@@ -61,8 +61,7 @@ class CompanyUsersReader implements CompanyUsersReaderInterface
 
         $restResponse = $this->getCompanyUsersResponse(
             $this->restResourceBuilder->createRestResponse(),
-            $companyUserCollectionTransfer,
-            $restRequest->getResource()->getId()
+            $companyUserCollectionTransfer
         );
 
         $restResponse->addLink(RestLinkInterface::LINK_SELF, $this->createSelfLink());
@@ -73,20 +72,14 @@ class CompanyUsersReader implements CompanyUsersReaderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer
-     * @param string|null $idCompanyUser
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     protected function getCompanyUsersResponse(
         RestResponseInterface $restResponse,
-        CompanyUserCollectionTransfer $companyUserCollectionTransfer,
-        ?string $idCompanyUser
+        CompanyUserCollectionTransfer $companyUserCollectionTransfer
     ): RestResponseInterface {
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUserTransfer) {
-            if ($idCompanyUser && (int)$idCompanyUser !== $companyUserTransfer->getIdCompanyUser()) {
-                continue;
-            }
-
             $restCompanyUserAttributesTransfer = $this->companyUsersResourceMapper
                 ->mapCompanyUserTransferToRestCompanyUserAttributesTransfer(
                     $companyUserTransfer

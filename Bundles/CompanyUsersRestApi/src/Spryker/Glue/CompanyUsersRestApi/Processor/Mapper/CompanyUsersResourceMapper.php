@@ -75,7 +75,6 @@ class CompanyUsersResourceMapper implements CompanyUsersResourceMapperInterface
     protected function mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): RestCompanyBusinessUnitAttributesTransfer {
-
         $restCompanyUnitAddressAttributesTransferCollection = $this->mapCompanyUnitAddressCollectionTransferToRestCompanyUnitAddressAttributesTransfer(
             $companyBusinessUnitTransfer->getAddressCollection()
         );
