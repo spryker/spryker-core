@@ -17,6 +17,8 @@ items:
       - NotBlank
       - Type:
           type: numeric
+      - GreaterThan:
+          value: 0
   patch:
     quantity:
       - NotBlank
@@ -31,6 +33,8 @@ guest-cart-items:
       - NotBlank
       - Type:
           type: numeric
+      - GreaterThan:
+          value: 0
   patch:
     quantity:
       - NotBlank
