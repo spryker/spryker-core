@@ -88,9 +88,6 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
             $query->filterByFkProductAbstract_In($productAbstractIds);
         }
 
-        $query->offset($filterTransfer->getOffset())
-            ->limit($filterTransfer->getLimit());
-
-        return $this->buildQueryFromCriteria($query)->find();
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 }

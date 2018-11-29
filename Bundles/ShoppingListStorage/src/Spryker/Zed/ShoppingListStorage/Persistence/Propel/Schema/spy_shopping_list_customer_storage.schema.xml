@@ -7,6 +7,7 @@
 
     <table name="spy_shopping_list_customer_storage">
         <column name="id_shopping_list_customer_storage" type="integer" autoIncrement="true" primaryKey="true"/>
+        <column name="key" type="VARCHAR" size="255" required="true"/>
         <column name="customer_reference" type="VARCHAR" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>
 

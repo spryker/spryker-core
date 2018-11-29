@@ -98,12 +98,12 @@ class PriceProductAbstractMerchantRelationSynchronizationDataBulkPlugin extends 
         $data = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $priceProductAbstractMerchantRelationshipStorageEntities = $this->getRepository()->findFilteredPriceProductAbstractMerchantRelationshipStorageEntities($filterTransfer, $ids);
+        $priceProductAbstractMerchantRelationshipStorageEntityTransfers = $this->getRepository()->findFilteredPriceProductAbstractMerchantRelationshipStorageEntities($filterTransfer, $ids);
 
-        foreach ($priceProductAbstractMerchantRelationshipStorageEntities as $priceProductAbstractMerchantRelationshipStorageEntity) {
+        foreach ($priceProductAbstractMerchantRelationshipStorageEntityTransfers as $priceProductAbstractMerchantRelationshipStorageEntityTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($priceProductAbstractMerchantRelationshipStorageEntity->getData());
-            $synchronizationDataTransfer->setKey($priceProductAbstractMerchantRelationshipStorageEntity->getKey());
+            $synchronizationDataTransfer->setData($priceProductAbstractMerchantRelationshipStorageEntityTransfer->getData());
+            $synchronizationDataTransfer->setKey($priceProductAbstractMerchantRelationshipStorageEntityTransfer->getKey());
 
             $data[] = $synchronizationDataTransfer;
         }

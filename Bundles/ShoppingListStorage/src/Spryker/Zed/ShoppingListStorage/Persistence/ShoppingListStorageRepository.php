@@ -96,9 +96,9 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $shoppingListCustomerStorageEntityIds
      *
-     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Generated\Shared\Transfer\SpyProductConcreteProductListStorageEntityTransfer[]
      */
-    public function findFilteredProductConcreteProductListStorageEntities(FilterTransfer $filterTransfer, array $shoppingListCustomerStorageEntityIds = []): ObjectCollection
+    public function findFilteredProductConcreteProductListStorageEntities(FilterTransfer $filterTransfer, array $shoppingListCustomerStorageEntityIds = []): array
     {
         $query = $this->getFactory()->createShoppingListCustomerStoragePropelQuery();
 
@@ -106,9 +106,7 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
             $query->filterByIdShoppingListCustomerStorage_In($shoppingListCustomerStorageEntityIds);
         }
 
-        return $query->offset($filterTransfer->getOffset())
-            ->limit($filterTransfer->getLimit())
-            ->find();
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 
     /**

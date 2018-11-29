@@ -370,7 +370,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $priceProductConcreteMerchantRelationshipStorageIds
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\SpyPriceProductConcreteMerchantRelationshipStorageEntityTransfer[]
      */
     public function findFilteredPriceProductConcreteMerchantRelationshipStorageEntities(FilterTransfer $filterTransfer, array $priceProductConcreteMerchantRelationshipStorageIds = []): array
     {
@@ -380,17 +380,14 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
             $query->filterByIdPriceProductConcreteMerchantRelationshipStorage_In($priceProductConcreteMerchantRelationshipStorageIds);
         }
 
-        return $query->offset($filterTransfer->getOffset())
-            ->limit($filterTransfer->getLimit())
-            ->find()
-            ->getArrayCopy();
+        return $this->buildQueryFromCriteria($query, $filterTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $priceProductAbstractMerchantRelationshipStorageIds
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\SpyPriceProductAbstractMerchantRelationshipStorageEntityTransfer[]
      */
     public function findFilteredPriceProductAbstractMerchantRelationshipStorageEntities(FilterTransfer $filterTransfer, array $priceProductAbstractMerchantRelationshipStorageIds = []): array
     {
@@ -400,9 +397,6 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
             $query->filterByIdPriceProductAbstractMerchantRelationshipStorage_In($priceProductAbstractMerchantRelationshipStorageIds);
         }
 
-        return $query->offset($filterTransfer->getOffset())
-            ->limit($filterTransfer->getLimit())
-            ->find()
-            ->getArrayCopy();
+        return $this->buildQueryFromCriteria($query, $filterTransfer);
     }
 }

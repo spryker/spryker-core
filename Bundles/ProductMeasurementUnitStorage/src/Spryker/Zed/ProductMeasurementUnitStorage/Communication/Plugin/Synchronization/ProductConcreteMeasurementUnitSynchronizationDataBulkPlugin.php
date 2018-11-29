@@ -61,13 +61,13 @@ class ProductConcreteMeasurementUnitSynchronizationDataBulkPlugin extends Abstra
         $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $productConcreteMeasurementUnitTransfers = $this->getRepository()->findFilteredProductConcreteMeasurementUnitStorageEntities($filterTransfer, $ids);
+        $productConcreteMeasurementUnitEntityTransfers = $this->getRepository()->findFilteredProductConcreteMeasurementUnitStorageEntities($filterTransfer, $ids);
 
-        foreach ($productConcreteMeasurementUnitTransfers as $productConcreteMeasurementUnitTransfer) {
+        foreach ($productConcreteMeasurementUnitEntityTransfers as $productConcreteMeasurementUnitEntityTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($productConcreteMeasurementUnitTransfer->getData());
-            $synchronizationDataTransfer->setKey($productConcreteMeasurementUnitTransfer->getKey());
-            $synchronizationDataTransfer->setStore($productConcreteMeasurementUnitTransfer->getStore());
+            $synchronizationDataTransfer->setData($productConcreteMeasurementUnitEntityTransfer->getData());
+            $synchronizationDataTransfer->setKey($productConcreteMeasurementUnitEntityTransfer->getKey());
+            $synchronizationDataTransfer->setStore($productConcreteMeasurementUnitEntityTransfer->getStore());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 

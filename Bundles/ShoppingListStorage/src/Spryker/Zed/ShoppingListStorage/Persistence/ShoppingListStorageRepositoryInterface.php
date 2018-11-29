@@ -44,7 +44,7 @@ interface ShoppingListStorageRepositoryInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $shoppingListCustomerStorageEntityIds
      *
-     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Generated\Shared\Transfer\SpyProductConcreteProductListStorageEntityTransfer[]
      */
-    public function findFilteredProductConcreteProductListStorageEntities(FilterTransfer $filterTransfer, array $shoppingListCustomerStorageEntityIds = []): ObjectCollection;
+    public function findFilteredProductConcreteProductListStorageEntities(FilterTransfer $filterTransfer, array $shoppingListCustomerStorageEntityIds = []): array;
 }

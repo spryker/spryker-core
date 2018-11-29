@@ -61,12 +61,12 @@ class ProductPackagingUnitSynchronizationDataBulkPlugin extends AbstractPlugin i
         $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $productAbstractPackagingUnitTransfers = $this->getRepository()->findFilteredProductAbstractPackagingUnitStorages($filterTransfer, $ids);
+        $productAbstractPackagingUnitEntityTransfers = $this->getRepository()->findFilteredProductAbstractPackagingUnitStorages($filterTransfer, $ids);
 
-        foreach ($productAbstractPackagingUnitTransfers as $productAbstractPackagingUnitTransfer) {
+        foreach ($productAbstractPackagingUnitEntityTransfers as $productAbstractPackagingUnitEntityTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($productAbstractPackagingUnitTransfer->getData());
-            $synchronizationDataTransfer->setKey($productAbstractPackagingUnitTransfer->getKey());
+            $synchronizationDataTransfer->setData($productAbstractPackagingUnitEntityTransfer->getData());
+            $synchronizationDataTransfer->setKey($productAbstractPackagingUnitEntityTransfer->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 
