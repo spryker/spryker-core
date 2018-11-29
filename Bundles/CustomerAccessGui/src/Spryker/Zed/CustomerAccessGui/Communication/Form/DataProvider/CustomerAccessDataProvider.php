@@ -32,7 +32,7 @@ class CustomerAccessDataProvider
      */
     public function getData(): CustomerAccessTransfer
     {
-        return $this->customerAccessFacade->getRestrictedContentTypes();
+        return $this->customerAccessFacade->getUnrestrictedContentTypes();
     }
 
     /**

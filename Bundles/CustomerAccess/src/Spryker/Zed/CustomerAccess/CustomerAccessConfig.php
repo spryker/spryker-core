@@ -22,24 +22,12 @@ class CustomerAccessConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated use getDefaultContentTypeAccess() instead.
-     *
-     * Gets content type access for install (all content types will be created with restricted access)
+     * Gets content type access for install.
      *
      * @return bool
      */
     public function getContentTypeAccess(): bool
     {
         return true;
-    }
-
-    /**
-     * Gets default content type access for install.
-     *
-     * @return bool[]
-     */
-    public function getDefaultContentTypeAccess(): array
-    {
-        return [];
     }
 }
