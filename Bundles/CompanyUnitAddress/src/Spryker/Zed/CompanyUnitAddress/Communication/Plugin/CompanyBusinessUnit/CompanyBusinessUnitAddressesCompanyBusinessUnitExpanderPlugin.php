@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CompanyUnitAddress\Communication\Plugin\CompanyBusinessUnit;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -31,12 +30,6 @@ class CompanyBusinessUnitAddressesCompanyBusinessUnitExpanderPlugin extends Abst
      */
     public function expand(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitTransfer
     {
-        $companyUnitAddressCriteriaFilterTransfer = (new CompanyUnitAddressCriteriaFilterTransfer())
-            ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
-
-        $companyUnitAddressCollection = $this->getFacade()->getCompanyUnitAddressCollection($companyUnitAddressCriteriaFilterTransfer);
-        $companyBusinessUnitTransfer->setAddressCollection($companyUnitAddressCollection);
-
-        return $companyBusinessUnitTransfer;
+        return $this->getFacade()->expandCompanyBusinessUnitWithCompanyUnitAddressCollection($companyBusinessUnitTransfer);
     }
 }
