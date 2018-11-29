@@ -81,7 +81,7 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
      */
     protected function getAllParents($idCategoryNode, LocaleTransfer $localeTransfer)
     {
-        if (static::$categoryTree === null) {
+        if (static::$categoryTree === null || !array_key_exists($idCategoryNode, static::$categoryTree)) {
             $this->loadTree($localeTransfer);
         }
 
