@@ -17,6 +17,7 @@ use Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class RestRequestValidator implements RestRequestValidatorInterface
@@ -132,7 +133,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
      *
      * @return string
      */
-    protected function getFormattedErrorMessage($validationError): string
+    protected function getFormattedErrorMessage(ConstraintViolationInterface $validationError): string
     {
         return str_replace(
             static::ERROR_DETAIL_REPLACED_SYMBOLS,
@@ -153,17 +154,17 @@ class RestRequestValidator implements RestRequestValidatorInterface
             return null;
         }
 
-        return array_map($this->getTrimCallback(), $attributesDataFromRequest);
+        return array_map($this->applyTrimRecursively(), $attributesDataFromRequest);
     }
 
     /**
      * @return callable
      */
-    protected function getTrimCallback(): callable
+    protected function applyTrimRecursively(): callable
     {
         return function ($value) {
             if (is_array($value)) {
-                array_map($this->getTrimCallback(), $value);
+                array_map($this->applyTrimRecursively(), $value);
             }
 
             return trim($value);
