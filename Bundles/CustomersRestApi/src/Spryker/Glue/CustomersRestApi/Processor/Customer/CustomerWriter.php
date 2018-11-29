@@ -141,6 +141,10 @@ class CustomerWriter implements CustomerWriterInterface
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
+        if (!$restRequest->getResource()->getId()) {
+            return $this->restApiError->addCustomerReferenceMissingError($restResponse);
+        }
+
         $customerResponseTransfer = $this->customerReader->findCustomer($restRequest);
 
         if (!$customerResponseTransfer->getHasCustomer()) {
