@@ -4,8 +4,8 @@
   "description": "Development module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
     "nette/di": " ^2.4.7 || ^3.0",
+    "php": ">=7.1",
     "spryker/config": "^3.0.0",
     "spryker/graph": "^3.0.0",
     "spryker/kernel": "^3.22.0",
