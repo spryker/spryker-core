@@ -9,9 +9,17 @@ namespace Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 interface BusinessOnBehalfGuiToCompanyUserFacadeInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return int
+     */
+    public function countActiveCompanyUsersByIdCustomer(CustomerTransfer $customerTransfer): int;
+
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
