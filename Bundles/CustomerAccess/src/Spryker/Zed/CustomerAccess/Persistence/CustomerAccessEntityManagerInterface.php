@@ -22,7 +22,7 @@ interface CustomerAccessEntityManagerInterface
     /**
      * @return void
      */
-    public function setAllContentTypesInaccessible(): void;
+    public function setAllContentTypesToInaccessible(): void;
 
     /**
      * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer

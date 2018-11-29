@@ -41,7 +41,7 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
     /**
      * @return void
      */
-    public function setAllContentTypesInaccessible(): void
+    public function setAllContentTypesToInaccessible(): void
     {
         $customerAccessEntities = $this->getFactory()->customerAccessQuery()->find();
 
