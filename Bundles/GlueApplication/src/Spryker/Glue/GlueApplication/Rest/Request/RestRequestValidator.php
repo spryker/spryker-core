@@ -115,7 +115,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
      *
      * @return bool
      */
-    protected function isResourceTypeValid(RestRequestInterface $restRequest)
+    protected function isResourceTypeValid(RestRequestInterface $restRequest): bool
     {
         return $restRequest->getResource()->getType() === $restRequest->getHttpRequest()->attributes->get(RestResourceInterface::RESOURCE_TYPE);
     }
