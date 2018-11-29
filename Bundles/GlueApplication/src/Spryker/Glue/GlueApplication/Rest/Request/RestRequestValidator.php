@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 class RestRequestValidator implements RestRequestValidatorInterface
 {
     protected const EXCEPTION_MESSAGE_POST_DATA_IS_INVALID = 'Post data is invalid.';
-    protected const EXCEPTION_MESSAGE_RESOURCE_TYPE_MISMATCH = 'Resource type is wrong for requested endpoint.';
+    protected const EXCEPTION_MESSAGE_RESOURCE_TYPE_IS_INVALID = 'Invalid type.';
 
     /**
      * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
@@ -67,7 +67,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
 
         if (!$this->isResourceTypeValid($restRequest)) {
             $restErrorMessageTransfer = new RestErrorMessageTransfer();
-            $restErrorMessageTransfer->setDetail(static::EXCEPTION_MESSAGE_RESOURCE_TYPE_MISMATCH);
+            $restErrorMessageTransfer->setDetail(static::EXCEPTION_MESSAGE_RESOURCE_TYPE_IS_INVALID);
 
             return (new RestErrorCollectionTransfer())->addRestError($restErrorMessageTransfer);
         }
