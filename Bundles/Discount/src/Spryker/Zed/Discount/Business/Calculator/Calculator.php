@@ -232,7 +232,7 @@ class Calculator implements CalculatorInterface
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
-    protected function collectItems(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer): array
+    protected function collectItems(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
     {
         $alternativeCollectorStrategyPlugin = $this->resolveCollectorPluginStrategy($quoteTransfer, $discountTransfer);
         if ($alternativeCollectorStrategyPlugin) {
