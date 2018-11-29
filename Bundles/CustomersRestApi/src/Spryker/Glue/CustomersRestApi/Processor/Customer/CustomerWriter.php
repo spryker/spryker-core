@@ -102,6 +102,10 @@ class CustomerWriter implements CustomerWriterInterface
             return $this->restApiError->addNotAcceptedTermsError($restResponse);
         }
 
+        if ($restCustomersAttributesTransfer->getPassword() !== $restCustomersAttributesTransfer->getConfirmPassword()) {
+            return $this->restApiError->addPasswordsDoNotMatchError($restResponse, 'password', 'confirm_password');
+        }
+
         $customerTransfer = (new CustomerTransfer())->fromArray($restCustomersAttributesTransfer->toArray(), true);
         $customerResponseTransfer = $this->customerClient->registerCustomer($customerTransfer);
 
@@ -140,6 +144,11 @@ class CustomerWriter implements CustomerWriterInterface
         RestCustomersAttributesTransfer $restCustomerAttributesTransfer
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        if ($restCustomerAttributesTransfer->getPassword()
+            && $restCustomerAttributesTransfer->getPassword() !== $restCustomerAttributesTransfer->getConfirmPassword()) {
+            return $this->restApiError->addPasswordsDoNotMatchError($restResponse, 'password', 'confirm_password');
+        }
 
         $customerResponseTransfer = $this->customerReader->findCustomer($restRequest);
 
@@ -192,6 +201,9 @@ class CustomerWriter implements CustomerWriterInterface
         RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
+        if ($passwordAttributesTransfer->getNewPassword() !== $passwordAttributesTransfer->getConfirmPassword()) {
+            return $this->restApiError->addPasswordsDoNotMatchError($restResponse, 'newPassword', 'confirm_password');
+        }
         $customerResponseTransfer = $this->customerReader->getCurrentCustomer($restRequest);
 
         if (!$customerResponseTransfer->getHasCustomer() || $restRequest->getResource()->getId()) {

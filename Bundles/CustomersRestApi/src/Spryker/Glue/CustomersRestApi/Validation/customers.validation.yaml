@@ -23,8 +23,6 @@ customers:
       - NotBlank
       - Length:
           max: 72
-      - IdenticalTo:
-          propertyPath: password
     acceptedTerms:
       - NotBlank
       - Type:
@@ -172,8 +170,6 @@ customer-password:
       - NotBlank
       - Length:
           max: 72
-      - IdenticalTo:
-          propertyPath: newPassword
 
 customer-forgotten-password:
   post:
@@ -195,5 +191,3 @@ customer-restore-password:
       - NotBlank
       - Length:
           max: 72
-      - IdenticalTo:
-          propertyPath: password
