@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductListStorage\Business\ProductListProductAbstractStorage;
 
 use Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer;
-use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage;
 use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface;
 use Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface;
@@ -52,13 +51,13 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      */
     public function publish(array $productAbstractIds): void
     {
-        $productListBuffer = $this->productListFacade->getProductAbstractListsIdsByIdProductAbstractIn($productAbstractIds);
+        $productLists = $this->productListFacade->getProductAbstractListsIdsByIdProductAbstractIn($productAbstractIds);
 
         $productAbstractProductListStorageEntities = $this->findProductAbstractProductListStorageEntities($productAbstractIds);
         $indexedProductAbstractProductListStorageEntities = $this->indexProductAbstractProductListStorageEntities($productAbstractProductListStorageEntities);
         foreach ($productAbstractIds as $idProductAbstract) {
             $productAbstractProductListStorageEntity = $this->getProductAbstractProductListStorageEntity($idProductAbstract, $indexedProductAbstractProductListStorageEntities);
-            if ($this->saveProductAbstractProductListStorageEntity($idProductAbstract, $productAbstractProductListStorageEntity, $productListBuffer)) {
+            if ($this->saveProductAbstractProductListStorageEntity($idProductAbstract, $productAbstractProductListStorageEntity, $productLists)) {
                 unset($indexedProductAbstractProductListStorageEntities[$idProductAbstract]);
             }
         }
@@ -69,16 +68,16 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
     /**
      * @param int $idProductAbstract
      * @param \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage $productAbstractProductListStorageEntity
-     * @param array $productListBuffer
+     * @param array $productLists
      *
      * @return bool
      */
     protected function saveProductAbstractProductListStorageEntity(
         int $idProductAbstract,
         SpyProductAbstractProductListStorage $productAbstractProductListStorageEntity,
-        array $productListBuffer
+        array $productLists
     ): bool {
-        $productAbstractProductListsStorageEntityTransfer = $this->getProductAbstractProductListsStorageTransfer($idProductAbstract, $productListBuffer);
+        $productAbstractProductListsStorageEntityTransfer = $this->getProductAbstractProductListsStorageTransfer($idProductAbstract, $productLists);
         if ($productAbstractProductListsStorageEntityTransfer->getIdWhitelists() || $productAbstractProductListsStorageEntityTransfer->getIdBlacklists()) {
             $productAbstractProductListStorageEntity->setFkProductAbstract($idProductAbstract)
                 ->setData($productAbstractProductListsStorageEntityTransfer->toArray())
@@ -93,42 +92,42 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
 
     /**
      * @param int $idProductAbstract
-     * @param array $productListBuffer
+     * @param array $productLists
      *
      * @return \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer
      */
     protected function getProductAbstractProductListsStorageTransfer(
         int $idProductAbstract,
-        array $productListBuffer
+        array $productLists
     ): ProductAbstractProductListStorageTransfer {
         $productAbstractProductListsStorageTransfer = new ProductAbstractProductListStorageTransfer();
         $productAbstractProductListsStorageTransfer->setIdProductAbstract($idProductAbstract)
-            ->setIdBlacklists($this->findProductAbstractBlacklistIds($idProductAbstract, $productListBuffer))
-            ->setIdWhitelists($this->findProductAbstractWhitelistIds($idProductAbstract, $productListBuffer));
+            ->setIdBlacklists($this->findProductAbstractBlacklistIds($idProductAbstract, $productLists))
+            ->setIdWhitelists($this->findProductAbstractWhitelistIds($idProductAbstract, $productLists));
 
         return $productAbstractProductListsStorageTransfer;
     }
 
     /**
      * @param int $idProductAbstract
-     * @param array $productListBuffer
+     * @param array $productLists
      *
      * @return int[]
      */
-    protected function findProductAbstractBlacklistIds(int $idProductAbstract, array $productListBuffer): array
+    protected function findProductAbstractBlacklistIds(int $idProductAbstract, array $productLists): array
     {
-        return $productListBuffer[$idProductAbstract][SpyProductListTableMap::COL_TYPE_BLACKLIST] ?? [];
+        return $productLists[$idProductAbstract][$this->productListStorageRepository->getProductListBlacklistEnumValue()] ?? [];
     }
 
     /**
      * @param int $idProductAbstract
-     * @param array $productListBuffer
+     * @param array $productLists
      *
      * @return int[]
      */
-    protected function findProductAbstractWhitelistIds(int $idProductAbstract, array $productListBuffer): array
+    protected function findProductAbstractWhitelistIds(int $idProductAbstract, array $productLists): array
     {
-        return $productListBuffer[$idProductAbstract][SpyProductListTableMap::COL_TYPE_WHITELIST] ?? [];
+        return $productLists[$idProductAbstract][$this->productListStorageRepository->getProductListWhitelistEnumValue()] ?? [];
     }
 
     /**

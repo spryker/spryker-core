@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductListStorage\Business\ProductListProductConcreteStorage;
 
 use Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer;
-use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage;
 use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface;
 use Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface;
@@ -52,13 +51,13 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
      */
     public function publish(array $productConcreteIds): void
     {
-        $productListBuffer = $this->productListFacade->getProductListsIdsByIdProductIn($productConcreteIds);
+        $productLists = $this->productListFacade->getProductListsIdsByIdProductIn($productConcreteIds);
 
         $productConcreteProductListStorageEntities = $this->findProductConcreteProductListStorageEntities($productConcreteIds);
         $indexedProductConcreteProductListStorageEntities = $this->indexProductConcreteProductListStorageEntities($productConcreteProductListStorageEntities);
         foreach ($productConcreteIds as $idProduct) {
             $productConcreteProductListStorageEntity = $this->getProductConcreteProductListStorageEntity($idProduct, $indexedProductConcreteProductListStorageEntities);
-            if ($this->saveProductConcreteProductListStorageEntity($idProduct, $productConcreteProductListStorageEntity, $productListBuffer)) {
+            if ($this->saveProductConcreteProductListStorageEntity($idProduct, $productConcreteProductListStorageEntity, $productLists)) {
                 unset($indexedProductConcreteProductListStorageEntities[$idProduct]);
             }
         }
@@ -69,16 +68,16 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
     /**
      * @param int $idProduct
      * @param \Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage $productConcreteProductListStorageEntity
-     * @param array $productListBuffer
+     * @param array $productLists
      *
      * @return bool
      */
     protected function saveProductConcreteProductListStorageEntity(
         int $idProduct,
         SpyProductConcreteProductListStorage $productConcreteProductListStorageEntity,
-        array $productListBuffer
+        array $productLists
     ): bool {
-        $productConcreteProductListsStorageTransfer = $this->getProductConcreteProductListsStorageTransfer($idProduct, $productListBuffer);
+        $productConcreteProductListsStorageTransfer = $this->getProductConcreteProductListsStorageTransfer($idProduct, $productLists);
         if ($productConcreteProductListsStorageTransfer->getIdBlacklists() || $productConcreteProductListsStorageTransfer->getIdWhitelists()) {
             $productConcreteProductListStorageEntity->setFkProduct($idProduct)
                 ->setData($productConcreteProductListsStorageTransfer->toArray())
@@ -93,40 +92,40 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
 
     /**
      * @param int $idProductConcrete
-     * @param array $productListBuffer
+     * @param array $productLists
      *
      * @return \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer
      */
-    protected function getProductConcreteProductListsStorageTransfer(int $idProductConcrete, array $productListBuffer): ProductConcreteProductListStorageTransfer
+    protected function getProductConcreteProductListsStorageTransfer(int $idProductConcrete, array $productLists): ProductConcreteProductListStorageTransfer
     {
         $productConcreteProductListsStorageTransfer = new ProductConcreteProductListStorageTransfer();
         $productConcreteProductListsStorageTransfer->setIdProductConcrete($idProductConcrete)
-            ->setIdBlacklists($this->findProductConcreteBlacklistIdsByIdProductConcrete($idProductConcrete, $productListBuffer))
-            ->setIdWhitelists($this->findProductConcreteWhitelistIdsByIdProductConcrete($idProductConcrete, $productListBuffer));
+            ->setIdBlacklists($this->findProductConcreteBlacklistIdsByIdProductConcrete($idProductConcrete, $productLists))
+            ->setIdWhitelists($this->findProductConcreteWhitelistIdsByIdProductConcrete($idProductConcrete, $productLists));
 
         return $productConcreteProductListsStorageTransfer;
     }
 
     /**
      * @param int $idProductConcrete
-     * @param array $productListBuffer
+     * @param array $productLists
      *
      * @return int[]
      */
-    protected function findProductConcreteBlacklistIdsByIdProductConcrete(int $idProductConcrete, array $productListBuffer): array
+    protected function findProductConcreteBlacklistIdsByIdProductConcrete(int $idProductConcrete, array $productLists): array
     {
-        return $productListBuffer[$idProductConcrete][SpyProductListTableMap::COL_TYPE_BLACKLIST] ?? [];
+        return $productLists[$idProductConcrete][$this->productListStorageRepository->getProductListBlacklistEnumValue()] ?? [];
     }
 
     /**
      * @param int $idProductConcrete
-     * @param array $productListBuffer
+     * @param array $productLists
      *
      * @return int[]
      */
-    protected function findProductConcreteWhitelistIdsByIdProductConcrete(int $idProductConcrete, array $productListBuffer): array
+    protected function findProductConcreteWhitelistIdsByIdProductConcrete(int $idProductConcrete, array $productLists): array
     {
-        return $productListBuffer[$idProductConcrete][SpyProductListTableMap::COL_TYPE_WHITELIST] ?? [];
+        return $productLists[$idProductConcrete][$this->productListStorageRepository->getProductListWhitelistEnumValue()] ?? [];
     }
 
     /**

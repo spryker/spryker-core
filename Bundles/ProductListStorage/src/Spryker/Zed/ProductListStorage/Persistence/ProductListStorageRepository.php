@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductListStorage\Persistence;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
+use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -169,5 +170,33 @@ class ProductListStorageRepository extends AbstractRepository implements Product
             ->distinct()
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @return int
+     */
+    public function getProductListWhitelistEnumValue(): int
+    {
+        return $this->getProductListEnumValue(SpyProductListTableMap::COL_TYPE_WHITELIST);
+    }
+
+    /**
+     * @return int
+     */
+    public function getProductListBlacklistEnumValue(): int
+    {
+        return $this->getProductListEnumValue(SpyProductListTableMap::COL_TYPE_BLACKLIST);
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return int
+     */
+    protected function getProductListEnumValue(string $type): int
+    {
+        $enumForType = array_flip(SpyProductListTableMap::getValueSet(SpyProductListTableMap::COL_TYPE));
+
+        return $enumForType[$type];
     }
 }

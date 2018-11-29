@@ -60,4 +60,14 @@ interface ProductListStorageRepositoryInterface
      * @return array
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
+
+    /**
+     * @return int
+     */
+    public function getProductListWhitelistEnumValue(): int;
+
+    /**
+     * @return int
+     */
+    public function getProductListBlacklistEnumValue(): int;
 }

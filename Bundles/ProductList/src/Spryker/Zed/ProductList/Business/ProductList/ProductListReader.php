@@ -128,11 +128,10 @@ class ProductListReader implements ProductListReaderInterface
      */
     protected function mapProductListIdsByIdProductAbstractAndType(array $productAbstractListsIds): array
     {
-        $typeValueSet = SpyProductListTableMap::getValueSet(SpyProductListTableMap::COL_TYPE);
         $mappedProductListIds = [];
         foreach ($productAbstractListsIds as $productList) {
             $idProductAbstract = $productList[ProductListRepository::COL_ID_PRODUCT_ABSTRACT];
-            $type = $typeValueSet[$productList[ProductListRepository::COL_TYPE]];
+            $type = $productList[ProductListRepository::COL_TYPE];
             $idProductList = $productList[ProductListRepository::COL_ID_PRODUCT_LIST];
 
             $mappedProductListIds[$idProductAbstract][$type][] = $idProductList;
@@ -148,11 +147,10 @@ class ProductListReader implements ProductListReaderInterface
      */
     protected function mapProductListIdsByIdProductConcreteAndType(array $productAbstractListsIds): array
     {
-        $typeValueSet = SpyProductListTableMap::getValueSet(SpyProductListTableMap::COL_TYPE);
         $mappedProductListIds = [];
         foreach ($productAbstractListsIds as $productList) {
             $idProduct = $productList[SpyProductListProductConcreteTableMap::COL_FK_PRODUCT];
-            $type = $typeValueSet[$productList[ProductListRepository::COL_TYPE]];
+            $type = $productList[ProductListRepository::COL_TYPE];
             $idProductList = $productList[ProductListRepository::COL_ID_PRODUCT_LIST];
 
             $mappedProductListIds[$idProduct][$type][] = $idProductList;
