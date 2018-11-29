@@ -66,5 +66,8 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_RESTORE_PASSWORD_KEY_INVALID = '415';
     public const RESPONSE_DETAILS_RESTORE_PASSWORD_KEY_INVALID = 'Restore password key is not valid.';
 
+    public const RESPONSE_CODE_PASSWORDS_DO_NOT_MATCH = '416';
+    public const RESPONSE_DETAILS_PASSWORDS_DO_NOT_MATCH = 'Value in field %s should be identical to value in the %s field.';
+
     public const FORMAT_SELF_LINK_ADDRESS_RESOURCE = '%s/%s/%s/%s';
 }

@@ -226,4 +226,21 @@ class RestApiError implements RestApiErrorInterface
 
         return $restResponse->addError($restErrorTransfer);
     }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     * @param string $passwordFieldName
+     * @param string $passwordConfirmFieldName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function addPasswordsDoNotMatchError(RestResponseInterface $restResponse, string $passwordFieldName, string $passwordConfirmFieldName): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORDS_DO_NOT_MATCH)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setDetail(sprintf(CustomersRestApiConfig::RESPONSE_DETAILS_PASSWORDS_DO_NOT_MATCH, $passwordFieldName, $passwordConfirmFieldName));
+
+        return $restResponse->addError($restErrorTransfer);
+    }
 }
