@@ -373,7 +373,7 @@ class CompanyUserFacadeTest extends Test
     /**
      * @return void
      */
-    public function testDeleteWithoutCustomerAnonymizingShouldRemoveCompanyUserFromStorageWithoutCustomerAnonymizing(): void
+    public function testDeleteCompanyUserShouldRemoveCompanyUserFromStorageWithoutCustomerAnonymizing(): void
     {
         // Assign
         $companyTransfer = $this->tester->haveCompany();
@@ -387,7 +387,7 @@ class CompanyUserFacadeTest extends Test
         $idCompanyUser = $companyUserTransfer->getIdCompanyUser();
 
         // Act
-        $this->getFacade()->deleteWithoutCustomerAnonymizing($companyUserTransfer);
+        $this->getFacade()->deleteCompanyUser($companyUserTransfer);
 
         // Assert
         $this->expectException(TypeError::class);

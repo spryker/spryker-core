@@ -384,12 +384,12 @@ class CompanyUser implements CompanyUserInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function deleteWithoutCustomerAnonymizing(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyUserTransfer) {
-            $this->companyUserPluginExecutor->executePreDeletePlugins($companyUserTransfer);
+            $companyUserTransfer->requireIdCompanyUser();
 
-            return $this->executeDeleteWithoutCustomerAnonymizingTransaction($companyUserTransfer);
+            return $this->executeDeleteCompanyUserTransaction($companyUserTransfer);
         });
     }
 
@@ -398,9 +398,9 @@ class CompanyUser implements CompanyUserInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    protected function executeDeleteWithoutCustomerAnonymizingTransaction(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    protected function executeDeleteCompanyUserTransaction(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        $companyUserTransfer->requireIdCompanyUser();
+        $this->companyUserPluginExecutor->executePreDeletePlugins($companyUserTransfer);
 
         $this->companyUserEntityManager->deleteCompanyUserById($companyUserTransfer->getIdCompanyUser());
 

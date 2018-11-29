@@ -13,10 +13,10 @@ use Spryker\Service\UtilText\Model\Url\Url;
 
 class BusinessOnBehalfGuiButtonCreator implements BusinessOnBehalfGuiButtonCreatorInterface
 {
-    protected const BUTTON_DEFAULT_DELETE_COMPANY_USER_LINK = '/company-user-gui/delete-company-user/confirm-delete';
+    protected const BUTTON_ORIGINAL_DELETE_COMPANY_USER_LINK = '/company-user-gui/delete-company-user/confirm-delete';
 
     protected const URL_CONFIRM_DELETE_COMPANY_USER = '/business-on-behalf-gui/delete-company-user/confirm-delete';
-    protected const URL_ATTACH_CUSTOMER_TO_BUSINESS_UNIT = '/business-on-behalf-gui/create-company-user/attach-customer';
+    protected const URL_ATTACH_CUSTOMER_TO_BUSINESS_UNIT = '/business-on-behalf-gui/customer/attach-customer';
 
     protected const PARAM_ID_COMPANY_USER = 'id-company-user';
     protected const PARAM_ID_CUSTOMER = 'id-customer';
@@ -37,7 +37,7 @@ class BusinessOnBehalfGuiButtonCreator implements BusinessOnBehalfGuiButtonCreat
                 static::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
             ];
 
-            $oldDeleteUrl = $this->generateUrl(static::BUTTON_DEFAULT_DELETE_COMPANY_USER_LINK, $queryParams);
+            $oldDeleteUrl = $this->generateUrl(static::BUTTON_ORIGINAL_DELETE_COMPANY_USER_LINK, $queryParams);
 
             if ($buttonTransfer->getUrl() === $oldDeleteUrl) {
                 $newDeleteUrl = $this->generateUrl(static::URL_CONFIRM_DELETE_COMPANY_USER, $queryParams);

@@ -185,7 +185,8 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Deletes a company user without customer anonymizing.
+     * - Deletes a company user.
+     * - Executes plugins before delete company user.
      *
      * @api
      *
@@ -193,5 +194,5 @@ interface CompanyUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function deleteWithoutCustomerAnonymizing(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+    public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 }

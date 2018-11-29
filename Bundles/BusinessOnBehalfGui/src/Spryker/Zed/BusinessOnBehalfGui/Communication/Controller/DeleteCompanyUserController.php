@@ -8,7 +8,6 @@
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Controller;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +22,8 @@ class DeleteCompanyUserController extends AbstractController
 
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
+    protected const PARAM_ID_COMPANY_USER = 'id-company-user';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -30,16 +31,11 @@ class DeleteCompanyUserController extends AbstractController
      */
     public function confirmDeleteAction(Request $request): array
     {
-        $idCompanyUser = $this->castId($request->query->getInt(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER));
+        $idCompanyUser = $this->castId($request->query->getInt(static::PARAM_ID_COMPANY_USER));
 
         $companyUserTransfer = $this->getFactory()
             ->getCompanyUserFacade()
             ->getCompanyUserById($idCompanyUser);
-
-        $companyUserTransfer
-            ->requireIdCompanyUser()
-            ->requireCustomer()
-            ->requireCompany();
 
         return $this->viewResponse([
             'companyUser' => $companyUserTransfer,
@@ -53,14 +49,14 @@ class DeleteCompanyUserController extends AbstractController
      */
     public function deleteAction(Request $request): RedirectResponse
     {
-        $idCompanyUser = $this->castId($request->query->getInt(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER));
+        $idCompanyUser = $this->castId($request->query->getInt(static::PARAM_ID_COMPANY_USER));
 
         $companyUserTransfer = (new CompanyUserTransfer())
             ->setIdCompanyUser($idCompanyUser);
 
         $companyUserResponseTransfer = $this->getFactory()
             ->getCompanyUserFacade()
-            ->deleteWithoutCustomerAnonymizing($companyUserTransfer);
+            ->deleteCompanyUser($companyUserTransfer);
 
         if ($companyUserResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_DELETE);
