@@ -44,29 +44,29 @@ class CompanyUser implements CompanyUserInterface
     protected $companyUserPluginExecutor;
 
     /**
-     * @var array|\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSaveCheckPluginInterface[]
+     * @var \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserSavePreCheckPluginInterface[]
      */
-    protected $companyUserPreSaveCheckPlugins;
+    protected $companyUserSavePreCheckPlugins;
 
     /**
      * @param \Spryker\Zed\CompanyUser\Persistence\CompanyUserRepositoryInterface $companyUserRepository
      * @param \Spryker\Zed\CompanyUser\Persistence\CompanyUserEntityManagerInterface $companyUserEntityManager
      * @param \Spryker\Zed\CompanyUser\Dependency\Facade\CompanyUserToCustomerFacadeInterface $customerFacade
      * @param \Spryker\Zed\CompanyUser\Business\Model\CompanyUserPluginExecutorInterface $companyUserPluginExecutor
-     * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSaveCheckPluginInterface[] $companyUserPreSaveCheckPlugins
+     * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserSavePreCheckPluginInterface[] $companyUserSavePreCheckPlugins
      */
     public function __construct(
         CompanyUserRepositoryInterface $companyUserRepository,
         CompanyUserEntityManagerInterface $companyUserEntityManager,
         CompanyUserToCustomerFacadeInterface $customerFacade,
         CompanyUserPluginExecutorInterface $companyUserPluginExecutor,
-        array $companyUserPreSaveCheckPlugins
+        array $companyUserSavePreCheckPlugins
     ) {
         $this->companyUserRepository = $companyUserRepository;
         $this->companyUserEntityManager = $companyUserEntityManager;
         $this->customerFacade = $customerFacade;
         $this->companyUserPluginExecutor = $companyUserPluginExecutor;
-        $this->companyUserPreSaveCheckPlugins = $companyUserPreSaveCheckPlugins;
+        $this->companyUserSavePreCheckPlugins = $companyUserSavePreCheckPlugins;
     }
 
     /**
@@ -76,7 +76,7 @@ class CompanyUser implements CompanyUserInterface
      */
     public function create(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        $companyUserResponseTransfer = $this->executePreSaveCheckPlugins($companyUserTransfer);
+        $companyUserResponseTransfer = $this->executeSavePreCheckPlugins($companyUserTransfer);
 
         if (!$companyUserResponseTransfer->getIsSuccessful()) {
             return $companyUserResponseTransfer;
@@ -94,7 +94,7 @@ class CompanyUser implements CompanyUserInterface
      */
     public function save(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        $companyUserResponseTransfer = $this->executePreSaveCheckPlugins($companyUserTransfer);
+        $companyUserResponseTransfer = $this->executeSavePreCheckPlugins($companyUserTransfer);
 
         if (!$companyUserResponseTransfer->getIsSuccessful()) {
             return $companyUserResponseTransfer;
@@ -365,12 +365,12 @@ class CompanyUser implements CompanyUserInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    protected function executePreSaveCheckPlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    protected function executeSavePreCheckPlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        foreach ($this->companyUserPreSaveCheckPlugins as $companyUserPreSaveCheckPlugin) {
-            $companyUserResponseTransfer = $companyUserPreSaveCheckPlugin->check($companyUserTransfer);
+        foreach ($this->companyUserSavePreCheckPlugins as $companyUserSavePreCheckPlugin) {
+            $companyUserResponseTransfer = $companyUserSavePreCheckPlugin->check($companyUserTransfer);
             if (!$companyUserResponseTransfer->getIsSuccessful()) {
-                return $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
+                return $companyUserResponseTransfer;
             }
         }
 

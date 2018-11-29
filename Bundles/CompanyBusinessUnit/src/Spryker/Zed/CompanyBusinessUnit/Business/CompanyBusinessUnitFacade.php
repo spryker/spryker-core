@@ -198,10 +198,10 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function checkCompanyUserNotDuplicated(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    public function checkUniqueCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         return $this->getFactory()
-            ->createCompanyUserChecker()
-            ->checkCompanyUserNotDuplicated($companyUserTransfer);
+            ->createCompanyUserValidator()
+            ->checkUniqueCompanyUser($companyUserTransfer);
     }
 }

@@ -9,18 +9,18 @@ namespace Spryker\Zed\CompanyBusinessUnit\Communication\Plugin\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSaveCheckPluginInterface;
+use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserSavePreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyBusinessUnit\CompanyBusinessUnitConfig getConfig()
  */
-class CheckCompanyUserByBusinessUnitIdCompanyUserIdExistsPlugin extends AbstractPlugin implements CompanyUserPreSaveCheckPluginInterface
+class CheckUniqueCompanyUserByBusinessUnitSavePreCheckPlugin extends AbstractPlugin implements CompanyUserSavePreCheckPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Checks exists relation between customer and business unit before save company user to avoid duplicates of company user entity.
+     * - Checks if company user with the same customer and business unit does not exist yet.
      *
      * @api
      *
@@ -31,6 +31,6 @@ class CheckCompanyUserByBusinessUnitIdCompanyUserIdExistsPlugin extends Abstract
     public function check(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         return $this->getFacade()
-            ->checkCompanyUserNotDuplicated($companyUserTransfer);
+            ->checkUniqueCompanyUser($companyUserTransfer);
     }
 }

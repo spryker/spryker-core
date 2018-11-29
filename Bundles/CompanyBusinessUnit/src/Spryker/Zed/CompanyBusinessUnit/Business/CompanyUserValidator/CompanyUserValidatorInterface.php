@@ -5,22 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUserExtension\Dependency\Plugin;
+namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyUserValidator;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
-interface CompanyUserPreSaveCheckPluginInterface
+interface CompanyUserValidatorInterface
 {
     /**
-     * Specification:
-     * - Executes plugins before a company user saving process is started.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function check(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+    public function checkUniqueCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 }

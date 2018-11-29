@@ -18,6 +18,7 @@ interface CompanyUserFacadeInterface
 {
     /**
      * Specification:
+     * - Executes check plugins before create company user.
      * - Creates a company user
      *
      * @api
@@ -42,6 +43,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
+     * - Executes check plugins before create company user.
      * - Updates a company user
      *
      * @api

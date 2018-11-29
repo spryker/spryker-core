@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyUserChecker;
+namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyUserValidator;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface;
 
-class CompanyUserChecker implements CompanyUserCheckerInterface
+class CompanyUserValidator implements CompanyUserValidatorInterface
 {
     protected const MESSAGE_ERROR_COMPANY_USER_ALREADY_ATTACHED = 'Customer already attached to this business unit.';
 
@@ -35,21 +35,22 @@ class CompanyUserChecker implements CompanyUserCheckerInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function checkCompanyUserNotDuplicated(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    public function checkUniqueCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         $companyUserResponseTransfer = (new CompanyUserResponseTransfer())->setIsSuccessful(true);
 
-        $existsSpyCompanyUser = $this->repository
-            ->checkCompanyUserNotDuplicated($companyUserTransfer);
+        $existsCompanyUser = $this->repository
+            ->hasCompanyUser($companyUserTransfer);
 
-        if ($existsSpyCompanyUser) {
-            $message = (new ResponseMessageTransfer())
-                ->setText(static::MESSAGE_ERROR_COMPANY_USER_ALREADY_ATTACHED);
-
-            $companyUserResponseTransfer->setIsSuccessful(false)
-                ->addMessage($message);
+        if (!$existsCompanyUser) {
+            return $companyUserResponseTransfer;
         }
 
-        return $companyUserResponseTransfer;
+        $message = (new ResponseMessageTransfer())
+            ->setText(static::MESSAGE_ERROR_COMPANY_USER_ALREADY_ATTACHED);
+
+        return $companyUserResponseTransfer
+            ->setIsSuccessful(false)
+            ->addMessage($message);
     }
 }
