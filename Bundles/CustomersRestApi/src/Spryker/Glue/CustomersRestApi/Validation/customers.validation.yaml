@@ -26,9 +26,7 @@ customers:
       - IdenticalTo:
           propertyPath: password
     acceptedTerms:
-      - NotBlank
-      - Type:
-          type: bool
+      - IsTrue
   patch:
     email:
     - Optional:
