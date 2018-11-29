@@ -109,6 +109,16 @@ interface CustomerClientInterface
 
     /**
      * Specification:
+     * - Extending session TTL of a customer.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function extendSessionLifetime(): bool;
+
+    /**
+     * Specification:
      * - Stores provided customer information in session.
      *
      * @api
