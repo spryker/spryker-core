@@ -5,14 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\BusinessOnBehalfGui\Communication\BusinessOnBehalfGuiButtonCreator;
+namespace Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator;
 
 use Generated\Shared\Transfer\ButtonTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyUserFacadeInterface;
 
-class BusinessOnBehalfGuiButtonCreator implements BusinessOnBehalfGuiButtonCreatorInterface
+class CustomerTableButtonCreator extends AbstractButtonCreator implements CustomerTableButtonCreatorInterface
 {
     protected const URL_ATTACH_CUSTOMER_TO_COMPANY = 'company-user-gui/create-company-user/attach-customer';
     protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE = 'Attach to company';
@@ -70,33 +69,5 @@ class BusinessOnBehalfGuiButtonCreator implements BusinessOnBehalfGuiButtonCreat
         ]);
 
         return $this->generateButtonTransfer($url, static::BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE, $defaultOptions);
-    }
-
-    /**
-     * @param string $url
-     * @param string $title
-     * @param array $defaultOptions
-     * @param array|null $customOptions
-     *
-     * @return \Generated\Shared\Transfer\ButtonTransfer
-     */
-    protected function generateButtonTransfer(string $url, string $title, array $defaultOptions, ?array $customOptions = null): ButtonTransfer
-    {
-        return (new ButtonTransfer())
-            ->setUrl($url)
-            ->setTitle($title)
-            ->setDefaultOptions($defaultOptions)
-            ->setCustomOptions($customOptions);
-    }
-
-    /**
-     * @param string $url
-     * @param array $queryParams
-     *
-     * @return string
-     */
-    protected function generateUrl(string $url, array $queryParams): string
-    {
-        return Url::generate($url, $queryParams);
     }
 }

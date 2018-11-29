@@ -5,32 +5,32 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Plugin\Customer;
+namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Plugin\CompanyUserGui;
 
-use Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionExpanderPluginInterface;
+use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionLinksExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\BusinessOnBehalfGui\Communication\BusinessOnBehalfGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\BusinessOnBehalfGui\BusinessOnBehalfGuiConfig getConfig()
  */
-class BusinessOnBehalfGuiAttachToCompanyButtonCustomerTableActionExpanderPlugin extends AbstractPlugin implements CustomerTableActionExpanderPluginInterface
+class CompanyUserTableAttachToBusinessUnitActionLinksExpanderPlugin extends AbstractPlugin implements CompanyUserTableActionLinksExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Adds "Attach to company" button to customer table actions if the customer has at least one company user.
+     * - Adds new "Attach to BU" action button to company user table.
      *
      * @api
      *
-     * @param int $idCustomer
+     * @param array $companyUserDataItem
      * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function execute(int $idCustomer, array $buttonTransfers): array
+    public function expandActionLinks(array $companyUserDataItem, array $buttonTransfers): array
     {
         return $this->getFactory()
-            ->createCustomerTableButtonCreator()
-            ->addAttachCustomerToCompanyButton($idCustomer, $buttonTransfers);
+            ->createCompanyUserTableButtonCreator()
+            ->addAttachCustomerToBusinessUnitButton($companyUserDataItem, $buttonTransfers);
     }
 }

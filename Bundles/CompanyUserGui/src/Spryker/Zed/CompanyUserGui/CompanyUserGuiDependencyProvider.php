@@ -29,6 +29,7 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER = 'PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER';
     public const PLUGINS_COMPANY_USER_FORM_EXPANDER = 'PLUGINS_COMPANY_USER_FORM_EXPANDER';
     public const PLUGINS_COMPANY_USER_ATTACH_CUSTOMER_FORM_EXPANDER = 'PLUGINS_COMPANY_USER_ATTACH_CUSTOMER_FORM_EXPANDER';
+    public const PLUGINS_COMPANY_USER_TABLE_ACTION_LINKS_FORM_EXPANDER = 'PLUGINS_COMPANY_USER_TABLE_ACTION_LINKS_FORM_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -47,6 +48,7 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyUserTablePrepareDataExpanderPlugins($container);
         $container = $this->addCompanyUserFormExpanderPlugins($container);
         $container = $this->addCompanyUserAttachCustomerFormExpanderPlugins($container);
+        $container = $this->addCompanyUserTableActionLinksExpanderPlugins($container);
 
         return $container;
     }
@@ -170,6 +172,20 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserTableActionLinksExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_COMPANY_USER_TABLE_ACTION_LINKS_FORM_EXPANDER] = function (Container $container) {
+            return $this->getCompanyUserTableActionLinksExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableConfigExpanderPluginInterface[]
      */
     protected function getCompanyUserTableConfigExpanderPlugins(): array
@@ -197,6 +213,14 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserAttachCustomerFormExpanderPluginInterface[]
      */
     protected function getCompanyUserAttachCustomerFormExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionLinksExpanderPluginInterface[]
+     */
+    protected function getCompanyUserTableActionLinksExpanderPlugins(): array
     {
         return [];
     }
