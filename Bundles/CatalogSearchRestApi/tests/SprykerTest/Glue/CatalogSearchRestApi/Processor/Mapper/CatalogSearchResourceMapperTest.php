@@ -8,6 +8,7 @@
 namespace SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
@@ -16,6 +17,8 @@ use Generated\Shared\Transfer\PriceModeConfigurationTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 use Generated\Shared\Transfer\SortSearchResultTransfer;
+use Spryker\Client\Currency\CurrencyClient;
+use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientBridge;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapper;
 
@@ -47,14 +50,23 @@ class CatalogSearchResourceMapperTest extends Unit
     protected $restSearchAttributesTransfer;
 
     /**
+     * @var \Spryker\Client\Currency\CurrencyClient|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $currencyClientMock;
+
+    /**
      * @return void
      */
     protected function setUp(): void
     {
         parent::setUp();
 
+        $this->mockCurrencyClient();
+
         $this->restSearchAttributesTransfer = new RestCatalogSearchAttributesTransfer();
-        $this->catalogSearchResourceMapper = new CatalogSearchResourceMapper();
+        $this->catalogSearchResourceMapper = new CatalogSearchResourceMapper(
+            new CatalogSearchRestApiToCurrencyClientBridge($this->currencyClientMock)
+        );
     }
 
     /**
@@ -65,8 +77,7 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper
             ->mapSearchResultToRestAttributesTransfer(
-                $this->mockRestSearchResponseTransfer(),
-                static::REQUESTED_CURRENCY
+                $this->mockRestSearchResponseTransfer()
             );
 
         $this->restSearchAttributesTransfer = $this->restSearchAttributesTransfer = $this
@@ -119,8 +130,7 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper
             ->mapSearchResultToRestAttributesTransfer(
-                $this->mockEmptyRestSearchResponseTransfer(),
-                static::REQUESTED_CURRENCY
+                $this->mockEmptyRestSearchResponseTransfer()
             );
 
         $this->assertEquals(static::REQUESTED_CURRENCY, $this->restSearchAttributesTransfer->getCurrency());
@@ -140,6 +150,17 @@ class CatalogSearchResourceMapperTest extends Unit
         $mockRestSearchResponse['facets'] = $this->mockFacets();
 
         return $mockRestSearchResponse;
+    }
+
+    /**
+     * @return void
+     */
+    protected function mockCurrencyClient(): void
+    {
+        $this->currencyClientMock = $this->getMockBuilder(CurrencyClient::class)->getMock();
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode(static::REQUESTED_CURRENCY);
+        $this->currencyClientMock->method('getCurrent')->willReturn($currencyTransfer);
     }
 
     /**
