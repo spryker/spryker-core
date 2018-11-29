@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyUnitAddress\Business;
 
+use Spryker\Zed\CompanyUnitAddress\Business\CompanyBusinessUnit\CompanyBusinessUnitExpander;
+use Spryker\Zed\CompanyUnitAddress\Business\CompanyBusinessUnit\CompanyBusinessUnitExpanderInterface;
 use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReader;
 use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReaderInterface;
 use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressWriter;
@@ -65,6 +67,14 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createCompanyUnitAddressPluginExecutor()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddress\Business\CompanyBusinessUnit\CompanyBusinessUnitExpanderInterface
+     */
+    public function createCompanyBusinessUnitExpander(): CompanyBusinessUnitExpanderInterface
+    {
+        return new CompanyBusinessUnitExpander($this->getRepository());
     }
 
     /**
