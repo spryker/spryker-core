@@ -18,7 +18,7 @@ interface CategoryRepositoryInterface
     public const EXCLUDE_NODE_PATH_ROOT = true;
     public const NODE_PATH_NULL_DEPTH = null;
     public const NODE_PATH_ZERO_DEPTH = 0;
-    public const IS_ROOT_NODE = 0;
+    public const IS_NOT_ROOT_NODE = 0;
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -28,29 +28,20 @@ interface CategoryRepositoryInterface
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
 
     /**
-     * @param int $idNode
+     * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string
      */
-    public function getNodePath(int $idNode, LocaleTransfer $localeTransfer);
+    public function getNodePath(int $idCategoryNode, LocaleTransfer $localeTransfer);
 
     /**
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string $glue
-     * @param bool $excludeRoot
-     * @param int|null $depth
      *
      * @return string
      */
-    public function getCategoryNodePath(
-        int $idNode,
-        LocaleTransfer $localeTransfer,
-        string $glue = self::CATEGORY_NODE_PATH_GLUE,
-        bool $excludeRoot = self::EXCLUDE_NODE_PATH_ROOT,
-        ?int $depth = self::NODE_PATH_NULL_DEPTH
-    ): string;
+    public function getCategoryNodePath(int $idNode, LocaleTransfer $localeTransfer): string;
 
     /**
      * @param string $nodeName
