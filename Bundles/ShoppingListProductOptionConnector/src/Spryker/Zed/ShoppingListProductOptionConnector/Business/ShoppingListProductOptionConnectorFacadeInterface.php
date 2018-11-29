@@ -69,7 +69,7 @@ interface ShoppingListProductOptionConnectorFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     * @param ProductOptionGroupTransfer $productOptionGroupTransfer
      *
      * @return void
      */

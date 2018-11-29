@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 
 interface ProductOptionValuesFromShoppingListItemsRemoverInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
-     *
-     * @return void
-     */
     public function unassignDeletedProductOptionValues(ProductOptionGroupTransfer $productOptionGroupTransfer): void;
 }

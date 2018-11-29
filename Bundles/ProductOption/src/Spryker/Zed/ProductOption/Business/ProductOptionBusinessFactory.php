@@ -26,6 +26,7 @@ use Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\Business\ProductOption\PreRemoveProductOptionValuePluginExecutor;
 use Spryker\Zed\ProductOption\Business\ProductOption\PreRemoveProductOptionValuePluginExecutorInterface;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
+use Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
@@ -251,7 +252,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\ProductOption\PreRemoveProductOptionValuePluginExecutorInterface
+     * @return PreRemoveProductOptionValuePluginExecutorInterface
      */
     protected function createPreRemovePluginExecutor(): PreRemoveProductOptionValuePluginExecutorInterface
     {
@@ -261,7 +262,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface[]
+     * @return ProductOptionValuesPreRemovePluginInterface[]
      */
     protected function getProductOptionValuesPreRemovePlugins(): array
     {

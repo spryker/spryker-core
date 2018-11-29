@@ -8,16 +8,17 @@
 namespace Spryker\Zed\ProductOption\Business\ProductOption;
 
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface;
 
 class PreRemoveProductOptionValuePluginExecutor implements PreRemoveProductOptionValuePluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface[]
+     * @var ProductOptionValuesPreRemovePluginInterface[]
      */
     protected $plugins;
 
     /**
-     * @param \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface[] $plugins
+     * @param ProductOptionValuesPreRemovePluginInterface[] $plugins
      */
     public function __construct(array $plugins)
     {

@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ShoppingListProductOptionConnector\Business\Mapper\CartItemToShoppingListItemMapper;
 use Spryker\Zed\ShoppingListProductOptionConnector\Business\Mapper\CartItemToShoppingListItemMapperInterface;
 use Spryker\Zed\ShoppingListProductOptionConnector\Business\ProductOption\ProductOptionValuesFromShoppingListItemsRemover;
+use Spryker\Zed\ShoppingListProductOptionConnector\Business\ProductOption\ProductOptionValuesFromShoppingListItemsRemoverInterface;
 use Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListItem\ShoppingListItemExpander;
 use Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListItem\ShoppingListItemExpanderInterface;
 use Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOption\ShoppingListProductOptionReader;
@@ -76,7 +77,7 @@ class ShoppingListProductOptionConnectorBusinessFactory extends AbstractBusiness
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListProductOptionConnector\Business\ProductOption\ProductOptionValuesFromShoppingListItemsRemoverInterface
+     * @return ProductOptionValuesFromShoppingListItemsRemoverInterface
      */
     public function createProductOptionValueFromShoppingListItemsRemover()
     {

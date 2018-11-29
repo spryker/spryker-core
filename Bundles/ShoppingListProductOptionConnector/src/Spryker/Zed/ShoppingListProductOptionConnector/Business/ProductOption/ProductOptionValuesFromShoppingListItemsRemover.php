@@ -13,12 +13,12 @@ use Spryker\Zed\ShoppingListProductOptionConnector\Persistence\ShoppingListProdu
 class ProductOptionValuesFromShoppingListItemsRemover implements ProductOptionValuesFromShoppingListItemsRemoverInterface
 {
     /**
-     * @var \Spryker\Zed\ShoppingListProductOptionConnector\Persistence\ShoppingListProductOptionConnectorEntityManagerInterface
+     * @var ShoppingListProductOptionConnectorEntityManagerInterface
      */
     protected $entityManager;
 
     /**
-     * @param \Spryker\Zed\ShoppingListProductOptionConnector\Persistence\ShoppingListProductOptionConnectorEntityManagerInterface $entityManager
+     * @param ShoppingListProductOptionConnectorEntityManagerInterface $entityManager
      */
     public function __construct(ShoppingListProductOptionConnectorEntityManagerInterface $entityManager)
     {
@@ -26,7 +26,7 @@ class ProductOptionValuesFromShoppingListItemsRemover implements ProductOptionVa
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     * @param ProductOptionGroupTransfer $productOptionGroupTransfer
      *
      * @return void
      */

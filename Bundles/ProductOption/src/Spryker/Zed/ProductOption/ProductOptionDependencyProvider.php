@@ -23,6 +23,7 @@ use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToCountryQu
 use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToSalesQueryContainerBridge;
 use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingServiceBridge;
 use Spryker\Zed\ProductOption\Exception\MissingMoneyCollectionFormTypePluginException;
+use Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
@@ -223,7 +224,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface[]
+     * @return ProductOptionValuesPreRemovePluginInterface[]
      */
     protected function getProductOptionValuesPreRemovePlugins(): array
     {
