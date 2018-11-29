@@ -4,7 +4,11 @@
   "description": "CompanyUsersRestApi module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "spryker/company-user": "*",
+    "spryker/glue-application": "*",
+    "spryker/glue-application-extension": "*",
+    "spryker/kernel": "*"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
