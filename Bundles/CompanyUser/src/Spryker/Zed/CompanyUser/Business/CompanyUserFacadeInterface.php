@@ -187,8 +187,8 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
+     * - Executes CompanyUserPreDeletePluginInterface plugins before delete company user.
      * - Deletes a company user.
-     * - Executes plugins before delete company user.
      *
      * @api
      *

@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator;
 
-use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
-
 class CompanyUserTableButtonCreator extends AbstractButtonCreator implements CompanyUserTableButtonCreatorInterface
 {
     protected const BUTTON_ORIGINAL_DELETE_COMPANY_USER_LINK = '/company-user-gui/delete-company-user/confirm-delete';
@@ -19,6 +17,10 @@ class CompanyUserTableButtonCreator extends AbstractButtonCreator implements Com
     protected const PARAM_ID_COMPANY_USER = 'id-company-user';
     protected const PARAM_ID_CUSTOMER = 'id-customer';
     protected const PARAM_ID_COMPANY = 'id-company';
+
+    protected const COL_ID_COMPANY_USER = 'spy_company_user.id_company_user';
+    protected const COL_FK_CUSTOMER = 'spy_company_user.fk_customer';
+    protected const COL_FK_COMPANY = 'spy_company_user.fk_company';
 
     protected const BUTTON_ATTACH_TO_BUSINESS_UNIT_TITLE = 'Attach to BU';
 
@@ -32,7 +34,7 @@ class CompanyUserTableButtonCreator extends AbstractButtonCreator implements Com
     {
         foreach ($buttonTransfers as $key => $buttonTransfer) {
             $queryParams = [
-                static::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+                static::PARAM_ID_COMPANY_USER => $companyUserDataItem[static::COL_ID_COMPANY_USER],
             ];
 
             $oldDeleteUrl = $this->generateUrl(static::BUTTON_ORIGINAL_DELETE_COMPANY_USER_LINK, $queryParams);
@@ -55,8 +57,8 @@ class CompanyUserTableButtonCreator extends AbstractButtonCreator implements Com
     public function addAttachCustomerToBusinessUnitButton(array $companyUserDataItem, array $buttonTransfers): array
     {
         $url = $this->generateUrl(static::URL_ATTACH_CUSTOMER_TO_BUSINESS_UNIT, [
-            static::PARAM_ID_CUSTOMER => $companyUserDataItem[SpyCompanyUserTableMap::COL_FK_CUSTOMER],
-            static::PARAM_ID_COMPANY => $companyUserDataItem[SpyCompanyUserTableMap::COL_FK_COMPANY],
+            static::PARAM_ID_CUSTOMER => $companyUserDataItem[static::COL_FK_CUSTOMER],
+            static::PARAM_ID_COMPANY => $companyUserDataItem[static::COL_FK_COMPANY],
         ]);
 
         $defaultOptions = [
