@@ -11,22 +11,22 @@ use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalThresholdType;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\GlobalSoftThresholdType;
 
-class GlobalSoftThresholdDataProvider extends AbstractGlobalThresholdDataProvider implements ThresholdStrategyDataProviderInterface
+class GlobalSoftThresholdDataProvider extends AbstractGlobalThresholdDataProvider implements ThresholdStrategyGroupDataProviderInterface
 {
     /**
-     * @param array $data
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     * @param array $data
      *
      * @return array
      */
-    public function getData(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): array
+    public function mapTransferToFormData(SalesOrderThresholdTransfer $salesOrderThresholdTransfer, array $data): array
     {
         $thresholdData = $data[GlobalThresholdType::FIELD_SOFT] ?? [];
         $thresholdData[GlobalSoftThresholdType::FIELD_ID_THRESHOLD] = $salesOrderThresholdTransfer->getIdSalesOrderThreshold();
         $thresholdData[GlobalSoftThresholdType::FIELD_THRESHOLD] = $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getThreshold();
 
-        $thresholdData = $this->getExpandersData($thresholdData, $salesOrderThresholdTransfer);
-        $thresholdData = $this->getLocalizedMessages($thresholdData, $salesOrderThresholdTransfer);
+        $thresholdData = $this->expandFormData($salesOrderThresholdTransfer, $thresholdData);
+        $thresholdData = $this->getLocalizedMessages($salesOrderThresholdTransfer, $thresholdData);
 
         $data[GlobalThresholdType::FIELD_SOFT] = $thresholdData;
 

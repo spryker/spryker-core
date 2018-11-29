@@ -11,22 +11,22 @@ use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\MerchantRelationshipThresholdType;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\MerchantRelationshipSoftThresholdType;
 
-class MerchantRelationshipSoftThresholdDataProvider extends AbstractMerchantRelationshipThresholdDataProvider implements ThresholdStrategyDataProviderInterface
+class MerchantRelationshipSoftThresholdDataProvider extends AbstractMerchantRelationshipThresholdDataProvider implements ThresholdStrategyGroupDataProviderInterface
 {
     /**
-     * @param array $data
      * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+     * @param array $data
      *
      * @return array
      */
-    public function getData(array $data, MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): array
+    public function mapTransferToFormData(MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer, array $data): array
     {
         $thresholdData = $data[MerchantRelationshipThresholdType::FIELD_SOFT] ?? [];
         $thresholdData[MerchantRelationshipSoftThresholdType::FIELD_ID_THRESHOLD] = $merchantRelationshipSalesOrderThresholdTransfer->getIdMerchantRelationshipSalesOrderThreshold();
         $thresholdData[MerchantRelationshipSoftThresholdType::FIELD_THRESHOLD] = $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getThreshold();
 
-        $thresholdData = $this->getExpandersData($thresholdData, $merchantRelationshipSalesOrderThresholdTransfer);
-        $thresholdData = $this->getLocalizedMessages($thresholdData, $merchantRelationshipSalesOrderThresholdTransfer);
+        $thresholdData = $this->expandFormData($merchantRelationshipSalesOrderThresholdTransfer, $thresholdData);
+        $thresholdData = $this->mapLocalizedMessages($merchantRelationshipSalesOrderThresholdTransfer, $thresholdData);
 
         $data[MerchantRelationshipThresholdType::FIELD_SOFT] = $thresholdData;
 

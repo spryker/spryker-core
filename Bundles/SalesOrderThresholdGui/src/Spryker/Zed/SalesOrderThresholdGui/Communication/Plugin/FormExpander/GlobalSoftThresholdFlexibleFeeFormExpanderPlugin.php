@@ -72,12 +72,12 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
     /**
      * @api
      *
-     * @param array $data
      * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
+     * @param array $data
      *
      * @return array
      */
-    public function getData(array $data, SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer): array
+    public function mapTransferToFormData(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer, array $data): array
     {
         $data[static::FIELD_SOFT_FLEXIBLE_FEE] = $salesOrderThresholdValueTransfer->getFee();
 

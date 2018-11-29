@@ -8,7 +8,7 @@
 namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver;
 
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Exception\MissingThresholdDataProviderException;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyDataProviderInterface;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyGroupDataProviderInterface;
 use Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
 
 class GlobalThresholdDataProviderResolver implements GlobalThresholdDataProviderResolverInterface
@@ -38,9 +38,9 @@ class GlobalThresholdDataProviderResolver implements GlobalThresholdDataProvider
      *
      * @throws \Spryker\Zed\SalesOrderThresholdGui\Communication\Exception\MissingThresholdDataProviderException
      *
-     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyDataProviderInterface
+     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyGroupDataProviderInterface
      */
-    public function resolveGlobalThresholdDataProviderByStrategyGroup(string $salesOrderThresholdTypeGroup): ThresholdStrategyDataProviderInterface
+    public function resolveGlobalThresholdDataProviderByStrategyGroup(string $salesOrderThresholdTypeGroup): ThresholdStrategyGroupDataProviderInterface
     {
         if (!$this->hasGlobalThresholdDataProviderByStrategyGroup($salesOrderThresholdTypeGroup)) {
             throw new MissingThresholdDataProviderException();

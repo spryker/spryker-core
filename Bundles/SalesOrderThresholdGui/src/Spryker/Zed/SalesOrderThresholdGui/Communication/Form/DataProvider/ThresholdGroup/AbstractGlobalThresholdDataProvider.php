@@ -27,12 +27,12 @@ abstract class AbstractGlobalThresholdDataProvider
     }
 
     /**
-     * @param array $data
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     * @param array $data
      *
      * @return array
      */
-    protected function getExpandersData(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): array
+    protected function expandFormData(SalesOrderThresholdTransfer $salesOrderThresholdTransfer, array $data): array
     {
         foreach ($this->formExpanderPlugins as $formExpanderPlugin) {
             if ($formExpanderPlugin->getThresholdKey() !== $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getKey()) {
@@ -40,19 +40,19 @@ abstract class AbstractGlobalThresholdDataProvider
             }
 
             $data[AbstractGlobalThresholdType::FIELD_STRATEGY] = $formExpanderPlugin->getThresholdKey();
-            $data = $formExpanderPlugin->getData($data, $salesOrderThresholdTransfer->getSalesOrderThresholdValue());
+            $data = $formExpanderPlugin->mapTransferToFormData($salesOrderThresholdTransfer->getSalesOrderThresholdValue(), $data);
         }
 
         return $data;
     }
 
     /**
-     * @param array $data
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     * @param array $data
      *
      * @return array
      */
-    protected function getLocalizedMessages(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): array
+    protected function getLocalizedMessages(SalesOrderThresholdTransfer $salesOrderThresholdTransfer, array $data): array
     {
         foreach ($salesOrderThresholdTransfer->getLocalizedMessages() as $localizedMessage) {
             $data[$localizedMessage->getLocaleCode()][LocalizedMessagesType::FIELD_MESSAGE] = $localizedMessage->getMessage();

@@ -9,13 +9,13 @@ namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\Thr
 
 use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
 
-interface ThresholdStrategyDataProviderInterface
+interface ThresholdStrategyGroupDataProviderInterface
 {
     /**
-     * @param array $data
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     * @param array $data
      *
      * @return array
      */
-    public function getData(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): array;
+    public function mapTransferToFormData(SalesOrderThresholdTransfer $salesOrderThresholdTransfer, array $data): array;
 }
