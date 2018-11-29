@@ -93,6 +93,21 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves company users collection by customer reference.
+     * - Checks activity flag in a related company and customer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getActiveCompanyUsersByCustomerReference(
+        CustomerTransfer $customerTransfer
+    ): CompanyUserCollectionTransfer;
+
+    /**
+     * Specification:
      * - Retrieves company users collection.
      *
      * @api
