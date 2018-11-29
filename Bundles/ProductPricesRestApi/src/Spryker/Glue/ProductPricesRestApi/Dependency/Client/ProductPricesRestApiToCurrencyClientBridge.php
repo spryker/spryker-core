@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\ProductPricesRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
-
 class ProductPricesRestApiToCurrencyClientBridge implements ProductPricesRestApiToCurrencyClientInterface
 {
     /**
@@ -27,7 +25,7 @@ class ProductPricesRestApiToCurrencyClientBridge implements ProductPricesRestApi
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent(): CurrencyTransfer
+    public function getCurrent()
     {
         return $this->currencyClient->getCurrent();
     }

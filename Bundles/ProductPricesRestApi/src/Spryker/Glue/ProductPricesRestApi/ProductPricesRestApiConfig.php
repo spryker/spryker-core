@@ -24,5 +24,5 @@ class ProductPricesRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_INVALID_CURRENCY = '313';
     public const RESPONSE_DETAILS_INVALID_CURRENCY = 'Currency is invalid.';
     public const RESPONSE_CODE_INVALID_PRICE_MODE = '314';
-    public const RESPONSE_DETAILS_INVALID_PRICE_MODE = 'Price mode not found.';
+    public const RESPONSE_DETAILS_INVALID_PRICE_MODE = 'Price mode is invalid.';
 }

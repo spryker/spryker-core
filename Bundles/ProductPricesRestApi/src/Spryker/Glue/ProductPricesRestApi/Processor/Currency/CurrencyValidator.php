@@ -50,14 +50,16 @@ class CurrencyValidator implements CurrencyValidatorInterface
 
         $currencyIsoCodes = $this->storeClient->getCurrentStore()->getAvailableCurrencyIsoCodes();
 
-        if (!in_array($currencyIsoCode, $currencyIsoCodes)) {
-            return (new RestErrorCollectionTransfer())->addRestError(
-                (new RestErrorMessageTransfer())
-                    ->setDetail(ProductPricesRestApiConfig::RESPONSE_DETAILS_INVALID_CURRENCY)
-                    ->setCode(ProductPricesRestApiConfig::RESPONSE_CODE_INVALID_CURRENCY)
-                    ->setStatus(Response::HTTP_BAD_REQUEST)
-            );
+        if (in_array($currencyIsoCode, $currencyIsoCodes)) {
+            return null;
         }
+
+        return (new RestErrorCollectionTransfer())->addRestError(
+            (new RestErrorMessageTransfer())
+                ->setDetail(ProductPricesRestApiConfig::RESPONSE_DETAILS_INVALID_CURRENCY)
+                ->setCode(ProductPricesRestApiConfig::RESPONSE_CODE_INVALID_CURRENCY)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+        );
     }
 
     /**

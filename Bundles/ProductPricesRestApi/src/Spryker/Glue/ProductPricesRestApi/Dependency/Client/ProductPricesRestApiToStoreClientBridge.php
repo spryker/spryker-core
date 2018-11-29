@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\ProductPricesRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 class ProductPricesRestApiToStoreClientBridge implements ProductPricesRestApiToStoreClientInterface
 {
     /**
@@ -27,7 +25,7 @@ class ProductPricesRestApiToStoreClientBridge implements ProductPricesRestApiToS
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer
+    public function getCurrentStore()
     {
         return $this->storeClient->getCurrentStore();
     }

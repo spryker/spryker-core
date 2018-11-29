@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\CatalogSearchRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
-
 class CatalogSearchRestApiToCurrencyClientBridge implements CatalogSearchRestApiToCurrencyClientInterface
 {
     /**
@@ -27,7 +25,7 @@ class CatalogSearchRestApiToCurrencyClientBridge implements CatalogSearchRestApi
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent(): CurrencyTransfer
+    public function getCurrent()
     {
         return $this->currencyClient->getCurrent();
     }

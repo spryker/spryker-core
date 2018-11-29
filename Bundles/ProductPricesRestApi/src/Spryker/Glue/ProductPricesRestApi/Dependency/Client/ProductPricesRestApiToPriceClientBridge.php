@@ -59,7 +59,7 @@ class ProductPricesRestApiToPriceClientBridge implements ProductPricesRestApiToP
     /**
      * @return string[]
      */
-    public function getPriceModes(): array
+    public function getPriceModes()
     {
         return $this->priceClient->getPriceModes();
     }
