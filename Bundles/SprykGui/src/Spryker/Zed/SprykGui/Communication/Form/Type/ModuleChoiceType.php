@@ -20,6 +20,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * This type can be used to select a module from a given list.
  *
  * @method \Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\SprykGui\SprykGuiConfig getConfig()
+ * @method \Spryker\Zed\SprykGui\Communication\SprykGuiCommunicationFactory getFactory()
  */
 class ModuleChoiceType extends AbstractType
 {

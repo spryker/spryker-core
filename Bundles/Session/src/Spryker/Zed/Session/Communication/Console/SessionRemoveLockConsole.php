@@ -15,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Session\Business\SessionFacadeInterface getFacade()
+ * @method \Spryker\Zed\Session\Communication\SessionCommunicationFactory getFactory()
  */
 class SessionRemoveLockConsole extends Console
 {

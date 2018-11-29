@@ -16,6 +16,9 @@ use Spryker\Zed\Availability\Dependency\QueryContainer\AvailabilityToProductBrid
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
+ */
 class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_OMS = 'FACADE_OMS';

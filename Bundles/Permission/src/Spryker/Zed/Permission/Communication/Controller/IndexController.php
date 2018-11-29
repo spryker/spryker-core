@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @method \Spryker\Zed\Permission\Business\PermissionFacadeInterface getFacade()
+ * @method \Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface getRepository()
  */
 class IndexController extends AbstractController
 {

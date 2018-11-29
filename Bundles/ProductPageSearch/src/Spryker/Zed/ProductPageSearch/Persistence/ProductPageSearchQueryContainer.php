@@ -78,7 +78,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
 
         $query
             ->rightJoinWith('SpyProduct.SpyProductSearch')
-            ->addJoinCondition('SpyProductSearch', sprintf('(spy_product_search.fk_locale = %s AND spy_product_search.is_searchable = true)', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE));
+            ->addJoinCondition('SpyProductSearch', sprintf('spy_product_search.fk_locale = %s', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE));
 
         return $query;
     }

@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleBridge;
 
+/**
+ * @method \Spryker\Zed\ProductImage\ProductImageConfig getConfig()
+ */
 class ProductImageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';

@@ -87,6 +87,53 @@ class DiscountFacadeCalculateTest extends Unit
     /**
      * @return void
      */
+    public function testCalculateWhenMinimumItemAmountNotMatchesItemsIncludeAllProvidedDiscounts(): void
+    {
+        $this->createDiscountEntity(
+            '(sku = "123")',
+            'sku = "123"',
+            DiscountConstants::TYPE_CART_RULE,
+            2
+        );
+
+        $quoteTransfer = $this->createQuoteTransfer();
+
+        $discountFacade = $this->getFacade();
+        $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
+
+        $cartRuleDiscounts = $quoteTransfer->getCartRuleDiscounts();
+
+        $this->assertCount(0, $cartRuleDiscounts);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateWhenMinimumItemAmountMatchesMoreThanOneItemIncludeAllProvidedDiscounts(): void
+    {
+        $discountEntity = $this->createDiscountEntity(
+            '(sku = "123" or sku = "431")',
+            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"',
+            DiscountConstants::TYPE_CART_RULE,
+            2
+        );
+
+        $quoteTransfer = $this->createQuoteTransfer();
+
+        $discountFacade = $this->getFacade();
+        $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
+
+        $cartRuleDiscounts = $quoteTransfer->getCartRuleDiscounts();
+
+        $this->assertCount(1, $cartRuleDiscounts);
+
+        $discountTransfer = current($cartRuleDiscounts);
+        $this->assertEquals($discountEntity->getAmount(), $discountTransfer->getAmount());
+    }
+
+    /**
+     * @return void
+     */
     public function testCalculateWithEmptyDecisionRuleShouldIncludeDiscount()
     {
         $discountEntity = $this->createDiscountEntity(
@@ -225,6 +272,7 @@ class DiscountFacadeCalculateTest extends Unit
         $itemTransfer->setAbstractSku('123');
         $itemTransfer->setSku('123');
         $itemTransfer->setUnitGrossPrice(15000);
+        $itemTransfer->setQuantity(1);
 
         $quoteTransfer->addItem($itemTransfer);
 
@@ -232,6 +280,7 @@ class DiscountFacadeCalculateTest extends Unit
         $itemTransfer->setAbstractSku('321');
         $itemTransfer->setSku('431');
         $itemTransfer->setUnitGrossPrice(1000);
+        $itemTransfer->setQuantity(1);
 
         $quoteTransfer->addItem($itemTransfer);
 
@@ -242,13 +291,15 @@ class DiscountFacadeCalculateTest extends Unit
      * @param string $decisionRuleQueryString
      * @param string $collectorQueryString
      * @param string $discountType
+     * @param int $minimumItemAmount
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
     protected function createDiscountEntity(
         $decisionRuleQueryString,
         $collectorQueryString,
-        $discountType = DiscountConstants::TYPE_CART_RULE
+        $discountType = DiscountConstants::TYPE_CART_RULE,
+        $minimumItemAmount = 1
     ) {
         $discountVoucherPool = new SpyDiscountVoucherPool();
         $discountVoucherPool->setIsActive(true);
@@ -260,6 +311,7 @@ class DiscountFacadeCalculateTest extends Unit
         $discountEntity->setFkDiscountVoucherPool($discountVoucherPool->getIdDiscountVoucherPool());
         $discountEntity->setDecisionRuleQueryString($decisionRuleQueryString);
         $discountEntity->setCollectorQueryString($collectorQueryString);
+        $discountEntity->setMinimumItemAmount($minimumItemAmount);
 
         $discountEntity->setDisplayName('display name');
         $discountEntity->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
