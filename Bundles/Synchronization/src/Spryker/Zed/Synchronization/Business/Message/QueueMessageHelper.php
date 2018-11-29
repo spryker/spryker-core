@@ -12,6 +12,8 @@ use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncoding
 
 class QueueMessageHelper implements QueueMessageHelperInterface
 {
+    protected const ROUTING_KEY_ERROR = 'error';
+
     /**
      * @var \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface
      */
@@ -38,6 +40,7 @@ class QueueMessageHelper implements QueueMessageHelperInterface
         $queueMessageTransfer->setAcknowledge(false);
         $queueMessageTransfer->setReject(true);
         $queueMessageTransfer->setHasError(true);
+        $queueMessageTransfer->setRoutingKey(static::ROUTING_KEY_ERROR);
 
         return $queueMessageTransfer;
     }
