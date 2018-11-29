@@ -17,8 +17,12 @@ customers:
       - NotBlank
     password:
       - NotBlank
+      - Length:
+          max: 72
     passwordConfirmation:
       - NotBlank
+      - Length:
+          max: 72
       - IdenticalTo:
           propertyPath: password
     acceptedTerms:
@@ -158,10 +162,16 @@ customer-password:
   patch:
     password:
       - NotBlank
+      - Length:
+          max: 72
     newPassword:
       - NotBlank
+      - Length:
+          max: 72
     confirmPassword:
       - NotBlank
+      - Length:
+          max: 72
       - IdenticalTo:
           propertyPath: newPassword
 
@@ -179,7 +189,11 @@ customer-restore-password:
       - NotBlank
     password:
       - NotBlank
+      - Length:
+          max: 72
     confirmPassword:
       - NotBlank
+      - Length:
+          max: 72
       - IdenticalTo:
           propertyPath: password
