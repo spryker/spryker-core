@@ -18,10 +18,12 @@ customers:
     password:
       - NotBlank
       - Length:
+          min: 7
           max: 72
     passwordConfirmation:
       - NotBlank
       - Length:
+          min: 7
           max: 72
       - IdenticalTo:
           propertyPath: password
@@ -161,14 +163,17 @@ customer-password:
     password:
       - NotBlank
       - Length:
+          min: 7
           max: 72
     newPassword:
       - NotBlank
       - Length:
+          min: 7
           max: 72
     confirmPassword:
       - NotBlank
       - Length:
+          min: 7
           max: 72
       - IdenticalTo:
           propertyPath: newPassword
@@ -188,10 +193,12 @@ customer-restore-password:
     password:
       - NotBlank
       - Length:
+          min: 7
           max: 72
     confirmPassword:
       - NotBlank
       - Length:
+          min: 7
           max: 72
       - IdenticalTo:
           propertyPath: password
