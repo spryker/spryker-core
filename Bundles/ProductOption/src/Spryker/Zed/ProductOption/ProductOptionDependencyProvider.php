@@ -45,6 +45,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     public const QUERY_CONTAINER_COUNTRY = 'QUERY_CONTAINER_COUNTRY';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const PRODUCT_OPTION_VALUES_PRE_REMOVE_PLUGINS = 'PRODUCT_OPTION_VALUES_PRE_REMOVE_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -53,20 +54,24 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ProductOptionToLocaleFacadeBridge($container->getLocator()->locale()->facade());
         };
 
-        $container[self::FACADE_TOUCH] = function (Container $container) {
+        $container[static::FACADE_TOUCH] = function (Container $container) {
             return new ProductOptionToTouchFacadeBridge($container->getLocator()->touch()->facade());
         };
 
-        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+        $container[static::FACADE_GLOSSARY] = function (Container $container) {
             return new ProductOptionToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
         };
 
-        $container[self::FACADE_TAX] = function (Container $container) {
+        $container[static::FACADE_TAX] = function (Container $container) {
             return new ProductOptionToTaxFacadeBridge($container->getLocator()->tax()->facade());
+        };
+
+        $container[static::PRODUCT_OPTION_VALUES_PRE_REMOVE_PLUGINS] = function (Container $container) {
+            return $this->getProductOptionValuesPreRemovePlugins();
         };
 
         $container = $this->addCurrencyFacade($container);
@@ -215,5 +220,13 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMoneyCollectionFormTypePlugin($container);
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface[]
+     */
+    protected function getProductOptionValuesPreRemovePlugins(): array
+    {
+        return [];
     }
 }
