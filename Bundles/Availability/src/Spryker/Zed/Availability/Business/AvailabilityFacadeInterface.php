@@ -67,7 +67,7 @@ interface AvailabilityFacadeInterface
      *
      * @param string $sku
      *
-     * @return int
+     * @return float
      */
     public function calculateStockForProduct($sku);
 

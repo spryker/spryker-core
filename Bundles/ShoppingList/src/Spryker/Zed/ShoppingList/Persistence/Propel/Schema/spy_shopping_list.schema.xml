@@ -14,7 +14,7 @@
         <column name="id_shopping_list_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_shopping_list" required="true" type="INTEGER"/>
         <column name="sku" type="VARCHAR" size="255"/>
-        <column name="quantity" type="INTEGER" unsigned="true" default="1" required="true"/>
+        <column name="quantity" type="FLOAT" unsigned="true" default="1" required="true"/>
 
         <foreign-key name="spy_shopping_list_item-fk_shopping_list" foreignTable="spy_shopping_list">
             <reference local="fk_shopping_list" foreign="id_shopping_list"/>

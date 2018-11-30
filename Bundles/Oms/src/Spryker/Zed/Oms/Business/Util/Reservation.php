@@ -74,7 +74,7 @@ class Reservation implements ReservationInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return int
+     * @return float
      */
     public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null)
     {
@@ -153,7 +153,7 @@ class Reservation implements ReservationInterface
      * @param bool $returnTest
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return int
+     * @return float
      */
     protected function sumProductQuantitiesForSku(
         array $states,
@@ -163,7 +163,7 @@ class Reservation implements ReservationInterface
     ) {
 
         if ($storeTransfer) {
-            return (int)$this->queryContainer
+            return (float)$this->queryContainer
                 ->sumProductQuantitiesForAllSalesOrderItemsBySkuForStore(
                     $states,
                     $sku,
@@ -173,7 +173,7 @@ class Reservation implements ReservationInterface
                 ->findOne();
         }
 
-        return (int)$this->queryContainer
+        return (float)$this->queryContainer
             ->sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest)
             ->findOne();
     }
@@ -181,11 +181,11 @@ class Reservation implements ReservationInterface
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param int $reservationQuantity
+     * @param float $reservationQuantity
      *
      * @return void
      */
-    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, float $reservationQuantity): void
     {
         $storeTransfer->requireIdStore();
 

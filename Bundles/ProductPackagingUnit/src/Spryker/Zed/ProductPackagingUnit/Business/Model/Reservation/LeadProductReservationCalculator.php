@@ -39,9 +39,9 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
      * @param string $leadProductSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
-    public function calculateReservedAmountForLeadProduct(string $leadProductSku, StoreTransfer $storeTransfer): int
+    public function calculateReservedAmountForLeadProduct(string $leadProductSku, StoreTransfer $storeTransfer): float
     {
         $reservedStateNames = $this->omsFacade->getReservedStateNames();
 

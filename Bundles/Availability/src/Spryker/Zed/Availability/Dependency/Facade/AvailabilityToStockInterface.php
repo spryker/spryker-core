@@ -23,7 +23,7 @@ interface AvailabilityToStockInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
     public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer);
 

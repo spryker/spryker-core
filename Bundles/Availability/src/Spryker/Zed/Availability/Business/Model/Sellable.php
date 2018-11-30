@@ -60,7 +60,7 @@ class Sellable implements SellableInterface
     /**
      * @param string $sku
      *
-     * @return int
+     * @return float
      */
     public function calculateStockForProduct($sku)
     {
@@ -102,7 +102,7 @@ class Sellable implements SellableInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
     public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer)
     {
@@ -130,7 +130,7 @@ class Sellable implements SellableInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
     protected function calculateStock($sku, StoreTransfer $storeTransfer)
     {
