@@ -24,7 +24,7 @@
 
     <transfer name="RestCheckoutRequestAttributes">
         <property name="customer" type="RestCustomer"/>
-        <property name="id" type="string"/>
+        <property name="idCart" type="string"/>
         <property name="billingAddress" type="RestAddress"/>
         <property name="shippingAddress" type="RestAddress"/>
         <property name="payments" type="RestPayment[]" singular="payment"/>

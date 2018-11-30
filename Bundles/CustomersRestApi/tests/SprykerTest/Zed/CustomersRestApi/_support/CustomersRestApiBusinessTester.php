@@ -33,12 +33,12 @@ class CustomersRestApiBusinessTester extends Actor
     use _generated\CustomersRestApiBusinessTesterActions;
 
     public const CUSTOMER = [
-        'customerReference' => 'DE-666',
+        'customerReference' => 'DE-test-customer-reference',
         'idCustomer' => 666,
     ];
 
     protected const GUEST_CUSTOMER = [
-        'customerReference' => 'anonymous:666',
+        'customerReference' => 'anonymous:test-guest-customer-reference',
     ];
 
     public const ADDRESS_1 = [

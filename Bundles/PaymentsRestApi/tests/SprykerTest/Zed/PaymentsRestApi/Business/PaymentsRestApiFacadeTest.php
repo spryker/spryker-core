@@ -66,7 +66,7 @@ class PaymentsRestApiFacadeTest extends Unit
         $actualQuote = $paymentsRestApiFacade->mapPaymentsToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
         $this->assertNull($actualQuote->getPayment());
-        $this->assertCount(0, $actualQuote->getPayments());
+        $this->assertCount(1, $actualQuote->getPayments());
     }
 
     /**

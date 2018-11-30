@@ -39,7 +39,7 @@ class QuoteReader implements QuoteReaderInterface
         }
 
         $quoteTransfer = (new QuoteTransfer())
-            ->setUuid($restCheckoutRequestAttributesTransfer->getId());
+            ->setUuid($restCheckoutRequestAttributesTransfer->getIdCart());
 
         $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 

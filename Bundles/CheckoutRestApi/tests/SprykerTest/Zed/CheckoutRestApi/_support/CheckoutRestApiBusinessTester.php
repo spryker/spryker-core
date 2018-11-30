@@ -48,14 +48,14 @@ class CheckoutRestApiBusinessTester extends Actor
     protected const CART_UUID = 'test-cart-uuid';
 
     protected const CUSTOMER = [
-        'customerReference' => 'DE-666',
+        'customerReference' => 'DE-test-customer-reference',
         'idCustomer' => 666,
         'defaultShippingAddress' => '8',
         'defaultBillingAddress' => '9',
     ];
 
     protected const GUEST_CUSTOMER = [
-        'customerReference' => 'anonymous:666',
+        'customerReference' => 'anonymous:test-guest-customer-reference',
     ];
 
     protected const ADDRESS_1 = [
@@ -96,7 +96,7 @@ class CheckoutRestApiBusinessTester extends Actor
     public function prepareFullRestCheckoutRequestAttributesTransfer(): RestCheckoutRequestAttributesTransfer
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
-        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder(['id' => static::CART_UUID]))
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder(['idCart' => static::CART_UUID]))
             ->withBillingAddress(static::ADDRESS_1)
             ->withShippingAddress(static::ADDRESS_2)
             ->withCustomer(static::CUSTOMER)
@@ -111,7 +111,7 @@ class CheckoutRestApiBusinessTester extends Actor
     public function prepareFullRestCheckoutRequestAttributesTransferForGuest(): RestCheckoutRequestAttributesTransfer
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
-        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder(['id' => static::CART_UUID]))
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder(['idCart' => static::CART_UUID]))
             ->withBillingAddress(static::ADDRESS_1)
             ->withShippingAddress(static::ADDRESS_2)
             ->withCustomer(static::GUEST_CUSTOMER)
