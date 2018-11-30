@@ -93,7 +93,10 @@ class TableMapBuilder extends PropelTableMapBuilder
         }
         $script .= '
         } else {';
-        if (!$table->getChildrenColumn()) {
+        /** @var \Propel\Generator\Model\Column|null $childrenColumn */
+        $childrenColumn = $table->getChildrenColumn();
+
+        if (!$childrenColumn) {
             $script .= '
             $cls = ' . $this->getTableMapClass() . '::OM_CLASS;';
         } else {

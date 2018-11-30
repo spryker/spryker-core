@@ -4,7 +4,7 @@ parameters:
     ignoreErrors:
         - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\ModelCriteria::.+#'
         - '#.+ has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface.#'
-        - '#Casting to .+ something that.+s already .+.#'
+        - '#Casting to \w+ something that.+s already \w+\.#'
 
 services:
     -

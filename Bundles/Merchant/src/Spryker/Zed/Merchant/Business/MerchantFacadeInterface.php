@@ -82,4 +82,17 @@ interface MerchantFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
     public function getMerchants(): MerchantCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds a merchant by merchant id in provided transfer.
+     * - Returns MerchantTransfer if found, NULL otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
 }

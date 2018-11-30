@@ -29,8 +29,8 @@ class EditControllerCest
      */
     public function updateCategoryWithAlreadyExistingKeyShowsValidationMessage(CategoryCommunicationTester $i)
     {
-        $categoryTransferA = $i->haveCategory();
-        $categoryTransferB = $i->haveCategory();
+        $categoryTransferA = $i->haveLocalizedCategory();
+        $categoryTransferB = $i->haveLocalizedCategory();
 
         $this->mockGlobalGet($categoryTransferB);
 
