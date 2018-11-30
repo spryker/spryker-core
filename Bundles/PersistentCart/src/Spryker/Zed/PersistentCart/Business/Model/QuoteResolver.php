@@ -146,20 +146,6 @@ class QuoteResolver implements QuoteResolverInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function createQuoteNotWritableResult(CustomerTransfer $customerTransfer): QuoteResponseTransfer
-    {
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        $quoteResponseTransfer->setCustomer($customerTransfer);
-        $quoteResponseTransfer->setIsSuccessful(false);
-
-        return $this->quoteResponseExpander->expand($quoteResponseTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function resolveDefaultCustomerQuote(CustomerTransfer $customerTransfer): QuoteTransfer
@@ -213,7 +199,7 @@ class QuoteResolver implements QuoteResolverInterface
             $messageTransfer->setValue(static::GLOSSARY_KEY_PERMISSION_FAILED);
             $this->messengerFacade->addErrorMessage($messageTransfer);
 
-            return $this->createQuoteNotWritableResult($customerTransfer);
+            return $this->createQuoteNotWritableResponse($customerTransfer);
         }
 
         if ($quoteUpdateRequestAttributesTransfer) {
@@ -241,11 +227,25 @@ class QuoteResolver implements QuoteResolverInterface
         CustomerTransfer $customerTransfer,
         $operation
     ): bool {
-        return strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0
+        return $customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()
             || $this->isAnonymousCustomerQuote($quoteTransfer->getCustomerReference())
             || ($customerTransfer->getCompanyUserTransfer()
                 && $this->can($operation, $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function createQuoteNotWritableResponse(CustomerTransfer $customerTransfer): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = new QuoteResponseTransfer();
+        $quoteResponseTransfer->setCustomer($customerTransfer);
+        $quoteResponseTransfer->setIsSuccessful(false);
+
+        return $this->quoteResponseExpander->expand($quoteResponseTransfer);
     }
 
     /**
