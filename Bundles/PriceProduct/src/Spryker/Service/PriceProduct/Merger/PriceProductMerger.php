@@ -74,14 +74,7 @@ class PriceProductMerger implements PriceProductMergerInterface
         array $concretePriceProductTransfers,
         array $priceProductTransfers
     ): array {
-        $missingConcretePriceProductTransfers = array_diff_key($concretePriceProductTransfers, $priceProductTransfers);
-
-        return array_values(
-            array_merge(
-                $priceProductTransfers,
-                $missingConcretePriceProductTransfers
-            )
-        );
+        return array_values($priceProductTransfers + $concretePriceProductTransfers);
     }
 
     /**
@@ -111,6 +104,7 @@ class PriceProductMerger implements PriceProductMergerInterface
         $priceProductTransfer->getMoneyValue()->requireCurrency();
         $priceProductTransfer->getMoneyValue()->getCurrency()->requireCode();
         $priceProductTransfer->requirePriceDimension();
+        $priceProductTransfer->requirePriceType();
 
         return implode('-', array_filter($this->getIdentifiersPath($priceProductTransfer)));
     }
