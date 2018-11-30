@@ -225,7 +225,7 @@ class QuoteResolver implements QuoteResolverInterface
     protected function isQuoteOperationAllowed(
         QuoteTransfer $quoteTransfer,
         CustomerTransfer $customerTransfer,
-        $operation
+        string $operation
     ): bool {
         return $customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()
             || $this->isAnonymousCustomerQuote($quoteTransfer->getCustomerReference())
