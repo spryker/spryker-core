@@ -66,14 +66,14 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
     protected $catalogSearchSuggestionsResourceMapper;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var \Spryker\Glue\CatalogSearchRestApi\Processor\Translation\CatalogSearchTranslationExpanderInterface
      */
     protected $catalogSearchTranslationExpander;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
 
     /**
      * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCatalogClientInterface $catalogClient
@@ -117,9 +117,10 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $searchString = $this->getRequestParameter($restRequest, CatalogSearchRestApiConfig::QUERY_STRING_PARAMETER);
         $requestParameters = $this->getAllRequestParameters($restRequest);
         $searchResult = $this->catalogClient->catalogSearch($searchString, $requestParameters);
+
         $restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper
-            ->mapSearchResultToRestAttributesTransfer($searchResult, $this->store->getCurrencyIsoCode());
+            ->mapSearchResultToRestAttributesTransfer($searchResult);
 
         $this->catalogSearchResourceMapper
             ->mapPrices($restSearchAttributesTransfer, $this->getPriceModeConfigurationTransfer());
@@ -151,7 +152,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $suggestions = $this->catalogClient->catalogSuggestSearch($searchString, $requestParameters);
         $restSuggestionsAttributesTransfer = $this
             ->catalogSearchSuggestionsResourceMapper
-            ->mapSuggestionsToRestAttributesTransfer($suggestions, $this->store->getCurrencyIsoCode());
+            ->mapSuggestionsToRestAttributesTransfer($suggestions);
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH_SUGGESTIONS,
@@ -163,6 +164,8 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface|null
@@ -182,6 +185,94 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $this->priceClient->switchPriceMode($priceMode);
 
         return null;
+    }
+
+    /**
+     * @deprecated Will be removed in the next major release.
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return string
+     */
+    protected function getCurrency($restRequest): string
+    {
+        $currency = $this->getRequestParameter($restRequest, CatalogSearchRestApiConfig::CURRENCY_STRING_PARAMETER);
+        if (empty($currency)) {
+            return $this->store->getDefaultCurrencyCode();
+        }
+
+        return $currency;
+    }
+
+    /**
+     * @deprecated Will be removed in the next major release.
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return string
+     */
+    protected function getPriceMode($restRequest): string
+    {
+        $priceMode = $this->getRequestParameter($restRequest, CatalogSearchRestApiConfig::PRICE_MODE_STRING_PARAMETER);
+        if (empty($priceMode)) {
+            return $this->priceClient->getCurrentPriceMode();
+        }
+
+        return $priceMode;
+    }
+
+    /**
+     * @deprecated Will be removed in the next major release.
+     *
+     * @param string $currency
+     *
+     * @return bool
+     */
+    protected function isCurrencyAvailable(string $currency): bool
+    {
+        return in_array($currency, $this->store->getCurrencyIsoCodes());
+    }
+
+    /**
+     * @deprecated Will be removed in the next major release.
+     *
+     * @param string $priceMode
+     *
+     * @return bool
+     */
+    protected function isPriceModeAvailable(string $priceMode): bool
+    {
+        return in_array($priceMode, $this->priceClient->getPriceModes());
+    }
+
+    /**
+     * @deprecated Will be removed in the next major release.
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createInvalidCurrencyResponse(): RestResponseInterface
+    {
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError((new RestErrorMessageTransfer())
+                ->setCode(CatalogSearchRestApiConfig::RESPONSE_CODE_INVALID_CURRENCY)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setDetail(CatalogSearchRestApiConfig::RESPONSE_DETAIL_INVALID_CURRENCY));
+    }
+
+    /**
+     * @deprecated Will be removed in the next major release.
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createInvalidPriceModeResponse(): RestResponseInterface
+    {
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError((new RestErrorMessageTransfer())
+                ->setCode(CatalogSearchRestApiConfig::RESPONSE_CODE_INVALID_PRICE_MODE)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setDetail(CatalogSearchRestApiConfig::RESPONSE_DETAIL_INVALID_PRICE_MODE));
     }
 
     /**
@@ -221,8 +312,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $restSuggestionsAttributesTransfer = $this
             ->catalogSearchSuggestionsResourceMapper
             ->mapSuggestionsToRestAttributesTransfer(
-                $this->catalogSearchSuggestionsResourceMapper->getEmptySearchResponse(),
-                $this->store->getCurrencyIsoCode()
+                $this->catalogSearchSuggestionsResourceMapper->getEmptySearchResponse()
             );
 
         $restResource = $this->restResourceBuilder->createRestResource(
@@ -232,82 +322,6 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         );
 
         return $response->addResource($restResource);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return string
-     */
-    protected function getCurrency($restRequest): string
-    {
-        $currency = $this->getRequestParameter($restRequest, CatalogSearchRestApiConfig::CURRENCY_STRING_PARAMETER);
-        if (empty($currency)) {
-            return $this->store->getDefaultCurrencyCode();
-        }
-
-        return $currency;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return string
-     */
-    protected function getPriceMode($restRequest): string
-    {
-        $priceMode = $this->getRequestParameter($restRequest, CatalogSearchRestApiConfig::PRICE_MODE_STRING_PARAMETER);
-        if (empty($priceMode)) {
-            return $this->priceClient->getCurrentPriceMode();
-        }
-
-        return $priceMode;
-    }
-
-    /**
-     * @param string $currency
-     *
-     * @return bool
-     */
-    protected function isCurrencyAvailable(string $currency): bool
-    {
-        return in_array($currency, $this->store->getCurrencyIsoCodes());
-    }
-
-    /**
-     * @param string $priceMode
-     *
-     * @return bool
-     */
-    protected function isPriceModeAvailable(string $priceMode): bool
-    {
-        return in_array($priceMode, $this->priceClient->getPriceModes());
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createInvalidCurrencyResponse(): RestResponseInterface
-    {
-        return $this->restResourceBuilder
-            ->createRestResponse()
-            ->addError((new RestErrorMessageTransfer())
-            ->setCode(CatalogSearchRestApiConfig::RESPONSE_CODE_INVALID_CURRENCY)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CatalogSearchRestApiConfig::RESPONSE_DETAIL_INVALID_CURRENCY));
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createInvalidPriceModeResponse(): RestResponseInterface
-    {
-        return $this->restResourceBuilder
-            ->createRestResponse()
-            ->addError((new RestErrorMessageTransfer())
-            ->setCode(CatalogSearchRestApiConfig::RESPONSE_CODE_INVALID_PRICE_MODE)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CatalogSearchRestApiConfig::RESPONSE_DETAIL_INVALID_PRICE_MODE));
     }
 
     /**

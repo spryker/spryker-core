@@ -11,12 +11,27 @@ use Generated\Shared\Transfer\PriceModeConfigurationTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchSortAttributesTransfer;
+use Generated\Shared\Transfer\RestCurrencyTransfer;
 use Generated\Shared\Transfer\RestFacetSearchResultAttributesTransfer;
 use Generated\Shared\Transfer\RestPriceProductAttributesTransfer;
 use Generated\Shared\Transfer\RestRangeSearchResultAttributesTransfer;
+use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface;
 
 class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterface
 {
+    /**
+     * @var \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface
+     */
+    protected $currencyClient;
+
+    /**
+     * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface $currencyClient
+     */
+    public function __construct(CatalogSearchRestApiToCurrencyClientInterface $currencyClient)
+    {
+        $this->currencyClient = $currencyClient;
+    }
+
     /**
      * @uses \Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin::NAME
      */
@@ -29,18 +44,17 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
 
     /**
      * @param array $restSearchResponse
-     * @param string $currency
      *
      * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
      */
-    public function mapSearchResultToRestAttributesTransfer(array $restSearchResponse, string $currency): RestCatalogSearchAttributesTransfer
+    public function mapSearchResultToRestAttributesTransfer(array $restSearchResponse): RestCatalogSearchAttributesTransfer
     {
         $restSearchAttributesTransfer = (new RestCatalogSearchAttributesTransfer())->fromArray($restSearchResponse, true);
         $restCatalogSearchSortAttributesTransfer = (new RestCatalogSearchSortAttributesTransfer())
             ->fromArray($restSearchResponse[static::SORT_NAME]->toArray());
         $restSearchAttributesTransfer->setSort($restCatalogSearchSortAttributesTransfer);
 
-        $restSearchAttributesTransfer->setCurrency($currency);
+        $restSearchAttributesTransfer->setCurrency($this->currencyClient->getCurrent()->getCode());
         if (isset($restSearchResponse[static::NAME])) {
             $restSearchAttributesTransfer = $this->mapSearchResponseFacetTransfersToSearchAttributesTransfer(
                 $restSearchResponse[static::NAME],
@@ -115,6 +129,14 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
     ): RestPriceProductAttributesTransfer {
         $restPriceProductAttributes = new RestPriceProductAttributesTransfer();
         $restPriceProductAttributes->setPriceTypeName($priceType);
+
+        $restPriceProductAttributes->setCurrency(
+            (new RestCurrencyTransfer())->fromArray(
+                $this->currencyClient->getCurrent()->toArray(),
+                true
+            )
+        );
+
         if ($priceModeInformation->getCurrentPriceMode() === $priceModeInformation->getGrossModeIdentifier()) {
             return $restPriceProductAttributes->setGrossAmount($price);
         }
