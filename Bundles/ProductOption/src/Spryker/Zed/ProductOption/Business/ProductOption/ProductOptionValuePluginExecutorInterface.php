@@ -9,12 +9,12 @@ namespace Spryker\Zed\ProductOption\Business\ProductOption;
 
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 
-interface PreRemoveProductOptionValuePluginExecutorInterface
+interface ProductOptionValuePluginExecutorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
      *
      * @return void
      */
-    public function executePreRemoveOptionValuesPlugins(ProductOptionGroupTransfer $productOptionGroupTransfer): void;
+    public function executeProductOptionValuePlugins(ProductOptionGroupTransfer $productOptionGroupTransfer): void;
 }

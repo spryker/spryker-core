@@ -23,8 +23,8 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
 use Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaver;
-use Spryker\Zed\ProductOption\Business\ProductOption\PreRemoveProductOptionValuePluginExecutor;
-use Spryker\Zed\ProductOption\Business\ProductOption\PreRemoveProductOptionValuePluginExecutorInterface;
+use Spryker\Zed\ProductOption\Business\ProductOption\ProductOptionValuePluginExecutor;
+use Spryker\Zed\ProductOption\Business\ProductOption\ProductOptionValuePluginExecutorInterface;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -251,11 +251,11 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\ProductOption\PreRemoveProductOptionValuePluginExecutorInterface
+     * @return \Spryker\Zed\ProductOption\Business\ProductOption\ProductOptionValuePluginExecutorInterface
      */
-    protected function createPreRemovePluginExecutor(): PreRemoveProductOptionValuePluginExecutorInterface
+    protected function createPreRemovePluginExecutor(): ProductOptionValuePluginExecutorInterface
     {
-        return new PreRemoveProductOptionValuePluginExecutor(
+        return new ProductOptionValuePluginExecutor(
             $this->getProductOptionValuesPreRemovePlugins()
         );
     }

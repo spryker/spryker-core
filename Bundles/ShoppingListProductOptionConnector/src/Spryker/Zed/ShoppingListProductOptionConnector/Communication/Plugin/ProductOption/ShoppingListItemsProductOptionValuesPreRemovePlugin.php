@@ -19,6 +19,7 @@ class ShoppingListItemsProductOptionValuesPreRemovePlugin extends AbstractPlugin
 {
     /**
      * {@inheritdoc}
+     * - unassign productOptionValuesToBeRemoved from all shopping list items.
      *
      * @api
      *
