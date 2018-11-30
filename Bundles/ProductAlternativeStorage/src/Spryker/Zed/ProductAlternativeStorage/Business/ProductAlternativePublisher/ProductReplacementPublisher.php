@@ -45,10 +45,8 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
      */
     public function publishAbstractReplacements(array $productIds): void
     {
-        $productAbstractIndexedSkus = $this->productAlternativeStorageRepository->getIndexedProductAbstractIdToSkusByProductIds($productIds);
-        $productConcreteIndexedSkusPerAbstract = $this->productAlternativeStorageRepository->getIndexedProductConcreteIdToSkusByProductAbstractIds($productIds);
-        $this->storeAbstractProductData($productAbstractIndexedSkus);
-        $this->storeConcreteProductData($productConcreteIndexedSkusPerAbstract);
+        $this->storeAbstractReplacements($productIds);
+        $this->storeConcreteReplacementsByAbstract($productIds);
     }
 
     /**
@@ -60,6 +58,28 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
     {
         $indexedSkus = $this->productAlternativeStorageRepository->getIndexedProductConcreteIdToSkusByProductIds($productIds);
         $this->storeConcreteProductData($indexedSkus);
+    }
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return void
+     */
+    protected function storeAbstractReplacements(array $productIds): void
+    {
+        $productAbstractIndexedSkus = $this->productAlternativeStorageRepository->getIndexedProductAbstractIdToSkusByProductIds($productIds);
+        $this->storeAbstractProductData($productAbstractIndexedSkus);
+    }
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return void
+     */
+    protected function storeConcreteReplacementsByAbstract(array $productIds): void
+    {
+        $productConcreteIndexedSkusPerAbstract = $this->productAlternativeStorageRepository->getIndexedProductConcreteIdToSkusByProductAbstractIds($productIds);
+        $this->storeConcreteProductData($productConcreteIndexedSkusPerAbstract);
     }
 
     /**
@@ -90,7 +110,7 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
                 $this->productAlternativeStorageRepository->getReplacementsByConcreteProductId($idProduct),
                 $this->productAlternativeStorageRepository->getReplacementsByAbstractProductId($productConcreteData[ProductConcreteTransfer::FK_PRODUCT_ABSTRACT])
             );
-            $sku = $productConcreteData[ProductConcreteTransfer::SKU] ?? $productConcreteData[ProductConcreteTransfer::ABSTRACT_SKU];
+            $sku = $productConcreteData[ProductConcreteTransfer::SKU];
             $productReplacementStorageEntity = $this->productAlternativeStorageRepository->findProductReplacementStorageEntitiesBySku($sku);
             $this->storeDataSet($sku, $replacementIds, $productReplacementStorageEntity);
         }
