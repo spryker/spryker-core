@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig;
 use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUsersResourceMapperInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -64,8 +63,6 @@ class CompanyUsersReader implements CompanyUsersReaderInterface
             $companyUserCollectionTransfer
         );
 
-        $restResponse->addLink(RestLinkInterface::LINK_SELF, $this->createSelfLink());
-
         return $restResponse;
     }
 
@@ -91,21 +88,9 @@ class CompanyUsersReader implements CompanyUsersReaderInterface
                 $restCompanyUserAttributesTransfer
             );
 
-            $restResponse->addResource($restResource)
-                ->addLink(RestLinkInterface::LINK_SELF, $this->createSelfLink());
+            $restResponse->addResource($restResource);
         }
 
         return $restResponse;
-    }
-
-    /**
-     * @return string
-     */
-    protected function createSelfLink(): string
-    {
-        return sprintf(
-            CompanyUsersRestApiConfig::FORMAT_SELF_LINK_COMPANY_USERS_RESOURCE,
-            CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS
-        );
     }
 }
