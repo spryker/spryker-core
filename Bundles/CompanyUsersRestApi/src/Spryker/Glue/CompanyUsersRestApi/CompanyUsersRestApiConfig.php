@@ -14,6 +14,4 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_COMPANY_USERS = 'company-users';
     public const CONTROLLER_RESOURCE_COMPANY_USERS = 'company-users-resource';
     public const RESOURCE_COMPANY_USERS_IS_PROTECTED = true;
-
-    public const FORMAT_SELF_LINK_COMPANY_USERS_RESOURCE = '%s';
 }
