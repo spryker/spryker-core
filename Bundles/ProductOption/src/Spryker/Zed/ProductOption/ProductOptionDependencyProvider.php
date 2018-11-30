@@ -45,7 +45,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     public const QUERY_CONTAINER_COUNTRY = 'QUERY_CONTAINER_COUNTRY';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
-    public const PRODUCT_OPTION_VALUES_PRE_REMOVE_PLUGINS = 'PRODUCT_OPTION_VALUES_PRE_REMOVE_PLUGINS';
+    public const PLUGINS_PRODUCT_OPTION_VALUES_PRE_REMOVE = 'PLUGINS_PRODUCT_OPTION_VALUES_PRE_REMOVE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -70,7 +70,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductOptionToTaxFacadeBridge($container->getLocator()->tax()->facade());
         };
 
-        $container[static::PRODUCT_OPTION_VALUES_PRE_REMOVE_PLUGINS] = function (Container $container) {
+        $container[static::PLUGINS_PRODUCT_OPTION_VALUES_PRE_REMOVE] = function (Container $container) {
             return $this->getProductOptionValuesPreRemovePlugins();
         };
 

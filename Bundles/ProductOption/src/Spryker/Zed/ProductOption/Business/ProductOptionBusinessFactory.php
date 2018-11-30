@@ -265,6 +265,6 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
      */
     protected function getProductOptionValuesPreRemovePlugins(): array
     {
-        return $this->getProvidedDependency(ProductOptionDependencyProvider::PRODUCT_OPTION_VALUES_PRE_REMOVE_PLUGINS);
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::PLUGINS_PRODUCT_OPTION_VALUES_PRE_REMOVE);
     }
 }
