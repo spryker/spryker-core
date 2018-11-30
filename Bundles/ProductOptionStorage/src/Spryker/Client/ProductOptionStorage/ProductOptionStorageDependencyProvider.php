@@ -10,7 +10,6 @@ namespace Spryker\Client\ProductOptionStorage;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToCurrencyClientBridge;
-use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToPermissionClientBridge;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToPriceClientBridge;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageBridge;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceBridge;
@@ -24,7 +23,6 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const CLIENT_PRICE = 'CLIENT_PRICE';
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
-    public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const STORE = 'STORE';
 
@@ -38,7 +36,6 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addStorageClient($container);
         $container = $this->addPriceClient($container);
         $container = $this->addCurrencyClient($container);
-        $container = $this->addPermissionClient($container);
         $container = $this->addSynchronizationService($container);
         $container = $this->addStore($container);
 
@@ -82,20 +79,6 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_CURRENCY] = function (Container $container) {
             return new ProductOptionStorageToCurrencyClientBridge($container->getLocator()->currency()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addPermissionClient(Container $container)
-    {
-        $container[static::CLIENT_PERMISSION] = function (Container $container) {
-            return new ProductOptionStorageToPermissionClientBridge($container->getLocator()->permission()->client());
         };
 
         return $container;

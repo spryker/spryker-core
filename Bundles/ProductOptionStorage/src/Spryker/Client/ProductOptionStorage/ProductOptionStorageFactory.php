@@ -8,7 +8,6 @@
 namespace Spryker\Client\ProductOptionStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToPermissionClientInterface;
 use Spryker\Client\ProductOptionStorage\Price\ValuePriceReader;
 use Spryker\Client\ProductOptionStorage\Storage\ProductOptionStorageReader;
 
@@ -23,8 +22,7 @@ class ProductOptionStorageFactory extends AbstractFactory
             $this->getStorage(),
             $this->getStore(),
             $this->getSynchronizationService(),
-            $this->createValuePriceReader(),
-            $this->getPermissionClient()
+            $this->createValuePriceReader()
         );
     }
 
@@ -69,14 +67,6 @@ class ProductOptionStorageFactory extends AbstractFactory
     protected function getCurrencyClient()
     {
         return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::CLIENT_CURRENCY);
-    }
-
-    /**
-     * @return \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToPermissionClientInterface
-     */
-    protected function getPermissionClient(): ProductOptionStorageToPermissionClientInterface
-    {
-        return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::CLIENT_PERMISSION);
     }
 
     /**
