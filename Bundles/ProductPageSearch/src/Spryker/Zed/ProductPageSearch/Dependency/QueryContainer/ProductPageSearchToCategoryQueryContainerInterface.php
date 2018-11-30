@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Dependency\QueryContainer;
 
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
+
 interface ProductPageSearchToCategoryQueryContainerInterface
 {
     /**
@@ -29,6 +31,15 @@ interface ProductPageSearchToCategoryQueryContainerInterface
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryPath($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false);
+
+    /**
+     * @param int $idNode
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryFullPath(int $idNode): SpyCategoryNodeQuery;
 
     /**
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery

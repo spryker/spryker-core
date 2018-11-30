@@ -11,6 +11,7 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -24,6 +25,8 @@ use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
  */
 class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQueryContainerInterface
 {
+    public const ID_CATEGORY_NODE_ALIAS = 'id_category_node';
+
     /**
      * @api
      *
@@ -397,6 +400,25 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         $nodeQuery->setFormatter(new PropelArraySetFormatter());
 
         return $nodeQuery;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idNode
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryFullPath(int $idNode): SpyCategoryNodeQuery
+    {
+        return $this->getFactory()->createCategoryNodeQuery()
+            ->useClosureTableQuery()
+            ->orderByFkCategoryNodeDescendant(Criteria::DESC)
+            ->orderByDepth(Criteria::DESC)
+            ->filterByFkCategoryNodeDescendant($idNode)
+            ->endUse()
+            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::ID_CATEGORY_NODE_ALIAS)
+            ->setFormatter(new PropelArraySetFormatter());
     }
 
     /**
