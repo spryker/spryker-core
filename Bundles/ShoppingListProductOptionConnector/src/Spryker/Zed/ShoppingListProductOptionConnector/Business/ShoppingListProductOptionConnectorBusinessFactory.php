@@ -79,7 +79,7 @@ class ShoppingListProductOptionConnectorBusinessFactory extends AbstractBusiness
     /**
      * @return \Spryker\Zed\ShoppingListProductOptionConnector\Business\ProductOption\ProductOptionValuesRemoverInterface
      */
-    public function createProductOptionValueFromShoppingListItemsRemover(): ProductOptionValuesRemoverInterface
+    public function createProductOptionValuesRemover(): ProductOptionValuesRemoverInterface
     {
         return new ProductOptionValuesRemover(
             $this->getEntityManager()

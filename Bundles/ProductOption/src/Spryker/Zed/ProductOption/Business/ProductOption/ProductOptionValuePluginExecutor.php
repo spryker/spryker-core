@@ -17,11 +17,11 @@ class ProductOptionValuePluginExecutor implements ProductOptionValuePluginExecut
     protected $productOptionValuesPreRemovePlugins;
 
     /**
-     * @param \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface[] $plugins
+     * @param \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface[] $productOptionValuesPreRemovePlugins
      */
-    public function __construct(array $plugins)
+    public function __construct(array $productOptionValuesPreRemovePlugins)
     {
-        $this->productOptionValuesPreRemovePlugins = $plugins;
+        $this->productOptionValuesPreRemovePlugins = $productOptionValuesPreRemovePlugins;
     }
 
     /**
