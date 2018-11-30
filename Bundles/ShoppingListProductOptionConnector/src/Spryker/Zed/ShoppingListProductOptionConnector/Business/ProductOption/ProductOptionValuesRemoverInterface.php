@@ -9,12 +9,12 @@ namespace Spryker\Zed\ShoppingListProductOptionConnector\Business\ProductOption;
 
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 
-interface ProductOptionValuesFromShoppingListItemsRemoverInterface
+interface ProductOptionValuesRemoverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
      *
      * @return void
      */
-    public function unassignDeletedProductOptionValues(ProductOptionGroupTransfer $productOptionGroupTransfer): void;
+    public function unassignProductOptionValuesToBeRemoved(ProductOptionGroupTransfer $productOptionGroupTransfer): void;
 }

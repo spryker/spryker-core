@@ -16,5 +16,5 @@ interface ProductOptionValuePluginExecutorInterface
      *
      * @return void
      */
-    public function executeProductOptionValuePlugins(ProductOptionGroupTransfer $productOptionGroupTransfer): void;
+    public function executePreRemoveProductOptionValuePlugins(ProductOptionGroupTransfer $productOptionGroupTransfer): void;
 }

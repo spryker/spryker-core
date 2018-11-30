@@ -226,7 +226,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
 
         $this->tester
             ->getFacade()
-            ->unassignRemovedProductOptionValuesFromShoppingListItems(
+            ->unassignProductOptionValuesToBeRemovedFromShoppingListItems(
                 (new ProductOptionGroupTransfer())
                 ->addProductOptionValuesToBeRemoved($this->productOptionValueTransfer2->getIdProductOptionValue())
             );

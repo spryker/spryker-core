@@ -14,14 +14,14 @@ class ProductOptionValuePluginExecutor implements ProductOptionValuePluginExecut
     /**
      * @var \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface[]
      */
-    protected $plugins;
+    protected $productOptionValuesPreRemovePlugins;
 
     /**
      * @param \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface[] $plugins
      */
     public function __construct(array $plugins)
     {
-        $this->plugins = $plugins;
+        $this->productOptionValuesPreRemovePlugins = $plugins;
     }
 
     /**
@@ -29,9 +29,9 @@ class ProductOptionValuePluginExecutor implements ProductOptionValuePluginExecut
      *
      * @return void
      */
-    public function executeProductOptionValuePlugins(ProductOptionGroupTransfer $productOptionGroupTransfer): void
+    public function executePreRemoveProductOptionValuePlugins(ProductOptionGroupTransfer $productOptionGroupTransfer): void
     {
-        foreach ($this->plugins as $plugin) {
+        foreach ($this->productOptionValuesPreRemovePlugins as $plugin) {
             $plugin->preRemove($productOptionGroupTransfer);
         }
     }

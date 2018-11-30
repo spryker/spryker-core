@@ -73,5 +73,5 @@ interface ShoppingListProductOptionConnectorFacadeInterface
      *
      * @return void
      */
-    public function unassignRemovedProductOptionValuesFromShoppingListItems(ProductOptionGroupTransfer $productOptionGroupTransfer): void;
+    public function unassignProductOptionValuesToBeRemovedFromShoppingListItems(ProductOptionGroupTransfer $productOptionGroupTransfer): void;
 }

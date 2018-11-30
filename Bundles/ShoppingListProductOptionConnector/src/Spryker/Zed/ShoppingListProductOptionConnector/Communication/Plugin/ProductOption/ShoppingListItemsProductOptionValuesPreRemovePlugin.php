@@ -30,6 +30,6 @@ class ShoppingListItemsProductOptionValuesPreRemovePlugin extends AbstractPlugin
     public function preRemove(ProductOptionGroupTransfer $productOptionGroupTransfer): void
     {
         $this->getFacade()
-            ->unassignRemovedProductOptionValuesFromShoppingListItems($productOptionGroupTransfer);
+            ->unassignProductOptionValuesToBeRemovedFromShoppingListItems($productOptionGroupTransfer);
     }
 }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShoppingListProductOptionConnector\Business\ProductOption;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Spryker\Zed\ShoppingListProductOptionConnector\Persistence\ShoppingListProductOptionConnectorEntityManagerInterface;
 
-class ProductOptionValuesFromShoppingListItemsRemover implements ProductOptionValuesFromShoppingListItemsRemoverInterface
+class ProductOptionValuesRemover implements ProductOptionValuesRemoverInterface
 {
     /**
      * @var \Spryker\Zed\ShoppingListProductOptionConnector\Persistence\ShoppingListProductOptionConnectorEntityManagerInterface
@@ -30,7 +30,7 @@ class ProductOptionValuesFromShoppingListItemsRemover implements ProductOptionVa
      *
      * @return void
      */
-    public function unassignDeletedProductOptionValues(ProductOptionGroupTransfer $productOptionGroupTransfer): void
+    public function unassignProductOptionValuesToBeRemoved(ProductOptionGroupTransfer $productOptionGroupTransfer): void
     {
         $idsProductOptionValue = $productOptionGroupTransfer->getProductOptionValuesToBeRemoved();
         $idsProductOptionValue = array_filter($idsProductOptionValue);

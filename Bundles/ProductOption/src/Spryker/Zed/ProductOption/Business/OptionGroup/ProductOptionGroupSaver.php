@@ -45,7 +45,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     /**
      * @var \Spryker\Zed\ProductOption\Business\ProductOption\ProductOptionValuePluginExecutorInterface
      */
-    protected $preRemovePluginExecutor;
+    protected $productOptionValuePluginExecutor;
 
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
@@ -53,7 +53,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface $translationSaver
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface $abstractProductOptionSaver
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface $productOptionValueSaver
-     * @param \Spryker\Zed\ProductOption\Business\ProductOption\ProductOptionValuePluginExecutorInterface $preRemovePluginExecutor
+     * @param \Spryker\Zed\ProductOption\Business\ProductOption\ProductOptionValuePluginExecutorInterface $productOptionValuePluginExecutor
      */
     public function __construct(
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
@@ -61,14 +61,14 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
         TranslationSaverInterface $translationSaver,
         AbstractProductOptionSaverInterface $abstractProductOptionSaver,
         ProductOptionValueSaverInterface $productOptionValueSaver,
-        ProductOptionValuePluginExecutorInterface $preRemovePluginExecutor
+        ProductOptionValuePluginExecutorInterface $productOptionValuePluginExecutor
     ) {
         $this->productOptionQueryContainer = $productOptionQueryContainer;
         $this->touchFacade = $touchFacade;
         $this->translationSaver = $translationSaver;
         $this->abstractProductOptionSaver = $abstractProductOptionSaver;
         $this->productOptionValueSaver = $productOptionValueSaver;
-        $this->preRemovePluginExecutor = $preRemovePluginExecutor;
+        $this->productOptionValuePluginExecutor = $productOptionValuePluginExecutor;
     }
 
     /**
@@ -83,7 +83,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
         $productOptionGroupEntity->save();
 
         $this->productOptionValueSaver->saveOptionValues($productOptionGroupTransfer, $productOptionGroupEntity);
-        $this->preRemovePluginExecutor->executeProductOptionValuePlugins($productOptionGroupTransfer);
+        $this->productOptionValuePluginExecutor->executePreRemoveProductOptionValuePlugins($productOptionGroupTransfer);
         $this->productOptionValueSaver->removeOptionValues($productOptionGroupTransfer, $productOptionGroupEntity);
 
         $this->abstractProductOptionSaver->assignProducts($productOptionGroupTransfer, $productOptionGroupEntity);
