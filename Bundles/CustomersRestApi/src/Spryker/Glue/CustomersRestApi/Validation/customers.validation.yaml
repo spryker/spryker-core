@@ -138,7 +138,7 @@ addresses:
         - NotBlank
         - Length:
             min: 3
-          max: 255
+            max: 255
     iso2Code:
     - Optional:
         constraints:

@@ -167,7 +167,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
                 array_map($this->applyTrimRecursively(), $value);
             }
 
-            return trim($value);
+            return is_string($value) ? trim($value) : $value;
         };
     }
 }
