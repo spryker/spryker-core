@@ -20,7 +20,7 @@ customers:
       - Length:
           min: 7
           max: 72
-    passwordConfirmation:
+    confirmPassword:
       - NotBlank
       - Length:
           min: 7
