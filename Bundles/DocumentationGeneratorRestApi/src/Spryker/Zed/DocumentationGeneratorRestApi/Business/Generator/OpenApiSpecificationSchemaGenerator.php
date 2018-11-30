@@ -288,7 +288,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
             if ($value[static::KEY_REST_REQUEST_PARAMETER] === static::REST_REQUEST_BODY_PARAMETER_REQUIRED) {
                 $schemaData->addRequired($key);
             }
-            $schemaData->addProperty($this->createSchemaPropertyTransfer($key, $value));
+            $schemaData->addProperty($this->createRequestSchemaPropertyTransfer($key, $value));
         }
 
         if ($schemaData->getProperties()->count() > 0) {
@@ -433,6 +433,24 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $relationshipsSchema->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_TYPE_STRING));
 
         $this->addSchemaData($relationshipsSchema);
+    }
+
+    /**
+     * @param string $metadataKey
+     * @param array $metadataValue
+     *
+     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
+     */
+    protected function createRequestSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer
+    {
+        if (class_exists($metadataValue[static::KEY_TYPE])) {
+            $schemaName = $this->resourceTransferAnalyzer->createRequestAttributesSchemaNameFromTransferClassName($metadataValue[static::KEY_TYPE]);
+            $this->addRequestDataAttributesSchemaFromTransfer(new $metadataValue[static::KEY_TYPE](), $schemaName);
+
+            return $this->schemaComponentBuilder->createObjectSchemaTypeTransfer($metadataKey, $schemaName, $metadataValue);
+        }
+
+        return $this->schemaComponentBuilder->createScalarSchemaTypeTransfer($metadataKey, $metadataValue[static::KEY_TYPE]);
     }
 
     /**
