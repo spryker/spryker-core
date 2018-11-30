@@ -18,6 +18,31 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class CheckoutResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "post": {
+     *          "summary": [
+     *              "Places order."
+     *          ],
+     *          "parameters": [
+     *              {
+     *                  "name": "Accept-Language",
+     *                  "in": "header"
+     *              },
+     *              {
+     *                  "name": "X-Anonymous-Customer-Unique-Id",
+     *                  "in": "header",
+     *                  "required": false,
+     *                  "description": "Guest customer unique ID"
+     *              }
+     *          ],
+     *          "responses": {
+     *              "400": "Bad Response.",
+     *              "422": "Unprocessable entity."
+     *          },
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestCheckoutResponseAttributesTransfer"
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *

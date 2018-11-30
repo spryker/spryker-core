@@ -23,50 +23,50 @@
     </transfer>
 
     <transfer name="RestCheckoutRequestAttributes">
-        <property name="customer" type="RestCustomer"/>
-        <property name="idCart" type="string"/>
-        <property name="billingAddress" type="RestAddress"/>
-        <property name="shippingAddress" type="RestAddress"/>
-        <property name="payments" type="RestPayment[]" singular="payment"/>
-        <property name="shipment" type="RestShipment"/>
+        <property name="customer" type="RestCustomer" restRequestParameter="yes"/>
+        <property name="idCart" type="string" restRequestParameter="required"/>
+        <property name="billingAddress" type="RestAddress" restRequestParameter="yes"/>
+        <property name="shippingAddress" type="RestAddress" restRequestParameter="yes"/>
+        <property name="payments" type="RestPayment[]" singular="payment" restRequestParameter="yes"/>
+        <property name="shipment" type="RestShipment" restRequestParameter="yes"/>
     </transfer>
 
     <transfer name="RestCustomer">
-        <property name="email" type="string" />
-        <property name="salutation" type="string" />
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
-        <property name="idCustomer" type="int" />
-        <property name="customerReference" type="string" />
+        <property name="email" type="string" restRequestParameter="yes"/>
+        <property name="salutation" type="string" restRequestParameter="yes"/>
+        <property name="firstName" type="string" restRequestParameter="yes"/>
+        <property name="lastName" type="string" restRequestParameter="yes"/>
+        <property name="idCustomer" type="int" restRequestParameter="no"/>
+        <property name="customerReference" type="string" restRequestParameter="no"/>
     </transfer>
 
     <transfer name="RestAddress">
         <property name="id" type="string" />
-        <property name="salutation" type="string" />
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
-        <property name="address1" type="string" />
-        <property name="address2" type="string" />
-        <property name="address3" type="string" />
-        <property name="zipCode" type="string" />
-        <property name="city" type="string" />
-        <property name="country" type="string" />
-        <property name="iso2Code" type="string" />
-        <property name="company" type="string" />
-        <property name="phone" type="string" />
-        <property name="isDefaultBilling" type="bool" />
-        <property name="isDefaultShipping" type="bool" />
+        <property name="salutation" type="string" restRequestParameter="required"/>
+        <property name="firstName" type="string" restRequestParameter="required"/>
+        <property name="lastName" type="string" restRequestParameter="required"/>
+        <property name="address1" type="string" restRequestParameter="required"/>
+        <property name="address2" type="string" restRequestParameter="required"/>
+        <property name="address3" type="string" restRequestParameter="required"/>
+        <property name="zipCode" type="string" restRequestParameter="required"/>
+        <property name="city" type="string" restRequestParameter="required"/>
+        <property name="country" type="string" restRequestParameter="no"/>
+        <property name="iso2Code" type="string" restRequestParameter="required"/>
+        <property name="company" type="string" restRequestParameter="required"/>
+        <property name="phone" type="string" restRequestParameter="required"/>
+        <property name="isDefaultBilling" type="bool" restRequestParameter="yes" />
+        <property name="isDefaultShipping" type="bool" restRequestParameter="yes" />
     </transfer>
 
     <transfer name="RestShipment">
-        <property name="shipmentSelection" type="int"/>
+        <property name="shipmentSelection" type="int" restRequestParameter="required"/>
     </transfer>
 
     <transfer name="RestPayment">
-        <property name="paymentProvider" type="string"/>
-        <property name="paymentMethod" type="string"/>
-        <property name="paymentSelection" type="string"/>
-        <property name="isLimitedAmount" type="bool" />
+        <property name="paymentProvider" type="string" restRequestParameter="required"/>
+        <property name="paymentMethod" type="string" restRequestParameter="required"/>
+        <property name="paymentSelection" type="string" restRequestParameter="required"/>
+        <property name="isLimitedAmount" type="bool" restRequestParameter="required"/>
     </transfer>
 
     <transfer name="RestCheckoutDataResponseAttributes">
