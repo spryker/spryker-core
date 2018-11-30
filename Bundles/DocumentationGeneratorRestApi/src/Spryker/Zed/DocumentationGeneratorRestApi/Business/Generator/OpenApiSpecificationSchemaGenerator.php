@@ -122,6 +122,10 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
             throw new InvalidTransferClassException(sprintf(static::MESSAGE_INVALID_TRANSFER_CLASS, get_class($plugin)));
         }
 
+        if (!$this->isRequestSchemaRequired($transferClassName)) {
+            return '';
+        }
+
         $requestSchemaName = $this->resourceTransferAnalyzer->createRequestSchemaNameFromTransferClassName($transferClassName);
         $requestDataSchemaName = $this->resourceTransferAnalyzer->createRequestDataSchemaNameFromTransferClassName($transferClassName);
         $requestAttributesSchemaName = $this->resourceTransferAnalyzer->createRequestAttributesSchemaNameFromTransferClassName($transferClassName);
@@ -287,7 +291,9 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
             $schemaData->addProperty($this->createSchemaPropertyTransfer($key, $value));
         }
 
-        $this->addSchemaData($schemaData);
+        if ($schemaData->getProperties()->count() > 0) {
+            $this->addSchemaData($schemaData);
+        }
     }
 
     /**
@@ -455,5 +461,22 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     protected function addSchemaData(SchemaDataTransfer $schemaData): void
     {
         $this->schemas = array_replace_recursive($this->schemas, $this->schemaRenderer->render($schemaData));
+    }
+
+    /**
+     * @param string $transferClassName
+     *
+     * @return bool
+     */
+    protected function isRequestSchemaRequired(string $transferClassName): bool
+    {
+        $transferMetadata = $this->resourceTransferAnalyzer->getTransferMetadata(new $transferClassName());
+        foreach ($transferMetadata as $metadataParameter) {
+            if ($metadataParameter[static::KEY_REST_REQUEST_PARAMETER] !== static::REST_REQUEST_BODY_PARAMETER_NOT_REQUIRED) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
