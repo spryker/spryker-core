@@ -12,7 +12,7 @@ use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncoding
 
 class QueueMessageHelper implements QueueMessageHelperInterface
 {
-    protected const ROUTING_KEY_ERROR = 'error';
+    public const ROUTING_KEY_ERROR = 'error';
 
     /**
      * @var \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface
