@@ -13,8 +13,6 @@ customers:
       - NotBlank
       - Length:
           max: 100
-    gender:
-      - NotBlank
     password:
       - NotBlank
       - Length:
@@ -49,10 +47,6 @@ customers:
         - NotBlank
         - Length:
             max: 100
-    gender:
-    - Optional:
-        constraints:
-        - NotBlank
     dateOfBirth:
     - Optional:
         constraints:
@@ -87,6 +81,11 @@ addresses:
       - Length:
           min: 3
           max: 255
+    phone:
+    - Optional:
+        constraints:
+        - Length:
+            max: 255
     iso2Code:
       - NotBlank
       - Length:
@@ -138,6 +137,11 @@ addresses:
         - NotBlank
         - Length:
             min: 3
+            max: 255
+    phone:
+    - Optional:
+        constraints:
+        - Length:
             max: 255
     iso2Code:
     - Optional:
