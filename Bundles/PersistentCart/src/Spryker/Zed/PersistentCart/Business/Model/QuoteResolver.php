@@ -24,6 +24,9 @@ class QuoteResolver implements QuoteResolverInterface
     public const GLOSSARY_KEY_QUOTE_NOT_AVAILABLE = 'persistent_cart.error.quote.not_available';
     public const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
 
+    protected const WRITE_SHARED_CART_PERMISSION_PLUGIN = 'WriteSharedCartPermissionPlugin';
+    protected const READ_SHARED_CART_PERMISSION_PLUGIN = 'ReadSharedCartPermissionPlugin';
+
     /**
      * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface
      */
@@ -106,8 +109,13 @@ class QuoteResolver implements QuoteResolverInterface
     protected function findCustomerQuoteById(int $idQuote, CustomerTransfer $customerTransfer): ?QuoteTransfer
     {
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById($idQuote);
-        if (!$quoteResponseTransfer->getIsSuccessful() || !$this->isQuoteReadAllowed($quoteResponseTransfer->getQuoteTransfer(), $customerTransfer)
-        ) {
+        $isReadSharedCartAllowed = $this->isQuoteOperationAllowed(
+            $quoteResponseTransfer->getQuoteTransfer(),
+            $customerTransfer,
+            static::READ_SHARED_CART_PERMISSION_PLUGIN
+        );
+
+        if (!$quoteResponseTransfer->getIsSuccessful() || !$isReadSharedCartAllowed) {
             $messageTransfer = new MessageTransfer();
             $messageTransfer->setValue(static::GLOSSARY_KEY_QUOTE_NOT_AVAILABLE);
             $this->messengerFacade->addErrorMessage($messageTransfer);
@@ -189,21 +197,6 @@ class QuoteResolver implements QuoteResolverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteReadAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
-    {
-        return $customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()
-            || $this->isAnonymousCustomerQuote($quoteTransfer->getCustomerReference())
-            || ($customerTransfer->getCompanyUserTransfer()
-                && $this->can('ReadSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
-            );
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer|null $quoteUpdateRequestAttributesTransfer
@@ -215,7 +208,7 @@ class QuoteResolver implements QuoteResolverInterface
         QuoteTransfer $quoteTransfer,
         ?QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null
     ): QuoteResponseTransfer {
-        if (!$this->isQuoteWriteAllowed($quoteTransfer, $customerTransfer)) {
+        if (!$this->isQuoteOperationAllowed($quoteTransfer, $customerTransfer, static::WRITE_SHARED_CART_PERMISSION_PLUGIN)) {
             $messageTransfer = new MessageTransfer();
             $messageTransfer->setValue(static::GLOSSARY_KEY_PERMISSION_FAILED);
             $this->messengerFacade->addErrorMessage($messageTransfer);
@@ -239,15 +232,19 @@ class QuoteResolver implements QuoteResolverInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param string $operation
      *
      * @return bool
      */
-    protected function isQuoteWriteAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
-    {
+    protected function isQuoteOperationAllowed(
+        QuoteTransfer $quoteTransfer,
+        CustomerTransfer $customerTransfer,
+        $operation
+    ): bool {
         return strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0
             || $this->isAnonymousCustomerQuote($quoteTransfer->getCustomerReference())
             || ($customerTransfer->getCompanyUserTransfer()
-                && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
+                && $this->can($operation, $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
             );
     }
 
