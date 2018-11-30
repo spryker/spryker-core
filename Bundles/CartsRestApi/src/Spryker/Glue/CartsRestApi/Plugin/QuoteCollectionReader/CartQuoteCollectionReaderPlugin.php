@@ -15,7 +15,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
-class QuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCollectionReaderPluginInterface
+class CartQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCollectionReaderPluginInterface
 {
     /**
      * {@inheritdoc}
