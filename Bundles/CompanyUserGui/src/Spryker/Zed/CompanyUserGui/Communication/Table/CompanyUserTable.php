@@ -209,7 +209,7 @@ class CompanyUserTable extends AbstractTable
             );
         }
 
-        return implode($buttons);
+        return implode(' ', $buttons);
     }
 
     /**

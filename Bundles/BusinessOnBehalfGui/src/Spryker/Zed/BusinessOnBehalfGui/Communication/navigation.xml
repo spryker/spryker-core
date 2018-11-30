@@ -16,7 +16,7 @@
                         <label>Attach to Business Unit</label>
                         <title>Attach to Business Unit</title>
                         <bundle>business-on-behalf-gui</bundle>
-                        <controller>create-company-user</controller>
+                        <controller>customer</controller>
                         <action>attach-customer</action>
                         <visible>0</visible>
                     </customer-business-unit-attach>
