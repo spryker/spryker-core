@@ -103,7 +103,7 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     protected function getEffectiveTaxRate(array $taxRates, $idOptionValue)
     {
         foreach ($taxRates as $taxRate) {
-            if ($taxRate[ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE] === $idOptionValue) {
+            if ((int)$taxRate[ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE] === $idOptionValue) {
                 return (float)$taxRate[ProductOptionQueryContainer::COL_MAX_TAX_RATE];
             }
         }
