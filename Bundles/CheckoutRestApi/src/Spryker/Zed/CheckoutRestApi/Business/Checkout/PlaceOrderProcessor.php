@@ -102,7 +102,11 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
 
         $quoteResponseTransfer = $this->deleteQuote($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createCheckoutResponseTransferFromQuoteErrorTransfer($quoteResponseTransfer);
+            return $this->createQuoteResponseError(
+                $quoteResponseTransfer,
+                CheckoutRestApiConfig::RESPONSE_CODE_UNABLE_TO_DELETE_CART,
+                CheckoutRestApiConfig::RESPONSE_DETAILS_UNABLE_TO_DELETE_CART
+            );
         }
 
         return $this->createRestCheckoutResponseTransfer($checkoutResponseTransfer);
@@ -126,7 +130,11 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         $quoteResponseTransfer = $this->cartFacade->validateQuote($quoteTransfer);
 
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
-            return $this->createCheckoutResponseTransferFromQuoteErrorTransfer($quoteResponseTransfer);
+            return $this->createQuoteResponseError(
+                $quoteResponseTransfer,
+                CheckoutRestApiConfig::RESPONSE_CODE_CHECKOUT_DATA_INVALID,
+                CheckoutRestApiConfig::RESPONSE_DETAILS_CHECKOUT_DATA_INVALID
+            );
         }
 
         return null;
@@ -181,19 +189,24 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     * @param string $responseCode
+     * @param string $responseDetail
      *
      * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
      */
-    protected function createCheckoutResponseTransferFromQuoteErrorTransfer(QuoteResponseTransfer $quoteResponseTransfer): RestCheckoutResponseTransfer
-    {
+    protected function createQuoteResponseError(
+        QuoteResponseTransfer $quoteResponseTransfer,
+        string $responseCode,
+        string $responseDetail
+    ): RestCheckoutResponseTransfer {
         if ($quoteResponseTransfer->getErrors()->count() === 0) {
             return (new RestCheckoutResponseTransfer())
                 ->setIsSuccess(false)
                 ->addError(
                     (new RestCheckoutErrorTransfer())
                         ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                        ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CHECKOUT_DATA_INVALID)
-                        ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CHECKOUT_DATA_INVALID)
+                        ->setCode($responseCode)
+                        ->setDetail($responseDetail)
                 );
         }
 
@@ -203,7 +216,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
             $restCheckoutResponseTransfer->addError(
                 (new RestCheckoutErrorTransfer())
                     ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CHECKOUT_DATA_INVALID)
+                    ->setCode($responseCode)
                     ->setDetail($quoteErrorTransfer->getMessage())
             );
         }
