@@ -166,12 +166,13 @@ class Calculator implements CalculatorInterface
      */
     protected function filterExclusiveDiscounts(array $collectedDiscountTransfers): array
     {
-        $exclusiveDiscounts = array_filter($collectedDiscountTransfers, function (CollectedDiscountTransfer $collectedDiscountTransfer) {
-            return $collectedDiscountTransfer->getDiscount()->getIsExclusive();
-        });
+        $exclusiveDiscounts = [];
+        foreach ($collectedDiscountTransfers as $collectedDiscountTransfer) {
+            if ($collectedDiscountTransfer->getDiscount()->getIsExclusive()) {
+                $exclusiveDiscounts[] = $collectedDiscountTransfer;
 
-        if (!empty($exclusiveDiscounts)) {
-            return array_slice($exclusiveDiscounts, 0, 1);
+                return $exclusiveDiscounts;
+            }
         }
 
         return $collectedDiscountTransfers;
