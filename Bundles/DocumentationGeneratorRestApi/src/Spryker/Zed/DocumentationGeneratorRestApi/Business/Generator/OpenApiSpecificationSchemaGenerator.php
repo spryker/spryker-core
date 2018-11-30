@@ -111,16 +111,12 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @throws \Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidTransferClassException
-     *
      * @return string
      */
     public function addRequestSchemaForPlugin(ResourceRoutePluginInterface $plugin): string
     {
-        $transferClassName = $plugin->getResourceAttributesClassName();
-        if (!$this->resourceTransferAnalyzer->isTransferValid($transferClassName)) {
-            throw new InvalidTransferClassException(sprintf(static::MESSAGE_INVALID_TRANSFER_CLASS, get_class($plugin)));
-        }
+        $transferClassName = $this->resolveTransferClassNameForPlugin($plugin);
+        $this->validatePluginTransfer($plugin, $transferClassName);
 
         if (!$this->isRequestSchemaRequired($transferClassName)) {
             return '';
@@ -141,19 +137,12 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string|null $transferClassName
      *
-     * @throws \Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidTransferClassException
-     *
      * @return string
      */
     public function addResponseResourceSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?string $transferClassName = null): string
     {
-        if (!$transferClassName) {
-            $transferClassName = $plugin->getResourceAttributesClassName();
-        }
-
-        if (!$this->resourceTransferAnalyzer->isTransferValid($transferClassName)) {
-            throw new InvalidTransferClassException(sprintf(static::MESSAGE_INVALID_TRANSFER_CLASS, get_class($plugin)));
-        }
+        $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $transferClassName);
+        $this->validatePluginTransfer($plugin, $transferClassName);
 
         $resourceRelationships = $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
 
@@ -173,19 +162,12 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string|null $transferClassName
      *
-     * @throws \Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidTransferClassException
-     *
      * @return string
      */
     public function addResponseCollectionSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?string $transferClassName = null): string
     {
-        if (!$transferClassName) {
-            $transferClassName = $plugin->getResourceAttributesClassName();
-        }
-
-        if (!$this->resourceTransferAnalyzer->isTransferValid($transferClassName)) {
-            throw new InvalidTransferClassException(sprintf(static::MESSAGE_INVALID_TRANSFER_CLASS, get_class($plugin)));
-        }
+        $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $transferClassName);
+        $this->validatePluginTransfer($plugin, $transferClassName);
 
         $resourceRelationships = $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
 
@@ -496,5 +478,31 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string|null $transferClassName
+     *
+     * @return string
+     */
+    protected function resolveTransferClassNameForPlugin(ResourceRoutePluginInterface $plugin, ?string $transferClassName = null): string
+    {
+        return $transferClassName ?? $plugin->getResourceAttributesClassName();
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string $transferClassName
+     *
+     * @throws \Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidTransferClassException
+     *
+     * @return void
+     */
+    protected function validatePluginTransfer(ResourceRoutePluginInterface $plugin, string $transferClassName): void
+    {
+        if (!$this->resourceTransferAnalyzer->isTransferValid($transferClassName)) {
+            throw new InvalidTransferClassException(sprintf(static::MESSAGE_INVALID_TRANSFER_CLASS, get_class($plugin)));
+        }
     }
 }
