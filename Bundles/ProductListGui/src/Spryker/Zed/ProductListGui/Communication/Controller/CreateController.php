@@ -78,18 +78,6 @@ class CreateController extends ProductListAbstractController
             static::URL_PARAM_ID_PRODUCT_LIST => $idProductList,
         ];
 
-        return $this->generateUrl(RoutingConstants::URL_EDIT, $query);
-    }
-
-    /**
-     * @param string $url
-     * @param array $query
-     * @param array $options
-     *
-     * @return string
-     */
-    protected function generateUrl(string $url, array $query = [], array $options = []): string
-    {
-         return Url::generate($url, $query, $options)->build();
+        return Url::generate(RoutingConstants::URL_EDIT, $query, [])->build();
     }
 }
