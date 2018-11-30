@@ -74,6 +74,13 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
                 ->addError($customerValidationError);
         }
 
+        $paymentsError = $this->validatePayments($restCheckoutRequestAttributesTransfer);
+        if ($paymentsError !== null) {
+            return $this->restResourceBuilder
+                ->createRestResponse()
+                ->addError($paymentsError);
+        }
+
         $restCustomerTransfer = $this->customerMapper->mapRestCustomerTransferFromRestCheckoutRequest($restRequest, $restCheckoutRequestAttributesTransfer);
         $restCheckoutRequestAttributesTransfer->setCustomer($restCustomerTransfer);
 
@@ -139,6 +146,23 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
                 ->setStatus(Response::HTTP_BAD_REQUEST)
                 ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_USER_IS_NOT_SPECIFIED)
                 ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_USER_IS_NOT_SPECIFIED);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
+     */
+    protected function validatePayments(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?RestErrorMessageTransfer
+    {
+        if ($restCheckoutRequestAttributesTransfer->getPayments()->count() > 1) {
+            return (new RestErrorMessageTransfer())
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_MULTIPLE_PAYMENTS_NOT_ALLOWED)
+                ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_MULTIPLE_PAYMENTS_NOT_ALLOWED);
         }
 
         return null;

@@ -65,8 +65,13 @@ class PaymentsRestApiFacadeTest extends Unit
 
         $actualQuote = $paymentsRestApiFacade->mapPaymentsToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
-        $this->assertNull($actualQuote->getPayment());
-        $this->assertCount(1, $actualQuote->getPayments());
+        $this->assertNotNull($actualQuote->getPayment());
+        $unlimitedPayment = $restCheckoutRequestAttributesTransfer->getPayments()->offsetGet(0);
+        $this->assertEquals($unlimitedPayment->getPaymentProvider(), $actualQuote->getPayment()->getPaymentProvider());
+        $this->assertEquals($unlimitedPayment->getPaymentSelection(), $actualQuote->getPayment()->getPaymentSelection());
+        $this->assertEquals($unlimitedPayment->getPaymentMethod(), $actualQuote->getPayment()->getPaymentMethod());
+        $this->assertEquals($unlimitedPayment->getIsLimitedAmount(), $actualQuote->getPayment()->getIsLimitedAmount());
+        $this->assertCount(0, $actualQuote->getPayments());
     }
 
     /**
@@ -88,12 +93,6 @@ class PaymentsRestApiFacadeTest extends Unit
         $this->assertEquals($unlimitedPayment->getPaymentSelection(), $actualQuote->getPayment()->getPaymentSelection());
         $this->assertEquals($unlimitedPayment->getPaymentMethod(), $actualQuote->getPayment()->getPaymentMethod());
         $this->assertEquals($unlimitedPayment->getIsLimitedAmount(), $actualQuote->getPayment()->getIsLimitedAmount());
-        $limitedPayment = $restCheckoutRequestAttributesTransfer->getPayments()->offsetGet(1);
-        $actualLimitedPayment = $actualQuote->getPayments()->offsetGet(0);
-        $this->assertEquals($limitedPayment->getPaymentProvider(), $actualLimitedPayment->getPaymentProvider());
-        $this->assertEquals($limitedPayment->getPaymentSelection(), $actualLimitedPayment->getPaymentSelection());
-        $this->assertEquals($limitedPayment->getPaymentMethod(), $actualLimitedPayment->getPaymentMethod());
-        $this->assertEquals($limitedPayment->getIsLimitedAmount(), $actualLimitedPayment->getIsLimitedAmount());
     }
 
     /**

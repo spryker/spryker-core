@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PaymentsRestApi\Business\Quote;
 
-use ArrayObject;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
@@ -26,34 +25,12 @@ class PaymentQuoteMapper implements PaymentQuoteMapperInterface
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
         $restPaymentTransfers = $restCheckoutRequestAttributesTransfer->getPayments();
-        $quoteTransfer = $this->setFirstPaymentMethodWithUnlimitedAmountToQuote($restPaymentTransfers, $quoteTransfer);
 
-        foreach ($restPaymentTransfers as $restPaymentTransfer) {
-            if (!$quoteTransfer->getPayment() || $quoteTransfer->getPayment()->getPaymentSelection() !== $restPaymentTransfer->getPaymentSelection()) {
-                $quoteTransfer->addPayment($this->preparePaymentTransfer($restPaymentTransfer));
-            }
+        if (!$restPaymentTransfers->count()) {
+            return $quoteTransfer;
         }
 
-        return $quoteTransfer;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\RestPaymentTransfer[] $restPaymentTransfers
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function setFirstPaymentMethodWithUnlimitedAmountToQuote(
-        ArrayObject $restPaymentTransfers,
-        QuoteTransfer $quoteTransfer
-    ): QuoteTransfer {
-        foreach ($restPaymentTransfers as $restPaymentTransfer) {
-            if (!$restPaymentTransfer->getIsLimitedAmount()) {
-                $quoteTransfer->setPayment($this->preparePaymentTransfer($restPaymentTransfer));
-
-                return $quoteTransfer;
-            }
-        }
+        $quoteTransfer->setPayment($this->preparePaymentTransfer($restPaymentTransfers->offsetGet(0)));
 
         return $quoteTransfer;
     }

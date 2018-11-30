@@ -26,6 +26,7 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_CART_IS_EMPTY = '1104';
     public const RESPONSE_CODE_USER_IS_NOT_SPECIFIED = '1105';
     public const RESPONSE_CODE_UNABLE_TO_DELETE_CART = '1106';
+    public const RESPONSE_CODE_MULTIPLE_PAYMENTS_NOT_ALLOWED = '1107';
 
     public const RESPONSE_DETAILS_CHECKOUT_DATA_INVALID = 'Checkout data is invalid.';
     public const RESPONSE_DETAILS_ORDER_NOT_PLACED = 'Order could not be placed.';
@@ -33,6 +34,7 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAILS_CART_IS_EMPTY = 'Cart is empty.';
     public const RESPONSE_DETAILS_USER_IS_NOT_SPECIFIED = 'One of Authorization or X-Anonymous-Customer-Unique-Id headers is required.';
     public const RESPONSE_DETAILS_UNABLE_TO_DELETE_CART = 'Unable to delete cart.';
+    public const RESPONSE_DETAILS_MULTIPLE_PAYMENTS_NOT_ALLOWED = 'Multiple payments are not allowed.';
 
     protected const PAYMENT_REQUIRED_FIELDS = [];
     protected const PAYMENT_METHOD_REQUIRED_FIELDS = [];
