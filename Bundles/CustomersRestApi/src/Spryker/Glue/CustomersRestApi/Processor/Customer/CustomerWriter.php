@@ -106,7 +106,7 @@ class CustomerWriter implements CustomerWriterInterface
         }
 
         if ($restCustomersAttributesTransfer->getPassword() !== $restCustomersAttributesTransfer->getConfirmPassword()) {
-            return $this->restApiError->addPasswordsDoNotMatchError($restResponse, static::FIELD_NAME_PASSWORD, self::FIELD_NAME_NEW_PASSWORD);
+            return $this->restApiError->addPasswordsDoNotMatchError($restResponse, static::FIELD_NAME_PASSWORD, static::FIELD_NAME_CONFIRM_PASSWORD);
         }
 
         $customerTransfer = (new CustomerTransfer())->fromArray($restCustomersAttributesTransfer->toArray(), true);
@@ -174,7 +174,8 @@ class CustomerWriter implements CustomerWriterInterface
         }
 
         $customerResponseTransfer->getCustomerTransfer()->fromArray(
-            $this->getCustomerData($restCustomerAttributesTransfer)
+            $this->getCustomerData($restCustomerAttributesTransfer),
+            true
         );
 
         $customerResponseTransfer = $this->customerClient->updateCustomer($customerResponseTransfer->getCustomerTransfer());
