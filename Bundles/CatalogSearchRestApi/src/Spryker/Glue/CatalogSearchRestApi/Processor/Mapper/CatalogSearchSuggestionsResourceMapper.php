@@ -6,7 +6,7 @@
 
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\RestCatalogSearchSuggestionProductsAttributesTransfer;
+use Generated\Shared\Transfer\RestCatalogSearchSuggestionProductsTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer;
 
 class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestionsResourceMapperInterface
@@ -160,13 +160,13 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         $restSearchResponseSuggestProducts = $restSearchResponseSuggest[static::SEARCH_RESPONSE_PRODUCT_ABSTRACT_KEY];
 
         foreach ($restSearchResponseSuggestProducts as $restSearchResponseSuggestProduct) {
-            $restCatalogSearchSuggestionProductsAttributes = new RestCatalogSearchSuggestionProductsAttributesTransfer();
-            $restCatalogSearchSuggestionProductsAttributes->fromArray(
+            $restCatalogSearchSuggestionProducts = new RestCatalogSearchSuggestionProductsTransfer();
+            $restCatalogSearchSuggestionProducts->fromArray(
                 $restSearchResponseSuggestProduct,
                 true
             );
 
-            $restSearchSuggestionsAttributesTransfer->addProducts($restCatalogSearchSuggestionProductsAttributes);
+            $restSearchSuggestionsAttributesTransfer->addProducts($restCatalogSearchSuggestionProducts);
         }
 
         return $restSearchSuggestionsAttributesTransfer;
