@@ -177,6 +177,6 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
     protected function isCustomerQuoteOwner(QuoteTransfer $quoteTransfer): bool
     {
         $customer = $quoteTransfer->getCustomer();
-        return strcmp($customer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
+        return $customer->getCustomerReference() === $quoteTransfer->getCustomerReference();
     }
 }

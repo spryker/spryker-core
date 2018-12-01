@@ -7,6 +7,7 @@
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer;
+use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface;
 
 class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestionsResourceMapperInterface
 {
@@ -25,6 +26,19 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
     protected const SEARCH_RESPONSE_NAME_KEY = 'name';
 
     /**
+     * @var \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface
+     */
+    protected $currencyClient;
+
+    /**
+     * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface $currencyClient
+     */
+    public function __construct(CatalogSearchRestApiToCurrencyClientInterface $currencyClient)
+    {
+        $this->currencyClient = $currencyClient;
+    }
+
+    /**
      * @return array
      */
     public function getEmptySearchResponse(): array
@@ -41,15 +55,14 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
 
     /**
      * @param array $restSearchResponse
-     * @param string $currency
      *
      * @return \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer
      */
-    public function mapSuggestionsToRestAttributesTransfer(array $restSearchResponse, string $currency): RestCatalogSearchSuggestionsAttributesTransfer
+    public function mapSuggestionsToRestAttributesTransfer(array $restSearchResponse): RestCatalogSearchSuggestionsAttributesTransfer
     {
         $restSuggestionsAttributesTransfer = new RestCatalogSearchSuggestionsAttributesTransfer();
         $restSuggestionsAttributesTransfer->fromArray($restSearchResponse, true);
-        $restSuggestionsAttributesTransfer->setCurrency($currency);
+        $restSuggestionsAttributesTransfer->setCurrency($this->currencyClient->getCurrent()->getCode());
 
         $restSuggestionsAttributesTransfer = $this->mapCustomFields($restSuggestionsAttributesTransfer, $restSearchResponse);
 

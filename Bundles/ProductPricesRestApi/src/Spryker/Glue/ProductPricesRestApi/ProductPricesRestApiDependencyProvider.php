@@ -9,10 +9,12 @@ namespace Spryker\Glue\ProductPricesRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
+use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientBridge;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientBridge;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductClientBridge;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductStorageClientBridge;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientBridge;
+use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToStoreClientBridge;
 
 /**
  * @method \Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiConfig getConfig()
@@ -23,6 +25,8 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
     public const CLIENT_PRICE = 'CLIENT_PRICE';
+    public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
+    public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -32,11 +36,12 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-
         $container = $this->addPriceProductStorageClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addPriceProductClient($container);
         $container = $this->addPriceClient($container);
+        $container = $this->addCurrencyClient($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -100,6 +105,36 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
             return new ProductPricesRestApiToPriceClientBridge(
                 $container->getLocator()->price()->client()
             );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addCurrencyClient(Container $container): Container
+    {
+        $container[static::CLIENT_CURRENCY] = function (Container $container) {
+            return new ProductPricesRestApiToCurrencyClientBridge(
+                $container->getLocator()->currency()->client()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container[static::CLIENT_STORE] = function (Container $container) {
+            return new ProductPricesRestApiToStoreClientBridge($container->getLocator()->store()->client());
         };
 
         return $container;
