@@ -2,8 +2,6 @@ carts:
   post:
     priceMode:
       - NotBlank
-      - Choice:
-          choices: [NET_MODE, GROSS_MODE]
     currency:
       - NotBlank
     store:
