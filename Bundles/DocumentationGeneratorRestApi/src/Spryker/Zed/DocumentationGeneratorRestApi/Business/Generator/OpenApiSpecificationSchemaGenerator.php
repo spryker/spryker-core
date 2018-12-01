@@ -102,8 +102,6 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     public function addRequestSchemaForPlugin(ResourceRoutePluginInterface $plugin): string
     {
         $transferClassName = $this->resolveTransferClassNameForPlugin($plugin);
-        $this->validatePluginTransfer($plugin, $transferClassName);
-
         if (!$this->isRequestSchemaRequired($transferClassName)) {
             return '';
         }
@@ -128,8 +126,6 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     public function addResponseResourceSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?string $transferClassName = null): string
     {
         $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $transferClassName);
-        $this->validatePluginTransfer($plugin, $transferClassName);
-
         $resourceRelationships = $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
 
         $responseSchemaName = $this->resourceTransferAnalyzer->createResponseResourceSchemaNameFromTransferClassName($transferClassName);
@@ -155,8 +151,6 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     public function addResponseCollectionSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?string $transferClassName = null): string
     {
         $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $transferClassName);
-        $this->validatePluginTransfer($plugin, $transferClassName);
-
         $resourceRelationships = $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
 
         $responseSchemaName = $this->resourceTransferAnalyzer->createResponseCollectionSchemaNameFromTransferClassName($transferClassName);
@@ -307,7 +301,10 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      */
     protected function resolveTransferClassNameForPlugin(ResourceRoutePluginInterface $plugin, ?string $transferClassName = null): string
     {
-        return $transferClassName ?? $plugin->getResourceAttributesClassName();
+        $transferClassName = $transferClassName ?? $plugin->getResourceAttributesClassName();
+        $this->validatePluginTransfer($plugin, $transferClassName);
+
+        return $transferClassName;
     }
 
     /**

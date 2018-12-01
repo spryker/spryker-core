@@ -152,13 +152,12 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
      */
     public function createRequestSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer
     {
-        if (class_exists($metadataValue[static::KEY_TYPE])) {
-            $schemaName = $this->resourceTransferAnalyzer->createRequestAttributesSchemaNameFromTransferClassName($metadataValue[static::KEY_TYPE]);
-
-            return $this->createObjectSchemaTypeTransfer($metadataKey, $schemaName, $metadataValue);
+        if (!class_exists($metadataValue[static::KEY_TYPE])) {
+            return $this->createScalarSchemaTypeTransfer($metadataKey, $metadataValue[static::KEY_TYPE]);
         }
+        $schemaName = $this->resourceTransferAnalyzer->createRequestAttributesSchemaNameFromTransferClassName($metadataValue[static::KEY_TYPE]);
 
-        return $this->createScalarSchemaTypeTransfer($metadataKey, $metadataValue[static::KEY_TYPE]);
+        return $this->createObjectSchemaTypeTransfer($metadataKey, $schemaName, $metadataValue);
     }
 
     /**
@@ -169,13 +168,12 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
      */
     public function createResponseSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer
     {
-        if (class_exists($metadataValue[static::KEY_TYPE])) {
-            $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($metadataValue[static::KEY_TYPE]);
-
-            return $this->createObjectSchemaTypeTransfer($metadataKey, $schemaName, $metadataValue);
+        if (!class_exists($metadataValue[static::KEY_TYPE])) {
+            return $this->createScalarSchemaTypeTransfer($metadataKey, $metadataValue[static::KEY_TYPE]);
         }
+        $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($metadataValue[static::KEY_TYPE]);
 
-        return $this->createScalarSchemaTypeTransfer($metadataKey, $metadataValue[static::KEY_TYPE]);
+        return $this->createObjectSchemaTypeTransfer($metadataKey, $schemaName, $metadataValue);
     }
 
     /**
