@@ -10,6 +10,7 @@ namespace Spryker\Glue\CatalogSearchProductsResourceRelationship\Processor\Expan
 use Spryker\Glue\CatalogSearchProductsResourceRelationship\Dependency\RestResource\CatalogSearchProductsResourceRelationshipToProductsRestApiInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements CatalogSearchSuggestionsProductsResourceRelationshipExpanderInterface
 {
@@ -68,11 +69,11 @@ class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements Ca
     }
 
     /**
-     * @param array $product
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $product
      *
      * @return string|null
      */
-    protected function findProductAbstractSkuInProduct(array $product): ?string
+    protected function findProductAbstractSkuInProduct(AbstractTransfer $product): ?string
     {
         if (isset($product[static::KEY_ABSTRACT_SKU_CAMEL_CASE])) {
             return $product[static::KEY_ABSTRACT_SKU_CAMEL_CASE];
