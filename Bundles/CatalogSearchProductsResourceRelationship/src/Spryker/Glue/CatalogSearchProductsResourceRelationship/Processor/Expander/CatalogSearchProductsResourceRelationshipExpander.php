@@ -45,7 +45,7 @@ class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearch
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCatalogSearchProductsAttributesTransfer[] $products
+     * @param \Generated\Shared\Transfer\RestCatalogSearchProductsTransfer[] $products
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
