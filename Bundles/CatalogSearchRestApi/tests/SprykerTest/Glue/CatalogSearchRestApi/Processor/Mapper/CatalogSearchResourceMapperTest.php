@@ -19,7 +19,6 @@ use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 use Generated\Shared\Transfer\SortSearchResultTransfer;
 use Spryker\Client\Currency\CurrencyClient;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientBridge;
-use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapper;
 
 /**
@@ -84,8 +83,6 @@ class CatalogSearchResourceMapperTest extends Unit
             ->catalogSearchResourceMapper
             ->mapPrices($this->restSearchAttributesTransfer, $this->getPriceModeInformation());
 
-        $this->assertEquals(static::REQUESTED_CURRENCY, $this->restSearchAttributesTransfer->getCurrency());
-
         $this->assertEquals(1, $this->restSearchAttributesTransfer->getProducts()->count());
         $this->assertEquals("cameras", $this->restSearchAttributesTransfer->getSpellingSuggestion());
 
@@ -133,7 +130,6 @@ class CatalogSearchResourceMapperTest extends Unit
                 $this->mockEmptyRestSearchResponseTransfer()
             );
 
-        $this->assertEquals(static::REQUESTED_CURRENCY, $this->restSearchAttributesTransfer->getCurrency());
         $this->assertEmpty($this->restSearchAttributesTransfer->getProducts());
     }
 
@@ -312,19 +308,6 @@ class CatalogSearchResourceMapperTest extends Unit
         $facetSearchResultTransfer->setConfig($facetConfig);
 
         return $facetSearchResultTransfer;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject | \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface
-     */
-    protected function getPriceClientMock()
-    {
-        $mock = $this
-            ->createMock(CatalogSearchRestApiToPriceClientInterface::class);
-        $mock->method('getCurrentPriceMode')
-            ->willReturn(static::GROSS_MODE);
-
-        return $mock;
     }
 
     /**

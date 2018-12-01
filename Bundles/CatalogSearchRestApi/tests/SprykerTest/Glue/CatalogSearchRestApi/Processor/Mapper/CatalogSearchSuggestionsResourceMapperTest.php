@@ -8,9 +8,7 @@
 namespace SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer;
-use Spryker\Client\Currency\CurrencyClient;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapper;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperInterface;
@@ -44,11 +42,6 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
      * @var \Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapper
      */
     protected $catalogSearchSuggestionsResourceMapper;
-
-    /**
-     * @var \Spryker\Client\Currency\CurrencyClient|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $currencyClientMock;
 
     /**
      * @return void
@@ -121,17 +114,6 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
             $this->assertArrayHasKey('name', $cmsPage);
             $this->assertArrayNotHasKey('id_cms_page', $cmsPage);
         }
-    }
-
-    /**
-     * @return void
-     */
-    protected function mockCurrencyClient(): void
-    {
-        $this->currencyClientMock = $this->getMockBuilder(CurrencyClient::class)->getMock();
-        $currencyTransfer = new CurrencyTransfer();
-        $currencyTransfer->setCode(static::REQUESTED_CURRENCY);
-        $this->currencyClientMock->method('getCurrent')->willReturn($currencyTransfer);
     }
 
     /**
