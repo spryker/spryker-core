@@ -59,6 +59,7 @@ class GlueApplicationConfig extends AbstractBundleConfig
             RequestConstantsInterface::HEADER_CONTENT_LANGUAGE,
             RequestConstantsInterface::HEADER_ACCEPT_LANGUAGE,
             RequestConstantsInterface::HEADER_AUTHORIZATION,
+            RequestConstantsInterface::HEADER_X_ANONYMOUS_CUSTOMER_UNIQUE_ID,
         ];
     }
 }

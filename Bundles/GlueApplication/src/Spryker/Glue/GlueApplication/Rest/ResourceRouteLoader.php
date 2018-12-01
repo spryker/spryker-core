@@ -165,7 +165,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
         }
 
         foreach ($resources as $resource) {
-            if ($resource[RequestConstantsInterface::ATTRIBUTE_TYPE] === $parentResourceType) {
+            if ($resource[RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE] === $parentResourceType) {
                 return true;
             }
         }

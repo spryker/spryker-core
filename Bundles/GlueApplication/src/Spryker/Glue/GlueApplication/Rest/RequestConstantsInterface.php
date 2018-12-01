@@ -25,9 +25,11 @@ interface RequestConstantsInterface
     public const HEADER_CONTENT_TYPE = 'content-type';
     public const HEADER_CONTENT_LANGUAGE = 'content-language';
     public const HEADER_AUTHORIZATION = 'authorization';
+    public const HEADER_X_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'x-anonymous-customer-unique-id';
     public const HEADER_ACCESS_CONTROL_ALLOW_METHODS = 'access-control-allow-methods';
     public const HEADER_ACCESS_CONTROL_ALLOW_ORIGIN = 'access-control-allow-origin';
     public const HEADER_ACCESS_CONTROL_ALLOW_HEADERS = 'access-control-allow-headers';
+    public const HEADER_ACCESS_CONTROL_ALLOW_CREDENTIALS = 'Access-Control-Allow-Credentials';
     public const HEADER_ACCESS_CONTROL_REQUEST_METHOD = 'access-control-request-method';
     public const HEADER_ACCESS_CONTROL_REQUEST_HEADER = 'access-control-request-header';
 
