@@ -130,10 +130,9 @@ class AddressWriter implements AddressWriterInterface
         $addressTransfer->fromArray($addressAttributesTransfer->modifiedToArray(), true);
 
         $customerTransfer = $this->customerClient->updateAddressAndCustomerDefaultAddresses($addressTransfer);
+        $modifiedAddress = $this->getModifiedAddress($addressTransfer, $customerTransfer);
 
-        $restResponse->addResource($this->getAddressResource($addressTransfer, $customerTransfer));
-
-        return $restResponse;
+        return $restResponse->addResource($this->getAddressResource($modifiedAddress, $customerTransfer));
     }
 
     /**
@@ -179,6 +178,25 @@ class AddressWriter implements AddressWriterInterface
         }
 
         return $lastAddedAddress;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $modifiedAddress
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function getModifiedAddress(
+        AddressTransfer $modifiedAddress,
+        CustomerTransfer $customerTransfer
+    ): AddressTransfer {
+        foreach ($customerTransfer->getAddresses()->getAddresses() as $addressTransfer) {
+            if ($addressTransfer->getIdCustomerAddress() === $modifiedAddress->getIdCustomerAddress()) {
+                return $addressTransfer;
+            }
+        }
+
+        return $modifiedAddress;
     }
 
     /**
