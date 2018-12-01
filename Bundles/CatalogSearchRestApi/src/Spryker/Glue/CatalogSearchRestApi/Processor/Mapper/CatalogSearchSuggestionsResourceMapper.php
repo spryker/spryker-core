@@ -7,7 +7,6 @@
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer;
-use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface;
 
 class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestionsResourceMapperInterface
 {
@@ -24,19 +23,6 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
     protected const SEARCH_RESPONSE_IMAGE_URL_SMALL_KEY = 'external_url_small';
     protected const SEARCH_RESPONSE_IMAGE_URL_LARGE_KEY = 'external_url_large';
     protected const SEARCH_RESPONSE_NAME_KEY = 'name';
-
-    /**
-     * @var \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface
-     */
-    protected $currencyClient;
-
-    /**
-     * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface $currencyClient
-     */
-    public function __construct(CatalogSearchRestApiToCurrencyClientInterface $currencyClient)
-    {
-        $this->currencyClient = $currencyClient;
-    }
 
     /**
      * @return array
@@ -62,7 +48,6 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
     {
         $restSuggestionsAttributesTransfer = new RestCatalogSearchSuggestionsAttributesTransfer();
         $restSuggestionsAttributesTransfer->fromArray($restSearchResponse, true);
-        $restSuggestionsAttributesTransfer->setCurrency($this->currencyClient->getCurrent()->getCode());
 
         $restSuggestionsAttributesTransfer = $this->mapCustomFields($restSuggestionsAttributesTransfer, $restSearchResponse);
 

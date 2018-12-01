@@ -54,7 +54,6 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
             ->fromArray($restSearchResponse[static::SORT_NAME]->toArray());
         $restSearchAttributesTransfer->setSort($restCatalogSearchSortAttributesTransfer);
 
-        $restSearchAttributesTransfer->setCurrency($this->currencyClient->getCurrent()->getCode());
         if (isset($restSearchResponse[static::NAME])) {
             $restSearchAttributesTransfer = $this->mapSearchResponseFacetTransfersToSearchAttributesTransfer(
                 $restSearchResponse[static::NAME],

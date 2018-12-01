@@ -4,7 +4,6 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestCatalogSearchAttributes">
-        <property name="currency" type="string"/>
         <property name="sort" type="RestCatalogSearchSortAttributes"/>
         <property name="pagination" type="RestCatalogSearchPaginationAttributes"/>
         <property name="products" type="RestCatalogSearchProductsAttributes[]"/>
@@ -59,7 +58,6 @@
     </transfer>
 
     <transfer name="RestCatalogSearchSuggestionsAttributes">
-        <property name="currency" type="string"/>
         <property name="completion" type="string[]"/>
         <property name="products" type="array"/>
         <property name="categories" type="array"/>
