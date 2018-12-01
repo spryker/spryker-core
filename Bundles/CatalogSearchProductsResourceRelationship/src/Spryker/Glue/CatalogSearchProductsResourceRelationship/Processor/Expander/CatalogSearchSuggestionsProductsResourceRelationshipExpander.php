@@ -13,7 +13,8 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements CatalogSearchSuggestionsProductsResourceRelationshipExpanderInterface
 {
-    protected const KEY_ABSTRACT_SKU = 'abstractSku';
+    protected const KEY_ABSTRACT_SKU = 'abstract_sku';
+    protected const KEY_ABSTRACT_SKU_CAMEL_CASE = 'abstractSku';
 
     /**
      * @var \Spryker\Glue\CatalogSearchProductsResourceRelationship\Dependency\RestResource\CatalogSearchProductsResourceRelationshipToProductsRestApiInterface
@@ -39,7 +40,7 @@ class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements Ca
         foreach ($resources as $resource) {
             /** @var \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer $attributes */
             $attributes = $resource->getAttributes();
-            if ($attributes->getProducts() !== null) {
+            if ($attributes->getProducts()->count()) {
                 $this->addAbstractProductsToResource($attributes->getProducts()->getArrayCopy(), $resource, $restRequest);
             }
         }
@@ -55,12 +56,32 @@ class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements Ca
     protected function addAbstractProductsToResource(array $products, RestResourceInterface $resource, RestRequestInterface $restRequest): void
     {
         foreach ($products as $product) {
-            if (isset($product[static::KEY_ABSTRACT_SKU])) {
-                $abstractProduct = $this->productsResource->findProductAbstractBySku($product[static::KEY_ABSTRACT_SKU], $restRequest);
+            $productAbstractSku = $this->findProductAbstractSkuInProduct($product);
+
+            if ($productAbstractSku) {
+                $abstractProduct = $this->productsResource->findProductAbstractBySku($productAbstractSku, $restRequest);
                 if ($abstractProduct) {
                     $resource->addRelationship($abstractProduct);
                 }
             }
         }
+    }
+
+    /**
+     * @param array $product
+     *
+     * @return string|null
+     */
+    protected function findProductAbstractSkuInProduct(array $product): ?string
+    {
+        if (isset($product[static::KEY_ABSTRACT_SKU_CAMEL_CASE])) {
+            return $product[static::KEY_ABSTRACT_SKU_CAMEL_CASE];
+        }
+
+        if (isset($product[static::KEY_ABSTRACT_SKU])) {
+            return $product[static::KEY_ABSTRACT_SKU];
+        }
+
+        return null;
     }
 }
