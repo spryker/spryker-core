@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
-use Generated\Shared\Transfer\PaymentMethodsTransfer;
+use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
@@ -88,7 +88,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
 
         $checkoutDataTransfer = (new RestCheckoutDataTransfer())
             ->setShipmentMethods($this->getShipmentMethodsTransfer($quoteTransfer))
-            ->setPaymentMethods($this->getPaymentMethodsTransfer($quoteTransfer))
+            ->setPaymentProviders($this->getPaymentProviders($quoteTransfer))
             ->setAddresses($this->addressReader->getAddressesTransfer($quoteTransfer));
 
         return (new RestCheckoutDataResponseTransfer())
@@ -109,11 +109,11 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
+     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
      */
-    protected function getPaymentMethodsTransfer(QuoteTransfer $quoteTransfer): PaymentMethodsTransfer
+    protected function getPaymentProviders(QuoteTransfer $quoteTransfer): PaymentProviderCollectionTransfer
     {
-        return $this->paymentFacade->getAvailableMethods($quoteTransfer);
+        return $this->paymentFacade->getAvailablePaymentProviders($quoteTransfer);
     }
 
     /**

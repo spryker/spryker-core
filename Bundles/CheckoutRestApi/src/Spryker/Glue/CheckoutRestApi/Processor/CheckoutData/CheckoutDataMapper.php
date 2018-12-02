@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
-use Generated\Shared\Transfer\RestPaymentMethodTransfer;
+use Generated\Shared\Transfer\RestPaymentProviderTransfer;
 use Generated\Shared\Transfer\RestShipmentMethodTransfer;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 
@@ -46,7 +46,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             $restCheckoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
-        $restCheckoutDataResponseAttributesTransfer = $this->mapPaymentMethods(
+        $restCheckoutDataResponseAttributesTransfer = $this->mapPaymentProviders(
             $restCheckoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
@@ -86,16 +86,17 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
-    protected function mapPaymentMethods(
+    protected function mapPaymentProviders(
         RestCheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
-        foreach ($checkoutDataTransfer->getPaymentMethods()->getMethods() as $paymentMethodTransfer) {
-            $restPaymentMethodTransfer = new RestPaymentMethodTransfer();
-            $restPaymentMethodTransfer->fromArray($paymentMethodTransfer->toArray(), true)
-                ->setRequiredRequestData($this->config->getRequiredRequestDataForMethod($paymentMethodTransfer->getMethodName()));
-
-            $restCheckoutDataResponseAttributesTransfer->addPaymentMethod($restPaymentMethodTransfer);
+        foreach ($checkoutDataTransfer->getPaymentProviders()->getPaymentProviders() as $paymentProviderTransfer) {
+            $restPaymentProviderTransfer = new RestPaymentProviderTransfer();
+            $restPaymentProviderTransfer->fromArray($paymentProviderTransfer->toArray(), true);
+            foreach ($restPaymentProviderTransfer->getPaymentMethods() as $restPaymentMethodTransfer) {
+                $restPaymentMethodTransfer->setRequiredRequestData($this->config->getRequiredRequestDataForMethod($restPaymentMethodTransfer->getPaymentSelection()));
+            }
+            $restCheckoutDataResponseAttributesTransfer->addPaymentProvider($restPaymentProviderTransfer);
         }
 
         return $restCheckoutDataResponseAttributesTransfer;

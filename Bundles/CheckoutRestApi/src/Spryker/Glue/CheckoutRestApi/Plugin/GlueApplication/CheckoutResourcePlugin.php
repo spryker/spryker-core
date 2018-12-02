@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CheckoutRestApi\Plugin;
+namespace Spryker\Glue\CheckoutRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
@@ -13,11 +13,11 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollect
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
-class CheckoutDataResourcePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
+class CheckoutResourcePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Configures available actions for checkout-data resource.
+     * - Configures available actions for checkout resource.
      *
      * @api
      *
@@ -27,7 +27,7 @@ class CheckoutDataResourcePlugin extends AbstractPlugin implements ResourceRoute
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection->addPost(CheckoutRestApiConfig::ACTION_CHECKOUT_DATA_POST, false);
+        $resourceRouteCollection->addPost(CheckoutRestApiConfig::ACTION_CHECKOUT_POST, false);
 
         return $resourceRouteCollection;
     }
@@ -41,7 +41,7 @@ class CheckoutDataResourcePlugin extends AbstractPlugin implements ResourceRoute
      */
     public function getResourceType(): string
     {
-        return CheckoutRestApiConfig::RESOURCE_CHECKOUT_DATA;
+        return CheckoutRestApiConfig::RESOURCE_CHECKOUT;
     }
 
     /**
@@ -53,7 +53,7 @@ class CheckoutDataResourcePlugin extends AbstractPlugin implements ResourceRoute
      */
     public function getController(): string
     {
-        return CheckoutRestApiConfig::CONTROLLER_CHECKOUT_DATA;
+        return CheckoutRestApiConfig::CONTROLLER_CHECKOUT;
     }
 
     /**
