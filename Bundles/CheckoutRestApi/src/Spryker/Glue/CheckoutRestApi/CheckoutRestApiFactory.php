@@ -16,6 +16,10 @@ use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReader;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReaderInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidator;
+use Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\Validator\SinglePaymentValidator;
+use Spryker\Glue\CheckoutRestApi\Processor\Validator\SinglePaymentValidatorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -33,7 +37,8 @@ class CheckoutRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->getResourceBuilder(),
             $this->createCheckoutDataMapper(),
-            $this->createCustomerMapper()
+            $this->createCustomerMapper(),
+            $this->createCheckoutRequestValidator()
         );
     }
 
@@ -51,10 +56,11 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function createCheckoutProcessor(): CheckoutProcessorInterface
     {
         return new CheckoutProcessor(
-            $this->getResourceBuilder(),
             $this->getClient(),
+            $this->getResourceBuilder(),
             $this->getGlossaryStorageClient(),
-            $this->createCustomerMapper()
+            $this->createCustomerMapper(),
+            $this->createCheckoutRequestValidator()
         );
     }
 
@@ -67,10 +73,36 @@ class CheckoutRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface
+     */
+    public function createCheckoutRequestValidator(): CheckoutRequestValidatorInterface
+    {
+        return new CheckoutRequestValidator(
+            $this->getCheckoutRequestAttributesValidatorPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\Validator\SinglePaymentValidatorInterface
+     */
+    public function createSinglePaymentValidator(): SinglePaymentValidatorInterface
+    {
+        return new SinglePaymentValidator();
+    }
+
+    /**
      * @return \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface
      */
     public function getGlossaryStorageClient(): CheckoutRestApiToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface[]
+     */
+    public function getCheckoutRequestAttributesValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR);
     }
 }

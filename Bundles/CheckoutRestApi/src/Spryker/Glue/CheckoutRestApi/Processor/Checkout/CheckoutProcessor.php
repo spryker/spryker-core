@@ -11,15 +11,16 @@ use ArrayObject;
 use Generated\Shared\Transfer\RestCheckoutErrorTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer;
+use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class CheckoutProcessor implements CheckoutProcessorInterface
 {
@@ -44,22 +45,35 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     protected $customerMapper;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
      * @param \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface $customerMapper
+     * @param \Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface $checkoutRequestValidator
      */
     public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
         CheckoutRestApiClientInterface $checkoutRestApiClient,
+        RestResourceBuilderInterface $restResourceBuilder,
         CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient,
-        CustomerMapperInterface $customerMapper
+        CustomerMapperInterface $customerMapper,
+        CheckoutRequestValidatorInterface $checkoutRequestValidator
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
         $this->customerMapper = $customerMapper;
+        $this->checkoutRequestValidator = $checkoutRequestValidator;
     }
+
+    /**
+     * @var \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface[]
+     */
+    protected $checkoutRequestAttributesValidatorPlugins;
+
+    /**
+     * @var \Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface
+     */
+    protected $checkoutRequestValidator;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -69,18 +83,9 @@ class CheckoutProcessor implements CheckoutProcessorInterface
      */
     public function placeOrder(RestRequestInterface $restRequest, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestResponseInterface
     {
-        $customerValidationError = $this->validateCustomer($restRequest);
-        if ($customerValidationError !== null) {
-            return $this->restResourceBuilder
-                ->createRestResponse()
-                ->addError($customerValidationError);
-        }
-
-        $paymentsError = $this->validatePayments($restCheckoutRequestAttributesTransfer);
-        if ($paymentsError !== null) {
-            return $this->restResourceBuilder
-                ->createRestResponse()
-                ->addError($paymentsError);
+        $restErrorCollectionTransfer = $this->checkoutRequestValidator->validateCheckoutRequest($restRequest, $restCheckoutRequestAttributesTransfer);
+        if ($restErrorCollectionTransfer->getRestErrors()->count()) {
+            return $this->createValidationErrorResponse($restErrorCollectionTransfer);
         }
 
         $restCustomerTransfer = $this->customerMapper->mapRestCustomerTransferFromRestCheckoutRequest($restRequest, $restCheckoutRequestAttributesTransfer);
@@ -150,36 +155,17 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestErrorCollectionTransfer $restErrorCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function validateCustomer(RestRequestInterface $restRequest): ?RestErrorMessageTransfer
+    protected function createValidationErrorResponse(RestErrorCollectionTransfer $restErrorCollectionTransfer)
     {
-        if ($restRequest->getUser() === null) {
-            return (new RestErrorMessageTransfer())
-                ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_USER_IS_NOT_SPECIFIED)
-                ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_USER_IS_NOT_SPECIFIED);
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+        foreach ($restErrorCollectionTransfer->getRestErrors() as $restErrorTransfer) {
+            $restResponse->addError($restErrorTransfer);
         }
 
-        return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
-     */
-    protected function validatePayments(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?RestErrorMessageTransfer
-    {
-        if ($restCheckoutRequestAttributesTransfer->getPayments()->count() > 1) {
-            return (new RestErrorMessageTransfer())
-                ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_MULTIPLE_PAYMENTS_NOT_ALLOWED)
-                ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_MULTIPLE_PAYMENTS_NOT_ALLOWED);
-        }
-
-        return null;
+        return $restResponse;
     }
 }

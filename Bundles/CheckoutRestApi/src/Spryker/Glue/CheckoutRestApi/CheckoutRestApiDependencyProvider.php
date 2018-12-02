@@ -17,6 +17,7 @@ use Spryker\Glue\Kernel\Container;
 class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+    public const PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR = 'PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -27,6 +28,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideDependencies($container);
         $container = $this->addGlossaryStorageClient($container);
+        $container = $this->addCheckoutRequestAttributesValidatorPlugins($container);
 
         return $container;
     }
@@ -43,5 +45,27 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addCheckoutRequestAttributesValidatorPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR] = function () {
+            return $this->getCheckoutRequestAttributesValidatorPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface[]
+     */
+    protected function getCheckoutRequestAttributesValidatorPlugins(): array
+    {
+        return [];
     }
 }
