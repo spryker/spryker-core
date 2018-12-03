@@ -16,9 +16,6 @@ use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
 use Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageBusinessFactory;
@@ -59,18 +56,11 @@ class ProductLabelStorageListenerTest extends Unit
     protected $productAbstractTransfer;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     protected function setUp()
     {
         parent::setUp();
-
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
 
         $this->productAbstractTransfer = $this->tester->haveProductAbstract();
         $this->productLabelTransfer = $this->tester->haveProductLabel();

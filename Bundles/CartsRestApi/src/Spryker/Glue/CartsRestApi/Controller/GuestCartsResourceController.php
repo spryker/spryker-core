@@ -17,6 +17,32 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class GuestCartsResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *      "getResourceById": {
+     *          "summary": [
+     *              "Retrieves a guest cart by id."
+     *          ],
+     *          "parameters": [{
+     *              "name": "X-Anonymous-Customer-Unique-Id",
+     *              "in": "header",
+     *              "required": true
+     *          }],
+     *          "responses": {
+     *              "404": "Cart not found."
+     *          }
+     *     },
+     *     "getCollection": {
+     *           "summary": [
+     *              "Retrieves list of customer's guest carts."
+     *          ],
+     *          "parameters": [{
+     *              "name": "X-Anonymous-Customer-Unique-Id",
+     *              "in": "header",
+     *              "required": true
+     *          }]
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
