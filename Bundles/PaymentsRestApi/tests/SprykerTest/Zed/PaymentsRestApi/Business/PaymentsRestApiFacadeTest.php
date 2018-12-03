@@ -49,50 +49,6 @@ class PaymentsRestApiFacadeTest extends Unit
         $this->assertEquals($unlimitedPayment->getPaymentProvider(), $actualQuote->getPayment()->getPaymentProvider());
         $this->assertEquals($unlimitedPayment->getPaymentSelection(), $actualQuote->getPayment()->getPaymentSelection());
         $this->assertEquals($unlimitedPayment->getPaymentMethod(), $actualQuote->getPayment()->getPaymentMethod());
-        $this->assertEquals($unlimitedPayment->getIsLimitedAmount(), $actualQuote->getPayment()->getIsLimitedAmount());
-    }
-
-    /**
-     * @return void
-     */
-    public function testPaymentRestApiFacadeWillMapSinglePaymentWithLimitedAmountToQuote(): void
-    {
-        /** @var \Spryker\Zed\PaymentsRestApi\Business\PaymentsRestApiFacadeInterface $paymentsRestApiFacade */
-        $paymentsRestApiFacade = $this->tester->getFacade();
-
-        $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithSinglePaymentWithLimitedAmount();
-        $quoteTransfer = $this->prepareQuoteTransfer();
-
-        $actualQuote = $paymentsRestApiFacade->mapPaymentsToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
-
-        $this->assertNotNull($actualQuote->getPayment());
-        $unlimitedPayment = $restCheckoutRequestAttributesTransfer->getPayments()->offsetGet(0);
-        $this->assertEquals($unlimitedPayment->getPaymentProvider(), $actualQuote->getPayment()->getPaymentProvider());
-        $this->assertEquals($unlimitedPayment->getPaymentSelection(), $actualQuote->getPayment()->getPaymentSelection());
-        $this->assertEquals($unlimitedPayment->getPaymentMethod(), $actualQuote->getPayment()->getPaymentMethod());
-        $this->assertEquals($unlimitedPayment->getIsLimitedAmount(), $actualQuote->getPayment()->getIsLimitedAmount());
-        $this->assertCount(0, $actualQuote->getPayments());
-    }
-
-    /**
-     * @return void
-     */
-    public function testPaymentRestApiFacadeWillMapMultiplePaymentsToQuote(): void
-    {
-        /** @var \Spryker\Zed\PaymentsRestApi\Business\PaymentsRestApiFacadeInterface $paymentsRestApiFacade */
-        $paymentsRestApiFacade = $this->tester->getFacade();
-
-        $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithMultiplePayments();
-        $quoteTransfer = $this->prepareQuoteTransfer();
-
-        $actualQuote = $paymentsRestApiFacade->mapPaymentsToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
-
-        $this->assertNotNull($actualQuote->getPayment());
-        $unlimitedPayment = $restCheckoutRequestAttributesTransfer->getPayments()->offsetGet(0);
-        $this->assertEquals($unlimitedPayment->getPaymentProvider(), $actualQuote->getPayment()->getPaymentProvider());
-        $this->assertEquals($unlimitedPayment->getPaymentSelection(), $actualQuote->getPayment()->getPaymentSelection());
-        $this->assertEquals($unlimitedPayment->getPaymentMethod(), $actualQuote->getPayment()->getPaymentMethod());
-        $this->assertEquals($unlimitedPayment->getIsLimitedAmount(), $actualQuote->getPayment()->getIsLimitedAmount());
     }
 
     /**
@@ -120,33 +76,6 @@ class PaymentsRestApiFacadeTest extends Unit
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
             ->withPayment($this->prepareRestPayment())
-            ->build();
-
-        return $restCheckoutRequestAttributesTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer
-     */
-    protected function prepareRestCheckoutRequestAttributesTransferWithSinglePaymentWithLimitedAmount(): RestCheckoutRequestAttributesTransfer
-    {
-        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
-        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withPayment($this->prepareRestPaymentWithLimitedAmount())
-            ->build();
-
-        return $restCheckoutRequestAttributesTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer
-     */
-    protected function prepareRestCheckoutRequestAttributesTransferWithMultiplePayments(): RestCheckoutRequestAttributesTransfer
-    {
-        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
-        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withPayment($this->prepareRestPayment())
-            ->withAnotherPayment($this->prepareRestPaymentWithLimitedAmount())
             ->build();
 
         return $restCheckoutRequestAttributesTransfer;
@@ -183,24 +112,6 @@ class PaymentsRestApiFacadeTest extends Unit
             'paymentProvider' => 'dummyPayment',
             'paymentMethod' => 'invoice',
             'paymentSelection' => 'dummyPaymentInvoice',
-            'isLimitedAmount' => false,
-        ]))
-            ->withDummyPayment()
-            ->withDummyPaymentInvoice();
-    }
-
-    /**
-     * @return \Generated\Shared\DataBuilder\RestPaymentBuilder
-     */
-    protected function prepareRestPaymentWithLimitedAmount(): RestPaymentBuilder
-    {
-        return (new RestPaymentBuilder([
-            'paymentProvider' => 'dummyPayment',
-            'paymentMethod' => 'creditCard',
-            'paymentSelection' => 'dummyPaymentCreditCard',
-            'isLimitedAmount' => true,
-        ]))
-            ->withDummyPayment()
-            ->withDummyPaymentCreditCard();
+        ]));
     }
 }

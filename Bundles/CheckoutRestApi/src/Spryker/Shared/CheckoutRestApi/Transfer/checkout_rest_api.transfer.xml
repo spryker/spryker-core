@@ -7,7 +7,7 @@
         <property name="addresses" type="Addresses" singular="address"/>
         <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod"/>
         <property name="paymentProviders" type="PaymentProviderCollection" singular="paymentProvider"/>
-    </transfer>
+    </transfer>PaymentsRestApiFacadeTest
 
     <transfer name="RestCheckoutError">
         <property name="status" type="int"/>
@@ -66,7 +66,6 @@
         <property name="paymentProvider" type="string" restRequestParameter="required"/>
         <property name="paymentMethod" type="string" restRequestParameter="required"/>
         <property name="paymentSelection" type="string" restRequestParameter="required"/>
-        <property name="isLimitedAmount" type="bool" restRequestParameter="required"/>
     </transfer>
 
     <transfer name="RestCheckoutDataResponseAttributes">
