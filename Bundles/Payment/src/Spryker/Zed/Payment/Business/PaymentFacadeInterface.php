@@ -97,15 +97,12 @@ interface PaymentFacadeInterface
     /**
      * Specification:
      * - Finds available payment providers.
-     * - Runs filter plugins.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
      */
-    public function getAvailablePaymentProviders(QuoteTransfer $quoteTransfer): PaymentProviderCollectionTransfer;
+    public function getAvailablePaymentProviders(): PaymentProviderCollectionTransfer;
 
     /**
      * Specification:

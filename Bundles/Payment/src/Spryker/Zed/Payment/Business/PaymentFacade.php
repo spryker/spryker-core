@@ -156,14 +156,12 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
      */
-    public function getAvailablePaymentProviders(QuoteTransfer $quoteTransfer): PaymentProviderCollectionTransfer
+    public function getAvailablePaymentProviders(): PaymentProviderCollectionTransfer
     {
         return $this->getFactory()
             ->createPaymentProviderReader()
-            ->getAvailablePaymentProviders($quoteTransfer);
+            ->getAvailablePaymentProviders();
     }
 }

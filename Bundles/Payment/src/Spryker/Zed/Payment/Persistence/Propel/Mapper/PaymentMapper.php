@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Payment\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\PaymentMethodTransfer;
+use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer;
 use Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType;
 
@@ -23,6 +25,13 @@ class PaymentMapper implements PaymentMapperInterface
         SalesPaymentMethodTypeTransfer $salesPaymentMethodTypeTransfer
     ): SalesPaymentMethodTypeTransfer {
         $salesPaymentMethodTypeTransfer->fromArray($productPackagingUnitEntity->toArray(), true);
+        $paymentProviderTransfer = (new PaymentProviderTransfer())
+            ->setName($productPackagingUnitEntity->getPaymentProvider());
+        $salesPaymentMethodTypeTransfer->setPaymentProvider($paymentProviderTransfer);
+
+        $paymentMethodTransfer = (new PaymentMethodTransfer())
+            ->setMethodName($productPackagingUnitEntity->getPaymentMethod());
+        $salesPaymentMethodTypeTransfer->setPaymentMethod($paymentMethodTransfer);
 
         return $salesPaymentMethodTypeTransfer;
     }

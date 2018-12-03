@@ -31,8 +31,8 @@
 
     <transfer name="SalesPaymentMethodType">
         <property name="idSalesPaymentMethodType" type="int" />
-        <property name="paymentProvider" type="string" />
-        <property name="paymentMethod" type="string" />
+        <property name="paymentProvider" type="PaymentProvider" />
+        <property name="paymentMethod" type="PaymentMethod" />
     </transfer>
 
     <transfer name="SalesPaymentMethodTypeCollection">
@@ -48,13 +48,12 @@
     </transfer>
 
     <transfer name="PaymentProvider">
-        <property name="providerName" type="string"/>
+        <property name="name" type="string"/>
         <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]" />
     </transfer>
 
     <transfer name="PaymentMethod">
         <property name="methodName" type="string" />
-        <property name="paymentSelection" type="string"/>
     </transfer>
 
     <transfer name="Totals">
