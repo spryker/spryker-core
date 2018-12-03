@@ -461,26 +461,6 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateAndUpdateWishlistShouldUpdateWishlistWhenNameIsNotUniqueInOtherCustomer()
-    {
-        $wishlistTransfer = new WishlistTransfer();
-
-        $newWhishListId = $this->wishlist->getIdWishlist() + 1;
-
-        $wishlistTransfer
-            ->setIdWishlist($newWhishListId)
-            ->setName($this->wishlist->getName())
-            ->setFkCustomer($this->customer->getIdCustomer());
-
-        $wishlistTransferResponseTransfer = $this->wishlistFacade->validateAndUpdateWishlist($wishlistTransfer);
-
-        $this->assertFalse($wishlistTransferResponseTransfer->getIsSuccess());
-        $this->assertCount(1, $wishlistTransferResponseTransfer->getErrors());
-    }
-
-    /**
-     * @return void
-     */
     public function testRemoveWishlistShouldRemoveItemsAsWell()
     {
         $wishlistTransfer = new WishlistTransfer();
