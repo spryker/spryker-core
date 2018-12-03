@@ -24,14 +24,14 @@ class CompanyUsersRestApiFactory extends AbstractFactory
         return new CompanyUserReader(
             $this->getCompanyUserClient(),
             $this->getResourceBuilder(),
-            $this->createCompanyUsersMapper()
+            $this->createCompanyUserResourceMapper()
         );
     }
 
     /**
      * @return \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapperInterface
      */
-    public function createCompanyUsersMapper(): CompanyUserResourceMapperInterface
+    public function createCompanyUserResourceMapper(): CompanyUserResourceMapperInterface
     {
         return new CompanyUserResourceMapper();
     }

@@ -79,14 +79,9 @@ class CompanyUserResourceMapper implements CompanyUserResourceMapperInterface
             $companyBusinessUnitTransfer->getAddressCollection()
         );
 
-        $restCompanyAttributesTransfer = $this->mapCompanyTransferToRestCompanyAttributesTransfer(
-            $companyBusinessUnitTransfer->getCompany()
-        );
-
         return (new RestCompanyBusinessUnitAttributesTransfer())
             ->fromArray($companyBusinessUnitTransfer->toArray(), true)
-            ->setBillingAddresses($restCompanyUnitAddressAttributesTransferCollection)
-            ->setCompany($restCompanyAttributesTransfer);
+            ->setBillingAddresses($restCompanyUnitAddressAttributesTransferCollection);
     }
 
     /**
