@@ -42,7 +42,7 @@ class CompanyUserResourceMapper implements CompanyUserResourceMapperInterface
         );
 
         return (new RestCompanyUserAttributesTransfer())
-            ->fromArray($companyUserTransfer->toArray())
+            ->fromArray($companyUserTransfer->toArray(), true)
             ->setCompanyBusinessUnit($restCompanyBusinessUnitAttributesTransfer)
             ->setCompany($restCompanyAttributesTransfer)
             ->setCompanyRoles($restCompanyRoleAttributesTransferCollection);
