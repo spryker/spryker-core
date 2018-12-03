@@ -226,7 +226,8 @@
     <xs:complexType name="parameter">
         <xs:attribute name="name" type="xs:string" use="required"/>
         <xs:attribute name="value" type="xs:string" use="optional"/>
-        <xs:attribute name="required" type="xs:string" use="optional"/>
+        <xs:attribute name="required" type="xs:boolean" use="optional"/>
+        <xs:attribute name="column" type="xs:string" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="validator">
@@ -361,6 +362,13 @@
             <xs:annotation>
                 <xs:documentation xml:lang="en">
                     Set to true to add a primary key on this column.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="unsigned" type="xs:boolean" default="false">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    Set to true when you want to allow only non-negative numbers in a column and you need a larger upper numeric range for the column for MySQL vendor.
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>
