@@ -21,7 +21,6 @@ class PaymentsQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPlu
     /**
      * {@inheritdoc}
      * - Maps rest request payments to quote.
-     * - Sets first payment method with unlimited amount as main payment method to quote.
      *
      * @api
      *
