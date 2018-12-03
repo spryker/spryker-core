@@ -70,12 +70,19 @@
         <property name="priceTypeName" type="string"/>
         <property name="grossAmount" type="int"/>
         <property name="netAmount" type="int"/>
+        <property name="currency" type="RestCurrency"/>
     </transfer>
 
     <transfer name="PriceModeConfiguration">
         <property name="currentPriceMode" type="string"/>
         <property name="grossModeIdentifier" type="string"/>
         <property name="netModeIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="RestCurrency">
+        <property name="code" type="string" />
+        <property name="name" type="string" />
+        <property name="symbol" type="string" />
     </transfer>
 
 </transfers>
