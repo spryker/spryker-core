@@ -12,7 +12,6 @@ use Generated\Shared\DataBuilder\CheckoutResponseBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\DataBuilder\CustomerResponseBuilder;
 use Generated\Shared\DataBuilder\PaymentBuilder;
-use Generated\Shared\DataBuilder\PaymentMethodsBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteResponseBuilder;
 use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
@@ -193,11 +192,7 @@ class CheckoutRestApiBusinessTester extends Actor
 
         $paymentProviderCollectionTransfer->addPaymentProvider($paymentProviderTransfer);
 
-
-        return (new PaymentMethodsBuilder())
-            ->withMethod($paymentMethodData1)
-            ->withAnotherMethod($paymentMethodData2)
-            ->build();
+        return $paymentProviderCollectionTransfer;
     }
 
     /**
