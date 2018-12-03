@@ -302,7 +302,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         }
 
         foreach ($results['file'] as $index => $fileResult) {
-            $fileResults[$index] = $this->filterFileResultOfIgnoredErrors($fileResult, $ignoreErrorPatterns);
+            $fileResults[$index] = $this->filterOutIgnoredErrors($fileResult, $ignoreErrorPatterns);
         }
 
         $results['file'] = $fileResults;
@@ -316,7 +316,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      *
      * @return array
      */
-    protected function filterFileResultOfIgnoredErrors(array $fileResult, array $ignoreErrorPatterns): array
+    protected function filterOutIgnoredErrors(array $fileResult, array $ignoreErrorPatterns): array
     {
         if (!array_key_exists('violation', $fileResult)) {
             return $fileResult;
