@@ -23,6 +23,7 @@ use Codeception\Test\Unit;
 class ArchitectureSnifferConfigurationBuilderTest extends Unit
 {
     protected const CONFIG_PRIORITY_NAME = 'priority';
+    protected const CONFIG_IGNORE_ERRORS = 'ignoreErrors';
 
     /**
      * @var \SprykerTest\Zed\Development\DevelopmentBusinessTester
@@ -69,9 +70,9 @@ class ArchitectureSnifferConfigurationBuilderTest extends Unit
             $this->tester->getZedDiscountModulePath()
         );
 
-        $aclPriority = $discountModuleArchitectureSnifferConfig[static::CONFIG_PRIORITY_NAME];
+        $discountPriority = $discountModuleArchitectureSnifferConfig[static::CONFIG_PRIORITY_NAME];
 
-        $this->assertEquals($aclPriority, $this->tester->getDefaultPriority());
+        $this->assertEquals($discountPriority, $this->tester->getDefaultPriority());
     }
 
     /**
@@ -83,9 +84,9 @@ class ArchitectureSnifferConfigurationBuilderTest extends Unit
             $this->tester->getZedCountryPath()
         );
 
-        $aclPriority = $countryModuleArchitectureSnifferConfig[static::CONFIG_PRIORITY_NAME];
+        $countryPriority = $countryModuleArchitectureSnifferConfig[static::CONFIG_PRIORITY_NAME];
 
-        $this->assertEquals($aclPriority, $this->tester->getDefaultPriority());
+        $this->assertEquals($countryPriority, $this->tester->getDefaultPriority());
     }
 
     /**
@@ -97,22 +98,36 @@ class ArchitectureSnifferConfigurationBuilderTest extends Unit
             $this->tester->getZedProductModulePath()
         );
 
-        $aclPriority = $productModuleArchitectureSnifferConfig[static::CONFIG_PRIORITY_NAME];
+        $productPriority = $productModuleArchitectureSnifferConfig[static::CONFIG_PRIORITY_NAME];
 
-        $this->assertEquals($aclPriority, $this->tester->getDefaultPriority());
+        $this->assertEquals($productPriority, $this->tester->getDefaultPriority());
     }
 
     /**
      * @return void
      */
-    public function testCustomFolderHasDefaultPriorityBecauseConfigFileDoesNotHaveArchitectureSnifferBlock(): void
+    public function testCustomDirectoryHasDefaultPriorityBecauseConfigFileDoesNotHaveArchitectureSnifferBlock(): void
     {
-        $customFolderArchitectureSnifferConfig = $this->tester->createArchitectureSnifferConfigurationBuilder()->getConfiguration(
+        $customDirectoryArchitectureSnifferConfig = $this->tester->createArchitectureSnifferConfigurationBuilder()->getConfiguration(
             $this->tester->getZedCustomPath()
         );
 
-        $aclPriority = $customFolderArchitectureSnifferConfig[static::CONFIG_PRIORITY_NAME];
+        $customDirectoryPriority = $customDirectoryArchitectureSnifferConfig[static::CONFIG_PRIORITY_NAME];
 
-        $this->assertEquals($aclPriority, $this->tester->getDefaultPriority());
+        $this->assertEquals($customDirectoryPriority, $this->tester->getDefaultPriority());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDiscountModuleHasIgnoreErrorPatternsInConfigFile(): void
+    {
+        $discountModuleArchitectureSnifferConfig = $this->tester->createArchitectureSnifferConfigurationBuilder()->getConfiguration(
+            $this->tester->getZedDiscountModulePath()
+        );
+
+        $discountModuleIgnoreErrorPatterns = $discountModuleArchitectureSnifferConfig[static::CONFIG_IGNORE_ERRORS];
+
+        $this->assertNotEmpty($discountModuleIgnoreErrorPatterns);
     }
 }
