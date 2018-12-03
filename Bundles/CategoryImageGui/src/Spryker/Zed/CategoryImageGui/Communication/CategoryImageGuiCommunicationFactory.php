@@ -8,22 +8,44 @@
 namespace Spryker\Zed\CategoryImageGui\Communication;
 
 use Spryker\Zed\CategoryImageGui\CategoryImageGuiDependencyProvider;
-use Spryker\Zed\CategoryImageGui\Communication\Form\DataProvider\LocaleProvider;
-use Spryker\Zed\CategoryImageGui\Communication\Form\ImageSetLocalizer\ImageSetLocalizer;
-use Spryker\Zed\CategoryImageGui\Communication\Form\ImageSetLocalizer\ImageSetLocalizerInterface;
+use Spryker\Zed\CategoryImageGui\Communication\Form\Transformer\ImageCollectionTransformer;
+use Spryker\Zed\CategoryImageGui\Communication\Form\Transformer\ImageSetCollectionTransformer;
+use Spryker\Zed\CategoryImageGui\Communication\Form\Transformer\LocaleTransformer;
 use Spryker\Zed\CategoryImageGui\Dependency\Facade\CategoryImageGuiToLocaleInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @method \Spryker\Zed\CategoryImageGui\CategoryImageGuiConfig getConfig()
+ */
 class CategoryImageGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\CategoryImageGui\Communication\Form\DataProvider\LocaleProvider
+     * @return \Symfony\Component\Form\DataTransformerInterface
      */
-    public function createLocaleProvider(): LocaleProvider
+    public function createImageSetCollectionTransformer(): DataTransformerInterface
     {
-        return new LocaleProvider(
+        return new ImageSetCollectionTransformer(
             $this->getLocaleFacade()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createLocaleTransformer(): DataTransformerInterface
+    {
+        return new LocaleTransformer(
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createImageCollectionTransformer(): DataTransformerInterface
+    {
+        return new ImageCollectionTransformer();
     }
 
     /**
@@ -32,15 +54,5 @@ class CategoryImageGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade(): CategoryImageGuiToLocaleInterface
     {
         return $this->getProvidedDependency(CategoryImageGuiDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryImageGui\Communication\Form\ImageSetLocalizer\ImageSetLocalizerInterface
-     */
-    public function createImageSetLocalizer(): ImageSetLocalizerInterface
-    {
-        return new ImageSetLocalizer(
-            $this->createLocaleProvider()
-        );
     }
 }

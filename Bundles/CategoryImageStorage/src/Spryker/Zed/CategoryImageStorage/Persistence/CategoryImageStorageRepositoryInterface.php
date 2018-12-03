@@ -13,8 +13,6 @@ namespace Spryker\Zed\CategoryImageStorage\Persistence;
 interface CategoryImageStorageRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param array $categoryImageSetToCategoryImageIds
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
@@ -22,8 +20,6 @@ interface CategoryImageStorageRepositoryInterface
     public function findCategoryIdsByCategoryImageSetToCategoryImageIds(array $categoryImageSetToCategoryImageIds);
 
     /**
-     * @api
-     *
      * @param array $categoryIds
      *
      * @return \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer[]
@@ -31,8 +27,6 @@ interface CategoryImageStorageRepositoryInterface
     public function findCategoryImageSetsByFkCategoryIn(array $categoryIds): array;
 
     /**
-     * @api
-     *
      * @param array $categoryIds
      *
      * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]

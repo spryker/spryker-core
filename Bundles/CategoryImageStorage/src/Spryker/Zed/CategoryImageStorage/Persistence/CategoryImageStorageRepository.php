@@ -19,7 +19,9 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     public const FK_CATEGORY = 'fkCategory';
 
     /**
-     * {@inheritdoc}
+     * @param array $categoryImageSetToCategoryImageIds
+     *
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function findCategoryIdsByCategoryImageSetToCategoryImageIds(array $categoryImageSetToCategoryImageIds)
     {
@@ -34,7 +36,9 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     }
 
     /**
-     * {@inheritdoc}
+     * @param array $categoryIds
+     *
+     * @return \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer[]
      */
     public function findCategoryImageSetsByFkCategoryIn(array $categoryIds): array
     {
@@ -43,7 +47,8 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
             ->innerJoinWithSpyLocale()
             ->innerJoinWithSpyCategoryImageSetToCategoryImage()
             ->useSpyCategoryImageSetToCategoryImageQuery()
-            ->innerJoinWithSpyCategoryImage()
+                ->innerJoinWithSpyCategoryImage()
+                ->orderBySortOrder()
             ->endUse()
             ->filterByFkCategory_In($categoryIds);
 
@@ -51,7 +56,9 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     }
 
     /**
-     * {@inheritdoc}
+     * @param array $categoryIds
+     *
+     * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]
      */
     public function findCategoryImageStorageByFkCategoryIn(array $categoryIds): array
     {
@@ -63,7 +70,9 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     }
 
     /**
-     * {@inheritdoc}
+     * @param array $categoryImageIds
+     *
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function findCategoryIdsByCategoryImageIds(array $categoryImageIds)
     {

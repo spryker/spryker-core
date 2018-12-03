@@ -28,6 +28,6 @@ class CategoryAfterCreatePlugin extends AbstractPlugin implements CategoryCreate
      */
     public function execute(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
-        return $this->getFacade()->createCategoryImageSetCollection($categoryTransfer);
+        return $this->getFacade()->createCategoryImageSets($categoryTransfer);
     }
 }

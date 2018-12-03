@@ -94,7 +94,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
      *
      * @return void
      */
-    protected function storeData(array $imagesSets, array $spyCategoryImageStorageEntities)
+    protected function storeData(array $imagesSets, array $spyCategoryImageStorageEntities): void
     {
         foreach ($imagesSets as $idCategory => $categorizedImageSets) {
             foreach ($categorizedImageSets as $localeName => $localizedImageSets) {

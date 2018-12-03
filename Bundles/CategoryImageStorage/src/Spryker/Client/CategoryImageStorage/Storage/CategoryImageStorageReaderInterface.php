@@ -17,5 +17,5 @@ interface CategoryImageStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetCollectionStorageTransfer|null
      */
-    public function getCategoryImageStorage(int $idCategory, string $localeName): ?CategoryImageSetCollectionStorageTransfer;
+    public function findCategoryImageStorage(int $idCategory, string $localeName): ?CategoryImageSetCollectionStorageTransfer;
 }

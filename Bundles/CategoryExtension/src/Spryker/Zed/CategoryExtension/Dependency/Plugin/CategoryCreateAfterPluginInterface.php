@@ -13,7 +13,7 @@ interface CategoryCreateAfterPluginInterface
 {
     /**
      * Specification:
-     * - Executes actions after category is created.
+     * - Execute actions after category is created.
      *
      * @api
      *

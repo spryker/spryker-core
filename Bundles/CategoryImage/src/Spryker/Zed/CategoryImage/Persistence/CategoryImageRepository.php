@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CategoryImage\Persistence;
 
+use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageQuery;
+use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -21,10 +23,9 @@ class CategoryImageRepository extends AbstractRepository implements CategoryImag
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    public function findCategoryImageSetsByCategoryId(int $idCategory, array $excludeIdCategoryImageSets = []): array
+    public function getCategoryImageSetsByCategoryId(int $idCategory, array $excludeIdCategoryImageSets = []): array
     {
-        $categoryImageSetEntityCollection = $this->getFactory()
-            ->createCategoryImageSetQuery()
+        $categoryImageSetEntityCollection = SpyCategoryImageSetQuery::create()
             ->joinWithSpyCategoryImageSetToCategoryImage()
             ->useSpyCategoryImageSetToCategoryImageQuery()
                 ->joinWithSpyCategoryImage()
@@ -44,18 +45,16 @@ class CategoryImageRepository extends AbstractRepository implements CategoryImag
      *
      * @return \Generated\Shared\Transfer\CategoryImageTransfer[]
      */
-    public function findCategoryImagesByCategoryImageSetId(int $idCategoryImageSet, array $excludeIdCategoryImage = []): array
+    public function getCategoryImagesByCategoryImageSetId(int $idCategoryImageSet, array $excludeIdCategoryImage = []): array
     {
-        $categoryImageCollection = $this->getFactory()
-            ->createCategoryImageQuery()
+        $categoryImageCollection = SpyCategoryImageQuery::create()
             ->useSpyCategoryImageSetToCategoryImageQuery()
                 ->filterByFkCategoryImageSet($idCategoryImageSet)
                 ->filterByFkCategoryImage($excludeIdCategoryImage, Criteria::NOT_IN)
             ->endUse()
             ->find();
 
-        $categoryImageSetEntity = $this->getFactory()
-            ->createCategoryImageSetQuery()
+        $categoryImageSetEntity = SpyCategoryImageSetQuery::create()
             ->filterByIdCategoryImageSet($idCategoryImageSet)
             ->findOne();
 

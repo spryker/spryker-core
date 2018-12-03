@@ -16,7 +16,7 @@ interface ReaderInterface
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    public function findCategoryImagesSetCollectionByIdCategory(int $idCategory): array;
+    public function getCategoryImagesSetCollectionByIdCategory(int $idCategory): array;
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer

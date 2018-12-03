@@ -41,4 +41,9 @@ interface CategoryImageGuiToLocaleInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocaleById(int $idLocale): LocaleTransfer;
+
+    /**
+     * @return string[]
+     */
+    public function getAvailableLocales(): array;
 }

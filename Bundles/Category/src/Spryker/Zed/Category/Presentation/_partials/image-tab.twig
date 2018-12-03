@@ -6,20 +6,10 @@
     {% endfilter %}
 </div>
 
-{% embed '@Gui/Partials/localized-ibox.twig' with {
-    'collapsed': false,
-    'localeName': 'default',
-    'categoryForm': categoryForm
-} only %}
-    {% block content %}
-        {% include '@Category/_partials/image-set-form.twig' %}
-    {% endblock %}
-{% endembed %}
-
-{% for localeTransfer in localeCollection %}
+{% for localeName in localeCollection %}
     {% embed '@Gui/Partials/localized-ibox.twig' with {
-        'collapsed': true,
-        'localeName': localeTransfer.localeName,
+        'collapsed': not loop.first,
+        'localeName': localeName,
         'categoryForm': categoryForm
     } only %}
         {% block content %}

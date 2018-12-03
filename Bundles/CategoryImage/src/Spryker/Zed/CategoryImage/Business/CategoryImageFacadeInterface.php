@@ -24,7 +24,7 @@ interface CategoryImageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    public function findCategoryImagesSetCollectionByCategoryId(int $idCategory): array;
+    public function getCategoryImagesSetsByCategoryId(int $idCategory): array;
 
     /**
      * Specification:
@@ -37,7 +37,7 @@ interface CategoryImageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function createCategoryImageSetCollection(CategoryTransfer $categoryTransfer): CategoryTransfer;
+    public function createCategoryImageSets(CategoryTransfer $categoryTransfer): CategoryTransfer;
 
     /**
      * Specification:
@@ -50,7 +50,7 @@ interface CategoryImageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function updateCategoryImageSetCollection(CategoryTransfer $categoryTransfer): CategoryTransfer;
+    public function updateCategoryImageSets(CategoryTransfer $categoryTransfer): CategoryTransfer;
 
     /**
      * Specification:

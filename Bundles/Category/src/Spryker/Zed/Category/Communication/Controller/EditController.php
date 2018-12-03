@@ -10,6 +10,7 @@ namespace Spryker\Zed\Category\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
+use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +34,6 @@ class EditController extends AbstractController
         $idCategory = $request->query->getInt(CategoryConstants::PARAM_ID_CATEGORY);
 
         $categoryTransfer = $this->getFacade()->findCategoryById($idCategory);
-        $localeProvider = $this->getFactory()->createLocaleProvider();
 
         if ($categoryTransfer === null) {
             $this->addErrorMessage(sprintf('Category with id %s doesn\'t exist', $request->get('id-category')));
@@ -63,8 +63,8 @@ class EditController extends AbstractController
             'categoryForm' => $form->createView(),
             'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
             'idCategory' => $this->castId($request->query->get(CategoryConstants::PARAM_ID_CATEGORY)),
-            'localeCollection' => $localeProvider->getLocaleCollection(),
-            'categoryFormEditTabs' => $this->getFactory()->createCategoryFormEditTabs()->createView(),
+            'localeCollection' => $this->getLocaleNames(),
+            'categoryFormTabs' => $this->getFactory()->createCategoryFormTabs()->createView(),
         ]);
     }
 
@@ -93,5 +93,18 @@ class EditController extends AbstractController
         );
 
         return $url->build();
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getLocaleNames(): array
+    {
+        $localeFacade = $this->getFactory()->getLocaleFacade();
+
+        return array_merge(
+            [CategoryConfig::DEFAULT_LOCALE_NAME],
+            $localeFacade->getAvailableLocales()
+        );
     }
 }

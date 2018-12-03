@@ -10,6 +10,7 @@ namespace Spryker\Zed\Category\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
+use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +31,6 @@ class CreateController extends AbstractController
     public function indexAction(Request $request)
     {
         $this->getFacade()->syncCategoryTemplate();
-        $localeProvider = $this->getFactory()->createLocaleProvider();
 
         $idParentNode = $this->readParentNodeId($request);
         $form = $this->getFactory()->createCategoryCreateForm($idParentNode);
@@ -53,8 +53,8 @@ class CreateController extends AbstractController
         return $this->viewResponse([
             'categoryForm' => $form->createView(),
             'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
-            'localeCollection' => $localeProvider->getLocaleCollection(),
-            'categoryFormCreateTabs' => $this->getFactory()->createCategoryFormAddTabs()->createView(),
+            'localeCollection' => $this->getLocaleNames(),
+            'categoryFormTabs' => $this->getFactory()->createCategoryFormTabs()->createView(),
         ]);
     }
 
@@ -99,5 +99,18 @@ class CreateController extends AbstractController
         );
 
         return $url->build();
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getLocaleNames(): array
+    {
+        $localeFacade = $this->getFactory()->getLocaleFacade();
+
+        return array_merge(
+            [CategoryConfig::DEFAULT_LOCALE_NAME],
+            $localeFacade->getAvailableLocales()
+        );
     }
 }

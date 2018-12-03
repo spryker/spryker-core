@@ -33,7 +33,7 @@ class Reader implements ReaderInterface
      */
     public function expandCategoryWithImageSetCollection(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
-        $categoryImageSetCollection = $this->findCategoryImagesSetCollectionByIdCategory(
+        $categoryImageSetCollection = $this->getCategoryImagesSetCollectionByIdCategory(
             $categoryTransfer->requireIdCategory()->getIdCategory()
         );
         if ($categoryImageSetCollection) {
@@ -50,8 +50,8 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    public function findCategoryImagesSetCollectionByIdCategory(int $idCategory): array
+    public function getCategoryImagesSetCollectionByIdCategory(int $idCategory): array
     {
-        return $this->categoryImageRepository->findCategoryImageSetsByCategoryId($idCategory);
+        return $this->categoryImageRepository->getCategoryImageSetsByCategoryId($idCategory);
     }
 }

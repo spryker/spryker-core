@@ -9,6 +9,6 @@ namespace Spryker\Zed\CategoryImage\Persistence\Propel;
 
 use Orm\Zed\CategoryImage\Persistence\Base\SpyCategoryImageSetToCategoryImage;
 
-class AbstractSpyCategoryImageSetToCategoryImage extends SpyCategoryImageSetToCategoryImage
+abstract class AbstractSpyCategoryImageSetToCategoryImage extends SpyCategoryImageSetToCategoryImage
 {
 }

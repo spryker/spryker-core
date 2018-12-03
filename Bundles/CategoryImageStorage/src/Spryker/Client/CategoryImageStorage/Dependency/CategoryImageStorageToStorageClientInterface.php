@@ -11,7 +11,7 @@ interface CategoryImageStorageToStorageClientInterface
 {
     /**
      * Specification:
-     *  - get data from storage by string key.
+     *  - Get data from storage by string key.
      *
      * @api
      *

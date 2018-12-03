@@ -7,11 +7,8 @@
 
 namespace Spryker\Zed\CategoryImageGui\Communication\Form;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,6 +21,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\CategoryImageGui\Communication\CategoryImageGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CategoryImageGui\CategoryImageGuiConfig getConfig()
  */
 class ImageSetForm extends AbstractType
 {
@@ -78,8 +76,7 @@ class ImageSetForm extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $this
-            ->addSetIdField($builder)
+        $this->addSetIdField($builder)
             ->addNameField($builder)
             ->addLocaleHiddenField($builder)
             ->addCategoryHiddenField($builder)
@@ -91,10 +88,9 @@ class ImageSetForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSetIdField(FormBuilderInterface $builder)
+    protected function addSetIdField(FormBuilderInterface $builder): self
     {
-        $builder
-            ->add(static::FIELD_ID, HiddenType::class, []);
+        $builder->add(static::FIELD_ID, HiddenType::class, []);
 
         return $this;
     }
@@ -104,7 +100,7 @@ class ImageSetForm extends AbstractType
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder)
+    protected function addNameField(FormBuilderInterface $builder): self
     {
         $builder
             ->add(static::FIELD_NAME, TextType::class, [
@@ -120,11 +116,13 @@ class ImageSetForm extends AbstractType
      *
      * @return $this
      */
-    protected function addLocaleHiddenField(FormBuilderInterface $builder)
+    protected function addLocaleHiddenField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_LOCALE, HiddenType::class);
         $builder->get(static::FIELD_LOCALE)
-            ->addModelTransformer($this->createLocaleModelTransformer());
+            ->addModelTransformer(
+                $this->getFactory()->createLocaleTransformer()
+            );
 
         return $this;
     }
@@ -134,7 +132,7 @@ class ImageSetForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCategoryHiddenField(FormBuilderInterface $builder)
+    protected function addCategoryHiddenField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_CATEGORY, HiddenType::class);
 
@@ -146,7 +144,7 @@ class ImageSetForm extends AbstractType
      *
      * @return $this
      */
-    protected function addImageCollectionForm(FormBuilderInterface $builder)
+    protected function addImageCollectionForm(FormBuilderInterface $builder): self
     {
         $builder
             ->add(static::CATEGORY_IMAGES, CollectionType::class, [
@@ -174,44 +172,9 @@ class ImageSetForm extends AbstractType
             ]);
 
         $builder->get(static::CATEGORY_IMAGES)->addModelTransformer(
-            $this->createArrayObjectModelTransformer()
+            $this->getFactory()->createImageCollectionTransformer()
         );
 
         return $this;
-    }
-
-    /**
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
-    protected function createArrayObjectModelTransformer(): CallbackTransformer
-    {
-        return new CallbackTransformer(
-            function ($value) {
-                return (array)$value;
-            },
-            function ($value) {
-                return new ArrayObject($value);
-            }
-        );
-    }
-
-    /**
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
-    protected function createLocaleModelTransformer(): CallbackTransformer
-    {
-        return new CallbackTransformer(
-            function (?LocaleTransfer $value) {
-                if ($value !== null) {
-                    return $value->getIdLocale();
-                }
-            },
-            function (?int $value) {
-                $localeFacade = $this->getFactory()->getLocaleFacade();
-                if ($value !== null) {
-                    return $localeFacade->getLocaleById($value);
-                }
-            }
-        );
     }
 }

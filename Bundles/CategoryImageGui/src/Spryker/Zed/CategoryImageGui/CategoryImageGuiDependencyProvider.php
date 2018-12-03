@@ -11,6 +11,9 @@ use Spryker\Zed\CategoryImageGui\Dependency\Facade\CategoryImageGuiToLocaleBridg
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CategoryImageGui\CategoryImageGuiConfig getConfig()
+ */
 class CategoryImageGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
@@ -21,6 +24,26 @@ class CategoryImageGuiDependencyProvider extends AbstractBundleDependencyProvide
      * @return \Spryker\Zed\Kernel\Container
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        return $this->addLocaleFacade($container);
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        return $this->addLocaleFacade($container);
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new CategoryImageGuiToLocaleBridge(

@@ -71,12 +71,12 @@ class Writer implements WriterInterface
      */
     protected function saveCategoryImageSetCollection(CategoryTransfer $categoryTransfer): void
     {
-        /** @var \Generated\Shared\Transfer\CategoryImageSetTransfer $imageSetTransfer */
-        foreach ($categoryTransfer->getImageSets() as $imageSetTransfer) {
-            $imageSetTransfer->setIdCategory(
+        /** @var \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer */
+        foreach ($categoryTransfer->getImageSets() as $categoryImageSetTransfer) {
+            $categoryImageSetTransfer->setIdCategory(
                 $categoryTransfer->requireIdCategory()->getIdCategory()
             );
-            $this->saveCategoryImageSet($imageSetTransfer);
+            $this->saveCategoryImageSet($categoryImageSetTransfer);
         }
     }
 
@@ -160,7 +160,7 @@ class Writer implements WriterInterface
         }
 
         $removedCategoryImageSetCollection = $this->categoryImageRepository
-            ->findCategoryImageSetsByCategoryId(
+            ->getCategoryImageSetsByCategoryId(
                 $categoryTransfer->getIdCategory(),
                 $validIdCategoryImageSetCollection
             );
@@ -193,7 +193,7 @@ class Writer implements WriterInterface
         }
 
         $missingCategoryImageCollection = $this->categoryImageRepository
-            ->findCategoryImagesByCategoryImageSetId(
+            ->getCategoryImagesByCategoryImageSetId(
                 $categoryImageSetTransfer->getIdCategoryImageSet(),
                 $excludeIdCategoryImageCollection
             );

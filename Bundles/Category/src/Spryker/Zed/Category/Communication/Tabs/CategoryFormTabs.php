@@ -11,8 +11,23 @@ use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
 use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
-abstract class AbstractCategoryFormTabs extends AbstractTabs
+class CategoryFormTabs extends AbstractTabs
 {
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\TabsViewTransfer
+     */
+    protected function build(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
+    {
+        $this
+            ->addGeneralTab($tabsViewTransfer)
+            ->addImageTab($tabsViewTransfer)
+            ->setFooter($tabsViewTransfer);
+
+        return $tabsViewTransfer;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *

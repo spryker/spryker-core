@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryImage\Persistence\Mapper;
+namespace Spryker\Zed\CategoryImage\Persistence\Propel\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
@@ -59,7 +59,7 @@ class CategoryImageMapper implements CategoryImageMapperInterface
             ->setIdCategory($categoryImageSetEntity->getFkCategory());
 
         $this->setCategoryImageSetLocale($categoryImageSetEntity, $categoryImageSetTransfer);
-        $this->setCategoryImages($categoryImageSetEntity, $categoryImageSetTransfer);
+        $this->hydrateCategoryImages($categoryImageSetEntity, $categoryImageSetTransfer);
 
         return $categoryImageSetTransfer;
     }
@@ -177,7 +177,7 @@ class CategoryImageMapper implements CategoryImageMapperInterface
      *
      * @return void
      */
-    protected function setCategoryImages(SpyCategoryImageSet $categoryImageSetEntity, CategoryImageSetTransfer $categoryImageSetTransfer)
+    protected function hydrateCategoryImages(SpyCategoryImageSet $categoryImageSetEntity, CategoryImageSetTransfer $categoryImageSetTransfer)
     {
         $criteria = new Criteria();
         $criteria->addAscendingOrderByColumn(SpyCategoryImageSetToCategoryImageTableMap::COL_SORT_ORDER);

@@ -25,7 +25,7 @@
             {{ form_start(categoryForm) }}
                 {% do categoryForm.localized_attributes.setRendered %}
                 {% do categoryForm.imageSets.setRendered %}
-            {{ tabs(categoryFormEditTabs, {
+            {{ tabs(categoryFormTabs, {
                 'categoryForm': categoryForm,
                 'currentLocale': currentLocale,
                 'localeCollection': localeCollection

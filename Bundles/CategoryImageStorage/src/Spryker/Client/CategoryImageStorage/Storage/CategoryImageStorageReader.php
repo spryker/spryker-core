@@ -38,9 +38,12 @@ class CategoryImageStorageReader implements CategoryImageStorageReaderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param int $idCategory
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetCollectionStorageTransfer|null
      */
-    public function getCategoryImageStorage(int $idCategory, string $localeName): ?CategoryImageSetCollectionStorageTransfer
+    public function findCategoryImageStorage(int $idCategory, string $localeName): ?CategoryImageSetCollectionStorageTransfer
     {
         $key = $this->generateKey($idCategory, $localeName);
         $categoryImageStorageData = $this->storageClient->get($key);

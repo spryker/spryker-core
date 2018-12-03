@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\CategoryImageGui\Communication\Form;
 
+use Spryker\Zed\CategoryImageGui\CategoryImageGuiConfig;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\CategoryImageGui\Communication\CategoryImageGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CategoryImageGui\CategoryImageGuiConfig getConfig()
  */
 class ImageSetCollectionForm extends AbstractType
 {
@@ -31,10 +33,8 @@ class ImageSetCollectionForm extends AbstractType
      */
     protected function addImageLocalizedForms(FormBuilderInterface $builder)
     {
-        $localeCollection = $this->getFactory()->createLocaleProvider()->getLocaleCollection(true);
-
-        foreach ($localeCollection as $localeTransfer) {
-            $this->addImageSetForm($builder, $localeTransfer->getLocaleName());
+        foreach ($this->getLocaleNames() as $localeName) {
+            $this->addImageSetForm($builder, $localeName);
         }
 
         return $this;
@@ -56,5 +56,18 @@ class ImageSetCollectionForm extends AbstractType
                 'prototype' => true,
                 'prototype_name' => '__image_set_name__',
             ]);
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getLocaleNames(): array
+    {
+        $localeFacade = $this->getFactory()->getLocaleFacade();
+
+        return array_merge(
+            [CategoryImageGuiConfig::DEFAULT_LOCALE_NAME],
+            $localeFacade->getAvailableLocales()
+        );
     }
 }

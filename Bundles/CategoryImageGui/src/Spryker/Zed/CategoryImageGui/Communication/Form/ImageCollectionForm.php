@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\CategoryImageGui\Communication\CategoryImageGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CategoryImageGui\CategoryImageGuiConfig getConfig()
  */
 class ImageCollectionForm extends AbstractType
 {
