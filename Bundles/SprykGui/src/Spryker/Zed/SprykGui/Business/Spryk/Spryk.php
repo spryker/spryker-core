@@ -243,6 +243,10 @@ class Spryk implements SprykInterface
      */
     protected function getUserInputForArgument(string $argumentName, array $formData)
     {
+        if (!isset($formData[$argumentName])) {
+            return null;
+        }
+
         return $formData[$argumentName];
     }
 

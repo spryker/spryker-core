@@ -47,7 +47,7 @@ use Spryker\Zed\Kernel\Container;
 class DiscountFacadeTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\Discount\BusinessTester
+     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
      */
     protected $tester;
 
@@ -828,6 +828,7 @@ class DiscountFacadeTest extends Unit
 
         $discountConditionTransfer = new DiscountConditionTransfer();
         $discountConditionTransfer->setDecisionRuleQueryString('sku = "123"');
+        $discountConditionTransfer->setMinimumItemAmount(1);
         $discountConfiguratorTransfer->setDiscountCondition($discountConditionTransfer);
 
         return $discountConfiguratorTransfer;
