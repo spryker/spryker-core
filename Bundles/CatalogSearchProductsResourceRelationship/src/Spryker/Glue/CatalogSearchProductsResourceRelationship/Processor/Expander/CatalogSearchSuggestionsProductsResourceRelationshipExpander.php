@@ -7,10 +7,10 @@
 
 namespace Spryker\Glue\CatalogSearchProductsResourceRelationship\Processor\Expander;
 
+use ArrayObject;
 use Spryker\Glue\CatalogSearchProductsResourceRelationship\Dependency\RestResource\CatalogSearchProductsResourceRelationshipToProductsRestApiInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements CatalogSearchSuggestionsProductsResourceRelationshipExpanderInterface
 {
@@ -41,8 +41,14 @@ class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements Ca
         foreach ($resources as $resource) {
             /** @var \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer $attributes */
             $attributes = $resource->getAttributes();
-            if ($attributes->getProducts()->count()) {
-                $this->addAbstractProductsToResource($attributes->getProducts()->getArrayCopy(), $resource, $restRequest);
+            $products = $attributes->getProducts();
+
+            if ($products instanceof ArrayObject) {
+                $products = $products->getArrayCopy();
+            }
+
+            if ($products) {
+                $this->addAbstractProductsToResource($products, $resource, $restRequest);
             }
         }
     }
@@ -57,32 +63,23 @@ class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements Ca
     protected function addAbstractProductsToResource(array $products, RestResourceInterface $resource, RestRequestInterface $restRequest): void
     {
         foreach ($products as $product) {
-            $productAbstractSku = $this->findProductAbstractSkuInProduct($product);
+            $productAbstractSku = '';
+            if (isset($product[static::KEY_ABSTRACT_SKU_CAMEL_CASE])) {
+                $productAbstractSku = $product[static::KEY_ABSTRACT_SKU_CAMEL_CASE];
+            }
 
-            if ($productAbstractSku) {
-                $abstractProduct = $this->productsResource->findProductAbstractBySku($productAbstractSku, $restRequest);
-                if ($abstractProduct) {
-                    $resource->addRelationship($abstractProduct);
-                }
+            if (isset($product[static::KEY_ABSTRACT_SKU])) {
+                $productAbstractSku = $product[static::KEY_ABSTRACT_SKU];
+            }
+
+            if (!$productAbstractSku) {
+                continue;
+            }
+
+            $abstractProduct = $this->productsResource->findProductAbstractBySku($productAbstractSku, $restRequest);
+            if ($abstractProduct) {
+                $resource->addRelationship($abstractProduct);
             }
         }
-    }
-
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $product
-     *
-     * @return string|null
-     */
-    protected function findProductAbstractSkuInProduct(AbstractTransfer $product): ?string
-    {
-        if (isset($product[static::KEY_ABSTRACT_SKU_CAMEL_CASE])) {
-            return $product[static::KEY_ABSTRACT_SKU_CAMEL_CASE];
-        }
-
-        if (isset($product[static::KEY_ABSTRACT_SKU])) {
-            return $product[static::KEY_ABSTRACT_SKU];
-        }
-
-        return null;
     }
 }
