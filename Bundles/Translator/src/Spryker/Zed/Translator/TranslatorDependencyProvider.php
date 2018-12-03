@@ -14,6 +14,9 @@ use Spryker\Zed\Kernel\Container;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @method \Spryker\Zed\Translator\TranslatorConfig getConfig()
+ */
 class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const APPLICATION = 'APPLICATION';

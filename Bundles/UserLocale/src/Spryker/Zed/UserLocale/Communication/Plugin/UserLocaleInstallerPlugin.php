@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\UserLocale\Communication\UserLocaleCommunicationFactory getFactory()
  * @method \Spryker\Zed\UserLocale\Business\UserLocaleFacadeInterface getFacade()
+ * @method \Spryker\Zed\UserLocale\UserLocaleConfig getConfig()
  */
 class UserLocaleInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {

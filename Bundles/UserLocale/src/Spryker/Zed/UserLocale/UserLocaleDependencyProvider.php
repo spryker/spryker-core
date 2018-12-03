@@ -13,6 +13,9 @@ use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToAclBridge;
 use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleBridge;
 use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserBridge;
 
+/**
+ * @method \Spryker\Zed\UserLocale\UserLocaleConfig getConfig()
+ */
 class UserLocaleDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';

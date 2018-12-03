@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\UserLocaleGui\Communication\UserLocaleGuiCommunicationFactory getFactory()
+ */
 class UserLocaleFormExpander extends AbstractType
 {
     protected const FIELD_FK_LOCALE = 'fk_locale';

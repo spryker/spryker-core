@@ -14,6 +14,7 @@ use Spryker\Zed\UserLocale\UserLocaleDependencyProvider;
 
 /**
  * @method \Spryker\Zed\UserLocale\UserLocaleConfig getConfig()
+ * @method \Spryker\Zed\UserLocale\Business\UserLocaleFacadeInterface getFacade()
  */
 class UserLocaleCommunicationFactory extends AbstractCommunicationFactory
 {
