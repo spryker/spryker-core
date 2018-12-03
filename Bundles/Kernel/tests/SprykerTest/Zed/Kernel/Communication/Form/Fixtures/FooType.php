@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\Kernel\Communication\Form\Fixtures;
 
-use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 
 class FooType extends AbstractType
@@ -34,13 +33,5 @@ class FooType extends AbstractType
     public function getQueryContainer()
     {
         return parent::getQueryContainer();
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver
-     */
-    public function getQueryContainerResolver()
-    {
-        return new QueryContainerResolver();
     }
 }

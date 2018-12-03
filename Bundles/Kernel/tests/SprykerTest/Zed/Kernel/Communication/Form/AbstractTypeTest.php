@@ -91,10 +91,14 @@ class AbstractTypeTest extends Unit
         $classInfo->setClass('\\Namespace\\Application\\Bundle\\Layer\\Foo\\Bar');
         $queryContainerResolverMock->method('getClassInfo')->willReturn($classInfo);
 
-        $formTypeMock = $this->getFormTypeMock(['getQueryContainerResolver']);
-        $formTypeMock->method('getQueryContainerResolver')->willReturn($queryContainerResolverMock);
+        $formType = new FooType();
 
-        $formTypeMock->getQueryContainer();
+        $formTypeReflection = new ReflectionClass($formType);
+        $getQueryContainerResolverMethod = $formTypeReflection->getParentClass()->getMethod('getQueryContainerResolver');
+        $getQueryContainerResolverMethod->setAccessible(true);
+        $getQueryContainerResolverMethod->invoke($formType, $queryContainerResolverMock);
+
+        $formType->getQueryContainer();
     }
 
     /**
@@ -112,17 +116,5 @@ class AbstractTypeTest extends Unit
         $queryContainer = $formType->getQueryContainer();
 
         $this->assertInstanceOf(AbstractQueryContainer::class, $queryContainer);
-    }
-
-    /**
-     * @param array $methods
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\SprykerTest\Zed\Kernel\Communication\Form\Fixtures\FooType
-     */
-    protected function getFormTypeMock(array $methods)
-    {
-        $formTypeMock = $this->getMockBuilder(FooType::class)->setMethods($methods)->getMock();
-
-        return $formTypeMock;
     }
 }
