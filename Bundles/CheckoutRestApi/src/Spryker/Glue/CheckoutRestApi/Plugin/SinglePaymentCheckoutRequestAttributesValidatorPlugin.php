@@ -12,11 +12,15 @@ use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
+/**
+ * @method \Spryker\Glue\CheckoutRestApi\CheckoutRestApiFactory getFactory()
+ * @method \Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig getConfig()
+ */
 class SinglePaymentCheckoutRequestAttributesValidatorPlugin extends AbstractPlugin implements CheckoutRequestAttributesValidatorPluginInterface
 {
     /**
-     * Specification:
-     * - Validates checkout Rest API request attributes.
+     * {@inheritdoc}
+     * - Checks that only one payment method is set.
      *
      * @api
      *
