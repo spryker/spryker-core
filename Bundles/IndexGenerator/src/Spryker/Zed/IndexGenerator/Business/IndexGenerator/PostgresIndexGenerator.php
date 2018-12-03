@@ -189,9 +189,10 @@ class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
      */
     protected function getFileHeader(): string
     {
-        return '<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        return '<database xmlns="spryker:schema-01"
           name="zed"
-          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
           namespace="%s"
           package="%s"/>';
     }

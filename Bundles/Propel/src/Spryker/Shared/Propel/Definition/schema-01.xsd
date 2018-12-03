@@ -225,7 +225,8 @@
 
     <xs:complexType name="parameter">
         <xs:attribute name="name" type="xs:string" use="required"/>
-        <xs:attribute name="value" type="xs:string" use="required"/>
+        <xs:attribute name="value" type="xs:string" use="optional"/>
+        <xs:attribute name="required" type="xs:string" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="validator">
@@ -601,7 +602,7 @@
                 </xs:annotation>
             </xs:element>
 
-            <xs:element name="behavior" type="behavior"  minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="behavior" type="behavior" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation>
                     <xs:documentation xml:lang="en">
                         A behavior to be added to the current table. Can modify the table structure, as well as modify the runtime code of the generated Model objects linked to this table. Bundled behaviors include alternative_coding_standards, auto_add_pk, timestampable, sluggable, sortable, nested_set, query_cache, and concrete_inheritance.

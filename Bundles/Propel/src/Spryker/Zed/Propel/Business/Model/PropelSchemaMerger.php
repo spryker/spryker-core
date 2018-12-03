@@ -122,10 +122,10 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     private function createNewXml($schemaDatabase, $schemaNamespace, $schemaPackage)
     {
         return new SimpleXMLElement(sprintf(
-            '<database
+            '<database xmlns="spryker:schema-01"
             name="%s"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+            xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
             namespace="%s"
             package="%s"
             ></database>',
