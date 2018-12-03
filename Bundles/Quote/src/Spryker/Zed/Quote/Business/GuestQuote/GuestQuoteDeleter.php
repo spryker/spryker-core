@@ -65,13 +65,15 @@ class GuestQuoteDeleter implements GuestQuoteDeleterInterface
      */
     public function deleteExpiredGuestQuote(): void
     {
-        $quoteCollectionTransfer = $this->findExpiredGuestQuotes();
+        do {
+            $quoteCollectionTransfer = $this->findExpiredGuestQuotes();
 
-        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
-                $this->executeDeleteTransaction($quoteTransfer);
-            });
-        }
+            foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
+                $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
+                    $this->executeDeleteTransaction($quoteTransfer);
+                });
+            }
+        } while ($quoteCollectionTransfer->getQuotes()->count());
     }
 
     /**
