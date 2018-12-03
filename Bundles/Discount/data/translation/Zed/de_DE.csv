@@ -1,0 +1,43 @@
+Activate,Aktivieren
+Amount:,Betrag:
+"Apply to query:","Auf Query anwenden:"
+"Cart Rules",Warenkorb-Regeln
+Conditions,Bedingungen
+"Create new discount","Neuen Rabatt erstellen"
+"Create new Discount","Neuen Rabatt erstellen"
+"Create voucher codes for the discount","Gutscheincodes für den Rabatt erstellen"
+Deactivate,Deaktivieren
+"Define what to apply the discount to","Geben Sie an, auf was der Rabatt angewendet werden soll"
+"Define when to apply the discount","Geben Sie an, wann der Rabatt angewendet werden soll"
+"Delete codes","Codes löschen"
+Description,Beschreibung
+Description:,Beschreibung:
+"Discount calculation",Rabattberechnung
+"Discount List",Rabattliste
+"Discount Type:",Rabatttyp:
+Edit,Bearbeiten
+"Edit discount","Rabatt bearbeiten"
+"Enter your custom code as a string. If selected in the next step, additional random characters are added at the end of this string. Use the placeholder [code] to indicate where you want random characters to be generated.","Geben Sie Ihren benutzerdefinierten Code als Zeichenkette ein. Wenn im nächsten Schritt ausgewählt, werden am Ende dieser Zeichenkette weitere zusätzliche Zeichen hinzugefügt. Verwenden Sie den Platzhalter[code], um anzugeben, wo zufällige Zeichen generiert werden sollen."""
+Exclusive:,Exklusiv:
+Export,Exportieren
+"Fill in the general discount information","Allgemeine Rabattinformationen ausfüllen"
+"General Information","Allgemeine Informationen"
+"Generated Discount Codes","Generierte Rabattcodes"
+"List of Discounts","Liste der Rabatte"
+N/A,k.A.
+Name,Name
+Name:,Name:
+No,Nein
+"No conditions, discount always applied.","Keine Bedingungen, Rabatt wird immer angewandt."
+Overview,Übersicht
+"Plain query","Einfache Query"
+"Query builder","Query builder"
+Save,Speichern
+"Store relation:",Store-Beziehung:
+Type:,Typ:
+"Valid from:","Gültig ab (inklusive):"
+"Valid until:","Gültig bis (exklusive):"
+Value,Wert
+Voucher,Gutschein
+"Voucher Code",Gutscheincode
+Yes,Ja
