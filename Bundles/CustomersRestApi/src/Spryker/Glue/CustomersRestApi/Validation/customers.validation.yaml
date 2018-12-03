@@ -2,7 +2,7 @@ customers:
   post:
     email:
       - NotBlank
-      - EmailConstraint
+      - Email
     salutation:
       - NotBlank
     firstName:
@@ -30,7 +30,7 @@ customers:
     - Optional:
         constraints:
         - NotBlank
-        - EmailConstraint
+        - Email
     salutation:
     - Optional:
         constraints:
@@ -192,7 +192,7 @@ customer-forgotten-password:
   post:
     email:
       - NotBlank
-      - EmailConstraint
+      - Email
       - Length:
           max: 255
 
