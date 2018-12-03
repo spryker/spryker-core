@@ -37,17 +37,32 @@ use SprykerTest\Zed\UrlStorage\UrlStorageConfigMock;
 class UrlStorageListenerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\UrlStorage\UrlStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
+     * @var \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected $urlTransfer;
+
+    /**
+     * @return void
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $urlRedirectTransfer = $this->tester->haveUrlRedirect();
+        $this->urlTransfer = $urlRedirectTransfer->getSource();
+    }
+
+    /**
      * @return void
      */
     public function testUrlStorageListenerStoreData()
     {
-        SpyUrlStorageQuery::create()->filterByUrl('/de')->delete();
-        SpyUrlQuery::create()->filterByUrl('/de')->delete();
-        $spyUrlEntity = new SpyUrl();
-        $spyUrlEntity->setUrl('/de');
-        $spyUrlEntity->setFkLocale(46);
-        $spyUrlEntity->setFkResourcePage(1);
-        $spyUrlEntity->save();
+        SpyUrlStorageQuery::create()->filterByUrl($this->urlTransfer->getUrl())->delete();
 
         $beforeCount = SpyUrlStorageQuery::create()->count();
 
@@ -55,7 +70,7 @@ class UrlStorageListenerTest extends Unit
         $urlStorageListener->setFacade($this->getUrlStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($spyUrlEntity->getIdUrl()),
+            (new EventEntityTransfer())->setId($this->urlTransfer->getIdUrl()),
         ];
         $urlStorageListener->handleBulk($eventTransfers, UrlEvents::URL_PUBLISH);
 
@@ -106,10 +121,10 @@ class UrlStorageListenerTest extends Unit
     {
         $urlStorageCount = SpyUrlStorageQuery::create()->count();
         $this->assertSame($beforeCount + 1, $urlStorageCount);
-        $spyUrlStorage = SpyUrlStorageQuery::create()->orderByIdUrlStorage()->findOneByUrl('/de');
+        $spyUrlStorage = SpyUrlStorageQuery::create()->orderByIdUrlStorage()->findOneByUrl($this->urlTransfer->getUrl());
         $this->assertNotNull($spyUrlStorage);
         $data = $spyUrlStorage->getData();
-        $this->assertSame('/de', $data['url']);
+        $this->assertSame($this->urlTransfer->getUrl(), $data['url']);
     }
 
     /**
