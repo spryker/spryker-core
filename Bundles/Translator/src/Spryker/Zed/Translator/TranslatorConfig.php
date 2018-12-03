@@ -31,6 +31,8 @@ class TranslatorConfig extends AbstractBundleConfig
         return [
             APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/*/Zed/*/Translation/',
             APPLICATION_VENDOR_DIR . '/spryker/*/src/*/Zed/*/Translation/',
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/data/translation/Zed/',
+            APPLICATION_VENDOR_DIR . '/spryker/*/data/translation/Zed/',
         ];
     }
 
@@ -41,6 +43,7 @@ class TranslatorConfig extends AbstractBundleConfig
     {
         return [
             APPLICATION_ROOT_DIR . '/data/import/translation/Zed/*/',
+            APPLICATION_ROOT_DIR . '/data/translation/Zed/*/',
         ];
     }
 

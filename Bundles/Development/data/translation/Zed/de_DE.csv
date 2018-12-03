@@ -1,0 +1,22 @@
+Back,Zurück
+"Composer dependencies",Composer-Abhängigkeiten
+"Composer dev only dependencies","Composer dev only dependencies"
+Count,Anzahl
+"Declared in composer.json","Declared in composer.json"
+"Declared in composer.json (dev)","Declared in composer.json (dev)"
+Dependency,Abhängigkeit
+"Dev only dependencies","Dev only dependencies"
+"Display all architecture rules","Alle Architekturregeln anzeigen"
+"Found in src","Gefunden in src"
+"Found in test","Gefunden im Test"
+"in src","in src"
+"in tests","in Tests"
+"Incoming dependencies of the","Eingehende Abhängigkeiten der"
+module,Modul
+Module,Modul
+"No architecture violations detected","Keine Architekturverstöße erkannt"
+"Outgoing dependencies of the","Ausgehende Abhängigkeiten der"
+Reload,"Neu laden"
+require,require
+require-dev,require-dev
+"Suggested dependencies","Empfohlene Abhängigkeiten"

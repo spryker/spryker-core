@@ -36,6 +36,7 @@ class GenerateTranslationCacheConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
+        $this->getFacade()->clearTranslationCache();
         $this->getFacade()->generateTranslationCache();
     }
 }

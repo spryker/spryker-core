@@ -1,0 +1,27 @@
+Activate,Aktivieren
+"Add image","Bild hinzufügen"
+"Add image set","Bilderset hinzufügen"
+"Assigned products","Zugeordnete Produkte"
+"Available in stores","Im Store erhältlich"
+"Bundle availability based on assigned products:","Verfügbarkeit des Bündels auf Basis der zugeordneten Produkte:"
+"Create a Product","Produkt erstellen"
+"Create Bundle Product","Bundle-Produkt erstellen"
+"Create Product","Produkt erstellen"
+Deactivate,Deaktivieren
+Default,Standard
+Edit,Bearbeiten
+"Edit Product Abstract","Abstraktes Produkt bearbeiten"
+"Edit Product Concrete","Konkretes Produkt bearbeiten"
+"Gross price",Bruttopreis
+"List Products","Liste der Produkte"
+"Manage Attributes","Attribute verwalten"
+n/a,k.A.
+"Net price",Nettopreis
+"Never out of stock","Immer auf Lager"
+Quantity,Menge
+Save,Speichern
+"Stock Type",Bestandsart
+"Tax Set",Steuer-Set
+"There is no super attribute defined. <a href=""%url%"">Define super attributes</a> in order to be able to create variants.","Es ist kein Superattribut definiert. <a href=""%url%"">Definieren Sie Super-Attribute</a>, um Varianten anlegen zu können."
+"View Product Abstract","Abstraktes Produkt anzeigen"
+"View Product Concrete","Konkretes Produkt anzeigen"

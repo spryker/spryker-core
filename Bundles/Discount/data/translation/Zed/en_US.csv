@@ -1,0 +1,43 @@
+Activate,Activate
+Amount:,Amount:
+"Apply to query:","Apply to query:"
+"Cart Rules","Cart Rules"
+Conditions,Conditions
+"Create new discount","Create new discount"
+"Create new Discount","Create new discount"
+"Create voucher codes for the discount","Create voucher codes for the discount"
+Deactivate,Deactivate
+"Define what to apply the discount to","Define what to apply the discount to"
+"Define when to apply the discount","Define when to apply the discount"
+"Delete codes","Delete codes"
+Description,Description
+Description:,Description:
+"Discount calculation","Discount calculation"
+"Discount List","Discount List"
+"Discount Type:","Discount Type:"
+Edit,Edit
+"Edit discount","Edit discount"
+"Enter your custom code as a string. If selected in the next step, additional random characters are added at the end of this string. Use the placeholder [code] to indicate where you want random characters to be generated.","Enter your custom code as a string. If selected in the next step, additional random characters are added at the end of this string. Use the placeholder [code] to indicate where you want random characters to be generated."""
+Exclusive:,Exclusive:
+Export,Export
+"Fill in the general discount information","Fill in the general discount information"
+"General Information","General Information"
+"Generated Discount Codes","Generated Discount Codes"
+"List of Discounts","List of discounts"
+N/A,n/a
+Name,Name
+Name:,Name:
+No,No
+"No conditions, discount always applied.","No conditions, discount always applied."
+Overview,Overview
+"Plain query","Plain query"
+"Query builder","Query builder"
+Save,Save
+"Store relation:","Store relation:"
+Type:,Type:
+"Valid from:","Valid from (included):"
+"Valid until:","Valid to (excluded):"
+Value,Value
+Voucher,Voucher
+"Voucher Code","Voucher Code"
+Yes,Yes

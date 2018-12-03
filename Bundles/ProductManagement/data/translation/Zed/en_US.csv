@@ -1,0 +1,27 @@
+Activate,Activate
+"Add image","Add image"
+"Add image set","Add image set"
+"Assigned products","Assigned products"
+"Available in stores","Available in stores"
+"Bundle availability based on assigned products:","Bundle availability based on assigned products:"
+"Create a Product","Create a Product"
+"Create Bundle Product","Create Bundle Product"
+"Create Product","Create Product"
+Deactivate,Deactivate
+Default,Default
+Edit,Edit
+"Edit Product Abstract","Edit Product Abstract"
+"Edit Product Concrete","Edit Product Concrete"
+"Gross price","Gross price"
+"List Products","List of products"
+"Manage Attributes","Manage Attributes"
+n/a,n/a
+"Net price","Net price"
+"Never out of stock","Never out of stock"
+Quantity,Quantity
+Save,Save
+"Stock Type","Stock Type"
+"Tax Set","Tax Set"
+"There is no super attribute defined. <a href=""%url%"">Define super attributes</a> in order to be able to create variants.","There is no super attribute defined. <a href=""%url%"">Define super attributes</a> in order to be able to create variants."
+"View Product Abstract","View Product Abstract"
+"View Product Concrete","View Product Concrete"

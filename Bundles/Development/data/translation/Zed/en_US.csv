@@ -1,0 +1,22 @@
+Back,Back
+"Composer dependencies","Composer dependencies"
+"Composer dev only dependencies","Composer dev only dependencies"
+Count,Count
+"Declared in composer.json","Declared in composer.json"
+"Declared in composer.json (dev)","Declared in composer.json (dev)"
+Dependency,Dependency
+"Dev only dependencies","Dev only dependencies"
+"Display all architecture rules","Display all architecture rules"
+"Found in src","Found in src"
+"Found in test","Found in test"
+"in src","in src"
+"in tests","in tests"
+"Incoming dependencies of the","Incoming dependencies of the"
+module,module
+Module,module
+"No architecture violations detected","No architecture violations detected"
+"Outgoing dependencies of the","Outgoing dependencies of the"
+Reload,Reload
+require,require
+require-dev,require-dev
+"Suggested dependencies","Suggested dependencies"
