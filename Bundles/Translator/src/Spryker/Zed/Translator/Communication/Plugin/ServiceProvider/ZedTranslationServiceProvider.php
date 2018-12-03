@@ -5,20 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
+namespace Spryker\Zed\Translator\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Twig_Environment;
 
 /**
- * @deprecated use \Spryker\Zed\Translator\Communication\Plugin\ServiceProvider\ZedTranslationServiceProvider instead
- *
- * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
- * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
- * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
+ * @method \Spryker\Zed\Translator\Business\TranslatorFacadeInterface getFacade()
+ * @method \Spryker\Zed\Translator\TranslatorConfig getConfig()
  */
-class TranslationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
+class ZedTranslationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
      * @param \Silex\Application $app
@@ -27,6 +25,13 @@ class TranslationServiceProvider extends AbstractPlugin implements ServiceProvid
      */
     public function register(Application $app)
     {
+        $app['twig'] = $app->share(
+            $app->extend('twig', function (Twig_Environment $twig) {
+                $this->getFacade()->registerTwigTranslator($twig);
+
+                return $twig;
+            })
+        );
     }
 
     /**

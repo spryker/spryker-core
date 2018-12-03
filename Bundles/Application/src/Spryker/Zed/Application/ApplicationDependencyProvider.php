@@ -37,7 +37,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_PROVIDER_API = 'SERVICE_PROVIDER_API';
     public const INTERNAL_CALL_SERVICE_PROVIDER = 'INTERNAL_CALL_SERVICE_PROVIDER';
     public const INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION = 'INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION';
-    public const PLUGINS_TWIG_ENVIRONMENT_EXTENSION = 'PLUGINS_TWIG_ENVIRONMENT_EXTENSION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -62,7 +61,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addApiServiceProviders($container);
         $container = $this->addInternalCallServiceProviders($container);
         $container = $this->addInternalCallServiceProvidersWithAuthentication($container);
-        $container = $this->addTwigTranslatorExtensionPlugins($container);
 
         return $container;
     }
@@ -184,20 +182,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addTwigTranslatorExtensionPlugins(Container $container): Container
-    {
-        $container[static::PLUGINS_TWIG_ENVIRONMENT_EXTENSION] = function () {
-            return $this->getTwigTranslatorExtensionPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return \Silex\ServiceProviderInterface[]
      */
     protected function getApiServiceProviders(Container $container)
@@ -221,14 +205,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Silex\ServiceProviderInterface[]
      */
     protected function getInternalCallServiceProvidersWithAuthentication(Container $container)
-    {
-        return [];
-    }
-
-    /**
-     * @return \Spryker\Zed\ApplicationExtension\Dependency\Plugin\TwigTranslatorExtensionPluginInterface[]
-     */
-    protected function getTwigTranslatorExtensionPlugins(): array
     {
         return [];
     }
