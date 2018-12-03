@@ -9,10 +9,10 @@ namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface;
+use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainer;
 
 /**
  * @deprecated Use \Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\ProductCategoryPageDataLoaderExpanderPlugin instead.
@@ -93,19 +93,20 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
     {
         static::$categoryTree = [];
 
-        $categoryNodes = $this->getFactory()->getCategoryQueryContainer()
+        $categoryNodes = $this->getFactory()
+            ->getCategoryQueryContainer()
             ->queryAllCategoryNodes()
             ->find();
 
         foreach ($categoryNodes as $categoryNodeEntity) {
-            $pathData = $this->getFactory()->getCategoryQueryContainer()
-                ->queryFullPath($categoryNodeEntity->getIdCategoryNode())
+            $pathData = $this->getQueryContainer()
+                ->queryCategoryNodeFullPath($categoryNodeEntity->getIdCategoryNode())
                 ->find();
 
             static::$categoryTree[$categoryNodeEntity->getIdCategoryNode()] = [];
 
             foreach ($pathData as $path) {
-                $idCategory = (int)$path[CategoryQueryContainer::ID_CATEGORY_NODE_ALIAS];
+                $idCategory = (int)$path[ProductPageSearchQueryContainer::VIRT_COLUMN_ID_CATEGORY_NODE];
                 if (!in_array($idCategory, static::$categoryTree[$categoryNodeEntity->getIdCategoryNode()])) {
                     static::$categoryTree[$categoryNodeEntity->getIdCategoryNode()][] = $idCategory;
                 }
