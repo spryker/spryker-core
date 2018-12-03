@@ -84,7 +84,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function validateRequest(RestRequestInterface $restRequest, Collection $constraintCollection): ?RestErrorCollectionTransfer
     {
         $validator = $this->validationAdapter->createValidator();
-        $attributesDataFromRequest = $this->getAttributesFromRequest($restRequest);
+        $attributesDataFromRequest = $restRequest->getAttributesDataFromRequest();
         if (!isset($attributesDataFromRequest)) {
             return null;
         }
@@ -140,34 +140,5 @@ class RestRequestValidator implements RestRequestValidatorInterface
             static::ERROR_DETAIL_REPLACING_SYMBOLS,
             $validationError->getPropertyPath()
         ) . ' => ' . $validationError->getMessage();
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return array|null
-     */
-    protected function getAttributesFromRequest(RestRequestInterface $restRequest): ?array
-    {
-        $attributesDataFromRequest = $restRequest->getAttributesDataFromRequest();
-        if (!isset($attributesDataFromRequest)) {
-            return null;
-        }
-
-        return array_map($this->applyTrimRecursively(), $attributesDataFromRequest);
-    }
-
-    /**
-     * @return callable
-     */
-    protected function applyTrimRecursively(): callable
-    {
-        return function ($value) {
-            if (is_array($value)) {
-                array_map($this->applyTrimRecursively(), $value);
-            }
-
-            return is_string($value) ? trim($value) : $value;
-        };
     }
 }
