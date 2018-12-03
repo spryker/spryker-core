@@ -175,6 +175,13 @@ interface UserFacadeInterface
     /**
      * @api
      *
+     * @return bool
+     */
+    public function updateUserSessionTtl(): bool;
+
+    /**
+     * @api
+     *
      * @param int $idUser
      *
      * @return bool
