@@ -4,9 +4,9 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestCheckoutData">
-        <property name="addresses" type="Addresses"/>
-        <property name="shipmentMethods" type="ShipmentMethods"/>
-        <property name="paymentProviders" type="PaymentProviderCollection"/>
+        <property name="addresses" type="Addresses" singular="address"/>
+        <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod"/>
+        <property name="paymentProviders" type="PaymentProviderCollection" singular="paymentProvider"/>
     </transfer>
 
     <transfer name="RestCheckoutError">

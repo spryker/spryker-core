@@ -68,7 +68,8 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
-        foreach ($restCheckoutDataTransfer->getAddresses()->getAddresses() as $addressTransfer) {
+        $addresses = $restCheckoutDataTransfer->getAddresses()->getAddresses();
+        foreach ($addresses as $addressTransfer) {
             $restCheckoutDataResponseAttributesTransfer->addAddress(
                 (new RestAddressTransfer())->fromArray(
                     $addressTransfer->toArray(),
@@ -90,7 +91,8 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         RestCheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
-        foreach ($checkoutDataTransfer->getPaymentProviders()->getPaymentProviders() as $paymentProviderTransfer) {
+        $paymentProviders = $checkoutDataTransfer->getPaymentProviders()->getPaymentProviders();
+        foreach ($paymentProviders as $paymentProviderTransfer) {
             $restPaymentProviderTransfer = new RestPaymentProviderTransfer();
             $restPaymentProviderTransfer->fromArray($paymentProviderTransfer->toArray(), true);
             foreach ($restPaymentProviderTransfer->getPaymentMethods() as $restPaymentMethodTransfer) {
@@ -112,7 +114,8 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         RestCheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
-        foreach ($checkoutDataTransfer->getShipmentMethods()->getMethods() as $shipmentMethodTransfer) {
+        $shipmentMethods = $checkoutDataTransfer->getShipmentMethods()->getMethods();
+        foreach ($shipmentMethods as $shipmentMethodTransfer) {
             $restShipmentMethodTransfer = new RestShipmentMethodTransfer();
             $restShipmentMethodTransfer->fromArray($shipmentMethodTransfer->toArray(), true)
                 ->setPrice($shipmentMethodTransfer->getStoreCurrencyPrice())
