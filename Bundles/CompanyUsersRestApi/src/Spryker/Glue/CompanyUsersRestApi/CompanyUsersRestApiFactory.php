@@ -8,20 +8,20 @@
 namespace Spryker\Glue\CompanyUsersRestApi;
 
 use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface;
-use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUsers\CompanyUsersReader;
-use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUsers\CompanyUsersReaderInterface;
-use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUsersResourceMapper;
-use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUsersResourceMapperInterface;
+use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReader;
+use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReaderInterface;
+use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapper;
+use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CompanyUsersRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUsers\CompanyUsersReaderInterface
+     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReaderInterface
      */
-    public function createCompanyUsersReader(): CompanyUsersReaderInterface
+    public function createCompanyUserReader(): CompanyUserReaderInterface
     {
-        return new CompanyUsersReader(
+        return new CompanyUserReader(
             $this->getCompanyUserClient(),
             $this->getResourceBuilder(),
             $this->createCompanyUsersMapper()
@@ -29,11 +29,11 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUsersResourceMapperInterface
+     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapperInterface
      */
-    public function createCompanyUsersMapper(): CompanyUsersResourceMapperInterface
+    public function createCompanyUsersMapper(): CompanyUserResourceMapperInterface
     {
-        return new CompanyUsersResourceMapper();
+        return new CompanyUserResourceMapper();
     }
 
     /**

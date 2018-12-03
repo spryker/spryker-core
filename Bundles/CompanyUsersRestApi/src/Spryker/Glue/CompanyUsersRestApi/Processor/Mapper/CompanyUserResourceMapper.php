@@ -19,7 +19,7 @@ use Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer;
 use Generated\Shared\Transfer\RestCompanyUnitAddressAttributesTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
 
-class CompanyUsersResourceMapper implements CompanyUsersResourceMapperInterface
+class CompanyUserResourceMapper implements CompanyUserResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
@@ -42,7 +42,7 @@ class CompanyUsersResourceMapper implements CompanyUsersResourceMapperInterface
         );
 
         return (new RestCompanyUserAttributesTransfer())
-            ->setIsActive($companyUserTransfer->getIsActive())
+            ->fromArray($companyUserTransfer->toArray())
             ->setCompanyBusinessUnit($restCompanyBusinessUnitAttributesTransfer)
             ->setCompany($restCompanyAttributesTransfer)
             ->setCompanyRoles($restCompanyRoleAttributesTransferCollection);

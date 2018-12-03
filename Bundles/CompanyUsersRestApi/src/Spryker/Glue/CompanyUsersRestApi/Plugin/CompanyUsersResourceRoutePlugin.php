@@ -17,6 +17,7 @@ class CompanyUsersResourceRoutePlugin extends AbstractPlugin implements Resource
 {
     /**
      * {@inheritdoc}
+     * - Configures available actions for company-users resource.
      *
      * @api
      *

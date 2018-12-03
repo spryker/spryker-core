@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUsers;
+namespace Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig;
 use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface;
-use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUsersResourceMapperInterface;
+use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class CompanyUsersReader implements CompanyUsersReaderInterface
+class CompanyUserReader implements CompanyUserReaderInterface
 {
     /**
      * @var \Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface
@@ -29,19 +29,19 @@ class CompanyUsersReader implements CompanyUsersReaderInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUsersResourceMapperInterface
+     * @var \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapperInterface
      */
     protected $companyUsersResourceMapper;
 
     /**
      * @param \Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface $companyUserClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUsersResourceMapperInterface $companyUsersResourceMapper
+     * @param \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapperInterface $companyUsersResourceMapper
      */
     public function __construct(
         CompanyUsersRestApiToCompanyUserClientInterface $companyUserClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        CompanyUsersResourceMapperInterface $companyUsersResourceMapper
+        CompanyUserResourceMapperInterface $companyUsersResourceMapper
     ) {
         $this->companyUserClient = $companyUserClient;
         $this->restResourceBuilder = $restResourceBuilder;
