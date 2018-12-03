@@ -91,14 +91,14 @@ class AbstractTypeTest extends Unit
         $classInfo->setClass('\\Namespace\\Application\\Bundle\\Layer\\Foo\\Bar');
         $queryContainerResolverMock->method('getClassInfo')->willReturn($classInfo);
 
-        $formType = new FooType();
+        $fooType = new FooType();
 
-        $formTypeReflection = new ReflectionClass($formType);
-        $getQueryContainerResolverMethod = $formTypeReflection->getParentClass()->getMethod('getQueryContainerResolver');
+        $fooTypeReflection = new ReflectionClass($fooType);
+        $getQueryContainerResolverMethod = $fooTypeReflection->getParentClass()->getMethod('getQueryContainerResolver');
         $getQueryContainerResolverMethod->setAccessible(true);
-        $getQueryContainerResolverMethod->invoke($formType, $queryContainerResolverMock);
+        $getQueryContainerResolverMethod->invoke($fooType, $queryContainerResolverMock);
 
-        $formType->getQueryContainer();
+        $fooType->getQueryContainer();
     }
 
     /**
