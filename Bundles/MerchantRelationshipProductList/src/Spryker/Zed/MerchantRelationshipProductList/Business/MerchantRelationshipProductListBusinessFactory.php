@@ -13,6 +13,7 @@ use Spryker\Zed\MerchantRelationshipProductList\Business\CustomerExpander\Custom
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListReader;
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListReaderInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListWriter;
+use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListWriterInterface;
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductList\MerchantRelationshipProductListConfig getConfig()
@@ -38,9 +39,9 @@ class MerchantRelationshipProductListBusinessFactory extends AbstractBusinessFac
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListWriter
+     * @return \Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListWriterInterface
      */
-    public function createProductListWriter(): ProductListWriter
+    public function createProductListWriter(): ProductListWriterInterface
     {
         return new ProductListWriter($this->getEntityManager());
     }

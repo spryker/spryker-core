@@ -35,6 +35,7 @@ class ProductListWriter implements ProductListWriterInterface
     {
         $merchantRelationshipDeleteResponseTransfer = (new MerchantRelationshipDeleteResponseTransfer())->setIsSuccess(true);
         $this->entityManager->deleteMerchantRelationshipFromProductList($productListTransfer);
+
         return $merchantRelationshipDeleteResponseTransfer;
     }
 }

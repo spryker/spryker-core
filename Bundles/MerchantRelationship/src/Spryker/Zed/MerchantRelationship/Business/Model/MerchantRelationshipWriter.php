@@ -130,6 +130,7 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
 
         if ($preDeletePluginsErrorMessages->count()) {
             $merchantRelationshipDeleteResponseTransfer->setMessages($preDeletePluginsErrorMessages);
+
             return $merchantRelationshipDeleteResponseTransfer;
         }
 
@@ -190,11 +191,12 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[]
      */
     protected function executeMerchantRelationshipPreDeletePlugins(MerchantRelationshipTransfer $merchantRelationTransfer): ArrayObject
     {
         $errorMessages = new ArrayObject();
+
         foreach ($this->merchantRelationshipPreDeletePlugins as $merchantRelationshipPreDeletePlugin) {
             $merchantRelationshipDeleteResponseTransfer = $merchantRelationshipPreDeletePlugin->execute($merchantRelationTransfer);
 

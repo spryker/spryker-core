@@ -38,11 +38,11 @@ interface MerchantRelationshipProductListFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
      */
-    public function getProductListCollectionByIdMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): ProductListCollectionTransfer;
+    public function getProductListCollectionByMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): ProductListCollectionTransfer;
 
     /**
      * Specification:
-     * - Remove merchant relationship from product list.
+     * - Removes merchant relationship from product list.
      *
      * @api
      *

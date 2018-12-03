@@ -22,6 +22,8 @@ class ProductListMerchantRelationshipPreDeletePlugin extends AbstractPlugin impl
     public const ERROR_MESSAGE = 'merchant.relationship.product.list.pre.delete.check';
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
@@ -31,7 +33,7 @@ class ProductListMerchantRelationshipPreDeletePlugin extends AbstractPlugin impl
     public function execute(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipDeleteResponseTransfer
     {
         $merchantRelationshipDeleteResponseTransfer = (new MerchantRelationshipDeleteResponseTransfer())->setIsSuccess(false);
-        $productListCollection = $this->getFacade()->getProductListCollectionByIdMerchantRelationship($merchantRelationshipTransfer);
+        $productListCollection = $this->getFacade()->getProductListCollectionByMerchantRelationship($merchantRelationshipTransfer);
 
         if (!$productListCollection->getProductLists()->count()) {
             return $merchantRelationshipDeleteResponseTransfer->setIsSuccess(true);

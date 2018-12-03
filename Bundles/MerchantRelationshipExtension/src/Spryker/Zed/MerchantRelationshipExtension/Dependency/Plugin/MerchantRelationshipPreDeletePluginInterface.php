@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 interface MerchantRelationshipPreDeletePluginInterface
 {
     /**
-     * @api
-     *
      * Specification:
-     * - This plugin is executed before a MerchantRelationship is deleted
-     * - Returns a MerchantRelationshipDeleteResponseTransfer which indicates if the MerchantRelationship can be deleted or not
-     * - If the MerchantRelationship cannot be deleted the MerchantRelationshipDeleteResponseTransfer will contain all related error messages
+     * - This plugin is executed before a MerchantRelationship is deleted.
+     * - Returns a MerchantRelationshipDeleteResponseTransfer which indicates if the MerchantRelationship can be deleted or not.
+     * - If the MerchantRelationship cannot be deleted the MerchantRelationshipDeleteResponseTransfer will contain all related error messages.
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
