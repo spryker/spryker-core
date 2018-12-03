@@ -126,7 +126,6 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     public function addItems(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
         $shoppingListTransfer
-            ->requireIdShoppingList()
             ->requireIdCompanyUser()
             ->requireCustomerReference();
 
@@ -379,7 +378,8 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         if (!$shoppingListTransfer->getIdShoppingList()) {
             return $this->shoppingListResolver
                 ->createDefaultShoppingListIfNotExists($shoppingListTransfer->getCustomerReference())
-                ->setIdCompanyUser($shoppingListTransfer->getIdCompanyUser());
+                ->setIdCompanyUser($shoppingListTransfer->getIdCompanyUser())
+                ->setItems($shoppingListTransfer->getItems());
         }
 
         return $shoppingListTransfer;
