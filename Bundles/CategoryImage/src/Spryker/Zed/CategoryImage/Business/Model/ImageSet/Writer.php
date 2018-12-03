@@ -43,7 +43,7 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function createCategoryImageSetCollection(CategoryTransfer $categoryTransfer): CategoryTransfer
+    public function createCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
         $this->saveCategoryImageSetCollection($categoryTransfer);
 
@@ -55,13 +55,24 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function updateCategoryImageSetCollection(CategoryTransfer $categoryTransfer): CategoryTransfer
+    public function updateCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
         $this->saveCategoryImageSetCollection($categoryTransfer);
         $this->deleteRemovedCategoryImageSets($categoryTransfer);
         $this->deleteRemovedCategoryImages($categoryTransfer->getImageSets());
 
         return $categoryTransfer;
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function deleteCategoryImageSetsByIdCategory(int $idCategory): void
+    {
+        $categoryImageSets = $this->categoryImageRepository->getCategoryImageSetsByCategoryId($idCategory);
+        $this->deleteCategoryImageSetCollection($categoryImageSets);
     }
 
     /**

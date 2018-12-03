@@ -16,12 +16,19 @@ interface WriterInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function createCategoryImageSetCollection(CategoryTransfer $categoryTransfer): CategoryTransfer;
+    public function createCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): CategoryTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function updateCategoryImageSetCollection(CategoryTransfer $categoryTransfer): CategoryTransfer;
+    public function updateCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): CategoryTransfer;
+
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function deleteCategoryImageSetsByIdCategory(int $idCategory): void;
 }

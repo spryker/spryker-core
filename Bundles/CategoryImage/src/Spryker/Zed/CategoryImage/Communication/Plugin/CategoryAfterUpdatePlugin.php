@@ -28,6 +28,6 @@ class CategoryAfterUpdatePlugin extends AbstractPlugin implements CategoryUpdate
      */
     public function execute(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
-        return $this->getFacade()->updateCategoryImageSets($categoryTransfer);
+        return $this->getFacade()->updateCategoryImageSetsForCategory($categoryTransfer);
     }
 }

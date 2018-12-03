@@ -42,11 +42,11 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function createCategoryImageSets(CategoryTransfer $categoryTransfer): CategoryTransfer
+    public function createCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
         return $this->getFactory()
             ->createCategoryImageWriter()
-            ->createCategoryImageSetCollection($categoryTransfer);
+            ->createCategoryImageSetsForCategory($categoryTransfer);
     }
 
     /**
@@ -58,11 +58,27 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function updateCategoryImageSets(CategoryTransfer $categoryTransfer): CategoryTransfer
+    public function updateCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
         return $this->getFactory()
             ->createCategoryImageWriter()
-            ->updateCategoryImageSetCollection($categoryTransfer);
+            ->updateCategoryImageSetsForCategory($categoryTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function deleteCategoryImageSetsByIdCategory(int $idCategory): void
+    {
+        $this->getFactory()
+            ->createCategoryImageWriter()
+            ->deleteCategoryImageSetsByIdCategory($idCategory);
     }
 
     /**

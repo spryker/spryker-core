@@ -37,7 +37,7 @@ interface CategoryImageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function createCategoryImageSets(CategoryTransfer $categoryTransfer): CategoryTransfer;
+    public function createCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): CategoryTransfer;
 
     /**
      * Specification:
@@ -50,7 +50,19 @@ interface CategoryImageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function updateCategoryImageSets(CategoryTransfer $categoryTransfer): CategoryTransfer;
+    public function updateCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): CategoryTransfer;
+
+    /**
+     * Specification:
+     * - Deletes all the category image sets for the specified category id.
+     *
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function deleteCategoryImageSetsByIdCategory(int $idCategory): void;
 
     /**
      * Specification:

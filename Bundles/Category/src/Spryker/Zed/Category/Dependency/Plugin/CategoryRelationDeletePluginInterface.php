@@ -7,17 +7,11 @@
 
 namespace Spryker\Zed\Category\Dependency\Plugin;
 
-interface CategoryRelationDeletePluginInterface
+use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface as CategoryExtensionCategoryRelationDeletePluginInterface;
+
+/**
+ * @deprecated Use \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface instead.
+ */
+interface CategoryRelationDeletePluginInterface extends CategoryExtensionCategoryRelationDeletePluginInterface
 {
-    /**
-     * Specification:
-     *  - Cleans up related entities
-     *
-     * @api
-     *
-     * @param int $idCategory
-     *
-     * @return void
-     */
-    public function delete($idCategory);
 }

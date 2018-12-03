@@ -7,27 +7,27 @@
 
 namespace Spryker\Zed\CategoryImage\Communication\Plugin;
 
-use Generated\Shared\Transfer\CategoryTransfer;
-use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryCreateAfterPluginInterface;
+use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CategoryImage\Business\CategoryImageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryImage\CategoryImageConfig getConfig()
  */
-class CategoryAfterCreatePlugin extends AbstractPlugin implements CategoryCreateAfterPluginInterface
+class RemoveCategoryImageSetRelationPlugin extends AbstractPlugin implements CategoryRelationDeletePluginInterface
 {
     /**
      * {@inheritdoc}
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param int $idCategory
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
+     * @return void
      */
-    public function execute(CategoryTransfer $categoryTransfer): CategoryTransfer
+    public function delete($idCategory): void
     {
-        return $this->getFacade()->createCategoryImageSetsForCategory($categoryTransfer);
+        $this->getFacade()
+            ->deleteCategoryImageSetsByIdCategory($idCategory);
     }
 }
