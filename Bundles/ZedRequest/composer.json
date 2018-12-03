@@ -42,6 +42,6 @@
     "sort-packages": true
   },
   "suggest": {
-    "spryker/log": "ADD SUGGEST DESCRIPTION"
+    "spryker/log": "Required for using the Log middleware"
   }
 }
