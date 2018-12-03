@@ -36,6 +36,11 @@ class CompanyUsersRestApiFacadeTest extends Test
     protected $customerTransfer;
 
     /**
+     * @var \Spryker\Zed\BusinessOnBehalf\Business\BusinessOnBehalfFacade
+     */
+    protected $businessOnBehalfFacade;
+
+    /**
      * @return void
      */
     protected function setUp(): void
@@ -43,6 +48,7 @@ class CompanyUsersRestApiFacadeTest extends Test
         parent::setUp();
 
         $this->customerTransfer = $this->tester->haveCustomer();
+        $this->businessOnBehalfFacade = $this->tester->getLocator()->businessOnBehalf()->facade();
     }
 
     /**
@@ -81,7 +87,7 @@ class CompanyUsersRestApiFacadeTest extends Test
         $this->customerTransfer->setCompanyUserTransfer($companyUserTransfer);
 
         // Act
-        $this->tester->getLocator()->businessOnBehalf()->facade()->setDefaultCompanyUserToCustomer($this->customerTransfer);
+        $this->businessOnBehalfFacade->setDefaultCompanyUserToCustomer($this->customerTransfer);
         $expandedCustomerIdentifierTransfer = $this->tester->getFacade()->expandCustomerIdentifier(
             (new CustomerIdentifierTransfer()),
             $this->customerTransfer
@@ -124,7 +130,7 @@ class CompanyUsersRestApiFacadeTest extends Test
         $this->customerTransfer->setCompanyUserTransfer($defaultCompanyUserTransfer);
 
         // Act
-        $this->tester->getLocator()->businessOnBehalf()->facade()->setDefaultCompanyUserToCustomer($this->customerTransfer);
+        $this->businessOnBehalfFacade->setDefaultCompanyUserToCustomer($this->customerTransfer);
         $expandedCustomerIdentifierTransfer = $this->tester->getFacade()->expandCustomerIdentifier(
             (new CustomerIdentifierTransfer()),
             $this->customerTransfer
@@ -165,7 +171,7 @@ class CompanyUsersRestApiFacadeTest extends Test
         ]);
 
         // Act
-        $this->tester->getLocator()->businessOnBehalf()->facade()->unsetDefaultCompanyUserByCustomer($this->customerTransfer);
+        $this->businessOnBehalfFacade->unsetDefaultCompanyUserByCustomer($this->customerTransfer);
         $expandedCustomerIdentifierTransfer = $this->tester->getFacade()->expandCustomerIdentifier(
             (new CustomerIdentifierTransfer()),
             $this->customerTransfer
