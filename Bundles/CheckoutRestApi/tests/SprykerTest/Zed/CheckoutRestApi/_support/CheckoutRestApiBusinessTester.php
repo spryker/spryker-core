@@ -193,7 +193,6 @@ class CheckoutRestApiBusinessTester extends Actor
 
         $paymentProviderCollectionTransfer->addPaymentProvider($paymentProviderTransfer);
 
-
         return (new PaymentMethodsBuilder())
             ->withMethod($paymentMethodData1)
             ->withAnotherMethod($paymentMethodData2)
