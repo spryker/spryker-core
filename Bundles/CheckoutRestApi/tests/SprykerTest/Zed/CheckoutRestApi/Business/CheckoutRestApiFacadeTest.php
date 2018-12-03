@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\CheckoutRestApi\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CustomerResponseBuilder;
 use Generated\Shared\Transfer\AddressesTransfer;
-use Generated\Shared\Transfer\PaymentMethodsTransfer;
+use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
@@ -80,10 +80,10 @@ class CheckoutRestApiFacadeTest extends Unit
         $this->assertInstanceOf(RestCheckoutDataResponseTransfer::class, $restCheckoutDataResponseTransfer);
         $this->assertInstanceOf(AddressesTransfer::class, $restCheckoutDataResponseTransfer->getCheckoutData()->getAddresses());
         $this->assertInstanceOf(ShipmentMethodsTransfer::class, $restCheckoutDataResponseTransfer->getCheckoutData()->getShipmentMethods());
-        $this->assertInstanceOf(PaymentMethodsTransfer::class, $restCheckoutDataResponseTransfer->getCheckoutData()->getPaymentMethods());
+        $this->assertInstanceOf(PaymentProviderCollectionTransfer::class, $restCheckoutDataResponseTransfer->getCheckoutData()->getPaymentProviders());
         $this->assertCount(1, $restCheckoutDataResponseTransfer->getCheckoutData()->getAddresses()->getAddresses());
         $this->assertCount(1, $restCheckoutDataResponseTransfer->getCheckoutData()->getShipmentMethods()->getMethods());
-        $this->assertCount(2, $restCheckoutDataResponseTransfer->getCheckoutData()->getPaymentMethods()->getMethods());
+        $this->assertCount(1, $restCheckoutDataResponseTransfer->getCheckoutData()->getPaymentProviders()->getPaymentProviders());
     }
 
     /**
@@ -104,10 +104,10 @@ class CheckoutRestApiFacadeTest extends Unit
         $this->assertInstanceOf(RestCheckoutDataResponseTransfer::class, $restCheckoutDataResponseTransfer);
         $this->assertInstanceOf(AddressesTransfer::class, $restCheckoutDataResponseTransfer->getCheckoutData()->getAddresses());
         $this->assertInstanceOf(ShipmentMethodsTransfer::class, $restCheckoutDataResponseTransfer->getCheckoutData()->getShipmentMethods());
-        $this->assertInstanceOf(PaymentMethodsTransfer::class, $restCheckoutDataResponseTransfer->getCheckoutData()->getPaymentMethods());
+        $this->assertInstanceOf(PaymentProviderCollectionTransfer::class, $restCheckoutDataResponseTransfer->getCheckoutData()->getPaymentProviders());
         $this->assertCount(0, $restCheckoutDataResponseTransfer->getCheckoutData()->getAddresses()->getAddresses());
         $this->assertCount(1, $restCheckoutDataResponseTransfer->getCheckoutData()->getShipmentMethods()->getMethods());
-        $this->assertCount(2, $restCheckoutDataResponseTransfer->getCheckoutData()->getPaymentMethods()->getMethods());
+        $this->assertCount(1, $restCheckoutDataResponseTransfer->getCheckoutData()->getPaymentProviders()->getPaymentProviders());
     }
 
     /**
@@ -427,11 +427,11 @@ class CheckoutRestApiFacadeTest extends Unit
     {
         $mockPaymentFacade = $this->createPartialMock(
             PaymentFacade::class,
-            ['getAvailableMethods']
+            ['getAvailablePaymentProviders']
         );
         $mockPaymentFacade
-            ->method('getAvailableMethods')
-            ->willReturn($this->tester->createPaymentMethodsTransfer());
+            ->method('getAvailablePaymentProviders')
+            ->willReturn($this->tester->createPaymentProviderCollectionTransfer());
 
         $mockCheckoutRestApiFactory
             ->method('getPaymentFacade')

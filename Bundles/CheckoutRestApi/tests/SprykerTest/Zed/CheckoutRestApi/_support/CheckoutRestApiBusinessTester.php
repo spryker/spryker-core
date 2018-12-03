@@ -20,6 +20,9 @@ use Generated\Shared\DataBuilder\ShipmentMethodsBuilder;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PaymentMethodTransfer;
+use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
+use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
@@ -161,14 +164,35 @@ class CheckoutRestApiBusinessTester extends Actor
     /**
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\PaymentMethodsTransfer
      */
-    public function createPaymentMethodsTransfer(): AbstractTransfer
+    public function createPaymentProviderCollectionTransfer(): AbstractTransfer
     {
+        $paymentProviderCollectionTransfer = new PaymentProviderCollectionTransfer();
+
         $paymentMethodData1 = [
-            'methodName' => 'dummyPaymentInvoice',
+            'methodName' => 'invoice',
+            'paymentSelections' => 'dummyPaymentInvoice',
         ];
         $paymentMethodData2 = [
-            'methodName' => 'dummyPaymentCreditCard',
+            'methodName' => 'credit card',
+            'paymentSelections' => 'dummyPaymentCreditCard',
         ];
+        $paymentProviderTransfer = (new PaymentProviderTransfer())
+            ->setProviderName('DummyPayment');
+
+        $paymentProviderTransfer->addPaymentMethod(
+            (new PaymentMethodTransfer())
+                ->setMethodName($paymentMethodData1['methodName'])
+                ->setPaymentSelection($paymentMethodData1['paymentSelections'])
+        );
+
+        $paymentProviderTransfer->addPaymentMethod(
+            (new PaymentMethodTransfer())
+                ->setMethodName($paymentMethodData2['methodName'])
+                ->setPaymentSelection($paymentMethodData2['paymentSelections'])
+        );
+
+        $paymentProviderCollectionTransfer->addPaymentProvider($paymentProviderTransfer);
+
 
         return (new PaymentMethodsBuilder())
             ->withMethod($paymentMethodData1)
