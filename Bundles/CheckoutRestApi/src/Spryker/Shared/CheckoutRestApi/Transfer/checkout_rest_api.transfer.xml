@@ -7,7 +7,7 @@
         <property name="addresses" type="Addresses" singular="address"/>
         <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod"/>
         <property name="paymentProviders" type="PaymentProviderCollection" singular="paymentProvider"/>
-    </transfer>PaymentsRestApiFacadeTest
+    </transfer>
 
     <transfer name="RestCheckoutError">
         <property name="status" type="int"/>
