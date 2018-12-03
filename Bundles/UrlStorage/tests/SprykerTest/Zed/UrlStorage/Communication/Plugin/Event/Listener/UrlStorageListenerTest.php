@@ -62,9 +62,9 @@ class UrlStorageListenerTest extends Unit
      */
     public function testUrlStorageListenerStoreData()
     {
-        SpyUrlStorageQuery::create()->filterByUrl($this->urlTransfer->getUrl())->delete();
+        $this->createSpyUrlStorageQuery()->filterByUrl($this->urlTransfer->getUrl())->delete();
 
-        $beforeCount = SpyUrlStorageQuery::create()->count();
+        $beforeCount = $this->createSpyUrlStorageQuery()->count();
 
         $urlStorageListener = new UrlStorageListener();
         $urlStorageListener->setFacade($this->getUrlStorageFacade());
@@ -119,9 +119,9 @@ class UrlStorageListenerTest extends Unit
      */
     protected function assertUrlStorage($beforeCount)
     {
-        $urlStorageCount = SpyUrlStorageQuery::create()->count();
+        $urlStorageCount = $this->createSpyUrlStorageQuery()->count();
         $this->assertSame($beforeCount + 1, $urlStorageCount);
-        $spyUrlStorage = SpyUrlStorageQuery::create()->orderByIdUrlStorage()->findOneByUrl($this->urlTransfer->getUrl());
+        $spyUrlStorage = $this->createSpyUrlStorageQuery()->orderByIdUrlStorage()->findOneByUrl($this->urlTransfer->getUrl());
         $this->assertNotNull($spyUrlStorage);
         $data = $spyUrlStorage->getData();
         $this->assertSame($this->urlTransfer->getUrl(), $data['url']);
@@ -162,5 +162,13 @@ class UrlStorageListenerTest extends Unit
         $url->save();
 
         return $redirectUrl->getIdUrlRedirect();
+    }
+
+    /**
+     * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorageQuery
+     */
+    protected function createSpyUrlStorageQuery(): SpyUrlStorageQuery
+    {
+        return new SpyUrlStorageQuery();
     }
 }
