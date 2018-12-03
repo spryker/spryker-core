@@ -15,6 +15,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
     protected const CONFIG_NAME = 'architecture-sniffer';
     protected const CONFIG_PRIORITY_NAME = 'priority';
     protected const CONFIG_PRIORITY_SKIP_VALUE = 0;
+    protected const CONFIG_IGNORE_ERRORS = 'ignoreErrors';
 
     /**
      * @var \Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReaderInterface
@@ -56,6 +57,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
         }
 
         $options[static::CONFIG_PRIORITY_NAME] = $priority;
+        $options[static::CONFIG_IGNORE_ERRORS] = $this->getIgnoreErrors($moduleConfig);
 
         return $options;
     }
@@ -143,5 +145,21 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
     protected function getArchitectureSnifferConfigPriority(array $architectureSnifferConfig): int
     {
         return (int)$architectureSnifferConfig[static::CONFIG_PRIORITY_NAME];
+    }
+
+    /**
+     * @param array $moduleConfig
+     *
+     * @return string[]
+     */
+    protected function getIgnoreErrors(array $moduleConfig): array
+    {
+        if (!$this->architectureSnifferConfigExists($moduleConfig)) {
+            return [];
+        }
+
+        $architectureSnifferConfig = $this->getArchitectureSnifferConfig($moduleConfig);
+
+        return $architectureSnifferConfig[static::CONFIG_IGNORE_ERRORS] ?? [];
     }
 }
