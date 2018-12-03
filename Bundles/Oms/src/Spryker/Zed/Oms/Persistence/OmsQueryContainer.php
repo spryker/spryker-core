@@ -293,7 +293,24 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         $query = $this->getFactory()
             ->getSalesQueryContainer()
             ->querySalesOrderItem()
-            ->filterByFkOmsOrderProcess($processIds, Criteria::IN);
+            ->withColumn("COUNT(*)", 'itemsCount')
+            ->withColumn(sprintf(
+                "CASE WHEN %s > '%s' THEN 'day' WHEN %s > '%s' THEN 'week' ELSE 'other' END",
+                SpySalesOrderItemTableMap::COL_LAST_STATE_CHANGE,
+                (new DateTime('-1 day'))->format('Y-m-d H:i:s'),
+                SpySalesOrderItemTableMap::COL_LAST_STATE_CHANGE,
+                (new DateTime('-7 day'))->format('Y-m-d H:i:s')
+            ), 'range')
+            ->select([
+                SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE,
+                SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_PROCESS,
+                'itemsCount',
+                'range',
+            ])
+            ->filterByFkOmsOrderProcess($processIds, Criteria::IN)
+            ->groupBy(SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE)
+            ->groupBy(SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_PROCESS)
+            ->groupBy('range');
 
         if ($stateBlacklist) {
             $query->filterByFkOmsOrderItemState($stateBlacklist, Criteria::NOT_IN);
