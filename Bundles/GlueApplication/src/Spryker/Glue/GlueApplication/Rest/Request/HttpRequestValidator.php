@@ -109,7 +109,6 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
 
         $availableMethods = $this->resourceRouteLoader->getAvailableMethods(
             $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_TYPE),
-            (array)$request->attributes->get(RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE),
             $request
         );
 

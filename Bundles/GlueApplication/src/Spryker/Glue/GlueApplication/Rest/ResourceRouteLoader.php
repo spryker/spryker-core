@@ -81,14 +81,13 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
 
     /**
      * @param string $resourceType
-     * @param array $resources
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
      * @return array
      */
-    public function getAvailableMethods(string $resourceType, array $resources, Request $httpRequest): array
+    public function getAvailableMethods(string $resourceType, Request $httpRequest): array
     {
-        $resourcePlugin = $this->findResourcePlugin($resourceType, $resources, $httpRequest);
+        $resourcePlugin = $this->findResourcePlugin($resourceType, [], $httpRequest);
 
         if ($resourcePlugin === null) {
             return [];
@@ -144,7 +143,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
             return false;
         }
 
-        if ($resourceRoutePlugin instanceof ResourceWithParentPluginInterface) {
+        if ($resourceRoutePlugin instanceof ResourceWithParentPluginInterface && count($resources)) {
             $parentResourceType = $resourceRoutePlugin->getParentResourceType();
             return $this->isParentResourceMatching($resources, $parentResourceType);
         }
@@ -165,7 +164,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
         }
 
         foreach ($resources as $resource) {
-            if ($resource[RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE] === $parentResourceType) {
+            if ($resource[RequestConstantsInterface::ATTRIBUTE_TYPE] === $parentResourceType) {
                 return true;
             }
         }

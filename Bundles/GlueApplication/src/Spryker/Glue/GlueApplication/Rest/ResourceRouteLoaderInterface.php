@@ -21,10 +21,9 @@ interface ResourceRouteLoaderInterface
 
     /**
      * @param string $resourceType
-     * @param array $resources
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
      * @return array
      */
-    public function getAvailableMethods(string $resourceType, array $resources, Request $httpRequest): array;
+    public function getAvailableMethods(string $resourceType, Request $httpRequest): array;
 }
