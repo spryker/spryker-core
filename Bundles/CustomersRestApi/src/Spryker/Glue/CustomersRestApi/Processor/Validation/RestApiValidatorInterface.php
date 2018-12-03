@@ -9,7 +9,6 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Validation;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer;
-use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -25,17 +24,6 @@ interface RestApiValidatorInterface
     public function validateCustomerResponseTransfer(
         CustomerResponseTransfer $customerResponseTransfer,
         RestRequestInterface $restRequest,
-        RestResponseInterface $restResponse
-    ): RestResponseInterface;
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomersAttributesTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function validateCustomerGender(
-        RestCustomersAttributesTransfer $restCustomersAttributesTransfer,
         RestResponseInterface $restResponse
     ): RestResponseInterface;
 

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorProcessorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,26 +35,26 @@ class CustomerPasswordWriter implements CustomerPasswordWriterInterface
     protected $customerRestorePasswordResourceMapper;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorProcessorInterface
      */
-    protected $restApiError;
+    protected $restApiErrorProcessor;
 
     /**
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface $customerRestorePasswordResourceMapper
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface $restApiError
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorProcessorInterface $restApiErrorProcessor
      */
     public function __construct(
         CustomersRestApiToCustomerClientInterface $customerClient,
         RestResourceBuilderInterface $restResourceBuilder,
         CustomerRestorePasswordResourceMapperInterface $customerRestorePasswordResourceMapper,
-        RestApiErrorInterface $restApiError
+        RestApiErrorProcessorInterface $restApiErrorProcessor
     ) {
         $this->customerClient = $customerClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->customerRestorePasswordResourceMapper = $customerRestorePasswordResourceMapper;
-        $this->restApiError = $restApiError;
+        $this->restApiErrorProcessor = $restApiErrorProcessor;
     }
 
     /**
@@ -67,7 +67,7 @@ class CustomerPasswordWriter implements CustomerPasswordWriterInterface
         $response = $this->restResourceBuilder->createRestResponse();
 
         if ($restCustomerRestorePasswordAttributesTransfer->getPassword() !== $restCustomerRestorePasswordAttributesTransfer->getConfirmPassword()) {
-            return $this->restApiError->addPasswordsDoNotMatchError(
+            return $this->restApiErrorProcessor->addPasswordsDoNotMatchError(
                 $response,
                 RestCustomerRestorePasswordAttributesTransfer::PASSWORD,
                 RestCustomerRestorePasswordAttributesTransfer::CONFIRM_PASSWORD

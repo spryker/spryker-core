@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorProcessorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -36,9 +36,9 @@ class CustomerReader implements CustomerReaderInterface
     protected $customerResourceMapper;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorProcessorInterface
      */
-    protected $restApiError;
+    protected $restApiErrorProcessor;
 
     /**
      * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface
@@ -49,20 +49,20 @@ class CustomerReader implements CustomerReaderInterface
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface $customerResourceMapper
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface $restApiError
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorProcessorInterface $restApiErrorProcessor
      * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface $restApiValidator
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CustomersRestApiToCustomerClientInterface $customerClient,
         CustomerResourceMapperInterface $customerResourceMapper,
-        RestApiErrorInterface $restApiError,
+        RestApiErrorProcessorInterface $restApiErrorProcessor,
         RestApiValidatorInterface $restApiValidator
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->customerClient = $customerClient;
         $this->customerResourceMapper = $customerResourceMapper;
-        $this->restApiError = $restApiError;
+        $this->restApiErrorProcessor = $restApiErrorProcessor;
         $this->restApiValidator = $restApiValidator;
     }
 
@@ -79,14 +79,14 @@ class CustomerReader implements CustomerReaderInterface
         $customerResponseTransfer = $this->getCurrentCustomer($restRequest);
         if ($customerResourceId) {
             if (!$this->restApiValidator->isSameCustomerReference($restRequest)) {
-                return $this->restApiError->addCustomerNotFoundError($restResponse);
+                return $this->restApiErrorProcessor->addCustomerNotFoundError($restResponse);
             }
 
             $customerResponseTransfer = $this->findCustomer($restRequest);
         }
 
         if (!$customerResponseTransfer->getHasCustomer()) {
-            return $this->restApiError->addCustomerNotFoundError($restResponse);
+            return $this->restApiErrorProcessor->addCustomerNotFoundError($restResponse);
         }
 
         $restCustomersResponseAttributesTransfer = $this

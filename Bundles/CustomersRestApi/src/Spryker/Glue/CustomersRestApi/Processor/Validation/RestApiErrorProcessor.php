@@ -7,12 +7,13 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Validation;
 
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class RestApiError implements RestApiErrorInterface
+class RestApiErrorProcessor implements RestApiErrorProcessorInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
@@ -31,16 +32,15 @@ class RestApiError implements RestApiErrorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     * @param string $errorMessage
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addCustomerCantRegisterMessageError(RestResponseInterface $restResponse, string $errorMessage): RestResponseInterface
+    public function addCustomerEmailInvalidError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER)
-            ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
-            ->setDetail($errorMessage);
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_EMAIL_INVALID)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_EMAIL_INVALID);
 
         return $restResponse->addError($restErrorTransfer);
     }
@@ -86,37 +86,6 @@ class RestApiError implements RestApiErrorInterface
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_REFERENCE_MISSING)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_REFERENCE_MISSING);
-
-        return $restResponse->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function addPasswordsNotMatchError(RestResponseInterface $restResponse): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORDS_DONT_MATCH)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_PASSWORDS_DONT_MATCH);
-
-        return $restResponse->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     * @param string $errorMessage
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function addPasswordChangeError(RestResponseInterface $restResponse, string $errorMessage): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORD_CHANGE_FAILED)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail($errorMessage);
 
         return $restResponse->addError($restErrorTransfer);
     }
@@ -213,22 +182,6 @@ class RestApiError implements RestApiErrorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function addNotValidGenderError(RestResponseInterface $restResponse): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_NOT_VALID_GENDER)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_NOT_VALID_GENDER
-                . ' Possible options are: ' . implode(', ', RestApiValidator::CUSTOMERS_GENDERS_ENUM));
-
-        return $restResponse->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      * @param string $passwordFieldName
      * @param string $passwordConfirmFieldName
      *
@@ -237,10 +190,116 @@ class RestApiError implements RestApiErrorInterface
     public function addPasswordsDoNotMatchError(RestResponseInterface $restResponse, string $passwordFieldName, string $passwordConfirmFieldName): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORDS_DO_NOT_MATCH)
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORDS_DONT_MATCH)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(sprintf(CustomersRestApiConfig::RESPONSE_DETAILS_PASSWORDS_DO_NOT_MATCH, $passwordFieldName, $passwordConfirmFieldName));
+            ->setDetail(sprintf(CustomersRestApiConfig::RESPONSE_DETAILS_PASSWORDS_DONT_MATCH, $passwordFieldName, $passwordConfirmFieldName));
 
         return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     * @param string $code
+     * @param string $detail
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addCustomerError(
+        RestResponseInterface $restResponse,
+        string $code,
+        string $detail
+    ): RestResponseInterface {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode($code)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail($detail);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function processKnownCustomerError(RestResponseInterface $restResponse, CustomerResponseTransfer $customerResponseTransfer): RestResponseInterface
+    {
+        foreach ($customerResponseTransfer->getErrors() as $customerResponseTransfer) {
+            if ($customerResponseTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED) {
+                $restResponse = $this->addCustomerAlreadyExistsError($restResponse);
+            }
+            if ($customerResponseTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_INVALID) {
+                $restResponse = $this->addCustomerEmailInvalidError($restResponse);
+            }
+            if ($customerResponseTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_INVALID) {
+                $restResponse = $this->addPasswordNotValidError($restResponse);
+            }
+        }
+
+        return $restResponse;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function processCustomerErrorOnRegistration(RestResponseInterface $restResponse, CustomerResponseTransfer $customerResponseTransfer): RestResponseInterface
+    {
+        $restResponse = $this->processKnownCustomerError($restResponse, $customerResponseTransfer);
+
+        if (!count($restResponse->getErrors())) {
+            return $this->addCustomerError(
+                $restResponse,
+                CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER,
+                CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_CANT_REGISTER_CUSTOMER
+            );
+        }
+
+        return $restResponse;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function processCustomerErrorOnUpdate(RestResponseInterface $restResponse, CustomerResponseTransfer $customerResponseTransfer): RestResponseInterface
+    {
+        $restResponse = $this->processKnownCustomerError($restResponse, $customerResponseTransfer);
+
+        if (!count($restResponse->getErrors())) {
+            return $this->addCustomerError(
+                $restResponse,
+                CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_FAILED_TO_SAVE,
+                CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_FAILED_TO_SAVE
+            );
+        }
+
+        return $restResponse;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function processCustomerErrorOnPasswordUpdate(RestResponseInterface $restResponse, CustomerResponseTransfer $customerResponseTransfer): RestResponseInterface
+    {
+        $restResponse = $this->processKnownCustomerError($restResponse, $customerResponseTransfer);
+
+        if (!count($restResponse->getErrors())) {
+            return $this->addCustomerError(
+                $restResponse,
+                CustomersRestApiConfig::RESPONSE_CODE_PASSWORD_CHANGE_FAILED,
+                CustomersRestApiConfig::RESPONSE_DETAILS_PASSWORD_CHANGE_FAILED
+            );
+        }
+
+        return $restResponse;
     }
 }
