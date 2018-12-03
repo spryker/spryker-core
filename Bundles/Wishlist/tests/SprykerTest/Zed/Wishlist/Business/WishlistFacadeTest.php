@@ -121,12 +121,12 @@ class WishlistFacadeTest extends Unit
     }
 
     /**
-     * @param $reference
-     * @param $email
+     * @param string $reference
+     * @param string $email
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomer
      */
-    protected function createCustomer(string $reference, string $email)
+    protected function createCustomer(string $reference, string $email): SpyCustomer
     {
         $customerEntity = (new SpyCustomer())
             ->setCustomerReference($reference)
@@ -444,7 +444,11 @@ class WishlistFacadeTest extends Unit
     public function testValidateAndUpdateWishlistShouldFailWhenNameIsNotUnique()
     {
         $wishlistTransfer = new WishlistTransfer();
+
+        $newWhishListId = $this->wishlist->getIdWishlist() + 1;
+
         $wishlistTransfer
+            ->setIdWishlist($newWhishListId)
             ->setName($this->wishlist->getName())
             ->setFkCustomer($this->customer->getIdCustomer());
 
@@ -460,7 +464,11 @@ class WishlistFacadeTest extends Unit
     public function testValidateAndUpdateWishlistShouldUpdateWishlistWhenNameIsNotUniqueInOtherCustomer()
     {
         $wishlistTransfer = new WishlistTransfer();
+
+        $newWhishListId = $this->wishlist->getIdWishlist() + 1;
+
         $wishlistTransfer
+            ->setIdWishlist($newWhishListId)
             ->setName($this->wishlist->getName())
             ->setFkCustomer($this->customer->getIdCustomer());
 
