@@ -9,6 +9,7 @@ namespace Spryker\Glue\CatalogSearchRestApi\Processor\Mapper;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\PriceModeConfigurationTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
+use Generated\Shared\Transfer\RestCatalogSearchAbstractProductsTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchSortTransfer;
 use Generated\Shared\Transfer\RestCurrencyTransfer;
@@ -19,6 +20,8 @@ use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCu
 
 class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterface
 {
+    protected const KEY_PRODUCTS = 'products';
+
     /**
      * @var \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface
      */
@@ -50,6 +53,12 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
     public function mapSearchResultToRestAttributesTransfer(array $restSearchResponse): RestCatalogSearchAttributesTransfer
     {
         $restSearchAttributesTransfer = (new RestCatalogSearchAttributesTransfer())->fromArray($restSearchResponse, true);
+
+        $restSearchAttributesTransfer = $this->mapSearchResponseProductsToRestCatalogSearchAttributesTransfer(
+            $restSearchAttributesTransfer,
+            $restSearchResponse
+        );
+
         $restCatalogSearchSortTransfer = (new RestCatalogSearchSortTransfer())
             ->fromArray($restSearchResponse[static::SORT_NAME]->toArray());
         $restSearchAttributesTransfer->setSort($restCatalogSearchSortTransfer);
@@ -62,6 +71,29 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         }
 
         return $restSearchAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer
+     * @param array $restSearchResponse
+     *
+     * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
+     */
+    protected function mapSearchResponseProductsToRestCatalogSearchAttributesTransfer(
+        RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer,
+        array $restSearchResponse
+    ): RestCatalogSearchAttributesTransfer {
+        if (!isset($restSearchResponse[static::KEY_PRODUCTS]) || !is_array($restSearchResponse[static::KEY_PRODUCTS])) {
+            return $restCatalogSearchAttributesTransfer;
+        }
+
+        foreach ($restSearchResponse[static::KEY_PRODUCTS] as $product) {
+            $restCatalogSearchAttributesTransfer->addAbstractProduct(
+                (new RestCatalogSearchAbstractProductsTransfer())->fromArray($product, true)
+            );
+        }
+
+        return $restCatalogSearchAttributesTransfer;
     }
 
     /**
@@ -99,7 +131,7 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer,
         PriceModeConfigurationTransfer $priceModeInformation
     ): RestCatalogSearchAttributesTransfer {
-        foreach ($restSearchAttributesTransfer->getProducts() as $product) {
+        foreach ($restSearchAttributesTransfer->getAbstractProducts() as $product) {
             $prices = [];
             foreach ($product->getPrices() as $priceType => $price) {
                 $priceData = $this

@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CatalogSearchProductsResourceRelationship\Processor\Expander;
 
-use ArrayObject;
 use Spryker\Glue\CatalogSearchProductsResourceRelationship\Dependency\RestResource\CatalogSearchProductsResourceRelationshipToProductsRestApiInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -16,6 +15,8 @@ class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements Ca
 {
     protected const KEY_ABSTRACT_SKU = 'abstract_sku';
     protected const KEY_ABSTRACT_SKU_CAMEL_CASE = 'abstractSku';
+    protected const KEY_PRODUCTS = 'products';
+    protected const KEY_ABSTRACT_PRODUCTS = 'abstractProducts';
 
     /**
      * @var \Spryker\Glue\CatalogSearchProductsResourceRelationship\Dependency\RestResource\CatalogSearchProductsResourceRelationshipToProductsRestApiInterface
@@ -39,16 +40,39 @@ class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements Ca
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            /** @var \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer $attributes */
             $attributes = $resource->getAttributes();
-            $products = $attributes->getProducts();
 
-            if ($products instanceof ArrayObject) {
-                $products = $products->getArrayCopy();
+            if (isset($attributes[static::KEY_PRODUCTS])) {
+                $products = $attributes[static::KEY_PRODUCTS];
+                $this->addAbstractProductsToResource($products, $resource, $restRequest);
+
+                return;
             }
 
-            if ($products) {
-                $this->addAbstractProductsToResource($products, $resource, $restRequest);
+            if (isset($attributes[static::KEY_ABSTRACT_PRODUCTS])) {
+                $products = $attributes[static::KEY_ABSTRACT_PRODUCTS];
+                $this->addRelatedAbstractProductsToResourceCollection($products->getArrayCopy(), $resource, $restRequest);
+            }
+        }
+    }
+
+    /**
+     * @param array $products
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
+     */
+    protected function addRelatedAbstractProductsToResourceCollection(array $products, RestResourceInterface $resource, RestRequestInterface $restRequest): void
+    {
+        foreach ($products as $product) {
+            if (!isset($product[static::KEY_ABSTRACT_SKU_CAMEL_CASE])) {
+                continue;
+            }
+
+            $abstractProduct = $this->productsResource->findProductAbstractBySku($product[static::KEY_ABSTRACT_SKU_CAMEL_CASE], $restRequest);
+            if ($abstractProduct) {
+                $resource->addRelationship($abstractProduct);
             }
         }
     }
@@ -63,20 +87,11 @@ class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements Ca
     protected function addAbstractProductsToResource(array $products, RestResourceInterface $resource, RestRequestInterface $restRequest): void
     {
         foreach ($products as $product) {
-            $productAbstractSku = '';
-            if (isset($product[static::KEY_ABSTRACT_SKU_CAMEL_CASE])) {
-                $productAbstractSku = $product[static::KEY_ABSTRACT_SKU_CAMEL_CASE];
-            }
-
-            if (isset($product[static::KEY_ABSTRACT_SKU])) {
-                $productAbstractSku = $product[static::KEY_ABSTRACT_SKU];
-            }
-
-            if (!$productAbstractSku) {
+            if (!isset($product[static::KEY_ABSTRACT_SKU])) {
                 continue;
             }
 
-            $abstractProduct = $this->productsResource->findProductAbstractBySku($productAbstractSku, $restRequest);
+            $abstractProduct = $this->productsResource->findProductAbstractBySku($product[static::KEY_ABSTRACT_SKU], $restRequest);
             if ($abstractProduct) {
                 $resource->addRelationship($abstractProduct);
             }

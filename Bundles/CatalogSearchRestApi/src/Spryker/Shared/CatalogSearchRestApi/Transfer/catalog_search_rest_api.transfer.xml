@@ -6,7 +6,7 @@
     <transfer name="RestCatalogSearchAttributes">
         <property name="sort" type="RestCatalogSearchSort"/>
         <property name="pagination" type="RestCatalogSearchPagination"/>
-        <property name="products" type="RestCatalogSearchProducts[]"/>
+        <property name="abstractProducts" type="RestCatalogSearchAbstractProducts[]" singular="abstractProduct"/>
         <property name="valueFacets" type="RestFacetSearchResult[]" singular="valueFacet"/>
         <property name="rangeFacets" type="RestRangeSearchResult[]" singular="rangeFacet"/>
         <property name="spellingSuggestion" type="string"/>
@@ -26,7 +26,7 @@
         <property name="currentItemsPerPage" type="int" />
     </transfer>
 
-    <transfer name="RestCatalogSearchProducts">
+    <transfer name="RestCatalogSearchAbstractProducts">
         <property name="images" type="RestCatalogSearchProductImage[]"/>
         <property name="price" type="int"/>
         <property name="abstractName" type="string"/>
@@ -59,12 +59,12 @@
 
     <transfer name="RestCatalogSearchSuggestionsAttributes">
         <property name="completion" type="string[]"/>
-        <property name="products" type="RestCatalogSearchSuggestionProducts[]"/>
+        <property name="abstractProducts" type="RestCatalogSearchSuggestionAbstractProducts[]" singular="abstractProduct"/>
         <property name="categories" type="array"/>
         <property name="cmsPages" type="array"/>
     </transfer>
 
-    <transfer name="RestCatalogSearchSuggestionProducts">
+    <transfer name="RestCatalogSearchSuggestionAbstractProducts">
         <property name="images" type="RestCatalogSearchSuggestionProductImage[]"/>
         <property name="price" type="int"/>
         <property name="abstractName" type="string"/>

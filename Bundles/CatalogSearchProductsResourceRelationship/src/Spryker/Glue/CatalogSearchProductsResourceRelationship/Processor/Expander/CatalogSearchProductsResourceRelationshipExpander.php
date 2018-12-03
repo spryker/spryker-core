@@ -14,6 +14,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearchProductsResourceRelationshipExpanderInterface
 {
     protected const KEY_PRODUCTS = 'products';
+    protected const KEY_ABSTRACT_PRODUCTS = 'abstractProducts';
     /**
      * @var \Spryker\Glue\CatalogSearchProductsResourceRelationship\Dependency\RestResource\CatalogSearchProductsResourceRelationshipToProductsRestApiInterface
      */
@@ -37,6 +38,12 @@ class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearch
     {
         foreach ($resources as $resource) {
             $attributes = $resource->getAttributes();
+            if ($attributes && $attributes->offsetGet(static::KEY_ABSTRACT_PRODUCTS)) {
+                $products = $attributes->offsetGet(static::KEY_ABSTRACT_PRODUCTS)->getArrayCopy();
+                $this->addAbstractProductsToResource($products, $resource, $restRequest);
+
+                return;
+            }
             if ($attributes && $attributes->offsetGet(static::KEY_PRODUCTS)) {
                 $products = $attributes->offsetGet(static::KEY_PRODUCTS)->getArrayCopy();
                 $this->addAbstractProductsToResource($products, $resource, $restRequest);
@@ -45,7 +52,7 @@ class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearch
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCatalogSearchProductsTransfer[] $products
+     * @param \Generated\Shared\Transfer\RestCatalogSearchAbstractProductsTransfer[] $products
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
