@@ -27,7 +27,7 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
 
         $salesPaymentMethodTypeCollectionTransfer = new SalesPaymentMethodTypeCollectionTransfer();
 
-        $paymentMapper = $this->getFactory()->creatPaymentMapper();
+        $paymentMapper = $this->getFactory()->createPaymentMapper();
         foreach ($salesPaymentMethodTypeEntities as $salesPaymentMethodTypeEntity) {
             $salesPaymentMethodTypeTransfer = $paymentMapper->mapSalesPaymentMethodTypeTransfer(
                 $salesPaymentMethodTypeEntity,

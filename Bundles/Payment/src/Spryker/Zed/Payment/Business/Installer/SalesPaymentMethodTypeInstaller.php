@@ -53,10 +53,10 @@ class SalesPaymentMethodTypeInstaller implements SalesPaymentMethodTypeInstaller
      */
     protected function executeInstallTransaction(): void
     {
-        $salesPaymentMethods = $this->config->getSalesPaymentMethods();
+        $salesPaymentMethods = $this->config->getSalesPaymentMethodTypes();
 
         foreach ($salesPaymentMethods as $paymentProvider => $paymentMethods) {
-            foreach ($paymentMethods as $paymentMethod) {
+            foreach ($paymentMethods as $paymentMethod => $value) {
                 $salesPaymentMethodTypeTransfer = (new SalesPaymentMethodTypeTransfer())
                     ->setPaymentMethod($paymentMethod)
                     ->setPaymentProvider($paymentProvider);

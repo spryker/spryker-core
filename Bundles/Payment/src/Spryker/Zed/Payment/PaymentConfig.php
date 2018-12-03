@@ -13,21 +13,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class PaymentConfig extends AbstractBundleConfig
 {
     /**
-     * @uses \Spryker\Shared\DummyPayment\DummyPaymentConfig::PROVIDER_NAME
-     */
-    protected const DUMMY_PAYMENT_PROVIDER_NAME = 'DummyPayment';
-
-    /**
-     * @uses \Spryker\Shared\DummyPayment\DummyPaymentConfig::PAYMENT_METHOD_NAME_INVOICE
-     */
-    protected const DUMMY_PAYMENT_PAYMENT_METHOD_NAME_INVOICE = 'invoice';
-
-    /**
-     * @uses \Spryker\Shared\DummyPayment\DummyPaymentConfig::PAYMENT_METHOD_NAME_CREDIT_CARD
-     */
-    protected const DUMMY_PAYMENT_PAYMENT_METHOD_NAME_CREDIT_CARD = 'credit card';
-
-    /**
      * @return array
      */
     public function getPaymentStatemachineMappings()
@@ -38,13 +23,8 @@ class PaymentConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getSalesPaymentMethods(): array
+    public function getSalesPaymentMethodTypes(): array
     {
-        return [
-            static::DUMMY_PAYMENT_PROVIDER_NAME => [
-                static::DUMMY_PAYMENT_PAYMENT_METHOD_NAME_CREDIT_CARD,
-                static::DUMMY_PAYMENT_PAYMENT_METHOD_NAME_INVOICE,
-            ],
-        ];
+        return [];
     }
 }

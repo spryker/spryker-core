@@ -40,7 +40,7 @@ class PaymentPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\Payment\Persistence\Propel\Mapper\PaymentMapperInterface
      */
-    public function creatPaymentMapper(): PaymentMapperInterface
+    public function createPaymentMapper(): PaymentMapperInterface
     {
         return new PaymentMapper();
     }
