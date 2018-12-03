@@ -9,7 +9,6 @@
     "spryker/config": "^3.0.0",
     "spryker/guzzle": "^2.1.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/log": "^3.0.0",
     "spryker/messenger": "^3.0.0",
     "spryker/silex": "^2.0.0",
     "spryker/symfony": "^3.0.0",
@@ -17,6 +16,7 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
+    "spryker/log": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
@@ -40,5 +40,8 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "suggest": {
+    "spryker/log": "ADD SUGGEST DESCRIPTION"
   }
 }
