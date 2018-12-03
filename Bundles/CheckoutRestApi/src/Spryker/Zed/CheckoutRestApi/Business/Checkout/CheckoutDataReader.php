@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseTransfer;
@@ -88,8 +89,9 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
 
         $checkoutDataTransfer = (new RestCheckoutDataTransfer())
             ->setShipmentMethods($this->getShipmentMethodsTransfer($quoteTransfer))
-            ->setPaymentProviders($this->getPaymentProviders($quoteTransfer))
-            ->setAddresses($this->addressReader->getAddressesTransfer($quoteTransfer));
+            ->setPaymentProviders($this->getPaymentProviders())
+            ->setAddresses($this->addressReader->getAddressesTransfer($quoteTransfer))
+            ->setAvailablePaymentMethods($this->getAvailablePaymentMethods($quoteTransfer));
 
         return (new RestCheckoutDataResponseTransfer())
                 ->setIsSuccess(true)
@@ -107,13 +109,21 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
      */
-    protected function getPaymentProviders(QuoteTransfer $quoteTransfer): PaymentProviderCollectionTransfer
+    protected function getPaymentProviders(): PaymentProviderCollectionTransfer
     {
-        return $this->paymentFacade->getAvailablePaymentProviders($quoteTransfer);
+        return $this->paymentFacade->getAvailablePaymentProviders();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
+     */
+    protected function getAvailablePaymentMethods(QuoteTransfer $quoteTransfer): PaymentMethodsTransfer
+    {
+        return $this->paymentFacade->getAvailableMethods($quoteTransfer);
     }
 
     /**

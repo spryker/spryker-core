@@ -13,9 +13,14 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface CheckoutRestApiToPaymentFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
      */
-    public function getAvailablePaymentProviders(QuoteTransfer $quoteTransfer): PaymentProviderCollectionTransfer;
+    public function getAvailablePaymentProviders(): PaymentProviderCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
+     */
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer);
 }

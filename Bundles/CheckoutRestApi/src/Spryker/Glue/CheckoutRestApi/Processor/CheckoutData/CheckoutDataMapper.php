@@ -95,9 +95,13 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         foreach ($paymentProviders as $paymentProviderTransfer) {
             $restPaymentProviderTransfer = new RestPaymentProviderTransfer();
             $restPaymentProviderTransfer->fromArray($paymentProviderTransfer->toArray(), true);
-            foreach ($restPaymentProviderTransfer->getPaymentMethods() as $restPaymentMethodTransfer) {
-                $restPaymentMethodTransfer->setRequiredRequestData($this->config->getRequiredRequestDataForMethod($restPaymentMethodTransfer->getPaymentSelection()));
-            }
+            $restPaymentProviderTransfer->setPaymentProviderName($paymentProviderTransfer->getName());
+
+//            foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
+//                $restPaymentMethodTransfer = (new RestPaymentMethodTransfer())
+//                    ->setMethodName($paymentMethodTransfer->getMethodName());
+//                $restPaymentMethodTransfer->setRequiredRequestData($this->config->getRequiredRequestDataForMethod($restPaymentMethodTransfer->getPaymentSelection()));
+//            }
             $restCheckoutDataResponseAttributesTransfer->addPaymentProvider($restPaymentProviderTransfer);
         }
 

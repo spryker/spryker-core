@@ -26,12 +26,20 @@ class CheckoutRestApiToPaymentFacadeBridge implements CheckoutRestApiToPaymentFa
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
      */
-    public function getAvailablePaymentProviders(QuoteTransfer $quoteTransfer): PaymentProviderCollectionTransfer
+    public function getAvailablePaymentProviders(): PaymentProviderCollectionTransfer
     {
-        return $this->paymentFacade->getAvailablePaymentProviders($quoteTransfer);
+        return $this->paymentFacade->getAvailablePaymentProviders();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
+     */
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
+    {
+        return $this->paymentFacade->getAvailableMethods($quoteTransfer);
     }
 }

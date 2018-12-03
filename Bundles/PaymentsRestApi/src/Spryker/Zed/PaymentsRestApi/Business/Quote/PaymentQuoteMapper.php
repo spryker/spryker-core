@@ -23,7 +23,8 @@ class PaymentQuoteMapper implements PaymentQuoteMapperInterface
     public function mapPaymentsToQuote(
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
-    ): QuoteTransfer {
+    ): QuoteTransfer
+    {
         $restPaymentTransfers = $restCheckoutRequestAttributesTransfer->getPayments();
 
         if (!$restPaymentTransfers->count()) {
@@ -42,6 +43,11 @@ class PaymentQuoteMapper implements PaymentQuoteMapperInterface
      */
     protected function preparePaymentTransfer(RestPaymentTransfer $restPaymentTransfer): PaymentTransfer
     {
-        return (new PaymentTransfer())->fromArray($restPaymentTransfer->toArray(), true);
+        $paymentTransfer = (new PaymentTransfer())->fromArray($restPaymentTransfer->toArray(), true);
+
+        $paymentTransfer->setPaymentProvider($restPaymentTransfer->getPaymentProviderName())
+            ->setPaymentMethod($restPaymentTransfer->getPaymentMethodName());
+
+        return $paymentTransfer;
     }
 }

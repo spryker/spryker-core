@@ -7,6 +7,7 @@
         <property name="addresses" type="Addresses" singular="address"/>
         <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod"/>
         <property name="paymentProviders" type="PaymentProviderCollection" singular="paymentProvider"/>
+        <property name="availablePaymentMethods" type="PaymentMethods"/>
     </transfer>
 
     <transfer name="RestCheckoutError">
@@ -63,8 +64,8 @@
     </transfer>
 
     <transfer name="RestPayment">
-        <property name="paymentProvider" type="string" restRequestParameter="required"/>
-        <property name="paymentMethod" type="string" restRequestParameter="required"/>
+        <property name="paymentProviderName" type="string" restRequestParameter="required"/>
+        <property name="paymentMethodName" type="string" restRequestParameter="required"/>
         <property name="paymentSelection" type="string" restRequestParameter="required"/>
     </transfer>
 
@@ -75,7 +76,7 @@
     </transfer>
 
     <transfer name="RestPaymentProvider">
-        <property name="providerName" type="string"/>
+        <property name="paymentProviderName" type="string"/>
         <property name="paymentMethods" singular="paymentMethod" type="RestPaymentMethod[]" />
     </transfer>
 
