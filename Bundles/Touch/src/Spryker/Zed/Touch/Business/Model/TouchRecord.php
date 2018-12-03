@@ -83,7 +83,8 @@ class TouchRecord implements TouchRecordInterface
         } else {
             $touchEntity = $this->touchQueryContainer->queryUpdateTouchEntry(
                 $itemType,
-                $idItem
+                $idItem,
+                $itemEvent
             )->findOneOrCreate();
 
             $this->saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity);
