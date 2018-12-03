@@ -9,7 +9,11 @@ namespace Spryker\Zed\User\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\User\Business\Model\Installer;
+use Spryker\Zed\User\Business\Model\InstallerInterface;
 use Spryker\Zed\User\Business\Model\User;
+use Spryker\Zed\User\Business\Model\UserInterface;
+use Spryker\Zed\User\Business\Model\UserSession;
+use Spryker\Zed\User\Business\Model\UserSessionInterface;
 use Spryker\Zed\User\UserDependencyProvider;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -22,14 +26,21 @@ class UserBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\User\Business\Model\UserInterface
      */
-    public function createUserModel()
+    public function createUserModel(): UserInterface
     {
         return new User(
             $this->getQueryContainer(),
-            $this->getSessionClient(),
             $this->getConfig(),
             $this->getPostSavePlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\User\Business\Model\UserSessionInterface
+     */
+    public function createUserSession(): UserSessionInterface
+    {
+        return new UserSession($this->getSessionClient());
     }
 
     /**
@@ -49,9 +60,9 @@ class UserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\User\Business\Model\Installer
+     * @return \Spryker\Zed\User\Business\Model\InstallerInterface
      */
-    public function createInstallerModel()
+    public function createInstallerModel(): InstallerInterface
     {
         return new Installer(
             $this->getQueryContainer(),
