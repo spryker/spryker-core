@@ -66,7 +66,7 @@ interface SalesOrderThresholdFormExpanderPluginInterface
      *
      * @return array
      */
-    public function mapTransferToFormData(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer, array $data): array;
+    public function mapSalesOrderThresholdValueTransferToFormData(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer, array $data): array;
 
     /**
      * Specification:

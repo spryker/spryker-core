@@ -40,7 +40,7 @@ abstract class AbstractMerchantRelationshipThresholdDataProvider
             }
 
             $data[AbstractMerchantRelationshipThresholdType::FIELD_STRATEGY] = $formExpanderPlugin->getThresholdKey();
-            $data = $formExpanderPlugin->mapTransferToFormData($merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue(), $data);
+            $data = $formExpanderPlugin->mapSalesOrderThresholdValueTransferToFormData($merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue(), $data);
         }
 
         return $data;

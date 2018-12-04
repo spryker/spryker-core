@@ -104,7 +104,7 @@ class MerchantRelationshipThresholdDataProvider
                 ->hasMerchantRelationshipThresholdDataProviderByStrategyGroup($merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getThresholdGroup())) {
                 $data = $thresholdStrategyDataProvider = $this->globalThresholdDataProviderResolver
                     ->resolveMerchantRelationshipThresholdDataProviderByStrategyGroup($merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getThresholdGroup())
-                    ->mapTransferToFormData($merchantRelationshipSalesOrderThresholdTransfer, $data);
+                    ->mapSalesOrderThresholdValueTransferToFormData($merchantRelationshipSalesOrderThresholdTransfer, $data);
             }
         }
 

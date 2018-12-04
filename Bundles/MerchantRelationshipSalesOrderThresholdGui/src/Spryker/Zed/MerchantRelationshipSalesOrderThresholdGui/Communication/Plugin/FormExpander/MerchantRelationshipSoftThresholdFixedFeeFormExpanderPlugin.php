@@ -76,7 +76,7 @@ class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends Abstra
      *
      * @return array
      */
-    public function mapTransferToFormData(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer, array $data): array
+    public function mapSalesOrderThresholdValueTransferToFormData(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer, array $data): array
     {
         $data[static::FIELD_SOFT_FIXED_FEE] = $salesOrderThresholdValueTransfer->getFee();
 

@@ -101,7 +101,7 @@ class GlobalThresholdDataProvider
                 ->hasGlobalThresholdDataProviderByStrategyGroup($salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getThresholdGroup())) {
                 $data = $thresholdStrategyDataProvider = $this->globalThresholdDataProviderResolver
                     ->resolveGlobalThresholdDataProviderByStrategyGroup($salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getThresholdGroup())
-                    ->mapTransferToFormData($salesOrderThresholdTransfer, $data);
+                    ->mapSalesOrderThresholdValueTransferToFormData($salesOrderThresholdTransfer, $data);
             }
         }
 

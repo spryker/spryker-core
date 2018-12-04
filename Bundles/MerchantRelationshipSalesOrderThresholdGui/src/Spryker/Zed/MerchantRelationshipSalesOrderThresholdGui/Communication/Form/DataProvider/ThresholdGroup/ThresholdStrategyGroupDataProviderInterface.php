@@ -17,5 +17,5 @@ interface ThresholdStrategyGroupDataProviderInterface
      *
      * @return array
      */
-    public function mapTransferToFormData(MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer, array $data): array;
+    public function mapSalesOrderThresholdValueTransferToFormData(MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer, array $data): array;
 }

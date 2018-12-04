@@ -111,10 +111,7 @@ class GlobalController extends AbstractController
             $currencyTransfer
         );
 
-        if (isset($thresholdData[AbstractGlobalThresholdType::FIELD_STRATEGY]) &&
-            $this->getFactory()->createGlobalThresholdFormMapperResolver()->hasGlobalThresholdFormMapperByStrategyGroup(
-                $strategyGroup
-            )) {
+        if ($this->canMapThresholdData($thresholdData, $strategyGroup)) {
             $salesOrderThresholdTransfer = $this->getFactory()
                 ->createGlobalThresholdFormMapperResolver()
                 ->resolveGlobalThresholdFormMapperByStrategyGroup($strategyGroup)
@@ -122,6 +119,25 @@ class GlobalController extends AbstractController
         }
 
         $this->saveSalesOrderThreshold($salesOrderThresholdTransfer);
+    }
+
+    /**
+     * @param array $thresholdData
+     * @param string $strategyGroup
+     *
+     * @return bool
+     */
+    protected function canMapThresholdData(array $thresholdData, string $strategyGroup): bool
+    {
+        if (!isset($thresholdData[AbstractGlobalThresholdType::FIELD_STRATEGY])) {
+            return false;
+        }
+
+        return $this->getFactory()
+            ->createGlobalThresholdFormMapperResolver()
+            ->hasGlobalThresholdFormMapperByStrategyGroup(
+                $strategyGroup
+            );
     }
 
     /**

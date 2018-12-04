@@ -71,7 +71,7 @@ class MerchantRelationshipSoftThresholdWithMessageFormExpanderPlugin extends Abs
      *
      * @return array
      */
-    public function mapTransferToFormData(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer, array $data): array
+    public function mapSalesOrderThresholdValueTransferToFormData(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer, array $data): array
     {
         return $data;
     }

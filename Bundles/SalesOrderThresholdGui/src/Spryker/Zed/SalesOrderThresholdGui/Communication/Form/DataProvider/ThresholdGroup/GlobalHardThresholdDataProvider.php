@@ -19,7 +19,7 @@ class GlobalHardThresholdDataProvider extends AbstractGlobalThresholdDataProvide
      *
      * @return array
      */
-    public function mapTransferToFormData(SalesOrderThresholdTransfer $salesOrderThresholdTransfer, array $data): array
+    public function mapSalesOrderThresholdValueTransferToFormData(SalesOrderThresholdTransfer $salesOrderThresholdTransfer, array $data): array
     {
         $thresholdData = $data[GlobalThresholdType::FIELD_HARD] ?? [];
         $thresholdData[GlobalHardThresholdType::FIELD_ID_THRESHOLD] = $salesOrderThresholdTransfer->getIdSalesOrderThreshold();

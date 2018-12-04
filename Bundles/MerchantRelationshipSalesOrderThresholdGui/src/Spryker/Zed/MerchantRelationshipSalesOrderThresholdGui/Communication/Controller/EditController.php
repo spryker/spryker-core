@@ -159,10 +159,7 @@ class EditController extends AbstractController
             $currencyTransfer
         );
 
-        if (isset($thresholdData[AbstractMerchantRelationshipThresholdType::FIELD_STRATEGY]) &&
-            $this->getFactory()->createMerchantRelationshipThresholdFormMapperResolver()->hasMerchantRelationshipThresholdFormMapperByStrategyGroup(
-                $strategyGroup
-            )) {
+        if ($this->canMapThresholdData($thresholdData, $strategyGroup)) {
             $merchantRelationshipSalesOrderThresholdTransfer = $this->getFactory()
                 ->createMerchantRelationshipThresholdFormMapperResolver()
                 ->resolveMerchantRelationshipThresholdFormMapperByStrategyGroup($strategyGroup)
@@ -170,6 +167,25 @@ class EditController extends AbstractController
         }
 
         $this->saveMerchantRelationshipSalesOrderThreshold($merchantRelationshipSalesOrderThresholdTransfer);
+    }
+
+    /**
+     * @param array $thresholdData
+     * @param string $strategyGroup
+     *
+     * @return bool
+     */
+    protected function canMapThresholdData(array $thresholdData, string $strategyGroup): bool
+    {
+        if (!isset($thresholdData[AbstractMerchantRelationshipThresholdType::FIELD_STRATEGY])) {
+            return false;
+        }
+
+        return $this->getFactory()
+            ->createMerchantRelationshipThresholdFormMapperResolver()
+            ->hasMerchantRelationshipThresholdFormMapperByStrategyGroup(
+                $strategyGroup
+            );
     }
 
     /**

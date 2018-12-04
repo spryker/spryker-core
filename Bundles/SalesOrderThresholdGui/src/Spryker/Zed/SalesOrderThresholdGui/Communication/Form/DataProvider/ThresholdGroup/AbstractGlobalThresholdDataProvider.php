@@ -40,7 +40,7 @@ abstract class AbstractGlobalThresholdDataProvider
             }
 
             $data[AbstractGlobalThresholdType::FIELD_STRATEGY] = $formExpanderPlugin->getThresholdKey();
-            $data = $formExpanderPlugin->mapTransferToFormData($salesOrderThresholdTransfer->getSalesOrderThresholdValue(), $data);
+            $data = $formExpanderPlugin->mapSalesOrderThresholdValueTransferToFormData($salesOrderThresholdTransfer->getSalesOrderThresholdValue(), $data);
         }
 
         return $data;
