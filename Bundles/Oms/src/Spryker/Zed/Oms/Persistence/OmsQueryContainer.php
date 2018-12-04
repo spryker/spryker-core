@@ -28,6 +28,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     public const STORE = 'store';
     public const ID_OMS_PRODUCT_RESERVATION_STORE = 'idOmsProductReservationStore';
     public const LAST_UPDATE = 'lastUpdate';
+    public const ITEMS_COUNT = 'itemsCount';
+    public const DATE_WINDOW = 'dateWindow';
 
     /**
      * @api
@@ -293,26 +295,26 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         $query = $this->getFactory()
             ->getSalesQueryContainer()
             ->querySalesOrderItem()
-            ->withColumn("COUNT(*)", 'itemsCount')
+            ->withColumn("COUNT(*)", static::ITEMS_COUNT)
             ->withColumn(sprintf(
-                "CASE WHEN %s > '%s' THEN 'day' WHEN %s > '%s' THEN 'week' ELSE 'other' END",
+                "(CASE WHEN %s > '%s' THEN 'day' WHEN %s > '%s' THEN 'week' ELSE 'other' END)",
                 SpySalesOrderItemTableMap::COL_LAST_STATE_CHANGE,
                 (new DateTime('-1 day'))->format('Y-m-d H:i:s'),
                 SpySalesOrderItemTableMap::COL_LAST_STATE_CHANGE,
                 (new DateTime('-7 day'))->format('Y-m-d H:i:s')
-            ), 'range')
+            ), static::DATE_WINDOW)
             ->select([
                 SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE,
                 SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_PROCESS,
-                'itemsCount',
-                'range',
+                static::ITEMS_COUNT,
+                static::DATE_WINDOW,
             ])
             ->filterByFkOmsOrderProcess($processIds, Criteria::IN)
             ->groupBy(SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE)
             ->groupBy(SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_PROCESS)
-            ->groupBy('range');
+            ->groupBy(static::DATE_WINDOW);
 
-        if ($stateBlacklist) {
+        if (!empty($stateBlacklist)) {
             $query->filterByFkOmsOrderItemState($stateBlacklist, Criteria::NOT_IN);
         }
 

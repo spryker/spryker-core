@@ -10,6 +10,7 @@ namespace Spryker\Zed\Oms\Business\Util;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeInterface;
 use Spryker\Zed\Oms\OmsConfig;
+use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class OrderItemMatrix
@@ -186,7 +187,7 @@ class OrderItemMatrix
             $idState = $orderItemsMatrixRow[SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE];
             $idProcess = $orderItemsMatrixRow[SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_PROCESS];
 
-            $orderItemsMatrix[$idState][$idProcess][$orderItemsMatrixRow['range']] = $orderItemsMatrixRow['itemsCount'];
+            $orderItemsMatrix[$idState][$idProcess][$orderItemsMatrixRow[OmsQueryContainer::DATE_WINDOW]] = $orderItemsMatrixRow[OmsQueryContainer::ITEMS_COUNT];
         }
 
         return $orderItemsMatrix;
