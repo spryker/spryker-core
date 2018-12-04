@@ -31,8 +31,8 @@ class UuidGeneratorConsole extends Console
     protected function configure(): void
     {
         parent::configure();
-        $this
-            ->setName(static::COMMAND_NAME)
+
+        $this->setName(static::COMMAND_NAME)
             ->setDescription(static::COMMAND_DESCRIPTION)
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>');
 

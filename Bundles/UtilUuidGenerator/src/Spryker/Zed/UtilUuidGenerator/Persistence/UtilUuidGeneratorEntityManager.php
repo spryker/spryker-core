@@ -9,13 +9,14 @@ namespace Spryker\Zed\UtilUuidGenerator\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\UtilUuidGenerator\UtilUuidGeneratorConfig;
 
 /**
  * @method \Spryker\Zed\UtilUuidGenerator\Persistence\UtilUuidGeneratorPersistenceFactory getFactory()
  */
 class UtilUuidGeneratorEntityManager extends AbstractEntityManager implements UtilUuidGeneratorEntityManagerInterface
 {
+    protected const BATCH_SIZE = 200;
+
     /**
      * @param string $tableName
      *
@@ -32,7 +33,7 @@ class UtilUuidGeneratorEntityManager extends AbstractEntityManager implements Ut
             /** @var \Propel\Runtime\Collection\ObjectCollection $entities */
             $entities = $query
                 ->filterByUuid(null, Criteria::ISNULL)
-                ->limit(UtilUuidGeneratorConfig::BATCH_SIZE)
+                ->limit(static::BATCH_SIZE)
                 ->find();
 
             $count += $entities->count();

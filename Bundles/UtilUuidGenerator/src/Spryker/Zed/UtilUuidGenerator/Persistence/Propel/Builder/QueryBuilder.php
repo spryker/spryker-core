@@ -25,7 +25,7 @@ class QueryBuilder implements QueryBuilderInterface
      */
     public function buildQuery(string $tableName): ModelCriteria
     {
-        $className = $this->getClassNameWithNamespace($tableName);
+        $className = $this->getFullyQualifiedClassName($tableName);
 
         if (!class_exists($className)) {
             throw new Exception("Query '{$className}' not found.");
@@ -39,7 +39,7 @@ class QueryBuilder implements QueryBuilderInterface
      *
      * @return string
      */
-    protected function getClassNameWithNamespace(string $tableName): string
+    protected function getFullyQualifiedClassName(string $tableName): string
     {
         $className = $this->camelizeTableName($tableName);
         $classWithoutPrefix = str_replace(static::TABLE_PREFIX, '', $className);

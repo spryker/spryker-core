@@ -17,5 +17,5 @@ interface UtilUuidGeneratorRepositoryInterface
      *
      * @return bool
      */
-    public function hasQueryUuidField(string $tableName): bool;
+    public function hasUuidField(string $tableName): bool;
 }

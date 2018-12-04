@@ -21,7 +21,7 @@ class UtilUuidGeneratorRepository extends AbstractRepository implements UtilUuid
      *
      * @return bool
      */
-    public function hasQueryUuidField(string $tableName): bool
+    public function hasUuidField(string $tableName): bool
     {
         $query = $this->getFactory()
             ->createQueryBuilder()

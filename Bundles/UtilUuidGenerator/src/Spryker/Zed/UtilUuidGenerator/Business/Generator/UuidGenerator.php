@@ -41,7 +41,7 @@ class UuidGenerator implements UuidGeneratorInterface
      */
     public function generate(string $tableName): int
     {
-        if (!$this->repository->hasQueryUuidField($tableName)) {
+        if (!$this->repository->hasUuidField($tableName)) {
             return 0;
         }
 

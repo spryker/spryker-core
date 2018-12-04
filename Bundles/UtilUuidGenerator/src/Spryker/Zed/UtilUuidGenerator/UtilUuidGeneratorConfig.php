@@ -11,5 +11,4 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class UtilUuidGeneratorConfig extends AbstractBundleConfig
 {
-    public const BATCH_SIZE = 200;
 }
