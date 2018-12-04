@@ -295,11 +295,17 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
             return $results;
         }
 
-        $fileResults = [];
-
         if (!array_key_exists('file', $results)) {
             return $results;
         }
+
+        if (array_key_exists('violation', $results['file'])) {
+            $results['file'] = $this->filterOutIgnoredErrors($results['file'], $ignoreErrorPatterns);
+
+            return $results;
+        }
+
+        $fileResults = [];
 
         foreach ($results['file'] as $index => $fileResult) {
             $fileResults[$index] = $this->filterOutIgnoredErrors($fileResult, $ignoreErrorPatterns);
@@ -319,6 +325,16 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected function filterOutIgnoredErrors(array $fileResult, array $ignoreErrorPatterns): array
     {
         if (!array_key_exists('violation', $fileResult)) {
+            return $fileResult;
+        }
+
+        if (array_key_exists('_', $fileResult['violation'])) {
+            $violation = $fileResult['violation'];
+
+            if (!$this->isViolationMatchWithIgnoreErrorPatterns($violation, $ignoreErrorPatterns)) {
+                $fileResult['violation'] = $violation;
+            }
+
             return $fileResult;
         }
 
