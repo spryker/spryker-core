@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipProductList\Communication\Plugin\MerchantRelationship;
 
-use Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
-use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface;
 
@@ -19,8 +17,6 @@ use Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelation
  */
 class ProductListMerchantRelationshipPreDeletePlugin extends AbstractPlugin implements MerchantRelationshipPreDeletePluginInterface
 {
-    public const ERROR_MESSAGE = 'merchant.relationship.product.list.pre.delete.check';
-
     /**
      * {@inheritdoc}
      *
@@ -28,29 +24,16 @@ class ProductListMerchantRelationshipPreDeletePlugin extends AbstractPlugin impl
      *
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer
+     * @return void
      */
-    public function execute(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipDeleteResponseTransfer
+    public function execute(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
     {
-        $merchantRelationshipDeleteResponseTransfer = (new MerchantRelationshipDeleteResponseTransfer())->setIsSuccess(false);
         $productListCollection = $this->getFacade()->getProductListCollectionByMerchantRelationship($merchantRelationshipTransfer);
-
-        if (!$productListCollection->getProductLists()->count()) {
-            return $merchantRelationshipDeleteResponseTransfer->setIsSuccess(true);
-        }
 
         if ($productListCollection->getProductLists()->count()) {
             foreach ($productListCollection->getProductLists() as $productListTransfer) {
-                $merchantRelationshipDeleteResponseTransfer = $this->getFacade()->deleteMerchantRelationshipFromProductList($productListTransfer);
+                $this->getFacade()->clearMerchantRelationshipFromProductList($productListTransfer);
             }
-
-            return $merchantRelationshipDeleteResponseTransfer;
         }
-
-        $message = (new MessageTransfer())->setValue(static::ERROR_MESSAGE);
-        $merchantRelationshipDeleteResponseTransfer->setIsSuccess(false);
-        $merchantRelationshipDeleteResponseTransfer->addMessage($message);
-
-        return $merchantRelationshipDeleteResponseTransfer;
     }
 }

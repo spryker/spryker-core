@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 interface MerchantRelationshipPreDeletePluginInterface
@@ -22,7 +21,7 @@ interface MerchantRelationshipPreDeletePluginInterface
      *
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer $merchantRelationshipDeleteResponseTransfer
+     * @return void
      */
-    public function execute(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipDeleteResponseTransfer;
+    public function execute(MerchantRelationshipTransfer $merchantRelationshipTransfer): void;
 }

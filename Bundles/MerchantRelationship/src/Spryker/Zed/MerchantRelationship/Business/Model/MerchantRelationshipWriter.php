@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business\Model;
 
-use ArrayObject;
 use Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\MerchantRelationship\Business\KeyGenerator\MerchantRelationshipKeyGeneratorInterface;
@@ -126,14 +125,7 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
         $merchantRelationTransfer->requireIdMerchantRelationship();
 
         $merchantRelationshipDeleteResponseTransfer = (new MerchantRelationshipDeleteResponseTransfer())->setIsSuccess(false);
-        $preDeletePluginsErrorMessages = $this->executeMerchantRelationshipPreDeletePlugins($merchantRelationTransfer);
-
-        if ($preDeletePluginsErrorMessages->count()) {
-            $merchantRelationshipDeleteResponseTransfer->setMessages($preDeletePluginsErrorMessages);
-
-            return $merchantRelationshipDeleteResponseTransfer;
-        }
-
+        $this->executeMerchantRelationshipPreDeletePlugins($merchantRelationTransfer);
         $this->entityManager->deleteMerchantRelationshipById($merchantRelationTransfer->getIdMerchantRelationship());
         $merchantRelationshipDeleteResponseTransfer->setIsSuccess(true);
 
@@ -191,22 +183,12 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[]
+     * @return void
      */
-    protected function executeMerchantRelationshipPreDeletePlugins(MerchantRelationshipTransfer $merchantRelationTransfer): ArrayObject
+    protected function executeMerchantRelationshipPreDeletePlugins(MerchantRelationshipTransfer $merchantRelationTransfer): void
     {
-        $errorMessages = new ArrayObject();
-
         foreach ($this->merchantRelationshipPreDeletePlugins as $merchantRelationshipPreDeletePlugin) {
-            $merchantRelationshipDeleteResponseTransfer = $merchantRelationshipPreDeletePlugin->execute($merchantRelationTransfer);
-
-            if (!$merchantRelationshipDeleteResponseTransfer->getIsSuccess()) {
-                foreach ($merchantRelationshipDeleteResponseTransfer->getMessages() as $errorMessage) {
-                    $errorMessages->append($errorMessage);
-                }
-            }
+            $merchantRelationshipPreDeletePlugin->execute($merchantRelationTransfer);
         }
-
-        return $errorMessages;
     }
 }

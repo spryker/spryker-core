@@ -16,5 +16,5 @@ interface MerchantRelationshipProductListEntityManagerInterface
      *
      * @return void
      */
-    public function deleteMerchantRelationshipFromProductList(ProductListTransfer $productListTransfer): void;
+    public function clearMerchantRelationshipFromProductList(ProductListTransfer $productListTransfer): void;
 }
