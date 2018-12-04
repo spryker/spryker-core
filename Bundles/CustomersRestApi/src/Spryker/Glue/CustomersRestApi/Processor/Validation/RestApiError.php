@@ -22,12 +22,12 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addCustomerAlreadyExistsError(RestResponseInterface $restResponse): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_EXISTS)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_ALREADY_EXISTS);
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -38,12 +38,12 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addCustomerCantRegisterMessageError(RestResponseInterface $restResponse, string $errorMessage): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER)
             ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
             ->setDetail($errorMessage);
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -53,12 +53,12 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addCustomerEmailInvalidError(RestResponseInterface $restResponse): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_EMAIL_INVALID)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_EMAIL_INVALID);
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -68,12 +68,12 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addCustomerNotFoundError(RestResponseInterface $restResponse): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -83,12 +83,12 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addAddressNotFoundError(RestResponseInterface $restResponse): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_ADDRESS_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_ADDRESS_NOT_FOUND);
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -98,12 +98,12 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addCustomerReferenceMissingError(RestResponseInterface $restResponse): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_REFERENCE_MISSING)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_REFERENCE_MISSING);
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -113,12 +113,12 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addPasswordsNotMatchError(RestResponseInterface $restResponse): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORDS_DONT_MATCH)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_PASSWORDS_DONT_MATCH);
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -129,12 +129,12 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addPasswordChangeError(RestResponseInterface $restResponse, string $errorMessage): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORD_CHANGE_FAILED)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail($errorMessage);
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -144,12 +144,12 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addPasswordNotValidError(RestResponseInterface $restResponse): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_INVALID_PASSWORD)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_INVALID_PASSWORD);
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -159,12 +159,12 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addAddressNotSavedError(RestResponseInterface $restResponse): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ADDRESS_FAILED_TO_SAVE)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_ADDRESS_FAILED_TO_SAVE);
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -174,12 +174,12 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addCustomerNotSavedError(RestResponseInterface $restResponse): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_FAILED_TO_SAVE)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_FAILED_TO_SAVE);
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -189,12 +189,12 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addCustomerUnauthorizedError(RestResponseInterface $restResponse): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED)
             ->setStatus(Response::HTTP_FORBIDDEN)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED);
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -204,12 +204,12 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addAddressUuidMissingError(RestResponseInterface $restResponse): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_ADDRESS_UUID_MISSING)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_ADDRESS_UUID_MISSING);
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -219,12 +219,12 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addNotAcceptedTermsError(RestResponseInterface $restResponse): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_NOT_ACCEPTED_TERMS)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_NOT_ACCEPTED_TERMS);
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -234,13 +234,13 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addNotValidGenderError(RestResponseInterface $restResponse): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_NOT_VALID_GENDER)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_NOT_VALID_GENDER
                 . ' Possible options are: ' . implode(', ', RestApiValidator::CUSTOMERS_GENDERS_ENUM));
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -252,12 +252,12 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addPasswordsDoNotMatchError(RestResponseInterface $restResponse, string $passwordFieldName, string $passwordConfirmFieldName): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORDS_DONT_MATCH)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->setDetail(sprintf(CustomersRestApiConfig::RESPONSE_DETAILS_PASSWORDS_DONT_MATCH, $passwordFieldName, $passwordConfirmFieldName));
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 
     /**

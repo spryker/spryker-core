@@ -181,22 +181,22 @@ class AddressWriter implements AddressWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $modifiedAddress
+     * @param \Generated\Shared\Transfer\AddressTransfer $modifiedAddressTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function getModifiedAddress(
-        AddressTransfer $modifiedAddress,
+        AddressTransfer $modifiedAddressTransfer,
         CustomerTransfer $customerTransfer
     ): AddressTransfer {
         foreach ($customerTransfer->getAddresses()->getAddresses() as $addressTransfer) {
-            if ($addressTransfer->getIdCustomerAddress() === $modifiedAddress->getIdCustomerAddress()) {
+            if ($addressTransfer->getIdCustomerAddress() === $modifiedAddressTransfer->getIdCustomerAddress()) {
                 return $addressTransfer;
             }
         }
 
-        return $modifiedAddress;
+        return $modifiedAddressTransfer;
     }
 
     /**

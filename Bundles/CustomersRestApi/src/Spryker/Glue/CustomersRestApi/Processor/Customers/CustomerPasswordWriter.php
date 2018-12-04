@@ -64,11 +64,11 @@ class CustomerPasswordWriter implements CustomerPasswordWriterInterface
      */
     public function restorePassword(RestCustomerRestorePasswordAttributesTransfer $restCustomerRestorePasswordAttributesTransfer): RestResponseInterface
     {
-        $response = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if ($restCustomerRestorePasswordAttributesTransfer->getPassword() !== $restCustomerRestorePasswordAttributesTransfer->getConfirmPassword()) {
             return $this->restApiError->addPasswordsDoNotMatchError(
-                $response,
+                $restResponse,
                 RestCustomerRestorePasswordAttributesTransfer::PASSWORD,
                 RestCustomerRestorePasswordAttributesTransfer::CONFIRM_PASSWORD
             );
@@ -79,10 +79,10 @@ class CustomerPasswordWriter implements CustomerPasswordWriterInterface
         $customerResponseTransfer = $this->customerClient->restorePassword($customerTransfer);
 
         if (!$customerResponseTransfer->getIsSuccess()) {
-            return $response->addError($this->createErrorRestorePasswordKeyIsNotValid());
+            return $restResponse->addError($this->createErrorRestorePasswordKeyIsNotValid());
         }
 
-        return $response->setStatus(Response::HTTP_NO_CONTENT);
+        return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
     }
 
     /**
