@@ -49,11 +49,11 @@ class CustomerClientTest extends Unit
      */
     public function testSessionSuccessfullyMigrated(): void
     {
+        $this->sessionClient->start();
         $oldSessionCreatedTime = $this->sessionClient->getMetadataBag()->getCreated();
-        $result = $this->customerClient->extendSessionLifetime();
+        $this->customerClient->extendSessionLifetime();
         $newSessionCreatedTime = $this->sessionClient->getMetadataBag()->getCreated();
 
-        $this->assertTrue($result);
         $this->assertNotSame($oldSessionCreatedTime, $newSessionCreatedTime);
     }
 }

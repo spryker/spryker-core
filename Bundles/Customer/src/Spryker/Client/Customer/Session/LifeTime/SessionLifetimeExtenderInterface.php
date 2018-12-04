@@ -10,7 +10,7 @@ namespace Spryker\Client\Customer\Session\LifeTime;
 interface SessionLifetimeExtenderInterface
 {
     /**
-     * @return bool
+     * @return void
      */
-    public function extendSessionLifeTime(): bool;
+    public function extendSessionLifeTime(): void;
 }
