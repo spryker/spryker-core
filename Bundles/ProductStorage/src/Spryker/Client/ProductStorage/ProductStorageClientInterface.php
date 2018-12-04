@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductStorage;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
+
 interface ProductStorageClientInterface
 {
     /**
@@ -39,6 +41,20 @@ interface ProductStorageClientInterface
      * @return array|null
      */
     public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array;
+
+    /**
+     * Specification:
+     * TODO: Write spec
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findMappedProductAbstractStorageData(int $idProductAbstract, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
 
     /**
      * Specification:
@@ -84,6 +100,20 @@ interface ProductStorageClientInterface
      * @return array|null
      */
     public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array;
+
+    /**
+     * Specification:
+     * TODO: Write spec
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findMappedProductConcreteStorageData(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
 
     /**
      * Specification:

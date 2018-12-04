@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductStorage;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -74,6 +75,30 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
+     * @param int $idProductAbstract
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findMappedProductAbstractStorageData(int $idProductAbstract, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
+    {
+        $data = $this->findProductAbstractStorageData($idProductAbstract, $localeName);
+        if (!$data) {
+            return null;
+        }
+        return $this->mapProductStorageData(
+            $data,
+            $localeName,
+            $selectedAttributes
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int $idProductConcrete
      * @param string $localeName
      *
@@ -85,6 +110,31 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
             ->createProductConcreteStorageReader()
             ->findProductConcreteStorageData($idProductConcrete, $localeName);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findMappedProductConcreteStorageData(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
+    {
+        $data = $this->findProductConcreteStorageData($idProductConcrete, $localeName);
+        if (!$data) {
+            return null;
+        }
+        return $this->mapProductStorageData(
+            $data,
+            $localeName,
+            $selectedAttributes
+        );
+    }
+
 
     /**
      * {@inheritdoc}
