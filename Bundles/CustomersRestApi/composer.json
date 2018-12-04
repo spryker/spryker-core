@@ -18,6 +18,9 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/rest-request-validator": "If you want to use rest request validation."
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

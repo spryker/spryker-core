@@ -103,7 +103,8 @@ class CustomersRestApiFactory extends AbstractFactory
         return new CustomerPasswordWriter(
             $this->getCustomerClient(),
             $this->getResourceBuilder(),
-            $this->createCustomerRestorePasswordResourceMapper()
+            $this->createCustomerRestorePasswordResourceMapper(),
+            $this->createRestApiError()
         );
     }
 
