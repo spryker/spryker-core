@@ -47,7 +47,7 @@ class CustomerAccessInstaller implements CustomerAccessInstallerInterface
      */
     public function install(): void
     {
-        $contentTypeAccess = $this->customerAccessConfig->getContentTypeAccessConfiguration();
+        $contentAccessByType = $this->customerAccessConfig->getContentAccessByType();
 
         foreach ($this->customerAccessConfig->getContentTypes() as $contentType) {
             if ($this->customerAccessReader->findCustomerAccessByContentType($contentType) !== null) {
@@ -55,7 +55,7 @@ class CustomerAccessInstaller implements CustomerAccessInstallerInterface
                 continue;
             }
 
-            $isGranted = $contentTypeAccess[$contentType] ?? $this->customerAccessConfig->getContentTypeAccess();
+            $isGranted = $contentAccessByType[$contentType] ?? $this->customerAccessConfig->getContentTypeAccess();
 
             $this->customerAccessCreator->createCustomerAccess($contentType, !$isGranted);
         }

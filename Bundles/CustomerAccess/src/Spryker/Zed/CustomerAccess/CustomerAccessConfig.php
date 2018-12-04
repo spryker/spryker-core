@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CustomerAccess;
 
-use Spryker\Shared\CustomerAccess\CustomerAccessConfig as SharedCustomerAccessConfig;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CustomerAccessConfig extends AbstractBundleConfig
@@ -33,18 +32,12 @@ class CustomerAccessConfig extends AbstractBundleConfig
     }
 
     /**
-     * Gets content type access restricted by default for install.
+     * Returns content access by type for install.
      *
      * @return bool[]
      */
-    public function getContentTypeAccessConfiguration(): array
+    public function getContentAccessByType(): array
     {
-        return [
-            SharedCustomerAccessConfig::CONTENT_TYPE_PRICE => true,
-            SharedCustomerAccessConfig::CONTENT_TYPE_ORDER_PLACE_SUBMIT => true,
-            SharedCustomerAccessConfig::CONTENT_TYPE_ADD_TO_CART => true,
-            SharedCustomerAccessConfig::CONTENT_TYPE_WISHLIST => false,
-            SharedCustomerAccessConfig::CONTENT_TYPE_SHOPPING_LIST => false,
-        ];
+        return [];
     }
 }
