@@ -90,10 +90,14 @@ class AbstractPluginTest extends Unit
         $classInfo->setClass('\\Namespace\\Application\\Bundle\\Layer\\Foo\\Bar');
         $queryContainerResolverMock->method('getClassInfo')->willReturn($classInfo);
 
-        $pluginMock = $this->getPluginMock(['getQueryContainerResolver']);
-        $pluginMock->method('getQueryContainerResolver')->willReturn($queryContainerResolverMock);
+        $fooPlugin = new FooPlugin();
 
-        $pluginMock->getQueryContainer();
+        $fooPluginReflection = new ReflectionClass($fooPlugin);
+        $getQueryContainerResolverMethod = $fooPluginReflection->getParentClass()->getMethod('getQueryContainerResolver');
+        $getQueryContainerResolverMethod->setAccessible(true);
+        $getQueryContainerResolverMethod->invoke($fooPlugin, $queryContainerResolverMock);
+
+        $fooPlugin->getQueryContainer();
     }
 
     /**
@@ -111,17 +115,5 @@ class AbstractPluginTest extends Unit
         $queryContainer = $plugin->getQueryContainer();
 
         $this->assertInstanceOf(AbstractQueryContainer::class, $queryContainer);
-    }
-
-    /**
-     * @param array $methods
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\SprykerTest\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin
-     */
-    protected function getPluginMock(array $methods)
-    {
-        $pluginMock = $this->getMockBuilder(FooPlugin::class)->setMethods($methods)->getMock();
-
-        return $pluginMock;
     }
 }
