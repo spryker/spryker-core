@@ -36,6 +36,18 @@ class ProductAlternativeStorageToProductStorageClientBridge implements ProductAl
     }
 
     /**
+     * @param int $idProductAbstract
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findMappedProductAbstractStorageData(int $idProductAbstract, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
+    {
+        return $this->productStorageClient->findMappedProductAbstractStorageData($idProductAbstract, $localeName, $selectedAttributes);
+    }
+
+    /**
      * @deprecated Use getProductConcreteStorageData($idProductConcrete, $localeName)
      *
      * @param int $idProductConcrete
@@ -57,6 +69,18 @@ class ProductAlternativeStorageToProductStorageClientBridge implements ProductAl
     public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array
     {
         return $this->productStorageClient->findProductConcreteStorageData($idProductConcrete, $localeName);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findMappedProductConcreteStorageData(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
+    {
+        return $this->productStorageClient->findMappedProductConcreteStorageData($idProductConcrete, $localeName, $selectedAttributes);
     }
 
     /**

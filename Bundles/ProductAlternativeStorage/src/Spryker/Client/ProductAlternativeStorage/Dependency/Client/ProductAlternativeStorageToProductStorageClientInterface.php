@@ -20,6 +20,15 @@ interface ProductAlternativeStorageToProductStorageClientInterface
     public function findProductAbstractStorageData($idProductAbstract, $localeName): ?array;
 
     /**
+     * @param int $idProductAbstract
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findMappedProductAbstractStorageData(int $idProductAbstract, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
+
+    /**
      * @param int $idProductConcrete
      * @param string $localeName
      *
@@ -34,6 +43,15 @@ interface ProductAlternativeStorageToProductStorageClientInterface
      * @return array|null
      */
     public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array;
+
+    /**
+     * @param int $idProductConcrete
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findMappedProductConcreteStorageData(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
 
     /**
      * @param array $data
