@@ -427,11 +427,17 @@ class CheckoutRestApiFacadeTest extends Unit
     {
         $mockPaymentFacade = $this->createPartialMock(
             PaymentFacade::class,
-            ['getAvailablePaymentProviders']
+            [
+                'getAvailablePaymentProviders',
+                'getAvailableMethods',
+            ]
         );
         $mockPaymentFacade
             ->method('getAvailablePaymentProviders')
             ->willReturn($this->tester->createPaymentProviderCollectionTransfer());
+        $mockPaymentFacade
+            ->method('getAvailableMethods')
+            ->willReturn($this->tester->createAvailableMethodsCollectionTransfer());
 
         $mockCheckoutRestApiFactory
             ->method('getPaymentFacade')

@@ -61,9 +61,7 @@ class ShipmentsRestApiFacadeTest extends Unit
 
         $this->assertNotNull($actualQuote->getShipment());
         $this->assertGreaterThan(0, $actualQuote->getExpenses()->count());
-        $this->assertEquals($restCheckoutRequestAttributesTransfer->getShipment()->getShipmentSelection(), $actualQuote->getShipment()->getShipmentSelection());
         $actualShipmentMethodTransfer = $actualQuote->getShipment()->getMethod();
-        $this->assertEquals($restCheckoutRequestAttributesTransfer->getShipment()->getShipmentSelection(), $actualShipmentMethodTransfer->getIdShipmentMethod());
         $this->assertEquals(static::SHIPMENT_METHOD['idShipmentMethod'], $actualShipmentMethodTransfer->getIdShipmentMethod());
         $this->assertEquals(static::SHIPMENT_METHOD['storeCurrencyPrice'], $actualShipmentMethodTransfer->getStoreCurrencyPrice());
         $this->assertEquals(static::SHIPMENT_METHOD['currencyIsoCode'], $actualShipmentMethodTransfer->getCurrencyIsoCode());
@@ -193,7 +191,7 @@ class ShipmentsRestApiFacadeTest extends Unit
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withShipment(['shipmentSelection' => static::SHIPMENT_METHOD['idShipmentMethod']])
+            ->withShipment(['idShipmentMethod' => static::SHIPMENT_METHOD['idShipmentMethod']])
             ->build();
 
         return $restCheckoutRequestAttributesTransfer;
