@@ -63,17 +63,11 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     {
         $priceProductAbstractTransfers = $this->findPriceAbstractData($productViewTransfer);
         $priceProductConcreteTransfers = $this->findPriceConcreteData($productViewTransfer);
-        $priceProductFilter = $this->getPriceProductFilterFromProductView($productViewTransfer);
 
         if (!$priceProductConcreteTransfers) {
-            $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
-                $priceProductAbstractTransfers,
-                $priceProductFilter
-            );
+            $productViewTransfer = $this->setPrices($productViewTransfer, $priceProductAbstractTransfers);
 
-            return $productViewTransfer
-                ->setPrice($currentProductPriceTransfer->getPrice())
-                ->setPrices($currentProductPriceTransfer->getPrices());
+            return $productViewTransfer;
         }
 
         $priceProductConcreteTransfers = $this->priceProductService->mergeConcreteAndAbstractPrices(
@@ -81,9 +75,22 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
             $priceProductConcreteTransfers
         );
 
+        $productViewTransfer = $this->setPrices($productViewTransfer, $priceProductConcreteTransfers);
+
+        return $productViewTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function setPrices(ProductViewTransfer $productViewTransfer, array $priceProductTransfers): ProductViewTransfer
+    {
         $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
-            $priceProductConcreteTransfers,
-            $priceProductFilter
+            $priceProductTransfers,
+            $this->getPriceProductFilterFromProductView($productViewTransfer)
         );
 
         return $productViewTransfer
