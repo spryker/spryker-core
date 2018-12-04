@@ -78,7 +78,7 @@ class Locator implements LocatorLocatorInterface
                 new ServiceLocator(),
             ];
         }
-        $bundleProxy->setLocator($this->locator);
+        $bundleProxy->setLocators($this->locator);
 
         return $bundleProxy;
     }

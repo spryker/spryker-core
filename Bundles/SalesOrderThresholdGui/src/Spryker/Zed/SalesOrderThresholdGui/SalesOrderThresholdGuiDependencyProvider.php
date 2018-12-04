@@ -16,6 +16,9 @@ use Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiT
 use Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToStoreFacadeBridge;
 use Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToTaxFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig getConfig()
+ */
 class SalesOrderThresholdGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';

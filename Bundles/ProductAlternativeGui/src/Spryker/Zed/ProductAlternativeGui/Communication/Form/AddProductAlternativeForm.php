@@ -13,6 +13,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
+/**
+ * @method \Spryker\Zed\ProductAlternativeGui\Communication\ProductAlternativeGuiCommunicationFactory getFactory()
+ */
 class AddProductAlternativeForm extends AbstractType
 {
     public const FIELD_PRODUCT_ALTERNATIVE = 'alternative_products';

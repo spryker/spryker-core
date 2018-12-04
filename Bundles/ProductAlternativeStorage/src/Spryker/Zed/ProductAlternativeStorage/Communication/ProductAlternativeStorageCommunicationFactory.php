@@ -14,6 +14,8 @@ use Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageDependencyPro
 /**
  * @method \Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface getRepository()
  */
 class ProductAlternativeStorageCommunicationFactory extends AbstractCommunicationFactory
 {
