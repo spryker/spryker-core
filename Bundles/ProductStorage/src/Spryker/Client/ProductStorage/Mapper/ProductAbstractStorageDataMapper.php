@@ -8,29 +8,21 @@
 namespace Spryker\Client\ProductStorage\Mapper;
 
 use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteViewExpanderExcluderPluginInterface;
+use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
 
-class ProductAbstractStorageDataMapper extends AbstractProductStorageDataMapper
+class ProductAbstractStorageDataMapper extends ProductStorageDataMapper
 {
     /**
-     * @param string $locale
-     * @param array $productStorageData
-     * @param array $selectedAttributes
+     * @param \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface $storageProductExpanderPlugin
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     * @return bool
      */
-    public function mapProductStorageData($locale, array $productStorageData, array $selectedAttributes = [])
+    protected function filterProductStorageExpanderPlugins(ProductViewExpanderPluginInterface $storageProductExpanderPlugin): bool
     {
-        $productStorageData = $this->productAbstractVariantsRestrictionFilter->filterAbstractProductVariantsData($productStorageData);
-        $productViewTransfer = $this->createProductViewTransfer($productStorageData);
-        $productViewTransfer->setSelectedAttributes($selectedAttributes);
-
-        foreach ($this->productStorageExpanderPlugins as $productViewExpanderPlugin) {
-            if ($productViewExpanderPlugin instanceof ProductConcreteViewExpanderExcluderPluginInterface) {
-                continue;
-            }
-            $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer($productViewTransfer, $productStorageData, $locale);
+        if ($storageProductExpanderPlugin instanceof ProductConcreteViewExpanderExcluderPluginInterface) {
+            return false;
         }
 
-        return $productViewTransfer;
+        return true;
     }
 }
