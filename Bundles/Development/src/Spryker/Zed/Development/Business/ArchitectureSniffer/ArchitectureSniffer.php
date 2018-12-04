@@ -23,6 +23,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
 
     protected const SOURCE_FOLDER_NAME = 'src';
     protected const OPTION_MODULE = 'module';
+    protected const OPTION_IGNORE_ERRORS = 'ignoreErrors';
 
     /**
      * @var string
@@ -120,6 +121,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
             $results = [];
         }
 
+        $results = $this->getResultsWithoutIgnoredErrors($results, $options);
         $fileViolations = $this->formatResult($results);
 
         return $fileViolations;
@@ -273,5 +275,98 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         $module = $options[static::OPTION_MODULE];
 
         return mb_strpos($module, '.') !== false;
+    }
+
+    /**
+     * @param array $results
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function getResultsWithoutIgnoredErrors(array $results, array $options): array
+    {
+        if ($results === []) {
+            return $results;
+        }
+
+        $ignoreErrorPatterns = $options[static::OPTION_IGNORE_ERRORS];
+
+        if ($ignoreErrorPatterns === []) {
+            return $results;
+        }
+
+        if (!array_key_exists('file', $results)) {
+            return $results;
+        }
+
+        if (array_key_exists('violation', $results['file'])) {
+            $results['file'] = $this->filterOutIgnoredErrors($results['file'], $ignoreErrorPatterns);
+
+            return $results;
+        }
+
+        $fileResults = [];
+
+        foreach ($results['file'] as $index => $fileResult) {
+            $fileResults[$index] = $this->filterOutIgnoredErrors($fileResult, $ignoreErrorPatterns);
+        }
+
+        $results['file'] = $fileResults;
+
+        return $results;
+    }
+
+    /**
+     * @param array $fileResult
+     * @param string[] $ignoreErrorPatterns
+     *
+     * @return array
+     */
+    protected function filterOutIgnoredErrors(array $fileResult, array $ignoreErrorPatterns): array
+    {
+        if (!array_key_exists('violation', $fileResult)) {
+            return $fileResult;
+        }
+
+        if (array_key_exists('_', $fileResult['violation'])) {
+            $violation = $fileResult['violation'];
+
+            if (!$this->isViolationMatchWithIgnoreErrorPatterns($violation, $ignoreErrorPatterns)) {
+                $fileResult['violation'] = $violation;
+            }
+
+            return $fileResult;
+        }
+
+        $violations = [];
+
+        foreach ($fileResult['violation'] as $index => $violation) {
+            if (!$this->isViolationMatchWithIgnoreErrorPatterns($violation, $ignoreErrorPatterns)) {
+                $violations[$index] = $violation;
+            }
+        }
+
+        $fileResult['violation'] = $violations;
+
+        return $fileResult;
+    }
+
+    /**
+     * @param array $violation
+     * @param string[] $ignoreErrorPatterns
+     *
+     * @return bool
+     */
+    protected function isViolationMatchWithIgnoreErrorPatterns(array $violation, array $ignoreErrorPatterns): bool
+    {
+        $violationMessage = trim($violation['_']);
+
+        foreach ($ignoreErrorPatterns as $ignoreErrorPattern) {
+            if (preg_match($ignoreErrorPattern, $violationMessage)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
