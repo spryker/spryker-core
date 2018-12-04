@@ -130,9 +130,9 @@ class AddressWriter implements AddressWriterInterface
         $addressTransfer->fromArray($addressAttributesTransfer->modifiedToArray(), true);
 
         $customerTransfer = $this->customerClient->updateAddressAndCustomerDefaultAddresses($addressTransfer);
-        $modifiedAddress = $this->getModifiedAddress($addressTransfer, $customerTransfer);
+        $modifiedAddressTransfer = $this->getModifiedAddress($addressTransfer, $customerTransfer);
 
-        return $restResponse->addResource($this->getAddressResource($modifiedAddress, $customerTransfer));
+        return $restResponse->addResource($this->getAddressResource($modifiedAddressTransfer, $customerTransfer));
     }
 
     /**

@@ -79,7 +79,7 @@ class WishlistsWriter implements WishlistsWriterInterface
      */
     public function create(RestWishlistsAttributesTransfer $attributesTransfer, RestRequestInterface $restRequest): RestResponseInterface
     {
-        $response = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $wishlistTransfer = $this->wishlistsResourceMapper->mapWishlistAttributesToWishlistTransfer(new WishlistTransfer(), $attributesTransfer);
         $wishlistTransfer->setFkCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());
@@ -89,7 +89,7 @@ class WishlistsWriter implements WishlistsWriterInterface
             return $this->handleWishlistResponseTransferError(
                 $wishlistResponseTransfer,
                 WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_CANT_CREATE_WISHLIST,
-                $response
+                $restResponse
             );
         }
 
@@ -101,7 +101,7 @@ class WishlistsWriter implements WishlistsWriterInterface
             $this->wishlistsResourceMapper->mapWishlistTransferToRestWishlistsAttributes($wishlistTransfer)
         );
 
-        return $response->addResource($wishlistResource);
+        return $restResponse->addResource($wishlistResource);
     }
 
     /**
@@ -112,15 +112,15 @@ class WishlistsWriter implements WishlistsWriterInterface
      */
     public function update(RestWishlistsAttributesTransfer $attributesTransfer, RestRequestInterface $restRequest): RestResponseInterface
     {
-        $response = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if (!$restRequest->getResource()->getId()) {
-            return $this->createWishlistNotFoundError($response);
+            return $this->createWishlistNotFoundError($restResponse);
         }
 
         $wishlistTransfer = $this->wishlistsReader->findWishlistByUuid($restRequest->getResource()->getId());
         if ($wishlistTransfer === null) {
-            return $this->createWishlistNotFoundError($response);
+            return $this->createWishlistNotFoundError($restResponse);
         }
         $wishlistTransfer = $this->wishlistsResourceMapper->mapWishlistAttributesToWishlistTransfer($wishlistTransfer, $attributesTransfer);
 
@@ -129,7 +129,7 @@ class WishlistsWriter implements WishlistsWriterInterface
             return $this->handleWishlistResponseTransferError(
                 $wishlistResponseTransfer,
                 WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_CANT_UPDATE_WISHLIST,
-                $response
+                $restResponse
             );
         }
 
@@ -140,7 +140,7 @@ class WishlistsWriter implements WishlistsWriterInterface
             $this->wishlistsResourceMapper->mapWishlistTransferToRestWishlistsAttributes($wishlistOverviewTransfer->getWishlist())
         );
 
-        return $response->addResource($wishlistResource);
+        return $restResponse->addResource($wishlistResource);
     }
 
     /**
@@ -150,22 +150,22 @@ class WishlistsWriter implements WishlistsWriterInterface
      */
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $response = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if (!$restRequest->getResource()->getId()) {
-            return $this->createWishlistNotFoundError($response);
+            return $this->createWishlistNotFoundError($restResponse);
         }
 
         $wishlistUuid = $restRequest->getResource()->getId();
         $wishlistTransfer = $this->wishlistsReader->findWishlistByUuid($wishlistUuid);
 
         if ($wishlistTransfer === null) {
-            return $this->createWishlistNotFoundError($response);
+            return $this->createWishlistNotFoundError($restResponse);
         }
 
         $this->wishlistClient->removeWishlist($wishlistTransfer);
 
-        return $response;
+        return $restResponse;
     }
 
     /**
@@ -179,27 +179,27 @@ class WishlistsWriter implements WishlistsWriterInterface
     {
         foreach ($wishlistResponseTransfer->getErrors() as $error) {
             if ($error === static::WISHLIST_VALIDATION_ERROR_NAME_ALREADY_EXIST) {
-                $restErrorTransfer = (new RestErrorMessageTransfer())
+                $restErrorMessageTransfer = (new RestErrorMessageTransfer())
                     ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS)
                     ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
                     ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS);
 
-                return $restResponse->addError($restErrorTransfer);
+                return $restResponse->addError($restErrorMessageTransfer);
             }
             if ($error === static::WISHLIST_VALIDATION_ERROR_NAME_WRONG_FORMAT) {
-                $restErrorTransfer = (new RestErrorMessageTransfer())
+                $restErrorMessageTransfer = (new RestErrorMessageTransfer())
                     ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_NAME_INVALID)
                     ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
                     ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_NAME_INVALID);
 
-                return $restResponse->addError($restErrorTransfer);
+                return $restResponse->addError($restErrorMessageTransfer);
             }
 
-            $restErrorTransfer = (new RestErrorMessageTransfer())
+            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
                 ->setCode($errorCode)
                 ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
                 ->setDetail($error);
-            $restResponse->addError($restErrorTransfer);
+            $restResponse->addError($restErrorMessageTransfer);
         }
 
         return $restResponse;
@@ -212,11 +212,11 @@ class WishlistsWriter implements WishlistsWriterInterface
      */
     protected function createWishlistNotFoundError(RestResponseInterface $response): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
             ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_NOT_FOUND);
 
-        return $response->addError($restErrorTransfer);
+        return $response->addError($restErrorMessageTransfer);
     }
 }

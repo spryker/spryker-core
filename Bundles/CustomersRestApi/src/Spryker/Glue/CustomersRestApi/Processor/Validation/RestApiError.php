@@ -268,14 +268,14 @@ class RestApiError implements RestApiErrorInterface
      */
     protected function processKnownCustomerError(RestResponseInterface $restResponse, CustomerResponseTransfer $customerResponseTransfer): RestResponseInterface
     {
-        foreach ($customerResponseTransfer->getErrors() as $customerResponseTransfer) {
-            if ($customerResponseTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED) {
+        foreach ($customerResponseTransfer->getErrors() as $customerErrorTransfer) {
+            if ($customerErrorTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED) {
                 $restResponse = $this->addCustomerAlreadyExistsError($restResponse);
             }
-            if ($customerResponseTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_INVALID) {
+            if ($customerErrorTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_INVALID) {
                 $restResponse = $this->addCustomerEmailInvalidError($restResponse);
             }
-            if ($customerResponseTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_INVALID) {
+            if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_INVALID) {
                 $restResponse = $this->addPasswordNotValidError($restResponse);
             }
         }
