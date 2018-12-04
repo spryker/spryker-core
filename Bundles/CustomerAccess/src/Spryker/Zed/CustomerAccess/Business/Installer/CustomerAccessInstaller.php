@@ -13,7 +13,7 @@ use Spryker\Zed\CustomerAccess\CustomerAccessConfig;
 
 class CustomerAccessInstaller implements CustomerAccessInstallerInterface
 {
-    protected const ALERT_MESSAGE = 'You need to clean up table spy_unauthenticated_customer_access to get access config update.';
+    protected const ALERT_MESSAGE = 'You need to clean up table spy_unauthenticated_customer_access to get %s access config update.';
 
     /**
      * @var \Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessCreatorInterface
@@ -47,20 +47,15 @@ class CustomerAccessInstaller implements CustomerAccessInstallerInterface
      */
     public function install(): void
     {
-        $defaultContentAccess = !$this->customerAccessConfig->getContentTypeAccess();
-        $alertMessageRequired = false;
+        $contentTypeAccess = $this->customerAccessConfig->getContentTypeAccess();
 
         foreach ($this->customerAccessConfig->getContentTypes() as $contentType) {
             if ($this->customerAccessReader->findCustomerAccessByContentType($contentType) !== null) {
-                $alertMessageRequired = true;
+                print sprintf(static::ALERT_MESSAGE . PHP_EOL, $contentType);
                 continue;
             }
 
-            $this->customerAccessCreator->createCustomerAccess($contentType, $defaultContentAccess);
-        }
-
-        if ($alertMessageRequired) {
-            print static::ALERT_MESSAGE . PHP_EOL;
+            $this->customerAccessCreator->createCustomerAccess($contentType, !$contentTypeAccess);
         }
     }
 }

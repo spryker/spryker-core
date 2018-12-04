@@ -36,9 +36,9 @@ class CustomerAccessUpdater implements CustomerAccessUpdaterInterface
     public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($customerAccessTransfer) {
-            $this->customerAccessEntityManager->setAllContentTypesToInaccessible();
+            $this->customerAccessEntityManager->setAllContentTypesToAccessible();
 
-            return $this->customerAccessEntityManager->setContentTypesToAccessible($customerAccessTransfer);
+            return $this->customerAccessEntityManager->setContentTypesToInaccessible($customerAccessTransfer);
         });
     }
 }

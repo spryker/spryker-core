@@ -22,12 +22,12 @@ interface CustomerAccessEntityManagerInterface
     /**
      * @return void
      */
-    public function setAllContentTypesToInaccessible(): void;
+    public function setAllContentTypesToAccessible(): void;
 
     /**
      * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function setContentTypesToAccessible(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer;
+    public function setContentTypesToInaccessible(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer;
 }
