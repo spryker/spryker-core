@@ -138,20 +138,6 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      *
      * @api
      *
-     * @return bool
-     */
-    public function extendSessionLifetime(): bool
-    {
-        return $this->getFactory()
-            ->createSessionLifetimeExtender()
-            ->extendSessionLifeTime();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer

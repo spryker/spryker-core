@@ -9,8 +9,6 @@ namespace Spryker\Client\Customer;
 
 use Spryker\Client\Customer\Model\CustomerAddress;
 use Spryker\Client\Customer\Session\CustomerSession;
-use Spryker\Client\Customer\Session\LifeTime\SessionLifetimeExtender;
-use Spryker\Client\Customer\Session\LifeTime\SessionLifetimeExtenderInterface;
 use Spryker\Client\Customer\Zed\CustomerStub;
 use Spryker\Client\Kernel\AbstractFactory;
 
@@ -77,15 +75,5 @@ class CustomerFactory extends AbstractFactory
     protected function getSessionClient()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_SESSION);
-    }
-
-    /**
-     * @return \Spryker\Client\Customer\Session\LifeTime\SessionLifetimeExtenderInterface
-     */
-    public function createSessionLifetimeExtender(): SessionLifetimeExtenderInterface
-    {
-        return new SessionLifetimeExtender(
-            $this->getSessionClient()
-        );
     }
 }
