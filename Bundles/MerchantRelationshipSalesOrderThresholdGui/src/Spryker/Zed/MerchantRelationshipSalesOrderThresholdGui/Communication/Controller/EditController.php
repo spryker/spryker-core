@@ -162,7 +162,7 @@ class EditController extends AbstractController
         if ($this->canMapThresholdData($thresholdData, $strategyGroup)) {
             $merchantRelationshipSalesOrderThresholdTransfer = $this->getFactory()
                 ->createMerchantRelationshipThresholdFormMapperResolver()
-                ->resolveMerchantRelationshipThresholdFormMapperByStrategyGroup($strategyGroup)
+                ->getResolvedMerchantRelationshipThresholdFormMapperByStrategyGroup($strategyGroup)
                 ->mapFormDataToTransfer($thresholdData, $merchantRelationshipSalesOrderThresholdTransfer);
         }
 

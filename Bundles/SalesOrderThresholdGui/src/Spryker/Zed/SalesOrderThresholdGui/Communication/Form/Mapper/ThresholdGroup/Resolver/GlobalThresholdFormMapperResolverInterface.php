@@ -18,7 +18,7 @@ interface GlobalThresholdFormMapperResolverInterface
      *
      * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface
      */
-    public function resolveGlobalThresholdFormMapperByStrategyGroup(string $salesOrderThresholdTypeGroup): GlobalThresholdFormMapperInterface;
+    public function getResolvedGlobalThresholdFormMapperByStrategyGroup(string $salesOrderThresholdTypeGroup): GlobalThresholdFormMapperInterface;
 
     /**
      * @param string $salesOrderThresholdTypeGroup

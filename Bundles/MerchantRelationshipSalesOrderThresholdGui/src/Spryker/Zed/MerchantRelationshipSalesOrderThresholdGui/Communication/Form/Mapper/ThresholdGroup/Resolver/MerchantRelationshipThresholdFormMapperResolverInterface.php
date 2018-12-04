@@ -18,7 +18,7 @@ interface MerchantRelationshipThresholdFormMapperResolverInterface
      *
      * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\MerchantRelationshipThresholdFormMapperInterface
      */
-    public function resolveMerchantRelationshipThresholdFormMapperByStrategyGroup(string $salesOrderThresholdTypeGroup): MerchantRelationshipThresholdFormMapperInterface;
+    public function getResolvedMerchantRelationshipThresholdFormMapperByStrategyGroup(string $salesOrderThresholdTypeGroup): MerchantRelationshipThresholdFormMapperInterface;
 
     /**
      * @param string $salesOrderThresholdTypeGroup
