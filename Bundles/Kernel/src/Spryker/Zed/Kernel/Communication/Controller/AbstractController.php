@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\Kernel\Communication\Controller;
 
+use DateTime;
 use Generated\Shared\Transfer\MessageTransfer;
 use Silex\Application;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
+use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
@@ -25,6 +27,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 abstract class AbstractController
 {
+    protected const SESSION_UPDATE_TIMEOUT = 300;
+
     use RepositoryResolverAwareTrait;
 
     /**
@@ -235,7 +239,31 @@ abstract class AbstractController
      */
     protected function viewResponse(array $data = [])
     {
+        if (!$this->isSessionUpdateNeeded()) {
+            setcookie('isSessionUpdateNeeded', '', time() - 60);
+
+            return $data;
+        }
+
+        setcookie('isSessionUpdateNeeded', '1', time() + 60);
+
         return $data;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isSessionUpdateNeeded(): bool
+    {
+        /**
+         * @var \Symfony\Component\HttpFoundation\Session\Storage\MetadataBag $metadataBag
+         */
+        $metadataBag = $this->application['session']->getMetadataBag();
+        $sessionCreated = $metadataBag->getCreated();
+        $sessionLength = Config::get(SessionConstants::ZED_SESSION_COOKIE_TIME_TO_LIVE);
+        $currentTimestamp = (new DateTime())->getTimestamp();
+
+        return $currentTimestamp - $sessionCreated - $sessionLength <= static::SESSION_UPDATE_TIMEOUT;
     }
 
     /**

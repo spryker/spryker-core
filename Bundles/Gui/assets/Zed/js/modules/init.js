@@ -78,4 +78,8 @@ $(document).ready(function() {
 
     safeChecks.addSafeSubmitCheck();
     safeChecks.addSafeDatetimeCheck();
+
+    if (document.cookie.search('isSessionUpdateNeeded') !== -1) {
+        $.get('/user/session/update-ttl');
+    }
 });
