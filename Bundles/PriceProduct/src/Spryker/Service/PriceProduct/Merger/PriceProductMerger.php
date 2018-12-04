@@ -104,7 +104,6 @@ class PriceProductMerger implements PriceProductMergerInterface
         $priceProductTransfer->getMoneyValue()->requireCurrency();
         $priceProductTransfer->getMoneyValue()->getCurrency()->requireCode();
         $priceProductTransfer->requirePriceDimension();
-        $priceProductTransfer->requirePriceType();
 
         return implode('-', array_filter($this->getIdentifiersPath($priceProductTransfer)));
     }
@@ -118,11 +117,16 @@ class PriceProductMerger implements PriceProductMergerInterface
     {
         $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
 
-        return array_merge([
-                $priceProductTransfer->getMoneyValue()->getCurrency()->getCode(),
-                $priceProductTransfer->getPriceTypeName(),
-                $priceProductTransfer->getMoneyValue()->getFkStore(),
-                $priceProductTransfer->getPriceType()->getPriceModeConfiguration(),
-            ], array_values($priceDimensionTransfer->toArray()));
+        $identifierPaths = [
+            $priceProductTransfer->getMoneyValue()->getCurrency()->getCode(),
+            $priceProductTransfer->getPriceTypeName(),
+            $priceProductTransfer->getMoneyValue()->getFkStore(),
+        ];
+
+        if ($priceProductTransfer->getPriceType()) {
+            $identifierPaths[] = $priceProductTransfer->getPriceType()->getPriceModeConfiguration();
+        }
+
+        return array_merge($identifierPaths, array_values($priceDimensionTransfer->toArray()));
     }
 }
