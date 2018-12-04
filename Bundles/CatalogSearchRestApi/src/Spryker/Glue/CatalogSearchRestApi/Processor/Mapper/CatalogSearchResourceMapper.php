@@ -20,7 +20,7 @@ use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCu
 
 class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterface
 {
-    protected const KEY_PRODUCTS = 'products';
+    protected const SEARCH_KEY_PRODUCTS = 'products';
 
     /**
      * @var \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface
@@ -83,11 +83,11 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer,
         array $restSearchResponse
     ): RestCatalogSearchAttributesTransfer {
-        if (!isset($restSearchResponse[static::KEY_PRODUCTS]) || !is_array($restSearchResponse[static::KEY_PRODUCTS])) {
+        if (!isset($restSearchResponse[static::SEARCH_KEY_PRODUCTS]) || !is_array($restSearchResponse[static::SEARCH_KEY_PRODUCTS])) {
             return $restCatalogSearchAttributesTransfer;
         }
 
-        foreach ($restSearchResponse[static::KEY_PRODUCTS] as $product) {
+        foreach ($restSearchResponse[static::SEARCH_KEY_PRODUCTS] as $product) {
             $restCatalogSearchAttributesTransfer->addAbstractProduct(
                 (new RestCatalogSearchAbstractProductsTransfer())->fromArray($product, true)
             );
