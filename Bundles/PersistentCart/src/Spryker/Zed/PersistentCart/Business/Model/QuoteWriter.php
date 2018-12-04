@@ -10,10 +10,13 @@ namespace Spryker\Zed\PersistentCart\Business\Model;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
+use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
 
 class QuoteWriter implements QuoteWriterInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface
      */
@@ -70,6 +73,15 @@ class QuoteWriter implements QuoteWriterInterface
      */
     public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
+        $idCompanyUser = $quoteUpdateRequestTransfer
+            ->getCustomer()
+            ->getCompanyUserTransfer()
+            ->getIdCompanyUser();
+
+        if (!$this->can('WriteSharedCartPermissionPlugin', $idCompanyUser, $quoteUpdateRequestTransfer->getIdQuote())) {
+            return (new QuoteResponseTransfer())->setIsSuccessful(false);
+        }
+
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $quoteUpdateRequestTransfer->getIdQuote(),
             $quoteUpdateRequestTransfer->getCustomer()
@@ -90,6 +102,15 @@ class QuoteWriter implements QuoteWriterInterface
      */
     public function updateAndReloadQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
+        $idCompanyUser = $quoteUpdateRequestTransfer
+            ->getCustomer()
+            ->getCompanyUserTransfer()
+            ->getIdCompanyUser();
+
+        if (!$this->can('WriteSharedCartPermissionPlugin', $idCompanyUser, $quoteUpdateRequestTransfer->getIdQuote())) {
+            return (new QuoteResponseTransfer())->setIsSuccessful(false);
+        }
+
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $quoteUpdateRequestTransfer->getIdQuote(),
             $quoteUpdateRequestTransfer->getCustomer()

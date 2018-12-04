@@ -22,7 +22,6 @@ class QuoteResolver implements QuoteResolverInterface
 {
     use PermissionAwareTrait;
     public const GLOSSARY_KEY_QUOTE_NOT_AVAILABLE = 'persistent_cart.error.quote.not_available';
-    public const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
 
     /**
      * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface
@@ -106,40 +105,18 @@ class QuoteResolver implements QuoteResolverInterface
     protected function findCustomerQuoteById(int $idQuote, CustomerTransfer $customerTransfer): ?QuoteTransfer
     {
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById($idQuote);
-
-        if ($quoteResponseTransfer->getQuoteTransfer() === null ||
-            !$quoteResponseTransfer->getIsSuccessful() ||
-            !$this->isQuoteAvailableForCustomer($quoteResponseTransfer->getQuoteTransfer(), $customerTransfer)
+        if (!$quoteResponseTransfer->getIsSuccessful() || !$this->isQuoteReadAllowed($quoteResponseTransfer->getQuoteTransfer(), $customerTransfer)
         ) {
-            $messageTransfer = (new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_NOT_AVAILABLE);
+            $messageTransfer = new MessageTransfer();
+            $messageTransfer->setValue(static::GLOSSARY_KEY_QUOTE_NOT_AVAILABLE);
             $this->messengerFacade->addErrorMessage($messageTransfer);
 
             return null;
         }
-
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteTransfer->setCustomer($customerTransfer);
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteAvailableForCustomer(
-        QuoteTransfer $quoteTransfer,
-        CustomerTransfer $customerTransfer
-    ): bool {
-        $isReadSharedCartAllowed = $this->isQuoteOperationAllowed(
-            $quoteTransfer,
-            $customerTransfer,
-            'ReadSharedCartPermissionPlugin'
-        );
-
-        return $isReadSharedCartAllowed;
     }
 
     /**
@@ -197,6 +174,21 @@ class QuoteResolver implements QuoteResolverInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteReadAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
+    {
+        return $customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()
+            || $this->isAnonymousCustomerQuote($quoteTransfer->getCustomerReference())
+            || ($customerTransfer->getCompanyUserTransfer()
+                && $this->can('ReadSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
+            );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer|null $quoteUpdateRequestAttributesTransfer
@@ -208,13 +200,6 @@ class QuoteResolver implements QuoteResolverInterface
         QuoteTransfer $quoteTransfer,
         ?QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null
     ): QuoteResponseTransfer {
-        if (!$this->isQuoteOperationAllowed($quoteTransfer, $customerTransfer, 'WriteSharedCartPermissionPlugin')) {
-            $messageTransfer = (new MessageTransfer())->setValue(static::GLOSSARY_KEY_PERMISSION_FAILED);
-            $this->messengerFacade->addErrorMessage($messageTransfer);
-
-            return $this->createQuoteNotFoundResult($customerTransfer);
-        }
-
         if ($quoteUpdateRequestAttributesTransfer) {
             $quoteTransfer->fromArray($quoteUpdateRequestAttributesTransfer->modifiedToArray(), true);
         }
@@ -226,25 +211,6 @@ class QuoteResolver implements QuoteResolverInterface
         $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
 
         return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param string $operation
-     *
-     * @return bool
-     */
-    protected function isQuoteOperationAllowed(
-        QuoteTransfer $quoteTransfer,
-        CustomerTransfer $customerTransfer,
-        string $operation
-    ): bool {
-        return $customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()
-            || $this->isAnonymousCustomerQuote($quoteTransfer->getCustomerReference())
-            || ($customerTransfer->getCompanyUserTransfer()
-                && $this->can($operation, $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
-            );
     }
 
     /**
