@@ -26,7 +26,7 @@ class CustomerProvider implements CustomerProviderInterface
     protected $utilEncodingService;
 
     /**
-     * @var array|\Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerIdentifierExpanderPluginInterface[]
+     * @var \Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerIdentifierExpanderPluginInterface[]
      */
     protected $oauthCustomerIdentifierExpanderPlugins;
 

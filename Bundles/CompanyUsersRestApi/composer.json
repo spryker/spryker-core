@@ -10,6 +10,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company": "*",
+    "spryker/company-business-unit": "*",
+    "spryker/company-user": "*",
+    "spryker/customer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

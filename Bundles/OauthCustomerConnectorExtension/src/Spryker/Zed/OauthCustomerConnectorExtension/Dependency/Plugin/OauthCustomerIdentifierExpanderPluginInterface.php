@@ -14,7 +14,7 @@ interface OauthCustomerIdentifierExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Can be used to extend the CustomerIdentifierTransfer with extra information.
+     * - Expands the CustomerIdentifierTransfer with extra information.
      *
      * @api
      *
