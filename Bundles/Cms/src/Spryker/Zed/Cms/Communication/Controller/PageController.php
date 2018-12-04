@@ -166,7 +166,7 @@ class PageController extends AbstractController
 
         $this->updatePageState($idPage, true);
 
-        return $this->redirectResponse($request->headers->get('referer'));
+        return $this->redirectResponseExternal($request->headers->get('referer'));
     }
 
     /**
@@ -180,7 +180,7 @@ class PageController extends AbstractController
 
         $this->updatePageState($idPage, false);
 
-        return $this->redirectResponse($request->headers->get('referer'));
+        return $this->redirectResponseExternal($request->headers->get('referer'));
     }
 
     /**
