@@ -24,9 +24,6 @@ class QuoteResolver implements QuoteResolverInterface
     public const GLOSSARY_KEY_QUOTE_NOT_AVAILABLE = 'persistent_cart.error.quote.not_available';
     public const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
 
-    protected const WRITE_SHARED_CART_PERMISSION_PLUGIN = 'WriteSharedCartPermissionPlugin';
-    protected const READ_SHARED_CART_PERMISSION_PLUGIN = 'ReadSharedCartPermissionPlugin';
-
     /**
      * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface
      */
@@ -109,23 +106,40 @@ class QuoteResolver implements QuoteResolverInterface
     protected function findCustomerQuoteById(int $idQuote, CustomerTransfer $customerTransfer): ?QuoteTransfer
     {
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById($idQuote);
-        $isReadSharedCartAllowed = $this->isQuoteOperationAllowed(
-            $quoteResponseTransfer->getQuoteTransfer(),
-            $customerTransfer,
-            static::READ_SHARED_CART_PERMISSION_PLUGIN
-        );
 
-        if (!$quoteResponseTransfer->getIsSuccessful() || !$isReadSharedCartAllowed) {
-            $messageTransfer = new MessageTransfer();
-            $messageTransfer->setValue(static::GLOSSARY_KEY_QUOTE_NOT_AVAILABLE);
+        if ($quoteResponseTransfer->getQuoteTransfer() === null ||
+            !$quoteResponseTransfer->getIsSuccessful() ||
+            !$this->isQuoteAvailableForCustomer($quoteResponseTransfer->getQuoteTransfer(), $customerTransfer)
+        ) {
+            $messageTransfer = (new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_NOT_AVAILABLE);
             $this->messengerFacade->addErrorMessage($messageTransfer);
 
             return null;
         }
+
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteTransfer->setCustomer($customerTransfer);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteAvailableForCustomer(
+        QuoteTransfer $quoteTransfer,
+        CustomerTransfer $customerTransfer
+    ): bool {
+        $isReadSharedCartAllowed = $this->isQuoteOperationAllowed(
+            $quoteTransfer,
+            $customerTransfer,
+            'ReadSharedCartPermissionPlugin'
+        );
+
+        return $isReadSharedCartAllowed;
     }
 
     /**
@@ -194,12 +208,11 @@ class QuoteResolver implements QuoteResolverInterface
         QuoteTransfer $quoteTransfer,
         ?QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null
     ): QuoteResponseTransfer {
-        if (!$this->isQuoteOperationAllowed($quoteTransfer, $customerTransfer, static::WRITE_SHARED_CART_PERMISSION_PLUGIN)) {
-            $messageTransfer = new MessageTransfer();
-            $messageTransfer->setValue(static::GLOSSARY_KEY_PERMISSION_FAILED);
+        if (!$this->isQuoteOperationAllowed($quoteTransfer, $customerTransfer, 'WriteSharedCartPermissionPlugin')) {
+            $messageTransfer = (new MessageTransfer())->setValue(static::GLOSSARY_KEY_PERMISSION_FAILED);
             $this->messengerFacade->addErrorMessage($messageTransfer);
 
-            return $this->createQuoteNotWritableResponse($customerTransfer);
+            return $this->createQuoteNotFoundResult($customerTransfer);
         }
 
         if ($quoteUpdateRequestAttributesTransfer) {
@@ -232,20 +245,6 @@ class QuoteResolver implements QuoteResolverInterface
             || ($customerTransfer->getCompanyUserTransfer()
                 && $this->can($operation, $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
             );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function createQuoteNotWritableResponse(CustomerTransfer $customerTransfer): QuoteResponseTransfer
-    {
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        $quoteResponseTransfer->setCustomer($customerTransfer);
-        $quoteResponseTransfer->setIsSuccessful(false);
-
-        return $this->quoteResponseExpander->expand($quoteResponseTransfer);
     }
 
     /**
