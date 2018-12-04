@@ -21,6 +21,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
+    "spryker/session": "*",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -43,5 +44,8 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "suggest": {
+    "spryker/session": "ADD SUGGEST DESCRIPTION"
   }
 }

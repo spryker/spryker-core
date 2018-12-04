@@ -254,18 +254,6 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     /**
      * @api
      *
-     * @return bool
-     */
-    public function updateUserSessionTtl(): bool
-    {
-        return $this->getFactory()
-            ->createUserSessionUpdater()
-            ->updateTtl();
-    }
-
-    /**
-     * @api
-     *
      * @param int $idUser
      *
      * @return bool

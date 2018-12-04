@@ -14,8 +14,6 @@ use Spryker\Zed\User\Business\Model\User;
 use Spryker\Zed\User\Business\Model\UserInterface;
 use Spryker\Zed\User\Business\Model\UserSession;
 use Spryker\Zed\User\Business\Model\UserSessionInterface;
-use Spryker\Zed\User\Business\Model\UserSessionUpdater;
-use Spryker\Zed\User\Business\Model\UserSessionUpdaterInterface;
 use Spryker\Zed\User\UserDependencyProvider;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -43,14 +41,6 @@ class UserBusinessFactory extends AbstractBusinessFactory
     public function createUserSession(): UserSessionInterface
     {
         return new UserSession($this->getSessionClient());
-    }
-
-    /**
-     * @return \Spryker\Zed\User\Business\Model\UserSessionUpdaterInterface
-     */
-    public function createUserSessionUpdater(): UserSessionUpdaterInterface
-    {
-        return new UserSessionUpdater($this->getSessionClient());
     }
 
     /**
