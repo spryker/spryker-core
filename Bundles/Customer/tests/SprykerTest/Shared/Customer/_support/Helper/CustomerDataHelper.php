@@ -11,7 +11,6 @@ use Codeception\Module;
 use Codeception\Util\Stub;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
@@ -41,9 +40,8 @@ class CustomerDataHelper extends Module
         $customerResponseTransfer = $this->getCustomerFacade()->registerCustomer($customerTransfer);
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($customerResponseTransfer) {
-            $this->createCustomerQuery()
-                ->filterByIdCustomer($customerResponseTransfer->getCustomerTransfer()->getIdCustomer())
-                ->delete();
+            $this->getCustomerFacade()
+                ->deleteCustomer($customerResponseTransfer->getCustomerTransfer());
         });
 
         return $customerTransfer;
@@ -69,13 +67,5 @@ class CustomerDataHelper extends Module
         $mailFacadeMock = Stub::makeEmpty(MailFacadeInterface::class);
 
         return $mailFacadeMock;
-    }
-
-    /**
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
-     */
-    protected function createCustomerQuery(): SpyCustomerQuery
-    {
-        return SpyCustomerQuery::create();
     }
 }
