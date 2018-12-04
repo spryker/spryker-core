@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -27,6 +28,10 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 class CatalogSearchSuggestionsResourceMapperTest extends Unit
 {
     protected const REQUESTED_CURRENCY = 'CHF';
+
+    /** @deprecated Will be removed in next major release. */
+    protected const KEY_PRODUCTS = 'products';
+    protected const KEY_ABSTRACT_PRODUCTS = 'abstractProducts';
 
     /**
      * @var \SprykerTest\Glue\CatalogSearchRestApi\CatalogSearchRestApiProcessorTester
@@ -75,7 +80,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
         $attributes = $restCatalogSearchSuggestionsAttributes;
 
         $this->assertEmpty($attributes->getCompletion());
-        $this->assertEmpty($attributes->getProducts());
+        $this->assertEmpty($this->getProductsFromRestCatalogSearchAttributesTransfer($attributes));
         $this->assertEmpty($attributes->getCategories());
         $this->assertEmpty($attributes->getCmsPages());
     }
@@ -97,7 +102,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
             $searchSuggestionsResponseDataMock
         );
 
-        foreach ($restCatalogSearchSuggestionsAttributes->getProducts() as $product) {
+        foreach ($this->getProductsFromRestCatalogSearchAttributesTransfer($restCatalogSearchSuggestionsAttributes) as $product) {
             $this->assertArrayHasKey('abstractSku', $product);
             $this->assertArrayHasKey('abstractName', $product);
             $this->assertArrayHasKey('price', $product);
@@ -114,6 +119,19 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
             $this->assertArrayHasKey('name', $cmsPage);
             $this->assertArrayNotHasKey('id_cms_page', $cmsPage);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer $restCatalogSearchSuggestionsAttributes
+     *
+     * @return \ArrayObject
+     */
+    protected function getProductsFromRestCatalogSearchAttributesTransfer(
+        RestCatalogSearchSuggestionsAttributesTransfer $restCatalogSearchSuggestionsAttributes
+    ): ArrayObject {
+        return isset($restCatalogSearchSuggestionsAttributes[static::KEY_ABSTRACT_PRODUCTS])
+            ? $restCatalogSearchSuggestionsAttributes[static::KEY_ABSTRACT_PRODUCTS]
+            : $restCatalogSearchSuggestionsAttributes[static::KEY_PRODUCTS];
     }
 
     /**
@@ -155,7 +173,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     /**
      * @return $this
      */
-    public function addCompletionData(): self
+    protected function addCompletionData(): self
     {
         $this->restSearchSuggestionsResponseMock['completion'] = [
             'hp pro tablet 608 g1',
@@ -169,7 +187,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     /**
      * @return $this
      */
-    public function addProductsAbstractData(): self
+    protected function addProductsAbstractData(): self
     {
         $this->restSearchSuggestionsResponseMock['suggestionByType']['product_abstract'] = [
             [
@@ -205,7 +223,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     /**
      * @return $this
      */
-    public function addCategoriesData(): self
+    protected function addCategoriesData(): self
     {
         $this->restSearchSuggestionsResponseMock['suggestionByType']['category'] = [
             [
@@ -222,7 +240,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     /**
      * @return $this
      */
-    public function addCmsPagesData(): self
+    protected function addCmsPagesData(): self
     {
         $this->restSearchSuggestionsResponseMock['suggestionByType']['cms_page'] = [
             [
