@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipProductList\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ProductListCollectionTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Orm\Zed\ProductList\Persistence\SpyProductList;
 
@@ -22,4 +23,15 @@ interface MerchantRelationshipProductListMapperInterface
         SpyProductList $spyProductList,
         ProductListTransfer $productListTransfer
     ): ProductListTransfer;
+
+    /**
+     * @param \Orm\Zed\ProductList\Persistence\SpyProductList[] $productListEntities
+     * @param \Generated\Shared\Transfer\ProductListCollectionTransfer $productListCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
+     */
+    public function mapProductListCollection(
+        array $productListEntities,
+        ProductListCollectionTransfer $productListCollectionTransfer
+    ): ProductListCollectionTransfer;
 }

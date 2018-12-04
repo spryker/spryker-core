@@ -47,7 +47,7 @@ class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyPro
     /**
      * @return \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface[]
      */
-    protected function getMerchantRelationshipPreDeletePlugins()
+    protected function getMerchantRelationshipPreDeletePlugins(): array
     {
         return [];
     }

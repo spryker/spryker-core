@@ -68,7 +68,7 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface[]
      */
-    public function getMerchantRelationshipPreDeletePlugins()
+    public function getMerchantRelationshipPreDeletePlugins(): array
     {
         return $this->getProvidedDependency(MerchantRelationshipDependencyProvider::MERCHANT_RELATIONSHIP_PRE_DELETE_PLUGINS);
     }
