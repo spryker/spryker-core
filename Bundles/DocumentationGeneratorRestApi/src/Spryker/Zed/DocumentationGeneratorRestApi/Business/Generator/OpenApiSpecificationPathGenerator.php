@@ -98,9 +98,10 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         $errorSchemaDataTransfer->setCode(static::KEY_DEFAULT);
         $errorSchemaDataTransfer->setDescription(static::DESCRIPTION_DEFAULT_RESPONSE);
 
-        $requestSchemaDataTransfer->setDescription(static::DESCRIPTION_DEFAULT_REQUEST);
-
-        $pathMethodDataTransfer->setRequestSchema($requestSchemaDataTransfer);
+        if ($requestSchemaDataTransfer->getSchemaReference()) {
+            $requestSchemaDataTransfer->setDescription(static::DESCRIPTION_DEFAULT_REQUEST);
+            $pathMethodDataTransfer->setRequestSchema($requestSchemaDataTransfer);
+        }
         $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
         $pathMethodDataTransfer->addResponseSchema($errorSchemaDataTransfer);
         $pathMethodDataTransfer->setMethod(strtolower(Request::METHOD_POST));
@@ -132,9 +133,10 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         $errorSchemaDataTransfer->setCode(static::KEY_DEFAULT);
         $errorSchemaDataTransfer->setDescription(static::DESCRIPTION_DEFAULT_RESPONSE);
 
-        $requestSchemaDataTransfer->setDescription(static::DESCRIPTION_DEFAULT_REQUEST);
-
-        $pathMethodDataTransfer->setRequestSchema($requestSchemaDataTransfer);
+        if ($requestSchemaDataTransfer->getSchemaReference()) {
+            $requestSchemaDataTransfer->setDescription(static::DESCRIPTION_DEFAULT_REQUEST);
+            $pathMethodDataTransfer->setRequestSchema($requestSchemaDataTransfer);
+        }
         $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
         $pathMethodDataTransfer->addResponseSchema($errorSchemaDataTransfer);
         $pathMethodDataTransfer->setMethod(strtolower(Request::METHOD_PATCH));

@@ -9,6 +9,7 @@ namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder;
 
 use Generated\Shared\Transfer\SchemaDataTransfer;
 use Generated\Shared\Transfer\SchemaPropertyTransfer;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
 
 class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuilderInterface
 {
@@ -25,6 +26,19 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
 
     protected const KEY_TYPE = 'type';
     protected const PATTERN_SCHEMA_REFERENCE = '#/components/schemas/%s';
+
+    /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface
+     */
+    protected $resourceTransferAnalyzer;
+
+    /**
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
+     */
+    public function __construct(ResourceTransferAnalyzerInterface $resourceTransferAnalyzer)
+    {
+        $this->resourceTransferAnalyzer = $resourceTransferAnalyzer;
+    }
 
     /**
      * @param string $key
@@ -128,6 +142,38 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
         $arrayProperty->setType($itemsType);
 
         return $arrayProperty;
+    }
+
+    /**
+     * @param string $metadataKey
+     * @param array $metadataValue
+     *
+     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
+     */
+    public function createRequestSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer
+    {
+        if (!class_exists($metadataValue[static::KEY_TYPE])) {
+            return $this->createScalarSchemaTypeTransfer($metadataKey, $metadataValue[static::KEY_TYPE]);
+        }
+        $schemaName = $this->resourceTransferAnalyzer->createRequestAttributesSchemaNameFromTransferClassName($metadataValue[static::KEY_TYPE]);
+
+        return $this->createObjectSchemaTypeTransfer($metadataKey, $schemaName, $metadataValue);
+    }
+
+    /**
+     * @param string $metadataKey
+     * @param array $metadataValue
+     *
+     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
+     */
+    public function createResponseSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer
+    {
+        if (!class_exists($metadataValue[static::KEY_TYPE])) {
+            return $this->createScalarSchemaTypeTransfer($metadataKey, $metadataValue[static::KEY_TYPE]);
+        }
+        $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($metadataValue[static::KEY_TYPE]);
+
+        return $this->createObjectSchemaTypeTransfer($metadataKey, $schemaName, $metadataValue);
     }
 
     /**
