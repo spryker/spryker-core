@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Application\Communication\Plugin\Subscriber;
 
 use DateTime;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Session\SessionConstants;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -17,6 +15,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class MigrateSessionEventSubscriber implements EventSubscriberInterface
 {
+    protected const SESSION_UPDATE_TIMEOUT = 300;
     /**
      * @return array
      */
@@ -50,9 +49,9 @@ class MigrateSessionEventSubscriber implements EventSubscriberInterface
     {
         $metadataBag = $session->getMetadataBag();
         $sessionCreated = $metadataBag->getCreated();
-        $sessionLength = Config::get(SessionConstants::ZED_SESSION_COOKIE_TIME_TO_LIVE);
+        $sessionLength = $metadataBag->getLifetime();
         $currentTimestamp = (new DateTime())->getTimestamp();
 
-        return $currentTimestamp - $sessionCreated - $sessionLength <= SessionConstants::SESSION_UPDATE_TIMEOUT;
+        return $currentTimestamp - $sessionCreated - $sessionLength <= static::SESSION_UPDATE_TIMEOUT;
     }
 }
