@@ -10,8 +10,10 @@ namespace Spryker\Client\AvailabilityStorage\Storage;
 use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\AvailabilityStorage\AvailabilityStorageConfig;
 use Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageClientInterface;
 use Spryker\Client\AvailabilityStorage\Dependency\Service\AvailabilityStorageToSynchronizationServiceInterface;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
 use Spryker\Shared\Kernel\Store;
 
@@ -44,6 +46,10 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
      */
     public function getAvailabilityAbstractAsStorageTransfer($idProductAbstract)
     {
+        if (AvailabilityStorageConfig::isCollectorCompatibilityMode()) {
+            return $this->getAvailabilityFromCollectorData($idProductAbstract);
+        }
+
         $spyAvailabilityAbstractTransfer = $this->getAvailabilityAbstract($idProductAbstract);
         $storageAvailabilityTransfer = new StorageAvailabilityTransfer();
 
@@ -76,6 +82,30 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
         }
 
         return $spyAvailabilityAbstractEntityTransfer->fromArray($availability, true);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
+     */
+    protected function getAvailabilityFromCollectorData($idProductAbstract): StorageAvailabilityTransfer
+    {
+        $clientLocatorClassName = Locator::class;
+        /** @var \Spryker\Client\Availability\AvailabilityClientInterface $availabilityClient */
+        $availabilityClient = $clientLocatorClassName::getInstance()->availability()->client();
+        $availabilityData = $availabilityClient->findProductAvailabilityByIdProductAbstract($idProductAbstract);
+
+        $storageAvailabilityTransfer = new StorageAvailabilityTransfer();
+        if ($availabilityData === null) {
+            return $storageAvailabilityTransfer;
+        }
+
+        $storageAvailabilityTransfer
+            ->setIsAbstractProductAvailable($availabilityData['isAbstractProductAvailable'])
+            ->setConcreteProductAvailableItems($availabilityData['concreteProductAvailableItems']);
+
+        return $storageAvailabilityTransfer;
     }
 
     /**

@@ -8,7 +8,10 @@
 namespace SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer;
+use Spryker\Client\Currency\CurrencyClient;
+use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientBridge;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapper;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
@@ -39,12 +42,36 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     protected $restSearchSuggestionsResponseMock;
 
     /**
+     * @var \Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapper
+     */
+    protected $catalogSearchSuggestionsResourceMapper;
+
+    /**
+     * @var \Spryker\Client\Currency\CurrencyClient|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $currencyClientMock;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->mockCurrencyClient();
+
+        $this->catalogSearchSuggestionsResourceMapper = new CatalogSearchSuggestionsResourceMapper(
+            new CatalogSearchRestApiToCurrencyClientBridge($this->currencyClientMock)
+        );
+    }
+
+    /**
      * @return void
      */
     public function testRestResponseAttributesIsInstanceOfRestSearchSuggestionsAttributesTransfer(): void
     {
         $mapper = $this->getMapper();
-        $restCatalogSearchSuggestionsAttributes = $mapper->mapSuggestionsToRestAttributesTransfer([], static::REQUESTED_CURRENCY);
+        $restCatalogSearchSuggestionsAttributes = $mapper->mapSuggestionsToRestAttributesTransfer([]);
 
         $this->assertInstanceOf(RestCatalogSearchSuggestionsAttributesTransfer::class, $restCatalogSearchSuggestionsAttributes);
     }
@@ -55,7 +82,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     public function testEmptySearchSuggestionsResponseWillMapEmptyAttributes(): void
     {
         $mapper = $this->getMapper();
-        $restCatalogSearchSuggestionsAttributes = $mapper->mapSuggestionsToRestAttributesTransfer([], static::REQUESTED_CURRENCY);
+        $restCatalogSearchSuggestionsAttributes = $mapper->mapSuggestionsToRestAttributesTransfer([]);
 
         $attributes = $restCatalogSearchSuggestionsAttributes;
 
@@ -80,8 +107,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
             ->getData();
 
         $restCatalogSearchSuggestionsAttributes = $mapper->mapSuggestionsToRestAttributesTransfer(
-            $searchSuggestionsResponseDataMock,
-            static::REQUESTED_CURRENCY
+            $searchSuggestionsResponseDataMock
         );
 
         $this->assertEquals(static::REQUESTED_CURRENCY, $restCatalogSearchSuggestionsAttributes->getCurrency());
@@ -105,11 +131,22 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    protected function mockCurrencyClient(): void
+    {
+        $this->currencyClientMock = $this->getMockBuilder(CurrencyClient::class)->getMock();
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode(static::REQUESTED_CURRENCY);
+        $this->currencyClientMock->method('getCurrent')->willReturn($currencyTransfer);
+    }
+
+    /**
      * @return \Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperInterface
      */
     protected function getMapper(): CatalogSearchSuggestionsResourceMapperInterface
     {
-        return new CatalogSearchSuggestionsResourceMapper();
+        return $this->catalogSearchSuggestionsResourceMapper;
     }
 
     /**
