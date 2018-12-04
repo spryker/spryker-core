@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\CompanyBusinessUnit\Business;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\DataBuilder\CompanyUserBuilder;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
@@ -281,54 +280,6 @@ class CompanyBusinessUnitFacadeTest extends Test
         $this->assertNull(
             $loadedChildBusinessUnitTransfer->getFkParentCompanyBusinessUnit()
         );
-    }
-
-    /**
-     * @return void
-     */
-    public function testCheckCompanyUserByBusinessUnitIdCompanyUserIdExistsShouldReturnTrueIfCompanyUserRelationAlreadyExists()
-    {
-        // Arrange
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
-        $customerTransfer = $this->tester->haveCustomer();
-        $companyUserTransfer = $this->tester->haveCompanyUser(
-            [
-                CompanyUserTransfer::CUSTOMER => $customerTransfer,
-                CompanyUserTransfer::COMPANY_BUSINESS_UNIT => $businessUnitTransfer,
-                CompanyUserTransfer::FK_COMPANY => $businessUnitTransfer->getFkCompany(),
-                CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $businessUnitTransfer->getIdCompanyBusinessUnit(),
-                CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
-            ]
-        );
-
-        // Act
-        $existsCompanyUser = $this->getFacade()
-            ->checkCompanyUserNotDuplicated($companyUserTransfer);
-
-        // Assert
-        $this->assertTrue($existsCompanyUser->getIsSuccessful());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCheckCompanyUserByBusinessUnitIdCompanyUserIdExistsShouldReturnFalseIfCompanyUserRelationDoesNotExists()
-    {
-        // Arrange
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
-        $customerTransfer = $this->tester->haveCustomer();
-
-        $notExistentСompanyUserTransfer = (new CompanyUserBuilder())
-            ->build()
-            ->setFkCustomer($customerTransfer->getIdCustomer())
-            ->setFkCompanyBusinessUnit($businessUnitTransfer->getFkCompany());
-
-        // Act
-        $existsCompanyUser = $this->getFacade()
-            ->checkCompanyUserNotDuplicated($notExistentСompanyUserTransfer);
-
-        // Assert
-        $this->assertFalse($existsCompanyUser->getIsSuccessful());
     }
 
     /**
