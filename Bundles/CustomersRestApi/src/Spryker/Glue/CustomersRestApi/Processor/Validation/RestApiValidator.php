@@ -8,7 +8,9 @@
 namespace Spryker\Glue\CustomersRestApi\Processor\Validation;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer;
+use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -24,16 +26,16 @@ class RestApiValidator implements RestApiValidatorInterface
     ];
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorProcessorInterface
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface
      */
-    protected $restApiErrorProcessor;
+    protected $apiErrors;
 
     /**
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorProcessorInterface $restApiErrorProcessor
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface $apiErrors
      */
-    public function __construct(RestApiErrorProcessorInterface $restApiErrorProcessor)
+    public function __construct(RestApiErrorInterface $apiErrors)
     {
-        $this->restApiErrorProcessor = $restApiErrorProcessor;
+        $this->apiErrors = $apiErrors;
     }
 
     /**
@@ -49,11 +51,31 @@ class RestApiValidator implements RestApiValidatorInterface
         RestResponseInterface $restResponse
     ): RestResponseInterface {
         if (!$customerResponseTransfer->getHasCustomer()) {
-            return $this->restApiErrorProcessor->addCustomerNotFoundError($restResponse);
+            return $this->apiErrors->addCustomerNotFoundError($restResponse);
         }
 
         if (!$this->isSameCustomerReference($restRequest)) {
-            return $this->restApiErrorProcessor->addCustomerUnauthorizedError($restResponse);
+            return $this->apiErrors->addCustomerUnauthorizedError($restResponse);
+        }
+
+        return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomersAttributesTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function validateCustomerGender(RestCustomersAttributesTransfer $restCustomersAttributesTransfer, RestResponseInterface $restResponse): RestResponseInterface
+    {
+        if (count($restResponse->getErrors()) > 0) {
+            return $restResponse;
+        }
+
+        if ($restCustomersAttributesTransfer->isPropertyModified(CustomerTransfer::GENDER) &&
+            !in_array($restCustomersAttributesTransfer->getGender(), static::CUSTOMERS_GENDERS_ENUM)) {
+            return $this->apiErrors->addNotValidGenderError($restResponse);
         }
 
         return $restResponse;
@@ -74,11 +96,11 @@ class RestApiValidator implements RestApiValidatorInterface
         }
 
         if (!$this->assertPasswordNotEmpty($passwordAttributesTransfer)) {
-            return $this->restApiErrorProcessor->addPasswordNotValidError($restResponse);
+            return $this->apiErrors->addPasswordNotValidError($restResponse);
         }
 
         if (!$this->assertPasswordsAreIdentical($passwordAttributesTransfer)) {
-            return $this->restApiErrorProcessor->addPasswordsDoNotMatchError(
+            return $this->apiErrors->addPasswordsDoNotMatchError(
                 $restResponse,
                 RestCustomerPasswordAttributesTransfer::NEW_PASSWORD,
                 RestCustomerPasswordAttributesTransfer::CONFIRM_PASSWORD

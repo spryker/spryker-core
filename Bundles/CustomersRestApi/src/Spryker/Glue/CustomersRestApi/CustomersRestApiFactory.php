@@ -31,8 +31,8 @@ use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorProcessor;
-use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorProcessorInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiError;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidator;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -48,7 +48,7 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->getCustomerClient(),
             $this->createCustomerResourceMapper(),
-            $this->createRestApiErrorProcessor(),
+            $this->createRestApiError(),
             $this->createRestApiValidator()
         );
     }
@@ -63,7 +63,7 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->createCustomerReader(),
             $this->getResourceBuilder(),
             $this->createCustomerResourceMapper(),
-            $this->createRestApiErrorProcessor(),
+            $this->createRestApiError(),
             $this->createRestApiValidator(),
             $this->getCustomerPostRegisterPlugins()
         );
@@ -78,7 +78,7 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->getCustomerClient(),
             $this->createAddressResourceMapper(),
-            $this->createRestApiErrorProcessor(),
+            $this->createRestApiError(),
             $this->createRestApiValidator()
         );
     }
@@ -104,7 +104,7 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->getResourceBuilder(),
             $this->createCustomerRestorePasswordResourceMapper(),
-            $this->createRestApiErrorProcessor()
+            $this->createRestApiError()
         );
     }
 
@@ -130,7 +130,7 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->createAddressReader(),
             $this->createAddressResourceMapper(),
-            $this->createRestApiErrorProcessor(),
+            $this->createRestApiError(),
             $this->createRestApiValidator()
         );
     }
@@ -180,7 +180,7 @@ class CustomersRestApiFactory extends AbstractFactory
      */
     public function createRestApiValidator(): RestApiValidatorInterface
     {
-        return new RestApiValidator($this->createRestApiErrorProcessor());
+        return new RestApiValidator($this->createRestApiError());
     }
 
     /**
@@ -194,11 +194,11 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorProcessorInterface
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface
      */
-    public function createRestApiErrorProcessor(): RestApiErrorProcessorInterface
+    public function createRestApiError(): RestApiErrorInterface
     {
-        return new RestApiErrorProcessor();
+        return new RestApiError();
     }
 
     /**

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorProcessorInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -38,9 +38,9 @@ class AddressReader implements AddressReaderInterface
     protected $addressesResourceMapper;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorProcessorInterface
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface
      */
-    protected $restApiErrorProcessor;
+    protected $restApiError;
 
     /**
      * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface
@@ -51,20 +51,20 @@ class AddressReader implements AddressReaderInterface
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface $addressesResourceMapper
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorProcessorInterface $restApiErrorProcessor
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface $restApiError
      * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface $restApiValidator
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CustomersRestApiToCustomerClientInterface $customerClient,
         AddressResourceMapperInterface $addressesResourceMapper,
-        RestApiErrorProcessorInterface $restApiErrorProcessor,
+        RestApiErrorInterface $restApiError,
         RestApiValidatorInterface $restApiValidator
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->customerClient = $customerClient;
         $this->addressesResourceMapper = $addressesResourceMapper;
-        $this->restApiErrorProcessor = $restApiErrorProcessor;
+        $this->restApiError = $restApiError;
         $this->restApiValidator = $restApiValidator;
     }
 
@@ -78,7 +78,7 @@ class AddressReader implements AddressReaderInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
         $parentResource = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS);
         if (!$parentResource) {
-            return $this->restApiErrorProcessor->addCustomerReferenceMissingError($restResponse);
+            return $this->restApiError->addCustomerReferenceMissingError($restResponse);
         }
         $customerReference = $parentResource->getId();
 
@@ -144,7 +144,7 @@ class AddressReader implements AddressReaderInterface
             }
         }
 
-        return $this->restApiErrorProcessor->addAddressNotFoundError($restResponse);
+        return $this->restApiError->addAddressNotFoundError($restResponse);
     }
 
     /**

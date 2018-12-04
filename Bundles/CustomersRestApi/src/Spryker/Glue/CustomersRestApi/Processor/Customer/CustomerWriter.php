@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorProcessorInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -42,9 +42,9 @@ class CustomerWriter implements CustomerWriterInterface
     protected $customerResourceMapper;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorProcessorInterface
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface
      */
-    protected $restApiErrorProcessor;
+    protected $restApiError;
 
     /**
      * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface
@@ -66,7 +66,7 @@ class CustomerWriter implements CustomerWriterInterface
      * @param \Spryker\Glue\CustomersRestApi\Processor\Customer\CustomerReaderInterface $customerReader
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface $customerResourceMapper
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorProcessorInterface $restApiErrorProcessor
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface $restApiError
      * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface $restApiValidator
      * @param \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface[] $customerPostRegisterPlugins
      */
@@ -75,7 +75,7 @@ class CustomerWriter implements CustomerWriterInterface
         CustomerReaderInterface $customerReader,
         RestResourceBuilderInterface $restResourceBuilder,
         CustomerResourceMapperInterface $customerResourceMapper,
-        RestApiErrorProcessorInterface $restApiErrorProcessor,
+        RestApiErrorInterface $restApiError,
         RestApiValidatorInterface $restApiValidator,
         array $customerPostRegisterPlugins
     ) {
@@ -83,7 +83,7 @@ class CustomerWriter implements CustomerWriterInterface
         $this->customerReader = $customerReader;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->customerResourceMapper = $customerResourceMapper;
-        $this->restApiErrorProcessor = $restApiErrorProcessor;
+        $this->restApiError = $restApiError;
         $this->restApiValidator = $restApiValidator;
         $this->customerPostRegisterPlugins = $customerPostRegisterPlugins;
     }
@@ -99,11 +99,11 @@ class CustomerWriter implements CustomerWriterInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if (!$restCustomersAttributesTransfer->getAcceptedTerms()) {
-            return $this->restApiErrorProcessor->addNotAcceptedTermsError($restResponse);
+            return $this->restApiError->addNotAcceptedTermsError($restResponse);
         }
 
         if ($restCustomersAttributesTransfer->getPassword() !== $restCustomersAttributesTransfer->getConfirmPassword()) {
-            return $this->restApiErrorProcessor->addPasswordsDoNotMatchError(
+            return $this->restApiError->addPasswordsDoNotMatchError(
                 $restResponse,
                 RestCustomersAttributesTransfer::PASSWORD,
                 RestCustomersAttributesTransfer::CONFIRM_PASSWORD
@@ -114,7 +114,7 @@ class CustomerWriter implements CustomerWriterInterface
         $customerResponseTransfer = $this->customerClient->registerCustomer($customerTransfer);
 
         if (!$customerResponseTransfer->getIsSuccess()) {
-            return $this->restApiErrorProcessor->processCustomerErrorOnRegistration(
+            return $this->restApiError->processCustomerErrorOnRegistration(
                 $restResponse,
                 $customerResponseTransfer
             );
@@ -148,12 +148,12 @@ class CustomerWriter implements CustomerWriterInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if (!$restRequest->getResource()->getId()) {
-            return $this->restApiErrorProcessor->addCustomerReferenceMissingError($restResponse);
+            return $this->restApiError->addCustomerReferenceMissingError($restResponse);
         }
 
         if ($restCustomerAttributesTransfer->getPassword()
             && $restCustomerAttributesTransfer->getPassword() !== $restCustomerAttributesTransfer->getConfirmPassword()) {
-            return $this->restApiErrorProcessor->addPasswordsDoNotMatchError(
+            return $this->restApiError->addPasswordsDoNotMatchError(
                 $restResponse,
                 RestCustomersAttributesTransfer::PASSWORD,
                 RestCustomersAttributesTransfer::CONFIRM_PASSWORD
@@ -163,11 +163,11 @@ class CustomerWriter implements CustomerWriterInterface
         $customerResponseTransfer = $this->customerReader->findCustomer($restRequest);
 
         if (!$customerResponseTransfer->getHasCustomer()) {
-            return $this->restApiErrorProcessor->addCustomerNotFoundError($restResponse);
+            return $this->restApiError->addCustomerNotFoundError($restResponse);
         }
 
         if (!$this->restApiValidator->isSameCustomerReference($restRequest)) {
-            return $this->restApiErrorProcessor->addCustomerUnauthorizedError($restResponse);
+            return $this->restApiError->addCustomerUnauthorizedError($restResponse);
         }
 
         $customerResponseTransfer->getCustomerTransfer()->fromArray(
@@ -178,7 +178,7 @@ class CustomerWriter implements CustomerWriterInterface
         $customerResponseTransfer = $this->customerClient->updateCustomer($customerResponseTransfer->getCustomerTransfer());
 
         if (!$customerResponseTransfer->getIsSuccess()) {
-            return $this->restApiErrorProcessor->processCustomerErrorOnUpdate(
+            return $this->restApiError->processCustomerErrorOnUpdate(
                 $restResponse,
                 $customerResponseTransfer
             );
@@ -213,7 +213,7 @@ class CustomerWriter implements CustomerWriterInterface
         $customerResponseTransfer = $this->customerReader->getCurrentCustomer($restRequest);
 
         if (!$customerResponseTransfer->getHasCustomer() || $restRequest->getResource()->getId()) {
-            return $this->restApiErrorProcessor->addCustomerNotFoundError($restResponse);
+            return $this->restApiError->addCustomerNotFoundError($restResponse);
         }
 
         $restResponse = $this->restApiValidator->validatePassword($passwordAttributesTransfer, $restResponse);
@@ -229,7 +229,7 @@ class CustomerWriter implements CustomerWriterInterface
             return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
         }
 
-        return $this->restApiErrorProcessor->processCustomerErrorOnPasswordUpdate($restResponse, $customerResponseTransfer);
+        return $this->restApiError->processCustomerErrorOnPasswordUpdate($restResponse, $customerResponseTransfer);
     }
 
     /**
@@ -242,7 +242,7 @@ class CustomerWriter implements CustomerWriterInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if (!$restRequest->getResource()->getId()) {
-            return $this->restApiErrorProcessor->addCustomerReferenceMissingError($restResponse);
+            return $this->restApiError->addCustomerReferenceMissingError($restResponse);
         }
 
         $customerResponseTransfer = $this->customerReader->findCustomer($restRequest);
