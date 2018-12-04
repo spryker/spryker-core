@@ -15,6 +15,7 @@ use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportCon
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnitDataImport\Business\ProductPackagingUnitDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportConfig getConfig()
  */
 class ProductPackagingUnitDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {

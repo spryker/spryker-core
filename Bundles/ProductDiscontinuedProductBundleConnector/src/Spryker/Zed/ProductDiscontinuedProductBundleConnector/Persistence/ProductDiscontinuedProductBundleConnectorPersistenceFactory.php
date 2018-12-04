@@ -13,6 +13,7 @@ use Spryker\Zed\ProductDiscontinuedProductBundleConnector\ProductDiscontinuedPro
 
 /**
  * @method \Spryker\Zed\ProductDiscontinuedProductBundleConnector\ProductDiscontinuedProductBundleConnectorConfig getConfig()
+ * @method \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Persistence\ProductDiscontinuedProductBundleConnectorRepositoryInterface getRepository()
  */
 class ProductDiscontinuedProductBundleConnectorPersistenceFactory extends AbstractPersistenceFactory
 {

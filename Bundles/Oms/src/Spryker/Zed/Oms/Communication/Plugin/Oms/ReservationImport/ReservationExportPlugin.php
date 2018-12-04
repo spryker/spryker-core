@@ -14,6 +14,8 @@ use Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface;
 /**
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  * @method \Spryker\Zed\Oms\Communication\OmsCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Oms\OmsConfig getConfig()
+ * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
  */
 class ReservationExportPlugin extends AbstractPlugin implements ReservationExportPluginInterface
 {

@@ -22,6 +22,9 @@ use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToProductQu
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerBridge;
 
+/**
+ * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
+ */
 class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT = 'product facade';

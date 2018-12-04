@@ -27,6 +27,8 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
      *
      * @api
      *
+     * @deprecated Use findQuoteByCustomerReferenceAndIdStore() instead.
+     *
      * @param string $customerReference
      *
      * @return null|\Generated\Shared\Transfer\QuoteTransfer
@@ -43,6 +45,31 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
         }
 
         return $this->getFactory()->createQuoteMapper()->mapQuoteTransfer($quoteEntityTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $customerReference
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    public function findQuoteByCustomerReferenceAndIdStore(string $customerReference, int $idStore): ?QuoteTransfer
+    {
+        $quoteQuery = $this->getFactory()->createQuoteQuery()
+            ->joinWithSpyStore()
+            ->filterByCustomerReference($customerReference)
+            ->filterByFkStore($idStore);
+
+        $quoteEntity = $this->buildQueryFromCriteria($quoteQuery)->findOne();
+        if (!$quoteEntity) {
+            return null;
+        }
+
+        return $this->getFactory()->createQuoteMapper()->mapQuoteTransfer($quoteEntity);
     }
 
     /**

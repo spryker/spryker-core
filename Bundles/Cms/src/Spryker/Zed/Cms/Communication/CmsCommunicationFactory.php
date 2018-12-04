@@ -24,6 +24,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 /**
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Cms\CmsConfig getConfig()
+ * @method \Spryker\Zed\Cms\Business\CmsFacadeInterface getFacade()
  */
 class CmsCommunicationFactory extends AbstractCommunicationFactory
 {
