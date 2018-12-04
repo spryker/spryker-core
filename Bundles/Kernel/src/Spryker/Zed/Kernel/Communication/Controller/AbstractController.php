@@ -25,8 +25,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 abstract class AbstractController
 {
-    protected const SESSION_UPDATE_TIMEOUT = 300;
-
     use RepositoryResolverAwareTrait;
 
     /**
