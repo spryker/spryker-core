@@ -17,4 +17,11 @@ interface MerchantReaderInterface
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
     public function getMerchantById(MerchantTransfer $merchantTransfer): MerchantTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
 }
