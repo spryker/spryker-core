@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin;
 
-interface CompanyUserTableActionLinksExpanderPluginInterface
+use Generated\Shared\Transfer\ButtonTransfer;
+
+interface CompanyUserTableActionExpanderPluginInterface
 {
     /**
      * Specification:
@@ -15,10 +17,10 @@ interface CompanyUserTableActionLinksExpanderPluginInterface
      *
      * @api
      *
-     * @param array $companyUserDataItem
-     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
+     * @param array $companyUserTableRowItem
+     * @param string[] $buttons
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     * @return \Generated\Shared\Transfer\ButtonTransfer
      */
-    public function expandActionLinks(array $companyUserDataItem, array $buttonTransfers): array;
+    public function expand(array $companyUserTableRowItem, array $buttons): ButtonTransfer;
 }

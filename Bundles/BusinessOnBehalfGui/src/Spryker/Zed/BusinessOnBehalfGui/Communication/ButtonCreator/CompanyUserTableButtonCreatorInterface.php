@@ -7,21 +7,15 @@
 
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator;
 
+use Generated\Shared\Transfer\ButtonTransfer;
+
 interface CompanyUserTableButtonCreatorInterface
 {
     /**
-     * @param array $companyUserDataItem
-     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
+     * @param array $companyUserTableRowItem
+     * @param string[] $buttons
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     * @return \Generated\Shared\Transfer\ButtonTransfer
      */
-    public function replaceDeleteCompanyUserButton(array $companyUserDataItem, array $buttonTransfers): array;
-
-    /**
-     * @param array $companyUserDataItem
-     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
-     *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
-     */
-    public function addAttachCustomerToBusinessUnitButton(array $companyUserDataItem, array $buttonTransfers): array;
+    public function addAttachCustomerToBusinessUnitButton(array $companyUserTableRowItem, array $buttons): ButtonTransfer;
 }

@@ -23,6 +23,7 @@ use Spryker\Zed\CompanyUserGui\CompanyUserGuiDependencyProvider;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeInterface;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCustomerFacadeInterface;
+use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableGetDeleteLinkPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -131,8 +132,7 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CompanyUserTableExpanderPluginExecutor(
             $this->getCompanyUserTableConfigExpanderPlugins(),
-            $this->getCompanyUserTablePrepareDataExpanderPlugins(),
-            $this->getCompanyUserTableActionLinksExpanderPlugins()
+            $this->getCompanyUserTablePrepareDataExpanderPlugins()
         );
     }
 
@@ -162,7 +162,9 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CompanyUserTable(
             $this->getCompanyUserPropelQuery(),
-            $this->createCompanyUserTableExpanderPluginExecutor()
+            $this->createCompanyUserTableExpanderPluginExecutor(),
+            $this->getCompanyUserTableActionLinksExpanderPlugins(),
+            $this->getCompanyUserTableGetDeleteLinkPlugin()
         );
     }
 
@@ -183,10 +185,18 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionLinksExpanderPluginInterface[]
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionExpanderPluginInterface[]
      */
     public function getCompanyUserTableActionLinksExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PLUGINS_COMPANY_USER_TABLE_ACTION_LINKS_FORM_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableGetDeleteLinkPluginInterface|null
+     */
+    public function getCompanyUserTableGetDeleteLinkPlugin(): ?CompanyUserTableGetDeleteLinkPluginInterface
+    {
+        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PLUGIN_COMPANY_USER_TABLE_GET_DELETE_LINK);
     }
 }

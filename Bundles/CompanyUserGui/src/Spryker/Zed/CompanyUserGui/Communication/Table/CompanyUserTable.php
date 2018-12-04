@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyUserGui\Communication\Table;
 
-use Generated\Shared\Transfer\ButtonTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
@@ -16,6 +15,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface;
 use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
+use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableGetDeleteLinkPluginInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -25,11 +25,6 @@ class CompanyUserTable extends AbstractTable
     protected const COL_COMPANY_USER_NAME = 'company_user_name';
     protected const COL_IS_ACTIVE = 'is_active';
     protected const COL_COMPANY_USER_ACTIONS = 'actions';
-
-    protected const BUTTON_EDIT_TITLE = 'Edit';
-    protected const BUTTON_DISABLE_TITLE = 'Disable';
-    protected const BUTTON_ENABLE_TITLE = 'Enable';
-    protected const BUTTON_DELETE_TITLE = 'Delete';
 
     /**
      * @var \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
@@ -42,15 +37,31 @@ class CompanyUserTable extends AbstractTable
     protected $companyUserTableExpanderPluginExecutor;
 
     /**
+     * @var \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionExpanderPluginInterface[]
+     */
+    protected $companyUserTableActionLinksExpanderPlugins;
+
+    /**
+     * @var null|\Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableGetDeleteLinkPluginInterface
+     */
+    protected $companyUserTableGetDeleteLinkPlugin;
+
+    /**
      * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $companyUserQuery
      * @param \Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface $companyUserTableExpanderPluginExecutor
+     * @param \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionExpanderPluginInterface[] $companyUserTableActionLinksExpanderPlugins
+     * @param \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableGetDeleteLinkPluginInterface|null $companyUserTableGetDeleteLinkPlugin
      */
     public function __construct(
         SpyCompanyUserQuery $companyUserQuery,
-        CompanyUserTableExpanderPluginExecutorInterface $companyUserTableExpanderPluginExecutor
+        CompanyUserTableExpanderPluginExecutorInterface $companyUserTableExpanderPluginExecutor,
+        array $companyUserTableActionLinksExpanderPlugins,
+        ?CompanyUserTableGetDeleteLinkPluginInterface $companyUserTableGetDeleteLinkPlugin
     ) {
         $this->companyUserQuery = $companyUserQuery;
         $this->companyUserTableExpanderPluginExecutor = $companyUserTableExpanderPluginExecutor;
+        $this->companyUserTableActionLinksExpanderPlugins = $companyUserTableActionLinksExpanderPlugins;
+        $this->companyUserTableGetDeleteLinkPlugin = $companyUserTableGetDeleteLinkPlugin;
     }
 
     /**
@@ -181,7 +192,7 @@ class CompanyUserTable extends AbstractTable
     {
         return $companyUserQuery->joinCustomer()
             ->useCustomerQuery()
-                ->filterByAnonymizedAt(null, Criteria::EQUAL)
+            ->filterByAnonymizedAt(null, Criteria::EQUAL)
             ->endUse()
             ->withColumn(
                 'CONCAT(' . SpyCustomerTableMap::COL_FIRST_NAME . ', \' \', ' . SpyCustomerTableMap::COL_LAST_NAME . ')',
@@ -198,34 +209,15 @@ class CompanyUserTable extends AbstractTable
      */
     protected function buildLinks(array $companyUserDataItem): string
     {
-        $buttons = [];
-
-        foreach ($this->getAllButtonTransfers($companyUserDataItem) as $buttonTransfer) {
-            $buttons[] = $this->generateButton(
-                $buttonTransfer->getUrl(),
-                $buttonTransfer->getTitle(),
-                $buttonTransfer->getDefaultOptions(),
-                $buttonTransfer->getCustomOptions()
-            );
-        }
-
-        return implode(' ', $buttons);
-    }
-
-    /**
-     * @param array $companyUserDataItem
-     *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
-     */
-    protected function getAllButtonTransfers(array $companyUserDataItem): array
-    {
-        $buttonTransfers = [
+        $actionButtons = [
             $this->generateCompanyUserEditButton($companyUserDataItem),
             $this->generateCompanyUserStatusChangeButton($companyUserDataItem),
             $this->generateCompanyUserDeleteButton($companyUserDataItem),
         ];
 
-        return $this->expandActionLinks($companyUserDataItem, $buttonTransfers);
+        $actionButtons = $this->expandLinks($companyUserDataItem, $actionButtons);
+
+        return implode(' ', $actionButtons);
     }
 
     /**
@@ -245,95 +237,82 @@ class CompanyUserTable extends AbstractTable
     /**
      * @param array $companyUserDataItem
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer
+     * @return string
      */
-    protected function generateCompanyUserEditButton(array $companyUserDataItem): ButtonTransfer
+    protected function generateCompanyUserEditButton(array $companyUserDataItem): string
     {
-        $defaultOptions = [
-            'class' => 'btn-edit',
-            'icon' => 'fa-pencil-square-o',
-        ];
-        $url = Url::generate(CompanyUserGuiConfig::URL_EDIT_COMPANY_USER, [
-            CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
-        ]);
-
-        return $this->generateButtonTransfer($url, static::BUTTON_EDIT_TITLE, $defaultOptions);
+        return $this->generateEditButton(
+            Url::generate(CompanyUserGuiConfig::URL_EDIT_COMPANY_USER, [
+                CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+            ]),
+            'Edit'
+        );
     }
 
     /**
      * @param array $companyUserDataItem
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer
+     * @return string
      */
-    protected function generateCompanyUserStatusChangeButton(array $companyUserDataItem): ButtonTransfer
+    protected function generateCompanyUserStatusChangeButton(array $companyUserDataItem): string
     {
         if ($companyUserDataItem[SpyCompanyUserTableMap::COL_IS_ACTIVE]) {
-            $defaultOptions = [
-                'class' => 'safe-submit btn-danger',
-                'icon' => 'fa-trash',
-            ];
-            $url = Url::generate(CompanyUserGuiConfig::URL_DISABLE_COMPANY_USER, [
-                CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
-            ]);
-
-            return $this->generateButtonTransfer($url, static::BUTTON_DISABLE_TITLE, $defaultOptions);
+            return $this->generateRemoveButton(
+                Url::generate(CompanyUserGuiConfig::URL_DISABLE_COMPANY_USER, [
+                    CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+                ]),
+                'Disable'
+            );
         }
 
-        $defaultOptions = [
-            'class' => 'btn-view',
-            'icon' => 'fa-caret-right',
-        ];
-        $url = Url::generate(CompanyUserGuiConfig::URL_ENABLE_COMPANY_USER, [
-            CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
-        ]);
-
-        return $this->generateButtonTransfer($url, static::BUTTON_ENABLE_TITLE, $defaultOptions);
+        return $this->generateViewButton(
+            Url::generate(CompanyUserGuiConfig::URL_ENABLE_COMPANY_USER, [
+                CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+            ]),
+            'Enable'
+        );
     }
 
     /**
      * @param array $companyUserDataItem
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer
+     * @return string
      */
-    protected function generateCompanyUserDeleteButton(array $companyUserDataItem): ButtonTransfer
+    protected function generateCompanyUserDeleteButton(array $companyUserDataItem): string
     {
-        $defaultOptions = [
-            'class' => 'safe-submit btn-danger',
-            'icon' => 'fa-trash',
-        ];
-        $url = Url::generate(CompanyUserGuiConfig::URL_CONFIRM_DELETE_COMPANY_USER, [
-            CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
-        ]);
+        $deleteUrl = CompanyUserGuiConfig::URL_CONFIRM_DELETE_COMPANY_USER;
 
-        return $this->generateButtonTransfer($url, static::BUTTON_DELETE_TITLE, $defaultOptions);
-    }
+        if ($this->companyUserTableGetDeleteLinkPlugin !== null) {
+            $deleteUrl = $this->companyUserTableGetDeleteLinkPlugin->getLink();
+        }
 
-    /**
-     * @param string $url
-     * @param string $title
-     * @param array $defaultOptions
-     * @param array|null $customOptions
-     *
-     * @return \Generated\Shared\Transfer\ButtonTransfer
-     */
-    protected function generateButtonTransfer(string $url, string $title, array $defaultOptions, ?array $customOptions = null): ButtonTransfer
-    {
-        return (new ButtonTransfer())
-            ->setUrl($url)
-            ->setTitle($title)
-            ->setDefaultOptions($defaultOptions)
-            ->setCustomOptions($customOptions);
+        return $this->generateRemoveButton(
+            Url::generate($deleteUrl, [
+                CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+            ]),
+            'Delete'
+        );
     }
 
     /**
      * @param array $companyUserDataItem
-     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
+     * @param string[] $buttons
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     * @return string[]
      */
-    protected function expandActionLinks(array $companyUserDataItem, array $buttonTransfers): array
+    protected function expandLinks(array $companyUserDataItem, array $buttons): array
     {
-        return $this->companyUserTableExpanderPluginExecutor
-            ->executeActionExpanderPlugins($companyUserDataItem, $buttonTransfers);
+        foreach ($this->companyUserTableActionLinksExpanderPlugins as $companyUserTableActionExpanderPlugin) {
+            $buttonTransfer = $companyUserTableActionExpanderPlugin->expand($companyUserDataItem, $buttons);
+
+            $buttons[] = $this->generateButton(
+                $buttonTransfer->getUrl(),
+                $buttonTransfer->getTitle(),
+                $buttonTransfer->getDefaultOptions(),
+                $buttonTransfer->getCustomOptions()
+            );
+        }
+
+        return $buttons;
     }
 }

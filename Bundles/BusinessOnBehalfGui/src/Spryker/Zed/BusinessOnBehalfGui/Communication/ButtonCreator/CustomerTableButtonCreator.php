@@ -13,6 +13,9 @@ use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompa
 
 class CustomerTableButtonCreator extends AbstractButtonCreator implements CustomerTableButtonCreatorInterface
 {
+    /**
+     * @uses \Spryker\Zed\CompanyUserGui\Communication\Controller\CreateCompanyUserController::attachCustomerAction
+     */
     protected const URL_ATTACH_CUSTOMER_TO_COMPANY = 'company-user-gui/create-company-user/attach-customer';
     protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE = 'Attach to company';
 
