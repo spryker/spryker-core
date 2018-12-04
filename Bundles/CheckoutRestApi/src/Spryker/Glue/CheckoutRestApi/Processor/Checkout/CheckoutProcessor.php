@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
-use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpanderInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -35,33 +35,33 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     protected $glossaryStorageClient;
 
     /**
+     * @var \Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpanderInterface
+     */
+    protected $checkoutRequestAttributesExpander;
+
+    /**
      * @var \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface
      */
     protected $checkoutRestApiClient;
 
     /**
-     * @var \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface
-     */
-    protected $customerMapper;
-
-    /**
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
-     * @param \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface $customerMapper
+     * @param \Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpanderInterface $checkoutRequestAttributesExpander
      * @param \Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface $checkoutRequestValidator
      */
     public function __construct(
         CheckoutRestApiClientInterface $checkoutRestApiClient,
         RestResourceBuilderInterface $restResourceBuilder,
         CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient,
-        CustomerMapperInterface $customerMapper,
+        CheckoutRequestAttributesExpanderInterface $checkoutRequestAttributesExpander,
         CheckoutRequestValidatorInterface $checkoutRequestValidator
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
-        $this->customerMapper = $customerMapper;
+        $this->checkoutRequestAttributesExpander = $checkoutRequestAttributesExpander;
         $this->checkoutRequestValidator = $checkoutRequestValidator;
     }
 
@@ -88,8 +88,8 @@ class CheckoutProcessor implements CheckoutProcessorInterface
             return $this->createValidationErrorResponse($restErrorCollectionTransfer);
         }
 
-        $restCustomerTransfer = $this->customerMapper->mapRestCustomerTransferFromRestCheckoutRequest($restRequest, $restCheckoutRequestAttributesTransfer);
-        $restCheckoutRequestAttributesTransfer->setCustomer($restCustomerTransfer);
+        $restCheckoutRequestAttributesTransfer = $this->checkoutRequestAttributesExpander
+            ->expandCheckoutRequestAttributes($restRequest, $restCheckoutRequestAttributesTransfer);
 
         $restCheckoutResponseTransfer = $this->checkoutRestApiClient->placeOrder($restCheckoutRequestAttributesTransfer);
         if (!$restCheckoutResponseTransfer->getIsSuccess()) {
@@ -162,8 +162,8 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     protected function createValidationErrorResponse(RestErrorCollectionTransfer $restErrorCollectionTransfer)
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        foreach ($restErrorCollectionTransfer->getRestErrors() as $restErrorTransfer) {
-            $restResponse->addError($restErrorTransfer);
+        foreach ($restErrorCollectionTransfer->getRestErrors() as $restErrorMessageTransfer) {
+            $restResponse->addError($restErrorMessageTransfer);
         }
 
         return $restResponse;

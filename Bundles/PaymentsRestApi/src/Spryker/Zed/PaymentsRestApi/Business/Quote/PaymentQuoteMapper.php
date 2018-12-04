@@ -23,8 +23,7 @@ class PaymentQuoteMapper implements PaymentQuoteMapperInterface
     public function mapPaymentsToQuote(
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
-    ): QuoteTransfer
-    {
+    ): QuoteTransfer {
         $restPaymentTransfers = $restCheckoutRequestAttributesTransfer->getPayments();
 
         if (!$restPaymentTransfers->count()) {

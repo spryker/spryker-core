@@ -84,18 +84,16 @@ checkout-data:
             constraints:
             - Collection:
                 fields:
-                  paymentMethod:
+                  paymentMethodName:
                   - NotBlank
-                  paymentProvider:
-                  - NotBlank
-                  paymentSelection:
+                  paymentProviderName:
                   - NotBlank
     shipment:
     - Optional:
         constraints:
         - Collection:
             fields:
-              shipmentSelection:
+              idShipmentMethod:
               - NotBlank
               - Type:
                   type: numeric
@@ -178,16 +176,14 @@ checkout:
         constraints:
         - Collection:
             fields:
-              paymentMethod:
+              paymentMethodName:
               - NotBlank
-              paymentProvider:
-              - NotBlank
-              paymentSelection:
+              paymentProviderName:
               - NotBlank
     shipment:
     - Collection:
         fields:
-          shipmentSelection:
+          idShipmentMethod:
           - NotBlank
           - Type:
               type: numeric

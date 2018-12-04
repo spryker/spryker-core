@@ -16,6 +16,8 @@ use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReader;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReaderInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpander;
+use Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpanderInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidator;
 use Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Validator\SinglePaymentValidator;
@@ -37,7 +39,7 @@ class CheckoutRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->getResourceBuilder(),
             $this->createCheckoutDataMapper(),
-            $this->createCustomerMapper(),
+            $this->createCheckoutRequestAttributesExpander(),
             $this->createCheckoutRequestValidator()
         );
     }
@@ -59,8 +61,19 @@ class CheckoutRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->getResourceBuilder(),
             $this->getGlossaryStorageClient(),
-            $this->createCustomerMapper(),
+            $this->createCheckoutRequestAttributesExpander(),
             $this->createCheckoutRequestValidator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpanderInterface
+     */
+    public function createCheckoutRequestAttributesExpander(): CheckoutRequestAttributesExpanderInterface
+    {
+        return new CheckoutRequestAttributesExpander(
+            $this->createCustomerMapper(),
+            $this->getConfig()
         );
     }
 
@@ -78,7 +91,8 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function createCheckoutRequestValidator(): CheckoutRequestValidatorInterface
     {
         return new CheckoutRequestValidator(
-            $this->getCheckoutRequestAttributesValidatorPlugins()
+            $this->getCheckoutRequestAttributesValidatorPlugins(),
+            $this->getConfig()
         );
     }
 

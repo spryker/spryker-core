@@ -60,13 +60,13 @@
     </transfer>
 
     <transfer name="RestShipment">
-        <property name="shipmentSelection" type="int" restRequestParameter="required"/>
+        <property name="idShipmentMethod" type="int" restRequestParameter="required"/>
     </transfer>
 
     <transfer name="RestPayment">
         <property name="paymentProviderName" type="string" restRequestParameter="required"/>
         <property name="paymentMethodName" type="string" restRequestParameter="required"/>
-        <property name="paymentSelection" type="string" restRequestParameter="required"/>
+        <property name="paymentSelection" type="string"/>
     </transfer>
 
     <transfer name="RestCheckoutDataResponseAttributes">
@@ -81,8 +81,7 @@
     </transfer>
 
     <transfer name="RestPaymentMethod">
-        <property name="methodName" type="string"/>
-        <property name="paymentSelection" type="string"/>
+        <property name="paymentMethodName" type="string"/>
         <property name="requiredRequestData" type="array"/>
     </transfer>
 

@@ -41,11 +41,11 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
         if (!$restCheckoutRequestAttributesTransfer->getShipment()
-            || !$restCheckoutRequestAttributesTransfer->getShipment()->getShipmentSelection()
+            || !$restCheckoutRequestAttributesTransfer->getShipment()->getIdShipmentMethod()
         ) {
             return $quoteTransfer;
         }
-        $idShipmentMethod = $restCheckoutRequestAttributesTransfer->getShipment()->getShipmentSelection();
+        $idShipmentMethod = $restCheckoutRequestAttributesTransfer->getShipment()->getIdShipmentMethod();
 
         $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
         if ($shipmentMethodTransfer === null) {

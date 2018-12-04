@@ -22,12 +22,20 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
     protected $checkoutRequestAttributesValidatorPlugins;
 
     /**
+     * @var \Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface[] $checkoutRequestAttributesValidatorPlugins
+     * @param \Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig $config
      */
     public function __construct(
-        array $checkoutRequestAttributesValidatorPlugins
+        array $checkoutRequestAttributesValidatorPlugins,
+        CheckoutRestApiConfig $config
     ) {
         $this->checkoutRequestAttributesValidatorPlugins = $checkoutRequestAttributesValidatorPlugins;
+        $this->config = $config;
     }
 
     /**
@@ -41,10 +49,8 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestErrorCollectionTransfer {
         $restErrorCollectionTransfer = new RestErrorCollectionTransfer();
-        $customerValidationError = $this->validateCustomer($restRequest);
-        if ($customerValidationError !== null) {
-            $restErrorCollectionTransfer->addRestError($customerValidationError);
-        }
+        $restErrorCollectionTransfer = $this->validateCustomer($restRequest, $restErrorCollectionTransfer);
+        $restErrorCollectionTransfer = $this->validatePayments($restCheckoutRequestAttributesTransfer, $restErrorCollectionTransfer);
 
         foreach ($this->checkoutRequestAttributesValidatorPlugins as $checkoutRequestAttributesValidatorPlugin) {
             $pluginErrorCollectionTransfer = $checkoutRequestAttributesValidatorPlugin->validateAttributes($restCheckoutRequestAttributesTransfer);
@@ -58,18 +64,47 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestErrorCollectionTransfer $restErrorCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
      */
-    protected function validateCustomer(RestRequestInterface $restRequest): ?RestErrorMessageTransfer
+    protected function validateCustomer(RestRequestInterface $restRequest, RestErrorCollectionTransfer $restErrorCollectionTransfer): ?RestErrorCollectionTransfer
     {
         if ($restRequest->getUser() === null) {
-            return (new RestErrorMessageTransfer())
+            $resErrorMessageTransfer = (new RestErrorMessageTransfer())
                 ->setStatus(Response::HTTP_BAD_REQUEST)
                 ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_USER_IS_NOT_SPECIFIED)
                 ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_USER_IS_NOT_SPECIFIED);
+
+            $restErrorCollectionTransfer->addRestError($resErrorMessageTransfer);
         }
 
-        return null;
+        return $restErrorCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestErrorCollectionTransfer $restErrorCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
+     */
+    protected function validatePayments(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, RestErrorCollectionTransfer $restErrorCollectionTransfer): RestErrorCollectionTransfer
+    {
+        $paymentProviderMethodToStateMachineMapping = $this->config->getPaymentProviderMethodToStateMachineMapping();
+        foreach ($restCheckoutRequestAttributesTransfer->getPayments() as $restPaymentTransfer) {
+            if (!isset($paymentProviderMethodToStateMachineMapping[$restPaymentTransfer->getPaymentProviderName()][$restPaymentTransfer->getPaymentMethodName()])) {
+                $resErrorMessageTransfer = (new RestErrorMessageTransfer())
+                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_INVALID_PAYMENT)
+                    ->setDetail(sprintf(
+                        CheckoutRestApiConfig::RESPONSE_DETAILS_INVALID_PAYMENT,
+                        $restPaymentTransfer->getPaymentMethodName(),
+                        $restPaymentTransfer->getPaymentProviderName()
+                    ));
+
+                $restErrorCollectionTransfer->addRestError($resErrorMessageTransfer);
+            }
+        }
+        return $restErrorCollectionTransfer;
     }
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Payment\Business\Installer;
 
+use Generated\Shared\Transfer\PaymentMethodTransfer;
+use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Payment\PaymentConfig;
@@ -56,10 +58,10 @@ class SalesPaymentMethodTypeInstaller implements SalesPaymentMethodTypeInstaller
         $salesPaymentMethods = $this->config->getSalesPaymentMethodTypes();
 
         foreach ($salesPaymentMethods as $paymentProvider => $paymentMethods) {
-            foreach ($paymentMethods as $paymentMethod => $value) {
+            foreach ($paymentMethods as $paymentMethod) {
                 $salesPaymentMethodTypeTransfer = (new SalesPaymentMethodTypeTransfer())
-                    ->setPaymentMethod($paymentMethod)
-                    ->setPaymentProvider($paymentProvider);
+                    ->setPaymentMethod((new PaymentMethodTransfer())->setMethodName($paymentMethod))
+                    ->setPaymentProvider((new PaymentProviderTransfer())->setName($paymentProvider));
                 $this->entityManager
                     ->saveSalesPaymentMethodTypeByPaymentProviderAndMethod($salesPaymentMethodTypeTransfer);
             }

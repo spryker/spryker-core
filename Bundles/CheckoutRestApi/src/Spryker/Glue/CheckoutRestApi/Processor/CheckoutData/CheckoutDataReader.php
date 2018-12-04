@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
-use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpanderInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -39,9 +39,9 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface
+     * @var \Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpanderInterface
      */
-    protected $customerMapper;
+    protected $checkoutRequestAttributesExpander;
 
     /**
      * @var \Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface
@@ -52,20 +52,20 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface $checkoutDataMapper
-     * @param \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface $customerMapper
+     * @param \Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpanderInterface $checkoutRequestAttributesExpander
      * @param \Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface $checkoutRequestValidator
      */
     public function __construct(
         CheckoutRestApiClientInterface $checkoutRestApiClient,
         RestResourceBuilderInterface $restResourceBuilder,
         CheckoutDataMapperInterface $checkoutDataMapper,
-        CustomerMapperInterface $customerMapper,
+        CheckoutRequestAttributesExpanderInterface $checkoutRequestAttributesExpander,
         CheckoutRequestValidatorInterface $checkoutRequestValidator
     ) {
         $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->checkoutDataMapper = $checkoutDataMapper;
-        $this->customerMapper = $customerMapper;
+        $this->checkoutRequestAttributesExpander = $checkoutRequestAttributesExpander;
         $this->checkoutRequestValidator = $checkoutRequestValidator;
     }
 
@@ -82,8 +82,8 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             return $this->createValidationErrorResponse($restErrorCollectionTransfer);
         }
 
-        $restCustomerTransfer = $this->customerMapper->mapRestCustomerTransferFromRestCheckoutRequest($restRequest, $restCheckoutRequestAttributesTransfer);
-        $restCheckoutRequestAttributesTransfer->setCustomer($restCustomerTransfer);
+        $restCheckoutRequestAttributesTransfer = $this->checkoutRequestAttributesExpander
+            ->expandCheckoutRequestAttributes($restRequest, $restCheckoutRequestAttributesTransfer);
 
         $restCheckoutDataResponseTransfer = $this->checkoutRestApiClient->getCheckoutData($restCheckoutRequestAttributesTransfer);
         if (!$restCheckoutDataResponseTransfer->getIsSuccess()) {
@@ -143,8 +143,8 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected function createValidationErrorResponse(RestErrorCollectionTransfer $restErrorCollectionTransfer)
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        foreach ($restErrorCollectionTransfer->getRestErrors() as $restErrorTransfer) {
-            $restResponse->addError($restErrorTransfer);
+        foreach ($restErrorCollectionTransfer->getRestErrors() as $restErrorMessageTransfer) {
+            $restResponse->addError($restErrorMessageTransfer);
         }
 
         return $restResponse;

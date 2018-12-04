@@ -7,21 +7,21 @@
         <property name="payments" type="RestPayment[]" singular="payment"/>
     </transfer>
 
+    <transfer name="RestPayment">
+        <property name="paymentProviderName" type="string" restRequestParameter="required"/>
+        <property name="paymentMethodName" type="string" restRequestParameter="required"/>
+        <property name="paymentSelection" type="string"/>
+    </transfer>
+
     <transfer name="Quote">
         <property name="payment" type="Payment" deprecated="Use payments property instead."/>
         <property name="payments" type="Payment[]" singular="payment"/>
     </transfer>
 
     <transfer name="Payment">
-        <property name="paymentSelection" type="string"/>
-        <property name="isLimitedAmount" type="bool"/>
-    </transfer>
-
-    <transfer name="RestPayment">
         <property name="paymentProvider" type="string"/>
         <property name="paymentMethod" type="string"/>
         <property name="paymentSelection" type="string"/>
-        <property name="isLimitedAmount" type="bool" />
     </transfer>
 
 </transfers>

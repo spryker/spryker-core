@@ -7,6 +7,10 @@
         <property name="shipment" type="RestShipment"/>
     </transfer>
 
+    <transfer name="RestShipment">
+        <property name="idShipmentMethod" type="int" restRequestParameter="required"/>
+    </transfer>
+
     <transfer name="Quote">
         <property name="shipment" type="Shipment"/>
         <property name="expenses" type="Expense[]" singular="expense"/>

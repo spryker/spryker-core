@@ -25,11 +25,12 @@ class PaymentEntityManager extends AbstractEntityManager implements PaymentEntit
     ): void {
         $salesPaymentMethodTypeEntity = $this->getFactory()
             ->createSalesPaymentMethodTypeQuery()
-            ->filterByPaymentMethod($salesPaymentMethodTypeTransfer->getPaymentMethod())
-            ->filterByPaymentProvider($salesPaymentMethodTypeTransfer->getPaymentProvider())
+            ->filterByPaymentProvider($salesPaymentMethodTypeTransfer->getPaymentProvider()->getName())
+            ->filterByPaymentMethod($salesPaymentMethodTypeTransfer->getPaymentMethod()->getMethodName())
             ->findOneOrCreate();
 
-        $salesPaymentMethodTypeEntity->fromArray($salesPaymentMethodTypeTransfer->modifiedToArray());
+        $salesPaymentMethodTypeEntity->setPaymentProvider($salesPaymentMethodTypeTransfer->getPaymentProvider()->getName());
+        $salesPaymentMethodTypeEntity->setPaymentMethod($salesPaymentMethodTypeTransfer->getPaymentMethod()->getMethodName());
         $salesPaymentMethodTypeEntity->save();
     }
 }
