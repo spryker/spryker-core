@@ -30,4 +30,14 @@ class CustomerAccessConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * Gets content type access restricted by default for install.
+     *
+     * @return bool[]
+     */
+    public function getContentTypeAccessRestrictedByDefault(): array
+    {
+        return [];
+    }
 }

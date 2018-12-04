@@ -47,7 +47,7 @@ class CustomerAccessInstaller implements CustomerAccessInstallerInterface
      */
     public function install(): void
     {
-        $contentTypeAccess = $this->customerAccessConfig->getContentTypeAccess();
+        $contentTypeAccessRestrictedByDefault = $this->customerAccessConfig->getContentTypeAccessRestrictedByDefault();
 
         foreach ($this->customerAccessConfig->getContentTypes() as $contentType) {
             if ($this->customerAccessReader->findCustomerAccessByContentType($contentType) !== null) {
@@ -55,7 +55,9 @@ class CustomerAccessInstaller implements CustomerAccessInstallerInterface
                 continue;
             }
 
-            $this->customerAccessCreator->createCustomerAccess($contentType, !$contentTypeAccess);
+            $isRestricted = $contentTypeAccessRestrictedByDefault[$contentType] ?? $this->customerAccessConfig->getContentTypeAccess();
+
+            $this->customerAccessCreator->createCustomerAccess($contentType, $isRestricted);
         }
     }
 }
