@@ -51,9 +51,11 @@ class CustomerClientTest extends Unit
     {
         $this->sessionClient->start();
         $oldSessionCreatedTime = $this->sessionClient->getMetadataBag()->getCreated();
-        $this->customerClient->extendSessionLifetime();
+        sleep(1);
+        $result = $this->customerClient->extendSessionLifetime();
         $newSessionCreatedTime = $this->sessionClient->getMetadataBag()->getCreated();
 
-        $this->assertNotSame($oldSessionCreatedTime, $newSessionCreatedTime);
+        $this->assertTrue($result);
+        $this->assertGreaterThan($oldSessionCreatedTime, $newSessionCreatedTime);
     }
 }

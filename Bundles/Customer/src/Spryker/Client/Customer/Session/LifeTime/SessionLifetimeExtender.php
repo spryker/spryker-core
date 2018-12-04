@@ -25,10 +25,10 @@ class SessionLifetimeExtender implements SessionLifetimeExtenderInterface
     }
 
     /**
-     * @return void
+     * @return bool
      */
-    public function extendSessionLifeTime(): void
+    public function extendSessionLifeTime(): bool
     {
-        $this->sessionClient->save();
+        return $this->sessionClient->migrate(true);
     }
 }

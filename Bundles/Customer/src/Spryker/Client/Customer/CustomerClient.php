@@ -138,11 +138,11 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      *
      * @api
      *
-     * @return void
+     * @return bool
      */
-    public function extendSessionLifetime(): void
+    public function extendSessionLifetime(): bool
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createSessionLifetimeExtender()
             ->extendSessionLifeTime();
     }

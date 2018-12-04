@@ -113,9 +113,9 @@ interface CustomerClientInterface
      *
      * @api
      *
-     * @return void
+     * @return bool
      */
-    public function extendSessionLifetime(): void;
+    public function extendSessionLifetime(): bool;
 
     /**
      * Specification:
