@@ -28,14 +28,14 @@ class RestApiValidator implements RestApiValidatorInterface
     /**
      * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface
      */
-    protected $apiErrors;
+    protected $apiError;
 
     /**
      * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface $apiErrors
      */
     public function __construct(RestApiErrorInterface $apiErrors)
     {
-        $this->apiErrors = $apiErrors;
+        $this->apiError = $apiErrors;
     }
 
     /**
@@ -51,11 +51,11 @@ class RestApiValidator implements RestApiValidatorInterface
         RestResponseInterface $restResponse
     ): RestResponseInterface {
         if (!$customerResponseTransfer->getHasCustomer()) {
-            return $this->apiErrors->addCustomerNotFoundError($restResponse);
+            return $this->apiError->addCustomerNotFoundError($restResponse);
         }
 
         if (!$this->isSameCustomerReference($restRequest)) {
-            return $this->apiErrors->addCustomerUnauthorizedError($restResponse);
+            return $this->apiError->addCustomerUnauthorizedError($restResponse);
         }
 
         return $restResponse;
@@ -75,7 +75,7 @@ class RestApiValidator implements RestApiValidatorInterface
 
         if ($restCustomersAttributesTransfer->isPropertyModified(CustomerTransfer::GENDER) &&
             !in_array($restCustomersAttributesTransfer->getGender(), static::CUSTOMERS_GENDERS_ENUM)) {
-            return $this->apiErrors->addNotValidGenderError($restResponse);
+            return $this->apiError->addNotValidGenderError($restResponse);
         }
 
         return $restResponse;
@@ -96,11 +96,11 @@ class RestApiValidator implements RestApiValidatorInterface
         }
 
         if (!$this->assertPasswordNotEmpty($passwordAttributesTransfer)) {
-            return $this->apiErrors->addPasswordNotValidError($restResponse);
+            return $this->apiError->addPasswordNotValidError($restResponse);
         }
 
         if (!$this->assertPasswordsAreIdentical($passwordAttributesTransfer)) {
-            return $this->apiErrors->addPasswordsDoNotMatchError(
+            return $this->apiError->addPasswordsDoNotMatchError(
                 $restResponse,
                 RestCustomerPasswordAttributesTransfer::NEW_PASSWORD,
                 RestCustomerPasswordAttributesTransfer::CONFIRM_PASSWORD
