@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\PriceProductStorage\Storage;
 
+use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface;
+
 class PriceConcreteResolver implements PriceConcreteResolverInterface
 {
     /**
@@ -20,13 +22,23 @@ class PriceConcreteResolver implements PriceConcreteResolverInterface
     protected $priceConcreteStorageReader;
 
     /**
+     * @var \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface
+     */
+    protected $priceProductService;
+
+    /**
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface $priceAbstractStorageReader
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface $priceConcreteStorageReader
+     * @param \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface $priceProductService
      */
-    public function __construct(PriceAbstractStorageReaderInterface $priceAbstractStorageReader, PriceConcreteStorageReaderInterface $priceConcreteStorageReader)
-    {
+    public function __construct(
+        PriceAbstractStorageReaderInterface $priceAbstractStorageReader,
+        PriceConcreteStorageReaderInterface $priceConcreteStorageReader,
+        PriceProductStorageToPriceProductServiceInterface $priceProductService
+    ) {
         $this->priceAbstractStorageReader = $priceAbstractStorageReader;
         $this->priceConcreteStorageReader = $priceConcreteStorageReader;
+        $this->priceProductService = $priceProductService;
     }
 
     /**
@@ -37,14 +49,15 @@ class PriceConcreteResolver implements PriceConcreteResolverInterface
      */
     public function resolvePriceProductConcrete(int $idProductConcrete, int $idProductAbstract): array
     {
-        $priceProductTransfers = $this->priceConcreteStorageReader
+        $concretePriceProductTransfers = $this->priceConcreteStorageReader
             ->findPriceProductConcreteTransfers($idProductConcrete);
 
-        if (!$priceProductTransfers) {
-            return $this->priceAbstractStorageReader
+        $abstractPriceProductTransfers = $this->priceAbstractStorageReader
                 ->findPriceProductAbstractTransfers($idProductAbstract);
-        }
 
-        return $priceProductTransfers;
+        return $this->priceProductService->mergeConcreteAndAbstractPrices(
+            $abstractPriceProductTransfers,
+            $concretePriceProductTransfers
+        );
     }
 }

@@ -17,6 +17,30 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class OrdersResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "getResourceById": {
+     *          "summary": [
+     *              "Retrieves order by id."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "404": "Order not found."
+     *          }
+     *     },
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieves list of orders."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }]
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
