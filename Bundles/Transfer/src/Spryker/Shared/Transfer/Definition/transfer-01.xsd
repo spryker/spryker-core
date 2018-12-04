@@ -27,6 +27,7 @@
                                         <xsd:attribute type="xsd:string" name="type" use="required" />
                                         <xsd:attribute type="xsd:string" name="singular" use="optional"/>
                                         <xsd:attribute type="xsd:string" name="deprecated" use="optional"/>
+                                        <xsd:attribute type="restRequestParameterType" name="restRequestParameter" use="optional"/>
                                     </xsd:complexType>
                                 </xsd:element>
                                 <xsd:element name="implements" maxOccurs="unbounded" minOccurs="0">
@@ -45,4 +46,11 @@
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
+    <xsd:simpleType name="restRequestParameterType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="yes"/>
+            <xsd:enumeration value="no"/>
+            <xsd:enumeration value="required"/>
+        </xsd:restriction>
+    </xsd:simpleType>
 </xsd:schema>
