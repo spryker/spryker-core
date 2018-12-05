@@ -18,6 +18,24 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class CustomerPasswordResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "patch": {
+     *          "summary": [
+     *              "Updates customer password."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "isEmptyResponse": true,
+     *          "responses": {
+     *              "400": "Passwords don't match.",
+     *              "404": "Customer not found.",
+     *              "406": "Invalid password."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer
      *
