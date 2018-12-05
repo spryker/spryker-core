@@ -30,6 +30,8 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
     protected $productAbstractVariantsRestrictionFilter;
 
     /**
+     * @uses ProductStorageDataMapper::filterProductStorageExpanderPlugins()
+     *
      * @param \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[] $storageProductExpanderPlugins
      * @param \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
      */
