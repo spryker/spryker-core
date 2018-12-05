@@ -15,7 +15,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface;
 use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
-use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableGetDeleteLinkPluginInterface;
+use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableDeleteActionPluginInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -42,26 +42,26 @@ class CompanyUserTable extends AbstractTable
     protected $companyUserTableActionLinksExpanderPlugins;
 
     /**
-     * @var null|\Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableGetDeleteLinkPluginInterface
+     * @var null|\Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableDeleteActionPluginInterface
      */
-    protected $companyUserTableGetDeleteLinkPlugin;
+    protected $companyUserTableDeleteActionPlugin;
 
     /**
      * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $companyUserQuery
      * @param \Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface $companyUserTableExpanderPluginExecutor
      * @param \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionExpanderPluginInterface[] $companyUserTableActionLinksExpanderPlugins
-     * @param \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableGetDeleteLinkPluginInterface|null $companyUserTableGetDeleteLinkPlugin
+     * @param \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableDeleteActionPluginInterface|null $companyUserTableDeleteActionPlugin
      */
     public function __construct(
         SpyCompanyUserQuery $companyUserQuery,
         CompanyUserTableExpanderPluginExecutorInterface $companyUserTableExpanderPluginExecutor,
         array $companyUserTableActionLinksExpanderPlugins,
-        ?CompanyUserTableGetDeleteLinkPluginInterface $companyUserTableGetDeleteLinkPlugin
+        ?CompanyUserTableDeleteActionPluginInterface $companyUserTableDeleteActionPlugin
     ) {
         $this->companyUserQuery = $companyUserQuery;
         $this->companyUserTableExpanderPluginExecutor = $companyUserTableExpanderPluginExecutor;
         $this->companyUserTableActionLinksExpanderPlugins = $companyUserTableActionLinksExpanderPlugins;
-        $this->companyUserTableGetDeleteLinkPlugin = $companyUserTableGetDeleteLinkPlugin;
+        $this->companyUserTableDeleteActionPlugin = $companyUserTableDeleteActionPlugin;
     }
 
     /**
@@ -282,8 +282,8 @@ class CompanyUserTable extends AbstractTable
     {
         $deleteUrl = CompanyUserGuiConfig::URL_CONFIRM_DELETE_COMPANY_USER;
 
-        if ($this->companyUserTableGetDeleteLinkPlugin !== null) {
-            $deleteUrl = $this->companyUserTableGetDeleteLinkPlugin->getLink();
+        if ($this->companyUserTableDeleteActionPlugin !== null) {
+            $deleteUrl = $this->companyUserTableDeleteActionPlugin->getPath();
         }
 
         return $this->generateRemoveButton(

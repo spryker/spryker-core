@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin;
 
-interface CompanyUserTableGetDeleteLinkPluginInterface
+interface CompanyUserTableDeleteActionPluginInterface
 {
     /**
      * Specification:
-     *  - Returns custom delete company user link.
+     *  - Returns custom "delete company user" action path.
      *
      * @api
      *
      * @return string
      */
-    public function getLink(): string;
+    public function getPath(): string;
 }

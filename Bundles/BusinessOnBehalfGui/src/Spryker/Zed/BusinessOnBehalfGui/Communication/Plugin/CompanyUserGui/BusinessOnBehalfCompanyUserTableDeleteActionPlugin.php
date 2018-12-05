@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Plugin\CompanyUserGui;
 
-use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableGetDeleteLinkPluginInterface;
+use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableDeleteActionPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\BusinessOnBehalfGui\Communication\BusinessOnBehalfGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\BusinessOnBehalfGui\BusinessOnBehalfGuiConfig getConfig()
  */
-class CompanyUserTableGetDeleteLinkPlugin extends AbstractPlugin implements CompanyUserTableGetDeleteLinkPluginInterface
+class BusinessOnBehalfCompanyUserTableDeleteActionPlugin extends AbstractPlugin implements CompanyUserTableDeleteActionPluginInterface
 {
-    protected const URL_CONFIRM_DELETE_COMPANY_USER = '/business-on-behalf-gui/delete-company-user/confirm-delete';
+    protected const PATH_CONFIRM_DELETE_COMPANY_USER = '/business-on-behalf-gui/delete-company-user/confirm-delete';
 
     /**
      * {@inheritdoc}
@@ -26,8 +26,8 @@ class CompanyUserTableGetDeleteLinkPlugin extends AbstractPlugin implements Comp
      *
      * @return string
      */
-    public function getLink(): string
+    public function getPath(): string
     {
-        return static::URL_CONFIRM_DELETE_COMPANY_USER;
+        return static::PATH_CONFIRM_DELETE_COMPANY_USER;
     }
 }

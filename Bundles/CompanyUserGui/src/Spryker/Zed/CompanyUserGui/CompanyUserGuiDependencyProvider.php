@@ -11,7 +11,7 @@ use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeBridge;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeBridge;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCustomerFacadeBridge;
-use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableGetDeleteLinkPluginInterface;
+use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableDeleteActionPluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -50,8 +50,8 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyUserTablePrepareDataExpanderPlugins($container);
         $container = $this->addCompanyUserFormExpanderPlugins($container);
         $container = $this->addCompanyUserAttachCustomerFormExpanderPlugins($container);
-        $container = $this->addCompanyUserTableActionLinksExpanderPlugins($container);
-        $container = $this->addCompanyUserTableGetDeleteLinkPlugin($container);
+        $container = $this->addCompanyUserTableActionExpanderPlugins($container);
+        $container = $this->addCompanyUserTableDeleteActionPlugin($container);
 
         return $container;
     }
@@ -179,10 +179,10 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCompanyUserTableActionLinksExpanderPlugins(Container $container): Container
+    protected function addCompanyUserTableActionExpanderPlugins(Container $container): Container
     {
         $container[static::PLUGINS_COMPANY_USER_TABLE_ACTION_LINKS_FORM_EXPANDER] = function (Container $container) {
-            return $this->getCompanyUserTableActionLinksExpanderPlugins();
+            return $this->getCompanyUserTableActionExpanderPlugins();
         };
 
         return $container;
@@ -193,10 +193,10 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCompanyUserTableGetDeleteLinkPlugin(Container $container): Container
+    protected function addCompanyUserTableDeleteActionPlugin(Container $container): Container
     {
         $container[static::PLUGIN_COMPANY_USER_TABLE_GET_DELETE_LINK] = function (Container $container) {
-            return $this->getCompanyUserTableGetDeleteLinkPlugin();
+            return $this->getCompanyUserTableDeleteActionPlugin();
         };
 
         return $container;
@@ -237,15 +237,15 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionExpanderPluginInterface[]
      */
-    protected function getCompanyUserTableActionLinksExpanderPlugins(): array
+    protected function getCompanyUserTableActionExpanderPlugins(): array
     {
         return [];
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableGetDeleteLinkPluginInterface|null
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableDeleteActionPluginInterface|null
      */
-    protected function getCompanyUserTableGetDeleteLinkPlugin(): ?CompanyUserTableGetDeleteLinkPluginInterface
+    protected function getCompanyUserTableDeleteActionPlugin(): ?CompanyUserTableDeleteActionPluginInterface
     {
         return null;
     }
