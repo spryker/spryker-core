@@ -31,7 +31,7 @@ class PaymentsRestApiFacade extends AbstractFacade implements PaymentsRestApiFac
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
         return $this->getFactory()
-            ->createPaymentQuoteMapperMapper()
+            ->createPaymentQuoteMapper()
             ->mapPaymentsToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
     }
 }

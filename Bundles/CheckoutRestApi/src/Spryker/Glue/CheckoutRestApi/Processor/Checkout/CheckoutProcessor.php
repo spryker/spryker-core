@@ -45,6 +45,16 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     protected $checkoutRestApiClient;
 
     /**
+     * @var \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface[]
+     */
+    protected $checkoutRequestAttributesValidatorPlugins;
+
+    /**
+     * @var \Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface
+     */
+    protected $checkoutRequestValidator;
+
+    /**
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
@@ -64,16 +74,6 @@ class CheckoutProcessor implements CheckoutProcessorInterface
         $this->checkoutRequestAttributesExpander = $checkoutRequestAttributesExpander;
         $this->checkoutRequestValidator = $checkoutRequestValidator;
     }
-
-    /**
-     * @var \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface[]
-     */
-    protected $checkoutRequestAttributesValidatorPlugins;
-
-    /**
-     * @var \Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface
-     */
-    protected $checkoutRequestValidator;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
