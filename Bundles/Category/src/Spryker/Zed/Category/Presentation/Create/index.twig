@@ -4,11 +4,6 @@
     {% set widget_title = 'Create category' | trans %}
 {% endif %}
 
-{% form_theme categoryForm with [
-    '@Category/_partials/category-image-set-theme.twig',
-    '@Category/_partials/category-image-collection-theme.twig',
-]%}
-
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
@@ -22,12 +17,10 @@
 
             {{ form_start(categoryForm) }}
                 {% do categoryForm.localized_attributes.setRendered %}
-                {% do categoryForm.imageSets.setRendered %}
-            {{ tabs(categoryFormTabs, {
-                'categoryForm': categoryForm,
-                'currentLocale': currentLocale,
-                'localeCollection': localeCollection
-            }) }}
+                {{ tabs(categoryFormTabs, {
+                    'categoryForm': categoryForm,
+                    'currentLocale': currentLocale
+                }) }}
             {{ form_end(categoryForm) }}
 
         {% endblock %}
@@ -45,4 +38,3 @@
     <script src="/assets/js/spryker-zed-category-main.js"></script>
     <script src="/assets/js/spryker-zed-cms-block-category-connector-main.js"></script>
 {% endblock %}
-

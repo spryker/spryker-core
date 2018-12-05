@@ -8,15 +8,11 @@
 namespace Spryker\Zed\CategoryImageGui\Communication\Form\Transformer;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CategoryImageSetTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\CategoryImageGui\Dependency\Facade\CategoryImageGuiToLocaleInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class ImageSetCollectionTransformer implements DataTransformerInterface
 {
-    public const DEFAULT_LOCALE_NAME = 'default';
-
     /**
      * @var \Spryker\Zed\CategoryImageGui\Dependency\Facade\CategoryImageGuiToLocaleInterface
      */
@@ -45,10 +41,8 @@ class ImageSetCollectionTransformer implements DataTransformerInterface
         }
 
         $formImageSetCollection = [];
-        foreach ($this->getLocales() as $localeTransfer) {
-            $localeName = $localeTransfer->getLocaleName();
+        foreach ($this->localeFacade->getAvailableLocales() as $localeName) {
             foreach ($value as $categoryImageSetTransfer) {
-                $this->prepareLocale($categoryImageSetTransfer);
                 if ($categoryImageSetTransfer->getLocale()->getLocaleName() === $localeName) {
                     $formImageSetCollection[$localeName][] = $categoryImageSetTransfer;
                 }
@@ -73,7 +67,7 @@ class ImageSetCollectionTransformer implements DataTransformerInterface
         }
 
         $localizedImageSetCollection = [];
-        foreach ($this->getLocales() as $localeTransfer) {
+        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $localeName = $localeTransfer->getLocaleName();
             $imageSetTransferCollection = $value[$localeName] ?? [];
 
@@ -85,40 +79,5 @@ class ImageSetCollectionTransformer implements DataTransformerInterface
         }
 
         return new ArrayObject($localizedImageSetCollection);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
-     */
-    protected function prepareLocale(CategoryImageSetTransfer $categoryImageSetTransfer): CategoryImageSetTransfer
-    {
-        if ($categoryImageSetTransfer->getLocale() === null) {
-            $categoryImageSetTransfer->setLocale(
-                $this->createDefaultLocale()
-            );
-        }
-
-        return $categoryImageSetTransfer;
-    }
-
-    /**
-     * Gets the array of locale transfers based on the store config plus the 'default' locale.
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
-     */
-    protected function getLocales(): array
-    {
-        return array_merge([$this->createDefaultLocale()], $this->localeFacade->getLocaleCollection());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected function createDefaultLocale(): LocaleTransfer
-    {
-        return (new LocaleTransfer())
-            ->setLocaleName(static::DEFAULT_LOCALE_NAME);
     }
 }

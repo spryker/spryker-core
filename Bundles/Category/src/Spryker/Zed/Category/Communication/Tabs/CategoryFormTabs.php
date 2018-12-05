@@ -14,18 +14,29 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 class CategoryFormTabs extends AbstractTabs
 {
     /**
+     * @var array|\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface[]
+     */
+    private $expanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface[] $expanderPlugins
+     */
+    public function __construct(array $expanderPlugins)
+    {
+        $this->expanderPlugins = $expanderPlugins;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
      * @return \Generated\Shared\Transfer\TabsViewTransfer
      */
     protected function build(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
-        $this
-            ->addGeneralTab($tabsViewTransfer)
-            ->addImageTab($tabsViewTransfer)
+        $this->addGeneralTab($tabsViewTransfer)
             ->setFooter($tabsViewTransfer);
 
-        return $tabsViewTransfer;
+        return $this->executeExpanderPlugins($tabsViewTransfer);
     }
 
     /**
@@ -36,28 +47,9 @@ class CategoryFormTabs extends AbstractTabs
     protected function addGeneralTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = new TabItemTransfer();
-        $tabItemTransfer
-            ->setName('general')
+        $tabItemTransfer->setName('general')
             ->setTitle('General')
             ->setTemplate('@Category/_partials/general-tab.twig');
-
-        $tabsViewTransfer->addTab($tabItemTransfer);
-
-        return $this;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
-     *
-     * @return $this
-     */
-    protected function addImageTab(TabsViewTransfer $tabsViewTransfer)
-    {
-        $tabItemTransfer = new TabItemTransfer();
-        $tabItemTransfer
-            ->setName('image')
-            ->setTitle('Image')
-            ->setTemplate('@Category/_partials/image-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 
@@ -76,5 +68,19 @@ class CategoryFormTabs extends AbstractTabs
             ->setIsNavigable(true);
 
         return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\TabsViewTransfer
+     */
+    protected function executeExpanderPlugins(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
+    {
+        foreach ($this->expanderPlugins as $concreteFormEditTabsExpanderPlugin) {
+            $tabsViewTransfer = $concreteFormEditTabsExpanderPlugin->expand($tabsViewTransfer);
+        }
+
+        return $tabsViewTransfer;
     }
 }

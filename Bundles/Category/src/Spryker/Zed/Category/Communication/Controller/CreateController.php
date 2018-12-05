@@ -10,7 +10,6 @@ namespace Spryker\Zed\Category\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
-use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,7 +52,6 @@ class CreateController extends AbstractController
         return $this->viewResponse([
             'categoryForm' => $form->createView(),
             'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
-            'localeCollection' => $this->getLocaleNames(),
             'categoryFormTabs' => $this->getFactory()->createCategoryFormTabs()->createView(),
         ]);
     }
@@ -99,18 +97,5 @@ class CreateController extends AbstractController
         );
 
         return $url->build();
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getLocaleNames(): array
-    {
-        $localeFacade = $this->getFactory()->getLocaleFacade();
-
-        return array_merge(
-            [CategoryConfig::DEFAULT_LOCALE_NAME],
-            $localeFacade->getAvailableLocales()
-        );
     }
 }

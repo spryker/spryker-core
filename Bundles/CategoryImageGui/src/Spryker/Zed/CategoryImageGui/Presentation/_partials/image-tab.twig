@@ -1,3 +1,8 @@
+{% form_theme categoryForm with [
+    '@CategoryImageGui/_partials/category-image-set-theme.twig',
+    '@CategoryImageGui/_partials/category-image-collection-theme.twig',
+]%}
+
 <div class="well">
     {% filter trans|raw %}
         <h3>Category Image(s)</h3>
@@ -6,6 +11,8 @@
     {% endfilter %}
 </div>
 
+{% set localeCollection = categoryForm.imageSets.vars.locales %}
+
 {% for localeName in localeCollection %}
     {% embed '@Gui/Partials/localized-ibox.twig' with {
         'collapsed': not loop.first,
@@ -13,7 +20,7 @@
         'categoryForm': categoryForm
     } only %}
         {% block content %}
-            {% include '@Category/_partials/image-set-form.twig' %}
+            {% include '@CategoryImageGui/_partials/image-set-form.twig' %}
         {% endblock %}
     {% endembed %}
 {% endfor %}

@@ -4,11 +4,6 @@
     {% set widget_title = 'Edit category' | trans %}
 {% endif %}
 
-{% form_theme categoryForm with [
-    '@Category/_partials/category-image-set-theme.twig',
-    '@Category/_partials/category-image-collection-theme.twig',
-]%}
-
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
@@ -24,12 +19,10 @@
 
             {{ form_start(categoryForm) }}
                 {% do categoryForm.localized_attributes.setRendered %}
-                {% do categoryForm.imageSets.setRendered %}
-            {{ tabs(categoryFormTabs, {
-                'categoryForm': categoryForm,
-                'currentLocale': currentLocale,
-                'localeCollection': localeCollection
-            }) }}
+                {{ tabs(categoryFormTabs, {
+                    'categoryForm': categoryForm,
+                    'currentLocale': currentLocale
+                }) }}
 
                 <hr />
             {{ form_end(categoryForm) }}

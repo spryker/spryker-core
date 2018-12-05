@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\CategoryImageGui\Communication\Form;
 
-use Spryker\Zed\CategoryImageGui\CategoryImageGuiConfig;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\CategoryImageGui\Communication\CategoryImageGuiCommunicationFactory getFactory()
@@ -18,22 +20,61 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ImageSetCollectionForm extends AbstractType
 {
+    public const OPTION_LOCALES = 'locales';
+    public const OPTION_IS_RENDERED = 'is_rendered';
+
     /**
-     * {@inheritdoc}
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addImageLocalizedForms($builder);
+        $this->addImageLocalizedForms($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setRequired([
+            static::OPTION_LOCALES,
+        ]);
+        $resolver->setDefaults([
+            static::OPTION_IS_RENDERED => true,
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param array $options
+     *
+     * @return void
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        if ($options[static::OPTION_IS_RENDERED]) {
+            $view->setRendered();
+        }
+        $view->vars = array_merge($view->vars, [
+            static::OPTION_LOCALES => $options[static::OPTION_LOCALES],
+        ]);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addImageLocalizedForms(FormBuilderInterface $builder)
+    protected function addImageLocalizedForms(FormBuilderInterface $builder, array $options)
     {
-        foreach ($this->getLocaleNames() as $localeName) {
+        foreach ($options['locales'] as $localeName) {
             $this->addImageSetForm($builder, $localeName);
         }
 
@@ -56,18 +97,5 @@ class ImageSetCollectionForm extends AbstractType
                 'prototype' => true,
                 'prototype_name' => '__image_set_name__',
             ]);
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getLocaleNames(): array
-    {
-        $localeFacade = $this->getFactory()->getLocaleFacade();
-
-        return array_merge(
-            [CategoryImageGuiConfig::DEFAULT_LOCALE_NAME],
-            $localeFacade->getAvailableLocales()
-        );
     }
 }

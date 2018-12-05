@@ -26,12 +26,6 @@ class CategoryConfig extends AbstractBundleConfig
      * Used as `item_type` for touch mechanism.
      */
     public const RESOURCE_TYPE_NAVIGATION = SharedCategoryConfig::RESOURCE_TYPE_NAVIGATION;
-
-    /**
-     * The name for default locale displayed in the Images tab of a create/edit page.
-     */
-    public const DEFAULT_LOCALE_NAME = 'default';
-
     protected const REDIRECT_URL_DEFAULT = '/category/root';
 
     /**

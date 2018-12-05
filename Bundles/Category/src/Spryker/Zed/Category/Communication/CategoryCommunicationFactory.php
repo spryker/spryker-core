@@ -213,6 +213,16 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCategoryFormTabs(): TabsInterface
     {
-        return new CategoryFormTabs();
+        return new CategoryFormTabs(
+            $this->getCategoryFormTabPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface[]
+     */
+    protected function getCategoryFormTabPlugins(): array
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_FORM_TAB_EXPANDER);
     }
 }
