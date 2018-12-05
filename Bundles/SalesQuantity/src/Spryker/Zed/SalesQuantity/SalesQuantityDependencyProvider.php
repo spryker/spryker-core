@@ -7,25 +7,27 @@
 
 namespace Spryker\Zed\SalesQuantity;
 
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductFacadeBridge;
 
 /**
  * @method \Spryker\Zed\SalesQuantity\SalesQuantityConfig getConfig()
  */
 class SalesQuantityDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container): Container
+    public function providePersistenceLayerDependencies(Container $container): Container
     {
-        $container = $this->addProductFacade($container);
+        $container = parent::providePersistenceLayerDependencies($container);
+
+        $container = $this->addProductPropelQuery($container);
 
         return $container;
     }
@@ -35,10 +37,10 @@ class SalesQuantityDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductFacade(Container $container): Container
+    protected function addProductPropelQuery(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
-            return new SalesQuantityToProductFacadeBridge($container->getLocator()->product()->facade());
+        $container[static::PROPEL_QUERY_PRODUCT] = function (Container $container): SpyProductQuery {
+            return SpyProductQuery::create();
         };
 
         return $container;
