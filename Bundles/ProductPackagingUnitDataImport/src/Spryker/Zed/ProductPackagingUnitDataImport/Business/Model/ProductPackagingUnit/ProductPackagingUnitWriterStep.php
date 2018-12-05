@@ -268,10 +268,6 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected function assertHaveProductMeasurementSalesUnit(string $productSku): void
     {
-        if (static::$productMeasurementSalesUnitHeapSize >= static::HEAP_LIMIT) {
-            $this->clearProductMeasurementSalesUnitHeap();
-        }
-
         $this->addProductMeasurementSalesUnitCheckToHeap($productSku);
 
         if (static::$productMeasurementSalesUnitHeap[$productSku]) {
@@ -290,6 +286,10 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     {
         if (isset(static::$productMeasurementSalesUnitHeap[$productSku])) {
             return;
+        }
+
+        if (static::$productMeasurementSalesUnitHeapSize >= static::HEAP_LIMIT) {
+            $this->clearProductMeasurementSalesUnitHeap();
         }
 
         $productConcreteId = $this->getIdProductBySku($productSku);
