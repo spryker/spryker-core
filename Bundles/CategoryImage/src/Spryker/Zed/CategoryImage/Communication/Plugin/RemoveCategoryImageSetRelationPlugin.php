@@ -25,7 +25,7 @@ class RemoveCategoryImageSetRelationPlugin extends AbstractPlugin implements Cat
      *
      * @return void
      */
-    public function delete($idCategory): void
+    public function delete($idCategory)
     {
         $this->getFacade()
             ->deleteCategoryImageSetsByIdCategory($idCategory);

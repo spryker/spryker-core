@@ -125,7 +125,7 @@ class Category
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function read(int $idCategory)
+    public function read($idCategory)
     {
         $categoryTransfer = $this->categoryReader->findCategoryById($idCategory);
         if (!$categoryTransfer) {
