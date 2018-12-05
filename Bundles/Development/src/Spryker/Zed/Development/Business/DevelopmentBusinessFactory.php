@@ -1312,7 +1312,6 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         $finderComposite = new ComposerJsonFinderComposite();
         $finderComposite->addFinder($this->createComposerJsonFinder());
-        $finderComposite->addFinder($this->createComposerJsonFinderSdk());
         $finderComposite->addFinder($this->createComposerJsonFinderShop());
 
         return $finderComposite;

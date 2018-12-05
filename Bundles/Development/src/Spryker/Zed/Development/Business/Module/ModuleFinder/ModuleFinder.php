@@ -176,7 +176,6 @@ class ModuleFinder implements ModuleFinderInterface
         return array_filter([
             $this->config->getPathToCore(),
             $this->config->getPathToShop(),
-            $this->config->getPathToSdk(),
             $this->config->getPathToEco(),
         ], 'is_dir');
     }
