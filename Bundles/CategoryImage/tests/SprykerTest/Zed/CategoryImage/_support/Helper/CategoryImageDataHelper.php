@@ -115,7 +115,7 @@ class CategoryImageDataHelper extends Module
      *
      * @return void
      */
-    private function cleanupCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer): void
+    protected function cleanupCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer): void
     {
         $idCategoryImageCollection = [];
         foreach ($categoryImageSetTransfer->getCategoryImages() as $categoryImageTransfer) {

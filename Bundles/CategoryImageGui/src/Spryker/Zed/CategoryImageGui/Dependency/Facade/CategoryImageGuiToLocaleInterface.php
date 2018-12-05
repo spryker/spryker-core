@@ -12,25 +12,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 interface CategoryImageGuiToLocaleInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getCurrentLocale(): LocaleTransfer;
-
-    /**
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getLocale(string $localeName): LocaleTransfer;
-
-    /**
-     * @param string $localeName
-     *
-     * @return bool
-     */
-    public function hasLocale(string $localeName): bool;
-
-    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection(): array;

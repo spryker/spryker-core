@@ -8,7 +8,7 @@
     "spryker/category-image": "^1.0.0",
     "spryker/event-behavior": "^1.1.0",
     "spryker/kernel": "^3.24.0",
-    "spryker/propel-orm": "^1.7.1",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/storage": "^3.4.0",
     "spryker/synchronization": "^1.1.0",
     "spryker/synchronization-extension": "^1.0.0"
@@ -22,7 +22,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/event": "ADD SUGGEST DESCRIPTION"
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
   },
   "autoload": {
     "psr-4": {

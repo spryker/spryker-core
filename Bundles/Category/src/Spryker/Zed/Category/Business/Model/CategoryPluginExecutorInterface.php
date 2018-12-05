@@ -23,7 +23,7 @@ interface CategoryPluginExecutorInterface
 
     /**
      * Specification:
-     * - execute category post create plugin stack
+     * - Execute category post create plugin stack.
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *

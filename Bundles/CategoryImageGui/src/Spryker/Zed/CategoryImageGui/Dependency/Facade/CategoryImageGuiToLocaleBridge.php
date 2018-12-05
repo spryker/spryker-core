@@ -25,34 +25,6 @@ class CategoryImageGuiToLocaleBridge implements CategoryImageGuiToLocaleInterfac
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getCurrentLocale(): LocaleTransfer
-    {
-        return $this->localeFacade->getCurrentLocale();
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getLocale(string $localeName): LocaleTransfer
-    {
-        return $this->localeFacade->getLocale($localeName);
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return bool
-     */
-    public function hasLocale(string $localeName): bool
-    {
-        return $this->localeFacade->hasLocale($localeName);
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection(): array

@@ -184,7 +184,7 @@ class Writer implements WriterInterface
      *
      * @return void
      */
-    private function deleteRemovedCategoryImages(ArrayObject $categoryImageSetCollection)
+    protected function deleteRemovedCategoryImages(ArrayObject $categoryImageSetCollection)
     {
         foreach ($categoryImageSetCollection as $categoryImageSetTransfer) {
             $this->deleteMissingCategoryImageSetToCategoryImage($categoryImageSetTransfer);

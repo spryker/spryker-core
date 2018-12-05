@@ -25,40 +25,6 @@ class CategoryImageToLocaleBridge implements CategoryImageToLocaleInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getCurrentLocale()
-    {
-        return $this->localeFacade->getCurrentLocale();
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getLocale($localeName)
-    {
-        return $this->localeFacade->getLocale($localeName);
-    }
-
-    /**
-     * @return array
-     */
-    public function getAvailableLocales()
-    {
-        return $this->localeFacade->getAvailableLocales();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
-     */
-    public function getLocaleCollection(): array
-    {
-        return $this->localeFacade->getLocaleCollection();
-    }
-
-    /**
      * @param int $idLocale
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
@@ -66,15 +32,5 @@ class CategoryImageToLocaleBridge implements CategoryImageToLocaleInterface
     public function getLocaleById($idLocale): LocaleTransfer
     {
         return $this->localeFacade->getLocaleById($idLocale);
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return bool
-     */
-    public function hasLocale(string $localeName): bool
-    {
-        return $this->localeFacade->hasLocale($localeName);
     }
 }

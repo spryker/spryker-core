@@ -75,7 +75,7 @@ class Category
     /**
      * @var \Spryker\Zed\Category\Business\Model\CategoryReaderInterface
      */
-    private $categoryReader;
+    protected $categoryReader;
 
     /**
      * @param \Spryker\Zed\Category\Business\Model\Category\CategoryInterface $category

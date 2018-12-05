@@ -20,7 +20,7 @@ class CategoryReader implements CategoryReaderInterface
     /**
      * @var \Spryker\Zed\Category\Business\Model\CategoryPluginExecutorInterface
      */
-    private $categoryPluginExecutor;
+    protected $categoryPluginExecutor;
 
     /**
      * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $repository

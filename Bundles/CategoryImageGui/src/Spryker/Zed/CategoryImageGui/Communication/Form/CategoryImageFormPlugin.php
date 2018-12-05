@@ -27,7 +27,7 @@ class CategoryImageFormPlugin extends AbstractPlugin implements CategoryFormPlug
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder): void
+    public function buildForm(FormBuilderInterface $builder)
     {
         $localeFacade = $this->getFactory()->getLocaleFacade();
         $builder->add(static::FIELD_IMAGE_SETS, ImageSetCollectionForm::class, [

@@ -16,14 +16,14 @@ class CategoryFormTabs extends AbstractTabs
     /**
      * @var array|\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface[]
      */
-    private $expanderPlugins;
+    protected $categoryFormTabExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface[] $expanderPlugins
+     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface[] $categoryFormTabExpanderPlugins
      */
-    public function __construct(array $expanderPlugins)
+    public function __construct(array $categoryFormTabExpanderPlugins)
     {
-        $this->expanderPlugins = $expanderPlugins;
+        $this->categoryFormTabExpanderPlugins = $categoryFormTabExpanderPlugins;
     }
 
     /**
@@ -36,7 +36,7 @@ class CategoryFormTabs extends AbstractTabs
         $this->addGeneralTab($tabsViewTransfer)
             ->setFooter($tabsViewTransfer);
 
-        return $this->executeExpanderPlugins($tabsViewTransfer);
+        return $this->executeCategoryFormTabExpanderPlugins($tabsViewTransfer);
     }
 
     /**
@@ -75,10 +75,10 @@ class CategoryFormTabs extends AbstractTabs
      *
      * @return \Generated\Shared\Transfer\TabsViewTransfer
      */
-    protected function executeExpanderPlugins(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
+    protected function executeCategoryFormTabExpanderPlugins(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
-        foreach ($this->expanderPlugins as $concreteFormEditTabsExpanderPlugin) {
-            $tabsViewTransfer = $concreteFormEditTabsExpanderPlugin->expand($tabsViewTransfer);
+        foreach ($this->categoryFormTabExpanderPlugins as $categoryFormTabExpanderPlugin) {
+            $tabsViewTransfer = $categoryFormTabExpanderPlugin->expand($tabsViewTransfer);
         }
 
         return $tabsViewTransfer;

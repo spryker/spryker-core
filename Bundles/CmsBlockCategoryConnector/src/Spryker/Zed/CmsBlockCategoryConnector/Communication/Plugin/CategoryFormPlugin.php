@@ -8,8 +8,8 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CategoryTransfer;
-use Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface;
 use Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface;
+use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -30,7 +30,7 @@ class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInt
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder): void
+    public function buildForm(FormBuilderInterface $builder)
     {
         $formType = $this->getFactory()
             ->createCategoryType();
