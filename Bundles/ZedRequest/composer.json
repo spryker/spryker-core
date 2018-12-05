@@ -20,6 +20,9 @@
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/log": "Required for using the Log middleware"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
@@ -40,8 +43,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/log": "Required for using the Log middleware"
   }
 }
