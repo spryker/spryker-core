@@ -16,10 +16,18 @@
                         <label>Attach to Business Unit</label>
                         <title>Attach to Business Unit</title>
                         <bundle>business-on-behalf-gui</bundle>
-                        <controller>create-company-user</controller>
+                        <controller>customer</controller>
                         <action>attach-customer</action>
                         <visible>0</visible>
                     </customer-business-unit-attach>
+                    <confirm-delete-company-user-without-customer-anonymizing>
+                        <label>Confirm Delete Company User</label>
+                        <title>Confirm Delete Company User</title>
+                        <bundle>business-on-behalf-gui</bundle>
+                        <controller>delete-company-user</controller>
+                        <action>confirm-delete</action>
+                        <visible>0</visible>
+                    </confirm-delete-company-user-without-customer-anonymizing>
                 </pages>
             </company-user-gui>
         </pages>

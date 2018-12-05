@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CompanyBusinessUnit\Persistence;
 
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
-use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\Mapper\CompanyBusinessUnitMapper;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\Mapper\CompanyBusinessUnitMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -34,15 +33,5 @@ class CompanyBusinessUnitPersistenceFactory extends AbstractPersistenceFactory
     public function createCompanyBusinessUnitMapper(): CompanyBusinessUnitMapperInterface
     {
         return new CompanyBusinessUnitMapper();
-    }
-
-    /**
-     * @module CompanyUser
-     *
-     * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
-     */
-    public function createCompanyUserQuery(): SpyCompanyUserQuery
-    {
-        return SpyCompanyUserQuery::create();
     }
 }
