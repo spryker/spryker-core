@@ -49,7 +49,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     protected static $productHeapSize = 0;
 
     /**
-     * @var bool[] Keys are product Ids, values boolean representing if this product have a MeasurementSalesUnit or not.
+     * @var bool[] Keys are product SKUs, values boolean representing if this product have a MeasurementSalesUnit or not.
      */
     protected static $productMeasurementSalesUnitHeap = [];
 
@@ -272,17 +272,32 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
             $this->clearProductMeasurementSalesUnitHeap();
         }
 
-        $productConcreteId = $this->getIdProductBySku($productSku);
+        $this->addProductMeasurementSalesUnitCheckToHeap($productSku);
 
-        static::$productMeasurementSalesUnitHeap[$productConcreteId] = $this->getProductMeasurementSalesUnitQuery()
-            ->filterByFkProduct($productConcreteId)->exists();
-        static::$productMeasurementSalesUnitHeapSize++;
-
-        if (static::$productMeasurementSalesUnitHeap[$productConcreteId]) {
+        if (static::$productMeasurementSalesUnitHeap[$productSku]) {
             return;
         }
 
         throw new EntityNotFoundException(sprintf("Product measurement sales unit was not found for SKU '%s'", $productSku));
+    }
+
+    /**
+     * @param string $productSku
+     *
+     * @return void
+     */
+    protected function addProductMeasurementSalesUnitCheckToHeap(string $productSku): void
+    {
+        if (isset(static::$productMeasurementSalesUnitHeap[$productSku])) {
+            return;
+        }
+
+        $productConcreteId = $this->getIdProductBySku($productSku);
+
+        static::$productMeasurementSalesUnitHeapSize++;
+        static::$productMeasurementSalesUnitHeap[$productSku] = $this->getProductMeasurementSalesUnitQuery()
+            ->filterByFkProduct($productConcreteId)
+            ->exists();
     }
 
     /**
