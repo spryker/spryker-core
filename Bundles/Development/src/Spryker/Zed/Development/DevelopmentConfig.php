@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class DevelopmentConfig extends AbstractBundleConfig
 {
     public const BUNDLE_PLACEHOLDER = '[BUNDLE]';
+    protected const PHPSTAN_CONFIG_FILENAME = 'phpstan.neon';
 
     public const APPLICATION_NAMESPACES = [
         'Orm',
@@ -180,6 +181,22 @@ class DevelopmentConfig extends AbstractBundleConfig
         ];
 
         return implode(DIRECTORY_SEPARATOR, $pathParts);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhpstanConfigFilename(): string
+    {
+        return static::PHPSTAN_CONFIG_FILENAME;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathToPhpstanModuleTemporaryConfigFolder()
+    {
+        return APPLICATION_ROOT_DIR . '/data/phpstan/';
     }
 
     /**
