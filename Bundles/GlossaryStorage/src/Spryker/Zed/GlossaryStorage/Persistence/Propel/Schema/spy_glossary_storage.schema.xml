@@ -5,7 +5,7 @@
           namespace="Orm\Zed\GlossaryStorage\Persistence"
           package="src.Orm.Zed.GlossaryStorage.Persistence">
 
-    <table name="spy_glossary_storage">
+    <table name="spy_glossary_storage" identifierQuoting="true">
         <column name="id_glossary_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_glossary_key" type="INTEGER" required="true"/>
         <column name="glossary_key" type="VARCHAR" required="true"/>
