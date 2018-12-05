@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business;
 
+use Nette\DI\Config\Loader;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\AllBundleFinder;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSniffer;
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
@@ -147,12 +148,17 @@ use Spryker\Zed\Development\Business\Module\ProjectModuleFinder\ProjectModuleFin
 use Spryker\Zed\Development\Business\Package\PackageFinder\PackageFinder;
 use Spryker\Zed\Development\Business\Package\PackageFinder\PackageFinderInterface;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
+use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileFinder;
+use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileFinderInterface;
+use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileManager;
+use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileManagerInterface;
 use Spryker\Zed\Development\Business\Phpstan\PhpstanRunner;
 use Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidator;
 use Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidatorInterface;
 use Spryker\Zed\Development\Business\Stability\StabilityCalculator;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 use Zend\Config\Reader\Xml;
 use Zend\Filter\Word\CamelCaseToDash;
@@ -201,7 +207,9 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createPhpstanRunner()
     {
         return new PhpstanRunner(
-            $this->getConfig()
+            $this->getConfig(),
+            $this->createPhpstanConfigFileFinder(),
+            $this->createPhpstanConfigFileManager()
         );
     }
 
@@ -1814,5 +1822,37 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createPackageFinder(): PackageFinderInterface
     {
         return new PackageFinder($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileFinderInterface
+     */
+    protected function createPhpstanConfigFileFinder(): PhpstanConfigFileFinderInterface
+    {
+        return new PhpstanConfigFileFinder($this->createFinder(), $this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileManagerInterface
+     */
+    protected function createPhpstanConfigFileManager(): PhpstanConfigFileManagerInterface
+    {
+        return new PhpstanConfigFileManager($this->getFilesystem(), $this->getConfig(), $this->getConfigLoader());
+    }
+
+    /**
+     * @return \Symfony\Component\Filesystem\Filesystem
+     */
+    protected function getFilesystem(): Filesystem
+    {
+        return $this->getProvidedDependency(DevelopmentDependencyProvider::FILESYSTEM);
+    }
+
+    /**
+     * @return \Nette\DI\Config\Loader
+     */
+    protected function getConfigLoader(): Loader
+    {
+        return $this->getProvidedDependency(DevelopmentDependencyProvider::CONFIG_LOADER);
     }
 }
