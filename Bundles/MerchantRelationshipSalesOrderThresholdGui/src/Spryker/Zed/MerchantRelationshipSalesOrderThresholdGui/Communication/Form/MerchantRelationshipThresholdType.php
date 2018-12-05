@@ -84,6 +84,7 @@ class MerchantRelationshipThresholdType extends AbstractType
             'label' => 'Store and Currency',
             'choices' => $options[static::OPTION_STORE_CURRENCY_ARRAY],
             'choices_as_values' => true,
+            'placeholder' => false,
             'multiple' => false,
             'required' => true,
         ]);

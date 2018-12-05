@@ -14,6 +14,7 @@ use Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
 use Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Range;
 
 /**
  * @method \Spryker\Zed\SalesOrderThresholdGui\Communication\SalesOrderThresholdGuiCommunicationFactory getFactory()
@@ -119,6 +120,9 @@ class GlobalSoftThresholdFixedFeeFormExpanderPlugin extends AbstractPlugin imple
             'attr' => [
                 'threshold_group' => $this->getThresholdGroup(),
                 'threshold_key' => $this->getThresholdKey(),
+            ],
+            'constraints' => [
+                new Range(['min' => 0]),
             ],
         ]);
 

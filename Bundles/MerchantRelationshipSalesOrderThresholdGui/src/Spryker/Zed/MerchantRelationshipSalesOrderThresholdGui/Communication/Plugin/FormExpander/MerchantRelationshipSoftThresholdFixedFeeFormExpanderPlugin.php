@@ -14,6 +14,7 @@ use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipS
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Range;
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory getFactory()
@@ -115,6 +116,9 @@ class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends Abstra
             'label' => 'Enter fixed fee',
             'currency' => $options[MerchantRelationshipSalesOrderThresholdGuiConfig::OPTION_CURRENCY_CODE],
             'divisor' => 100,
+            'constraints' => [
+                new Range(['min' => 0]),
+            ],
             'required' => false,
             'attr' => [
                 'threshold_group' => $this->getThresholdGroup(),

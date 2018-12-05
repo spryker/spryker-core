@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Range;
 
 /**
  * @method \Spryker\Zed\SalesOrderThresholdGui\Communication\SalesOrderThresholdGuiCommunicationFactory getFactory()
@@ -65,6 +66,9 @@ abstract class AbstractGlobalThresholdType extends AbstractType
             'label' => 'Enter threshold value',
             'currency' => $options[GlobalThresholdType::OPTION_CURRENCY_CODE],
             'divisor' => 100,
+            'constraints' => [
+                new Range(['min' => 0]),
+            ],
             'required' => false,
         ]);
 
@@ -99,8 +103,8 @@ abstract class AbstractGlobalThresholdType extends AbstractType
     protected function addLocalizedForm(FormBuilderInterface $builder, string $name, array $options = []): self
     {
         $builder->add($name, LocalizedMessagesType::class, [
-                'label' => false,
-            ]);
+            'label' => false,
+        ]);
 
         return $this;
     }

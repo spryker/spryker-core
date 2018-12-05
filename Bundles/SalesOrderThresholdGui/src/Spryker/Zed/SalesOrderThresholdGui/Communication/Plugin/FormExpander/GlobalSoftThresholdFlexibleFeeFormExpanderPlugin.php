@@ -121,25 +121,10 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
                 'threshold_key' => $this->getThresholdKey(),
             ],
             'constraints' => [
-                $this->createRangeConstraint($options, 0, 100),
+                new Range(['min' => 0, 'max' => 100]),
             ],
         ]);
 
         return $this;
-    }
-
-    /**
-     * @param array $options
-     * @param int $min
-     * @param int $max
-     *
-     * @return \Symfony\Component\Validator\Constraints\Range
-     */
-    protected function createRangeConstraint(array $options, int $min, int $max): Range
-    {
-        return new Range([
-            'min' => $min,
-            'max' => $max,
-        ]);
     }
 }
