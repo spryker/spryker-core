@@ -16,6 +16,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class MigrateSessionEventSubscriber implements EventSubscriberInterface
 {
     protected const SESSION_UPDATE_TIMEOUT = 300;
+
     /**
      * @return array
      */
