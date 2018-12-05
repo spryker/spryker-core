@@ -209,6 +209,7 @@ class DiscountFacadeCalculateTest extends Unit
         $discountTransfer = $quoteTransfer->getVoucherDiscounts()[0];
 
         $this->assertCount(1, $quoteTransfer->getVoucherDiscounts());
+        $this->assertCount(1, $quoteTransfer->getUsedNotAppliedVoucherCodes());
         $this->assertEquals($code1, $discountTransfer->getVoucherCode());
     }
 

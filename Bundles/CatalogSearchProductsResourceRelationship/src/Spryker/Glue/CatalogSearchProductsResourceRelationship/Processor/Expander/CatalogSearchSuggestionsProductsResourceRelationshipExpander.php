@@ -13,7 +13,12 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements CatalogSearchSuggestionsProductsResourceRelationshipExpanderInterface
 {
+    /** @deprecated Will be removed in next major release. */
     protected const KEY_ABSTRACT_SKU = 'abstract_sku';
+    protected const KEY_ABSTRACT_SKU_CAMEL_CASE = 'abstractSku';
+    /** @deprecated Will be removed in next major release. */
+    protected const KEY_PRODUCTS = 'products';
+    protected const KEY_ABSTRACT_PRODUCTS = 'abstractProducts';
 
     /**
      * @var \Spryker\Glue\CatalogSearchProductsResourceRelationship\Dependency\RestResource\CatalogSearchProductsResourceRelationshipToProductsRestApiInterface
@@ -37,10 +42,18 @@ class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements Ca
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            /** @var \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer $attributes */
             $attributes = $resource->getAttributes();
-            if ($attributes->getProducts()) {
-                $this->addAbstractProductsToResource($attributes->getProducts(), $resource, $restRequest);
+
+            if (isset($attributes[static::KEY_PRODUCTS])) {
+                $products = $attributes[static::KEY_PRODUCTS];
+                $this->addAbstractProductsToResource($products, $resource, $restRequest);
+
+                return;
+            }
+
+            if (isset($attributes[static::KEY_ABSTRACT_PRODUCTS])) {
+                $products = $attributes[static::KEY_ABSTRACT_PRODUCTS];
+                $this->addRelatedAbstractProductsToResourceCollection($products->getArrayCopy(), $resource, $restRequest);
             }
         }
     }
@@ -52,14 +65,39 @@ class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements Ca
      *
      * @return void
      */
+    protected function addRelatedAbstractProductsToResourceCollection(array $products, RestResourceInterface $resource, RestRequestInterface $restRequest): void
+    {
+        foreach ($products as $product) {
+            if (!isset($product[static::KEY_ABSTRACT_SKU_CAMEL_CASE])) {
+                continue;
+            }
+
+            $abstractProduct = $this->productsResource->findProductAbstractBySku($product[static::KEY_ABSTRACT_SKU_CAMEL_CASE], $restRequest);
+            if ($abstractProduct) {
+                $resource->addRelationship($abstractProduct);
+            }
+        }
+    }
+
+    /**
+     * @deprecated Will be removed in next major release.
+     *
+     * @param array $products
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
+     */
     protected function addAbstractProductsToResource(array $products, RestResourceInterface $resource, RestRequestInterface $restRequest): void
     {
         foreach ($products as $product) {
-            if (isset($product[static::KEY_ABSTRACT_SKU])) {
-                $abstractProduct = $this->productsResource->findProductAbstractBySku($product[static::KEY_ABSTRACT_SKU], $restRequest);
-                if ($abstractProduct) {
-                    $resource->addRelationship($abstractProduct);
-                }
+            if (!isset($product[static::KEY_ABSTRACT_SKU])) {
+                continue;
+            }
+
+            $abstractProduct = $this->productsResource->findProductAbstractBySku($product[static::KEY_ABSTRACT_SKU], $restRequest);
+            if ($abstractProduct) {
+                $resource->addRelationship($abstractProduct);
             }
         }
     }
