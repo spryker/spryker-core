@@ -81,17 +81,11 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    public function findMappedProductAbstractStorageData(int $idProductAbstract, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
+    public function findProductAbstractViewTransfer(int $idProductAbstract, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
     {
-        $data = $this->findProductAbstractStorageData($idProductAbstract, $localeName);
-        if (!$data) {
-            return null;
-        }
-        return $this->mapProductStorageData(
-            $data,
-            $localeName,
-            $selectedAttributes
-        );
+        return $this->getFactory()
+            ->createProductAbstractViewTransferFinder()
+            ->findProductViewTransfer($idProductAbstract, $localeName, $selectedAttributes);
     }
 
     /**
@@ -122,19 +116,12 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    public function findMappedProductConcreteStorageData(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
+    public function findProductConcreteViewTransfer(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
     {
-        $data = $this->findProductConcreteStorageData($idProductConcrete, $localeName);
-        if (!$data) {
-            return null;
-        }
-        return $this->mapProductStorageData(
-            $data,
-            $localeName,
-            $selectedAttributes
-        );
+        return $this->getFactory()
+            ->createProductConcreteViewTransferFinder()
+            ->findProductViewTransfer($idProductConcrete, $localeName, $selectedAttributes);
     }
-
 
     /**
      * {@inheritdoc}

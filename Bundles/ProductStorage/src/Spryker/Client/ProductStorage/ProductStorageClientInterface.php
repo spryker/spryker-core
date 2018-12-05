@@ -44,7 +44,8 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
-     * TODO: Write spec
+     * - @uses ProductStorageClientInterface::findProductAbstractStorageData()
+     * - @uses ProductStorageClientInterface::mapProductStorageData()
      *
      * @api
      *
@@ -54,7 +55,7 @@ interface ProductStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    public function findMappedProductAbstractStorageData(int $idProductAbstract, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
+    public function findProductAbstractViewTransfer(int $idProductAbstract, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
 
     /**
      * Specification:
@@ -103,7 +104,8 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
-     * TODO: Write spec
+     * - @uses ProductStorageClientInterface::findProductAbstractStorageData()
+     * - @uses ProductStorageClientInterface::mapProductStorageData()
      *
      * @api
      *
@@ -113,7 +115,7 @@ interface ProductStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    public function findMappedProductConcreteStorageData(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
+    public function findProductConcreteViewTransfer(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
 
     /**
      * Specification:
