@@ -11,8 +11,4 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CategoryImageGuiConfig extends AbstractBundleConfig
 {
-    /**
-     * The name for default locale displayed in the Images tab of a create/edit page.
-     */
-    public const DEFAULT_LOCALE_NAME = 'default';
 }
