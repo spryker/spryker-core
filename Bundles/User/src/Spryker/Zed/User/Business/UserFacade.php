@@ -274,4 +274,28 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     {
         return $this->getFactory()->createUserModel()->deactivateUser($idUser);
     }
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getSessionMetadata(): array
+    {
+        return $this->getFactory()
+            ->createUserSession()
+            ->getArraySessionMetadata();
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function updateSessionTtl(): void
+    {
+        $this->getFactory()
+            ->getSessionClient()
+            ->save();
+    }
 }

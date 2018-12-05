@@ -189,4 +189,18 @@ interface UserFacadeInterface
      * @return bool
      */
     public function deactivateUser($idUser);
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getSessionMetadata(): array;
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function updateSessionTtl(): void;
 }

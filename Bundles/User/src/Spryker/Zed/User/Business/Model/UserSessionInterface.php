@@ -29,4 +29,9 @@ interface UserSessionInterface
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser(): ?UserTransfer;
+
+    /**
+     * @return array
+     */
+    public function getArraySessionMetadata(): array;
 }

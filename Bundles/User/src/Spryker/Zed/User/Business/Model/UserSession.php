@@ -63,6 +63,19 @@ class UserSession implements UserSessionInterface
     }
 
     /**
+     * @return array
+     */
+    public function getArraySessionMetadata(): array
+    {
+        $metadata = $this->session->getMetadataBag();
+
+        return [
+            'created' => $metadata->getCreated(),
+            'lifetime' => $metadata->getLifetime(),
+        ];
+    }
+
+    /**
      * @return string
      */
     protected function createUserKey(): string
