@@ -9,7 +9,7 @@ namespace Spryker\Client\PriceProductStorage\Plugin;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface;
+use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
 
 /**
  * @method \Spryker\Client\PriceProductStorage\PriceProductStorageFactory getFactory()
@@ -17,6 +17,12 @@ use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInt
 class ProductViewPriceExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Adds price value based on current store settings.
+     * - Adds prices key-value array of available price types (e.g. DEFAULT, ORIGINAL).
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param array $productData
      * @param string $localeName
