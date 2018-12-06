@@ -9,7 +9,7 @@ namespace Spryker\Client\PriceProductStorage\Plugin;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
+use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface;
 
 /**
  * @method \Spryker\Client\PriceProductStorage\PriceProductStorageFactory getFactory()
