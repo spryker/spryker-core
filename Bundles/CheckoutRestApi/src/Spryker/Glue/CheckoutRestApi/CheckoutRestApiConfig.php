@@ -20,20 +20,50 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public const ACTION_CHECKOUT_DATA_POST = 'post';
     public const ACTION_CHECKOUT_POST = 'post';
 
+    /**
+     * @deprecated Use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig::RESPONSE_CODE_CHECKOUT_DATA_INVALID instead.
+     */
     public const RESPONSE_CODE_CHECKOUT_DATA_INVALID = '1101';
+    /**
+     * @deprecated Use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig::RESPONSE_CODE_ORDER_NOT_PLACED instead.
+     */
     public const RESPONSE_CODE_ORDER_NOT_PLACED = '1102';
+    /**
+     * @deprecated Use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND instead.
+     */
     public const RESPONSE_CODE_CART_NOT_FOUND = '1103';
+    /**
+     * @deprecated Use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig::RESPONSE_CODE_CART_IS_EMPTY instead.
+     */
     public const RESPONSE_CODE_CART_IS_EMPTY = '1104';
     public const RESPONSE_CODE_USER_IS_NOT_SPECIFIED = '1105';
+    /**
+     * @deprecated Use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig::RESPONSE_CODE_UNABLE_TO_DELETE_CART instead.
+     */
     public const RESPONSE_CODE_UNABLE_TO_DELETE_CART = '1106';
     public const RESPONSE_CODE_MULTIPLE_PAYMENTS_NOT_ALLOWED = '1107';
     public const RESPONSE_CODE_INVALID_PAYMENT = '1108';
 
+    /**
+     * @deprecated Use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig::RESPONSE_DETAILS_CHECKOUT_DATA_INVALID instead.
+     */
     public const RESPONSE_DETAILS_CHECKOUT_DATA_INVALID = 'Checkout data is invalid.';
+    /**
+     * @deprecated Use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig::RESPONSE_DETAILS_ORDER_NOT_PLACED instead.
+     */
     public const RESPONSE_DETAILS_ORDER_NOT_PLACED = 'Order could not be placed.';
+    /**
+     * @deprecated Use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig::RESPONSE_DETAILS_CART_NOT_FOUND instead.
+     */
     public const RESPONSE_DETAILS_CART_NOT_FOUND = 'Cart not found.';
+    /**
+     * @deprecated Use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig::RESPONSE_DETAILS_CART_IS_EMPTY instead.
+     */
     public const RESPONSE_DETAILS_CART_IS_EMPTY = 'Cart is empty.';
     public const RESPONSE_DETAILS_USER_IS_NOT_SPECIFIED = 'One of Authorization or X-Anonymous-Customer-Unique-Id headers is required.';
+    /**
+     * @deprecated Use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig::RESPONSE_DETAILS_UNABLE_TO_DELETE_CART instead.
+     */
     public const RESPONSE_DETAILS_UNABLE_TO_DELETE_CART = 'Unable to delete cart.';
     public const RESPONSE_DETAILS_MULTIPLE_PAYMENTS_NOT_ALLOWED = 'Multiple payments are not allowed.';
     public const RESPONSE_DETAILS_INVALID_PAYMENT = 'Payment method "%s" of payment provider "%s" is invalid';
