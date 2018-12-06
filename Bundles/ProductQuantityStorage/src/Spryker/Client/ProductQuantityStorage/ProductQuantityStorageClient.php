@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductQuantityStorage;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 

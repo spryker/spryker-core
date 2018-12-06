@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductMeasurementUnitStorage\Storage;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 
 class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitReaderInterface

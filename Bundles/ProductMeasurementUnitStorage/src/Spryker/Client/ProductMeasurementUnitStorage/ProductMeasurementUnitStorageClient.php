@@ -8,7 +8,6 @@
 namespace Spryker\Client\ProductMeasurementUnitStorage;
 
 use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Spryker\Client\Kernel\AbstractClient;
