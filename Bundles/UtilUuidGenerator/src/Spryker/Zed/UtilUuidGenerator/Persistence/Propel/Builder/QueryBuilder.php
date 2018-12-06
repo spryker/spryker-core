@@ -13,9 +13,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 class QueryBuilder implements QueryBuilderInterface
 {
     protected const TABLE_SEPARATOR = '_';
-    protected const TABLE_PREFIX = 'Spy';
     protected const QUERY_NAMESPACE = 'Orm\Zed\%s\Persistence\%sQuery';
-    protected const CAMEL_CASE_REGEXP = '/(^[^A-Z]+|[A-Z][^A-Z]+)/';
 
     /**
      * @param string $tableName
@@ -26,37 +24,51 @@ class QueryBuilder implements QueryBuilderInterface
      */
     public function buildQuery(string $tableName): ModelCriteria
     {
-        $queryClassNames = $this->getAvailableClassNames($tableName);
+        $moduleName = $this->getModuleName($tableName);
+        $tableName = $this->getTableName($tableName);
 
-        foreach ($queryClassNames as $queryClassName) {
-            if (class_exists($queryClassName)) {
-                return new $queryClassName();
-            }
+        $className = $this->getFullyQualifiedClassName($moduleName, $tableName);
+
+        if (!class_exists($className)) {
+            throw new Exception("Query '{$className}' not found.");
         }
 
-        throw new Exception("Query for table '{$tableName}' not found.");
+        return new $className();
     }
 
     /**
      * @param string $tableName
      *
-     * @return string[]
+     * @return string
      */
-    protected function getAvailableClassNames(string $tableName): array
+    protected function getModuleName(string $tableName): string
     {
-        $className = $this->camelizeTableName($tableName);
-        $classWithoutPrefix = str_replace(static::TABLE_PREFIX, '', $className);
+        $components = explode('.', $tableName);
 
-        $availableClassNames = [];
-        $classFragments = $this->splitCamelCase($classWithoutPrefix);
-        $fragment = '';
+        return reset($components);
+    }
 
-        foreach ($classFragments as $classFragment) {
-            $fragment .= $classFragment;
-            $availableClassNames[] = sprintf(static::QUERY_NAMESPACE, $fragment, $className);
-        }
+    /**
+     * @param string $tableName
+     *
+     * @return string
+     */
+    protected function getTableName(string $tableName): string
+    {
+        $components = explode('.', $tableName);
 
-        return $availableClassNames;
+        return end($components);
+    }
+
+    /**
+     * @param string $moduleName
+     * @param string $tableName
+     *
+     * @return string
+     */
+    protected function getFullyQualifiedClassName(string $moduleName, string $tableName): string
+    {
+        return sprintf(static::QUERY_NAMESPACE, $moduleName, $this->camelizeTableName($tableName));
     }
 
     /**
@@ -67,20 +79,5 @@ class QueryBuilder implements QueryBuilderInterface
     protected function camelizeTableName(string $tableName): string
     {
         return str_replace(static::TABLE_SEPARATOR, '', ucwords($tableName, static::TABLE_SEPARATOR));
-    }
-
-    /**
-     * @param string $className
-     *
-     * @return array
-     */
-    protected function splitCamelCase(string $className): array
-    {
-        return preg_split(
-            static::CAMEL_CASE_REGEXP,
-            $className,
-            -1,
-            PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE
-        );
     }
 }
