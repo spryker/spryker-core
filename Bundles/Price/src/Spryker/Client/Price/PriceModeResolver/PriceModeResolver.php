@@ -25,7 +25,7 @@ class PriceModeResolver implements PriceModeResolverInterface
     /**
      * @var string|null
      */
-    private static $priceModeCache;
+    protected static $priceModeCache;
 
     /**
      * @param \Spryker\Client\Price\Dependency\Client\PriceToQuoteClientInterface $quoteClient
