@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\QuickOrder;
 
+use Generated\Shared\Transfer\QuickOrderTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -14,6 +15,22 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class QuickOrderClient extends AbstractClient implements QuickOrderClientInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteResolver()
+            ->getProductsByQuickOrder($quickOrderTransfer);
+    }
+
     /**
      * {@inheritdoc}
      *

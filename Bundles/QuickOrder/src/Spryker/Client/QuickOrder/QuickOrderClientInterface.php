@@ -7,8 +7,22 @@
 
 namespace Spryker\Client\QuickOrder;
 
+use Generated\Shared\Transfer\QuickOrderTransfer;
+
 interface QuickOrderClientInterface
 {
+    /**
+     * Specification:
+     * - Returns the list of ProductConcreteTransfers from QuickOrderTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array;
+
     /**
      * Specification:
      * - Expands array of ProductConcreteTransfers with additional data using pre-configured plugins.

@@ -9,9 +9,11 @@ namespace Spryker\Client\QuickOrder;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientBridge;
 
 class QuickOrderDependencyProvider extends AbstractDependencyProvider
 {
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const PLUGINS_PRODUCT_CONCRETE_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_EXPANDER';
 
     /**
@@ -19,8 +21,9 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
+        $container = $this->addProductStorageClient($container);
         $container = $this->addProductConcreteExpanderPlugins($container);
 
         return $container;
@@ -46,5 +49,19 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
     protected function getProductConcreteExpanderPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+            return new QuickOrderToProductStorageClientBridge($container->getLocator()->productStorage()->client());
+        };
+
+        return $container;
     }
 }
