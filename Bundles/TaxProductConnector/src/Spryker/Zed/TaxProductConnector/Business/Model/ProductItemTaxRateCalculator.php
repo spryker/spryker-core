@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\TaxProductConnector\Business\Model;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
@@ -35,6 +36,11 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
         $this->taxFacade = $taxFacade;
     }
 
+    protected function useNewShipment()
+    {
+        return true;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -42,6 +48,11 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
+        if ($this->useNewShipment()) {
+            $this->newRecalculate($quoteTransfer);
+            return;
+        }
+
         $countryIso2Code = $this->getShippingCountryIso2Code($quoteTransfer);
         $allIdProductAbstracts = $this->getAllIdAbstractProducts($quoteTransfer);
 
@@ -56,6 +67,26 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
+     * @return void
+     */
+    public function newRecalculate(QuoteTransfer $quoteTransfer)
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $countryIso2Code = $this->newGetShippingCountryIso2Code($itemTransfer);
+            $idProductAbstracts = $itemTransfer->getIdProductAbstract();
+//@todo: group product IDs with ISO codes
+            if (!$countryIso2Code) {
+                $countryIso2Code = $this->taxFacade->getDefaultTaxCountryIso2Code();
+            }
+
+            $taxRates = $this->findTaxRatesByAllIdProductAbstractsAndCountryIso2Code($allIdProductAbstracts, $countryIso2Code);
+            $this->setItemsTax($quoteTransfer, $taxRates);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return string
      */
     protected function getShippingCountryIso2Code(QuoteTransfer $quoteTransfer)
@@ -65,6 +96,20 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
         }
 
         return $quoteTransfer->getShippingAddress()->getIso2Code();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return string
+     */
+    protected function newGetShippingCountryIso2Code(ItemTransfer $itemTransfer)
+    {
+        if ($itemTransfer->getShipment() === null) {
+            return $this->taxFacade->getDefaultTaxCountryIso2Code();
+        }
+
+        return $itemTransfer->getShipment()->getIso2Code();
     }
 
     /**
