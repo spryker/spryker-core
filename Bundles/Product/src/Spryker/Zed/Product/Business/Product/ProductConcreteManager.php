@@ -10,6 +10,7 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
@@ -186,14 +187,22 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
             ->filterByIdProduct($idProduct)
             ->findOne();
 
-        if (!$productEntity) {
-            return null;
-        }
+        return $this->loadProductTransfer($productEntity);
+    }
 
-        $productTransfer = $this->productTransferMapper->convertProduct($productEntity);
-        $productTransfer = $this->loadProductData($productTransfer);
+    /**
+     * @param string $skuProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteBySku(string $skuProduct): ?ProductConcreteTransfer
+    {
+        $productEntity = $this->productQueryContainer
+            ->queryProduct()
+            ->filterBySku($skuProduct)
+            ->findOne();
 
-        return $productTransfer;
+        return $this->loadProductTransfer($productEntity);
     }
 
     /**
@@ -245,8 +254,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      */
     public function getProductConcrete($concreteSku)
     {
-        $idProduct = (int)$this->findProductConcreteIdBySku($concreteSku);
-        $productConcreteTransfer = $this->findProductConcreteById($idProduct);
+        $productConcreteTransfer = $this->findProductConcreteBySku($concreteSku);
 
         if (!$productConcreteTransfer) {
             throw new MissingProductException(
@@ -400,6 +408,23 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $productConcreteEntity->save();
 
         return $productConcreteEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct|null $productEntity
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    protected function loadProductTransfer(?SpyProduct $productEntity = null): ?ProductConcreteTransfer
+    {
+        if (!$productEntity) {
+            return null;
+        }
+
+        $productTransfer = $this->productTransferMapper->convertProduct($productEntity);
+        $productTransfer = $this->loadProductData($productTransfer);
+
+        return $productTransfer;
     }
 
     /**
