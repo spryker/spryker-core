@@ -128,6 +128,8 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
+     * @deprecated Use findProductAbstractViewTransfer(int $idProductAbstract, string $localeName): ?ProductViewTransfer
+     *
      * @param array $data
      * @param string $localeName
      * @param array $selectedAttributes

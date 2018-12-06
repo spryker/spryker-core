@@ -34,15 +34,15 @@ class ProductAbstractViewTransferFinder implements ProductViewTransferFinderInte
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param int $idProductConcrete
      * @param string $localeName
      * @param array $selectedAttributes
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    public function findProductViewTransfer(int $idProductAbstract, string $localeName, array $selectedAttributes): ?ProductViewTransfer
+    public function findProductViewTransfer(int $idProductConcrete, string $localeName, array $selectedAttributes): ?ProductViewTransfer
     {
-        $data = $this->productAbstractStorage->findProductAbstractStorageData($idProductAbstract, $localeName);
+        $data = $this->productAbstractStorage->findProductAbstractStorageData($idProductConcrete, $localeName);
         if (!$data) {
             return null;
         }

@@ -175,7 +175,8 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
      */
     protected function findConcreteProductViewTransfer(int $idProduct, string $localeName): ?ProductViewTransfer
     {
-        $productViewTransfer = $this->productStorageClient->findProductConcreteViewTransfer($idProduct, $localeName, (new AttributeMapStorageTransfer())->toArray());
+        $productViewTransfer = $this->productStorageClient
+            ->findProductConcreteViewTransfer($idProduct, $localeName, (new AttributeMapStorageTransfer())->toArray());
 
         if ($productViewTransfer && $productViewTransfer->getAvailable()) {
             return $productViewTransfer;
