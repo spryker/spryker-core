@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query;
+namespace Spryker\Client\Catalog\Plugin\Elasticsearch\Query;
 
 use Elastica\Query;
 use Elastica\Query\AbstractQuery;
@@ -17,13 +17,18 @@ use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
-use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 
 /**
- * @method \Spryker\Client\ProductPageSearch\ProductPageSearchFactory getFactory()
+ * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
+ * @method \Spryker\Client\ProductPageSearch\CatalogConfig getConfig()
  */
-class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchStringSetterInterface
+class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchStringSetterInterface
 {
+    /**
+     * @uses \Spryker\Shared\ProductPageSearch\ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME
+     */
+    protected const PRODUCT_CONCRETE_RESOURCE_NAME = 'product_concrete';
+
     /**
      * @var \Elastica\Query
      */
@@ -123,7 +128,7 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Que
     protected function setTypeFilter(BoolQuery $boolQuery): BoolQuery
     {
         $typeFilter = new Match();
-        $typeFilter->setField(PageIndexMap::TYPE, ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME);
+        $typeFilter->setField(PageIndexMap::TYPE, static::PRODUCT_CONCRETE_RESOURCE_NAME);
         $boolQuery->addMust($typeFilter);
 
         return $boolQuery;
@@ -143,7 +148,7 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Que
     protected function getFullTextBoostedBoostingValue(): int
     {
         return $this->getFactory()
-            ->getProductPageSearchConfig()
+            ->getCatalogConfig()
             ->getFullTextBoostedBoostingValue();
     }
 }

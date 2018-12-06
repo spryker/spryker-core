@@ -46,6 +46,8 @@ class ProductPageSearchConstants
 
     /**
      * @uses SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
+     *
+     * @api
      */
     public const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
 }

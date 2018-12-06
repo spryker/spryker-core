@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\QueryExpander;
+namespace Spryker\Client\Catalog\Plugin\Elasticsearch\QueryExpander;
 
 use Elastica\Query;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -14,9 +14,9 @@ use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
- * @method \Spryker\Client\ProductPageSearch\ProductPageSearchFactory getFactory()
+ * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
  */
-class PaginatedProductConcretePageSearchQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
+class PaginatedProductConcreteCatalogSearchQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery

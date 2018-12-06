@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\ResultFormatter;
+namespace Spryker\Client\Catalog\Plugin\Elasticsearch\ResultFormatter;
 
 use Elastica\ResultSet;
 use Generated\Shared\Search\PageIndexMap;
@@ -15,9 +15,9 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
 /**
  * @method \Spryker\Client\ProductPageSearch\ProductPageSearchFactory getFactory()
  */
-class ProductConcretePageSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
+class ProductConcreteCatalogSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-    public const NAME = 'ProductConcretePageSearchResultFormatter';
+    public const NAME = 'ProductConcreteCatalogSearchResultFormatterPlugin';
     public const KEY_ID_PRODUCT = 'id_product';
 
     /**

@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Catalog;
 
+use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -68,4 +69,18 @@ interface CatalogClientInterface
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function setCatalogViewMode($mode, Response $response);
+
+    /**
+     * Specification:
+     * - Finds concrete products at Elasticsearch by full-text.
+     * - Filters results by searchString and locale.
+     * - Limit and offset can be specified.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
+     *
+     * @return array|\Elastica\ResultSet
+     */
+    public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer);
 }

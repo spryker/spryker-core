@@ -5,20 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductPageSearch;
+namespace Spryker\Client\Catalog\ProductConcreteReader;
 
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 
-interface ProductPageSearchClientInterface
+interface ProductConcreteReaderInterface
 {
     /**
-     * Specification:
-     * - Finds concrete products at Elasticsearch by full-text.
-     * - Filters results by searchString and locale.
-     * - Limit and offset can be specified.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
      *
      * @return array|\Elastica\ResultSet

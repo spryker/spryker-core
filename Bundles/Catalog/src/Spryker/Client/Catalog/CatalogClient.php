@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Catalog;
 
+use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -109,5 +110,21 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
         return $this->getFactory()
             ->createCatalogViewModePersistence()
             ->setViewMode($mode, $response);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
+     *
+     * @return array|\Elastica\ResultSet
+     */
+    public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer)
+    {
+        return $this->getFactory()
+            ->createProductConcreteReader()
+            ->searchProductConcretesByFullText($productConcreteCriteriaFilterTransfer);
     }
 }

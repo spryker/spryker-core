@@ -5,23 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductPageSearch\ProductConcreteReader;
+namespace Spryker\Client\Catalog\ProductConcreteReader;
 
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
-use Spryker\Client\ProductPageSearch\Dependency\Client\ProductPageSearchToSearchClientInterface;
-use Spryker\Client\ProductPageSearch\ProductPageSearchConfig;
+use Spryker\Client\Catalog\CatalogConfig;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
+use Spryker\Client\Search\SearchClientInterface;
 
 class ProductConcreteReader implements ProductConcreteReaderInterface
 {
     /**
-     * @var \Spryker\Client\ProductPageSearch\ProductPageSearchConfig
+     * @var \Spryker\Client\Catalog\CatalogConfig
      */
     protected $config;
 
     /**
-     * @var \Spryker\Client\ProductPageSearch\Dependency\Client\ProductPageSearchToSearchClientInterface
+     * @var \Spryker\Client\Search\SearchClientInterface
      */
     protected $searchClient;
 
@@ -41,15 +41,15 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     protected $productConcretePageSearchResultFormatterPlugins;
 
     /**
-     * @param \Spryker\Client\ProductPageSearch\ProductPageSearchConfig $config
-     * @param \Spryker\Client\ProductPageSearch\Dependency\Client\ProductPageSearchToSearchClientInterface $searchClient
+     * @param \Spryker\Client\Catalog\CatalogConfig $config
+     * @param \Spryker\Client\Search\SearchClientInterface $searchClient
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $productConcretePageSearchQueryPlugin
-     * @param \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[] $productConcretePageSearchQueryExpanderPlugins
-     * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] $productConcretePageSearchResultFormatterPlugins
+     * @param array $productConcretePageSearchQueryExpanderPlugins
+     * @param array $productConcretePageSearchResultFormatterPlugins
      */
     public function __construct(
-        ProductPageSearchConfig $config,
-        ProductPageSearchToSearchClientInterface $searchClient,
+        CatalogConfig $config,
+        SearchClientInterface $searchClient,
         QueryInterface $productConcretePageSearchQueryPlugin,
         array $productConcretePageSearchQueryExpanderPlugins,
         array $productConcretePageSearchResultFormatterPlugins
