@@ -103,7 +103,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     {
         return $this->productQueryContainer
             ->queryProductConcreteBySku($sku)
-            ->count() > 0;
+            ->exists();
     }
 
     /**
