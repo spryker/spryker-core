@@ -23,7 +23,9 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelation
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\OpenApiSpecificationSchemaBuilder;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\OpenApiSpecificationSchemaComponentBuilder;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaBuilderInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaComponentBuilderInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinder;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinderInterface;
@@ -195,7 +197,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
         return new OpenApiSpecificationSchemaGenerator(
             $this->createResourceRelationshipsPluginAnalyzer(),
             $this->createResourceTransferAnalyzer(),
-            $this->createOpenApiSpecificationSchemaComponentBuilder(),
+            $this->createOpenApiSpecificationSchemaBuilder(),
             $this->createSchemaRenderer()
         );
     }
@@ -338,11 +340,19 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     }
 
     /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaBuilderInterface
+     */
+    public function createOpenApiSpecificationSchemaBuilder(): SchemaBuilderInterface
+    {
+        return new OpenApiSpecificationSchemaBuilder($this->createOpenApiSpecificationSchemaComponentBuilder());
+    }
+
+    /**
      * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaComponentBuilderInterface
      */
     public function createOpenApiSpecificationSchemaComponentBuilder(): SchemaComponentBuilderInterface
     {
-        return new OpenApiSpecificationSchemaComponentBuilder();
+        return new OpenApiSpecificationSchemaComponentBuilder($this->createResourceTransferAnalyzer());
     }
 
     /**
