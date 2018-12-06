@@ -51,7 +51,7 @@ class GlobalThresholdFormMapperResolver implements GlobalThresholdFormMapperReso
      *
      * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface
      */
-    public function getResolvedGlobalThresholdFormMapperByStrategyGroup(string $salesOrderThresholdTypeGroup): GlobalThresholdFormMapperInterface
+    public function resolveGlobalThresholdFormMapperClassInstanceByStrategyGroup(string $salesOrderThresholdTypeGroup): GlobalThresholdFormMapperInterface
     {
         if (!$this->hasGlobalThresholdFormMapperByStrategyGroup($salesOrderThresholdTypeGroup)) {
             throw new MissingGlobalThresholdFormMapperException();

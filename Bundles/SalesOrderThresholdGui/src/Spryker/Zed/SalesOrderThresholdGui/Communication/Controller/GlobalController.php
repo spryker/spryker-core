@@ -114,7 +114,7 @@ class GlobalController extends AbstractController
         if ($this->canMapThresholdData($thresholdData, $strategyGroup)) {
             $salesOrderThresholdTransfer = $this->getFactory()
                 ->createGlobalThresholdFormMapperResolver()
-                ->getResolvedGlobalThresholdFormMapperByStrategyGroup($strategyGroup)
+                ->resolveGlobalThresholdFormMapperClassInstanceByStrategyGroup($strategyGroup)
                 ->mapFormDataToTransfer($thresholdData, $salesOrderThresholdTransfer);
         }
 
