@@ -30,10 +30,10 @@ class UtilUuidGeneratorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateUuidsByTableName()
+    public function testGenerateUuidsByTableName(): void
     {
         // Act
-        $updatedRecordCount = $this->tester->getFacade()->generateUuids('spy_wishlist');
+        $updatedRecordCount = $this->tester->getFacade()->generateUuids('spy_tax_set');
 
         // Assert
         $this->assertEquals(0, $updatedRecordCount);
@@ -42,11 +42,11 @@ class UtilUuidGeneratorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateUuidsWithWrongTableName()
+    public function testGenerateUuidsWithWrongTableName(): void
     {
         // Assert
         $this->expectException('Exception');
-        $this->expectExceptionMessage("Query 'Orm\Zed\WrongTableName\Persistence\SpyWrongTableNameQuery' not found.");
+        $this->expectExceptionMessage("Query for table 'spy_wrong_table_name' not found.");
 
         // Act
         $this->tester->getFacade()->generateUuids('spy_wrong_table_name');
@@ -55,13 +55,12 @@ class UtilUuidGeneratorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateUuidsWithoutUuidField()
+    public function testGenerateUuidsWithoutUuidField(): void
     {
-        // Assert
-        $this->expectException('Exception');
-        $this->expectExceptionMessage("Table spy_customer does not contain field uuid.");
-
         // Act
-        $this->tester->getFacade()->generateUuids('spy_customer');
+        $updatedRecordCount = $this->tester->getFacade()->generateUuids('spy_customer');
+
+        // Assert
+        $this->assertEquals(0, $updatedRecordCount);
     }
 }
