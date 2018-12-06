@@ -100,7 +100,11 @@ class RestApiValidator implements RestApiValidatorInterface
         }
 
         if (!$this->assertPasswordsAreIdentical($passwordAttributesTransfer)) {
-            return $this->apiErrors->addPasswordsNotMatchError($restResponse);
+            return $this->apiErrors->addPasswordsDoNotMatchError(
+                $restResponse,
+                RestCustomerPasswordAttributesTransfer::NEW_PASSWORD,
+                RestCustomerPasswordAttributesTransfer::CONFIRM_PASSWORD
+            );
         }
 
         return $restResponse;
