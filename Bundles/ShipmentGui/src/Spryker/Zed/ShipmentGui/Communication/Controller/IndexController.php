@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Shipment\Communication\Controller;
+namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
- * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
- * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ShipmentGui\Persistence\ShipmentGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ShipmentGui\Business\ShipmentGuiFacadeInterface getFacade()
  */
 class IndexController extends AbstractController
 {
@@ -21,18 +21,6 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getFactory()->createMethodTable();
-
-        return $this->viewResponse(['methodTable' => $table->render()]);
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function tableAction()
-    {
-        $table = $this->getFactory()->createMethodTable();
-
-        return $this->jsonResponse($table->fetchData());
+        return $this->viewResponse(['methodTable' => '']);
     }
 }
