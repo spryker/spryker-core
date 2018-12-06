@@ -27,15 +27,15 @@ interface ProductQuantityStorageClientInterface
 
     /**
      * Specification:
-     * - Expands ProductConcreteTransfer with quantity restrictions if exists.
+     * - Expands array of ProductConcreteTransfer with quantity restrictions if exists.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function expandProductConcreteTransferWithProductQuantity(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function expandProductConcreteTransferWithProductQuantity(array $productConcreteTransfers): array;
 
     /**
      * Specification:

@@ -7,20 +7,18 @@
 
 namespace Spryker\Client\QuickOrderExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-
 interface ProductConcreteExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands provided ProductConcreteTransfer with additional data.
+     * - Expands provided array of ProductConcreteTransfers with additional data.
      * - Executed on quick order product search result.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function expand(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function expand(array $productConcreteTransfers): array;
 }

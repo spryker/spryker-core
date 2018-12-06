@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductQuantityStorage\Expander;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
@@ -28,26 +27,28 @@ class ProductConcreteTransferExpander implements ProductConcreteTransferExpander
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function expandWithProductQuantity(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function expandWithProductQuantity(array $productConcreteTransfers): array
     {
-        $productConcreteTransfer->requireIdProductConcrete();
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $productConcreteTransfer->requireIdProductConcrete();
 
-        $productQuantityStorageTransfer = $this->productQuantityStorageReader->findProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
-        if ($productQuantityStorageTransfer === null) {
-            return $productConcreteTransfer;
+            $productQuantityStorageTransfer = $this->productQuantityStorageReader->findProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
+            if ($productQuantityStorageTransfer === null) {
+                continue;
+            }
+
+            $productQuantityTransfer = $this->mapProductQuantityStorageTransferToProductQuantityTransfer(
+                $productQuantityStorageTransfer,
+                new ProductQuantityTransfer()
+            );
+            $productConcreteTransfer->setProductQuantity($productQuantityTransfer);
         }
 
-        $productQuantityTransfer = $this->mapProductQuantityStorageTransferToProductQuantityTransfer(
-            $productQuantityStorageTransfer,
-            new ProductQuantityTransfer()
-        );
-        $productConcreteTransfer->setProductQuantity($productQuantityTransfer);
-
-        return $productConcreteTransfer;
+        return $productConcreteTransfers;
     }
 
     /**
@@ -59,7 +60,7 @@ class ProductConcreteTransferExpander implements ProductConcreteTransferExpander
     protected function mapProductQuantityStorageTransferToProductQuantityTransfer(
         ProductQuantityStorageTransfer $productQuantityStorageTransfer,
         ProductQuantityTransfer $productQuantityTransfer
-    ) {
+    ): ProductQuantityTransfer {
         $productQuantityTransfer->fromArray(
             $productQuantityStorageTransfer->modifiedToArray(),
             true

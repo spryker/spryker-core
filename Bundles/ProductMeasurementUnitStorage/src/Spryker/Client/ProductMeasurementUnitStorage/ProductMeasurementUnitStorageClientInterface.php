@@ -78,14 +78,14 @@ interface ProductMeasurementUnitStorageClientInterface
 
     /**
      * Specification:
-     * - Expands ProductConcreteTransfer with base measurement unit data using given product ID.
-     * - Returns the unchanged provided ProductConcreteTransfer when no base measurement unit is defined for the product.
+     * - Expands array of ProductConcreteTransfers with base measurement unit data using given product ID.
+     * - Returns the unchanged provided ProductConcreteTransfers when no base measurement unit is defined for the product.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function expandProductConcreteTransferWithBaseMeasurementUnit(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function expandProductConcreteTransferWithBaseMeasurementUnit(array $productConcreteTransfers): array;
 }

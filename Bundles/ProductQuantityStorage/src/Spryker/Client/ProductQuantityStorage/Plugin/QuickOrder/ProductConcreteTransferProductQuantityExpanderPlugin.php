@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductQuantityStorage\Plugin\QuickOrder;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface;
 
@@ -18,16 +17,16 @@ class ProductConcreteTransferProductQuantityExpanderPlugin extends AbstractPlugi
 {
     /**
      * {@inheritdoc}
-     * - Expands ProductConcreteTransfer with quantity restrictions for given product.
+     * - Expands array of ProductConcreteTransfers with quantity restrictions for given product.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function expand(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function expand(array $productConcreteTransfers): array
     {
-        return $this->getClient()->expandProductConcreteTransferWithProductQuantity($productConcreteTransfer);
+        return $this->getClient()->expandProductConcreteTransferWithProductQuantity($productConcreteTransfers);
     }
 }

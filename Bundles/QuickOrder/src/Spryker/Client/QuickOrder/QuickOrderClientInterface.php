@@ -7,19 +7,17 @@
 
 namespace Spryker\Client\QuickOrder;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-
 interface QuickOrderClientInterface
 {
     /**
      * Specification:
-     * - Expands ProductConcreteTransfer with additional data using pre-configured plugins.
+     * - Expands array of ProductConcreteTransfers with additional data using pre-configured plugins.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function expandProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function expandProductConcreteTransfers(array $productConcreteTransfers): array;
 }

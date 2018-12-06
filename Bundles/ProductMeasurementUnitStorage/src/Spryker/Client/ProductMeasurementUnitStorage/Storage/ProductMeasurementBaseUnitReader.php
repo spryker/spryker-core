@@ -54,20 +54,24 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function expandProductConcreteTransferWithBaseMeasurementUnit(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function expandProductConcreteTransferWithBaseMeasurementUnit(array $productConcreteTransfers): array
     {
-        $productConcreteTransfer->requireIdProductConcrete();
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $productConcreteTransfer->requireIdProductConcrete();
 
-        $productMeasurementUnitTransfer = $this->findProductMeasurementBaseUnitByIdProduct($productConcreteTransfer->getIdProductConcrete());
+            $productMeasurementUnitTransfer = $this->findProductMeasurementBaseUnitByIdProduct($productConcreteTransfer->getIdProductConcrete());
 
-        if ($productMeasurementUnitTransfer === null) {
-            return $productConcreteTransfer;
+            if ($productMeasurementUnitTransfer === null) {
+                continue;
+            }
+
+            $productConcreteTransfer->setBaseMeasurementUnitName($productMeasurementUnitTransfer->getName());
         }
 
-        return $productConcreteTransfer->setBaseMeasurementUnitName($productMeasurementUnitTransfer->getName());
+        return $productConcreteTransfers;
     }
 }

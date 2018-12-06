@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\QuickOrder;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -20,14 +19,14 @@ class QuickOrderClient extends AbstractClient implements QuickOrderClientInterfa
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function expandProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function expandProductConcreteTransfers(array $productConcreteTransfers): array
     {
         return $this->getFactory()
             ->createProductConcreteExpander()
-            ->expand($productConcreteTransfer);
+            ->expand($productConcreteTransfers);
     }
 }

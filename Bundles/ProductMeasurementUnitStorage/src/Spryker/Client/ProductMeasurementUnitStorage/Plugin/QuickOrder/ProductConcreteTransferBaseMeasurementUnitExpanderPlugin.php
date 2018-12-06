@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductMeasurementUnitStorage\Plugin\QuickOrder;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface;
 
@@ -19,17 +18,17 @@ class ProductConcreteTransferBaseMeasurementUnitExpanderPlugin extends AbstractP
 {
     /**
      * {@inheritdoc}
-     * - Expands provided ProductConcreteTransfer with base measurement unit information if available for product.
-     * - Returns the unchanged provided ProductConcreteTransfer when no base measurement unit is defined for the product.
+     * - Expands provided array of ProductConcreteTransfers with base measurement unit information if available for product.
+     * - Returns the unchanged provided ProductConcreteTransfers when no base measurement unit is defined for the product.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function expand(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function expand(array $productConcreteTransfers): array
     {
-        return $this->getClient()->expandProductConcreteTransferWithBaseMeasurementUnit($productConcreteTransfer);
+        return $this->getClient()->expandProductConcreteTransferWithBaseMeasurementUnit($productConcreteTransfers);
     }
 }

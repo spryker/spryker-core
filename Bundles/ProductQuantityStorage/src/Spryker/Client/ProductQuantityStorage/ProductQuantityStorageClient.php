@@ -37,15 +37,15 @@ class ProductQuantityStorageClient extends AbstractClient implements ProductQuan
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function expandProductConcreteTransferWithProductQuantity(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function expandProductConcreteTransferWithProductQuantity(array $productConcreteTransfers): array
     {
         return $this->getFactory()
             ->createProductConcreteTransferExpander()
-            ->expandWithProductQuantity($productConcreteTransfer);
+            ->expandWithProductQuantity($productConcreteTransfers);
     }
 
     /**
