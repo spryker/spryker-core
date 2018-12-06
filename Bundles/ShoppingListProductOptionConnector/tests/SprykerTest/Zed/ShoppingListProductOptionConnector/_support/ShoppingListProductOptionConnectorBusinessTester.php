@@ -27,7 +27,7 @@ use Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProduc
  *
  * @SuppressWarnings(PHPMD)
  *
- * @method \Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOptionConnectorFacade getFacade()
+ * @method \Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOptionConnectorFacadeInterface getFacade()
  */
 class ShoppingListProductOptionConnectorBusinessTester extends Actor
 {

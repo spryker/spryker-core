@@ -16,5 +16,5 @@ interface ProductOptionValuesRemoverInterface
      *
      * @return void
      */
-    public function unassignProductOptionValuesToBeRemoved(ProductOptionGroupTransfer $productOptionGroupTransfer): void;
+    public function removeProductOptionValuesFromShoppingListItems(ProductOptionGroupTransfer $productOptionGroupTransfer): void;
 }
