@@ -175,19 +175,10 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
      */
     protected function findConcreteProductViewTransfer(int $idProduct, string $localeName): ?ProductViewTransfer
     {
-        $productConcreteStorageData = $this->productStorageClient
-            ->findProductConcreteStorageData($idProduct, $localeName);
-
-        if (empty($productConcreteStorageData)) {
-            return null;
-        }
-
-        $productConcreteStorageData[ProductAlternativeStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = (new AttributeMapStorageTransfer())->toArray();
-
         $productViewTransfer = $this->productStorageClient
-            ->mapProductStorageData($productConcreteStorageData, $localeName);
+            ->findProductConcreteViewTransfer($idProduct, $localeName, (new AttributeMapStorageTransfer())->toArray());
 
-        if ($productViewTransfer->getAvailable()) {
+        if ($productViewTransfer && $productViewTransfer->getAvailable()) {
             return $productViewTransfer;
         }
 
@@ -202,15 +193,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
      */
     protected function findAbstractProductViewTransfer(int $idProductAbstract, string $localeName): ?ProductViewTransfer
     {
-        $productAbstractStorageData = $this->productStorageClient
-            ->findProductAbstractStorageData($idProductAbstract, $localeName);
-
-        if (empty($productAbstractStorageData)) {
-            return null;
-        }
-
-        return $this->productStorageClient
-            ->mapProductStorageData($productAbstractStorageData, $localeName);
+        return $this->productStorageClient->findProductAbstractViewTransfer($idProductAbstract, $localeName);
     }
 
     /**

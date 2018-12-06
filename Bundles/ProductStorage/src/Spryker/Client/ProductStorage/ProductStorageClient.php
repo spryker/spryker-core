@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductStorage;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -74,6 +75,24 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
+     * @param int $idProductAbstract
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findProductAbstractViewTransfer(int $idProductAbstract, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
+    {
+        return $this->getFactory()
+            ->createProductAbstractViewTransferFinder()
+            ->findProductViewTransfer($idProductAbstract, $localeName, $selectedAttributes);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int $idProductConcrete
      * @param string $localeName
      *
@@ -90,6 +109,26 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      * {@inheritdoc}
      *
      * @api
+     *
+     * @param int $idProductConcrete
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findProductConcreteViewTransfer(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
+    {
+        return $this->getFactory()
+            ->createProductConcreteViewTransferFinder()
+            ->findProductViewTransfer($idProductConcrete, $localeName, $selectedAttributes);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @deprecated Use findProductAbstractViewTransfer(int $idProductAbstract, string $localeName): ?ProductViewTransfer
      *
      * @param array $data
      * @param string $localeName
