@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -24,6 +25,11 @@ use Spryker\Zed\Product\Persistence\ProductRepositoryInterface;
 
 class ProductConcreteManager extends AbstractProductConcreteManagerSubject implements ProductConcreteManagerInterface
 {
+    /**
+     * @var \Generated\Shared\Transfer\LocaleTransfer[]
+     */
+    protected static $cachedLocaleTransfers;
+
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -453,7 +459,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
             ->find();
 
         foreach ($productAttributeCollection as $attributeEntity) {
-            $localeTransfer = $this->localeFacade->getLocaleById($attributeEntity->getFkLocale());
+            $localeTransfer = $this->getLocaleTransfer($attributeEntity->getFkLocale());
 
             $localizedAttributesData = $attributeEntity->toArray();
             if (isset($localizedAttributesData[LocalizedAttributesTransfer::ATTRIBUTES])) {
@@ -469,6 +475,22 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         }
 
         return $productTransfer;
+    }
+
+    /**
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getLocaleTransfer(int $idLocale): LocaleTransfer
+    {
+        if (isset(static::$cachedLocaleTransfers[$idLocale])) {
+            return static::$cachedLocaleTransfers[$idLocale];
+        }
+
+        static::$cachedLocaleTransfers[$idLocale] = $this->localeFacade->getLocaleById($idLocale);
+
+        return static::$cachedLocaleTransfers[$idLocale];
     }
 
     /**
