@@ -27,27 +27,11 @@ interface CategoryImageEvents
 
     /**
      * Specification
-     * - This event will be used for spy_category_image entity creation
-     *
-     * @api
-     */
-    public const ENTITY_SPY_CATEGORY_IMAGE_CREATE = 'Entity.spy_category_image.create';
-
-    /**
-     * Specification
      * - This event will be used for spy_category_image entity changes
      *
      * @api
      */
     public const ENTITY_SPY_CATEGORY_IMAGE_UPDATE = 'Entity.spy_category_image.update';
-
-    /**
-     * Specification
-     * - This event will be used for spy_category_image entity deletion
-     *
-     * @api
-     */
-    public const ENTITY_SPY_CATEGORY_IMAGE_DELETE = 'Entity.spy_category_image.delete';
 
     /**
      * Specification

@@ -35,7 +35,6 @@ class CategoryImageStorageEventSubscriber extends AbstractPlugin implements Even
         $this->addCategoryImagePublishStorageListener($eventCollection);
         $this->addCategoryImageUnpublishStorageListener($eventCollection);
         $this->addCategoryImageUpdateStorageListener($eventCollection);
-        $this->addCategoryImageDeleteStorageListener($eventCollection);
         $this->addCategoryImageSetCreateStorageListener($eventCollection);
         $this->addCategoryImageSetUpdateStorageListener($eventCollection);
         $this->addCategoryImageSetDeleteStorageListener($eventCollection);
@@ -74,16 +73,6 @@ class CategoryImageStorageEventSubscriber extends AbstractPlugin implements Even
     protected function addCategoryImageUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(CategoryImageEvents::ENTITY_SPY_CATEGORY_IMAGE_UPDATE, new CategoryImageStorageListener());
-    }
-
-    /**
-     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     *
-     * @return void
-     */
-    protected function addCategoryImageDeleteStorageListener(EventCollectionInterface $eventCollection)
-    {
-        $eventCollection->addListenerQueued(CategoryImageEvents::ENTITY_SPY_CATEGORY_IMAGE_DELETE, new CategoryImageStorageListener());
     }
 
     /**
