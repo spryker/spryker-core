@@ -8,8 +8,12 @@
 namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\AbstractGlobalThresholdType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig getConfig()
@@ -40,6 +44,22 @@ class LocalizedMessagesType extends AbstractType
     {
         $builder->add(static::FIELD_MESSAGE, TextType::class, [
             'required' => false,
+            'constraints' => [
+                new Callback(function ($value, ExecutionContextInterface $context) {
+                    /** @var \Symfony\Component\Form\Form $form */
+                    $form = $context->getObject();
+                    $parentThresholdGroupForm = $form->getParent()->getParent();
+                    $data = $parentThresholdGroupForm->getData();
+
+                    if (empty($data[AbstractGlobalThresholdType::FIELD_THRESHOLD])) {
+                        return;
+                    }
+
+                    if (empty($value)) {
+                        $context->buildViolation((new NotBlank())->message)->addViolation();
+                    }
+                }),
+            ],
         ]);
 
         return $this;
