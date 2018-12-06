@@ -40,12 +40,13 @@ class ProductConcreteViewTransferFinder implements ProductViewTransferFinderInte
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    public function findProductViewTransfer(int $idProductConcrete, string $localeName, array $selectedAttributes): ?ProductViewTransfer
+    public function findProductViewTransfer(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
     {
         $data = $this->productConcreteStorage->findProductConcreteStorageData($idProductConcrete, $localeName);
-        if (!$data) {
+        if ($data === null) {
             return null;
         }
+
         return $this->productStorageDataMapper->mapProductStorageData($localeName, $data, $selectedAttributes);
     }
 }

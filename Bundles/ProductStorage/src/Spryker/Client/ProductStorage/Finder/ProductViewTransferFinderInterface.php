@@ -18,5 +18,5 @@ interface ProductViewTransferFinderInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    public function findProductViewTransfer(int $idProduct, string $localeName, array $selectedAttributes): ?ProductViewTransfer;
+    public function findProductViewTransfer(int $idProduct, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
 }
