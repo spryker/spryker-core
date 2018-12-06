@@ -33,7 +33,7 @@ class CategoryImageStorageListener extends AbstractPlugin implements EventBulkHa
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($eventTransfers) {
             $categoryImageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
-            $categoryIds = $this->getRepository()->findCategoryIdsByCategoryImageIds($categoryImageIds)->getData();
+            $categoryIds = $this->getRepository()->getCategoryIdsByCategoryImageIds($categoryImageIds)->getData();
 
             $this->getFacade()->publishCategoryImages($categoryIds);
         });

@@ -49,7 +49,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
     public function publish(array $categoryIds): void
     {
         $imageSets = $this->getImageSetsIndexedByCategoryIdAndLocale(
-            $this->repository->findCategoryImageSetsByFkCategoryIn($categoryIds)
+            $this->repository->getCategoryImageSetsByFkCategoryIn($categoryIds)
         );
 
         $spyCategoryImageStorageEntities = $this->findCategoryImageStorageTransfersByCategoryIds($categoryIds);
@@ -63,7 +63,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
      */
     public function unpublish(array $categoryIds): void
     {
-        $spyCategoryImageStorageEntities = $this->repository->findCategoryImageStorageByFkCategoryIn($categoryIds);
+        $spyCategoryImageStorageEntities = $this->repository->getCategoryImageStorageByFkCategoryIn($categoryIds);
         foreach ($spyCategoryImageStorageEntities as $spyCategoryImageStorageEntity) {
             $this->entityManager->deleteCategoryImageStorage(
                 $spyCategoryImageStorageEntity->getIdCategoryImageStorage()
@@ -218,7 +218,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
      */
     protected function findCategoryImageStorageTransfersByCategoryIds(array $categoryIds): array
     {
-        $categoryImageStorageTransfers = $this->repository->findCategoryImageStorageByFkCategoryIn($categoryIds);
+        $categoryImageStorageTransfers = $this->repository->getCategoryImageStorageByFkCategoryIn($categoryIds);
         $categoryStorageEntitiesByIdAndLocale = [];
 
         foreach ($categoryImageStorageTransfers as $categoryImageStorageTransfer) {

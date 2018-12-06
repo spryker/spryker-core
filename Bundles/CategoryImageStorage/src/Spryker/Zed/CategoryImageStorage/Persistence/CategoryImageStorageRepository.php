@@ -19,19 +19,16 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     public const FK_CATEGORY = 'fkCategory';
 
     /**
-     * @param array $categoryImageSetToCategoryImageIds
+     * @param array $categoryImageSetIds
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findCategoryIdsByCategoryImageSetToCategoryImageIds(array $categoryImageSetToCategoryImageIds)
+    public function getCategoryIdsByCategoryImageSetIds(array $categoryImageSetIds)
     {
         return $this->getFactory()
-            ->getQueryCategoryImageSetToCategoryImage()
-            ->filterByIdCategoryImageSetToCategoryImage_In($categoryImageSetToCategoryImageIds)
-            ->innerJoinSpyCategoryImageSet()
-            ->withColumn('DISTINCT ' . SpyCategoryImageSetTableMap::COL_FK_CATEGORY, static::FK_CATEGORY)
-            ->select([static::FK_CATEGORY])
-            ->addAnd(SpyCategoryImageSetTableMap::COL_FK_CATEGORY, null, ModelCriteria::NOT_EQUAL)
+            ->getCategoryImageSetQuery()
+            ->filterByIdCategoryImageSet_In($categoryImageSetIds)
+            ->select([SpyCategoryImageSetTableMap::COL_FK_CATEGORY])
             ->find();
     }
 
@@ -40,7 +37,7 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
      *
      * @return \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer[]
      */
-    public function findCategoryImageSetsByFkCategoryIn(array $categoryIds): array
+    public function getCategoryImageSetsByFkCategoryIn(array $categoryIds): array
     {
         $categoryImageSetsQuery = $this->getFactory()
             ->getCategoryImageSetQuery()
@@ -60,7 +57,7 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
      *
      * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]
      */
-    public function findCategoryImageStorageByFkCategoryIn(array $categoryIds): array
+    public function getCategoryImageStorageByFkCategoryIn(array $categoryIds): array
     {
         $categoryImageStorageQuery = $this->getFactory()
             ->createSpyCategoryImageStorageQuery()
@@ -74,7 +71,7 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findCategoryIdsByCategoryImageIds(array $categoryImageIds)
+    public function getCategoryIdsByCategoryImageIds(array $categoryImageIds)
     {
         return $this->getFactory()
             ->getQueryCategoryImageSetToCategoryImage()

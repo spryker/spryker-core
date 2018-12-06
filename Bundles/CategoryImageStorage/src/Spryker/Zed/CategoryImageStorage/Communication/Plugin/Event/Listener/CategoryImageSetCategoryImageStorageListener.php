@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Listener;
 
+use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageSetToCategoryImageTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -30,8 +31,12 @@ class CategoryImageSetCategoryImageStorageListener extends AbstractPlugin implem
     public function handleBulk(array $transfers, $eventName)
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($transfers) {
-            $categoryImageSetToCategoryImageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($transfers);
-            $categoryIds = $this->getRepository()->findCategoryIdsByCategoryImageSetToCategoryImageIds($categoryImageSetToCategoryImageIds)->getData();
+            $categoryImageSetIds = $this->getFactory()
+                ->getEventBehaviorFacade()
+                ->getEventTransferForeignKeys($transfers, SpyCategoryImageSetToCategoryImageTableMap::COL_FK_CATEGORY_IMAGE_SET);
+            $categoryIds = $this->getRepository()
+                ->getCategoryIdsByCategoryImageSetIds($categoryImageSetIds)
+                ->getData();
 
             $this->getFacade()->publishCategoryImages($categoryIds);
         });

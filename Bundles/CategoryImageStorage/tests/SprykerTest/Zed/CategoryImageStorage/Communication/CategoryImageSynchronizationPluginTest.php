@@ -14,7 +14,7 @@ use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageSetTableMap;
 use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageSetToCategoryImageTableMap;
 use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageTableMap;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageQuery;
-use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImageQuery;
+use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery;
 use Orm\Zed\CategoryImageStorage\Persistence\SpyCategoryImageStorageQuery;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
@@ -90,11 +90,13 @@ class CategoryImageSynchronizationPluginTest extends Unit
         $beforeCount = SpyCategoryImageStorageQuery::create()->count();
         $categoryImageSetCategoryImageStorageListener = new CategoryImageSetCategoryImageStorageListener();
         $categoryImageSetCategoryImageStorageListener->setFacade($this->tester->getFacade());
-        $idCategoryImageStorageToCategoryImageCollection = $this->getIdCategoryImageSetToCategoryImageForCategory($this->categoryTransfer);
+        $categoryImageSetIds = $this->getCategoryImageSetIdsForCategory($this->categoryTransfer);
 
         $eventTransfers = [];
-        foreach ($idCategoryImageStorageToCategoryImageCollection as $idCategoryImageStorageToCategoryImage) {
-            $eventTransfers[] = (new EventEntityTransfer())->setId($idCategoryImageStorageToCategoryImage);
+        foreach ($categoryImageSetIds as $idCategoryImageSet) {
+            $eventTransfers[] = (new EventEntityTransfer())->setForeignKeys([
+                SpyCategoryImageSetToCategoryImageTableMap::COL_FK_CATEGORY_IMAGE_SET => $idCategoryImageSet,
+            ]);
         }
 
         $categoryImageSetCategoryImageStorageListener->handleBulk($eventTransfers, CategoryImageEvents::CATEGORY_IMAGE_CATEGORY_PUBLISH);
@@ -174,14 +176,11 @@ class CategoryImageSynchronizationPluginTest extends Unit
      *
      * @return array
      */
-    protected function getIdCategoryImageSetToCategoryImageForCategory(CategoryTransfer $categoryTransfer): array
+    protected function getCategoryImageSetIdsForCategory(CategoryTransfer $categoryTransfer): array
     {
-        return SpyCategoryImageSetToCategoryImageQuery::create()
-            ->joinSpyCategoryImageSet()
-            ->useSpyCategoryImageSetQuery()
+        return SpyCategoryImageSetQuery::create()
             ->filterByFkCategory($categoryTransfer->getIdCategory())
-            ->endUse()
-            ->select(SpyCategoryImageSetToCategoryImageTableMap::COL_ID_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE)
+            ->select(SpyCategoryImageSetTableMap::COL_ID_CATEGORY_IMAGE_SET)
             ->find()
             ->getData();
     }

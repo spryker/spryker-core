@@ -13,30 +13,30 @@ namespace Spryker\Zed\CategoryImageStorage\Persistence;
 interface CategoryImageStorageRepositoryInterface
 {
     /**
-     * @param array $categoryImageSetToCategoryImageIds
+     * @param array $categoryImageSetIds
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findCategoryIdsByCategoryImageSetToCategoryImageIds(array $categoryImageSetToCategoryImageIds);
+    public function getCategoryIdsByCategoryImageSetIds(array $categoryImageSetIds);
 
     /**
      * @param array $categoryIds
      *
      * @return \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer[]
      */
-    public function findCategoryImageSetsByFkCategoryIn(array $categoryIds): array;
+    public function getCategoryImageSetsByFkCategoryIn(array $categoryIds): array;
 
     /**
      * @param array $categoryIds
      *
      * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]
      */
-    public function findCategoryImageStorageByFkCategoryIn(array $categoryIds): array;
+    public function getCategoryImageStorageByFkCategoryIn(array $categoryIds): array;
 
     /**
      * @param array $categoryImageIds
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findCategoryIdsByCategoryImageIds(array $categoryImageIds);
+    public function getCategoryIdsByCategoryImageIds(array $categoryImageIds);
 }
