@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Quote\Business\QuoteFacade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Quote\QuoteConstants;
 
@@ -40,8 +41,8 @@ class GuestQuoteCleanerTest extends Unit
      */
     public function testGuestQuoteClearAfterLifetimeIsExceeded(): void
     {
-        $customerTransfer = $this->tester->haveCustomer();
-        $customerTransfer->setCustomerReference(static::ANONYMOUS_CUSTOMER_REFERENCE);
+        $customerTransfer = (new CustomerTransfer())
+            ->setCustomerReference(static::ANONYMOUS_CUSTOMER_REFERENCE);
 
         $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $customerTransfer,
@@ -59,8 +60,8 @@ class GuestQuoteCleanerTest extends Unit
      */
     public function testGuestQuoteNotClearedBeforeLifetimeIsExceeded(): void
     {
-        $customerTransfer = $this->tester->haveCustomer();
-        $customerTransfer->setCustomerReference(static::ANONYMOUS_CUSTOMER_REFERENCE);
+        $customerTransfer = (new CustomerTransfer())
+            ->setCustomerReference(static::ANONYMOUS_CUSTOMER_REFERENCE);
 
         $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $customerTransfer,
