@@ -9,11 +9,10 @@ namespace Spryker\Zed\Synchronization\Business\Message;
 
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
+use Spryker\Zed\Synchronization\SynchronizationConfig;
 
 class QueueMessageHelper implements QueueMessageHelperInterface
 {
-    public const ROUTING_KEY_ERROR = 'error';
-
     /**
      * @var \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface
      */
@@ -40,7 +39,7 @@ class QueueMessageHelper implements QueueMessageHelperInterface
         $queueMessageTransfer->setAcknowledge(false);
         $queueMessageTransfer->setReject(true);
         $queueMessageTransfer->setHasError(true);
-        $queueMessageTransfer->setRoutingKey(static::ROUTING_KEY_ERROR);
+        $queueMessageTransfer->setRoutingKey(SynchronizationConfig::ROUTING_KEY_ERROR);
 
         return $queueMessageTransfer;
     }

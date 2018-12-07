@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SynchronizationConfig extends AbstractBundleConfig
 {
+    public const ROUTING_KEY_ERROR = 'error';
+
     /**
      * @param string $queueName
      *
