@@ -41,16 +41,22 @@ class GuestQuoteCleanerTest extends Unit
      */
     public function testGuestQuoteClearAfterLifetimeIsExceeded(): void
     {
+        // Prepare
+        $this->tester->setConfig(QuoteConstants::GUEST_QUOTE_LIFETIME, static::CONFIG_LIFETIME_ONE_SECOND);
+
         $customerTransfer = (new CustomerTransfer())
             ->setCustomerReference(static::ANONYMOUS_CUSTOMER_REFERENCE);
 
         $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
-        $this->tester->setConfig(QuoteConstants::GUEST_QUOTE_LIFETIME, static::CONFIG_LIFETIME_ONE_SECOND);
-        sleep(1);
 
+        sleep(2);
+
+        // Action
         $this->tester->getFacade()->deleteExpiredGuestQuote();
+
+        // Assert
         $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomer($customerTransfer);
         $this->assertNull($findQuoteResponseTransfer->getQuoteTransfer(), static::MESSAGE_SHOULD_BE_DELETED);
     }
@@ -60,15 +66,20 @@ class GuestQuoteCleanerTest extends Unit
      */
     public function testGuestQuoteNotClearedBeforeLifetimeIsExceeded(): void
     {
+        // Prepare
+        $this->tester->setConfig(QuoteConstants::GUEST_QUOTE_LIFETIME, static::CONFIG_LIFETIME_ONE_HOUR);
+
         $customerTransfer = (new CustomerTransfer())
             ->setCustomerReference(static::ANONYMOUS_CUSTOMER_REFERENCE);
 
         $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
-        $this->tester->setConfig(QuoteConstants::GUEST_QUOTE_LIFETIME, static::CONFIG_LIFETIME_ONE_HOUR);
 
+        // Action
         $this->tester->getFacade()->deleteExpiredGuestQuote();
+
+        // Assert
         $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomer($customerTransfer);
         $this->assertNotNull($findQuoteResponseTransfer->getQuoteTransfer(), static::MESSAGE_SHOULD_NOT_BE_DELETED);
     }

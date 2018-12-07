@@ -68,7 +68,7 @@ class QuoteEntityManager extends AbstractEntityManager implements QuoteEntityMan
         do {
             $quoteIds = $query->filterByUpdatedAt(['max' => $lifetimeLimitDate], Criteria::LESS_EQUAL)
                 ->select(SpyQuoteTableMap::COL_ID_QUOTE)
-                ->where(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE . Criteria::ISNULL)
+                ->add(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, null, Criteria::ISNULL)
                 ->limit(static::BATCH_SIZE_LIMIT)
                 ->find()
                 ->toArray();
