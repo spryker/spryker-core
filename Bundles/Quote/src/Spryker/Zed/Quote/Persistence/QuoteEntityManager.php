@@ -63,12 +63,12 @@ class QuoteEntityManager extends AbstractEntityManager implements QuoteEntityMan
         /** @var \Orm\Zed\Quote\Persistence\SpyQuoteQuery $query */
         $query = $this->getFactory()
             ->createQuoteQuery()
-            ->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN);
+            ->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
+            ->add(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, null, Criteria::ISNULL);
 
         do {
             $quoteIds = $query->filterByUpdatedAt(['max' => $lifetimeLimitDate], Criteria::LESS_EQUAL)
                 ->select(SpyQuoteTableMap::COL_ID_QUOTE)
-                ->add(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, null, Criteria::ISNULL)
                 ->limit(static::BATCH_SIZE_LIMIT)
                 ->find()
                 ->toArray();
