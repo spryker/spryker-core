@@ -10,3 +10,4 @@ refresh-tokens:
   post:
     refreshToken:
       - Required
+      - NotBlank
