@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+    <cms-gui>
+        <label>Content Management</label>
+        <title>Content Management</title>
+        <bundle>cms-block-gui</bundle>
+        <controller>list-block</controller>
+        <action>index</action>
+        <icon>fa-files-o</icon>
+        <pages>
+            <content-items>
+                <label>Content Items</label>
+                <title>Content Items</title>
+                <bundle>cms-content-item-gui</bundle>
+                <controller>list-cms-content-item</controller>
+                <action>index</action>
+            </content-items>
+        </pages>
+    </cms-gui>
+</config>
