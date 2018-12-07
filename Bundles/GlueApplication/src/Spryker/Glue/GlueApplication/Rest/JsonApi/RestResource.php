@@ -210,7 +210,9 @@ class RestResource implements RestResourceInterface
     }
 
     /**
-     * Used for preventing have empty object in the response instead of array for collections.
+     * Used for preventing have empty object instead of empty arrays in the response.
+     * Converts transfer object to array.
+     * Replaces empty ArrayObjects to empty arrays.
      *
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
      *
