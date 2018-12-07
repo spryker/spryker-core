@@ -260,7 +260,7 @@ class CustomerAddressFacadeTest extends Unit
         $addressTransfer = $addresses[0];
         $idCustomerAddress = $addressTransfer->getIdCustomerAddress();
 
-        $result = $this->customerFacade->checkAddressExistsByIdCustomerAddress($idCustomerAddress);
+        $result = $this->customerFacade->findCustomerAddressById($idCustomerAddress);
 
         $this->assertTrue($result);
     }
@@ -277,7 +277,7 @@ class CustomerAddressFacadeTest extends Unit
         $idCustomerAddress = $addressTransfer->getIdCustomerAddress();
         $this->customerFacade->deleteAddress($addressTransfer);
 
-        $result = $this->customerFacade->checkAddressExistsByIdCustomerAddress($idCustomerAddress);
+        $result = $this->customerFacade->findCustomerAddressById($idCustomerAddress);
 
         $this->assertFalse($result);
     }
