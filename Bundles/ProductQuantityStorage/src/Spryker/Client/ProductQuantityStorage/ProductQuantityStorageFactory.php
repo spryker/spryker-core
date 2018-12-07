@@ -10,8 +10,6 @@ namespace Spryker\Client\ProductQuantityStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageClientInterface;
 use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceInterface;
-use Spryker\Client\ProductQuantityStorage\Expander\ProductConcreteTransferExpander;
-use Spryker\Client\ProductQuantityStorage\Expander\ProductConcreteTransferExpanderInterface;
 use Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolver;
 use Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolverInterface;
 use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounder;
@@ -29,16 +27,6 @@ class ProductQuantityStorageFactory extends AbstractFactory
         return new ProductQuantityStorageReader(
             $this->getStorage(),
             $this->getSynchronizationService()
-        );
-    }
-
-    /**
-     * @return \Spryker\Client\ProductQuantityStorage\Expander\ProductConcreteTransferExpanderInterface
-     */
-    public function createProductConcreteTransferExpander(): ProductConcreteTransferExpanderInterface
-    {
-        return new ProductConcreteTransferExpander(
-            $this->createProductQuantityStorageReader()
         );
     }
 

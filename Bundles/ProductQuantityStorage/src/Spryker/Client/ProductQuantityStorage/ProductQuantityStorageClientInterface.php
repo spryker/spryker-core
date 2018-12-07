@@ -26,18 +26,6 @@ interface ProductQuantityStorageClientInterface
 
     /**
      * Specification:
-     * - Expands array of ProductConcreteTransfer with quantity restrictions if exists.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
-     */
-    public function expandProductConcreteTransferWithProductQuantity(array $productConcreteTransfers): array;
-
-    /**
-     * Specification:
      * - Retrieves the nearest valid quantity for a given product based on its product quantity restrictions.
      *
      * @api
