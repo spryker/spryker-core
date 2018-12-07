@@ -9,6 +9,9 @@ namespace Spryker\Service\UtilMeasurementUnitConversion;
 
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Service\UtilMeasurementUnitConversion\UtilMeasurementUnitConversionConfig getConfig()
+ */
 class UtilMeasurementUnitConversionDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

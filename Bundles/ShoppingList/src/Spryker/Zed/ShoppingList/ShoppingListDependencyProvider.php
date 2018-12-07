@@ -16,6 +16,9 @@ use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPermissionFacadeBri
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeBridge;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ShoppingList\ShoppingListConfig getConfig()
+ */
 class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';

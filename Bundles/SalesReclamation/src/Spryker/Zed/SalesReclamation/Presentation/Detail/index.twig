@@ -6,10 +6,6 @@
 
 {% block action %}
     {{ backActionButton('/sales-reclamation', 'Back to Reclamatinos' | trans) }}
-    {{ createActionButton(
-        url('/manual-order-entry-gui/create', {'id-reclamation': reclamation.idSalesReclamation}),
-        'Create connected order' | trans
-    ) }}
 {% endblock %}
 
 {% block content %}

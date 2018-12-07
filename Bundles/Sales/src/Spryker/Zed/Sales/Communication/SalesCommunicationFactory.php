@@ -25,6 +25,9 @@ use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
 /**
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
+ * @method \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
  */
 class SalesCommunicationFactory extends AbstractCommunicationFactory
 {
