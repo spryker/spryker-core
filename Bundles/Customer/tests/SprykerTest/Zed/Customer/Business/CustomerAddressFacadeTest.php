@@ -262,7 +262,7 @@ class CustomerAddressFacadeTest extends Unit
 
         $result = $this->customerFacade->findCustomerAddressById($idCustomerAddress);
 
-        $this->assertTrue($result);
+        $this->assertNotNull($result);
     }
 
     /**
@@ -279,7 +279,7 @@ class CustomerAddressFacadeTest extends Unit
 
         $result = $this->customerFacade->findCustomerAddressById($idCustomerAddress);
 
-        $this->assertFalse($result);
+        $this->assertNull($result);
     }
 
     /**
