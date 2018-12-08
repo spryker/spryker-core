@@ -29,4 +29,11 @@ interface ProductImageStorageRepositoryInterface
      * @return array
      */
     public function getProductImageSetsByFkAbstractProductIn(array $productAbstractFks): array;
+
+    /**
+     * @param int[] $productAbstractFks
+     *
+     * @return array
+     */
+    public function getDefaultAbstractProductImageSetsByFkAbstractProductIn(array $productAbstractFks): array;
 }
