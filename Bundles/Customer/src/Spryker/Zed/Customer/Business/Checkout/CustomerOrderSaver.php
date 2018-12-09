@@ -11,8 +11,10 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Spryker\Zed\Customer\Business\Customer\AddressInterface;
 use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
+use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
 class CustomerOrderSaver implements CustomerOrderSaverInterface
 {
@@ -27,13 +29,23 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     protected $address;
 
     /**
+     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
      * @param \Spryker\Zed\Customer\Business\Customer\CustomerInterface $customer
      * @param \Spryker\Zed\Customer\Business\Customer\AddressInterface $address
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      */
-    public function __construct(CustomerInterface $customer, AddressInterface $address)
-    {
+    public function __construct(
+        CustomerInterface $customer,
+        AddressInterface $address,
+        CustomerQueryContainerInterface $queryContainer
+    ) {
         $this->customer = $customer;
         $this->address = $address;
+        $this->queryContainer = $queryContainer;
     }
 
     /**
@@ -69,11 +81,32 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
      */
     protected function persistAddresses(QuoteTransfer $quoteTransfer, CustomerTransfer $customer)
     {
-        $this->processCustomerAddress($quoteTransfer->getShippingAddress(), $customer);
+        $this->processCustomerAddress($quoteTransfer->getBillingAddress(), $customer);
 
-        if ($quoteTransfer->getBillingSameAsShipping() !== true) {
-            $this->processCustomerAddress($quoteTransfer->getBillingAddress(), $customer);
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $addressEntity = $this->queryContainer->queryAddressByTransfer($itemTransfer->getShipment()->getShippingAddress())->findOne();
+
+            if ($addressEntity !== null) {
+                $addressTransfer = $this->entityToAddressTransfer($addressEntity);
+                $itemTransfer->getShipment()->setShippingAddress($addressTransfer);
+
+                return;
+            }
+
+            $this->processCustomerAddress($itemTransfer->getShipment()->getShippingAddress(), $customer);
         }
+    }
+
+    /**
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $entity
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function entityToAddressTransfer(SpyCustomerAddress $entity)
+    {
+        $addressTransfer = new AddressTransfer();
+
+        return $addressTransfer->fromArray($entity->toArray(), true);
     }
 
     /**

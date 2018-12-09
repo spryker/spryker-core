@@ -185,10 +185,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected function hydrateAddresses(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
     {
         $billingAddressEntity = $this->saveSalesOrderAddress($quoteTransfer->getBillingAddress());
-        $shippingAddressEntity = $this->saveSalesOrderAddress($quoteTransfer->getShippingAddress());
-
         $salesOrderEntity->setBillingAddress($billingAddressEntity);
-        $salesOrderEntity->setShippingAddress($shippingAddressEntity);
     }
 
     /**
@@ -346,6 +343,9 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $salesOrderItemEntity->setDiscountAmountFullAggregation($sanitizedItemTransfer->getSumDiscountAmountFullAggregation());
         $salesOrderItemEntity->setRefundableAmount($itemTransfer->getRefundableAmount());
         $salesOrderItemEntity->setProcess($processEntity);
+
+        $shippingAddressEntity = $this->saveSalesOrderAddress($itemTransfer->getShippingAddress());
+        $salesOrderItemEntity->setShippingAddress($shippingAddressEntity);
     }
 
     /**
