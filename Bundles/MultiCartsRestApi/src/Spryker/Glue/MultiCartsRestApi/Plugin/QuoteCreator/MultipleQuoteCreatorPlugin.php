@@ -16,7 +16,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Glue\MultiCartsRestApi\MultiCartsRestApiFactory getFactory()
  */
-class MultipleQuoteCreator extends AbstractPlugin implements QuoteCreatorPluginInterface
+class MultipleQuoteCreatorPlugin extends AbstractPlugin implements QuoteCreatorPluginInterface
 {
     /**
      * {@inheritdoc}
