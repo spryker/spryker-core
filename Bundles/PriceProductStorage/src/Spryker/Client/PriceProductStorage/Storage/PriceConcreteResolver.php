@@ -43,7 +43,7 @@ class PriceConcreteResolver implements PriceConcreteResolverInterface
     public function __construct(
         PriceAbstractStorageReaderInterface $priceAbstractStorageReader,
         PriceConcreteStorageReaderInterface $priceConcreteStorageReader,
-        PriceProductStorageToPriceProductServiceInterface $priceProductService
+        PriceProductStorageToPriceProductServiceInterface $priceProductService,
         PriceProductStorageToPriceProductInterface $priceProductClient
     ) {
         $this->priceAbstractStorageReader = $priceAbstractStorageReader;
