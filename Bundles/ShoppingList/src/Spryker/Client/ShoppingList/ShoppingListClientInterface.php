@@ -292,4 +292,14 @@ interface ShoppingListClientInterface
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
     public function dismissShoppingListSharing(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Updates shopping list permissions for company user.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function updatePermissions(): void;
 }
