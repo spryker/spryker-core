@@ -16,16 +16,16 @@ class QueryBuilder implements QueryBuilderInterface
     protected const QUERY_NAMESPACE = 'Orm\Zed\%s\Persistence\%sQuery';
 
     /**
-     * @param string $tableName
+     * @param string $tableAlias
      *
      * @throws \Exception
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function buildQuery(string $tableName): ModelCriteria
+    public function buildQuery(string $tableAlias): ModelCriteria
     {
-        $moduleName = $this->getModuleName($tableName);
-        $tableName = $this->getTableName($tableName);
+        $moduleName = $this->getModuleName($tableAlias);
+        $tableName = $this->getTableName($tableAlias);
 
         $className = $this->getFullyQualifiedClassName($moduleName, $tableName);
 
@@ -37,25 +37,25 @@ class QueryBuilder implements QueryBuilderInterface
     }
 
     /**
-     * @param string $tableName
+     * @param string $tableAlias
      *
      * @return string
      */
-    protected function getModuleName(string $tableName): string
+    protected function getModuleName(string $tableAlias): string
     {
-        $components = explode('.', $tableName);
+        $components = explode('.', $tableAlias);
 
         return reset($components);
     }
 
     /**
-     * @param string $tableName
+     * @param string $tableAlias
      *
      * @return string
      */
-    protected function getTableName(string $tableName): string
+    protected function getTableName(string $tableAlias): string
     {
-        $components = explode('.', $tableName);
+        $components = explode('.', $tableAlias);
 
         return end($components);
     }

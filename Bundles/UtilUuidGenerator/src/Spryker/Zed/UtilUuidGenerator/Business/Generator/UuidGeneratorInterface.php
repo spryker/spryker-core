@@ -10,9 +10,9 @@ namespace Spryker\Zed\UtilUuidGenerator\Business\Generator;
 interface UuidGeneratorInterface
 {
     /**
-     * @param string $tableName
+     * @param string $tableAlias
      *
      * @return int
      */
-    public function generate(string $tableName): int;
+    public function generate(string $tableAlias): int;
 }

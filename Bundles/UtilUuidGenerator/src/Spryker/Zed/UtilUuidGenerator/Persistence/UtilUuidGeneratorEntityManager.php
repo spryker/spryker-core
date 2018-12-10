@@ -18,16 +18,16 @@ class UtilUuidGeneratorEntityManager extends AbstractEntityManager implements Ut
     protected const BATCH_SIZE = 200;
 
     /**
-     * @param string $tableName
+     * @param string $tableAlias
      *
      * @return int
      */
-    public function fillEmptyUuids(string $tableName): int
+    public function fillEmptyUuids(string $tableAlias): int
     {
         $count = 0;
         $query = $this->getFactory()
             ->createQueryBuilder()
-            ->buildQuery($tableName);
+            ->buildQuery($tableAlias);
 
         do {
             /** @var \Propel\Runtime\Collection\ObjectCollection $entities */

@@ -13,9 +13,9 @@ namespace Spryker\Zed\UtilUuidGenerator\Persistence;
 interface UtilUuidGeneratorRepositoryInterface
 {
     /**
-     * @param string $tableName
+     * @param string $tableAlias
      *
      * @return bool
      */
-    public function hasUuidField(string $tableName): bool;
+    public function hasUuidField(string $tableAlias): bool;
 }

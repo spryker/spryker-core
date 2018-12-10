@@ -17,15 +17,15 @@ class UtilUuidGeneratorRepository extends AbstractRepository implements UtilUuid
     protected const COLUMN_UUID = 'uuid';
 
     /**
-     * @param string $tableName
+     * @param string $tableAlias
      *
      * @return bool
      */
-    public function hasUuidField(string $tableName): bool
+    public function hasUuidField(string $tableAlias): bool
     {
         $query = $this->getFactory()
             ->createQueryBuilder()
-            ->buildQuery($tableName);
+            ->buildQuery($tableAlias);
 
         return $query->getTableMap()->hasColumn(static::COLUMN_UUID);
     }

@@ -12,9 +12,9 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\EntityManagerInterface;
 interface UtilUuidGeneratorEntityManagerInterface extends EntityManagerInterface
 {
     /**
-     * @param string $tableName
+     * @param string $tableAlias
      *
      * @return int
      */
-    public function fillEmptyUuids(string $tableName): int;
+    public function fillEmptyUuids(string $tableAlias): int;
 }

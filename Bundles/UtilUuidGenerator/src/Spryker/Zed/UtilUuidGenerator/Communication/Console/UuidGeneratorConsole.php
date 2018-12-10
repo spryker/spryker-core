@@ -22,7 +22,7 @@ class UuidGeneratorConsole extends Console
     public const COMMAND_NAME = 'uuid:generate';
     public const COMMAND_DESCRIPTION = 'Fills uuid field for records where this field is empty.';
 
-    protected const ARGUMENT_TABLE = 'table';
+    protected const ARGUMENT_TABLE_ALIAS = 'table-alias';
     protected const SUCCESS_MESSAGE = 'Updated record count for this table: %s.';
 
     /**
@@ -36,7 +36,7 @@ class UuidGeneratorConsole extends Console
             ->setDescription(static::COMMAND_DESCRIPTION)
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>');
 
-        $this->addArgument(static::ARGUMENT_TABLE, InputArgument::REQUIRED, 'Module name with DB table name, e.g. `Wishlist.spy_wishlist`, `Tax.spy_tax_set`, etc.');
+        $this->addArgument(static::ARGUMENT_TABLE_ALIAS, InputArgument::REQUIRED, 'Module name with DB table alias, e.g. `Wishlist.spy_wishlist`, `Tax.spy_tax_set`, etc.');
     }
 
     /**
@@ -48,7 +48,7 @@ class UuidGeneratorConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $updatedRecordCount = $this->getFacade()
-            ->generateUuids($input->getArgument(static::ARGUMENT_TABLE));
+            ->generateUuids($input->getArgument(static::ARGUMENT_TABLE_ALIAS));
 
         $this->info(sprintf(static::SUCCESS_MESSAGE, $updatedRecordCount));
     }

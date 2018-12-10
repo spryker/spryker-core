@@ -21,12 +21,14 @@ class UtilUuidGeneratorFacade extends AbstractFacade implements UtilUuidGenerato
      *
      * @api
      *
+     * @param string $tableAlias
+     *
      * @return int
      */
-    public function generateUuids(string $tableName): int
+    public function generateUuids(string $tableAlias): int
     {
         return $this->getFactory()
             ->createUuidGenerator()
-            ->generate($tableName);
+            ->generate($tableAlias);
     }
 }

@@ -16,9 +16,9 @@ interface UtilUuidGeneratorFacadeInterface
      *
      * @api
      *
-     * @param string $tableName
+     * @param string $tableAlias
      *
      * @return int
      */
-    public function generateUuids(string $tableName): int;
+    public function generateUuids(string $tableAlias): int;
 }

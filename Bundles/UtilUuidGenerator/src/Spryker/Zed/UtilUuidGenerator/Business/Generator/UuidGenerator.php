@@ -35,16 +35,16 @@ class UuidGenerator implements UuidGeneratorInterface
     }
 
     /**
-     * @param string $tableName
+     * @param string $tableAlias
      *
      * @return int
      */
-    public function generate(string $tableName): int
+    public function generate(string $tableAlias): int
     {
-        if (!$this->repository->hasUuidField($tableName)) {
+        if (!$this->repository->hasUuidField($tableAlias)) {
             return 0;
         }
 
-        return $this->entityManager->fillEmptyUuids($tableName);
+        return $this->entityManager->fillEmptyUuids($tableAlias);
     }
 }
