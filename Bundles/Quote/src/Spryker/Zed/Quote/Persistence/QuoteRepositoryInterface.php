@@ -71,4 +71,11 @@ interface QuoteRepositoryInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer;
+
+    /**
+     * @param string $uuidQuote
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    public function findQuoteByUuid(string $uuidQuote): ?QuoteTransfer;
 }
