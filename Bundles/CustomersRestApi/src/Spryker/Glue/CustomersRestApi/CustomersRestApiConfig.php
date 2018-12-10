@@ -24,7 +24,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_MESSAGE_CUSTOMER_ALREADY_EXISTS = 'Customer with this email already exists.';
 
     public const RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER = '401';
-    public const RESPONSE_MESSAGE_CUSTOMER_CANT_REGISTER_CUSTOMER = 'Can`t register a customer.';
+    public const RESPONSE_MESSAGE_CUSTOMER_CANT_REGISTER_CUSTOMER = 'Can\'t register a customer.';
 
     public const RESPONSE_CODE_CUSTOMER_NOT_FOUND = '402';
     public const RESPONSE_DETAILS_CUSTOMER_NOT_FOUND = 'Customer not found.';
@@ -39,9 +39,11 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAILS_CUSTOMER_REFERENCE_MISSING = 'Customer reference is missing.';
 
     public const RESPONSE_CODE_PASSWORDS_DONT_MATCH = '406';
-    public const RESPONSE_DETAILS_PASSWORDS_DONT_MATCH = 'Passwords don\'t match.';
+    public const RESPONSE_DETAILS_PASSWORDS_DONT_MATCH = 'Value in field %s should be identical to value in the %s field.';
 
     public const RESPONSE_CODE_PASSWORD_CHANGE_FAILED = '407';
+    public const RESPONSE_DETAILS_PASSWORD_CHANGE_FAILED = 'Failed to change password.';
+
     public const RESPONSE_CODE_INVALID_PASSWORD = '408';
     public const RESPONSE_DETAILS_INVALID_PASSWORD = 'Invalid password';
 
@@ -65,6 +67,9 @@ class CustomersRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_RESTORE_PASSWORD_KEY_INVALID = '415';
     public const RESPONSE_DETAILS_RESTORE_PASSWORD_KEY_INVALID = 'Restore password key is not valid.';
+
+    public const RESPONSE_CODE_CUSTOMER_EMAIL_INVALID = '416';
+    public const RESPONSE_MESSAGE_CUSTOMER_EMAIL_INVALID = 'Invalid Email address format.';
 
     public const FORMAT_SELF_LINK_ADDRESS_RESOURCE = '%s/%s/%s/%s';
 }
