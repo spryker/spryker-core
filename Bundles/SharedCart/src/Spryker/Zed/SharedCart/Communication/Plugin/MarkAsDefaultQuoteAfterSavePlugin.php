@@ -31,7 +31,7 @@ class MarkAsDefaultQuoteAfterSavePlugin extends AbstractPlugin implements QuoteW
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if (strcmp($quoteTransfer->getCustomer()->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0) {
+        if ($quoteTransfer->getCustomer()->getCustomerReference() === $quoteTransfer->getCustomerReference()) {
             return $quoteTransfer;
         }
 

@@ -10,6 +10,7 @@ namespace Spryker\Client\PriceProductStorage\Storage;
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface;
+use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface;
 
 class PriceConcreteResolver implements PriceConcreteResolverInterface
 {
@@ -24,6 +25,11 @@ class PriceConcreteResolver implements PriceConcreteResolverInterface
     protected $priceConcreteStorageReader;
 
     /**
+     * @var \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface
+     */
+    protected $priceProductService;
+
+    /**
      * @var \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface
      */
     protected $priceProductClient;
@@ -31,15 +37,18 @@ class PriceConcreteResolver implements PriceConcreteResolverInterface
     /**
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface $priceAbstractStorageReader
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface $priceConcreteStorageReader
+     * @param \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface $priceProductService
      * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface $priceProductClient
      */
     public function __construct(
         PriceAbstractStorageReaderInterface $priceAbstractStorageReader,
         PriceConcreteStorageReaderInterface $priceConcreteStorageReader,
+        PriceProductStorageToPriceProductServiceInterface $priceProductService
         PriceProductStorageToPriceProductInterface $priceProductClient
     ) {
         $this->priceAbstractStorageReader = $priceAbstractStorageReader;
         $this->priceConcreteStorageReader = $priceConcreteStorageReader;
+        $this->priceProductService = $priceProductService;
         $this->priceProductClient = $priceProductClient;
     }
 
@@ -51,15 +60,16 @@ class PriceConcreteResolver implements PriceConcreteResolverInterface
      */
     public function resolvePriceProductConcrete(int $idProductConcrete, int $idProductAbstract): array
     {
-        $priceProductTransfers = $this->priceConcreteStorageReader
+        $concretePriceProductTransfers = $this->priceConcreteStorageReader
             ->findPriceProductConcreteTransfers($idProductConcrete);
 
-        if (!$priceProductTransfers) {
-            return $this->priceAbstractStorageReader
+        $abstractPriceProductTransfers = $this->priceAbstractStorageReader
                 ->findPriceProductAbstractTransfers($idProductAbstract);
-        }
 
-        return $priceProductTransfers;
+        return $this->priceProductService->mergeConcreteAndAbstractPrices(
+            $abstractPriceProductTransfers,
+            $concretePriceProductTransfers
+        );
     }
 
     /**

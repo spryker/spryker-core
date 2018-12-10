@@ -29,6 +29,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     public const SUGGESTION_RESULT_FORMATTER_PLUGINS = 'suggestion result formatter plugins';
     public const PLUGIN_FACET_CONFIG_TRANSFER_BUILDERS = 'PLUGIN_FACET_CONFIG_TRANSFER_BUILDERS';
     public const PLUGIN_SORT_CONFIG_TRANSFER_BUILDERS = 'PLUGIN_SORT_CONFIG_TRANSFER_BUILDERS';
+    public const PLUGINS_CATALOG_SEARCH_COUNT_QUERY_EXPANDER = 'PLUGINS_CATALOG_SEARCH_COUNT_QUERY_EXPANDER';
     public const PLUGIN_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY = 'PLUGIN_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY';
     public const PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER = 'PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER';
     public const PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER';
@@ -52,6 +53,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
         $container = $this->addSuggestionResultFormatterPlugins($container);
         $container = $this->addFacetConfigTransferBuilderPlugins($container);
         $container = $this->addSortConfigTransferBuilderPlugins($container);
+        $container = $this->addCatalogSearchCountQueryExpanderPlugins($container);
         $container = $this->addProductConcreteCatalogSearchResultFormatterPlugins($container);
         $container = $this->addProductConcreteCatalogSearchQueryPlugin($container);
         $container = $this->addProductConcreteCatalogSearchQueryExpanderPlugins($container);
@@ -191,6 +193,19 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
+    protected function addCatalogSearchCountQueryExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CATALOG_SEARCH_COUNT_QUERY_EXPANDER] = function () {
+            return $this->createCatalogSearchCountQueryExpanderPlugins();
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
     protected function addProductConcreteCatalogSearchResultFormatterPlugins(Container $container): Container
     {
         $container[static::PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER] = function (Container $container) {
@@ -302,6 +317,14 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      * @return \Spryker\Client\Catalog\Dependency\Plugin\SortConfigTransferBuilderPluginInterface[]
      */
     protected function getSortConfigTransferBuilderPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     */
+    protected function createCatalogSearchCountQueryExpanderPlugins(): array
     {
         return [];
     }

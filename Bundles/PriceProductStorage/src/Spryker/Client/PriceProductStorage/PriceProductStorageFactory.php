@@ -8,6 +8,7 @@
 namespace Spryker\Client\PriceProductStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface;
 use Spryker\Client\PriceProductStorage\Expander\ProductViewPriceExpander;
 use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReader;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolver;
@@ -27,7 +28,8 @@ class PriceProductStorageFactory extends AbstractFactory
         return new ProductViewPriceExpander(
             $this->createPriceAbstractStorageReader(),
             $this->createPriceConcreteStorageReader(),
-            $this->getPriceProductClient()
+            $this->getPriceProductClient(),
+            $this->getPriceProductService()
         );
     }
 
@@ -67,6 +69,7 @@ class PriceProductStorageFactory extends AbstractFactory
         return new PriceConcreteResolver(
             $this->createPriceAbstractStorageReader(),
             $this->createPriceConcreteStorageReader(),
+            $this->getPriceProductService(),
             $this->getPriceProductClient()
         );
     }
@@ -109,6 +112,14 @@ class PriceProductStorageFactory extends AbstractFactory
     public function getSynchronizationService()
     {
         return $this->getProvidedDependency(PriceProductStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface
+     */
+    public function getPriceProductService(): PriceProductStorageToPriceProductServiceInterface
+    {
+        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::SERVICE_PRICE_PRODUCT);
     }
 
     /**
