@@ -20,3 +20,22 @@ Template:,Template:
 "Valid to:","Valid to (excluded):"
 "View CMS Block:","View CMS Block:"
 yes,Yes
+"Block Id","Block Id"
+Template,Template
+Stores, Stores
+"Store relation", "Store relation"
+Name, Name
+"Valid from", "Valid from"
+"Valid to", "Valid to"
+"Categories: top", "Categories: top"
+"Categories: middle", "Categories: middle"
+"Categories: bottom", "Categories: bottom"
+"Invalid data provided.", "Invalid data provided."
+"Selected template doesn't exist anymore.", "Selected template doesn't exist anymore."
+"CMS Block was created successfully.", "CMS Block was created successfully."
+"Selected template doesn't exist anymore", "Selected template doesn't exist anymore"
+"CMS Block was updated successfully.", "CMS Block was updated successfully."
+"CMS Block was deactivated successfully.", "CMS Block was deactivated successfully."
+"CMS Block was deactivated successfully.", "CMS Block was deactivated successfully."
+"Selected template doesn't exist anymore", "Selected template doesn't exist anymore"
+"Placeholder translations successfully updated.", "Placeholder translations successfully updated."
