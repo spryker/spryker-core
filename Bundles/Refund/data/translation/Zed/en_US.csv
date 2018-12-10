@@ -2,3 +2,7 @@ Amount,Amount
 Comment,Comment
 "Overview of Refunds","Overview of Refunds"
 Time,Time
+"Refund Id","Refund Id"
+"Sales Order Id","Sales Order Id"
+"Refund date","Refund date"
+
