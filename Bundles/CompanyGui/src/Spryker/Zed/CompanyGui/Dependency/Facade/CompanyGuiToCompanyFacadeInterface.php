@@ -32,4 +32,11 @@ interface CompanyGuiToCompanyFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
     public function create(CompanyTransfer $companyTransfer): CompanyResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function findCompanyById(CompanyTransfer $companyTransfer): ?CompanyTransfer;
 }

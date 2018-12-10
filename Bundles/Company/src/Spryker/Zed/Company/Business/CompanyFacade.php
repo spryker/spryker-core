@@ -86,4 +86,18 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     {
         return $this->getRepository()->getCompanies();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function findCompanyById(CompanyTransfer $companyTransfer): ?CompanyTransfer
+    {
+        return $this->getRepository()->findCompanyById($companyTransfer);
+    }
 }

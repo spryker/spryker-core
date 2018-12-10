@@ -45,4 +45,16 @@ interface CompanyRepositoryInterface
      * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
      */
     public function getCompanies(): CompanyCollectionTransfer;
+
+    /**
+     * Specification:
+     *  - Finds a company by CompanyTransfer::idCompany in the transfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer|null
+     */
+    public function findCompanyById(CompanyTransfer $companyTransfer): ?CompanyTransfer;
 }
