@@ -29,6 +29,7 @@ class MultiCartsRestApiDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container = parent::provideDependencies($container);
         $container = $this->addMultiCartClient($container);
+        $container = $this->addPersistentCartClient($container);
 
         return $container;
     }
