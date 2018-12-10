@@ -39,7 +39,6 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
             }
 
             $allowedQuantities = array_reverse(range($min, $max, $interval));
-
             $quantity = $this->getNearestQuantityFromAllowed($quantity, $allowedQuantities);
         }
 
