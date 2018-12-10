@@ -34,7 +34,12 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
         if ($interval && ($quantity - $min) % $interval !== 0) {
             $max = $max ?? ($quantity + $interval);
 
+            if ($quantity - $interval > $min) {
+                $min = round(($quantity - $interval)/$interval) * $interval;
+            }
+
             $allowedQuantities = array_reverse(range($min, $max, $interval));
+
             $quantity = $this->getNearestQuantityFromAllowed($quantity, $allowedQuantities);
         }
 
