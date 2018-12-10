@@ -9,10 +9,10 @@
     "spryker/oauth-customer-connector-extension": "1.0.0"
   },
   "require-dev": {
+    "spryker/business-on-behalf": "*",
     "spryker/code-sniffer": "*",
     "spryker/company": "*",
     "spryker/company-business-unit": "*",
-    "spryker/company-user": "*",
     "spryker/customer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"

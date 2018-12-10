@@ -11,6 +11,7 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
+use Spryker\Zed\BusinessOnBehalf\Business\BusinessOnBehalfFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -48,7 +49,7 @@ class CompanyUsersRestApiFacadeTest extends Test
         parent::setUp();
 
         $this->customerTransfer = $this->tester->haveCustomer();
-        $this->businessOnBehalfFacade = $this->tester->getLocator()->businessOnBehalf()->facade();
+        $this->businessOnBehalfFacade = $this->getBusinessOnBehalfFacade();
     }
 
     /**
@@ -179,5 +180,13 @@ class CompanyUsersRestApiFacadeTest extends Test
 
         // Assert
         $this->assertEquals(null, $expandedCustomerIdentifierTransfer->getIdCompanyUser());
+    }
+
+    /**
+     * @return \Spryker\Zed\BusinessOnBehalf\Business\BusinessOnBehalfFacadeInterface
+     */
+    protected function getBusinessOnBehalfFacade(): BusinessOnBehalfFacadeInterface
+    {
+        return $this->tester->getLocator()->businessOnBehalf()->facade();
     }
 }
