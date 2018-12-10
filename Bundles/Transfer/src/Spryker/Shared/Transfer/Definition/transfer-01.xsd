@@ -30,16 +30,9 @@
                                         <xsd:attribute type="restRequestParameterType" name="restRequestParameter" use="optional"/>
                                     </xsd:complexType>
                                 </xsd:element>
-                                <xsd:element name="implements" maxOccurs="unbounded" minOccurs="0">
-                                    <xsd:complexType mixed="true">
-                                        <xsd:attribute type="xsd:string" name="type" use="required" />
-                                    </xsd:complexType>
-                                </xsd:element>
                             </xsd:choice>
                         </xsd:sequence>
                         <xsd:attribute type="xsd:string" name="name" use="required"/>
-                        <xsd:attribute type="xsd:boolean" name="createCollection" use="optional" />
-                        <xsd:attribute type="xsd:string" name="subFolder" use="optional"/>
                         <xsd:attribute type="xsd:string" name="deprecated" use="optional"/>
                     </xsd:complexType>
                 </xsd:element>
