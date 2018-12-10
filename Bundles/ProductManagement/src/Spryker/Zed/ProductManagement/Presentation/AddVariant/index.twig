@@ -1,0 +1,55 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% form_theme form with [
+    '@ProductManagement/_partials/no-label-checkbox-theme.twig',
+    '@ProductManagement/_partials/product-image-set-theme.twig',
+    '@ProductManagement/_partials/product-image-collection-theme.twig',
+]%}
+
+{% if widget_title is not defined %}
+    {% set widget_title = ('Add Product Concrete' | trans) %}
+{% endif %}
+
+{% if submit_title is not defined %}
+    {% set submit_title = 'Save' | trans %}
+{% endif %}
+
+{% block head_title -%}
+    {{ widget_title | trans }}
+{%- endblock %}
+
+{% block action %}
+    {{ backActionButton('/product-management', 'List Products' | trans) }}
+
+    {{ backActionButton('/product-management/edit?id-product-abstract=' ~ productAbstract.idProductAbstract, 'Edit Product Abstract' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {{ form_start(form, { 'attr': {'class': 'kv_autocomplete_form'} }) }}
+
+    {{ form_errors(form) }}
+
+    {{ tabs(productConcreteFormAddTabs, {
+        'form': form,
+        'currentLocale': currentLocale,
+        'localeCollection': localeCollection,
+        'attributeLocaleCollection': attributeLocaleCollection,
+        'submit_title': submit_title,
+        'idProductAbstract': productAbstract.idProductAbstract,
+        'bundledProductTable' : bundledProductTable
+    }) }}
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-productmanagement-main.css" />
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productmanagement-main.js"></script>
+{% endblock %}

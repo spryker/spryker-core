@@ -214,10 +214,12 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
      */
     protected function getCalculatedDiscountQuantity(SpySalesDiscount $salesOrderDiscountEntity)
     {
-        if (!$salesOrderDiscountEntity->getOrderItem()) {
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem|null $salesOrderItemEntity */
+        $salesOrderItemEntity = $salesOrderDiscountEntity->getOrderItem();
+        if (!$salesOrderItemEntity) {
             return 1;
         }
 
-        return $salesOrderDiscountEntity->getOrderItem()->getQuantity();
+        return $salesOrderItemEntity->getQuantity();
     }
 }

@@ -94,6 +94,11 @@ abstract class AbstractTable
     protected $dataTablesTransfer;
 
     /**
+     * @var \Twig_Environment
+     */
+    protected $twig;
+
+    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
@@ -137,6 +142,7 @@ abstract class AbstractTable
             $config->setPageLength($this->getLimit());
             $config = $this->configure($config);
             $this->setConfiguration($config);
+            $this->twig = $this->getTwig();
         }
 
         return $this;
@@ -238,7 +244,7 @@ abstract class AbstractTable
     {
         $callback = function (&$value, $key) use ($safeColumns) {
             if (!in_array($key, $safeColumns)) {
-                $value = \twig_escape_filter(new Twig_Environment(new Twig_Loader_Filesystem()), $value);
+                $value = twig_escape_filter(new Twig_Environment(new Twig_Loader_Filesystem()), $value);
             }
 
             return $value;
@@ -538,7 +544,7 @@ abstract class AbstractTable
             'config' => $this->prepareConfig(),
         ];
 
-        return $this->getTwig()
+        return $this->twig
             ->render('index.twig', $twigVars);
     }
 
@@ -880,7 +886,7 @@ abstract class AbstractTable
         $options['form'] = $form->createView();
         $options['title'] = $title;
 
-        return $this->getTwig()->render('delete-form.twig', $options);
+        return $this->twig->render('delete-form.twig', $options);
     }
 
     /**

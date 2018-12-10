@@ -15,6 +15,9 @@ use Spryker\Zed\CmsStorage\Dependency\QueryContainer\CmsStorageToLocaleQueryCont
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsStorage\CmsStorageConfig getConfig()
+ */
 class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_CMS_PAGE = 'QUERY_CONTAINER_CMS_PAGE';

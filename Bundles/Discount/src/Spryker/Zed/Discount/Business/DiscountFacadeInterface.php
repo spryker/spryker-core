@@ -330,12 +330,15 @@ interface DiscountFacadeInterface
     public function updateDiscount(DiscountConfiguratorTransfer $discountConfigurator);
 
     /**
+     *
      * Specification:
      * - Read idDiscount from persistence
      * - Hydrate data from entities to DiscountConfiguratorTransfer
      * - return DiscountConfiguratorTransfer
      *
      * @api
+     *
+     * @deprecated Use `findHydratedDiscountConfiguratorByIdDiscount()` instead.
      *
      * @param int $idDiscount
      *
@@ -534,4 +537,18 @@ interface DiscountFacadeInterface
      * @return void
      */
     public function checkDiscountChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void;
+
+    /**
+     * Specification:
+     * - Finds discount by id.
+     * - Hydrates data from entity to DiscountConfiguratorTransfer.
+     * - Returns NULL if discount doesn't exist.
+     *
+     * @api
+     *
+     * @param int $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null
+     */
+    public function findHydratedDiscountConfiguratorByIdDiscount(int $idDiscount): ?DiscountConfiguratorTransfer;
 }

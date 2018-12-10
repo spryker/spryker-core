@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
-use Spryker\Zed\CompanyBusinessUnit\Persistence\Propel\AbstractSpyCompanyBusinessUnitQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -70,6 +70,8 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
                     ->filterByIdCompanyUser($criteriaFilterTransfer->getIdCompanyUser())
                 ->endUse();
         }
+
+        $this->filterCompanyBusinessUnitCollection($query, $criteriaFilterTransfer);
 
         $collection = $this->buildQueryFromCriteria($query, $criteriaFilterTransfer->getFilter());
         $collection = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
@@ -172,9 +174,9 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnit\Persistence\Propel\AbstractSpyCompanyBusinessUnitQuery
+     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
      */
-    protected function getSpyCompanyBusinessUnitQuery(): AbstractSpyCompanyBusinessUnitQuery
+    protected function getSpyCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
     {
         return $this->getFactory()
             ->createCompanyBusinessUnitQuery()
@@ -199,5 +201,20 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
             ->setLastPage($paginationModel->getLastPage())
             ->setNextPage($paginationModel->getNextPage())
             ->setPreviousPage($paginationModel->getPreviousPage());
+    }
+
+    /**
+     * @param \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery $companyBusinessUnitQuery
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return void
+     */
+    protected function filterCompanyBusinessUnitCollection(
+        SpyCompanyBusinessUnitQuery $companyBusinessUnitQuery,
+        CompanyBusinessUnitCriteriaFilterTransfer $criteriaFilterTransfer
+    ): void {
+        if ($criteriaFilterTransfer->getCompanyBusinessUnitIds()) {
+            $companyBusinessUnitQuery->filterByIdCompanyBusinessUnit_In($criteriaFilterTransfer->getCompanyBusinessUnitIds());
+        }
     }
 }

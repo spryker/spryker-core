@@ -22,6 +22,8 @@ use Spryker\Zed\ShoppingList\Business\Model\ShoppingListSharer;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListSharerInterface;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriter;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriterInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingList\ShoppingListShareDeleter;
+use Spryker\Zed\ShoppingList\Business\ShoppingList\ShoppingListShareDeleterInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutor;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface;
@@ -48,7 +50,8 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getProductFacade(),
             $this->getCompanyUserFacade(),
-            $this->createShoppingListItemPluginExecutor()
+            $this->createShoppingListItemPluginExecutor(),
+            $this->getMessengerFacade()
         );
     }
 
@@ -59,10 +62,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     {
         return new ShoppingListWriter(
             $this->getEntityManager(),
-            $this->getProductFacade(),
             $this->getRepository(),
-            $this->getConfig(),
-            $this->getMessengerFacade(),
             $this->getEventFacade(),
             $this->createShoppingListItemOperation(),
             $this->createShoppingListReader(),
@@ -119,6 +119,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteToShoppingListConverter(
             $this->createShoppingListResolver(),
+            $this->getRepository(),
             $this->getPersistentCartFacade(),
             $this->createShoppingListItemOperation(),
             $this->getQuoteItemExpanderPlugins(),
@@ -159,6 +160,19 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     public function createShoppingListPermissionInstaller(): ShoppingListPermissionInstallerInterface
     {
         return new ShoppingListPermissionInstaller($this->getConfig(), $this->getEntityManager(), $this->getPermissionFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\ShoppingList\ShoppingListShareDeleterInterface
+     */
+    public function createShoppingListShareDeleter(): ShoppingListShareDeleterInterface
+    {
+        return new ShoppingListShareDeleter(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->getCompanyUserFacade(),
+            $this->getEventFacade()
+        );
     }
 
     /**

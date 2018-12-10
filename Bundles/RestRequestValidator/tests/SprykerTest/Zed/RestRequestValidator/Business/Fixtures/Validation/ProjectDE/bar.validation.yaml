@@ -1,0 +1,19 @@
+endpoint_three:
+  post:
+    stringField:
+    - Regex:
+        pattern: '/\w*/'
+    integerField:
+    - Regex:
+        pattern: '/\d{6}/'
+    nestedField:
+      - Collection:
+          fields:
+            test:
+              - Regex:
+                  pattern: '/\d{15}/'
+            test_email:
+              - Email
+  patch:
+    booleanField:
+    - IsFalse

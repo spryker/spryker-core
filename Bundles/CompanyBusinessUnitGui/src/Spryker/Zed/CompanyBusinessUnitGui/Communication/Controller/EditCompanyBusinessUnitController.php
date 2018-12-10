@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitGui\Communication\CompanyBusinessUnitGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyBusinessUnitGui\Business\CompanyBusinessUnitGuiFacadeInterface getFacade()
  */
 class EditCompanyBusinessUnitController extends AbstractController
 {
@@ -24,6 +25,9 @@ class EditCompanyBusinessUnitController extends AbstractController
      * @see ListCompanyBusinessUnitController::indexAction()
      */
     protected const URL_BUSINESS_UNIT_LIST = '/company-business-unit-gui/list-company-business-unit';
+
+    protected const MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_SUCCESS = 'Company Business Unit "%s" has been updated.';
+    protected const MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_ERROR = 'Company Business Unit "%s" has not been updated. A Business Unit cannot be set as a child to an own child Business Unit, please check the Business Unit hierarchy.';
 
     protected const MESSAGE_BUSINESS_UNIT_NOT_FOUND = 'Company business unit not found';
 
@@ -60,9 +64,10 @@ class EditCompanyBusinessUnitController extends AbstractController
                 ->update($companyBusinessUnitTransfer);
 
             if (!$companyResponseTransfer->getIsSuccessful()) {
-                foreach ($companyResponseTransfer->getMessages() as $message) {
-                    $this->addErrorMessage($message->getText());
-                }
+                $this->addErrorMessage(sprintf(
+                    static::MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_ERROR,
+                    $companyBusinessUnitTransfer->getName()
+                ));
 
                 return $this->viewResponse([
                     'form' => $form->createView(),
@@ -70,9 +75,10 @@ class EditCompanyBusinessUnitController extends AbstractController
                 ]);
             }
 
-            foreach ($companyResponseTransfer->getMessages() as $message) {
-                $this->addSuccessMessage($message->getText());
-            }
+            $this->addSuccessMessage(sprintf(
+                static::MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_SUCCESS,
+                $companyBusinessUnitTransfer->getName()
+            ));
 
             return $this->redirectResponse($redirectUrl);
         }

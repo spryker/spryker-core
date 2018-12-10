@@ -8,11 +8,13 @@
 namespace Spryker\Zed\ProductOption\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use PDO;
@@ -99,6 +101,39 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         return $this->getFactory()
             ->createProductOptionValueQuery()
             ->filterByIdProductOptionValue($idProductOptionValue);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryProductOptionGroupByProductOptionValueId(int $idProductOptionValue): SpyProductOptionGroupQuery
+    {
+        return $this->getFactory()
+            ->createProductOptionGroupQuery()
+            ->filterByActive(true)
+            ->useSpyProductOptionValueQuery()
+                ->filterByIdProductOptionValue($idProductOptionValue)
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
+     */
+    public function queryProductOptionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer)
+    {
+        $productOptionCriteriaTransfer->requireProductOptionIds();
+
+        return $this->getFactory()
+            ->createProductOptionValueQuery()
+            ->filterByIdProductOptionValue_In($productOptionCriteriaTransfer->getProductOptionIds());
     }
 
     /**

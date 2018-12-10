@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
+use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface;
+use Spryker\Zed\PersistentCart\PersistentCartConfig;
 
 class QuoteResolver implements QuoteResolverInterface
 {
@@ -37,29 +39,45 @@ class QuoteResolver implements QuoteResolverInterface
     protected $messengerFacade;
 
     /**
+     * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
+     * @var \Spryker\Zed\PersistentCart\PersistentCartConfig
+     */
+    protected $persistentCartConfig;
+
+    /**
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface $quoteResponseExpander
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeInterface $messengerFacade
+     * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\PersistentCart\PersistentCartConfig $persistentCartConfig
      */
     public function __construct(
         PersistentCartToQuoteFacadeInterface $quoteFacade,
         QuoteResponseExpanderInterface $quoteResponseExpander,
-        PersistentCartToMessengerFacadeInterface $messengerFacade
+        PersistentCartToMessengerFacadeInterface $messengerFacade,
+        PersistentCartToStoreFacadeInterface $storeFacade,
+        PersistentCartConfig $persistentCartConfig
     ) {
         $this->quoteFacade = $quoteFacade;
         $this->quoteResponseExpander = $quoteResponseExpander;
         $this->messengerFacade = $messengerFacade;
+        $this->storeFacade = $storeFacade;
+        $this->persistentCartConfig = $persistentCartConfig;
     }
 
     /**
-     * @param int $idQuote
+     * @param int|null $idQuote
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer|null $quoteUpdateRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function resolveCustomerQuote(
-        int $idQuote,
+        ?int $idQuote,
         CustomerTransfer $customerTransfer,
         ?QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null
     ): QuoteResponseTransfer {
@@ -124,7 +142,8 @@ class QuoteResolver implements QuoteResolverInterface
     protected function resolveDefaultCustomerQuote(CustomerTransfer $customerTransfer): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
-        $customerQuoteTransfer = $this->quoteFacade->findQuoteByCustomer($customerTransfer);
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $customerQuoteTransfer = $this->quoteFacade->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
         if ($customerQuoteTransfer->getIsSuccessful()) {
             $quoteTransfer = $customerQuoteTransfer->getQuoteTransfer();
         }
@@ -162,7 +181,8 @@ class QuoteResolver implements QuoteResolverInterface
      */
     protected function isQuoteReadAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
     {
-        return strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0
+        return $customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()
+            || $this->isAnonymousCustomerQuote($quoteTransfer->getCustomerReference())
             || ($customerTransfer->getCompanyUserTransfer()
                 && $this->can('ReadSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
             );
@@ -191,5 +211,17 @@ class QuoteResolver implements QuoteResolverInterface
         $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return bool
+     */
+    protected function isAnonymousCustomerQuote(string $customerReference): bool
+    {
+        $anonymousPrefix = $this->persistentCartConfig->getPersistentCartAnonymousPrefix();
+
+        return strncasecmp($anonymousPrefix, $customerReference, strlen($anonymousPrefix)) === 0;
     }
 }
