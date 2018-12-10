@@ -70,7 +70,7 @@ class SalesConfig extends AbstractBundleConfig
     {
         $isTestOrder = false;
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer){
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $shippingAddressTransfer = $itemTransfer->getShipment()->getShippingAddress();
 
             if ($shippingAddressTransfer->getFirstName() === self::TEST_CUSTOMER_FIRST_NAME) {

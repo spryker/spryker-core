@@ -16,5 +16,4 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
 }

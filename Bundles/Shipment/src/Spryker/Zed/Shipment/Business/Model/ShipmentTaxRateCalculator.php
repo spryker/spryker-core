@@ -42,7 +42,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer){
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getMethod() === null) {
                 continue;
             }
