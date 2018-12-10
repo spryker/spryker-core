@@ -31,9 +31,9 @@ class ProductAbstractViewTransferFinder extends ProductViewTransferFinderAbstrac
      * @param int $idProductAbstract
      * @param string $localeName
      *
-     * @return array
+     * @return array|null
      */
-    protected function getProductStorageData(int $idProductAbstract, string $localeName): array
+    protected function findProductStorageData(int $idProductAbstract, string $localeName): ?array
     {
         return $this->productAbstractStorage->findProductAbstractStorageData($idProductAbstract, $localeName);
     }

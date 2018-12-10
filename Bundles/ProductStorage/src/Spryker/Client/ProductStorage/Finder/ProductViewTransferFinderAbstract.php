@@ -35,7 +35,7 @@ abstract class ProductViewTransferFinderAbstract implements ProductViewTransferF
      */
     public function findProductViewTransfer(int $idProduct, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
     {
-        $data = $this->getProductStorageData($idProduct, $localeName);
+        $data = $this->findProductStorageData($idProduct, $localeName);
         if ($data === null) {
             return null;
         }
@@ -53,5 +53,5 @@ abstract class ProductViewTransferFinderAbstract implements ProductViewTransferF
      *
      * @return array|null
      */
-    abstract protected function getProductStorageData(int $idProduct, string $localeName): ?array;
+    abstract protected function findProductStorageData(int $idProduct, string $localeName): ?array;
 }
