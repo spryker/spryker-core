@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/content-gui.svg)](https://travis-ci.org/spryker/content-gui)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/content-gui/badge.svg)](https://coveralls.io/github/spryker/content-gui)
 
-{{ADD DESCRIPTION HERE}}
+This module provides Zed UI interface for content management
 
 ## Installation
 

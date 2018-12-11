@@ -98,7 +98,7 @@ class ContentTable extends AbstractTable
         $contentItems = $this->runQuery($this->contentQuery, $config);
         $results = [];
 
-        foreach ($contentItems as $contentItem) {
+        foreach ($contentItems as $key => $contentItem) {
             $results[] = [
                 ContentTableConstants::COL_ID_CONTENT => $contentItem[SpyContentTableMap::COL_ID_CONTENT],
                 ContentTableConstants::COL_NAME => $contentItem[SpyContentTableMap::COL_NAME],
@@ -107,9 +107,8 @@ class ContentTable extends AbstractTable
                 ContentTableConstants::COL_UPDATED_AT => $this->utilDateTimeService->formatDateTime($contentItem[SpyContentTableMap::COL_UPDATED_AT]),
                 ContentTableConstants::COL_ACTIONS => $this->buildLinks($contentItem),
             ];
+            unset($contentItems[$key]);
         }
-
-        unset($contentItems);
 
         return $results;
     }

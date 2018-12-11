@@ -4,6 +4,7 @@
   "description": "Content module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/locale": "^3.1.0"
   },
   "require-dev": {
