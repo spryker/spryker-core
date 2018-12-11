@@ -464,10 +464,14 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         if ($priceMode === $this->priceFacade->getNetPriceModeIdentifier()) {
             $itemTransfer->setUnitNetPrice($unitPrice);
+            $itemTransfer->setUnitGrossPrice(0);
+            $itemTransfer->setSumGrossPrice(0);
             return;
         }
 
         $itemTransfer->setUnitGrossPrice($unitPrice);
+        $itemTransfer->setUnitNetPrice(0);
+        $itemTransfer->setSumNetPrice(0);
     }
 
     /**
