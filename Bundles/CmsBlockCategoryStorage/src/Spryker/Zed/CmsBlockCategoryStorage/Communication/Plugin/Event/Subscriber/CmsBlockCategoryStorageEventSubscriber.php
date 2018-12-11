@@ -8,8 +8,8 @@
 namespace Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Event\Subscriber;
 
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\CmsBlockCategoryConnectorEvents;
-use Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Event\Listener\CmsBlockCategoryConnectorPublishStorageListener;
-use Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Event\Listener\CmsBlockCategoryConnectorStorageListener;
+use Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Event\Listener\CmsBlockCategoryConnectorStoragePublishListener;
+use Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Event\Listener\CmsBlockCategoryConnectorStorageUnpublishListener;
 use Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Event\Listener\CmsBlockCategoryPositionStorageListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
@@ -51,7 +51,7 @@ class CmsBlockCategoryStorageEventSubscriber extends AbstractPlugin implements E
      */
     protected function addCmsBlockCategoryConnectorPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_PUBLISH, new CmsBlockCategoryConnectorPublishStorageListener());
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_PUBLISH, new CmsBlockCategoryConnectorStoragePublishListener());
     }
 
     /**
@@ -61,7 +61,7 @@ class CmsBlockCategoryStorageEventSubscriber extends AbstractPlugin implements E
      */
     protected function addCmsBlockCategoryConnectorUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_UNPUBLISH, new CmsBlockCategoryConnectorPublishStorageListener());
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_UNPUBLISH, new CmsBlockCategoryConnectorStorageUnpublishListener());
     }
 
     /**
@@ -71,7 +71,7 @@ class CmsBlockCategoryStorageEventSubscriber extends AbstractPlugin implements E
      */
     protected function addCmsBlockCategoryConnectorCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_CREATE, new CmsBlockCategoryConnectorStorageListener());
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_CREATE, new CmsBlockCategoryConnectorStoragePublishListener());
     }
 
     /**
@@ -81,7 +81,7 @@ class CmsBlockCategoryStorageEventSubscriber extends AbstractPlugin implements E
      */
     protected function addCmsBlockCategoryConnectorUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_UPDATE, new CmsBlockCategoryConnectorStorageListener());
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_UPDATE, new CmsBlockCategoryConnectorStoragePublishListener());
     }
 
     /**
@@ -91,7 +91,7 @@ class CmsBlockCategoryStorageEventSubscriber extends AbstractPlugin implements E
      */
     protected function addCmsBlockCategoryConnectorDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_DELETE, new CmsBlockCategoryConnectorStorageListener());
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_DELETE, new CmsBlockCategoryConnectorStorageUnpublishListener());
     }
 
     /**

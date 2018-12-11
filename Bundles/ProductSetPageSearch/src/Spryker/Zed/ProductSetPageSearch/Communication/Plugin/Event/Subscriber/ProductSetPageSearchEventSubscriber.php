@@ -17,7 +17,8 @@ use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\Product
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageProductImageSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageProductImageSetImageSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageProductImageSetSearchListener;
-use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchListener;
+use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchPublishListener;
+use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchUnpublishListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageUrlSearchListener;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
@@ -80,7 +81,7 @@ class ProductSetPageSearchEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductSetPagePublishSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::PRODUCT_SET_PUBLISH, new ProductSetPageSearchListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::PRODUCT_SET_PUBLISH, new ProductSetPageSearchPublishListener());
     }
 
     /**
@@ -90,7 +91,7 @@ class ProductSetPageSearchEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductSetPageUnpublishSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::PRODUCT_SET_UNPUBLISH, new ProductSetPageSearchListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::PRODUCT_SET_UNPUBLISH, new ProductSetPageSearchUnpublishListener());
     }
 
     /**
@@ -100,7 +101,7 @@ class ProductSetPageSearchEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductSetPageCreateSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_CREATE, new ProductSetPageSearchListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_CREATE, new ProductSetPageSearchPublishListener());
     }
 
     /**
@@ -110,7 +111,7 @@ class ProductSetPageSearchEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductSetPageUpdateSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_UPDATE, new ProductSetPageSearchListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_UPDATE, new ProductSetPageSearchPublishListener());
     }
 
     /**
@@ -120,7 +121,7 @@ class ProductSetPageSearchEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductSetPageDeleteSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DELETE, new ProductSetPageSearchListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DELETE, new ProductSetPageSearchUnpublishListener());
     }
 
     /**
@@ -150,7 +151,7 @@ class ProductSetPageSearchEventSubscriber extends AbstractPlugin implements Even
      */
     protected function addProductSetDataPageDeleteSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_DELETE, new ProductSetDataPageSearchListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_DELETE, new ProductSetPageSearchUnpublishListener());
     }
 
     /**
