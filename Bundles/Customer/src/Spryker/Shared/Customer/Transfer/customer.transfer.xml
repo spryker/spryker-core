@@ -97,7 +97,7 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="skipAddressSaving" type="bool" />
+        <property name="isAddressSavingSkipped" type="bool" />
     </transfer>
 
 </transfers>
