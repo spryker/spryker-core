@@ -41,6 +41,7 @@ interface PriceProductStorageClientInterface
      *  - Returns a resolved concrete product price from storage.
      *  - Returns product concrete price data if it exists.
      *  - Returns product abstract price data otherwise.
+     *  - Merges concrete prices to abstract prices when both available.
      *
      * @api
      *
@@ -53,9 +54,10 @@ interface PriceProductStorageClientInterface
 
     /**
      * Specification:
-     * - Retrieves the provided filter specific item price.
+     * - Returns product price based on the provided PriceProductFilterTransfer.
      * - Uses product concrete prices when available.
      * - Uses product abstract prices as fall back.
+     * - Merges concrete prices to abstract prices when both available.
      *
      * @api
      *
