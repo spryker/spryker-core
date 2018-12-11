@@ -21,8 +21,11 @@ Keywords:,Schlüsselwörter:
 "List of CMS pages","Liste der CMS-Seiten"
 Locale,Locale
 "Meta Description",Meta-Beschreibung
-"Meta Keywords",Meta-Keywords
+"Meta Keywords",Meta-Schlüsselwörter
 "Meta Title",Meta-Titel
+Meta title,Meta-Titel
+Meta description,Meta-Beschreibung
+Meta keywords,Meta-Schlüsselwörter
 "Missing placeholders for selected template.","Fehlende Platzhalter für die ausgewählte Vorlage."
 n/a,k.A.
 Name,Name
@@ -45,3 +48,9 @@ View,Ansicht
 "View CMS Page:","CMS-Seite anzeigen:"
 Edit,Bearbeiten
 Placeholders,Platzhalter
+Meta Keywords,Meta-Schlüsselwörter
+Current Version,Aktuelle Version
+Selected Version,Ausgewählte Version
+General,Allgemeine
+Valid from,Gültig ab (inklusive):
+Valid to,Gültig bis (exklusive):
