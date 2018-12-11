@@ -9,7 +9,7 @@ namespace Spryker\Client\PriceProductStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductBridge;
+use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductClientBridge;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageBridge;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientBridge;
 use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceBridge;
@@ -70,7 +70,7 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
     protected function addPriceProductClient(Container $container): Container
     {
         $container[static::CLIENT_PRICE_PRODUCT] = function (Container $container) {
-            return new PriceProductStorageToPriceProductBridge($container->getLocator()->priceProduct()->client());
+            return new PriceProductStorageToPriceProductClientBridge($container->getLocator()->priceProduct()->client());
         };
 
         return $container;

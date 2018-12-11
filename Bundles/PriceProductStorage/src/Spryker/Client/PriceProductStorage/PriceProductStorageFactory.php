@@ -83,7 +83,7 @@ class PriceProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface
+     * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductClientInterface
      */
     public function getPriceProductClient()
     {
