@@ -16,7 +16,6 @@ use Spryker\Glue\Kernel\Container;
 class LogDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_QUEUE = 'CLIENT_QUEUE';
-
     public const LOG_PROCESSORS = 'LOG_PROCESSORS';
     public const LOG_HANDLERS = 'LOG_HANDLERS';
 
@@ -25,7 +24,7 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = $this->addQueueClient($container);
         $container = $this->addLogHandlers($container);
@@ -39,7 +38,7 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addQueueClient(Container $container)
+    protected function addQueueClient(Container $container): Container
     {
         $container[static::CLIENT_QUEUE] = function () use ($container) {
             return $container->getLocator()->queue()->client();
@@ -53,7 +52,7 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addLogHandlers(Container $container)
+    protected function addLogHandlers(Container $container): Container
     {
         $container[static::LOG_HANDLERS] = function () {
             return [];
@@ -67,7 +66,7 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addProcessors(Container $container)
+    protected function addProcessors(Container $container): Container
     {
         $container[static::LOG_PROCESSORS] = function () {
             return [];

@@ -15,7 +15,7 @@ class LogConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getChannelName()
+    public function getChannelName(): string
     {
         return $this->get(LogConstants::LOGGER_CHANNEL_GLUE, 'Glue');
     }
@@ -23,7 +23,7 @@ class LogConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getSanitizerFieldNames()
+    public function getSanitizerFieldNames(): array
     {
         return $this->get(LogConstants::LOG_SANITIZE_FIELDS, []);
     }
@@ -31,7 +31,7 @@ class LogConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getSanitizedFieldValue()
+    public function getSanitizedFieldValue(): string
     {
         return $this->get(LogConstants::LOG_SANITIZED_VALUE, '***');
     }
@@ -39,7 +39,7 @@ class LogConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getLogFilePath()
+    public function getLogFilePath(): string
     {
         if ($this->getConfig()->hasKey(LogConstants::LOG_FILE_PATH_GLUE)) {
             return $this->get(LogConstants::LOG_FILE_PATH_GLUE);
@@ -59,7 +59,7 @@ class LogConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getExceptionLogFilePath()
+    public function getExceptionLogFilePath(): string
     {
         if ($this->getConfig()->hasKey(LogConstants::EXCEPTION_LOG_FILE_PATH_GLUE)) {
             return $this->get(LogConstants::EXCEPTION_LOG_FILE_PATH_GLUE);
@@ -71,7 +71,7 @@ class LogConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return $this->get(LogConstants::LOG_QUEUE_NAME);
     }

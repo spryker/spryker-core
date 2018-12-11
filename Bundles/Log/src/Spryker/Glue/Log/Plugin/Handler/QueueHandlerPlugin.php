@@ -92,7 +92,7 @@ class QueueHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInter
      *
      * @return \Monolog\Handler\HandlerInterface
      */
-    public function setFormatter(FormatterInterface $formatter)
+    public function setFormatter(FormatterInterface $formatter): HandlerInterface
     {
         return $this->getHandler()->setFormatter($formatter);
     }
@@ -100,7 +100,7 @@ class QueueHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInter
     /**
      * @return \Monolog\Formatter\FormatterInterface
      */
-    public function getFormatter()
+    public function getFormatter(): FormatterInterface
     {
         return $this->getHandler()->getFormatter();
     }
