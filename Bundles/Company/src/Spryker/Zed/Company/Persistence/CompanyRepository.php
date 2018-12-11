@@ -77,6 +77,10 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
      */
     public function findCompanyById(CompanyTransfer $companyTransfer): ?CompanyTransfer
     {
+        if (!$companyTransfer->getIdCompany()) {
+            return null;
+        }
+
         $spyCompany = $this->getFactory()
             ->createCompanyQuery()
             ->filterByIdCompany($companyTransfer->getIdCompany())

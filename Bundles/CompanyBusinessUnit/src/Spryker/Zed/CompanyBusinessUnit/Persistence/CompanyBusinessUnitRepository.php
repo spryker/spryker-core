@@ -40,10 +40,6 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
             ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit);
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
 
-        if (!$entityTransfer) {
-            return new CompanyBusinessUnitTransfer();
-        }
-
         return $this->getFactory()
             ->createCompanyBusinessUnitMapper()
             ->mapEntityTransferToBusinessUnitTransfer($entityTransfer, new CompanyBusinessUnitTransfer());
@@ -147,6 +143,30 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
             ->select(static::COL_CUSTOMER_REFERENCE)
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function findCompanyBusinessUnitById(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitTransfer
+    {
+        if (!$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()) {
+            return null;
+        }
+
+        $query = $this->getSpyCompanyBusinessUnitQuery()
+            ->filterByIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
+        $companyBusinessUnitEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+
+        if (!$companyBusinessUnitEntityTransfer) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCompanyBusinessUnitMapper()
+            ->mapEntityTransferToBusinessUnitTransfer($companyBusinessUnitEntityTransfer, new CompanyBusinessUnitTransfer());
     }
 
     /**

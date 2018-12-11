@@ -82,4 +82,14 @@ class CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeBridge implements Company
         return $this->companyBusinessUnitFacade
             ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function findCompanyBusinessUnitById(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitTransfer
+    {
+        return $this->companyBusinessUnitFacade->findCompanyBusinessUnitById($companyBusinessUnitTransfer);
+    }
 }
