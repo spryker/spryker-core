@@ -12,17 +12,20 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
+use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 use Spryker\Zed\Sales\SalesConfig;
 
 class SalesOrderSaver implements SalesOrderSaverInterface
@@ -75,6 +78,11 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $salesOrderItemMapper;
 
     /**
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainer
+     */
+    protected $salesQueryContainer;
+
+    /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface $countryFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface $orderReferenceGenerator
@@ -84,6 +92,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      * @param \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[] $orderExpanderPreSavePlugins
      * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
      * @param \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface $salesOrderItemMapper
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainer $salesQueryContainer
      */
     public function __construct(
         SalesToCountryInterface $countryFacade,
@@ -94,7 +103,8 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         Store $store,
         $orderExpanderPreSavePlugins,
         SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor,
-        SalesOrderItemMapperInterface $salesOrderItemMapper
+        SalesOrderItemMapperInterface $salesOrderItemMapper,
+        SalesQueryContainer $salesQueryContainer
     ) {
         $this->countryFacade = $countryFacade;
         $this->omsFacade = $omsFacade;
@@ -105,6 +115,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $this->orderExpanderPreSavePlugins = $orderExpanderPreSavePlugins;
         $this->salesOrderSaverPluginExecutor = $salesOrderSaverPluginExecutor;
         $this->salesOrderItemMapper = $salesOrderItemMapper;
+        $this->salesQueryContainer = $salesQueryContainer;
     }
 
     /**
@@ -220,6 +231,26 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
+     */
+    protected function saveSalesShipment(ShipmentTransfer $shipmentTransfer): SpySalesShipment
+    {
+        $salesShipmentEntity = $this->salesQueryContainer->queryShipmentByTransfer($shipmentTransfer);
+
+        if($salesShipmentEntity !== null){
+            return $salesShipmentEntity;
+        }
+
+        $salesShipmentEntity = $this->createSalesShipmentEntity();
+        $this->hydrateSalesShipment($shipmentTransfer, $salesShipmentEntity);
+        $salesShipmentEntity->save();
+
+        return $salesShipmentEntity;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $salesOrderAddressEntity
      *
@@ -230,6 +261,20 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $salesOrderAddressEntity->fromArray($addressTransfer->toArray());
         $salesOrderAddressEntity->setFkCountry(
             $this->countryFacade->getIdCountryByIso2Code($addressTransfer->getIso2Code())
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
+     *
+     * @return void
+     */
+    protected function hydrateSalesShipment(ShipmentTransfer $shipmentTransfer, SpySalesShipment $salesShipmentEntity)
+    {
+        $salesShipmentEntity->fromArray($shipmentTransfer->toArray());
+        $salesShipmentEntity->setFkSalesOrderAddress(
+            $shipmentTransfer->getShippingAddress()->getIdSalesOrderAddress()
         );
     }
 
@@ -299,11 +344,29 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $this->assertItemRequirements($itemTransfer);
 
+            if ($itemTransfer->getShipment()->getShippingAddress()->getIdSalesOrderAddress() === null) {
+                $this->saveSalesOrderAddress($itemTransfer->getShipment()->getShippingAddress());
+            }
+
+            $shipmentEntity = $this->saveSalesShipment($itemTransfer->getShipment());
+
             $salesOrderItemEntity = $this->createSalesOrderItemEntity();
-            $this->hydrateSalesOrderItemEntity($salesOrderEntity, $quoteTransfer, $salesOrderItemEntity, $itemTransfer);
-            $salesOrderItemEntity = $this->executeOrderItemExpanderPreSavePlugins($quoteTransfer, $itemTransfer, $salesOrderItemEntity);
+            $this->hydrateSalesOrderItemEntity(
+                $salesOrderEntity,
+                $quoteTransfer,
+                $salesOrderItemEntity,
+                $itemTransfer,
+                $shipmentEntity
+            );
+
+            $salesOrderItemEntity = $this->executeOrderItemExpanderPreSavePlugins(
+                $quoteTransfer,
+                $itemTransfer,
+                $salesOrderItemEntity
+            );
 
             $salesOrderItemEntity->save();
+
             $itemTransfer->setIdSalesOrderItem($salesOrderItemEntity->getIdSalesOrderItem());
         }
     }
@@ -313,6 +376,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
      *
      * @return void
      */
@@ -320,7 +384,8 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         SpySalesOrder $salesOrderEntity,
         QuoteTransfer $quoteTransfer,
         SpySalesOrderItem $salesOrderItemEntity,
-        ItemTransfer $itemTransfer
+        ItemTransfer $itemTransfer,
+        SpySalesShipment $salesShipmentEntity
     ) {
         $processEntity = $this->getProcessEntity($quoteTransfer, $itemTransfer);
         $initialStateEntity = $this->omsFacade->getInitialStateEntity();
@@ -343,9 +408,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $salesOrderItemEntity->setDiscountAmountFullAggregation($sanitizedItemTransfer->getSumDiscountAmountFullAggregation());
         $salesOrderItemEntity->setRefundableAmount($itemTransfer->getRefundableAmount());
         $salesOrderItemEntity->setProcess($processEntity);
-
-        $shippingAddressEntity = $this->saveSalesOrderAddress($itemTransfer->getShippingAddress());
-        $salesOrderItemEntity->setShippingAddress($shippingAddressEntity);
+        $salesOrderItemEntity->setSpySalesShipment($salesShipmentEntity);
     }
 
     /**
@@ -444,6 +507,14 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected function createSalesOrderAddressEntity()
     {
         return new SpySalesOrderAddress();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
+     */
+    protected function createSalesShipmentEntity()
+    {
+        return new SpySalesShipment();
     }
 
     /**

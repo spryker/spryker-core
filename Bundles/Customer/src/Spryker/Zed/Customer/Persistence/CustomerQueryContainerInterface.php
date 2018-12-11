@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer\Persistence;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CustomerQueryContainerInterface extends QueryContainerInterface
@@ -97,7 +98,7 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
      */
-    public function queryAddressByTransfer(AddressTransfer $addressTransfer);
+    public function queryAddressByTransfer(AddressTransfer $addressTransfer): SpyCustomerAddressQuery;
 
     /**
      * @api

@@ -83,14 +83,25 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     {
         $this->processCustomerAddress($quoteTransfer->getBillingAddress(), $customer);
 
+        $existingAddresses = [];
+
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $hash = $this->getAddressTransferHash($itemTransfer->getShipment()->getShippingAddress());
+
+            if(isset($existingAddresses[$hash])){
+                $itemTransfer->getShipment()->setShippingAddress($existingAddresses[$hash]);
+
+                $this->processCustomerAddress($itemTransfer->getShipment()->getShippingAddress(), $customer);
+
+                continue;
+            }
+
             $addressEntity = $this->queryContainer->queryAddressByTransfer($itemTransfer->getShipment()->getShippingAddress())->findOne();
 
             if ($addressEntity !== null) {
                 $addressTransfer = $this->entityToAddressTransfer($addressEntity);
                 $itemTransfer->getShipment()->setShippingAddress($addressTransfer);
-
-                return;
+                $existingAddresses[$hash] = $addressTransfer;
             }
 
             $this->processCustomerAddress($itemTransfer->getShipment()->getShippingAddress(), $customer);
@@ -98,11 +109,11 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $entity
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomerAddress $entity
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function entityToAddressTransfer(SpyCustomerAddress $entity)
+    protected function entityToAddressTransfer(SpyCustomerAddress $entity): AddressTransfer
     {
         $addressTransfer = new AddressTransfer();
 
@@ -171,5 +182,26 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     protected function isNewCustomer(CustomerTransfer $customerTransfer)
     {
         return $customerTransfer->getIdCustomer() === null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return string
+     */
+    protected function getAddressTransferHash(AddressTransfer $addressTransfer): string
+    {
+        return md5(sprintf('%s %s %s %s %s %s %s %s %s %s',
+            $addressTransfer->getFkCustomer(),
+            $addressTransfer->getFirstName(),
+            $addressTransfer->getLastName(),
+            $addressTransfer->getAddress1(),
+            $addressTransfer->getAddress2(),
+            $addressTransfer->getAddress3(),
+            $addressTransfer->getZipCode(),
+            $addressTransfer->getCity(),
+            $addressTransfer->getFkCountry(),
+            $addressTransfer->getPhone()
+        ));
     }
 }

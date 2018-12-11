@@ -54,19 +54,6 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param float $taxRate
-     *
-     * @return void
-     */
-    protected function setShipmentTaxRate(ItemTransfer $itemTransfer, $taxRate)
-    {
-        $itemTransfer->getShipment()
-            ->getMethod()
-            ->setTaxRate($taxRate);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return float
      */
