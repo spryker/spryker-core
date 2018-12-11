@@ -11,6 +11,7 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
+use TypeError;
 
 /**
  * Auto-generated group annotations
@@ -56,6 +57,21 @@ class CompanyBusinessUnitFacadeTest extends Test
             ->getCompanyBusinessUnitTransfer();
 
         $foundBusinessUnitTransfer = $this->getFacade()->getCompanyBusinessUnitById($createdBusinessUnitTransfer);
+        $this->assertSame($createdBusinessUnitTransfer->getName(), $foundBusinessUnitTransfer->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCompanyBusinessUnitByIdShouldReturnTransferObject()
+    {
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+
+        $createdBusinessUnitTransfer = $this->getFacade()
+            ->create($businessUnitTransfer)
+            ->getCompanyBusinessUnitTransfer();
+
+        $foundBusinessUnitTransfer = $this->getFacade()->findCompanyBusinessUnitById($createdBusinessUnitTransfer);
         $this->assertSame($createdBusinessUnitTransfer->getName(), $foundBusinessUnitTransfer->getName());
     }
 
@@ -112,8 +128,8 @@ class CompanyBusinessUnitFacadeTest extends Test
             ->getCompanyBusinessUnitTransfer();
 
         $this->getFacade()->delete($createdBusinessUnitTransfer);
-        $companyBusinessUnitTransfer = $this->getFacade()->getCompanyBusinessUnitById($createdBusinessUnitTransfer);
-        $this->assertNull($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
+        $this->expectException(TypeError::class);
+        $this->getFacade()->getCompanyBusinessUnitById($createdBusinessUnitTransfer);
     }
 
     /**
