@@ -121,8 +121,22 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->assertSame('label', $this->restSearchAttributesTransfer->getValueFacets()[0]['name']);
         $this->assertCount(1, $this->restSearchAttributesTransfer->getRangeFacets());
         $this->assertSame('rating', $this->restSearchAttributesTransfer->getRangeFacets()[0]['name']);
-        $this->assertArrayNotHasKey('config', $this->restSearchAttributesTransfer->getValueFacets()[0]);
-        $this->assertArrayNotHasKey('config', $this->restSearchAttributesTransfer->getRangeFacets()[0]);
+        $this->assertArrayHasKey('config', $this->restSearchAttributesTransfer->getValueFacets()[0]);
+        $this->assertArrayHasKey('config', $this->restSearchAttributesTransfer->getRangeFacets()[0]);
+
+        foreach ($this->restSearchAttributesTransfer->getValueFacets() as $valueFacet) {
+            $this->assertArrayHasKey('parameterName', $valueFacet->getConfig());
+            $this->assertArrayHasKey('isMultiValued', $valueFacet->getConfig());
+            $this->assertInternalType('string', $valueFacet->getConfig()->getParameterName());
+            $this->assertInternalType('boolean', $valueFacet->getConfig()->getIsMultiValued());
+        }
+
+        foreach ($this->restSearchAttributesTransfer->getRangeFacets() as $rangeFacet) {
+            $this->assertArrayHasKey('parameterName', $rangeFacet->getConfig());
+            $this->assertArrayHasKey('isMultiValued', $rangeFacet->getConfig());
+            $this->assertInternalType('string', $rangeFacet->getConfig()->getParameterName());
+            $this->assertInternalType('boolean', $rangeFacet->getConfig()->getIsMultiValued());
+        }
     }
 
     /**
