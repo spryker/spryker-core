@@ -842,7 +842,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves products by given ids.
+     * - Returns concrete product transfers array by their product ids.
      *
      * @api
      *
