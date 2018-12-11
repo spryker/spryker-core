@@ -8,6 +8,8 @@
 namespace Spryker\Zed\CmsBlockProductStorage\Communication\Plugin\Event\Subscriber;
 
 use Spryker\Zed\CmsBlockProductConnector\Dependency\CmsBlockProductConnectorEvents;
+use Spryker\Zed\CmsBlockProductStorage\Communication\Plugin\Event\Listener\CmsBlockProductConnectorEntityStoragePublishListener;
+use Spryker\Zed\CmsBlockProductStorage\Communication\Plugin\Event\Listener\CmsBlockProductConnectorEntityStorageUnpublishListener;
 use Spryker\Zed\CmsBlockProductStorage\Communication\Plugin\Event\Listener\CmsBlockProductConnectorStoragePublishListener;
 use Spryker\Zed\CmsBlockProductStorage\Communication\Plugin\Event\Listener\CmsBlockProductConnectorStorageUnpublishListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
@@ -67,7 +69,7 @@ class CmsBlockProductStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addCmsBlockProductConnectorCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_CREATE, new CmsBlockProductConnectorStoragePublishListener());
+        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_CREATE, new CmsBlockProductConnectorEntityStoragePublishListener());
     }
 
     /**
@@ -77,7 +79,7 @@ class CmsBlockProductStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addCmsBlockProductConnectorUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_UPDATE, new CmsBlockProductConnectorStoragePublishListener());
+        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_UPDATE, new CmsBlockProductConnectorEntityStoragePublishListener());
     }
 
     /**
@@ -87,6 +89,6 @@ class CmsBlockProductStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addCmsBlockProductConnectorDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_DELETE, new CmsBlockProductConnectorStorageUnpublishListener());
+        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_DELETE, new CmsBlockProductConnectorEntityStorageUnpublishListener());
     }
 }

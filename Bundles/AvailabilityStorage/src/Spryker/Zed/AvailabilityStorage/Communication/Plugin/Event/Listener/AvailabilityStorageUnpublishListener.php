@@ -17,11 +17,13 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\AvailabilityStorage\AvailabilityStorageConfig getConfig()
  */
-class AvailabilityStorageUnPublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class AvailabilityStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers

@@ -22,6 +22,8 @@ class UrlStoragePublishListener extends AbstractPlugin implements EventBulkHandl
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers

@@ -10,16 +10,17 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Lis
 use Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingLeadProductTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
  */
-class ProductPackagingLeadProductStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductPackagingLeadProductEntityStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
@@ -33,21 +34,6 @@ class ProductPackagingLeadProductStoragePublishListener extends AbstractPlugin i
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyProductPackagingLeadProductTableMap::COL_FK_PRODUCT_ABSTRACT);
 
-        $publishEvents = $this->getPublishEvents();
-
-        if (in_array($eventName, $publishEvents)) {
-            $this->getFacade()->publishProductAbstractPackaging($productAbstractIds);
-        }
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getPublishEvents(): array
-    {
-        return [
-            ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_LEAD_PRODUCT_CREATE,
-            ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_LEAD_PRODUCT_UPDATE,
-        ];
+        $this->getFacade()->unpublishProductAbstractPackaging($productAbstractIds);
     }
 }

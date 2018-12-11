@@ -22,6 +22,8 @@ class CategoryNodeCategoryPageSearchUnpublishListener extends AbstractPlugin imp
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers

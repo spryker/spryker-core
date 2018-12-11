@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsBlockProductStorage\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\CmsBlockProductConnector\Persistence\Map\SpyCmsBlockProductConnectorTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -35,7 +34,7 @@ class CmsBlockProductConnectorStorageUnpublishListener extends AbstractPlugin im
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $idProductAbstracts = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyCmsBlockProductConnectorTableMap::COL_FK_PRODUCT_ABSTRACT);
+        $idProductAbstracts = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         $this->getFacade()->refreshOrUnpublish($idProductAbstracts);
     }

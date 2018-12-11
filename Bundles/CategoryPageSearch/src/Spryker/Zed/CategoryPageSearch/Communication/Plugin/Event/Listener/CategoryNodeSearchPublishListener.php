@@ -22,6 +22,8 @@ class CategoryNodeSearchPublishListener extends AbstractPlugin implements EventB
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers

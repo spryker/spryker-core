@@ -22,6 +22,8 @@ class RedirectStorageUnpublishListener extends AbstractPlugin implements EventBu
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers

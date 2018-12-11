@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockProductStorage\Communication\Plugin\Event\Listener;
 
+use Orm\Zed\CmsBlockProductConnector\Persistence\Map\SpyCmsBlockProductConnectorTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -17,7 +18,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\CmsBlockProductStorage\Business\CmsBlockProductStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CmsBlockProductStorage\CmsBlockProductStorageConfig getConfig()
  */
-class CmsBlockProductConnectorStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class CmsBlockProductConnectorEntityStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -34,7 +35,7 @@ class CmsBlockProductConnectorStoragePublishListener extends AbstractPlugin impl
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $idProductAbstracts = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $idProductAbstracts = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyCmsBlockProductConnectorTableMap::COL_FK_PRODUCT_ABSTRACT);
 
         $this->getFacade()->publish($idProductAbstracts);
     }

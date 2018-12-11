@@ -11,7 +11,7 @@ use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener\AvailabilityProductStorageListener;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener\AvailabilityStockStorageListener;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener\AvailabilityStoragePublishListener;
-use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener\AvailabilityStorageUnPublishListener;
+use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener\AvailabilityStorageUnpublishListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -62,7 +62,7 @@ class AvailabilityStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addAvailabilityAbstractUnPublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(AvailabilityEvents::AVAILABILITY_ABSTRACT_UNPUBLISH, new AvailabilityStorageUnPublishListener());
+        $eventCollection->addListenerQueued(AvailabilityEvents::AVAILABILITY_ABSTRACT_UNPUBLISH, new AvailabilityStorageUnpublishListener());
     }
 
     /**
@@ -92,7 +92,7 @@ class AvailabilityStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addAvailabilityAbstractDeleteListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE, new AvailabilityStorageUnPublishListener());
+        $eventCollection->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE, new AvailabilityStorageUnpublishListener());
     }
 
     /**
