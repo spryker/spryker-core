@@ -8,7 +8,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/search": "*",
     "spryker/testify": "*"
   },
   "suggest": {

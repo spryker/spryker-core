@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\SearchResultDataMapTransfer;
 use Generated\Shared\Transfer\StringFacetMapTransfer;
 use Generated\Shared\Transfer\StringSortMapTransfer;
 use InvalidArgumentException;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
 class PageMapBuilder implements PageMapBuilderInterface
 {

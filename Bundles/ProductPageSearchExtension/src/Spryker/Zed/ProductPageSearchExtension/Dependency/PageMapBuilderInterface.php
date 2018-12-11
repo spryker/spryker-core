@@ -5,11 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper;
+namespace Spryker\Zed\ProductPageSearchExtension\Dependency;
 
 use Generated\Shared\Transfer\PageMapTransfer;
 
-/** @deprecated Use \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface instead. */
 interface PageMapBuilderInterface
 {
     /**
