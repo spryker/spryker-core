@@ -2,8 +2,12 @@
 
 {% set widget_title = 'Edit a CMS redirect' %}
 
-{% block head_title widget_title %}
-{% block section_title widget_title %}
+{% block head_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+{% block section_title %}
+    {{ widget_title | trans }}
+{% endblock %}
 
 {% block action %}
     {{ backActionButton('/cms/redirect', 'Back to CMS' | trans) }}
