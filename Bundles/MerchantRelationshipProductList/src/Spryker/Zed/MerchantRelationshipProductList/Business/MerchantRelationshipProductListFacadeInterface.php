@@ -30,6 +30,7 @@ interface MerchantRelationshipProductListFacadeInterface
     /**
      * Specification:
      * - Finds product lists by merchant relationship.
+     * - Transfer has to contain ID as the required field
      *
      * @api
      *
@@ -37,7 +38,7 @@ interface MerchantRelationshipProductListFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
      */
-    public function getProductListCollectionByMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): ProductListCollectionTransfer;
+    public function findProductListCollectionByMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): ProductListCollectionTransfer;
 
     /**
      * Specification:

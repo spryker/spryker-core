@@ -45,10 +45,10 @@ class ProductListReader implements ProductListReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
      */
-    public function getProductListCollectionByMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): ProductListCollectionTransfer
+    public function findProductListCollectionByMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): ProductListCollectionTransfer
     {
         $merchantRelationshipTransfer->requireIdMerchantRelationship();
 
-        return $this->merchantRelationshipProductListRepository->getProductListCollectionByIdMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationship());
+        return $this->merchantRelationshipProductListRepository->findProductListCollectionByIdMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationship());
     }
 }

@@ -70,6 +70,6 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
      */
     public function getMerchantRelationshipPreDeletePlugins(): array
     {
-        return $this->getProvidedDependency(MerchantRelationshipDependencyProvider::MERCHANT_RELATIONSHIP_PRE_DELETE_PLUGINS);
+        return $this->getProvidedDependency(MerchantRelationshipDependencyProvider::PLUGINS_MERCHANT_RELATIONSHIP_PRE_DELETE);
     }
 }

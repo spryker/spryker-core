@@ -45,11 +45,11 @@ class MerchantRelationshipProductListFacade extends AbstractFacade implements Me
      *
      * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
      */
-    public function getProductListCollectionByMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): ProductListCollectionTransfer
+    public function findProductListCollectionByMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): ProductListCollectionTransfer
     {
         return $this->getFactory()
             ->createProductListReader()
-            ->getProductListCollectionByMerchantRelationship($merchantRelationshipTransfer);
+            ->findProductListCollectionByMerchantRelationship($merchantRelationshipTransfer);
     }
 
     /**

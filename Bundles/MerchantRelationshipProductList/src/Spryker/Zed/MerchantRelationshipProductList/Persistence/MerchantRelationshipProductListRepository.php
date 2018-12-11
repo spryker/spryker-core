@@ -53,7 +53,7 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
      *
      * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
      */
-    public function getProductListCollectionByIdMerchantRelationship(int $idMerchantRelationship): ProductListCollectionTransfer
+    public function findProductListCollectionByIdMerchantRelationship(int $idMerchantRelationship): ProductListCollectionTransfer
     {
         /** @var \Orm\Zed\ProductList\Persistence\SpyProductList[] $productListEntities */
         $productListEntities = $this->getFactory()
@@ -61,12 +61,10 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
             ->filterByFkMerchantRelationship($idMerchantRelationship)
             ->find();
 
-        $productListCollectionTransfer = new ProductListCollectionTransfer();
-
         $merchantRelationshipProductListMapper = $this->getFactory()->createMerchantRelationshipProductListMapper();
         $productListCollectionTransfer = $merchantRelationshipProductListMapper->mapProductListCollection(
             $productListEntities,
-            $productListCollectionTransfer
+            new ProductListCollectionTransfer()
         );
 
         return $productListCollectionTransfer;

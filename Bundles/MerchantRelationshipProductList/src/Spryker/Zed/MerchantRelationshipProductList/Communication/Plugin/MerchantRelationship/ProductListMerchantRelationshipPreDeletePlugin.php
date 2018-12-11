@@ -28,12 +28,14 @@ class ProductListMerchantRelationshipPreDeletePlugin extends AbstractPlugin impl
      */
     public function execute(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
     {
-        $productListCollection = $this->getFacade()->getProductListCollectionByMerchantRelationship($merchantRelationshipTransfer);
+        $productListCollection = $this->getFacade()->findProductListCollectionByMerchantRelationship($merchantRelationshipTransfer);
 
-        if ($productListCollection->getProductLists()->count()) {
-            foreach ($productListCollection->getProductLists() as $productListTransfer) {
-                $this->getFacade()->clearMerchantRelationshipFromProductList($productListTransfer);
-            }
+        if (!$productListCollection->getProductLists()->count()) {
+            return;
+        }
+
+        foreach ($productListCollection->getProductLists() as $productListTransfer) {
+            $this->getFacade()->clearMerchantRelationshipFromProductList($productListTransfer);
         }
     }
 }

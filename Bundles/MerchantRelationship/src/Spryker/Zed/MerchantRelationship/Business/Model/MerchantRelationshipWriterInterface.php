@@ -26,8 +26,6 @@ interface MerchantRelationshipWriterInterface
     public function update(MerchantRelationshipTransfer $merchantRelationTransfer): MerchantRelationshipTransfer;
 
     /**
-     * @deprecated Use MerchantRelationshipWriterInterface::deleteWithPreCheck() instead
-     *
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
      *
      * @return void

@@ -101,8 +101,6 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
     }
 
     /**
-     * @deprecated Use MerchantRelationshipWriter::deleteWithPreCheck() instead
-     *
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
      *
      * @return void

@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Container;
  */
 class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const MERCHANT_RELATIONSHIP_PRE_DELETE_PLUGINS = 'MERCHANT_RELATIONSHIP_PRE_DELETE_PLUGINS';
+    public const PLUGINS_MERCHANT_RELATIONSHIP_PRE_DELETE = 'PLUGINS_MERCHANT_RELATIONSHIP_PRE_DELETE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,7 +37,7 @@ class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addMerchantRelationshipPreDeletePlugins(Container $container): Container
     {
-        $container[static::MERCHANT_RELATIONSHIP_PRE_DELETE_PLUGINS] = function () {
+        $container[static::PLUGINS_MERCHANT_RELATIONSHIP_PRE_DELETE] = function () {
             return $this->getMerchantRelationshipPreDeletePlugins();
         };
 

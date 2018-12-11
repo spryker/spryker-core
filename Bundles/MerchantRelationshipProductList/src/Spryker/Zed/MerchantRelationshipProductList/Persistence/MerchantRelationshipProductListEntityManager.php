@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class MerchantRelationshipProductListEntityManager extends AbstractEntityManager implements MerchantRelationshipProductListEntityManagerInterface
 {
-    public const FK_MERCHANT_RELATIONSHIP_KEY = 'FkMerchantRelationship';
+    protected const FK_MERCHANT_RELATIONSHIP_KEY = 'FkMerchantRelationship';
 
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
@@ -27,6 +27,6 @@ class MerchantRelationshipProductListEntityManager extends AbstractEntityManager
         $this->getFactory()
             ->getProductListQuery()
             ->filterByIdProductList($productListTransfer->getIdProductList())
-            ->update([ static::FK_MERCHANT_RELATIONSHIP_KEY => null]);
+            ->update([static::FK_MERCHANT_RELATIONSHIP_KEY => null]);
     }
 }
