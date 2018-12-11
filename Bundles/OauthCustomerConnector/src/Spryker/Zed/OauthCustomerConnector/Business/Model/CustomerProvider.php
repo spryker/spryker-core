@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OauthCustomerConnector\Business\Model;
 
+use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
 use Spryker\Zed\OauthCustomerConnector\Dependency\Facade\OauthCustomerConnectorToCustomerFacadeInterface;
@@ -25,15 +26,23 @@ class CustomerProvider implements CustomerProviderInterface
     protected $utilEncodingService;
 
     /**
+     * @var \Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerIdentifierExpanderPluginInterface[]
+     */
+    protected $oauthCustomerIdentifierExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\OauthCustomerConnector\Dependency\Facade\OauthCustomerConnectorToCustomerFacadeInterface $customerFacade
      * @param \Spryker\Zed\OauthCustomerConnector\Dependency\Service\OauthCustomerConnectorToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerIdentifierExpanderPluginInterface[] $oauthCustomerIdentifierExpanderPlugins
      */
     public function __construct(
         OauthCustomerConnectorToCustomerFacadeInterface $customerFacade,
-        OauthCustomerConnectorToUtilEncodingServiceInterface $utilEncodingService
+        OauthCustomerConnectorToUtilEncodingServiceInterface $utilEncodingService,
+        array $oauthCustomerIdentifierExpanderPlugins
     ) {
         $this->customerFacade = $customerFacade;
         $this->utilEncodingService = $utilEncodingService;
+        $this->oauthCustomerIdentifierExpanderPlugins = $oauthCustomerIdentifierExpanderPlugins;
     }
 
     /**
@@ -53,14 +62,17 @@ class CustomerProvider implements CustomerProviderInterface
 
         if ($isAuthorized) {
             $customerTransfer = $this->customerFacade->getCustomer($customerTransfer);
-            $customerIdentifier = $this->utilEncodingService->encodeJson(
-                [
-                    'customer_reference' => $customerTransfer->getCustomerReference(),
-                    'id_customer' => $customerTransfer->getIdCustomer(),
-                ]
-            );
+
+            $customerIdentifierTransfer = (new CustomerIdentifierTransfer())
+                ->setCustomerReference($customerTransfer->getCustomerReference())
+                ->setIdCustomer($customerTransfer->getIdCustomer());
+
+            foreach ($this->oauthCustomerIdentifierExpanderPlugins as $oauthCustomerIdentifierExpanderPlugin) {
+                $customerIdentifierTransfer = $oauthCustomerIdentifierExpanderPlugin->expandCustomerIdentifier($customerIdentifierTransfer, $customerTransfer);
+            }
+
             $oauthUserTransfer
-                ->setUserIdentifier($customerIdentifier)
+                ->setUserIdentifier($this->utilEncodingService->encodeJson($customerIdentifierTransfer->toArray()))
                 ->setIsSuccess(true);
         }
 

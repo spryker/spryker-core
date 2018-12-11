@@ -1,0 +1,28 @@
+language: php
+
+php:
+    - 7.1
+    - 7.3
+
+cache:
+    directories:
+        - vendor
+        - $HOME/.composer/cache
+
+env:
+    global:
+        - APPLICATION_ENV=development
+        - APPLICATION_STORE=DE
+
+install:
+    - composer install --no-interaction --prefer-dist
+
+script:
+    - vendor/bin/phpcs src --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml
+    - vendor/bin/codecept run --env isolated --coverage-xml
+
+after_success:
+    - vendor/bin/coveralls -vvv
+
+notifications:
+    email: false
