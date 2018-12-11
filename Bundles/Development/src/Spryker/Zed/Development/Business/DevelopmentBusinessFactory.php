@@ -16,9 +16,10 @@ use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\CodeTest\CodeTester;
 use Spryker\Zed\Development\Business\Composer\ComposerJson;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonFinder;
-use Spryker\Zed\Development\Business\Composer\ComposerJsonFinderComposite;
+use Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonInterface;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonUpdater;
+use Spryker\Zed\Development\Business\Composer\ComposerJsonUpdaterInterface;
 use Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\BranchAliasUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\ComposerUpdaterComposite;
@@ -1305,10 +1306,10 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonUpdaterInterface
      */
-    public function createComposerJsonUpdater()
+    public function createComposerJsonUpdater(): ComposerJsonUpdaterInterface
     {
         return new ComposerJsonUpdater(
-            $this->createComposerJsonFinderComposite(),
+            $this->createComposerJsonFinder(),
             $this->createComposerJsonUpdaterComposite()
         );
     }
@@ -1316,50 +1317,10 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface
      */
-    protected function createComposerJsonFinderComposite()
-    {
-        $finderComposite = new ComposerJsonFinderComposite();
-        $finderComposite->addFinder($this->createComposerJsonFinder());
-        $finderComposite->addFinder($this->createComposerJsonFinderSdk());
-        $finderComposite->addFinder($this->createComposerJsonFinderShop());
-
-        return $finderComposite;
-    }
-
-    /**
-     * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface
-     */
-    protected function createComposerJsonFinder()
+    protected function createComposerJsonFinder(): ComposerJsonFinderInterface
     {
         $composerJsonFinder = new ComposerJsonFinder(
-            $this->createFinder(),
-            $this->getConfig()->getPathToCore()
-        );
-
-        return $composerJsonFinder;
-    }
-
-    /**
-     * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface
-     */
-    protected function createComposerJsonFinderSdk()
-    {
-        $composerJsonFinder = new ComposerJsonFinder(
-            $this->createFinder(),
-            $this->getConfig()->getPathToSdk()
-        );
-
-        return $composerJsonFinder;
-    }
-
-    /**
-     * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface
-     */
-    protected function createComposerJsonFinderShop()
-    {
-        $composerJsonFinder = new ComposerJsonFinder(
-            $this->createFinder(),
-            $this->getConfig()->getPathToShop()
+            $this->createFinder()
         );
 
         return $composerJsonFinder;

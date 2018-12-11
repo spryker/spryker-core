@@ -695,6 +695,36 @@ class ShoppingListFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetCustomerShoppingListCollection()
+    {
+        // Arrange
+        $fistShoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
+            ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $fistShoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::QUANTITY => 1,
+            ShoppingListItemTransfer::SKU => $this->product->getSku(),
+        ]);
+        $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+
+        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
+            ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $fistShoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::QUANTITY => 2,
+            ShoppingListItemTransfer::SKU => $this->product->getSku(),
+        ]);
+        $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+
+        // Act
+        $shoppingListItemResponseTransfer = $this->tester->getFacade()->getCustomerShoppingListCollection($this->ownerCompanyUserTransfer->getCustomer());
+
+        // Assert
+        $this->assertSame(3, $shoppingListItemResponseTransfer->getShoppingLists()[0]->getNumberOfItems(), 'Customer should get correct count of items in the shopping list.');
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer $shoppingListPermissionGroupCollectionTransfer
      *
      * @return string[]
