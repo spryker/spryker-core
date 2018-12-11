@@ -14,12 +14,14 @@
   "require-dev": {
     "spryker/calculation": "*",
     "spryker/checkout": "*",
+    "spryker/installer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/calculation": "To correctly calculate multiple payment methods",
-    "spryker/checkout": "If you want to use Checkout plugins."
+    "spryker/checkout": "If you want to use Checkout plugins.",
+    "spryker/installer": "If you want to use Installer plugins: ^4.0.0."
   },
   "autoload": {
     "psr-4": {
