@@ -68,6 +68,15 @@ interface ProductConcreteManagerInterface
     public function getProductConcrete($concreteSku);
 
     /**
+     * @param string $concreteSku
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProductConcreteForCart(string $concreteSku): ProductConcreteTransfer;
+
+    /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]

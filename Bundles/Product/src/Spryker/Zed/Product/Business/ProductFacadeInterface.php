@@ -281,6 +281,22 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
+     * - Returns concrete product with attributes and localized attributes.
+     * - Throws exception if the concrete product is not found by SKU.
+     * - Triggers AddItem plugins.
+     *
+     * @api
+     *
+     * @param string $concreteSku
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProductConcreteForCart($concreteSku): ProductConcreteTransfer;
+
+    /**
+     * Specification:
      * - Returns concrete product collection.
      * - Triggers READ plugins.
      *

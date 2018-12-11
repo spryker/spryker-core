@@ -212,6 +212,21 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
+     * @param string $skuProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteBySkuForCart(string $skuProduct): ?ProductConcreteTransfer
+    {
+        $productEntity = $this->productQueryContainer
+            ->queryProduct()
+            ->filterBySku($skuProduct)
+            ->findOne();
+
+        return $this->loadProductTransferForCart($productEntity);
+    }
+
+    /**
      * @param string $sku
      *
      * @return int|null
@@ -254,14 +269,41 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @param string $concreteSku
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku)
     {
         $productConcreteTransfer = $this->findProductConcreteBySku($concreteSku);
 
+        $this->assertProductConcreteTransfer($concreteSku, $productConcreteTransfer);
+
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProductConcreteForCart(string $concreteSku): ProductConcreteTransfer
+    {
+        $productConcreteTransfer = $this->findProductConcreteBySkuForCart($concreteSku);
+
+        $this->assertProductConcreteTransfer($concreteSku, $productConcreteTransfer);
+
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer|null $productConcreteTransfer
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return void
+     */
+    public function assertProductConcreteTransfer(string $concreteSku, ?ProductConcreteTransfer $productConcreteTransfer = null): void
+    {
         if (!$productConcreteTransfer) {
             throw new MissingProductException(
                 sprintf(
@@ -270,8 +312,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
                 )
             );
         }
-
-        return $productConcreteTransfer;
     }
 
     /**
@@ -434,6 +474,23 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct|null $productEntity
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    protected function loadProductTransferForCart(?SpyProduct $productEntity = null): ?ProductConcreteTransfer
+    {
+        if (!$productEntity) {
+            return null;
+        }
+
+        $productTransfer = $this->productTransferMapper->convertProduct($productEntity);
+        $productTransfer = $this->loadProductDataForCart($productTransfer);
+
+        return $productTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -443,6 +500,20 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $this->loadLocalizedAttributes($productTransfer);
 
         $this->notifyReadObservers($productTransfer);
+
+        return $productTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function loadProductDataForCart(ProductConcreteTransfer $productTransfer): ProductConcreteTransfer
+    {
+        $this->loadLocalizedAttributes($productTransfer);
+
+        $this->notifyAddItemObservers($productTransfer);
 
         return $productTransfer;
     }
