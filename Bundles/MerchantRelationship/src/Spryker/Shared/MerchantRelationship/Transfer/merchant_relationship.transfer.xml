@@ -14,16 +14,6 @@
         <property name="assigneeCompanyBusinessUnits" type="CompanyBusinessUnitCollection" />
     </transfer>
 
-    <transfer name="MerchantRelationshipDeleteResponse">
-        <property name="isSuccess" type="bool"/>
-        <property name="messages" type="Message[]" singular="message"/>
-    </transfer>
-
-    <transfer name="Message">
-        <property name="value" type="string"/>
-        <property name="parameters" type="array"/>
-    </transfer>
-
     <transfer name="CompanyBusinessUnit">
         <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship" />
     </transfer>
