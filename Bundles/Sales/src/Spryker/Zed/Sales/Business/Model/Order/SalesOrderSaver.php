@@ -83,6 +83,11 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $salesQueryContainer;
 
     /**
+     * @var \Orm\Zed\Sales\Persistence\SpySalesShipment[]
+     */
+    protected $existingCustomerShipments;
+
+    /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface $countryFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface $orderReferenceGenerator
@@ -341,6 +346,8 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      */
     protected function saveOrderItems(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
     {
+        $this->existingCustomerShipments = [];
+
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $this->assertItemRequirements($itemTransfer);
 
@@ -348,7 +355,13 @@ class SalesOrderSaver implements SalesOrderSaverInterface
                 $this->saveSalesOrderAddress($itemTransfer->getShipment()->getShippingAddress());
             }
 
-            $shipmentEntity = $this->saveSalesShipment($itemTransfer->getShipment());
+            $shipmentHash = $this->createShipmentTransferHash($itemTransfer->getShipment());
+            $shipmentEntity = $this->existingCustomerShipments[$shipmentHash] ?? null;
+
+            if($shipmentEntity === null){
+                $shipmentEntity = $this->saveSalesShipment($itemTransfer->getShipment());
+                $this->existingCustomerShipments[$shipmentHash] = $shipmentEntity;
+            }
 
             $salesOrderItemEntity = $this->createSalesOrderItemEntity();
             $this->hydrateSalesOrderItemEntity(
@@ -572,5 +585,18 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $spySalesOrderItemEntity = $this->salesOrderItemMapper->mapSalesOrderItemEntityToSpySalesOrderItemEntity($salesOrderItemEntity);
 
         return $spySalesOrderItemEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return string
+     */
+    protected function createShipmentTransferHash(ShipmentTransfer $shipmentTransfer): string
+    {
+        return md5(sprintf('%s %s',
+            $shipmentTransfer->getRequestedDeliveryDate(),
+            $shipmentTransfer->getShippingAddress()->getIdSalesOrderAddress()(),
+        ));
     }
 }

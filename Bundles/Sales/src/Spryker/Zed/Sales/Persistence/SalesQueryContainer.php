@@ -305,7 +305,6 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
         return $this
             ->getFactory()
             ->createSpySalesShipmentQuery()
-            ->filterByCarrierName($shipmentTransfer->getCarrier()->getName())
             ->filterByRequestedDeliveryDate($shipmentTransfer->getRequestedDeliveryDate())
             ->filterByFkSalesOrderAddress($shipmentTransfer->getShippingAddress()->getIdSalesOrderAddress());
     }

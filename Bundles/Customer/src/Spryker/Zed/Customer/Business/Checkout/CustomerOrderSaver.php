@@ -86,7 +86,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
         $existingAddresses = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $hash = $this->getAddressTransferHash($itemTransfer->getShipment()->getShippingAddress());
+            $hash = $this->createAddressTransferHash($itemTransfer->getShipment()->getShippingAddress());
 
             if(isset($existingAddresses[$hash])){
                 $itemTransfer->getShipment()->setShippingAddress($existingAddresses[$hash]);
@@ -189,7 +189,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
      *
      * @return string
      */
-    protected function getAddressTransferHash(AddressTransfer $addressTransfer): string
+    protected function createAddressTransferHash(AddressTransfer $addressTransfer): string
     {
         return md5(sprintf('%s %s %s %s %s %s %s %s %s %s',
             $addressTransfer->getFkCustomer(),
