@@ -77,7 +77,7 @@
         {% set label = 'label-danger' %}
     {% endif %}
 
-    <span class="label {{ label }}" title="Deactivated">{{ reclamationItem.status }}</span>
+    <span class="label {{ label }}" title="Deactivated">{{ reclamationItem.status | trans }}</span>
 </td>
 <td>
     {% if reclamationItem.status != 'Refunded' %}
