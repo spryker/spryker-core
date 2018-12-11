@@ -77,7 +77,7 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
     }
 
     /**
-     * @param array $productAbstractFks
+     * @param int[] $productAbstractFks
      *
      * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
      */

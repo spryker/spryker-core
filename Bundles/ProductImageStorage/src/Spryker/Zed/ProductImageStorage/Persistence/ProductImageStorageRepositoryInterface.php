@@ -33,7 +33,7 @@ interface ProductImageStorageRepositoryInterface
     /**
      * @param int[] $productAbstractFks
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
      */
     public function getDefaultAbstractProductImageSetsByFkAbstractProductIn(array $productAbstractFks): array;
 }

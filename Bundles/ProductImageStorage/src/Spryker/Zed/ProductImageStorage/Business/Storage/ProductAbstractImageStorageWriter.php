@@ -62,7 +62,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
      *
      * @return void
      */
-    public function publish(array $productAbstractIds): void
+    public function publish(array $productAbstractIds)
     {
         $spyProductAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
         $imageSets = [];

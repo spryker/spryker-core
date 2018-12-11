@@ -14,7 +14,7 @@ interface ProductAbstractImageStorageWriterInterface
      *
      * @return void
      */
-    public function publish(array $productAbstractIds): void;
+    public function publish(array $productAbstractIds);
 
     /**
      * @param array $productAbstractIds
