@@ -28,4 +28,11 @@ interface CompanyBusinessUnitAddressReaderInterface
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
     public function getCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    public function findCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): ?CompanyUnitAddressTransfer;
 }

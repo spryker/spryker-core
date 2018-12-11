@@ -40,4 +40,16 @@ interface CompanyUnitAddressRepositoryInterface
     public function getCompanyUnitAddressCollection(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds company unit address by CompanyUnitAddressTransfer::idCompanyUnitAddress.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    public function findCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): ?CompanyUnitAddressTransfer;
 }

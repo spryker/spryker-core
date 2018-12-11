@@ -97,4 +97,18 @@ interface CompanyUnitAddressFacadeInterface
     public function saveCompanyBusinessUnitAddresses(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): void;
+
+    /**
+     * Specification:
+     * - Finds a company unit address by CompanyUnitAddressTransfer::idCompanyUnitAddress.
+     * - Extends returned company unit address transfer with country iso code.
+     * - Extends returned company unit address transfer with company business unit collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    public function findCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): ?CompanyUnitAddressTransfer;
 }

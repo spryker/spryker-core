@@ -64,19 +64,13 @@ class CompanyUnitAddressFormDataProvider
      */
     public function getData(?int $idCompanyUnitAddress = null)
     {
-        if (!$idCompanyUnitAddress) {
-            $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
+        $companyUnitAddressTransfer = $this->createCompanyUnitAddressTransfer($idCompanyUnitAddress);
 
+        if (!$idCompanyUnitAddress) {
             return $companyUnitAddressTransfer;
         }
 
-        $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
-        $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
-
-        $companyUnitAddressTransfer = $this->companyUnitAddressFacade
-            ->getCompanyUnitAddressById($companyUnitAddressTransfer);
-
-        return $companyUnitAddressTransfer;
+        return $this->companyUnitAddressFacade->findCompanyUnitAddressById($companyUnitAddressTransfer) ?? $companyUnitAddressTransfer->setIdCompanyUnitAddress(null);
     }
 
     /**
@@ -105,5 +99,15 @@ class CompanyUnitAddressFormDataProvider
         }
 
         return $result;
+    }
+
+    /**
+     * @param int|null $idCompanyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     */
+    protected function createCompanyUnitAddressTransfer(?int $idCompanyUnitAddressTransfer): CompanyUnitAddressTransfer
+    {
+        return (new CompanyUnitAddressTransfer())->setIdCompanyUnitAddress($idCompanyUnitAddressTransfer);
     }
 }

@@ -44,10 +44,6 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
 
         $entityTransfer = $this->buildQueryFromCriteria($query)->find();
 
-        if (!$entityTransfer) {
-            return new CompanyUnitAddressTransfer();
-        }
-
         return $this->getFactory()
             ->createCompanyUniAddressMapper()
             ->mapEntityTransferToCompanyUnitAddressTransfer($entityTransfer[0], $companyUnitAddressTransfer);
@@ -136,5 +132,41 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         }
 
         return $query->find();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    public function findCompanyUnitAddressById(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+    ): ?CompanyUnitAddressTransfer {
+        if (!$companyUnitAddressTransfer->getIdCompanyUnitAddress()) {
+            return null;
+        }
+
+        $query = $this->getFactory()
+            ->createCompanyUnitAddressQuery()
+            ->filterByIdCompanyUnitAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress())
+            ->innerJoinWithCountry()
+            ->leftJoinWithSpyCompanyUnitAddressToCompanyBusinessUnit()
+            ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithCompanyBusinessUnit()
+            ->endUse();
+
+        $entityTransfer = $this->buildQueryFromCriteria($query)->find();
+
+        if (empty($entityTransfer[0])) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCompanyUniAddressMapper()
+            ->mapEntityTransferToCompanyUnitAddressTransfer($entityTransfer[0], $companyUnitAddressTransfer);
     }
 }

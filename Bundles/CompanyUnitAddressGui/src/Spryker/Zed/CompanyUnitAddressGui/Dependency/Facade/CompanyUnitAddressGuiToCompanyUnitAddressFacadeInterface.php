@@ -43,4 +43,11 @@ interface CompanyUnitAddressGuiToCompanyUnitAddressFacadeInterface
     public function getCompanyUnitAddressCollection(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    public function findCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): ?CompanyUnitAddressTransfer;
 }
