@@ -39,8 +39,11 @@ class PaginatedProductConcreteCatalogSearchQueryExpanderPlugin extends AbstractP
      *
      * @return void
      */
-    protected function addPaginationToQuery(Query $query, PaginationConfigBuilderInterface $paginationConfigBuilder, array $requestParameters)
-    {
+    protected function addPaginationToQuery(
+        Query $query,
+        PaginationConfigBuilderInterface $paginationConfigBuilder,
+        array $requestParameters
+    ): void {
         $currentPage = $paginationConfigBuilder->getCurrentPage($requestParameters);
         $itemsPerPage = $paginationConfigBuilder->getCurrentItemsPerPage($requestParameters);
 

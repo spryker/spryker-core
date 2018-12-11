@@ -47,12 +47,16 @@ class ItemTransferExpander implements ItemTransferExpanderInterface
     {
         $this->assertItemTransfer($itemTransfer);
 
-        $productAbstractPackagingStorageTransfer = $this->productPackagingUnitStorageReader->findProductAbstractPackagingById((int)$itemTransfer->getIdProductAbstract());
+        $productAbstractPackagingStorageTransfer = $this->productPackagingUnitStorageReader
+            ->findProductAbstractPackagingById((int)$itemTransfer->getIdProductAbstract());
         if ($productAbstractPackagingStorageTransfer === null) {
             return $itemTransfer;
         }
 
-        $productConcretePackagingStorageTransfer = $this->selectProductConcretePackagingStorageTransfer($productAbstractPackagingStorageTransfer, $itemTransfer);
+        $productConcretePackagingStorageTransfer = $this->selectProductConcretePackagingStorageTransfer(
+            $productAbstractPackagingStorageTransfer,
+            $itemTransfer
+        );
         if ($productConcretePackagingStorageTransfer === null) {
             return $itemTransfer;
         }
@@ -60,8 +64,12 @@ class ItemTransferExpander implements ItemTransferExpanderInterface
             return $itemTransfer;
         }
 
-        $quantityProductMeasurementSalesUnitTransfer = $this->findDefaultProductMeasurementSalesUnitTransfer((int)$productConcretePackagingStorageTransfer->getIdProduct());
-        $amountProductMeasurementSalesUnitTransfer = $this->findDefaultProductMeasurementSalesUnitTransfer((int)$productAbstractPackagingStorageTransfer->getLeadProduct());
+        $quantityProductMeasurementSalesUnitTransfer = $this->findDefaultProductMeasurementSalesUnitTransfer(
+            (int)$productConcretePackagingStorageTransfer->getIdProduct()
+        );
+        $amountProductMeasurementSalesUnitTransfer = $this->findDefaultProductMeasurementSalesUnitTransfer(
+            (int)$productAbstractPackagingStorageTransfer->getLeadProduct()
+        );
         if ($quantityProductMeasurementSalesUnitTransfer === null || $amountProductMeasurementSalesUnitTransfer === null) {
             return $itemTransfer;
         }
@@ -98,8 +106,10 @@ class ItemTransferExpander implements ItemTransferExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer|null
      */
-    protected function selectProductConcretePackagingStorageTransfer(ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer, ItemTransfer $itemTransfer): ?ProductConcretePackagingStorageTransfer
-    {
+    protected function selectProductConcretePackagingStorageTransfer(
+        ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer,
+        ItemTransfer $itemTransfer
+    ): ?ProductConcretePackagingStorageTransfer {
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
         $productConcreteTransfer = $itemTransfer->getProductConcrete();
         $idProduct = $productConcreteTransfer->getIdProductConcrete();

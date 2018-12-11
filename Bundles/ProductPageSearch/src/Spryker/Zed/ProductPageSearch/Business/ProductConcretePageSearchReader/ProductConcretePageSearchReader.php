@@ -43,7 +43,7 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
     {
         $productConcreteSearchPageTransfers = $this->repository->getProductConcretePageSearchTransfers($productConcreteIds);
 
-        return $this->getTransfersGrouppedByStoreAndLocale($productConcreteSearchPageTransfers);
+        return $this->getTransfersGroupedByStoreAndLocale($productConcreteSearchPageTransfers);
     }
 
     /**
@@ -51,18 +51,18 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
      *
      * @return array
      */
-    protected function getTransfersGrouppedByStoreAndLocale(array $productConcretePageSearchTransfers): array
+    protected function getTransfersGroupedByStoreAndLocale(array $productConcretePageSearchTransfers): array
     {
-        $grouppedProductConcretePageSearchTransfers = [];
+        $groupedProductConcretePageSearchTransfers = [];
 
         foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
             $idProduct = $productConcretePageSearchTransfer->getFkProduct();
             $storeName = $productConcretePageSearchTransfer->getStore();
             $localeName = $productConcretePageSearchTransfer->getLocale();
 
-            $grouppedProductConcretePageSearchTransfers[$idProduct][$storeName][$localeName] = $productConcretePageSearchTransfer;
+            $groupedProductConcretePageSearchTransfers[$idProduct][$storeName][$localeName] = $productConcretePageSearchTransfer;
         }
 
-        return $grouppedProductConcretePageSearchTransfers;
+        return $groupedProductConcretePageSearchTransfers;
     }
 }

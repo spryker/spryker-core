@@ -11,6 +11,7 @@ use Spryker\Client\Catalog\Listing\CatalogViewModePersistence;
 use Spryker\Client\Catalog\ProductConcreteReader\ProductConcreteReader;
 use Spryker\Client\Catalog\ProductConcreteReader\ProductConcreteReaderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 
@@ -76,7 +77,7 @@ class CatalogFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface
      */
-    public function getPaginationConfigBuilder()
+    public function getPaginationConfigBuilder(): PaginationConfigBuilderInterface
     {
         $paginationConfigBuilder = $this->getProvidedDependency(CatalogDependencyProvider::PLUGIN_PAGINATION_CONFIG_BUILDER);
         $paginationConfigBuilder->setPagination($this->getConfig()->getPaginationConfig());

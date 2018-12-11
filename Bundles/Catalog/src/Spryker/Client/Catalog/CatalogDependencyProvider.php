@@ -208,7 +208,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductConcreteCatalogSearchResultFormatterPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER] = function (Container $container) {
+        $container[static::PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER] = function () {
             return $this->getProductConcreteCatalogSearchResultFormatterPlugins();
         };
 
@@ -222,7 +222,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductConcreteCatalogSearchQueryExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER] = function (Container $container) {
+        $container[static::PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER] = function () {
             return $this->getProductConcreteCatalogSearchQueryExpanderPlugins();
         };
 
@@ -236,7 +236,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductConcreteCatalogSearchQueryPlugin(Container $container): Container
     {
-        $container[static::PLUGIN_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY] = function (Container $container) {
+        $container[static::PLUGIN_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY] = function () {
             return $this->createProductConcreteCatalogSearchQueryPlugin();
         };
 
@@ -248,9 +248,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addPaginationConfigBuilderPlugin(Container $container)
+    protected function addPaginationConfigBuilderPlugin(Container $container): Container
     {
-        $container[static::PLUGIN_PAGINATION_CONFIG_BUILDER] = function (Container $container) {
+        $container[static::PLUGIN_PAGINATION_CONFIG_BUILDER] = function () {
             return new PaginationConfigBuilder();
         };
 

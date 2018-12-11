@@ -35,9 +35,9 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
     protected $query;
 
     /**
-     * @var string|null
+     * @var string
      */
-    protected $searchString;
+    protected $searchString = '';
 
     public function __construct()
     {
@@ -90,7 +90,7 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
      */
     protected function createFulltextSearchQuery(): AbstractQuery
     {
-        if ($this->searchString === null || !strlen($this->searchString)) {
+        if ($this->searchString === '') {
             return new MatchAll();
         }
 

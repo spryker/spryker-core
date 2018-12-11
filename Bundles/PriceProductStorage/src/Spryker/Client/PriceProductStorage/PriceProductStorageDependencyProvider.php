@@ -147,7 +147,7 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPriceProductPricesExtractorPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR] = function (Container $container) {
+        $container[static::PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR] = function () {
             return $this->getPriceProductPricesExtractorPlugins();
         };
 

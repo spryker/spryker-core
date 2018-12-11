@@ -114,15 +114,15 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductPageSearchToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
         };
 
-        $container[static::PLUGIN_PRODUCT_PAGE_MAP_EXPANDER] = function (Container $container) {
+        $container[static::PLUGIN_PRODUCT_PAGE_MAP_EXPANDER] = function () {
             return $this->getMapExpanderPlugins();
         };
 
-        $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER] = function (Container $container) {
+        $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER] = function () {
             return $this->getProductConcretePageMapExpanderPlugins();
         };
 
-        $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER] = function (Container $container) {
+        $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER] = function () {
             return $this->getProductConcretePageDataExpanderPlugins();
         };
 
@@ -155,15 +155,15 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductPageSearchToSearchBridge($container->getLocator()->search()->facade());
         };
 
-        $container[static::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER] = function (Container $container) {
+        $container[static::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER] = function () {
             return $this->getDataExpanderPlugins();
         };
 
-        $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER] = function (Container $container) {
+        $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER] = function () {
             return $this->getProductConcretePageDataExpanderPlugins();
         };
 
-        $container[static::PLUGIN_PRODUCT_PAGE_DATA_LOADER] = function (Container $container) {
+        $container[static::PLUGIN_PRODUCT_PAGE_DATA_LOADER] = function () {
             return $this->getDataLoaderPlugins();
         };
 

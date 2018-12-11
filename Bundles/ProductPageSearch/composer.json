@@ -27,7 +27,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/elastica": "*",
     "spryker/event": "*",
     "spryker/locale": "*",
     "spryker/product-attribute": "*",

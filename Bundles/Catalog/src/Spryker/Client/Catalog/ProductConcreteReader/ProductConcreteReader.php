@@ -125,7 +125,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
      *
      * @return void
      */
-    protected function expandQuery(array $requestParams = [])
+    protected function expandQuery(array $requestParams = []): void
     {
         $this->searchClient->expandQuery(
             $this->productConcretePageSearchQueryPlugin,

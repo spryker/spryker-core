@@ -162,5 +162,5 @@ interface ProductStorageClientInterface
      *
      * @return array|null
      */
-    public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier);
+    public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array;
 }

@@ -41,7 +41,7 @@ class CatalogConfig extends AbstractBundleConfig
     /**
      * @return \Generated\Shared\Transfer\PaginationConfigTransfer
      */
-    public function getPaginationConfig()
+    public function getPaginationConfig(): PaginationConfigTransfer
     {
         $paginationConfigTransfer = new PaginationConfigTransfer();
         $paginationConfigTransfer

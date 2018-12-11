@@ -125,7 +125,7 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
     /**
      * @return int[]
      */
-    protected function getAllProductIds()
+    protected function getAllProductIds(): array
     {
         return SpyProductQuery::create()
             ->select([SpyProductTableMap::COL_ID_PRODUCT])

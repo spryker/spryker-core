@@ -62,7 +62,7 @@ class ProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductConcreteTransfersByProductIdsRetrievesAllSpecifiedProductconcreteAsTransferWithId()
+    public function testGetProductConcreteTransfersByProductIdsRetrievesAllSpecifiedProductconcreteAsTransferWithId(): void
     {
         $productConcreteIds = $this->tester->getProductConcreteIds();
 
