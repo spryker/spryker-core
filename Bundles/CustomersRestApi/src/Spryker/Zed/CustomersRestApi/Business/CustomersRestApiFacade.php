@@ -20,6 +20,8 @@ class CustomersRestApiFacade extends AbstractFacade implements CustomersRestApiF
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @return void
      */
     public function updateCustomerAddressUuid(): void

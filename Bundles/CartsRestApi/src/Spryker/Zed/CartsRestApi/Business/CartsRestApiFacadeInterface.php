@@ -16,6 +16,8 @@ interface CartsRestApiFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @return void
      */
     public function updateQuoteUuid(): void;

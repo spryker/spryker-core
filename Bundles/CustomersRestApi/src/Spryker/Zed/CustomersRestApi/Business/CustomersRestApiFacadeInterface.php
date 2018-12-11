@@ -15,6 +15,8 @@ interface CustomersRestApiFacadeInterface
      *
      * @api
      *
+     * @deprecated UWill be removed in the next major.
+     *
      * @return void
      */
     public function updateCustomerAddressUuid(): void;

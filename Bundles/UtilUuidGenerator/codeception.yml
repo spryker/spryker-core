@@ -1,5 +1,9 @@
 namespace: UtilUuidGenerator
 actor: Tester
+
+include:
+    - tests/SprykerTest/Zed/UtilUuidGenerator
+
 paths:
     tests: tests
     log: tests/_output
