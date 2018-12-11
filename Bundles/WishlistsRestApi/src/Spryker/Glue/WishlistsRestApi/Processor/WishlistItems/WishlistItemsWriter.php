@@ -93,12 +93,12 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
 
         $wishlistItemTransfer = $this->wishlistClient->addItem($wishlistItemTransfer);
         if (!$wishlistItemTransfer->getIdWishlistItem()) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
+            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
                 ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_CANT_ADD_ITEM)
                 ->setStatus(Response::HTTP_BAD_REQUEST)
                 ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_CANT_ADD_ITEM);
 
-            return $restResponse->addError($restErrorTransfer);
+            return $restResponse->addError($restErrorMessageTransfer);
         }
 
         $restWishlistItemsAttributesTransfer = $this->wishlistItemsResourceMapper
@@ -143,12 +143,12 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
         }
 
         if (!$this->isSkuInWishlist($wishlistOverviewTransfer, $sku)) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
+            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
                 ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_NO_ITEM_WITH_PROVIDED_ID)
                 ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
                 ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_NO_ITEM_WITH_PROVIDED_SKU);
 
-            return $restResponse->addError($restErrorTransfer);
+            return $restResponse->addError($restErrorMessageTransfer);
         }
 
         $wishlistItemTransfer = $this->createWishlistItemTransfer($wishlistOverviewTransfer->getWishlist(), $sku);
@@ -198,12 +198,12 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
      */
     protected function createWishlistNotFoundErrorResponse(RestResponseInterface $restResponse): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
             ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_NOT_FOUND);
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -230,11 +230,11 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
      */
     protected function addItemSkuMissingErrorToResponse(RestResponseInterface $restResponse): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_ID_IS_NOT_SPECIFIED)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_ID_IS_NOT_SPECIFIED);
 
-        return $restResponse->addError($restErrorTransfer);
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 }
