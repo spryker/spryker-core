@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <cms-gui>
+        <pages>
+            <content-items>
+                <label>Content Items</label>
+                <title>Content Items</title>
+                <bundle>content-gui</bundle>
+                <controller>list-content</controller>
+                <action>index</action>
+            </content-items>
+        </pages>
+    </cms-gui>
+</config>
