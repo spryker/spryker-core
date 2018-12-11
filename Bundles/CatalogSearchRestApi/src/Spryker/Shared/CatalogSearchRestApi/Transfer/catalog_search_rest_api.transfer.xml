@@ -98,7 +98,7 @@
     </transfer>
 
     <transfer name="RestFacetConfig">
-        <property name="name" type="string" />
+        <property name="parameterName" type="string" />
         <property name="isMultiValued" type="bool" />
     </transfer>
 
