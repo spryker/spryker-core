@@ -47,6 +47,7 @@
         <property name="activeMin" type="float" />
         <property name="activeMax" type="float" />
         <property name="docCount" type="int" />
+        <property name="config" type="RestFacetConfig" />
     </transfer>
 
     <transfer name="RestFacetSearchResult">
@@ -55,6 +56,7 @@
         <property name="docCount" type="int" />
         <property name="values" type="array" singular="value" />
         <property name="activeValue" type="string" />
+        <property name="config" type="RestFacetConfig" />
     </transfer>
 
     <transfer name="RestCatalogSearchSuggestionsAttributes">
@@ -93,6 +95,11 @@
         <property name="code" type="string" />
         <property name="name" type="string" />
         <property name="symbol" type="string" />
+    </transfer>
+
+    <transfer name="RestFacetConfig">
+        <property name="parameterName" type="string" />
+        <property name="isMultiValued" type="bool" />
     </transfer>
 
 </transfers>
