@@ -905,6 +905,7 @@ abstract class AbstractTable
 
         $class = $this->getButtonClass($defaultOptions, $customOptions);
         $parameters = $this->getButtonParameters($buttonOptions);
+        $icon = '';
 
         if (is_string($url)) {
             $utilSanitizeService = new UtilSanitizeService();
@@ -913,16 +914,17 @@ abstract class AbstractTable
             $url = $url->buildEscaped();
         }
 
-        $html = '<a href="' . $url . '" class="btn btn-xs btn-outline ' . $class . '"' . $parameters . '>';
-
         if (array_key_exists(self::BUTTON_ICON, $buttonOptions) === true && $buttonOptions[self::BUTTON_ICON] !== null) {
-            $html .= '<i class="fa ' . $buttonOptions[self::BUTTON_ICON] . '"></i> ';
+            $icon = '<i class="fa ' . $buttonOptions[self::BUTTON_ICON] . '"></i> ';
         }
 
-        $html .= $title;
-        $html .= '</a>';
-
-        return $html;
+        return $this->getTwig()->render('button.twig', [
+            'url' => $url,
+            'class' => $class,
+            'title' => $title,
+            'icon' => $icon,
+            'parameters' => $parameters,
+        ]);
     }
 
     /**
@@ -958,15 +960,7 @@ abstract class AbstractTable
      */
     protected function generateButtonDropdownHtml(array $buttons, $title, $icon, $class, $parameters)
     {
-        $html = sprintf(
-            '<div class="btn-group"><button data-toggle="dropdown" class="btn btn-xs btn-outline %s dropdown-toggle" aria-expanded="true" %s>%s%s<span class="caret"></span></button>',
-            $class,
-            $parameters,
-            $icon,
-            $title
-        );
-
-        $html .= '<ul class="dropdown-menu">';
+        $nestedButtons = [];
 
         foreach ($buttons as $button) {
             if (is_string($button['url'])) {
@@ -978,23 +972,26 @@ abstract class AbstractTable
                 $url = $buttonUrl->buildEscaped();
             }
 
-            if (!empty($button['separated'])) {
-                $html .= '<li class="divider"></li>';
-            }
-
             $buttonParameters = '';
             if (isset($button['options'])) {
                 $buttonParameters = $this->getButtonParameters($button['options']);
             }
 
-            $html .= sprintf('<li><a href="%s" %s>', $url, $buttonParameters);
-            $html .= $button['title'];
-            $html .= '</a></li>';
+            $nestedButtons[] = [
+                'needDivider' => !empty($button['separated']),
+                'url' => $url,
+                'params' => $buttonParameters,
+                'title' => $button['title'],
+            ];
         }
 
-        $html .= '</ul></div>';
-
-        return $html;
+        return $this->getTwig()->render('button-dropdown.twig', [
+            'class' => $class,
+            'parameters' => $parameters,
+            'icon' => $icon,
+            'title' => $title,
+            'nestedButtons' => $nestedButtons,
+        ]);
     }
 
     /**

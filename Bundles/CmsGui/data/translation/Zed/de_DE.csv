@@ -5,6 +5,7 @@ Compare,Vergleich
 "Create CMS Page","CMS-Seite erstellen"
 "Create page","Seite erstellen"
 "Created at:","Erstellt am:"
+View,Ansicht
 Deactivate,Deaktivieren
 Description:,Beschreibung:
 "Discard Draft","Entwurf verwerfen"
@@ -28,10 +29,11 @@ Name,Name
 Name:,Name:
 on,bzgl.
 "Overview of CMS Pages","Übersicht der CMS-Seiten"
-Publish,Veröffentlichen
+"Publish","Veröffentlichen"
 "Rollback to Selected Version","Zurücksetzen auf ausgewählte Version"
 Save,Speichern
 Template:,Vorlage:
+Template,Vorlage
 Title:,Titel:
 "Translation key:",Übersetzungs-Key:
 Url,URL
@@ -41,3 +43,5 @@ Url,URL
 "Version History:",Versionshistorie:
 View,Ansicht
 "View CMS Page:","CMS-Seite anzeigen:"
+Edit,Bearbeiten
+Placeholders,Platzhalter

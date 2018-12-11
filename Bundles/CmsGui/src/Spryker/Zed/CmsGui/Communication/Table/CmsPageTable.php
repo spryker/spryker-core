@@ -290,7 +290,7 @@ class CmsPageTable extends AbstractTable
                 $this->createEditPageButtonItem($item),
                 $this->createEditGlossaryButtonItem($item),
             ],
-            'Edit ',
+            'Edit',
             [
                 'class' => 'btn-edit',
                 'icon' => 'fa-pencil-square-o',
