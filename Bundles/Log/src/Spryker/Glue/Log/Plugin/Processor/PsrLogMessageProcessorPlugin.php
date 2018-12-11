@@ -20,7 +20,7 @@ class PsrLogMessageProcessorPlugin extends AbstractPlugin implements LogProcesso
      *
      * @return array
      */
-    public function __invoke(array $data)
+    public function __invoke(array $data): array
     {
         return $this->getFactory()->createPsrMessageProcessor()->__invoke($data);
     }

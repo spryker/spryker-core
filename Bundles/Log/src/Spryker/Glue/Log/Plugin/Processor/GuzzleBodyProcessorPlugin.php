@@ -20,7 +20,7 @@ class GuzzleBodyProcessorPlugin extends AbstractPlugin implements LogProcessorPl
      *
      * @return array
      */
-    public function __invoke(array $data)
+    public function __invoke(array $data): array
     {
         return $this->getFactory()->createGuzzleBodyProcessor()->__invoke($data);
     }

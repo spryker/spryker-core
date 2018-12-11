@@ -19,7 +19,7 @@ class GlueLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInter
     /**
      * @return string
      */
-    public function getChannelName()
+    public function getChannelName(): string
     {
         return $this->getConfig()->getChannelName();
     }
@@ -27,7 +27,7 @@ class GlueLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInter
     /**
      * @return \Monolog\Handler\HandlerInterface[]
      */
-    public function getHandlers()
+    public function getHandlers(): array
     {
         return $this->getFactory()->getHandlers();
     }
@@ -35,7 +35,7 @@ class GlueLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInter
     /**
      * @return callable[]
      */
-    public function getProcessors()
+    public function getProcessors(): array
     {
         return $this->getFactory()->getProcessors();
     }

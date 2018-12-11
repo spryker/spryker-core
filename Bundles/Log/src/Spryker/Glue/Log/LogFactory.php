@@ -7,20 +7,25 @@
 
 namespace Spryker\Glue\Log;
 
+use Monolog\Formatter\FormatterInterface;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Formatter\LogstashFormatter;
 use Monolog\Handler\BufferHandler;
+use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Monolog\Processor\ProcessorInterface as MonologProcessorInterface;
 use Monolog\Processor\PsrLogMessageProcessor;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\Log\Handler\QueueHandler;
 use Spryker\Shared\Log\Processor\EnvironmentProcessor;
 use Spryker\Shared\Log\Processor\GuzzleBodyProcessor;
+use Spryker\Shared\Log\Processor\ProcessorInterface;
 use Spryker\Shared\Log\Processor\RequestProcessor;
 use Spryker\Shared\Log\Processor\ResponseProcessor;
 use Spryker\Shared\Log\Processor\ServerProcessor;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
+use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 
 /**
  * @method \Spryker\Glue\Log\LogConfig getConfig()
@@ -30,7 +35,7 @@ class LogFactory extends AbstractFactory
     /**
      * @return \Monolog\Handler\HandlerInterface[]
      */
-    public function getHandlers()
+    public function getHandlers(): array
     {
         return $this->getProvidedDependency(LogDependencyProvider::LOG_HANDLERS);
     }
@@ -38,7 +43,7 @@ class LogFactory extends AbstractFactory
     /**
      * @return callable[]
      */
-    public function getProcessors()
+    public function getProcessors(): array
     {
         return $this->getProvidedDependency(LogDependencyProvider::LOG_PROCESSORS);
     }
@@ -46,15 +51,15 @@ class LogFactory extends AbstractFactory
     /**
      * @return \Monolog\Handler\HandlerInterface
      */
-    public function createBufferedQueueHandler()
+    public function createBufferedQueueHandler(): HandlerInterface
     {
         return new BufferHandler($this->createQueueHandler());
     }
 
     /**
-     * @return \Monolog\Handler\HandlerInterface|\Spryker\Glue\Log\Handler\QueueHandler
+     * @return \Monolog\Handler\HandlerInterface
      */
-    public function createQueueHandler()
+    public function createQueueHandler(): HandlerInterface
     {
         return new QueueHandler(
             $this->getProvidedDependency(LogDependencyProvider::CLIENT_QUEUE),
@@ -63,17 +68,17 @@ class LogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Monolog\Handler\HandlerInterface|\Monolog\Handler\BufferHandler
+     * @return \Monolog\Handler\HandlerInterface
      */
-    public function createBufferedStreamHandler()
+    public function createBufferedStreamHandler(): HandlerInterface
     {
         return new BufferHandler($this->createStreamHandler());
     }
 
     /**
-     * @return \Monolog\Handler\HandlerInterface|\Monolog\Handler\StreamHandler
+     * @return \Monolog\Handler\HandlerInterface
      */
-    public function createStreamHandler()
+    public function createStreamHandler(): HandlerInterface
     {
         $streamHandler = new StreamHandler(
             $this->getConfig()->getLogFilePath(),
@@ -86,17 +91,17 @@ class LogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Monolog\Formatter\FormatterInterface|\Monolog\Formatter\LogstashFormatter
+     * @return \Monolog\Formatter\FormatterInterface
      */
-    public function createLogstashFormatter()
+    public function createLogstashFormatter(): FormatterInterface
     {
         return new LogstashFormatter(APPLICATION);
     }
 
     /**
-     * @return \Monolog\Handler\HandlerInterface|\Monolog\Handler\FilterHandler
+     * @return \Monolog\Handler\HandlerInterface
      */
-    public function createExceptionStreamHandler()
+    public function createExceptionStreamHandler(): HandlerInterface
     {
         $streamHandler = new StreamHandler(
             $this->getConfig()->getExceptionLogFilePath(),
@@ -108,9 +113,9 @@ class LogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Monolog\Formatter\FormatterInterface|\Monolog\Formatter\LineFormatter
+     * @return \Monolog\Formatter\FormatterInterface
      */
-    public function createExceptionFormatter()
+    public function createExceptionFormatter(): FormatterInterface
     {
         $lineFormatter = new LineFormatter();
         $lineFormatter->includeStacktraces(true);
@@ -121,7 +126,7 @@ class LogFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
      */
-    public function createEnvironmentProcessor()
+    public function createEnvironmentProcessor(): ProcessorInterface
     {
         return new EnvironmentProcessor();
     }
@@ -129,15 +134,15 @@ class LogFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
      */
-    public function createGuzzleBodyProcessor()
+    public function createGuzzleBodyProcessor(): ProcessorInterface
     {
         return new GuzzleBodyProcessor($this->createSanitizer());
     }
 
     /**
-     * @return \Monolog\Processor\PsrLogMessageProcessor
+     * @return \Monolog\Processor\ProcessorInterface
      */
-    public function createPsrMessageProcessor()
+    public function createPsrMessageProcessor(): MonologProcessorInterface
     {
         return new PsrLogMessageProcessor();
     }
@@ -145,7 +150,7 @@ class LogFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
      */
-    public function createRequestProcessor()
+    public function createRequestProcessor(): ProcessorInterface
     {
         return new RequestProcessor($this->createSanitizer());
     }
@@ -153,7 +158,7 @@ class LogFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
      */
-    public function createResponseProcessor()
+    public function createResponseProcessor(): ProcessorInterface
     {
         return new ResponseProcessor();
     }
@@ -161,7 +166,7 @@ class LogFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
      */
-    public function createServerProcessor()
+    public function createServerProcessor(): ProcessorInterface
     {
         return new ServerProcessor();
     }
@@ -169,7 +174,7 @@ class LogFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Log\Sanitizer\SanitizerInterface
      */
-    public function createSanitizer()
+    public function createSanitizer(): SanitizerInterface
     {
         return new Sanitizer(
             $this->getConfig()->getSanitizerFieldNames(),

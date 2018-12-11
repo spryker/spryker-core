@@ -21,7 +21,7 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getSanitizerFieldNames()
     {
@@ -29,7 +29,7 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getSanitizedFieldValue()
     {

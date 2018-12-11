@@ -8,6 +8,7 @@
 namespace Spryker\Glue\Log\Plugin\Handler;
 
 use Monolog\Formatter\FormatterInterface;
+use Monolog\Handler\HandlerInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface;
 
@@ -24,7 +25,7 @@ class StreamHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInte
     /**
      * @return \Monolog\Handler\HandlerInterface
      */
-    protected function getHandler()
+    protected function getHandler(): HandlerInterface
     {
         if (!$this->handler) {
             $this->handler = $this->getFactory()->createBufferedStreamHandler();
@@ -38,7 +39,7 @@ class StreamHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInte
      *
      * @return bool
      */
-    public function isHandling(array $record)
+    public function isHandling(array $record): bool
     {
         return $this->getHandler()->isHandling($record);
     }
@@ -48,7 +49,7 @@ class StreamHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInte
      *
      * @return bool
      */
-    public function handle(array $record)
+    public function handle(array $record): bool
     {
         return $this->getHandler()->handle($record);
     }
@@ -68,7 +69,7 @@ class StreamHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInte
      *
      * @return \Monolog\Handler\HandlerInterface
      */
-    public function pushProcessor($callback)
+    public function pushProcessor($callback): HandlerInterface
     {
         return $this->getHandler()->pushProcessor($callback);
     }
@@ -76,7 +77,7 @@ class StreamHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInte
     /**
      * @return callable
      */
-    public function popProcessor()
+    public function popProcessor(): callable
     {
         return $this->getHandler()->popProcessor();
     }
@@ -86,7 +87,7 @@ class StreamHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInte
      *
      * @return \Monolog\Handler\HandlerInterface
      */
-    public function setFormatter(FormatterInterface $formatter)
+    public function setFormatter(FormatterInterface $formatter): HandlerInterface
     {
         return $this->getHandler()->setFormatter($formatter);
     }
@@ -94,7 +95,7 @@ class StreamHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInte
     /**
      * @return \Monolog\Formatter\FormatterInterface
      */
-    public function getFormatter()
+    public function getFormatter(): FormatterInterface
     {
         return $this->getHandler()->getFormatter();
     }
