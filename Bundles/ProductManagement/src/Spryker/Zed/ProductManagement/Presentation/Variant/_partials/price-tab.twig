@@ -1,7 +1,7 @@
 <div class="well">
     {% filter trans|raw %}
-        <h3>Price</h3>
-        <p>Enter price.</p>
+        <h3>{{ 'Price' | trans }}</h3>
+        <p>{{ 'Enter price.' | trans }}</p>
     {% endfilter %}
 </div>
 
@@ -17,8 +17,8 @@
 
     <div class="well">
         {% filter trans|raw %}
-            <h3>Stock</h3>
-            <p>Enter stock value. In case you create multiple variants, the stock can be managed under "Product Variants" and this input field will be ignored.</p>
+            <h3>{{ 'Stock' | trans }}</h3>
+            <p>{{ 'Enter stock value. In case you create multiple variants, the stock can be managed under "Product Variants" and this input field will be ignored.' | trans }}</p>
         {% endfilter %}
     </div>
 
