@@ -10,6 +10,7 @@ namespace Spryker\Client\ProductOptionStorage\Storage;
 use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\Kernel\Locator;
+use Spryker\Client\Kernel\PermissionAwareTrait;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface;
@@ -19,6 +20,8 @@ use Spryker\Shared\ProductOptionStorage\ProductOptionStorageConfig as SharedProd
 
 class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @var \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface
      */
@@ -65,8 +68,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      */
     public function getProductOptions($idProductAbstract, $locale)
     {
-        $key = $this->generateKey($idProductAbstract);
-        $productAbstractOptionStorageData = $this->getStorageData($idProductAbstract);
+        $productAbstractOptionStorageData = $this->findStorageData($idProductAbstract);
 
         if (!$productAbstractOptionStorageData) {
             return null;
@@ -82,7 +84,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      */
     public function getProductOptionsForCurrentStore($idProductAbstract)
     {
-        $productAbstractOptionStorageData = $this->getStorageData($idProductAbstract);
+        $productAbstractOptionStorageData = $this->findStorageData($idProductAbstract);
 
         if (!$productAbstractOptionStorageData) {
             return null;
@@ -95,9 +97,9 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      * @param int $idProductAbstract
      * @param string|null $locale
      *
-     * @return array
+     * @return array|null
      */
-    protected function getStorageData(int $idProductAbstract, ?string $locale = null): array
+    protected function findStorageData(int $idProductAbstract, ?string $locale = null): ?array
     {
         if (ProductOptionStorageConfig::isCollectorCompatibilityMode()) {
             if ($locale === null) {
@@ -127,7 +129,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
 
         $key = $this->generateKey($idProductAbstract);
 
-        return $this->storageClient->get($key);
+        return $this->storageClient->get($key) ?? [];
     }
 
     /**
@@ -139,6 +141,10 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     {
         $productAbstractOptionStorageTransfer = new ProductAbstractOptionStorageTransfer();
         $productAbstractOptionStorageTransfer->fromArray($productAbstractOptionStorageData, true);
+
+        if (!$this->can('SeePricePermissionPlugin')) {
+            return $productAbstractOptionStorageTransfer;
+        }
 
         foreach ($productAbstractOptionStorageTransfer->getProductOptionGroups() as $productOptionGroup) {
             $this->valuePriceReader->resolvePrices($productOptionGroup);

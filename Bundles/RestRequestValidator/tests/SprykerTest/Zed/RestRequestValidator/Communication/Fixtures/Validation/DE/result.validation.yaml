@@ -8,6 +8,14 @@ endpoint:
     integerField:
     - Regex:
         pattern: '/\d{15}/'
+    nestedField:
+    - Collection:
+        fields:
+          test:
+            - Regex:
+                pattern: '/\d{15}/'
+          test_email:
+            - Email
   patch:
     booleanField:
     - IsTrue
