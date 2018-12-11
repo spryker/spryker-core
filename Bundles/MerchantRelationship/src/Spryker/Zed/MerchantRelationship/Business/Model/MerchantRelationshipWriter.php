@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business\Model;
 
-use Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\MerchantRelationship\Business\KeyGenerator\MerchantRelationshipKeyGeneratorInterface;
 use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipEntityManagerInterface;
@@ -112,24 +111,8 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
     {
         $merchantRelationTransfer->requireIdMerchantRelationship();
 
-        $this->entityManager->deleteMerchantRelationshipById($merchantRelationTransfer->getIdMerchantRelationship());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer
-     */
-    public function deleteWithPreCheck(MerchantRelationshipTransfer $merchantRelationTransfer): MerchantRelationshipDeleteResponseTransfer
-    {
-        $merchantRelationTransfer->requireIdMerchantRelationship();
-
-        $merchantRelationshipDeleteResponseTransfer = (new MerchantRelationshipDeleteResponseTransfer())->setIsSuccess(false);
         $this->executeMerchantRelationshipPreDeletePlugins($merchantRelationTransfer);
         $this->entityManager->deleteMerchantRelationshipById($merchantRelationTransfer->getIdMerchantRelationship());
-        $merchantRelationshipDeleteResponseTransfer->setIsSuccess(true);
-
-        return $merchantRelationshipDeleteResponseTransfer;
     }
 
     /**

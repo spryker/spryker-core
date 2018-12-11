@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business;
 
-use Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -53,8 +52,6 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
     /**
      * {@inheritdoc}
      *
-     * @deprecated Use MerchantRelationshipFacade::deleteMerchantRelationshipWithPreCheck() instead
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
@@ -66,22 +63,6 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
         $this->getFactory()
             ->createMerchantRelationshipWriter()
             ->delete($merchantRelationshipTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer
-     */
-    public function deleteMerchantRelationshipWithPreCheck(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipDeleteResponseTransfer
-    {
-        return $this->getFactory()
-            ->createMerchantRelationshipWriter()
-            ->deleteWithPreCheck($merchantRelationshipTransfer);
     }
 
     /**

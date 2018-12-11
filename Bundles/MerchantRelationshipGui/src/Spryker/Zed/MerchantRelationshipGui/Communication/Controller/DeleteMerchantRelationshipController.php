@@ -35,17 +35,9 @@ class DeleteMerchantRelationshipController extends AbstractController
         $merchantRelationshipTransfer = (new MerchantRelationshipTransfer())
             ->setIdMerchantRelationship($idMerchantRelationship);
 
-        $merchantRelationshipDeleteResponseTransfer = $this->getFactory()
+        $this->getFactory()
             ->getMerchantRelationshipFacade()
-            ->deleteMerchantRelationshipWithPreCheck($merchantRelationshipTransfer);
-
-        if (!$merchantRelationshipDeleteResponseTransfer->getIsSuccess()) {
-            foreach ($merchantRelationshipDeleteResponseTransfer->getMessages() as $errorMessage) {
-                $this->addErrorMessage($errorMessage->getValue());
-            }
-
-            return $this->redirectResponse($redirectUrl);
-        }
+            ->deleteMerchantRelationship($merchantRelationshipTransfer);
 
         $this->addSuccessMessage(static::MESSAGE_MERCHANT_RELATIONSHIP_DELETE_SUCCESS);
 

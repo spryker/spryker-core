@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantRelationshipGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 class MerchantRelationshipGuiToMerchantRelationshipFacadeBridge implements MerchantRelationshipGuiToMerchantRelationshipFacadeInterface
@@ -46,8 +45,6 @@ class MerchantRelationshipGuiToMerchantRelationshipFacadeBridge implements Merch
     }
 
     /**
-     * @deprecated Use MerchantRelationshipGuiToMerchantRelationshipFacadeBridge::deleteMerchantRelationshipWithPreCheck() instead
-     *
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
      * @return void
@@ -55,16 +52,6 @@ class MerchantRelationshipGuiToMerchantRelationshipFacadeBridge implements Merch
     public function deleteMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
     {
         $this->merchantRelationshipFacade->deleteMerchantRelationship($merchantRelationshipTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer
-     */
-    public function deleteMerchantRelationshipWithPreCheck(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipDeleteResponseTransfer
-    {
-        return $this->merchantRelationshipFacade->deleteMerchantRelationshipWithPreCheck($merchantRelationshipTransfer);
     }
 
     /**
