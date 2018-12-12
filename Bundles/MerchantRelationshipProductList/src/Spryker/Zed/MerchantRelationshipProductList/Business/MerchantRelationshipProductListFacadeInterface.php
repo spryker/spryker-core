@@ -30,7 +30,7 @@ interface MerchantRelationshipProductListFacadeInterface
     /**
      * Specification:
      * - Finds product lists by merchant relationship.
-     * - Transfer has to contain ID as the required field
+     * - MerchantRelationshipTransfer has to contain MerchantRelationship ID as the required field.
      *
      * @api
      *
@@ -43,6 +43,7 @@ interface MerchantRelationshipProductListFacadeInterface
     /**
      * Specification:
      * - Removes merchant relationship from product list.
+     * - ProductListTransfer has to contain ProductList ID as the required field.
      *
      * @api
      *
