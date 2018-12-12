@@ -13,11 +13,15 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
@@ -225,7 +229,7 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function hydrateOrderItemTransfer(SpySalesOrderItem $orderItemEntity)
+    public function hydrateOrderItemTransfer(SpySalesOrderItem $orderItemEntity): ItemTransfer
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->fromArray($orderItemEntity->toArray(), true);
@@ -250,6 +254,7 @@ class OrderHydrator implements OrderHydratorInterface
 
         $this->hydrateStateHistory($orderItemEntity, $itemTransfer);
         $this->hydrateCurrentSalesOrderItemState($orderItemEntity, $itemTransfer);
+        $this->hydrateItemShipping($orderItemEntity, $itemTransfer);
 
         return $itemTransfer;
     }
@@ -283,13 +288,9 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function hydrateBillingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
-        $countryEntity = $orderEntity->getBillingAddress()->getCountry();
-
-        $billingAddressTransfer = new AddressTransfer();
-        $billingAddressTransfer->fromArray($orderEntity->getBillingAddress()->toArray(), true);
-        $this->hydrateCountryEntityIntoAddressTransfer($billingAddressTransfer, $countryEntity);
-
-        $orderTransfer->setBillingAddress($billingAddressTransfer);
+        $orderTransfer->setBillingAddress(
+            $this->createAddressTransfer($orderEntity->getBillingAddress())
+        );
     }
 
     /**
@@ -298,30 +299,34 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return void
      */
-    protected function hydrateShippingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
+    protected function hydrateShippingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): void
     {
-        $countryEntity = $orderEntity->getShippingAddress()->getCountry();
+        $shippingAddress = $orderEntity->getShippingAddress();
 
-        $shippingAddressTransfer = new AddressTransfer();
-        $shippingAddressTransfer->fromArray($orderEntity->getShippingAddress()->toArray(), true);
-        $this->hydrateCountryEntityIntoAddressTransfer($shippingAddressTransfer, $countryEntity);
+        if (!$shippingAddress) {
+            return;
+        }
 
-        $orderTransfer->setShippingAddress($shippingAddressTransfer);
+        $orderTransfer->setShippingAddress($this->createAddressTransfer($shippingAddress));
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param \Orm\Zed\Country\Persistence\SpyCountry $countryEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $salesOrderAddressEntity
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function hydrateCountryEntityIntoAddressTransfer(
-        AddressTransfer $addressTransfer,
-        SpyCountry $countryEntity
-    ) {
+    protected function createAddressTransfer(SpySalesOrderAddress $salesOrderAddressEntity): AddressTransfer
+    {
+        $countryEntity = $salesOrderAddressEntity->getCountry();
+
+        $addressTransfer = new AddressTransfer();
+        $addressTransfer->fromArray($salesOrderAddressEntity->toArray(), true);
         $addressTransfer->setIso2Code($countryEntity->getIso2Code());
+
         $countryTransfer = (new CountryTransfer())->fromArray($countryEntity->toArray(), true);
         $addressTransfer->setCountry($countryTransfer);
+
+        return $addressTransfer;
     }
 
     /**
@@ -330,24 +335,10 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return void
      */
-    protected function hydrateExpensesToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
+    protected function hydrateExpensesToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): void
     {
         foreach ($orderEntity->getExpenses() as $expenseEntity) {
-            $expenseTransfer = new ExpenseTransfer();
-            $expenseTransfer->fromArray($expenseEntity->toArray(), true);
-
-            $expenseTransfer->setQuantity(1);
-            $expenseTransfer->setSumGrossPrice($expenseEntity->getGrossPrice());
-            $expenseTransfer->setSumNetPrice($expenseEntity->getNetPrice());
-            $expenseTransfer->setSumPrice($expenseEntity->getPrice());
-            $expenseTransfer->setSumPriceToPayAggregation($expenseEntity->getPriceToPayAggregation());
-            $expenseTransfer->setSumTaxAmount($expenseEntity->getTaxAmount());
-
-            $expenseTransfer->setIsOrdered(true);
-
-            $this->deriveExpenseUnitPrices($expenseTransfer);
-
-            $orderTransfer->addExpense($expenseTransfer);
+            $orderTransfer->addExpense($this->createExpense($expenseEntity));
         }
     }
 
@@ -481,5 +472,72 @@ class OrderHydrator implements OrderHydratorInterface
             // Deprecated: Using FK to customer is obsolete, but needed to prevent BC break.
             $orderTransfer->setFkCustomer(null);
         }
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function hydrateItemShipping(SpySalesOrderItem $orderItemEntity, ItemTransfer $itemTransfer): void
+    {
+        $spySalesShipment = $orderItemEntity->getSpySalesShipment();
+
+        $shipmentTransfer = new ShipmentTransfer();
+        $shipmentTransfer->setShippingAddress(
+            $this->createAddressTransfer($spySalesShipment->getSpySalesOrderAddress())
+        );
+        $shipmentTransfer->setExpense($this->createExpense($spySalesShipment->getExpense()));
+        $shipmentTransfer->setCarrier($this->createShipmentCarrier($spySalesShipment->getCarrierName()));
+        $shipmentTransfer->setMethod($this->createShipmentMethod($spySalesShipment->getName()));
+        $shipmentTransfer->setRequestedDeliveryDate($spySalesShipment->getRequestedDeliveryDate());
+
+        $itemTransfer->setShipment($shipmentTransfer);
+    }
+
+    /**
+     * @param string $shipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     */
+    protected function createShipmentMethod(string $shipmentMethod): ShipmentMethodTransfer
+    {
+        return (new ShipmentMethodTransfer())
+            ->setName($shipmentMethod);
+    }
+
+    /**
+     * @param string $carrierName
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
+     */
+    protected function createShipmentCarrier(string $carrierName): ShipmentCarrierTransfer
+    {
+        return (new ShipmentCarrierTransfer())
+            ->setName($carrierName);
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesExpense $expenseEntity
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    protected function createExpense(SpySalesExpense $expenseEntity): ExpenseTransfer
+    {
+        $expenseTransfer = new ExpenseTransfer();
+        $expenseTransfer->fromArray($expenseEntity->toArray(), true);
+
+        $expenseTransfer->setQuantity(1);
+        $expenseTransfer->setSumGrossPrice($expenseEntity->getGrossPrice());
+        $expenseTransfer->setSumNetPrice($expenseEntity->getNetPrice());
+        $expenseTransfer->setSumPrice($expenseEntity->getPrice());
+        $expenseTransfer->setSumPriceToPayAggregation($expenseEntity->getPriceToPayAggregation());
+        $expenseTransfer->setSumTaxAmount($expenseEntity->getTaxAmount());
+
+        $expenseTransfer->setIsOrdered(true);
+        $this->deriveExpenseUnitPrices($expenseTransfer);
+
+        return $expenseTransfer;
     }
 }
