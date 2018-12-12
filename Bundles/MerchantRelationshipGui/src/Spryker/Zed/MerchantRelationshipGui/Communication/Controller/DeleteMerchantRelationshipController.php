@@ -34,7 +34,6 @@ class DeleteMerchantRelationshipController extends AbstractController
 
         $merchantRelationshipTransfer = (new MerchantRelationshipTransfer())
             ->setIdMerchantRelationship($idMerchantRelationship);
-
         $this->getFactory()
             ->getMerchantRelationshipFacade()
             ->deleteMerchantRelationship($merchantRelationshipTransfer);
