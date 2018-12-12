@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductPageSearchExtension\Dependency;
 
 use Generated\Shared\Transfer\PageMapTransfer;
 
+/**
+ * deprecated: This interface will not be used in PluginInterfaces in the next Search module major
+ */
 interface PageMapBuilderInterface
 {
     /**
