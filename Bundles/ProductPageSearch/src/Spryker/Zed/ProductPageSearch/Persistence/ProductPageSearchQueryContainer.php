@@ -12,6 +12,7 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -75,6 +76,10 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
             ->join('SpyProductAbstract.SpyProductImageSet', Criteria::LEFT_JOIN)
             ->addJoinCondition('SpyProductImageSet', sprintf('(spy_product_image_set.fk_locale = %s or spy_product_image_set.fk_locale is null)', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE))
             ->withColumn(SpyProductImageSetTableMap::COL_ID_PRODUCT_IMAGE_SET, 'id_image_set');
+
+        $query
+            ->rightJoinWith('SpyProduct.SpyProductSearch')
+            ->addJoinCondition('SpyProductSearch', sprintf('spy_product_search.fk_locale = %s', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE));
 
         return $query;
     }
@@ -296,5 +301,25 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
         $nodeQuery->setFormatter(new PropelArraySetFormatter());
 
         return $nodeQuery;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idNode
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryCategoryNodeFullPath(int $idNode): SpyCategoryNodeQuery
+    {
+        return $this->getFactory()
+            ->getCategoryNodeQueryContainer()
+            ->useClosureTableQuery()
+                ->orderByFkCategoryNodeDescendant(Criteria::DESC)
+                ->orderByDepth(Criteria::DESC)
+                ->filterByFkCategoryNodeDescendant($idNode)
+            ->endUse()
+            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::VIRT_COLUMN_ID_CATEGORY_NODE)
+            ->setFormatter(new PropelArraySetFormatter());
     }
 }

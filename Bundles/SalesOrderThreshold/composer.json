@@ -6,14 +6,14 @@
   "require": {
     "php": ">=7.1",
     "spryker/calculation-extension": "^1.0.0",
-    "spryker/cart-extension": "^1.0.0 || ^2.0.0",
+    "spryker/cart-extension": "^1.6.0 || ^2.2.1",
     "spryker/checkout-extension": "^1.0.0",
     "spryker/currency": "^3.0.0",
     "spryker/glossary": "^3.1.0",
     "spryker/kernel": "^3.17.0",
     "spryker/messenger": "^3.1.0",
     "spryker/money": "^2.0.0",
-    "spryker/sales": "^8.14.0",
+    "spryker/sales": "^8.16.0",
     "spryker/sales-order-threshold-extension": "^1.0.0",
     "spryker/store": "^1.2.0",
     "spryker/tax": "^5.0.0"

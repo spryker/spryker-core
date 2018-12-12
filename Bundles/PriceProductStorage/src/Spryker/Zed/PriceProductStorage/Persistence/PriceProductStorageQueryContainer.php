@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductStorage\Persistence;
 
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -158,5 +159,43 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
         return $this->getFactory()
             ->createSpyPriceConcreteStorageQuery()
             ->filterByFkProduct_In($productConcreteIds);
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $priceProductStoreIds
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
+     */
+    public function queryProductAbstractIdsByPriceProductStoreIds(array $priceProductStoreIds): SpyPriceProductQuery
+    {
+        return $this->getFactory()
+            ->getPriceProductQueryContainer()
+            ->queryPriceProduct()
+            ->usePriceProductStoreQuery()
+                ->filterByIdPriceProductStore_In($priceProductStoreIds)
+            ->endUse()
+            ->select([SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->filterByFkProductAbstract(null, Criteria::ISNOTNULL);
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $priceProductStoreIds
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
+     */
+    public function queryProductConcreteIdsByPriceProductStoreIds(array $priceProductStoreIds): SpyPriceProductQuery
+    {
+        return $this->getFactory()
+            ->getPriceProductQueryContainer()
+            ->queryPriceProduct()
+            ->usePriceProductStoreQuery()
+                ->filterByIdPriceProductStore_In($priceProductStoreIds)
+            ->endUse()
+            ->select([SpyPriceProductTableMap::COL_FK_PRODUCT])
+            ->filterByFkProduct(null, Criteria::ISNOTNULL);
     }
 }

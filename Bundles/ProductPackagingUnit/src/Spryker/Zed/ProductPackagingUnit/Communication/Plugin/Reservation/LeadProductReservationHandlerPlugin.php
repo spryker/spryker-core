@@ -13,11 +13,14 @@ use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
 /**
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig getConfig()
  */
 class LeadProductReservationHandlerPlugin extends AbstractPlugin implements ReservationHandlerPluginInterface
 {
     /**
      * {@inheritdoc}
+     * - Updates the lead product's reservation for the provided product packaging unit SKU.
+     * - Updates the lead product's availability for the provided product packaging unit SKU.
      *
      * @api
      *
@@ -28,9 +31,9 @@ class LeadProductReservationHandlerPlugin extends AbstractPlugin implements Rese
     public function handle($sku): void
     {
         $this->getFacade()
-            ->updateLeadProductAvailability($sku);
+            ->updateLeadProductReservation($sku);
 
         $this->getFacade()
-            ->updateLeadProductReservation($sku);
+            ->updateLeadProductAvailability($sku);
     }
 }

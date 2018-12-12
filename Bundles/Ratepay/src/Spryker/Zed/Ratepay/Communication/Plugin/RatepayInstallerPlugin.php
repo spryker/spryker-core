@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Ratepay\Communication\RatepayCommunicationFactory getFactory()
  * @method \Spryker\Zed\Ratepay\Business\RatepayFacadeInterface getFacade()
+ * @method \Spryker\Zed\Ratepay\RatepayConfig getConfig()
+ * @method \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface getQueryContainer()
  */
 class RatepayInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {

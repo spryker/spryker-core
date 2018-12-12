@@ -16,6 +16,8 @@ use Spryker\Zed\ProductResourceAliasStorage\ProductResourceAliasStorageDependenc
 
 /**
  * @method \Spryker\Zed\ProductResourceAliasStorage\ProductResourceAliasStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductResourceAliasStorage\Persistence\ProductResourceAliasStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductResourceAliasStorage\Persistence\ProductResourceAliasStorageRepositoryInterface getRepository()
  */
 class ProductResourceAliasStoragePersistenceFactory extends AbstractPersistenceFactory
 {

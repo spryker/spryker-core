@@ -50,6 +50,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
             ->addProductAbstractIdHiddenField($builder)
             ->addProductConcreteIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
+            ->addPriceDimensionForm($builder)
             ->addPriceForm($builder, $options)
             ->addStockForm($builder, $options)
             ->addImageLocalizedForms($builder)
@@ -57,6 +58,8 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
             ->addBundledProductsToBeRemoved($builder)
             ->addProductConcreteSuperAttributeForm($builder, $options)
             ->addPriceSourceCheckbox($builder);
+
+        $this->executeProductConcreteFormExpanderPlugins($builder, $options);
     }
 
     /**

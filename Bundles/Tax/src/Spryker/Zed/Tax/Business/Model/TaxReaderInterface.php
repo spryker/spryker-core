@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Tax\Business\Model;
 
+use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
+
 interface TaxReaderInterface
 {
     /**
@@ -75,4 +78,18 @@ interface TaxReaderInterface
      * @return bool
      */
     public function taxSetWithSameNameAndIdExists(string $name, int $idTaxSet): bool;
+
+    /**
+     * @param int $idTaxRate
+     *
+     * @return \Generated\Shared\Transfer\TaxRateTransfer|null
+     */
+    public function findTaxRate(int $idTaxRate): ?TaxRateTransfer;
+
+    /**
+     * @param int $idTaxSet
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer|null
+     */
+    public function findTaxSet(int $idTaxSet): ?TaxSetTransfer;
 }

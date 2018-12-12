@@ -42,6 +42,7 @@ class ShoppingListDataImportPluginTest extends Unit
     public function testImportImportsData(): void
     {
         $this->tester->ensureShoppingListDatabaseTableIsEmpty();
+        $this->tester->ensureCustomerWithReferenceDoesNotExist(static::TEST_CUSTOMER_REFERENCE);
         $this->tester->createCustomer([
             CustomerTransfer::CUSTOMER_REFERENCE => static::TEST_CUSTOMER_REFERENCE,
         ]);
