@@ -76,7 +76,7 @@ class IndexController extends AbstractController
             ->getData($idDiscount);
 
         if ($discountConfiguratorTransfer === null) {
-            $this->addErrorMessage(sprintf('Discount with id %s doesn\'t exist', $idDiscount));
+            $this->addErrorMessage(sprintf("Discount with id %s doesn't exist", $idDiscount));
 
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
