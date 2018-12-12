@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,9 +16,15 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface getRepository()
  */
 class AddressController extends AbstractController
 {
+    protected const URL_CUSTOMER_LIST = '/customer';
+    protected const URL_CUSTOMER_VIEW = '/customer/view';
+    protected const ERROR_MESSAGE_CUSTOMER_ADDRESS_DOES_NOT_EXIST = 'Customer Address with ID = %d does not exist';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -25,12 +32,25 @@ class AddressController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idCustomer = false;
+        $idCustomer = $request->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER);
         $idCustomerAddress = $this->castId($request->query->get(CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS));
+
+        if (!$idCustomer) {
+            return $this->redirectResponse(static::URL_CUSTOMER_LIST);
+        }
+
+        if (!$this->getFacade()->findCustomerAddressById($idCustomerAddress)) {
+            $this->addErrorMessage(sprintf(static::ERROR_MESSAGE_CUSTOMER_ADDRESS_DOES_NOT_EXIST, $idCustomerAddress));
+
+            return $this->redirectResponse(
+                Url::generate(static::URL_CUSTOMER_VIEW, [
+                    CustomerConstants::PARAM_ID_CUSTOMER => $idCustomer,
+                ])->build()
+            );
+        }
 
         $customerAddress = $this->createCustomerAddressTransfer();
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
-
         $addressDetails = $this->getFacade()
             ->getAddress($customerAddress);
 

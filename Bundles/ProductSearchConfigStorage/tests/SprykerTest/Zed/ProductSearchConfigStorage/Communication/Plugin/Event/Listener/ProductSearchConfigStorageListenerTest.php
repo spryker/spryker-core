@@ -10,9 +10,6 @@ namespace SprykerTest\Zed\ProductSearchConfigStorage\Communication\Plugin\Event\
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductSearchConfigStorage\Persistence\SpyProductSearchConfigStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\ProductSearch\Dependency\ProductSearchEvents;
 use Spryker\Zed\ProductSearchConfigStorage\Business\ProductSearchConfigStorageBusinessFactory;
 use Spryker\Zed\ProductSearchConfigStorage\Business\ProductSearchConfigStorageFacade;
@@ -33,19 +30,6 @@ use SprykerTest\Zed\ProductSearchConfigStorage\ProductSearchConfigStorageConfigM
  */
 class ProductSearchConfigStorageListenerTest extends Unit
 {
-    /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
-    }
-
     /**
      * @return void
      */

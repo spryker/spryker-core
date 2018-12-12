@@ -13,6 +13,9 @@ use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToColle
 use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToProductSetBridge;
 use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToSearchBridge;
 
+/**
+ * @method \Spryker\Zed\ProductSetCollector\ProductSetCollectorConfig getConfig()
+ */
 class ProductSetCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';

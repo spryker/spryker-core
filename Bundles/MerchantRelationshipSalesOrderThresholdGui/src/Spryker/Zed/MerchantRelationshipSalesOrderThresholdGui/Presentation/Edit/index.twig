@@ -1,9 +1,19 @@
 {% extends '@MerchantRelationshipSalesOrderThresholdGui/_layout/layout.twig' %}
 
-{% set widget_title = 'Edit Merchant Relationhip Threshold: ' ~ form.vars.value.idMerchantRelationship %}
+{% set widget_title = 'Edit Merchant Relationhip Threshold: ' ~
+    merchantRelationship.ownerCompanyBusinessUnit.company.name ~ ' - ' ~
+    merchantRelationship.ownerCompanyBusinessUnit.name %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
+
+{% form_theme form _self %}
+{% block percent_widget %}
+    <div class="input-group">
+        <span class="input-group-addon">%</span>
+        {{- block('form_widget_simple') -}}
+    </div>
+{% endblock percent_widget %}
 
 {% block action %}
     {{ backActionButton(url('/merchant-relationship-sales-order-threshold-gui'), 'Back to Merchant Relationship Thresholds' | trans) }}
@@ -69,7 +79,7 @@
                 {{ 'You can use the the placeholders <b>{{threshold}}</b> <b>{{fee}}</b>' | raw }}
             </div>
 
-            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}"/>
 
             {{ form_end(form) }}
         {% endblock %}

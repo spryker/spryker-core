@@ -27,11 +27,11 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
      */
     public function findProductConcretePrices(int $idProductConcrete): array
     {
-        $currentCustomerCompanyBusinessUnitId = $this->getFactory()
+        $idBusinessUnitFromCurrentCustomer = $this->getFactory()
             ->createCompanyBusinessUnitFinder()
             ->findCurrentCustomerCompanyBusinessUnitId();
 
-        if (!$currentCustomerCompanyBusinessUnitId) {
+        if (!$idBusinessUnitFromCurrentCustomer) {
             return [];
         }
 
@@ -39,7 +39,7 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
             ->createPriceProductMerchantRelationshipConcreteReader()
             ->findPriceMerchantRelationshipConcrete(
                 $idProductConcrete,
-                $currentCustomerCompanyBusinessUnitId
+                $idBusinessUnitFromCurrentCustomer
             );
     }
 

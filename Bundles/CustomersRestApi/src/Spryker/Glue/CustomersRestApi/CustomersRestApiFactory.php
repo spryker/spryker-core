@@ -64,7 +64,8 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createCustomerResourceMapper(),
             $this->createRestApiError(),
-            $this->createRestApiValidator()
+            $this->createRestApiValidator(),
+            $this->getCustomerPostRegisterPlugins()
         );
     }
 
@@ -102,7 +103,8 @@ class CustomersRestApiFactory extends AbstractFactory
         return new CustomerPasswordWriter(
             $this->getCustomerClient(),
             $this->getResourceBuilder(),
-            $this->createCustomerRestorePasswordResourceMapper()
+            $this->createCustomerRestorePasswordResourceMapper(),
+            $this->createRestApiError()
         );
     }
 
@@ -182,6 +184,8 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed in the next major.
+     *
      * @return \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToSessionClientInterface
      */
     public function getSessionClient(): CustomersRestApiToSessionClientInterface
@@ -195,5 +199,13 @@ class CustomersRestApiFactory extends AbstractFactory
     public function createRestApiError(): RestApiErrorInterface
     {
         return new RestApiError();
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface[]
+     */
+    public function getCustomerPostRegisterPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::PLUGINS_CUSTOMER_POST_REGISTER);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch;
 
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -36,12 +37,16 @@ use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToPricePro
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilSanitizeServiceBridge;
 
+/**
+ * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
+ */
 class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     public const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
     public const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
     public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+    public const QUERY_CONTAINER_CATEGORY_NODE = 'QUERY_CONTAINER_CATEGORY_NODE';
     public const QUERY_CONTAINER_PRICE = 'QUERY_CONTAINER_PRICE';
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
     public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
@@ -171,6 +176,10 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
             return new ProductPageSearchToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
+        };
+
+        $container[static::QUERY_CONTAINER_CATEGORY_NODE] = function (Container $container) {
+            return SpyCategoryNodeQuery::create();
         };
 
         return $container;

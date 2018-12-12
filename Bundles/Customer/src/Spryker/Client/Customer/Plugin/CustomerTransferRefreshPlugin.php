@@ -12,11 +12,17 @@ use Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Use CustomerTransferSessionRefreshPlugin instead.
+ *
  * @method \Spryker\Client\Customer\CustomerClientInterface getClient()
  */
 class CustomerTransferRefreshPlugin extends AbstractPlugin implements CustomerSessionGetPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Retrieves customer by provided id.
+     * - Retrieves the fresh customer data from persistence and invalidates the already existing data in session.
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void

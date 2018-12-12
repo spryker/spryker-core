@@ -14,6 +14,7 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
  */
 class DeleteController extends AbstractController
 {
