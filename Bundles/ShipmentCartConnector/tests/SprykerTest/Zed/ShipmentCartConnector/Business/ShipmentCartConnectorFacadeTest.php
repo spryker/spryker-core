@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CartChangeBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\ShipmentCartConnector\Business\ShipmentCartConnectorFacade;
 
@@ -26,6 +27,7 @@ use Spryker\Zed\ShipmentCartConnector\Business\ShipmentCartConnectorFacade;
  */
 class ShipmentCartConnectorFacadeTest extends Unit
 {
+    public const SKU = 'sku';
     public const CURRENCY_ISO_CODE = 'USD';
 
     /**
@@ -50,12 +52,16 @@ class ShipmentCartConnectorFacadeTest extends Unit
         $updatedCartChangeTransfer = $shipmentCartConnectorFacade->updateShipmentPrice($cartChangeTransfer);
 
         $quoteTransfer = $updatedCartChangeTransfer->getQuote();
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $this->assertSame(
+                $itemTransfer->getShipment()->getMethod()->getCurrencyIsoCode(),
+                $quoteTransfer->getCurrency()->getCode()
+            );
 
-        $this->assertSame($quoteTransfer->getShipment()->getMethod()->getCurrencyIsoCode(), $quoteTransfer->getCurrency()->getCode());
-
-        $price = $quoteTransfer->getShipment()->getMethod()->getStoreCurrencyPrice();
-        $this->assertNotEmpty($price);
-        $this->assertNotEquals(-1, $price);
+            $price = $itemTransfer->getShipment()->getMethod()->getStoreCurrencyPrice();
+            $this->assertNotEmpty($price);
+            $this->assertNotEquals(-1, $price);
+        }
     }
 
     /**
@@ -117,10 +123,16 @@ class ShipmentCartConnectorFacadeTest extends Unit
             ->build();
 
         $shipmentTransfer = (new ShipmentBuilder())->build();
-
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         $quoteTransfer->setShipment($shipmentTransfer);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku(self::SKU);
+        $itemTransfer->setGroupKey(self::SKU);
+        $itemTransfer->setShipment($shipmentTransfer);
+
+        $quoteTransfer->addItem($itemTransfer);
 
         $cartChangeTransfer->setQuote($quoteTransfer);
 

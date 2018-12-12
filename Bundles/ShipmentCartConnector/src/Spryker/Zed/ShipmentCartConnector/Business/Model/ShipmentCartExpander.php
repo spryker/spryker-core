@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface;
 
@@ -47,39 +48,49 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     public function updateShipmentPrice(CartChangeTransfer $cartChangeTransfer)
     {
         $quoteTransfer = $cartChangeTransfer->getQuote();
-        if (!$quoteTransfer->getShipment() || !$this->isCurrencyChanged($quoteTransfer)) {
-            return $cartChangeTransfer;
+
+        $availableShipmentMethods = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if (!$itemTransfer->getShipment() || !$this->isCurrencyChanged($itemTransfer->getShipment(), $quoteTransfer)) {
+                continue;
+            }
+
+            $idShipmentMethod = $itemTransfer->getShipment()->getMethod()->getIdShipmentMethod();
+            $shipmentMethodTransfer = current(array_filter(
+                $availableShipmentMethods->getMethods()->getArrayCopy(),
+                function ($shipmentMethodTransfer) use ($idShipmentMethod) {
+                    return $idShipmentMethod == $shipmentMethodTransfer->getIdShipmentMethod();
+                }
+            ));
+
+            if (!$shipmentMethodTransfer) {
+                return $cartChangeTransfer;
+            }
+
+            $this->updateShipmentExpenses($quoteTransfer, $shipmentMethodTransfer);
+
+            $shipmentMethodTransfer->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
+
+            $quoteTransfer->getShipment()->setMethod($shipmentMethodTransfer);
         }
-
-        $idShipmentMethod = $quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod();
-
-        $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
-
-        if (!$shipmentMethodTransfer) {
-            return $cartChangeTransfer;
-        }
-
-        $this->updateShipmentExpenses($quoteTransfer, $shipmentMethodTransfer);
-
-        $shipmentMethodTransfer->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
-
-        $quoteTransfer->getShipment()->setMethod($shipmentMethodTransfer);
 
         return $cartChangeTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function isCurrencyChanged(QuoteTransfer $quoteTransfer)
+    protected function isCurrencyChanged(ShipmentTransfer $shipmentTransfer, QuoteTransfer $quoteTransfer): bool
     {
-        if (!$quoteTransfer->getShipment()->getMethod()) {
+        if (!$shipmentTransfer->getMethod()) {
             return false;
         }
 
-        $shipmentCurrencyIsoCode = $quoteTransfer->getShipment()->getMethod()->getCurrencyIsoCode();
+        $shipmentCurrencyIsoCode = $shipmentTransfer->getMethod()->getCurrencyIsoCode();
         if ($shipmentCurrencyIsoCode !== $quoteTransfer->getCurrency()->getCode()) {
             return true;
         }
