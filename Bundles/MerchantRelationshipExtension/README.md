@@ -1,6 +1,6 @@
 # MerchantRelationshipExtension Module
 
-Module provides extension plugin interfaces for Spryker's Merchant Relationship module.
+The module provides plugin interfaces for extending MerchantRelationship module functionality.
 
 ## Installation
 
