@@ -244,7 +244,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     {
         $salesShipmentEntity = $this->salesQueryContainer->queryShipmentByTransfer($shipmentTransfer);
 
-        if($salesShipmentEntity !== null){
+        if ($salesShipmentEntity !== null) {
             return $salesShipmentEntity;
         }
 
@@ -358,7 +358,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
             $shipmentHash = $this->createShipmentTransferHash($itemTransfer->getShipment());
             $shipmentEntity = $this->existingCustomerShipments[$shipmentHash] ?? null;
 
-            if($shipmentEntity === null){
+            if ($shipmentEntity === null) {
                 $shipmentEntity = $this->saveSalesShipment($itemTransfer->getShipment());
                 $this->existingCustomerShipments[$shipmentHash] = $shipmentEntity;
             }
@@ -594,9 +594,10 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      */
     protected function createShipmentTransferHash(ShipmentTransfer $shipmentTransfer): string
     {
-        return md5(sprintf('%s %s',
+        return md5(sprintf(
+            '%s %s',
             $shipmentTransfer->getRequestedDeliveryDate(),
-            $shipmentTransfer->getShippingAddress()->getIdSalesOrderAddress()(),
+            $shipmentTransfer->getShippingAddress()->getIdSalesOrderAddress()
         ));
     }
 }
