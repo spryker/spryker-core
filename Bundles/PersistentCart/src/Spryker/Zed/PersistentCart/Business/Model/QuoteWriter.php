@@ -73,12 +73,8 @@ class QuoteWriter implements QuoteWriterInterface
      */
     public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
-        $idCompanyUser = $quoteUpdateRequestTransfer
-            ->getCustomer()
-            ->getCompanyUserTransfer()
-            ->getIdCompanyUser();
-
-        if (!$this->can('WriteSharedCartPermissionPlugin', $idCompanyUser, $quoteUpdateRequestTransfer->getIdQuote())) {
+        $companyUserId = $this->findCompanyUserId($quoteUpdateRequestTransfer);
+        if ($companyUserId && !$this->can('WriteSharedCartPermissionPlugin', $companyUserId, $quoteUpdateRequestTransfer->getIdQuote())) {
             return (new QuoteResponseTransfer())->setIsSuccessful(false);
         }
 
@@ -102,12 +98,8 @@ class QuoteWriter implements QuoteWriterInterface
      */
     public function updateAndReloadQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
-        $idCompanyUser = $quoteUpdateRequestTransfer
-            ->getCustomer()
-            ->getCompanyUserTransfer()
-            ->getIdCompanyUser();
-
-        if (!$this->can('WriteSharedCartPermissionPlugin', $idCompanyUser, $quoteUpdateRequestTransfer->getIdQuote())) {
+        $companyUserId = $this->findCompanyUserId($quoteUpdateRequestTransfer);
+        if ($companyUserId && !$this->can('WriteSharedCartPermissionPlugin', $companyUserId, $quoteUpdateRequestTransfer->getIdQuote())) {
             return (new QuoteResponseTransfer())->setIsSuccessful(false);
         }
 
@@ -122,5 +114,19 @@ class QuoteWriter implements QuoteWriterInterface
         $quoteTransfer->fromArray($quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->modifiedToArray(), true);
 
         return $this->quoteItemOperation->reloadItems($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     *
+     * @return int|null
+     */
+    protected function findCompanyUserId(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): ?int
+    {
+        $companyUserTransfer = $quoteUpdateRequestTransfer
+            ->getCustomer()
+            ->getCompanyUserTransfer();
+
+        return $companyUserTransfer ? $companyUserTransfer->getIdCompanyUser() : null;
     }
 }
