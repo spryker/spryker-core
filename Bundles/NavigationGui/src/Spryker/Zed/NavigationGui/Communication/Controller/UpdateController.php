@@ -31,7 +31,7 @@ class UpdateController extends AbstractController
         $navigationFormData = $navigationFormDataProvider->getData($idNavigation);
 
         if ($navigationFormData === null) {
-            $this->addErrorMessage(sprintf('Navigation with id %s doesn\'t exist', $idNavigation));
+            $this->addErrorMessage(sprintf("Navigation with id %s doesn't exist", $idNavigation));
 
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
