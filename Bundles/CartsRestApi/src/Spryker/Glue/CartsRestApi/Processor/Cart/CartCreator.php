@@ -95,6 +95,7 @@ class CartCreator implements CartCreatorInterface
         $storeTransfer = $this->getStoreTransfer($restCartsAttributesTransfer);
 
         $quoteTransfer = (new QuoteTransfer())
+            ->fromArray($restCartsAttributesTransfer->toArray(), true)
             ->setCurrency($currencyTransfer)
             ->setCustomer($customerTransfer)
             ->setPriceMode($restCartsAttributesTransfer->getPriceMode())
