@@ -13,10 +13,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
 class CreateDatabaseConsole extends Console
 {
-    const COMMAND_NAME = 'propel:database:create';
+    public const COMMAND_NAME = 'propel:database:create';
 
     /**
      * @return void

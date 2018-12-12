@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-quantity-data-import",
+  "type": "library",
   "description": "ProductQuantityDataImport module",
   "license": "MIT",
   "require": {
@@ -11,6 +12,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

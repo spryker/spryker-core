@@ -13,6 +13,9 @@ use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiT
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CompanyBusinessUnitGui\CompanyBusinessUnitGuiConfig getConfig()
+ */
 class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_COMPANY_BUSINESS_UNIT = 'PROPEL_QUERY_COMPANY_BUSINESS_UNIT';
@@ -29,11 +32,26 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addCompanyBusinessUnitQuery($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addCompanyFacade($container);
         $container = $this->addCompanyBusinessUnitFormExpanderPlugins($container);
         $container = $this->addCompanyBusinessUnitEditFormExpanderPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addCompanyBusinessUnitFacade($container);
 
         return $container;
     }

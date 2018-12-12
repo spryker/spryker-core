@@ -19,15 +19,6 @@ class MerchantDataImportHelper extends Module
     /**
      * @return void
      */
-    public function ensureDatabaseTableIsEmpty(): void
-    {
-        $query = $this->getMerchantQuery();
-        $query->deleteAll();
-    }
-
-    /**
-     * @return void
-     */
     public function assertDatabaseTableIsEmpty(): void
     {
         $query = $this->getMerchantQuery();
@@ -54,7 +45,7 @@ class MerchantDataImportHelper extends Module
     /**
      * @param string $key
      *
-     * @return \Orm\Zed\Merchant\Persistence\SpyMerchant
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchant|null
      */
     public function findMerchantByKey(string $key): SpyMerchant
     {

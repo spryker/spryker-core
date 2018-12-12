@@ -13,11 +13,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
+ * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  */
 class JenkinsDisableConsole extends Console
 {
-    const COMMAND_NAME = 'setup:jenkins:disable';
-    const DESCRIPTION = 'Disable Jenkins';
+    public const COMMAND_NAME = 'setup:jenkins:disable';
+    public const DESCRIPTION = 'Disable Jenkins';
 
     /**
      * @return void

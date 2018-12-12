@@ -22,9 +22,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class VersionPageController extends AbstractController
 {
-    const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
-    const URL_PARAM_VERSION = 'version';
-    const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    public const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
+    public const URL_PARAM_VERSION = 'version';
+    public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -49,7 +49,7 @@ class VersionPageController extends AbstractController
         } catch (CannotActivatePageException $exception) {
             $this->addErrorMessage('Cannot publish the CMS page. Please fill in all placeholders for this page.');
 
-            return $this->redirectResponse($request->headers->get('referer'));
+            return $this->redirectResponseExternal($request->headers->get('referer'));
         }
 
         return $this->redirectResponse($redirectUrl);
@@ -138,7 +138,7 @@ class VersionPageController extends AbstractController
      * @param int $version
      * @param int $idCmsPage
      *
-     * @return null|string
+     * @return string|null
      */
     protected function submitVersionForm(Request $request, $version, $idCmsPage)
     {

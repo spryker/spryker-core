@@ -16,10 +16,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\CustomerApi\Business\CustomerApiFacadeInterface getFacade()
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerApi\CustomerApiConfig getConfig()
+ * @method \Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface getQueryContainer()
  */
 class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
@@ -30,6 +34,8 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
     }
 
     /**
+     * @api
+     *
      * @internal param ApiFilterTransfer $apiFilterTransfer
      *
      * @param int $id
@@ -42,6 +48,8 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
     }
 
     /**
+     * @api
+     *
      * @param int $idCustomer
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
@@ -53,6 +61,8 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
     }
 
     /**
+     * @api
+     *
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
@@ -63,6 +73,8 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer

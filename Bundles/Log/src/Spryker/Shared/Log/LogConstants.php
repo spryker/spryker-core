@@ -18,7 +18,7 @@ interface LogConstants
      *
      * @api
      */
-    const LOGGER_CONFIG_YVES = 'LOG:LOGGER_CONFIG_YVES';
+    public const LOGGER_CONFIG_YVES = 'LOG:LOGGER_CONFIG_YVES';
 
     /**
      * Specification:
@@ -26,7 +26,7 @@ interface LogConstants
      *
      * @api
      */
-    const LOGGER_CHANNEL_YVES = 'LOG:LOGGER_CHANNEL_YVES';
+    public const LOGGER_CHANNEL_YVES = 'LOG:LOGGER_CHANNEL_YVES';
 
     /**
      * Specification:
@@ -34,7 +34,7 @@ interface LogConstants
      *
      * @api
      */
-    const LOGGER_CONFIG_ZED = 'LOG:LOGGER_CONFIG_ZED';
+    public const LOGGER_CONFIG_ZED = 'LOG:LOGGER_CONFIG_ZED';
 
     /**
      * Specification:
@@ -42,7 +42,7 @@ interface LogConstants
      *
      * @api
      */
-    const LOGGER_CHANNEL_ZED = 'LOG:LOGGER_CHANNEL_ZED';
+    public const LOGGER_CHANNEL_ZED = 'LOG:LOGGER_CHANNEL_ZED';
 
     /**
      * Specification:
@@ -50,7 +50,7 @@ interface LogConstants
      *
      * @api
      */
-    const LOGGER_CONFIG = 'LOGGER_CONFIG';
+    public const LOGGER_CONFIG = 'LOGGER_CONFIG';
 
     /**
      * Specification:
@@ -58,7 +58,7 @@ interface LogConstants
      *
      * @api
      */
-    const LOG_LEVEL = 'LOG_LEVEL';
+    public const LOG_LEVEL = 'LOG_LEVEL';
 
     /**
      * Specification:
@@ -69,7 +69,7 @@ interface LogConstants
      *
      * @api
      */
-    const LOG_FILE_PATH = 'LOG_FILE_PATH';
+    public const LOG_FILE_PATH = 'LOG_FILE_PATH';
 
     /**
      * Specification:
@@ -78,7 +78,15 @@ interface LogConstants
      *
      * @api
      */
-    const LOG_FILE_PATH_YVES = 'LOG_FILE_PATH_YVES';
+    public const LOG_FILE_PATH_YVES = 'LOG_FILE_PATH_YVES';
+
+    /**
+     * Specification:
+     * - Absolute path to the installation log files directory.
+     *
+     * @api
+     */
+    public const LOG_FOLDER_PATH_INSTALLATION = 'LOG:LOG_FOLDER_PATH_INSTALLATION';
 
     /**
      * Specification:
@@ -87,7 +95,7 @@ interface LogConstants
      *
      * @api
      */
-    const LOG_FILE_PATH_ZED = 'LOG_FILE_PATH_ZED';
+    public const LOG_FILE_PATH_ZED = 'LOG_FILE_PATH_ZED';
 
     /**
      * Specification:
@@ -97,7 +105,7 @@ interface LogConstants
      *
      * @api
      */
-    const EXCEPTION_LOG_FILE_PATH = 'LOG:EXCEPTION_LOG_FILE_PATH';
+    public const EXCEPTION_LOG_FILE_PATH = 'LOG:EXCEPTION_LOG_FILE_PATH';
 
     /**
      * Specification:
@@ -105,7 +113,7 @@ interface LogConstants
      *
      * @api
      */
-    const EXCEPTION_LOG_FILE_PATH_YVES = 'LOG:EXCEPTION_LOG_FILE_PATH_YVES';
+    public const EXCEPTION_LOG_FILE_PATH_YVES = 'LOG:EXCEPTION_LOG_FILE_PATH_YVES';
 
     /**
      * Specification:
@@ -113,7 +121,7 @@ interface LogConstants
      *
      * @api
      */
-    const EXCEPTION_LOG_FILE_PATH_ZED = 'LOG:EXCEPTION_LOG_FILE_PATH_ZED';
+    public const EXCEPTION_LOG_FILE_PATH_ZED = 'LOG:EXCEPTION_LOG_FILE_PATH_ZED';
 
     /**
      * Specification:
@@ -142,7 +150,7 @@ interface LogConstants
      *
      * @api
      */
-    const LOG_SANITIZE_FIELDS = 'LOG_SANITIZE_FIELDS';
+    public const LOG_SANITIZE_FIELDS = 'LOG_SANITIZE_FIELDS';
 
     /**
      * Specification:
@@ -150,7 +158,7 @@ interface LogConstants
      *
      * @api
      */
-    const LOG_SANITIZED_VALUE = 'LOG_SANITIZED_VALUE';
+    public const LOG_SANITIZED_VALUE = 'LOG_SANITIZED_VALUE';
 
     /**
      * Specification:
@@ -158,7 +166,7 @@ interface LogConstants
      *
      * @api
      */
-    const LOG_QUEUE_NAME = 'LOG:LOG_QUEUE_NAME';
+    public const LOG_QUEUE_NAME = 'LOG:LOG_QUEUE_NAME';
 
     /**
      * Specification:
@@ -166,5 +174,38 @@ interface LogConstants
      *
      * @api
      */
-    const LOG_ERROR_QUEUE_NAME = 'LOG:LOG_ERROR_QUEUE_NAME';
+    public const LOG_ERROR_QUEUE_NAME = 'LOG:LOG_ERROR_QUEUE_NAME';
+
+    /**
+     * Specification:
+     * - Class name of the class which implements LoggerConfigInterface. E.g. SprykerLoggerConfig::class
+     *
+     * @api
+     */
+    public const LOGGER_CONFIG_GLUE = 'LOG:LOGGER_CONFIG_GLUE';
+
+    /**
+     * Specification:
+     * - Channel name of Glue logger.
+     *
+     * @api
+     */
+    public const LOGGER_CHANNEL_GLUE = 'LOG:LOGGER_CHANNEL_GLUE';
+
+    /**
+     * Specification:
+     * - Absolute path to the log file which should be used be the stream handler. E.g. /var/www/data/logs/spryker.log
+     * - If set logs will be written to the specified file.
+     *
+     * @api
+     */
+    public const LOG_FILE_PATH_GLUE = 'LOG_FILE_PATH_GLUE';
+
+    /**
+     * Specification:
+     * - Absolute path to the log file which should be used be the stream handler for exceptions. E.g. /var/www/data/logs/spryker.log
+     *
+     * @api
+     */
+    public const EXCEPTION_LOG_FILE_PATH_GLUE = 'LOG:EXCEPTION_LOG_FILE_PATH_GLUE';
 }

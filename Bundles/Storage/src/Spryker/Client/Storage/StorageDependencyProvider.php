@@ -10,9 +10,12 @@ namespace Spryker\Client\Storage;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
+/**
+ * @method \Spryker\Client\Storage\StorageConfig getConfig()
+ */
 class StorageDependencyProvider extends AbstractDependencyProvider
 {
-    const STORAGE_CLIENT = 'storage client';
+    public const STORAGE_CLIENT = 'storage client';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

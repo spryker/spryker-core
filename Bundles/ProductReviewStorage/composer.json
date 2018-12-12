@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-review-storage",
+  "type": "library",
   "description": "ProductReviewStorage module",
   "license": "proprietary",
   "require": {
@@ -12,8 +13,14 @@
     "spryker/synchronization-extension": "^1.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/customer": "*",
     "spryker/event": "*",
-    "spryker/propel-orm": "*"
+    "spryker/locale": "*",
+    "spryker/product": "*",
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",

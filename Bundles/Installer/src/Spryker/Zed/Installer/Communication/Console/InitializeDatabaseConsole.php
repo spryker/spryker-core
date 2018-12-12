@@ -14,11 +14,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Installer\Business\InstallerFacadeInterface getFacade()
+ * @method \Spryker\Zed\Installer\Communication\InstallerCommunicationFactory getFactory()
  */
 class InitializeDatabaseConsole extends Console
 {
-    const COMMAND_NAME = 'setup:init-db';
-    const DESCRIPTION = 'Fill the database with required data';
+    public const COMMAND_NAME = 'setup:init-db';
+    public const DESCRIPTION = 'Fill the database with required data';
 
     /**
      * @return void
@@ -33,7 +34,7 @@ class InitializeDatabaseConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return null|int null
+     * @return int|null null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -70,7 +71,7 @@ class InitializeDatabaseConsole extends Console
      */
     protected function getPluginNameFromClass($className)
     {
-        $pattern = '#^(.+)\\\(.+)\\\(.+)\\\(.+)\\\(.*)$#i';
-        return preg_replace($pattern, '${2}', $className);
+        $pattern = '#^.+?\\\.+?\\\(.+?)\\\.+$#i';
+        return preg_replace($pattern, '${1}', $className);
     }
 }

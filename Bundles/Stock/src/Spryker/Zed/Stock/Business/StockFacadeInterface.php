@@ -183,7 +183,7 @@ interface StockFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getAvailableStockTypes();
 

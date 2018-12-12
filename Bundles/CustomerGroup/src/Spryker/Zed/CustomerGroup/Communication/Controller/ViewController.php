@@ -14,10 +14,12 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerGroup\Communication\CustomerGroupCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupRepositoryInterface getRepository()
  */
 class ViewController extends AbstractController
 {
-    const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
+    public const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

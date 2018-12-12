@@ -10,9 +10,12 @@ namespace Spryker\Client\Queue;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
+/**
+ * @method \Spryker\Client\Queue\QueueConfig getConfig()
+ */
 class QueueDependencyProvider extends AbstractDependencyProvider
 {
-    const QUEUE_ADAPTERS = 'queue adapters';
+    public const QUEUE_ADAPTERS = 'queue adapters';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

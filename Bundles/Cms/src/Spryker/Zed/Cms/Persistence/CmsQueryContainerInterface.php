@@ -7,9 +7,14 @@
 
 namespace Spryker\Zed\Cms\Persistence;
 
+use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
+/**
+ * @method \Orm\Zed\Cms\Persistence\SpyCmsPageQuery queryPagesWithTemplates()
+ * @method \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery queryNodeByCategoryName(string $categoryName, int $idLocale)
+ */
 interface CmsQueryContainerInterface extends QueryContainerInterface
 {
     /**
@@ -45,6 +50,15 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrlByIdWithRedirect($idUrl);
+
+    /**
+     * @api
+     *
+     * @param int $idUrl
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlById($idUrl);
 
     /**
      * @api
@@ -120,7 +134,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @param int $idLocale
      *
-     * @return \Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
     public function queryLocaleById($idLocale);
 
@@ -209,6 +223,13 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryLocalizedPagesWithTemplates(): SpyCmsPageQuery;
+
+    /**
+     * @api
+     *
      * @param string $value
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
@@ -287,4 +308,28 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryResourceUrlByCmsPageId($idCmsPage);
+
+    /**
+     * @api
+     *
+     * @param string $key
+     * @param int $localeId
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     */
+    public function queryKeyWithTranslationByKeyAndLocale($key, $localeId);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryPageWithTemplatesAndUrls();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlsWithRedirect();
 }

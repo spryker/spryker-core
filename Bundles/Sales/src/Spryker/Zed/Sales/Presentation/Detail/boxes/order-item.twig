@@ -10,7 +10,7 @@
 {% endif %}
 <td>
     <div>
-        <a target="_blank" href="{{ url('/product-management/view', {'id-product-abstract': orderItem.idProductAbstract}) }}">
+        <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': orderItem.idProductAbstract, 'id-product': orderItem.id, 'type': 'regular'}) }}">
           {{ orderItem.name }}
         </a>
     </div>
@@ -36,9 +36,11 @@
       {% endif %}
     </div>
   {% endif %}
+  {% embed '@Sales/Detail/boxes/item-packaging-unit.twig' with {orderItem: orderItem} %}{% endembed %}
 </td>
 <td>
-    {{ orderItem.quantity }}
+  {{ orderItem.quantity }}
+  {% embed '@Sales/Detail/boxes/item-measurement-unit.twig' with {orderItem: orderItem} %}{% endembed %}
 </td>
 <td>
     <div>

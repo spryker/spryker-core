@@ -196,6 +196,8 @@ class ProductQuantityFacadeTest extends Unit
             [true, 5, 2, 7, 7,    7], // min, max, interval matches new quantity
             [true, 0, 1, 1, null, 1], // empty quote
 
+            [false, 0, 0, 1, null, 1], // general rule 0 qty
+            [false, 0, -4, 1, null, 1], // general rule negative qty
             [false, 5, 2, 8, null, 1], // min above new quantity
             [false, 5, 2, 1, 6,    1], // max below new quantity
             [false, 5, 2, 1, null, 4], // shifted interval does not match new quantity
@@ -242,6 +244,8 @@ class ProductQuantityFacadeTest extends Unit
         return [
             [true, 0, 1],
             [true, 2, 4],
+            [false, 0, 0],
+            [false, 0, -1],
         ];
     }
 

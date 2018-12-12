@@ -14,13 +14,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
 class DatabaseExportConsole extends Console
 {
-    const COMMAND_NAME = 'propel:database:export';
-    const COMMAND_DESCRIPTION = 'Backup an existing database into a file.';
+    public const COMMAND_NAME = 'propel:database:export';
+    public const COMMAND_DESCRIPTION = 'Backup an existing database into a file.';
 
-    const ARGUMENT_BACKUP_PATH = 'backup-path';
+    public const ARGUMENT_BACKUP_PATH = 'backup-path';
 
     /**
      * @return void

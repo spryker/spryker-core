@@ -12,7 +12,8 @@
 # OS
 .DS_Store
 
-config/*
-data/*
-src/Generated/*
-src/Orm/*
+/vendor
+/composer.lock
+
+/tests/_output/*
+!/tests/_output/.gitkeep

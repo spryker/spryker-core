@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class TwigContent extends SymfonyConstraint
 {
-    const OPTION_TWIG_ENVIRONMENT = 'twigEnvironment';
+    public const OPTION_TWIG_ENVIRONMENT = 'twigEnvironment';
 
     /**
      * @var \Twig_Environment

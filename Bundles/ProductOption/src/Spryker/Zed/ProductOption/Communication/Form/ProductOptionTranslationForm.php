@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -18,13 +19,14 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
  */
 class ProductOptionTranslationForm extends AbstractType
 {
-    const FIELD_NAME = 'name';
-    const FIELD_LOCALE_CODE = 'localeCode';
-    const FIELD_KEY = 'key';
-    const FIELD_RELATED_OPTION_HASH = 'relatedOptionHash';
+    public const FIELD_NAME = 'name';
+    public const FIELD_LOCALE_CODE = 'localeCode';
+    public const FIELD_KEY = 'key';
+    public const FIELD_RELATED_OPTION_HASH = 'relatedOptionHash';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

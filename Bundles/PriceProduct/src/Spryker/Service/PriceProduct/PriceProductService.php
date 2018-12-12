@@ -59,12 +59,29 @@ class PriceProductService extends AbstractService implements PriceProductService
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function resolveProductPricesByPriceProductFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
         return $this->getFactory()
             ->createPriceProductMatcher()
             ->matchPricesByFilter($priceProductTransfers, $priceProductFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function mergeConcreteAndAbstractPrices(array $abstractPriceProductTransfers, array $concretePriceProductTransfers): array
+    {
+        return $this->getFactory()
+            ->createPriceProductMerger()
+            ->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
     }
 }

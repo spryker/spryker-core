@@ -8,19 +8,23 @@
 namespace Spryker\Zed\CompanyBusinessUnitDataImport\Business;
 
 use Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\CompanyBusinessUnitWriterStep;
+use Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\Step\BusinessUnitKeyToAddressKeyStep;
+use Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\Step\CompanyBusinessUnitUserWriterStep;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\Step\CompanyKeyToIdCompanyStep;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\Step\ParentBusinessUnitKeyToIdCompanyBusinessUnitStep;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
+use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitDataImport\CompanyBusinessUnitDataImportConfig getConfig()
+ * @method \Spryker\Zed\CompanyBusinessUnitDataImport\Persistence\CompanyBusinessUnitDataImportRepositoryInterface getRepository()
  */
 class CompanyBusinessUnitDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createCompanyBusinessUnitDataImport()
+    public function getCompanyBusinessUnitDataImport(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getCompanyBusinessUnitDataImporterConfiguration());
 
@@ -28,7 +32,7 @@ class CompanyBusinessUnitDataImportBusinessFactory extends DataImportBusinessFac
         $dataSetStepBroker
             ->addStep($this->createCompanyKeyToIdCompanyStep())
             ->addStep($this->createParentBusinessUnitKeyToIdCompanyBusinessUnitStep())
-            ->addStep(new CompanyBusinessUnitWriterStep());
+            ->addStep($this->createCompanyBusinessUnitWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
@@ -36,9 +40,47 @@ class CompanyBusinessUnitDataImportBusinessFactory extends DataImportBusinessFac
     }
 
     /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     */
+    public function getCompanyBusinessUnitUserDataImport(): DataImporterInterface
+    {
+        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getCompanyBusinessUnitUserDataImporterConfiguration());
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        $dataSetStepBroker->addStep($this->createCompanyBusinessUnitUserWriterStep());
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     */
+    public function getCompanyBusinessUnitAddressDataImport(): DataImporterInterface
+    {
+        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getCompanyBusinessUnitAddressDataImporterConfiguration());
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        $dataSetStepBroker->addStep($this->createBusinessUnitKeyToAddressKeyStep());
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\CompanyBusinessUnitWriterStep
+     */
+    public function createCompanyBusinessUnitWriterStep(): CompanyBusinessUnitWriterStep
+    {
+        return new CompanyBusinessUnitWriterStep();
+    }
+
+    /**
      * @return \Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\Step\CompanyKeyToIdCompanyStep|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    protected function createCompanyKeyToIdCompanyStep()
+    public function createCompanyKeyToIdCompanyStep()
     {
         return new CompanyKeyToIdCompanyStep();
     }
@@ -46,8 +88,30 @@ class CompanyBusinessUnitDataImportBusinessFactory extends DataImportBusinessFac
     /**
      * @return \Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\Step\ParentBusinessUnitKeyToIdCompanyBusinessUnitStep|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    protected function createParentBusinessUnitKeyToIdCompanyBusinessUnitStep()
+    public function createParentBusinessUnitKeyToIdCompanyBusinessUnitStep()
     {
-        return new ParentBusinessUnitKeyToIdCompanyBusinessUnitStep();
+        return new ParentBusinessUnitKeyToIdCompanyBusinessUnitStep(
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\Step\CompanyBusinessUnitUserWriterStep
+     */
+    public function createCompanyBusinessUnitUserWriterStep(): CompanyBusinessUnitUserWriterStep
+    {
+        return new CompanyBusinessUnitUserWriterStep(
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\Step\BusinessUnitKeyToAddressKeyStep
+     */
+    public function createBusinessUnitKeyToAddressKeyStep(): BusinessUnitKeyToAddressKeyStep
+    {
+        return new BusinessUnitKeyToAddressKeyStep(
+            $this->getRepository()
+        );
     }
 }

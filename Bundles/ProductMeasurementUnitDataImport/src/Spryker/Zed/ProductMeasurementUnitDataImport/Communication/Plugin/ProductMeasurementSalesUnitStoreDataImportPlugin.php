@@ -15,10 +15,13 @@ use Spryker\Zed\ProductMeasurementUnitDataImport\ProductMeasurementUnitDataImpor
 
 /**
  * @method \Spryker\Zed\ProductMeasurementUnitDataImport\Business\ProductMeasurementUnitDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductMeasurementUnitDataImport\ProductMeasurementUnitDataImportConfig getConfig()
  */
 class ProductMeasurementSalesUnitStoreDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -29,6 +32,8 @@ class ProductMeasurementSalesUnitStoreDataImportPlugin extends AbstractPlugin im
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getImportType(): string

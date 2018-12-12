@@ -14,10 +14,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CompanyUnitAddressLabelDataImport\Business\CompanyUnitAddressLabelDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanyUnitAddressLabelDataImport\CompanyUnitAddressLabelDataImportConfig getConfig()
  */
 class CompanyUnitAddressLabelRelationDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -28,6 +31,8 @@ class CompanyUnitAddressLabelRelationDataImportPlugin extends AbstractPlugin imp
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getImportType()

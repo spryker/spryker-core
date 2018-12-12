@@ -13,11 +13,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Transfer\Business\TransferFacadeInterface getFacade()
+ * @method \Spryker\Zed\Transfer\Communication\TransferCommunicationFactory getFactory()
  */
 class GeneratorConsole extends Console
 {
-    const COMMAND_NAME = 'transfer:generate';
-    const COMMAND_DESCRIPTION = 'Generates transfer objects from transfer XML definition files';
+    public const COMMAND_NAME = 'transfer:generate';
+    public const COMMAND_DESCRIPTION = 'Generates transfer objects from transfer XML definition files';
 
     /**
      * @return void

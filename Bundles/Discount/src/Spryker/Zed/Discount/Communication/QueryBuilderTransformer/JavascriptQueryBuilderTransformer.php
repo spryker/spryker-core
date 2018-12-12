@@ -42,7 +42,7 @@ class JavascriptQueryBuilderTransformer implements JavascriptQueryBuilderTransfo
     /**
      * @param string $type
      *
-     * @return string[]
+     * @return array
      */
     public function getFilters($type)
     {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-image",
+  "type": "library",
   "description": "ProductImage module",
   "license": "proprietary",
   "require": {
@@ -12,12 +13,12 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\ProductImage\\Helper\\": "tests/SprykerTest/Shared/ProductImage/_support/Helper/"
     }
   },
   "autoload-dev": {

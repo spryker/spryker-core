@@ -16,13 +16,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductSetGui\ProductSetGuiConfig getConfig()
  */
 class LocalizedSeoFormType extends AbstractType
 {
-    const FIELD_META_TITLE = 'meta_title';
-    const FIELD_META_KEYWORDS = 'meta_keywords';
-    const FIELD_META_DESCRIPTION = 'meta_description';
-    const FIELD_FK_LOCALE = 'fk_locale';
+    public const FIELD_META_TITLE = 'meta_title';
+    public const FIELD_META_KEYWORDS = 'meta_keywords';
+    public const FIELD_META_DESCRIPTION = 'meta_description';
+    public const FIELD_FK_LOCALE = 'fk_locale';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

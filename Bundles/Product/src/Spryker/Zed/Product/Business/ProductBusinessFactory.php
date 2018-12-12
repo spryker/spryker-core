@@ -31,11 +31,15 @@ use Spryker\Zed\Product\Business\Product\ProductConcreteActivator;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
+use Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGenerator;
+use Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGeneratorInterface;
 use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusChecker;
 use Spryker\Zed\Product\Business\Product\Status\ProductConcreteStatusChecker;
 use Spryker\Zed\Product\Business\Product\Status\ProductConcreteStatusCheckerInterface;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReader;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationWriter;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggester;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggesterInterface;
 use Spryker\Zed\Product\Business\Product\Touch\ProductAbstractTouch;
 use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouch;
 use Spryker\Zed\Product\Business\Product\Url\ProductAbstractAfterUpdateUrlObserver;
@@ -99,7 +103,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductAbstractAssertion(),
             $this->createProductConcreteAssertion(),
             $this->createAttributeEncoder(),
-            $this->createProductTransferMapper()
+            $this->createProductTransferMapper(),
+            $this->getRepository()
         );
 
         $productConcreteManager->setEventFacade($this->getEventFacade());
@@ -178,9 +183,17 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface
      */
-    protected function createSkuGenerator()
+    public function createSkuGenerator()
     {
-        return new SkuGenerator($this->getUtilTextService());
+        return new SkuGenerator($this->getUtilTextService(), $this->createSkuIncrementGenerator());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGeneratorInterface
+     */
+    public function createSkuIncrementGenerator(): SkuIncrementGeneratorInterface
+    {
+        return new SkuIncrementGenerator($this->createProductConcreteManager());
     }
 
     /**
@@ -561,5 +574,17 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function getEventFacade()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Suggest\ProductSuggesterInterface
+     */
+    public function createProductSuggester(): ProductSuggesterInterface
+    {
+        return new ProductSuggester(
+            $this->getConfig(),
+            $this->getRepository(),
+            $this->getLocaleFacade()
+        );
     }
 }

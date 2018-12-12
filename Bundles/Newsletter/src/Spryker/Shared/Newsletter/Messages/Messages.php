@@ -9,7 +9,7 @@ namespace Spryker\Shared\Newsletter\Messages;
 
 class Messages
 {
-    const ALREADY_SUBSCRIBED = 'newsletter.subscription.already_subscribed';
-    const INVALID_EMAIL_FORMAT = 'newsletter.subscription.email_format_invalid';
-    const INVALID_SUBSCRIBER_KEY = 'newsletter.subscription.invalid_subscriber_key';
+    public const ALREADY_SUBSCRIBED = 'newsletter.subscription.already_subscribed';
+    public const INVALID_EMAIL_FORMAT = 'newsletter.subscription.email_format_invalid';
+    public const INVALID_SUBSCRIBER_KEY = 'newsletter.subscription.invalid_subscriber_key';
 }

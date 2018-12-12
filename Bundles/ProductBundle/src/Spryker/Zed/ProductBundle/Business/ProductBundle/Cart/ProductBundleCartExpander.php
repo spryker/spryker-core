@@ -26,7 +26,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 {
-    const BUNDLE_IDENTIFIER_DELIMITER = '_';
+    public const BUNDLE_IDENTIFIER_DELIMITER = '_';
     protected const GROUP_KEY_DELIMITER = '_';
 
     /**
@@ -116,7 +116,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             if ($bundledProducts->count() == 0) {
                 $cartChangeItems->append($itemTransfer);
                 continue;
-            };
+            }
 
             $addToCartItems = $this->buildBundle($itemTransfer, $quoteTransfer, $bundledProducts);
 
@@ -464,10 +464,14 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         if ($priceMode === $this->priceFacade->getNetPriceModeIdentifier()) {
             $itemTransfer->setUnitNetPrice($unitPrice);
+            $itemTransfer->setUnitGrossPrice(0);
+            $itemTransfer->setSumGrossPrice(0);
             return;
         }
 
         $itemTransfer->setUnitGrossPrice($unitPrice);
+        $itemTransfer->setUnitNetPrice(0);
+        $itemTransfer->setSumNetPrice(0);
     }
 
     /**

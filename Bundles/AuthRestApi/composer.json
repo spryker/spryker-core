@@ -1,5 +1,6 @@
 {
   "name": "spryker/auth-rest-api",
+  "type": "library",
   "description": "AuthRestApi module",
   "license": "proprietary",
   "require": {
@@ -13,6 +14,9 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/rest-request-validator": "If you want to use rest request validation."
   },
   "autoload": {
     "psr-4": {

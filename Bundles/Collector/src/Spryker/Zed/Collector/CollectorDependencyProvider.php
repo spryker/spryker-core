@@ -12,14 +12,17 @@ use Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Collector\CollectorConfig getConfig()
+ */
 class CollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_LOCALE = 'locale facade';
-    const QUERY_CONTAINER_TOUCH = 'touch query container';
-    const SEARCH_PLUGINS = 'search plugins';
-    const STORAGE_PLUGINS = 'storage plugins';
-    const FACADE_PROPEL = 'propel facade';
-    const FACADE_STORE = 'store facade';
+    public const FACADE_LOCALE = 'locale facade';
+    public const QUERY_CONTAINER_TOUCH = 'touch query container';
+    public const SEARCH_PLUGINS = 'search plugins';
+    public const STORAGE_PLUGINS = 'storage plugins';
+    public const FACADE_PROPEL = 'propel facade';
+    public const FACADE_STORE = 'store facade';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -9,8 +9,10 @@ namespace SprykerTest\Zed\ProductMeasurementUnit\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
 /**
  * Auto-generated group annotations
@@ -230,5 +232,122 @@ class ProductMeasurementUnitFacadeTest extends Unit
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $this->assertNotNull($itemTransfer->getQuantitySalesUnit()->getConversion());
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductMeasurementSalesUnitTransfer(): void
+    {
+        // Assign
+        $code = 'MYCODE' . random_int(1, 100);
+
+        $productTransfer = $this->tester->haveProduct();
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
+        ]);
+
+        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
+            $productTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+
+        $productMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
+            $productTransfer->getIdProductConcrete(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+        );
+
+        $productMeasurementSalesUnitTransfer = $this->productMeasurementUnitFacade->getProductMeasurementSalesUnitTransfer($productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit());
+
+        $this->assertInstanceOf(ProductMeasurementSalesUnitTransfer::class, $productMeasurementSalesUnitTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandOrderWithQuantitySalesUnit(): void
+    {
+        // Assign
+        $orderTransfer = (new OrderTransfer())
+            ->setIdSalesOrder(1);
+
+        $orderTransfer = $this->productMeasurementUnitFacade
+            ->expandOrderWithQuantitySalesUnit($orderTransfer);
+
+        $this->assertInstanceOf(OrderTransfer::class, $orderTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandSalesOrderItem(): void
+    {
+        // Assign
+        $code = 'MYCODE' . random_int(1, 100);
+        $productTransfer = $this->tester->haveProduct();
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
+        ]);
+        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
+            $productTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+        $productMeasurementBaseUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
+
+        $productMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
+            $productTransfer->getIdProductConcrete(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+        );
+
+        $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
+        $productMeasurementSalesUnitTransfer->setProductMeasurementBaseUnit($productMeasurementBaseUnitTransfer);
+
+        $quantitySalesUnitTransfer = (new ProductMeasurementSalesUnitTransfer())->fromArray($productMeasurementSalesUnitTransfer->toArray(), true);
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantitySalesUnit($quantitySalesUnitTransfer);
+
+        //Act
+        $salesOrderItemEntity = $this->productMeasurementUnitFacade
+            ->expandSalesOrderItem($itemTransfer, new SpySalesOrderItemEntityTransfer());
+
+        //Assert
+        $this->assertSame($productMeasurementUnitTransfer->getName(), $salesOrderItemEntity->getQuantityMeasurementUnitName());
+        $this->assertSame($productMeasurementUnitTransfer->getName(), $salesOrderItemEntity->getQuantityBaseMeasurementUnitName());
+        $this->assertSame($quantitySalesUnitTransfer->getPrecision(), $salesOrderItemEntity->getQuantityMeasurementUnitPrecision());
+        $this->assertSame($quantitySalesUnitTransfer->getConversion(), $salesOrderItemEntity->getQuantityMeasurementUnitConversion());
+    }
+
+    /**
+     * @return void
+     */
+    public function testTranslateProductMeasurementSalesUnit(): void
+    {
+        // Assign
+        $code = 'MYCODE' . random_int(1, 100);
+        $productTransfer = $this->tester->haveProduct();
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
+        ]);
+
+        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
+            $productTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+
+        $spyProductMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
+            $productTransfer->getIdProductConcrete(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+        );
+
+        $productMeasurementSalesUnitTransfer = $this->tester
+            ->createProductMeasurementSalesUnitTransfer($spyProductMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit());
+
+        $productMeasurementSalesUnitTransfer = $this->productMeasurementUnitFacade
+            ->translateProductMeasurementSalesUnit($productMeasurementSalesUnitTransfer);
+
+        $this->assertInstanceOf(ProductMeasurementSalesUnitTransfer::class, $productMeasurementSalesUnitTransfer);
     }
 }

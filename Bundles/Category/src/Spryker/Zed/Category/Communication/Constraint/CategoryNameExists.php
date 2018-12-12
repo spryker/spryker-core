@@ -55,7 +55,7 @@ class CategoryNameExists extends Constraint
     }
 
     /**
-     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainer
+     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     public function getQueryContainer()
     {

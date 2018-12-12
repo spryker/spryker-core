@@ -12,13 +12,16 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductSetStorage\Dependency\Client\ProductSetStorageToStorageClientBridge;
 use Spryker\Client\ProductSetStorage\Dependency\Service\ProductSetStorageToSynchronizationServiceBridge;
 
+/**
+ * @method \Spryker\Client\ProductSetStorage\ProductSetStorageConfig getConfig()
+ */
 class ProductSetStorageDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_STORAGE = 'CLIENT_STORAGE';
-    const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
-    const CLIENT_LOCALE = 'CLIENT_LOCALE';
-    const SERVICE_ENCODING = 'SERVICE_ENCODING';
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    public const SERVICE_ENCODING = 'SERVICE_ENCODING';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

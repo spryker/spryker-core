@@ -1,9 +1,12 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 namespace Spryker\Zed\CmsGui\Dependency\QueryContainer;
+
+use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
 
 interface CmsGuiToCmsQueryContainerInterface
 {
@@ -67,4 +70,9 @@ interface CmsGuiToCmsQueryContainerInterface
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
      */
     public function queryCmsPageLocalizedAttributes();
+
+    /**
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryLocalizedPagesWithTemplates(): SpyCmsPageQuery;
 }

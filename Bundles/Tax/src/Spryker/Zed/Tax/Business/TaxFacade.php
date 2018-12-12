@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Tax\Business\TaxBusinessFactory getFactory()
+ * @method \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface getRepository()
  */
 class TaxFacade extends AbstractFacade implements TaxFacadeInterface
 {
@@ -113,6 +114,39 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
         return $this->getFactory()
             ->createReaderModel()
             ->taxSetExists($id);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function taxSetWithSameNameExists(string $name): bool
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->taxSetWithSameNameExists($name);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $name
+     * @param int $idTaxSet
+     *
+     * @return bool
+     */
+    public function taxSetWithSameNameAndIdExists(string $name, int $idTaxSet): bool
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->taxSetWithSameNameAndIdExists($name, $idTaxSet);
     }
 
     /**
@@ -315,7 +349,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      * @param float $taxRate
      * @param bool $round
      *
-     * @return int
+     * @return float
      */
     public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate, $round = false)
     {
@@ -403,5 +437,37 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
         $this->getFactory()
             ->createTaxRateAverageAggregationCalculator()
             ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idTaxRate
+     *
+     * @return \Generated\Shared\Transfer\TaxRateTransfer|null
+     */
+    public function findTaxRate(int $idTaxRate): ?TaxRateTransfer
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->findTaxRate($idTaxRate);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idTaxSet
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer|null
+     */
+    public function findTaxSet(int $idTaxSet): ?TaxSetTransfer
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->findTaxSet($idTaxSet);
     }
 }

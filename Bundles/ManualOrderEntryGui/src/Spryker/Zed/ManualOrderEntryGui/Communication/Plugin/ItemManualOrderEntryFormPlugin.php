@@ -16,12 +16,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiConfig getConfig()
  */
 class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     use UniqueFlashMessagesTrait;
 
     /**
+     * @api
+     *
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface
      */
     protected $messengerFacade;
@@ -32,6 +35,8 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -40,6 +45,8 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -51,6 +58,8 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -72,6 +81,8 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -83,6 +94,8 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool

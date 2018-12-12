@@ -13,16 +13,22 @@ use Spryker\Zed\PersistentCart\Communication\Plugin\SimpleProductQuoteItemFinder
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeBridge;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeBridge;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeBridge;
+use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeBridge;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
+/**
+ * @method \Spryker\Zed\PersistentCart\PersistentCartConfig getConfig()
+ */
 class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CART = 'FACADE_CART';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const FACADE_QUOTE = 'FACADE_QUOTE';
+    public const FACADE_STORE = 'FACADE_STORE';
     public const PLUGIN_QUOTE_ITEM_FINDER = 'PLUGIN_QUOTE_ITEM_FINDER';
     public const PLUGINS_QUOTE_RESPONSE_EXPANDER = 'PLUGINS_QUOTE_RESPONSE_EXPANDER';
     public const PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER = 'PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER';
+    public const PLUGINS_CART_ADD_ITEM_STRATEGY = 'PLUGINS_CART_ADD_ITEM_STRATEGY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,12 +37,16 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addCartFacade($container);
         $container = $this->addMessengerFacade($container);
         $container = $this->addQuoteItemFinderPlugin($container);
         $container = $this->addQuoteFacade($container);
+        $container = $this->addStoreFacade($container);
         $container = $this->addQuoteResponseExpanderPlugins($container);
         $container = $this->addRemoveItemsRequestExpanderPlugins($container);
+        $container = $this->addCartAddItemStrategyPlugins($container);
 
         return $container;
     }
@@ -64,6 +74,20 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_CART] = function (Container $container) {
             return new PersistentCartToCartFacadeBridge($container->getLocator()->cart()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new PersistentCartToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 
         return $container;
@@ -126,6 +150,20 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCartAddItemStrategyPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CART_ADD_ITEM_STRATEGY] = function (Container $container) {
+            return $this->getCartAddItemStrategyPlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface
      */
     protected function getQuoteItemFinderPlugin(): QuoteItemFinderPluginInterface
@@ -145,6 +183,16 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\CartChangeRequestExpandPluginInterface[]
      */
     protected function getRemoveItemsRequestExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
+     */
+    protected function getCartAddItemStrategyPlugins(Container $container): array
     {
         return [];
     }

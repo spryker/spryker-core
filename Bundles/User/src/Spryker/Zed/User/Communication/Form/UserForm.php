@@ -15,7 +15,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Choice;
@@ -27,18 +26,19 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
  * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
  * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\User\UserConfig getConfig()
  */
 class UserForm extends AbstractType
 {
-    const OPTION_GROUP_CHOICES = 'group_choices';
-    const GROUP_UNIQUE_USERNAME_CHECK = 'unique_email_check';
+    public const OPTION_GROUP_CHOICES = 'group_choices';
+    public const GROUP_UNIQUE_USERNAME_CHECK = 'unique_email_check';
 
-    const FIELD_USERNAME = 'username';
-    const FIELD_GROUP = 'group';
-    const FIELD_FIRST_NAME = 'first_name';
-    const FIELD_LAST_NAME = 'last_name';
-    const FIELD_PASSWORD = 'password';
-    const FIELD_STATUS = 'status';
+    public const FIELD_USERNAME = 'username';
+    public const FIELD_GROUP = 'group';
+    public const FIELD_FIRST_NAME = 'first_name';
+    public const FIELD_LAST_NAME = 'last_name';
+    public const FIELD_PASSWORD = 'password';
+    public const FIELD_STATUS = 'status';
 
     /**
      * @return string
@@ -86,11 +86,11 @@ class UserForm extends AbstractType
     /**
      * @deprecated Use `configureOptions()` instead.
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
         $this->configureOptions($resolver);
     }
@@ -112,6 +112,20 @@ class UserForm extends AbstractType
         $groupChoices = $options[self::OPTION_GROUP_CHOICES];
         if ($groupChoices) {
             $this->addGroupField($builder, $options[self::OPTION_GROUP_CHOICES]);
+        }
+
+        $this->executeFormExpanderPlugins($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    protected function executeFormExpanderPlugins(FormBuilderInterface $builder): void
+    {
+        foreach ($this->getFactory()->getFormExpanderPlugins() as $formExpanderPlugin) {
+            $formExpanderPlugin->buildForm($builder);
         }
     }
 
@@ -206,6 +220,7 @@ class UserForm extends AbstractType
                         'choices' => array_keys($choices),
                         'multiple' => true,
                     ]),
+                    new NotBlank(),
                 ],
                 'label' => 'Assigned groups',
                 'multiple' => true,

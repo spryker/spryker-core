@@ -29,6 +29,10 @@ class CompanyUserWriterStep implements DataImportStepInterface
             ->filterByFkCustomer($dataSet[BusinessOnBehalfCompanyUserDataSetInterface::COLUMN_ID_CUSTOMER])
             ->findOneOrCreate();
 
+        if (isset($dataSet[BusinessOnBehalfCompanyUserDataSetInterface::COLUMN_DEFAULT])) {
+            $companyUserEntity->setIsDefault($dataSet[BusinessOnBehalfCompanyUserDataSetInterface::COLUMN_DEFAULT]);
+        }
+
         $companyUserEntity->save();
     }
 }

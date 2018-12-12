@@ -22,7 +22,7 @@ class ProductPackagingUnitTypeWriterStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         $productPackagingUnitTypeEntity = $this->getProductPackagingUnitTypeQuery()
-            ->filterByName($dataSet[ProductPackagingUnitTypeDataSetInterface::NAME])
+            ->filterByName($dataSet[ProductPackagingUnitTypeDataSetInterface::COLUMN_NAME])
             ->findOneOrCreate();
 
         if ($productPackagingUnitTypeEntity->isNew()) {
@@ -31,6 +31,8 @@ class ProductPackagingUnitTypeWriterStep implements DataImportStepInterface
     }
 
     /**
+     * @module ProductPackagingUnit
+     *
      * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery
      */
     protected function getProductPackagingUnitTypeQuery(): SpyProductPackagingUnitTypeQuery

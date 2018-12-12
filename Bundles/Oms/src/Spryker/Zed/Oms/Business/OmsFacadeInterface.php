@@ -567,4 +567,29 @@ interface OmsFacadeInterface
      * @return string[]
      */
     public function getStateFlags(string $processName, string $stateName): array;
+
+    /**
+     * Specification:
+     *  - Saves OMS Reservation for a given sku, store and quantity.
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int $reservationQuantity
+     *
+     * @return void
+     */
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void;
+
+    /**
+     * Specification:
+     *  - Reads states from XML definition
+     *  - Returns a list of reserved state names
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getReservedStateNames(): array;
 }

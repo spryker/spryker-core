@@ -10,8 +10,11 @@ namespace Spryker\Zed\Cart\Business;
 use Spryker\Zed\Cart\Business\Model\Operation;
 use Spryker\Zed\Cart\Business\Model\QuoteChangeObserver;
 use Spryker\Zed\Cart\Business\Model\QuoteChangeObserverInterface;
+use Spryker\Zed\Cart\Business\Model\QuoteCleaner;
+use Spryker\Zed\Cart\Business\Model\QuoteCleanerInterface;
 use Spryker\Zed\Cart\Business\Model\QuoteValidator;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
+use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -33,7 +36,8 @@ class CartBusinessFactory extends AbstractBusinessFactory
             $this->getCartPreCheckPlugins(),
             $this->getPostSavePlugins(),
             $this->getTerminationPlugins(),
-            $this->getCartRemovalPreCheckPlugins()
+            $this->getCartRemovalPreCheckPlugins(),
+            $this->getPostReloadItemsPlugins()
         );
 
         $operation->setPreReloadLoadPlugins($this->getPreReloadItemsPlugins());
@@ -54,11 +58,22 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Cart\Business\Model\QuoteCleanerInterface
+     */
+    public function createQuoteCleaner(): QuoteCleanerInterface
+    {
+        return new QuoteCleaner();
+    }
+
+    /**
      * @return \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
      */
-    public function createStorageProvider()
+    public function createStorageProvider(): StorageProviderInterface
     {
-        return new NonPersistentProvider();
+        return new NonPersistentProvider(
+            $this->getCartAddItemStrategyPlugins(),
+            $this->getCartRemoveItemStrategyPlugins()
+        );
     }
 
     /**
@@ -94,7 +109,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface[]
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface[]
      */
     protected function getCartPreCheckPlugins()
     {
@@ -118,7 +133,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Cart\Dependency\PreReloadItemsPluginInterface[]
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface[]
      */
     protected function getPreReloadItemsPlugins()
     {
@@ -139,5 +154,29 @@ class CartBusinessFactory extends AbstractBusinessFactory
     protected function getQuoteChangeObserverPlugins(): array
     {
         return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_QUOTE_CHANGE_OBSERVER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
+     */
+    public function getCartAddItemStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_CART_ADD_ITEM_STRATEGY);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
+     */
+    public function getCartRemoveItemStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_CART_REMOVE_ITEM_STRATEGY);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface[]
+     */
+    public function getPostReloadItemsPlugins(): array
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_POST_RELOAD_ITEMS);
     }
 }

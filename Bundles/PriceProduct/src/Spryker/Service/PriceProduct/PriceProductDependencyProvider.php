@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -9,6 +10,9 @@ namespace Spryker\Service\PriceProduct;
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 
+/**
+ * @method \Spryker\Service\PriceProduct\PriceProductConfig getConfig()
+ */
 class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_PRICE_PRODUCT_DECISION = 'PLUGIN_PRICE_PRODUCT_DECISION';

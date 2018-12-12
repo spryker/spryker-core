@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BaseProductRelationController extends AbstractController
 {
-    const URL_PARAM_DATA = 'data';
+    public const URL_PARAM_DATA = 'data';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

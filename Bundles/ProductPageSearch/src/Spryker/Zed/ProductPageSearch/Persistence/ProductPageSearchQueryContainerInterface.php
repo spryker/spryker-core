@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductPageSearchQueryContainerInterface extends QueryContainerInterface
@@ -101,4 +102,38 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
     public function queryAllProductAbstractIdsByPriceProductIds(array $priceProductIds);
+
+    /**
+     * @api
+     *
+     * @param array $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryAllProductImageSetsByProductAbstractIds(array $productAbstractIds);
+
+    /**
+     * @api
+     *
+     * @param array $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function queryProductCategoriesByProductAbstractIds(array $productAbstractIds);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryAllCategoriesWithAttributesAndOrderByDescendant();
+
+    /**
+     * @api
+     *
+     * @param int $idNode
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryCategoryNodeFullPath(int $idNode): SpyCategoryNodeQuery;
 }

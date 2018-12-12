@@ -15,10 +15,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Money\Business\MoneyFacadeInterface getFacade()
  * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Money\MoneyConfig getConfig()
  */
 class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
 {
     /**
+     * @api
+     *
      * @param int $amount
      * @param string|null $isoCode
      *
@@ -30,6 +33,8 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
     }
 
     /**
+     * @api
+     *
      * @param float $amount
      * @param string|null $isoCode
      *
@@ -41,6 +46,8 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
     }
 
     /**
+     * @api
+     *
      * @param string $amount
      * @param string|null $isoCode
      *
@@ -56,6 +63,8 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      *
      * E.g. `MoneyTransfer::$amount = 1000`, `MoneyTransfer::$isoCode = EUR` will return `10,00 €`
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
      *
      * @return string
@@ -69,6 +78,8 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      * This method will return float representation of the given MoneyTransfer object without symbol
      *
      * E.g. `MoneyTransfer::$amount = 1000`, `MoneyTransfer::$isoCode = EUR` will return `10,00`
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
      *
@@ -84,6 +95,8 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      *
      * E.g. `$value = 10,00 €` `CurrencyTransfer::$code = EUR` will return `MoneyTransfer::$amount(1000)`
      *
+     * @api
+     *
      * @param string $value
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
@@ -95,6 +108,8 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
     }
 
     /**
+     * @api
+     *
      * @param int $value
      *
      * @return float
@@ -105,6 +120,8 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
     }
 
     /**
+     * @api
+     *
      * @param float $value
      *
      * @return int

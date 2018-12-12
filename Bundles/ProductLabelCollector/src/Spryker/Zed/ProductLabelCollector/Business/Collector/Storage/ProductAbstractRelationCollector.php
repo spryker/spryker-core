@@ -69,11 +69,9 @@ class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
     {
         $activeIds = [];
         foreach ($productLabelIds as $labelId) {
-            list($idProductLabel, $isActive) = explode(ProductAbstractRelationCollectorQuery::LABEL_DELIMITER, $labelId);
+            [$idProductLabel, $isActive] = explode(ProductAbstractRelationCollectorQuery::LABEL_DELIMITER, $labelId);
 
             $isActive = $this->normalizeIsActive($isActive);
-
-            $isActive = filter_var($isActive, FILTER_VALIDATE_BOOLEAN);
             if (!$isActive) {
                 continue;
             }
@@ -98,6 +96,9 @@ class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
         if ($isActive[0] === 'f') {
             return false;
         }
-        return $isActive;
+
+        $isActive = filter_var($isActive, FILTER_VALIDATE_BOOLEAN);
+
+        return (bool)$isActive;
     }
 }

@@ -1,0 +1,21 @@
+{% extends '@Sales/Layout/layout.twig' %}
+
+{% block section_title %}
+    {{ 'Dashboard' | trans }}
+{% endblock %}
+
+{% block content %}
+    {% for pluginContent in pluginContents %}
+        {% set countPlugin = ( countPlugin | default(-1) ) + 1 %}
+        {% if countPlugin%2 == 0 %}
+            <div class="row page-heading">
+        {% endif %}
+        <div class="col-lg-6">
+            {{ pluginContent | raw }}
+        </div>
+        {% if countPlugin%2 == 1 %}
+            </div>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}

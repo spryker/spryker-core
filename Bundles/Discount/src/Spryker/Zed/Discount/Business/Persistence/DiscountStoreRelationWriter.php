@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -57,7 +58,7 @@ class DiscountStoreRelationWriter implements DiscountStoreRelationWriterInterfac
      */
     protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelationTransfer)
     {
-        if ($storeRelationTransfer->getIdStores() === null) {
+        if (!$storeRelationTransfer->getIdStores()) {
             return [];
         }
 

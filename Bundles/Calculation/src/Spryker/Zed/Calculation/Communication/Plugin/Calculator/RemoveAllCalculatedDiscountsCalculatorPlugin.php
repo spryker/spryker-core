@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -13,10 +14,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Calculation\Business\CalculationFacadeInterface getFacade()
  * @method \Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
  */
 class RemoveAllCalculatedDiscountsCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void

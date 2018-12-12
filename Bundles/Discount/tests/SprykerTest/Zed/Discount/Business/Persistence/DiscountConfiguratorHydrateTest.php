@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -174,7 +175,8 @@ class DiscountConfiguratorHydrateTest extends Unit
             ->setValidTo('2001-01-01')
             ->setIsActive(true)
             ->setFkDiscountVoucherPool(1)
-            ->setIsExclusive(true);
+            ->setIsExclusive(true)
+            ->setMinimumItemAmount(1);
 
         $discountEntity->addSpyDiscountStore(
             (new SpyDiscountStore())

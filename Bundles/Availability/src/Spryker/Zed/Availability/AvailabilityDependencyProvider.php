@@ -16,15 +16,18 @@ use Spryker\Zed\Availability\Dependency\QueryContainer\AvailabilityToProductBrid
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
+ */
 class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_OMS = 'FACADE_OMS';
-    const FACADE_STOCK = 'FACADE_STOCK';
-    const FACADE_TOUCH = 'FACADE_TOUCH';
-    const FACADE_PRODUCT = 'FACADE_PRODUCT';
-    const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_OMS = 'FACADE_OMS';
+    public const FACADE_STOCK = 'FACADE_STOCK';
+    public const FACADE_TOUCH = 'FACADE_TOUCH';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_STORE = 'FACADE_STORE';
 
-    const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+    public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

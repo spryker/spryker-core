@@ -14,10 +14,14 @@ use Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface;
 /**
  * @method \Spryker\Zed\Navigation\Business\NavigationFacadeInterface getFacade()
  * @method \Spryker\Zed\Navigation\Communication\NavigationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Navigation\NavigationConfig getConfig()
+ * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface getQueryContainer()
  */
 class DetachNavigationUrlAfterUrlDeletePlugin extends AbstractPlugin implements UrlDeletePluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void

@@ -14,10 +14,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductSetGui\ProductSetGuiConfig getConfig()
  */
 class ImagesFormType extends AbstractType
 {
-    const FIELD_IMAGE_SET_COLLECTION_PREFIX = 'image_set_collection_';
+    public const FIELD_IMAGE_SET_COLLECTION_PREFIX = 'image_set_collection_';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

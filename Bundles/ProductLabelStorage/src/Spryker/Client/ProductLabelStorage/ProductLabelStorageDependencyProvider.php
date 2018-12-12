@@ -13,11 +13,14 @@ use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToSt
 use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceBridge;
 use Spryker\Shared\Kernel\Store;
 
+/**
+ * @method \Spryker\Client\ProductLabelStorage\ProductLabelStorageConfig getConfig()
+ */
 class ProductLabelStorageDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_STORAGE = 'CLIENT_STORAGE';
-    const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
-    const STORE = 'STORE';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const STORE = 'STORE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

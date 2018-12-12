@@ -21,14 +21,15 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\EditTableButtonFunct
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\RemoveTableButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\ViewTableButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\TabsFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlDecodeFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class GuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const GUI_TWIG_FUNCTIONS = 'gui_twig_functions';
-    const GUI_TWIG_FILTERS = 'gui_twig_filters';
+    public const GUI_TWIG_FUNCTIONS = 'gui_twig_functions';
+    public const GUI_TWIG_FILTERS = 'gui_twig_filters';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -80,6 +81,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
             new AssetsPathFunction(),
             new TabsFunction(),
             new UrlFunction(),
+            new UrlDecodeFunction(),
             // navigation buttons
             new ButtonGroupFunction(),
             new BackActionButtonFunction(),

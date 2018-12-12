@@ -7,16 +7,17 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener;
 
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
-use Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelQuery;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductLabelStorage\Communication\ProductLabelStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
  */
 class ProductLabelDictionaryStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

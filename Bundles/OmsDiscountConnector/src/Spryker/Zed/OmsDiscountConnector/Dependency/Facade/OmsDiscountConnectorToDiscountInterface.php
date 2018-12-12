@@ -12,7 +12,7 @@ interface OmsDiscountConnectorToDiscountInterface
     /**
      * @param string[] $codes
      *
-     * @return bool
+     * @return int
      */
     public function releaseUsedVoucherCodes(array $codes);
 }

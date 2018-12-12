@@ -11,12 +11,15 @@ use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
+ */
 class CalculationDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUOTE_CALCULATOR_PLUGIN_STACK = 'quote calculator plugin stack';
-    const ORDER_CALCULATOR_PLUGIN_STACK = 'order calculator plugin stack';
+    public const QUOTE_CALCULATOR_PLUGIN_STACK = 'quote calculator plugin stack';
+    public const ORDER_CALCULATOR_PLUGIN_STACK = 'order calculator plugin stack';
 
-    const SERVICE_UTIL_TEXT = 'util text service';
+    public const SERVICE_UTIL_TEXT = 'util text service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -43,7 +46,7 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
+     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
      */
     protected function getQuoteCalculatorPluginStack(Container $container)
     {
@@ -53,7 +56,7 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
+     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
      */
     protected function getOrderCalculatorPluginStack(Container $container)
     {

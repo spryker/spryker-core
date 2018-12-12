@@ -18,9 +18,9 @@ use Spryker\Shared\Money\Dependency\Parser\MoneyToParserBridge;
 
 class MoneyDependencyProvider extends AbstractDependencyProvider
 {
-    const STORE = 'store';
-    const PLUGIN_CURRENCY = 'currency plugin';
-    const MONEY_PARSER = 'money parser';
+    public const STORE = 'store';
+    public const PLUGIN_CURRENCY = 'currency plugin';
+    public const MONEY_PARSER = 'money parser';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

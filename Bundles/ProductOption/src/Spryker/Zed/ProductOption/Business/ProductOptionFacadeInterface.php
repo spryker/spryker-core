@@ -1,13 +1,18 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\ProductOption\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
+use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -221,4 +226,54 @@ interface ProductOptionFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
      */
     public function getAllProductOptionValuePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer);
+
+    /**
+     * Specification:
+     * - Retrieves product options by provided product option IDs.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
+     */
+    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds product option by product option value id.
+     *
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
+     */
+    public function findProductOptionByIdProductOptionValue(int $idProductOptionValue): ?ProductOptionTransfer;
+
+    /**
+     * Specification:
+     * - Checks if product option value exists.
+     *
+     * @api
+     *
+     * @deprecated Use checkProductOptionGroupExistenceByProductOptionValueId() instead
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function checkProductOptionValueExistence(int $idProductOptionValue): bool;
+
+    /**
+     * Specification:
+     * - Checks if product option group exists using product option value id.
+     *
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function checkProductOptionGroupExistenceByProductOptionValueId(int $idProductOptionValue): bool;
 }

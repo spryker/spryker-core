@@ -22,7 +22,7 @@ class CompanyUnitAddressPluginExecutor implements CompanyUnitAddressPluginExecut
     protected $companyUnitAddressPostSavePlugins;
 
     /**
-     * @param \Spryker\Zed\CompanyUnitAddressLabel\Business\Model\CompanyUnitAddressHydratorInterface[] $companyUnitAddressHydratePlugins
+     * @param \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratePluginInterface[] $companyUnitAddressHydratePlugins
      * @param \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressPostSavePluginInterface[] $companyUnitAddressPostSavePlugins
      */
     public function __construct(

@@ -70,7 +70,7 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function createContainer()
     {

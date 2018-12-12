@@ -22,16 +22,17 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\ProductRelation\Business\ProductRelationFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductRelation\Communication\ProductRelationCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductRelation\ProductRelationConfig getConfig()
  */
 class ProductRelationFormType extends AbstractType
 {
-    const FIELD_RELATION_TYPE = 'productRelationType';
-    const FIELD_FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
-    const FIELD_ID_PRODUCT_RELATION = 'idProductRelation';
-    const FIELD_QUERY_SET = 'querySet';
-    const FIELD_IS_REBUILD_SCHEDULED = 'isRebuildScheduled';
+    public const FIELD_RELATION_TYPE = 'productRelationType';
+    public const FIELD_FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
+    public const FIELD_ID_PRODUCT_RELATION = 'idProductRelation';
+    public const FIELD_QUERY_SET = 'querySet';
+    public const FIELD_IS_REBUILD_SCHEDULED = 'isRebuildScheduled';
 
-    const OPTION_RELATION_CHOICES = 'productRelationType';
+    public const OPTION_RELATION_CHOICES = 'productRelationType';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

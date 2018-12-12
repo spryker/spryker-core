@@ -20,6 +20,8 @@ use Spryker\Client\ShoppingList\PermissionUpdater\PermissionUpdater;
 use Spryker\Client\ShoppingList\PermissionUpdater\PermissionUpdaterInterface;
 use Spryker\Client\ShoppingList\Product\ProductStorage;
 use Spryker\Client\ShoppingList\Product\ProductStorageInterface;
+use Spryker\Client\ShoppingList\ShoppingList\ShoppingListAddItemExpander;
+use Spryker\Client\ShoppingList\ShoppingList\ShoppingListAddItemExpanderInterface;
 use Spryker\Client\ShoppingList\Zed\ShoppingListStub;
 use Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface;
 
@@ -60,7 +62,19 @@ class ShoppingListFactory extends AbstractFactory
         return new CartHandler(
             $this->getCartClient(),
             $this->createShoppingListStub(),
-            $this->getMessengerClient()
+            $this->getMessengerClient(),
+            $this->getShoppingListItemToItemMapperPlugins(),
+            $this->getQuoteItemToItemMapperPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingList\ShoppingList\ShoppingListAddItemExpanderInterface
+     */
+    public function createShoppingListAddItemExpander(): ShoppingListAddItemExpanderInterface
+    {
+        return new ShoppingListAddItemExpander(
+            $this->getAddItemShoppingListItemMapperPlugins()
         );
     }
 
@@ -110,5 +124,29 @@ class ShoppingListFactory extends AbstractFactory
     public function createPermissionUpdater(): PermissionUpdaterInterface
     {
         return new PermissionUpdater($this->getCustomerClient());
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
+     */
+    public function getShoppingListItemToItemMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER);
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\QuoteItemToItemMapperPluginInterface[]
+     */
+    public function getQuoteItemToItemMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_QUOTE_ITEM_TO_ITEM_MAPPER);
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemMapperPluginInterface[]
+     */
+    public function getAddItemShoppingListItemMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_MAPPER);
     }
 }

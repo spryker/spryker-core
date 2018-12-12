@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\OfferGui\OfferGuiConfig getConfig()
  */
 class AddressType extends AbstractType
 {
@@ -228,7 +229,6 @@ class AddressType extends AbstractType
             'required' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
-                $this->createZipCodeConstraint($options),
             ],
         ]);
 
@@ -342,22 +342,6 @@ class AddressType extends AbstractType
             'min' => 3,
             'groups' => $validationGroup,
             'minMessage' => 'This field must be at least {{ limit }} characters long.',
-        ]);
-    }
-
-    /**
-     * @param array $options
-     *
-     * @return \Symfony\Component\Validator\Constraints\Regex
-     */
-    protected function createZipCodeConstraint(array $options)
-    {
-        $validationGroup = $this->getValidationGroup($options);
-
-        return new Regex([
-            'pattern' => '/^\d{5}$/',
-            'message' => 'This field should contain exactly 5 digits.',
-            'groups' => $validationGroup,
         ]);
     }
 

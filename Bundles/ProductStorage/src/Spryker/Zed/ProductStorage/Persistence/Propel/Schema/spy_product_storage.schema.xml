@@ -5,7 +5,7 @@
           namespace="Orm\Zed\ProductStorage\Persistence"
           package="src.Orm.Zed.ProductStorage.Persistence">
 
-    <table name="spy_product_abstract_storage">
+    <table name="spy_product_abstract_storage" identifierQuoting="true">
         <column name="id_product_abstract_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_abstract" type="INTEGER" required="true"/>
         <index name="spy_product_abstract_storage-fk_product_abstract">
@@ -22,7 +22,7 @@
         <behavior name="timestampable"/>
     </table>
 
-    <table name="spy_product_concrete_storage">
+    <table name="spy_product_concrete_storage" identifierQuoting="true">
         <column name="id_product_concrete_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product" type="INTEGER" required="true"/>
         <index name="spy_product_concrete_storage-fk_product">

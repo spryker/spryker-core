@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductAlternativeStorage">
+        <property name="productAbstractIds" type="array" />
+        <property name="productConcreteIds" type="array" />
+    </transfer>
+
+    <transfer name="ProductReplacementStorage">
+        <property name="productConcreteIds" type="array" />
+    </transfer>
+
+</transfers>

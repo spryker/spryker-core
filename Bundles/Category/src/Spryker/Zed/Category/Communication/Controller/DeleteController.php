@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -17,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface getRepository()
  */
 class DeleteController extends AbstractController
 {
@@ -123,6 +125,7 @@ class DeleteController extends AbstractController
     protected function getParentCategoryEntity(NodeTransfer $categoryNodeTransfer)
     {
         $localeTransfer = $this->getFactory()->getCurrentLocale();
+        /** @var \Orm\Zed\Category\Persistence\SpyCategory $parentCategoryEntity */
         $parentCategoryEntity = $this
             ->getQueryContainer()
             ->queryCategory($localeTransfer->getIdLocale())

@@ -15,14 +15,17 @@ use Spryker\Zed\CmsStorage\Dependency\QueryContainer\CmsStorageToLocaleQueryCont
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsStorage\CmsStorageConfig getConfig()
+ */
 class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_CMS_PAGE = 'QUERY_CONTAINER_CMS_PAGE';
-    const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const PLUGIN_CONTENT_WIDGET_DATA_EXPANDER = 'PLUGIN_CONTENT_WIDGET_DATA_EXPANDER';
-    const FACADE_CMS = 'FACADE_CMS';
-    const STORE = 'store';
+    public const QUERY_CONTAINER_CMS_PAGE = 'QUERY_CONTAINER_CMS_PAGE';
+    public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const PLUGIN_CONTENT_WIDGET_DATA_EXPANDER = 'PLUGIN_CONTENT_WIDGET_DATA_EXPANDER';
+    public const FACADE_CMS = 'FACADE_CMS';
+    public const STORE = 'store';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

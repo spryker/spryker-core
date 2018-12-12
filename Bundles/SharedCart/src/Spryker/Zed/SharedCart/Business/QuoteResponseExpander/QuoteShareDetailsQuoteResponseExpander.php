@@ -23,8 +23,6 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
     protected $sharedCartRepository;
 
     /**
-     * QuoteReader constructor.
-     *
      * @param \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface $sharedCartRepository
      */
     public function __construct(SharedCartRepositoryInterface $sharedCartRepository)
@@ -179,6 +177,6 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
     protected function isCustomerQuoteOwner(QuoteTransfer $quoteTransfer): bool
     {
         $customer = $quoteTransfer->getCustomer();
-        return strcmp($customer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
+        return $customer->getCustomerReference() === $quoteTransfer->getCustomerReference();
     }
 }

@@ -69,7 +69,13 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createAddress()
     {
-        return new Address($this->getQueryContainer(), $this->getCountryFacade(), $this->getLocaleFacade());
+        return new Address(
+            $this->getQueryContainer(),
+            $this->getCountryFacade(),
+            $this->getLocaleFacade(),
+            $this->createCustomerExpander(),
+            $this->getRepository()
+        );
     }
 
     /**

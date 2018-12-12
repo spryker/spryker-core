@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductReviewSearch\Persistence;
 
+use Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery;
 use Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearchQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductReviewSearch\ProductReviewSearchDependencyProvider;
@@ -14,6 +15,7 @@ use Spryker\Zed\ProductReviewSearch\ProductReviewSearchDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductReviewSearch\ProductReviewSearchConfig getConfig()
  * @method \Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchRepositoryInterface getRepository()
  */
 class ProductReviewSearchPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -31,5 +33,13 @@ class ProductReviewSearchPersistenceFactory extends AbstractPersistenceFactory
     public function getProductReviewQuery()
     {
         return $this->getProvidedDependency(ProductReviewSearchDependencyProvider::QUERY_CONTAINER_PRODUCT_REVIEW);
+    }
+
+    /**
+     * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
+     */
+    public function getPropelProductReviewQuery(): SpyProductReviewQuery
+    {
+        return $this->getProvidedDependency(ProductReviewSearchDependencyProvider::PROPEL_QUERY_PRODUCT_REVIEW);
     }
 }

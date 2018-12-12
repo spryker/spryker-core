@@ -16,7 +16,7 @@ class ExporterPluginResolver
     public const QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS = 'query_container';
 
     /**
-     * @var \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface[]
+     * @var array
      */
     protected $synchronizationDataPlugins;
 
@@ -55,6 +55,21 @@ class ExporterPluginResolver
         $pluginsPerExporter = $this->getResolvedPluginsByResources($resources);
         $this->queryContainerExporter->exportSynchronizedData($pluginsPerExporter[ExporterPluginResolver::QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS]);
         $this->repositoryExporter->exportSynchronizedData($pluginsPerExporter[ExporterPluginResolver::REPOSITORY_SYNCHRONIZATION_PLUGINS]);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAvailableResourceNames(): array
+    {
+        $resourceNames = [];
+        foreach ($this->synchronizationDataPlugins as $plugin) {
+            $resourceNames[] = $plugin->getResourceName();
+        }
+
+        sort($resourceNames);
+
+        return $resourceNames;
     }
 
     /**

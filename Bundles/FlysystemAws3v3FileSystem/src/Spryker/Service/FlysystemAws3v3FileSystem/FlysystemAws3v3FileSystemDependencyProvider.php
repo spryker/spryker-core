@@ -9,6 +9,9 @@ namespace Spryker\Service\FlysystemAws3v3FileSystem;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Service\FlysystemAws3v3FileSystem\FlysystemAws3v3FileSystemConfig getConfig()
+ */
 class FlysystemAws3v3FileSystemDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

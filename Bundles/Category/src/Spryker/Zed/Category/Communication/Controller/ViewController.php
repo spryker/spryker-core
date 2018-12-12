@@ -14,22 +14,28 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface getRepository()
  */
 class ViewController extends AbstractController
 {
-    const QUERY_PARAM_ID_CATEGORY = 'id-category';
+    public const QUERY_PARAM_ID_CATEGORY = 'id-category';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
         $idCategory = $request->query->getInt(static::QUERY_PARAM_ID_CATEGORY);
 
-        $categoryTransfer = $this->getFacade()
-            ->read($idCategory);
+        $categoryTransfer = $this->getFacade()->findCategoryById($idCategory);
+
+        if ($categoryTransfer === null) {
+            $this->addErrorMessage(sprintf('Category with id %s doesn\'t exist', $idCategory));
+
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
+        }
 
         $localeTransfer = $this->getFactory()->getCurrentLocale();
         $readPlugins = $this->getFactory()

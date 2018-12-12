@@ -35,7 +35,7 @@ class BatchResult implements BatchResultInterface
     protected $successCount = 0;
 
     /**
-     * @var \Spryker\Zed\Collector\Business\Model\FailedResult[]
+     * @var \Spryker\Zed\Collector\Business\Model\FailedResultInterface[]
      */
     protected $failed = [];
 

@@ -8,6 +8,9 @@
 namespace Spryker\Zed\Development\Business\Phpstan;
 
 use RuntimeException;
+use SplFileInfo;
+use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileFinderInterface;
+use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileManagerInterface;
 use Spryker\Zed\Development\Business\Traits\PathTrait;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Console\Input\InputInterface;
@@ -22,22 +25,32 @@ class PhpstanRunner implements PhpstanRunnerInterface
 {
     use PathTrait;
 
-    const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
-    const NAMESPACE_SPRYKER = 'Spryker';
+    public const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+    public const NAMESPACE_SPRYKER = 'Spryker';
 
-    const DEFAULT_LEVEL = 'defaultLevel';
-    const MEMORY_LIMIT = '512M';
-    const CODE_SUCCESS = 0;
-    const CODE_ERROR = 0;
+    public const DEFAULT_LEVEL = 'defaultLevel';
+    public const MEMORY_LIMIT = '512M';
+    public const CODE_SUCCESS = 0;
+    public const CODE_ERROR = 0;
 
-    const OPTION_DRY_RUN = 'dry-run';
-    const OPTION_VERBOSE = 'verbose';
-    const OPTION_MODULE = 'module';
+    public const OPTION_DRY_RUN = 'dry-run';
+    public const OPTION_VERBOSE = 'verbose';
+    public const OPTION_MODULE = 'module';
 
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
      */
     protected $config;
+
+    /**
+     * @var \Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileFinderInterface
+     */
+    protected $phpstanConfigFileFinder;
+
+    /**
+     * @var \Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileManagerInterface
+     */
+    protected $phpstanConfigFileManager;
 
     /**
      * @var int
@@ -46,10 +59,17 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
     /**
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
+     * @param \Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileFinderInterface $phpstanConfigFileFinder
+     * @param \Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileManagerInterface $phpstanConfigFileManager
      */
-    public function __construct(DevelopmentConfig $config)
-    {
+    public function __construct(
+        DevelopmentConfig $config,
+        PhpstanConfigFileFinderInterface $phpstanConfigFileFinder,
+        PhpstanConfigFileManagerInterface $phpstanConfigFileManager
+    ) {
         $this->config = $config;
+        $this->phpstanConfigFileFinder = $phpstanConfigFileFinder;
+        $this->phpstanConfigFileManager = $phpstanConfigFileManager;
     }
 
     /**
@@ -84,6 +104,9 @@ class PhpstanRunner implements PhpstanRunnerInterface
         $count = 0;
         $total = count($paths);
         $this->errorCount = 0;
+
+        asort($paths);
+
         foreach ($paths as $path => $configFilePath) {
             $resultCode |= $this->runCommand($path, $configFilePath, $input, $output);
             $count++;
@@ -121,7 +144,8 @@ class PhpstanRunner implements PhpstanRunnerInterface
         if (is_dir($path . 'src')) {
             $path .= 'src' . DIRECTORY_SEPARATOR;
         }
-        $configFilePath .= 'phpstan.neon';
+
+        $configFilePath .= $this->config->getPhpstanConfigFilename();
 
         $command = sprintf($command, static::MEMORY_LIMIT, $configFilePath, $path, $level);
 
@@ -139,7 +163,11 @@ class PhpstanRunner implements PhpstanRunnerInterface
             $output->write($buffer);
         });
 
-        return $process->run();
+        if ($this->phpstanConfigFileManager->isMergedConfigFile($configFilePath)) {
+            $this->phpstanConfigFileManager->deleteConfigFile($configFilePath);
+        }
+
+        return $process->getExitCode();
     }
 
     /**
@@ -184,7 +212,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
         foreach ($namespaces as $namespace) {
             $path = $pathToRoot . 'src' . DIRECTORY_SEPARATOR . $namespace . DIRECTORY_SEPARATOR;
 
-            foreach (DevelopmentConfig::APPLICATION_LAYERS as $layer) {
+            foreach (DevelopmentConfig::APPLICATIONS as $layer) {
                 $layerPath = $path . $layer . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
                 if ($pathSuffix) {
                     $layerPath .= $pathSuffix;
@@ -203,40 +231,87 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
     /**
      * @param array $paths
-     * @param string $path
-     * @param string|null $configFilePath
+     * @param string $moduleDirectoryPath
      * @param string|null $namespace
      *
      * @return array
      */
-    protected function addPath(array $paths, $path, $configFilePath = null, $namespace = null)
+    protected function addPath(array $paths, string $moduleDirectoryPath, $namespace = null): array
     {
-        if (!$configFilePath) {
-            $configFilePath = $this->detectConfigFilePath($path);
-        }
-        if (!$configFilePath && $namespace) {
-            $pathToModules = $namespace === static::NAMESPACE_SPRYKER_SHOP ? $this->config->getPathToShop() : $this->config->getPathToCore();
-            $vendorPath = dirname($pathToModules) . DIRECTORY_SEPARATOR;
-            $configFilePath = $this->detectConfigFilePath($vendorPath);
-        }
-
-        $paths[$path] = $configFilePath ?: $this->config->getPathToRoot();
+        $paths[$moduleDirectoryPath] = $this->getConfigFilePathByModuleDirectory($moduleDirectoryPath, $namespace);
 
         return $paths;
     }
 
     /**
-     * @param string $path
+     * @param string $moduleDirectoryPath
+     * @param string|null $namespace
+     *
+     * @return string
+     */
+    protected function getConfigFilePathByModuleDirectory(string $moduleDirectoryPath, $namespace = null): string
+    {
+        $moduleConfigFile = $this->phpstanConfigFileFinder
+            ->searchIn($moduleDirectoryPath);
+
+        $vendorDirectoryPath = $this->getVendorPathByNamespace($namespace);
+
+        $vendorConfigFile = $this->phpstanConfigFileFinder
+            ->searchIn($vendorDirectoryPath);
+
+        if ($moduleConfigFile && $vendorConfigFile) {
+            return $this->phpstanConfigFileManager->merge(
+                [$moduleConfigFile, $vendorConfigFile],
+                $this->getConfigFilenameForMerge($moduleConfigFile)
+            );
+        }
+
+        if ($moduleConfigFile) {
+            return $moduleConfigFile->getPath() . DIRECTORY_SEPARATOR;
+        }
+
+        if ($vendorConfigFile) {
+            return $vendorConfigFile->getPath() . DIRECTORY_SEPARATOR;
+        }
+
+        return $this->config->getPathToRoot();
+    }
+
+    /**
+     * @param \SplFileInfo $moduleConfigFile
      *
      * @return string|null
      */
-    protected function detectConfigFilePath($path)
+    protected function getConfigFilenameForMerge(SplFileInfo $moduleConfigFile): ?string
     {
-        if (file_exists($path . 'phpstan.neon')) {
-            return $path;
+        $filenameFromPath = mb_strtolower(
+            implode(
+                '_',
+                array_slice(
+                    explode('/', $moduleConfigFile->getPath()),
+                    -3,
+                    3
+                )
+            )
+        );
+
+        return $filenameFromPath . '_';
+    }
+
+    /**
+     * @param string $namespace
+     *
+     * @return string|null
+     */
+    protected function getVendorPathByNamespace(string $namespace): ?string
+    {
+        if (!$namespace) {
+            return null;
         }
 
-        return null;
+        $pathToModules = $namespace === static::NAMESPACE_SPRYKER_SHOP ? $this->config->getPathToShop() : $this->config->getPathToCore();
+
+        return dirname($pathToModules) . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -249,7 +324,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
     protected function resolveCorePaths($module)
     {
         $paths = [];
-        list ($namespace, $module) = explode('.', $module, 2);
+        [$namespace, $module] = explode('.', $module, 2);
 
         if ($module === 'all') {
             if ($namespace === static::NAMESPACE_SPRYKER_SHOP) {
@@ -263,27 +338,27 @@ class PhpstanRunner implements PhpstanRunnerInterface
             $modules = $this->getCoreModules($corePath);
             foreach ($modules as $module) {
                 $path = $corePath . $module . DIRECTORY_SEPARATOR;
-                $paths = $this->addPath($paths, $path, null, $namespace);
+                $paths = $this->addPath($paths, $path, $namespace);
             }
 
             return $paths;
         }
 
         if ($namespace === static::NAMESPACE_SPRYKER && is_dir($this->config->getPathToCore() . $module)) {
-            $paths = $this->addPath($paths, $this->config->getPathToCore() . $module . DIRECTORY_SEPARATOR, null, $namespace);
+            $paths = $this->addPath($paths, $this->config->getPathToCore() . $module . DIRECTORY_SEPARATOR, $namespace);
 
             return $paths;
         }
 
         if ($namespace === static::NAMESPACE_SPRYKER_SHOP && is_dir($this->config->getPathToShop() . $module)) {
-            $paths = $this->addPath($paths, $this->config->getPathToShop() . $module . DIRECTORY_SEPARATOR, null, $namespace);
+            $paths = $this->addPath($paths, $this->config->getPathToShop() . $module . DIRECTORY_SEPARATOR, $namespace);
 
             return $paths;
         }
 
         $vendor = $this->dasherize($namespace);
         $module = $this->dasherize($module);
-        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module;
+        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
         $paths = $this->addPath($paths, $path);
 
         return $paths;
@@ -357,7 +432,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      *
      * @return void
      */
-    protected function addErrors($buffer)
+    protected function addErrors(string $buffer): void
     {
         preg_match('#\[ERROR\] Found (\d+) error#i', $buffer, $matches);
         if (!$matches) {
