@@ -25,13 +25,13 @@ interface MerchantRelationshipProductListMapperInterface
     ): ProductListTransfer;
 
     /**
-     * @param array $productListEntities
+     * @param \Orm\Zed\ProductList\Persistence\SpyProductList[]|\Propel\Runtime\Collection\ObjectCollection $productListEntities
      * @param \Generated\Shared\Transfer\ProductListCollectionTransfer $productListCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
      */
     public function mapProductListCollection(
-        array $productListEntities,
+        $productListEntities,
         ProductListCollectionTransfer $productListCollectionTransfer
     ): ProductListCollectionTransfer;
 }
