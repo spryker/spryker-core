@@ -24,10 +24,15 @@ class MerchantRelationshipProductListEntityManager extends AbstractEntityManager
      */
     public function clearMerchantRelationshipFromProductList(ProductListTransfer $productListTransfer): void
     {
-        $this->getFactory()
+        $productList = $this->getFactory()
             ->getProductListQuery()
-            ->findOneByIdProductList($productListTransfer->getIdProductList())
-            ->setFkMerchantRelationship(null)
+            ->findOneByIdProductList($productListTransfer->getIdProductList());
+
+        if (!$productList) {
+            return;
+        }
+
+        $productList->setFkMerchantRelationship(null)
             ->save();
     }
 }
