@@ -34,8 +34,8 @@ class PriceProductConcreteStorageUnpublishListener extends AbstractPlugin implem
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $concreteIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $productConcreteIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        $this->getFacade()->unpublishPriceProductConcrete($concreteIds);
+        $this->getFacade()->unpublishPriceProductConcrete($productConcreteIds);
     }
 }

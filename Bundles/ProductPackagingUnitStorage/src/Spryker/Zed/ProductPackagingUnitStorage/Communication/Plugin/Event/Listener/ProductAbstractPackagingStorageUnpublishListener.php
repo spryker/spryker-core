@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Lis
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
@@ -34,20 +33,6 @@ class ProductAbstractPackagingStorageUnpublishListener extends AbstractPlugin im
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventTransfers);
 
-        $unpublishEvents = $this->getUnpublishEvents();
-
-        if (in_array($eventName, $unpublishEvents)) {
-            $this->getFacade()->unpublishProductAbstractPackaging($productAbstractIds);
-        }
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getUnpublishEvents(): array
-    {
-        return [
-            ProductPackagingUnitEvents::PRODUCT_ABSTRACT_PACKAGING_UNPUBLISH,
-        ];
+        $this->getFacade()->unpublishProductAbstractPackaging($productAbstractIds);
     }
 }

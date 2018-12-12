@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
@@ -37,10 +36,6 @@ class ProductAbstractStorageUnpublishListener extends AbstractPlugin implements 
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE ||
-            $eventName === ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH
-        ) {
-            $this->getFacade()->unpublishProductAbstracts($productAbstractIds);
-        }
+        $this->getFacade()->unpublishProductAbstracts($productAbstractIds);
     }
 }

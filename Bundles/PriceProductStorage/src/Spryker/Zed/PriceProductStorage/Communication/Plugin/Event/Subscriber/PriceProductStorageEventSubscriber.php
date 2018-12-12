@@ -141,7 +141,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductAbstractDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE, new PriceProductAbstractEntityStoragePublishListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE, new PriceProductAbstractStorageUnpublishListener());
     }
 
     /**
