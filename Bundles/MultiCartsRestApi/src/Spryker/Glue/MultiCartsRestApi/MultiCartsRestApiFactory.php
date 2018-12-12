@@ -10,10 +10,10 @@ namespace Spryker\Glue\MultiCartsRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToMultiCartClientInterface;
 use Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToPersistentCartClientInterface;
-use Spryker\Glue\MultiCartsRestApi\Processor\Cart\MultipleQuoteCreator;
-use Spryker\Glue\MultiCartsRestApi\Processor\Cart\MultipleQuoteCreatorInterface;
 use Spryker\Glue\MultiCartsRestApi\Processor\Quote\MultipleQuoteCollectionReader;
 use Spryker\Glue\MultiCartsRestApi\Processor\Quote\MultipleQuoteCollectionReaderInterface;
+use Spryker\Glue\MultiCartsRestApi\Processor\Quote\MultipleQuoteCreator;
+use Spryker\Glue\MultiCartsRestApi\Processor\Quote\MultipleQuoteCreatorInterface;
 
 /**
  *
@@ -30,7 +30,7 @@ class MultiCartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\MultiCartsRestApi\Processor\Cart\MultipleQuoteCreatorInterface
+     * @return \Spryker\Glue\MultiCartsRestApi\Processor\Quote\MultipleQuoteCreatorInterface
      */
     public function createMultipleQuoteCreator(): MultipleQuoteCreatorInterface
     {
