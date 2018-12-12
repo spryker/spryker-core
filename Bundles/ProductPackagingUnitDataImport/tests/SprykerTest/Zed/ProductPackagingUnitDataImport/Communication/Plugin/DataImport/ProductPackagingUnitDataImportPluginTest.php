@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
+use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
 use Spryker\Zed\ProductPackagingUnitDataImport\Communication\Plugin\DataImport\ProductPackagingUnitDataImportPlugin;
 use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportConfig;
@@ -53,6 +54,11 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
     protected $productAbstractIds = [];
 
     /**
+     * @var array
+     */
+    protected $productConcreteIds = [];
+
+    /**
      * @return void
      */
     public function testImportImportsData(): void
@@ -67,6 +73,7 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
         $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE_DEFAULT]);
         $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE]);
         $this->createTestProducts();
+        $this->createTestMeasurementSalesUnits();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_packaging_unit.csv');
@@ -102,7 +109,32 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
     {
         foreach (static::PRODUCT_SKUS as $sku) {
             $productConcreteTransfer = $this->tester->haveProduct([SpyProductEntityTransfer::SKU => $sku]);
-            $this->productAbstractIds[] = $productConcreteTransfer->getFkProductAbstract();
+            $this->productAbstractIds[$sku] = $productConcreteTransfer->getFkProductAbstract();
+            $this->productConcreteIds[$sku] = $productConcreteTransfer->getIdProductConcrete();
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function createTestMeasurementSalesUnits(): void
+    {
+        $code = 'MYCODE' . random_int(1, 100);
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
+        ]);
+
+        foreach (static::PRODUCT_SKUS as $sku) {
+            $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
+                $this->productAbstractIds[$sku],
+                $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+            );
+
+            $this->tester->haveProductMeasurementSalesUnit(
+                $this->productConcreteIds[$sku],
+                $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+                $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+            );
         }
     }
 
