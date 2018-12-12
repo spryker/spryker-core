@@ -1,8 +1,8 @@
 <div class="well">
     {% filter trans|raw %}
-        <h3>Add General Information</h3>
-        <p>Below the name and description for your product can be edited for different locales (in different languages).</p>
-        <p><i>Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore.</i></p>
+        <h3>{{ 'Add General Information' | trans }}</h3>
+        <p>{{ 'Below the name and description for your product can be edited for different locales (in different languages).' | trans }}</p>
+        <p><i>{{ 'Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore.' | trans }}</i></p>
     {% endfilter %}
 </div>
 

@@ -3,7 +3,7 @@
 {% set widget_title = 'List of translations' %}
 
 {% block head_title widget_title %}
-{% block section_title 'Overview of Translations' %}
+{% block section_title 'Overview of Translations' | trans %}
 
 {% block action %}
     {{ createActionButton('/glossary/add', 'Create Translation' | trans) }}

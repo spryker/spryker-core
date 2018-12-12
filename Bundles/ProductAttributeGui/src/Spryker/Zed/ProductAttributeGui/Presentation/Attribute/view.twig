@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Product Attributes' %}
+{% set widget_title = 'Product Attributes' | trans %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
@@ -10,7 +10,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'View Attribute #' ~ app.request.query.get('id') } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'View Attribute' | trans ~ ' #' ~ app.request.query.get('id') } %}
         {% block widget_content %}
 
             <h4>{{ 'General Information' | trans }}</h4>

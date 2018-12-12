@@ -2,7 +2,7 @@
 "2. Translations","2. Translations"
 Add,Add
 "Allow input any value other than predefined ones","Allow input any value other than predefined ones"
-"Attribute key","Attribute key"
+"Attribute Key","Attribute Key"
 "Attribute name translation","Attribute name translation"
 Back,Back
 "Back to List","Back to list"
@@ -15,8 +15,32 @@ Edit,Edit
 "General Information","General Information"
 "Input type","Input type"
 "Predefined value translations","Predefined value translations"
-"Predefined values","Predefined values"
+"Predefined Values","Predefined Values"
 Save,Save
-"Super attribute","Super attribute"
+Superattribute,Superattribute
 Values,Values
 "You can add new values by pressing ""Enter"" after each element","You can add new values by pressing ""Enter"" after each element"
+"Attribute ID","Attribute ID"
+"Attribute Key","Attribute Key"
+"Attribute list","Attribute list"
+"View Attribute","View Attribute"
+"Product Attributes","Product Attributes"
+"Attributes and their values are used by the backoffice application. They are unique and cannot contain special characters.","Attributes and their values are used by the backoffice application. They are unique and cannot contain special characters."
+text,text
+textarea,textarea
+number,number
+float,float
+date,date
+time,time
+datetime,datetime
+select,select
+"Manage Attributes for Product","Manage Attributes for Product"
+"Create a Product Attribute","Create a Product Attribute"
+"Manage Attributes for Product Abstract","Manage Attributes for Product Abstract"
+"Translate predefined values","Translate predefined values"
+"Product attribute was created successfully.","Product attribute was created successfully."
+"Product attribute was not created.","Product attribute was not created."
+"Product attribute was updated successfully.","Product attribute was updated successfully."
+"Translation was updated successfully.","Translation was updated successfully."
+"Product abstract attributes saved","Product abstract attributes saved"
+"Product attributes saved","Product attributes saved"

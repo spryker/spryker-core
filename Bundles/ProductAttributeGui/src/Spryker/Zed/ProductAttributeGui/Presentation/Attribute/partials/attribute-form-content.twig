@@ -3,7 +3,7 @@
 {% endif %}
 
 {% if not readOnly %}
-    <p>{{ 'Attributes and their values are used by the backoffice application. They are unique and cannot contain special characters.' }}</p>
+    <p>{{ 'Attributes and their values are used by the backoffice application. They are unique and cannot contain special characters.' | trans }}</p>
 {% endif %}
 
 {{ form_row(form.key) }}

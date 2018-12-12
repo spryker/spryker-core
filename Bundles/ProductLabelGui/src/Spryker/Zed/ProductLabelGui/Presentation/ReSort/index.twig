@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Prioritize Product Labels' %}
+{% set widget_title = 'Prioritize Product Labels' | trans %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Prioritize Product Labels' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Prioritize Product Labels' | trans } %}
 
         {% block widget_content %}
             <div id="js-re-sort-list" class="dd">

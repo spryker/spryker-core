@@ -1,8 +1,8 @@
 <div class="well">
     {% filter trans|raw %}
-        <h3>Product Image(s)</h3>
-        <p>Multiple images can be grouped to an image set. An image set has a name for identification and may contain a small and a large version of each image.</p>
-        <p><i>Note: Image sets can be used for different purposes such as being displayed in the catalog or the product detail page or elsewhere.</i></p>
+        <h3>{{ 'Product Image(s)' | trans }}</h3>
+        <p>{{ 'Multiple images can be grouped to an image set. An image set has a name for identification and may contain a small and a large version of each image' | trans }}.</p>
+        <p><i>{{ 'Note: Image sets can be used for different purposes such as being displayed in the catalog or the product detail page or elsewhere.' | trans }}</i></p>
     {% endfilter %}
 </div>
 
