@@ -10,11 +10,18 @@
  * @type {string}
  */
 const companyFieldPath = 'select#company-business-unit_fk_company';
+
 /**
  * @see \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
  * @type {string}
  */
 const parentFieldPath = 'select#company-business-unit_fk_parent_company_business_unit';
+
+/**
+ * @type {string}
+ */
+const parentAllOptionsFieldId = 'all-options';
+
 /**
  * @see \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyBusinessUnitFormDataProvider::OPTION_ATTRIBUTE_DATA
  * @type {string}
@@ -24,6 +31,7 @@ const attributeIdCompany = 'id_company';
 function initialize() {
     const companyField = new CompanyFieldHandler();
 
+    companyField.cloneOptions();
     companyField.addListenerOnCompany();
 }
 
@@ -32,47 +40,56 @@ function CompanyFieldHandler() {
     const $parentField = $(parentFieldPath);
 
     function addListenerOnCompany() {
-        if (apllyeble()) {
+        if (isApplicable()) {
             setParentNames();
             $companyField.change(setParentNames);
         }
     }
 
+    function cloneOptions() {
+        $('<div id="' + parentAllOptionsFieldId + '" class="hidden"></div>').html($parentField.html()).appendTo($parentField.parents());
+    }
+
     /**
      * @returns {bool}
      */
-    function apllyeble() {
+    function isApplicable() {
         return $parentField.length && $companyField.length;
     }
 
     function setParentNames() {
+        restoreAllParentOptions();
         $parentField.children().each(toggleOption);
 
         blinkParentField();
     }
 
     function toggleOption() {
-        const companyId = parseInt(getCompanyId());
+        const companyId = getCompanyId();
         const $parentOption = $(this);
 
-        if (!$parentOption.val()) {
+        if (!companyId || !$parentOption.val()) {
             return;
         }
 
-        if (!companyId) {
-            $parentOption.hide();
-        } else if ($parentOption.data(attributeIdCompany) === companyId) {
-            $parentOption.show();
-        } else {
-            $parentOption.hide();
+        if ($parentOption.data(attributeIdCompany) == companyId) {
+            return;
         }
+
+        $parentOption.remove();
     }
 
     /**
-     * @returns Null|{string}
+     * @returns NaN|{integer}
      */
     function getCompanyId() {
-        return $companyField.val();
+        return parseInt($companyField.val());
+    }
+
+    function restoreAllParentOptions() {
+        const $parentAllOptionsField = $('div#' + parentAllOptionsFieldId);
+
+        $parentField.html($parentAllOptionsField.html());
     }
 
     function blinkParentField() {
@@ -81,6 +98,7 @@ function CompanyFieldHandler() {
 
     return {
         addListenerOnCompany: addListenerOnCompany,
+        cloneOptions: cloneOptions,
     };
 }
 
