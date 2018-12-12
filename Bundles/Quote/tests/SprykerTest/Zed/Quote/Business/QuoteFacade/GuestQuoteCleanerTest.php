@@ -42,7 +42,7 @@ class GuestQuoteCleanerTest extends Unit
      */
     public function testGuestQuoteClearAfterLifetimeIsExceeded(): void
     {
-        // Prepare
+        // Arrange
         $this->tester->setConfig(QuoteConstants::GUEST_QUOTE_LIFETIME, static::CONFIG_LIFETIME_ONE_SECOND);
 
         $customerTransfer = (new CustomerTransfer())
@@ -69,7 +69,7 @@ class GuestQuoteCleanerTest extends Unit
      */
     public function testGuestQuoteNotClearedBeforeLifetimeIsExceeded(): void
     {
-        // Prepare
+        // Arrange
         $this->tester->setConfig(QuoteConstants::GUEST_QUOTE_LIFETIME, static::CONFIG_LIFETIME_ONE_HOUR);
 
         $customerTransfer = (new CustomerTransfer())
