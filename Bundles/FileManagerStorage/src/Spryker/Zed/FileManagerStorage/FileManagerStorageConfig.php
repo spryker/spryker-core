@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManagerStorage;
 
+use Spryker\Shared\Synchronization\SynchronizationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class FileManagerStorageConfig extends AbstractBundleConfig
@@ -19,5 +20,13 @@ class FileManagerStorageConfig extends AbstractBundleConfig
     public function getStorageCompositeKey()
     {
         return static::STORAGE_COMPOSITE_KEY;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSendingToQueue()
+    {
+        return $this->get(SynchronizationConstants::STORAGE_SYNC_ENABLED, true);
     }
 }

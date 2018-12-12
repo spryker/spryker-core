@@ -31,15 +31,23 @@ class ShoppingListCustomerStoragePublisher implements ShoppingListCustomerStorag
     protected $shoppingListStorageRepository;
 
     /**
+     * @var bool
+     */
+    protected $isSendingToQueue;
+
+    /**
      * @param \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageEntityManagerInterface $shoppingListStorageEntityManager
      * @param \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepositoryInterface $shoppingListStorageRepository
+     * @param bool $isSendingToQueue
      */
     public function __construct(
         ShoppingListStorageEntityManagerInterface $shoppingListStorageEntityManager,
-        ShoppingListStorageRepositoryInterface $shoppingListStorageRepository
+        ShoppingListStorageRepositoryInterface $shoppingListStorageRepository,
+        bool $isSendingToQueue = true
     ) {
         $this->shoppingListStorageEntityManager = $shoppingListStorageEntityManager;
         $this->shoppingListStorageRepository = $shoppingListStorageRepository;
+        $this->isSendingToQueue = $isSendingToQueue;
     }
 
     /**
@@ -89,6 +97,7 @@ class ShoppingListCustomerStoragePublisher implements ShoppingListCustomerStorag
         $shoppingListCustomerStorageTransfer = new ShoppingListCustomerStorageTransfer();
         $shoppingListCustomerStorageTransfer->setUpdatedAt(time());
         $shoppingListCustomerStorageEntity->setData($shoppingListCustomerStorageTransfer->toArray());
+        $shoppingListCustomerStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
 
         $this->shoppingListStorageEntityManager->saveShoppingListCustomerStorage($shoppingListCustomerStorageEntity);
     }

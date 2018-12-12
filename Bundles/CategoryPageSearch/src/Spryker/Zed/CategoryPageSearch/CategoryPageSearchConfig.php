@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryPageSearch;
 
+use Spryker\Shared\Synchronization\SynchronizationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CategoryPageSearchConfig extends AbstractBundleConfig
@@ -16,7 +17,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return true;
+        return $this->get(SynchronizationConstants::SEARCH_SYNC_ENABLED, true);
     }
 
     /**

@@ -32,18 +32,26 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
     protected $productQuantityFacade;
 
     /**
+     * @var bool
+     */
+    protected $isSendingToQueue;
+
+    /**
      * @param \Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageEntityManagerInterface $productQuantityStorageEntityManager
      * @param \Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageRepositoryInterface $productQuantityStorageRepository
      * @param \Spryker\Zed\ProductQuantityStorage\Dependency\Facade\ProductQuantityStorageToProductQuantityFacadeInterface $productQuantityFacade
+     * @param bool $isSendingToQueue
      */
     public function __construct(
         ProductQuantityStorageEntityManagerInterface $productQuantityStorageEntityManager,
         ProductQuantityStorageRepositoryInterface $productQuantityStorageRepository,
-        ProductQuantityStorageToProductQuantityFacadeInterface $productQuantityFacade
+        ProductQuantityStorageToProductQuantityFacadeInterface $productQuantityFacade,
+        bool $isSendingToQueue = true
     ) {
         $this->productQuantityStorageEntityManager = $productQuantityStorageEntityManager;
         $this->productQuantityStorageRepository = $productQuantityStorageRepository;
         $this->productQuantityFacade = $productQuantityFacade;
+        $this->isSendingToQueue = $isSendingToQueue;
     }
 
     /**
@@ -82,7 +90,7 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
             ->setFkProduct($productQuantityTransfer->getFkProduct())
             ->setData($this->getStorageEntityData($productQuantityTransfer));
 
-        $this->productQuantityStorageEntityManager->saveProductQuantityStorageEntity($storageEntity);
+        $this->productQuantityStorageEntityManager->saveProductQuantityStorageEntity($storageEntity, $this->isSendingToQueue);
     }
 
     /**
@@ -136,7 +144,10 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
     protected function deleteStorageEntities(array $mappedProductQuantityStorageEntities): void
     {
         foreach ($mappedProductQuantityStorageEntities as $productQuantityStorageEntity) {
-            $this->productQuantityStorageEntityManager->deleteProductQuantityStorage($productQuantityStorageEntity->getIdProductQuantityStorage());
+            $this->productQuantityStorageEntityManager->deleteProductQuantityStorage(
+                $productQuantityStorageEntity->getIdProductQuantityStorage(),
+                $this->isSendingToQueue
+            );
         }
     }
 }

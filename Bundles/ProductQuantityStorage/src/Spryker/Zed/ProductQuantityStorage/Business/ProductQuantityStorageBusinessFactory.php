@@ -28,7 +28,8 @@ class ProductQuantityStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductQuantityStorageWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->getProductQuantityFacade()
+            $this->getProductQuantityFacade(),
+            $this->getConfig()->isSendingToQueue()
         );
     }
 

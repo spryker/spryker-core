@@ -17,26 +17,31 @@ class ProductQuantityStorageEntityManager extends AbstractEntityManager implemen
 {
     /**
      * @param int $idProductQuantityStorage
+     * @param bool $isSendingToQueue
      *
      * @return void
      */
-    public function deleteProductQuantityStorage(int $idProductQuantityStorage): void
+    public function deleteProductQuantityStorage(int $idProductQuantityStorage, bool $isSendingToQueue = true): void
     {
         $spyProductQuantityStorageEntity = $this->getFactory()
             ->createProductQuantityStorageQuery()
             ->filterByIdProductQuantityStorage($idProductQuantityStorage)
             ->findOne();
 
+        $spyProductQuantityStorageEntity->setIsSendingToQueue($isSendingToQueue);
         $spyProductQuantityStorageEntity->delete();
     }
 
     /**
      * @param \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity
+     * @param bool $isSendingToQueue
      *
      * @return void
      */
-    public function saveProductQuantityStorageEntity(SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity): void
-    {
+    public function saveProductQuantityStorageEntity(
+        SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity,
+        bool $isSendingToQueue = true
+    ): void {
         $productQuantityStorageEntity->requireFkProduct();
 
         $spyProductQuantityStorageEntity = $this->getFactory()

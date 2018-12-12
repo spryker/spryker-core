@@ -26,15 +26,23 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected $entityManager;
 
     /**
+     * @var bool
+     */
+    protected $isSendingToQueue;
+
+    /**
      * @param \Spryker\Zed\ProductResourceAliasStorage\Persistence\ProductResourceAliasStorageRepositoryInterface $repository
      * @param \Spryker\Zed\ProductResourceAliasStorage\Persistence\ProductResourceAliasStorageEntityManagerInterface $entityManager
+     * @param bool $isSendingToQueue
      */
     public function __construct(
         ProductResourceAliasStorageRepositoryInterface $repository,
-        ProductResourceAliasStorageEntityManagerInterface $entityManager
+        ProductResourceAliasStorageEntityManagerInterface $entityManager,
+        bool $isSendingToQueue = true
     ) {
         $this->repository = $repository;
         $this->entityManager = $entityManager;
+        $this->isSendingToQueue = $isSendingToQueue;
     }
 
     /**
@@ -59,6 +67,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
             }
 
             $productAbstractStorageEntity->setSku($sku);
+            $productAbstractStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $this->entityManager->saveProductAbstractStorageEntity($productAbstractStorageEntity);
         }
     }
