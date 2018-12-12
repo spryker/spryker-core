@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Quote\Business\QuoteFacade;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Spryker\Shared\Quote\QuoteConstants;
 
 /**
@@ -47,11 +48,13 @@ class GuestQuoteCleanerTest extends Unit
         $customerTransfer = (new CustomerTransfer())
             ->setCustomerReference(static::ANONYMOUS_CUSTOMER_REFERENCE);
 
-        $this->tester->havePersistentQuote([
+        $quoteTransfer = $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
 
-        sleep(2);
+        SpyQuoteQuery::create()->filterByIdQuote($quoteTransfer->getIdQuote())->findOneOrCreate()->setUpdatedAt(
+            date("F j, Y", strtotime('-1 minutes'))
+        )->save();
 
         // Action
         $this->tester->getFacade()->deleteExpiredGuestQuote();
