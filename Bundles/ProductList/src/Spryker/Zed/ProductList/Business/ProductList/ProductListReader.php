@@ -93,10 +93,7 @@ class ProductListReader implements ProductListReaderInterface
         foreach ($productConcreteLists as $idProductConcrete => $productConcreteList) {
             $idProductAbstract = $concreteToAbstractMap[$idProductConcrete];
 
-            $mergedProductConcreteAndProductAbstractLists[$idProductConcrete] = array_merge(
-                $productConcreteList,
-                $productAbstractLists[$idProductAbstract] ?? []
-            );
+            $mergedProductConcreteAndProductAbstractLists[$idProductConcrete] = $productAbstractLists[$idProductAbstract] + $productConcreteList;
         }
 
         return $mergedProductConcreteAndProductAbstractLists;
@@ -141,14 +138,14 @@ class ProductListReader implements ProductListReaderInterface
     }
 
     /**
-     * @param array $productAbstractListsIds
+     * @param array $productConcreteListsIds
      *
      * @return array
      */
-    protected function mapProductListIdsByIdProductConcreteAndType(array $productAbstractListsIds): array
+    protected function mapProductListIdsByIdProductConcreteAndType(array $productConcreteListsIds): array
     {
         $mappedProductListIds = [];
-        foreach ($productAbstractListsIds as $productList) {
+        foreach ($productConcreteListsIds as $productList) {
             $idProduct = $productList[SpyProductListProductConcreteTableMap::COL_FK_PRODUCT];
             $type = $productList[ProductListRepository::COL_TYPE];
             $idProductList = $productList[ProductListRepository::COL_ID_PRODUCT_LIST];
