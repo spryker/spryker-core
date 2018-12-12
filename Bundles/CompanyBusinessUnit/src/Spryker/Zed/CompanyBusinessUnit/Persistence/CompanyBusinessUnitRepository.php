@@ -148,7 +148,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
      */
     public function findCompanyBusinessUnitById(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitTransfer
     {

@@ -67,12 +67,12 @@ class CompanyBusinessUnitFacadeTest extends Test
     {
         $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
 
-        $createdBusinessUnitTransfer = $this->getFacade()
+        $expectedBusinessUnitTransfer = $this->getFacade()
             ->create($businessUnitTransfer)
             ->getCompanyBusinessUnitTransfer();
 
-        $foundBusinessUnitTransfer = $this->getFacade()->findCompanyBusinessUnitById($createdBusinessUnitTransfer);
-        $this->assertSame($createdBusinessUnitTransfer->getName(), $foundBusinessUnitTransfer->getName());
+        $actualBusinessUnitTransfer = $this->getFacade()->findCompanyBusinessUnitById($expectedBusinessUnitTransfer);
+        $this->assertSame($expectedBusinessUnitTransfer->getName(), $actualBusinessUnitTransfer->getName());
     }
 
     /**

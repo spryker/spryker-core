@@ -195,7 +195,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
      */
     public function findCompanyBusinessUnitById(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitTransfer
     {
