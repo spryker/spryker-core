@@ -38,24 +38,30 @@ class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
      */
     public function checkShipment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        if (!$quoteTransfer->getShipment()) {
-            return true;
-        }
+        $availableShipmentMethods = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
 
-        $quoteTransfer->getShipment()->requireMethod();
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if (!$itemTransfer->getShipment()) {
+                continue;
+            }
 
-        $idShipmentMethod = $quoteTransfer->getShipment()
-            ->getMethod()
-            ->getIdShipmentMethod();
+            $idShipmentMethod = $itemTransfer->getShipment()->getMethod()->getIdShipmentMethod();
+            $shipmentMethodTransfer = current(array_filter(
+                $availableShipmentMethods->getMethods()->getArrayCopy(),
+                function ($shipmentMethodTransfer) use ($idShipmentMethod) {
+                    return $idShipmentMethod == $shipmentMethodTransfer->getIdShipmentMethod();
+                }
+            ));
 
-        if (!$idShipmentMethod || !$this->shipmentFacade->isShipmentMethodActive($idShipmentMethod)) {
-            $checkoutErrorTransfer = $this->createCheckoutErrorTransfer();
+            if (!$idShipmentMethod || !$shipmentMethodTransfer) {
+                $checkoutErrorTransfer = $this->createCheckoutErrorTransfer();
 
-            $checkoutResponseTransfer
-                ->setIsSuccess(false)
-                ->addError($checkoutErrorTransfer);
+                $checkoutResponseTransfer
+                    ->setIsSuccess(false)
+                    ->addError($checkoutErrorTransfer);
 
-            return false;
+                return false;
+            }
         }
 
         return true;

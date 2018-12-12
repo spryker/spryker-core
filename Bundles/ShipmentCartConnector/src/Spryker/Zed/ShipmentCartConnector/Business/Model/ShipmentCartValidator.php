@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface;
 
@@ -51,36 +52,48 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
             ->setIsSuccess(true);
 
         $quoteTransfer = $cartChangeTransfer->getQuote();
-        if (!$quoteTransfer->getShipment() || !$this->isCurrencyChanged($quoteTransfer)) {
-            return $cartPreCheckResponseTransfer;
-        }
 
-        $idShipmentMethod = $quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod();
-        $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
+        $availableShipmentMethods = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
 
-        if (!$shipmentMethodTransfer) {
-             $cartPreCheckResponseTransfer
-                ->setIsSuccess(false)
-                ->addMessage($this->createMessage());
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if (!$itemTransfer->getShipment() || !$this->isCurrencyChanged($itemTransfer->getShipment(), $quoteTransfer)) {
+                continue;
+            }
+
+            $idShipmentMethod = $itemTransfer->getShipment()->getMethod()->getIdShipmentMethod();
+            $shipmentMethodTransfer = current(array_filter(
+                $availableShipmentMethods->getMethods()->getArrayCopy(),
+                function ($shipmentMethodTransfer) use ($idShipmentMethod) {
+                    return $idShipmentMethod == $shipmentMethodTransfer->getIdShipmentMethod();
+                }
+            ));
+
+            if (!$shipmentMethodTransfer) {
+                $cartPreCheckResponseTransfer
+                    ->setIsSuccess(false)
+                    ->addMessage($this->createMessage());
+
+                return $cartPreCheckResponseTransfer;
+            }
         }
 
         return $cartPreCheckResponseTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function isCurrencyChanged(QuoteTransfer $quoteTransfer)
+    protected function isCurrencyChanged(ShipmentTransfer $shipmentTransfer, QuoteTransfer $quoteTransfer): bool
     {
-        if (!$quoteTransfer->getShipment()->getMethod()) {
+        if (!$shipmentTransfer->getMethod()) {
             return false;
         }
 
-        $shipmentCurrency = $quoteTransfer->getShipment()->getMethod()->getCurrencyIsoCode();
-
-        if ($shipmentCurrency !== $quoteTransfer->getCurrency()->getCode()) {
+        $shipmentCurrencyIsoCode = $shipmentTransfer->getMethod()->getCurrencyIsoCode();
+        if ($shipmentCurrencyIsoCode !== $quoteTransfer->getCurrency()->getCode()) {
             return true;
         }
 

@@ -91,11 +91,11 @@ class ShipmentCartConnectorFacadeTest extends Unit
         $shipmentCartConnectorFacade = $this->createShipmentCartConnectorFacade();
 
         $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
-
+        $shipmentMethodTransfer->setCurrencyIsoCode(static::CURRENCY_ISO_CODE);
+        $shipmentMethodTransfer->setStoreCurrencyPrice(100);
         $cartChangeTransfer = $this->createCartCartChangeTransfer($shipmentMethodTransfer);
 
         $cartPreCheckResponseTransfer = $shipmentCartConnectorFacade->validateShipment($cartChangeTransfer);
-
         $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
         $this->assertCount(0, $cartPreCheckResponseTransfer->getMessages());
     }
