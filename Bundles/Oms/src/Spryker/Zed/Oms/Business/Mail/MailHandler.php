@@ -103,6 +103,11 @@ class MailHandler
     protected function getShippingAddressTransfer(SpySalesOrder $salesOrderEntity)
     {
         $shippingAddressEntity = $salesOrderEntity->getShippingAddress();
+
+        if ($shippingAddressEntity === null) {
+            return null;
+        }
+
         $addressTransfer = new AddressTransfer();
         $addressTransfer->fromArray($shippingAddressEntity->toArray(), true);
 
