@@ -167,7 +167,7 @@ class OrderHydrator implements OrderHydratorInterface
             $orderTransfer->setTotalOrderCount($totalCustomerOrderCount);
         }
 
-        $uniqueProductQuantity = (int)$this->queryContainer
+        $uniqueProductQuantity = $this->queryContainer
             ->queryCountUniqueProductsForOrder($orderEntity->getIdSalesOrder())
             ->count();
 
@@ -286,7 +286,7 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return void
      */
-    protected function hydrateBillingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
+    protected function hydrateBillingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): void
     {
         $orderTransfer->setBillingAddress(
             $this->createAddressTransfer($orderEntity->getBillingAddress())
@@ -303,7 +303,7 @@ class OrderHydrator implements OrderHydratorInterface
     {
         $shippingAddress = $orderEntity->getShippingAddress();
 
-        if (!$shippingAddress) {
+        if ($shippingAddress === null) {
             return;
         }
 

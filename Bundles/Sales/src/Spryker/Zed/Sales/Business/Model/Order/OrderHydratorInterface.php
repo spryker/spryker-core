@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -43,7 +44,7 @@ interface OrderHydratorInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function hydrateOrderItemTransfer(SpySalesOrderItem $orderItemEntity);
+    public function hydrateOrderItemTransfer(SpySalesOrderItem $orderItemEntity): ItemTransfer;
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
