@@ -32,6 +32,8 @@ class ProductListWriter implements ProductListWriterInterface
      */
     public function clearMerchantRelationshipFromProductList(ProductListTransfer $productListTransfer): ProductListTransfer
     {
+        $productListTransfer->requireIdProductList();
+
         $this->entityManager->clearMerchantRelationshipFromProductList($productListTransfer);
         $productListTransfer->setFkMerchantRelationship(null);
 

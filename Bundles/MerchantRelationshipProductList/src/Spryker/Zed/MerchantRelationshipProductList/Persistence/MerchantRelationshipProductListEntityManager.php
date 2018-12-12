@@ -26,7 +26,8 @@ class MerchantRelationshipProductListEntityManager extends AbstractEntityManager
     {
         $this->getFactory()
             ->getProductListQuery()
-            ->filterByIdProductList($productListTransfer->getIdProductList())
-            ->update([static::FK_MERCHANT_RELATIONSHIP_KEY => null]);
+            ->findOneByIdProductList($productListTransfer->getIdProductList())
+            ->setFkMerchantRelationship(null)
+            ->save();
     }
 }
