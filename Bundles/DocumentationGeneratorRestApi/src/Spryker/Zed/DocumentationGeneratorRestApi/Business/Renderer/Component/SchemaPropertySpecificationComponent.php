@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
 use Generated\Shared\Transfer\SchemaPropertyComponentTransfer;
+use stdClass;
 
 /**
  * Specification:
@@ -18,6 +19,7 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
 {
     protected const KEY_REF = '$ref';
     protected const KEY_ITEMS = 'items';
+    protected const KEY_TYPE = 'type';
 
     /**
      * @var \Generated\Shared\Transfer\SchemaPropertyComponentTransfer|null $schemaPropertyComponentTransfer
@@ -52,6 +54,12 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
         }
         if ($this->schemaPropertyComponentTransfer->getItemsSchemaReference()) {
             $property[static::KEY_ITEMS][static::KEY_REF] = $this->schemaPropertyComponentTransfer->getItemsSchemaReference();
+        }
+        if ($this->schemaPropertyComponentTransfer->getItemsType()) {
+            $property[static::KEY_ITEMS][static::KEY_TYPE] = $this->schemaPropertyComponentTransfer->getItemsType();
+        }
+        if ($this->schemaPropertyComponentTransfer->getType() === 'array' && !$this->schemaPropertyComponentTransfer->getItemsType()) {
+            $property[static::KEY_ITEMS] = new stdClass();
         }
 
         return [$this->schemaPropertyComponentTransfer->getName() => $property];
