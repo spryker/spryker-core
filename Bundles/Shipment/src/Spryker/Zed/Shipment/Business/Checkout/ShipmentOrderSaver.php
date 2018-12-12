@@ -111,8 +111,10 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
      */
     protected function assertShipmentRequirements(QuoteTransfer $quoteTransfer)
     {
-        $quoteTransfer->requireShipment();
-        $quoteTransfer->getShipment()->requireMethod();
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->requireShipment();
+            $itemTransfer->getShipment()->requireMethod();
+        }
     }
 
     /**
@@ -127,17 +129,16 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         SpySalesOrder $salesOrderEntity,
         SaveOrderTransfer $saveOrderTransfer
     ) {
-        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                $salesOrderExpenseEntity = new SpySalesExpense();
-                $this->hydrateOrderExpenseEntity($salesOrderExpenseEntity, $expenseTransfer);
-                $salesOrderExpenseEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
-                $salesOrderExpenseEntity->save();
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $expenseTransfer = $itemTransfer->getShipment()->getExpense();
+            $salesOrderExpenseEntity = new SpySalesExpense();
+            $this->hydrateOrderExpenseEntity($salesOrderExpenseEntity, $expenseTransfer);
+            $salesOrderExpenseEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
+            $salesOrderExpenseEntity->save();
 
-                $this->setCheckoutResponseExpenses($saveOrderTransfer, $expenseTransfer, $salesOrderExpenseEntity);
+            $this->setCheckoutResponseExpenses($saveOrderTransfer, $expenseTransfer, $salesOrderExpenseEntity);
 
-                $salesOrderEntity->addExpense($salesOrderExpenseEntity);
-            }
+            $salesOrderEntity->addExpense($salesOrderExpenseEntity);
         }
     }
 
@@ -181,15 +182,16 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         SaveOrderTransfer $saveOrderTransfer
     ) {
 
-        $shipmentMethodTransfer = $quoteTransfer->getShipment()->getMethod();
-        $idSalesExpense = $this->findShipmentExpenseId($saveOrderTransfer, $shipmentMethodTransfer->getName());
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $shipmentMethodTransfer = $itemTransfer->getShipment()->getMethod();
+            $idSalesExpense = $this->findShipmentExpenseId($saveOrderTransfer, $shipmentMethodTransfer->getName());
+            if (!$idSalesExpense) {
+                continue;
+            }
 
-        if (!$idSalesExpense) {
-            return;
+            $salesShipmentEntity = $this->mapSalesShipmentEntity($salesOrderEntity, $shipmentMethodTransfer, $idSalesExpense);
+            $salesShipmentEntity->save();
         }
-
-        $salesShipmentEntity = $this->mapSalesShipmentEntity($salesOrderEntity, $shipmentMethodTransfer, $idSalesExpense);
-        $salesShipmentEntity->save();
     }
 
     /**
