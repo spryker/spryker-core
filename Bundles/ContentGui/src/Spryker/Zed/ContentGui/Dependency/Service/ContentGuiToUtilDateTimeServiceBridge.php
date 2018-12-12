@@ -23,11 +23,11 @@ class ContentGuiToUtilDateTimeServiceBridge implements ContentGuiToUtilDateTimeS
     }
 
     /**
-     * @param string $date
+     * @param \DateTime|string $date
      *
      * @return string
      */
-    public function formatDateTime(string $date): string
+    public function formatDateTime($date)
     {
         return $this->utilDateTimeService->formatDateTime($date);
     }

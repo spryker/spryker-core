@@ -14,8 +14,8 @@ use Spryker\Zed\Kernel\Container;
 
 class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PROPEL_CONTENT = 'PROPEL_CONTENT';
-    public const UTIL_DATE_TIME_SERVICE = 'UTIL_DATE_TIME_SERVICE';
+    public const PROPEL_QUERY_CONTENT = 'PROPEL_QUERY_CONTENT';
+    public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,7 +38,7 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPropelContentQuery(Container $container): Container
     {
-        $container[static::PROPEL_CONTENT] = function () {
+        $container[static::PROPEL_QUERY_CONTENT] = function () {
             return SpyContentQuery::create();
         };
 
@@ -52,7 +52,7 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilDateTimeService(Container $container): Container
     {
-        $container[static::UTIL_DATE_TIME_SERVICE] = function (Container $container) {
+        $container[static::SERVICE_UTIL_DATE_TIME] = function (Container $container) {
             return new ContentGuiToUtilDateTimeServiceBridge(
                 $container->getLocator()->utilDateTime()->service()
             );

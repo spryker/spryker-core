@@ -31,7 +31,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function getPropelContentQuery(): SpyContentQuery
     {
-        return $this->getProvidedDependency(ContentGuiDependencyProvider::PROPEL_CONTENT);
+        return $this->getProvidedDependency(ContentGuiDependencyProvider::PROPEL_QUERY_CONTENT);
     }
 
     /**
@@ -39,6 +39,6 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function getUtilDateTimeService(): ContentGuiToUtilDateTimeServiceInterface
     {
-        return $this->getProvidedDependency(ContentGuiDependencyProvider::UTIL_DATE_TIME_SERVICE);
+        return $this->getProvidedDependency(ContentGuiDependencyProvider::SERVICE_UTIL_DATE_TIME);
     }
 }

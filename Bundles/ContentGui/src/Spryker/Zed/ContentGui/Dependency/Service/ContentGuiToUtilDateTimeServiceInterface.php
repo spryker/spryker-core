@@ -10,9 +10,9 @@ namespace Spryker\Zed\ContentGui\Dependency\Service;
 interface ContentGuiToUtilDateTimeServiceInterface
 {
     /**
-     * @param string $date
+     * @param \DateTime|string $date
      *
      * @return string
      */
-    public function formatDateTime(string $date): string;
+    public function formatDateTime($date);
 }
