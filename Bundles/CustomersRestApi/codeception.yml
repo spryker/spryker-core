@@ -1,5 +1,7 @@
 namespace: CustomersRestApi
 actor: Tester
+include:
+    - tests/SprykerTest/Zed/CustomersRestApi
 paths:
     tests: tests
     log: tests/_output
