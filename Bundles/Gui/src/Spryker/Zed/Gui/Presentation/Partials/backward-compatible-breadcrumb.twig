@@ -6,12 +6,12 @@
         {% for breadcrumbItem in breadcrumbs %}
             <li>
                 {% if loop.last == true %}
-                    <strong>{{ breadcrumbItem.label }}</strong>
+                    <strong>{{ breadcrumbItem.label | trans }}</strong>
                 {% else %}
                     {%  if breadcrumbItem.uri is not empty %}
-                        <a href="{{ breadcrumbItem.uri }}" title="{{ breadcrumbItem.title }}">{{ breadcrumbItem.label }}</a>
+                        <a href="{{ breadcrumbItem.uri }}" title="{{ breadcrumbItem.title | trans }}">{{ breadcrumbItem.label | trans }}</a>
                     {% else %}
-                        {{ breadcrumbItem.label }}
+                        {{ breadcrumbItem.label | trans }}
                     {% endif %}
                 {% endif %}
             </li>
