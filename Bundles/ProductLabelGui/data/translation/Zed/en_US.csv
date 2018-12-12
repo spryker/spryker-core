@@ -13,3 +13,24 @@ Save,Save
 "Selected products to de-assign","Selected products to de-assign"
 Translations,Translations
 View,View
+"Overview of Product Labels","Overview of Product Labels"
+"List of Product Labels","List of Product Labels"
+"Priority","Priority"
+"Is Exclusive","Is Exclusive"
+Validity,Validity
+"Products Applied to","Products Applied to"
+"Edit Product Label","Edit Product Label"
+"Create a Product Label","Create a Product Label"
+"Prioritize Product Labels","Prioritize Product Labels"
+"Categories","Categories"
+"# of Other Labels","# of Other Labels"
+"Products to which this label applies","Products to which this label applies"
+"Valid from","Valid from"
+"Valid to","Valid to"
+"View Product Label","View Product Label"
+"Product label #%d successfully updated.","Product label #%d successfully updated."
+"Missing or wrong request data","Missing or wrong request data"
+"Product label priority updated successfully.","Product label priority updated successfully."
+"Product label #%d successfully activated.","Product label #%d successfully activated."
+"Product label #%d successfully deactivated.","Product label #%d successfully deactivated."
+

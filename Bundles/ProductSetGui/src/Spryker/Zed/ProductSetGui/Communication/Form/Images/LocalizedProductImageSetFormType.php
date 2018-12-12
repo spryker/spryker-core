@@ -87,7 +87,7 @@ class LocalizedProductImageSetFormType extends AbstractType
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'required' => true,
-            'label' => 'Image Set Name *',
+            'label' => 'Image Set Name',
             'constraints' => [
                 new NotBlank(),
                 new Regex(
