@@ -104,7 +104,7 @@ class MailHandler
     {
         $shippingAddressEntity = $salesOrderEntity->getShippingAddress();
 
-        if (!$shippingAddressEntity) {
+        if ($shippingAddressEntity === null) {
             return null;
         }
 
