@@ -319,7 +319,7 @@ class ModuleFinder implements ModuleFinderInterface
         $moduleTransfer
             ->setName($moduleName)
             ->setNameDashed($moduleNameDashed)
-            ->setPath($directoryInfo->getRealPath())
+            ->setPath($directoryInfo->getRealPath() . DIRECTORY_SEPARATOR)
             ->setIsStandalone(false);
 
         return $moduleTransfer;
