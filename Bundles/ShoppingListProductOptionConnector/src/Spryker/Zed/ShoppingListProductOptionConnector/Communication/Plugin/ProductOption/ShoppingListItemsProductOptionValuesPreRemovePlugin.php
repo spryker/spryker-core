@@ -19,7 +19,8 @@ class ShoppingListItemsProductOptionValuesPreRemovePlugin extends AbstractPlugin
 {
     /**
      * {@inheritdoc}
-     * - unassign productOptionValuesToBeRemoved from all shopping list items.
+     * - Removes deleted product option values from shopping list items.
+     * - Deleted product option values are marked in ProductOptionGroupTransfer::productOptionValuesToBeRemoved.
      *
      * @api
      *
@@ -30,6 +31,6 @@ class ShoppingListItemsProductOptionValuesPreRemovePlugin extends AbstractPlugin
     public function preRemove(ProductOptionGroupTransfer $productOptionGroupTransfer): void
     {
         $this->getFacade()
-            ->unassignProductOptionValuesToBeRemovedFromShoppingListItems($productOptionGroupTransfer);
+            ->removeProductOptionValuesFromShoppingListItems($productOptionGroupTransfer);
     }
 }

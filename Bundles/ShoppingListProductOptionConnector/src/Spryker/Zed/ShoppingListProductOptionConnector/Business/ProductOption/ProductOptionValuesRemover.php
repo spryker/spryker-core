@@ -30,7 +30,7 @@ class ProductOptionValuesRemover implements ProductOptionValuesRemoverInterface
      *
      * @return void
      */
-    public function unassignProductOptionValuesToBeRemoved(ProductOptionGroupTransfer $productOptionGroupTransfer): void
+    public function removeProductOptionValuesFromShoppingListItems(ProductOptionGroupTransfer $productOptionGroupTransfer): void
     {
         $idsProductOptionValue = $productOptionGroupTransfer->getProductOptionValuesToBeRemoved();
         $idsProductOptionValue = array_filter($idsProductOptionValue);

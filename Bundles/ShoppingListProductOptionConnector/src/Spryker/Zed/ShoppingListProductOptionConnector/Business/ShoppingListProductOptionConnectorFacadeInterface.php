@@ -65,7 +65,8 @@ interface ShoppingListProductOptionConnectorFacadeInterface
 
     /**
      * Specification:
-     * - unassign deleted product option values from shopping list items.
+     * - Removes deleted product option values from shopping list items.
+     * - Deleted product option values are marked in ProductOptionGroupTransfer::productOptionValuesToBeRemoved.
      *
      * @api
      *
@@ -73,5 +74,5 @@ interface ShoppingListProductOptionConnectorFacadeInterface
      *
      * @return void
      */
-    public function unassignProductOptionValuesToBeRemovedFromShoppingListItems(ProductOptionGroupTransfer $productOptionGroupTransfer): void;
+    public function removeProductOptionValuesFromShoppingListItems(ProductOptionGroupTransfer $productOptionGroupTransfer): void;
 }
