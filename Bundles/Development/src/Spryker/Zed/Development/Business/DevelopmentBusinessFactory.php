@@ -10,15 +10,17 @@ namespace Spryker\Zed\Development\Business;
 use Nette\DI\Config\Loader;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\AllBundleFinder;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSniffer;
+use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSnifferInterface;
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
 use Spryker\Zed\Development\Business\CodeBuilder\Module\ModuleBuilder;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\CodeTest\CodeTester;
 use Spryker\Zed\Development\Business\Composer\ComposerJson;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonFinder;
-use Spryker\Zed\Development\Business\Composer\ComposerJsonFinderComposite;
+use Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonInterface;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonUpdater;
+use Spryker\Zed\Development\Business\Composer\ComposerJsonUpdaterInterface;
 use Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\BranchAliasUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\ComposerUpdaterComposite;
@@ -155,11 +157,16 @@ use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileManagerInte
 use Spryker\Zed\Development\Business\Phpstan\PhpstanRunner;
 use Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidator;
 use Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidatorInterface;
+use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\ArchitectureSnifferConfigurationBuilder;
+use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface;
+use Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReader;
+use Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReaderInterface;
 use Spryker\Zed\Development\Business\Stability\StabilityCalculator;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
+use Symfony\Component\Yaml\Parser;
 use Zend\Config\Reader\Xml;
 use Zend\Filter\Word\CamelCaseToDash;
 
@@ -1305,10 +1312,10 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonUpdaterInterface
      */
-    public function createComposerJsonUpdater()
+    public function createComposerJsonUpdater(): ComposerJsonUpdaterInterface
     {
         return new ComposerJsonUpdater(
-            $this->createComposerJsonFinderComposite(),
+            $this->createComposerJsonFinder(),
             $this->createComposerJsonUpdaterComposite()
         );
     }
@@ -1316,50 +1323,10 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface
      */
-    protected function createComposerJsonFinderComposite()
-    {
-        $finderComposite = new ComposerJsonFinderComposite();
-        $finderComposite->addFinder($this->createComposerJsonFinder());
-        $finderComposite->addFinder($this->createComposerJsonFinderSdk());
-        $finderComposite->addFinder($this->createComposerJsonFinderShop());
-
-        return $finderComposite;
-    }
-
-    /**
-     * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface
-     */
-    protected function createComposerJsonFinder()
+    protected function createComposerJsonFinder(): ComposerJsonFinderInterface
     {
         $composerJsonFinder = new ComposerJsonFinder(
-            $this->createFinder(),
-            $this->getConfig()->getPathToCore()
-        );
-
-        return $composerJsonFinder;
-    }
-
-    /**
-     * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface
-     */
-    protected function createComposerJsonFinderSdk()
-    {
-        $composerJsonFinder = new ComposerJsonFinder(
-            $this->createFinder(),
-            $this->getConfig()->getPathToSdk()
-        );
-
-        return $composerJsonFinder;
-    }
-
-    /**
-     * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface
-     */
-    protected function createComposerJsonFinderShop()
-    {
-        $composerJsonFinder = new ComposerJsonFinder(
-            $this->createFinder(),
-            $this->getConfig()->getPathToShop()
+            $this->createFinder()
         );
 
         return $composerJsonFinder;
@@ -1770,13 +1737,16 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSnifferInterface
      */
-    public function createArchitectureSniffer()
+    public function createArchitectureSniffer(): ArchitectureSnifferInterface
     {
         $xml = $this->createXmlReader();
         $command = $this->getConfig()->getArchitectureSnifferCommand();
-        $defaultPriority = $this->getConfig()->getArchitectureSnifferDefaultPriority();
 
-        return new ArchitectureSniffer($xml, $command, $defaultPriority);
+        return new ArchitectureSniffer(
+            $xml,
+            $command,
+            $this->createArchitectureSnifferConfigurationBuilder()
+        );
     }
 
     /**
@@ -1822,6 +1792,35 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createPackageFinder(): PackageFinderInterface
     {
         return new PackageFinder($this->getConfig());
+    }
+
+    /**
+     * @return \Symfony\Component\Yaml\Parser
+     */
+    public function createYamlParser(): Parser
+    {
+        return new Parser();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReaderInterface
+     */
+    public function createConfigurationReader(): ConfigurationReaderInterface
+    {
+        return new ConfigurationReader(
+            $this->createYamlParser()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface
+     */
+    public function createArchitectureSnifferConfigurationBuilder(): SnifferConfigurationBuilderInterface
+    {
+        return new ArchitectureSnifferConfigurationBuilder(
+            $this->createConfigurationReader(),
+            $this->getConfig()->getArchitectureSnifferDefaultPriority()
+        );
     }
 
     /**
