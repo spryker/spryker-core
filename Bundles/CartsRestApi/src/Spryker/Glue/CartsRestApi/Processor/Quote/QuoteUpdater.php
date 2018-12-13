@@ -41,7 +41,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
         $quoteUpdateRequestTransfer->setIdQuote($quoteTransfer->getIdQuote());
         $quoteUpdateRequestTransfer->setCustomer($quoteTransfer->getCustomer());
         $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
-            ->fromArray($quoteTransfer->toArray(), true);
+            ->fromArray($quoteTransfer->modifiedToArray(), true);
         $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
 
         return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);

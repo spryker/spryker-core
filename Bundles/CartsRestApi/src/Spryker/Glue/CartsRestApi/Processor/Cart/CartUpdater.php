@@ -86,7 +86,7 @@ class CartUpdater implements CartUpdaterInterface
         }
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer()
-            ->fromArray($restCartsAttributesTransfer->toArray(), true)
+            ->fromArray($restCartsAttributesTransfer->modifiedToArray(), true)
             ->setCurrency($currencyTransfer)
             ->setCustomer($customerTransfer)
             ->setStore($storeTransfer);
