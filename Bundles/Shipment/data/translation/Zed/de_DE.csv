@@ -1,5 +1,6 @@
 Add,Hinzufügen
 "Add new Carrier Company","Neue Spedition hinzufügen"
+"Add Carrier Company","Spedition hinzufügen"
 "Add new Shipment Method","Neue Versandmethode hinzufügen"
 Carrier,Träger
 "List Shipment Methods","Liste der Versandmethoden"
@@ -8,3 +9,4 @@ Method,Methode
 Price,Preis
 Save,Speichern
 "Shipment Method",Versandmethode
+Is active,Ist aktiv
