@@ -15,4 +15,13 @@ interface SalesReclamationGuiToOmsFacadeInterface
      * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder);
+
+    /**
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return array
+     */
+    public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
 }

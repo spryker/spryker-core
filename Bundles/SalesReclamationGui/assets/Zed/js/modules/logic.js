@@ -18,6 +18,21 @@ function getSelectedItems(idOrderItem) {
     return selectedItems;
 }
 
+function createTriggerUrl(idOrder, idReclamation, eventName) {
+    var url = '/oms/trigger/trigger-event-for-order';
+    var parameters = {
+        event: eventName,
+        'id-sales-order': idOrder,
+        redirect: '/sales-reclamation-gui/detail?id-reclamation=' + idReclamation
+    };
+
+    parameters.items = getSelectedItems();
+
+    var finalUrl = url + '?' + $.param(parameters);
+
+    return decodeURIComponent(finalUrl);
+}
+
 function createTriggerItemUrl(idOrder, idOrderItem, idReclamation, eventName) {
     var url = '/oms/trigger/trigger-event-for-order-items';
     var parameters = {
@@ -54,6 +69,20 @@ $(document).ready(function() {
         window.location = createTriggerItemUrl(idOrder, idOrderItem, idReclamation, eventName);
     });
 
+    $('.trigger-order-event').click(function(e){
+        e.preventDefault();
+
+        var $item = $(this);
+
+        disableTrigger($item);
+
+        var idOrder = $item.data('id-sales-order');
+        var idReclamation = $item.data('id-sales-reclamation');
+        var eventName = $item.data('event');
+
+        window.location = createTriggerUrl(idOrder, idReclamation, eventName);
+    });
+
     $('.more-history').click(function(e){
         e.preventDefault();
         var idProductItem = $(this).data('id');
@@ -64,5 +93,32 @@ $(document).ready(function() {
         $history.toggleClass('hidden', !isHidden);
         $button.toggleClass('is-hidden', !isHidden);
         $button.toggleClass('is-shown', isHidden);
+    });
+
+    $('.item-check').click(function(){
+        var countChecked = $(".item-check[type='checkbox']:checked").length;
+        var totalCheckboxItems = $('.item-check').length;
+
+        if (totalCheckboxItems === countChecked) {
+            $('#check-all-orders').prop('checked', true);
+
+            return true;
+        }
+
+        $('#check-all-orders').prop('checked', false);
+
+        return true;
+    });
+
+    $('#check-all-orders').click(function(){
+        if ($(this).prop('checked') === true) {
+            var checked = true;
+        } else {
+            var checked = false;
+        }
+
+        $('.item-check').each(function(){
+            $(this).prop('checked', checked);
+        });
     });
 });
