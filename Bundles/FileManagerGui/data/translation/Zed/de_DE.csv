@@ -1,5 +1,6 @@
-–°onfirm,bestätigt
+"confirm",bestätigt
 "Add a file","Datei hinzufügen"
+"Add File","Datei Hinzufügen"
 "Add MIME type","MIME-Typ hinzufügen"
 "Back to File Directory Elements","Zurück zu Elementen des Dateiverzeichnisses"
 "Back to File Tree","Zurück zu Dateibaum"
@@ -12,3 +13,5 @@ Cancel,Abbrechen
 Save,Speichern
 "Save order","Bestellung speichern"
 "View file","Datei anzeigen"
+File Tree,Dateibaum
+Сonfirm,Bestätigt

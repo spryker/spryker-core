@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Files list' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Files list' | trans } %}
 
         {% block widget_content %}
             {{ files | raw }}
