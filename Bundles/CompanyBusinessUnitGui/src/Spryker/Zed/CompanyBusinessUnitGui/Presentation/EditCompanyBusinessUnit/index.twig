@@ -1,6 +1,6 @@
 {% extends '@CompanyBusinessUnitGui/_layout/layout.twig' %}
 
-{% set widget_title = 'Edit Company Business Unit' %}
+{% set widget_title = 'Edit Company Business Unit' | trans %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
@@ -18,7 +18,7 @@
             {{ form_start(form) }}
                 {% set company = form.vars.value.company %}
                 <div class="form-group">
-                    <label class="control-label" for="company-business-unit_fk_company">Company: </label>
+                    <label class="control-label" for="company-business-unit_fk_company">{{ 'Company' | trans }}: </label>
                     {{ company.name }}
                 </div>
 

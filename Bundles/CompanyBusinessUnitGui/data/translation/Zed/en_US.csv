@@ -3,3 +3,18 @@
 "List of Company Business Units","List of company business units"
 "Overview of Company Business Units","Overview of Company Business Units"
 Save,Save
+"Company name","Company name"
+"BU Parent","BU Parent"
+"BU Name","BU Name"
+"Edit Company Business Unit","Edit Company Business Unit"
+"Create Company Business Unit","Create Company Business Unit"
+Parent,Parent
+"No parent","No parent"
+"Select one","Select one"
+"Company Business Unit "%s" has been created.","Company Business Unit "%s" has been created."
+"Company Business Unit "%s" has not been created.","Company Business Unit "%s" has not been created."
+"Company Business Unit "%s" was deleted.","Company Business Unit "%s" was deleted."
+"You can not delete a business unit "%s" while it contains user","You can not delete a business unit "%s" while it contains user"
+"Company Business Unit "%s" has been updated.","Company Business Unit "%s" has been updated."
+"Company Business Unit "%s" has not been updated. A Business Unit cannot be set as a child to an own child Business Unit, please check the Business Unit hierarchy.","Company Business Unit "%s" has not been updated. A Business Unit cannot be set as a child to an own child Business Unit, please check the Business Unit hierarchy."
+"Company Business Unit","Company Business Unit"
