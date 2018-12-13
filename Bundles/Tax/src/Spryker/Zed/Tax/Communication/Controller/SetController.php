@@ -68,7 +68,7 @@ class SetController extends AbstractController
         $taxSetTransfer = $taxSetFormDataProvider->getData($idTaxSet);
 
         if ($taxSetTransfer === null) {
-            $this->addErrorMessage(sprintf('Tax set with id %s doesn\'t exist', $idTaxSet));
+            $this->addErrorMessage(sprintf("Tax set with id %s doesn't exist", $idTaxSet));
 
             return $this->redirectResponse(
                 static::REDIRECT_URL_DEFAULT
@@ -111,7 +111,7 @@ class SetController extends AbstractController
         $taxSetTransfer = $this->getFacade()->findTaxSet($idTaxSet);
 
         if ($taxSetTransfer === null) {
-            $this->addErrorMessage(sprintf('Tax set with id %s doesn\'t exist', $idTaxSet));
+            $this->addErrorMessage(sprintf("Tax set with id %s doesn't exist", $idTaxSet));
 
             return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
         }
