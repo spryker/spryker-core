@@ -47,8 +47,8 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
             return [];
         }
 
-        $this->addBasicPropertyData($property);
-        $this->addItemPropertiyData($property);
+        $property = $this->addBasicPropertyData($property);
+        $property = $this->addItemPropertiyData($property);
 
         return [$this->schemaPropertyComponentTransfer->getName() => $property];
     }
