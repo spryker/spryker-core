@@ -73,8 +73,7 @@ class QuoteWriter implements QuoteWriterInterface
      */
     public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
-        $companyUserId = $this->findCompanyUserId($quoteUpdateRequestTransfer);
-        if ($companyUserId && !$this->can('WriteSharedCartPermissionPlugin', $companyUserId, $quoteUpdateRequestTransfer->getIdQuote())) {
+        if (!$this->hasCustomerWritePermission($quoteUpdateRequestTransfer)) {
             return (new QuoteResponseTransfer())->setIsSuccessful(false);
         }
 
@@ -98,8 +97,7 @@ class QuoteWriter implements QuoteWriterInterface
      */
     public function updateAndReloadQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
-        $companyUserId = $this->findCompanyUserId($quoteUpdateRequestTransfer);
-        if ($companyUserId && !$this->can('WriteSharedCartPermissionPlugin', $companyUserId, $quoteUpdateRequestTransfer->getIdQuote())) {
+        if (!$this->hasCustomerWritePermission($quoteUpdateRequestTransfer)) {
             return (new QuoteResponseTransfer())->setIsSuccessful(false);
         }
 
@@ -114,6 +112,22 @@ class QuoteWriter implements QuoteWriterInterface
         $quoteTransfer->fromArray($quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->modifiedToArray(), true);
 
         return $this->quoteItemOperation->reloadItems($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     *
+     * @return bool
+     */
+    protected function hasCustomerWritePermission(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): bool
+    {
+        $companyUserId = $this->findCompanyUserId($quoteUpdateRequestTransfer);
+
+        if (!$companyUserId) {
+            return true;
+        }
+
+        return $this->can('WriteSharedCartPermissionPlugin', $companyUserId, $quoteUpdateRequestTransfer->getIdQuote());
     }
 
     /**
