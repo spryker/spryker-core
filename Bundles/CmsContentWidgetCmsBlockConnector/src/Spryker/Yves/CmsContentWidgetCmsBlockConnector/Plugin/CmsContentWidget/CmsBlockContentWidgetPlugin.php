@@ -105,21 +105,21 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
      */
     protected function getBlockDataByNames(array &$blockNames)
     {
-        $availableBlockNames = $this->getFactory()
+        $blocks = $this->getFactory()
             ->getCmsBlockStorageClient()
             ->findBlocksByNames($blockNames, $this->localeName, $this->storeName);
 
-        return $availableBlockNames;
+        return $blocks;
     }
 
     /**
-     * @param array $cmsBlockData
+     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockData
      *
      * @return bool
      */
-    protected function validateBlock($cmsBlockData)
+    protected function validateBlock(SpyCmsBlockEntityTransfer $cmsBlockData)
     {
-        return !($cmsBlockData === null);
+        return $cmsBlockData->getCmsBlockTemplate() !== null;
     }
 
     /**
