@@ -13,7 +13,6 @@ use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToGlossaryStor
 class AbstractProductAttributeTranslationExpander implements AbstractProductAttributeTranslationExpanderInterface
 {
     protected const GLOSSARY_PRODUCT_ATTRIBUTE_NAME_KEY_PREFIX = 'product.attribute.';
-    protected const KEY_SUPER_ATTRIBUTES = 'super_attributes';
 
     /**
      * @var \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToGlossaryStorageClientInterface
@@ -45,10 +44,6 @@ class AbstractProductAttributeTranslationExpander implements AbstractProductAttr
             $attributeNames[$key] = $this->glossaryStorageClient->translate($glossaryKey, $localeName);
         }
         foreach ($abstractProductsRestAttributesTransfer->getSuperAttributes() as $key => $value) {
-            $glossaryKey = static::GLOSSARY_PRODUCT_ATTRIBUTE_NAME_KEY_PREFIX . $key;
-            $attributeNames[$key] = $this->glossaryStorageClient->translate($glossaryKey, $localeName);
-        }
-        foreach ($abstractProductsRestAttributesTransfer->getAttributeMap()[static::KEY_SUPER_ATTRIBUTES] as $key => $value) {
             $glossaryKey = static::GLOSSARY_PRODUCT_ATTRIBUTE_NAME_KEY_PREFIX . $key;
             $attributeNames[$key] = $this->glossaryStorageClient->translate($glossaryKey, $localeName);
         }
