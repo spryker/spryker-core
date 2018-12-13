@@ -29,7 +29,7 @@ class EditController extends AbstractController
     protected const PARAM_STORE_CURRENCY_REQUEST = 'store_currency';
     protected const REQUEST_ID_MERCHANT_RELATIONSHIP = 'id-merchant-relationship';
     protected const MESSAGE_UPDATE_SUCCESSFUL = 'The Merchant Relationship Threshold is saved successfully.';
-    protected const MESSAGE_UPDATE_SOFT_STRATEGY_ERROR = 'Field "%s" has not saved, please fill in the field "%s" in Soft Threshold';
+    protected const MESSAGE_UPDATE_SOFT_STRATEGY_ERROR = 'To save "%s", fill in "%s" in Soft Threshold.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
