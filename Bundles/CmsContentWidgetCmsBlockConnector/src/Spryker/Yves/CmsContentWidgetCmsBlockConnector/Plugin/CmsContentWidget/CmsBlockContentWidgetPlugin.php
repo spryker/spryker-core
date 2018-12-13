@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\CmsBlockWidgetCmsBlockConnector\Plugin\CmsContentWidget;
+namespace Spryker\Yves\CmsContentWidgetCmsBlockConnector\Plugin\CmsContentWidget;
 
 use ArrayObject;
 use DateTime;
@@ -86,6 +86,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
 
     /**
      * @param string|null $templateIdentifier
+     *
      * @return string
      */
     protected function resolveTemplatePath($templateIdentifier = null)
