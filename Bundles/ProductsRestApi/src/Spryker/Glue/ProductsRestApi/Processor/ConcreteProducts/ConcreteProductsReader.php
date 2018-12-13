@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts;
 
+use Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -43,21 +44,29 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     protected $concreteProductAttributeTranslationExpander;
 
     /**
+     * @var \Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\ConcreteProductsResourceExpanderPluginInterface[]
+     */
+    protected $concreteProductsResourceExpanderPlugins;
+
+    /**
      * @param \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductsRestApi\Processor\Mapper\ConcreteProductsResourceMapperInterface $concreteProductsResourceMapper
      * @param \Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\ConcreteProductAttributeTranslationExpanderInterface $concreteProductAttributeTranslationExpander
+     * @param \Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\ConcreteProductsResourceExpanderPluginInterface[] $concreteProductsResourceExpanderPlugins
      */
     public function __construct(
         ProductsRestApiToProductStorageClientInterface $productStorageClient,
         RestResourceBuilderInterface $restResourceBuilder,
         ConcreteProductsResourceMapperInterface $concreteProductsResourceMapper,
-        ConcreteProductAttributeTranslationExpanderInterface $concreteProductAttributeTranslationExpander
+        ConcreteProductAttributeTranslationExpanderInterface $concreteProductAttributeTranslationExpander,
+        array $concreteProductsResourceExpanderPlugins
     ) {
         $this->productStorageClient = $productStorageClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->concreteProductsResourceMapper = $concreteProductsResourceMapper;
         $this->concreteProductAttributeTranslationExpander = $concreteProductAttributeTranslationExpander;
+        $this->concreteProductsResourceExpanderPlugins = $concreteProductsResourceExpanderPlugins;
     }
 
     /**
@@ -124,15 +133,66 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
 
         $restConcreteProductsAttributesTransfer = $this->concreteProductsResourceMapper
             ->mapConcreteProductsDataToConcreteProductsRestAttributes($concreteProductData);
-
         $restConcreteProductsAttributesTransfer = $this->concreteProductAttributeTranslationExpander
             ->addProductAttributeTranslation($restConcreteProductsAttributesTransfer, $restRequest->getMetadata()->getLocale());
+        $restConcreteProductsAttributesTransfer = $this->expandConcreteProduct(
+            $restConcreteProductsAttributesTransfer,
+            $sku,
+            $restRequest->getMetadata()->getLocale()
+        );
 
         return $this->restResourceBuilder->createRestResource(
             ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
             $sku,
             $restConcreteProductsAttributesTransfer
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer
+     * @param string $concreteProductSku
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer
+     */
+    protected function expandConcreteProduct(
+        ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer,
+        string $concreteProductSku,
+        string $localeName
+    ): ConcreteProductsRestAttributesTransfer {
+        $concreteProductsRestAttributesTransfer = $this->concreteProductAttributeTranslationExpander
+            ->addProductAttributeTranslation($concreteProductsRestAttributesTransfer, $localeName);
+
+        $restConcreteProductsAttributesTransfer = $this->executeExpanderPlugins(
+            $concreteProductsRestAttributesTransfer,
+            $concreteProductSku,
+            $localeName
+        );
+
+        return $restConcreteProductsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer
+     * @param string $concreteProductSku
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer
+     */
+    protected function executeExpanderPlugins(
+        ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer,
+        string $concreteProductSku,
+        string $localeName
+    ): ConcreteProductsRestAttributesTransfer {
+        foreach ($this->concreteProductsResourceExpanderPlugins as $concreteProductsResourceExpanderPlugin) {
+            $concreteProductsRestAttributesTransfer = $concreteProductsResourceExpanderPlugin->expand(
+                $concreteProductsRestAttributesTransfer,
+                $concreteProductSku,
+                $localeName
+            );
+        }
+
+        return $concreteProductsRestAttributesTransfer;
     }
 
     /**
