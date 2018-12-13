@@ -12,6 +12,30 @@ var Ibox = require('./libs/ibox');
 var dataTable = require('./libs/data-table');
 var safeChecks = require('./libs/safe-checks');
 
+var dataTablesSearchDelay = function() {
+    var dataTablesWrapper = $('.dataTables_wrapper');
+    dataTablesWrapper.each(function(index, wrapper) {
+        var searchInput = $(wrapper).find('input[type="search"]');
+        var dataTable = $(wrapper).find('.gui-table-data');
+        var dataTableApi = dataTable.dataTable().api();
+        var timeOutId = 0;
+        
+        if(searchInput.length && dataTable.length) {
+            searchInput
+            .unbind()
+            .bind("input", function(e) {
+                var self = this;
+                
+                clearTimeout(timeOutId);
+                timeOutId = setTimeout(function() {
+                    dataTableApi.search(self.value).draw();
+                }, 1000);
+                return;
+            });
+        }
+    });
+}
+
 $(document).ready(function() {
     // editor
     $('.html-editor').summernote(editor.getConfig());
@@ -81,26 +105,5 @@ $(document).ready(function() {
 });
 
 $(window).on('load', function() {
-    /* Delay for data tables search */
-    var dataTablesWrapper = $('.dataTables_wrapper');
-    dataTablesWrapper.each(function(index, wrapper) {
-        var searchInput = $(wrapper).find('input[type="search"]');
-        var dataTable = $(wrapper).find('.gui-table-data');
-        var dataTableApi = dataTable.dataTable().api();
-        var timeOutId = 0;
-
-        if(searchInput.length && dataTable.length) {
-            searchInput
-            .unbind()
-            .bind("input", function(e) {
-                var self = this;
-
-                clearTimeout(timeOutId);
-                timeOutId = setTimeout(function() {
-                    dataTableApi.search(self.value).draw();
-                }, 1000);
-                return;
-            });
-        }
-    });
+    dataTablesSearchDelay();
 });
