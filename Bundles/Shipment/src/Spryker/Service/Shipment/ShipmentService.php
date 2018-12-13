@@ -23,11 +23,11 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
      *
      * @api
      *
-     * @param \iterable $items
+     * @param \Generated\Shared\Transfer\ItemTransferTransfer[] $items
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShipment(iterable $items): array
+    public function groupItemsByShipment(array $items): array
     {
         $shipmentGroupTransfers = [];
 
@@ -53,7 +53,11 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
      */
     protected function getItemHash(ItemTransfer $item): string
     {
-        return $item->getShipment()->getMethod()->getIdShipmentMethod()
+        $shippingMethod = '';
+        if ($item->getShipment()->getMethod() == null) {
+            $shippingMethod = $item->getShipment()->getMethod()->getIdShipmentMethod();
+        }
+        return $shippingMethod
             . md5(
                 $item->getShipment()->getShippingAddress()->serialize()
                 . $item->getShipment()->getRequestedDeliveryDate()

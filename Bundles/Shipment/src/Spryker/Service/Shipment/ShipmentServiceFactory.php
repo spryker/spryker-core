@@ -11,5 +11,4 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
 
 class ShipmentServiceFactory extends AbstractServiceFactory
 {
-
 }

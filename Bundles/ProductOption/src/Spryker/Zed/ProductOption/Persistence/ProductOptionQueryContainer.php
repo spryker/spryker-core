@@ -17,6 +17,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
@@ -455,9 +456,9 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      * @param int[] $idOptionValues
      * @param string[] $countryIso2Codes
      *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function queryTaxSetByIdProductOptionValueAndCountryIso2Codes(array $idOptionValues, array $countryIso2Codes): SpyShipmentMethodQuery
+    public function queryTaxSetByIdProductOptionValueAndCountryIso2Codes(array $idOptionValues, array $countryIso2Codes): SpyProductOptionValueQuery
     {
         $idCountryList = $this->queryCountryByIso2Code($countryIso2Codes)->find()->getColumnValues(SpyCountryTableMap::COL_ID_COUNTRY);
 
