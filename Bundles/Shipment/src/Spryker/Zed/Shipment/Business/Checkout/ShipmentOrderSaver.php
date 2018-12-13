@@ -11,8 +11,10 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -228,6 +230,32 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         $salesShipmentEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $salesShipmentEntity->setFkSalesExpense($idSalesExpense);
 
+        // todo: Split Delivery. Get rid from it, after old logic will be removed
+        if (!$salesShipmentEntity->getFkSalesOrderAddress()) {
+            $salesShipmentEntity->setFkSalesOrderAddress($this->getMockSAlesOrderAddressId());
+        }
+
         return $salesShipmentEntity;
+    }
+
+    /**
+     * Split Delivery. Get rid from it, after old logic will be removed
+     *
+     * @return int
+     */
+    protected function getMockSAlesOrderAddressId(): int
+    {
+        $country = SpyCountryQuery::create()->findOneByIso2Code('DE');
+
+        $billingAddress = (new SpySalesOrderAddress())
+            ->setFkCountry($country->getIdCountry())
+            ->setFirstName('Serhii')
+            ->setLastName('Spryker')
+            ->setAddress1('Straße des 17. Juni 135')
+            ->setCity('Berlin')
+            ->setZipCode('10623');
+        $billingAddress->save();
+
+        return $billingAddress->getIdSalesOrderAddress();
     }
 }
