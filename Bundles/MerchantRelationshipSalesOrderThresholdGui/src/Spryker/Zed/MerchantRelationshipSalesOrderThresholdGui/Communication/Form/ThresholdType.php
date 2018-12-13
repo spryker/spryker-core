@@ -52,6 +52,10 @@ class ThresholdType extends AbstractType
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
     protected const ERROR_MESSAGE_VALUE = 'Invalid Value.';
 
+    public const FIELD_SOFT_FIXED_FEE_LABEL = 'Enter fixed fee';
+    public const FIELD_SOFT_FLEXIBLE_FEE_LABEL = 'Enter flexible fee';
+    public const FIELD_SOFT_THRESHOLD_LABEL = 'Enter minimum order value';
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -198,7 +202,7 @@ class ThresholdType extends AbstractType
     protected function addSoftValueField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_SOFT_THRESHOLD, MoneyType::class, [
-            'label' => 'Enter minimum order value',
+            'label' => static::FIELD_SOFT_THRESHOLD_LABEL,
             'currency' => $options['data'][static::FIELD_CURRENCY],
             'required' => false,
             'constraints' => [
@@ -218,7 +222,7 @@ class ThresholdType extends AbstractType
     protected function addSoftFixedFeeField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_SOFT_FIXED_FEE, MoneyType::class, [
-            'label' => 'Enter fixed fee',
+            'label' => static::FIELD_SOFT_FIXED_FEE_LABEL,
             'currency' => $options['data'][static::FIELD_CURRENCY],
             'required' => false,
             'constraints' => [
@@ -238,7 +242,7 @@ class ThresholdType extends AbstractType
     protected function addSoftFlexibleFeeField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_SOFT_FLEXIBLE_FEE, PercentType::class, [
-            'label' => 'Enter flexible fee',
+            'label' => static::FIELD_SOFT_FLEXIBLE_FEE_LABEL,
             'type' => 'integer',
             'required' => false,
             'constraints' => [

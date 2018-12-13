@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipSalesOrderThresholdGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\ThresholdType;
 use Symfony\Component\Form\FormInterface;
@@ -28,6 +29,7 @@ class EditController extends AbstractController
     protected const PARAM_STORE_CURRENCY_REQUEST = 'store_currency';
     protected const REQUEST_ID_MERCHANT_RELATIONSHIP = 'id-merchant-relationship';
     protected const MESSAGE_UPDATE_SUCCESSFUL = 'The Merchant Relationship Threshold is saved successfully.';
+    protected const MESSAGE_UPDATE_SOFT_STRATEGY_ERROR = 'Field "%s" has not saved, please fill in the field "%s" in Soft Threshold';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -105,6 +107,7 @@ class EditController extends AbstractController
     protected function handleFormSubmission(Request $request, FormInterface $thresholdForm, int $idMerchantRelationship): RedirectResponse
     {
         $data = $thresholdForm->getData();
+        $this->checkSoftStrategy($data);
         $hardSalesOrderThresholdTransfer = $this->getFactory()
             ->createHardThresholdFormMapper()
             ->map($data, $this->createMerchantRelationshipSalesOrderThresholdTransfer(
@@ -219,5 +222,42 @@ class EditController extends AbstractController
     protected function createCompanyTransfer(int $idCompany): CompanyTransfer
     {
         return (new CompanyTransfer())->setIdCompany($idCompany);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return void
+     */
+    protected function checkSoftStrategy(array $data): void
+    {
+        $checkSoftStrategyArray = [
+            MerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FIXED,
+            MerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE,
+        ];
+
+        if (!in_array($data[ThresholdType::FIELD_SOFT_STRATEGY], $checkSoftStrategyArray) ||
+            !empty($data[ThresholdType::FIELD_SOFT_THRESHOLD])
+        ) {
+            return;
+        }
+
+        if ($data[ThresholdType::FIELD_SOFT_STRATEGY] === MerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FIXED &&
+            !$data[ThresholdType::FIELD_SOFT_FIXED_FEE]
+        ) {
+            return;
+        }
+
+        if ($data[ThresholdType::FIELD_SOFT_STRATEGY] === MerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE &&
+            !$data[ThresholdType::FIELD_SOFT_FLEXIBLE_FEE]
+        ) {
+            return;
+        }
+
+        $fieldName = $data[ThresholdType::FIELD_SOFT_STRATEGY] === MerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FIXED?
+                ThresholdType::FIELD_SOFT_FIXED_FEE_LABEL : ThresholdType::FIELD_SOFT_FLEXIBLE_FEE_LABEL;
+        $message = sprintf(static::MESSAGE_UPDATE_SOFT_STRATEGY_ERROR, $fieldName, ThresholdType::FIELD_SOFT_THRESHOLD_LABEL);
+
+        $this->addErrorMessage($message);
     }
 }
