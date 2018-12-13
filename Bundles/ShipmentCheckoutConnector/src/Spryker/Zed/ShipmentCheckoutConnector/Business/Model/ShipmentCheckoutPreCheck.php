@@ -10,6 +10,8 @@ namespace Spryker\Zed\ShipmentCheckoutConnector\Business\Model;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Shared\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConfig;
 use Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConnectorToShipmentFacadeInterface;
 
@@ -41,19 +43,14 @@ class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
         $availableShipmentMethods = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getShipment()) {
+            if ($itemTransfer->getShipment() === null) {
                 continue;
             }
 
             $idShipmentMethod = $itemTransfer->getShipment()->getMethod()->getIdShipmentMethod();
-            $shipmentMethodTransfer = current(array_filter(
-                $availableShipmentMethods->getMethods()->getArrayCopy(),
-                function ($shipmentMethodTransfer) use ($idShipmentMethod) {
-                    return $idShipmentMethod == $shipmentMethodTransfer->getIdShipmentMethod();
-                }
-            ));
+            $shipmentMethodTransfer = $this->findAvailableMethodById($idShipmentMethod, $availableShipmentMethods);
 
-            if (!$idShipmentMethod || !$shipmentMethodTransfer) {
+            if ($idShipmentMethod === null || $shipmentMethodTransfer === null) {
                 $checkoutErrorTransfer = $this->createCheckoutErrorTransfer();
 
                 $checkoutResponseTransfer
@@ -65,6 +62,26 @@ class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $availableShipmentMethods
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    protected function findAvailableMethodById(
+        int $idShipmentMethod,
+        ShipmentMethodsTransfer $availableShipmentMethods
+    ): ?ShipmentMethodTransfer {
+        $transfer = current(array_filter(
+            $availableShipmentMethods->getMethods()->getArrayCopy(),
+            function ($shipmentMethodTransfer) use ($idShipmentMethod) {
+                return $idShipmentMethod == $shipmentMethodTransfer->getIdShipmentMethod();
+            }
+        ));
+
+        return ($transfer === false ? null : $transfer);
     }
 
     /**
