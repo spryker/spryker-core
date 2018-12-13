@@ -14,5 +14,4 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ShipmentGuiFacade extends AbstractFacade implements ShipmentGuiFacadeInterface
 {
-
 }

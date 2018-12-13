@@ -68,9 +68,12 @@ class SalesConfig extends AbstractBundleConfig
      */
     public function isTestOrder(QuoteTransfer $quoteTransfer)
     {
-        $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
-        if ($shippingAddressTransfer === null || $shippingAddressTransfer->getFirstName() !== self::TEST_CUSTOMER_FIRST_NAME) {
-            return false;
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $shippingTransfer = $itemTransfer->getShipment()->getShippingAddress();
+
+            if ($shippingTransfer->getFirstName() !== self::TEST_CUSTOMER_FIRST_NAME) {
+                return false;
+            }
         }
 
         return true;
