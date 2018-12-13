@@ -27,7 +27,7 @@ interface ContainerInterface extends PsrContainerInterface
      *
      * @return callable
      */
-    public function extend(string $id, $service): callable;
+    public function extend(string $id, $service);
 
     /**
      * Removes an entry from the container.

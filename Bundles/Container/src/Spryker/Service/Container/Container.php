@@ -150,14 +150,14 @@ class Container implements ContainerInterface, ArrayAccess
      * Do not set the returned callable to the Container, this is done automatically.
      *
      * @param string $id
-     * @param callable $service
+     * @param \Closure|object $service
      *
      * @throws \Spryker\Service\Container\Exception\ContainerException
      * @throws \Spryker\Service\Container\Exception\FrozenServiceException
      *
-     * @return callable
+     * @return \Closure|object
      */
-    public function extend(string $id, $service): callable
+    public function extend(string $id, $service)
     {
         if (!isset($this->serviceIdentifier[$id])) {
             // For BC reasons we will not throw exception here until everything is migrated.
@@ -202,47 +202,6 @@ class Container implements ContainerInterface, ArrayAccess
     }
 
     /**
-     * TODO: check if it would make sense to keep it to be able to use extend services before they are added.
-     *
-     * This method (currently) exists only for BC reasons.
-     *
-     * @param string $id
-     * @param callable $service
-     *
-     * @return void
-     */
-    private function extendLater(string $id, callable $service)
-    {
-        if (!isset($this->toBeExtended[$id])) {
-            $this->toBeExtended[$id] = [];
-        }
-
-        $this->toBeExtended[$id][] = $service;
-    }
-
-    /**
-     * @param string $id
-     * @param mixed $service
-     *
-     * @return void
-     */
-    private function extendService(string $id, $service): void
-    {
-        if (isset($this->toBeExtended[$id])) {
-            $this->currentlyExtending = $id;
-
-            foreach ($this->toBeExtended[$id] as $service) {
-                $service = $this->extend($id, $service);
-            }
-
-            unset($this->toBeExtended[$id]);
-            $this->currentlyExtending = null;
-
-            $this->set($id, $service);
-        }
-    }
-
-    /**
      * @param string $id
      *
      * @return void
@@ -261,11 +220,11 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * @deprecated Do not use this method anymore. All services are shared by default now.
      *
-     * @param callable $service
+     * @param \Closure|object $service
      *
-     * @return callable
+     * @return \Closure|object
      */
-    public function share(callable $service): callable
+    public function share($service)
     {
         if (method_exists($service, '__invoke')) {
             $serviceHash = spl_object_hash($service);
@@ -277,11 +236,11 @@ class Container implements ContainerInterface, ArrayAccess
     }
 
     /**
-     * @param callable|object $service
+     * @param \Closure|object $service
      *
      * @throws \Spryker\Service\Container\Exception\ContainerException
      *
-     * @return callable|object
+     * @return \Closure|object
      */
     public function protect($service)
     {
@@ -295,11 +254,11 @@ class Container implements ContainerInterface, ArrayAccess
     }
 
     /**
-     * @param callable|object $service
+     * @param \Closure|object $service
      *
      * @throws \Spryker\Service\Container\Exception\ContainerException
      *
-     * @return callable|object
+     * @return \Closure|object
      */
     public function factory($service)
     {
@@ -379,5 +338,46 @@ class Container implements ContainerInterface, ArrayAccess
         @trigger_error('ArrayAccess the container in Spryker (e.g. unset($container[\'service\'])) is no longer supported! Please use "ContainerInterface:remove()" instead.', E_USER_DEPRECATED);
 
         $this->remove($offset);
+    }
+
+    /**
+     * TODO: check if it would make sense to keep it to be able to use extend services before they are added.
+     *
+     * This method (currently) exists only for BC reasons.
+     *
+     * @param string $id
+     * @param \Closure|object $service
+     *
+     * @return void
+     */
+    private function extendLater(string $id, $service): void
+    {
+        if (!isset($this->toBeExtended[$id])) {
+            $this->toBeExtended[$id] = [];
+        }
+
+        $this->toBeExtended[$id][] = $service;
+    }
+
+    /**
+     * @param string $id
+     * @param \Closure|object $service
+     *
+     * @return void
+     */
+    private function extendService(string $id, $service): void
+    {
+        if (isset($this->toBeExtended[$id])) {
+            $this->currentlyExtending = $id;
+
+            foreach ($this->toBeExtended[$id] as $service) {
+                $service = $this->extend($id, $service);
+            }
+
+            unset($this->toBeExtended[$id]);
+            $this->currentlyExtending = null;
+
+            $this->set($id, $service);
+        }
     }
 }
