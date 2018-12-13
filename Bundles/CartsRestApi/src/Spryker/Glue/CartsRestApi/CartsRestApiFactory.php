@@ -17,6 +17,8 @@ use Spryker\Glue\CartsRestApi\Processor\Cart\CartDeleter;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartDeleterInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReader;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdater;
+use Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemAdder;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemAdderInterface;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemDeleter;
@@ -43,6 +45,8 @@ use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapper;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCollectionReader;
 use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCollectionReaderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteUpdater;
+use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreator;
 use Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestRequest\RestRequestUpdater;
@@ -93,6 +97,19 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->getPersistentCartClient(),
             $this->createCartReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface
+     */
+    public function createCartUpdater(): CartUpdaterInterface
+    {
+        return new CartUpdater(
+            $this->createCartReader(),
+            $this->createCartsResourceMapper(),
+            $this->createQuoteUpdater(),
+            $this->getResourceBuilder()
         );
     }
 
@@ -170,6 +187,16 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new GuestCartUpdater(
             $this->getQuoteClient(),
+            $this->getPersistentCartClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\Quote\QuoteUpdaterInterface
+     */
+    public function createQuoteUpdater(): QuoteUpdaterInterface
+    {
+        return new QuoteUpdater(
             $this->getPersistentCartClient()
         );
     }
