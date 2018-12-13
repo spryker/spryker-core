@@ -28,7 +28,8 @@ class PriceProductStorageFactory extends AbstractFactory
         return new ProductViewPriceExpander(
             $this->createPriceAbstractStorageReader(),
             $this->createPriceConcreteStorageReader(),
-            $this->getPriceProductClient()
+            $this->getPriceProductClient(),
+            $this->getPriceProductService()
         );
     }
 
