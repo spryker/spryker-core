@@ -61,7 +61,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
      *
      * @return string
      */
-    public function contentWidgetFunction(Twig_Environment $twig, array $context, array $blockNames = [], $templateIdentifier = null)
+    public function contentWidgetFunction(Twig_Environment $twig, array $context, array $blockNames = [], $templateIdentifier = null): string
     {
         $blocks = $this->getBlockDataByNames($blockNames);
         $templatePath = $this->resolveTemplatePath($templateIdentifier);
@@ -89,7 +89,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
      *
      * @return string
      */
-    protected function resolveTemplatePath($templateIdentifier = null)
+    protected function resolveTemplatePath($templateIdentifier = null): string
     {
         if (!$templateIdentifier) {
             $templateIdentifier = CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER;
@@ -103,7 +103,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
      *
      * @return array
      */
-    protected function getBlockDataByNames(array &$blockNames)
+    protected function getBlockDataByNames(array &$blockNames): array
     {
         $blocks = $this->getFactory()
             ->getCmsBlockStorageClient()
@@ -117,7 +117,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
      *
      * @return bool
      */
-    protected function validateBlock(SpyCmsBlockEntityTransfer $cmsBlockData)
+    protected function validateBlock(SpyCmsBlockEntityTransfer $cmsBlockData): bool
     {
         return $cmsBlockData->getCmsBlockTemplate() !== null;
     }
@@ -127,7 +127,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
      *
      * @return bool
      */
-    protected function validateDates(SpyCmsBlockEntityTransfer $spyCmsBlockTransfer)
+    protected function validateDates(SpyCmsBlockEntityTransfer $spyCmsBlockTransfer): bool
     {
         $dateToCompare = new DateTime();
 
@@ -155,7 +155,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
      *
      * @return array
      */
-    protected function getPlaceholders(ArrayObject $mappings)
+    protected function getPlaceholders(ArrayObject $mappings): array
     {
         $placeholders = [];
         foreach ($mappings as $mapping) {
@@ -170,7 +170,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
      *
      * @return \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer
      */
-    protected function getCmsBlockTransfer(array $data)
+    protected function getCmsBlockTransfer(array $data): SpyCmsBlockEntityTransfer
     {
         return (new SpyCmsBlockEntityTransfer())->fromArray($data, true);
     }

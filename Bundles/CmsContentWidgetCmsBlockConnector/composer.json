@@ -11,12 +11,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
     "spryker/testify": "*",
-    "spryker/twig": "*"
-  },
-  "suggest": {
-    "spryker/twig": "Required by Yves Twig function."
   },
   "autoload": {
     "psr-4": {

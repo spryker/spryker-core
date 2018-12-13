@@ -16,7 +16,7 @@ class CmsContentWidgetCmsBlockConnectorConfigurationProvider implements CmsConte
     /**
      * @return string
      */
-    public function getFunctionName()
+    public function getFunctionName(): string
     {
         return static::FUNCTION_NAME;
     }
@@ -24,7 +24,7 @@ class CmsContentWidgetCmsBlockConnectorConfigurationProvider implements CmsConte
     /**
      * @return array
      */
-    public function getAvailableTemplates()
+    public function getAvailableTemplates(): array
     {
         return [
             CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER => '@CmsContentWidgetCmsBlockConnector/views/cms-block.twig',
@@ -34,8 +34,8 @@ class CmsContentWidgetCmsBlockConnectorConfigurationProvider implements CmsConte
     /**
      * @return string
      */
-    public function getUsageInformation()
+    public function getUsageInformation(): string
     {
-        return "{{ cms_block('block_name_placeholder') }}, to use different template {{ cms_block('block_name_placeholder', 'default') }}. Warning: Please avoid recursion. When editing Block A the user should not add the same Block A using a widget";
+        return "{{ cms_block('block_name_placeholder') }}, to use different template {{ cms_block('block_name_placeholder', 'default') }}. Warning: Please avoid looping situation when Block 'A' is added to a Block 'A'. This will make your page crush.";
     }
 }

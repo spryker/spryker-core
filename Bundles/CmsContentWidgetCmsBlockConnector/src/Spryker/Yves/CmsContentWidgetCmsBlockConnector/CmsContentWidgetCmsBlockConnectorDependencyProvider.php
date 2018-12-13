@@ -20,7 +20,7 @@ class CmsContentWidgetCmsBlockConnectorDependencyProvider extends AbstractBundle
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container[static::CLIENT_CMS_BLOCK_STORAGE] = function (Container $container) {
             return new CmsContentWidgetCmsBlockConnectorToCmsBlockStorageClientBridge($container->getLocator()->cmsBlockStorage()->client());

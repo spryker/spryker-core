@@ -14,7 +14,7 @@ class CmsContentWidgetCmsBlockConnectorFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\CmsContentWidgetCmsBlockConnector\Dependency\Client\CmsContentWidgetCmsBlockConnectorToCmsBlockStorageClientInterface
      */
-    public function getCmsBlockStorageClient()
+    public function getCmsBlockStorageClient(): CmsContentWidgetCmsBlockConnectorToCmsBlockStorageClientInterface
     {
         return $this->getProvidedDependency(CmsContentWidgetCmsBlockConnectorDependencyProvider::CLIENT_CMS_BLOCK_STORAGE);
     }
