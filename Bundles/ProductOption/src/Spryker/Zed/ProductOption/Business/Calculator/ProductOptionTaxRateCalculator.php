@@ -9,9 +9,11 @@ namespace Spryker\Zed\ProductOption\Business\Calculator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
+use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
 
 class ProductOptionTaxRateCalculator implements CalculatorInterface
 {
@@ -44,71 +46,36 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $countryIso2Code = $this->getShippingCountryIsoCode($quoteTransfer);
-        $productOptionValueIds = $this->getAllProductOptionValueIds($quoteTransfer);
+        $productOptionValueIds = $countryIso2Codes = [];
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $countryIso2Code = $this->getShippingCountryIso2CodeByItem($itemTransfer);
+            $productOptionValueIds[$countryIso2Code] = array_merge($productOptionValueIds[$countryIso2Code], $this->getProductOptionValueIds($itemTransfer));
+            $countryIso2Codes[$itemTransfer->getIdProductAbstract()] = $countryIso2Code;
+        }
 
-        $taxRates = $this->findTaxRatesByIdOptionValueAndCountryIso2Code($productOptionValueIds, $countryIso2Code);
+        $taxRates = $this->findTaxRatesByIdOptionValuesAndCountryIso2Codes($productOptionValueIds, array_unique($countryIso2Codes));
 
-        $this->setItemsTaxRate($quoteTransfer, $taxRates);
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $this->setProductOptionTaxRate($itemTransfer, $taxRates, $countryIso2Codes[$itemTransfer->getIdProductAbstract()]);
+        }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return string
      */
-    protected function getShippingCountryIsoCode(QuoteTransfer $quoteTransfer)
+    protected function getShippingCountryIso2CodeByItem(ItemTransfer $itemTransfer): string
     {
-        if ($quoteTransfer->getShippingAddress() === null || !$quoteTransfer->getShippingAddress()->getIso2Code()) {
+        if (
+            ($itemTransfer->getShipment() === null)
+            || ($itemTransfer->getShipment()->getShippingAddress() === null)
+        ) {
             return $this->taxFacade->getDefaultTaxCountryIso2Code();
         }
 
-        return $quoteTransfer->getShippingAddress()->getIso2Code();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    protected function getAllProductOptionValueIds(QuoteTransfer $quoteTransfer)
-    {
-        $productOptionValueIds = [];
-        foreach ($quoteTransfer->getItems() as $item) {
-            $productOptionValueIds = array_merge($productOptionValueIds, $this->getProductOptionValueIds($item));
-        }
-
-        return $productOptionValueIds;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $taxRates
-     *
-     * @return void
-     */
-    protected function setItemsTaxRate(QuoteTransfer $quoteTransfer, array $taxRates)
-    {
-        foreach ($quoteTransfer->getItems() as $item) {
-            $this->setProductOptionTaxRate($item, $taxRates);
-        }
-    }
-
-    /**
-     * @param array $taxRates
-     * @param int $idOptionValue
-     *
-     * @return float
-     */
-    protected function getEffectiveTaxRate(array $taxRates, $idOptionValue)
-    {
-        foreach ($taxRates as $taxRate) {
-            if ($taxRate[ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE] === $idOptionValue) {
-                return (float)$taxRate[ProductOptionQueryContainer::COL_MAX_TAX_RATE];
-            }
-        }
-
-        return $this->taxFacade->getDefaultTaxRate();
+        $isoCode = $itemTransfer->getShipment()->getShippingAddress()->getIso2Code();
+        return $isoCode ?: $this->taxFacade->getDefaultTaxCountryIso2Code();
     }
 
     /**
@@ -116,7 +83,7 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
      *
      * @return array
      */
-    protected function getProductOptionValueIds(ItemTransfer $itemTransfer)
+    protected function getProductOptionValueIds(ItemTransfer $itemTransfer): array
     {
         $productOptionValueIds = [];
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
@@ -129,27 +96,49 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param array $taxRates
+     * @param string $countryIso2Code
      *
      * @return void
      */
-    protected function setProductOptionTaxRate(ItemTransfer $itemTransfer, array $taxRates)
+    protected function setProductOptionTaxRate(ItemTransfer $itemTransfer, array $taxRates, string $countryIso2Code): void
     {
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $productOptionTransfer->setTaxRate($this->getEffectiveTaxRate($taxRates, $productOptionTransfer->getIdProductOptionValue()));
+            $productOptionTransfer->setTaxRate($this->getEffectiveTaxRate($taxRates, $productOptionTransfer->getIdProductOptionValue(), $countryIso2Code));
         }
     }
 
     /**
+     * @param array $taxRates
+     * @param int $idOptionValue
+     * @param string $iso2Code
+     *
+     * @return float
+     */
+    protected function getEffectiveTaxRate(array $taxRates, int $idOptionValue, string $iso2Code): float
+    {
+        $key = $iso2Code . $idOptionValue;
+        if (isset($taxRates[$key])) {
+            return (float)$taxRates[$key];
+        }
+
+        return $this->taxFacade->getDefaultTaxRate();
+    }
+
+    /**
      * @param int[] $productOptionValueIds
-     * @param string $countryIso2Code
+     * @param string[] $countryIso2Codes
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]
      */
-    protected function findTaxRatesByIdOptionValueAndCountryIso2Code(array $productOptionValueIds, $countryIso2Code)
+    protected function findTaxRatesByIdOptionValuesAndCountryIso2Codes(array $productOptionValueIds, array $countryIso2Codes): array
     {
-        return $this->queryContainer
-            ->queryTaxSetByIdProductOptionValueAndCountryIso2Code($productOptionValueIds, $countryIso2Code)
-            ->find()
-            ->toArray();
+        $groupedResults = [];
+        $foundResults = $this->queryContainer->queryTaxSetByIdProductOptionValueAndCountryIso2Codes($productOptionValueIds, $countryIso2Codes)->find();
+        foreach ($foundResults as $data) {
+            $key = $data[SpyCountryTableMap::COL_ISO2_CODE] . $data[ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE];
+            $groupedResults[$key] = $data[ProductOptionQueryContainer::COL_MAX_TAX_RATE];
+        }
+
+        return $groupedResults;
     }
 }
