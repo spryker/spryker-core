@@ -37,9 +37,9 @@ class QuoteUpdater implements QuoteUpdaterInterface
      */
     public function updateQuote(RestRequestInterface $restRequest, QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteUpdateRequestTransfer = new QuoteUpdateRequestTransfer();
-        $quoteUpdateRequestTransfer->setIdQuote($quoteTransfer->getIdQuote());
-        $quoteUpdateRequestTransfer->setCustomer($quoteTransfer->getCustomer());
+        $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())
+            ->setIdQuote($quoteTransfer->getIdQuote())
+            ->setCustomer($quoteTransfer->getCustomer());
         $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
             ->fromArray($quoteTransfer->modifiedToArray(), true);
         $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
