@@ -23,24 +23,26 @@ use Spryker\Service\Container\Exception\NotFoundException;
  */
 class ContainerTest extends Unit
 {
-    /**
-     * @return void
-     */
     protected const SERVICE = 'service';
+    protected const SERVICE_PROPERTY_1 = 'SERVICE_PROPERTY_1';
+    protected const SERVICE_PROPERTY_2 = 'SERVICE_PROPERTY_2';
 
     /**
      * @return void
      */
     public function testSetAddsServiceOnConstruction(): void
     {
+        //Arrange
         $service = function () {
             return static::SERVICE;
         };
 
+        //Act
         $container = new Container([
             static::SERVICE => $service,
         ]);
 
+        //Assert
         $this->assertSame(static::SERVICE, $container->get(static::SERVICE));
     }
 
@@ -49,12 +51,16 @@ class ContainerTest extends Unit
      */
     public function testSetAddsService(): void
     {
+        //Arrange
         $container = new Container();
         $service = function () {
             return static::SERVICE;
         };
+
+        //Act
         $container->set(static::SERVICE, $service);
 
+        //Assert
         $this->assertSame(static::SERVICE, $container->get(static::SERVICE));
     }
 
@@ -79,14 +85,18 @@ class ContainerTest extends Unit
      */
     public function testGetReturnsSameServiceInstanceOnConsecutiveCalls(): void
     {
+        //Arrange
         $container = new Container();
         $container->set(static::SERVICE, function () {
             return new class {
             };
         });
+
+        //Act
         $service = $container->get(static::SERVICE);
         $service2 = $container->get(static::SERVICE);
 
+        //Assert
         $this->assertSame($service, $service2);
     }
 
@@ -95,15 +105,18 @@ class ContainerTest extends Unit
      */
     public function testGetReturnsAlwaysANewServiceInstanceWhenServiceMarkedAsFactory(): void
     {
+        //Arrange
         $container = new Container();
         $container->set(static::SERVICE, $container->factory(function () {
             return new class {
             };
         }));
 
+        //Act
         $service = $container->get(static::SERVICE);
         $service2 = $container->get(static::SERVICE);
 
+        //Assert
         $this->assertNotSame($service, $service2);
     }
 
@@ -144,11 +157,15 @@ class ContainerTest extends Unit
      */
     public function testRemoveRemovesAService(): void
     {
+        //Arrange
         $container = new Container();
         $container->set(static::SERVICE, function () {
         });
+
+        //Act
         $container->remove(static::SERVICE);
 
+        //Assert
         $this->assertFalse($container->has(static::SERVICE));
     }
 
@@ -179,13 +196,67 @@ class ContainerTest extends Unit
      */
     public function testProtectServiceIsNotResolved(): void
     {
+        //Arrange
         $container = new Container();
         $service = function () {
             return static::SERVICE;
         };
+
+        //Act
         $container->set(static::SERVICE, $container->protect($service));
 
+        //Assert
         $this->assertSame($service, $container->get(static::SERVICE));
+    }
+
+    /**
+     * @return void
+     */
+    public function testExtendExtendsServiceWithProperty(): void
+    {
+        //Arrange
+        $container = new Container();
+        $container->set(static::SERVICE, function () {
+            return [static::SERVICE_PROPERTY_1 => true];
+        });
+
+        //Act
+        $container->extend(static::SERVICE, function ($existingService, $container) {
+            $existingService[static::SERVICE_PROPERTY_2] = true;
+
+            return $existingService;
+        });
+
+        //Assert
+        $this->assertSame(
+            [static::SERVICE_PROPERTY_1 => true, static::SERVICE_PROPERTY_2 => true],
+            $container->get(static::SERVICE)
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExtendExtendsServiceWithPropertyAfterItWasDefined(): void
+    {
+        //Arrange
+        $container = new Container();
+        $container->extend(static::SERVICE, function ($existingService, $container) {
+            $existingService[static::SERVICE_PROPERTY_2] = true;
+
+            return $existingService;
+        });
+
+        //Act
+        $container->set(static::SERVICE, function () {
+            return [static::SERVICE_PROPERTY_1 => true];
+        });
+
+        //Assert
+        $this->assertSame(
+            [static::SERVICE_PROPERTY_1 => true, static::SERVICE_PROPERTY_2 => true],
+            $container->get(static::SERVICE)
+        );
     }
 
     /***************************************************************************************
@@ -197,10 +268,14 @@ class ContainerTest extends Unit
      */
     public function testArrayAccessSetAddsService(): void
     {
+        //Arrange
         $container = new Container();
+
+        //Act
         $container[static::SERVICE] = function () {
         };
 
+        //Assert
         $this->assertTrue($container->has(static::SERVICE));
     }
 
@@ -209,15 +284,18 @@ class ContainerTest extends Unit
      */
     public function testArrayAccessSetAddsServiceAsFactory(): void
     {
+        //Arrange
         $container = new Container();
         $container[static::SERVICE] = function () {
             return new class {
             };
         };
 
+        //Act
         $service = $container->get(static::SERVICE);
         $service2 = $container->get(static::SERVICE);
 
+        //Assert
         $this->assertNotSame($service, $service2);
     }
 
@@ -226,15 +304,18 @@ class ContainerTest extends Unit
      */
     public function testArrayAccessSetAddsServiceAsShared(): void
     {
+        //Arrange
         $container = new Container();
         $container[static::SERVICE] = $container->share(function () {
             return new class {
             };
         });
 
+        //Act
         $service = $container->get(static::SERVICE);
         $service2 = $container->get(static::SERVICE);
 
+        //Assert
         $this->assertSame($service, $service2);
     }
 
