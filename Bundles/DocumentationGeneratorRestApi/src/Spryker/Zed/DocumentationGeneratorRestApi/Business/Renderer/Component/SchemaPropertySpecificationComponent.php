@@ -20,6 +20,7 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
     protected const KEY_REF = '$ref';
     protected const KEY_ITEMS = 'items';
     protected const KEY_TYPE = 'type';
+    protected const VALUE_TYPE_ARRAY = 'array';
 
     /**
      * @var \Generated\Shared\Transfer\SchemaPropertyComponentTransfer|null $schemaPropertyComponentTransfer
@@ -58,7 +59,7 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
         if ($this->schemaPropertyComponentTransfer->getItemsType()) {
             $property[static::KEY_ITEMS][static::KEY_TYPE] = $this->schemaPropertyComponentTransfer->getItemsType();
         }
-        if ($this->schemaPropertyComponentTransfer->getType() === 'array' && !$this->schemaPropertyComponentTransfer->getItemsType()) {
+        if ($this->schemaPropertyComponentTransfer->getType() === static::VALUE_TYPE_ARRAY && !$this->schemaPropertyComponentTransfer->getItemsType()) {
             $property[static::KEY_ITEMS] = new stdClass();
         }
 
