@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentCartConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 
 class ShipmentCartConnectorToShipmentFacadeBridge implements ShipmentCartConnectorToShipmentFacadeInterface
 {
@@ -29,7 +30,7 @@ class ShipmentCartConnectorToShipmentFacadeBridge implements ShipmentCartConnect
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
     {
         return $this->shipmentFacade->getAvailableMethods($quoteTransfer);
     }

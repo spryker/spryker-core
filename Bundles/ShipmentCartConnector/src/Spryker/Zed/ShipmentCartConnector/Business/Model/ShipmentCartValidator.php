@@ -88,14 +88,13 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
         int $idShipmentMethod,
         ShipmentMethodsTransfer $availableShipmentMethods
     ): ?ShipmentMethodTransfer {
-        $transfer = current(array_filter(
-            $availableShipmentMethods->getMethods()->getArrayCopy(),
-            function ($shipmentMethodTransfer) use ($idShipmentMethod) {
-                return $idShipmentMethod == $shipmentMethodTransfer->getIdShipmentMethod();
-            }
-        ));
+        $methodsIndexedByIdShipmentMethod = [];
 
-        return ($transfer === false ? null : $transfer);
+        foreach ($availableShipmentMethods->getMethods()->getArrayCopy() as $shipentMethodTransfer) {
+            $methodsIndexedByIdShipmentMethod[$shipentMethodTransfer->getIdShipmentMethod()] = $shipentMethodTransfer;
+        }
+
+        return $methodsIndexedByIdShipmentMethod[$idShipmentMethod] ?? null;
     }
 
     /**
