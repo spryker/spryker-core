@@ -17,6 +17,7 @@ Description:,Beschreibung:
 "Discount Type:",Rabatttyp:
 Edit,Bearbeiten
 "Edit discount","Rabatt bearbeiten"
+"Edit Discount","Rabatt Bearbeiten"
 "Enter your custom code as a string. If selected in the next step, additional random characters are added at the end of this string. Use the placeholder [code] to indicate where you want random characters to be generated.","Geben Sie Ihren benutzerdefinierten Code als Zeichenkette ein. Wenn im nächsten Schritt ausgewählt, werden am Ende dieser Zeichenkette weitere zusätzliche Zeichen hinzugefügt. Verwenden Sie den Platzhalter[code], um anzugeben, wo zufällige Zeichen generiert werden sollen."
 Exclusive:,Exklusiv:
 Export,Exportieren
