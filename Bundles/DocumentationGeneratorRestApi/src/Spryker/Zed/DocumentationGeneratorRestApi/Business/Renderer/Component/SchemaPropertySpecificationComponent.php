@@ -47,23 +47,47 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
             return [];
         }
 
-        if ($this->schemaPropertyComponentTransfer->getType()) {
-            $property[SchemaPropertyComponentTransfer::TYPE] = $this->schemaPropertyComponentTransfer->getType();
-        }
-        if ($this->schemaPropertyComponentTransfer->getSchemaReference()) {
-            $property[static::KEY_REF] = $this->schemaPropertyComponentTransfer->getSchemaReference();
-        }
-        if ($this->schemaPropertyComponentTransfer->getItemsSchemaReference()) {
-            $property[static::KEY_ITEMS][static::KEY_REF] = $this->schemaPropertyComponentTransfer->getItemsSchemaReference();
-        }
-        if ($this->schemaPropertyComponentTransfer->getItemsType()) {
-            $property[static::KEY_ITEMS][static::KEY_TYPE] = $this->schemaPropertyComponentTransfer->getItemsType();
-        }
-        if ($this->schemaPropertyComponentTransfer->getType() === static::VALUE_TYPE_ARRAY && !$this->schemaPropertyComponentTransfer->getItemsType()) {
-            $property[static::KEY_ITEMS] = new stdClass();
-        }
+        $this->addBasicPropertyData($property);
+        $this->addItemPropertiyData($property);
 
         return [$this->schemaPropertyComponentTransfer->getName() => $property];
+    }
+
+    /**
+     * @param array $schemaProperty
+     *
+     * @return array
+     */
+    protected function addBasicPropertyData(array $schemaProperty): array
+    {
+        if ($this->schemaPropertyComponentTransfer->getType()) {
+            $schemaProperty[SchemaPropertyComponentTransfer::TYPE] = $this->schemaPropertyComponentTransfer->getType();
+        }
+        if ($this->schemaPropertyComponentTransfer->getSchemaReference()) {
+            $schemaProperty[static::KEY_REF] = $this->schemaPropertyComponentTransfer->getSchemaReference();
+        }
+
+        return $schemaProperty;
+    }
+
+    /**
+     * @param array $schemaProperty
+     *
+     * @return array
+     */
+    protected function addItemPropertiyData(array $schemaProperty): array
+    {
+        if ($this->schemaPropertyComponentTransfer->getItemsSchemaReference()) {
+            $schemaProperty[static::KEY_ITEMS][static::KEY_REF] = $this->schemaPropertyComponentTransfer->getItemsSchemaReference();
+        }
+        if ($this->schemaPropertyComponentTransfer->getItemsType()) {
+            $schemaProperty[static::KEY_ITEMS][static::KEY_TYPE] = $this->schemaPropertyComponentTransfer->getItemsType();
+        }
+        if ($this->schemaPropertyComponentTransfer->getType() === static::VALUE_TYPE_ARRAY && !$this->schemaPropertyComponentTransfer->getItemsType()) {
+            $schemaProperty[static::KEY_ITEMS] = new stdClass();
+        }
+
+        return $schemaProperty;
     }
 
     /**
