@@ -42,7 +42,7 @@ class MultiCartsRestApiFactory extends AbstractFactory
      */
     public function getMultiCartClient(): MultiCartsRestApiToMultiCartClientInterface
     {
-        return $this->getProvidedDependency(MultiCartsRestApiDependencyProvider::MULTI_CLIENT_CART);
+        return $this->getProvidedDependency(MultiCartsRestApiDependencyProvider::CLIENT_MULTI_CART);
     }
 
     /**

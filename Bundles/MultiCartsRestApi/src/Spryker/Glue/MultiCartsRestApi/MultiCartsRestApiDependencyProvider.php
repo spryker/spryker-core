@@ -17,7 +17,7 @@ use Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToPersiste
  */
 class MultiCartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const MULTI_CLIENT_CART = 'MULTI_CLIENT_CART';
+    public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
 
     /**
@@ -41,7 +41,7 @@ class MultiCartsRestApiDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addMultiCartClient(Container $container): Container
     {
-        $container[static::MULTI_CLIENT_CART] = function (Container $container) {
+        $container[static::CLIENT_MULTI_CART] = function (Container $container) {
             return new MultiCartsRestApiToMultiCartClientBridge($container->getLocator()->multiCart()->client());
         };
 

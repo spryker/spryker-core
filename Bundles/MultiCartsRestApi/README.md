@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/multi-carts-rest-api.svg)](https://travis-ci.org/spryker/multi-carts-rest-api)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/multi-carts-rest-api/badge.svg)](https://coveralls.io/github/spryker/multi-carts-rest-api)
 
-Retrieve list of carts
+MultiCartsRestApi module provides API endpoints to create carts and retrieve list of carts
 
 ## Installation
 

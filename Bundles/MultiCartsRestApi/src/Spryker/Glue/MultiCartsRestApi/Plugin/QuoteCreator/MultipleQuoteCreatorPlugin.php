@@ -20,6 +20,7 @@ class MultipleQuoteCreatorPlugin extends AbstractPlugin implements QuoteCreatorP
 {
     /**
      * {@inheritdoc}
+     *  - Creates a quote for customer.
      *
      * @api
      *
