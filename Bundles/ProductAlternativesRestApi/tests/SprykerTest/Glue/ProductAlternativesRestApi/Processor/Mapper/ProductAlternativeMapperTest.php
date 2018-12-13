@@ -8,6 +8,8 @@
 namespace SprykerTest\Glue\ProductAlternativesRestApi\Processor\Mapper;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\RestAlternativeProductsAttributesTransfer;
+use Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\ProductAlternativeMapper;
 
 /**
  * Auto-generated group annotations
@@ -21,11 +23,33 @@ use Codeception\Test\Unit;
  */
 class ProductAlternativeMapperTest extends Unit
 {
+    protected const CONCRETE_PRODUCT_SKU = '134_26145012';
+    protected const ABSTRACT_PRODUCT_SKU = '134';
+
+    /**
+     * @var \SprykerTest\Glue\ProductAlternativesRestApi\ProductAlternativesMapperTester
+     */
+    protected $tester;
+
     /**
      * @return void
      */
-    public function testMapProductAbstractStorageDataToRestAlternativeProductsAttributesTransfer()
+    public function testMapProductAbstractStorageDataToRestAlternativeProductsAttributesTransferWillPopulateTransferOnlyWithAbstractProductsSku()
     {
+        // Arrange
+        $mapper = new ProductAlternativeMapper();
+        $concreteProductStorageData = $this->tester->hasProductConcreteStorageData();
+        $restAlternativeProductsAttributesTransfer = new RestAlternativeProductsAttributesTransfer();
+
+        // Act
+        $restAlternativeProductsAttributesTransfer = $mapper->mapProductConcreteStorageDataToRestAlternativeProductsAttributesTransfer(
+            $concreteProductStorageData,
+            $restAlternativeProductsAttributesTransfer
+        );
+
+        // Assert
+        $this->assertEquals($restAlternativeProductsAttributesTransfer->getConcreteProductIds(), [static::CONCRETE_PRODUCT_SKU]);
+        $this->assertEmpty($restAlternativeProductsAttributesTransfer->getAbstractProductIds());
     }
 
     /**
@@ -33,5 +57,19 @@ class ProductAlternativeMapperTest extends Unit
      */
     public function testMapProductConcreteStorageDataToRestAlternativeProductsAttributesTransfer()
     {
+        // Arrange
+        $mapper = new ProductAlternativeMapper();
+        $abstractProductStorageData = $this->tester->hasProductAbstractStorageData();
+        $restAlternativeProductsAttributesTransfer = new RestAlternativeProductsAttributesTransfer();
+
+        // Act
+        $restAlternativeProductsAttributesTransfer = $mapper->mapProductAbstractStorageDataToRestAlternativeProductsAttributesTransfer(
+            $abstractProductStorageData,
+            $restAlternativeProductsAttributesTransfer
+        );
+
+        // Assert
+        $this->assertEquals($restAlternativeProductsAttributesTransfer->getAbstractProductIds(), [static::ABSTRACT_PRODUCT_SKU]);
+        $this->assertEmpty($restAlternativeProductsAttributesTransfer->getConcreteProductIds());
     }
 }
