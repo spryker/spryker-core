@@ -14,6 +14,7 @@ use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSnifferInte
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
 use Spryker\Zed\Development\Business\CodeBuilder\Module\ModuleBuilder;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
+use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSnifferConfiguration;
 use Spryker\Zed\Development\Business\CodeTest\CodeTester;
 use Spryker\Zed\Development\Business\Composer\ComposerJson;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonFinder;
@@ -178,9 +179,21 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer
      */
-    public function createCodeStyleSniffer()
+    public function createCodeStyleSniffer(): CodeStyleSniffer
     {
         return new CodeStyleSniffer(
+            $this->getConfig(),
+            $this->createCodeStyleConfigurationReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSnifferConfiguration
+     */
+    public function createCodeStyleConfigurationReader(): CodeStyleSnifferConfiguration
+    {
+        return new CodeStyleSnifferConfiguration(
+            $this->createConfigurationReader(),
             $this->getConfig()
         );
     }

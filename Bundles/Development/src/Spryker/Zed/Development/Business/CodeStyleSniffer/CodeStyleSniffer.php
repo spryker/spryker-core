@@ -19,13 +19,7 @@ class CodeStyleSniffer
 {
     protected const CODE_SUCCESS = 0;
 
-    protected const OPTION_FIX = 'fix';
-    protected const OPTION_PRINT_DIFF_REPORT = 'report-diff';
-    protected const OPTION_DRY_RUN = 'dry-run';
-    protected const OPTION_QUIET = 'quiet';
-    protected const OPTION_EXPLAIN = 'explain';
-    protected const OPTION_SNIFFS = 'sniffs';
-    protected const OPTION_VERBOSE = 'verbose';
+    protected const OPTION_IGNORE = 'ignore';
 
     protected const APPLICATION_NAMESPACES = ['Orm'];
     protected const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
@@ -39,11 +33,18 @@ class CodeStyleSniffer
     protected $config;
 
     /**
-     * @param \Spryker\Zed\Development\DevelopmentConfig $config
+     * @var \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSnifferConfiguration
      */
-    public function __construct(DevelopmentConfig $config)
+    protected $codeStyleSnifferConfiguration;
+
+    /**
+     * @param \Spryker\Zed\Development\DevelopmentConfig $config
+     * @param \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSnifferConfiguration $codeStyleSnifferConfiguration
+     */
+    public function __construct(DevelopmentConfig $config, CodeStyleSnifferConfiguration $codeStyleSnifferConfiguration)
     {
         $this->config = $config;
+        $this->codeStyleSnifferConfiguration = $codeStyleSnifferConfiguration;
     }
 
     /**
@@ -61,13 +62,14 @@ class CodeStyleSniffer
 
         $pathOption = isset($options['path']) ? $options['path'] : null;
         $defaults = [
-            'ignore' => $namespace || $pathOption ? '' : 'vendor/',
+           static::OPTION_IGNORE => $namespace || $pathOption ? null : 'vendor/',
         ];
         $options += $defaults;
 
         $path = $this->resolvePath($module, $namespace, $pathOption);
+        $this->codeStyleSnifferConfiguration->load($options, $path);
 
-        return $this->runSnifferCommand($path, $options);
+        return $this->runSnifferCommand($path);
     }
 
     /**
@@ -214,42 +216,53 @@ class CodeStyleSniffer
 
     /**
      * @param string $path
-     * @param array $options
      *
      * @return int Exit code
      */
-    protected function runSnifferCommand($path, array $options)
+    protected function runSnifferCommand($path)
     {
-        $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
+        $processConfig = ' --standard=' . $this->codeStyleSnifferConfiguration->getCodingStandard();
 
-        $config = ' --standard=' . $this->config->getCodingStandard();
-        if ($options[static::OPTION_VERBOSE]) {
-            $config .= ' -v';
+        if ($this->codeStyleSnifferConfiguration->getOptionVerbose()) {
+            $processConfig .= ' -v';
         }
-        if (!$options[static::OPTION_QUIET]) {
-            $config .= ' -p'; // Progress
-        }
-
-        if ($options[static::OPTION_EXPLAIN]) {
-            $config .= ' -e';
+        if (!$this->codeStyleSnifferConfiguration->getOptionQuiet()) {
+            $processConfig .= ' -p'; // Progress
         }
 
-        if ($options[static::OPTION_SNIFFS]) {
-            $config .= ' --sniffs=' . $options[static::OPTION_SNIFFS];
+        if ($this->codeStyleSnifferConfiguration->getOptionExplain()) {
+            $processConfig .= ' -e';
         }
 
-        if ($options['ignore']) {
-            $config .= ' --ignore=' . $options['ignore'];
+        $optionSniffs = $this->codeStyleSnifferConfiguration->getOptionSniffs();
+
+        if ($optionSniffs) {
+            $processConfig .= ' --sniffs=' . $optionSniffs;
         }
 
-        if ($options[static::OPTION_VERBOSE] && !$options[static::OPTION_FIX]) {
-            $config .= ' -s';
+        $optionIgnore = $this->codeStyleSnifferConfiguration->getOptionIgnore();
+
+        if ($optionIgnore) {
+            $processConfig .= ' --ignore=' . $optionIgnore;
         }
 
-        $command = $options[static::OPTION_FIX] ? 'phpcbf' : 'phpcs';
-        $command = 'vendor/bin/' . $command . ' ' . $pathToFiles . $config;
+        $optionVerbose = $this->codeStyleSnifferConfiguration->getOptionVerbose();
+        $optionFix = $this->codeStyleSnifferConfiguration->getOptionFix();
 
-        if (!empty($options[static::OPTION_DRY_RUN])) {
+        if ($optionVerbose && !$optionFix) {
+            $processConfig .= ' -s';
+        }
+
+        $command = sprintf(
+            'vendor/bin/%s %s%s',
+            $optionFix ? 'phpcbf' : 'phpcs',
+            rtrim($path, DIRECTORY_SEPARATOR),
+            $processConfig
+        );
+
+        $optionDryRun = $this->codeStyleSnifferConfiguration->getOptionDryRun();
+
+        if (!empty($optionDryRun)) {
             echo $command . PHP_EOL;
 
             return static::CODE_SUCCESS;
