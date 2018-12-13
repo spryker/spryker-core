@@ -74,7 +74,7 @@ class RateController extends AbstractController
         $taxRateTransfer = $taxRateFormDataProvider->getData($idTaxRate);
 
         if ($taxRateTransfer === null) {
-            $this->addErrorMessage(sprintf('Tax rate with id %s doesn\'t exist', $idTaxRate));
+            $this->addErrorMessage(sprintf("Tax rate with id %s doesn't exist", $idTaxRate));
 
             return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
         }

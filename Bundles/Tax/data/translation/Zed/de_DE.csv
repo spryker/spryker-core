@@ -7,6 +7,7 @@ Country,Land
 Delete,Löschen
 Edit,Bearbeiten
 "Edit Tax Rate:","Steuerrate bearbeiten:"
+"Edit Tax Rate","Steuerrate bearbeiten"
 "Edit Tax Set:","Steuerset bearbeiten:"
 "List of tax rates","Liste der Steuerraten"
 "List of tax sets","Liste der Steuersätze"
@@ -19,6 +20,7 @@ Save,Speichern
 "Tax rate details","Details zum Steuersatz"
 "Tax rate ID",Steuersatz-ID
 "Tax rates",Steuersätze
+"Tax Rates",Steuersätze
 "Tax set details","Details zum Steuer-Set"
 "Tax set ID",Steuer-Set-ID
 "Updated at","Aktualisiert am"
