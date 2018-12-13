@@ -46,7 +46,7 @@ class PriceProductStorageToPriceProductBridge implements PriceProductStorageToPr
     }
 
     /**
-     * @param array $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer

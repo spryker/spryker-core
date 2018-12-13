@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
@@ -66,10 +67,20 @@ class ProductPageSearchPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @deprecated Use getCategoryQueryContainer() instead.
+     *
      * @return \Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToCategoryQueryContainerInterface
      */
     public function getCategoryAttributeQuery()
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::QUERY_CONTAINER_CATEGORY);
+    }
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function getCategoryNodeQueryContainer(): SpyCategoryNodeQuery
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::QUERY_CONTAINER_CATEGORY_NODE);
     }
 }
