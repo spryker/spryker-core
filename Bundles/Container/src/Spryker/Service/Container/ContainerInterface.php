@@ -23,9 +23,9 @@ interface ContainerInterface extends PsrContainerInterface
      * This one can be used to extend an existing Service without loading it.
      *
      * @param string $id
-     * @param callable $service
+     * @param \Closure|object $service
      *
-     * @return callable
+     * @return \Closure|object
      */
     public function extend(string $id, $service);
 
