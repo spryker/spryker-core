@@ -75,6 +75,7 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
         }
 
         $isoCode = $itemTransfer->getShipment()->getShippingAddress()->getIso2Code();
+
         return $isoCode ?: $this->taxFacade->getDefaultTaxCountryIso2Code();
     }
 
