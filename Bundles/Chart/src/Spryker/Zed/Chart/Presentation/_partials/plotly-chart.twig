@@ -4,7 +4,7 @@
     {% if data.traces | length > 0 %}
         {% set layout = layout.toArray | merge(
             {
-                'title':layout.title | default(data.title),
+                'title':layout.title | default(data.title) | trans,
                 'margin': {'l': 8 * maxLabeLength | default(1)}
             }) %}
         <div id="{{ chartDivId }}"></div>
