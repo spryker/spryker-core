@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Synchronization;
 
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
 /**
- * @method \Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageRepositoryInterface getRepository()()
  * @method \Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductDiscontinuedStorage\Communication\ProductDiscontinuedStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig getConfig()
  */
 class ProductDiscontinuedSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
 {
@@ -41,6 +41,24 @@ class ProductDiscontinuedSynchronizationDataPlugin extends AbstractPlugin implem
     public function hasStore(): bool
     {
         return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getData(array $ids = [])
+    {
+        $productDiscontinuedStorageEntities = $this->findProductDiscontinuedStorageEntities($ids);
+
+        return $this->getFactory()
+            ->createProductDiscontinuedStorageMapper()
+            ->mapProductDiscontinuedStorageEntitiesToSynchronizationDataTransfers($productDiscontinuedStorageEntities);
     }
 
     /**
@@ -80,30 +98,16 @@ class ProductDiscontinuedSynchronizationDataPlugin extends AbstractPlugin implem
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int[] $ids
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
      */
-    public function getData(array $ids = []): array
+    protected function findProductDiscontinuedStorageEntities(array $ids): array
     {
-        $synchronizationDataTransfers = [];
-        $productDiscontinuedStorageEntities = $this->getRepository()->findProductDiscontinuedStorageEntitiesByIds($ids);
-
         if (empty($ids)) {
-            $productDiscontinuedStorageEntities = $this->getRepository()->findProductDiscontinuedStorageEntities();
+            return $this->getRepository()->findAllProductDiscontinuedStorageEntities();
         }
 
-        foreach ($productDiscontinuedStorageEntities as $productDiscontinuedStorageEntity) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($productDiscontinuedStorageEntity->getData());
-            $synchronizationDataTransfer->setKey($productDiscontinuedStorageEntity->getKey());
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
-        }
-
-        return $synchronizationDataTransfers;
+        return $this->getRepository()->findProductDiscontinuedStorageEntitiesByIds($ids);
     }
 }

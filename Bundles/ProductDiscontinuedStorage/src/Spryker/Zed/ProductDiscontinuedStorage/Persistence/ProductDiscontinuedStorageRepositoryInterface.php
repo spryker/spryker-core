@@ -19,5 +19,5 @@ interface ProductDiscontinuedStorageRepositoryInterface
     /**
      * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
      */
-    public function findProductDiscontinuedStorageEntities(): array;
+    public function findAllProductDiscontinuedStorageEntities(): array;
 }
