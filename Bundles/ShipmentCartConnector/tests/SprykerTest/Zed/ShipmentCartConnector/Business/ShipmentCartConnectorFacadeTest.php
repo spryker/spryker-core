@@ -44,8 +44,8 @@ class ShipmentCartConnectorFacadeTest extends Unit
 
         $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
 
-        $shipmentMethodTransfer->setCurrencyIsoCode('FAKE_ISO_CODE');
-        $shipmentMethodTransfer->setStoreCurrencyPrice('FAKE_PRICE');
+        $shipmentMethodTransfer->setCurrencyIsoCode(static::CURRENCY_ISO_CODE);
+        $shipmentMethodTransfer->setStoreCurrencyPrice(-1);
 
         $cartChangeTransfer = $this->createCartCartChangeTransfer($shipmentMethodTransfer);
 
@@ -91,8 +91,6 @@ class ShipmentCartConnectorFacadeTest extends Unit
         $shipmentCartConnectorFacade = $this->createShipmentCartConnectorFacade();
 
         $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
-        $shipmentMethodTransfer->setCurrencyIsoCode(static::CURRENCY_ISO_CODE);
-        $shipmentMethodTransfer->setStoreCurrencyPrice(100);
         $cartChangeTransfer = $this->createCartCartChangeTransfer($shipmentMethodTransfer);
 
         $cartPreCheckResponseTransfer = $shipmentCartConnectorFacade->validateShipment($cartChangeTransfer);
