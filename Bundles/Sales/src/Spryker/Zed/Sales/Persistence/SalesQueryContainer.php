@@ -10,7 +10,7 @@ namespace Spryker\Zed\Sales\Persistence;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
-use Orm\Zed\Sales\Persistence\SpySalesShipment;
+use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -296,11 +296,15 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @inheritdoc
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
      */
-    public function queryShipmentByTransfer(ShipmentTransfer $shipmentTransfer): SpySalesShipment
+    public function queryShipmentByTransfer(ShipmentTransfer $shipmentTransfer): SpySalesShipmentQuery
     {
         return $this
             ->getFactory()

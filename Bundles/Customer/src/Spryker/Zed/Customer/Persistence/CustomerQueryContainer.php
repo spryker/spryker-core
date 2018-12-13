@@ -127,9 +127,13 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @inheritdoc
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
      */
     public function queryAddressByTransfer(AddressTransfer $addressTransfer): SpyCustomerAddressQuery
     {
