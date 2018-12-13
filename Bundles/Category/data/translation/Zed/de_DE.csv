@@ -1,7 +1,10 @@
 Active,Aktiv
 "Allow to search for this category:","Ermöglicht die Suche nach dieser Kategorie:"
+"Allow to search for this category","Ermöglicht die Suche nach dieser Kategorie"
 "Assign products","Produkte zuordnen"
+Category,Kategorie
 "Category key:",Kategorie-Key:
+"Category key",Kategorie-Key
 "Category status",Kategorie-Status
 "Category template",Kategorievorlage
 Create,Erstellen
@@ -9,6 +12,7 @@ Create,Erstellen
 "Create Category","Kategorie erstellen"
 Delete,Löschen
 "Delete category","Kategorie löschen"
+"Delete Category","Kategorie löschen"
 Edit,Bearbeiten
 "Edit category","Kategorie bearbeiten"
 "Edit Category","Kategorie Bearbeiten"
@@ -24,7 +28,10 @@ Searchable,Suchbar
 Translations,Übersetzungen
 View,Ansicht
 "View category","Kategorie anzeigen"
+"View Category","Kategorie anzeigen"
 "Visible in the category tree","Sichtbar im Kategorienbaum"
 "Visible in the category tree:","Sichtbar im Kategorienbaum:"
+Visible,Sichtbar
 yes,Ja
 "Yes, I am sure","Ja, ich bin mir sicher"
+Categories,Kategorien
