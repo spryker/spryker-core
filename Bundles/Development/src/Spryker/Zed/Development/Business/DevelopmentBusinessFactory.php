@@ -14,7 +14,10 @@ use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSnifferInte
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
 use Spryker\Zed\Development\Business\CodeBuilder\Module\ModuleBuilder;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
-use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSnifferConfiguration;
+use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfiguration;
+use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface;
+use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationLoader;
+use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationLoaderInterface;
 use Spryker\Zed\Development\Business\CodeTest\CodeTester;
 use Spryker\Zed\Development\Business\Composer\ComposerJson;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonFinder;
@@ -183,19 +186,27 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new CodeStyleSniffer(
             $this->getConfig(),
-            $this->createCodeStyleConfigurationReader()
+            $this->createCodeStyleSnifferConfigurationLoader()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSnifferConfiguration
+     * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationLoaderInterface
      */
-    public function createCodeStyleConfigurationReader(): CodeStyleSnifferConfiguration
+    public function createCodeStyleSnifferConfigurationLoader(): CodeStyleSnifferConfigurationLoaderInterface
     {
-        return new CodeStyleSnifferConfiguration(
+        return new CodeStyleSnifferConfigurationLoader(
             $this->createConfigurationReader(),
-            $this->getConfig()
+            $this->createCodeStyleSnifferConfiguration()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface
+     */
+    public function createCodeStyleSnifferConfiguration(): CodeStyleSnifferConfigurationInterface
+    {
+        return new CodeStyleSnifferConfiguration($this->getConfig());
     }
 
     /**

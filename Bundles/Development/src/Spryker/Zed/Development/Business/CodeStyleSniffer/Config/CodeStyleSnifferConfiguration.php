@@ -5,13 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Development\Business\CodeStyleSniffer;
+namespace Spryker\Zed\Development\Business\CodeStyleSniffer\Config;
 
 use InvalidArgumentException;
-use Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReaderInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 
-class CodeStyleSnifferConfiguration
+class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInterface
 {
     /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole::OPTION_FIX
@@ -53,14 +52,8 @@ class CodeStyleSnifferConfiguration
      */
     protected const OPTION_LEVEL = 'level';
 
-    protected const MODULE_CONFIG_TOOL_KEY = 'code-sniffer';
     protected const MODULE_CONFIG_LEVEL = 'level';
     protected const LEVELS_ALLOWED = [1, 2];
-
-    /**
-     * @var \Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReaderInterface
-     */
-    protected $configurationReader;
 
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
@@ -75,29 +68,34 @@ class CodeStyleSnifferConfiguration
     /**
      * @var array
      */
-    protected $optionConfig;
+    protected $configurationOptions;
 
     /**
-     * @param \Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReaderInterface $configurationReader
      * @param \Spryker\Zed\Development\DevelopmentConfig $developmentConfig
      */
-    public function __construct(ConfigurationReaderInterface $configurationReader, DevelopmentConfig $developmentConfig)
+    public function __construct(DevelopmentConfig $developmentConfig)
     {
         $this->developmentConfig = $developmentConfig;
-        $this->configurationReader = $configurationReader;
     }
 
     /**
-     * @param array $optionConfig
-     * @param string $modulePath
+     * @param array $moduleConfig
      *
      * @return void
      */
-    public function load(array $optionConfig, string $modulePath): void
+    public function setModuleConfig(array $moduleConfig): void
     {
-        $this->optionConfig = $optionConfig;
-        $this->moduleConfig = $this->configurationReader
-                ->getModuleConfigurationByAbsolutePath($modulePath)[static::MODULE_CONFIG_TOOL_KEY] ?? [];
+        $this->moduleConfig = $moduleConfig;
+    }
+
+    /**
+     * @param array $configurationOptions
+     *
+     * @return void
+     */
+    public function setConfigurationOptions(array $configurationOptions): void
+    {
+        $this->configurationOptions = $configurationOptions;
     }
 
     /**
@@ -114,7 +112,7 @@ class CodeStyleSnifferConfiguration
      */
     public function getOptionIgnore(): ?string
     {
-        return $this->optionConfig[static::OPTION_IGNORE];
+        return $this->configurationOptions[static::OPTION_IGNORE];
     }
 
     /**
@@ -122,15 +120,17 @@ class CodeStyleSnifferConfiguration
      */
     public function getOptionFix(): bool
     {
-        return $this->optionConfig[static::OPTION_FIX];
+        return $this->configurationOptions[static::OPTION_FIX];
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @return bool
      */
     public function getOptionQuiet(): bool
     {
-        return $this->optionConfig[static::OPTION_QUIET];
+        return $this->configurationOptions[static::OPTION_QUIET];
     }
 
     /**
@@ -138,7 +138,7 @@ class CodeStyleSnifferConfiguration
      */
     public function getOptionDryRun(): bool
     {
-        return $this->optionConfig[static::OPTION_DRY_RUN];
+        return $this->configurationOptions[static::OPTION_DRY_RUN];
     }
 
     /**
@@ -146,7 +146,7 @@ class CodeStyleSnifferConfiguration
      */
     public function getOptionExplain(): bool
     {
-        return $this->optionConfig[static::OPTION_EXPLAIN];
+        return $this->configurationOptions[static::OPTION_EXPLAIN];
     }
 
     /**
@@ -154,7 +154,7 @@ class CodeStyleSnifferConfiguration
      */
     public function getOptionSniffs(): ?string
     {
-        return $this->optionConfig[static::OPTION_SNIFFS];
+        return $this->configurationOptions[static::OPTION_SNIFFS];
     }
 
     /**
@@ -162,7 +162,7 @@ class CodeStyleSnifferConfiguration
      */
     public function getOptionVerbose(): bool
     {
-        return $this->optionConfig[static::OPTION_VERBOSE];
+        return $this->configurationOptions[static::OPTION_VERBOSE];
     }
 
     /**
@@ -188,7 +188,7 @@ class CodeStyleSnifferConfiguration
      */
     protected function resolveOptionLevel(): int
     {
-        $optionLevel = $this->optionConfig[static::OPTION_LEVEL];
+        $optionLevel = $this->configurationOptions[static::OPTION_LEVEL];
 
         if ($optionLevel !== null) {
             return (int)$optionLevel;

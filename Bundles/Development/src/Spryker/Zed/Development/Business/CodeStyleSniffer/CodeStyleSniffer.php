@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Development\Business\CodeStyleSniffer;
 
 use RuntimeException;
+use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface;
+use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationLoaderInterface;
 use Spryker\Zed\Development\Business\Exception\CodeStyleSniffer\PathDoesNotExistException;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
@@ -33,18 +35,18 @@ class CodeStyleSniffer
     protected $config;
 
     /**
-     * @var \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSnifferConfiguration
+     * @var \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationLoaderInterface
      */
-    protected $codeStyleSnifferConfiguration;
+    protected $codeStyleSnifferConfigurationLoader;
 
     /**
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
-     * @param \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSnifferConfiguration $codeStyleSnifferConfiguration
+     * @param \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationLoaderInterface $codeStyleSnifferConfigurationLoader
      */
-    public function __construct(DevelopmentConfig $config, CodeStyleSnifferConfiguration $codeStyleSnifferConfiguration)
+    public function __construct(DevelopmentConfig $config, CodeStyleSnifferConfigurationLoaderInterface $codeStyleSnifferConfigurationLoader)
     {
         $this->config = $config;
-        $this->codeStyleSnifferConfiguration = $codeStyleSnifferConfiguration;
+        $this->codeStyleSnifferConfigurationLoader = $codeStyleSnifferConfigurationLoader;
     }
 
     /**
@@ -67,9 +69,9 @@ class CodeStyleSniffer
         $options += $defaults;
 
         $path = $this->resolvePath($module, $namespace, $pathOption);
-        $this->codeStyleSnifferConfiguration->load($options, $path);
+        $codeStyleSnifferConfiguration = $this->codeStyleSnifferConfigurationLoader->load($options, $path);
 
-        return $this->runSnifferCommand($path);
+        return $this->runSnifferCommand($path, $codeStyleSnifferConfiguration);
     }
 
     /**
@@ -216,38 +218,40 @@ class CodeStyleSniffer
 
     /**
      * @param string $path
+     * @param \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface $codeStyleSnifferConfiguration
      *
      * @return int Exit code
      */
-    protected function runSnifferCommand($path)
+    protected function runSnifferCommand($path, CodeStyleSnifferConfigurationInterface $codeStyleSnifferConfiguration)
     {
-        $processConfig = ' --standard=' . $this->codeStyleSnifferConfiguration->getCodingStandard();
+        $processConfig = ' --standard=' . $codeStyleSnifferConfiguration->getCodingStandard();
 
-        if ($this->codeStyleSnifferConfiguration->getOptionVerbose()) {
+        if ($codeStyleSnifferConfiguration->getOptionVerbose()) {
             $processConfig .= ' -v';
         }
-        if (!$this->codeStyleSnifferConfiguration->getOptionQuiet()) {
-            $processConfig .= ' -p'; // Progress
+
+        if (!$codeStyleSnifferConfiguration->getOptionQuiet()) {
+            $processConfig .= ' -p';
         }
 
-        if ($this->codeStyleSnifferConfiguration->getOptionExplain()) {
+        if ($codeStyleSnifferConfiguration->getOptionExplain()) {
             $processConfig .= ' -e';
         }
 
-        $optionSniffs = $this->codeStyleSnifferConfiguration->getOptionSniffs();
+        $optionSniffs = $codeStyleSnifferConfiguration->getOptionSniffs();
 
         if ($optionSniffs) {
             $processConfig .= ' --sniffs=' . $optionSniffs;
         }
 
-        $optionIgnore = $this->codeStyleSnifferConfiguration->getOptionIgnore();
+        $optionIgnore = $codeStyleSnifferConfiguration->getOptionIgnore();
 
         if ($optionIgnore) {
             $processConfig .= ' --ignore=' . $optionIgnore;
         }
 
-        $optionVerbose = $this->codeStyleSnifferConfiguration->getOptionVerbose();
-        $optionFix = $this->codeStyleSnifferConfiguration->getOptionFix();
+        $optionVerbose = $codeStyleSnifferConfiguration->getOptionVerbose();
+        $optionFix = $codeStyleSnifferConfiguration->getOptionFix();
 
         if ($optionVerbose && !$optionFix) {
             $processConfig .= ' -s';
@@ -260,7 +264,7 @@ class CodeStyleSniffer
             $processConfig
         );
 
-        $optionDryRun = $this->codeStyleSnifferConfiguration->getOptionDryRun();
+        $optionDryRun = $codeStyleSnifferConfiguration->getOptionDryRun();
 
         if (!empty($optionDryRun)) {
             echo $command . PHP_EOL;
