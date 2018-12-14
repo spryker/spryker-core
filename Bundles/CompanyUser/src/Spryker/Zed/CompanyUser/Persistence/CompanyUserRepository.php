@@ -213,7 +213,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      *
      * @param int $idCompany
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
     public function findInitialCompanyUserByCompanyId(int $idCompany): ?CompanyUserTransfer
     {
