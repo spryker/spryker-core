@@ -28,7 +28,7 @@ class TouchAssertionHelper extends Module
     public function assertTouchActive($itemType, $itemId, $message = '')
     {
         $touchEntity = $this->getTouchQueryContainer()
-            ->queryTouchEntry($itemType, $itemId)
+            ->queryUpdateTouchEntry($itemType, $itemId, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
             ->findOne();
 
         $this->assertNotNull($touchEntity, $message);
@@ -45,7 +45,7 @@ class TouchAssertionHelper extends Module
     public function assertTouchDeleted($itemType, $itemId, $message = '')
     {
         $touchEntity = $this->getTouchQueryContainer()
-            ->queryTouchEntry($itemType, $itemId)
+            ->queryUpdateTouchEntry($itemType, $itemId, SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
             ->findOne();
 
         $this->assertNotNull($touchEntity, $message);
