@@ -14,7 +14,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class ProductDiscontinuedCheckoutPreConditionChecker implements ProductDiscontinuedCheckoutPreConditionCheckerInterface
 {
-    protected const PLACE_ORDER_PRE_CHECK_PRODUCT_DISCONTINUED = 'place_order.pre_check.product_discontinued';
+    protected const MESSAGE_PLACE_ORDER_PRE_CHECK_PRODUCT_DISCONTINUED = 'place_order.pre_check.product_discontinued';
+    protected const MESSAGE_PLACE_ORDER_PRE_CHECK_PRODUCT_DISCONTINUED_PARAM_NAME = '%name%';
 
     /**
      * @var \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface
@@ -44,7 +45,7 @@ class ProductDiscontinuedCheckoutPreConditionChecker implements ProductDiscontin
                 continue;
             }
 
-            $this->addDiscontinuedErrorToCheckoutResponse($checkoutResponseTransfer);
+            $this->addDiscontinuedErrorToCheckoutResponse($checkoutResponseTransfer, $itemTransfer);
             $isPassed = false;
         }
 
@@ -63,13 +64,15 @@ class ProductDiscontinuedCheckoutPreConditionChecker implements ProductDiscontin
 
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
-    protected function addDiscontinuedErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponseTransfer): void
+    protected function addDiscontinuedErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponseTransfer, ItemTransfer $itemTransfer): void
     {
         $checkoutErrorTransfer = (new CheckoutErrorTransfer())
-            ->setMessage(static::PLACE_ORDER_PRE_CHECK_PRODUCT_DISCONTINUED);
+            ->setMessage(static::MESSAGE_PLACE_ORDER_PRE_CHECK_PRODUCT_DISCONTINUED)
+            ->setParameters([static::MESSAGE_PLACE_ORDER_PRE_CHECK_PRODUCT_DISCONTINUED_PARAM_NAME => $itemTransfer->getName()]);
 
         $checkoutResponseTransfer
             ->addError($checkoutErrorTransfer)
