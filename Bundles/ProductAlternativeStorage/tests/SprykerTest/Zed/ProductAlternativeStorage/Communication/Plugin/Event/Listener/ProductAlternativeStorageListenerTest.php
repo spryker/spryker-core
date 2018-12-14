@@ -9,14 +9,14 @@ namespace SprykerTest\Zed\ProductAlternativeStorage\Communication\Plugin\Event\L
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
+use Generated\Shared\Transfer\ProductAlternativeCreateRequestTransfer;
+use Orm\Zed\ProductAlternative\Persistence\Map\SpyProductAlternativeTableMap;
 use PHPUnit\Framework\SkippedTestError;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\ProductAlternative\Dependency\ProductAlternativeEvents;
 use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Listener\ProductAlternativeStorageListener;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository;
-use Spryker\Zed\ProductDiscontinued\Dependency\ProductDiscontinuedEvents;
 
 /**
  * Auto-generated group annotations
@@ -33,7 +33,7 @@ use Spryker\Zed\ProductDiscontinued\Dependency\ProductDiscontinuedEvents;
 class ProductAlternativeStorageListenerTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\ProductAlternativeStorage\ProductAlternativeStorageBusinessTester
+     * @var \SprykerTest\Zed\ProductAlternativeStorage\ProductAlternativeStorageCommunicationTester
      */
     protected $tester;
 
@@ -48,9 +48,14 @@ class ProductAlternativeStorageListenerTest extends Unit
     protected $productAlternativeStorageListener;
 
     /**
-     * @var \Generated\Shared\Transfer\ProductDiscontinuedTransfer
+     * @var \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected $productDiscontinuedTransfer;
+    protected $targetProductConcrete;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected $alternativeProductConcrete;
 
     /**
      * @throws \PHPUnit\Framework\SkippedTestError
@@ -59,34 +64,31 @@ class ProductAlternativeStorageListenerTest extends Unit
      */
     protected function setUp(): void
     {
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
         parent::setUp();
-
         $this->productAlternativeStorageRepository = new ProductAlternativeStorageRepository();
 
         $this->productAlternativeStorageListener = new ProductAlternativeStorageListener();
         $this->productAlternativeStorageListener->setFacade($this->tester->getMockedFacade());
 
-        $productConcrete = $this->tester->haveProduct();
-        $productDiscontinuedRequestTransfer = (new ProductDiscontinueRequestTransfer())
-            ->setIdProduct($productConcrete->getIdProductConcrete());
-        $this->productDiscontinuedTransfer = $this->tester->getProductDiscontinuedFacade()->markProductAsDiscontinued(
-            $productDiscontinuedRequestTransfer
-        )
-            ->getProductDiscontinued();
+        $this->targetProductConcrete = $this->tester->haveProduct();
+        $this->alternativeProductConcrete = $this->tester->haveProduct();
+        $productAlternativeCreateRequestTransfer = (new ProductAlternativeCreateRequestTransfer())
+            ->setIdProduct($this->targetProductConcrete->getIdProductConcrete())
+            ->setAlternativeSku($this->alternativeProductConcrete->getSku());
+        $this->targetProductConcrete->addProductAlternativeCreateRequest($productAlternativeCreateRequestTransfer);
+        $this->tester->getProductAlternativeFacade()->persistProductAlternative($this->targetProductConcrete);
     }
 
     /**
      * @return void
      */
-    public function testProductAlternativeStorageEntityCanBePublished(): void
+    public function testHandleBulkProductAlternativeStorageEntityCanBePublished(): void
     {
         // Arrange
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($this->productDiscontinuedTransfer->getIdProductDiscontinued()),
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyProductAlternativeTableMap::COL_FK_PRODUCT => $this->targetProductConcrete->getIdProductConcrete(),
+            ]),
         ];
 
         // Act
@@ -95,36 +97,43 @@ class ProductAlternativeStorageListenerTest extends Unit
             ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH
         );
         $productDiscontinuedEntityTransfers = $this->productAlternativeStorageRepository
-            ->findProductAlternativeStorageEntitiesByIds(
-                [$this->productDiscontinuedTransfer->getIdProductDiscontinued()]
+            ->findProductAlternativeStorageEntities(
+                [$this->targetProductConcrete->getIdProductConcrete()]
             );
 
         // Assert
-        $this->assertCount(count($this->tester->getLocaleFacade()->getAvailableLocales()), $productDiscontinuedEntityTransfers);
+        $this->assertCount(1, $productDiscontinuedEntityTransfers);
     }
 
     /**
      * @return void
      */
-    public function testProductAlternativeStorageEntityCanBeUnpublished(): void
+    public function testHandleBulkProductAlternativeStorageEntityCanBeUnPublished(): void
     {
         // Arrange
+        $productAlternativeListTransfer = $this->tester->getProductAlternativeFacade()
+            ->getProductAlternativeListByIdProductConcrete($this->targetProductConcrete->getIdProductConcrete());
+        $productAlternativeTransfer = $productAlternativeListTransfer->getProductAlternatives()->offsetGet(0);
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($this->productDiscontinuedTransfer->getIdProductDiscontinued()),
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyProductAlternativeTableMap::COL_FK_PRODUCT => $this->targetProductConcrete->getIdProductConcrete(),
+            ]),
         ];
 
         // Act
         $this->productAlternativeStorageListener->handleBulk(
             $eventTransfers,
-            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH
+            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH
         );
+        $this->tester->getProductAlternativeFacade()
+            ->deleteProductAlternativeByIdProductAlternative($productAlternativeTransfer->getIdProductAlternative());
         $this->productAlternativeStorageListener->handleBulk(
             $eventTransfers,
-            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH
+            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_UNPUBLISH
         );
         $productDiscontinuedEntityTransfers = $this->productAlternativeStorageRepository
-            ->findProductAlternativeStorageEntitiesByIds(
-                [$this->productDiscontinuedTransfer->getIdProductDiscontinued()]
+            ->findProductAlternativeStorageEntities(
+                [$this->targetProductConcrete->getIdProductConcrete()]
             );
 
         // Assert

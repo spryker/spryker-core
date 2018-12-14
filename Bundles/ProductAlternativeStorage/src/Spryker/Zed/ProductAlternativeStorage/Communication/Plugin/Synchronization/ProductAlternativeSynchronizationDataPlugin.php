@@ -16,6 +16,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
  * @method \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductAlternativeStorage\Communication\ProductAlternativeStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageConfig getConfig()
  */
 class ProductAlternativeSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
 {
@@ -90,16 +91,39 @@ class ProductAlternativeSynchronizationDataPlugin extends AbstractPlugin impleme
      */
     public function getData(array $ids = []): array
     {
-        $synchronizationDataTransfers = [];
-        $productAlternativeStorageEntities = $this->getRepository()->findProductAlternativeStorageEntitiesByIds($ids);
+        $productAlternativeStorageEntities = $this->findProductAlternativeStorageEntities($ids);
 
+        return $this->mapEntitiesToSynchronizationDataTransfers($productAlternativeStorageEntities);
+    }
+
+    /**
+     * @param int[] $ids
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     */
+    protected function findProductAlternativeStorageEntities(array $ids): array
+    {
         if (empty($ids)) {
-            $productAlternativeStorageEntities = $this->getRepository()->findAllProductAlternativeStorageEntities();
+            return $this->getRepository()->findAllProductAlternativeStorageEntities();
         }
+
+        return $this->getRepository()->findProductAlternativeStorageEntitiesByIds($ids);
+    }
+
+    /**
+     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[] $productAlternativeStorageEntities
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    protected function mapEntitiesToSynchronizationDataTransfers(array $productAlternativeStorageEntities): array
+    {
+        $synchronizationDataTransfers = [];
 
         foreach ($productAlternativeStorageEntities as $productAlternativeStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($productAlternativeStorageEntity->getData());
+            /** @var string $data */
+            $data = $productAlternativeStorageEntity->getData();
+            $synchronizationDataTransfer->setData($data);
             $synchronizationDataTransfer->setKey($productAlternativeStorageEntity->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }

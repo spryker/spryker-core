@@ -12,9 +12,9 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Business:
+    Communication:
         path: Communication
-        class_name: ProductAlternativeStorageBusinessTester
+        class_name: ProductAlternativeStorageCommunicationTester
         modules:
             enabled:
                 - Asserts

@@ -35,17 +35,6 @@ class ProductDiscontinuedStorageRepository extends AbstractRepository implements
     /**
      * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
      */
-    public function findProductDiscontinuedStorageEntities(): array
-    {
-        return $this->getFactory()
-            ->createProductDiscontinuedStoragePropelQuery()
-            ->find()
-            ->getArrayCopy();
-    }
-
-    /**
-     * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
-     */
     public function findAllProductDiscontinuedStorageEntities(): array
     {
         /** @var \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]|\Propel\Runtime\Collection\ObjectCollection $productDiscontinuedStorageEntities */

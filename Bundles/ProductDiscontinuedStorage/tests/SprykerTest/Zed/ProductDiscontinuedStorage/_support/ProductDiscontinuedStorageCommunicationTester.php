@@ -5,13 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductAlternativeStorage;
+namespace SprykerTest\Zed\ProductDiscontinuedStorage;
 
 use Codeception\Actor;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
-use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageBusinessFactory;
-use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacade;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedFacadeInterface;
+use Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageBusinessFactory;
+use Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageFacade;
+use Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageFacadeInterface;
 
 /**
  * Inherited Methods
@@ -24,18 +25,18 @@ use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedFacadeInterface;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
- * @method \Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacade getFacade()
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageFacade getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
-class ProductAlternativeStorageBusinessTester extends Actor
+class ProductDiscontinuedStorageCommunicationTester extends Actor
 {
-    use _generated\ProductAlternativeStorageBusinessTesterActions;
+    use _generated\ProductDiscontinuedStorageCommunicationTesterActions;
 
-    /**
-     * Define custom actions here
-     */
+   /**
+    * Define custom actions here
+    */
 
     /**
      * @return \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedFacadeInterface
@@ -46,12 +47,12 @@ class ProductAlternativeStorageBusinessTester extends Actor
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacade
+     * @return \Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageFacade
      */
-    public function getMockedFacade(): ProductAlternativeStorageFacade
+    public function getMockedFacade(): ProductDiscontinuedStorageFacade
     {
-        $factory = new ProductAlternativeStorageBusinessFactory();
-        $factory->setConfig(new ProductAlternativeStorageConfigMock());
+        $factory = new ProductDiscontinuedStorageBusinessFactory();
+        $factory->setConfig(new ProductDiscontinuedStorageConfigMock());
 
         $facade = $this->getFacade();
         $facade->setFactory($factory);

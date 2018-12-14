@@ -103,7 +103,7 @@ interface ProductAlternativeStorageRepositoryInterface
     /**
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
      */
-    public function findProductReplacementForStorageEntities(): array;
+    public function findAllProductReplacementForStorageEntities(): array;
 
     /**
      * @param int[] $productReplacementForStorageIds

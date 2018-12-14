@@ -203,7 +203,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     /**
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
      */
-    public function findProductReplacementForStorageEntities(): array
+    public function findAllProductReplacementForStorageEntities(): array
     {
         return $this->getFactory()
             ->createProductReplacementForStoragePropelQuery()
