@@ -19,7 +19,6 @@ use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class Calculator implements CalculatorInterface
@@ -263,7 +262,7 @@ class Calculator implements CalculatorInterface
      *
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
      */
-    protected function getCalculatorPlugin(DiscountTransfer $discountTransfer): DiscountCalculatorPluginInterface
+    protected function getCalculatorPlugin(DiscountTransfer $discountTransfer)
     {
         if (!isset($this->calculatorPlugins[$discountTransfer->getCalculatorPlugin()])) {
             throw new CalculatorException(
