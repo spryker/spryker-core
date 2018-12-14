@@ -175,9 +175,10 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     protected function getConfigServerPort()
     {
         if (Config::get(static::ZED_API_SSL_ENABLED)) {
-            return Config::get(ApplicationConstants::PORT_SSL_ZED) ?: static::DEFAULT_SSL_PORT;
+            return Config::get(ApplicationConstants::PORT_SSL_ZED, static::DEFAULT_SSL_PORT);
         }
-        return Config::get(ApplicationConstants::PORT_ZED) ?: static::DEFAULT_PORT;
+
+        return Config::get(ApplicationConstants::PORT_ZED, static::DEFAULT_PORT);
     }
 
     /**
