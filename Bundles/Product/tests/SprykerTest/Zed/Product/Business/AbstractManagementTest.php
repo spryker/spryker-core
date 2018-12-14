@@ -262,8 +262,9 @@ class AbstractManagementTest extends FacadeTestAbstract
      */
     protected function assertTouchEntry($idProductAbstract, $touchType, $status)
     {
-        $touchEntity = $this->getProductTouchEntity($touchType, $idProductAbstract);
+        $touchEntity = $this->getProductTouchEntity($touchType, $idProductAbstract, $status);
 
+        $this->assertNotNull($touchEntity);
         $this->assertEquals($touchType, $touchEntity->getItemType());
         $this->assertEquals($idProductAbstract, $touchEntity->getItemId());
         $this->assertEquals($status, $touchEntity->getItemEvent());
@@ -317,13 +318,14 @@ class AbstractManagementTest extends FacadeTestAbstract
     /**
      * @param string $touchType
      * @param int $idProductAbstract
+     * @param string|null $status
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouch|null
      */
-    protected function getProductTouchEntity($touchType, $idProductAbstract)
+    protected function getProductTouchEntity(string $touchType, int $idProductAbstract, ?string $status = null)
     {
         return $this->touchQueryContainer
-            ->queryTouchEntriesByItemTypeAndItemIds($touchType, [$idProductAbstract])
+            ->queryUpdateTouchEntry($touchType, $idProductAbstract, $status)
             ->findOne();
     }
 }
