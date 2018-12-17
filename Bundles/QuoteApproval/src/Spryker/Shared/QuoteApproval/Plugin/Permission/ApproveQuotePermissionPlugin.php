@@ -9,17 +9,17 @@ namespace Spryker\Shared\QuoteApproval\Plugin\Permission;
 
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 
-class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
+class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterface
 {
-    public const KEY = 'PlaceOrderPermissionPlugin';
+    public const KEY = 'ApproveQuotePermissionPlugin';
 
     protected const FIELD_MULTI_CURRENCY = 'multi_currency';
 
     /**
      * {@inheritdoc}
-     * - Checks if customer is allowed to place order with cent amount up to some value for specific currency, provided in configuration.
+     * - Checks if approver is allowed to approve order with cent amount up to some value for specific currency, provided in configuration.
      * - Returns false, if quote is not provided.
-     * - Returns true, if configuration does not have cent amount for specific currency set.
+     * - Returns false, if configuration does not have cent amount for specific currency set.
      *
      * @param array $configuration
      * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
@@ -36,10 +36,10 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
         $currencyCode = $quoteTransfer->getCurrency()->getCode();
 
         if (!isset($configuration[static::FIELD_MULTI_CURRENCY][$currencyCode])) {
-            return true;
+            return false;
         }
 
-        if ($configuration[static::FIELD_MULTI_CURRENCY][$currencyCode] <= (int)$centAmount) {
+        if ($configuration[static::FIELD_MULTI_CURRENCY][$currencyCode] >= (int)$centAmount) {
             return false;
         }
 
