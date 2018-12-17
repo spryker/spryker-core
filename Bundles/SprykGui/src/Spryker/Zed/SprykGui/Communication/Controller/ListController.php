@@ -19,7 +19,7 @@ class ListController extends AbstractController
      */
     public function indexAction()
     {
-        if (!$this->isSprykAvailable()) {
+        if (!$this->getFactory()->getConfig()->isSprykAvailable()) {
             return $this->getSprykAvailableErrorRedirectResponse();
         }
 

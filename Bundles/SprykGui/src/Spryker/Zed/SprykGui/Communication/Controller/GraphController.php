@@ -24,7 +24,7 @@ class GraphController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        if (!$this->isSprykAvailable()) {
+        if (!$this->getFactory()->getConfig()->isSprykAvailable()) {
             return $this->getSprykAvailableErrorRedirectResponse();
         }
 
