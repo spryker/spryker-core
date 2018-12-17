@@ -18,7 +18,8 @@
   },
   "require-dev": {
     "spryker/propel": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {

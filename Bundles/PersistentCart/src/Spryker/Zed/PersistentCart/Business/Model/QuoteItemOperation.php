@@ -9,6 +9,7 @@ namespace Spryker\Zed\PersistentCart\Business\Model;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -192,18 +193,47 @@ class QuoteItemOperation implements QuoteItemOperationInterface
      */
     protected function isQuoteWriteAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
     {
-        if ($customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()
-            || ($customerTransfer->getCompanyUserTransfer()
-                && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
-            )
-        ) {
+        $isOwner = $customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference();
+        $hasWriteSharedCartPermission = $this->hasWritePermission($quoteTransfer->getIdQuote(), $customerTransfer->getCompanyUserTransfer());
+        $canWriteCart = $isOwner && $hasWriteSharedCartPermission;
+
+        if (!$quoteTransfer->getIsLocked() && $canWriteCart) {
             return true;
         }
-        $messageTransfer = new MessageTransfer();
-        $messageTransfer->setValue(static::GLOSSARY_KEY_PERMISSION_FAILED);
-        $this->messengerFacade->addErrorMessage($messageTransfer);
+
+        $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
 
         return false;
+    }
+
+    /**
+     * @param int $quoteId
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
+     *
+     * @return bool
+     */
+    protected function hasWritePermission(
+        int $quoteId,
+        ?CompanyUserTransfer $companyUserTransfer = null
+    ): bool {
+        return $companyUserTransfer && $this->can(
+            'WriteSharedCartPermissionPlugin',
+            $companyUserTransfer->getIdCompanyUser(),
+            $quoteId
+        );
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return void
+     */
+    protected function addErrorMessage(string $message): void
+    {
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue($message);
+
+        $this->messengerFacade->addErrorMessage($messageTransfer);
     }
 
     /**

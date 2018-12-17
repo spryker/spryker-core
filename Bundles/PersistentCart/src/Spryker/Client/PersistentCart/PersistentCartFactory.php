@@ -9,6 +9,7 @@ namespace Spryker\Client\PersistentCart;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToCustomerClientInterface;
+use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToMessengerClientInterface;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToZedRequestClientInterface;
 use Spryker\Client\PersistentCart\GuestCartCustomerReferenceGenerator\GuestCartCustomerReferenceGenerator;
@@ -102,6 +103,14 @@ class PersistentCartFactory extends AbstractFactory
     public function getCustomerClient(): PersistentCartToCustomerClientInterface
     {
         return $this->getProvidedDependency(PersistentCartDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToMessengerClientInterface
+     */
+    public function getMessengerClient(): PersistentCartToMessengerClientInterface
+    {
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::CLIENT_MESSENGER);
     }
 
     /**
