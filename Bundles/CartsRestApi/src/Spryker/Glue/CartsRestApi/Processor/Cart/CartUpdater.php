@@ -89,6 +89,9 @@ class CartUpdater implements CartUpdaterInterface
             ->setStore($storeTransfer);
 
         $quoteResponseTransfer = $this->quoteUpdater->updateQuote($restRequest, $quoteTransfer);
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->createCartNotFoundError($restResponse);
+        }
 
         $restResource = $this->cartsResourceMapper->mapCartsResource(
             $quoteResponseTransfer->getQuoteTransfer(),

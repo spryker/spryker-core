@@ -39,14 +39,19 @@ class QuoteUpdater implements QuoteUpdaterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * `
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function updateQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
-        $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())->fromArray($quoteTransfer->toArray(), true);
+        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
+        }
+
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer()->fromArray($quoteTransfer->modifiedToArray());
+
+        $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())->fromArray($quoteTransfer->modifiedToArray(), true);
         $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
             ->fromArray($quoteTransfer->modifiedToArray(), true);
         $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
