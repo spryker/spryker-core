@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\SprykGui\Communication\Controller;
 
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * @method \Spryker\Zed\SprykGui\Communication\SprykGuiCommunicationFactory getFactory()
@@ -22,10 +20,14 @@ class GraphController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function indexAction(Request $request): StreamedResponse
+    public function indexAction(Request $request)
     {
+        if (!$this->isSprykAvailable()) {
+            return $this->getSprykAvailableErrorRedirectResponse();
+        }
+
         $spryk = $request->query->get('spryk');
 
         $response = $this->getFacade()->drawSpryk($spryk);

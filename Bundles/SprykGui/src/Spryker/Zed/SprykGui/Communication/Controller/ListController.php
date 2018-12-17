@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\SprykGui\Communication\Controller;
 
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-
 /**
  * @method \Spryker\Zed\SprykGui\Communication\SprykGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface getFacade()
@@ -17,10 +15,14 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 class ListController extends AbstractController
 {
     /**
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(): array
+    public function indexAction()
     {
+        if (!$this->isSprykAvailable()) {
+            return $this->getSprykAvailableErrorRedirectResponse();
+        }
+
         $sprykDefinitions = $this->getFacade()->getSprykDefinitions();
 
         return $this->viewResponse([

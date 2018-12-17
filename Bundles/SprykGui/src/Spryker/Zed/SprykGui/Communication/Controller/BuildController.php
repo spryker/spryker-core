@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SprykGui\Communication\Controller;
 
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -24,6 +23,10 @@ class BuildController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        if (!$this->isSprykAvailable()) {
+            return $this->getSprykAvailableErrorRedirectResponse();
+        }
+
         $spryk = $request->query->get('spryk');
 
         $sprykForm = $this->getFactory()
