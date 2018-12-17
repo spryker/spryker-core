@@ -216,8 +216,8 @@ class CustomerWriter implements CustomerWriterInterface
             return $this->restApiError->addCustomerNotFoundError($restResponse);
         }
 
-        if ($restRequest->getResource()->getId()
-            && $restRequest->getResource()->getId() !== $restRequest->getUser()->getNaturalIdentifier()) {
+        $resourceId = $restRequest->getResource()->getId();
+        if ($resourceId && $resourceId !== $restRequest->getUser()->getNaturalIdentifier()) {
             return $this->restApiError->addCustomerUnauthorizedError($restResponse);
         }
 
