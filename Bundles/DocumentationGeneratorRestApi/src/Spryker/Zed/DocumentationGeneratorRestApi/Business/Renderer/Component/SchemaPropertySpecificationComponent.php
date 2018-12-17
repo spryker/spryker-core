@@ -48,7 +48,7 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
         }
 
         $property = $this->addBasicPropertyData($property);
-        $property = $this->addItemPropertiyData($property);
+        $property = $this->addItemPropertyData($property);
 
         return [$this->schemaPropertyComponentTransfer->getName() => $property];
     }
@@ -75,7 +75,7 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
      *
      * @return array
      */
-    protected function addItemPropertiyData(array $schemaProperty): array
+    protected function addItemPropertyData(array $schemaProperty): array
     {
         if ($this->schemaPropertyComponentTransfer->getItemsSchemaReference()) {
             $schemaProperty[static::KEY_ITEMS][static::KEY_REF] = $this->schemaPropertyComponentTransfer->getItemsSchemaReference();
