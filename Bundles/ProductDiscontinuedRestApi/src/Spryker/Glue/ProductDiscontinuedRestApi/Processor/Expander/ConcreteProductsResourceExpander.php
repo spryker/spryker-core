@@ -40,6 +40,7 @@ class ConcreteProductsResourceExpander implements ConcreteProductsResourceExpand
         $productDiscontinuedStorageTransfer = $this->productDiscontinuedStorageClient->findProductDiscontinuedStorage($concreteProductSku, $localeName);
         if (!$productDiscontinuedStorageTransfer) {
             $concreteProductsRestAttributesTransfer->setIsDiscontinued(false);
+            $concreteProductsRestAttributesTransfer->setDiscontinuedNote(null);
 
             return $concreteProductsRestAttributesTransfer;
         }
