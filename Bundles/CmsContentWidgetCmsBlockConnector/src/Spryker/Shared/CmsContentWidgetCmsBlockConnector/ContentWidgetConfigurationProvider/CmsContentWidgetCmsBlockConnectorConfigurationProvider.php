@@ -27,7 +27,7 @@ class CmsContentWidgetCmsBlockConnectorConfigurationProvider implements CmsConte
     public function getAvailableTemplates(): array
     {
         return [
-            CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER => '@CmsContentWidgetCmsBlockConnector/views/cms-block.twig',
+            CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER => '@CmsContentWidgetCmsBlockConnector/views/cms-block/cms-block.twig',
         ];
     }
 

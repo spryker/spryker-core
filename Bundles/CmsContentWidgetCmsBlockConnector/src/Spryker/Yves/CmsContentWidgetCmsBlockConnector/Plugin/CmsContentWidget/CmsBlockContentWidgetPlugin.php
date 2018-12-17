@@ -9,7 +9,7 @@ namespace Spryker\Yves\CmsContentWidgetCmsBlockConnector\Plugin\CmsContentWidget
 
 use ArrayObject;
 use DateTime;
-use Generated\Shared\Transfer\SpyCmsBlockEntityTransfer;
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 use Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
@@ -46,6 +46,10 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return callable
      */
     public function getContentWidgetFunction()
@@ -56,12 +60,12 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     /**
      * @param \Twig_Environment $twig
      * @param array $context
-     * @param array $blockNames
+     * @param array|string $blockNames
      * @param string|null $templateIdentifier
      *
      * @return string
      */
-    public function contentWidgetFunction(Twig_Environment $twig, array $context, array $blockNames = [], $templateIdentifier = null): string
+    public function contentWidgetFunction(Twig_Environment $twig, array $context, $blockNames, $templateIdentifier = null): string
     {
         $blocks = $this->getBlockDataByNames($blockNames);
         $templatePath = $this->resolveTemplatePath($templateIdentifier);
@@ -70,8 +74,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
         foreach ($blocks as $block) {
             $blockData = $this->getCmsBlockTransfer($block);
 
-            $isActive = $this->validateBlock($blockData);
-            $isActive &= $this->validateDates($blockData);
+            $isActive = $this->validateBlock($blockData) && $this->validateDates($blockData);
 
             if ($isActive) {
                 $rendered .= $twig->render($templatePath, [
@@ -89,7 +92,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
      *
      * @return string
      */
-    protected function resolveTemplatePath($templateIdentifier = null): string
+    protected function resolveTemplatePath(?string $templateIdentifier = null): string
     {
         if (!$templateIdentifier) {
             $templateIdentifier = CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER;
@@ -99,11 +102,11 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     }
 
     /**
-     * @param array $blockNames
+     * @param string[] $blockNames
      *
      * @return array
      */
-    protected function getBlockDataByNames(array &$blockNames): array
+    protected function getBlockDataByNames($blockNames): array
     {
         $blocks = $this->getFactory()
             ->getCmsBlockStorageClient()
@@ -113,34 +116,34 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockData
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockData
      *
      * @return bool
      */
-    protected function validateBlock(SpyCmsBlockEntityTransfer $cmsBlockData): bool
+    protected function validateBlock(CmsBlockTransfer $cmsBlockData): bool
     {
-        return $cmsBlockData->getCmsBlockTemplate() !== null;
+        return $cmsBlockData->getTemplateName() !== null;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $spyCmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return bool
      */
-    protected function validateDates(SpyCmsBlockEntityTransfer $spyCmsBlockTransfer): bool
+    protected function validateDates(CmsBlockTransfer $cmsBlockTransfer): bool
     {
         $dateToCompare = new DateTime();
 
-        if ($spyCmsBlockTransfer->getValidFrom() !== null) {
-            $validFrom = new DateTime($spyCmsBlockTransfer->getValidFrom());
+        if ($cmsBlockTransfer->getValidFrom() !== null) {
+            $validFrom = new DateTime($cmsBlockTransfer->getValidFrom());
 
             if ($dateToCompare < $validFrom) {
                 return false;
             }
         }
 
-        if ($spyCmsBlockTransfer->getValidTo() !== null) {
-            $validTo = new DateTime($spyCmsBlockTransfer->getValidTo());
+        if ($cmsBlockTransfer->getValidTo() !== null) {
+            $validTo = new DateTime($cmsBlockTransfer->getValidTo());
 
             if ($dateToCompare > $validTo) {
                 return false;
@@ -168,10 +171,10 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     /**
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    protected function getCmsBlockTransfer(array $data): SpyCmsBlockEntityTransfer
+    protected function getCmsBlockTransfer(array $data): CmsBlockTransfer
     {
-        return (new SpyCmsBlockEntityTransfer())->fromArray($data, true);
+        return (new CmsBlockTransfer())->fromArray($data, true);
     }
 }
