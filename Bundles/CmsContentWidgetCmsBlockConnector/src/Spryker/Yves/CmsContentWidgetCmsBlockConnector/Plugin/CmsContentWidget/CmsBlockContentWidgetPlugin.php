@@ -28,11 +28,6 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     /**
      * @var string
      */
-    protected $localeName;
-
-    /**
-     * @var string
-     */
     protected $storeName;
 
     /**
@@ -41,7 +36,6 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     public function __construct(CmsContentWidgetConfigurationProviderInterface $widgetConfiguration)
     {
         $this->widgetConfiguration = $widgetConfiguration;
-        $this->localeName = $this->getLocale();
         $this->storeName = $this->getApplication()['store'];
     }
 
@@ -94,11 +88,12 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
      */
     protected function resolveTemplatePath(?string $templateIdentifier = null): string
     {
-        if (!$templateIdentifier) {
+        $availableTemplates = $this->widgetConfiguration->getAvailableTemplates();
+        if (!$templateIdentifier || !array_key_exists($templateIdentifier, $availableTemplates)) {
             $templateIdentifier = CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER;
         }
 
-        return $this->widgetConfiguration->getAvailableTemplates()[$templateIdentifier];
+        return $availableTemplates[$templateIdentifier];
     }
 
     /**
@@ -110,7 +105,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     {
         $blocks = $this->getFactory()
             ->getCmsBlockStorageClient()
-            ->findBlocksByNames($blockNames, $this->localeName, $this->storeName);
+            ->findBlocksByNames($blockNames, $this->getLocale(), $this->storeName);
 
         return $blocks;
     }
