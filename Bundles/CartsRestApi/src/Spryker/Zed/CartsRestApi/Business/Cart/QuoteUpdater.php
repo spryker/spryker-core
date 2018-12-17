@@ -45,6 +45,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
      */
     public function updateQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
+        $quoteTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
         $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())->fromArray($quoteTransfer->toArray(), true);
         $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
             ->fromArray($quoteTransfer->modifiedToArray(), true);

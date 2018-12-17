@@ -9,6 +9,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -80,13 +81,9 @@ class CartUpdater implements CartUpdaterInterface
         $customerTransfer = $this->getCustomerTransfer($restRequest);
         $storeTransfer = $this->getStoreTransfer($restCartsAttributesTransfer);
 
-        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idCart, $restRequest);
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createCartNotFoundError($restResponse);
-        }
-
-        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer()
+        $quoteTransfer = (new QuoteTransfer())
             ->fromArray($restCartsAttributesTransfer->modifiedToArray(), true)
+            ->setUuid($idCart)
             ->setCurrency($currencyTransfer)
             ->setCustomer($customerTransfer)
             ->setStore($storeTransfer);
