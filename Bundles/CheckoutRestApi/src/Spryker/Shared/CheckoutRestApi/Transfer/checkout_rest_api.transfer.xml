@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="RestCheckoutData">
+        <property name="addresses" type="Addresses" singular="address"/>
+        <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod"/>
+        <property name="paymentProviders" type="PaymentProviderCollection" singular="paymentProvider"/>
+        <property name="availablePaymentMethods" type="PaymentMethods"/>
+    </transfer>
+
+    <transfer name="RestCheckoutError">
+        <property name="status" type="int"/>
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
+        <property name="parameters" type="array"/>
+    </transfer>
+
+    <transfer name="RestCheckoutDataResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="errors" type="RestCheckoutError[]" singular="error" />
+        <property name="checkoutData" type="RestCheckoutData"/>
+    </transfer>
+
+    <transfer name="RestCheckoutRequestAttributes">
+        <property name="customer" type="RestCustomer" restRequestParameter="yes"/>
+        <property name="idCart" type="string" restRequestParameter="required"/>
+        <property name="billingAddress" type="RestAddress" restRequestParameter="yes"/>
+        <property name="shippingAddress" type="RestAddress" restRequestParameter="yes"/>
+        <property name="payments" type="RestPayment[]" singular="payment" restRequestParameter="yes"/>
+        <property name="shipment" type="RestShipment" restRequestParameter="yes"/>
+    </transfer>
+
+    <transfer name="RestCustomer">
+        <property name="email" type="string" restRequestParameter="yes"/>
+        <property name="salutation" type="string" restRequestParameter="yes"/>
+        <property name="firstName" type="string" restRequestParameter="yes"/>
+        <property name="lastName" type="string" restRequestParameter="yes"/>
+        <property name="idCustomer" type="int" restRequestParameter="no"/>
+        <property name="customerReference" type="string" restRequestParameter="no"/>
+    </transfer>
+
+    <transfer name="RestAddress">
+        <property name="id" type="string" />
+        <property name="salutation" type="string" restRequestParameter="required"/>
+        <property name="firstName" type="string" restRequestParameter="required"/>
+        <property name="lastName" type="string" restRequestParameter="required"/>
+        <property name="address1" type="string" restRequestParameter="required"/>
+        <property name="address2" type="string" restRequestParameter="required"/>
+        <property name="address3" type="string" restRequestParameter="required"/>
+        <property name="zipCode" type="string" restRequestParameter="required"/>
+        <property name="city" type="string" restRequestParameter="required"/>
+        <property name="country" type="string" restRequestParameter="no"/>
+        <property name="iso2Code" type="string" restRequestParameter="required"/>
+        <property name="company" type="string" restRequestParameter="required"/>
+        <property name="phone" type="string" restRequestParameter="required"/>
+        <property name="isDefaultBilling" type="bool" restRequestParameter="yes" />
+        <property name="isDefaultShipping" type="bool" restRequestParameter="yes" />
+    </transfer>
+
+    <transfer name="RestShipment">
+        <property name="idShipmentMethod" type="int" restRequestParameter="required"/>
+    </transfer>
+
+    <transfer name="RestPayment">
+        <property name="paymentProviderName" type="string" restRequestParameter="required"/>
+        <property name="paymentMethodName" type="string" restRequestParameter="required"/>
+        <property name="paymentSelection" type="string"/>
+    </transfer>
+
+    <transfer name="RestCheckoutDataResponseAttributes">
+        <property name="addresses" type="RestAddress[]" singular="address"/>
+        <property name="paymentProviders" type="RestPaymentProvider[]" singular="paymentProvider"/>
+        <property name="shipmentMethods" type="RestShipmentMethod[]" singular="shipmentMethod"/>
+    </transfer>
+
+    <transfer name="RestPaymentProvider">
+        <property name="paymentProviderName" type="string"/>
+        <property name="paymentMethods" singular="paymentMethod" type="RestPaymentMethod[]" />
+    </transfer>
+
+    <transfer name="RestPaymentMethod">
+        <property name="paymentMethodName" type="string"/>
+        <property name="requiredRequestData" type="array"/>
+    </transfer>
+
+    <transfer name="RestShipmentMethod">
+        <property name="carrierName" type="string"/>
+        <property name="id" type="int"/>
+        <property name="name" type="string"/>
+        <property name="price" type="int"/>
+        <property name="taxRate" type="float"/>
+        <property name="deliveryTime" type="int"/>
+    </transfer>
+
+    <transfer name="RestCheckoutResponseAttributes">
+        <property name="orderReference" type="string"/>
+    </transfer>
+
+    <transfer name="RestCheckoutResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="errors" type="RestCheckoutError[]" singular="error" />
+        <property name="orderReference" type="string" />
+    </transfer>
+
+</transfers>
+
