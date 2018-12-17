@@ -31,7 +31,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addQuoteFacade($container);
-        $container = $this->addPersistentFacade($container);
+        $container = $this->addPersistentCartFacade($container);
 
         return $container;
     }
@@ -82,7 +82,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPersistentFacade(Container $container): Container
+    protected function addPersistentCartFacade(Container $container): Container
     {
         $container[static::FACADE_PERSISTENT_CART] = function (Container $container) {
             return new CartsRestApiToPersistentCartFacadeBridge($container->getLocator()->persistentCart()->facade());

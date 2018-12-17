@@ -45,8 +45,6 @@ use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapper;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCollectionReader;
 use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCollectionReaderInterface;
-use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteUpdater;
-use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreator;
 use Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestRequest\RestRequestUpdater;
@@ -107,8 +105,8 @@ class CartsRestApiFactory extends AbstractFactory
     public function createCartUpdater(): CartUpdaterInterface
     {
         return new CartUpdater(
+            $this->getClient(),
             $this->createCartsResourceMapper(),
-            $this->createQuoteUpdater(),
             $this->getResourceBuilder()
         );
     }
@@ -189,14 +187,6 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getQuoteClient(),
             $this->getPersistentCartClient()
         );
-    }
-
-    /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\Quote\QuoteUpdaterInterface
-     */
-    public function createQuoteUpdater(): QuoteUpdaterInterface
-    {
-        return new QuoteUpdater($this->getClient());
     }
 
     /**

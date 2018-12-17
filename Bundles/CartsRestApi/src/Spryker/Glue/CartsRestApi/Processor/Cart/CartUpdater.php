@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
-use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteUpdaterInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -24,14 +24,14 @@ use Symfony\Component\HttpFoundation\Response;
 class CartUpdater implements CartUpdaterInterface
 {
     /**
+     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
+     */
+    protected $cartsRestApiClient;
+
+    /**
      * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
      */
     protected $cartsResourceMapper;
-
-    /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Quote\QuoteUpdaterInterface
-     */
-    protected $quoteUpdater;
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -39,17 +39,17 @@ class CartUpdater implements CartUpdaterInterface
     protected $restResourceBuilder;
 
     /**
+     * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
-     * @param \Spryker\Glue\CartsRestApi\Processor\Quote\QuoteUpdaterInterface $quoteUpdater
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(
+        CartsRestApiClientInterface $cartsRestApiClient,
         CartsResourceMapperInterface $cartsResourceMapper,
-        QuoteUpdaterInterface $quoteUpdater,
         RestResourceBuilderInterface $restResourceBuilder
     ) {
+        $this->cartsRestApiClient = $cartsRestApiClient;
         $this->cartsResourceMapper = $cartsResourceMapper;
-        $this->quoteUpdater = $quoteUpdater;
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
@@ -80,7 +80,7 @@ class CartUpdater implements CartUpdaterInterface
             ->setCustomer($customerTransfer)
             ->setStore($storeTransfer);
 
-        $quoteResponseTransfer = $this->quoteUpdater->updateQuote($restRequest, $quoteTransfer);
+        $quoteResponseTransfer = $this->cartsRestApiClient->updateQuoteByUuid($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->createCartNotFoundError($restResponse);
         }
