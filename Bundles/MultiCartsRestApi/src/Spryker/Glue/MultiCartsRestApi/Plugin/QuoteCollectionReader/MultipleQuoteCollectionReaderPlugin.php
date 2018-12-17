@@ -19,7 +19,7 @@ class MultipleQuoteCollectionReaderPlugin extends AbstractPlugin implements Quot
 {
     /**
      * {@inheritdoc}
-     * - Returns quote collection transfer with single quote for customer.
+     * - Returns quote collection transfer with list of quotes for customer.
      *
      * @api
      *

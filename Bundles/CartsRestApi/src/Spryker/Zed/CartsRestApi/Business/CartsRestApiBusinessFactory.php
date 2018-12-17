@@ -9,9 +9,12 @@ namespace Spryker\Zed\CartsRestApi\Business;
 
 use Spryker\Zed\CartsRestApi\Business\Cart\QuoteReader;
 use Spryker\Zed\CartsRestApi\Business\Cart\QuoteReaderInterface;
+use Spryker\Zed\CartsRestApi\Business\Cart\QuoteUpdater;
+use Spryker\Zed\CartsRestApi\Business\Cart\QuoteUpdaterInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUuidWriter;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUuidWriterInterface;
 use Spryker\Zed\CartsRestApi\CartsRestApiDependencyProvider;
+use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -40,10 +43,29 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\CartsRestApi\Business\Cart\QuoteUpdaterInterface
+     */
+    public function createQuoteUpdater(): QuoteUpdaterInterface
+    {
+        return new QuoteUpdater(
+            $this->getPersistentFacade(),
+            $this->createQuoteReader()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface
      */
     public function getQuoteFacade(): CartsRestApiToQuoteFacadeInterface
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::FACADE_QUOTE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface
+     */
+    public function getPersistentFacade(): CartsRestApiToPersistentCartFacadeInterface
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::FACADE_PERSISTENT_CART);
     }
 }

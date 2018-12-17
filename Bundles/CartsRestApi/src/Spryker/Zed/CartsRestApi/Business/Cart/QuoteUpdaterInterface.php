@@ -5,20 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CartsRestApi\Zed;
+namespace Spryker\Zed\CartsRestApi\Business\Cart;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CartsRestApiZedStubInterface
+interface QuoteUpdaterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

@@ -5,7 +5,7 @@
 
     <transfer name="RestCartsAttributes">
         <property name="name" type="string" restRequestParameter="required" />
-        <property name="isDefault" type="boolean" restRequestParameter="yes" />
+        <property name="isDefault" type="boolean" restRequestParameter="no" />
     </transfer>
 
 </transfers>

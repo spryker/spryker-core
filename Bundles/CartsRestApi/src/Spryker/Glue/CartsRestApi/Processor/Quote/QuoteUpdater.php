@@ -9,24 +9,22 @@ namespace Spryker\Glue\CartsRestApi\Processor\Quote;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
-use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
+use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class QuoteUpdater implements QuoteUpdaterInterface
 {
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface
+     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
      */
-    protected $persistentCartClient;
+    protected $cartsRestApiClient;
 
     /**
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface $persistentCartClient
+     * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      */
-    public function __construct(CartsRestApiToPersistentCartClientInterface $persistentCartClient)
+    public function __construct(CartsRestApiClientInterface $cartsRestApiClient)
     {
-        $this->persistentCartClient = $persistentCartClient;
+        $this->cartsRestApiClient = $cartsRestApiClient;
     }
 
     /**
@@ -37,13 +35,6 @@ class QuoteUpdater implements QuoteUpdaterInterface
      */
     public function updateQuote(RestRequestInterface $restRequest, QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())
-            ->setIdQuote($quoteTransfer->getIdQuote())
-            ->setCustomer($quoteTransfer->getCustomer());
-        $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
-            ->fromArray($quoteTransfer->modifiedToArray(), true);
-        $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
-
-        return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
+        return $this->cartsRestApiClient->updateQuoteByUuid($quoteTransfer);
     }
 }
