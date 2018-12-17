@@ -107,7 +107,6 @@ class CartsRestApiFactory extends AbstractFactory
     public function createCartUpdater(): CartUpdaterInterface
     {
         return new CartUpdater(
-            $this->createCartReader(),
             $this->createCartsResourceMapper(),
             $this->createQuoteUpdater(),
             $this->getResourceBuilder()

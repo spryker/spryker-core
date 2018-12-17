@@ -24,11 +24,6 @@ use Symfony\Component\HttpFoundation\Response;
 class CartUpdater implements CartUpdaterInterface
 {
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface
-     */
-    protected $cartReader;
-
-    /**
      * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
      */
     protected $cartsResourceMapper;
@@ -44,18 +39,15 @@ class CartUpdater implements CartUpdaterInterface
     protected $restResourceBuilder;
 
     /**
-     * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface $cartReader
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
      * @param \Spryker\Glue\CartsRestApi\Processor\Quote\QuoteUpdaterInterface $quoteUpdater
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(
-        CartReaderInterface $cartReader,
         CartsResourceMapperInterface $cartsResourceMapper,
         QuoteUpdaterInterface $quoteUpdater,
         RestResourceBuilderInterface $restResourceBuilder
     ) {
-        $this->cartReader = $cartReader;
         $this->cartsResourceMapper = $cartsResourceMapper;
         $this->quoteUpdater = $quoteUpdater;
         $this->restResourceBuilder = $restResourceBuilder;
