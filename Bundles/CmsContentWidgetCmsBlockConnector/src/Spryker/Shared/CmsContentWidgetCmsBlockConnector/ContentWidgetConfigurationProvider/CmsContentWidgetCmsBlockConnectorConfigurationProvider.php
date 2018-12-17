@@ -36,6 +36,7 @@ class CmsContentWidgetCmsBlockConnectorConfigurationProvider implements CmsConte
      */
     public function getUsageInformation(): string
     {
-        return "{{ cms_block('block_name_placeholder') }}, to use different template {{ cms_block('block_name_placeholder', 'default') }}. Warning: Please avoid looping situation when Block 'A' is added to a Block 'A'. This will make your page crush.";
+        return "{{ cms_block('block_name_placeholder') }}. To use a different template {{ cms_block('block_name_placeholder', 'default') }}. Warning: Please avoid situations involving loops. For example, when Block 'A' is added to a Block 'A' your page will crash after a long period of waiting. This situation also exists if Block 'A' references Block 'B', which itself references block 'A'.";
+
     }
 }
