@@ -139,7 +139,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
     /**
      * @param int $idProductOptionValue
      *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue|null
      */
     protected function findOptionValueById(int $idProductOptionValue): ?SpyProductOptionValue
     {
