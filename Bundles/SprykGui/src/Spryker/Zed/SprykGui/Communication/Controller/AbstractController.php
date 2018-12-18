@@ -31,6 +31,8 @@ class AbstractController extends SprykerAbstractController
             return;
         }
 
-        throw new NotFoundHttpException('Spryk available only on Development environment.');
+        throw new NotFoundHttpException(
+            'Spryk available only on Development environment. Include this module as require-dev dependency in your composer file for security reasons.'
+        );
     }
 }
