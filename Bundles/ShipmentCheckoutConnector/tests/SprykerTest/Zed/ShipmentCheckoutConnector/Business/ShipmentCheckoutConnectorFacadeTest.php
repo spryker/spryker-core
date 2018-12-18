@@ -107,7 +107,6 @@ class ShipmentCheckoutConnectorFacadeTest extends Unit
             ->withMethod($shipmentMethodTransfer->toArray())
             ->build();
 
-
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setShipment($shipmentTransfer);
 

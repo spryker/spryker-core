@@ -16,6 +16,7 @@
     "spryker/symfony": "^3.0.0",
     "spryker/tax": "^5.0.0",
     "spryker/util-text": "^1.1.0",
+    "spryker/country": "*",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
@@ -24,7 +25,6 @@
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
-    "spryker/country": "*",
     "spryker/propel": "*",
     "spryker/testify": "*",
     "spryker/zed-navigation": "*"

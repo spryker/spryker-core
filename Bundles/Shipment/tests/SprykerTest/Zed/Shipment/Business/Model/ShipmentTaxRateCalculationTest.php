@@ -319,7 +319,6 @@ class ShipmentTaxRateCalculationTest extends Unit
 
         $quoteTransfer->addItem($itemTransfer);
 
-
         return $quoteTransfer;
     }
 }

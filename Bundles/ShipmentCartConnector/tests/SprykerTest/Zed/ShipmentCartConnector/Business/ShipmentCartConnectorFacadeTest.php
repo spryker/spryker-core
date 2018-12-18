@@ -19,6 +19,7 @@ use Spryker\Zed\ShipmentCartConnector\Business\ShipmentCartConnectorFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ShipmentCartConnector

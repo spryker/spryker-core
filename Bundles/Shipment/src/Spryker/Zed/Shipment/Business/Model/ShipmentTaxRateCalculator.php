@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
@@ -41,7 +40,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
      *
      * @return void
      */
-    public function recalculate(QuoteTransfer $quoteTransfer)
+    public function recalculate(QuoteTransfer $quoteTransfer): void
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getMethod() === null) {
@@ -59,7 +58,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function setItemShipmentExpenseTaxRate(ItemTransfer $itemTransfer, float $taxRate)
+    protected function setItemShipmentExpenseTaxRate(ItemTransfer $itemTransfer, float $taxRate): void
     {
         $itemTransfer
             ->getShipment()
@@ -73,7 +72,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function setItemShipmentTaxRate(ItemTransfer $itemTransfer, float $taxRate)
+    protected function setItemShipmentTaxRate(ItemTransfer $itemTransfer, float $taxRate): void
     {
         $itemTransfer
             ->getShipment()
@@ -99,9 +98,9 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod|null
+     * @return array|null
      */
-    protected function findTaxSet(ItemTransfer $itemTransfer): ?SpyShipmentMethod
+    protected function findTaxSet(ItemTransfer $itemTransfer): ?array
     {
         $countryIso2Code = $this->getCountryIso2Code($itemTransfer);
 
