@@ -15,7 +15,7 @@
     <transfer name="RestCatalogSearchSort">
         <property name="sortParamNames" type="array"/>
         <property name="sortParamLocalizedNames" type="array"/>
-        <property name="currentSortParam" type="string" />
+        <property name="currentSortParam" type="string"/>
         <property name="currentSortOrder" type="string"/>
     </transfer>
 
