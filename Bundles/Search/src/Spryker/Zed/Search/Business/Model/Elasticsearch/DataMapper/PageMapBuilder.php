@@ -260,6 +260,7 @@ class PageMapBuilder implements PageMapBuilderInterface, ProductPageSearchPageMa
             $value = [$value];
         }
 
-        return array_values(array_filter($value));
+        // removes null, false and empty strings but leaves 0 (zero) values
+        return array_values(array_filter($value, 'strlen'));
     }
 }
