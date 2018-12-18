@@ -2,4 +2,9 @@
 "Add Dataset","Datensatz hinzufügen"
 "Back to Dataset list","Zurück zu Datensatzliste"
 "Edit Dataset","Datensatz bearbeiten"
-Save,Speichern
+"Edit dataset","Datensatz bearbeiten"
+Save,Speichern,
+Datasets list,Datensatzliste
+Dataset name,Datensatz name
+Dataset,Datensatz
+Add dashboard,Dashboard hinzufügen
