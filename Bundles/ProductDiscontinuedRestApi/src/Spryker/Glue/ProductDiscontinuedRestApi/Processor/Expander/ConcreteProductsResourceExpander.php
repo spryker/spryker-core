@@ -27,17 +27,16 @@ class ConcreteProductsResourceExpander implements ConcreteProductsResourceExpand
 
     /**
      * @param \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer
-     * @param string $concreteProductSku
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer
      */
     public function expand(
         ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer,
-        string $concreteProductSku,
         string $localeName
     ): ConcreteProductsRestAttributesTransfer {
-        $productDiscontinuedStorageTransfer = $this->productDiscontinuedStorageClient->findProductDiscontinuedStorage($concreteProductSku, $localeName);
+        $productDiscontinuedStorageTransfer = $this->productDiscontinuedStorageClient
+            ->findProductDiscontinuedStorage($concreteProductsRestAttributesTransfer->getSku(), $localeName);
         if (!$productDiscontinuedStorageTransfer) {
             $concreteProductsRestAttributesTransfer->setIsDiscontinued(false);
             $concreteProductsRestAttributesTransfer->setDiscontinuedNote(null);

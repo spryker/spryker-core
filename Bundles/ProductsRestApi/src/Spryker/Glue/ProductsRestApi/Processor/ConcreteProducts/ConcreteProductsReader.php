@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ConcreteProductsReader implements ConcreteProductsReaderInterface
 {
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
+    protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
 
     /**
      * @var \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface
@@ -137,7 +138,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             ->addProductAttributeTranslation($restConcreteProductsAttributesTransfer, $restRequest->getMetadata()->getLocale());
         $restConcreteProductsAttributesTransfer = $this->expandConcreteProduct(
             $restConcreteProductsAttributesTransfer,
-            $sku,
+            $concreteProductData[static::KEY_ID_PRODUCT_CONCRETE],
             $restRequest->getMetadata()->getLocale()
         );
 
@@ -150,14 +151,14 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer
-     * @param string $concreteProductSku
+     * @param int $idProductConcrete
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer
      */
     protected function expandConcreteProduct(
         ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer,
-        string $concreteProductSku,
+        int $idProductConcrete,
         string $localeName
     ): ConcreteProductsRestAttributesTransfer {
         $concreteProductsRestAttributesTransfer = $this->concreteProductAttributeTranslationExpander
@@ -165,7 +166,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
 
         $restConcreteProductsAttributesTransfer = $this->executeExpanderPlugins(
             $concreteProductsRestAttributesTransfer,
-            $concreteProductSku,
+            $idProductConcrete,
             $localeName
         );
 
@@ -174,20 +175,20 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer
-     * @param string $concreteProductSku
+     * @param int $idProductConcrete
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer
      */
     protected function executeExpanderPlugins(
         ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer,
-        string $concreteProductSku,
+        int $idProductConcrete,
         string $localeName
     ): ConcreteProductsRestAttributesTransfer {
         foreach ($this->concreteProductsResourceExpanderPlugins as $concreteProductsResourceExpanderPlugin) {
             $concreteProductsRestAttributesTransfer = $concreteProductsResourceExpanderPlugin->expand(
                 $concreteProductsRestAttributesTransfer,
-                $concreteProductSku,
+                $idProductConcrete,
                 $localeName
             );
         }

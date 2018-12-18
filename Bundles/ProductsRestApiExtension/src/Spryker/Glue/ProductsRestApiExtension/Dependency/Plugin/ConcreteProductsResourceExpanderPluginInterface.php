@@ -18,14 +18,14 @@ interface ConcreteProductsResourceExpanderPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer
-     * @param string $concreteProductSku
+     * @param int $idProductConcrete
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer
      */
     public function expand(
         ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer,
-        string $concreteProductSku,
+        int $idProductConcrete,
         string $localeName
     ): ConcreteProductsRestAttributesTransfer;
 }
