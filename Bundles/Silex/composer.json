@@ -5,15 +5,10 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "silex/silex": "^1.3.5"
+    "spryker/silexphp": "^1.0.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0.x-dev"
-    }
-  },
   "config": {
     "sort-packages": true
   }
