@@ -10,7 +10,6 @@ namespace Spryker\Zed\SprykGui\Communication\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\SprykGui\Communication\SprykGuiCommunicationFactory getFactory()
@@ -22,14 +21,12 @@ class GraphController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function indexAction(Request $request): StreamedResponse
     {
         if (!$this->isSprykAvailable()) {
-            throw new NotFoundHttpException(static::MESSAGE_SPRYK_ERROR);
+            $this->assertNonProductionEnvironment();
         }
 
         $spryk = $request->query->get('spryk');

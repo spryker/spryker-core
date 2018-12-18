@@ -9,6 +9,7 @@ namespace Spryker\Zed\SprykGui\Communication\Controller;
 
 use Spryker\Shared\Config\Environment;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController as SprykerAbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\SprykGui\Communication\SprykGuiCommunicationFactory getFactory()
@@ -16,20 +17,24 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController as SprykerAbs
  */
 class AbstractController extends SprykerAbstractController
 {
-    protected const MESSAGE_SPRYK_ERROR = 'Spryk available only on Development environment.';
-
     /**
      * @return bool
      */
-    public function isSprykAvailable(): bool
+    protected function isSprykAvailable(): bool
     {
-        $isDevelopmentEnvironment = Environment::isDevelopment();
+        $isProductionEnvironment = Environment::isProduction();
         $isCli = PHP_SAPI === 'cli';
 
-        if ($isDevelopmentEnvironment || $isCli) {
-            return true;
-        }
+        return !$isProductionEnvironment || $isCli;
+    }
 
-        return false;
+    /**
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return void
+     */
+    protected function assertNonProductionEnvironment(): void
+    {
+        throw new NotFoundHttpException('Spryk available only on Development environment.');
     }
 }

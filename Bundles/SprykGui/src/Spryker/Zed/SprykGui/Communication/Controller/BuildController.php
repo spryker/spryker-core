@@ -9,7 +9,6 @@ namespace Spryker\Zed\SprykGui\Communication\Controller;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\SprykGui\Communication\SprykGuiCommunicationFactory getFactory()
@@ -20,14 +19,12 @@ class BuildController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return array
      */
     public function indexAction(Request $request): array
     {
         if (!$this->isSprykAvailable()) {
-            throw new NotFoundHttpException(static::MESSAGE_SPRYK_ERROR);
+            $this->assertNonProductionEnvironment();
         }
 
         $spryk = $request->query->get('spryk');
