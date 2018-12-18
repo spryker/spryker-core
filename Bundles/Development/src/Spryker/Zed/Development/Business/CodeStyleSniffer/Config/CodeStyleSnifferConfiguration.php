@@ -53,7 +53,8 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     protected const OPTION_LEVEL = 'level';
 
     protected const MODULE_CONFIG_LEVEL = 'level';
-    protected const LEVELS_ALLOWED = [1, 2];
+    protected const LEVEL_SPRYKER = 1;
+    protected const LEVEL_SPRYKER_STRICT = 2;
 
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
@@ -109,7 +110,10 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
      */
     public function getCodingStandard(): string
     {
-        // TODO: make this dependent on current code sniffer level
+        if ($this->getLevel() === static::LEVEL_SPRYKER_STRICT) {
+            return $this->developmentConfig->getCodingStandardStrict();
+        }
+
         return $this->developmentConfig->getCodingStandard();
     }
 
@@ -194,9 +198,11 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     {
         $optionLevel = $this->resolveOptionLevel();
 
-        if (!in_array($optionLevel, static::LEVELS_ALLOWED)) {
+        $levelAllowed = $this->getLevelsAllowed();
+
+        if (!in_array($optionLevel, $levelAllowed)) {
             throw new InvalidArgumentException(
-                sprintf('Level should be in [%s] range', implode(', ', static::LEVELS_ALLOWED))
+                sprintf('Level should be in [%s] range', implode(', ', $levelAllowed))
             );
         }
 
@@ -219,5 +225,16 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
         }
 
         return $this->developmentConfig->getCodeSnifferLevel();
+    }
+
+    /**
+     * @return int[]
+     */
+    protected function getLevelsAllowed(): array
+    {
+        return [
+            static::LEVEL_SPRYKER,
+            static::LEVEL_SPRYKER_STRICT,
+        ];
     }
 }
