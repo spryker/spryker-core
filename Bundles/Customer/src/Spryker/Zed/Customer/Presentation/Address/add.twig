@@ -2,8 +2,12 @@
 
 {% set widget_title = 'Add new address' %}
 
-{% block head_title widget_title | trans %}
-{% block section_title widget_title | trans %}
+{% block head_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+{% block section_title %}
+    {{ widget_title | trans }}
+{% endblock %}
 
 {% block action %}
     {{ backActionButton('/customer/view?id-customer=' ~ idCustomer, 'Back to Customer View' | trans) }}
