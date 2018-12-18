@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ButtonTransfer;
 
 class CompanyUserTableButtonCreator extends AbstractButtonCreator implements CompanyUserTableButtonCreatorInterface
 {
-    protected const URL_ATTACH_CUSTOMER_TO_BUSINESS_UNIT = '/business-on-behalf-gui/customer/attach-customer';
+    protected const PATH_ATTACH_CUSTOMER_TO_BUSINESS_UNIT = '/business-on-behalf-gui/customer/attach-customer';
 
     protected const PARAM_ID_CUSTOMER = 'id-customer';
     protected const PARAM_ID_COMPANY = 'id-company';
@@ -29,7 +29,7 @@ class CompanyUserTableButtonCreator extends AbstractButtonCreator implements Com
      */
     public function addAttachCustomerToBusinessUnitButton(array $companyUserTableRowItem, array $buttons): ButtonTransfer
     {
-        $url = $this->generateUrl(static::URL_ATTACH_CUSTOMER_TO_BUSINESS_UNIT, [
+        $url = $this->generateUrl(static::PATH_ATTACH_CUSTOMER_TO_BUSINESS_UNIT, [
             static::PARAM_ID_CUSTOMER => $companyUserTableRowItem[static::COL_FK_CUSTOMER],
             static::PARAM_ID_COMPANY => $companyUserTableRowItem[static::COL_FK_COMPANY],
         ]);

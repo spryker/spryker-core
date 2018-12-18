@@ -189,7 +189,7 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getCompanyUserTableActionExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PLUGINS_COMPANY_USER_TABLE_ACTION_LINKS_FORM_EXPANDER);
+        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PLUGINS_COMPANY_USER_TABLE_ACTION_EXPANDER);
     }
 
     /**
@@ -197,6 +197,6 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getCompanyUserTableDeleteActionPlugin(): ?CompanyUserTableDeleteActionPluginInterface
     {
-        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PLUGIN_COMPANY_USER_TABLE_GET_DELETE_LINK);
+        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PLUGIN_COMPANY_USER_TABLE_DELETE_ACTION);
     }
 }

@@ -30,8 +30,8 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER = 'PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER';
     public const PLUGINS_COMPANY_USER_FORM_EXPANDER = 'PLUGINS_COMPANY_USER_FORM_EXPANDER';
     public const PLUGINS_COMPANY_USER_ATTACH_CUSTOMER_FORM_EXPANDER = 'PLUGINS_COMPANY_USER_ATTACH_CUSTOMER_FORM_EXPANDER';
-    public const PLUGINS_COMPANY_USER_TABLE_ACTION_LINKS_FORM_EXPANDER = 'PLUGINS_COMPANY_USER_TABLE_ACTION_LINKS_FORM_EXPANDER';
-    public const PLUGIN_COMPANY_USER_TABLE_GET_DELETE_LINK = 'PLUGIN_COMPANY_USER_TABLE_GET_DELETE_LINK';
+    public const PLUGINS_COMPANY_USER_TABLE_ACTION_EXPANDER = 'PLUGINS_COMPANY_USER_TABLE_ACTION_EXPANDER';
+    public const PLUGIN_COMPANY_USER_TABLE_DELETE_ACTION = 'PLUGIN_COMPANY_USER_TABLE_DELETE_ACTION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -181,7 +181,7 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserTableActionExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USER_TABLE_ACTION_LINKS_FORM_EXPANDER] = function (Container $container) {
+        $container[static::PLUGINS_COMPANY_USER_TABLE_ACTION_EXPANDER] = function (Container $container) {
             return $this->getCompanyUserTableActionExpanderPlugins();
         };
 
@@ -195,7 +195,7 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserTableDeleteActionPlugin(Container $container): Container
     {
-        $container[static::PLUGIN_COMPANY_USER_TABLE_GET_DELETE_LINK] = function (Container $container) {
+        $container[static::PLUGIN_COMPANY_USER_TABLE_DELETE_ACTION] = function (Container $container) {
             return $this->getCompanyUserTableDeleteActionPlugin();
         };
 
