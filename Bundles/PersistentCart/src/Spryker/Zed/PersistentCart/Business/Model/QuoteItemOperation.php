@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
+use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
 
 class QuoteItemOperation implements QuoteItemOperationInterface
 {
@@ -193,17 +194,27 @@ class QuoteItemOperation implements QuoteItemOperationInterface
      */
     protected function isQuoteWriteAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
     {
-        $isOwner = $customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference();
-        $hasWriteSharedCartPermission = $this->hasWritePermission($quoteTransfer->getIdQuote(), $customerTransfer->getCompanyUserTransfer());
-        $canWriteCart = $isOwner && $hasWriteSharedCartPermission;
-
-        if (!$quoteTransfer->getIsLocked() && $canWriteCart) {
+        if (!$quoteTransfer->getIsLocked()
+            && $this->hasWritePermission($quoteTransfer->getIdQuote(), $customerTransfer->getCompanyUserTransfer())
+            && $this->isCartOwner($quoteTransfer, $customerTransfer)
+        ) {
             return true;
         }
 
         $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isCartOwner(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
+    {
+        return $customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference();
     }
 
     /**
@@ -217,7 +228,7 @@ class QuoteItemOperation implements QuoteItemOperationInterface
         ?CompanyUserTransfer $companyUserTransfer = null
     ): bool {
         return $companyUserTransfer && $this->can(
-            'WriteSharedCartPermissionPlugin',
+            WriteSharedCartPermissionPlugin::KEY,
             $companyUserTransfer->getIdCompanyUser(),
             $quoteId
         );

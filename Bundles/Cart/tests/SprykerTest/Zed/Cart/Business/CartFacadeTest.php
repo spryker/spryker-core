@@ -307,4 +307,30 @@ class CartFacadeTest extends Unit
             ->setPrice(100)
             ->save();
     }
+
+    /**
+     * @return void
+     */
+    public function testLock(): void
+    {
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setIsLocked(true);
+
+        $quoteTransfer = $this->cartFacade->lock($quoteTransfer);
+
+        $this->assertTrue($quoteTransfer->getIsLocked());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUnlock(): void
+    {
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setIsLocked(false);
+
+        $quoteTransfer = $this->cartFacade->unlock($quoteTransfer);
+
+        $this->assertFalse($quoteTransfer->getIsLocked());
+    }
 }
