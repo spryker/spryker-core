@@ -226,32 +226,32 @@ class CodeStyleSniffer
     {
         $processConfig = ' --standard=' . $codeStyleSnifferConfiguration->getCodingStandard();
 
-        if ($codeStyleSnifferConfiguration->getOptionVerbose()) {
+        if ($codeStyleSnifferConfiguration->isVerbose()) {
             $processConfig .= ' -v';
         }
 
-        if (!$codeStyleSnifferConfiguration->getOptionQuiet()) {
+        if (!$codeStyleSnifferConfiguration->isQuiet()) {
             $processConfig .= ' -p';
         }
 
-        if ($codeStyleSnifferConfiguration->getOptionExplain()) {
+        if ($codeStyleSnifferConfiguration->isExplaining()) {
             $processConfig .= ' -e';
         }
 
-        $optionSniffs = $codeStyleSnifferConfiguration->getOptionSniffs();
+        $optionSniffs = $codeStyleSnifferConfiguration->getSpecificSniffs();
 
         if ($optionSniffs) {
             $processConfig .= ' --sniffs=' . $optionSniffs;
         }
 
-        $optionIgnore = $codeStyleSnifferConfiguration->getOptionIgnore();
+        $optionIgnore = $codeStyleSnifferConfiguration->getIgnoredPaths();
 
         if ($optionIgnore) {
             $processConfig .= ' --ignore=' . $optionIgnore;
         }
 
-        $optionVerbose = $codeStyleSnifferConfiguration->getOptionVerbose();
-        $optionFix = $codeStyleSnifferConfiguration->getOptionFix();
+        $optionVerbose = $codeStyleSnifferConfiguration->isVerbose();
+        $optionFix = $codeStyleSnifferConfiguration->isFixing();
 
         if ($optionVerbose && !$optionFix) {
             $processConfig .= ' -s';
@@ -264,7 +264,7 @@ class CodeStyleSniffer
             $processConfig
         );
 
-        $optionDryRun = $codeStyleSnifferConfiguration->getOptionDryRun();
+        $optionDryRun = $codeStyleSnifferConfiguration->isDryRun();
 
         if (!empty($optionDryRun)) {
             echo $command . PHP_EOL;

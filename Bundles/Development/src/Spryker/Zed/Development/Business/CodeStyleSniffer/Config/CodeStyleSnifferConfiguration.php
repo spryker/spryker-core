@@ -53,7 +53,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     protected const OPTION_LEVEL = 'level';
 
     protected const MODULE_CONFIG_LEVEL = 'level';
-    protected const LEVELS_ALLOWED = [1, 2];
+    protected const ALLOWED_LEVELS = [1, 2];
 
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
@@ -81,24 +81,30 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     /**
      * @param array $moduleConfig
      *
-     * @return void
+     * @return $this
      */
-    public function setModuleConfig(array $moduleConfig): void
+    public function setModuleConfig(array $moduleConfig): CodeStyleSnifferConfigurationInterface
     {
         $this->moduleConfig = $moduleConfig;
+
+        return $this;
     }
 
     /**
      * @param array $configurationOptions
      *
-     * @return void
+     * @return $this
      */
-    public function setConfigurationOptions(array $configurationOptions): void
+    public function setConfigurationOptions(array $configurationOptions): CodeStyleSnifferConfigurationInterface
     {
         $this->configurationOptions = $configurationOptions;
+
+        return $this;
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @return string
      */
     public function getCodingStandard(): string
@@ -108,17 +114,21 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @return string|null
      */
-    public function getOptionIgnore(): ?string
+    public function getIgnoredPaths(): ?string
     {
         return $this->configurationOptions[static::OPTION_IGNORE];
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @return bool
      */
-    public function getOptionFix(): bool
+    public function isFixing(): bool
     {
         return $this->configurationOptions[static::OPTION_FIX];
     }
@@ -128,55 +138,65 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
      *
      * @return bool
      */
-    public function getOptionQuiet(): bool
+    public function isQuiet(): bool
     {
         return $this->configurationOptions[static::OPTION_QUIET];
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @return bool
      */
-    public function getOptionDryRun(): bool
+    public function isDryRun(): bool
     {
         return $this->configurationOptions[static::OPTION_DRY_RUN];
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @return bool
      */
-    public function getOptionExplain(): bool
+    public function isExplaining(): bool
     {
         return $this->configurationOptions[static::OPTION_EXPLAIN];
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @return string|null
      */
-    public function getOptionSniffs(): ?string
+    public function getSpecificSniffs(): ?string
     {
         return $this->configurationOptions[static::OPTION_SNIFFS];
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @return bool
      */
-    public function getOptionVerbose(): bool
+    public function isVerbose(): bool
     {
         return $this->configurationOptions[static::OPTION_VERBOSE];
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @throws \InvalidArgumentException
      *
      * @return int
      */
-    public function getOptionLevel(): int
+    public function getLevel(): int
     {
         $optionLevel = $this->resolveOptionLevel();
 
-        if (!in_array($optionLevel, static::LEVELS_ALLOWED)) {
+        if (!in_array($optionLevel, static::ALLOWED_LEVELS)) {
             throw new InvalidArgumentException(
-                sprintf('Level should be in [%s] range', implode(', ', static::LEVELS_ALLOWED))
+                sprintf('Level should be in [%s] range', implode(', ', static::ALLOWED_LEVELS))
             );
         }
 
