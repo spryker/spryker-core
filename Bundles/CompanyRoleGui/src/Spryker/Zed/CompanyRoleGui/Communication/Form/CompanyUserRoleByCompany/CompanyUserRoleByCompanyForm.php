@@ -136,10 +136,10 @@ class CompanyUserRoleByCompanyForm extends AbstractType
      */
     protected function getOutputDataCallbackRoleCollectionTransformer(): Closure
     {
-        return function ($roleCollectionSubmitted = []): CompanyRoleCollectionTransfer {
+        return function ($submittedRoleCollection = []): CompanyRoleCollectionTransfer {
             $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
 
-            foreach ($roleCollectionSubmitted as $role) {
+            foreach ($submittedRoleCollection as $role) {
                 $companyRoleTransfer = (new CompanyRoleTransfer())
                     ->setIdCompanyRole($role);
 

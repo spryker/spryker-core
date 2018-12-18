@@ -60,6 +60,7 @@ class CustomerBusinessUnitAttachFormDataProvider
         $companyTransfer = $this->companyFacade->getCompanyById(
             (new CompanyTransfer())->setIdCompany($idCompany)
         );
+
         $customerTransfer = $this->customerFacade->findCustomerById(
             (new CustomerTransfer())->setIdCustomer($idCustomer)
         );

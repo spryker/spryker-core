@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\BusinessOnBehalfGui\BusinessOnBehalfGuiDependencyProvider;
 use Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator\CompanyUserTableButtonCreator;
 use Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator\CompanyUserTableButtonCreatorInterface;
@@ -72,14 +71,17 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $data
-     * @param array $options
+     * @param int $idCustomer
+     * @param int $idCompany
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getCustomerBusinessUnitAttachForm(?CompanyUserTransfer $data = null, array $options = []): FormInterface
+    public function getCustomerBusinessUnitAttachForm(int $idCustomer, int $idCompany): FormInterface
     {
-        return $this->getFormFactory()->create(CustomerBusinessUnitAttachForm::class, $data, $options);
+        $dataProvider = $this->createCustomerCompanyAttachFormDataProvider();
+        $companyUserTransfer = $dataProvider->getData($idCustomer, $idCompany);
+
+        return $this->getFormFactory()->create(CustomerBusinessUnitAttachForm::class, $companyUserTransfer, $dataProvider->getOptions($companyUserTransfer));
     }
 
     /**
