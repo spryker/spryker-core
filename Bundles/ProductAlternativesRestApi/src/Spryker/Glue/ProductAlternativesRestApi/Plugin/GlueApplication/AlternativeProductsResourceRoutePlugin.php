@@ -15,7 +15,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\ProductAlternativesRestApi\ProductAlternativesRestApiConfig;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 
-class ProductAlternativesResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
+class AlternativeProductsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -28,7 +28,7 @@ class ProductAlternativesResourceRoutePlugin extends AbstractPlugin implements R
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        return $resourceRouteCollection->addGet(ProductAlternativesRestApiConfig::ACTION_PRODUCT_ALTERNATIVES_GET, false);
+        return $resourceRouteCollection->addGet(ProductAlternativesRestApiConfig::ACTION_ALTERNATIVE_PRODUCTS_GET, false);
     }
 
     /**
@@ -40,7 +40,7 @@ class ProductAlternativesResourceRoutePlugin extends AbstractPlugin implements R
      */
     public function getResourceType(): string
     {
-        return ProductAlternativesRestApiConfig::RESOURCE_PRODUCT_ALTERNATIVES;
+        return ProductAlternativesRestApiConfig::RESOURCE_ALTERNATIVE_PRODUCTS;
     }
 
     /**
@@ -52,7 +52,7 @@ class ProductAlternativesResourceRoutePlugin extends AbstractPlugin implements R
      */
     public function getController(): string
     {
-        return ProductAlternativesRestApiConfig::CONTROLLER_PRODUCT_ALTERNATIVES;
+        return ProductAlternativesRestApiConfig::CONTROLLER_ALTERNATIVE_PRODUCTS;
     }
 
     /**

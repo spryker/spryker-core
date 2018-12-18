@@ -24,13 +24,9 @@ class ProductAlternativesMapperTester extends Actor
     use _generated\ProductAlternativesMapperTesterActions;
 
     /**
-     * Define custom actions here
-     */
-
-    /**
      * @return array
      */
-    public function hasProductConcreteStorageData(): array
+    public function haveProductConcreteStorageData(): array
     {
         return [
             'id_product_concrete' => 185,
@@ -63,7 +59,7 @@ class ProductAlternativesMapperTester extends Actor
     /**
      * @return array
      */
-    public function hasProductAbstractStorageData(): array
+    public function haveProductAbstractStorageData(): array
     {
         return [
             'id_product_abstract' => 134,

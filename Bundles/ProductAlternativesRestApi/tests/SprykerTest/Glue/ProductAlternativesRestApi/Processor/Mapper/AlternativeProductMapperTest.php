@@ -9,7 +9,7 @@ namespace SprykerTest\Glue\ProductAlternativesRestApi\Processor\Mapper;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RestAlternativeProductsAttributesTransfer;
-use Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\ProductAlternativeMapper;
+use Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\AlternativeProductMapper;
 
 /**
  * Auto-generated group annotations
@@ -18,10 +18,10 @@ use Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\ProductAlternativeM
  * @group ProductAlternativesRestApi
  * @group Processor
  * @group Mapper
- * @group ProductAlternativeMapperTest
+ * @group AlternativeProductMapperTest
  * Add your own group annotations below this line
  */
-class ProductAlternativeMapperTest extends Unit
+class AlternativeProductMapperTest extends Unit
 {
     protected const CONCRETE_PRODUCT_SKU = '134_26145012';
     protected const ABSTRACT_PRODUCT_SKU = '134';
@@ -34,11 +34,11 @@ class ProductAlternativeMapperTest extends Unit
     /**
      * @return void
      */
-    public function testMapProductAbstractStorageDataToRestAlternativeProductsAttributesTransferWillPopulateTransferOnlyWithAbstractProductsSku()
+    public function testMapProductConcreteStorageDataToRestAlternativeProductsAttributesTransferWillPopulateTransferOnlyWithConcreteProductsSku(): void
     {
         // Arrange
-        $mapper = new ProductAlternativeMapper();
-        $concreteProductStorageData = $this->tester->hasProductConcreteStorageData();
+        $mapper = new AlternativeProductMapper();
+        $concreteProductStorageData = $this->tester->haveProductConcreteStorageData();
         $restAlternativeProductsAttributesTransfer = new RestAlternativeProductsAttributesTransfer();
 
         // Act
@@ -55,11 +55,11 @@ class ProductAlternativeMapperTest extends Unit
     /**
      * @return void
      */
-    public function testMapProductConcreteStorageDataToRestAlternativeProductsAttributesTransfer()
+    public function testMapProductAbstractStorageDataToRestAlternativeProductsAttributesTransferWillPopulateTransferOnlyWithAbstractProductsSku(): void
     {
         // Arrange
-        $mapper = new ProductAlternativeMapper();
-        $abstractProductStorageData = $this->tester->hasProductAbstractStorageData();
+        $mapper = new AlternativeProductMapper();
+        $abstractProductStorageData = $this->tester->haveProductAbstractStorageData();
         $restAlternativeProductsAttributesTransfer = new RestAlternativeProductsAttributesTransfer();
 
         // Act

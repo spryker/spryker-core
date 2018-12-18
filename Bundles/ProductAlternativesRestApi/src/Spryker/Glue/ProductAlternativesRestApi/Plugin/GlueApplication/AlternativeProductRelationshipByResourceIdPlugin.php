@@ -15,7 +15,7 @@ use Spryker\Glue\ProductAlternativesRestApi\ProductAlternativesRestApiConfig;
 /**
  * @method \Spryker\Glue\ProductAlternativesRestApi\ProductAlternativesRestApiFactory getFactory()
  */
-class ProductAlternativesRelationshipByResourceIdPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class AlternativeProductRelationshipByResourceIdPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -31,7 +31,7 @@ class ProductAlternativesRelationshipByResourceIdPlugin extends AbstractPlugin i
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createProductAvailabilityResourceRelationshipExpander()
+            ->createProductAlternativesResourceRelationshipExpander()
             ->addRelationshipsByConcreteSku($resources, $restRequest);
     }
 
@@ -40,6 +40,6 @@ class ProductAlternativesRelationshipByResourceIdPlugin extends AbstractPlugin i
      */
     public function getRelationshipResourceType(): string
     {
-        return ProductAlternativesRestApiConfig::RESOURCE_PRODUCT_ALTERNATIVES;
+        return ProductAlternativesRestApiConfig::RESOURCE_ALTERNATIVE_PRODUCTS;
     }
 }

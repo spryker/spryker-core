@@ -10,21 +10,21 @@ namespace Spryker\Glue\ProductAlternativesRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductAlternativeStorageClientInterface;
 use Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductStorageClientInterface;
-use Spryker\Glue\ProductAlternativesRestApi\Processor\Expander\ProductAvailabilityResourceRelationshipExpander;
-use Spryker\Glue\ProductAlternativesRestApi\Processor\Expander\ProductAvailabilityResourceRelationshipExpanderInterface;
-use Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\ProductAlternativeMapper;
-use Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\ProductAlternativeMapperInterface;
-use Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative\ProductAlternativeReader;
-use Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative\ProductAlternativeReaderInterface;
+use Spryker\Glue\ProductAlternativesRestApi\Processor\Expander\AlternativeProductResourceRelationshipExpander;
+use Spryker\Glue\ProductAlternativesRestApi\Processor\Expander\AlternativeProductResourceRelationshipExpanderInterface;
+use Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\AlternativeProductMapper;
+use Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\AlternativeProductMapperInterface;
+use Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative\AlternativeProductReader;
+use Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative\AlternativeProductReaderInterface;
 
 class ProductAlternativesRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative\ProductAlternativeReaderInterface
+     * @return \Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative\AlternativeProductReaderInterface
      */
-    public function createProductAlternativeReader(): ProductAlternativeReaderInterface
+    public function createProductAlternativeReader(): AlternativeProductReaderInterface
     {
-        return new ProductAlternativeReader(
+        return new AlternativeProductReader(
             $this->getProductAlternativeStorageClient(),
             $this->getProductStorageClient(),
             $this->createProductAlternativeMapper(),
@@ -33,19 +33,19 @@ class ProductAlternativesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\ProductAlternativeMapperInterface
+     * @return \Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\AlternativeProductMapperInterface
      */
-    public function createProductAlternativeMapper(): ProductAlternativeMapperInterface
+    public function createProductAlternativeMapper(): AlternativeProductMapperInterface
     {
-        return new ProductAlternativeMapper();
+        return new AlternativeProductMapper();
     }
 
     /**
-     * @return \Spryker\Glue\ProductAlternativesRestApi\Processor\Expander\ProductAvailabilityResourceRelationshipExpanderInterface
+     * @return \Spryker\Glue\ProductAlternativesRestApi\Processor\Expander\AlternativeProductResourceRelationshipExpanderInterface
      */
-    public function createProductAvailabilityResourceRelationshipExpander(): ProductAvailabilityResourceRelationshipExpanderInterface
+    public function createProductAlternativesResourceRelationshipExpander(): AlternativeProductResourceRelationshipExpanderInterface
     {
-        return new ProductAvailabilityResourceRelationshipExpander($this->createProductAlternativeReader());
+        return new AlternativeProductResourceRelationshipExpander($this->createProductAlternativeReader());
     }
 
     /**

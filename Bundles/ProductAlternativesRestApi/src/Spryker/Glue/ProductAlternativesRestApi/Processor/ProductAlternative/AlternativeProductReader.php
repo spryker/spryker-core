@@ -17,12 +17,12 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductAlternativeStorageClientInterface;
 use Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductStorageClientInterface;
-use Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\ProductAlternativeMapperInterface;
+use Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\AlternativeProductMapperInterface;
 use Spryker\Glue\ProductAlternativesRestApi\ProductAlternativesRestApiConfig;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProductAlternativeReader implements ProductAlternativeReaderInterface
+class AlternativeProductReader implements AlternativeProductReaderInterface
 {
     protected const SELF_LINK_PATTERN = '%s/%s/%s';
 
@@ -37,7 +37,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
     protected $productStorage;
 
     /**
-     * @var \Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\ProductAlternativeMapperInterface
+     * @var \Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\AlternativeProductMapperInterface
      */
     protected $productAlternativeMapper;
 
@@ -49,13 +49,13 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
     /**
      * @param \Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductAlternativeStorageClientInterface $productAlternativeStorage
      * @param \Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductStorageClientInterface $productStorage
-     * @param \Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\ProductAlternativeMapperInterface $productAlternativeMapper
+     * @param \Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\AlternativeProductMapperInterface $productAlternativeMapper
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(
         ProductAlternativesRestApiToProductAlternativeStorageClientInterface $productAlternativeStorage,
         ProductAlternativesRestApiToProductStorageClientInterface $productStorage,
-        ProductAlternativeMapperInterface $productAlternativeMapper,
+        AlternativeProductMapperInterface $productAlternativeMapper,
         RestResourceBuilderInterface $restResourceBuilder
     ) {
         $this->productAlternativeStorage = $productAlternativeStorage;
@@ -75,9 +75,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
 
         $concreteProductResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS);
         if (!$concreteProductResource) {
-            $restErrorTransfer = $this->createConcreteProductSkuIsNotSpecifiedError();
-
-            return $restResponse->addError($restErrorTransfer);
+            return $restResponse->addError($this->createConcreteProductSkuMissingError());
         }
 
         $concreteProductSku = $concreteProductResource->getId();
@@ -158,7 +156,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
         }
 
         $restResource = $this->restResourceBuilder->createRestResource(
-            ProductAlternativesRestApiConfig::RESOURCE_PRODUCT_ALTERNATIVES,
+            ProductAlternativesRestApiConfig::RESOURCE_ALTERNATIVE_PRODUCTS,
             $sku,
             $restProductAlternativeAttributesTransfer
         );
@@ -167,7 +165,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
             static::SELF_LINK_PATTERN,
             ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
             $sku,
-            ProductAlternativesRestApiConfig::RESOURCE_PRODUCT_ALTERNATIVES
+            ProductAlternativesRestApiConfig::RESOURCE_ALTERNATIVE_PRODUCTS
         );
         $restResource->addLink(RestLinkInterface::LINK_SELF, $restResourceSelfLink);
 
@@ -177,7 +175,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
     /**
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
-    protected function createConcreteProductSkuIsNotSpecifiedError(): RestErrorMessageTransfer
+    protected function createConcreteProductSkuMissingError(): RestErrorMessageTransfer
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED)

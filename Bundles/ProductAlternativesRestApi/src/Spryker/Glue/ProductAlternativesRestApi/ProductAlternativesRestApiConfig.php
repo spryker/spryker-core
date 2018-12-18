@@ -11,7 +11,7 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class ProductAlternativesRestApiConfig extends AbstractBundleConfig
 {
-    public const RESOURCE_PRODUCT_ALTERNATIVES = 'product-alternatives';
-    public const CONTROLLER_PRODUCT_ALTERNATIVES = 'product-alternatives-resource';
-    public const ACTION_PRODUCT_ALTERNATIVES_GET = 'get';
+    public const RESOURCE_ALTERNATIVE_PRODUCTS = 'alternative-products';
+    public const CONTROLLER_ALTERNATIVE_PRODUCTS = 'alternative-products-resource';
+    public const ACTION_ALTERNATIVE_PRODUCTS_GET = 'get';
 }

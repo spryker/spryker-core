@@ -8,19 +8,19 @@
 namespace Spryker\Glue\ProductAlternativesRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative\ProductAlternativeReaderInterface;
+use Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative\AlternativeProductReaderInterface;
 
-class ProductAvailabilityResourceRelationshipExpander implements ProductAvailabilityResourceRelationshipExpanderInterface
+class AlternativeProductResourceRelationshipExpander implements AlternativeProductResourceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative\ProductAlternativeReaderInterface
+     * @var \Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative\AlternativeProductReaderInterface
      */
     protected $productAlternativeReader;
 
     /**
-     * @param \Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative\ProductAlternativeReaderInterface $productAlternativeReader
+     * @param \Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative\AlternativeProductReaderInterface $productAlternativeReader
      */
-    public function __construct(ProductAlternativeReaderInterface $productAlternativeReader)
+    public function __construct(AlternativeProductReaderInterface $productAlternativeReader)
     {
         $this->productAlternativeReader = $productAlternativeReader;
     }

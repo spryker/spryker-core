@@ -9,10 +9,8 @@ namespace Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\RestAlternativeProductsAttributesTransfer;
 
-class ProductAlternativeMapper implements ProductAlternativeMapperInterface
+interface AlternativeProductMapperInterface
 {
-    protected const KEY_SKU = 'sku';
-
     /**
      * @param array $productAbstractStorageData
      * @param \Generated\Shared\Transfer\RestAlternativeProductsAttributesTransfer $restAlternativeProductsAttributesTransfer
@@ -22,11 +20,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     public function mapProductAbstractStorageDataToRestAlternativeProductsAttributesTransfer(
         array $productAbstractStorageData,
         RestAlternativeProductsAttributesTransfer $restAlternativeProductsAttributesTransfer
-    ): RestAlternativeProductsAttributesTransfer {
-        $restAlternativeProductsAttributesTransfer->addAbstractProductId($productAbstractStorageData[static::KEY_SKU]);
-
-        return $restAlternativeProductsAttributesTransfer;
-    }
+    ): RestAlternativeProductsAttributesTransfer;
 
     /**
      * @param array $productConcreteStorageData
@@ -37,9 +31,5 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     public function mapProductConcreteStorageDataToRestAlternativeProductsAttributesTransfer(
         array $productConcreteStorageData,
         RestAlternativeProductsAttributesTransfer $restAlternativeProductsAttributesTransfer
-    ): RestAlternativeProductsAttributesTransfer {
-        $restAlternativeProductsAttributesTransfer->addConcreteProductId($productConcreteStorageData[static::KEY_SKU]);
-
-        return $restAlternativeProductsAttributesTransfer;
-    }
+    ): RestAlternativeProductsAttributesTransfer;
 }
