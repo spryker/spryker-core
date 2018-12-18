@@ -110,14 +110,14 @@ class CmsBlockProductStorageListenerTest extends Unit
      */
     public function testCmsBlockProductConnectorStorageUnpublishListener(): void
     {
-        $cmsBlockProductConnectorPublishStorageListener = new CmsBlockProductConnectorStorageUnpublishListener();
-        $cmsBlockProductConnectorPublishStorageListener->setFacade($this->getCmsBlockProductStorageFacade());
+        $cmsBlockProductConnectorUnpublishStorageListener = new CmsBlockProductConnectorStorageUnpublishListener();
+        $cmsBlockProductConnectorUnpublishStorageListener->setFacade($this->getCmsBlockProductStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
         ];
 
-        $cmsBlockProductConnectorPublishStorageListener->handleBulk($eventTransfers, CmsBlockProductConnectorEvents::CMS_BLOCK_PRODUCT_CONNECTOR_UNPUBLISH);
+        $cmsBlockProductConnectorUnpublishStorageListener->handleBulk($eventTransfers, CmsBlockProductConnectorEvents::CMS_BLOCK_PRODUCT_CONNECTOR_UNPUBLISH);
 
         // Assert
         $this->assertSame(0, SpyCmsBlockProductStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->count());
