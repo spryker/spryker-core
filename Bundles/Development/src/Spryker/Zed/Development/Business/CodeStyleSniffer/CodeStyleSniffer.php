@@ -260,13 +260,13 @@ class CodeStyleSniffer
         $command = sprintf(
             'vendor/bin/%s %s%s',
             $optionFix ? 'phpcbf' : 'phpcs',
-            rtrim($path, DIRECTORY_SEPARATOR),
+            $path,
             $processConfig
         );
 
         $optionDryRun = $codeStyleSnifferConfiguration->isDryRun();
 
-        if (!empty($optionDryRun)) {
+        if ($optionDryRun) {
             echo $command . PHP_EOL;
 
             return static::CODE_SUCCESS;

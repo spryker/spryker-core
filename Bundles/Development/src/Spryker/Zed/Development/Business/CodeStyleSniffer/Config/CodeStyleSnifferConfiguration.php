@@ -53,7 +53,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     protected const OPTION_LEVEL = 'level';
 
     protected const MODULE_CONFIG_LEVEL = 'level';
-    protected const ALLOWED_LEVELS = [1, 2];
+    protected const LEVELS_ALLOWED = [1, 2];
 
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
@@ -194,9 +194,9 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     {
         $optionLevel = $this->resolveOptionLevel();
 
-        if (!in_array($optionLevel, static::ALLOWED_LEVELS)) {
+        if (!in_array($optionLevel, static::LEVELS_ALLOWED)) {
             throw new InvalidArgumentException(
-                sprintf('Level should be in [%s] range', implode(', ', static::ALLOWED_LEVELS))
+                sprintf('Level should be in [%s] range', implode(', ', static::LEVELS_ALLOWED))
             );
         }
 
