@@ -18,23 +18,19 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class AbstractController extends SprykerAbstractController
 {
     /**
-     * @return bool
-     */
-    protected function isSprykAvailable(): bool
-    {
-        $isProductionEnvironment = Environment::isProduction();
-        $isCli = PHP_SAPI === 'cli';
-
-        return !$isProductionEnvironment || $isCli;
-    }
-
-    /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return void
      */
     protected function assertNonProductionEnvironment(): void
     {
+        $isProductionEnvironment = Environment::isProduction();
+        $isCli = PHP_SAPI === 'cli';
+
+        if (!$isProductionEnvironment || $isCli) {
+            return;
+        }
+
         throw new NotFoundHttpException('Spryk available only on Development environment.');
     }
 }

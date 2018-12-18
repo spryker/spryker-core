@@ -25,9 +25,7 @@ class GraphController extends AbstractController
      */
     public function indexAction(Request $request): StreamedResponse
     {
-        if (!$this->isSprykAvailable()) {
-            $this->assertNonProductionEnvironment();
-        }
+        $this->assertNonProductionEnvironment();
 
         $spryk = $request->query->get('spryk');
 

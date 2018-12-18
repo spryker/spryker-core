@@ -19,9 +19,7 @@ class ListController extends AbstractController
      */
     public function indexAction(): array
     {
-        if (!$this->isSprykAvailable()) {
-            $this->assertNonProductionEnvironment();
-        }
+        $this->assertNonProductionEnvironment();
 
         $sprykDefinitions = $this->getFacade()->getSprykDefinitions();
 

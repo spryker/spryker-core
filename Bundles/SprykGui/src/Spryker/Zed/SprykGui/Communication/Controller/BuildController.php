@@ -23,9 +23,7 @@ class BuildController extends AbstractController
      */
     public function indexAction(Request $request): array
     {
-        if (!$this->isSprykAvailable()) {
-            $this->assertNonProductionEnvironment();
-        }
+        $this->assertNonProductionEnvironment();
 
         $spryk = $request->query->get('spryk');
 
