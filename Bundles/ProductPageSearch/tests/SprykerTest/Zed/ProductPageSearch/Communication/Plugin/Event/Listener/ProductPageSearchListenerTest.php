@@ -162,7 +162,7 @@ class ProductPageSearchListenerTest extends Unit
     public function testProductPageProductAbstractListenerStoreData(): void
     {
         // Prepare
-        SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
+        SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract(1)->delete();
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
 
         // Act
@@ -170,7 +170,7 @@ class ProductPageSearchListenerTest extends Unit
         $productPageProductAbstractListener->setFacade($this->getProductPageSearchFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
+            (new EventEntityTransfer())->setId(1),
         ];
         $productPageProductAbstractListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_ABSTRACT_PUBLISH);
 
@@ -186,7 +186,7 @@ class ProductPageSearchListenerTest extends Unit
     public function testProductPageProductAbstractPublishListener(): void
     {
         // Prepare
-        SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
+        SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract(1)->delete();
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
 
         // Act
@@ -194,7 +194,7 @@ class ProductPageSearchListenerTest extends Unit
         $productPageProductAbstractListener->setFacade($this->getProductPageSearchFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
+            (new EventEntityTransfer())->setId(1),
         ];
         $productPageProductAbstractListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_ABSTRACT_PUBLISH);
 
@@ -217,14 +217,13 @@ class ProductPageSearchListenerTest extends Unit
         $productPageProductAbstractListener->setFacade($this->getProductPageSearchFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
+            (new EventEntityTransfer())->setId(1),
         ];
         $productPageProductAbstractListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH);
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
         $this->assertSame($beforeCount - static::NUMBER_OF_STORES * static::NUMBER_OF_LOCALES, $afterCount);
-        $this->assertProductPageAbstractSearch();
     }
 
     /**

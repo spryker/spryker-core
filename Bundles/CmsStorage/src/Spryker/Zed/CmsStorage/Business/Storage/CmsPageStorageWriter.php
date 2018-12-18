@@ -86,7 +86,9 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     {
         $cmsPageStorageEntities = $this->findCmsStorageEntities($cmsPageIds);
         foreach ($cmsPageStorageEntities as $cmsPageStorageEntity) {
-            $cmsPageStorageEntity->delete();
+            foreach ($cmsPageStorageEntity as $cmsPageStorageLocaleEntity) {
+                $cmsPageStorageLocaleEntity->delete();
+            }
         }
     }
 

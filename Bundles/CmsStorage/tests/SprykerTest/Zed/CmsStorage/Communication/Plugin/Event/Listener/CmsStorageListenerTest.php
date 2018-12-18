@@ -20,6 +20,7 @@ use Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener\CmsPageStoragePub
 use Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener\CmsPageStorageUnpublishListener;
 use Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener\CmsPageUrlStorageListener;
 use Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener\CmsPageUrlStoragePublishListener;
+use Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener\CmsPageUrlStorageUnpublishListener;
 use Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener\CmsPageVersionStorageListener;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 use SprykerTest\Zed\CmsStorage\CmsStorageConfigMock;
@@ -166,15 +167,15 @@ class CmsStorageListenerTest extends Unit
      */
     public function testCmsPageUrlStorageUnpublishListener(): void
     {
-        $cmsPageUrlStorageListener = new CmsPageUrlStoragePublishListener();
-        $cmsPageUrlStorageListener->setFacade($this->getCmsStorageFacade());
+        $cmsPageUrlStorageUnpublishListener = new CmsPageUrlStorageUnpublishListener();
+        $cmsPageUrlStorageUnpublishListener->setFacade($this->getCmsStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
                 SpyUrlTableMap::COL_FK_RESOURCE_PAGE => 1,
             ]),
         ];
-        $cmsPageUrlStorageListener->handleBulk($eventTransfers, UrlEvents::ENTITY_SPY_URL_DELETE);
+        $cmsPageUrlStorageUnpublishListener->handleBulk($eventTransfers, UrlEvents::ENTITY_SPY_URL_DELETE);
 
         // Assert
         $this->assertSame(0, SpyCmsPageStorageQuery::create()->filterByFkCmsPage(1)->count());
