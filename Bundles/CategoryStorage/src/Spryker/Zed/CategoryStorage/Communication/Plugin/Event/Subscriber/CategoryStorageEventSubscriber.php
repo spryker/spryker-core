@@ -8,11 +8,16 @@
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Subscriber;
 
 use Spryker\Zed\Category\Dependency\CategoryEvents;
-use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryAttributeStorageListener;
-use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryStorageListener;
-use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateStorageListener;
-use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStorageListener;
-use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTreeStorageListener;
+use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryAttributeStoragePublishListener;
+use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryAttributeStorageUnpublishListener;
+use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryStoragePublishListener;
+use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryStorageUnpublishListener;
+use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateStoragePublishListener;
+use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateStorageUnpublishListener;
+use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStoragePublishListener;
+use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStorageUnpublishListener;
+use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTreeStoragePublishListener;
+use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTreeStorageUnpublishListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -81,7 +86,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryNodePublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::CATEGORY_NODE_PUBLISH, new CategoryNodeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::CATEGORY_NODE_PUBLISH, new CategoryNodeStoragePublishListener());
     }
 
     /**
@@ -91,7 +96,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryNodeUnpublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::CATEGORY_NODE_UNPUBLISH, new CategoryNodeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::CATEGORY_NODE_UNPUBLISH, new CategoryNodeStorageUnpublishListener());
     }
 
     /**
@@ -101,7 +106,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryNodeCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_CREATE, new CategoryNodeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_CREATE, new CategoryNodeStoragePublishListener());
     }
 
     /**
@@ -111,7 +116,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryNodeUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_UPDATE, new CategoryNodeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_UPDATE, new CategoryNodeStoragePublishListener());
     }
 
     /**
@@ -121,7 +126,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryNodeDeleteListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE, new CategoryNodeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE, new CategoryNodeStorageUnpublishListener());
     }
 
     /**
@@ -131,7 +136,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_CREATE, new CategoryNodeCategoryStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_CREATE, new CategoryNodeCategoryStoragePublishListener());
     }
 
     /**
@@ -141,7 +146,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_UPDATE, new CategoryNodeCategoryStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_UPDATE, new CategoryNodeCategoryStoragePublishListener());
     }
 
     /**
@@ -151,7 +156,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryDeleteListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_DELETE, new CategoryNodeCategoryStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_DELETE, new CategoryNodeCategoryStorageUnpublishListener());
     }
 
     /**
@@ -161,7 +166,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryAttributeUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE, new CategoryNodeCategoryAttributeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE, new CategoryNodeCategoryAttributeStoragePublishListener());
     }
 
     /**
@@ -171,7 +176,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryAttributeCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE, new CategoryNodeCategoryAttributeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE, new CategoryNodeCategoryAttributeStoragePublishListener());
     }
 
     /**
@@ -181,7 +186,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryAttributeDeleteListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE, new CategoryNodeCategoryAttributeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE, new CategoryNodeCategoryAttributeStorageUnpublishListener());
     }
 
     /**
@@ -191,7 +196,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryTemplateCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_CREATE, new CategoryNodeCategoryTemplateStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_CREATE, new CategoryNodeCategoryTemplateStoragePublishListener());
     }
 
     /**
@@ -201,7 +206,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryTemplateUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_UPDATE, new CategoryNodeCategoryTemplateStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_UPDATE, new CategoryNodeCategoryTemplateStoragePublishListener());
     }
 
     /**
@@ -211,7 +216,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryTemplateDeleteListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_DELETE, new CategoryNodeCategoryTemplateStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_DELETE, new CategoryNodeCategoryTemplateStorageUnpublishListener());
     }
 
     /**
@@ -221,7 +226,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryTreePublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::CATEGORY_TREE_PUBLISH, new CategoryTreeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::CATEGORY_TREE_PUBLISH, new CategoryTreeStoragePublishListener());
     }
 
     /**
@@ -231,7 +236,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryTreeUnpublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::CATEGORY_TREE_UNPUBLISH, new CategoryTreeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::CATEGORY_TREE_UNPUBLISH, new CategoryTreeStorageUnpublishListener());
     }
 
     /**
@@ -241,7 +246,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryCreateForTreeListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_CREATE, new CategoryTreeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_CREATE, new CategoryTreeStoragePublishListener());
     }
 
     /**
@@ -251,7 +256,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryUpdateForTreeListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_UPDATE, new CategoryTreeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_UPDATE, new CategoryTreeStoragePublishListener());
     }
 
     /**
@@ -261,7 +266,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryDeleteForTreeListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_DELETE, new CategoryTreeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_DELETE, new CategoryTreeStoragePublishListener());
     }
 
     /**
@@ -271,7 +276,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryNodeCreateForTreeListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_CREATE, new CategoryTreeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_CREATE, new CategoryTreeStoragePublishListener());
     }
 
     /**
@@ -281,7 +286,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryNodeUpdateForTreeListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_UPDATE, new CategoryTreeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_UPDATE, new CategoryTreeStoragePublishListener());
     }
 
     /**
@@ -291,7 +296,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryNodeDeleteForTreeListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE, new CategoryTreeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE, new CategoryTreeStoragePublishListener());
     }
 
     /**
@@ -301,7 +306,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryAttributeCreateForTreeListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE, new CategoryTreeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE, new CategoryTreeStoragePublishListener());
     }
 
     /**
@@ -311,7 +316,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryAttributeUpdateForTreeListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE, new CategoryTreeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE, new CategoryTreeStoragePublishListener());
     }
 
     /**
@@ -321,6 +326,6 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryAttributeDeleteForTreeListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE, new CategoryTreeStorageListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE, new CategoryTreeStoragePublishListener());
     }
 }

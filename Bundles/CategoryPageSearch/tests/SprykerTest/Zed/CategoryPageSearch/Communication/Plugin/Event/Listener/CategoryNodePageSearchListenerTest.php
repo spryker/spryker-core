@@ -14,9 +14,17 @@ use Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacade;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryAttributeSearchListener;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryAttributeSearchPublishListener;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryAttributeSearchUnpublishListener;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryPageSearchListener;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryPageSearchPublishListener;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryPageSearchUnpublishListener;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateSearchListener;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateSearchPublishListener;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateSearchUnpublishListener;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeSearchListener;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeSearchPublishListener;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeSearchUnpublishListener;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchBridge;
 use SprykerTest\Zed\CategoryPageSearch\Business\CategoryPageSearchBusinessFactoryMock;
 use SprykerTest\Zed\CategoryPageSearch\CategoryPageSearchConfigMock;
@@ -38,8 +46,9 @@ class CategoryNodePageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testCategoryPageSearchListenerStoreData()
+    public function testCategoryPageSearchListenerStoreData(): void
     {
+        // Prepare
         SpyCategoryNodePageSearchQuery::create()->filterByFkCategoryNode(1)->delete();
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
 
@@ -61,18 +70,66 @@ class CategoryNodePageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testCategoryNodeCategoryTemplateSearchListenerStoreData()
+    public function testCategoryPageSearchPublishListener(): void
     {
+        // Prepare
         SpyCategoryNodePageSearchQuery::create()->filterByFkCategoryNode(1)->delete();
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
 
         // Act
+        $categoryPageSearchListener = new CategoryNodeSearchPublishListener();
+        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId(1),
+        ];
+        $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::CATEGORY_NODE_PUBLISH);
+
+        // Assert
+        $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
+        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertCategoryPageSearch();
+    }
+
+    /**
+     * @return void
+     */
+    public function testCategoryPageSearchUnpublishListener(): void
+    {
+        // Prepare
+        $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
+        $categoryPageSearchListener = new CategoryNodeSearchUnpublishListener();
+        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId(1),
+        ];
+
+        // Act
+        $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::CATEGORY_NODE_UNPUBLISH);
+
+        // Assert
+        $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
+        $this->assertEquals($beforeCount - 2, $afterCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCategoryNodeCategoryTemplateSearchListenerStoreData(): void
+    {
+        // Prepare
+        SpyCategoryNodePageSearchQuery::create()->filterByFkCategoryNode(1)->delete();
+        $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
+
         $categoryPageSearchListener = new CategoryNodeCategoryTemplateSearchListener();
         $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
         ];
+
+        // Act
         $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_CREATE);
 
         // Assert
@@ -84,8 +141,57 @@ class CategoryNodePageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testCategoryNodeCategoryPageSearchListenerStoreData()
+    public function testCategoryNodeCategoryTemplateSearchPublishListener(): void
     {
+        // Prepare
+        SpyCategoryNodePageSearchQuery::create()->filterByFkCategoryNode(1)->delete();
+        $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
+
+        $categoryPageSearchListener = new CategoryNodeCategoryTemplateSearchPublishListener();
+        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId(1),
+        ];
+
+        // Act
+        $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_CREATE);
+
+        // Assert
+        $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
+        $this->assertGreaterThan($beforeCount, $afterCount);
+        $this->assertCategoryPageSearch();
+    }
+
+    /**
+     * @return void
+     */
+    public function testCategoryNodeCategoryTemplateSearchUnpublishListener(): void
+    {
+        // Prepare
+        $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
+
+        $categoryPageSearchListener = new CategoryNodeCategoryTemplateSearchUnpublishListener();
+        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId(1),
+        ];
+
+        // Act
+        $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_DELETE);
+
+        // Assert
+        $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
+        $this->assertLessThan($beforeCount, $afterCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCategoryNodeCategoryPageSearchListenerStoreData(): void
+    {
+        // Prepare
         SpyCategoryNodePageSearchQuery::create()->filterByFkCategoryNode(1)->delete();
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
 
@@ -107,12 +213,60 @@ class CategoryNodePageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testCategoryNodeCategoryAttributeSearchListenerStoreData()
+    public function testCategoryNodeCategoryPageSearchPublishListener(): void
     {
+        // Prepare
         SpyCategoryNodePageSearchQuery::create()->filterByFkCategoryNode(1)->delete();
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
 
+        $categoryPageSearchListener = new CategoryNodeCategoryPageSearchPublishListener();
+        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId(1),
+        ];
+
         // Act
+        $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_CREATE);
+
+        // Assert
+        $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
+        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertCategoryPageSearch();
+    }
+
+    /**
+     * @return void
+     */
+    public function testCategoryNodeCategoryPageSearchUnpublishListener(): void
+    {
+        // Prepare
+        $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
+
+        $categoryPageSearchListener = new CategoryNodeCategoryPageSearchUnpublishListener();
+        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId(1),
+        ];
+
+        // Act
+        $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_DELETE);
+
+        // Assert
+        $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
+        $this->assertLessThan($beforeCount, $afterCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCategoryNodeCategoryAttributeSearchListenerStoreData(): void
+    {
+        // Prepare
+        SpyCategoryNodePageSearchQuery::create()->filterByFkCategoryNode(1)->delete();
+        $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
+
         $categoryPageSearchListener = new CategoryNodeCategoryAttributeSearchListener();
         $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
 
@@ -121,12 +275,66 @@ class CategoryNodePageSearchListenerTest extends Unit
                 SpyCategoryAttributeTableMap::COL_FK_CATEGORY => 1,
             ]),
         ];
+
+        // Act
         $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE);
 
         // Assert
         $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
         $this->assertEquals($beforeCount + 2, $afterCount);
         $this->assertCategoryPageSearch();
+    }
+
+    /**
+     * @return void
+     */
+    public function testCategoryNodeCategoryAttributeSearchPublishListener(): void
+    {
+        // Prepare
+        SpyCategoryNodePageSearchQuery::create()->filterByFkCategoryNode(1)->delete();
+        $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
+
+        $categoryPageSearchListener = new CategoryNodeCategoryAttributeSearchPublishListener();
+        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyCategoryAttributeTableMap::COL_FK_CATEGORY => 1,
+            ]),
+        ];
+
+        // Act
+        $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE);
+
+        // Assert
+        $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
+        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertCategoryPageSearch();
+    }
+
+    /**
+     * @return void
+     */
+    public function testCategoryNodeCategoryAttributeSearchUnpublishListener(): void
+    {
+        // Prepare
+        $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
+
+        $categoryPageSearchListener = new CategoryNodeCategoryAttributeSearchUnpublishListener();
+        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyCategoryAttributeTableMap::COL_FK_CATEGORY => 1,
+            ]),
+        ];
+
+        // Act
+        $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE);
+
+        // Assert
+        $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
+        $this->assertEquals($beforeCount - 2, $afterCount);
     }
 
     /**
@@ -148,7 +356,7 @@ class CategoryNodePageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    protected function assertCategoryPageSearch()
+    protected function assertCategoryPageSearch(): void
     {
         $categoryPageSearchEntity = SpyCategoryNodePageSearchQuery::create()->orderByIdCategoryNodePageSearch()->findOneByFkCategoryNode(1);
         $this->assertNotNull($categoryPageSearchEntity);

@@ -13,7 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Navigation\Dependency\NavigationEvents;
 use Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationNodeLocalizedAttributeStorageListener;
 use Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationNodeStorageListener;
-use Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationStorageListener;
+use Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationStoragePublishListener;
+use Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationStorageUnpublishListener;
 use Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationUrlRelationStorageListener;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
@@ -57,7 +58,7 @@ class NavigationStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addNavigationPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(NavigationEvents::NAVIGATION_KEY_PUBLISH, new NavigationStorageListener());
+        $eventCollection->addListenerQueued(NavigationEvents::NAVIGATION_KEY_PUBLISH, new NavigationStoragePublishListener());
     }
 
     /**
@@ -67,7 +68,7 @@ class NavigationStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addNavigationUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(NavigationEvents::NAVIGATION_KEY_UNPUBLISH, new NavigationStorageListener());
+        $eventCollection->addListenerQueued(NavigationEvents::NAVIGATION_KEY_UNPUBLISH, new NavigationStorageUnpublishListener());
     }
 
     /**
@@ -77,7 +78,7 @@ class NavigationStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addNavigationCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(NavigationEvents::ENTITY_SPY_NAVIGATION_CREATE, new NavigationStorageListener());
+        $eventCollection->addListenerQueued(NavigationEvents::ENTITY_SPY_NAVIGATION_CREATE, new NavigationStoragePublishListener());
     }
 
     /**
@@ -87,7 +88,7 @@ class NavigationStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addNavigationUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(NavigationEvents::ENTITY_SPY_NAVIGATION_UPDATE, new NavigationStorageListener());
+        $eventCollection->addListenerQueued(NavigationEvents::ENTITY_SPY_NAVIGATION_UPDATE, new NavigationStoragePublishListener());
     }
 
     /**
@@ -97,7 +98,7 @@ class NavigationStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addNavigationDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(NavigationEvents::ENTITY_SPY_NAVIGATION_DELETE, new NavigationStorageListener());
+        $eventCollection->addListenerQueued(NavigationEvents::ENTITY_SPY_NAVIGATION_DELETE, new NavigationStorageUnpublishListener());
     }
 
     /**

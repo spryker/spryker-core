@@ -12,7 +12,8 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\ProductSearch\Dependency\ProductSearchEvents;
-use Spryker\Zed\ProductSearchConfigStorage\Communication\Plugin\Event\Listener\ProductSearchConfigStorageListener;
+use Spryker\Zed\ProductSearchConfigStorage\Communication\Plugin\Event\Listener\ProductSearchConfigStoragePublishListener;
+use Spryker\Zed\ProductSearchConfigStorage\Communication\Plugin\Event\Listener\ProductSearchConfigStorageUnpublishListener;
 
 /**
  * @method \Spryker\Zed\ProductSearchConfigStorage\Communication\ProductSearchConfigStorageCommunicationFactory getFactory()
@@ -50,7 +51,7 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
      */
     protected function addProductSearchConfigPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSearchEvents::PRODUCT_SEARCH_CONFIG_PUBLISH, new ProductSearchConfigStorageListener());
+        $eventCollection->addListenerQueued(ProductSearchEvents::PRODUCT_SEARCH_CONFIG_PUBLISH, new ProductSearchConfigStoragePublishListener());
     }
 
     /**
@@ -60,7 +61,7 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
      */
     protected function addProductSearchConfigUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSearchEvents::PRODUCT_SEARCH_CONFIG_UNPUBLISH, new ProductSearchConfigStorageListener());
+        $eventCollection->addListenerQueued(ProductSearchEvents::PRODUCT_SEARCH_CONFIG_UNPUBLISH, new ProductSearchConfigStorageUnpublishListener());
     }
 
     /**
@@ -70,7 +71,7 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
      */
     protected function addProductSearchConfigCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_CREATE, new ProductSearchConfigStorageListener());
+        $eventCollection->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_CREATE, new ProductSearchConfigStoragePublishListener());
     }
 
     /**
@@ -80,7 +81,7 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
      */
     protected function addProductSearchConfigUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_UPDATE, new ProductSearchConfigStorageListener());
+        $eventCollection->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_UPDATE, new ProductSearchConfigStoragePublishListener());
     }
 
     /**
@@ -90,7 +91,7 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
      */
     protected function addProductSearchConfigDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_DELETE, new ProductSearchConfigStorageListener());
+        $eventCollection->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_DELETE, new ProductSearchConfigStorageUnpublishListener());
     }
 
     /**
@@ -100,7 +101,7 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
      */
     protected function addProductSearchConfigKeyCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_CREATE, new ProductSearchConfigStorageListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_CREATE, new ProductSearchConfigStoragePublishListener());
     }
 
     /**
@@ -110,7 +111,7 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
      */
     protected function addProductSearchConfigKeyUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_UPDATE, new ProductSearchConfigStorageListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_UPDATE, new ProductSearchConfigStoragePublishListener());
     }
 
     /**
@@ -120,6 +121,6 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
      */
     protected function addProductSearchConfigKeyDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_DELETE, new ProductSearchConfigStorageListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_DELETE, new ProductSearchConfigStoragePublishListener());
     }
 }
