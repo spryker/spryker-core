@@ -39,7 +39,7 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
             return true;
         }
 
-        if ($configuration[static::FIELD_MULTI_CURRENCY][$currencyCode] <= (int)$centAmount) {
+        if ($configuration[static::FIELD_MULTI_CURRENCY][$currencyCode] < (int)$centAmount) {
             return false;
         }
 

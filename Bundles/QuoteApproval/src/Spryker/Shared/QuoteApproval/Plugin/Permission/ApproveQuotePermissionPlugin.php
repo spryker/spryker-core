@@ -39,7 +39,7 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
             return false;
         }
 
-        if ($configuration[static::FIELD_MULTI_CURRENCY][$currencyCode] >= (int)$centAmount) {
+        if ($configuration[static::FIELD_MULTI_CURRENCY][$currencyCode] < (int)$centAmount) {
             return false;
         }
 
