@@ -7,20 +7,29 @@
 
 namespace Spryker\Zed\SprykGui\Communication\Controller;
 
+use Spryker\Shared\Config\Environment;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController as SprykerAbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * @method \Spryker\Zed\SprykGui\Communication\SprykGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface getFacade()
+ */
 class AbstractController extends SprykerAbstractController
 {
     protected const MESSAGE_SPRYK_ERROR = 'Spryk available only on Development environment.';
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return bool
      */
-    protected function getSprykAvailableErrorRedirectResponse(): RedirectResponse
+    public function isSprykAvailable(): bool
     {
-        $this->addErrorMessage(static::MESSAGE_SPRYK_ERROR);
+        $isDevelopmentEnvironment = Environment::isDevelopment();
+        $isCli = PHP_SAPI === 'cli';
 
-        return $this->redirectResponse('/', 301);
+        if ($isDevelopmentEnvironment || $isCli) {
+            return true;
+        }
+
+        return false;
     }
 }
