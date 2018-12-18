@@ -19,7 +19,7 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
      * {@inheritdoc}
      * - Checks if approver is allowed to approve order with cent amount up to some value for specific currency, provided in configuration.
      * - Returns false, if quote is not provided.
-     * - Returns false, if configuration does not have cent amount for specific currency set.
+     * - Returns true, if configuration does not have cent amount for specific currency set.
      *
      * @param array $configuration
      * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
@@ -36,7 +36,7 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
         $currencyCode = $quoteTransfer->getCurrency()->getCode();
 
         if (!isset($configuration[static::FIELD_MULTI_CURRENCY][$currencyCode])) {
-            return false;
+            return true;
         }
 
         if ($configuration[static::FIELD_MULTI_CURRENCY][$currencyCode] < (int)$centAmount) {
