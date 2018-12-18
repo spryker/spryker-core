@@ -1,8 +1,12 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% set page_title = 'Build Spryk' %}
-{% block head_title page_title %}
-{% block section_title page_title %}
+{% block head_title %}
+    {{ page_title | trans }}
+{% endblock %}
+{% block section_title %}
+    {{ page_title | trans }}
+{% endblock %}
 
 {% block action %}
 {% endblock %}
@@ -12,7 +16,7 @@
     {% if messages is defined and messages is not empty %}
         <div class="alert alert-info">
             {% for message in messages %}
-                {{ message }}<br />
+                {{ message | trans}}<br />
             {% endfor %}
         </div>
     {% endif %}
@@ -21,7 +25,7 @@
         {{ form_widget(form) }}
         {{ form_end(form) }}
     {% else %}
-        <h3>Jira Template</h3>
+        <h3>{{ 'Jira Template' | trans }}</h3>
         <p><pre>
             {{ jiraTemplate }}
         </pre></p>
