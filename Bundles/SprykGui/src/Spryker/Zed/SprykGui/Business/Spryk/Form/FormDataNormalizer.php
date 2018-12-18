@@ -51,7 +51,7 @@ class FormDataNormalizer implements FormDataNormalizerInterface
             }
 
             if ($value instanceof ModuleTransfer) {
-                $normalizedData['moduleName'] = $value->getName();
+                $normalizedData['module'] = $value->getName();
                 $normalizedData['organization'] = $value->getOrganization()->getName();
                 $normalizedData['rootPath'] = $value->getOrganization()->getRootPath();
 
