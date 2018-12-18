@@ -101,7 +101,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * - Lock quote
+     * {@inheritdoc}
      *
      * @api
      *
@@ -115,7 +115,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * - Unlock quote
+     * {@inheritdoc}
      *
      * @api
      *
