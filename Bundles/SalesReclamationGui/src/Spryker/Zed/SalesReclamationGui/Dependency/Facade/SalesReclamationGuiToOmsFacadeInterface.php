@@ -17,8 +17,6 @@ interface SalesReclamationGuiToOmsFacadeInterface
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 
     /**
-     * @api
-     *
      * @param int $idSalesOrder
      *
      * @return array

@@ -33,8 +33,6 @@ class SalesReclamationGuiToOmsFacadeBridge implements SalesReclamationGuiToOmsFa
     }
 
     /**
-     * @api
-     *
      * @param int $idSalesOrder
      *
      * @return array
