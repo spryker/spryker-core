@@ -534,7 +534,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         $productConcreteManager->attachBeforeUpdateObserver($this->createProductConcreteBeforeUpdateObserverPluginManager());
         $productConcreteManager->attachAfterUpdateObserver($this->createProductConcreteAfterUpdateObserverPluginManager());
         $productConcreteManager->attachReadObserver($this->createProductConcreteReadObserverPluginManager());
-        $productConcreteManager->attachAddItemObserver($this->createProductConcreteAddItemObserverPluginManager());
 
         return $productConcreteManager;
     }

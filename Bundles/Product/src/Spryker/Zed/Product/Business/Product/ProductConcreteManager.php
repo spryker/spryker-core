@@ -109,7 +109,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     {
         return $this->productQueryContainer
             ->queryProductConcreteBySku($sku)
-            ->exists();
+            ->count() > 0;
     }
 
     /**
@@ -197,15 +197,15 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @param string $skuProduct
+     * @param string $productConcreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductConcreteBySku(string $skuProduct): ?ProductConcreteTransfer
+    public function findProductConcreteBySku(string $productConcreteSku): ?ProductConcreteTransfer
     {
         $productEntity = $this->productQueryContainer
             ->queryProduct()
-            ->filterBySku($skuProduct)
+            ->filterBySku($productConcreteSku)
             ->findOne();
 
         return $this->loadProductTransfer($productEntity);
@@ -216,14 +216,14 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductConcreteBySkuForCart(string $skuProduct): ?ProductConcreteTransfer
+    public function findRawProductConcreteBySku(string $skuProduct): ?ProductConcreteTransfer
     {
         $productEntity = $this->productQueryContainer
             ->queryProduct()
             ->filterBySku($skuProduct)
             ->findOne();
 
-        return $this->loadProductTransferForCart($productEntity);
+        return $this->loadRawProductTransfer($productEntity);
     }
 
     /**
@@ -285,9 +285,9 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getProductConcreteForCart(string $concreteSku): ProductConcreteTransfer
+    public function getRawProductConcrete(string $concreteSku): ProductConcreteTransfer
     {
-        $productConcreteTransfer = $this->findProductConcreteBySkuForCart($concreteSku);
+        $productConcreteTransfer = $this->findRawProductConcreteBySku($concreteSku);
 
         $this->assertProductConcreteTransfer($concreteSku, $productConcreteTransfer);
 
@@ -478,14 +478,14 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    protected function loadProductTransferForCart(?SpyProduct $productEntity = null): ?ProductConcreteTransfer
+    protected function loadRawProductTransfer(?SpyProduct $productEntity = null): ?ProductConcreteTransfer
     {
         if (!$productEntity) {
             return null;
         }
 
         $productTransfer = $this->productTransferMapper->convertProduct($productEntity);
-        $productTransfer = $this->loadProductDataForCart($productTransfer);
+        $productTransfer = $this->loadRawProductData($productTransfer);
 
         return $productTransfer;
     }
@@ -509,11 +509,11 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function loadProductDataForCart(ProductConcreteTransfer $productTransfer): ProductConcreteTransfer
+    protected function loadRawProductData(ProductConcreteTransfer $productTransfer): ProductConcreteTransfer
     {
         $this->loadLocalizedAttributes($productTransfer);
 
-        $this->notifyAddItemObservers($productTransfer);
+        $this->triggerProductConcreteReadEvent($productTransfer);
 
         return $productTransfer;
     }

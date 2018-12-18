@@ -325,11 +325,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getProductConcreteForCart($concreteSku): ProductConcreteTransfer
+    public function getRawProductConcrete($concreteSku): ProductConcreteTransfer
     {
         return $this->getFactory()
             ->createProductConcreteManager()
-            ->getProductConcreteForCart($concreteSku);
+            ->getRawProductConcrete($concreteSku);
     }
 
     /**

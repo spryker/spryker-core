@@ -24,7 +24,7 @@ interface ProductCartConnectorToProductInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getProductConcreteForCart(string $concreteSku): ProductConcreteTransfer;
+    public function getRawProductConcrete(string $concreteSku): ProductConcreteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

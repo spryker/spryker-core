@@ -39,11 +39,6 @@ abstract class AbstractProductConcreteManagerSubject
     protected $readObservers = [];
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\Observer\ProductConcreteAddItemObserverInterface[]
-     */
-    protected $addItemObservers = [];
-
-    /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface|null
      */
     protected $eventFacade;
@@ -96,16 +91,6 @@ abstract class AbstractProductConcreteManagerSubject
     public function attachReadObserver(ProductConcreteReadObserverInterface $productConcreteReadObserver)
     {
         $this->readObservers[] = $productConcreteReadObserver;
-    }
-
-    /**
-     * @param \Spryker\Zed\Product\Business\Product\Observer\ProductConcreteAddItemObserverInterface $productConcreteReadObserver
-     *
-     * @return void
-     */
-    public function attachAddItemObserver(ProductConcreteAddItemObserverInterface $productConcreteReadObserver)
-    {
-        $this->addItemObservers[] = $productConcreteReadObserver;
     }
 
     /**
@@ -191,17 +176,11 @@ abstract class AbstractProductConcreteManagerSubject
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return void
      */
-    public function notifyAddItemObservers(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function triggerProductConcreteReadEvent(ProductConcreteTransfer $productConcreteTransfer): void
     {
-        foreach ($this->addItemObservers as $observer) {
-            $productConcreteTransfer = $observer->addItem($productConcreteTransfer);
-        }
-
         $this->triggerEvent(ProductEvents::PRODUCT_CONCRETE_READ, $productConcreteTransfer);
-
-        return $productConcreteTransfer;
     }
 
     /**

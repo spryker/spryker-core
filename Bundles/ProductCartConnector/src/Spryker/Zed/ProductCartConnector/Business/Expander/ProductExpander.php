@@ -45,7 +45,7 @@ class ProductExpander implements ProductExpanderInterface
     public function expandItems(CartChangeTransfer $cartChangeTransfer)
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $productConcreteTransfer = $this->productFacade->getProductConcreteForCart($itemTransfer->getSku());
+            $productConcreteTransfer = $this->productFacade->getRawProductConcrete($itemTransfer->getSku());
 
             $this->assertProductConcreteTransfer($productConcreteTransfer);
 

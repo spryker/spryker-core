@@ -283,7 +283,8 @@ interface ProductFacadeInterface
      * Specification:
      * - Returns concrete product with attributes and localized attributes.
      * - Throws exception if the concrete product is not found by SKU.
-     * - Triggers AddItem plugins.
+     * - Triggers READ events
+     * - Doesn't trigger READ plugins
      *
      * @api
      *
@@ -293,7 +294,7 @@ interface ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getProductConcreteForCart($concreteSku): ProductConcreteTransfer;
+    public function getRawProductConcrete($concreteSku): ProductConcreteTransfer;
 
     /**
      * Specification:
