@@ -11,9 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductAlternativeCreateRequestTransfer;
 use Orm\Zed\ProductAlternative\Persistence\Map\SpyProductAlternativeTableMap;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\ProductAlternative\Dependency\ProductAlternativeEvents;
 use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Listener\ProductAlternativeReplacementStorageListener;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository;
@@ -63,8 +60,6 @@ class ProductAlternativeReplacementStorageListenerTest extends Unit
     protected $alternativeProductAbstract;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     protected function setUp(): void

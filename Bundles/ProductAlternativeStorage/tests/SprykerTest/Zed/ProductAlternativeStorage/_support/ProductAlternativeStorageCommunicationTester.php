@@ -11,7 +11,6 @@ use Codeception\Actor;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageBusinessFactory;
 use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacade;
-use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacadeInterface;
 
 /**
  * Inherited Methods

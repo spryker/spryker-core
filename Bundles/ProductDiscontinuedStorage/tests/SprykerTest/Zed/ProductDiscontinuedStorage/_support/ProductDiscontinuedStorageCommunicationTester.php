@@ -12,7 +12,6 @@ use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageBusinessFactory;
 use Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageFacade;
-use Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageFacadeInterface;
 
 /**
  * Inherited Methods

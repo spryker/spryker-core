@@ -20,7 +20,6 @@
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "suggest": {
