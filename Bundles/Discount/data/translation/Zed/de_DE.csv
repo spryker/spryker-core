@@ -5,6 +5,7 @@ Amount:,Betrag:
 Conditions,Bedingungen
 "Create new discount","Neuen Rabatt erstellen"
 "Create new Discount","Neuen Rabatt erstellen"
+Create Discount,Rabatt erstellen
 "Create voucher codes for the discount","Gutscheincodes für den Rabatt erstellen"
 Deactivate,Deaktivieren
 "Define what to apply the discount to","Geben Sie an, auf was der Rabatt angewendet werden soll"
@@ -52,4 +53,3 @@ Custom code, Benutzerdefinierter Code
 Generate,Generierte
 Created At,Erstellt Am
 View discount,Rabatt Anzeigen
-"This value should not be blank.",deTEst

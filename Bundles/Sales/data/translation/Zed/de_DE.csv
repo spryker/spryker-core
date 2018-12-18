@@ -37,4 +37,5 @@ State,Zustand
 "Name", "Name"
 "Refunds", "Rückerstattungen"
 "Edit", "Bearbeiten"
-
+Orders,Bestellungen
+Order Matrix,Bestellmatrix

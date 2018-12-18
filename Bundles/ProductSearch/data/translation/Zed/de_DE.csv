@@ -1,9 +1,12 @@
 "Add attribute to search","Attribut zur Suche hinzufügen"
+"Add Attribute to Search","Attribut zur Suche hinzufügen"
 "Attribute key",Attribut-key
 "Create filter","Filter erstellen"
+"Create Filter","Filter Erstellen"
 Delete,Löschen
 Edit,Bearbeiten
 "Edit filter order","Filteranordnung bearbeiten"
+"Edit Filter Order","Filteranordnung bearbeiten"
 "Filter name",Filtername
 "Filter type",Filtertyp
 "General Information","Allgemeine Informationen"
@@ -16,4 +19,5 @@ Save,Speichern
 Translations,Übersetzungen
 Deactivate all,Alle Deaktivieren
 Filter preferences,Filtereinstellungen
+Filter Preferences,Filtereinstellungen
 View filter,Filter Anzeigen
