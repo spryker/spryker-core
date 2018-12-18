@@ -9,9 +9,12 @@ namespace SprykerTest\Zed\ShipmentCartConnector\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CartChangeBuilder;
+use Generated\Shared\DataBuilder\ExpenseBuilder;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\ShipmentCartConnector\Business\ShipmentCartConnectorFacade;
 
 /**
@@ -51,9 +54,14 @@ class ShipmentCartConnectorFacadeTest extends Unit
 
         $quoteTransfer = $updatedCartChangeTransfer->getQuote();
 
-        $this->assertSame($quoteTransfer->getShipment()->getMethod()->getCurrencyIsoCode(), $quoteTransfer->getCurrency()->getCode());
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $quoteTransfer->getItems()[0];
+        $this->assertSame(
+            $itemTransfer->getShipment()->getMethod()->getCurrencyIsoCode(),
+            $quoteTransfer->getCurrency()->getCode()
+        );
 
-        $price = $quoteTransfer->getShipment()->getMethod()->getStoreCurrencyPrice();
+        $price = $itemTransfer->getShipment()->getMethod()->getStoreCurrencyPrice();
         $this->assertNotEmpty($price);
         $this->assertNotEquals(-1, $price);
     }
@@ -111,16 +119,21 @@ class ShipmentCartConnectorFacadeTest extends Unit
     {
         $cartChangeTransfer = (new CartChangeBuilder())->build();
 
+        $itemTransfer = (new ItemBuilder())->build();
         $quoteTransfer = (new QuoteBuilder())
             ->withCurrency()
-            ->withExpense()
             ->build();
 
         $shipmentTransfer = (new ShipmentBuilder())->build();
-
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
-        $quoteTransfer->setShipment($shipmentTransfer);
+        $shipmentExpanse = (new ExpenseBuilder())->build();
+        $shipmentExpanse->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+
+        $shipmentTransfer->setExpense($shipmentExpanse);
+
+        $itemTransfer->setShipment($shipmentTransfer);
+        $quoteTransfer->addItem($itemTransfer);
 
         $cartChangeTransfer->setQuote($quoteTransfer);
 
