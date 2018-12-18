@@ -49,6 +49,10 @@ class QuoteUpdater implements QuoteUpdaterInterface
             return $quoteResponseTransfer;
         }
 
+        if (!$quoteTransfer->getCurrency()->getCode()) {
+            $quoteTransfer->setCurrency($quoteResponseTransfer->getQuoteTransfer()->getCurrency());
+        }
+
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer()->fromArray($quoteTransfer->modifiedToArray());
 
         $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())->fromArray($quoteTransfer->modifiedToArray(), true);

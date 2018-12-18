@@ -121,8 +121,7 @@ class CartUpdater implements CartUpdaterInterface
      */
     protected function getStoreTransfer(RestCartsAttributesTransfer $restCartsAttributesTransfer): StoreTransfer
     {
-        return (new StoreTransfer())
-            ->setName($restCartsAttributesTransfer->getStore());
+        return (new StoreTransfer())->setName($restCartsAttributesTransfer->getStore());
     }
 
     /**
