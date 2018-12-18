@@ -9,6 +9,7 @@
     "spryker/gui": "^3.1.0",
     "spryker/kernel": "^3.18.0",
     "spryker/locale": "^3.0.0",
+    "spryker/merchant-relationship-sales-order-threshold-gui": "*",
     "spryker/money": "^2.1.0",
     "spryker/sales-order-threshold": "^1.0.0",
     "spryker/sales-order-threshold-gui-extension": "^1.0.0",
