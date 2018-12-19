@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Development\Communication\Console;
 
+use Generated\Shared\Transfer\ModuleFilterTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
+use Generated\Shared\Transfer\OrganizationTransfer;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,10 +32,12 @@ class CodeArchitectureSnifferConsole extends Console
     protected const OPTION_PRIORITY = 'priority';
     protected const OPTION_DRY_RUN = 'dry-run';
     protected const ARGUMENT_SUB_PATH = 'path';
+    protected const OPTION_VERBOSE = 'verbose';
     protected const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
 
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
     protected const NAMESPACE_SPRYKER = 'Spryker';
+    protected const SOURCE_FOLDER_NAME = 'src';
 
     /**
      * @return void
@@ -72,6 +77,7 @@ class CodeArchitectureSnifferConsole extends Console
         }
 
         $path = $this->input->getArgument(static::ARGUMENT_SUB_PATH);
+
         if ($path) {
             $message .= ' (' . $path . ')';
         }
@@ -81,8 +87,8 @@ class CodeArchitectureSnifferConsole extends Console
         if ($isCore) {
             $success = $this->runForCore($output, $module, $path);
         } else {
-            $pathToRoot = $this->getFactory()->getConfig()->getPathToRoot();
-            $customPath = $pathToRoot . $path;
+            $customPath = $this->getCustomPath($module, $path);
+
             if (!$module && file_exists($customPath)) {
                 $success = $this->runCustomPath($output, $customPath);
             } else {
@@ -95,70 +101,127 @@ class CodeArchitectureSnifferConsole extends Console
 
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param string $module
+     * @param string $moduleArgument
      * @param string $subPath
      *
      * @return bool
      */
-    protected function runForCore(OutputInterface $output, $module, $subPath)
+    protected function runForCore(OutputInterface $output, $moduleArgument, $subPath): bool
     {
-        $path = $this->getCorePath($module, $subPath);
-        if (!is_dir($path)) {
-            $output->writeln(sprintf('<error>Path not found: %s</error>', $path));
+        $moduleTransferCollection = $this->getModulesToExecute($moduleArgument);
 
-            return false;
+        $count = 0;
+
+        foreach ($moduleTransferCollection as $moduleTransfer) {
+            $path = $this->getCorePath($moduleTransfer, $subPath);
+
+            if (!is_dir($path)) {
+                $output->writeln(sprintf('<error>Path not found: %s</error>', $path));
+
+                return false;
+            }
+
+            $violations = $this->getFacade()->runArchitectureSniffer($path, $this->input->getOptions());
+            $output->writeln($path, $violations ? OutputInterface::VERBOSITY_QUIET : OutputInterface::VERBOSITY_VERBOSE);
+            $countCurrent = $this->displayViolations($output, $violations);
+            $this->displayViolationsCountMessage($output, $countCurrent);
+            $count += $countCurrent;
         }
-
-        $output->writeln($path, OutputInterface::VERBOSITY_VERBOSE);
-        $violations = $this->getFacade()->runArchitectureSniffer($path, $this->input->getOptions());
-        $count = $this->displayViolations($output, $violations);
-        $output->writeln($count . ' violations found');
 
         return $count === 0;
     }
 
     /**
-     * @param string $module
+     * @param string $namespace
+     *
+     * @return bool
+     */
+    protected function getNamespaceIsSpryker(string $namespace): bool
+    {
+        return $namespace === static::NAMESPACE_SPRYKER || $namespace === static::NAMESPACE_SPRYKER_SHOP;
+    }
+
+    /**
+     * @param string $moduleArgument
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     */
+    protected function getModulesToExecute(string $moduleArgument): array
+    {
+        return $this->getFacade()->getModules($this->buildModuleFilterTransfer($moduleArgument));
+    }
+
+    /**
+     * @param string $moduleArgument
+     *
+     * @return \Generated\Shared\Transfer\ModuleFilterTransfer|null
+     */
+    protected function buildModuleFilterTransfer(string $moduleArgument): ?ModuleFilterTransfer
+    {
+        if (!$moduleArgument) {
+            return null;
+        }
+
+        $moduleFilterTransfer = new ModuleFilterTransfer();
+
+        if (strpos($moduleArgument, '.') === false) {
+            $moduleTransfer = new ModuleTransfer();
+            $moduleTransfer->setName($moduleArgument);
+            $moduleFilterTransfer->setModule($moduleTransfer);
+
+            return $moduleFilterTransfer;
+        }
+
+        $this->addModuleFilterDetails($moduleArgument, $moduleFilterTransfer);
+
+        return $moduleFilterTransfer;
+    }
+
+    /**
+     * @param string $moduleArgument
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleFilterTransfer
+     */
+    protected function addModuleFilterDetails(string $moduleArgument, ModuleFilterTransfer $moduleFilterTransfer): ModuleFilterTransfer
+    {
+        [$organization, $module] = explode('.', $moduleArgument);
+
+        if ($module !== '*' && $module !== 'all') {
+            $moduleTransfer = new ModuleTransfer();
+            $moduleTransfer->setName($module);
+
+            $moduleFilterTransfer->setModule($moduleTransfer);
+        }
+
+        $organizationTransfer = new OrganizationTransfer();
+        $organizationTransfer->setName($organization);
+
+        $moduleFilterTransfer->setOrganization($organizationTransfer);
+
+        return $moduleFilterTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      * @param string $pathSuffix
      *
      * @return string
      */
-    protected function getCorePath($module, $pathSuffix)
+    protected function getCorePath(ModuleTransfer $moduleTransfer, $pathSuffix): string
     {
-        $namespace = null;
-        if (strpos($module, '.') !== false) {
-            [$namespace, $module] = explode('.', $module, 2);
-        }
-
-        if ($namespace === static::NAMESPACE_SPRYKER && is_dir($this->getFactory()->getConfig()->getPathToCore() . $module)) {
-            return $this->buildPath($this->getFactory()->getConfig()->getPathToCore() . $module . DIRECTORY_SEPARATOR, $pathSuffix);
-        }
-
-        if ($namespace === static::NAMESPACE_SPRYKER_SHOP && is_dir($this->getFactory()->getConfig()->getPathToShop() . $module)) {
-            return $this->buildPath($this->getFactory()->getConfig()->getPathToShop() . $module . DIRECTORY_SEPARATOR, $pathSuffix);
-        }
-
-        $vendor = $this->dasherize($namespace);
-        $module = $this->dasherize($module);
-        $pathToModule = $this->getFactory()->getConfig()->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR;
-        $path = $pathToModule . $module . DIRECTORY_SEPARATOR;
-
-        return $this->buildPath($path, $pathSuffix);
+        return $this->buildPath($moduleTransfer->getPath(), $pathSuffix);
     }
 
     /**
      * @param string $path
-     * @param string $suffix
+     * @param string|null $suffix
      *
      * @return string
      */
-    protected function buildPath($path, $suffix)
+    protected function buildPath(string $path, ?string $suffix = null): string
     {
-        if (!$suffix) {
-            return $path;
-        }
-
-        return $path . $suffix;
+        return rtrim($path . $suffix, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -209,7 +272,7 @@ class CodeArchitectureSnifferConsole extends Console
             return false;
         }
 
-        $output->writeln($result . ' violations found');
+        $this->displayViolationsCountMessage($output, $result);
 
         return $result === 0;
     }
@@ -227,7 +290,7 @@ class CodeArchitectureSnifferConsole extends Console
         $violations = $this->getFacade()->runArchitectureSniffer($customPath, $this->input->getOptions());
         $count = $this->displayViolations($output, $violations);
 
-        $output->writeln($count . ' violations found');
+        $this->displayViolationsCountMessage($output, $count);
 
         return $count === 0;
     }
@@ -279,5 +342,46 @@ class CodeArchitectureSnifferConsole extends Console
             ->attach(new StringToLower());
 
         return $filterChain->filter($name);
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param int $count
+     *
+     * @return void
+     */
+    protected function displayViolationsCountMessage(OutputInterface $output, int $count): void
+    {
+        if (!$this->isVerboseModeEnabled() && $count === 0) {
+            return;
+        }
+
+        $output->writeln($count . ' violations found');
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isVerboseModeEnabled(): bool
+    {
+        return $this->input->getOption(static::OPTION_VERBOSE);
+    }
+
+    /**
+     * @param string|null $module
+     * @param string|null $path
+     *
+     * @return string
+     */
+    protected function getCustomPath(?string $module, ?string $path): string
+    {
+        $pathToRoot = $this->getFactory()->getConfig()->getPathToRoot();
+        $customPath = $pathToRoot . $path;
+
+        if (!$module && !$path) {
+            return $this->buildPath($customPath, static::SOURCE_FOLDER_NAME);
+        }
+
+        return $this->buildPath($customPath);
     }
 }

@@ -5,7 +5,7 @@
           namespace="Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence"
           package="src.Orm.Zed.PriceProductMerchantRelationshipStorage.Persistence">
 
-    <table name="spy_price_product_abstract_merchant_relationship_storage">
+    <table name="spy_price_product_abstract_merchant_relationship_storage" identifierQuoting="true">
         <column name="id_price_product_abstract_merchant_relationship_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="key" type="VARCHAR" size="255" required="true"/>
         <column name="fk_product_abstract" type="INTEGER" required="true"/>
@@ -32,7 +32,7 @@
         <behavior name="timestampable"/>
     </table>
 
-    <table name="spy_price_product_concrete_merchant_relationship_storage">
+    <table name="spy_price_product_concrete_merchant_relationship_storage" identifierQuoting="true">
         <column name="id_price_product_concrete_merchant_relationship_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="key" type="VARCHAR" size="255" required="true"/>
         <column name="fk_product" type="INTEGER" required="true"/>
@@ -45,7 +45,7 @@
             <index-column name="fk_company_business_unit" />
         </index>
 
-        <index name="spy_price_product_concrete_merchant_relationship_storage-price_key">
+        <index name="spy_price_product_concrete_m_r_storage-price_key">
             <index-column name="price_key"/>
         </index>
 
