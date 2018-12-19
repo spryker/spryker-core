@@ -34,15 +34,34 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
         if ($interval && ($quantity - $min) % $interval !== 0) {
             $max = $max ?? ($quantity + $interval);
 
-            if ($quantity - $interval > $min) {
-                $min = round(($quantity - $interval) / $interval) * $interval;
-            }
-
-            $allowedQuantities = array_reverse(range($min, $max, $interval));
-            $quantity = $this->getNearestQuantityFromAllowed($quantity, $allowedQuantities);
+            $quantity = $this->getNearestQuantityFromAllowed(
+                $quantity,
+                $this->getAllowedQuantities($min, $max, $interval, $quantity)
+            );
         }
 
         return $quantity;
+    }
+
+    /**
+     * @param int $min
+     * @param int $max
+     * @param int $interval
+     * @param int $quantity
+     *
+     * @return int[]
+     */
+    protected function getAllowedQuantities(int $min, int $max, int $interval, int $quantity): array
+    {
+        if ($quantity - $interval > $min) {
+            $min = (int)round(($quantity - $interval) / $interval) * $interval + $min;
+        }
+
+        if ($min + $interval > $max) {
+            return [$min];
+        }
+
+        return array_reverse(range($min, $max, $interval));
     }
 
     /**
@@ -53,6 +72,10 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
      */
     protected function getNearestQuantityFromAllowed(int $quantity, array $allowedQuantities): int
     {
+        if (count($allowedQuantities) === 1) {
+            return reset($allowedQuantities);
+        }
+
         $nearest = null;
 
         foreach ($allowedQuantities as $allowedQuantity) {
