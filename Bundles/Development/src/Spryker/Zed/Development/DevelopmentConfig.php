@@ -427,7 +427,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getArchitectureSnifferDefaultPriority()
+    public function getArchitectureSnifferDefaultPriority(): int
     {
         return 2;
     }
