@@ -453,17 +453,17 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @api
      *
-     * @param int[] $idOptionValues
+     * @param int[] $idProductOptionValues
      * @param string[] $countryIso2Codes
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function queryTaxSetByIdProductOptionValueAndCountryIso2Codes(array $idOptionValues, array $countryIso2Codes): SpyProductOptionValueQuery
+    public function queryTaxSetByIdProductOptionValueAndCountryIso2Codes(array $idProductOptionValues, array $countryIso2Codes): SpyProductOptionValueQuery
     {
         $idCountryList = $this->queryCountryByIso2Code($countryIso2Codes)->find()->getColumnValues(SpyCountryTableMap::COL_ID_COUNTRY);
 
         return $this->getFactory()->createProductOptionValueQuery()
-            ->filterByIdProductOptionValue($idOptionValues, Criteria::IN)
+            ->filterByIdProductOptionValue($idProductOptionValues, Criteria::IN)
             ->withColumn(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE, static::COL_ID_PRODUCT_OPTION_VALUE)
             ->groupBy(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE)
             ->useSpyProductOptionGroupQuery()
