@@ -17,6 +17,7 @@ use Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage;
 use Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface;
 use Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface;
+use Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageRepositoryInterface;
 
 class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
 {
@@ -36,6 +37,11 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageRepositoryInterface
+     */
+    protected $productOptionStorageRepository;
+
+    /**
      * @var bool
      */
     protected $isSendingToQueue;
@@ -49,13 +55,20 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
      * @param \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface $productOptionFacade
      * @param \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageRepositoryInterface $productOptionStorageRepository
      * @param bool $isSendingToQueue
      */
-    public function __construct(ProductOptionStorageToProductOptionFacadeInterface $productOptionFacade, ProductOptionStorageToStoreFacadeInterface $storeFacade, ProductOptionStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
-    {
+    public function __construct(
+        ProductOptionStorageToProductOptionFacadeInterface $productOptionFacade,
+        ProductOptionStorageToStoreFacadeInterface $storeFacade,
+        ProductOptionStorageQueryContainerInterface $queryContainer,
+        ProductOptionStorageRepositoryInterface $productOptionStorageRepository,
+        $isSendingToQueue
+    ) {
         $this->productOptionFacade = $productOptionFacade;
         $this->storeFacade = $storeFacade;
         $this->queryContainer = $queryContainer;
+        $this->productOptionStorageRepository = $productOptionStorageRepository;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -70,16 +83,17 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         $productOptionEntities = $this->findProductOptionAbstractEntities($productAbstractIds);
         $productOptions = [];
         foreach ($productOptionEntities as $productOptionEntity) {
-            $productOptions[$productOptionEntity['fk_product_abstract']][] = $productOptionEntity;
+            $productOptions[$productOptionEntity->getFkProductAbstract()][] = $productOptionEntity;
         }
 
-        $spyProductAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
-
-        if (empty($productOptionEntities)) {
-            $this->deleteStorageData($spyProductAbstractOptionStorageEntities);
+        $deletableProductStorageOptionEntities = $this->getDeletableProductStorageOptionEntities($productAbstractIds);
+        if (count($deletableProductStorageOptionEntities) > 0) {
+            $this->deleteStorageData($deletableProductStorageOptionEntities);
         }
 
-        $this->storeData($spyProductAbstractOptionStorageEntities, $productOptions);
+        $productAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
+
+        $this->storeData($productAbstractOptionStorageEntities, $productOptions);
     }
 
     /**
@@ -90,9 +104,44 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     public function unpublish(array $productAbstractIds)
     {
         $spyProductAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
-        foreach ($spyProductAbstractOptionStorageEntities as $productAbstractOptionStorageEntity) {
+        foreach ($spyProductAbstractOptionStorageEntities as $storeName => $productAbstractOptionStorageEntity) {
             $productAbstractOptionStorageEntity->delete();
         }
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorageQuery[]
+     */
+    protected function getDeletableProductStorageOptionEntities(array $productAbstractIds): array
+    {
+        $productOptionGroupStatuses = $this->productOptionStorageRepository->getProductOptionGroupStatusesByProductAbstractIds($productAbstractIds);
+
+        $deletableEntityIds = [];
+        foreach ($productOptionGroupStatuses as $fkProductAbstract => $productOptionGroupStatus) {
+            if ($this->isAllProductOptionGroupsDeactivated($productOptionGroupStatus)) {
+                $deletableEntityIds[] = $fkProductAbstract;
+            }
+        }
+
+        return $this->findProductStorageOptionEntitiesByProductAbstractIds($deletableEntityIds);
+    }
+
+    /**
+     * @param array $productOptionGroupStatus
+     *
+     * @return bool
+     */
+    protected function isAllProductOptionGroupsDeactivated(array $productOptionGroupStatus): bool
+    {
+        foreach ($productOptionGroupStatus as $name => $status) {
+            if ($status === true) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

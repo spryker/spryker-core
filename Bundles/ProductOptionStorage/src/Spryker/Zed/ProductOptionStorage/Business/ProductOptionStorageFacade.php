@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductOptionStorage\Business\ProductOptionStorageBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageRepositoryInterface getRepository()
  */
 class ProductOptionStorageFacade extends AbstractFacade implements ProductOptionStorageFacadeInterface
 {
