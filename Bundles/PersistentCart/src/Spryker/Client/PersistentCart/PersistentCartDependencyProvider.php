@@ -51,7 +51,9 @@ class PersistentCartDependencyProvider extends AbstractDependencyProvider
     protected function addMessengerClient(Container $container): Container
     {
         $container[static::CLIENT_MESSENGER] = function (Container $container) {
-            return new PersistentCartToMessengerClientBridge($container->getLocator()->messenger()->client());
+            return new PersistentCartToMessengerClientBridge(
+                $container->getLocator()->messenger()->client()
+            );
         };
 
         return $container;

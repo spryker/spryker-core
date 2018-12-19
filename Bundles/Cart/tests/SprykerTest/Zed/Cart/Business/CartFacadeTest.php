@@ -311,26 +311,64 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testLockQuote(): void
+    public function testLockQuoteShouldSetIsLockedToTrue(): void
     {
+        // Assign
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setIsLocked(false);
 
+        // Act
         $quoteTransfer = $this->cartFacade->lockQuote($quoteTransfer);
 
+        // Assert
         $this->assertTrue($quoteTransfer->getIsLocked());
     }
 
     /**
      * @return void
      */
-    public function testUnlockQuote(): void
+    public function testLockOfAlreadyLockedQuoteShouldSetIsLockedToTrue(): void
     {
+        // Assign
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setIsLocked(true);
 
+        // Act
+        $quoteTransfer = $this->cartFacade->lockQuote($quoteTransfer);
+
+        // Assert
+        $this->assertTrue($quoteTransfer->getIsLocked());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUnlockQuoteShouldSetIsLockedToFalse(): void
+    {
+        // Assign
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setIsLocked(true);
+
+        // Act
         $quoteTransfer = $this->cartFacade->unlockQuote($quoteTransfer);
 
+        // Assert
+        $this->assertFalse($quoteTransfer->getIsLocked());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUnlockOfAlreadyUnlockedQuoteShouldSetIsLockedToFalse(): void
+    {
+        // Assign
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setIsLocked(false);
+
+        // Act
+        $quoteTransfer = $this->cartFacade->unlockQuote($quoteTransfer);
+
+        // Assert
         $this->assertFalse($quoteTransfer->getIsLocked());
     }
 }
