@@ -42,9 +42,9 @@ class EditCompanyBusinessUnitController extends AbstractController
         $redirectUrl = $request->query->get(static::PARAM_REDIRECT_URL, static::URL_BUSINESS_UNIT_LIST);
 
         $dataProvider = $this->getFactory()->createCompanyBusinessUnitFormDataProvider();
-        $formData = $dataProvider->getData($idCompanyBusinessUnit);
+        $companyBusinessUnitTransfer = $dataProvider->getData($idCompanyBusinessUnit);
 
-        if (!$formData->getIdCompanyBusinessUnit()) {
+        if (!$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()) {
             $this->addErrorMessage(static::MESSAGE_COMPANY_BUSINESS_UNIT_NOT_FOUND);
 
             return $this->redirectResponse(static::URL_BUSINESS_UNIT_LIST);
@@ -52,7 +52,7 @@ class EditCompanyBusinessUnitController extends AbstractController
 
         $form = $this->getFactory()
             ->getCompanyBusinessUnitEditForm(
-                $formData,
+                $companyBusinessUnitTransfer,
                 $dataProvider->getOptions($idCompanyBusinessUnit)
             )
             ->handleRequest($request);

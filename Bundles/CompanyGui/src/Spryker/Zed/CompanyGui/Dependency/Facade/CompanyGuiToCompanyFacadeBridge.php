@@ -58,7 +58,7 @@ class CompanyGuiToCompanyFacadeBridge implements CompanyGuiToCompanyFacadeInterf
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyTransfer
+     * @return \Generated\Shared\Transfer\CompanyTransfer|null
      */
     public function findCompanyById(CompanyTransfer $companyTransfer): ?CompanyTransfer
     {

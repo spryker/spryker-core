@@ -67,10 +67,6 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer|null

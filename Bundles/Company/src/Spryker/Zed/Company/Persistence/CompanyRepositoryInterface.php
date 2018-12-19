@@ -47,11 +47,6 @@ interface CompanyRepositoryInterface
     public function getCompanies(): CompanyCollectionTransfer;
 
     /**
-     * Specification:
-     *  - Finds a company by CompanyTransfer::idCompany in the transfer
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer|null
