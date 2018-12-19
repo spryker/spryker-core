@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\SequenceNumber\Persistence" package="src.Orm.Zed.SequenceNumber.Persistence" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd">
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\SequenceNumber\Persistence" package="src.Orm.Zed.SequenceNumber.Persistence" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd">
 
     <table name="spy_sequence_number">
         <column name="id_sequence_number" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
