@@ -51,7 +51,7 @@ class Application implements HttpKernelInterface, TerminableInterface
      *
      * @return $this
      */
-    public function registerServiceProvider(ServiceProviderInterface $serviceProvider): self
+    public function registerServiceProvider(ServiceProviderInterface $serviceProvider)
     {
         $this->services[] = $serviceProvider;
         $serviceProvider->provide($this->container);
@@ -66,7 +66,7 @@ class Application implements HttpKernelInterface, TerminableInterface
     /**
      * @return $this
      */
-    public function boot(): self
+    public function boot()
     {
         if (!$this->booted) {
             $this->booted = true;
@@ -79,17 +79,7 @@ class Application implements HttpKernelInterface, TerminableInterface
     /**
      * @return void
      */
-    protected function bootServices(): void
-    {
-        foreach ($this->bootableServices as $bootableService) {
-            $bootableService->boot($this->container);
-        }
-    }
-
-    /**
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
         $request = Request::createFromGlobals();
 
@@ -117,21 +107,31 @@ class Application implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * @return \Symfony\Component\HttpKernel\HttpKernel
-     */
-    protected function getKernel(): HttpKernel
-    {
-        return $this->container->get('kernel');
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\HttpFoundation\Response $response
      *
      * @return void
      */
-    public function terminate(Request $request, Response $response)
+    public function terminate(Request $request, Response $response): void
     {
         $this->getKernel()->terminate($request, $response);
+    }
+
+    /**
+     * @return void
+     */
+    protected function bootServices(): void
+    {
+        foreach ($this->bootableServices as $bootableService) {
+            $bootableService->boot($this->container);
+        }
+    }
+
+    /**
+     * @return \Symfony\Component\HttpKernel\HttpKernel
+     */
+    protected function getKernel(): HttpKernel
+    {
+        return $this->container->get('kernel');
     }
 }
