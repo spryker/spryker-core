@@ -1,7 +1,7 @@
 
 {% if form.items|length > 0 %}
     <div class="form-group">
-        <label class="control-label required">Added Items</label>
+        <label class="control-label required">{{ 'Added Items' | trans }}</label>
 
         <table class="manualOrderItems">
             {% for item in form.items %}
