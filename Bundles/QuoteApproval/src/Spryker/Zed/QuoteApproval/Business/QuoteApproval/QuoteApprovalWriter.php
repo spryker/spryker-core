@@ -7,47 +7,85 @@
 
 namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
-use ArrayObject;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
+use Spryker\Shared\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
+use Spryker\Zed\Kernel\PermissionAwareTrait;
+use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface;
 use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface;
+use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface;
 
 class QuoteApprovalWriter implements QuoteApprovalWriterInterface
 {
+    use PermissionAwareTrait;
+
+    /**
+     * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface
+     */
+    protected $quoteFacade;
+
     /**
      * @var \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface
      */
     protected $quoteApprovalEntityManager;
 
     /**
-     * @param \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface $quoteApprovalEntityManager
+     * @var \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface
      */
-    public function __construct(QuoteApprovalEntityManagerInterface $quoteApprovalEntityManager)
-    {
+    protected $quoteApprovalRepository;
+
+    /**
+     * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface $quoteFacade
+     * @param \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface $quoteApprovalEntityManager
+     * @param \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface $quoteApprovalRepository
+     */
+    public function __construct(
+        QuoteApprovalToQuoteFacadeInterface $quoteFacade,
+        QuoteApprovalEntityManagerInterface $quoteApprovalEntityManager,
+        QuoteApprovalRepositoryInterface $quoteApprovalRepository
+    ) {
+        $this->quoteFacade = $quoteFacade;
         $this->quoteApprovalEntityManager = $quoteApprovalEntityManager;
+        $this->quoteApprovalRepository = $quoteApprovalRepository;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function approveQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function approveQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-        $approvals = new ArrayObject();
-        foreach ($quoteTransfer->getApprovals() as $quoteApprovalTransfer) {
-            if ($quoteApprovalTransfer->getApprover()->getCustomer()) {
-                //todo: check that current customer is approver
-                //todo: check that he/she can approve
+        $quoteApprovalTransfer = $this->quoteApprovalRepository
+            ->findQuoteApprovalById($quoteApprovalRequestTransfer->getIdQuoteApproval());
 
-                $quoteApprovalTransfer->setStatus(QuoteApprovalConfig::STATUS_APPROVED); // todo update to config
-                $quoteApprovalTransfer = $this->quoteApprovalEntityManager->updateQuoteApproval($quoteApprovalTransfer);
-                $approvals->append($quoteApprovalTransfer);
-            }
+        $quoteApprovalResponseTransfer = (new QuoteApprovalResponseTransfer())
+            ->setIsSuccessful(false);
+
+        $quoteTransfer = $this->quoteFacade->findQuoteById($quoteApprovalTransfer->getFkQuote());
+
+        //todo: check the status of quote
+
+        if (!$this->can(ApproveQuotePermissionPlugin::KEY, $quoteTransfer)) {
+            return $quoteApprovalResponseTransfer;
         }
 
-        $quoteTransfer->setApprovals($approvals);
+        if ($quoteApprovalTransfer->getStatus() !== QuoteApprovalConfig::STATUS_WAITING) {
+            return $quoteApprovalResponseTransfer;
+        }
 
-        return $quoteTransfer;
+        if ($quoteApprovalTransfer->getFkCompanyUser() != $quoteApprovalRequestTransfer->getFkCompanyUser()) {
+            return $quoteApprovalResponseTransfer;
+        }
+
+        $quoteApprovalTransfer->setStatus(QuoteApprovalConfig::STATUS_APPROVED);
+        $quoteApprovalTransfer = $this->quoteApprovalEntityManager->updateQuoteApproval($quoteApprovalTransfer);
+
+        $quoteApprovalResponseTransfer
+            ->setQuoteApproval($quoteApprovalTransfer)
+            ->setIsSuccessful(true);
+
+        return $quoteApprovalResponseTransfer;
     }
 }

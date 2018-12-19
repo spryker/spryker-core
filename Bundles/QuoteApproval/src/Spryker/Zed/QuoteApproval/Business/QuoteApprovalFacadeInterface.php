@@ -7,16 +7,20 @@
 
 namespace Spryker\Zed\QuoteApproval\Business;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 
 interface QuoteApprovalFacadeInterface
 {
     /**
+     * Specification:
+     * - Approves quote if approver has right for it.
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function approveQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function approveQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer;
 }

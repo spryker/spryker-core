@@ -7,7 +7,8 @@
 
 namespace Spryker\Client\QuoteApproval\Zed;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Spryker\Zed\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface;
 
 class QuoteApprovalStub implements QuoteApprovalStubInterface
@@ -26,20 +27,18 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
     }
 
     /**
-     * @param int $idQuote
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function approveQuote(int $idQuote): QuoteTransfer
+    public function approveQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-        $quoteTransfer = (new QuoteTransfer)->setIdQuote($idQuote); // todo: move to a separate function
-
-        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
-        $quoteTransfer = $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer */
+        $quoteApprovalResponseTransfer = $this->zedRequestClient->call(
             '/quote-approval/gateway/approve-quote',
-            $quoteTransfer
+            $quoteApprovalRequestTransfer
         );
 
-        return $quoteTransfer;
+        return $quoteApprovalResponseTransfer;
     }
 }

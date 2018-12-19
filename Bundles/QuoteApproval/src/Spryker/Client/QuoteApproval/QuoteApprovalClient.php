@@ -7,8 +7,10 @@
 
 namespace Spryker\Client\QuoteApproval;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 
 /**
  * @method \Spryker\Client\QuoteApproval\QuoteApprovalFactory getFactory()
@@ -18,14 +20,26 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     /**
      * @api
      *
-     * @param int $idQuote
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function approveQuote(int $idQuote): QuoteTransfer
+    public function approveQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteApprovalStub()
-            ->approveQuote($idQuote);
+            ->approveQuote($quoteApprovalRequestTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idQuote
+     *
+     * @return string
+     */
+    public function getQuoteStatus(int $idQuote): string
+    {
+        return QuoteApprovalConfig::STATUS_WAITING; //todo: update with real functionality in PS-4362
     }
 }

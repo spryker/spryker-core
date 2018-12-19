@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\QuoteApproval\Persistence;
 
+use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -14,4 +15,21 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class QuoteApprovalRepository extends AbstractRepository implements QuoteApprovalRepositoryInterface
 {
+    /**
+     * @param int $idQuoteApproval
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer
+     */
+    public function findQuoteApprovalById(int $idQuoteApproval): QuoteApprovalTransfer
+    {
+        $spyQuoteApproval = $this->getFactory()
+            ->createSpyQuoteApprovalQuery()
+            ->findOneByIdQuoteApproval($idQuoteApproval);
+
+        $quoteApprovalTransfer = $this->getFactory()
+            ->createQuoteApprovalMapper()
+            ->mapEntityToQuoteApprovalTransfer($spyQuoteApproval, new QuoteApprovalTransfer());
+
+        return $quoteApprovalTransfer;
+    }
 }

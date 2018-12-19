@@ -7,6 +7,14 @@
 
 namespace Spryker\Zed\QuoteApproval\Persistence;
 
+use Generated\Shared\Transfer\QuoteApprovalTransfer;
+
 interface QuoteApprovalRepositoryInterface
 {
+    /**
+     * @param int $idQuoteApproval
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer
+     */
+    public function findQuoteApprovalById(int $idQuoteApproval): QuoteApprovalTransfer;
 }

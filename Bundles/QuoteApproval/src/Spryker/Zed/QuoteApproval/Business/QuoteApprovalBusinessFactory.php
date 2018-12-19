@@ -10,7 +10,7 @@ namespace Spryker\Zed\QuoteApproval\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalWriter;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalWriterInterface;
-use Spryker\Zed\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface;
+use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface;
 use Spryker\Zed\QuoteApproval\QuoteApprovalDependencyProvider;
 
 /**
@@ -26,15 +26,17 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     public function createQuoteApprovalWriter(): QuoteApprovalWriterInterface
     {
         return new QuoteApprovalWriter(
-            $this->getEntityManager()
+            $this->getQuoteFacade(),
+            $this->getEntityManager(),
+            $this->getRepository()
         );
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface
+     * @return \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface
      */
-    public function getZedRequestClient(): QuoteApprovalToZedRequestClientInterface
+    public function getQuoteFacade(): QuoteApprovalToQuoteFacadeInterface
     {
-        return $this->getProvidedDependency(QuoteApprovalDependencyProvider::CLIENT_ZED_REQUEST);
+        return $this->getProvidedDependency(QuoteApprovalDependencyProvider::FACADE_QUOTE);
     }
 }

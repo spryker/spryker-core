@@ -7,16 +7,32 @@
 
 namespace Spryker\Client\QuoteApproval;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 
 interface QuoteApprovalClientInterface
 {
     /**
+     * Specification:
+     * - todo: add Specification.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function approveQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer;
+
+    /**
+     * Specification:
+     * - todo: add Specification.
+     *
      * @api
      *
      * @param int $idQuote
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return string
      */
-    public function approveQuote(int $idQuote): QuoteTransfer;
+    public function getQuoteStatus(int $idQuote): string;
 }
