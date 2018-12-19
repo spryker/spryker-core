@@ -1,6 +1,8 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title %}Assign Customers to User: {{ userTransfer.username }}{% endblock %}
+{% block section_title %}
+    {{ 'Assign Customers to User:' | trans ~ ' ' ~ userTransfer.username }}
+{% endblock %}
 
 {% block action %}
     {{ backActionButton('/user', 'List Users' | trans) }}

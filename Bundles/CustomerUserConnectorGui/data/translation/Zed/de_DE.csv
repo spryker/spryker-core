@@ -1,3 +1,6 @@
 "A customer can not be assigned to multiple users at a time.","Ein Kunde kann nicht gleichzeitig mehreren Benutzern zugeordnet sein."
 "List Users","Liste der Benutzer"
 Save,Speichern
+List of customers,Liste der kunden
+Select All,Alle Auswählen
+Selected customers,Ausgewählte Kunden
