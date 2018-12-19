@@ -133,6 +133,23 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserByUuid(CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer
+    {
+        $companyUserTransfer->requireUuid();
+        $companyUserTransfer = $this->companyUserRepository->findCompanyUserByUuid($companyUserTransfer->getUuid());
+
+        if ($companyUserTransfer !== null) {
+            return $this->companyUserPluginExecutor->executeHydrationPlugins($companyUserTransfer);
+        }
+
+        return null;
+    }
+
+    /**
      * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer

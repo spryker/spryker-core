@@ -58,6 +58,13 @@ interface CompanyUserInterface
     public function findActiveCompanyUserByCustomerId(int $idCustomer): ?CompanyUserTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserByUuid(CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer

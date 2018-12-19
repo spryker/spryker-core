@@ -168,6 +168,22 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
      *
      * @api
      *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserByUuid(CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer
+    {
+        return $this->getFactory()->createCompanyUser()->findCompanyUserByUuid($companyUserTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return int

@@ -12,6 +12,7 @@ use Generated\Shared\DataBuilder\CompanyResponseBuilder;
 use Generated\Shared\DataBuilder\CompanyUserBuilder;
 use Generated\Shared\DataBuilder\CompanyUserCriteriaFilterBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use TypeError;
 
@@ -30,6 +31,7 @@ class CompanyUserFacadeTest extends Test
     protected const CUSTOMER_COLUMN_COMPANY_USER = 'customer';
     protected const FK_COMPANY_COLUMN_COMPANY_USER = 'fk_company';
     protected const IS_ACTIVE_COLUMN_COMPANY_USER = 'is_active';
+    protected const TEST_COMPANY_USER_UUID = 'test-company-user-uuid';
 
     /**
      * @var \SprykerTest\Zed\CompanyUser\CompanyUserBusinessTester
@@ -175,6 +177,55 @@ class CompanyUserFacadeTest extends Test
 
         // Assert
         $this->assertNotNull($companyUserTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCompanyUserByUuidShouldReturnTransfer(): void
+    {
+        // Assign
+        $companyTransfer = $this->tester->haveCompany([CompanyTransfer::IS_ACTIVE => true]);
+        $customerTransfer = (new CustomerBuilder())->build();
+        $companyUserTransfer = $this->tester->haveCompanyUser(
+            [
+                CompanyUserTransfer::CUSTOMER => $customerTransfer,
+                CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+                CompanyUserTransfer::UUID => static::TEST_COMPANY_USER_UUID,
+            ]
+        );
+
+        // Act
+        $companyUserTransfer = $this->getFacade()->findCompanyUserByUuid($companyUserTransfer);
+
+        // Assert
+        $this->assertInstanceOf(CompanyUserTransfer::class, $companyUserTransfer);
+        $this->assertNotNull($companyUserTransfer);
+        $this->assertEquals(static::TEST_COMPANY_USER_UUID, $companyUserTransfer->getUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCompanyUserByUuidShouldNotFindCompanyUserWithoutUuid(): void
+    {
+        // Assign
+        $companyTransfer = $this->tester->haveCompany([CompanyTransfer::IS_ACTIVE => true]);
+        $customerTransfer = (new CustomerBuilder())->build();
+        $companyUserTransfer = $this->tester->haveCompanyUser(
+            [
+                CompanyUserTransfer::CUSTOMER => $customerTransfer,
+                CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            ]
+        );
+
+        $companyUserTransfer->setUuid(static::TEST_COMPANY_USER_UUID);
+
+        // Act
+        $companyUserTransfer = $this->getFacade()->findCompanyUserByUuid($companyUserTransfer);
+
+        // Assert
+        $this->assertNull($companyUserTransfer);
     }
 
     /**

@@ -49,6 +49,33 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
+     * @module Customer
+     * @module Company
+     *
+     * @param string $uuidCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserByUuid(string $uuidCompanyUser): ?CompanyUserTransfer
+    {
+        $query = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->joinWithCustomer()
+            ->leftJoinWithCompany()
+            ->filterByUuid($uuidCompanyUser);
+
+        $companyUserEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+
+        if ($companyUserEntityTransfer !== null) {
+            return $this->getFactory()
+                ->createCompanyUserMapper()
+                ->mapEntityTransferToCompanyUserTransfer($companyUserEntityTransfer);
+        }
+
+        return null;
+    }
+
+    /**
      * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
      *
      * @param int $idCustomer
