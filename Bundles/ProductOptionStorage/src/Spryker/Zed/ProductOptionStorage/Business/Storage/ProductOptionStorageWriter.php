@@ -83,7 +83,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         $productOptionEntities = $this->findProductOptionAbstractEntities($productAbstractIds);
         $productOptions = [];
         foreach ($productOptionEntities as $productOptionEntity) {
-            $productOptions[$productOptionEntity->getFkProductAbstract()][] = $productOptionEntity;
+            $productOptions[$productOptionEntity['fk_product_abstract']][] = $productOptionEntity;
         }
 
         $deletableProductStorageOptionEntities = $this->getDeletableProductStorageOptionEntities($productAbstractIds);
@@ -221,9 +221,9 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     /**
      * @param array $productAbstractIds
      *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroup[]
+     * @return array
      */
-    protected function findProductOptionAbstractEntities(array $productAbstractIds)
+    protected function findProductOptionAbstractEntities(array $productAbstractIds): array
     {
         return $this->queryContainer->queryProductOptionsByProductAbstractIds($productAbstractIds)->find()->getData();
     }
