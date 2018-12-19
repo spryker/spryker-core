@@ -106,6 +106,8 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated
+     *
      * @return string
      */
     public function getCustomerSecuredPattern(): string

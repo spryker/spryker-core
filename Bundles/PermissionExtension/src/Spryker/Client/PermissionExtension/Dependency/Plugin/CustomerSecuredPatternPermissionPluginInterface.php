@@ -11,8 +11,7 @@ interface CustomerSecuredPatternPermissionPluginInterface
 {
     /**
      * Specification:
-     * - Returns true if customer is logged in.
-     * - Returns false if customer is logged out.
+     * - Checks if plugin applicable.
      *
      * @api
      *
@@ -22,7 +21,7 @@ interface CustomerSecuredPatternPermissionPluginInterface
 
     /**
      * Specification:
-     * - Returns customer secured pattern for unauthenticated users after applied customer access permissions.
+     * - Returns modified by rules customer secured pattern for customers.
      *
      * @api
      *

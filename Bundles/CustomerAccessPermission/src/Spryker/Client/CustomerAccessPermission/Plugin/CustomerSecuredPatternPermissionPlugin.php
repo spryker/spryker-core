@@ -19,6 +19,8 @@ class CustomerSecuredPatternPermissionPlugin extends AbstractPlugin implements I
 {
     /**
      * {@inheritdoc}
+     * - Returns true if customer is logged in.
+     * - Returns false if customer is logged out.
      *
      * @api
      *
@@ -33,6 +35,7 @@ class CustomerSecuredPatternPermissionPlugin extends AbstractPlugin implements I
 
     /**
      * {@inheritdoc}
+     * - Modifies secured pattern by configured customer access for unauthenticated users.
      *
      * @api
      *
