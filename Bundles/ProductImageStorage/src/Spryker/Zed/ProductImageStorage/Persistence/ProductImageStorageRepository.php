@@ -89,7 +89,7 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
             ->useSpyProductImageSetToProductImageQuery()
                 ->innerJoinWithSpyProductImage()
             ->endUse()
-            ->filterByIdProductAbstract_In($productAbstractIds)
+            ->filterByFkProductAbstract_In($productAbstractIds)
             ->filterByFkLocale(null, Criteria::ISNULL);
 
         return $this->buildQueryFromCriteria($productImageSetsQuery)->find();
