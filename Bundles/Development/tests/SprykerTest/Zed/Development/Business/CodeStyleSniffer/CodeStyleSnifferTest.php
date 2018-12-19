@@ -61,7 +61,7 @@ class CodeStyleSnifferTest extends Unit
      */
     public function testCheckCodeStyleRunsCommandInProject()
     {
-        $options = $this->defaultOptions + ['ignore' => 'vendor/'];
+        $options = ['ignore' => 'vendor/'] + $this->defaultOptions;
         $pathToApplicationRoot = APPLICATION_ROOT_DIR . '/';
         $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($pathToApplicationRoot, $options);
 
@@ -73,7 +73,7 @@ class CodeStyleSnifferTest extends Unit
      */
     public function testCheckCodeStyleRunsCommandInProjectModule()
     {
-        $options = $this->defaultOptions + ['ignore' => 'vendor/'];
+        $options = ['ignore' => 'vendor/'] + $this->defaultOptions;
         $pathToApplicationRoot = APPLICATION_ROOT_DIR . '/src/Pyz/Zed/Development/';
         $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($pathToApplicationRoot, $options);
 
@@ -86,10 +86,10 @@ class CodeStyleSnifferTest extends Unit
     public function testCheckCodeStyleRunsCommandInCore()
     {
         $module = 'Spryker.all';
-        $options = $this->defaultOptions + [
+        $options = [
             'ignore' => 'vendor/',
             'module' => $module,
-        ];
+        ] + $this->defaultOptions;
 
         $path = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . $this->pathToCore;
         $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($path, $options);
@@ -103,11 +103,11 @@ class CodeStyleSnifferTest extends Unit
     public function testCheckCodeStyleRunsCommandInCoreModuleForLevelOne()
     {
         $module = 'Spryker.Development';
-        $options = $this->defaultOptions + [
+        $options = [
             'ignore' => 'vendor/',
             'module' => $module,
             'level' => 1,
-        ];
+        ] + $this->defaultOptions;
 
         $path = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . $this->pathToCore . 'Development/';
         $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($path, $options);
@@ -121,11 +121,11 @@ class CodeStyleSnifferTest extends Unit
     public function testCheckCodeStyleRunsCommandInCoreModuleForLevelTwo()
     {
         $module = 'Spryker.Development';
-        $options = $this->defaultOptions + [
+        $options = [
             'ignore' => 'vendor/',
             'module' => $module,
             'level' => 2,
-        ];
+        ] + $this->defaultOptions;
 
         $path = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . $this->pathToCore . 'Development/';
         $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($path, $options);
