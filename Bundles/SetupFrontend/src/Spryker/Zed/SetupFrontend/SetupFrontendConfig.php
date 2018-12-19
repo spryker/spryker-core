@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SetupFrontendConfig extends AbstractBundleConfig
 {
     /**
-     * @return array
+     * @return string[]
      */
     public function getProjectFrontendDependencyDirectories(): array
     {
@@ -31,7 +31,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getYvesAssetsDirectories(): array
     {
@@ -41,7 +41,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getYvesInstallerDirectoryPattern(): array
     {
@@ -67,7 +67,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getZedAssetsDirectories(): array
     {
@@ -77,7 +77,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getZedInstallerDirectoryPattern(): array
     {

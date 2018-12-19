@@ -12,16 +12,16 @@ use Symfony\Component\Finder\Finder;
 class InstallPathFinder implements PathFinderInterface
 {
     /**
-     * @var array
+     * @var string[]
      */
-    protected $pathPattern;
+    protected $pathPatterns;
 
     /**
-     * @param array $pathPattern
+     * @param string[] $pathPatterns
      */
-    public function __construct(array $pathPattern)
+    public function __construct(array $pathPatterns)
     {
-        $this->pathPattern = $pathPattern;
+        $this->pathPatterns = $pathPatterns;
     }
 
     /**
@@ -31,7 +31,7 @@ class InstallPathFinder implements PathFinderInterface
     {
         $finder = new Finder();
 
-        $finder->files()->in($this->pathPattern)->name('package.json')->depth('< 2');
+        $finder->files()->in($this->pathPatterns)->name('package.json')->depth('< 2');
 
         return $finder;
     }
