@@ -20,8 +20,27 @@ class AbstractProductAvailabilitiesResourceMapper implements AbstractProductAvai
     {
         $restProductsAbstractAvailabilityAttributesTransfer = (new RestAbstractProductAvailabilityAttributesTransfer())
             ->fromArray($availabilityEntityTransfer->toArray(), true);
-        $restProductsAbstractAvailabilityAttributesTransfer->setAvailability($availabilityEntityTransfer->getQuantity() > 0);
+        $restProductsAbstractAvailabilityAttributesTransfer->setAvailability($this->isAbstractAvailable($availabilityEntityTransfer));
 
         return $restProductsAbstractAvailabilityAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer $availabilityEntityTransfer
+     *
+     * @return bool
+     */
+    protected function isAbstractAvailable(SpyAvailabilityAbstractEntityTransfer $availabilityEntityTransfer): bool
+    {
+        $isNeverOutOfStock = false;
+
+        foreach ($availabilityEntityTransfer->getSpyAvailabilities() as $spyAvailabilityEntityTransfer) {
+            $isNeverOutOfStock = $spyAvailabilityEntityTransfer->getIsNeverOutOfStock();
+            if ($isNeverOutOfStock) {
+                break;
+            }
+        }
+
+        return $isNeverOutOfStock || $availabilityEntityTransfer->getQuantity() > 0;
     }
 }
