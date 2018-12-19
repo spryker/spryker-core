@@ -32,6 +32,10 @@ class AbstractProductAvailabilitiesResourceMapper implements AbstractProductAvai
      */
     protected function isAbstractAvailable(SpyAvailabilityAbstractEntityTransfer $availabilityEntityTransfer): bool
     {
+        if ($availabilityEntityTransfer->getQuantity() > 0) {
+            return true;
+        }
+
         $isNeverOutOfStock = false;
 
         foreach ($availabilityEntityTransfer->getSpyAvailabilities() as $spyAvailabilityEntityTransfer) {
@@ -41,6 +45,6 @@ class AbstractProductAvailabilitiesResourceMapper implements AbstractProductAvai
             }
         }
 
-        return $isNeverOutOfStock || $availabilityEntityTransfer->getQuantity() > 0;
+        return $isNeverOutOfStock;
     }
 }
