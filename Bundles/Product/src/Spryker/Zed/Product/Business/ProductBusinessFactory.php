@@ -16,13 +16,11 @@ use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertion;
 use Spryker\Zed\Product\Business\Product\NameGenerator\ProductAbstractNameGenerator;
 use Spryker\Zed\Product\Business\Product\NameGenerator\ProductConcreteNameGenerator;
-use Spryker\Zed\Product\Business\Product\Observer\ProductConcreteAddItemObserverInterface;
 use Spryker\Zed\Product\Business\Product\Plugin\ProductAbstractAfterCreateObserverPluginManager;
 use Spryker\Zed\Product\Business\Product\Plugin\ProductAbstractAfterUpdateObserverPluginManager;
 use Spryker\Zed\Product\Business\Product\Plugin\ProductAbstractBeforeCreateObserverPluginManager;
 use Spryker\Zed\Product\Business\Product\Plugin\ProductAbstractBeforeUpdateObserverPluginManager;
 use Spryker\Zed\Product\Business\Product\Plugin\ProductAbstractReadObserverPluginManager;
-use Spryker\Zed\Product\Business\Product\Plugin\ProductConcreteAddItemObserverPluginManager;
 use Spryker\Zed\Product\Business\Product\Plugin\ProductConcreteAfterCreateObserverPluginManager;
 use Spryker\Zed\Product\Business\Product\Plugin\ProductConcreteAfterUpdateObserverPluginManager;
 use Spryker\Zed\Product\Business\Product\Plugin\ProductConcreteBeforeCreateObserverPluginManager;
@@ -434,14 +432,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface[]
-     */
-    protected function getProductConcreteAddItemPlugins(): array
-    {
-        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_CONCRETE_PLUGINS_ADD_ITEM);
-    }
-
-    /**
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface[]
      */
     protected function getProductConcreteBeforeUpdatePlugins()
@@ -576,14 +566,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function createProductConcreteReadObserverPluginManager()
     {
         return new ProductConcreteReadObserverPluginManager($this->getProductConcreteReadPlugins());
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Observer\ProductConcreteAddItemObserverInterface
-     */
-    protected function createProductConcreteAddItemObserverPluginManager(): ProductConcreteAddItemObserverInterface
-    {
-        return new ProductConcreteAddItemObserverPluginManager($this->getProductConcreteAddItemPlugins());
     }
 
     /**
