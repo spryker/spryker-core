@@ -12,9 +12,10 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 interface QueryBuilderInterface
 {
     /**
-     * @param string $tableAlias
+     * @param string $moduleName
+     * @param string $tableName
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function buildQuery(string $tableAlias): ModelCriteria;
+    public function buildQuery(string $moduleName, string $tableName): ModelCriteria;
 }

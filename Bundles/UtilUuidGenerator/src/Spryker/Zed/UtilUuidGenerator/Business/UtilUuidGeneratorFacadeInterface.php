@@ -7,18 +7,20 @@
 
 namespace Spryker\Zed\UtilUuidGenerator\Business;
 
+use Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer;
+
 interface UtilUuidGeneratorFacadeInterface
 {
     /**
      * Specification:
-     * - Generates uuids for table.
+     * - Generate and fills uuid field for records where this field is null.
      * - Returns count of updated records.
      *
      * @api
      *
-     * @param string $tableAlias
+     * @param \Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer
      *
      * @return int
      */
-    public function generateUuids(string $tableAlias): int;
+    public function generateUuids(UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer): int;
 }

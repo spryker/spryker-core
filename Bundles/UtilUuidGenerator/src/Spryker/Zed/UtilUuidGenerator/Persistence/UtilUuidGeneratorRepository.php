@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\UtilUuidGenerator\Persistence;
 
+use Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -17,15 +18,18 @@ class UtilUuidGeneratorRepository extends AbstractRepository implements UtilUuid
     protected const COLUMN_UUID = 'uuid';
 
     /**
-     * @param string $tableAlias
+     * @param \Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer
      *
      * @return bool
      */
-    public function hasUuidField(string $tableAlias): bool
+    public function hasUuidField(UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer): bool
     {
         $query = $this->getFactory()
             ->createQueryBuilder()
-            ->buildQuery($tableAlias);
+            ->buildQuery(
+                $uuidGeneratorConfigurationTransfer->getModule(),
+                $uuidGeneratorConfigurationTransfer->getTable()
+            );
 
         return $query->getTableMap()->hasColumn(static::COLUMN_UUID);
     }

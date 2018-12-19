@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\UtilUuidGenerator\Business\Generator;
 
+use Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer;
+
 interface UuidGeneratorInterface
 {
     /**
-     * @param string $tableAlias
+     * @param \Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer
      *
      * @return int
      */
-    public function generate(string $tableAlias): int;
+    public function generate(UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer): int;
 }

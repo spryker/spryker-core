@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\UtilUuidGenerator\Persistence;
 
+use Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -18,16 +19,19 @@ class UtilUuidGeneratorEntityManager extends AbstractEntityManager implements Ut
     protected const BATCH_SIZE = 200;
 
     /**
-     * @param string $tableAlias
+     * @param \Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer
      *
      * @return int
      */
-    public function fillEmptyUuids(string $tableAlias): int
+    public function fillEmptyUuids(UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer): int
     {
         $count = 0;
         $query = $this->getFactory()
             ->createQueryBuilder()
-            ->buildQuery($tableAlias);
+            ->buildQuery(
+                $uuidGeneratorConfigurationTransfer->getModule(),
+                $uuidGeneratorConfigurationTransfer->getTable()
+            );
 
         do {
             /** @var \Propel\Runtime\Collection\ObjectCollection $entities */

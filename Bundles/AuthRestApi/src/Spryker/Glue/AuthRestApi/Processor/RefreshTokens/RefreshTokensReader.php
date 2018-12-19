@@ -9,7 +9,6 @@ namespace Spryker\Glue\AuthRestApi\Processor\RefreshTokens;
 
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\RestRefreshTokenResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestRefreshTokensAttributesTransfer;
 use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface;
@@ -78,7 +77,7 @@ class RefreshTokensReader implements RefreshTokensReaderInterface
             return $response;
         }
 
-        $restTokenAttributesTransfer = new RestRefreshTokenResponseAttributesTransfer();
+        $restTokenAttributesTransfer = new RestRefreshTokensAttributesTransfer();
         $restTokenAttributesTransfer->fromArray($oauthResponseTransfer->toArray(), true);
 
         $accessTokenResource = $this->restResourceBuilder

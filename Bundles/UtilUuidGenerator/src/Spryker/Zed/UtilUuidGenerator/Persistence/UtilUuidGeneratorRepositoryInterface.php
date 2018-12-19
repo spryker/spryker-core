@@ -7,15 +7,17 @@
 
 namespace Spryker\Zed\UtilUuidGenerator\Persistence;
 
+use Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer;
+
 /**
  * @method \Spryker\Zed\UtilUuidGenerator\Persistence\UtilUuidGeneratorPersistenceFactory getFactory()
  */
 interface UtilUuidGeneratorRepositoryInterface
 {
     /**
-     * @param string $tableAlias
+     * @param \Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer
      *
      * @return bool
      */
-    public function hasUuidField(string $tableAlias): bool;
+    public function hasUuidField(UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer): bool;
 }

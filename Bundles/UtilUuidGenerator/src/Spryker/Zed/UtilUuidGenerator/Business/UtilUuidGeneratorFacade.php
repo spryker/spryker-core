@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\UtilUuidGenerator\Business;
 
+use Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -21,14 +22,14 @@ class UtilUuidGeneratorFacade extends AbstractFacade implements UtilUuidGenerato
      *
      * @api
      *
-     * @param string $tableAlias
+     * @param \Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer
      *
      * @return int
      */
-    public function generateUuids(string $tableAlias): int
+    public function generateUuids(UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer): int
     {
         return $this->getFactory()
             ->createUuidGenerator()
-            ->generate($tableAlias);
+            ->generate($uuidGeneratorConfigurationTransfer);
     }
 }

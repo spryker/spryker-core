@@ -7,11 +7,15 @@
 
 namespace Spryker\Zed\UtilUuidGenerator\Business\Generator;
 
+use Exception;
+use Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer;
 use Spryker\Zed\UtilUuidGenerator\Persistence\UtilUuidGeneratorEntityManagerInterface;
 use Spryker\Zed\UtilUuidGenerator\Persistence\UtilUuidGeneratorRepositoryInterface;
 
 class UuidGenerator implements UuidGeneratorInterface
 {
+    protected const ERROR_MESSAGE_UUID = 'Table %s does not contain field uuid.';
+
     /**
      * @var \Spryker\Zed\UtilUuidGenerator\Persistence\UtilUuidGeneratorRepositoryInterface
      */
@@ -35,16 +39,21 @@ class UuidGenerator implements UuidGeneratorInterface
     }
 
     /**
-     * @param string $tableAlias
+     * @param \Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer
+     *
+     * @throws \Exception
      *
      * @return int
      */
-    public function generate(string $tableAlias): int
+    public function generate(UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer): int
     {
-        if (!$this->repository->hasUuidField($tableAlias)) {
-            return 0;
+        $uuidGeneratorConfigurationTransfer->requireModule()
+            ->requireTable();
+
+        if (!$this->repository->hasUuidField($uuidGeneratorConfigurationTransfer)) {
+            throw new Exception(sprintf(static::ERROR_MESSAGE_UUID, $uuidGeneratorConfigurationTransfer->getTable()));
         }
 
-        return $this->entityManager->fillEmptyUuids($tableAlias);
+        return $this->entityManager->fillEmptyUuids($uuidGeneratorConfigurationTransfer);
     }
 }
