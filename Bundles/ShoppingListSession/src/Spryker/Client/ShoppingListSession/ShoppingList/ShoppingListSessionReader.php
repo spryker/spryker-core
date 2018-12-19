@@ -82,7 +82,7 @@ class ShoppingListSessionReader implements ShoppingListSessionReaderInterface
             ->setShoppingLists($customerShoppingListCollectionTransfer);
         $this->shoppingListSessionStorage->setShoppingListCollection($shoppingListSessionTransfer);
 
-        $this->shoppingListClient->updatePermissions();
+        $this->shoppingListClient->updateCustomerPermission();
 
         return $shoppingListSessionTransfer;
     }

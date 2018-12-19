@@ -295,11 +295,12 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     *  - Updates shopping list permissions for company user.
+     *  - Makes Zed request.
+     *  - Gets customer from Zed and updates customer in session to updating customer permissions.
      *
      * @api
      *
      * @return void
      */
-    public function updatePermissions(): void;
+    public function updateCustomerPermission(): void;
 }

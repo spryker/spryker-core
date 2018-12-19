@@ -19,5 +19,5 @@ interface ShoppingListSessionToShoppingListClientBridgeInterface
     /**
      * @return void
      */
-    public function updatePermissions(): void;
+    public function updateCustomerPermission(): void;
 }
