@@ -286,7 +286,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function getBaseQuoteTransfer()
+    protected function getBaseQuoteTransfer(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
 
@@ -365,9 +365,9 @@ class CheckoutFacadeTest extends Unit
             ->setZipCode('12346')
             ->setCity('Entenhausen2');
 
-        $shipment = new ShipmentTransfer();
-        $shipment->setMethod(new ShipmentMethodTransfer());
-        $shipment->setShippingAddress($shippingAddress);
+        $shipmentTransfer = new ShipmentTransfer();
+        $shipmentTransfer->setMethod(new ShipmentMethodTransfer());
+        $shipmentTransfer->setShippingAddress($shippingAddress);
 
         $item1 = new ItemTransfer();
         $item1
@@ -376,7 +376,7 @@ class CheckoutFacadeTest extends Unit
             ->setQuantity(1)
             ->setUnitGrossPrice(3000)
             ->setSumGrossPrice(3000)
-            ->setShipment($shipment)
+            ->setShipment($shipmentTransfer)
             ->setName('Product1');
 
         $item2 = new ItemTransfer();
@@ -386,7 +386,7 @@ class CheckoutFacadeTest extends Unit
             ->setQuantity(1)
             ->setUnitGrossPrice(4000)
             ->setSumGrossPrice(4000)
-            ->setShipment($shipment)
+            ->setShipment($shipmentTransfer)
             ->setName('Product2');
 
         $quoteTransfer->addItem($item1);

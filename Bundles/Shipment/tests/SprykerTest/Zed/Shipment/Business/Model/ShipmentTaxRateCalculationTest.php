@@ -56,11 +56,11 @@ class ShipmentTaxRateCalculationTest extends Unit
         $addressTransfer->setIso2Code('GB');
         $shipmentTransfer = new ShipmentTransfer();
         $shipmentMethodTransfer = new ShipmentMethodTransfer();
-        $expanse = new ExpenseTransfer();
+        $expense = new ExpenseTransfer();
 
         $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
-        $shipmentTransfer->setExpense($expanse);
+        $shipmentTransfer->setExpense($expense);
         $shipmentTransfer->setShippingAddress($addressTransfer);
         $itemTransfer->setShipment($shipmentTransfer);
         $quoteTransfer->addItem($itemTransfer);
@@ -83,11 +83,11 @@ class ShipmentTaxRateCalculationTest extends Unit
         $addressTransfer->setIso2Code(static::DEFAULT_TAX_COUNTRY);
         $shipmentTransfer = new ShipmentTransfer();
         $shipmentMethodTransfer = new ShipmentMethodTransfer();
-        $expanse = new ExpenseTransfer();
+        $expense = new ExpenseTransfer();
 
         $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
-        $shipmentTransfer->setExpense($expanse);
+        $shipmentTransfer->setExpense($expense);
         $shipmentTransfer->setShippingAddress($addressTransfer);
         $itemTransfer->setShipment($shipmentTransfer);
         $quoteTransfer->addItem($itemTransfer);

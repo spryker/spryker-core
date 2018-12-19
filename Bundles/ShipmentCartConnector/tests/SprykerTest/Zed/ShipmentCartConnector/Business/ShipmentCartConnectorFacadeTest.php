@@ -128,10 +128,10 @@ class ShipmentCartConnectorFacadeTest extends Unit
         $shipmentTransfer = (new ShipmentBuilder())->build();
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
-        $shipmentExpanse = (new ExpenseBuilder())->build();
-        $shipmentExpanse->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $shipmentExpense = (new ExpenseBuilder())->build();
+        $shipmentExpense->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
 
-        $shipmentTransfer->setExpense($shipmentExpanse);
+        $shipmentTransfer->setExpense($shipmentExpense);
 
         $itemTransfer->setShipment($shipmentTransfer);
         $quoteTransfer->addItem($itemTransfer);
