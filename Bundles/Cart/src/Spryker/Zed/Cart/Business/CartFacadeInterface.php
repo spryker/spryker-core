@@ -111,7 +111,7 @@ interface CartFacadeInterface
 
     /**
      * Specification:
-     *  - Locks quote by setting `isLocked` transfer field to true.
+     *  - Locks quote by setting `isLocked` transfer property to true.
      *
      * @api
      *
@@ -123,7 +123,7 @@ interface CartFacadeInterface
 
     /**
      * Specification:
-     *  - Unlocks quote by setting `isLocked` transfer field to false.
+     *  - Unlocks quote by setting `isLocked` transfer property to false.
      *
      * @api
      *
