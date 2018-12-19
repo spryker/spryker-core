@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\SpyProductEntityTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
@@ -218,12 +219,9 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      */
     public function findRawProductConcreteBySku(string $skuProduct): ?ProductConcreteTransfer
     {
-        $productEntity = $this->productQueryContainer
-            ->queryProduct()
-            ->filterBySku($skuProduct)
-            ->findOne();
+        $productEntityTransfer = $this->productRepository->findProductConcreteBySku($skuProduct);
 
-        return $this->loadRawProductTransfer($productEntity);
+        return $this->loadRawProductTransfer($productEntityTransfer);
     }
 
     /**
@@ -474,17 +472,17 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProduct|null $productEntity
+     * @param \Generated\Shared\Transfer\SpyProductEntityTransfer|null $productEntityTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    protected function loadRawProductTransfer(?SpyProduct $productEntity = null): ?ProductConcreteTransfer
+    protected function loadRawProductTransfer(?SpyProductEntityTransfer $productEntityTransfer = null): ?ProductConcreteTransfer
     {
-        if (!$productEntity) {
+        if (!$productEntityTransfer) {
             return null;
         }
 
-        $productTransfer = $this->productTransferMapper->convertProduct($productEntity);
+        $productTransfer = $this->productTransferMapper->mapSpyProductEntityTransferToProductConcreteTransfer($productEntityTransfer);
         $productTransfer = $this->loadRawProductData($productTransfer);
 
         return $productTransfer;
