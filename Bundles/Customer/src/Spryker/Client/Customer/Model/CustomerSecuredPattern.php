@@ -23,14 +23,14 @@ class CustomerSecuredPattern implements CustomerSecuredPatternInterface
 
     /**
      * @param \Spryker\Client\Customer\CustomerConfig $customerConfig
-     * @param \Spryker\Client\PermissionExtension\Dependency\Plugin\CustomerSecuredPatternPermissionPluginInterface[] $securedPatternPermissionPlugins
+     * @param \Spryker\Client\PermissionExtension\Dependency\Plugin\CustomerSecuredPatternPermissionPluginInterface[] $customerSecuredPatternPermissionPlugins
      */
     public function __construct(
         CustomerConfig $customerConfig,
-        array $securedPatternPermissionPlugins
+        array $customerSecuredPatternPermissionPlugins
     ) {
         $this->customerConfig = $customerConfig;
-        $this->customerSecuredPatternPermissionPlugins = $securedPatternPermissionPlugins;
+        $this->customerSecuredPatternPermissionPlugins = $customerSecuredPatternPermissionPlugins;
     }
 
     /**
@@ -38,14 +38,14 @@ class CustomerSecuredPattern implements CustomerSecuredPatternInterface
      */
     public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string
     {
-        $securedPattern = $this->customerConfig->getCustomerSecuredPattern();
+        $customerSecuredPattern = $this->customerConfig->getCustomerSecuredPattern();
 
         foreach ($this->customerSecuredPatternPermissionPlugins as $customerSecuredPatternPermissionPlugin) {
             if ($customerSecuredPatternPermissionPlugin->isApplicable()) {
-                $securedPattern = $customerSecuredPatternPermissionPlugin->execute($securedPattern);
+                $customerSecuredPattern = $customerSecuredPatternPermissionPlugin->execute($customerSecuredPattern);
             }
         }
 
-        return $securedPattern;
+        return $customerSecuredPattern;
     }
 }

@@ -21,7 +21,7 @@ interface CustomerSecuredPatternPermissionPluginInterface
 
     /**
      * Specification:
-     * - Returns modified by rules customer secured pattern for customers.
+     * - Returns modified by rules customer secured pattern.
      *
      * @api
      *
