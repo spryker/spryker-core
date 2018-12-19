@@ -207,30 +207,6 @@ class CompanyUserFacadeTest extends Test
     /**
      * @return void
      */
-    public function testFindCompanyUserByUuidShouldNotFindCompanyUserWithoutUuid(): void
-    {
-        // Assign
-        $companyTransfer = $this->tester->haveCompany([CompanyTransfer::IS_ACTIVE => true]);
-        $customerTransfer = (new CustomerBuilder())->build();
-        $companyUserTransfer = $this->tester->haveCompanyUser(
-            [
-                CompanyUserTransfer::CUSTOMER => $customerTransfer,
-                CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            ]
-        );
-
-        $companyUserTransfer->setUuid(static::TEST_COMPANY_USER_UUID);
-
-        // Act
-        $companyUserTransfer = $this->getFacade()->findCompanyUserByUuid($companyUserTransfer);
-
-        // Assert
-        $this->assertNull($companyUserTransfer);
-    }
-
-    /**
-     * @return void
-     */
     public function testGetCompanyUserCollectionShouldReturnTransfer(): void
     {
         // Assign
