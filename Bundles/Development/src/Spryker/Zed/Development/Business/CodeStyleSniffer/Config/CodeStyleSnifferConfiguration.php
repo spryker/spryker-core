@@ -53,7 +53,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     protected const OPTION_LEVEL = 'level';
 
     protected const MODULE_CONFIG_LEVEL = 'level';
-    protected const LEVEL_SPRYKER = 1;
+    protected const LEVEL_SPRYKER_BASIC = 1;
     protected const LEVEL_SPRYKER_STRICT = 2;
 
     /**
@@ -111,7 +111,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     public function getCodingStandard(): string
     {
         if ($this->getLevel() === static::LEVEL_SPRYKER_STRICT) {
-            return $this->developmentConfig->getCodingStandardStrict();
+            return $this->developmentConfig->getStrictCodingStandard();
         }
 
         return $this->developmentConfig->getCodingStandard();
@@ -197,8 +197,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     public function getLevel(): int
     {
         $optionLevel = $this->resolveOptionLevel();
-
-        $levelAllowed = $this->getLevelsAllowed();
+        $levelAllowed = $this->getAllowedLevels();
 
         if (!in_array($optionLevel, $levelAllowed)) {
             throw new InvalidArgumentException(
@@ -230,10 +229,10 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     /**
      * @return int[]
      */
-    protected function getLevelsAllowed(): array
+    protected function getAllowedLevels(): array
     {
         return [
-            static::LEVEL_SPRYKER,
+            static::LEVEL_SPRYKER_BASIC,
             static::LEVEL_SPRYKER_STRICT,
         ];
     }

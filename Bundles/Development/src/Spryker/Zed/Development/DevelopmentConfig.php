@@ -154,7 +154,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getCodingStandardStrict()
+    public function getStrictCodingStandard()
     {
         $vendorDir = APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR;
 
