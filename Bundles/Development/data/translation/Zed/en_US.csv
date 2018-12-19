@@ -20,3 +20,40 @@ Reload,Reload
 require,require
 require-dev,require-dev
 "Suggested dependencies","Suggested dependencies"
+in,in
+out,out
+"Dependency graphs of all core modules","Dependency graphs of all core modules"
+"Simple Dependency Graph","Simple Dependency Graph"
+detailed,detailed
+adjacency,adjacency
+"Adjacency Matrix","Adjacency Matrix"
+Incoming,Incoming
+Outgoing,Outgoing
+Stability,Stability
+"Indirect Incoming","Indirect Incoming"
+"Indirect Outgoing","Indirect Outgoing"
+"Indirect Stability","Indirect Stability"
+"Spryker Stability",""Spryker Stability"
+From,From
+To,To
+"Plugins used in Projects DependencyProvider","Plugins used in Projects DependencyProvider"
+"List all used plugins","List all used plugins"
+"Download CSV","Download CSV"
+"show all used plugins","show all used plugins"
+"No plugins used in this Module","No plugins used in this Module"
+"Priority:","Priority:"
+"Stability of all core modules","Stability of all core modules"
+Stability,Stability
+SUM,SUM
+'You need to run "vendor/bin/console dev:dependency:build-tree" to calculate stability for all bundles.','You need to run "vendor/bin/console dev:dependency:build-tree" to calculate stability for all bundles.'
+"You must specify a bundle for which the graph should be build","You must specify a bundle for which the graph should be build"
+'Stability is calculated by "incoming dependencies / ( incoming dependencies + outgoing dependencies )" the result will be between 0 (stable) and 1 (unstable)','Stability is calculated by "incoming dependencies / ( incoming dependencies + outgoing dependencies )" the result will be between 0 (stable) and 1 (unstable)'
+"Architecture sniffer results","Architecture sniffer results"
+Namespace,Namespace
+Application,Application
+"Check for violations","Check for violations"
+"Module name","Module name"
+"Core module","Core module"
+"Project module","Project module"
+"Module overview","Module overview"
+Development,Development

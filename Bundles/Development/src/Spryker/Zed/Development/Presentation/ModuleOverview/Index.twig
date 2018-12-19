@@ -7,9 +7,9 @@
             <div class="spy-layout sparse" xmlns="http://www.w3.org/1999/html">
                 <table class="table-condensed table-hover table-striped">
                     <tr>
-                        <th>Module name</th>
-                        <th>Core module</th>
-                        <th>Project module</th>
+                        <th>{{ 'Module name' | trans }}</th>
+                        <th>{{ 'Core module' | trans }}</th>
+                        <th>{{ 'Project module' | trans }}</th>
                     </tr>
                     {% for moduleName, moduleOverviewTransfer in moduleOverviewTransferCollection %}
                     <tr>
