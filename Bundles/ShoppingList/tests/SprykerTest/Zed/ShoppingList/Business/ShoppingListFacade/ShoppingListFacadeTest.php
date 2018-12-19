@@ -752,7 +752,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddItemOwnerCanAddItemsToShoppingList(): void
+    public function testAddItemsOwnerCanAddItemsToShoppingList(): void
     {
         // Arrange
         $customerTransfer = (clone $this->ownerCompanyUserTransfer->getCustomer())
@@ -787,7 +787,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddItemOwnerCanNotAddIncorrectProductsToShoppingList(): void
+    public function testAddItemsOwnerCanNotAddIncorrectProductsToShoppingList(): void
     {
         // Arrange
         $customerTransfer = (clone $this->ownerCompanyUserTransfer->getCustomer())
@@ -811,18 +811,18 @@ class ShoppingListFacadeTest extends Unit
         // Act
         $shoppingListResponseTransfer = $this->tester->getFacade()->addItems($shoppingListTransfer);
         $shoppingListCollectionTransfer = (new ShoppingListCollectionTransfer())
-            ->addShoppingList($shoppingListResponseTransfer->getShoppingList());
+            ->addShoppingList($shoppingListTransfer);
         $shoppingListItemCollectionTransfer = $this->tester->getFacade()->getShoppingListItemCollection($shoppingListCollectionTransfer);
 
         // Assert
         $this->assertFalse($shoppingListResponseTransfer->getIsSuccess(), 'Owner should be able to add items to shopping list.');
-        $this->assertCount(1, $shoppingListItemCollectionTransfer->getItems());
+        $this->assertCount(0, $shoppingListItemCollectionTransfer->getItems());
     }
 
     /**
      * @return void
      */
-    public function testAddItemCustomerWithoutAccessCanNotAddItemsToShoppingList(): void
+    public function testAddItemsCustomerWithoutAccessCanNotAddItemsToShoppingList(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
