@@ -5,7 +5,7 @@
           namespace="Orm\Zed\AvailabilityStorage\Persistence"
           package="src.Orm.Zed.AvailabilityStorage.Persistence">
 
-    <table name="spy_availability_storage">
+    <table name="spy_availability_storage" identifierQuoting="true">
         <column name="id_availability_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_abstract" type="INTEGER" required="true"/>
         <column name="fk_availability_abstract" type="INTEGER" required="true"/>
