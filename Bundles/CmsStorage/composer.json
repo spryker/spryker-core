@@ -15,10 +15,10 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
     "spryker/propel-query-builder": "*",
+    "spryker/propel-orm": "*",
     "spryker/testify": "*",
     "spryker/url": "*",
     "spryker/url-storage": "*"

@@ -8,6 +8,11 @@
 namespace SprykerTest\Zed\Development;
 
 use Codeception\Actor;
+use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\ArchitectureSnifferConfigurationBuilder;
+use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface;
+use Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReader;
+use Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReaderInterface;
+use Symfony\Component\Yaml\Parser;
 
 /**
  * Inherited Methods
@@ -27,4 +32,43 @@ use Codeception\Actor;
 class DevelopmentBusinessTester extends Actor
 {
     use _generated\DevelopmentBusinessTesterActions;
+
+    protected const DEFAULT_PRIORITY = 2;
+
+    /**
+     * @return \Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface
+     */
+    public function createArchitectureSnifferConfigurationBuilder(): SnifferConfigurationBuilderInterface
+    {
+        return new ArchitectureSnifferConfigurationBuilder(
+            $this->createConfigurationReader(),
+            static::DEFAULT_PRIORITY
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReaderInterface
+     */
+    public function createConfigurationReader(): ConfigurationReaderInterface
+    {
+        return new ConfigurationReader(
+            $this->createSymfonyYamlParser()
+        );
+    }
+
+    /**
+     * @return int
+     */
+    public function getDefaultPriority(): int
+    {
+        return static::DEFAULT_PRIORITY;
+    }
+
+    /**
+     * @return \Symfony\Component\Yaml\Parser
+     */
+    protected function createSymfonyYamlParser(): Parser
+    {
+        return new Parser();
+    }
 }

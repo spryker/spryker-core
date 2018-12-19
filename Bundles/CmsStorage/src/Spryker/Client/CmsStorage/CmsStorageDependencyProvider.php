@@ -12,6 +12,9 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Shared\Kernel\Store;
 
+/**
+ * @method \Spryker\Client\CmsStorage\CmsStorageConfig getConfig()
+ */
 class CmsStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';

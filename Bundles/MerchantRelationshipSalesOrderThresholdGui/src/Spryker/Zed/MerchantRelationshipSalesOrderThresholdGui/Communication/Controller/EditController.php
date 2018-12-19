@@ -7,13 +7,16 @@
 
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\ThresholdType;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\MerchantRelationshipThresholdType;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\AbstractMerchantRelationshipThresholdType;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipSalesOrderThresholdGuiConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +29,7 @@ class EditController extends AbstractController
 {
     protected const PARAM_STORE_CURRENCY_REQUEST = 'store_currency';
     protected const REQUEST_ID_MERCHANT_RELATIONSHIP = 'id-merchant-relationship';
-    protected const MESSAGE_UPDATE_SUCCESSFUL = 'The Merchant Relationship Threshold is saved successfully.';
+    protected const MESSAGE_UPDATE_SUCCESSFUL = 'The Merchant Relationship Thresholds is saved successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -49,58 +52,140 @@ class EditController extends AbstractController
         $thresholdForm->handleRequest($request);
 
         if ($thresholdForm->isSubmitted() && $thresholdForm->isValid()) {
-            return $this->handleFormSubmission($request, $thresholdForm, $idMerchantRelationship);
+            return $this->handleFormSubmission($request, $thresholdForm, $idMerchantRelationship, $storeTransfer, $currencyTransfer);
         }
 
+        $viewData = $this->executeIndexAction($idMerchantRelationship, $thresholdForm);
+
+        return $this->viewResponse($viewData);
+    }
+
+    /**
+     * @param int $idMerchantRelationship
+     * @param \Symfony\Component\Form\FormInterface $thresholdForm
+     *
+     * @return array
+     */
+    protected function executeIndexAction(int $idMerchantRelationship, FormInterface $thresholdForm): array
+    {
         $localeCollection = $this->getFactory()
             ->getLocaleFacade()
             ->getLocaleCollection();
 
-        return $this->viewResponse([
+        $merchantRelationshipTransfer = $this->getFactory()
+            ->getMerchantRelationshipFacade()
+            ->getMerchantRelationshipById(
+                $this->createMerchantRelationshipTransfer($idMerchantRelationship)
+            );
+
+        $companyBusinessUnit = $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit();
+
+        $companyBusinessUnit->setCompany(
+            $this->getFactory()
+                ->getCompanyFacade()
+                ->getCompanyById(
+                    $this->createCompanyTransfer($companyBusinessUnit->getFkCompany())
+                )
+        );
+
+        $merchantRelationshipTransfer->setOwnerCompanyBusinessUnit($companyBusinessUnit);
+
+        return [
             'localeCollection' => $localeCollection,
-            'form' => $thresholdForm->createView(),
-        ]);
+            'merchantRelationshipThresholdform' => $thresholdForm->createView(),
+            'merchantRelationship' => $merchantRelationshipTransfer,
+        ];
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $thresholdForm
      * @param int $idMerchantRelationship
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function handleFormSubmission(Request $request, FormInterface $thresholdForm, int $idMerchantRelationship): RedirectResponse
-    {
+    protected function handleFormSubmission(
+        Request $request,
+        FormInterface $thresholdForm,
+        int $idMerchantRelationship,
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer
+    ): RedirectResponse {
         $data = $thresholdForm->getData();
-        $hardSalesOrderThresholdTransfer = $this->getFactory()
-            ->createHardThresholdFormMapper()
-            ->map($data, $this->createMerchantRelationshipSalesOrderThresholdTransfer(
-                $data[ThresholdType::FIELD_ID_MERCHANT_RELATIONSHIP_THRESHOLD_HARD],
-                $idMerchantRelationship
-            ));
 
-        $this->saveMerchantRelationshipSalesOrderThreshold($hardSalesOrderThresholdTransfer);
-
-        $softSalesOrderThresholdTransfer = $this->createMerchantRelationshipSalesOrderThresholdTransfer(
-            $data[ThresholdType::FIELD_ID_MERCHANT_RELATIONSHIP_THRESHOLD_SOFT],
-            $idMerchantRelationship
+        $this->handleThresholdData(
+            $data[MerchantRelationshipThresholdType::FIELD_HARD],
+            MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_HARD,
+            $idMerchantRelationship,
+            $storeTransfer,
+            $currencyTransfer
         );
 
-        if ($data[ThresholdType::FIELD_SOFT_STRATEGY] &&
-            $this->getFactory()->createSoftThresholdFormMapperResolver()->hasThresholdMapperByStrategyKey(
-                $data[ThresholdType::FIELD_SOFT_STRATEGY]
-            )) {
-            $softSalesOrderThresholdTransfer = $this->getFactory()
-                ->createSoftThresholdFormMapperResolver()
-                ->resolveThresholdMapperByStrategyKey($data[ThresholdType::FIELD_SOFT_STRATEGY])
-                ->map($data, $softSalesOrderThresholdTransfer);
-        }
-
-        $this->saveMerchantRelationshipSalesOrderThreshold($softSalesOrderThresholdTransfer);
+        $this->handleThresholdData(
+            $data[MerchantRelationshipThresholdType::FIELD_SOFT],
+            MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_SOFT,
+            $idMerchantRelationship,
+            $storeTransfer,
+            $currencyTransfer
+        );
 
         $this->addSuccessMessage(static::MESSAGE_UPDATE_SUCCESSFUL);
 
         return $this->redirectResponse($request->getRequestUri());
+    }
+
+    /**
+     * @param array $thresholdData
+     * @param string $strategyGroup
+     * @param int $idMerchantRelationship
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return void
+     */
+    protected function handleThresholdData(
+        array $thresholdData,
+        string $strategyGroup,
+        int $idMerchantRelationship,
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer
+    ): void {
+        $merchantRelationshipSalesOrderThresholdTransfer = $this->createMerchantRelationshipSalesOrderThresholdTransfer(
+            $thresholdData[AbstractMerchantRelationshipThresholdType::FIELD_ID_THRESHOLD] ?? null,
+            $idMerchantRelationship,
+            $storeTransfer,
+            $currencyTransfer
+        );
+
+        if ($this->canMapThresholdData($thresholdData, $strategyGroup)) {
+            $merchantRelationshipSalesOrderThresholdTransfer = $this->getFactory()
+                ->createMerchantRelationshipThresholdFormMapperResolver()
+                ->resolveMerchantRelationshipThresholdFormMapperClassInstanceByStrategyGroup($strategyGroup)
+                ->mapFormDataToTransfer($thresholdData, $merchantRelationshipSalesOrderThresholdTransfer);
+        }
+
+        $this->saveMerchantRelationshipSalesOrderThreshold($merchantRelationshipSalesOrderThresholdTransfer);
+    }
+
+    /**
+     * @param array $thresholdData
+     * @param string $strategyGroup
+     *
+     * @return bool
+     */
+    protected function canMapThresholdData(array $thresholdData, string $strategyGroup): bool
+    {
+        if (!isset($thresholdData[AbstractMerchantRelationshipThresholdType::FIELD_STRATEGY])) {
+            return false;
+        }
+
+        return $this->getFactory()
+            ->createMerchantRelationshipThresholdFormMapperResolver()
+            ->hasMerchantRelationshipThresholdFormMapperByStrategyGroup(
+                $strategyGroup
+            );
     }
 
     /**
@@ -152,20 +237,45 @@ class EditController extends AbstractController
 
     /**
      * @param int|null $idMerchantRelationshipSalesOrderThreshold
-     * @param int|null $idMerchantRelationship
+     * @param int $idMerchantRelationship
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer
      */
     protected function createMerchantRelationshipSalesOrderThresholdTransfer(
         ?int $idMerchantRelationshipSalesOrderThreshold,
-        ?int $idMerchantRelationship
+        int $idMerchantRelationship,
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer
     ): MerchantRelationshipSalesOrderThresholdTransfer {
         return (new MerchantRelationshipSalesOrderThresholdTransfer())
             ->setIdMerchantRelationshipSalesOrderThreshold($idMerchantRelationshipSalesOrderThreshold)
+            ->setStore($storeTransfer)
+            ->setCurrency($currencyTransfer)
             ->setSalesOrderThresholdValue(new SalesOrderThresholdValueTransfer())
             ->setMerchantRelationship(
-                (new MerchantRelationshipTransfer())
-                ->setIdMerchantRelationship($idMerchantRelationship)
+                $this->createMerchantRelationshipTransfer($idMerchantRelationship)
             );
+    }
+
+    /**
+     * @param int $idMerchantRelationship
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     */
+    protected function createMerchantRelationshipTransfer(int $idMerchantRelationship): MerchantRelationshipTransfer
+    {
+        return (new MerchantRelationshipTransfer())->setIdMerchantRelationship($idMerchantRelationship);
+    }
+
+    /**
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    protected function createCompanyTransfer(int $idCompany): CompanyTransfer
+    {
+        return (new CompanyTransfer())->setIdCompany($idCompany);
     }
 }

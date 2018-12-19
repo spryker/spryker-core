@@ -5,7 +5,7 @@
           namespace="Orm\Zed\CmsStorage\Persistence"
           package="src.Orm.Zed.CmsStorage.Persistence">
 
-    <table name="spy_cms_page_storage">
+    <table name="spy_cms_page_storage" identifierQuoting="true">
         <column name="id_cms_page_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_cms_page" type="INTEGER" required="true"/>
         <index name="spy_cms_page_storage-fk_cms_page">
