@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOptionStorage;
 
+use Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToEventBehaviorFacadeBridge;
@@ -25,6 +26,7 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
     public const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_STORE = 'FACADE_STORE';
+    public const PROPEL_QUERY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP = 'PROPEL_QUERY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -60,6 +62,7 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
     {
         $container = $this->addProductOptionQueryContainer($container);
         $container = $this->addProductQueryContainer($container);
+        $container = $this->addProductAbstractProductOptionGroupPropelQuery($container);
 
         return $container;
     }
@@ -129,6 +132,20 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return new ProductOptionStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractProductOptionGroupPropelQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP] = function (Container $container) {
+            return SpyProductAbstractProductOptionGroupQuery::create();
         };
 
         return $container;
