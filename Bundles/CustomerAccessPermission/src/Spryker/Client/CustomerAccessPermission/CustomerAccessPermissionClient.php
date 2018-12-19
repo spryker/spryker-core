@@ -19,6 +19,8 @@ class CustomerAccessPermissionClient extends AbstractClient implements CustomerA
      *
      * @api
      *
+     * @deprecated Use \Spryker\Client\CustomerAccessPermission\Plugin\CustomerSecuredPatternPermissionPlugin plugin instead.
+     *
      * @return string
      */
     public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string

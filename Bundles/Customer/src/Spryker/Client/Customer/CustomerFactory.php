@@ -8,10 +8,15 @@
 namespace Spryker\Client\Customer;
 
 use Spryker\Client\Customer\Model\CustomerAddress;
+use Spryker\Client\Customer\Model\CustomerSecuredPattern;
+use Spryker\Client\Customer\Model\CustomerSecuredPatternInterface;
 use Spryker\Client\Customer\Session\CustomerSession;
 use Spryker\Client\Customer\Zed\CustomerStub;
 use Spryker\Client\Kernel\AbstractFactory;
 
+/**
+ * @method \Spryker\Client\Customer\CustomerConfig getConfig()
+ */
 class CustomerFactory extends AbstractFactory
 {
     /**
@@ -67,6 +72,22 @@ class CustomerFactory extends AbstractFactory
     public function getDefaultAddressChangePlugins()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_DEFAULT_ADDRESS_CHANGE);
+    }
+
+    /**
+     * @return \Spryker\Client\Customer\Model\CustomerSecuredPatternInterface
+     */
+    public function createCustomerSecuredPattern(): CustomerSecuredPatternInterface
+    {
+        return new CustomerSecuredPattern($this->getConfig(), $this->getCustomerSecuredPatternPermissionPlugins());
+    }
+
+    /**
+     * @return \Spryker\Client\PermissionExtension\Dependency\Plugin\CustomerSecuredPatternPermissionPluginInterface[]
+     */
+    public function getCustomerSecuredPatternPermissionPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_SECURED_PATTERN);
     }
 
     /**
