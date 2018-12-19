@@ -311,7 +311,7 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testLockQuoteShouldSetIsLockedToTrue(): void
+    public function testLockQuoteShouldSetIsLockedToTrueIfQuoteIsUnlocked(): void
     {
         // Assign
         $quoteTransfer = new QuoteTransfer();
@@ -327,7 +327,7 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testLockOfAlreadyLockedQuoteShouldSetIsLockedToTrue(): void
+    public function testLockQuoteShouldSetIsLockedToTrueIfQuoteIsLocked(): void
     {
         // Assign
         $quoteTransfer = new QuoteTransfer();
@@ -343,7 +343,7 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUnlockQuoteShouldSetIsLockedToFalse(): void
+    public function testUnlockQuoteShouldSetIsLockedToFalseIfQuoteIsLocked(): void
     {
         // Assign
         $quoteTransfer = new QuoteTransfer();
@@ -359,7 +359,7 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUnlockOfAlreadyUnlockedQuoteShouldSetIsLockedToFalse(): void
+    public function testUnlockQuoteShouldSetIsLockedToFalseIfQuoteIsUnlocked(): void
     {
         // Assign
         $quoteTransfer = new QuoteTransfer();
