@@ -6,6 +6,7 @@ parameters:
         - '#Call to an undefined method Silex\\Application::getTransferSession\(\).#'
         - '#Call to an undefined method object::setApplication\(\).#'
         - '#Call to an undefined method object::initialize\(\).#'
+        - '#Access to an undefined static property Spryker\Shared\ApplicationExtension\Provider\BootableServiceInterface::$runs.#'
 
 services:
     -

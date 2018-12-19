@@ -280,7 +280,9 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function offsetExists($offset): bool
     {
+        // @codingStandardsIgnoreStart
         @trigger_error('ArrayAccess the container in Spryker (e.g. isset($container[\'service\'])) is no longer supported! Please use "ContainerInterface:has()" instead.', E_USER_DEPRECATED);
+        // @codingStandardsIgnoreEnd
 
         return $this->has($offset);
     }
@@ -294,7 +296,9 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function offsetGet($offset)
     {
+        // @codingStandardsIgnoreStart
         @trigger_error('ArrayAccess the container in Spryker (e.g. $foo = $container[\'service\']) is no longer supported! Please use "ContainerInterface:get()" instead.', E_USER_DEPRECATED);
+        // @codingStandardsIgnoreEnd
 
         return $this->get($offset);
     }
@@ -309,7 +313,9 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function offsetSet($offset, $value): void
     {
+        // @codingStandardsIgnoreStart
         @trigger_error('ArrayAccess the container in Spryker (e.g. $container[\'service\'] = $foo) is no longer supported! Please use "ContainerInterface:set()" instead.', E_USER_DEPRECATED);
+        // @codingStandardsIgnoreEnd
 
         // When extend is called for a service which is not registered so far, we store the extension and wait for the service to be added.
         // For BC reasons code like `$container['service'] = $container->extend('service', callable)` is valid and still needs to be supported
@@ -335,14 +341,14 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function offsetUnset($offset): void
     {
+        // @codingStandardsIgnoreStart
         @trigger_error('ArrayAccess the container in Spryker (e.g. unset($container[\'service\'])) is no longer supported! Please use "ContainerInterface:remove()" instead.', E_USER_DEPRECATED);
+        // @codingStandardsIgnoreEnd
 
         $this->remove($offset);
     }
 
     /**
-     * TODO: check if it would make sense to keep it to be able to use extend services before they are added.
-     *
      * This method (currently) exists only for BC reasons.
      *
      * @param string $id
