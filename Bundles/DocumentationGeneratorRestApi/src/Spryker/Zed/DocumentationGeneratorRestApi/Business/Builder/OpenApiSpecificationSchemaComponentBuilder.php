@@ -13,6 +13,7 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransfer
 
 class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuilderInterface
 {
+    protected const VALUE_TYPE_ARRAY = 'array';
     protected const VALUE_TYPE_BOOLEAN = 'boolean';
     protected const VALUE_TYPE_INTEGER = 'integer';
     protected const VALUE_TYPE_NUMBER = 'number';
@@ -66,6 +67,9 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
     {
         if (substr($type, -2) === '[]') {
             return $this->createArrayOfTypesPropertyTransfer($key, $this->mapScalarSchemaType(substr($type, 0, -2)));
+        }
+        if ($type === static::VALUE_TYPE_ARRAY) {
+            return $this->createArrayOfMixedTypesPropertyTransfer($key);
         }
 
         return $this->createTypePropertyTransfer($key, $this->mapScalarSchemaType($type));
@@ -139,7 +143,22 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
     {
         $arrayProperty = new SchemaPropertyTransfer();
         $arrayProperty->setName($name);
-        $arrayProperty->setType($itemsType);
+        $arrayProperty->setType(static::VALUE_TYPE_ARRAY);
+        $arrayProperty->setItemsType($itemsType);
+
+        return $arrayProperty;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
+     */
+    public function createArrayOfMixedTypesPropertyTransfer(string $name): SchemaPropertyTransfer
+    {
+        $arrayProperty = new SchemaPropertyTransfer();
+        $arrayProperty->setName($name);
+        $arrayProperty->setType(static::VALUE_TYPE_ARRAY);
 
         return $arrayProperty;
     }
