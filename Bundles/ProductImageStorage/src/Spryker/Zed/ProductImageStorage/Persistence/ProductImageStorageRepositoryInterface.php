@@ -12,28 +12,28 @@ interface ProductImageStorageRepositoryInterface
     /**
      * @param int[] $productIds
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\SpyProductLocalizedAttributesEntityTransfer[]
      */
     public function getProductLocalizedAttributesWithProductByIdProductIn(array $productIds): array;
 
     /**
-     * @param int[] $productFks
+     * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
      */
-    public function getProductImageSetsByFkProductIn(array $productFks): array;
+    public function getProductImageSetsByIdProductIn(array $productIds): array;
 
     /**
-     * @param int[] $productAbstractFks
-     *
-     * @return array
-     */
-    public function getProductImageSetsByFkAbstractProductIn(array $productAbstractFks): array;
-
-    /**
-     * @param int[] $productAbstractFks
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
      */
-    public function getDefaultAbstractProductImageSetsByFkAbstractProductIn(array $productAbstractFks): array;
+    public function getProductImageSetsByIdAbstractProductIn(array $productAbstractIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
+     */
+    public function getDefaultAbstractProductImageSetsByIdAbstractProductIn(array $productAbstractIds): array;
 }

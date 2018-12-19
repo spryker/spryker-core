@@ -67,10 +67,10 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
         $spyProductAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
         $imageSets = [];
         $productAbstractImageSetsBulk = $this->getImageSetsIndexedByProductAbstractIdAndLocale(
-            $this->repository->getProductImageSetsByFkAbstractProductIn($productAbstractIds)
+            $this->repository->getProductImageSetsByIdAbstractProductIn($productAbstractIds)
         );
         $defaultProductAbstractImageSetsBulk = $this->getImageSetsIndexedByProductAbstractId(
-            $this->repository->getDefaultAbstractProductImageSetsByFkAbstractProductIn($productAbstractIds)
+            $this->repository->getDefaultAbstractProductImageSetsByIdAbstractProductIn($productAbstractIds)
         );
 
         foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
