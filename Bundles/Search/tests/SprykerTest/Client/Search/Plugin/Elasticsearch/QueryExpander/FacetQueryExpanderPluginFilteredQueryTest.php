@@ -46,6 +46,10 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             'filtered multi-valued integer facets' => $this->createMultiValuedFilteredIntegerFacetData(),
             'filtered single category facet' => $this->createFilteredCategoryFacetData(),
             'filtered mixed facets' => $this->createFilteredMixedFacetData(),
+            'filtered single incorrect value facet' => $this->createFilteredIncorrectStringFacetData(),
+            'filtered multiple incorrect value facets' => $this->createMultiFilteredIncorrectValuesFacetData(),
+            'filtered string facet with multiple incorrect values' => $this->createFilteredStringFacetDataWithMultipleIncorrectValues(),
+            'filtered zero value facets' => $this->createFilteredZeroValuesFacetData(),
         ];
     }
 
@@ -485,6 +489,87 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             'foo-param' => 'asdf',
             'bar-param' => 456,
             'baz-param' => 'c1',
+        ];
+
+        return [$searchConfig, $expectedQuery, $parameters];
+    }
+
+    /**
+     * @return array
+     */
+    protected function createFilteredIncorrectStringFacetData()
+    {
+        $searchConfig = $this->createMixedSearchConfig();
+        $expectedQuery = new BoolQuery();
+
+        $parameters = [
+            'baz-param' => '',
+        ];
+
+        return [$searchConfig, $expectedQuery, $parameters];
+    }
+
+    /**
+     * @return array
+     */
+    protected function createMultiFilteredIncorrectValuesFacetData()
+    {
+        $searchConfig = $this->createMixedSearchConfig();
+        $expectedQuery = (new BoolQuery());
+
+        $parameters = [
+            'foo-param' => false,
+            'bar-param' => null,
+            'baz-param' => '',
+        ];
+
+        return [$searchConfig, $expectedQuery, $parameters];
+    }
+
+    /**
+     * @return array
+     */
+    protected function createFilteredStringFacetDataWithMultipleIncorrectValues()
+    {
+        $searchConfig = $this->createMixedSearchConfig();
+        $expectedQuery = new BoolQuery();
+
+        $parameters = [
+            'foo-param' => [
+                false,
+                null,
+                '',
+            ],
+        ];
+
+        return [$searchConfig, $expectedQuery, $parameters];
+    }
+
+    /**
+     * @return array
+     */
+    protected function createFilteredZeroValuesFacetData()
+    {
+        $searchConfig = $this->createMixedSearchConfig();
+        $expectedQuery = (new BoolQuery())
+            ->addFilter((new Nested())
+                ->setPath(PageIndexMap::STRING_FACET)
+                ->setQuery((new BoolQuery())
+                    ->addFilter((new Term())
+                        ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'foo'))
+                    ->addFilter((new Term())
+                        ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, '0'))))
+            ->addFilter((new Nested())
+                ->setPath(PageIndexMap::INTEGER_FACET)
+                ->setQuery((new BoolQuery())
+                    ->addFilter((new Term())
+                        ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'bar'))
+                    ->addFilter((new Term())
+                        ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 0))));
+
+        $parameters = [
+            'foo-param' => '0',
+            'bar-param' => 0,
         ];
 
         return [$searchConfig, $expectedQuery, $parameters];

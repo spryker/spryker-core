@@ -11,4 +11,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductDiscontinuedStorageConfig extends AbstractBundleConfig
 {
+    /**
+     * @return string|null
+     */
+    public function getProductDiscontinuedSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
 }
