@@ -18,6 +18,16 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class AbstractController extends SprykerAbstractController
 {
     /**
+     * @return void
+     */
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->assertNonProductionEnvironment();
+    }
+
+    /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return void

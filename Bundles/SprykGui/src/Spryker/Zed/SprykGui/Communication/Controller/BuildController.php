@@ -23,8 +23,6 @@ class BuildController extends AbstractController
      */
     public function indexAction(Request $request): array
     {
-        $this->assertNonProductionEnvironment();
-
         $spryk = $request->query->get('spryk');
 
         $sprykForm = $this->getFactory()
