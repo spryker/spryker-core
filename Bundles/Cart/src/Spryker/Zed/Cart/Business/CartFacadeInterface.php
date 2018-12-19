@@ -119,7 +119,7 @@ interface CartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function lock(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 
     /**
      * Specification:
@@ -131,5 +131,5 @@ interface CartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function unlock(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

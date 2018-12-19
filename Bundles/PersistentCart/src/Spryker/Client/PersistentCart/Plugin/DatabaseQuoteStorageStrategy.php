@@ -28,7 +28,7 @@ use Spryker\Shared\Quote\QuoteConfig;
  */
 class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorageStrategyPluginInterface
 {
-    public const GLOSSARY_KEY_CHANGE_CURRENCY_FOR_QUOTE_DENIED = 'persistent_cart.quote.currency_change.denied';
+    protected const GLOSSARY_KEY_CHANGE_CURRENCY_FOR_QUOTE_DENIED = 'persistent_cart.quote.currency_change.denied';
 
     /**
      * @return string
@@ -319,7 +319,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *  - Saves updated quote to database.
      *  - Stores quote in session internally after zed request.
      *  - Returns update quote.
-     *  - Do nothing if quote is locked
+     *  - Do nothing if quote is locked.
      *
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *

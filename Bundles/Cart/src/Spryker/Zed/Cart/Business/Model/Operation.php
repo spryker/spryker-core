@@ -236,8 +236,6 @@ class Operation implements OperationInterface
     {
         $quoteTransfer->setIsLocked(true);
 
-        $quoteTransfer = $this->executePostSavePlugins($quoteTransfer);
-
         return $quoteTransfer;
     }
 
@@ -249,8 +247,6 @@ class Operation implements OperationInterface
     public function unlock(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $quoteTransfer->setIsLocked(false);
-
-        $quoteTransfer = $this->executePostSavePlugins($quoteTransfer);
 
         return $quoteTransfer;
     }

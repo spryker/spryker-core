@@ -109,7 +109,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function lock(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()->createCartOperation()->lock($quoteTransfer);
     }
@@ -123,7 +123,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function unlock(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()->createCartOperation()->unlock($quoteTransfer);
     }

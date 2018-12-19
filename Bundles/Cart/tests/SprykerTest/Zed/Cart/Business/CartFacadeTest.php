@@ -311,12 +311,12 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testLock(): void
+    public function testLockQuote(): void
     {
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setIsLocked(true);
+        $quoteTransfer->setIsLocked(false);
 
-        $quoteTransfer = $this->cartFacade->lock($quoteTransfer);
+        $quoteTransfer = $this->cartFacade->lockQuote($quoteTransfer);
 
         $this->assertTrue($quoteTransfer->getIsLocked());
     }
@@ -324,12 +324,12 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUnlock(): void
+    public function testUnlockQuote(): void
     {
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setIsLocked(false);
+        $quoteTransfer->setIsLocked(true);
 
-        $quoteTransfer = $this->cartFacade->unlock($quoteTransfer);
+        $quoteTransfer = $this->cartFacade->unlockQuote($quoteTransfer);
 
         $this->assertFalse($quoteTransfer->getIsLocked());
     }

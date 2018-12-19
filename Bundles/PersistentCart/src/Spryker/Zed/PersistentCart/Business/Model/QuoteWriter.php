@@ -102,28 +102,4 @@ class QuoteWriter implements QuoteWriterInterface
 
         return $this->quoteItemOperation->reloadItems($quoteTransfer);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        $quoteTransfer->setIsLocked(false);
-
-        return $this->quoteResponseExpander->expand($this->quoteFacade->updateQuote($quoteTransfer));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        $quoteTransfer->setIsLocked(true);
-
-        return $this->quoteResponseExpander->expand($this->quoteFacade->updateQuote($quoteTransfer));
-    }
 }
