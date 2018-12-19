@@ -132,6 +132,22 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
+     * - Finds company user by uuid.
+     * - Requires uuid field to be set in CompanyUserTransfer.
+     * - Uuid is not a required field and could be missing.
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserByUuid(CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer;
+
+    /**
+     * Specification:
      * - Retrieves count of company user information by customer ID
      * - Checks activity flag in a related company
      *
