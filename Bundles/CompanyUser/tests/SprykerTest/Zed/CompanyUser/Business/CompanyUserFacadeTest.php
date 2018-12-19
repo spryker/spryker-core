@@ -199,8 +199,8 @@ class CompanyUserFacadeTest extends Test
         $companyUserTransfer = $this->getFacade()->findCompanyUserByUuid($companyUserTransfer);
 
         // Assert
-        $this->assertInstanceOf(CompanyUserTransfer::class, $companyUserTransfer);
         $this->assertNotNull($companyUserTransfer);
+        $this->assertInstanceOf(CompanyUserTransfer::class, $companyUserTransfer);
         $this->assertEquals(static::TEST_COMPANY_USER_UUID, $companyUserTransfer->getUuid());
     }
 
