@@ -76,7 +76,7 @@ class ApplicationTest extends Unit
         $application->boot();
 
         //Assert
-        $this->assertSame(1, $serviceProvider::$runs);
+        $this->assertSame(1, $serviceProvider->runs);
     }
 
     /**
@@ -128,7 +128,7 @@ class ApplicationTest extends Unit
             /**
              * @var int
              */
-            public static $runs = 0;
+            public $runs = 0;
 
             /**
              * @param \Spryker\Service\Container\ContainerInterface $container
@@ -146,7 +146,7 @@ class ApplicationTest extends Unit
              */
             public function boot(ContainerInterface $container): void
             {
-                static::$runs++;
+                $this->runs++;
                 $container->set(ApplicationTest::SERVICE, function () {
                     return [ApplicationTest::SERVICE_PROPERTY => true];
                 });

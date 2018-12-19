@@ -1,9 +1,6 @@
 parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
-    ignoreErrors:
-    - '#Method .+Container::set\(\) should return \$this\(.+Container\) but returns .+Container.#'
-
 services:
     -
         class: PhpStan\DynamicType\FacadeDynamicTypeExtension

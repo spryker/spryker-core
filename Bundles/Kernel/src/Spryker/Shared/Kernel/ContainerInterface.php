@@ -15,4 +15,12 @@ interface ContainerInterface extends ArrayAccess
      * @return \Spryker\Shared\Kernel\LocatorLocatorInterface
      */
     public function getLocator();
+
+    /**
+     * @param string $id
+     * @param \Closure|object $service
+     *
+     * @return \Closure|object
+     */
+    public function extend(string $id, $service);
 }
