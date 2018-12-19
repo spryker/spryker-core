@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Shared\ProductOption\ProductOptionConstants;
@@ -519,7 +520,7 @@ class ProductOptionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateTaxRateForProductOptionShouldSetRateToProvidedOptions()
+    public function testCalculateTaxRateForProductOptionShouldSetRateToProvidedOptions(): void
     {
         $iso2Code = 'DE';
         $taxRate = 19;
@@ -537,13 +538,16 @@ class ProductOptionFacadeTest extends Unit
         $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
 
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setShippingAddress($this->tester->createAddressTransfer($iso2Code));
 
         $productOptionTransfer = new ProductOptionTransfer();
         $productOptionTransfer->setIdProductOptionValue($productOptionValueTransfer->getIdProductOptionValue());
 
+        $shipment = new ShipmentTransfer();
+        $shipment->setShippingAddress($this->tester->createAddressTransfer($iso2Code));
+
         $itemTransfer = new ItemTransfer();
         $itemTransfer->addProductOption($productOptionTransfer);
+        $itemTransfer->setShipment($shipment);
 
         $quoteTransfer->addItem($itemTransfer);
 

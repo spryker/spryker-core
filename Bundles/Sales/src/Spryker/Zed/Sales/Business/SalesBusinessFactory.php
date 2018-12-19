@@ -101,7 +101,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getStore(),
             $this->getOrderExpanderPreSavePlugins(),
             $this->createSalesOrderSaverPluginExecutor(),
-            $this->createOrderItemMapper()
+            $this->createOrderItemMapper(),
+            $this->getQueryContainer()
         );
     }
 
