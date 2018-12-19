@@ -21,6 +21,8 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
      * - Returns false, if quote is not provided.
      * - Returns true, if configuration does not have cent amount for specific currency set.
      *
+     * @api
+     *
      * @param array $configuration
      * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
      *
@@ -47,6 +49,10 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string[]
      */
     public function getConfigurationSignature(): array
@@ -57,6 +63,10 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getKey(): string
