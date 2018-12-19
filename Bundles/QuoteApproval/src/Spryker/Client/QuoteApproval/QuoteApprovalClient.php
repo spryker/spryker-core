@@ -18,14 +18,14 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function approveQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function approveQuote(int $idQuote): QuoteTransfer
     {
         return $this->getFactory()
             ->createQuoteApprovalStub()
-            ->approveQuote($quoteTransfer);
+            ->approveQuote($idQuote);
     }
 }

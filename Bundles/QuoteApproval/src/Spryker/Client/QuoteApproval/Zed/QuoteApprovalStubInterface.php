@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface QuoteApprovalStubInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function approveQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function approveQuote(int $idQuote): QuoteTransfer;
 }

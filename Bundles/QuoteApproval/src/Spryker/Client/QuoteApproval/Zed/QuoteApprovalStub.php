@@ -26,12 +26,14 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function approveQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function approveQuote(int $idQuote): QuoteTransfer
     {
+        $quoteTransfer = (new QuoteTransfer)->setIdQuote($idQuote); // todo: move to a separate function
+
         /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = $this->zedRequestClient->call(
             '/quote-approval/gateway/approve-quote',
