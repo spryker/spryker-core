@@ -11,11 +11,27 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class ShoppingListsRestApiConfig extends AbstractBundleConfig
 {
-    public const RESPONSE_CODE_SHOPPING_LIST_CANNOT_ADD_ITEM = '1506';
-    public const RESPONSE_CODE_COMPANY_USER_NOT_FOUND = '1507';
-    public const RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND = '1508';
+    /**
+     * @see \Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig::X_COMPANY_USER_ID_HEADER_KEY
+     */
+    public const X_COMPANY_USER_ID_HEADER_KEY = 'X-Company-User-Id';
 
-    public const RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_ADD_ITEM = 'Can\'t add an item to shopping list';
-    public const RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND = 'Company user not found.';
+    public const RESPONSE_CODE_SHOPPING_LIST_ID_NOT_SPECIFIED = '1501';
+    public const RESPONSE_DETAIL_SHOPPING_LIST_ID_NOT_SPECIFIED = 'Shopping list id is not specified.';
+    public const RESPONSE_CODE_X_COMPANY_USER_ID_HEADER_KEY_NOT_SPECIFIED = '1502';
+    public const RESPONSE_DETAIL_X_COMPANY_USER_ID_HEADER_KEY_NOT_SPECIFIED = self::X_COMPANY_USER_ID_HEADER_KEY . ' header is not specified.';
+    public const RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND = '1503';
     public const RESPONSE_DETAIL_SHOPPING_LIST_NOT_FOUND = 'Shopping list not found.';
+    public const RESPONSE_CODE_COMPANY_USER_NOT_FOUND = '1504';
+    public const RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND = 'Company user not found.';
+    public const RESPONSE_CODE_SHOPPING_LIST_DUPLICATE_NAME = '1505';
+    public const RESPONSE_DETAIL_SHOPPING_LIST_DUPLICATE_NAME = 'Shopping list with given name already exists.';
+    public const RESPONSE_CODE_SHOPPING_LIST_CANNOT_UPDATE = '1506';
+    public const RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_UPDATE = 'Requested operation requires write access permission.';
+    public const RESPONSE_CODE_SHOPPING_LIST_CANNOT_ADD_ITEM = '1507';
+    public const RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_ADD_ITEM = 'Cannot add an item to shopping list';
+
+    /**
+     * @addTo \Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig::RESPONSE_ERROR_MAP
+     */
 }

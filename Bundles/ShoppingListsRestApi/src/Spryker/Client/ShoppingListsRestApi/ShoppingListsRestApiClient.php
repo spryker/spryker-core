@@ -7,8 +7,12 @@
 
 namespace Spryker\Client\ShoppingListsRestApi;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
-use Generated\Shared\Transfer\RestShoppingListItemResponseTransfer;
+use Generated\Shared\Transfer\RestShoppingListRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -21,13 +25,98 @@ class ShoppingListsRestApiClient extends AbstractClient implements ShoppingLists
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    public function getCustomerShoppingListCollection(
+        CustomerTransfer $customerTransfer
+    ): ShoppingListCollectionTransfer {
+        return $this->getFactory()
+            ->createShoppingListsRestApiStub()
+            ->getCustomerShoppingListCollection($customerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function findShoppingListByUuid(
+        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+    ): ShoppingListResponseTransfer {
+        return $this->getFactory()
+            ->createShoppingListsRestApiStub()
+            ->findShoppingListByUuid($restShoppingListRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function createShoppingList(
+        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+    ): ShoppingListResponseTransfer {
+        return $this->getFactory()
+            ->createShoppingListsRestApiStub()
+            ->createShoppingList($restShoppingListRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function updateShoppingList(
+        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+    ): ShoppingListResponseTransfer {
+        return $this->getFactory()
+            ->createShoppingListsRestApiStub()
+            ->updateShoppingList($restShoppingListRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function deleteShoppingList(
+        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+    ): ShoppingListResponseTransfer {
+        return $this->getFactory()
+            ->createShoppingListsRestApiStub()
+            ->deleteShoppingList($restShoppingListRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function addItem(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
-    ): RestShoppingListItemResponseTransfer {
+    ): ShoppingListItemResponseTransfer {
         return $this->getFactory()
             ->createShoppingListsRestApiStub()
             ->addItem($restShoppingListItemRequestTransfer);

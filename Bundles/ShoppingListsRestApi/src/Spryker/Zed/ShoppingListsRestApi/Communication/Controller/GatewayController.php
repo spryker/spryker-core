@@ -7,8 +7,12 @@
 
 namespace Spryker\Zed\ShoppingListsRestApi\Communication\Controller;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
-use Generated\Shared\Transfer\RestShoppingListItemResponseTransfer;
+use Generated\Shared\Transfer\RestShoppingListRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -17,13 +21,68 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    public function getCustomerShoppingListCollectionAction(
+        CustomerTransfer $customerTransfer
+    ): ShoppingListCollectionTransfer {
+        return $this->getFacade()->getCustomerShoppingListCollection($customerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function findShoppingListByUuidAction(
+        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+    ): ShoppingListResponseTransfer {
+        return $this->getFacade()->findShoppingListByUuid($restShoppingListRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function createShoppingListAction(
+        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+    ): ShoppingListResponseTransfer {
+        return $this->getFacade()->createShoppingList($restShoppingListRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function updateShoppingListAction(
+        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+    ): ShoppingListResponseTransfer {
+        return $this->getFacade()->updateShoppingList($restShoppingListRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function deleteShoppingListAction(
+        RestShoppingListRequestTransfer $restShoppingListRequestTransfer
+    ): ShoppingListResponseTransfer {
+        return $this->getFacade()->deleteShoppingList($restShoppingListRequestTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function addItemAction(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
-    ): RestShoppingListItemResponseTransfer {
+    ): ShoppingListItemResponseTransfer {
         return $this->getFacade()->addItem($restShoppingListItemRequestTransfer);
     }
 }

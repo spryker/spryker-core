@@ -8,95 +8,95 @@
 namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem;
 
 use Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer;
-use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
 use Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemsResourceMapperInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\ShoppingListItemRestResponseBuilderInterface;
-use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
+use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemsResourceMapperInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\Request\RestRequestReaderInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\Response\RestResponseWriterInterface;
 
 class ShoppingListItemAdder implements ShoppingListItemAdderInterface
 {
     /**
      * @var \Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface
      */
-    protected $shoppingListsRestApiClient;
+    protected $shoppingListClient;
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemsResourceMapperInterface
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemsResourceMapperInterface
      */
-    protected $shoppingListItemResourceMapper;
+    protected $shoppingListItemsResourceMapper;
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\ShoppingListItemRestResponseBuilderInterface
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\Request\RestRequestReaderInterface
      */
-    protected $shoppingListItemRestResponseBuilder;
+    protected $restRequestReader;
 
     /**
-     * @param \Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface $shoppingListsRestApiClient
-     * @param \Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemsResourceMapperInterface $shoppingListItemResourceMapper
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder\ShoppingListItemRestResponseBuilderInterface $shoppingListItemRestResponseBuilder
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\Response\RestResponseWriterInterface
+     */
+    protected $restResponseWriter;
+
+    /**
+     * @param \Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface $shoppingListClient
+     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemsResourceMapperInterface $shoppingListItemsResourceMapper
+     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Request\RestRequestReaderInterface $restRequestReader
+     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Response\RestResponseWriterInterface $restResponseWriter
      */
     public function __construct(
-        ShoppingListsRestApiClientInterface $shoppingListsRestApiClient,
-        ShoppingListItemsResourceMapperInterface $shoppingListItemResourceMapper,
-        ShoppingListItemRestResponseBuilderInterface $shoppingListItemRestResponseBuilder
+        ShoppingListsRestApiClientInterface $shoppingListClient,
+        ShoppingListItemsResourceMapperInterface $shoppingListItemsResourceMapper,
+        RestRequestReaderInterface $restRequestReader,
+        RestResponseWriterInterface $restResponseWriter
     ) {
-        $this->shoppingListsRestApiClient = $shoppingListsRestApiClient;
-        $this->shoppingListItemResourceMapper = $shoppingListItemResourceMapper;
-        $this->shoppingListItemRestResponseBuilder = $shoppingListItemRestResponseBuilder;
+        $this->shoppingListClient = $shoppingListClient;
+        $this->shoppingListItemsResourceMapper = $shoppingListItemsResourceMapper;
+        $this->restRequestReader = $restRequestReader;
+        $this->restResponseWriter = $restResponseWriter;
     }
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addItem(RestRequestInterface $restRequest): RestResponseInterface
-    {
-        $idShoppingList = $this->findShoppingListIdentifier($restRequest);
-        if (!$idShoppingList) {
-            return $this->shoppingListItemRestResponseBuilder->createShoppingListBadRequestErrorResponse();
-        }
+    public function addItem(
+        RestRequestInterface $restRequest,
+        RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
+    ): RestResponseInterface {
 
-        $restShoppingListItemRequestTransfer = $this->shoppingListItemResourceMapper->mapRestRequestToRestShoppingListItemRequestTransfer(
-            $restRequest,
-            (new RestShoppingListItemRequestTransfer())->setShoppingListUuid($idShoppingList)
+        $restResponse = $this->restResponseWriter->createRestResponse();
+        $restShoppingListItemRequestTransfer = $this->restRequestReader->readRestShoppingListItemRequestTransferFromRequest(
+            $restRequest
         );
 
-        $restShoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->addItem($restShoppingListItemRequestTransfer);
-
-        if (!$restShoppingListItemResponseTransfer->getIsSuccess()) {
-            return $this->shoppingListItemRestResponseBuilder->createAddItemErrorResponse(
-                $restShoppingListItemResponseTransfer->getRestErrorMessages()
+        if (count($restShoppingListItemRequestTransfer->getErrors()) > 0) {
+            return $this->restResponseWriter->writeErrorsFromErrorCodes(
+                $restShoppingListItemRequestTransfer->getErrors(),
+                $restResponse
             );
         }
 
-        $restShoppingListItemAttributesTransfer = $this->shoppingListItemResourceMapper->mapShoppingListItemTransferToRestShoppingListItemAttributesTransfer(
-            $restShoppingListItemResponseTransfer->getShoppingListItem(),
-            new RestShoppingListItemAttributesTransfer()
-        );
-
-        return $this->shoppingListItemRestResponseBuilder->createShoppingListItemResponse(
+        $restShoppingListItemRequestTransfer = $this->shoppingListItemsResourceMapper->mapRestShoppingListItemAttributesTransferToRestShoppingListItemRequestTransfer(
             $restShoppingListItemAttributesTransfer,
-            $idShoppingList,
-            $restShoppingListItemResponseTransfer->getShoppingListItem()->getUuid()
+            $restShoppingListItemRequestTransfer
         );
-    }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return string|null
-     */
-    protected function findShoppingListIdentifier(RestRequestInterface $restRequest): ?string
-    {
-        $shoppingListResource = $restRequest->findParentResourceByType(ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LISTS);
-        if ($shoppingListResource !== null) {
-            return $shoppingListResource->getId();
+        $shoppingListItemResponseTransfer = $this->shoppingListClient->addItem($restShoppingListItemRequestTransfer);
+
+        if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
+            return $this->restResponseWriter->writeErrorsFromErrorCodes(
+                $shoppingListItemResponseTransfer->getErrors(),
+                $restResponse
+            );
         }
 
-        return null;
+        $shoppingListItemResource = $this->restResponseWriter->createRestResourceFromShoppingListItemTransfer(
+            $shoppingListItemResponseTransfer->getShoppingListItem(),
+            $restShoppingListItemRequestTransfer->getShoppingListUuid()
+        );
+
+        return $restResponse->addResource($shoppingListItemResource);
     }
 }
