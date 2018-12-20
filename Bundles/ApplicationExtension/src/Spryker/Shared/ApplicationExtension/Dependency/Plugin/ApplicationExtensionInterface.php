@@ -13,7 +13,8 @@ interface ApplicationExtensionInterface
 {
     /**
      * Specification:
-     * - Provides extension for application. Executes before application boot.
+     * - Adds an ApplicationExtension to the application.
+     * - Do not use ContainerInterface::get() outside of a callback.
      *
      * @api
      *
