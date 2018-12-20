@@ -296,4 +296,21 @@ interface ShoppingListFacadeInterface
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
     public function dismissShoppingListSharing(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Find a shopping list by UUID
+     *  - Makes sure the shopping list can be accessed by the company user
+     *  - Uuid must be set in the ShoppingListTransfer taken as parameter.
+     *  - Company user ID must be set in the ShoppingListTransfer taken as parameter.
+     *
+     * @api
+     *
+     * @internal will work if uuid field is provided.
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
 }
