@@ -380,7 +380,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
             $query->filterByIdPriceProductConcreteMerchantRelationshipStorage_In($priceProductConcreteMerchantRelationshipStorageIds);
         }
 
-        return $this->buildQueryFromCriteria($query, $filterTransfer);
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 
     /**
@@ -397,6 +397,6 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
             $query->filterByIdPriceProductAbstractMerchantRelationshipStorage_In($priceProductAbstractMerchantRelationshipStorageIds);
         }
 
-        return $this->buildQueryFromCriteria($query, $filterTransfer);
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 }

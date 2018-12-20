@@ -57,6 +57,10 @@ class ExportSynchronizedDataConsole extends Console
         if ($input->getArgument(static::OPTION_IDS)) {
             $resourceString = $input->getArgument(static::OPTION_IDS);
             $ids = explode(',', $resourceString);
+
+            $ids = array_map(function ($id) {
+                return (int)$id;
+            }, $ids);
         }
 
         $this->getFacade()->executeResolvedPluginsBySources($resources, $ids);
