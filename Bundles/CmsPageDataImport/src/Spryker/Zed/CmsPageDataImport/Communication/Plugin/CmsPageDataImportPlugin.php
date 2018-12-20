@@ -14,6 +14,7 @@ use Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @method \Spryker\Zed\CmsPageDataImport\CmsPageDataImportConfig getConfig()
  * @method \Spryker\Zed\CmsPageDataImport\Business\CmsPageDataImportFacadeInterface getFacade()
  */
 class CmsPageDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface

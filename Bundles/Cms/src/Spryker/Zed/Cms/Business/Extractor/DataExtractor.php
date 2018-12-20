@@ -123,7 +123,7 @@ class DataExtractor implements DataExtractorInterface
      * @param \Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer[]|\ArrayObject $translations
      * @param string $localeName
      *
-     * @return string
+     * @return string|null
      */
     protected function extractTranslationByLocales(ArrayObject $translations, string $localeName): ?string
     {

@@ -11,6 +11,9 @@ use Spryker\Zed\CmsPageDataImport\Dependency\Facade\CmsPageDataImportToCmsFacade
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsPageDataImport\CmsPageDataImportConfig getConfig()
+ */
 class CmsPageDataImportDependencyProvider extends DataImportDependencyProvider
 {
     public const FACADE_CMS = 'cms facade';

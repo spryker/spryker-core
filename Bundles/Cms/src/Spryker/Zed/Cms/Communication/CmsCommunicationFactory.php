@@ -24,6 +24,8 @@ use Symfony\Component\Form\FormInterface;
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Cms\CmsConfig getConfig()
  * @method \Spryker\Zed\Cms\Business\CmsFacadeInterface getFacade()
+ * @method \Spryker\Zed\Cms\Persistence\CmsRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Cms\Persistence\CmsEntityManagerInterface getEntityManager()
  */
 class CmsCommunicationFactory extends AbstractCommunicationFactory
 {

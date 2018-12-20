@@ -22,6 +22,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Cms\Business\CmsBusinessFactory getFactory()
+ * @method \Spryker\Zed\Cms\Persistence\CmsRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Cms\Persistence\CmsEntityManagerInterface getEntityManager()
  */
 class CmsFacade extends AbstractFacade implements CmsFacadeInterface
 {

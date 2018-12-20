@@ -27,18 +27,18 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CmsPageFormType extends AbstractType
 {
-    const FIELD_SEARCHABLE = 'isSearchable';
-    const FIELD_PAGE_ATTRIBUTES = 'pageAttributes';
-    const FIELD_PAGE_META_ATTRIBUTES = 'metaAttributes';
-    const FIELD_FK_TEMPLATE = 'fkTemplate';
-    const FIELD_FK_PAGE = 'fkPage';
-    const FIELD_VALID_FROM = 'validFrom';
-    const FIELD_VALID_TO = 'validTo';
+    public const FIELD_SEARCHABLE = 'isSearchable';
+    public const FIELD_PAGE_ATTRIBUTES = 'pageAttributes';
+    public const FIELD_PAGE_META_ATTRIBUTES = 'metaAttributes';
+    public const FIELD_FK_TEMPLATE = 'fkTemplate';
+    public const FIELD_FK_PAGE = 'fkPage';
+    public const FIELD_VALID_FROM = 'validFrom';
+    public const FIELD_VALID_TO = 'validTo';
 
-    const OPTION_TEMPLATE_CHOICES = 'template_choices';
-    const OPTION_DATA_CLASS_ATTRIBUTES = 'data_class_attributes';
-    const OPTION_DATA_CLASS_META_ATTRIBUTES = 'data_class_meta_attributes';
-    const FIELD_STORE_RELATION = 'storeRelation';
+    public const OPTION_TEMPLATE_CHOICES = 'template_choices';
+    public const OPTION_DATA_CLASS_ATTRIBUTES = 'data_class_attributes';
+    public const OPTION_DATA_CLASS_META_ATTRIBUTES = 'data_class_meta_attributes';
+    public const FIELD_STORE_RELATION = 'storeRelation';
 
     use ArrayObjectTransformerTrait;
 

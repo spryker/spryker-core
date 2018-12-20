@@ -21,6 +21,8 @@ use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 /**
  * @method \Spryker\Zed\Cms\CmsConfig getConfig()
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Cms\Persistence\CmsRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Cms\Persistence\CmsEntityManagerInterface getEntityManager()
  */
 class CmsPersistenceFactory extends AbstractPersistenceFactory
 {
