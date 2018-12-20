@@ -13,7 +13,8 @@ interface BootableApplicationExtensionInterface
 {
     /**
      * Specification:
-     * - Provides extension for application. Executes during application boot.
+     * - Boots an ApplicationExtension.
+     * - This method is called after all services are registered and should be used for "dynamic" configuration.
      *
      * @api
      *
