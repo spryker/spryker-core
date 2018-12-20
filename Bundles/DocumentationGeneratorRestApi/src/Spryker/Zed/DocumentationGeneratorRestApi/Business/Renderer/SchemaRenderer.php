@@ -78,6 +78,9 @@ class SchemaRenderer implements SchemaRendererInterface
         if ($property->getItemsReference()) {
             $schemaPropertyComponentTransfer->setItemsSchemaReference($property->getItemsReference());
         }
+        if ($property->getItemsType()) {
+            $schemaPropertyComponentTransfer->setItemsType($property->getItemsType());
+        }
 
         $this->schemaPropertySpecificationComponent->setSchemaPropertyComponentTransfer($schemaPropertyComponentTransfer);
         $schemaPropertySpecificationData = $this->schemaPropertySpecificationComponent->getSpecificationComponentData();
