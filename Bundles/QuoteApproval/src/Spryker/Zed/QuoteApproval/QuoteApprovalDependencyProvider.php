@@ -9,6 +9,7 @@ namespace Spryker\Zed\QuoteApproval;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCustomerFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeBridge;
 
 /**
@@ -16,6 +17,7 @@ use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeBridge
  */
 class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_CUSTOMER = 'customer facade';
     public const FACADE_QUOTE = 'FACADE_QUOTE';
 
     /**
@@ -26,6 +28,7 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addCustomerFacade($container);
         $container = $this->addQuoteFacade($container);
 
         return $container;
@@ -40,6 +43,20 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_QUOTE] = function (Container $container) {
             return new QuoteApprovalToQuoteFacadeBridge($container->getLocator()->quote()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerFacade(Container $container): Container
+    {
+        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+            return new QuoteApprovalToCustomerFacadeBridge($container->getLocator()->customer()->facade());
         };
 
         return $container;

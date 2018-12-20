@@ -11,18 +11,20 @@ use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
-use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface;
 use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface;
 
 class QuoteApprovalWriter implements QuoteApprovalWriterInterface
 {
-    use PermissionAwareTrait;
-
     /**
      * @var \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalValidatorInterface
      */
     protected $quoteApprovalValidator;
+
+    /**
+     * @var \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalMessageBuilderInterface
+     */
+    protected $quoteApprovalMessageBuilder;
 
     /**
      * @var \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface
@@ -36,15 +38,18 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
 
     /**
      * @param \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalValidatorInterface $quoteApprovalValidator
+     * @param \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalMessageBuilderInterface $quoteApprovalMessageBuilder
      * @param \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface $quoteApprovalEntityManager
      * @param \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface $quoteApprovalRepository
      */
     public function __construct(
         QuoteApprovalValidatorInterface $quoteApprovalValidator,
+        QuoteApprovalMessageBuilderInterface $quoteApprovalMessageBuilder,
         QuoteApprovalEntityManagerInterface $quoteApprovalEntityManager,
         QuoteApprovalRepositoryInterface $quoteApprovalRepository
     ) {
         $this->quoteApprovalValidator = $quoteApprovalValidator;
+        $this->quoteApprovalMessageBuilder = $quoteApprovalMessageBuilder;
         $this->quoteApprovalEntityManager = $quoteApprovalEntityManager;
         $this->quoteApprovalRepository = $quoteApprovalRepository;
     }
@@ -86,6 +91,10 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
         $quoteApprovalTransfer = $this->quoteApprovalRepository
             ->findQuoteApprovalById($quoteApprovalRequestTransfer->getIdQuoteApproval());
 
+        if ($quoteApprovalTransfer === null) {
+            return $quoteApprovalResponseTransfer;
+        }
+
         if (!$this->quoteApprovalValidator->canUpdateQuoteApprovalRequest($quoteApprovalRequestTransfer, $quoteApprovalTransfer)) {
             return $quoteApprovalResponseTransfer;
         }
@@ -117,6 +126,7 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
 
         return (new QuoteApprovalResponseTransfer())
             ->setQuoteApproval($quoteApprovalTransfer)
-            ->setIsSuccessful(true);
+            ->setIsSuccessful(true)
+            ->setMessage($this->quoteApprovalMessageBuilder->getSuccessMessage($quoteApprovalTransfer, $status));
     }
 }

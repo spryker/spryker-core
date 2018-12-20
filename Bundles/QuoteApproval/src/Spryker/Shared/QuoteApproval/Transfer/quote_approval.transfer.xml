@@ -25,6 +25,7 @@
     <transfer name="QuoteApprovalResponse">
         <property name="quoteApproval" type="QuoteApproval"/>
         <property name="isSuccessful" type="bool" />
+        <property name="message" type="Message" />
     </transfer>
 
     <transfer name="QuoteApprovalCollection">

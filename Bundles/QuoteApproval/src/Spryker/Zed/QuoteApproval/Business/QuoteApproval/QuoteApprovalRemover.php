@@ -14,10 +14,17 @@ use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface;
 
 class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
 {
+    protected const STATUS_NAME = 'Canceled';
+
     /**
      * @var \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalValidatorInterface
      */
     protected $quoteApprovalValidator;
+
+    /**
+     * @var \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalMessageBuilderInterface
+     */
+    protected $quoteApprovalMessageBuilder;
 
     /**
      * @var \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface
@@ -31,15 +38,18 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
 
     /**
      * @param \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalValidatorInterface $quoteApprovalValidator
+     * @param \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalMessageBuilderInterface $quoteApprovalMessageBuilder
      * @param \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface $quoteApprovalEntityManager
      * @param \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface $quoteApprovalRepository
      */
     public function __construct(
         QuoteApprovalValidatorInterface $quoteApprovalValidator,
+        QuoteApprovalMessageBuilderInterface $quoteApprovalMessageBuilder,
         QuoteApprovalEntityManagerInterface $quoteApprovalEntityManager,
         QuoteApprovalRepositoryInterface $quoteApprovalRepository
     ) {
         $this->quoteApprovalValidator = $quoteApprovalValidator;
+        $this->quoteApprovalMessageBuilder = $quoteApprovalMessageBuilder;
         $this->quoteApprovalEntityManager = $quoteApprovalEntityManager;
         $this->quoteApprovalRepository = $quoteApprovalRepository;
     }
@@ -61,13 +71,18 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
         $quoteApprovalTransfer = $this->quoteApprovalRepository
             ->findQuoteApprovalById($quoteApprovalRequestTransfer->getIdQuoteApproval());
 
+        if ($quoteApprovalTransfer === null) {
+            return $quoteApprovalResponseTransfer;
+        }
+
         if (!$this->quoteApprovalValidator->canDeleteQuoteApprovalRequest($quoteApprovalRequestTransfer, $quoteApprovalTransfer)) {
             return $quoteApprovalResponseTransfer;
         }
 
         $this->quoteApprovalEntityManager->deleteQuoteApproval($quoteApprovalRequestTransfer->getIdQuoteApproval());
 
-        $quoteApprovalResponseTransfer->setIsSuccessful(true);
+        $quoteApprovalResponseTransfer->setIsSuccessful(true)
+            ->setMessage($this->quoteApprovalMessageBuilder->getSuccessMessage($quoteApprovalTransfer, self::STATUS_NAME));
 
         return $quoteApprovalResponseTransfer;
     }

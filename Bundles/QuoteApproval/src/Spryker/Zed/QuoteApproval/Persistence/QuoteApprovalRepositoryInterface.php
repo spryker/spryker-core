@@ -14,7 +14,7 @@ interface QuoteApprovalRepositoryInterface
     /**
      * @param int $idQuoteApproval
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer|null
      */
-    public function findQuoteApprovalById(int $idQuoteApproval): QuoteApprovalTransfer;
+    public function findQuoteApprovalById(int $idQuoteApproval): ?QuoteApprovalTransfer;
 }

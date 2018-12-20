@@ -18,13 +18,17 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
     /**
      * @param int $idQuoteApproval
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer|null
      */
-    public function findQuoteApprovalById(int $idQuoteApproval): QuoteApprovalTransfer
+    public function findQuoteApprovalById(int $idQuoteApproval): ?QuoteApprovalTransfer
     {
         $spyQuoteApproval = $this->getFactory()
             ->createSpyQuoteApprovalQuery()
             ->findOneByIdQuoteApproval($idQuoteApproval);
+
+        if ($spyQuoteApproval === null) {
+            return null;
+        }
 
         $quoteApprovalTransfer = $this->getFactory()
             ->createQuoteApprovalMapper()
