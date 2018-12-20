@@ -164,7 +164,6 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
      */
     protected function getCmsBlockTransfer(array $data): SpyCmsBlockEntityTransfer
     {
-        $dats['glossary'] = $data['SpyCmsBlockGlossaryKeyMappings'];
         return (new SpyCmsBlockEntityTransfer())->fromArray($data, true);
     }
 }
