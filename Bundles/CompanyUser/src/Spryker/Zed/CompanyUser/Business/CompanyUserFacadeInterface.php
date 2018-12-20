@@ -93,7 +93,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves company users collection.
+     * - Get user companies which can filtered by company ID, user ID and/or active flag.
      *
      * @api
      *

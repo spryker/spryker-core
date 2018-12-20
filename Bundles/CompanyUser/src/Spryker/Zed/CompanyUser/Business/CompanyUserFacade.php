@@ -119,8 +119,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * Specification:
-     *  - Get user companies wich can filtered by company, user, active status.
+     * {@inheritdoc}
      *
      * @api
      *
