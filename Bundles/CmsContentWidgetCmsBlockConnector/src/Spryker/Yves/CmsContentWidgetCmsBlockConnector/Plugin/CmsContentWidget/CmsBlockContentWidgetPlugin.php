@@ -26,17 +26,11 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     protected $widgetConfiguration;
 
     /**
-     * @var string
-     */
-    protected $storeName;
-
-    /**
      * @param \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface $widgetConfiguration
      */
     public function __construct(CmsContentWidgetConfigurationProviderInterface $widgetConfiguration)
     {
         $this->widgetConfiguration = $widgetConfiguration;
-        $this->storeName = $this->getApplication()['store'];
     }
 
     /**
@@ -105,7 +99,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     {
         $blocks = $this->getFactory()
             ->getCmsBlockStorageClient()
-            ->findBlocksByNames($blockNames, $this->getLocale(), $this->storeName);
+            ->findBlocksByNames($blockNames, $this->getLocale(), $this->getApplication()['store']);
 
         return $blocks;
     }
