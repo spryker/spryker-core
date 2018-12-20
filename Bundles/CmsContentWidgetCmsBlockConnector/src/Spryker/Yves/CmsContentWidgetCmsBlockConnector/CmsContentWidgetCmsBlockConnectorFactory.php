@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\CmsContentWidgetCmsBlockConnector;
 
+use Spryker\Yves\CmsContentWidgetCmsBlockConnector\Dependency\Client\CmsContentWidgetCmsBlockConnectorToCmsBlockStorageClientInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class CmsContentWidgetCmsBlockConnectorFactory extends AbstractFactory

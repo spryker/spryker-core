@@ -9,7 +9,7 @@ namespace Spryker\Yves\CmsContentWidgetCmsBlockConnector\Plugin\CmsContentWidget
 
 use ArrayObject;
 use DateTime;
-use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\SpyCmsBlockEntityTransfer;
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 use Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
@@ -105,21 +105,21 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockData
+     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockData
      *
      * @return bool
      */
-    protected function validateBlock(CmsBlockTransfer $cmsBlockData): bool
+    protected function validateBlock(SpyCmsBlockEntityTransfer $cmsBlockData): bool
     {
-        return $cmsBlockData->getTemplateName() !== null;
+        return $cmsBlockData->getCmsBlockTemplate()->getTemplatePath() !== null;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockTransfer
      *
      * @return bool
      */
-    protected function validateDates(CmsBlockTransfer $cmsBlockTransfer): bool
+    protected function validateDates(SpyCmsBlockEntityTransfer $cmsBlockTransfer): bool
     {
         $dateToCompare = new DateTime();
 
@@ -160,10 +160,11 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     /**
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer
      */
-    protected function getCmsBlockTransfer(array $data): CmsBlockTransfer
+    protected function getCmsBlockTransfer(array $data): SpyCmsBlockEntityTransfer
     {
-        return (new CmsBlockTransfer())->fromArray($data, true);
+        $dats['glossary'] = $data['SpyCmsBlockGlossaryKeyMappings'];
+        return (new SpyCmsBlockEntityTransfer())->fromArray($data, true);
     }
 }
