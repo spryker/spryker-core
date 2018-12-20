@@ -15,5 +15,4 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class ShipmentGuiBusinessFactory extends AbstractBusinessFactory
 {
-
 }

@@ -9,5 +9,4 @@ namespace Spryker\Zed\ShipmentGui\Business;
 
 interface ShipmentGuiFacadeInterface
 {
-
 }

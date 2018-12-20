@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Customer\Persistence;
 
+use Generated\Shared\Transfer\AddressTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -122,6 +124,32 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
             ->getFactory()
             ->createSpyCustomerAddressQuery()
             ->filterByFkCustomer($idCustomer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
+     */
+    public function queryAddressByTransfer(AddressTransfer $addressTransfer): SpyCustomerAddressQuery
+    {
+        return $this
+            ->getFactory()
+            ->createSpyCustomerAddressQuery()
+            ->filterByFkCustomer($addressTransfer->getFkCustomer())
+            ->filterByFirstName($addressTransfer->getFirstName())
+            ->filterByLastName($addressTransfer->getLastName())
+            ->filterByAddress1($addressTransfer->getAddress1())
+            ->filterByAddress2($addressTransfer->getAddress2())
+            ->filterByAddress3($addressTransfer->getAddress3())
+            ->filterByZipCode($addressTransfer->getZipCode())
+            ->filterByCity($addressTransfer->getCity())
+            ->filterByFkCountry($addressTransfer->getFkCountry())
+            ->filterByPhone($addressTransfer->getPhone());
     }
 
     /**

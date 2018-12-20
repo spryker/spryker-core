@@ -22,7 +22,6 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-
         return $container;
     }
 
@@ -33,7 +32,6 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-
         return $container;
     }
 }
