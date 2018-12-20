@@ -1,4 +1,4 @@
-namespace: Spryker\Client\ProductListStorage
+namespace: SprykerTest\Client\ProductListStorage
 
 paths:
     tests: .
@@ -14,7 +14,7 @@ coverage:
 suites:
     Client:
         path: .
-        class_name: ProductConcreteRestrictionReaderTester
+        class_name: ProductListStorageClientTester
         modules:
             enabled:
                 - Asserts

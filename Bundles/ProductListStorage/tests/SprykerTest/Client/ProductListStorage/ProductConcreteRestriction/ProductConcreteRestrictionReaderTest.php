@@ -29,7 +29,7 @@ class ProductConcreteRestrictionReaderTest extends Unit
     public const CONCRETE_PRODUCT_ID = 1;
 
     /**
-     * @var \SprykerTest\Client\ProductListStorage\ProductConcreteRestrictionReaderTester;
+     * @var \SprykerTest\Client\ProductListStorage\ProductListStorageClientTester;
      */
     protected $tester;
 

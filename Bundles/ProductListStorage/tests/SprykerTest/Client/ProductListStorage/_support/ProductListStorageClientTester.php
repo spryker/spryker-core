@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductListStorage;
+namespace SprykerTest\Client\ProductListStorage;
 
 use Codeception\Actor;
 
@@ -24,9 +24,9 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class ProductConcreteRestrictionReaderTester extends Actor
+class ProductListStorageClientTester extends Actor
 {
-    use _generated\ProductConcreteRestrictionReaderTesterActions;
+    use _generated\ProductListStorageClientTesterActions;
 
    /**
     * Define custom actions here
