@@ -26,7 +26,7 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 
 class CmsPageWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-    public const BULK_SIZE = 100;
+    public const BULK_SIZE = 20;
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
