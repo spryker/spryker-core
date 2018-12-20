@@ -295,8 +295,9 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     *  - Makes Zed request.
-     *  - Gets customer from Zed and updates customer in session to updating customer permissions.
+     *  - Gets customer from session.
+     *  - Makes Zed request. Gets customer by email.
+     *  - Updates customer in session.
      *
      * @api
      *
