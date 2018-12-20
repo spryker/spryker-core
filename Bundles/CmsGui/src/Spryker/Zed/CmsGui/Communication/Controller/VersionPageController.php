@@ -91,7 +91,7 @@ class VersionPageController extends AbstractController
             ->createCmsVersionFormDataProvider();
 
         $versionForm = $this->getFactory()
-            ->createCmsVersionForm($cmsVersionFormDataProvider, $idCmsPage, $version)
+            ->getCmsVersionForm($cmsVersionFormDataProvider, $idCmsPage, $version)
             ->handleRequest($request);
 
         if ($versionForm->isSubmitted() && $versionForm->isValid()) {
