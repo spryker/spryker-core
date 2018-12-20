@@ -36,15 +36,12 @@ class AbstractProductAvailabilitiesResourceMapper implements AbstractProductAvai
             return true;
         }
 
-        $isNeverOutOfStock = false;
-
         foreach ($availabilityEntityTransfer->getSpyAvailabilities() as $spyAvailabilityEntityTransfer) {
-            $isNeverOutOfStock = $spyAvailabilityEntityTransfer->getIsNeverOutOfStock();
-            if ($isNeverOutOfStock) {
-                break;
+            if ($spyAvailabilityEntityTransfer->getIsNeverOutOfStock()) {
+                return true;
             }
         }
 
-        return $isNeverOutOfStock;
+        return false;
     }
 }
