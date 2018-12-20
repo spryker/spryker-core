@@ -9,8 +9,9 @@ namespace SprykerTest\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Orm\Zed\ProductDiscontinued\Persistence\Map\SpyProductDiscontinuedNoteTableMap;
 use Spryker\Zed\ProductDiscontinued\Dependency\ProductDiscontinuedEvents;
-use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedStorageListener;
+use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedNoteStorageListener;
 use Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageRepository;
 
 /**
@@ -22,10 +23,10 @@ use Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorag
  * @group Plugin
  * @group Event
  * @group Listener
- * @group ProductDiscontinuedStorageListenerTest
+ * @group ProductDiscontinuedNoteStorageListenerTest
  * Add your own group annotations below this line
  */
-class ProductDiscontinuedStorageListenerTest extends Unit
+class ProductDiscontinuedNoteStorageListenerTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ProductDiscontinuedStorage\ProductDiscontinuedStorageCommunicationTester
@@ -38,9 +39,9 @@ class ProductDiscontinuedStorageListenerTest extends Unit
     protected $productDiscontinuedStorageRepository;
 
     /**
-     * @var \Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedStorageListener
+     * @var \Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedNoteStorageListener
      */
-    protected $productDiscontinuedStorageListener;
+    protected $productDiscontinuedNoteStorageListener;
 
     /**
      * @var \Generated\Shared\Transfer\ProductDiscontinuedTransfer
@@ -50,14 +51,14 @@ class ProductDiscontinuedStorageListenerTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->productDiscontinuedStorageRepository = new ProductDiscontinuedStorageRepository();
 
-        $this->productDiscontinuedStorageListener = new ProductDiscontinuedStorageListener();
-        $this->productDiscontinuedStorageListener->setFacade($this->tester->getMockedFacade());
+        $this->productDiscontinuedNoteStorageListener = new ProductDiscontinuedNoteStorageListener();
+        $this->productDiscontinuedNoteStorageListener->setFacade($this->tester->getMockedFacade());
 
         $this->productDiscontinuedTransfer = $this->tester->createProductDiscontinued();
     }
@@ -65,17 +66,19 @@ class ProductDiscontinuedStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductDiscontinuedStorageEntityCanBePublished(): void
+    public function testHandleBulkProductDiscontinuedStorageEntityCanBePublished(): void
     {
         // Arrange
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($this->productDiscontinuedTransfer->getIdProductDiscontinued()),
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyProductDiscontinuedNoteTableMap::COL_FK_PRODUCT_DISCONTINUED => $this->productDiscontinuedTransfer->getIdProductDiscontinued(),
+            ]),
         ];
 
         // Act
-        $this->productDiscontinuedStorageListener->handleBulk(
+        $this->productDiscontinuedNoteStorageListener->handleBulk(
             $eventTransfers,
-            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH
+            ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_NOTE_CREATE
         );
         $productDiscontinuedEntityTransfers = $this->productDiscontinuedStorageRepository
             ->findProductDiscontinuedStorageEntitiesByIds(
@@ -84,33 +87,5 @@ class ProductDiscontinuedStorageListenerTest extends Unit
 
         // Assert
         $this->assertCount(count($this->tester->getLocaleFacade()->getAvailableLocales()), $productDiscontinuedEntityTransfers);
-    }
-
-    /**
-     * @return void
-     */
-    public function testProductDiscontinuedStorageEntityCanBeUnpublished(): void
-    {
-        // Arrange
-        $eventTransfers = [
-            (new EventEntityTransfer())->setId($this->productDiscontinuedTransfer->getIdProductDiscontinued()),
-        ];
-
-        // Act
-        $this->productDiscontinuedStorageListener->handleBulk(
-            $eventTransfers,
-            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH
-        );
-        $this->productDiscontinuedStorageListener->handleBulk(
-            $eventTransfers,
-            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_UNPUBLISH
-        );
-        $productDiscontinuedEntityTransfers = $this->productDiscontinuedStorageRepository
-            ->findProductDiscontinuedStorageEntitiesByIds(
-                [$this->productDiscontinuedTransfer->getIdProductDiscontinued()]
-            );
-
-        // Assert
-        $this->assertCount(0, $productDiscontinuedEntityTransfers);
     }
 }
