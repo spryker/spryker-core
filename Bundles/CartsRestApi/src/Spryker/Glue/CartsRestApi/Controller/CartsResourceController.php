@@ -109,4 +109,31 @@ class CartsResourceController extends AbstractController
     {
         return $this->getFactory()->createCartDeleter()->delete($restRequest);
     }
+
+    /**
+     * @Glue({
+     *     "patch": {
+     *          "summary": [
+     *              "Updates a cart."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "400": "Cart id is missing.",
+     *              "404": "Cart with given uuid not found.",
+     *          }
+     *     }
+     * })
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function patchAction(RestRequestInterface $restRequest, RestCartsAttributesTransfer $restCartsAttributesTransfer): RestResponseInterface
+    {
+        return $this->getFactory()->createCartUpdater()->update($restRequest, $restCartsAttributesTransfer);
+    }
 }

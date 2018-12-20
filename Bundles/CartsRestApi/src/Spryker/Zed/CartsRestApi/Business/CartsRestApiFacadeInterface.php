@@ -35,4 +35,17 @@ interface CartsRestApiFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Updates customer quote by uuid.
+     * - Uuid and customerReference must be set in the QuoteTransfer taken as parameter.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

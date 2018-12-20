@@ -31,4 +31,20 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
             ->createCartsRestApiZedStub()
             ->findQuoteByUuid($quoteTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartsRestApiZedStub()
+            ->updateQuoteByUuid($quoteTransfer);
+    }
 }

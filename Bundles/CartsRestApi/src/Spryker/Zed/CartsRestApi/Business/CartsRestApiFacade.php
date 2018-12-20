@@ -46,4 +46,20 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
             ->createQuoteReader()
             ->findQuoteByUuid($quoteTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteUpdater()
+            ->updateQuoteByUuid($quoteTransfer);
+    }
 }

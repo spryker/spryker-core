@@ -5,24 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CartsRestApi\Zed;
+namespace Spryker\Glue\MultiCartsRestApi\Processor\Quote;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface CartsRestApiZedStubInterface
+interface MultipleQuoteCreatorInterface
 {
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function updateQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function createQuote(RestRequestInterface $restRequest, QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

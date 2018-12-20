@@ -17,6 +17,8 @@ use Spryker\Glue\CartsRestApi\Processor\Cart\CartDeleter;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartDeleterInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReader;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdater;
+use Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemAdder;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemAdderInterface;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemDeleter;
@@ -56,6 +58,7 @@ use Spryker\Glue\Kernel\AbstractFactory;
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  *
+ * @method \Spryker\Client\CartsRestApi\CartsRestApiClientInterface getClient()
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiConfig getConfig()
  */
 class CartsRestApiFactory extends AbstractFactory
@@ -93,6 +96,18 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->getPersistentCartClient(),
             $this->createCartReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface
+     */
+    public function createCartUpdater(): CartUpdaterInterface
+    {
+        return new CartUpdater(
+            $this->getClient(),
+            $this->createCartsResourceMapper(),
+            $this->getResourceBuilder()
         );
     }
 

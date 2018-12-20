@@ -38,4 +38,17 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
 
         return $quoteResponseTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/update-quote-by-uuid', $quoteTransfer);
+
+        return $quoteResponseTransfer;
+    }
 }
