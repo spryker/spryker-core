@@ -262,7 +262,7 @@ class CartOperation implements CartOperationInterface
             $quoteTransfer->getCustomer()
         );
 
-        if (!$quoteResponseTransfer->getIsSuccessful() || $quoteTransfer->getIsLocked()) {
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
 
