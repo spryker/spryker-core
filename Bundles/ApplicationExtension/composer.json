@@ -4,11 +4,11 @@
   "description": "ApplicationExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/container": "^1.0.0"
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/container": "*",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -25,5 +25,8 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "suggest": {
+    "spryker/container": "If you want to use ApplicationExtensionInterface or BootableApplicationExtensionInterface"
   }
 }

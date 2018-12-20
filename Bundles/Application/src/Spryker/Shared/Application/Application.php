@@ -8,8 +8,8 @@
 namespace Spryker\Shared\Application;
 
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\ApplicationExtension\Provider\ApplicationExtensionInterface;
-use Spryker\Shared\ApplicationExtension\Provider\BootableApplicationExtensionInterface;
+use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface;
+use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationExtensionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernel;
@@ -19,14 +19,14 @@ use Symfony\Component\HttpKernel\TerminableInterface;
 class Application implements HttpKernelInterface, TerminableInterface
 {
     /**
-     * @var \Spryker\Shared\ApplicationExtension\Provider\ApplicationExtensionInterface[]
+     * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface[]
      */
-    protected $services = [];
+    protected $extensions = [];
 
     /**
-     * @var \Spryker\Shared\ApplicationExtension\Provider\BootableApplicationExtensionInterface[]
+     * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationExtensionInterface[]
      */
-    protected $bootableServices = [];
+    protected $bootableExtensions = [];
 
     /**
      * @var \Spryker\Service\Container\ContainerInterface
@@ -47,17 +47,17 @@ class Application implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * @param \Spryker\Shared\ApplicationExtension\Provider\ApplicationExtensionInterface $serviceProvider
+     * @param \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface $applicationExtension
      *
      * @return $this
      */
-    public function registerServiceProvider(ApplicationExtensionInterface $serviceProvider)
+    public function registerApplicationExtension(ApplicationExtensionInterface $applicationExtension)
     {
-        $this->services[] = $serviceProvider;
-        $serviceProvider->provideExtension($this->container);
+        $this->extensions[] = $applicationExtension;
+        $applicationExtension->provideExtension($this->container);
 
-        if ($serviceProvider instanceof BootableApplicationExtensionInterface) {
-            $this->bootableServices[] = $serviceProvider;
+        if ($applicationExtension instanceof BootableApplicationExtensionInterface) {
+            $this->bootableExtensions[] = $applicationExtension;
         }
 
         return $this;
@@ -70,7 +70,7 @@ class Application implements HttpKernelInterface, TerminableInterface
     {
         if (!$this->booted) {
             $this->booted = true;
-            $this->bootServices();
+            $this->bootExtensions();
         }
 
         return $this;
@@ -120,10 +120,10 @@ class Application implements HttpKernelInterface, TerminableInterface
     /**
      * @return void
      */
-    protected function bootServices(): void
+    protected function bootExtensions(): void
     {
-        foreach ($this->bootableServices as $bootableService) {
-            $bootableService->boot($this->container);
+        foreach ($this->bootableExtensions as $bootableExtension) {
+            $bootableExtension->bootExtension($this->container);
         }
     }
 

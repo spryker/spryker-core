@@ -11,8 +11,8 @@ use Codeception\Test\Unit;
 use Spryker\Service\Container\Container;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Application\Application;
-use Spryker\Shared\ApplicationExtension\Provider\ApplicationExtensionInterface;
-use Spryker\Shared\ApplicationExtension\Provider\BootableApplicationExtensionInterface;
+use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface;
+use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationExtensionInterface;
 
 /**
  * Auto-generated group annotations
@@ -30,14 +30,14 @@ class ApplicationTest extends Unit
     /**
      * @return void
      */
-    public function testApplicationRegisterServiceProvider(): void
+    public function testApplicationRegisterApplicationExtension(): void
     {
         //Arrange
         $container = $this->createContainer();
         $application = $this->createApplication($container);
 
         //Act
-        $application->registerServiceProvider($this->createServiceProvider());
+        $application->registerApplicationExtension($this->createApplicationExtension());
 
         //Assert
         $this->assertTrue($container->has(static::SERVICE));
@@ -46,14 +46,14 @@ class ApplicationTest extends Unit
     /**
      * @return void
      */
-    public function testApplicationRunBootableService(): void
+    public function testApplicationRunBootableApplicationExtensions(): void
     {
         //Arrange
         $container = $this->createContainer();
         $application = $this->createApplication($container);
 
         //Act
-        $application->registerServiceProvider($this->createBootableServiceProvider());
+        $application->registerApplicationExtension($this->createBootableApplicationExtension());
         $application->boot();
 
         //Assert
@@ -63,15 +63,15 @@ class ApplicationTest extends Unit
     /**
      * @return void
      */
-    public function testApplicationRunsBootableServicesOnlyOnce(): void
+    public function testApplicationRunsBootableApplicationExtensionsOnlyOnce(): void
     {
         //Arrange
         $container = $this->createContainer();
         $application = $this->createApplication($container);
-        $serviceProvider = $this->createBootableServiceProvider();
+        $serviceProvider = $this->createBootableApplicationExtension();
 
         //Act
-        $application->registerServiceProvider($serviceProvider);
+        $application->registerApplicationExtension($serviceProvider);
         $application->boot();
         $application->boot();
 
@@ -98,9 +98,9 @@ class ApplicationTest extends Unit
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Provider\ApplicationExtensionInterface
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface
      */
-    protected function createServiceProvider(): ApplicationExtensionInterface
+    protected function createApplicationExtension(): ApplicationExtensionInterface
     {
         return new class implements ApplicationExtensionInterface
         {
@@ -119,9 +119,9 @@ class ApplicationTest extends Unit
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Provider\BootableApplicationExtensionInterface
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface
      */
-    protected function createBootableServiceProvider(): BootableApplicationExtensionInterface
+    protected function createBootableApplicationExtension(): ApplicationExtensionInterface
     {
         return new class implements ApplicationExtensionInterface, BootableApplicationExtensionInterface
         {
@@ -144,7 +144,7 @@ class ApplicationTest extends Unit
              *
              * @return void
              */
-            public function boot(ContainerInterface $container): void
+            public function bootExtension(ContainerInterface $container): void
             {
                 $this->runs++;
                 $container->set(ApplicationTest::SERVICE, function () {
