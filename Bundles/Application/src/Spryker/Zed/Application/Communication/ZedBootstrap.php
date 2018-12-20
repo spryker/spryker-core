@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\Application\Communication;
 
+use Spryker\Shared\Application\Application as SprykerApplication;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Application\ApplicationConfig;
 use Spryker\Zed\Application\ApplicationDependencyProvider;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
@@ -29,24 +31,54 @@ class ZedBootstrap
      */
     protected $application;
 
+    /**
+     * @var \Spryker\Service\Container\ContainerInterface
+     */
+    protected $serviceContainer;
+
+    /**
+     * @var \Spryker\Shared\Application\Application
+     */
+    protected $sprykerApplication;
+
+    /**
+     * @var \Spryker\Zed\Application\ApplicationConfig
+     */
+    protected $config;
+
     public function __construct()
     {
-        $this->application = $this->getBaseApplication();
+        // Currently the SilexApplication is an instance of our ContainerInterface
+        // to make both applications use the same container we use the old application
+        // as the current container
+        $this->serviceContainer
+            = $this->application
+            = $this->getBaseApplication();
+//check it
+        $this->sprykerApplication = new SprykerApplication($this->serviceContainer);
+        $this->config = new ApplicationConfig();
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Communication\Application
+     * @return \Spryker\Shared\Application\Application
      */
     public function boot()
     {
-        $store = Store::getInstance();
-        $this->application['debug'] = Config::get(ApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
-        $this->application['locale'] = $store->getCurrentLocale();
+        $this->serviceContainer->set('debug', function () {
+            return Config::get(ApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
+        });
+
+        $this->serviceContainer->set('locale', function () {
+            return Store::getInstance()->getCurrentLocale();
+        });
 
         $this->enableHttpMethodParameterOverride();
         $this->setUp();
 
-        return $this->application;
+        $this->application->boot();
+        $this->sprykerApplication->boot();
+
+        return $this->sprykerApplication;
     }
 
     /**
@@ -70,6 +102,25 @@ class ZedBootstrap
         }
 
         $this->registerServiceProvider();
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupApplication(): void
+    {
+        foreach ($this->getApplicationExtensions() as $applicationExtension) {
+            $this->sprykerApplication->registerApplicationExtension($applicationExtension);
+        }
+    }
+
+    /**
+     * @return array
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    protected function getApplicationExtensions(): array
+    {
+        return $this->getProvidedDependency('key');
     }
 
     /**
