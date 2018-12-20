@@ -30,9 +30,9 @@ interface CompanyBusinessUnitAddressReaderInterface
     public function getCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     * @param int $idCompanyUnitAddress
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
      */
-    public function findCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): ?CompanyUnitAddressTransfer;
+    public function findCompanyUnitAddressById(int $idCompanyUnitAddress): ?CompanyUnitAddressTransfer;
 }

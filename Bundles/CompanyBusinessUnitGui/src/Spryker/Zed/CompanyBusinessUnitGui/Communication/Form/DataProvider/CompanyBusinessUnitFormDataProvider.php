@@ -73,13 +73,13 @@ class CompanyBusinessUnitFormDataProvider
      */
     protected function findCompanyBusinessUnitTransfer(?int $idCompanyBusinessUnit = null): CompanyBusinessUnitTransfer
     {
-        $companyBusinessUnitTransfer = $this->createCompanyBusinessUnitTransfer($idCompanyBusinessUnit);
+        $companyBusinessUnitTransfer = $this->createCompanyBusinessUnitTransfer();
 
         if (!$idCompanyBusinessUnit) {
             return $companyBusinessUnitTransfer;
         }
 
-        return $this->companyBusinessUnitFacade->findCompanyBusinessUnitById($companyBusinessUnitTransfer) ?? $companyBusinessUnitTransfer->setIdCompanyBusinessUnit(null);
+        return $this->companyBusinessUnitFacade->findCompanyBusinessUnitById($idCompanyBusinessUnit) ?? $companyBusinessUnitTransfer;
     }
 
     /**
@@ -132,12 +132,10 @@ class CompanyBusinessUnitFormDataProvider
     }
 
     /**
-     * @param int|null $idCompanyBusinessUnit
-     *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    protected function createCompanyBusinessUnitTransfer(?int $idCompanyBusinessUnit): CompanyBusinessUnitTransfer
+    protected function createCompanyBusinessUnitTransfer(): CompanyBusinessUnitTransfer
     {
-        return (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
+        return new CompanyBusinessUnitTransfer();
     }
 }

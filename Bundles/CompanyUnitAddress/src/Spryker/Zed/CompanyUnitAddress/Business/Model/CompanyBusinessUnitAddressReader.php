@@ -68,13 +68,13 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     * @param int $idCompanyUnitAddress
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
      */
-    public function findCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): ?CompanyUnitAddressTransfer
+    public function findCompanyUnitAddressById(int $idCompanyUnitAddress): ?CompanyUnitAddressTransfer
     {
-        $companyUnitAddressTransfer = $this->repository->findCompanyUnitAddressById($companyUnitAddressTransfer);
+        $companyUnitAddressTransfer = $this->repository->findCompanyUnitAddressById($idCompanyUnitAddress);
 
         if (!$companyUnitAddressTransfer) {
             return null;

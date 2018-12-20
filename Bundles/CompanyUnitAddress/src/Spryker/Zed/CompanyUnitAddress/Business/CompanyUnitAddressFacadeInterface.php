@@ -100,15 +100,14 @@ interface CompanyUnitAddressFacadeInterface
 
     /**
      * Specification:
-     * - Finds a company unit address by CompanyUnitAddressTransfer::idCompanyUnitAddress.
-     * - Extends returned company unit address transfer with country iso code.
-     * - Extends returned company unit address transfer with company business unit collection.
+     * - Finds a company unit address by id.
+     * - Extends returned company unit address with plugins.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     * @param int $idCompanyUnitAddress
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
      */
-    public function findCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): ?CompanyUnitAddressTransfer;
+    public function findCompanyUnitAddressById(int $idCompanyUnitAddress): ?CompanyUnitAddressTransfer;
 }

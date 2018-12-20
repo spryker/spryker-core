@@ -67,19 +67,15 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     * @param int $idCompany
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer|null
      */
-    public function findCompanyById(CompanyTransfer $companyTransfer): ?CompanyTransfer
+    public function findCompanyById(int $idCompany): ?CompanyTransfer
     {
-        if (!$companyTransfer->getIdCompany()) {
-            return null;
-        }
-
         $spyCompany = $this->getFactory()
             ->createCompanyQuery()
-            ->filterByIdCompany($companyTransfer->getIdCompany())
+            ->filterByIdCompany($idCompany)
             ->findOne();
 
         if (!$spyCompany) {
@@ -88,7 +84,7 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
 
         return $this->getFactory()
             ->createCompanyMapper()
-            ->mapEntityToCompanyTransfer($spyCompany, $companyTransfer);
+            ->mapEntityToCompanyTransfer($spyCompany, new CompanyTransfer());
     }
 
     /**

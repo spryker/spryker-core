@@ -27,7 +27,7 @@ class EditCompanyController extends AbstractController
     public const MESSAGE_COMPANY_DENY_SUCCESS = 'Company has been denied.';
     protected const MESSAGE_COMPANY_UPDATE_SUCCESS = 'Company has been updated.';
     protected const MESSAGE_COMPANY_UPDATE_ERROR = 'Company has not been updated.';
-    protected const MESSAGE_COMPANY_NOT_FOUND = 'Company not found';
+    protected const MESSAGE_COMPANY_NOT_FOUND = 'Company not found.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

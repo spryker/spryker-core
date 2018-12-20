@@ -19,7 +19,7 @@ class EditCompanyUnitAddressController extends AbstractController
 {
     protected const COMPANY_UNIT_ADDRESS_LIST_URL = '/company-unit-address-gui/list-company-unit-address';
 
-    protected const MESSAGE_COMPANY_UNIT_ADDRESS_NOT_FOUND = 'Company unit address not found';
+    protected const MESSAGE_COMPANY_UNIT_ADDRESS_NOT_FOUND = 'Company unit address not found.';
     public const URL_PARAM_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
 
     public const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_SUCCESS = 'Company unit address has been successfully updated.';

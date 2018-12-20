@@ -193,12 +193,12 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     * @param int $idCompanyBusinessUnit
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
      */
-    public function findCompanyBusinessUnitById(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitTransfer
+    public function findCompanyBusinessUnitById(int $idCompanyBusinessUnit): ?CompanyBusinessUnitTransfer
     {
-        return $this->getRepository()->findCompanyBusinessUnitById($companyBusinessUnitTransfer);
+        return $this->getRepository()->findCompanyBusinessUnitById($idCompanyBusinessUnit);
     }
 }

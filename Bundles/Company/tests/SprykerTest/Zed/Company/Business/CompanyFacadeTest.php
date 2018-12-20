@@ -48,7 +48,7 @@ class CompanyFacadeTest extends Test
     public function testFindCompanyByIdReturnsTransfer(): void
     {
         $companyTransfer = $this->tester->haveCompany(['is_active' => false]);
-        $companyTransfer = $this->getFacade()->findCompanyById($companyTransfer);
+        $companyTransfer = $this->getFacade()->findCompanyById($companyTransfer->getIdCompany());
         $this->assertInstanceOf(CompanyTransfer::class, $companyTransfer);
         $this->assertNotNull($companyTransfer->getIdCompany());
     }
@@ -58,8 +58,7 @@ class CompanyFacadeTest extends Test
      */
     public function testFindCompanyByIdReturnsNull(): void
     {
-        $companyTransfer = (new CompanyTransfer())->setIdCompany(-1);
-        $companyTransfer = $this->getFacade()->findCompanyById($companyTransfer);
+        $companyTransfer = $this->getFacade()->findCompanyById(-1);
         $this->assertNull($companyTransfer);
     }
 

@@ -32,13 +32,13 @@ class CompanyFormDataProvider
      */
     public function getData(?int $idCompany = null): CompanyTransfer
     {
-        $companyTransfer = $this->createCompanyTransfer($idCompany);
+        $companyTransfer = $this->createCompanyTransfer();
 
         if (!$idCompany) {
             return $companyTransfer;
         }
 
-        return $this->companyFacade->findCompanyById($companyTransfer) ?? $companyTransfer->setIdCompany(null);
+        return $this->companyFacade->findCompanyById($idCompany) ?? $companyTransfer;
     }
 
     /**
@@ -54,12 +54,10 @@ class CompanyFormDataProvider
     }
 
     /**
-     * @param int|null $idCompany
-     *
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    protected function createCompanyTransfer(?int $idCompany): CompanyTransfer
+    protected function createCompanyTransfer(): CompanyTransfer
     {
-        return (new CompanyTransfer())->setIdCompany($idCompany);
+        return new CompanyTransfer();
     }
 }

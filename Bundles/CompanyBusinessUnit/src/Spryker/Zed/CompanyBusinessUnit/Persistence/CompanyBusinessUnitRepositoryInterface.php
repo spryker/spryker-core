@@ -53,9 +53,9 @@ interface CompanyBusinessUnitRepositoryInterface
     public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     * @param int $idCompanyBusinessUnit
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    public function findCompanyBusinessUnitById(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitTransfer;
+    public function findCompanyBusinessUnitById(int $idCompanyBusinessUnit): ?CompanyBusinessUnitTransfer;
 }

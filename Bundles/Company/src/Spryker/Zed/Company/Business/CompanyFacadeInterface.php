@@ -76,13 +76,13 @@ interface CompanyFacadeInterface
 
     /**
      * Specification:
-     * - Finds a company by CompanyTransfer::idCompany
+     * - Finds a company by id.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     * @param int $idCompany
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer|null
      */
-    public function findCompanyById(CompanyTransfer $companyTransfer): ?CompanyTransfer;
+    public function findCompanyById(int $idCompany): ?CompanyTransfer;
 }

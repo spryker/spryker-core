@@ -42,14 +42,9 @@ interface CompanyUnitAddressRepositoryInterface
     ): CompanyUnitAddressCollectionTransfer;
 
     /**
-     * Specification:
-     * - Finds company unit address by CompanyUnitAddressTransfer::idCompanyUnitAddress.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     * @param int $idCompanyUnitAddress
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
      */
-    public function findCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): ?CompanyUnitAddressTransfer;
+    public function findCompanyUnitAddressById(int $idCompanyUnitAddress): ?CompanyUnitAddressTransfer;
 }

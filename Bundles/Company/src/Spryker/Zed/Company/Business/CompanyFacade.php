@@ -92,12 +92,12 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     * @param int $idCompany
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer|null
      */
-    public function findCompanyById(CompanyTransfer $companyTransfer): ?CompanyTransfer
+    public function findCompanyById(int $idCompany): ?CompanyTransfer
     {
-        return $this->getRepository()->findCompanyById($companyTransfer);
+        return $this->getRepository()->findCompanyById($idCompany);
     }
 }

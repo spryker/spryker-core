@@ -153,13 +153,13 @@ interface CompanyBusinessUnitFacadeInterface
 
     /**
      * Specification:
-     * - Finds company business unit by CompanyBusinessUnitTransfer::idCompanyBusinessUnit.
+     * - Finds company business unit by id.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     * @param int $idCompanyBusinessUnit
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    public function findCompanyBusinessUnitById(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitTransfer;
+    public function findCompanyBusinessUnitById(int $idCompanyBusinessUnit): ?CompanyBusinessUnitTransfer;
 }
