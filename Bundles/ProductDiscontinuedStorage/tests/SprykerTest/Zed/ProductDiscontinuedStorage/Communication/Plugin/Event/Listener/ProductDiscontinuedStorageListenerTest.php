@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use Spryker\Zed\ProductDiscontinued\Dependency\ProductDiscontinuedEvents;
 use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedStorageListener;
 use Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageRepository;
@@ -60,13 +59,7 @@ class ProductDiscontinuedStorageListenerTest extends Unit
         $this->productDiscontinuedStorageListener = new ProductDiscontinuedStorageListener();
         $this->productDiscontinuedStorageListener->setFacade($this->tester->getMockedFacade());
 
-        $productConcrete = $this->tester->haveProduct();
-        $productDiscontinuedRequestTransfer = (new ProductDiscontinueRequestTransfer())
-            ->setIdProduct($productConcrete->getIdProductConcrete());
-        $this->productDiscontinuedTransfer = $this->tester->getProductDiscontinuedFacade()->markProductAsDiscontinued(
-            $productDiscontinuedRequestTransfer
-        )
-            ->getProductDiscontinued();
+        $this->productDiscontinuedTransfer = $this->tester->createProductDiscontinued();
     }
 
     /**

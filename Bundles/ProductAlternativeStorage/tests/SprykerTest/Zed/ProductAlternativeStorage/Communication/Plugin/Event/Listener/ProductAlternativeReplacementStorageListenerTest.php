@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\ProductAlternativeStorage\Communication\Plugin\Event\L
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Generated\Shared\Transfer\ProductAlternativeCreateRequestTransfer;
 use Orm\Zed\ProductAlternative\Persistence\Map\SpyProductAlternativeTableMap;
 use Spryker\Zed\ProductAlternative\Dependency\ProductAlternativeEvents;
 use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Listener\ProductAlternativeReplacementStorageListener;
@@ -72,16 +71,12 @@ class ProductAlternativeReplacementStorageListenerTest extends Unit
 
         $this->targetProductConcrete = $this->tester->haveProduct();
         $this->alternativeProductConcrete = $this->tester->haveProduct();
-        $productAlternativeCreateRequestTransfer = (new ProductAlternativeCreateRequestTransfer())
-            ->setIdProduct($this->targetProductConcrete->getIdProductConcrete())
-            ->setAlternativeSku($this->alternativeProductConcrete->getSku());
-        $this->targetProductConcrete->addProductAlternativeCreateRequest($productAlternativeCreateRequestTransfer);
         $this->alternativeProductAbstract = $this->tester->haveProductAbstract();
-        $productAlternativeCreateRequestTransfer = (new ProductAlternativeCreateRequestTransfer())
-            ->setIdProduct($this->targetProductConcrete->getIdProductConcrete())
-            ->setAlternativeSku($this->alternativeProductAbstract->getSku());
-        $this->targetProductConcrete->addProductAlternativeCreateRequest($productAlternativeCreateRequestTransfer);
-        $this->tester->getProductAlternativeFacade()->persistProductAlternative($this->targetProductConcrete);
+
+        $this->tester->persistAlternativeForConcreteProduct($this->targetProductConcrete, [
+            $this->alternativeProductConcrete->getSku(),
+            $this->alternativeProductAbstract->getSku(),
+        ]);
     }
 
     /**

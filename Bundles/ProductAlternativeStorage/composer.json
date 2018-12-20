@@ -23,8 +23,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
-    "spryker/propel-orm": "If you want to use transaction functionality, minimum required version: 1.3.0"
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
   },
   "autoload": {
     "psr-4": {

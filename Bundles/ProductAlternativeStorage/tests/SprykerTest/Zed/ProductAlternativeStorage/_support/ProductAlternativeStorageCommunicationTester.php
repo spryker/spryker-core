@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\ProductAlternativeStorage;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\ProductAlternativeCreateRequestTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageBusinessFactory;
 use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacade;
@@ -56,5 +58,23 @@ class ProductAlternativeStorageCommunicationTester extends Actor
         $facade->setFactory($factory);
 
         return $facade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param string[] $alternativeProductSkus
+     *
+     * @return void
+     */
+    public function persistAlternativeForConcreteProduct(ProductConcreteTransfer $productConcreteTransfer, array $alternativeProductSkus): void
+    {
+        foreach ($alternativeProductSkus as $alternativeProductSku) {
+            $productAlternativeCreateRequestTransfer = (new ProductAlternativeCreateRequestTransfer())
+                ->setIdProduct($productConcreteTransfer->getIdProductConcrete())
+                ->setAlternativeSku($alternativeProductSku);
+            $productConcreteTransfer->addProductAlternativeCreateRequest($productAlternativeCreateRequestTransfer);
+        }
+
+        $this->getProductAlternativeFacade()->persistProductAlternative($productConcreteTransfer);
     }
 }
