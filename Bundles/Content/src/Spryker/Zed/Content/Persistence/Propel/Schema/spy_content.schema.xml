@@ -5,20 +5,25 @@
         <column name="id_content" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
         <column name="description" required="false" type="VARCHAR" size="255"/>
-        <column name="type" required="true" type="VARCHAR" size="255"/>
-        <column name="category" required="true" type="VARCHAR" size="255"/>
+        <column name="content_term_candidate_key" required="true" type="VARCHAR" size="255"/>
+        <column name="content_type_candidate_key" required="true" type="VARCHAR" size="255"/>
+        <column name="content_category_candidate_key" required="true" type="VARCHAR" size="255"/>
+        <column name="uuid" required="false" type="VARCHAR" size="36"/>
+        <unique name="spy_content-unique-uuid">
+            <unique-column name="uuid"/>
+        </unique>
         <behavior name="timestampable"/>
         <id-method-parameter value="spy_content_pk_seq"/>
     </table>
 
-    <table name="spy_content_localized_attributes" phpName="SpyContentLocalizedAttributes">
-        <column name="id_content_localized_attributes" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+    <table name="spy_content_localized" phpName="SpyContentLocalized">
+        <column name="id_content_localized" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_content" required="true" type="INTEGER"/>
         <column name="fk_locale" required="false" type="INTEGER"/>
-        <foreign-key name="spy_content_localized_attributes-fk_content" foreignTable="spy_content">
+        <foreign-key name="spy_content_localized-fk_content" foreignTable="spy_content">
             <reference local="fk_content" foreign="id_content"/>
         </foreign-key>
-        <foreign-key name="spy_content_localized_attributes-fk_locale" foreignTable="spy_locale">
+        <foreign-key name="spy_content_localized-fk_locale" foreignTable="spy_locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
         <column name="parameters" required="true" type="VARCHAR"/>
@@ -27,7 +32,8 @@
             <unique-column name="fk_locale"/>
         </unique>
         <behavior name="timestampable"/>
-        <id-method-parameter value="spy_content_localized_attributes_pk_seq"/>
+        <id-method-parameter value="spy_content_localized_pk_seq"/>
     </table>
 
 </database>
+

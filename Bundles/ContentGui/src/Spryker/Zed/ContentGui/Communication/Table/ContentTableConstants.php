@@ -14,7 +14,7 @@ interface ContentTableConstants
     public const COL_ID_CONTENT = SpyContentTableMap::COL_ID_CONTENT;
     public const COL_NAME = SpyContentTableMap::COL_NAME;
     public const COL_DESCRIPTION = SpyContentTableMap::COL_DESCRIPTION;
-    public const COL_TYPE = SpyContentTableMap::COL_TYPE;
+    public const COL_CONTENT_TYPE_CANDIDATE_KEY = SpyContentTableMap::COL_CONTENT_TYPE_CANDIDATE_KEY;
     public const COL_UPDATED_AT = SpyContentTableMap::COL_UPDATED_AT;
 
     public const REQUEST_ID_CONTENT = 'id-content';

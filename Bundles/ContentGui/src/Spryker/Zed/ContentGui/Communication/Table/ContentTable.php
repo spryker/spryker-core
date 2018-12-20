@@ -50,17 +50,17 @@ class ContentTable extends AbstractTable
         $config->setSortable([
             ContentTableConstants::COL_ID_CONTENT,
             ContentTableConstants::COL_NAME,
-            ContentTableConstants::COL_TYPE,
+            ContentTableConstants::COL_CONTENT_TYPE_CANDIDATE_KEY,
         ]);
 
         $config->addRawColumn(ContentTableConstants::COL_ACTIONS);
-        $config->addRawColumn(ContentTableConstants::COL_TYPE);
+        $config->addRawColumn(ContentTableConstants::COL_CONTENT_TYPE_CANDIDATE_KEY);
         $config->setDefaultSortField(ContentTableConstants::COL_ID_CONTENT, TableConfiguration::SORT_DESC);
 
         $config->setSearchable([
             ContentTableConstants::COL_ID_CONTENT,
             ContentTableConstants::COL_NAME,
-            ContentTableConstants::COL_TYPE,
+            ContentTableConstants::COL_CONTENT_TYPE_CANDIDATE_KEY,
         ]);
 
         return $config;
@@ -77,7 +77,7 @@ class ContentTable extends AbstractTable
             ContentTableConstants::COL_ID_CONTENT => 'Content Item ID',
             ContentTableConstants::COL_NAME => 'Name',
             ContentTableConstants::COL_DESCRIPTION => 'Description',
-            ContentTableConstants::COL_TYPE => 'Content Type',
+            ContentTableConstants::COL_CONTENT_TYPE_CANDIDATE_KEY => 'Content Type',
             ContentTableConstants::COL_UPDATED_AT => 'Updated',
         ];
 
@@ -103,7 +103,7 @@ class ContentTable extends AbstractTable
                 ContentTableConstants::COL_ID_CONTENT => $contentItem[SpyContentTableMap::COL_ID_CONTENT],
                 ContentTableConstants::COL_NAME => $contentItem[SpyContentTableMap::COL_NAME],
                 ContentTableConstants::COL_DESCRIPTION => $contentItem[SpyContentTableMap::COL_DESCRIPTION],
-                ContentTableConstants::COL_TYPE => $this->buildContentTypeLabel($contentItem[SpyContentTableMap::COL_TYPE]),
+                ContentTableConstants::COL_CONTENT_TYPE_CANDIDATE_KEY => $this->buildContentTypeLabel($contentItem[SpyContentTableMap::COL_CONTENT_TYPE_CANDIDATE_KEY]),
                 ContentTableConstants::COL_UPDATED_AT => $this->utilDateTimeService->formatDateTime($contentItem[SpyContentTableMap::COL_UPDATED_AT]),
                 ContentTableConstants::COL_ACTIONS => $this->buildLinks($contentItem),
             ];
