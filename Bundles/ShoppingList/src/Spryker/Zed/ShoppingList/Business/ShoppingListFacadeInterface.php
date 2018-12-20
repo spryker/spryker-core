@@ -299,10 +299,10 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     *  - Find a shopping list by UUID
-     *  - Makes sure the shopping list can be accessed by the company user
-     *  - Uuid must be set in the ShoppingListTransfer taken as parameter.
-     *  - Company user ID must be set in the ShoppingListTransfer taken as parameter.
+     * - Finds shopping list by uuid.
+     * - Requires uuid field to be set in ShoppingListTransfer.
+     * - Requires idCompanyUser field to be set in ShoppingListTransfer.
+     * - Uuid is not a required field and could be missing.
      *
      * @api
      *

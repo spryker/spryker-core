@@ -315,21 +315,21 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $shoppingListResponseTransfer = (new ShoppingListResponseTransfer())
             ->setIsSuccess(false);
 
-        $shoppingListTransferFoundByUuid = $this->shoppingListRepository->findShoppingListByUuid($shoppingListTransfer);
+        $shoppingListTransferByUuid = $this->shoppingListRepository->findShoppingListByUuid($shoppingListTransfer);
 
-        if ($shoppingListTransferFoundByUuid === null) {
+        if ($shoppingListTransferByUuid === null) {
             return $shoppingListResponseTransfer;
         }
 
-        $shoppingListTransfer->setIdShoppingList($shoppingListTransferFoundByUuid->getIdShoppingList());
-        $shoppingListTransferFoundById = $this->getShoppingList($shoppingListTransfer);
+        $shoppingListTransfer->setIdShoppingList($shoppingListTransferByUuid->getIdShoppingList());
+        $shoppingListTransferById = $this->getShoppingList($shoppingListTransfer);
 
-        if ($shoppingListTransferFoundById->getIdShoppingList() === null) {
+        if ($shoppingListTransferById->getIdShoppingList() === null) {
             return $shoppingListResponseTransfer;
         }
 
         return $shoppingListResponseTransfer->setIsSuccess(true)
-            ->setShoppingList($shoppingListTransferFoundById);
+            ->setShoppingList($shoppingListTransferById);
     }
 
     /**
