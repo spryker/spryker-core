@@ -358,4 +358,22 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
             ->createShoppingListShareDeleter()
             ->dismissShoppingListSharing($shoppingListDismissRequest);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->getFactory()
+            ->createShoppingListReader()
+            ->findShoppingListByUuid($shoppingListTransfer);
+    }
 }

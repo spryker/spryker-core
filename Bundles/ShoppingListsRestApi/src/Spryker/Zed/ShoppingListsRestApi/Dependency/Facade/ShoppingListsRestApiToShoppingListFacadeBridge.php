@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ShoppingListsRestApi\Dependency\Facade;
 
+use Generated\Shared\Transfer\ShoppingListResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
+
 class ShoppingListsRestApiToShoppingListFacadeBridge implements ShoppingListsRestApiToShoppingListFacadeInterface
 {
     /**
@@ -20,5 +23,15 @@ class ShoppingListsRestApiToShoppingListFacadeBridge implements ShoppingListsRes
     public function __construct($shoppingListFacade)
     {
         $this->shoppingListFacade = $shoppingListFacade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->shoppingListFacade->findShoppingListByUuid($shoppingListTransfer);
     }
 }
