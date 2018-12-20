@@ -10,7 +10,6 @@ namespace Spryker\Client\QuoteApproval;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 
 /**
  * @method \Spryker\Client\QuoteApproval\QuoteApprovalFactory getFactory()
@@ -18,6 +17,8 @@ use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
@@ -32,14 +33,34 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @param int $idQuote
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function getQuoteStatus(int $idQuote): string
+    public function declineQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-        return QuoteApprovalConfig::STATUS_WAITING; //todo: update with real functionality in PS-4362
+        return $this->getFactory()
+            ->createQuoteApprovalStub()
+            ->declineQuote($quoteApprovalRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function cancelQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteApprovalStub()
+            ->cancelQuote($quoteApprovalRequestTransfer);
     }
 }

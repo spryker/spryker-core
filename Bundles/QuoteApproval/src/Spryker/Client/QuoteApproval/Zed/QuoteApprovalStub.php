@@ -41,4 +41,36 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
 
         return $quoteApprovalResponseTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function declineQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer */
+        $quoteApprovalResponseTransfer = $this->zedRequestClient->call(
+            '/quote-approval/gateway/decline-quote',
+            $quoteApprovalRequestTransfer
+        );
+
+        return $quoteApprovalResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function cancelQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer */
+        $quoteApprovalResponseTransfer = $this->zedRequestClient->call(
+            '/quote-approval/gateway/cancel-quote',
+            $quoteApprovalRequestTransfer
+        );
+
+        return $quoteApprovalResponseTransfer;
+    }
 }

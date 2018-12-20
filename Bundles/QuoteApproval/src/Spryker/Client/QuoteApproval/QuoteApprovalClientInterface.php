@@ -14,7 +14,7 @@ interface QuoteApprovalClientInterface
 {
     /**
      * Specification:
-     * - todo: add Specification.
+     * - Sends Zed request to approve quote approval request.
      *
      * @api
      *
@@ -26,13 +26,25 @@ interface QuoteApprovalClientInterface
 
     /**
      * Specification:
-     * - todo: add Specification.
+     * - Sends Zed request to decline quote approval request.
      *
      * @api
      *
-     * @param int $idQuote
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function getQuoteStatus(int $idQuote): string;
+    public function declineQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer;
+
+    /**
+     * Specification:
+     * - Sends Zed request to remove quote approval request.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function cancelQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer;
 }

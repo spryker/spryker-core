@@ -17,4 +17,11 @@ interface QuoteApprovalEntityManagerInterface
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer
      */
     public function updateQuoteApproval(QuoteApprovalTransfer $quoteApprovalTransfer): QuoteApprovalTransfer;
+
+    /**
+     * @param int $idQuoteApproval
+     *
+     * @return void
+     */
+    public function deleteQuoteApproval(int $idQuoteApproval): void;
 }

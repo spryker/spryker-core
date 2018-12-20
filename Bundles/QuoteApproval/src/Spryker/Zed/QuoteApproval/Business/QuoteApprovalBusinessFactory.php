@@ -8,6 +8,10 @@
 namespace Spryker\Zed\QuoteApproval\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRemover;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRemoverInterface;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalValidator;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalValidatorInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalWriter;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalWriterInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface;
@@ -26,9 +30,31 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     public function createQuoteApprovalWriter(): QuoteApprovalWriterInterface
     {
         return new QuoteApprovalWriter(
-            $this->getQuoteFacade(),
+            $this->createQuoteApprovalValidator(),
             $this->getEntityManager(),
             $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRemoverInterface
+     */
+    public function createQuoteApprovalRemover(): QuoteApprovalRemoverInterface
+    {
+        return new QuoteApprovalRemover(
+            $this->createQuoteApprovalValidator(),
+            $this->getEntityManager(),
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalValidatorInterface
+     */
+    public function createQuoteApprovalValidator(): QuoteApprovalValidatorInterface
+    {
+        return new QuoteApprovalValidator(
+            $this->getQuoteFacade()
         );
     }
 

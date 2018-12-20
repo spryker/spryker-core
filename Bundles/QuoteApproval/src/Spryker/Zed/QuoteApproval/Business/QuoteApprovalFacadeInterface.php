@@ -14,7 +14,9 @@ interface QuoteApprovalFacadeInterface
 {
     /**
      * Specification:
-     * - Approves quote if approver has right for it.
+     * - Checks that Approver can approve request.
+     * - Checks that status is "Waiting".
+     * - Sets quote approval request status "Approved" if checks are true.
      *
      * @api
      *
@@ -23,4 +25,32 @@ interface QuoteApprovalFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
     public function approveQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer;
+
+    /**
+     * Specification:
+     * - Checks that Approver can approve request.
+     * - Checks that status is "Waiting".
+     * - Sets quote approval request status "Declined" if checks are true.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function declineQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer;
+
+    /**
+     * Specification:
+     * - Checks that Approver can approve request.
+     * - Checks that status is "Waiting".
+     * - Removes quote approval request if checks are true.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function cancelQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer;
 }
