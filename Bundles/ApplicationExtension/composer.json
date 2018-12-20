@@ -11,6 +11,9 @@
     "spryker/container": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/container": "If you want to use ApplicationExtensionInterface or BootableApplicationExtensionInterface"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
@@ -25,8 +28,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/container": "If you want to use ApplicationExtensionInterface or BootableApplicationExtensionInterface"
   }
 }
