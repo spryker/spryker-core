@@ -9,7 +9,6 @@ namespace Spryker\Zed\PersistentCart\Business\Model;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -18,7 +17,6 @@ use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
-use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
 
 class QuoteItemOperation implements QuoteItemOperationInterface
 {
@@ -194,57 +192,18 @@ class QuoteItemOperation implements QuoteItemOperationInterface
      */
     protected function isQuoteWriteAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
     {
-        if (!$quoteTransfer->getIsLocked()
-            && $this->hasWritePermission($quoteTransfer->getIdQuote(), $customerTransfer->getCompanyUserTransfer())
-            && $this->isCartOwner($quoteTransfer, $customerTransfer)
+        if ($customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()
+            || ($customerTransfer->getCompanyUserTransfer()
+                && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
+            )
         ) {
             return true;
         }
-
-        $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue(static::GLOSSARY_KEY_PERMISSION_FAILED);
+        $this->messengerFacade->addErrorMessage($messageTransfer);
 
         return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
-    protected function isCartOwner(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
-    {
-        return $customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference();
-    }
-
-    /**
-     * @param int $quoteId
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
-     *
-     * @return bool
-     */
-    protected function hasWritePermission(
-        int $quoteId,
-        ?CompanyUserTransfer $companyUserTransfer = null
-    ): bool {
-        return $companyUserTransfer && $this->can(
-            WriteSharedCartPermissionPlugin::KEY,
-            $companyUserTransfer->getIdCompanyUser(),
-            $quoteId
-        );
-    }
-
-    /**
-     * @param string $message
-     *
-     * @return void
-     */
-    protected function addErrorMessage(string $message): void
-    {
-        $messageTransfer = new MessageTransfer();
-        $messageTransfer->setValue($message);
-
-        $this->messengerFacade->addErrorMessage($messageTransfer);
     }
 
     /**

@@ -10,7 +10,6 @@ namespace Spryker\Client\PersistentCart;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToCustomerClientBridge;
-use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToMessengerClientBridge;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientBridge;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToZedRequestClientBridge;
 
@@ -22,7 +21,6 @@ class PersistentCartDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
-    public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
     public const PLUGINS_QUOTE_UPDATE = 'PLUGINS_QUOTE_UPDATE';
     public const PLUGINS_CHANGE_REQUEST_EXTEND = 'PLUGINS_CHANGE_REQUEST_EXTEND';
 
@@ -38,23 +36,6 @@ class PersistentCartDependencyProvider extends AbstractDependencyProvider
         $container = $this->addQuoteUpdatePlugins($container);
         $container = $this->addChangeRequestExtendPlugins($container);
         $container = $this->addZedRequestClient($container);
-        $container = $this->addMessengerClient($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addMessengerClient(Container $container): Container
-    {
-        $container[static::CLIENT_MESSENGER] = function (Container $container) {
-            return new PersistentCartToMessengerClientBridge(
-                $container->getLocator()->messenger()->client()
-            );
-        };
 
         return $container;
     }

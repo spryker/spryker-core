@@ -36,11 +36,6 @@ class QuoteConfig extends AbstractBundleConfig
             QuoteTransfer::TOTALS,
             QuoteTransfer::CURRENCY,
             QuoteTransfer::PRICE_MODE,
-            QuoteTransfer::EXPENSES,
-            QuoteTransfer::VOUCHER_DISCOUNTS,
-            QuoteTransfer::CART_RULE_DISCOUNTS,
-            QuoteTransfer::PROMOTION_ITEMS,
-            QuoteTransfer::IS_LOCKED,
         ];
     }
 

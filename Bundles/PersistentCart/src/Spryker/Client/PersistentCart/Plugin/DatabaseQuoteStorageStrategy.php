@@ -10,7 +10,6 @@ namespace Spryker\Client\PersistentCart\Plugin;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
@@ -28,8 +27,6 @@ use Spryker\Shared\Quote\QuoteConfig;
  */
 class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorageStrategyPluginInterface
 {
-    protected const GLOSSARY_KEY_CHANGE_CURRENCY_FOR_QUOTE_DENIED = 'persistent_cart.quote.currency_change.denied';
-
     /**
      * @return string
      */
@@ -319,7 +316,6 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *  - Saves updated quote to database.
      *  - Stores quote in session internally after zed request.
      *  - Returns update quote.
-     *  - Do nothing if quote is locked.
      *
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
@@ -327,44 +323,15 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      */
     public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer
     {
-        $quoteTransfer = $this->getQuoteClient()->getQuote();
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-
-        if ($quoteTransfer->getIsLocked()) {
-            $this->getFactory()->getMessengerClient()->addErrorMessage(static::GLOSSARY_KEY_CHANGE_CURRENCY_FOR_QUOTE_DENIED);
-
-            return $this->createNotSuccessfulQuoteResponseTransfer($quoteTransfer, $customerTransfer);
-        }
-
         $quoteUpdateRequestTransfer = new QuoteUpdateRequestTransfer();
-        $quoteUpdateRequestTransfer->setIdQuote($quoteTransfer->getIdQuote());
-        $quoteUpdateRequestTransfer->setCustomer($customerTransfer);
+        $quoteUpdateRequestTransfer->setIdQuote($this->getQuoteClient()->getQuote()->getIdQuote());
+        $quoteUpdateRequestTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
         $quoteUpdateRequestAttributesTransfer = new QuoteUpdateRequestAttributesTransfer();
         $quoteUpdateRequestAttributesTransfer->setCurrency($currencyTransfer);
         $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
 
         $quoteResponseTransfer = $this->getZedStub()->updateAndReloadQuote($quoteUpdateRequestTransfer);
         $this->updateQuote($quoteResponseTransfer);
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function createNotSuccessfulQuoteResponseTransfer(
-        QuoteTransfer $quoteTransfer,
-        ?CustomerTransfer $customerTransfer = null
-    ): QuoteResponseTransfer {
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-
-        $quoteResponseTransfer->setIsSuccessful(false);
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        $quoteResponseTransfer->setCustomer($customerTransfer);
-
         return $quoteResponseTransfer;
     }
 
