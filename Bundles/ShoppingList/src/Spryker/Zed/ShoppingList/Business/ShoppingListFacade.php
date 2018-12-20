@@ -362,9 +362,9 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     /**
      * {@inheritdoc}
      *
-     * @internal will work if uuid field is provided.
-     *
      * @api
+     *
+     * {@internal will work if uuid field is provided.}
      *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *

@@ -306,7 +306,7 @@ interface ShoppingListFacadeInterface
      *
      * @api
      *
-     * @internal will work if uuid field is provided.
+     * {@internal will work if uuid field is provided.}
      *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *

@@ -310,10 +310,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
      */
     public function findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        $shoppingListResponseTransfer = (new ShoppingListResponseTransfer())
-            ->setIsSuccess(false);
         $shoppingListTransfer->requireUuid()
             ->requireIdCompanyUser();
+        $shoppingListResponseTransfer = (new ShoppingListResponseTransfer())
+            ->setIsSuccess(false);
 
         $shoppingListTransferFoundByUuid = $this->shoppingListRepository->findShoppingListByUuid($shoppingListTransfer);
 
