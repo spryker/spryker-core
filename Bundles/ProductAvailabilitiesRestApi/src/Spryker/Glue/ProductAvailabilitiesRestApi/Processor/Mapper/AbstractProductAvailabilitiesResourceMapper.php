@@ -20,7 +20,7 @@ class AbstractProductAvailabilitiesResourceMapper implements AbstractProductAvai
     {
         $restProductsAbstractAvailabilityAttributesTransfer = (new RestAbstractProductAvailabilityAttributesTransfer())
             ->fromArray($availabilityEntityTransfer->toArray(), true);
-        $restProductsAbstractAvailabilityAttributesTransfer->setAvailability($this->isAbstractAvailable($availabilityEntityTransfer));
+        $restProductsAbstractAvailabilityAttributesTransfer->setAvailability($this->isAbstractProductAvailable($availabilityEntityTransfer));
 
         return $restProductsAbstractAvailabilityAttributesTransfer;
     }
@@ -30,7 +30,7 @@ class AbstractProductAvailabilitiesResourceMapper implements AbstractProductAvai
      *
      * @return bool
      */
-    protected function isAbstractAvailable(SpyAvailabilityAbstractEntityTransfer $availabilityEntityTransfer): bool
+    protected function isAbstractProductAvailable(SpyAvailabilityAbstractEntityTransfer $availabilityEntityTransfer): bool
     {
         if ($availabilityEntityTransfer->getQuantity() > 0) {
             return true;
