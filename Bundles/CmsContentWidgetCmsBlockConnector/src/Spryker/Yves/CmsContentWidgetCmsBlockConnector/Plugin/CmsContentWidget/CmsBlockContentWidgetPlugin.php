@@ -91,7 +91,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     }
 
     /**
-     * @param string[] $blockNames
+     * @param string[]|string $blockNames
      *
      * @return array
      */
