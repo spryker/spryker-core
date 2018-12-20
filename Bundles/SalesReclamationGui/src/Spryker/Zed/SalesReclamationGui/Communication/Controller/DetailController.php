@@ -9,8 +9,6 @@ namespace Spryker\Zed\SalesReclamationGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
-use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationItemTableMap;
-use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\SalesReclamationGui\Communication\Table\ReclamationTable;
@@ -23,6 +21,8 @@ use Symfony\Component\HttpFoundation\Request;
 class DetailController extends AbstractController
 {
     protected const PARAM_ID_RECLAMATION_ITEM = 'id-reclamation-item';
+    protected const RECLAMATION_CLOSE_STATE = 'Close';
+    protected const RECLAMATION_ITEM_REFUNDED_STATE = 'Refunded';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -37,7 +37,7 @@ class DetailController extends AbstractController
 
         $reclamationTransfer = $this->getFactory()
             ->getSalesReclamationFacade()
-            ->hydrateReclamationByIdReclamation($reclamationTransfer);
+            ->expandReclamationByIdReclamation($reclamationTransfer);
 
         if (!$reclamationTransfer) {
             $this->addErrorMessage(sprintf('No reclamation with given id %s', $idReclamation));
@@ -81,7 +81,7 @@ class DetailController extends AbstractController
             );
         }
 
-        $reclamationTransfer->setState(SpySalesReclamationTableMap::COL_STATE_CLOSE);
+        $reclamationTransfer->setState(static::RECLAMATION_CLOSE_STATE);
         $this->getFactory()
             ->getSalesReclamationFacade()
             ->updateReclamation($reclamationTransfer);
@@ -111,7 +111,7 @@ class DetailController extends AbstractController
         $reclamationItemTransfer = $this->getFactory()
             ->getSalesReclamationFacade()
             ->getReclamationItemById($reclamationItemTransfer);
-        $reclamationItemTransfer->setState(SpySalesReclamationItemTableMap::COL_STATE_REFUNDED);
+        $reclamationItemTransfer->setState(static::RECLAMATION_ITEM_REFUNDED_STATE);
 
         if (!$reclamationItemTransfer->getIdSalesReclamationItem()) {
             $this->addErrorMessage(sprintf('Reclamation item with id %s not exists', $idReclamationItem));

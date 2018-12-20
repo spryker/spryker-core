@@ -62,9 +62,9 @@ class SalesReclamationGuiToSalesReclamationFacadeBridge implements SalesReclamat
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function hydrateReclamationByOrder(OrderTransfer $orderTransfer): ReclamationTransfer
+    public function expandReclamationByOrder(OrderTransfer $orderTransfer): ReclamationTransfer
     {
-        return $this->salesReclamationFacade->hydrateReclamationByOrder($orderTransfer);
+        return $this->salesReclamationFacade->expandReclamationByOrder($orderTransfer);
     }
 
     /**
@@ -72,9 +72,9 @@ class SalesReclamationGuiToSalesReclamationFacadeBridge implements SalesReclamat
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer|null
      */
-    public function hydrateReclamationByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
+    public function expandReclamationByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
     {
-        return $this->salesReclamationFacade->hydrateReclamationByIdReclamation($reclamationTransfer);
+        return $this->salesReclamationFacade->expandReclamationByIdReclamation($reclamationTransfer);
     }
 
     /**

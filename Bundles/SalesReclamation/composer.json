@@ -10,12 +10,10 @@
     "spryker/sales": "^7.0.0 || ^8.0.0"
   },
   "require-dev": {
-    "spryker/checkout": "^3.0.0 || ^4.0.0",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/checkout": "Used interface for SaveOrder plugin. Version from 3.0.0"
   },
   "autoload": {
     "psr-4": {

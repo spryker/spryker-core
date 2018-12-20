@@ -41,8 +41,9 @@ class SalesReclamationEntityManager extends AbstractEntityManager implements Sal
         $salesReclamationEntity = $this->getMapper()->mapReclamationTransferToEntity($reclamationTransfer, new SpySalesReclamation());
 
         $salesReclamationEntity->save();
+        $reclamationTransfer->setIdSalesReclamation($salesReclamationEntity->getIdSalesReclamation());
 
-        return $this->getMapper()->mapEntityToReclamationTransfer($salesReclamationEntity, new ReclamationTransfer());
+        return $reclamationTransfer;
     }
 
     /**
@@ -81,9 +82,9 @@ class SalesReclamationEntityManager extends AbstractEntityManager implements Sal
 
         $salesReclamationEntity->setFkSalesReclamation($reclamationItemTransfer->getFkSalesReclamation());
         $salesReclamationEntity->save();
+        $reclamationItemTransfer->setIdSalesReclamationItem($salesReclamationEntity->getIdSalesReclamationItem());
 
-        return $this->getMapper()
-            ->mapEntityToReclamationItemTransfer($salesReclamationEntity, new ReclamationItemTransfer());
+        return $reclamationItemTransfer;
     }
 
     /**

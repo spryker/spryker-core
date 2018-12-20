@@ -10,19 +10,19 @@ namespace Spryker\Zed\SalesReclamation\Business\Reclamation;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 
-interface HydratorInterface
+interface ExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer|null
      */
-    public function hydrateByReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
+    public function expandReclamationByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function hydrateByOrder(OrderTransfer $orderTransfer): ReclamationTransfer;
+    public function expandReclamationByOrder(OrderTransfer $orderTransfer): ReclamationTransfer;
 }

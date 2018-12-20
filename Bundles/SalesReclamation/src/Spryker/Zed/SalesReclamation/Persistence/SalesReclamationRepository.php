@@ -41,7 +41,7 @@ class SalesReclamationRepository extends AbstractRepository implements SalesRecl
             return null;
         }
 
-        return $this->getMapper()->mapEntityToReclamationTransfer($reclamationEntities[0], new ReclamationTransfer());
+        return $this->getMapper()->mapReclamationEntityToTransfer($reclamationEntities[0], new ReclamationTransfer());
     }
 
     /**
@@ -63,7 +63,7 @@ class SalesReclamationRepository extends AbstractRepository implements SalesRecl
             return null;
         }
 
-        return $this->getMapper()->mapEntityToReclamationItemTransfer($reclamationItemEntities[0], new ReclamationItemTransfer());
+        return $this->getMapper()->mapReclamationItemEntityToTransfer($reclamationItemEntities[0], new ReclamationItemTransfer());
     }
 
     /**

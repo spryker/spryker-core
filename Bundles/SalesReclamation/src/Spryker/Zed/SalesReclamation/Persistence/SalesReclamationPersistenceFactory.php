@@ -17,6 +17,8 @@ use Spryker\Zed\SalesReclamation\Persistence\Propel\Mapper\SalesReclamationMappe
 /**
  * @method \Spryker\Zed\SalesReclamation\SalesReclamationConfig getConfig()
  * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface getRepository()
  */
 class SalesReclamationPersistenceFactory extends AbstractPersistenceFactory
 {

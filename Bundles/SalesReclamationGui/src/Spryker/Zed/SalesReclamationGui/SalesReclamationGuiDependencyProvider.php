@@ -15,6 +15,9 @@ use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSales
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSalesReclamationFacadeBridge;
 use Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtilDateTimeServiceBridge;
 
+/**
+ * @method \Spryker\Zed\SalesReclamationGui\SalesReclamationGuiConfig getConfig()
+ */
 class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SALES_RECLAMATION = 'FACADE_SALES_RECLAMATION';
@@ -32,13 +35,13 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        parent::provideCommunicationLayerDependencies($container);
+        $container = parent::provideCommunicationLayerDependencies($container);
 
-        $this->addSalesFacade($container);
-        $this->addSalesReclamationFacade($container);
-        $this->addOmsFacade($container);
-        $this->addSalesReclamationPropelQuery($container);
-        $this->addDateTimeService($container);
+        $container = $this->addSalesFacade($container);
+        $container = $this->addSalesReclamationFacade($container);
+        $container = $this->addOmsFacade($container);
+        $container = $this->addSalesReclamationPropelQuery($container);
+        $container = $this->addDateTimeService($container);
 
         return $container;
     }

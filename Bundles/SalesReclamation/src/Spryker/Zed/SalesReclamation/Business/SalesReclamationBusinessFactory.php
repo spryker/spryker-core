@@ -8,10 +8,8 @@
 namespace Spryker\Zed\SalesReclamation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SalesReclamation\Business\Order\ReclamationSaver;
-use Spryker\Zed\SalesReclamation\Business\Order\ReclamationSaverInterface;
-use Spryker\Zed\SalesReclamation\Business\Reclamation\Hydrator;
-use Spryker\Zed\SalesReclamation\Business\Reclamation\HydratorInterface;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\Expander;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\ExpanderInterface;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationReader;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationReaderInterface;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationWriter;
@@ -31,9 +29,7 @@ class SalesReclamationBusinessFactory extends AbstractBusinessFactory
      */
     public function createReclamationWriter(): ReclamationWriterInterface
     {
-        return new ReclamationWriter(
-            $this->getEntityManager()
-        );
+        return new ReclamationWriter($this->getEntityManager());
     }
 
     /**
@@ -41,30 +37,15 @@ class SalesReclamationBusinessFactory extends AbstractBusinessFactory
      */
     public function createReclamationReader(): ReclamationReaderInterface
     {
-        return new ReclamationReader(
-            $this->getRepository()
-        );
+        return new ReclamationReader($this->getRepository());
     }
 
     /**
-     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\HydratorInterface
+     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\ExpanderInterface
      */
-    public function createReclamationHydrator(): HydratorInterface
+    public function createReclamationExpander(): ExpanderInterface
     {
-        return new Hydrator(
-            $this->getSalesFacade(),
-            $this->getRepository()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesReclamation\Business\Order\ReclamationSaverInterface
-     */
-    public function createReclamationSaver(): ReclamationSaverInterface
-    {
-        return new ReclamationSaver(
-            $this->getSalesFacade()
-        );
+        return new Expander($this->getSalesFacade(), $this->getRepository());
     }
 
     /**

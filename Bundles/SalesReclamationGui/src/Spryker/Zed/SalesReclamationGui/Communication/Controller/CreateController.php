@@ -39,71 +39,55 @@ class CreateController extends AbstractController
             ->getSalesFacade()
             ->getOrderByIdSalesOrder($idSalesOrder);
 
-        if ($request->isMethod(Request::METHOD_GET)) {
-            return $this->showForm($orderTransfer);
+        $reclamation = $this->getFactory()
+            ->getSalesReclamationFacade()
+            ->expandReclamationByOrder($orderTransfer);
+
+        $orderItemIds = $request->request->getDigits(static::PARAM_IDS_SALES_ORDER_ITEMS);
+
+        if (!$orderItemIds) {
+            return $this->viewResponse([
+                'reclamation' => $reclamation,
+            ]);
         }
 
-        $idsOrderItem = (array)$request->request->getDigits(static::PARAM_IDS_SALES_ORDER_ITEMS);
+        $reclamationTransfer = $this->createReclamation($orderTransfer, (array)$orderItemIds);
 
-        if (empty($idsOrderItem)) {
-            $this->addErrorMessage('No order items provided');
-
-            return $this->showForm($orderTransfer);
-        }
-
-        $reclamationTransfer = $this->createReclamation($orderTransfer, $idsOrderItem);
-
-        if ($reclamationTransfer) {
+        if ($orderItemIds && $reclamationTransfer) {
             $this->addSuccessMessage(sprintf(
                 'Reclamation id:%s for order %s successfully created',
                 $reclamationTransfer->getIdSalesReclamation(),
                 $orderTransfer->getOrderReference()
             ));
+
+            return $this->redirectResponse(
+                Url::generate(
+                    '/sales-reclamation-gui/detail',
+                    [
+                        ReclamationTable::PARAM_ID_RECLAMATION => $reclamationTransfer->getIdSalesReclamation(),
+                    ]
+                )->build()
+            );
         }
-
-        return $this->redirectResponse(
-            Url::generate(
-                '/sales-reclamation-gui/detail',
-                [
-                    ReclamationTable::PARAM_ID_RECLAMATION => $reclamationTransfer->getIdSalesReclamation(),
-                ]
-            )->build()
-        );
     }
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return array
-     */
-    protected function showForm(OrderTransfer $orderTransfer)
-    {
-        $reclamation = $this->getFactory()
-            ->getSalesReclamationFacade()
-            ->hydrateReclamationByOrder($orderTransfer);
-
-        return $this->viewResponse([
-            'reclamation' => $reclamation,
-        ]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param array $idsOrderItem
+     * @param array $orderItemIds
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer|null
      */
-    protected function createReclamation(OrderTransfer $orderTransfer, array $idsOrderItem): ?ReclamationTransfer
+    protected function createReclamation(OrderTransfer $orderTransfer, array $orderItemIds): ?ReclamationTransfer
     {
         $reclamationCreateRequestTransfer = new ReclamationCreateRequestTransfer();
         $reclamationCreateRequestTransfer->setOrder($orderTransfer);
 
-        foreach ($idsOrderItem as $idOrderItem) {
-            $orderItemsTransfer = $this->getOrderItemById($orderTransfer, (int)$idOrderItem);
+        foreach ($orderItemIds as $idOrderItem) {
+            $orderItemsTransfer = $this->getOrderItemById($orderTransfer, $idOrderItem);
 
             if (!$orderItemsTransfer) {
                 $this->addErrorMessage(sprintf(
-                    'OrderItem with id %s not belong to order %s',
+                    'Order item with id %s not belong to order %s',
                     $idOrderItem,
                     $orderTransfer->getIdSalesOrder()
                 ));

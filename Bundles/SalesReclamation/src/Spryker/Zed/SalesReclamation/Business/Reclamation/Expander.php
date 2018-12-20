@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface;
 use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface;
 
-class Hydrator implements HydratorInterface
+class Expander implements ExpanderInterface
 {
     /**
      * @var \Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface
@@ -44,7 +44,7 @@ class Hydrator implements HydratorInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer|null
      */
-    public function hydrateByReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
+    public function expandReclamationByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
     {
         $reclamationTransfer = $this->salesReclamationRepository->findReclamationById($reclamationTransfer);
 
@@ -58,19 +58,9 @@ class Hydrator implements HydratorInterface
             $reclamationTransfer->setCreatedOrders($createdOrderCollection->getOrders());
         }
 
-        $orderTransfer = $reclamationTransfer->getOrder();
-        $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($orderTransfer->getIdSalesOrder());
+        $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($reclamationTransfer->getOrder()->getIdSalesOrder());
         $reclamationTransfer->setOrder($orderTransfer);
-
-        $reclamationItems = new ArrayObject();
-        foreach ($reclamationTransfer->getReclamationItems() as $reclamationItemTransfer) {
-            $itemTransfer = $this->getOrderItemById($orderTransfer, $reclamationItemTransfer->getOrderItem()->getIdSalesOrderItem());
-            $reclamationItemTransfer->setOrderItem($itemTransfer);
-
-            $reclamationItems->append($reclamationItemTransfer);
-        }
-
-        $reclamationTransfer->setReclamationItems($reclamationItems);
+        $reclamationTransfer->setReclamationItems($this->expandByReclamationItems($reclamationTransfer));
 
         return $reclamationTransfer;
     }
@@ -80,7 +70,7 @@ class Hydrator implements HydratorInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function hydrateByOrder(OrderTransfer $orderTransfer): ReclamationTransfer
+    public function expandReclamationByOrder(OrderTransfer $orderTransfer): ReclamationTransfer
     {
         $orderTransfer->requireItems();
 
@@ -89,17 +79,7 @@ class Hydrator implements HydratorInterface
         $reclamationTransfer->setOrder($orderTransfer);
         $reclamationTransfer->setCustomerReference($orderTransfer->getCustomerReference());
         $reclamationTransfer->setCustomerEmail($orderTransfer->getEmail());
-
-        /** @var \Generated\Shared\Transfer\ReclamationItemTransfer[]|\ArrayObject $reclamationItems */
-        $reclamationItems = new ArrayObject();
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $reclamationItemTransfer = new ReclamationItemTransfer();
-            $reclamationItemTransfer->setOrderItem($itemTransfer);
-
-            $reclamationItems->append($reclamationItemTransfer);
-        }
-
-        $reclamationTransfer->setReclamationItems($reclamationItems);
+        $reclamationTransfer->setReclamationItems($this->expandByOrderItems($orderTransfer));
 
         return $reclamationTransfer;
     }
@@ -119,5 +99,43 @@ class Hydrator implements HydratorInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     *
+     * @return \ArrayObject
+     */
+    protected function expandByReclamationItems(ReclamationTransfer $reclamationTransfer): ArrayObject
+    {
+        $reclamationItems = new ArrayObject();
+
+        foreach ($reclamationTransfer->getReclamationItems() as $reclamationItemTransfer) {
+            $itemTransfer = $this->getOrderItemById($reclamationTransfer->getOrder(), $reclamationItemTransfer->getOrderItem()->getIdSalesOrderItem());
+            $reclamationItemTransfer->setOrderItem($itemTransfer);
+
+            $reclamationItems->append($reclamationItemTransfer);
+        }
+
+        return $reclamationItems;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \ArrayObject
+     */
+    protected function expandByOrderItems(OrderTransfer $orderTransfer): ArrayObject
+    {
+        /** @var \Generated\Shared\Transfer\ReclamationItemTransfer[]|\ArrayObject $reclamationItems */
+        $reclamationItems = new ArrayObject();
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $reclamationItemTransfer = new ReclamationItemTransfer();
+            $reclamationItemTransfer->setOrderItem($itemTransfer);
+
+            $reclamationItems->append($reclamationItemTransfer);
+        }
+
+        return $reclamationItems;
     }
 }

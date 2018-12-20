@@ -35,7 +35,7 @@ interface SalesReclamationMapperInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function mapEntityToReclamationTransfer(
+    public function mapReclamationEntityToTransfer(
         SpySalesReclamation $reclamationEntity,
         ReclamationTransfer $reclamationTransfer
     ): ReclamationTransfer;
@@ -57,7 +57,7 @@ interface SalesReclamationMapperInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationItemTransfer
      */
-    public function mapEntityToReclamationItemTransfer(
+    public function mapReclamationItemEntityToTransfer(
         SpySalesReclamationItem $reclamationItemEntity,
         ReclamationItemTransfer $reclamationItemTransfer
     ): ReclamationItemTransfer;

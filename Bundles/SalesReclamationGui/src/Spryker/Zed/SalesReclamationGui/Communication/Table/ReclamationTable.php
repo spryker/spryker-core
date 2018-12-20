@@ -25,7 +25,7 @@ class ReclamationTable extends AbstractTable
     /**
      * @var \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery
      */
-    protected $reclamationQuery;
+    protected $salesReclamationQuery;
 
     /**
      * @var \Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtilDateTimeServiceInterface
@@ -33,14 +33,14 @@ class ReclamationTable extends AbstractTable
     protected $dateTimeService;
 
     /**
-     * @param \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery $reclamationQuery
+     * @param \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery $salesReclamationQuery
      * @param \Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtilDateTimeServiceInterface $dateTimeService
      */
     public function __construct(
-        SpySalesReclamationQuery $reclamationQuery,
+        SpySalesReclamationQuery $salesReclamationQuery,
         SalesReclamationGuiToUtilDateTimeServiceInterface $dateTimeService
     ) {
-        $this->reclamationQuery = $reclamationQuery;
+        $this->salesReclamationQuery = $salesReclamationQuery;
         $this->dateTimeService = $dateTimeService;
     }
 
@@ -86,7 +86,7 @@ class ReclamationTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        $queryResults = $this->runQuery($this->reclamationQuery, $config);
+        $queryResults = $this->runQuery($this->salesReclamationQuery, $config);
 
         return $this->formatQueryData($queryResults);
     }
@@ -149,7 +149,7 @@ class ReclamationTable extends AbstractTable
         $isClosed = $item[SpySalesReclamationTableMap::COL_STATE] === SpySalesReclamationTableMap::COL_STATE_CLOSE;
         $buttons = [];
 
-        $buttons[] = $this->createViesAction((int)$idReclamation);
+        $buttons[] = $this->createViewAction((int)$idReclamation);
 
         if (!$isClosed) {
             $buttons[] = $this->createCloseAction((int)$idReclamation);
@@ -163,7 +163,7 @@ class ReclamationTable extends AbstractTable
      *
      * @return string
      */
-    protected function createViesAction(int $idReclamation): string
+    protected function createViewAction(int $idReclamation): string
     {
         return $this->generateViewButton(
             Url::generate(static::URL_RECLAMATION_DETAIL, [
