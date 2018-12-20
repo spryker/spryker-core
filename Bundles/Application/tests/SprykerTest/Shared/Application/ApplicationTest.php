@@ -11,8 +11,8 @@ use Codeception\Test\Unit;
 use Spryker\Service\Container\Container;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Application\Application;
-use Spryker\Shared\ApplicationExtension\Provider\BootableServiceInterface;
-use Spryker\Shared\ApplicationExtension\Provider\ServiceProviderInterface;
+use Spryker\Shared\ApplicationExtension\Provider\ApplicationExtensionInterface;
+use Spryker\Shared\ApplicationExtension\Provider\BootableApplicationExtensionInterface;
 
 /**
  * Auto-generated group annotations
@@ -98,18 +98,18 @@ class ApplicationTest extends Unit
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Provider\ServiceProviderInterface
+     * @return \Spryker\Shared\ApplicationExtension\Provider\ApplicationExtensionInterface
      */
-    protected function createServiceProvider(): ServiceProviderInterface
+    protected function createServiceProvider(): ApplicationExtensionInterface
     {
-        return new class implements ServiceProviderInterface
+        return new class implements ApplicationExtensionInterface
         {
             /**
              * @param \Spryker\Service\Container\ContainerInterface $container
              *
              * @return void
              */
-            public function provide(ContainerInterface $container): void
+            public function provideExtension(ContainerInterface $container): void
             {
                 $container->set(ApplicationTest::SERVICE, function () {
                     return [ApplicationTest::SERVICE_PROPERTY => true];
@@ -119,11 +119,11 @@ class ApplicationTest extends Unit
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Provider\BootableServiceInterface
+     * @return \Spryker\Shared\ApplicationExtension\Provider\BootableApplicationExtensionInterface
      */
-    protected function createBootableServiceProvider(): BootableServiceInterface
+    protected function createBootableServiceProvider(): BootableApplicationExtensionInterface
     {
-        return new class implements ServiceProviderInterface, BootableServiceInterface
+        return new class implements ApplicationExtensionInterface, BootableApplicationExtensionInterface
         {
             /**
              * @var int
@@ -135,7 +135,7 @@ class ApplicationTest extends Unit
              *
              * @return void
              */
-            public function provide(ContainerInterface $container): void
+            public function provideExtension(ContainerInterface $container): void
             {
             }
 
