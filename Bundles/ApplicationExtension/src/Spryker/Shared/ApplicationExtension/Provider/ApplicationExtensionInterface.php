@@ -9,12 +9,12 @@ namespace Spryker\Shared\ApplicationExtension\Provider;
 
 use Spryker\Service\Container\ContainerInterface;
 
-interface ServiceProviderInterface
+interface ApplicationExtensionInterface
 {
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return void
      */
-    public function provide(ContainerInterface $container): void;
+    public function provideExtension(ContainerInterface $container): void;
 }

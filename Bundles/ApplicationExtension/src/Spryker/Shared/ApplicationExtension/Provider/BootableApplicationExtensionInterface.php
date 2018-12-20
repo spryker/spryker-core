@@ -9,7 +9,7 @@ namespace Spryker\Shared\ApplicationExtension\Provider;
 
 use Spryker\Service\Container\ContainerInterface;
 
-interface BootableServiceInterface
+interface BootableApplicationExtensionInterface
 {
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container

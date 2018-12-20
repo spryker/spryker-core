@@ -8,8 +8,8 @@
 namespace Spryker\Shared\Application;
 
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\ApplicationExtension\Provider\BootableServiceInterface;
-use Spryker\Shared\ApplicationExtension\Provider\ServiceProviderInterface;
+use Spryker\Shared\ApplicationExtension\Provider\ApplicationExtensionInterface;
+use Spryker\Shared\ApplicationExtension\Provider\BootableApplicationExtensionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernel;
@@ -19,12 +19,12 @@ use Symfony\Component\HttpKernel\TerminableInterface;
 class Application implements HttpKernelInterface, TerminableInterface
 {
     /**
-     * @var \Spryker\Shared\ApplicationExtension\Provider\ServiceProviderInterface[]
+     * @var \Spryker\Shared\ApplicationExtension\Provider\ApplicationExtensionInterface[]
      */
     protected $services = [];
 
     /**
-     * @var \Spryker\Shared\ApplicationExtension\Provider\BootableServiceInterface[]
+     * @var \Spryker\Shared\ApplicationExtension\Provider\BootableApplicationExtensionInterface[]
      */
     protected $bootableServices = [];
 
@@ -47,16 +47,16 @@ class Application implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * @param \Spryker\Shared\ApplicationExtension\Provider\ServiceProviderInterface $serviceProvider
+     * @param \Spryker\Shared\ApplicationExtension\Provider\ApplicationExtensionInterface $serviceProvider
      *
      * @return $this
      */
-    public function registerServiceProvider(ServiceProviderInterface $serviceProvider)
+    public function registerServiceProvider(ApplicationExtensionInterface $serviceProvider)
     {
         $this->services[] = $serviceProvider;
-        $serviceProvider->provide($this->container);
+        $serviceProvider->provideExtension($this->container);
 
-        if ($serviceProvider instanceof BootableServiceInterface) {
+        if ($serviceProvider instanceof BootableApplicationExtensionInterface) {
             $this->bootableServices[] = $serviceProvider;
         }
 
