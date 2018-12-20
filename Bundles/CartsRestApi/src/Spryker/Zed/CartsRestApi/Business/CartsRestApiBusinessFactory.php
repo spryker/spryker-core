@@ -48,7 +48,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createQuoteUpdater(): QuoteUpdaterInterface
     {
         return new QuoteUpdater(
-            $this->getPersistentFacade(),
+            $this->getPersistentCartFacade(),
             $this->createQuoteReader()
         );
     }
@@ -64,7 +64,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface
      */
-    public function getPersistentFacade(): CartsRestApiToPersistentCartFacadeInterface
+    public function getPersistentCartFacade(): CartsRestApiToPersistentCartFacadeInterface
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::FACADE_PERSISTENT_CART);
     }
