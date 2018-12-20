@@ -8,10 +8,16 @@
 namespace Spryker\Client\Catalog;
 
 use Spryker\Client\Catalog\Plugin\Elasticsearch\Query\CatalogSearchQueryPlugin;
+use Spryker\Client\Catalog\Plugin\Elasticsearch\Query\ProductConcreteCatalogSearchQueryPlugin;
 use Spryker\Client\Catalog\Plugin\Elasticsearch\Query\SuggestionQueryPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 
+/**
+ * @method \Spryker\Client\Catalog\CatalogConfig getConfig()
+ */
 class CatalogDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_SEARCH = 'search client';
@@ -24,6 +30,10 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     public const PLUGIN_FACET_CONFIG_TRANSFER_BUILDERS = 'PLUGIN_FACET_CONFIG_TRANSFER_BUILDERS';
     public const PLUGIN_SORT_CONFIG_TRANSFER_BUILDERS = 'PLUGIN_SORT_CONFIG_TRANSFER_BUILDERS';
     public const PLUGINS_CATALOG_SEARCH_COUNT_QUERY_EXPANDER = 'PLUGINS_CATALOG_SEARCH_COUNT_QUERY_EXPANDER';
+    public const PLUGIN_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY = 'PLUGIN_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY';
+    public const PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER = 'PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER';
+    public const PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER';
+    public const PLUGIN_PAGINATION_CONFIG_BUILDER = 'PLUGIN_PAGINATION_CONFIG_BUILDER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -44,6 +54,10 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
         $container = $this->addFacetConfigTransferBuilderPlugins($container);
         $container = $this->addSortConfigTransferBuilderPlugins($container);
         $container = $this->addCatalogSearchCountQueryExpanderPlugins($container);
+        $container = $this->addProductConcreteCatalogSearchResultFormatterPlugins($container);
+        $container = $this->addProductConcreteCatalogSearchQueryPlugin($container);
+        $container = $this->addProductConcreteCatalogSearchQueryExpanderPlugins($container);
+        $container = $this->addPaginationConfigBuilderPlugin($container);
 
         return $container;
     }
@@ -188,6 +202,62 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductConcreteCatalogSearchResultFormatterPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER] = function () {
+            return $this->getProductConcreteCatalogSearchResultFormatterPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductConcreteCatalogSearchQueryExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER] = function () {
+            return $this->getProductConcreteCatalogSearchQueryExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductConcreteCatalogSearchQueryPlugin(Container $container): Container
+    {
+        $container[static::PLUGIN_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY] = function () {
+            return $this->createProductConcreteCatalogSearchQueryPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPaginationConfigBuilderPlugin(Container $container): Container
+    {
+        $container[static::PLUGIN_PAGINATION_CONFIG_BUILDER] = function () {
+            return new PaginationConfigBuilder();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     protected function createCatalogSearchQueryPlugin()
@@ -255,6 +325,30 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     protected function createCatalogSearchCountQueryExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
+    protected function createProductConcreteCatalogSearchQueryPlugin(): QueryInterface
+    {
+        return new ProductConcreteCatalogSearchQueryPlugin();
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     */
+    protected function getProductConcreteCatalogSearchResultFormatterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     */
+    protected function getProductConcreteCatalogSearchQueryExpanderPlugins(): array
     {
         return [];
     }
