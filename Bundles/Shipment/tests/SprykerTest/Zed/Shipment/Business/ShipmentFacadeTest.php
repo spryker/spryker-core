@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Shipment\Business;
 
 use ArrayObject;
 use Codeception\TestCase\Test;
+use Exception;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -18,6 +19,7 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Store\Persistence\SpyStore;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface;
@@ -505,5 +507,167 @@ class ShipmentFacadeTest extends Test
             ],
         ];
         return $priceList;
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderShipmentItemsWithDifferentShipmentAndWithDifferentExpense(): void
+    {
+        $orderSaverTransfer = $this->tester->createOrderSaverTransfer();
+
+        $itemTransfer1 = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
+            ->setShipment($this->tester->createShipmentTransfer());
+        $itemTransfer2 = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
+            ->setShipment($this->tester->createShipmentTransfer());
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->addItem($itemTransfer1)
+            ->addItem($itemTransfer2);
+
+        try {
+            $this->tester->getShipmentFacade()->saveOrderShipment($quoteTransfer, $orderSaverTransfer);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderShipmentItemsWithDifferentShipmentWithoutExpense(): void
+    {
+        $orderSaverTransfer = $this->tester->createOrderSaverTransfer();
+
+        $itemTransfer1 = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
+            ->setShipment($this->tester->createShipmentTransfer()->setExpense(null));
+        $itemTransfer2 = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
+            ->setShipment($this->tester->createShipmentTransfer()->setExpense(null));
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->addItem($itemTransfer1)
+            ->addItem($itemTransfer2);
+
+        $this->expectException(RequiredTransferPropertyException::class);
+        $this->expectExceptionMessageRegExp('/^Missing required property "expense" for transfer/');
+
+        $this->tester->getShipmentFacade()->saveOrderShipment($quoteTransfer, $orderSaverTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderShipmentItemsWithSameShipmentWithoutExpense(): void
+    {
+        $orderSaverTransfer = $this->tester->createOrderSaverTransfer();
+
+        $itemTransfer1 = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
+            ->setShipment($this->tester->createShipmentTransfer()->setExpense(null));
+        $itemTransfer2 = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
+            ->setShipment($itemTransfer1->getShipment());
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->addItem($itemTransfer1)
+            ->addItem($itemTransfer2);
+
+        $this->expectException(RequiredTransferPropertyException::class);
+        $this->expectExceptionMessageRegExp('/^Missing required property "expense" for transfer/');
+
+        $this->tester->getShipmentFacade()->saveOrderShipment($quoteTransfer, $orderSaverTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderShipmentItemShipmentSuccess(): void
+    {
+        $orderSaverTransfer = $this->tester->createOrderSaverTransfer();
+        $orderSaverTransfer->addOrderItem($this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder()));
+
+        $itemTransfer = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
+            ->setShipment($this->tester->createShipmentTransfer());
+
+        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+
+        try {
+            $this->tester->getShipmentFacade()->saveOrderShipment($quoteTransfer, $orderSaverTransfer);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderShipmentItemShipmentWithoutExpense(): void
+    {
+        $orderSaverTransfer = $this->tester->createOrderSaverTransfer();
+
+        $itemTransfer = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
+            ->setShipment($this->tester->createShipmentTransfer()->setExpense(null));
+
+        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+
+        $this->expectException(RequiredTransferPropertyException::class);
+        $this->expectExceptionMessageRegExp('/^Missing required property "expense" for transfer/');
+
+        $this->tester->getShipmentFacade()->saveOrderShipment($quoteTransfer, $orderSaverTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderShipmentItemShipmentWithoutAddressAndMethod(): void
+    {
+        $orderSaverTransfer = $this->tester->createOrderSaverTransfer();
+
+        $shipmentTransfer = $this->tester->createShipmentTransfer()
+            ->setShippingAddress(null)
+            ->setMethod(null);
+
+        $itemTransfer = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())->setShipment($shipmentTransfer);
+
+        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+
+        $this->expectException(RequiredTransferPropertyException::class);
+        $this->expectExceptionMessageRegExp('/^Missing required property "method" for transfer/');
+        $this->expectExceptionMessageRegExp('/^Missing required property "address" for transfer/');
+
+        $this->tester->getShipmentFacade()->saveOrderShipment($quoteTransfer, $orderSaverTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderShipmentItemShipmentWithoutAddress(): void
+    {
+        $orderSaverTransfer = $this->tester->createOrderSaverTransfer();
+
+        $itemTransfer = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder());
+        $itemTransfer->setShipment($this->tester->createShipmentTransfer()->setShippingAddress(null));
+
+        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+
+        $this->expectException(RequiredTransferPropertyException::class);
+        $this->expectExceptionMessageRegExp('/^Missing required property "address" for transfer/');
+
+        $this->tester->getShipmentFacade()->saveOrderShipment($quoteTransfer, $orderSaverTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderShipmentItemWithoutShipment(): void
+    {
+        $orderSaverTransfer = $this->tester->createOrderSaverTransfer();
+
+        $quoteTransfer = (new QuoteTransfer())->addItem(
+            $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
+        );
+
+        $this->expectException(RequiredTransferPropertyException::class);
+        $this->expectExceptionMessageRegExp('/^Missing required property "shipment" for transfer/');
+
+        $this->tester->getShipmentFacade()->saveOrderShipment($quoteTransfer, $orderSaverTransfer);
     }
 }
