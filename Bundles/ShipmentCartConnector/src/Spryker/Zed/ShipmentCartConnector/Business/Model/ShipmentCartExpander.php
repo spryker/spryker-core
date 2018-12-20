@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface;
@@ -30,15 +29,23 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     protected $priceFacade;
 
     /**
+     * @var \Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartExpanderHelper
+     */
+    protected $shipmentCartExpanderHelper;
+
+    /**
      * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface $priceFacade
+     * @param \Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartExpanderHelper $shipmentCartExpanderHelper
      */
     public function __construct(
         ShipmentCartConnectorToShipmentFacadeInterface $shipmentFacade,
-        ShipmentCartConnectorToPriceFacadeInterface $priceFacade
+        ShipmentCartConnectorToPriceFacadeInterface $priceFacade,
+        ShipmentCartExpanderHelper $shipmentCartExpanderHelper
     ) {
         $this->shipmentFacade = $shipmentFacade;
         $this->priceFacade = $priceFacade;
+        $this->shipmentCartExpanderHelper = $shipmentCartExpanderHelper;
     }
 
     /**
@@ -52,13 +59,17 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
         $availableShipmentMethods = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null
-                || !$this->isCurrencyChanged($itemTransfer->getShipment(), $quoteTransfer)) {
+            $skipUpdate = (
+                $itemTransfer->getShipment() === null
+                || !$this->shipmentCartExpanderHelper->isCurrencyChanged($itemTransfer->getShipment(), $quoteTransfer)
+            );
+
+            if ($skipUpdate) {
                 continue;
             }
 
             $idShipmentMethod = $itemTransfer->getShipment()->getMethod()->getIdShipmentMethod();
-            $shipmentMethodTransfer = $this->findAvailableMethodById($idShipmentMethod, $availableShipmentMethods);
+            $shipmentMethodTransfer = $this->shipmentCartExpanderHelper->findAvailableMethodById($idShipmentMethod, $availableShipmentMethods);
 
             if ($shipmentMethodTransfer === null) {
                 return $cartChangeTransfer;
@@ -72,45 +83,6 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
         }
 
         return $cartChangeTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isCurrencyChanged(ShipmentTransfer $shipmentTransfer, QuoteTransfer $quoteTransfer): bool
-    {
-        if ($shipmentTransfer->getMethod() === null) {
-            return false;
-        }
-
-        $shipmentCurrencyIsoCode = $shipmentTransfer->getMethod()->getCurrencyIsoCode();
-        if ($shipmentCurrencyIsoCode !== $quoteTransfer->getCurrency()->getCode()) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param int $idShipmentMethod
-     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $availableShipmentMethods
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
-     */
-    protected function findAvailableMethodById(
-        int $idShipmentMethod,
-        ShipmentMethodsTransfer $availableShipmentMethods
-    ): ?ShipmentMethodTransfer {
-        $methodsIndexedByIdShipmentMethod = [];
-
-        foreach ($availableShipmentMethods->getMethods()->getArrayCopy() as $shipentMethodTransfer) {
-            $methodsIndexedByIdShipmentMethod[$shipentMethodTransfer->getIdShipmentMethod()] = $shipentMethodTransfer;
-        }
-
-        return $methodsIndexedByIdShipmentMethod[$idShipmentMethod] ?? null;
     }
 
     /**

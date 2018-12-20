@@ -74,13 +74,13 @@ class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
         int $idShipmentMethod,
         ShipmentMethodsTransfer $availableShipmentMethods
     ): ?ShipmentMethodTransfer {
-        $methodsIndexedByIdShipmentMethod = [];
-
         foreach ($availableShipmentMethods->getMethods()->getArrayCopy() as $shipentMethodTransfer) {
-            $methodsIndexedByIdShipmentMethod[$shipentMethodTransfer->getIdShipmentMethod()] = $shipentMethodTransfer;
+            if ($idShipmentMethod === $shipentMethodTransfer->getIdShipmentMethod()) {
+                return $shipentMethodTransfer;
+            }
         }
 
-        return $methodsIndexedByIdShipmentMethod[$idShipmentMethod] ?? null;
+        return null;
     }
 
     /**
