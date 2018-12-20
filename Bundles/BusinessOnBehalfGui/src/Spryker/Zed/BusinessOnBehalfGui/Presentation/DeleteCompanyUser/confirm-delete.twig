@@ -14,7 +14,7 @@
     {% embed '@Gui/Partials/widget.twig' %}
 
         {% block widget_content %}
-            <p>You are trying to delete user: <b>"{{ companyUser.customer.firstName ~ ' ' ~ companyUser.customer.LastName }}"</b>
+            <p>You are trying to delete user: <b>"{{ companyUser.customer.firstName ~ ' ' ~ companyUser.customer.lastName }}"</b>
                 for company <b>"{{ companyUser.company.name }}"</b>,
                 business unit <b>"{{ companyUser.companyBusinessUnit.name }}"</b>
             </p>

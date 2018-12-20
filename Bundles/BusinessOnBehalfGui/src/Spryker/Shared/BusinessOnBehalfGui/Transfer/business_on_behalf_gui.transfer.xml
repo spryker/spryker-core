@@ -9,6 +9,7 @@
         <property name="company" type="Company" />
         <property name="fkCustomer" type="int"/>
         <property name="customer" type="Customer"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit" />
     </transfer>
 
     <transfer name="Button">
@@ -20,10 +21,13 @@
 
     <transfer name="Customer">
         <property name="idCustomer" type="int" />
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string" />
     </transfer>
 
     <transfer name="Company">
         <property name="idCompany" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">

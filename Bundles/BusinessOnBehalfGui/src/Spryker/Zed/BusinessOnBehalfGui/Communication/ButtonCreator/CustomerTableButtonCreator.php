@@ -16,7 +16,7 @@ class CustomerTableButtonCreator extends AbstractButtonCreator implements Custom
     /**
      * @uses \Spryker\Zed\CompanyUserGui\Communication\Controller\CreateCompanyUserController::attachCustomerAction
      */
-    protected const PATH_ATTACH_CUSTOMER_TO_COMPANY = 'company-user-gui/create-company-user/attach-customer';
+    protected const PATH_ATTACH_CUSTOMER_TO_COMPANY = '/company-user-gui/create-company-user/attach-customer';
     protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE = 'Attach to company';
 
     protected const PARAM_ID_CUSTOMER = 'id-customer';

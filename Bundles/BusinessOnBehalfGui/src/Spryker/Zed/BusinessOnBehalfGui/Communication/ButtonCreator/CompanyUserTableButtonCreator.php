@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ButtonTransfer;
 
 class CompanyUserTableButtonCreator extends AbstractButtonCreator implements CompanyUserTableButtonCreatorInterface
 {
+    /**
+     * @uses \Spryker\Zed\BusinessOnBehalfGui\Communication\Controller\CustomerController::attachCustomerAction
+     */
     protected const PATH_ATTACH_CUSTOMER_TO_BUSINESS_UNIT = '/business-on-behalf-gui/customer/attach-customer';
 
     protected const PARAM_ID_CUSTOMER = 'id-customer';

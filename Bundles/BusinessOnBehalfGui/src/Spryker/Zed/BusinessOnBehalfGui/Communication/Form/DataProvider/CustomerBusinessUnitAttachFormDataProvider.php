@@ -73,29 +73,29 @@ class CustomerBusinessUnitAttachFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param int $idCompany
      *
      * @return array
      */
-    public function getOptions(CompanyUserTransfer $companyUserTransfer): array
+    public function getOptions(int $idCompany): array
     {
         return [
             CustomerBusinessUnitAttachForm::OPTION_COMPANY_BUSINESS_UNIT_CHOICES =>
-                $this->getCompanyBusinessUnitChoices($companyUserTransfer),
+                $this->getCompanyBusinessUnitChoices($idCompany),
         ];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param int $idCompany
      *
      * @return array
      */
-    protected function getCompanyBusinessUnitChoices(CompanyUserTransfer $companyUserTransfer): array
+    protected function getCompanyBusinessUnitChoices(int $idCompany): array
     {
         $companyBusinessUnitChoicesValues = [];
 
         $companyBusinessUnitCollection = $this->companyBusinessUnitFacade->getCompanyBusinessUnitCollection(
-            (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompany($companyUserTransfer->getCompany()->getIdCompany())
+            (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompany($idCompany)
         );
 
         foreach ($companyBusinessUnitCollection->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {

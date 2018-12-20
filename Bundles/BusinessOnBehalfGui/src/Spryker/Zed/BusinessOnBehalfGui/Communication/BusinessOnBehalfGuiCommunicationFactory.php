@@ -79,9 +79,12 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getCustomerBusinessUnitAttachForm(int $idCustomer, int $idCompany): FormInterface
     {
         $dataProvider = $this->createCustomerCompanyAttachFormDataProvider();
-        $companyUserTransfer = $dataProvider->getData($idCustomer, $idCompany);
 
-        return $this->getFormFactory()->create(CustomerBusinessUnitAttachForm::class, $companyUserTransfer, $dataProvider->getOptions($companyUserTransfer));
+        return $this->getFormFactory()->create(
+            CustomerBusinessUnitAttachForm::class,
+            $dataProvider->getData($idCustomer, $idCompany),
+            $dataProvider->getOptions($idCompany)
+        );
     }
 
     /**
