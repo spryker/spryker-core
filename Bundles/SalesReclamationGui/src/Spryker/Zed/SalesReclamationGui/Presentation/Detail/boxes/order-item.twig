@@ -3,6 +3,7 @@
 {% set priceToPay = group ? bundleItem.unitPriceToPayAggregation : orderItem.unitPriceToPayAggregation %}
 {% set image = image %}
 
+<td class="item-checker"><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check" /></td>
 {% if displayImage %}
     <td {% if group %}rowspan="{{ itemCount }}" {% endif %}>
         <img class="product-image" src="{{ image }}" width="150px"/>

@@ -48,10 +48,14 @@ class DetailController extends AbstractController
         $eventsGroupedByItem = $this->getFactory()
             ->getOmsFacade()
             ->getManualEventsByIdSalesOrder($reclamationTransfer->getOrder()->getIdSalesOrder());
+        $events = $this->getFactory()
+            ->getOmsFacade()
+            ->getDistinctManualEventsByIdSalesOrder($reclamationTransfer->getOrder()->getIdSalesOrder());
 
         return $this->viewResponse([
             'reclamation' => $reclamationTransfer,
             'eventsGroupedByItem' => $eventsGroupedByItem,
+            'events' => $events,
         ]);
     }
 
