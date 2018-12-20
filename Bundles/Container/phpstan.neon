@@ -3,7 +3,6 @@ parameters:
 
     ignoreErrors:
         - '#Result of || is always true.#'
-        - '#Parameter \#1 $obj of method SplObjectStorage::attach() expects object, Closure(mixed): mixed given.#'
 
 services:
     -
