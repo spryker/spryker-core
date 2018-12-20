@@ -135,9 +135,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createAndReloadQuoteAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function createQuoteWithReloadedItemsAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->createAndReloadQuote($quoteTransfer);
+        return $this->getFacade()->createQuoteWithReloadedItems($quoteTransfer);
     }
 
     /**

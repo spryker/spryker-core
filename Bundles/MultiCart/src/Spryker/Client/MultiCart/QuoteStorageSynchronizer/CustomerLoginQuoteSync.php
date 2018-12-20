@@ -60,6 +60,6 @@ class CustomerLoginQuoteSync implements CustomerLoginQuoteSyncInterface
             ->setCustomerReference($customerTransfer->getCustomerReference())
             ->setIsDefault(true);
 
-        $this->persistentCartClient->createAndReloadQuote($quoteTransfer);
+        $this->persistentCartClient->createQuoteWithReloadedItems($quoteTransfer);
     }
 }

@@ -72,9 +72,9 @@ class QuoteCreator implements QuoteCreatorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createAndReloadQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function createQuoteWithReloadedItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteResponseTransfer = $this->persistentCartStub->createAndReloadQuote($quoteTransfer);
+        $quoteResponseTransfer = $this->persistentCartStub->createQuoteWithReloadedItems($quoteTransfer);
         $quoteResponseTransfer = $this->processQuoteResponse($quoteResponseTransfer);
 
         return $quoteResponseTransfer;

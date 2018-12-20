@@ -24,5 +24,5 @@ interface QuoteCreatorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createAndReloadQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function createQuoteWithReloadedItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

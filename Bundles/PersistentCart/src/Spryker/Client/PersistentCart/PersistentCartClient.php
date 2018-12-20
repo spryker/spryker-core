@@ -54,9 +54,9 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createAndReloadQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function createQuoteWithReloadedItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->getFactory()->createQuoteCreator()->createAndReloadQuote($quoteTransfer);
+        return $this->getFactory()->createQuoteCreator()->createQuoteWithReloadedItems($quoteTransfer);
     }
 
     /**

@@ -69,7 +69,7 @@ class QuoteWriter implements QuoteWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createAndReloadQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function createQuoteWithReloadedItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
         if ($quoteResponseTransfer->getIsSuccessful()) {
