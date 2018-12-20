@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Synchronization;
 
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\ProductAlternativeStorage\ProductAlternativeStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
@@ -93,7 +92,9 @@ class ProductReplacementForSynchronizationDataPlugin extends AbstractPlugin impl
     {
         $productReplacementForStorageEntities = $this->findProductReplacementForStorageEntities($ids);
 
-        return $this->mapEntitiesToSynchronizationDataTransfers($productReplacementForStorageEntities);
+        return $this->getFactory()
+            ->createProductReplacementForStorageMapper()
+            ->mapProductReplacementForStorageEntitiesToSynchronizationDataTransfers($productReplacementForStorageEntities);
     }
 
     /**
@@ -108,26 +109,5 @@ class ProductReplacementForSynchronizationDataPlugin extends AbstractPlugin impl
         }
 
         return $this->getRepository()->findProductReplacementForStorageEntitiesByIds($ids);
-    }
-
-    /**
-     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[] $productReplacementForStorageEntities
-     *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
-     */
-    protected function mapEntitiesToSynchronizationDataTransfers(array $productReplacementForStorageEntities): array
-    {
-        $synchronizationDataTransfers = [];
-
-        foreach ($productReplacementForStorageEntities as $productReplacementForStorageEntity) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            /** @var string $data */
-            $data = $productReplacementForStorageEntity->getData();
-            $synchronizationDataTransfer->setData($data);
-            $synchronizationDataTransfer->setKey($productReplacementForStorageEntity->getKey());
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
-        }
-
-        return $synchronizationDataTransfers;
     }
 }
