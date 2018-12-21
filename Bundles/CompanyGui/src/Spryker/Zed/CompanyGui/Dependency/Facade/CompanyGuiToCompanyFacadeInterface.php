@@ -36,7 +36,7 @@ interface CompanyGuiToCompanyFacadeInterface
     /**
      * @param int $idCompany
      *
-     * @return \Generated\Shared\Transfer\CompanyTransfer
+     * @return \Generated\Shared\Transfer\CompanyTransfer|null
      */
     public function findCompanyById(int $idCompany): ?CompanyTransfer;
 }
