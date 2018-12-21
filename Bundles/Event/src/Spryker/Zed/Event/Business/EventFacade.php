@@ -54,6 +54,23 @@ class EventFacade extends AbstractFacade implements EventFacadeInterface
      *
      * @api
      *
+     * @param string $listenerName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     *
+     * @return void
+     */
+    public function triggerByListenerName(string $listenerName, array $transfers): void
+    {
+        $this->getFactory()
+            ->createEventDispatcher()
+            ->triggerByListenerName($listenerName, $transfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]

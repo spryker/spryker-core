@@ -26,4 +26,15 @@ interface EventDispatcherInterface
      * @return void
      */
     public function triggerBulk(string $eventName, array $transfers): void;
+
+    /**
+     * @param string $listenerName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     *
+     * @throws \Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException
+     * @throws \Spryker\Zed\Event\Business\Exception\EventListenerAmbiguousException
+     *
+     * @return void
+     */
+    public function triggerByListenerName(string $listenerName, array $transfers): void;
 }
