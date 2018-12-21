@@ -15,12 +15,6 @@
         } %}
     </div>
 
-    {% if reclamation.createdOrders|length %}
-        {% include '@SalesReclamationGui/Detail/_connected_orders.twig' with {
-            'createdOrders': reclamation.createdOrders,
-        } %}
-    {% endif %}
-
 {% endblock %}
 
 {% block head_css %}

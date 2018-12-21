@@ -8,8 +8,10 @@
 namespace Spryker\Zed\SalesReclamation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SalesReclamation\Business\Reclamation\Expander;
-use Spryker\Zed\SalesReclamation\Business\Reclamation\ExpanderInterface;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationExpander;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationExpanderInterface;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationMapper;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationMapperInterface;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationReader;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationReaderInterface;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationWriter;
@@ -29,7 +31,7 @@ class SalesReclamationBusinessFactory extends AbstractBusinessFactory
      */
     public function createReclamationWriter(): ReclamationWriterInterface
     {
-        return new ReclamationWriter($this->getEntityManager());
+        return new ReclamationWriter($this->getEntityManager(), $this->createReclamationMapper());
     }
 
     /**
@@ -41,11 +43,11 @@ class SalesReclamationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\ExpanderInterface
+     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationExpanderInterface
      */
-    public function createReclamationExpander(): ExpanderInterface
+    public function createReclamationExpander(): ReclamationExpanderInterface
     {
-        return new Expander($this->getSalesFacade(), $this->getRepository());
+        return new ReclamationExpander($this->getSalesFacade(), $this->getRepository());
     }
 
     /**
@@ -54,5 +56,13 @@ class SalesReclamationBusinessFactory extends AbstractBusinessFactory
     public function getSalesFacade(): SalesReclamationToSalesFacadeInterface
     {
         return $this->getProvidedDependency(SalesReclamationDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationMapperInterface
+     */
+    public function createReclamationMapper(): ReclamationMapperInterface
+    {
+        return new ReclamationMapper();
     }
 }

@@ -75,13 +75,13 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
      *
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return null|\Generated\Shared\Transfer\ReclamationTransfer
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function expandReclamationByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
+    public function expandReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
     {
         return $this->getFactory()
             ->createReclamationExpander()
-            ->expandReclamationByIdReclamation($reclamationTransfer);
+            ->expandReclamation($reclamationTransfer);
     }
 
     /**
@@ -93,11 +93,11 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function expandReclamationByOrder(OrderTransfer $orderTransfer): ReclamationTransfer
+    public function mapOrderToReclamation(OrderTransfer $orderTransfer, ReclamationTransfer $reclamationTransfer): ReclamationTransfer
     {
         return $this->getFactory()
-            ->createReclamationExpander()
-            ->expandReclamationByOrder($orderTransfer);
+            ->createReclamationMapper()
+            ->mapOrderToReclamation($orderTransfer, $reclamationTransfer);
     }
 
     /**

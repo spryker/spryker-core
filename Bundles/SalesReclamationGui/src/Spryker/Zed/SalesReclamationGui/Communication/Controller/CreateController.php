@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\SalesReclamationGui\Communication\Table\ReclamationTable;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -24,6 +23,7 @@ class CreateController extends AbstractController
     public const PARAM_ID_SALES_ORDER = 'id-sales-order';
 
     protected const PARAM_IDS_SALES_ORDER_ITEMS = 'id-order-item';
+    protected const PARAM_ID_RECLAMATION = 'id-reclamation';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -41,7 +41,7 @@ class CreateController extends AbstractController
 
         $reclamation = $this->getFactory()
             ->getSalesReclamationFacade()
-            ->expandReclamationByOrder($orderTransfer);
+            ->mapOrderToReclamation($orderTransfer, new ReclamationTransfer());
 
         $orderItemIds = $request->request->getDigits(static::PARAM_IDS_SALES_ORDER_ITEMS);
 
@@ -64,7 +64,7 @@ class CreateController extends AbstractController
                 Url::generate(
                     '/sales-reclamation-gui/detail',
                     [
-                        ReclamationTable::PARAM_ID_RECLAMATION => $reclamationTransfer->getIdSalesReclamation(),
+                        static::PARAM_ID_RECLAMATION => $reclamationTransfer->getIdSalesReclamation(),
                     ]
                 )->build()
             );

@@ -17,7 +17,8 @@ use Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtil
 class ReclamationTable extends AbstractTable
 {
     public const COL_ACTIONS = 'COL_ACTIONS';
-    public const PARAM_ID_RECLAMATION = 'id-reclamation';
+
+    protected const PARAM_ID_RECLAMATION = 'id-reclamation';
 
     protected const URL_RECLAMATION_DETAIL = '/sales-reclamation-gui/detail';
     protected const URL_RECLAMATION_CLOSE = '/sales-reclamation-gui/detail/close';

@@ -65,20 +65,24 @@ interface SalesReclamationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer|null
      */
-    public function expandReclamationByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
+    public function expandReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
 
     /**
      * Specification:
-     * - Expands Reclamation with data from order.
-     * - Expands Reclamation items with data from order items.
+     * - Maps order transfer to reclamation transfer.
+     * - Maps nested order items transfers to reclamation items.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function expandReclamationByOrder(OrderTransfer $orderTransfer): ReclamationTransfer;
+    public function mapOrderToReclamation(
+        OrderTransfer $orderTransfer,
+        ReclamationTransfer $reclamationTransfer
+    ): ReclamationTransfer;
 
     /**
      * Specification:

@@ -7,11 +7,9 @@
 
 namespace Spryker\Zed\SalesReclamationGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\SalesReclamationGui\Communication\Table\ReclamationTable;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,8 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 class DetailController extends AbstractController
 {
     protected const PARAM_ID_RECLAMATION_ITEM = 'id-reclamation-item';
+    protected const PARAM_ID_RECLAMATION = 'id-reclamation';
     protected const RECLAMATION_CLOSE_STATE = 'Close';
-    protected const RECLAMATION_ITEM_REFUNDED_STATE = 'Refunded';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -31,15 +29,15 @@ class DetailController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idReclamation = $this->castId($request->get(ReclamationTable::PARAM_ID_RECLAMATION));
+        $idReclamation = $this->castId($request->get(static::PARAM_ID_RECLAMATION));
         $reclamationTransfer = new ReclamationTransfer();
         $reclamationTransfer->setIdSalesReclamation($idReclamation);
 
         $reclamationTransfer = $this->getFactory()
             ->getSalesReclamationFacade()
-            ->expandReclamationByIdReclamation($reclamationTransfer);
+            ->expandReclamation($reclamationTransfer);
 
-        if (!$reclamationTransfer) {
+        if (!$reclamationTransfer->getIdSalesReclamation()) {
             $this->addErrorMessage(sprintf('No reclamation with given id %s', $idReclamation));
 
             return $this->redirectResponse('/sales-reclamation-gui/');
@@ -66,7 +64,7 @@ class DetailController extends AbstractController
      */
     public function closeAction(Request $request): RedirectResponse
     {
-        $idReclamation = $this->castId($request->get(ReclamationTable::PARAM_ID_RECLAMATION));
+        $idReclamation = $this->castId($request->get(static::PARAM_ID_RECLAMATION));
 
         $reclamationTransfer = new ReclamationTransfer();
         $reclamationTransfer->setIdSalesReclamation($idReclamation);
@@ -95,64 +93,6 @@ class DetailController extends AbstractController
         return $this->redirectResponse(
             Url::generate(
                 '/sales-reclamation-gui'
-            )->build()
-        );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function closeItemAction(Request $request): RedirectResponse
-    {
-        $idReclamation = $this->castId($request->get(ReclamationTable::PARAM_ID_RECLAMATION));
-        $idReclamationItem = $this->castId($request->get(static::PARAM_ID_RECLAMATION_ITEM));
-
-        $reclamationItemTransfer = new ReclamationItemTransfer();
-        $reclamationItemTransfer->setIdSalesReclamationItem($idReclamationItem);
-
-        $reclamationItemTransfer = $this->getFactory()
-            ->getSalesReclamationFacade()
-            ->getReclamationItemById($reclamationItemTransfer);
-        $reclamationItemTransfer->setState(static::RECLAMATION_ITEM_REFUNDED_STATE);
-
-        if (!$reclamationItemTransfer->getIdSalesReclamationItem()) {
-            $this->addErrorMessage(sprintf('Reclamation item with id %s not exists', $idReclamationItem));
-
-            return $this->redirectResponse(
-                Url::generate(
-                    '/sales-reclamation-gui'
-                )->build()
-            );
-        }
-
-        if ($reclamationItemTransfer->getFkSalesReclamation() !== $idReclamation) {
-            $this->addErrorMessage(sprintf(
-                'Reclamation with id %s not own this item %s',
-                $idReclamation,
-                $idReclamationItem
-            ));
-
-            return $this->redirectResponse(
-                Url::generate(
-                    '/sales-reclamation-gui'
-                )->build()
-            );
-        }
-
-        $this->getFactory()
-            ->getSalesReclamationFacade()
-            ->updateReclamationItem($reclamationItemTransfer);
-
-        $this->addSuccessMessage('Reclamation item refunded');
-
-        return $this->redirectResponse(
-            Url::generate(
-                '/sales-reclamation-gui/detail',
-                [
-                    ReclamationTable::PARAM_ID_RECLAMATION => $idReclamation,
-                ]
             )->build()
         );
     }

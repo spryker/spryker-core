@@ -17,24 +17,11 @@
     <transfer name="ReclamationItem">
         <property name="idSalesReclamationItem" type="int" />
         <property name="orderItem" type="Item"/>
-        <property name="state" type="string"/>
         <property name="fkSalesReclamation" type="int"/>
     </transfer>
 
     <transfer name="ReclamationCreateRequest">
         <property name="order" type="Order"/>
         <property name="orderItems" type="Item[]" singular="Item"/>
-    </transfer>
-
-    <transfer name="Quote">
-        <property name="reclamationId" type="int"/>
-    </transfer>
-
-    <transfer name="Order">
-        <property name="reclamation" type="Reclamation"/>
-    </transfer>
-
-    <transfer name="OrderCollection">
-        <property name="orders" type="Order[]" singular="Order" />
     </transfer>
 </transfers>
