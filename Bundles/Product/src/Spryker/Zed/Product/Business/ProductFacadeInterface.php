@@ -283,18 +283,15 @@ interface ProductFacadeInterface
      * Specification:
      * - Returns concrete product with attributes and localized attributes.
      * - Throws exception if the concrete product is not found by SKU.
-     * - Triggers READ events
-     * - Doesn't trigger READ plugins
+     * - Triggers ProductEvents::PRODUCT_CONCRETE_READ event but doesn't trigger READ plugins.
      *
      * @api
      *
      * @param string $concreteSku
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getRawProductConcrete($concreteSku): ProductConcreteTransfer;
+    public function getRawProductConcrete(string $concreteSku): ProductConcreteTransfer;
 
     /**
      * Specification:

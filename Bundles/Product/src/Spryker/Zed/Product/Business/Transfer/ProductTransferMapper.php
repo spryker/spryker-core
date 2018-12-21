@@ -97,13 +97,13 @@ class ProductTransferMapper implements ProductTransferMapperInterface
      */
     public function mapSpyProductEntityTransferToProductConcreteTransfer(SpyProductEntityTransfer $productEntityTransfer): ProductConcreteTransfer
     {
-        $productTransfer = $this->mapProductConcreteTransferFromSpyProductEntityTransfer($productEntityTransfer);
+        $productTransfer = $this->mapProductConcreteFromData($productEntityTransfer->toArray());
         $attributes = $this->attributeEncoder->decodeAttributes($productEntityTransfer->getAttributes());
         $productTransfer->setAttributes($attributes);
         $productTransfer->setIdProductConcrete($productEntityTransfer->getIdProduct());
 
         $productAbstractEntityTransfer = $productEntityTransfer->getSpyProductAbstract();
-        if ($productEntityTransfer->getSpyProductAbstract()) {
+        if ($productAbstractEntityTransfer !== null) {
             $productTransfer->setAbstractSku($productAbstractEntityTransfer->getSku());
         }
 
@@ -133,18 +133,6 @@ class ProductTransferMapper implements ProductTransferMapperInterface
     protected function mapProductConcreteTransfer(SpyProduct $productEntity)
     {
         $productData = $productEntity->toArray();
-
-        return $this->mapProductConcreteFromData($productData);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyProductEntityTransfer $spyProductEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    protected function mapProductConcreteTransferFromSpyProductEntityTransfer(SpyProductEntityTransfer $spyProductEntityTransfer): ProductConcreteTransfer
-    {
-        $productData = $spyProductEntityTransfer->toArray();
 
         return $this->mapProductConcreteFromData($productData);
     }

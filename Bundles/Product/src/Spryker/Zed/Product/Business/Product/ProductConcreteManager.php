@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
-use Orm\Zed\Product\Persistence\SpyProduct;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
@@ -189,12 +188,9 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      */
     public function findProductConcreteById($idProduct)
     {
-        $productEntity = $this->productQueryContainer
-            ->queryProduct()
-            ->filterByIdProduct($idProduct)
-            ->findOne();
+        $productEntityTransfer = $this->productRepository->findProductConcreteById($idProduct);
 
-        return $this->loadProductTransfer($productEntity);
+        return $this->loadProductTransfer($productEntityTransfer);
     }
 
     /**
@@ -204,12 +200,9 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      */
     public function findProductConcreteBySku(string $productConcreteSku): ?ProductConcreteTransfer
     {
-        $productEntity = $this->productQueryContainer
-            ->queryProduct()
-            ->filterBySku($productConcreteSku)
-            ->findOne();
+        $productEntityTransfer = $this->productRepository->findProductConcreteBySku($productConcreteSku);
 
-        return $this->loadProductTransfer($productEntity);
+        return $this->loadProductTransfer($productEntityTransfer);
     }
 
     /**
@@ -300,7 +293,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      *
      * @return void
      */
-    public function assertProductConcreteTransfer(string $concreteSku, ?ProductConcreteTransfer $productConcreteTransfer = null): void
+    public function assertProductConcreteTransfer(string $concreteSku, ?ProductConcreteTransfer $productConcreteTransfer): void
     {
         if (!$productConcreteTransfer) {
             throw new MissingProductException(
@@ -455,17 +448,17 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProduct|null $productEntity
+     * @param \Generated\Shared\Transfer\SpyProductEntityTransfer|null $productEntityTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    protected function loadProductTransfer(?SpyProduct $productEntity = null): ?ProductConcreteTransfer
+    protected function loadProductTransfer(?SpyProductEntityTransfer $productEntityTransfer): ?ProductConcreteTransfer
     {
-        if (!$productEntity) {
+        if (!$productEntityTransfer) {
             return null;
         }
 
-        $productTransfer = $this->productTransferMapper->convertProduct($productEntity);
+        $productTransfer = $this->productTransferMapper->mapSpyProductEntityTransferToProductConcreteTransfer($productEntityTransfer);
         $productTransfer = $this->loadProductData($productTransfer);
 
         return $productTransfer;
@@ -476,7 +469,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    protected function loadRawProductTransfer(?SpyProductEntityTransfer $productEntityTransfer = null): ?ProductConcreteTransfer
+    protected function loadRawProductTransfer(?SpyProductEntityTransfer $productEntityTransfer): ?ProductConcreteTransfer
     {
         if (!$productEntityTransfer) {
             return null;
@@ -553,11 +546,9 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      */
     protected function getLocaleTransfer(int $idLocale): LocaleTransfer
     {
-        if (isset(static::$cachedLocaleTransfers[$idLocale])) {
-            return static::$cachedLocaleTransfers[$idLocale];
+        if (!isset(static::$cachedLocaleTransfers[$idLocale])) {
+            static::$cachedLocaleTransfers[$idLocale] = $this->localeFacade->getLocaleById($idLocale);
         }
-
-        static::$cachedLocaleTransfers[$idLocale] = $this->localeFacade->getLocaleById($idLocale);
 
         return static::$cachedLocaleTransfers[$idLocale];
     }

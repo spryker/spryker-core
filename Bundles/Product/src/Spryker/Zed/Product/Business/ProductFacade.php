@@ -321,11 +321,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param string $concreteSku
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getRawProductConcrete($concreteSku): ProductConcreteTransfer
+    public function getRawProductConcrete(string $concreteSku): ProductConcreteTransfer
     {
         return $this->getFactory()
             ->createProductConcreteManager()
