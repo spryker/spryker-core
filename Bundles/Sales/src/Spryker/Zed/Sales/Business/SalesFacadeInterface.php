@@ -195,7 +195,7 @@ interface SalesFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
      */
     public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer;
 
