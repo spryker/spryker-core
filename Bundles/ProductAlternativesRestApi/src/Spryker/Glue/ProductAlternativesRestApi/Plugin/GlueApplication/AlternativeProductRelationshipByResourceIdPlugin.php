@@ -19,7 +19,7 @@ class AlternativeProductRelationshipByResourceIdPlugin extends AbstractPlugin im
 {
     /**
      * {@inheritdoc}
-     *  - Adds product-alternatives relationship by concrete product sku.
+     *  - Adds alternative-products relationship by concrete product sku.
      *
      * @api
      *

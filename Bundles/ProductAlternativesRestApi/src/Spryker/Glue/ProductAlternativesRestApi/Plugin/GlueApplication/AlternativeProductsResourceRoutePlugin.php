@@ -19,6 +19,7 @@ class AlternativeProductsResourceRoutePlugin extends AbstractPlugin implements R
 {
     /**
      * {@inheritdoc}
+     * - Configures available actions for product-alternatives resource.
      *
      * @api
      *
