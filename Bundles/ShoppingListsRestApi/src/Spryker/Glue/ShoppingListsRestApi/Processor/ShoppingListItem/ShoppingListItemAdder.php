@@ -82,7 +82,7 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
         $shoppingListItemTransfer = $this->shoppingListsRestApiClient->addItem($restShoppingListItemRequestTransfer);
 
         if (!$shoppingListItemTransfer->getIdShoppingListItem()) {
-            return $this->createShoppingListCantAddItemErrorResponse();
+            return $this->createShoppingListCanNotAddItemErrorResponse();
         }
 
         $restShoppingListItemAttributesTransfer = $this->shoppingListItemResourceMapper->mapShoppingListItemTransferToRestShoppingListItemAttributesTransfer(
@@ -91,7 +91,7 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
 
         $shoppingListItemResource = $this->restResourceBuilder->createRestResource(
             ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
-            $restShoppingListItemAttributesTransfer->getSku(),
+            $shoppingListItemTransfer->getUuid(),
             $restShoppingListItemAttributesTransfer
         );
 
@@ -99,7 +99,7 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
             RestLinkInterface::LINK_SELF,
             $this->createSelfLinkForShoppingListItem(
                 $shoppingListUuid,
-                $restShoppingListItemAttributesTransfer->getSku()
+                $shoppingListItemTransfer->getUuid()
             )
         );
 
@@ -156,12 +156,12 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createShoppingListCantAddItemErrorResponse(): RestResponseInterface
+    protected function createShoppingListCanNotAddItemErrorResponse(): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANT_ADD_ITEM)
+            ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_ADD_ITEM)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(ShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_CANT_ADD_ITEM);
+            ->setDetail(ShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_ADD_ITEM);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }

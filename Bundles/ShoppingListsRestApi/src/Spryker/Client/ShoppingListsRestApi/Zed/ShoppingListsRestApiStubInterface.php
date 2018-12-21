@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
 interface ShoppingListsRestApiStubInterface
 {
-    /***
+    /**
      * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer

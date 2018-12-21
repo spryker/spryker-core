@@ -78,7 +78,7 @@ class ShoppingListItemResourceMapper implements ShoppingListItemResourceMapperIn
         }
 
         $restShoppingListItemRequestTransfer->setShoppingListUuid($shoppingListResource->getId())
-            ->setCompanyUserUuid($restRequest->getHttpRequest()->headers->get(ShoppingListsRestApiConfig::COMPANY_USER_HEADER_KEY));
+            ->setCompanyUserUuid($restRequest->getHttpRequest()->headers->get(ShoppingListsRestApiConfig::X_COMPANY_USER_ID_HEADER_KEY));
 
         return $restShoppingListItemRequestTransfer;
     }

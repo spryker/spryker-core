@@ -20,7 +20,7 @@
 
     <transfer name="RestShoppingListItemAttributes">
         <property name="quantity" type="int" restRequestParameter="required"/>
-        <property name="sku" type="string" restRequestParameter="required"/>
+        <property name="sku" type="string"/>
     </transfer>
 
 </transfers>

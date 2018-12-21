@@ -14,7 +14,7 @@ interface ShoppingListsRestApiClientInterface
 {
     /**
      * Specification:
-     *  - Adds item to shopping list
+     *  - Adds item to shopping list.
      *  - Required values of RestShoppingListItemRequestTransfer: shoppingListItem, shoppingListUuid, companyUserUuid, customerReference.
      *
      * @api
