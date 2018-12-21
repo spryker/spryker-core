@@ -10,6 +10,11 @@ namespace Spryker\Shared\Content;
 class ContentAbstractProductListTerm implements ContentTermInterface
 {
     /**
+     * @var string
+     */
+    public const CONTENT_TERM = "CONTENT_ABSTRACT_PRODUCT_LIST_TERM";
+
+    /**
      * @var \Spryker\Shared\Content\ContentProductListType $type
      */
     protected $type;
@@ -43,7 +48,7 @@ class ContentAbstractProductListTerm implements ContentTermInterface
      */
     public function getCandidateKey(): string
     {
-        return 'AbstractProductList';
+        return static::CONTENT_TERM;
     }
 
     /**

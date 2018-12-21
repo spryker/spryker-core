@@ -10,6 +10,11 @@ namespace Spryker\Shared\Content;
 class ContentProductListType implements ContentTypeInterface
 {
     /**
+     * @var string
+     */
+    public const CONTENT_TYPE = "CONTENT_PRODUCT_LIST_TYPE";
+
+    /**
      * @var \Spryker\Shared\Content\ContentItemCategory $category
      */
     protected $category;
@@ -35,6 +40,6 @@ class ContentProductListType implements ContentTypeInterface
      */
     public function getCandidateKey(): string
     {
-        return 'Product-List';
+        return static::CONTENT_TYPE;
     }
 }

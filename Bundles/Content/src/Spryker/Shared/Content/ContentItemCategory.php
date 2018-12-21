@@ -10,10 +10,15 @@ namespace Spryker\Shared\Content;
 class ContentItemCategory implements ContentCategoryInterface
 {
     /**
+     * @var string
+     */
+    public const CONTENT_CATEGORY = "CONTENT_CONTENT_ITEM";
+
+    /**
      * @return string
      */
     public function getCandidateKey(): string
     {
-        return 'Content-Item';
+        return static::CONTENT_CATEGORY;
     }
 }
