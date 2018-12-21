@@ -9,6 +9,8 @@ namespace Spryker\Zed\Queue\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Queue\Business\Process\ProcessManager;
+use Spryker\Zed\Queue\Business\QueueDumper\QueueDumper;
+use Spryker\Zed\Queue\Business\QueueDumper\QueueDumperInterface;
 use Spryker\Zed\Queue\Business\Task\TaskManager;
 use Spryker\Zed\Queue\Business\Worker\Worker;
 use Spryker\Zed\Queue\Business\Worker\WorkerProgressBar;
@@ -109,5 +111,17 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     public function getProcessorMessagePlugins()
     {
         return $this->getProvidedDependency(QueueDependencyProvider::QUEUE_MESSAGE_PROCESSOR_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Queue\Business\QueueDumper\QueueDumperInterface
+     */
+    public function createQueueDumper(): QueueDumperInterface
+    {
+        return new QueueDumper(
+            $this->getQueueClient(),
+            $this->getConfig(),
+            $this->getProcessorMessagePlugins()
+        );
     }
 }

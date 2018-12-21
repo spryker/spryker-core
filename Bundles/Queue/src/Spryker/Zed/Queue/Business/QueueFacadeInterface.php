@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Queue\Business;
 
+use Generated\Shared\Transfer\QueueDumpRequestTransfer;
+use Generated\Shared\Transfer\QueueDumpResponseTransfer;
 use Symfony\Component\Console\Output\OutputInterface;
 
 interface QueueFacadeInterface
@@ -36,4 +38,16 @@ interface QueueFacadeInterface
      * @return void
      */
     public function startWorker($command, OutputInterface $output);
+
+    /**
+     * Specification
+     *  - Reads events from the queue with an ability to limit amount of events, format output and acknowledge queue messages
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueDumpRequestTransfer $queueNameRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueueDumpResponseTransfer
+     */
+    public function queueDump(QueueDumpRequestTransfer $queueNameRequestTransfer): QueueDumpResponseTransfer;
 }
