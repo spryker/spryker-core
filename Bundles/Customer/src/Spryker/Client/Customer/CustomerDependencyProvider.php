@@ -21,7 +21,7 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_CUSTOMER_SESSION_GET = 'PLUGINS_CUSTOMER_SESSION_GET';
     public const PLUGINS_CUSTOMER_SESSION_SET = 'PLUGINS_CUSTOMER_SESSION_SET';
     public const PLUGINS_DEFAULT_ADDRESS_CHANGE = 'PLUGINS_DEFAULT_ADDRESS_CHANGE';
-    public const PLUGINS_CUSTOMER_SECURED_PATTERN = 'PLUGINS_CUSTOMER_SECURED_PATTERN';
+    public const PLUGINS_CUSTOMER_SECURED_PATTERN_PERMISSION = 'PLUGINS_CUSTOMER_SECURED_PATTERN_PERMISSION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -149,7 +149,7 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
      */
     public function addCustomerSecuredPatternPermissionPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CUSTOMER_SECURED_PATTERN] = function () {
+        $container[static::PLUGINS_CUSTOMER_SECURED_PATTERN_PERMISSION] = function () {
             return $this->getCustomerSecuredPatternPermissionPlugins();
         };
 

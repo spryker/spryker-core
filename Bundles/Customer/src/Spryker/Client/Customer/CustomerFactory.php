@@ -87,7 +87,7 @@ class CustomerFactory extends AbstractFactory
      */
     public function getCustomerSecuredPatternPermissionPlugins(): array
     {
-        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_SECURED_PATTERN);
+        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_SECURED_PATTERN_PERMISSION);
     }
 
     /**
