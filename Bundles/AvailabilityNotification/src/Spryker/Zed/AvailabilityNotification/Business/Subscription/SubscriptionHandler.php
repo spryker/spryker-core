@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
-use Exception;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Generated\Shared\Transfer\MailTransfer;
@@ -16,6 +15,7 @@ use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityN
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationQueryContainerInterface;
+use Throwable;
 
 class SubscriptionHandler implements SubscriptionHandlerInterface
 {
@@ -60,7 +60,7 @@ class SubscriptionHandler implements SubscriptionHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @throws \Exception
+     * @throws \Throwable
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
@@ -77,10 +77,10 @@ class SubscriptionHandler implements SubscriptionHandlerInterface
             }
 
             $connection->commit();
-        } catch (Exception $e) {
+        } catch (Throwable $exception) {
             $connection->rollBack();
 
-            throw $e;
+            throw $exception;
         }
 
         return $subscriptionResponse;
@@ -89,7 +89,7 @@ class SubscriptionHandler implements SubscriptionHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @throws \Exception
+     * @throws \Throwable
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
@@ -103,10 +103,10 @@ class SubscriptionHandler implements SubscriptionHandlerInterface
             $subscriptionResponse = $this->createSubscriptionResponseTransfer($isSuccess);
 
             $connection->commit();
-        } catch (Exception $e) {
+        } catch (Throwable $exception) {
             $connection->rollBack();
 
-            throw $e;
+            throw $exception;
         }
 
         return $subscriptionResponse;

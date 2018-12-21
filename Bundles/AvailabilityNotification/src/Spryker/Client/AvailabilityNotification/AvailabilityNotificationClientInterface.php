@@ -13,6 +13,10 @@ use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 interface AvailabilityNotificationClientInterface
 {
     /**
+     * Specification:
+     * - Subscribe a user for product availability by AvailabilityNotificationSubscriptionTransfer.
+     * - Returns AvailabilityNotificationSubscriptionResponseTransfer.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
@@ -22,6 +26,10 @@ interface AvailabilityNotificationClientInterface
     public function subscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer;
 
     /**
+     * Specification:
+     * - Unsubscribe a user for product availability by AvailabilityNotificationSubscriptionTransfer.
+     * - Returns AvailabilityNotificationSubscriptionResponseTransfer.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
@@ -31,6 +39,10 @@ interface AvailabilityNotificationClientInterface
     public function unsubscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer;
 
     /**
+     * Specification:
+     * - Check if user is subscribed for product availability by AvailabilityNotificationSubscriptionTransfer.
+     * - Returns AvailabilityNotificationSubscriptionResponseTransfer.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
