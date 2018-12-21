@@ -1,7 +1,7 @@
 {
   "name": "spryker/cms-page-data-import",
   "description": "CmsPageDataImport module",
-  "license": "proprietary",
+  "license": "MIT",
   "require": {
     "php": ">=7.1",
     "spryker/cms": "^6.5.0",
