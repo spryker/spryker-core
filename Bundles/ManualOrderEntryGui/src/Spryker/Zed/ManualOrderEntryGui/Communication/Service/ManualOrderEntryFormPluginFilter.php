@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Service;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\ManualOrderEntryFormPluginInterface;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ManualOrderEntryFormPluginFilter
@@ -131,7 +131,7 @@ class ManualOrderEntryFormPluginFilter
     }
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\ManualOrderEntryFormPluginInterface $formPlugin
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface $formPlugin
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -142,7 +142,7 @@ class ManualOrderEntryFormPluginFilter
     }
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\ManualOrderEntryFormPluginInterface $formPlugin
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface $formPlugin
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return bool
@@ -153,7 +153,7 @@ class ManualOrderEntryFormPluginFilter
     }
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\ManualOrderEntryFormPluginInterface $formPlugin
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface $formPlugin
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
