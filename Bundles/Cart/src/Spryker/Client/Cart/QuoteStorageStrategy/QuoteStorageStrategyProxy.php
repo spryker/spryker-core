@@ -19,8 +19,8 @@ use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInt
 
 class QuoteStorageStrategyProxy implements QuoteStorageStrategyPluginInterface
 {
-    protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
-    protected const GLOSSARY_KEY_CHANGE_CURRENCY_FOR_QUOTE_DENIED = 'persistent_cart.quote.currency_change.denied';
+    protected const GLOSSARY_KEY_PERMISSION_FAILED = 'cart.locked.change_denied';
+    protected const GLOSSARY_KEY_CHANGE_CURRENCY_FOR_QUOTE_DENIED = 'cart.locked.currency_change_denied';
 
     /**
      * @var \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface
@@ -245,6 +245,8 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyPluginInterface
     {
         if (!$this->isQuoteEditable()) {
             $this->addPermissionFailedMessage();
+
+            return;
         }
 
         $this->quoteStorageStrategy->reloadItems();

@@ -70,7 +70,7 @@ class CartFactory extends AbstractFactory
      *
      * @return \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface
      */
-    public function createQuoteStorageStrategyProxy(
+    public function createQuoteStorageStrategy(
         CartClientInterface $cartClient
     ): QuoteStorageStrategyPluginInterface {
         return new QuoteStorageStrategyProxy(
