@@ -230,7 +230,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
         if ($productOptionGroupCollection->count() === 0) {
             throw new ProductOptionGroupNotFoundException(
                 sprintf(
-                    'Product option group with id "%d" not found.',
+                    'Product Option Group with id "%d" not found.',
                     $idProductOptionGroup
                 )
             );

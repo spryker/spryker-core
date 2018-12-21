@@ -142,7 +142,7 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
 
         if (!$productOptionGroupEntity) {
             throw new ProductOptionGroupNotFoundException(sprintf(
-                'Product option group with id "%s" not found.',
+                'Product Option Group with id "%s" not found.',
                 $idProductOptionGroup
             ));
         }
@@ -165,7 +165,7 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
 
         if (!$productAbstractEntity) {
             throw new AbstractProductNotFoundException(sprintf(
-                'Abstract product with sku "%s" not found.',
+                'Abstract Product with sku "%s" not found.',
                 $abstractSku
             ));
         }

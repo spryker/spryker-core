@@ -122,7 +122,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 
         if (!$productOptionGroupEntity) {
             throw new ProductOptionGroupNotFoundException(
-                sprintf('Product option group with id "%d" not found', $idProductOptionGroup)
+                sprintf('Product Option Group with id "%d" not found', $idProductOptionGroup)
             );
         }
 
