@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  */
 class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearchFacadeInterface
 {
@@ -61,5 +63,53 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
         $this->getFactory()
             ->createProductAbstractPagePublisher()
             ->unpublish($productAbstractIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return void
+     */
+    public function publishProductConcretes(array $productIds): void
+    {
+        $this->getFactory()
+            ->createProductConcretePageSearchPublisher()
+            ->publish($productIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return void
+     */
+    public function unpublishProductConcretes(array $productIds): void
+    {
+        $this->getFactory()
+            ->createProductConcretePageSearchPublisher()
+            ->unpublish($productIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function getProductConcretePageSearchTransfersByProductIds(array $productIds): array
+    {
+        return $this->getFactory()
+            ->createProductConcretePageSearchReader()
+            ->getProductConcretePageSearchTransfersByProductIds($productIds);
     }
 }
