@@ -5,12 +5,19 @@
   "require": {
     "php": ">=7.1",
     "spryker/company-user": "^2.0.0",
+    "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.17.0",
     "spryker/permission-extension": "^1.0.0",
-    "spryker/quote": "^2.0.0"
+    "spryker/quote": "^2.0.0",
+    "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company": "^1.0.0",
+    "spryker/company-role": "^1.0.0",
+    "spryker/permission": "^1.0.0",
+    "spryker/propel": "^3.0.0",
+    "spryker/store": "^1.0.0",
     "spryker/testify": "*"
   },
   "autoload": {

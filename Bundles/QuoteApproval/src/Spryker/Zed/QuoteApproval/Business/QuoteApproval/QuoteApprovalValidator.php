@@ -81,9 +81,9 @@ class QuoteApprovalValidator implements QuoteApprovalValidatorInterface
      */
     protected function hasUpdateQuoteApprovalPermissions(QuoteApprovalTransfer $quoteApprovalTransfer): bool
     {
-        $quoteTransfer = $this->quoteFacade->findQuoteById($quoteApprovalTransfer->getFkQuote());
+        $quoteResponseTransfer = $this->quoteFacade->findQuoteById($quoteApprovalTransfer->getFkQuote());
 
-        if (!$this->can(ApproveQuotePermissionPlugin::KEY, $quoteTransfer)) {
+        if (!$this->can(ApproveQuotePermissionPlugin::KEY, $quoteResponseTransfer->getQuoteTransfer())) {
             return false;
         }
 

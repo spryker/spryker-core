@@ -17,7 +17,7 @@ use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeBridge
  */
 class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_CUSTOMER = 'customer facade';
+    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const FACADE_QUOTE = 'FACADE_QUOTE';
 
     /**

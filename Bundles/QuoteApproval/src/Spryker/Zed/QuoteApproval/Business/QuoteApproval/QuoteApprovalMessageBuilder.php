@@ -14,6 +14,10 @@ use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterf
 
 class QuoteApprovalMessageBuilder implements QuoteApprovalMessageBuilderInterface
 {
+    protected const FIRST_NAME_PARAMETER = 'first_name';
+    protected const LAST_NAME_PARAMETER = 'last_name';
+    protected const MESSAGE_SUCCESS = 'quote_approval_widget.cart.success_message.';
+
     /**
      * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface
      */
@@ -44,12 +48,12 @@ class QuoteApprovalMessageBuilder implements QuoteApprovalMessageBuilderInterfac
      */
     public function getSuccessMessage(QuoteApprovalTransfer $quoteApprovalTransfer, string $status): MessageTransfer
     {
-        $quoteTransfer = $this->quoteFacade->findQuoteById($quoteApprovalTransfer->getFkQuote());
-        $customerResponseTransfer = $this->customerFacade->findCustomerByReference($quoteTransfer->getQuoteTransfer()->getCustomerReference());
-        $messageTransfer = (new MessageTransfer())->setValue('quote_approval_widget.cart.success_message.' . $status)
+        $quoteResponseTransfer = $this->quoteFacade->findQuoteById($quoteApprovalTransfer->getFkQuote());
+        $customerResponseTransfer = $this->customerFacade->findCustomerByReference($quoteResponseTransfer->getQuoteTransfer()->getCustomerReference());
+        $messageTransfer = (new MessageTransfer())->setValue(static::MESSAGE_SUCCESS . $status)
             ->setParameters([
-                'first_name' => $customerResponseTransfer->getCustomerTransfer()->getFirstName(),
-                'last_name' => $customerResponseTransfer->getCustomerTransfer()->getLastName(),
+                static::FIRST_NAME_PARAMETER => $customerResponseTransfer->getCustomerTransfer()->getFirstName(),
+                static::LAST_NAME_PARAMETER => $customerResponseTransfer->getCustomerTransfer()->getLastName(),
             ]);
 
         return $messageTransfer;
