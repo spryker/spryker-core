@@ -8,6 +8,7 @@
         <property name="queuePoolName" type="string" />
         <property name="storeName" type="string" />
         <property name="locale" type="string" />
+        <property name="headers" type="array" singular="header" />
     </transfer>
 
     <transfer name="QueueReceiveMessage">

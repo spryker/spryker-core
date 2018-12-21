@@ -8,9 +8,12 @@
 namespace Spryker\Zed\Event\Business\Dispatcher;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Zed\Event\Business\Exception\EventListenerAmbiguousException;
+use Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException;
 use Spryker\Zed\Event\Business\Logger\EventLoggerInterface;
 use Spryker\Zed\Event\Business\Queue\Producer\EventQueueProducerInterface;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
 use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
 
@@ -88,6 +91,101 @@ class EventDispatcher implements EventDispatcherInterface
                 $this->handleEventListeners($eventName, $transfers, $eventListener);
             }
         }
+    }
+
+    /**
+     * @param string $listenerName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     *
+     * @throws \Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException
+     *
+     * @return void
+     */
+    public function triggerByListenerName(string $listenerName, array $transfers): void
+    {
+        $listenerContext = $this->findEventListenerContext($listenerName);
+
+        if (is_subclass_of($listenerContext->getListenerName(), EventHandlerInterface::class)) {
+            foreach ($transfers as $transfer) {
+                $listenerContext->handle($transfer, 'console');
+            }
+
+            return;
+        }
+
+        if (is_subclass_of($listenerContext->getListenerName(), EventBulkHandlerInterface::class)) {
+            $listenerContext->handleBulk($transfers, 'console');
+
+            return;
+        }
+
+        throw new EventListenerNotFoundException(sprintf('%s is not a listener or class doesn\'t exists', $listenerName));
+    }
+
+    /**
+     * @param string $listenerName
+     *
+     * @throws \Spryker\Zed\Event\Business\Exception\EventListenerAmbiguousException
+     * @throws \Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException
+     *
+     * @return \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface
+     */
+    protected function findEventListenerContext(string $listenerName): EventListenerContextInterface
+    {
+        if ($this->isFullyQualifiedName($listenerName)) {
+            return new $listenerName();
+        }
+
+        $foundListeners = $this->findEventListenersByShortName($listenerName);
+
+        if (count($foundListeners) === 0) {
+            throw new EventListenerNotFoundException(sprintf(
+                'Please use Qualified name or Fully qualified name. There is no listener like %s.',
+                $listenerName
+            ));
+        }
+
+        if (count($foundListeners) > 1) {
+            throw new EventListenerAmbiguousException(sprintf(
+                "Please use Qualified name or Fully qualified name. Found listeners: \n%s",
+                implode(PHP_EOL, array_keys($foundListeners))
+            ));
+        }
+
+        return reset($foundListeners);
+    }
+
+    /**
+     * @param string $desiredEventListenerName
+     *
+     * @return \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface[]
+     */
+    protected function findEventListenersByShortName(string $desiredEventListenerName): array
+    {
+        $foundEventListeners = [];
+
+        foreach ($this->eventCollection as $eventName => $eventListeners) {
+            foreach ($eventListeners as $eventListener) {
+                /** @var \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener */
+                $compareSymbolsFromEnd = -(strlen($desiredEventListenerName));
+
+                if (substr($eventListener->getListenerName(), $compareSymbolsFromEnd) === $desiredEventListenerName) {
+                    $foundEventListeners[$eventListener->getListenerName()] = $eventListener;
+                }
+            }
+        }
+
+        return $foundEventListeners;
+    }
+
+    /**
+     * @param string $listenerName
+     *
+     * @return bool
+     */
+    protected function isFullyQualifiedName(string $listenerName): bool
+    {
+        return strpos($listenerName, '\\') === 0;
     }
 
     /**
