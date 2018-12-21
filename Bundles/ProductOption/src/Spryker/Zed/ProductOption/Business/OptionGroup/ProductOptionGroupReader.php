@@ -66,7 +66,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     public function getProductOptionGroupById($idProductOptionGroup)
     {
         return $this->hydrateProductOptionGroupTransfer(
-            $this->getProductOptionGroupEntityWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup)
+            $this->getProductOptionGroupEntityWithValuesAndValuePricesById($idProductOptionGroup)
         );
     }
 
@@ -221,7 +221,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
      */
-    protected function getProductOptionGroupEntityWithProductOptionValuesAndProductOptionValuePricesById(int $idProductOptionGroup): SpyProductOptionGroup
+    protected function getProductOptionGroupEntityWithValuesAndValuePricesById(int $idProductOptionGroup): SpyProductOptionGroup
     {
         $productOptionGroupCollection = $this->productOptionQueryContainer
             ->queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup)
