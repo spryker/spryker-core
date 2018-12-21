@@ -73,17 +73,16 @@ class ContentTable extends AbstractTable
      */
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
-        $baseData = [
+        $header = [
             ContentTableConstants::COL_ID_CONTENT => 'Content Item ID',
             ContentTableConstants::COL_NAME => 'Name',
             ContentTableConstants::COL_DESCRIPTION => 'Description',
             ContentTableConstants::COL_CONTENT_TYPE_CANDIDATE_KEY => 'Content Type',
             ContentTableConstants::COL_UPDATED_AT => 'Updated',
+            ContentTableConstants::COL_ACTIONS => 'Actions',
         ];
 
-        $actions = [ContentTableConstants::COL_ACTIONS => 'Actions'];
-
-        $config->setHeader($baseData + $actions);
+        $config->setHeader($header);
 
         return $config;
     }
@@ -107,7 +106,6 @@ class ContentTable extends AbstractTable
                 ContentTableConstants::COL_UPDATED_AT => $this->utilDateTimeService->formatDateTime($contentItem[SpyContentTableMap::COL_UPDATED_AT]),
                 ContentTableConstants::COL_ACTIONS => $this->buildLinks($contentItem),
             ];
-            unset($contentItems[$key]);
         }
 
         return $results;
