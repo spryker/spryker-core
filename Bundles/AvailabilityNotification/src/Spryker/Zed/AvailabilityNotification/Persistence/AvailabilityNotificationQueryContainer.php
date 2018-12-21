@@ -72,7 +72,6 @@ class AvailabilityNotificationQueryContainer extends AbstractQueryContainer impl
             ->setIgnoreCase(true);
     }
 
-
     /**
      * @api
      *

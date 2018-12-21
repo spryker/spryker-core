@@ -58,7 +58,8 @@ class SubscriptionManager implements SubscriptionManagerInterface
      *
      * @return void
      */
-    public function subscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): void {
+    public function subscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): void
+    {
         $availabilityNotificationSubscriptionTransfer->requireEmail();
         $availabilityNotificationSubscriptionTransfer->requireSku();
 

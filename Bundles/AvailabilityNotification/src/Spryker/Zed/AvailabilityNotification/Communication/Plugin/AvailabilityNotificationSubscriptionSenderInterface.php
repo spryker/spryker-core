@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
+namespace Spryker\Zed\AvailabilityNotification\Communication\Plugin;
 
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 

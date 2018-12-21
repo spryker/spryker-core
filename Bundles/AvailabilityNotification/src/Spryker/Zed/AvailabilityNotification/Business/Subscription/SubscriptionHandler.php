@@ -60,6 +60,8 @@ class SubscriptionHandler implements SubscriptionHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
+     * @throws \Exception
+     *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
     public function processAvailabilityNotificationSubscription(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
@@ -87,6 +89,8 @@ class SubscriptionHandler implements SubscriptionHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
+     * @throws \Exception
+     *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
     public function processAvailabilityNotificationUnsubscription(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
@@ -113,7 +117,8 @@ class SubscriptionHandler implements SubscriptionHandlerInterface
      *
      * @return void
      */
-    protected function sendSubscribedMail(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): void {
+    protected function sendSubscribedMail(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): void
+    {
         $mailTransfer = (new MailTransfer())
             ->setType(AvailabilityNotificationSubscribedMailTypePlugin::MAIL_TYPE)
             ->setAvailabilityNotificationSubscription($availabilityNotificationSubscriptionTransfer)
@@ -139,7 +144,8 @@ class SubscriptionHandler implements SubscriptionHandlerInterface
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    protected function processSubscription(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer {
+    protected function processSubscription(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
+    {
         $isEmailValid = $this->utilValidateService->isEmailFormatValid($availabilityNotificationSubscriptionTransfer->getEmail());
 
         if (!$isEmailValid) {

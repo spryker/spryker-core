@@ -27,7 +27,6 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
 
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
 
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -77,7 +76,6 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
 
         return $container;
     }
-
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

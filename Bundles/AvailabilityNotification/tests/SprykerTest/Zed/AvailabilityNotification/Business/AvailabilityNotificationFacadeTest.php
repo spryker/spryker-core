@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Container;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group AvailabilityNotification
@@ -64,7 +65,6 @@ class AvailabilityNotificationFacadeTest extends Unit
         $response = $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
 
         $this->assertFalse($response->getIsSuccess());
-
     }
 
     /**

@@ -33,7 +33,7 @@ class AvailabilityNotificationStub implements AvailabilityNotificationStubInterf
      */
     public function subscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
     {
-        /** @var AvailabilityNotificationSubscriptionResponseTransfer $availabilityNotificationResponseTransfer */
+        /** @var \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer $availabilityNotificationResponseTransfer */
         $availabilityNotificationResponseTransfer = $this->zedRequestClient->call('/availability-notification/gateway/subscribe', $availabilityNotificationSubscriptionTransfer);
 
         return $availabilityNotificationResponseTransfer;
@@ -46,7 +46,7 @@ class AvailabilityNotificationStub implements AvailabilityNotificationStubInterf
      */
     public function unsubscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
     {
-        /** @var AvailabilityNotificationSubscriptionResponseTransfer $availabilityNotificationResponseTransfer */
+        /** @var \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer $availabilityNotificationResponseTransfer */
         $availabilityNotificationResponseTransfer = $this->zedRequestClient->call('/availability-notification/gateway/unsubscribe', $availabilityNotificationSubscriptionTransfer);
 
         return $availabilityNotificationResponseTransfer;
@@ -59,7 +59,7 @@ class AvailabilityNotificationStub implements AvailabilityNotificationStubInterf
      */
     public function checkSubscription(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
     {
-        /** @var AvailabilityNotificationSubscriptionResponseTransfer $availabilityNotificationResponseTransfer */
+        /** @var \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer $availabilityNotificationResponseTransfer */
         $availabilityNotificationResponseTransfer = $this->zedRequestClient->call('/availability-notification/gateway/check-subscription', $availabilityNotificationSubscriptionTransfer);
 
         return $availabilityNotificationResponseTransfer;
