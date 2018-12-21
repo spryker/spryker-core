@@ -32,4 +32,7 @@
         <property name="quoteApprovals" type="QuoteApproval[]" singular="quoteApproval"/>
     </transfer>
 
+    <transfer name="CompanyUser">
+    </transfer>
+
 </transfers>
