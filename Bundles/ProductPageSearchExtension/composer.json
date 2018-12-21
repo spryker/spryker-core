@@ -10,6 +10,9 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/search": "If you want to use ProductConcretePageMapExpanderPluginInterface: ^1.0.0."
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
