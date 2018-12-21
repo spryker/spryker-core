@@ -51,7 +51,7 @@ class AvailabilityNotificationFacadeTest extends Unit
 
         $response = $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
 
-        $this->assertTrue($response->getIsSuccess(), (bool)$response->getErrorMessage());
+        $this->assertTrue($response->getIsSuccess());
     }
 
     /**
@@ -70,7 +70,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSubscribeForAlreadySubscribedTypeShouldFail()
+    public function testSubscribeForAlreadySubscribedTypeShouldSucceed()
     {
         $availabilityNotificationSubscription = $this->createSubscription();
 
@@ -78,13 +78,13 @@ class AvailabilityNotificationFacadeTest extends Unit
 
         $response = $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
 
-        $this->assertFalse($response->getIsSuccess());
+        $this->assertTrue($response->getIsSuccess());
     }
 
     /**
      * @return void
      */
-    public function testCheckSubscriptionForSubscribedTypesShouldSucceed()
+    public function testCheckSubscriptionForAlreadySubscribedShouldSucceed()
     {
         $availabilityNotificationSubscription = $this->createSubscription();
 
@@ -92,13 +92,13 @@ class AvailabilityNotificationFacadeTest extends Unit
 
         $response = $this->availabilityNotificationFacade->checkSubscription($availabilityNotificationSubscription);
 
-        $this->assertTrue($response->getIsSuccess(), (bool)$response->getErrorMessage());
+        $this->assertTrue($response->getIsSuccess());
     }
 
     /**
      * @return void
      */
-    public function testCheckSubscriptionForNotSubscribedTypesShouldFail()
+    public function testCheckSubscriptionForNotSubscribedShouldFail()
     {
         $availabilityNotificationSubscription = $this->createSubscription();
 
