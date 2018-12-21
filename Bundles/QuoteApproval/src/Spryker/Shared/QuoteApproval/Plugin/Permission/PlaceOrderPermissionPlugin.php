@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\QuoteApproval\Plugin\Permission;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 
 class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
@@ -30,7 +31,7 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
      */
     public function can(array $configuration, $quoteTransfer = null): bool
     {
-        if ($quoteTransfer === null) {
+        if ($quoteTransfer === null || !($quoteTransfer instanceof QuoteTransfer)) {
             return false;
         }
 

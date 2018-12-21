@@ -15,4 +15,7 @@
         <property name="updatedAt" type="string"/>
     </transfer>
 
+    <transfer name="CompanyUser">
+    </transfer>
+    
 </transfers>
