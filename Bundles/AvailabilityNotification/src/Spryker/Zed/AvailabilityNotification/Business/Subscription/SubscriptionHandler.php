@@ -7,15 +7,14 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
-use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
-use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Shared\AvailabilityNotification\Messages\Messages;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationSubscribedMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface;
-use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationQueryContainerInterface;
-use Throwable;
+use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface;
 
 class SubscriptionHandler implements SubscriptionHandlerInterface
 {
@@ -25,9 +24,9 @@ class SubscriptionHandler implements SubscriptionHandlerInterface
     protected $subscriptionManager;
 
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationQueryContainerInterface
+     * @var \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface
      */
-    protected $queryContainer;
+    protected $repository;
 
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface
@@ -41,98 +40,75 @@ class SubscriptionHandler implements SubscriptionHandlerInterface
 
     /**
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\SubscriptionManagerInterface $subscriptionManager
-     * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface $repository
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface $mailFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface $utilValidateService
      */
     public function __construct(
         SubscriptionManagerInterface $subscriptionManager,
-        AvailabilityNotificationQueryContainerInterface $queryContainer,
+        AvailabilityNotificationRepositoryInterface $repository,
         AvailabilityNotificationToMailFacadeInterface $mailFacade,
         AvailabilityNotificationToUtilValidateServiceInterface $utilValidateService
     ) {
         $this->subscriptionManager = $subscriptionManager;
-        $this->queryContainer = $queryContainer;
+        $this->repository = $repository;
         $this->mailFacade = $mailFacade;
         $this->utilValidateService = $utilValidateService;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @throws \Throwable
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function processAvailabilityNotificationSubscription(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
+    public function processAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
-        $connection = $this->queryContainer->getConnection();
-        $connection->beginTransaction();
+        $subscriptionResponse = $this->processSubscription($availabilityNotificationSubscriptionTransfer);
 
-        try {
-            $subscriptionResponse = $this->processSubscription($availabilityNotificationSubscriptionTransfer);
-
-            if ($subscriptionResponse->getIsSuccess()) {
-                $this->sendSubscribedMail($availabilityNotificationSubscriptionTransfer);
-            }
-
-            $connection->commit();
-        } catch (Throwable $exception) {
-            $connection->rollBack();
-
-            throw $exception;
+        if ($subscriptionResponse->getIsSuccess()) {
+            $this->sendSubscribedMail($availabilityNotificationSubscriptionTransfer);
         }
 
         return $subscriptionResponse;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @throws \Throwable
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function processAvailabilityNotificationUnsubscription(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
+    public function processAvailabilityNotificationUnsubscription(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
-        $connection = $this->queryContainer->getConnection();
-        $connection->beginTransaction();
+        $isSuccess = $this->subscriptionManager->unsubscribe($availabilityNotificationSubscriptionTransfer);
 
-        try {
-            $isSuccess = $this->subscriptionManager->unsubscribe($availabilityNotificationSubscriptionTransfer);
-            $subscriptionResponse = $this->createSubscriptionResponseTransfer($isSuccess);
-
-            $connection->commit();
-        } catch (Throwable $exception) {
-            $connection->rollBack();
-
-            throw $exception;
-        }
-
-        return $subscriptionResponse;
+        return $this->createSubscriptionResponseTransfer($isSuccess);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return void
      */
-    protected function sendSubscribedMail(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): void
+    protected function sendSubscribedMail(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): void
     {
         $mailTransfer = (new MailTransfer())
             ->setType(AvailabilityNotificationSubscribedMailTypePlugin::MAIL_TYPE)
-            ->setAvailabilityNotificationSubscription($availabilityNotificationSubscriptionTransfer)
+            ->setAvailabilitySubscription($availabilityNotificationSubscriptionTransfer)
             ->setLocale($availabilityNotificationSubscriptionTransfer->getLocale());
 
         $this->mailFacade->handleMail($mailTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function checkAvailabilityNotificationSubscription(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
+    public function checkAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         $isAlreadySubscribed = $this->subscriptionManager->isAlreadySubscribed($availabilityNotificationSubscriptionTransfer);
 
@@ -140,11 +116,11 @@ class SubscriptionHandler implements SubscriptionHandlerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    protected function processSubscription(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
+    protected function processSubscription(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         $isEmailValid = $this->utilValidateService->isEmailFormatValid($availabilityNotificationSubscriptionTransfer->getEmail());
 
@@ -164,9 +140,9 @@ class SubscriptionHandler implements SubscriptionHandlerInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    protected function createInvalidEmailResponse(): AvailabilityNotificationSubscriptionResponseTransfer
+    protected function createInvalidEmailResponse(): AvailabilitySubscriptionResponseTransfer
     {
         return $this->createSubscriptionResponseTransfer(false)
             ->setErrorMessage(Messages::INVALID_EMAIL_FORMAT);
@@ -175,10 +151,10 @@ class SubscriptionHandler implements SubscriptionHandlerInterface
     /**
      * @param bool $isSuccess
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    protected function createSubscriptionResponseTransfer(bool $isSuccess): AvailabilityNotificationSubscriptionResponseTransfer
+    protected function createSubscriptionResponseTransfer(bool $isSuccess): AvailabilitySubscriptionResponseTransfer
     {
-        return (new AvailabilityNotificationSubscriptionResponseTransfer())->setIsSuccess($isSuccess);
+        return (new AvailabilitySubscriptionResponseTransfer())->setIsSuccess($isSuccess);
     }
 }

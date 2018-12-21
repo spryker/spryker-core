@@ -8,11 +8,13 @@
 namespace Spryker\Zed\AvailabilityNotification\Communication;
 
 use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationDependencyProvider;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToGlossaryFacadeInterface;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
- * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface getQueryContainer()
  * @method \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacadeInterface getFacade()
  */
 class AvailabilityNotificationCommunicationFactory extends AbstractCommunicationFactory
@@ -20,7 +22,7 @@ class AvailabilityNotificationCommunicationFactory extends AbstractCommunication
     /**
      * @return \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface
      */
-    public function getMailFacade()
+    public function getMailFacade(): AvailabilityNotificationToMailFacadeInterface
     {
         return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::FACADE_MAIL);
     }
@@ -28,7 +30,7 @@ class AvailabilityNotificationCommunicationFactory extends AbstractCommunication
     /**
      * @return \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToGlossaryFacadeInterface
      */
-    public function getGlossaryFacade()
+    public function getGlossaryFacade(): AvailabilityNotificationToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::FACADE_GLOSSARY);
     }

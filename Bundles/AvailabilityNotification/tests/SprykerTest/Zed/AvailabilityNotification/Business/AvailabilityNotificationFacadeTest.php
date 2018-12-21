@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\AvailabilityNotification\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationDependencyProvider;
 use Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationBusinessFactory;
 use Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacade;
@@ -127,11 +127,11 @@ class AvailabilityNotificationFacadeTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
      */
     protected function createSubscription()
     {
-        $subscription = new AvailabilityNotificationSubscriptionTransfer();
+        $subscription = new AvailabilitySubscriptionTransfer();
         $subscription->setEmail('example@spryker.com');
         $subscription->setSku('123_123');
         $subscription->setSubscriptionKey('example@spryker.com');
@@ -140,11 +140,11 @@ class AvailabilityNotificationFacadeTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
      */
     protected function createInvalidSubscription()
     {
-        $subscription = new AvailabilityNotificationSubscriptionTransfer();
+        $subscription = new AvailabilitySubscriptionTransfer();
         $subscription->setEmail('invalid<>example@spryker.com');
         $subscription->setSku('123_123');
         $subscription->setSubscriptionKey('invalid<>example@spryker.com');

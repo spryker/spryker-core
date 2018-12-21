@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Communication\Controller;
 
-use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -16,31 +17,31 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function subscribeAction(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer)
+    public function subscribeAction(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         return $this->getFacade()->subscribe($availabilityNotificationSubscriptionTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function unsubscribeAction(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer)
+    public function unsubscribeAction(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         return $this->getFacade()->unsubscribe($availabilityNotificationSubscriptionTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function checkSubscriptionAction(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer)
+    public function checkSubscriptionAction(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         return $this->getFacade()->checkSubscription($availabilityNotificationSubscriptionTransfer);
     }

@@ -7,47 +7,47 @@
 
 namespace Spryker\Client\AvailabilityNotification;
 
-use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
-use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 
 interface AvailabilityNotificationClientInterface
 {
     /**
      * Specification:
-     * - Subscribe a user for product availability by AvailabilityNotificationSubscriptionTransfer.
-     * - Returns AvailabilityNotificationSubscriptionResponseTransfer.
+     * - Subscribe a user for product availability.
+     * - Returns AvailabilitySubscriptionResponseTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function subscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer;
+    public function subscribe(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer;
 
     /**
      * Specification:
-     * - Unsubscribe a user for product availability by AvailabilityNotificationSubscriptionTransfer.
-     * - Returns AvailabilityNotificationSubscriptionResponseTransfer.
+     * - Unsubscribe a user for product availability.
+     * - Returns AvailabilitySubscriptionResponseTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function unsubscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer;
+    public function unsubscribe(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer;
 
     /**
      * Specification:
-     * - Check if user is subscribed for product availability by AvailabilityNotificationSubscriptionTransfer.
-     * - Returns AvailabilityNotificationSubscriptionResponseTransfer.
+     * - Check if user is subscribed for product availability.
+     * - Returns AvailabilitySubscriptionResponseTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function checkSubscription(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer;
+    public function checkSubscription(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer;
 }

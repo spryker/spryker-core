@@ -7,63 +7,60 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business;
 
-use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 
 interface AvailabilityNotificationFacadeInterface
 {
     /**
      * Specification:
-     * - Identifies subscription by provided subscription email in a case insensitive way.
-     * - Adds subscription to each provided AvailabilityNotification type:
+     * - Subscribe by provided subscription email, customer reference, product sku in a case insensitive way.
+     * - Adds subscription:
      *      - Validates email.
-     *      - Registers subscription if subscription is not registered already.
+     *      - Create subscription if subscription is not created already.
      *      - Sends confirmation email.
-     *      - Sets subscription as confirmed.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function subscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer);
+    public function subscribe(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer;
 
     /**
      * Specification:
-     * - Checks if the provided subscription is subscribed to any of the provided AvailabilityNotification type using case insensitive email matching.
-     * - Returns with a list, each element contains the result for a AvailabilityNotification type.
+     * - Checks if the provided subscription is already existing.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function checkSubscription(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer);
+    public function checkSubscription(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer;
 
     /**
      * Specification:
-     * - Unsubscribes provided subscription from provided AvailabilityNotification type list using case insensitive email matching.
-     * - Sends unsubscribed mail for each AvailabilityNotification type.
+     * - Remove provided subscription.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function unsubscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer);
+    public function unsubscribe(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer;
 
     /**
      * Specification:
-     * - Unsubscribes provided subscription from provided AvailabilityNotification types.
      * - Anonymizes personal information of the provided subscription.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return void
      */
-    public function anonymizeSubscription(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer);
+    public function anonymizeSubscription(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): void;
 }

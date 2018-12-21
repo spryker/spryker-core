@@ -15,7 +15,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  * @method \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacadeInterface getFacade()
  * @method \Spryker\Zed\AvailabilityNotification\Communication\AvailabilityNotificationCommunicationFactory getFactory()
  * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
- * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface getQueryContainer()
  */
 class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
@@ -53,7 +53,7 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      *
      * @return $this
      */
-    protected function setSubject(MailBuilderInterface $mailBuilder)
+    protected function setSubject(MailBuilderInterface $mailBuilder): self
     {
         $mailBuilder->setSubject('mail.availability_notification.subscribed.subject');
 
@@ -65,7 +65,7 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      *
      * @return $this
      */
-    protected function setHtmlTemplate(MailBuilderInterface $mailBuilder)
+    protected function setHtmlTemplate(MailBuilderInterface $mailBuilder): self
     {
         $mailBuilder->setHtmlTemplate('AvailabilityNotification/mail/subscribed.html.twig');
 
@@ -77,7 +77,7 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      *
      * @return $this
      */
-    protected function setTextTemplate(MailBuilderInterface $mailBuilder)
+    protected function setTextTemplate(MailBuilderInterface $mailBuilder): self
     {
         $mailBuilder->setTextTemplate('AvailabilityNotification/mail/subscribed.text.twig');
 
@@ -89,9 +89,9 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      *
      * @return $this
      */
-    protected function setRecipient(MailBuilderInterface $mailBuilder)
+    protected function setRecipient(MailBuilderInterface $mailBuilder): self
     {
-        $customerTransfer = $mailBuilder->getMailTransfer()->requireAvailabilityNotificationSubscription()->getAvailabilityNotificationSubscription();
+        $customerTransfer = $mailBuilder->getMailTransfer()->requireAvailabilitySubscription()->getAvailabilitySubscription();
 
         $mailBuilder->addRecipient($customerTransfer->getEmail(), '');
 
@@ -103,7 +103,7 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      *
      * @return $this
      */
-    protected function setSender(MailBuilderInterface $mailBuilder)
+    protected function setSender(MailBuilderInterface $mailBuilder): self
     {
         $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
 

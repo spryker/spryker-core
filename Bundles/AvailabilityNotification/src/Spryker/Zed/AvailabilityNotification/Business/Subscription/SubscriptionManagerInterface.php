@@ -7,36 +7,36 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
-use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscription;
 
 interface SubscriptionManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return void
      */
-    public function subscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): void;
+    public function subscribe(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): void;
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return bool
      */
-    public function isAlreadySubscribed(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): bool;
+    public function isAlreadySubscribed(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): bool;
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return bool
      */
-    public function unsubscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): bool;
+    public function unsubscribe(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): bool;
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscription
      */
-    public function createSubscriptionEntityFromTransfer(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): SpyAvailabilitySubscription;
+    public function createSubscriptionEntityFromTransfer(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): SpyAvailabilitySubscription;
 }

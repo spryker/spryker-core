@@ -7,18 +7,18 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
-use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscription;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
-use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationQueryContainerInterface;
+use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface;
 
 class SubscriptionManager implements SubscriptionManagerInterface
 {
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationQueryContainerInterface
+     * @var \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface
      */
-    protected $queryContainer;
+    protected $repository;
 
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\SubscriptionKeyGeneratorInterface
@@ -36,29 +36,29 @@ class SubscriptionManager implements SubscriptionManagerInterface
     protected $availabilityNotificationToLocaleFacade;
 
     /**
-     * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface $repository
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\SubscriptionKeyGeneratorInterface $subscriptionKeyGenerator
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface $availabilityNotificationToStoreClient
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface $availabilityNotificationToLocaleFacade
      */
     public function __construct(
-        AvailabilityNotificationQueryContainerInterface $queryContainer,
+        AvailabilityNotificationRepositoryInterface $repository,
         SubscriptionKeyGeneratorInterface $subscriptionKeyGenerator,
         AvailabilityNotificationToStoreFacadeInterface $availabilityNotificationToStoreClient,
         AvailabilityNotificationToLocaleFacadeInterface $availabilityNotificationToLocaleFacade
     ) {
-        $this->queryContainer = $queryContainer;
+        $this->repository = $repository;
         $this->subscriptionKeyGenerator = $subscriptionKeyGenerator;
         $this->availabilityNotificationToStoreClient = $availabilityNotificationToStoreClient;
         $this->availabilityNotificationToLocaleFacade = $availabilityNotificationToLocaleFacade;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return void
      */
-    public function subscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): void
+    public function subscribe(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): void
     {
         $availabilityNotificationSubscriptionTransfer->requireEmail();
         $availabilityNotificationSubscriptionTransfer->requireSku();
@@ -69,38 +69,37 @@ class SubscriptionManager implements SubscriptionManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return bool
      */
     public function isAlreadySubscribed(
-        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+        AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
     ): bool {
         $availabilityNotificationSubscriptionTransfer->requireEmail();
         $availabilityNotificationSubscriptionTransfer->requireSku();
 
         $currentStore = $this->availabilityNotificationToStoreClient->getCurrentStore();
 
-        $subscriptionCount = $this->queryContainer
-            ->querySubscriptionByEmailAndSkuAndStore(
+        $subscription = $this->repository
+            ->findOneSubscriptionByEmailAndSkuAndStore(
                 $availabilityNotificationSubscriptionTransfer->getEmail(),
                 $availabilityNotificationSubscriptionTransfer->getSku(),
                 $currentStore
-            )
-            ->count();
+            );
 
-        return $subscriptionCount > 0;
+        return $subscription !== null;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return bool
      */
     public function unsubscribe(
-        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+        AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
     ): bool {
-        $subscriptionEntity = $this->getSubscription($availabilityNotificationSubscriptionTransfer);
+        $subscriptionEntity = $this->findExistingSubscription($availabilityNotificationSubscriptionTransfer);
 
         if ($subscriptionEntity !== null) {
             $subscriptionEntity->delete();
@@ -112,49 +111,46 @@ class SubscriptionManager implements SubscriptionManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscription|null
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    protected function getSubscription(
-        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
-    ) {
+    protected function findExistingSubscription(
+        AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+    ): ?AvailabilitySubscriptionTransfer {
         if ($availabilityNotificationSubscriptionTransfer->getSubscriptionKey() !== null) {
-            return $this->queryContainer
-                ->querySubscriptionBySubscriptionKey($availabilityNotificationSubscriptionTransfer->getSubscriptionKey())
-                ->findOne();
+            return $this->repository
+                ->findOneSubscriptionBySubscriptionKey($availabilityNotificationSubscriptionTransfer->getSubscriptionKey());
         }
 
         if ($availabilityNotificationSubscriptionTransfer->getEmail() !== null) {
-            return $this->queryContainer
-                ->querySubscriptionByEmailAndSkuAndStore(
+            return $this->repository
+                ->findOneSubscriptionByEmailAndSkuAndStore(
                     $availabilityNotificationSubscriptionTransfer->getEmail(),
                     $availabilityNotificationSubscriptionTransfer->getSku(),
                     $availabilityNotificationSubscriptionTransfer->getStore()
-                )
-                ->findOne();
+                );
         }
 
         if ($availabilityNotificationSubscriptionTransfer->getCustomerReference() !== null) {
-            return $this->queryContainer
-                ->querySubscriptionByCustomerReferenceAndSkuAndStore(
+            return $this->repository
+                ->findOneSubscriptionByCustomerReferenceAndSkuAndStore(
                     $availabilityNotificationSubscriptionTransfer->getCustomerReference(),
                     $availabilityNotificationSubscriptionTransfer->getSku(),
                     $availabilityNotificationSubscriptionTransfer->getStore()
-                )
-                ->findOne();
+                );
         }
 
         return null;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscription
      */
     public function createSubscriptionEntityFromTransfer(
-        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+        AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
     ): SpyAvailabilitySubscription {
         $subscriptionEntity = new SpyAvailabilitySubscription();
         $subscriptionEntity->fromArray($availabilityNotificationSubscriptionTransfer->toArray());

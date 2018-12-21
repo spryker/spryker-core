@@ -8,8 +8,6 @@
 namespace Spryker\Zed\AvailabilityNotification\Business;
 
 use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationDependencyProvider;
-use Spryker\Zed\AvailabilityNotification\Business\Anonymizer\SubscriptionAnonymizer;
-use Spryker\Zed\AvailabilityNotification\Business\Anonymizer\SubscriptionAnonymizerInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\SubscriptionHandler;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\SubscriptionHandlerInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\SubscriptionKeyGenerator;
@@ -24,7 +22,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
- * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface getRepository()()
  */
 class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
 {
@@ -35,7 +33,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     {
         return new SubscriptionHandler(
             $this->createSubscriptionManager(),
-            $this->getQueryContainer(),
+            $this->getRepository(),
             $this->getMailFacade(),
             $this->getUtilValidateService()
         );
@@ -47,21 +45,10 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     protected function createSubscriptionManager(): SubscriptionManagerInterface
     {
         return new SubscriptionManager(
-            $this->getQueryContainer(),
+            $this->getRepository(),
             $this->createSubscriptionKeyGenerator(),
             $this->getStoreFacade(),
             $this->getLocaleFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\AvailabilityNotification\Business\Anonymizer\SubscriptionAnonymizerInterface
-     */
-    public function createSubscriptionAnonymizer(): SubscriptionAnonymizerInterface
-    {
-        return new SubscriptionAnonymizer(
-            $this->getQueryContainer(),
-            $this->createSubscriptionHandler()
         );
     }
 

@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business;
 
-use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -16,51 +17,58 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class AvailabilityNotificationFacade extends AbstractFacade implements AvailabilityNotificationFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Subscribe by provided subscription email, customer reference, product sku in a case insensitive way.
+     * - Adds subscription:
+     *      - Validates email.
+     *      - Create subscription if subscription is not created already.
+     *      - Sends confirmation email.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function subscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer)
+    public function subscribe(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         $subscriptionResponse = $this->getFactory()
             ->createSubscriptionHandler()
-            ->processAvailabilityNotificationSubscription($availabilityNotificationSubscriptionTransfer);
+            ->processAvailabilitySubscription($availabilityNotificationSubscriptionTransfer);
 
         return $subscriptionResponse;
     }
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Checks if the provided subscription is already existing.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function checkSubscription(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer)
+    public function checkSubscription(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         $subscriptionResponse = $this->getFactory()
             ->createSubscriptionHandler()
-            ->checkAvailabilityNotificationSubscription($availabilityNotificationSubscriptionTransfer);
+            ->checkAvailabilitySubscription($availabilityNotificationSubscriptionTransfer);
 
         return $subscriptionResponse;
     }
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Remove provided subscription.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function unsubscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer)
+    public function unsubscribe(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         $subscriptionResponse = $this->getFactory()
             ->createSubscriptionHandler()
@@ -70,18 +78,16 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
     }
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Anonymizes personal information of the provided subscription.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return void
      */
-    public function anonymizeSubscription(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer)
+    public function anonymizeSubscription(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): void
     {
-        $this->getFactory()
-            ->createSubscriptionAnonymizer()
-            ->process($availabilityNotificationSubscriptionTransfer);
     }
 }
