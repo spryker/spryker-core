@@ -69,7 +69,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
      */
     protected function persistAddresses(QuoteTransfer $quoteTransfer, CustomerTransfer $customer)
     {
-        if ($quoteTransfer->getSkipAddressSaving()) {
+        if ($quoteTransfer->getIsAddressSavingSkipped()) {
             return;
         }
 
