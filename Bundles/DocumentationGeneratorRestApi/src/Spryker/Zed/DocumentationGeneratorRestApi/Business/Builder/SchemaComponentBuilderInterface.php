@@ -67,4 +67,27 @@ interface SchemaComponentBuilderInterface
      * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
     public function createArrayOfTypesPropertyTransfer(string $name, string $itemsType): SchemaPropertyTransfer;
+
+    /**
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
+     */
+    public function createArrayOfMixedTypesPropertyTransfer(string $name): SchemaPropertyTransfer;
+
+    /**
+     * @param string $metadataKey
+     * @param array $metadataValue
+     *
+     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
+     */
+    public function createResponseSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer;
+
+    /**
+     * @param string $metadataKey
+     * @param array $metadataValue
+     *
+     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
+     */
+    public function createRequestSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer;
 }
