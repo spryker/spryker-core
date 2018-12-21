@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/availability-notification.svg)](https://travis-ci.org/spryker/availability-notification)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/availability-notification/badge.svg)](https://coveralls.io/github/spryker/availability-notification)
 
-{{ADD DESCRIPTION HERE}}
+Allow user to subscribe for product availability and be notified when product is back in the stock again
 
 ## Installation
 
