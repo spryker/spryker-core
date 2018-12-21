@@ -5,25 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShoppingListsRestApi\Communication\Controller;
+namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem;
 
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
-/**
- * @method \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade getFacade()
- */
-class GatewayController extends AbstractGatewayController
+interface ShoppingListItemAdderInterface
 {
-    /**
+    /***
      * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function addItemAction(
+    public function addItem(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
-    ): ShoppingListItemTransfer {
-        return $this->getFacade()->addItem($restShoppingListItemRequestTransfer);
-    }
+    ): ShoppingListItemTransfer;
 }

@@ -109,7 +109,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
             ->mapTransferToEntity($shoppingListItemTransfer, new SpyShoppingListItem());
 
         $shoppingListItemEntity->save();
-        $shoppingListItemTransfer->setIdShoppingListItem($shoppingListItemEntity->getIdShoppingListItem());
+        $shoppingListItemTransfer->fromArray($shoppingListItemEntity->toArray(), true);
 
         return $shoppingListItemTransfer;
     }

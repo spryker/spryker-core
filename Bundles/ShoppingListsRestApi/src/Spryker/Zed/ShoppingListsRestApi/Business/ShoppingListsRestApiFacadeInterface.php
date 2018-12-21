@@ -7,6 +7,23 @@
 
 namespace Spryker\Zed\ShoppingListsRestApi\Business;
 
+use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
+
 interface ShoppingListsRestApiFacadeInterface
 {
+    /**
+     * Specification:
+     *  - Adds item to shopping list
+     *  - Required values of RestShoppingListItemRequestTransfer: shoppingListItem, shoppingListUuid, companyUserUuid, customerReference.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function addItem(
+        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+    ): ShoppingListItemTransfer;
 }

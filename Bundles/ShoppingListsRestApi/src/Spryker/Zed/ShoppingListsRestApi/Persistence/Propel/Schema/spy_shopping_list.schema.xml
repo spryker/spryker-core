@@ -15,4 +15,14 @@
         </behavior>
     </table>
 
+    <table name="spy_shopping_list_item">
+        <column name="uuid" required="false" type="VARCHAR" size="36"/>
+        <unique name="spy_shopping_list_item-unique-uuid">
+            <unique-column name="uuid"/>
+        </unique>
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_shopping_list_item.fk_shopping_list"/>
+        </behavior>
+    </table>
+
 </database>
