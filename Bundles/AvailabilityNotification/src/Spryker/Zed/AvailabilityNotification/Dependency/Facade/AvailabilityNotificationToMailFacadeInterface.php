@@ -9,12 +9,12 @@ namespace Spryker\Zed\AvailabilityNotification\Dependency\Facade;
 
 use Generated\Shared\Transfer\MailTransfer;
 
-interface AvailabilityNotificationToMailInterface
+interface AvailabilityNotificationToMailFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
-     * @return mixed
+     * @return void
      */
-    public function handleMail(MailTransfer $mailTransfer);
+    public function handleMail(MailTransfer $mailTransfer): void;
 }

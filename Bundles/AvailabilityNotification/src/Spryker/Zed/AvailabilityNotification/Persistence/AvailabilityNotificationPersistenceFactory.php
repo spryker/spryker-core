@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence;
 
-use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery;
+use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -17,10 +17,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 class AvailabilityNotificationPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery
+     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery
      */
     public function createAvailabilityNotificationSubscriptionQuery()
     {
-        return SpyAvailabilityNotificationSubscriptionQuery::create();
+        return SpyAvailabilitySubscriptionQuery::create();
     }
 }

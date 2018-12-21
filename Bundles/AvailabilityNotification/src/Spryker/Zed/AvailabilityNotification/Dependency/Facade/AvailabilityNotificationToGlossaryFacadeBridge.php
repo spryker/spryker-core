@@ -8,8 +8,9 @@
 namespace Spryker\Zed\AvailabilityNotification\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 
-class AvailabilityNotificationToGlossaryBridge implements AvailabilityNotificationToGlossaryInterface
+class AvailabilityNotificationToGlossaryFacadeBridge implements AvailabilityNotificationToGlossaryFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
@@ -30,7 +31,7 @@ class AvailabilityNotificationToGlossaryBridge implements AvailabilityNotificati
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null)
+    public function hasTranslation($keyName, ?LocaleTransfer $locale = null): bool
     {
         return $this->glossaryFacade->hasTranslation($keyName, $locale);
     }
@@ -41,7 +42,7 @@ class AvailabilityNotificationToGlossaryBridge implements AvailabilityNotificati
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $locale)
+    public function getTranslation($keyName, LocaleTransfer $locale): TranslationTransfer
     {
         return $this->glossaryFacade->getTranslation($keyName, $locale);
     }

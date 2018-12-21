@@ -9,7 +9,7 @@ namespace Spryker\Zed\AvailabilityNotification\Dependency\Facade;
 
 use Generated\Shared\Transfer\MailTransfer;
 
-class AvailabilityNotificationToMailBridge implements AvailabilityNotificationToMailInterface
+class AvailabilityNotificationToMailFacadeBridge implements AvailabilityNotificationToMailFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Mail\Business\MailFacadeInterface
@@ -29,7 +29,7 @@ class AvailabilityNotificationToMailBridge implements AvailabilityNotificationTo
      *
      * @return void
      */
-    public function handleMail(MailTransfer $mailTransfer)
+    public function handleMail(MailTransfer $mailTransfer): void
     {
         $this->mailFacade->handleMail($mailTransfer);
     }

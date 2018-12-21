@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence;
 
+use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery;
+
 interface AvailabilityNotificationQueryContainerInterface
 {
     /**
@@ -14,53 +17,36 @@ interface AvailabilityNotificationQueryContainerInterface
      *
      * @param string $email
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery
+     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery
      */
-    public function querySubscriptionByEmailAndSku($email, $sku);
+    public function querySubscriptionByEmailAndSkuAndStore(string $email, string $sku, StoreTransfer $storeTransfer): SpyAvailabilitySubscriptionQuery;
 
     /**
      * @api
      *
      * @param string $subscriptionKey
+     *
+     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery
+     */
+    public function querySubscriptionBySubscriptionKey(string $subscriptionKey): SpyAvailabilitySubscriptionQuery;
+
+    /**
+     * @api
+     *
+     * @param string $customerReference
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery
+     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery
      */
-    public function querySubscriptionBySubscriptionKeyAndSku($subscriptionKey, $sku);
+    public function querySubscriptionByCustomerReferenceAndSkuAndStore(string $customerReference, string $sku, StoreTransfer $storeTransfer): SpyAvailabilitySubscriptionQuery;
 
     /**
      * @api
      *
-     * @param string $idCustomer
-     * @param string $sku
-     *
-     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery
-     */
-    public function querySubscriptionByCustomerReferenceAndSku($idCustomer, $sku);
-
-    /**
-     * @api
-     *
-     * @param string $idCustomer
-     *
-     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery
-     */
-    public function querySubscriptionByCustomerReference($idCustomer);
-
-    /**
-     * @api
-     *
-     * @param string $email
-     *
-     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery
-     */
-    public function querySubscriptionByEmail($email);
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery
+     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery
      */
     public function querySubscription();
 }

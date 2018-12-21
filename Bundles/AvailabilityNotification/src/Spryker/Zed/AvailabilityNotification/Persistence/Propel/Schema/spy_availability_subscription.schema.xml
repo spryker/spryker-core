@@ -1,11 +1,9 @@
 <?xml version="1.0"?>
 <database
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        name="zed"
-        defaultIdMethod="native"
-        xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
-        namespace="Orm\Zed\AvailabilityNotification\Persistence"
-        package="src.Orm.Zed.availability_notification.Persistence">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed"
+    namespace="Orm\Zed\AvailabilityNotification\Persistence"
+    package="src.Orm.Zed.AvailabilityNotification.Persistence"
+    xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd">
 
     <table name="spy_availability_subscription" idMethod="native" allowPkInsert="true">
         <column name="id_availability_subscription" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>

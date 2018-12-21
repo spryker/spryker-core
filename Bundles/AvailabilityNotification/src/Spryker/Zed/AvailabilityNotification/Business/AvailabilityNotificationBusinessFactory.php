@@ -16,7 +16,9 @@ use Spryker\Zed\AvailabilityNotification\Business\Subscription\SubscriptionKeyGe
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\SubscriptionKeyGeneratorInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\SubscriptionManager;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\SubscriptionManagerInterface;
-use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailInterface;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -46,7 +48,9 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     {
         return new SubscriptionManager(
             $this->getQueryContainer(),
-            $this->createSubscriptionKeyGenerator()
+            $this->createSubscriptionKeyGenerator(),
+            $this->getStoreFacade(),
+            $this->getLocaleFacade()
         );
     }
 
@@ -70,9 +74,9 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailInterface
+     * @return \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface
      */
-    protected function getMailFacade(): AvailabilityNotificationToMailInterface
+    protected function getMailFacade(): AvailabilityNotificationToMailFacadeInterface
     {
         return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::FACADE_MAIL);
     }
@@ -83,5 +87,21 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     protected function getUtilValidateService(): AvailabilityNotificationToUtilValidateServiceInterface
     {
         return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::SERVICE_UTIL_VALIDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface
+     */
+    public function getStoreFacade(): AvailabilityNotificationToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): AvailabilityNotificationToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::FACADE_LOCALE);
     }
 }

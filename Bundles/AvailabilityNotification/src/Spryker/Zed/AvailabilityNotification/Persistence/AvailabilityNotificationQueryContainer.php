@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence;
 
+use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -19,84 +21,62 @@ class AvailabilityNotificationQueryContainer extends AbstractQueryContainer impl
      *
      * @param string $email
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery
+     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery
      */
-    public function querySubscriptionByEmailAndSku($email, $sku)
-    {
-        $subscriptionQuery = $this->querySubscription()
-            ->filterBySku($sku)
+    public function querySubscriptionByEmailAndSkuAndStore(
+        string $email,
+        string $sku,
+        StoreTransfer $storeTransfer
+    ): SpyAvailabilitySubscriptionQuery {
+        return $this->querySubscription()
             ->filterByEmail($email)
+            ->filterBySku($sku)
+            ->filterByFkStore($storeTransfer->getIdStore())
             ->setIgnoreCase(true);
-
-        return $subscriptionQuery;
     }
 
     /**
      * @api
      *
      * @param string $subscriptionKey
-     * @param string $sku
      *
-     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery
+     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery
      */
-    public function querySubscriptionBySubscriptionKeyAndSku($subscriptionKey, $sku)
-    {
-        $subscriptionQuery = $this->querySubscription()
-            ->filterBySku($sku)
-            ->filterBySubscriptionKey($subscriptionKey);
-
-        return $subscriptionQuery;
-    }
-
-    /**
-     * @api
-     *
-     * @param int $customerReference
-     * @param string $sku
-     *
-     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery
-     */
-    public function querySubscriptionByCustomerReferenceAndSku($customerReference, $sku)
-    {
-        $subscriptionQuery = $this->querySubscription()
-            ->filterBySku($sku)
-            ->filterByCustomerReference($customerReference);
-
-        return $subscriptionQuery;
-    }
-
-    /**
-     * @api
-     *
-     * @param string $customerReference
-     *
-     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery
-     */
-    public function querySubscriptionByCustomerReference($customerReference)
+    public function querySubscriptionBySubscriptionKey(string $subscriptionKey): SpyAvailabilitySubscriptionQuery
     {
         return $this->querySubscription()
-            ->filterByCustomerReference($customerReference);
-    }
-
-    /**
-     * @api
-     *
-     * @param string $email
-     *
-     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery
-     */
-    public function querySubscriptionByEmail($email)
-    {
-        return $this->querySubscription()
-            ->filterByEmail($email)
+            ->filterBySubscriptionKey($subscriptionKey)
             ->setIgnoreCase(true);
     }
 
     /**
      * @api
      *
-     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery
+     * @param string $customerReference
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery
+     */
+    public function querySubscriptionByCustomerReferenceAndSkuAndStore(
+        string $customerReference,
+        string $sku,
+        StoreTransfer $storeTransfer
+    ): SpyAvailabilitySubscriptionQuery {
+        return $this->querySubscription()
+            ->filterByCustomerReference($customerReference)
+            ->filterBySku($sku)
+            ->filterByFkStore($storeTransfer->getIdStore())
+            ->setIgnoreCase(true);
+    }
+
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery
      */
     public function querySubscription()
     {

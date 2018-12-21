@@ -8,8 +8,9 @@
 namespace Spryker\Zed\AvailabilityNotification\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 
-interface AvailabilityNotificationToGlossaryInterface
+interface AvailabilityNotificationToGlossaryFacadeInterface
 {
     /**
      * @param string $keyName
@@ -17,15 +18,13 @@ interface AvailabilityNotificationToGlossaryInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null);
+    public function hasTranslation($keyName, ?LocaleTransfer $locale = null): bool;
 
     /**
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
-     *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $locale);
+    public function getTranslation($keyName, LocaleTransfer $locale): TranslationTransfer;
 }

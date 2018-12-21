@@ -9,21 +9,21 @@ namespace Spryker\Client\AvailabilityNotification\Zed;
 
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
-use Spryker\Client\ZedRequest\ZedRequestClient;
+use Spryker\Client\AvailabilityNotification\Dependency\Client\AvailabilityNotificationToZedRequestClientInterface;
 
 class AvailabilityNotificationStub implements AvailabilityNotificationStubInterface
 {
     /**
-     * @var \Spryker\Client\ZedRequest\ZedRequestClient
+     * @var \Spryker\Client\AvailabilityNotification\Dependency\Client\AvailabilityNotificationToZedRequestClientInterface
      */
-    protected $zedStub;
+    protected $zedRequestClient;
 
     /**
-     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
+     * @param \Spryker\Client\AvailabilityNotification\Dependency\Client\AvailabilityNotificationToZedRequestClientInterface $zedRequestClient
      */
-    public function __construct(ZedRequestClient $zedStub)
+    public function __construct(AvailabilityNotificationToZedRequestClientInterface $zedRequestClient)
     {
-        $this->zedStub = $zedStub;
+        $this->zedRequestClient = $zedRequestClient;
     }
 
     /**
@@ -33,7 +33,10 @@ class AvailabilityNotificationStub implements AvailabilityNotificationStubInterf
      */
     public function subscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
     {
-        return $this->zedStub->call('/availability-notification/gateway/subscribe', $availabilityNotificationSubscriptionTransfer);
+        /** @var AvailabilityNotificationSubscriptionResponseTransfer $availabilityNotificationResponseTransfer */
+        $availabilityNotificationResponseTransfer = $this->zedRequestClient->call('/availability-notification/gateway/subscribe', $availabilityNotificationSubscriptionTransfer);
+
+        return $availabilityNotificationResponseTransfer;
     }
 
     /**
@@ -43,7 +46,10 @@ class AvailabilityNotificationStub implements AvailabilityNotificationStubInterf
      */
     public function unsubscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
     {
-        return $this->zedStub->call('/availability-notification/gateway/unsubscribe', $availabilityNotificationSubscriptionTransfer);
+        /** @var AvailabilityNotificationSubscriptionResponseTransfer $availabilityNotificationResponseTransfer */
+        $availabilityNotificationResponseTransfer = $this->zedRequestClient->call('/availability-notification/gateway/unsubscribe', $availabilityNotificationSubscriptionTransfer);
+
+        return $availabilityNotificationResponseTransfer;
     }
 
     /**
@@ -53,6 +59,9 @@ class AvailabilityNotificationStub implements AvailabilityNotificationStubInterf
      */
     public function checkSubscription(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
     {
-        return $this->zedStub->call('/availability-notification/gateway/check-subscription', $availabilityNotificationSubscriptionTransfer);
+        /** @var AvailabilityNotificationSubscriptionResponseTransfer $availabilityNotificationResponseTransfer */
+        $availabilityNotificationResponseTransfer = $this->zedRequestClient->call('/availability-notification/gateway/check-subscription', $availabilityNotificationSubscriptionTransfer);
+
+        return $availabilityNotificationResponseTransfer;
     }
 }

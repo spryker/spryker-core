@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\AvailabilityNotification;
 
-use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\AvailabilityNotification\Zed\AvailabilityNotificationStub;
+use Spryker\Client\Kernel\AbstractFactory;
 
 class AvailabilityNotificationFactory extends AbstractFactory
 {
@@ -18,7 +18,7 @@ class AvailabilityNotificationFactory extends AbstractFactory
     public function createZedAvailabilityNotificationStub()
     {
         return new AvailabilityNotificationStub(
-            $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::SERVICE_ZED)
+            $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::CLIENT_ZED_REQUEST)
         );
     }
 }

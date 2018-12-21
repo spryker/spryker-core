@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscription;
 
 interface SubscriptionManagerInterface
 {
@@ -33,16 +34,9 @@ interface SubscriptionManagerInterface
     public function unsubscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): bool;
 
     /**
-     * @param string $email
-     *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer|null
-     */
-    public function findSubscriptionByEmail($email);
-
-    /**
      * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer
+     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscription
      */
-    public function createSubscriptionFromTransfer(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionTransfer;
+    public function createSubscriptionEntityFromTransfer(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): SpyAvailabilitySubscription;
 }

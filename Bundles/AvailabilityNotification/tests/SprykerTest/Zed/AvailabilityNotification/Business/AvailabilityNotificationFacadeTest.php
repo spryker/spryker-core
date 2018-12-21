@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationDependencyProvider;
 use Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationBusinessFactory;
 use Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacade;
-use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailInterface;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -117,7 +117,7 @@ class AvailabilityNotificationFacadeTest extends Unit
         $availabilityNotificationDependencyProvider = new AvailabilityNotificationDependencyProvider();
         $availabilityNotificationDependencyProvider->provideBusinessLayerDependencies($container);
 
-        $mailFacadeMock = $this->getMockBuilder(AvailabilityNotificationToMailInterface::class)->getMock();
+        $mailFacadeMock = $this->getMockBuilder(AvailabilityNotificationToMailFacadeInterface::class)->getMock();
         $container[AvailabilityNotificationDependencyProvider::FACADE_MAIL] = $mailFacadeMock;
 
         $availabilityNotificationBusinessFactory = new AvailabilityNotificationBusinessFactory();
