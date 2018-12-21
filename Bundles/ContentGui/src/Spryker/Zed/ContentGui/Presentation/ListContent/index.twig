@@ -1,0 +1,23 @@
+{% extends '@Gui/layout/layout.twig' %}
+
+{% set widget_title = 'Overview of Content Items' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ groupActionButtons({
+        'Product List': {'url':'#', 'title':'Product List'}
+    },'Add Content Item')}}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_title -%}
+            <h5>{{ 'List of Content Items' | trans }}</h5>
+        {%- endblock %}
+        {% block widget_content %}
+            {{ contentItems | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
