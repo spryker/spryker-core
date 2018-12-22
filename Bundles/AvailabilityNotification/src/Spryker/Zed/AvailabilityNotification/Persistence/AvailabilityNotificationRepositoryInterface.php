@@ -19,21 +19,12 @@ interface AvailabilityNotificationRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findOneSubscriptionByEmailAndSkuAndStore(string $email, string $sku, StoreTransfer $storeTransfer): ?AvailabilitySubscriptionTransfer;
+    public function findOneByEmailAndSkuAndStore(string $email, string $sku, StoreTransfer $storeTransfer): ?AvailabilitySubscriptionTransfer;
 
     /**
      * @param string $subscriptionKey
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findOneSubscriptionBySubscriptionKey(string $subscriptionKey): ?AvailabilitySubscriptionTransfer;
-
-    /**
-     * @param string $customerReference
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
-     */
-    public function findOneSubscriptionByCustomerReferenceAndSkuAndStore(string $customerReference, string $sku, StoreTransfer $storeTransfer): ?AvailabilitySubscriptionTransfer;
+    public function findOneBySubscriptionKey(string $subscriptionKey): ?AvailabilitySubscriptionTransfer;
 }

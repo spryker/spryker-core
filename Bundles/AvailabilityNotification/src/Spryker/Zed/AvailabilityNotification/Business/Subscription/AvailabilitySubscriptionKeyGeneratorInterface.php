@@ -7,15 +7,10 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
-use Spryker\Service\UtilText\UtilTextService;
-
-class SubscriptionKeyGenerator implements SubscriptionKeyGeneratorInterface
+interface AvailabilitySubscriptionKeyGeneratorInterface
 {
     /**
      * @return string
      */
-    public function generateKey(): string
-    {
-        return (new UtilTextService())->generateRandomString(32);
-    }
+    public function generateKey(): string;
 }

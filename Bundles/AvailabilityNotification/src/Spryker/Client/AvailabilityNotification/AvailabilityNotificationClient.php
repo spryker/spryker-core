@@ -17,9 +17,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class AvailabilityNotificationClient extends AbstractClient implements AvailabilityNotificationClientInterface
 {
     /**
-     * Specification:
-     * - Subscribe a user for product availability.
-     * - Returns AvailabilitySubscriptionResponseTransfer.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -33,9 +31,7 @@ class AvailabilityNotificationClient extends AbstractClient implements Availabil
     }
 
     /**
-     * Specification:
-     * - Unsubscribe a user for product availability.
-     * - Returns AvailabilitySubscriptionResponseTransfer.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -49,9 +45,7 @@ class AvailabilityNotificationClient extends AbstractClient implements Availabil
     }
 
     /**
-     * Specification:
-     * - Check if user is subscribed for product availability.
-     * - Returns AvailabilitySubscriptionResponseTransfer.
+     * {@inheritdoc}
      *
      * @api
      *

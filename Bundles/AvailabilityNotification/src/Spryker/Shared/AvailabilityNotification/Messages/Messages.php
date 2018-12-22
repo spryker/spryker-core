@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\AvailabilityNotification\Messages;
 
-class Messages
+interface Messages
 {
     public const INVALID_EMAIL_FORMAT = 'availability_notification.subscription.email_format_invalid';
 }

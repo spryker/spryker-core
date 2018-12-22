@@ -27,7 +27,9 @@
         </index>
 
         <index name="spy_availability_subscription-sku">
+            <index-column name="email"/>
             <index-column name="sku"/>
+            <index-column name="fk_store"/>
         </index>
 
         <unique name="spy_availability_subscription-sku-email-store">

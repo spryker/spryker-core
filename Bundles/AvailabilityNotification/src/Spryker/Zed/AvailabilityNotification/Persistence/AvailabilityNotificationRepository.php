@@ -24,7 +24,7 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findOneSubscriptionByEmailAndSkuAndStore(
+    public function findOneByEmailAndSkuAndStore(
         string $email,
         string $sku,
         StoreTransfer $storeTransfer
@@ -48,37 +48,10 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findOneSubscriptionBySubscriptionKey(string $subscriptionKey): ?AvailabilitySubscriptionTransfer
+    public function findOneBySubscriptionKey(string $subscriptionKey): ?AvailabilitySubscriptionTransfer
     {
         $availabilitySubscriptionEntity = $this->querySubscription()
             ->filterBySubscriptionKey($subscriptionKey)
-            ->setIgnoreCase(true)
-            ->findOne();
-
-        if ($availabilitySubscriptionEntity === null) {
-            return null;
-        }
-
-        return $this->getFactory()->createAvailabilitySubscriptionMapper()->mapAvailabilitySubscriptionTransfer($availabilitySubscriptionEntity);
-    }
-
-    /**
-     * @param string $customerReference
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
-     */
-    public function findOneSubscriptionByCustomerReferenceAndSkuAndStore(
-        string $customerReference,
-        string $sku,
-        StoreTransfer $storeTransfer
-    ): ?AvailabilitySubscriptionTransfer {
-        $availabilitySubscriptionEntity = $this->querySubscription()
-            ->filterByCustomerReference($customerReference)
-            ->filterBySku($sku)
-            ->filterByFkStore($storeTransfer->getIdStore())
-            ->setIgnoreCase(true)
             ->findOne();
 
         if ($availabilitySubscriptionEntity === null) {
@@ -93,7 +66,6 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
      */
     protected function querySubscription(): SpyAvailabilitySubscriptionQuery
     {
-        return $this->getFactory()
-            ->createAvailabilitySubscriptionQuery();
+        return $this->getFactory()->createAvailabilitySubscriptionQuery();
     }
 }

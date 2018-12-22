@@ -7,22 +7,19 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationBusinessFactory getFactory()
+ * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface getRepository()
+ * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface getEntityManager()()
  */
 class AvailabilityNotificationFacade extends AbstractFacade implements AvailabilityNotificationFacadeInterface
 {
     /**
-     * Specification:
-     * - Subscribe by provided subscription email, customer reference, product sku in a case insensitive way.
-     * - Adds subscription:
-     *      - Validates email.
-     *      - Create subscription if subscription is not created already.
-     *      - Sends confirmation email.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -33,15 +30,14 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
     public function subscribe(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         $subscriptionResponse = $this->getFactory()
-            ->createSubscriptionHandler()
-            ->processAvailabilitySubscription($availabilityNotificationSubscriptionTransfer);
+            ->createAvailabilitySubscriptionProcessor()
+            ->process($availabilityNotificationSubscriptionTransfer);
 
         return $subscriptionResponse;
     }
 
     /**
-     * Specification:
-     * - Checks if the provided subscription is already existing.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -52,15 +48,14 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
     public function checkSubscription(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         $subscriptionResponse = $this->getFactory()
-            ->createSubscriptionHandler()
-            ->checkAvailabilitySubscription($availabilityNotificationSubscriptionTransfer);
+            ->createAvailabilitySubscriptionExistingChecker()
+            ->check($availabilityNotificationSubscriptionTransfer);
 
         return $subscriptionResponse;
     }
 
     /**
-     * Specification:
-     * - Remove provided subscription.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -71,15 +66,14 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
     public function unsubscribe(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         $subscriptionResponse = $this->getFactory()
-            ->createSubscriptionHandler()
-            ->processAvailabilityNotificationUnsubscription($availabilityNotificationSubscriptionTransfer);
+            ->createAvailabilityUnsubscriptionProcessor()
+            ->process($availabilityNotificationSubscriptionTransfer);
 
         return $subscriptionResponse;
     }
 
     /**
-     * Specification:
-     * - Anonymizes personal information of the provided subscription.
+     * {@inheritdoc}
      *
      * @api
      *
