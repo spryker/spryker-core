@@ -29,45 +29,10 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $container[self::FACADE_MAIL] = function (Container $container) {
-            return new AvailabilityNotificationToMailFacadeBridge($container->getLocator()->mail()->facade());
-        };
-
+        $container = $this->addMailFacade($container);
         $container = $this->addUtilValidateService($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideCommunicationLayerDependencies(Container $container)
-    {
-        $container[self::FACADE_MAIL] = function (Container $container) {
-            return new AvailabilityNotificationToMailFacadeBridge($container->getLocator()->mail()->facade());
-        };
-        $container[self::FACADE_GLOSSARY] = function (Container $container) {
-            return new AvailabilityNotificationToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addUtilValidateService(Container $container)
-    {
-        $container[static::SERVICE_UTIL_VALIDATE] = function (Container $container) {
-            return new AvailabilityNotificationToUtilValidateServiceBridge($container->getLocator()->utilValidate()->service());
-        };
-
         $container = $this->addStoreClient($container);
         $container = $this->addLocaleFacade($container);
 
@@ -79,7 +44,34 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStoreClient(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = $this->addMailFacade($container);
+        $container = $this->addGlossaryFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilValidateService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_VALIDATE] = function (Container $container) {
+            return new AvailabilityNotificationToUtilValidateServiceBridge($container->getLocator()->utilValidate()->service());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
     {
         $container[static::FACADE_STORE] = function (Container $container) {
             return new AvailabilityNotificationToStoreFacadeBridge($container->getLocator()->store()->facade());
@@ -93,10 +85,38 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addLocaleFacade(Container $container)
+    protected function addLocaleFacade(Container $container): Container
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new AvailabilityNotificationToLocaleFacadeBridge($container->getLocator()->locale()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMailFacade(Container $container): Container
+    {
+        $container[self::FACADE_MAIL] = function (Container $container) {
+            return new AvailabilityNotificationToMailFacadeBridge($container->getLocator()->mail()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGlossaryFacade(Container $container): Container
+    {
+        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+            return new AvailabilityNotificationToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
         };
 
         return $container;

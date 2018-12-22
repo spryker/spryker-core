@@ -24,7 +24,7 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return static::MAIL_TYPE;
     }
@@ -36,7 +36,7 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      *
      * @return void
      */
-    public function build(MailBuilderInterface $mailBuilder)
+    public function build(MailBuilderInterface $mailBuilder): void
     {
         $this
             ->setSubject($mailBuilder)

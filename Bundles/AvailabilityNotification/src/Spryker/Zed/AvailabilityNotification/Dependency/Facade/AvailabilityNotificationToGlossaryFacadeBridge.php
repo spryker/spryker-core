@@ -31,7 +31,7 @@ class AvailabilityNotificationToGlossaryFacadeBridge implements AvailabilityNoti
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null): bool
+    public function hasTranslation(string $keyName, ?LocaleTransfer $locale = null): bool
     {
         return $this->glossaryFacade->hasTranslation($keyName, $locale);
     }
@@ -42,7 +42,7 @@ class AvailabilityNotificationToGlossaryFacadeBridge implements AvailabilityNoti
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $locale): TranslationTransfer
+    public function getTranslation(string $keyName, LocaleTransfer $locale): TranslationTransfer
     {
         return $this->glossaryFacade->getTranslation($keyName, $locale);
     }
