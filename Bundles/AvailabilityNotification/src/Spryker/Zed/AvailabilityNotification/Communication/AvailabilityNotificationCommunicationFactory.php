@@ -13,8 +13,8 @@ use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificat
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
- * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface getQueryContainer()
+ * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface getRepository()
  * @method \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacadeInterface getFacade()
  */
 class AvailabilityNotificationCommunicationFactory extends AbstractCommunicationFactory
