@@ -95,7 +95,8 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->endUse()
             ->useCompanyQuery()
                 ->filterByIsActive(true)
-            ->endUse();
+            ->endUse()
+            ->joinWithCompany();
 
         $collection = $this->buildQueryFromCriteria($queryCompanyUser)->find();
 

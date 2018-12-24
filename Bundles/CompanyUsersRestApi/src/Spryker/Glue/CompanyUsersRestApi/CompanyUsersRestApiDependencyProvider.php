@@ -17,6 +17,7 @@ use Spryker\Glue\Kernel\Container;
 class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
+    public const PLUGINS_COMPANY_USERS_RESOURCE_EXPANDER = 'PLUGINS_COMPANY_USERS_RESOURCE_EXPANDER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -27,6 +28,7 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::provideDependencies($container);
         $container = $this->addCompanyUserClient($container);
+        $container = $this->addCompanyUsersResourceExpanderPlugins($container);
 
         return $container;
     }
@@ -43,5 +45,27 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addCompanyUsersResourceExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_COMPANY_USERS_RESOURCE_EXPANDER] = function (Container $container) {
+            return $this->getCompanyUsersResourceExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceExpanderPluginInterface[]
+     */
+    protected function getCompanyUsersResourceExpanderPlugins(): array
+    {
+        return [];
     }
 }

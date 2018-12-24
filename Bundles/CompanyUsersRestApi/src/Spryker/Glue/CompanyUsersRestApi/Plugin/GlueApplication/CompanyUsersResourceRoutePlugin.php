@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyUsersRestApi\Plugin;
+namespace Spryker\Glue\CompanyUsersRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
 use Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig;
@@ -28,7 +28,7 @@ class CompanyUsersResourceRoutePlugin extends AbstractPlugin implements Resource
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
-            ->addGet('get', CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS_IS_PROTECTED);
+            ->addGet(CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS_ACTION_NAME_GET);
 
         return $resourceRouteCollection;
     }

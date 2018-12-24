@@ -5,19 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyUsersRestApi\Processor\Mapper;
+namespace Spryker\Glue\CompanyUnitAddressesRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
 
-interface CompanyUserResourceMapperInterface
+interface CompanyUnitAddressExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCompanyUserAttributesTransfer
      */
-    public function mapCompanyUserTransferToRestCompanyUserAttributesTransfer(
-        CompanyUserTransfer $companyUserTransfer
+    public function expand(
+        CompanyUserTransfer $companyUserTransfer,
+        RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
     ): RestCompanyUserAttributesTransfer;
 }

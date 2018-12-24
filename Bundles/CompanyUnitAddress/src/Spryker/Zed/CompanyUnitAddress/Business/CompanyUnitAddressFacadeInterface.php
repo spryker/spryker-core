@@ -101,6 +101,7 @@ interface CompanyUnitAddressFacadeInterface
     /**
      * Specification:
      * - Expands company business unit transfer with company unit address collection.
+     * - Marks company business unit address as default billing in the company unit address collection.
      *
      * @api
      *

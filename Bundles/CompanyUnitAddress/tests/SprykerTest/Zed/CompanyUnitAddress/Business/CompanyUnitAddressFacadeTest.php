@@ -50,7 +50,9 @@ class CompanyUnitAddressFacadeTest extends Unit
     {
         parent::setUp();
 
-        $this->companyUnitAddressFacade = $this->tester->getFacade();
+        /** @var \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface $companyUnitAddressFacade */
+        $companyUnitAddressFacade = $this->tester->getFacade();
+        $this->companyUnitAddressFacade = $companyUnitAddressFacade;
         $this->companyBusinessUnitFacade = $this->tester->getLocator()->companyBusinessUnit()->facade();
     }
 
@@ -67,6 +69,7 @@ class CompanyUnitAddressFacadeTest extends Unit
         $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
         $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($companyBusinessUnitTransfer);
 
+        /** @var \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer */
         $companyUnitAddressTransfer = $this->tester->haveCompanyUnitAddress([
             CompanyUnitAddressTransfer::KEY => static::COMPANY_ADDRESS_KEY,
             CompanyUnitAddressTransfer::COMPANY_BUSINESS_UNITS => $companyBusinessUnitCollectionTransfer,
@@ -82,6 +85,6 @@ class CompanyUnitAddressFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(CompanyUnitAddressCollectionTransfer::class, $companyUnitAddressCollectionTransfer);
         $this->assertCount(1, $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses());
-        $this->assertEquals($companyBusinessUnitTransfer->getDefaultBillingAddress(), $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()[0]->getIdCompanyUnitAddress());
+        $this->assertTrue($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()[0]->getIsDefaultBilling());
     }
 }

@@ -93,8 +93,8 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves company users collection by customer reference.
-     * - Checks activity flag in a related company and customer.
+     * - Retrieves active company users collection by customer reference.
+     * - Checks activity flag in a related company and company user.
      *
      * @api
      *

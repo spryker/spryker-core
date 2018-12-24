@@ -16,7 +16,7 @@
     </transfer>
 
     <transfer name="RestCompanyBusinessUnitAttributes">
-        <property name="billingAddresses" type="RestCompanyUnitAddressAttributes[]" singular="billingAddress"/>
+        <property name="addresses" type="RestCompanyUnitAddressAttributes[]" singular="address"/>
     </transfer>
 
 </transfers>

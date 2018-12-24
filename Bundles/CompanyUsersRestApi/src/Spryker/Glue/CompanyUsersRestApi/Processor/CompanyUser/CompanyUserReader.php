@@ -9,9 +9,9 @@ namespace Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
 use Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig;
 use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface;
-use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -29,23 +29,23 @@ class CompanyUserReader implements CompanyUserReaderInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapperInterface
+     * @var \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceExpanderPluginInterface[]
      */
-    protected $companyUsersResourceMapper;
+    protected $companyUserResourceExpanderPlugins;
 
     /**
      * @param \Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface $companyUserClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapperInterface $companyUsersResourceMapper
+     * @param \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceExpanderPluginInterface[] $companyUserResourceExpanderPlugins
      */
     public function __construct(
         CompanyUsersRestApiToCompanyUserClientInterface $companyUserClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        CompanyUserResourceMapperInterface $companyUsersResourceMapper
+        array $companyUserResourceExpanderPlugins
     ) {
         $this->companyUserClient = $companyUserClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->companyUsersResourceMapper = $companyUsersResourceMapper;
+        $this->companyUserResourceExpanderPlugins = $companyUserResourceExpanderPlugins;
     }
 
     /**
@@ -58,29 +58,29 @@ class CompanyUserReader implements CompanyUserReaderInterface
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
         $companyUserCollectionTransfer = $this->companyUserClient->getActiveCompanyUsersByCustomerReference($customerTransfer);
 
-        $restResponse = $this->getCompanyUsersResponse(
-            $this->restResourceBuilder->createRestResponse(),
-            $companyUserCollectionTransfer
-        );
+        $restResponse = $this->getCompanyUsersResponse($companyUserCollectionTransfer);
 
         return $restResponse;
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getCompanyUsersResponse(
-        RestResponseInterface $restResponse,
-        CompanyUserCollectionTransfer $companyUserCollectionTransfer
-    ): RestResponseInterface {
+    protected function getCompanyUsersResponse(CompanyUserCollectionTransfer $companyUserCollectionTransfer): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUserTransfer) {
-            $restCompanyUserAttributesTransfer = $this->companyUsersResourceMapper
-                ->mapCompanyUserTransferToRestCompanyUserAttributesTransfer(
-                    $companyUserTransfer
+            $restCompanyUserAttributesTransfer = (new RestCompanyUserAttributesTransfer())
+                ->fromArray($companyUserTransfer->toArray(), true);
+
+            foreach ($this->companyUserResourceExpanderPlugins as $companyUserResourceExpanderPlugin) {
+                $restCompanyUserAttributesTransfer = $companyUserResourceExpanderPlugin->expand(
+                    $companyUserTransfer,
+                    $restCompanyUserAttributesTransfer
                 );
+            }
 
             $restResource = $this->restResourceBuilder->createRestResource(
                 CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
