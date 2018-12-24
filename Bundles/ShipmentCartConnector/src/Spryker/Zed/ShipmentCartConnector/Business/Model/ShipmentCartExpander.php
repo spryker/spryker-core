@@ -53,7 +53,10 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $shipmentTransfer = $itemTransfer->getShipment();
-            $skipUpdate = ($shipmentTransfer === null || !$this->isCurrencyChanged($shipmentTransfer, $quoteTransfer));
+            $skipUpdate = (
+                $shipmentTransfer === null
+                || $this->isCurrencyChanged($shipmentTransfer, $quoteTransfer) === false
+            );
 
             if ($skipUpdate) {
                 continue;

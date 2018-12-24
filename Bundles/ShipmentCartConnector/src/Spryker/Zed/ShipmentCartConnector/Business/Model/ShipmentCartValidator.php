@@ -59,7 +59,10 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $shipmentMethod = $itemTransfer->getShipment();
-            $skipValidation = ($shipmentMethod === null || !$this->isCurrencyChanged($shipmentMethod, $quoteTransfer));
+            $skipValidation = (
+                $shipmentMethod === null
+                || $this->isCurrencyChanged($shipmentMethod, $quoteTransfer) === false
+            );
 
             if ($skipValidation) {
                 continue;
