@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Translator\Business\TranslatorFacadeInterface getFacade()
+ * @method \Spryker\Zed\Translator\Communication\TranslatorCommunicationFactory getFactory()
  */
 class GenerateTranslationCacheConsole extends Console
 {

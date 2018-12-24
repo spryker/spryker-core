@@ -20,6 +20,7 @@ use Spryker\Zed\Translator\TranslatorDependencyProvider;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Translation\Loader\CsvFileLoader;
+use Symfony\Component\Translation\Loader\XliffFileLoader;
 
 /**
  * @method \Spryker\Zed\Translator\TranslatorConfig getConfig()
@@ -46,6 +47,14 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Symfony\Component\Translation\Loader\XliffFileLoader
+     */
+    public function createXlfFileLoader(): XliffFileLoader
+    {
+        return new XliffFileLoader();
+    }
+
+    /**
      * @return \Spryker\Zed\Translator\Business\Translator\TranslatorInterface
      */
     public function createTranslator(): TranslatorInterface
@@ -59,6 +68,11 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
         $translator->setLazyLoadResources($translationFinder);
         $translator->addLoader($translationFinder->getFileFormat(), $this->createCsvFileLoader());
         $translator->setFallbackLocales($this->getConfig()->getFallbackLocales($this->getApplication()['locale']));
+        $translator->addLoader('xlf', $this->createXlfFileLoader());
+        $locales = $this->getStore()->getLocales();
+        foreach ($locales as $country => $locale) {
+            $translator->addResource('xlf', $this->getConfig()->getValidatorsTranslationPath($country), $locale, 'validators');
+        }
 
         return $translator;
     }

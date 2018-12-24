@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Translator\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Twig_Environment;
 
 /**
  * @method \Spryker\Zed\Translator\Business\TranslatorBusinessFactory getFactory()
@@ -42,19 +41,5 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     public function clearTranslationCache(): void
     {
         $this->getFactory()->createCacheClearer()->clearCache();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Twig_Environment $twig
-     *
-     * @return void
-     */
-    public function registerTwigTranslator(Twig_Environment $twig): void
-    {
-        $this->getFactory()->createTranslator()->addAsTwigExtension($twig);
     }
 }

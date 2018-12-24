@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Translator\Business\TranslatorFacade getFacade()
  * @method \Spryker\Zed\Translator\TranslatorConfig getConfig()
+ * @method \Spryker\Zed\Translator\Communication\TranslatorCommunicationFactory getFactory()
  */
 class TranslatorInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {

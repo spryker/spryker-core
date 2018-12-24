@@ -24,6 +24,19 @@ class TranslatorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @param string $country
+     *
+     * @return string
+     */
+    public function getValidatorsTranslationPath(string $country): string
+    {
+        return sprintf(
+            APPLICATION_VENDOR_DIR . '/symfony/validator/Resources/translations/validators.%s.xlf',
+            $country
+        );
+    }
+
+    /**
      * @return array
      */
     public function getCoreTranslationFilePathPatterns(): array

@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Translator\Business;
 
-use Twig_Environment;
-
 interface TranslatorFacadeInterface
 {
     /**
@@ -30,16 +28,4 @@ interface TranslatorFacadeInterface
      * @return void
      */
     public function clearTranslationCache(): void;
-
-    /**
-     * Specification:
-     * - Add Translator as Twig Translation extension
-     *
-     * @api
-     *
-     * @param \Twig_Environment $twig
-     *
-     * @return void
-     */
-    public function registerTwigTranslator(Twig_Environment $twig): void;
 }
