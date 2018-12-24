@@ -14,8 +14,8 @@
   },
   "require-dev": {
     "spryker/application": "*",
-    "spryker/event": "*",
     "spryker/code-sniffer": "*",
+    "spryker/event": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

@@ -17,7 +17,7 @@ interface FormatEncoderInterface
     /**
      * @param array $data
      *
-     * @return string
+     * @return string|null
      */
-    public function encode(array $data): string;
+    public function encode(array $data): ?string;
 }
