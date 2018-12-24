@@ -8,15 +8,15 @@
 namespace Spryker\Zed\SalesReclamation\Business;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\SalesReclamation\Business\SalesReclamationBusinessFactory getFactory()
+ * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface getRepository()
  */
 class SalesReclamationFacade extends AbstractFacade implements SalesReclamationFacadeInterface
 {
@@ -75,13 +75,13 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
      *
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return null|\Generated\Shared\Transfer\ReclamationTransfer
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function hydrateReclamationByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
+    public function expandReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
     {
         return $this->getFactory()
-            ->createReclamationHydrator()
-            ->hydrateByReclamation($reclamationTransfer);
+            ->createReclamationExpander()
+            ->expandReclamation($reclamationTransfer);
     }
 
     /**
@@ -93,26 +93,11 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function hydrateReclamationByOrder(OrderTransfer $orderTransfer): ReclamationTransfer
+    public function mapOrderToReclamation(OrderTransfer $orderTransfer, ReclamationTransfer $reclamationTransfer): ReclamationTransfer
     {
         return $this->getFactory()
-            ->createReclamationHydrator()
-            ->hydrateByOrder($orderTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-     *
-     * @return void
-     */
-    public function saveOrderReclamation(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
-    {
-        $this->getFactory()->createReclamationSaver()->saveOrder($quoteTransfer, $saveOrderTransfer);
+            ->createReclamationMapper()
+            ->mapOrderToReclamation($orderTransfer, $reclamationTransfer);
     }
 
     /**

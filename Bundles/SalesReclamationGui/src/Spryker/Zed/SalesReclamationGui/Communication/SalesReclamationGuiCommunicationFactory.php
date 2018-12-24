@@ -7,19 +7,14 @@
 
 namespace Spryker\Zed\SalesReclamationGui\Communication;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\SalesReclamationGui\Communication\Form\ReclamationDataProvider;
-use Spryker\Zed\SalesReclamationGui\Communication\Form\ReclamationType;
 use Spryker\Zed\SalesReclamationGui\Communication\Table\ReclamationTable;
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToOmsFacadeInterface;
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSalesFacadeInterface;
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSalesReclamationFacadeInterface;
 use Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\SalesReclamationGui\SalesReclamationGuiDependencyProvider;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\SalesReclamationGui\SalesReclamationGuiConfig getConfig()
@@ -59,33 +54,6 @@ class SalesReclamationGuiCommunicationFactory extends AbstractCommunicationFacto
             $this->getSalesReclamationPropelQuery(),
             $this->getDateTimeService()
         );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createReclamationForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
-    {
-        $dataProvider = $this->createReclamationDataProvider($request);
-
-        return $this->getFormFactory()->create(
-            ReclamationType::class,
-            $dataProvider->getData($quoteTransfer),
-            $dataProvider->getOptions($quoteTransfer)
-        );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Spryker\Zed\SalesReclamationGui\Communication\Form\ReclamationDataProvider
-     */
-    public function createReclamationDataProvider(Request $request): ReclamationDataProvider
-    {
-        return new ReclamationDataProvider($request);
     }
 
     /**

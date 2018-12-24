@@ -37,17 +37,21 @@ interface SalesReclamationGuiToSalesReclamationFacadeInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function hydrateReclamationByOrder(OrderTransfer $orderTransfer): ReclamationTransfer;
+    public function mapOrderToReclamation(
+        OrderTransfer $orderTransfer,
+        ReclamationTransfer $reclamationTransfer
+    ): ReclamationTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer|null
      */
-    public function hydrateReclamationByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
+    public function expandReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer

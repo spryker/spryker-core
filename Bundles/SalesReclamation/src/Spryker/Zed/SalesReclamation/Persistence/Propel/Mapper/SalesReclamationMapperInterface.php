@@ -7,14 +7,10 @@
 
 namespace Spryker\Zed\SalesReclamation\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\OrderCollectionTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation;
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationItem;
-use Propel\Runtime\Collection\ObjectCollection;
 
 interface SalesReclamationMapperInterface
 {
@@ -35,7 +31,7 @@ interface SalesReclamationMapperInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function mapEntityToReclamationTransfer(
+    public function mapReclamationEntityToTransfer(
         SpySalesReclamation $reclamationEntity,
         ReclamationTransfer $reclamationTransfer
     ): ReclamationTransfer;
@@ -57,27 +53,8 @@ interface SalesReclamationMapperInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationItemTransfer
      */
-    public function mapEntityToReclamationItemTransfer(
+    public function mapReclamationItemEntityToTransfer(
         SpySalesReclamationItem $reclamationItemEntity,
         ReclamationItemTransfer $reclamationItemTransfer
     ): ReclamationItemTransfer;
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function mapEntityToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): OrderTransfer;
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderEntities
-     * @param \Generated\Shared\Transfer\OrderCollectionTransfer $orderCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderCollectionTransfer
-     */
-    public function mapSalesOrdersToOrderCollectionTransfer(
-        ObjectCollection $salesOrderEntities,
-        OrderCollectionTransfer $orderCollectionTransfer
-    ): OrderCollectionTransfer;
 }

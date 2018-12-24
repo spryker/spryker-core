@@ -8,13 +8,9 @@
 namespace Spryker\Zed\SalesReclamationGui\Communication\Controller;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
-use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationItemTableMap;
-use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\SalesReclamationGui\Communication\Table\ReclamationTable;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -24,6 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
 class DetailController extends AbstractController
 {
     protected const PARAM_ID_RECLAMATION_ITEM = 'id-reclamation-item';
+    protected const PARAM_ID_RECLAMATION = 'id-reclamation';
+    protected const RECLAMATION_CLOSE_STATE = 'Close';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -32,20 +30,21 @@ class DetailController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idReclamation = $this->castId($request->get(ReclamationTable::PARAM_ID_RECLAMATION));
+        $idReclamation = $this->castId($request->get(static::PARAM_ID_RECLAMATION));
         $reclamationTransfer = new ReclamationTransfer();
         $reclamationTransfer->setIdSalesReclamation($idReclamation);
 
         $reclamationTransfer = $this->getFactory()
             ->getSalesReclamationFacade()
-            ->hydrateReclamationByIdReclamation($reclamationTransfer);
+            ->expandReclamation($reclamationTransfer);
 
-        if (!$reclamationTransfer) {
+        if (!$reclamationTransfer->getIdSalesReclamation()) {
             $this->addErrorMessage(sprintf('No reclamation with given id %s', $idReclamation));
 
             return $this->redirectResponse('/sales-reclamation-gui/');
         }
 
+        /** @var array[] $eventsGroupedByItem */
         $eventsGroupedByItem = $this->getFactory()
             ->getOmsFacade()
             ->getManualEventsByIdSalesOrder($reclamationTransfer->getOrder()->getIdSalesOrder());
@@ -65,7 +64,7 @@ class DetailController extends AbstractController
      */
     public function closeAction(Request $request): RedirectResponse
     {
-        $idReclamation = $this->castId($request->get(ReclamationTable::PARAM_ID_RECLAMATION));
+        $idReclamation = $this->castId($request->get(static::PARAM_ID_RECLAMATION));
 
         $reclamationTransfer = new ReclamationTransfer();
         $reclamationTransfer->setIdSalesReclamation($idReclamation);
@@ -84,7 +83,7 @@ class DetailController extends AbstractController
             );
         }
 
-        $reclamationTransfer->setState(SpySalesReclamationTableMap::COL_STATE_CLOSE);
+        $reclamationTransfer->setState(static::RECLAMATION_CLOSE_STATE);
         $this->getFactory()
             ->getSalesReclamationFacade()
             ->updateReclamation($reclamationTransfer);
@@ -100,11 +99,11 @@ class DetailController extends AbstractController
 
     /**
      * @param \ArrayObject $reclamationItems
-     * @param $eventsGroupedByItem
+     * @param array $eventsGroupedByItem
      *
      * @return string[]
      */
-    protected function getEventsPerReclamationItems(ArrayObject $reclamationItems, $eventsGroupedByItem): array
+    protected function getEventsPerReclamationItems(ArrayObject $reclamationItems, array $eventsGroupedByItem): array
     {
         $orderItemsIds = $this->getOrderItemsIdsByReclamationItems($reclamationItems);
         $events = [];

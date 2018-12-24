@@ -25,11 +25,6 @@ class SalesReclamationEntityManager extends AbstractEntityManager implements Sal
     public const RECLAMATION_STATE_OPEN = 'Open';
 
     /**
-     * @see \Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationItemTableMap::COL_STATE_OPEN
-     */
-    public const RECLAMATION_ITEM_STATE_OPEN = 'Open';
-
-    /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
@@ -38,11 +33,13 @@ class SalesReclamationEntityManager extends AbstractEntityManager implements Sal
     {
         $reclamationTransfer->requireState();
 
-        $salesReclamationEntity = $this->getMapper()->mapReclamationTransferToEntity($reclamationTransfer, new SpySalesReclamation());
+        $salesReclamationEntity = $this->getMapper()
+            ->mapReclamationTransferToEntity($reclamationTransfer, new SpySalesReclamation());
 
         $salesReclamationEntity->save();
+        $reclamationTransfer->setIdSalesReclamation($salesReclamationEntity->getIdSalesReclamation());
 
-        return $this->getMapper()->mapEntityToReclamationTransfer($salesReclamationEntity, new ReclamationTransfer());
+        return $reclamationTransfer;
     }
 
     /**
@@ -71,19 +68,17 @@ class SalesReclamationEntityManager extends AbstractEntityManager implements Sal
      */
     public function saveReclamationItem(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer
     {
-        $reclamationItemTransfer->requireFkSalesReclamation();
         $reclamationItemTransfer
-            ->requireOrderItem()
-            ->requireState();
+            ->requireFkSalesReclamation()
+            ->requireOrderItem();
 
-        $salesReclamationEntity = $this->getMapper()
+        $salesReclamationItemEntity = $this->getMapper()
             ->mapReclamationItemTransferToEntity($reclamationItemTransfer, new SpySalesReclamationItem());
 
-        $salesReclamationEntity->setFkSalesReclamation($reclamationItemTransfer->getFkSalesReclamation());
-        $salesReclamationEntity->save();
+        $salesReclamationItemEntity->save();
+        $reclamationItemTransfer->setIdSalesReclamationItem($salesReclamationItemEntity->getIdSalesReclamationItem());
 
-        return $this->getMapper()
-            ->mapEntityToReclamationItemTransfer($salesReclamationEntity, new ReclamationItemTransfer());
+        return $reclamationItemTransfer;
     }
 
     /**

@@ -59,22 +59,25 @@ class SalesReclamationGuiToSalesReclamationFacadeBridge implements SalesReclamat
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function hydrateReclamationByOrder(OrderTransfer $orderTransfer): ReclamationTransfer
-    {
-        return $this->salesReclamationFacade->hydrateReclamationByOrder($orderTransfer);
+    public function mapOrderToReclamation(
+        OrderTransfer $orderTransfer,
+        ReclamationTransfer $reclamationTransfer
+    ): ReclamationTransfer {
+        return $this->salesReclamationFacade->mapOrderToReclamation($orderTransfer, $reclamationTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationTransfer|null
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function hydrateReclamationByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
+    public function expandReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
     {
-        return $this->salesReclamationFacade->hydrateReclamationByIdReclamation($reclamationTransfer);
+        return $this->salesReclamationFacade->expandReclamation($reclamationTransfer);
     }
 
     /**

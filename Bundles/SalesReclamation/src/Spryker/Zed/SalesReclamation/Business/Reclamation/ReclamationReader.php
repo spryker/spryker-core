@@ -9,6 +9,8 @@ namespace Spryker\Zed\SalesReclamation\Business\Reclamation;
 
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
+use Spryker\Zed\SalesReclamation\Business\Exception\ReclamationItemNotFoundException;
+use Spryker\Zed\SalesReclamation\Business\Exception\ReclamationNotFoundException;
 use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface;
 
 class ReclamationReader implements ReclamationReaderInterface
@@ -30,14 +32,19 @@ class ReclamationReader implements ReclamationReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
+     * @throws \Spryker\Zed\SalesReclamation\Business\Exception\ReclamationNotFoundException
+
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
     public function getReclamationById(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
     {
+        $idSalesReclamation = $reclamationTransfer->getIdSalesReclamation();
         $reclamationTransfer = $this->salesReclamationRepository->findReclamationById($reclamationTransfer);
 
         if (!$reclamationTransfer) {
-            new ReclamationTransfer();
+            throw new ReclamationNotFoundException(
+                sprintf('There is no reclamation with id %s', $idSalesReclamation)
+            );
         }
 
         return $reclamationTransfer;
@@ -46,14 +53,19 @@ class ReclamationReader implements ReclamationReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
      *
+     * @throws \Spryker\Zed\SalesReclamation\Business\Exception\ReclamationItemNotFoundException
+     *
      * @return \Generated\Shared\Transfer\ReclamationItemTransfer
      */
     public function getReclamationItemById(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer
     {
+        $idSalesReclamationItem = $reclamationItemTransfer->getIdSalesReclamationItem();
         $reclamationItemTransfer = $this->salesReclamationRepository->findReclamationItemById($reclamationItemTransfer);
 
         if (!$reclamationItemTransfer) {
-            return new ReclamationItemTransfer();
+            throw new ReclamationItemNotFoundException(
+                sprintf('There is no reclamation item with id %s', $idSalesReclamationItem)
+            );
         }
 
         return $reclamationItemTransfer;

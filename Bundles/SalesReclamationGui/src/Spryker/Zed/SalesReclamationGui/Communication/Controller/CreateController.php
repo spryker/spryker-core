@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\SalesReclamationGui\Communication\Table\ReclamationTable;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -24,6 +23,7 @@ class CreateController extends AbstractController
     public const PARAM_ID_SALES_ORDER = 'id-sales-order';
 
     protected const PARAM_IDS_SALES_ORDER_ITEMS = 'id-order-item';
+    protected const PARAM_ID_RECLAMATION = 'id-reclamation';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -39,71 +39,55 @@ class CreateController extends AbstractController
             ->getSalesFacade()
             ->getOrderByIdSalesOrder($idSalesOrder);
 
-        if ($request->isMethod(Request::METHOD_GET)) {
-            return $this->showForm($orderTransfer);
+        $reclamation = $this->getFactory()
+            ->getSalesReclamationFacade()
+            ->mapOrderToReclamation($orderTransfer, new ReclamationTransfer());
+
+        $orderItemIds = $request->request->getDigits(static::PARAM_IDS_SALES_ORDER_ITEMS);
+
+        if (!$orderItemIds) {
+            return $this->viewResponse([
+                'reclamation' => $reclamation,
+            ]);
         }
 
-        $idsOrderItem = (array)$request->request->getDigits(static::PARAM_IDS_SALES_ORDER_ITEMS);
+        $reclamationTransfer = $this->createReclamation($orderTransfer, (array)$orderItemIds);
 
-        if (empty($idsOrderItem)) {
-            $this->addErrorMessage('No order items provided');
-
-            return $this->showForm($orderTransfer);
-        }
-
-        $reclamationTransfer = $this->createReclamation($orderTransfer, $idsOrderItem);
-
-        if ($reclamationTransfer) {
+        if ($orderItemIds && $reclamationTransfer) {
             $this->addSuccessMessage(sprintf(
                 'Reclamation id:%s for order %s successfully created',
                 $reclamationTransfer->getIdSalesReclamation(),
                 $orderTransfer->getOrderReference()
             ));
+
+            return $this->redirectResponse(
+                Url::generate(
+                    '/sales-reclamation-gui/detail',
+                    [
+                        static::PARAM_ID_RECLAMATION => $reclamationTransfer->getIdSalesReclamation(),
+                    ]
+                )->build()
+            );
         }
-
-        return $this->redirectResponse(
-            Url::generate(
-                '/sales-reclamation-gui/detail',
-                [
-                    ReclamationTable::PARAM_ID_RECLAMATION => $reclamationTransfer->getIdSalesReclamation(),
-                ]
-            )->build()
-        );
     }
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return array
-     */
-    protected function showForm(OrderTransfer $orderTransfer)
-    {
-        $reclamation = $this->getFactory()
-            ->getSalesReclamationFacade()
-            ->hydrateReclamationByOrder($orderTransfer);
-
-        return $this->viewResponse([
-            'reclamation' => $reclamation,
-        ]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param array $idsOrderItem
+     * @param array $orderItemIds
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer|null
      */
-    protected function createReclamation(OrderTransfer $orderTransfer, array $idsOrderItem): ?ReclamationTransfer
+    protected function createReclamation(OrderTransfer $orderTransfer, array $orderItemIds): ?ReclamationTransfer
     {
         $reclamationCreateRequestTransfer = new ReclamationCreateRequestTransfer();
         $reclamationCreateRequestTransfer->setOrder($orderTransfer);
 
-        foreach ($idsOrderItem as $idOrderItem) {
-            $orderItemsTransfer = $this->getOrderItemById($orderTransfer, (int)$idOrderItem);
+        foreach ($orderItemIds as $idOrderItem) {
+            $orderItemsTransfer = $this->getOrderItemById($orderTransfer, $idOrderItem);
 
             if (!$orderItemsTransfer) {
                 $this->addErrorMessage(sprintf(
-                    'OrderItem with id %s not belong to order %s',
+                    'Order item with id %s not belong to order %s',
                     $idOrderItem,
                     $orderTransfer->getIdSalesOrder()
                 ));

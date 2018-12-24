@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesReclamation;
+namespace Spryker\Zed\SalesReclamation\Business\Exception;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Exception;
 
-class SalesReclamationConfig extends AbstractBundleConfig
+class ReclamationItemNotFoundException extends Exception
 {
 }

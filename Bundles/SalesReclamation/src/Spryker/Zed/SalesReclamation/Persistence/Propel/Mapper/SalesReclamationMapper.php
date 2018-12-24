@@ -8,14 +8,11 @@
 namespace Spryker\Zed\SalesReclamation\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderCollectionTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation;
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationItem;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class SalesReclamationMapper implements SalesReclamationMapperInterface
 {
@@ -30,7 +27,7 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
         SpySalesReclamation $salesReclamationEntity
     ): SpySalesReclamation {
         $salesReclamationEntity->fromArray($reclamationTransfer->toArray());
-        $salesReclamationEntity->setNew($reclamationTransfer->getIdSalesReclamation() === null);
+        $salesReclamationEntity->setNew($this->isReclamationNew($reclamationTransfer));
 
         $orderTransfer = $reclamationTransfer->getOrder();
 
@@ -47,7 +44,7 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function mapEntityToReclamationTransfer(
+    public function mapReclamationEntityToTransfer(
         SpySalesReclamation $reclamationEntity,
         ReclamationTransfer $reclamationTransfer
     ): ReclamationTransfer {
@@ -58,8 +55,7 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
             ->fromArray($reclamationEntity->toArray(), true)
             ->setOrder($orderTransfer);
 
-        $this->addReclamationItemsToReclamationTransfer($reclamationEntity, $reclamationTransfer);
-        $this->addCreatedOrdersToReclamationTransfer($reclamationEntity, $reclamationTransfer);
+        $reclamationTransfer = $this->addReclamationItemsToReclamationTransfer($reclamationEntity, $reclamationTransfer);
 
         return $reclamationTransfer;
     }
@@ -75,7 +71,7 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
         SpySalesReclamationItem $salesReclamationItemEntity
     ): SpySalesReclamationItem {
         $salesReclamationItemEntity->fromArray($reclamationItemTransfer->toArray());
-        $salesReclamationItemEntity->setNew($reclamationItemTransfer->getIdSalesReclamationItem() === null);
+        $salesReclamationItemEntity->setNew($this->isReclamationItemNew($reclamationItemTransfer));
 
         $itemTransfer = $reclamationItemTransfer->getOrderItem();
 
@@ -92,7 +88,7 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationItemTransfer
      */
-    public function mapEntityToReclamationItemTransfer(
+    public function mapReclamationItemEntityToTransfer(
         SpySalesReclamationItem $reclamationItemEntity,
         ReclamationItemTransfer $reclamationItemTransfer
     ): ReclamationItemTransfer {
@@ -107,38 +103,23 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return bool
      */
-    public function mapEntityToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): OrderTransfer
+    protected function isReclamationNew(ReclamationTransfer $reclamationTransfer): bool
     {
-        $orderTransfer->fromArray($orderEntity->toArray(), true);
-
-        return $orderTransfer;
+        return $reclamationTransfer->getIdSalesReclamation() === null;
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderEntities
-     * @param \Generated\Shared\Transfer\OrderCollectionTransfer $createdOrdersCollectionTransfer
+     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderCollectionTransfer
+     * @return bool
      */
-    public function mapSalesOrdersToOrderCollectionTransfer(
-        ObjectCollection $salesOrderEntities,
-        OrderCollectionTransfer $createdOrdersCollectionTransfer
-    ): OrderCollectionTransfer {
-        if (!$salesOrderEntities->count()) {
-            return $createdOrdersCollectionTransfer;
-        }
-
-        foreach ($salesOrderEntities as $salesOrderEntitie) {
-            $salesOrderTransfer = $this->mapEntityToOrderTransfer($salesOrderEntitie, new OrderTransfer());
-            $createdOrdersCollectionTransfer->addOrder($salesOrderTransfer);
-        }
-
-        return $createdOrdersCollectionTransfer;
+    protected function isReclamationItemNew(ReclamationItemTransfer $reclamationItemTransfer): bool
+    {
+        return $reclamationItemTransfer->getIdSalesReclamationItem() === null;
     }
 
     /**
@@ -153,33 +134,9 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
     ): ReclamationTransfer {
         $salesReclamationItemEntities = $salesReclamationEntity->getSpySalesReclamationItems();
 
-        if ($salesReclamationItemEntities->count()) {
-            foreach ($salesReclamationItemEntities as $salesReclamationItemEntity) {
-                $reclamationItemTransfer = $this->mapEntityToReclamationItemTransfer($salesReclamationItemEntity, new ReclamationItemTransfer());
-                $reclamationTransfer->addReclamationItem($reclamationItemTransfer);
-            }
-        }
-
-        return $reclamationTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation $salesReclamationEntity
-     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
-     *
-     * @return \Generated\Shared\Transfer\ReclamationTransfer
-     */
-    protected function addCreatedOrdersToReclamationTransfer(
-        SpySalesReclamation $salesReclamationEntity,
-        ReclamationTransfer $reclamationTransfer
-    ): ReclamationTransfer {
-        $createdOrders = $salesReclamationEntity->getCreatedOrders();
-
-        if ($createdOrders->count()) {
-            foreach ($createdOrders as $createdOrder) {
-                $createdOrderTransfer = $this->mapEntityToOrderTransfer($createdOrder, new OrderTransfer());
-                $reclamationTransfer->addOrder($createdOrderTransfer);
-            }
+        foreach ($salesReclamationItemEntities as $salesReclamationItemEntity) {
+            $reclamationItemTransfer = $this->mapReclamationItemEntityToTransfer($salesReclamationItemEntity, new ReclamationItemTransfer());
+            $reclamationTransfer->addReclamationItem($reclamationItemTransfer);
         }
 
         return $reclamationTransfer;

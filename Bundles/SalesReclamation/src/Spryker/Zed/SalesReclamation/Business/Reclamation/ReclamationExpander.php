@@ -10,12 +10,11 @@ namespace Spryker\Zed\SalesReclamation\Business\Reclamation;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface;
 use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface;
 
-class Hydrator implements HydratorInterface
+class ReclamationExpander implements ReclamationExpanderInterface
 {
     /**
      * @var \Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface
@@ -42,66 +41,40 @@ class Hydrator implements HydratorInterface
     /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationTransfer|null
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function hydrateByReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
+    public function expandReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
     {
-        $reclamationTransfer = $this->salesReclamationRepository->findReclamationById($reclamationTransfer);
+        $reclamationTransfer = $this->salesReclamationRepository
+                ->findReclamationById($reclamationTransfer) ?? $reclamationTransfer;
 
-        if (!$reclamationTransfer) {
-            return null;
-        }
-
-        $createdOrderCollection = $this->salesReclamationRepository->findCreatedOrdersByReclamationId($reclamationTransfer);
-
-        if ($createdOrderCollection) {
-            $reclamationTransfer->setCreatedOrders($createdOrderCollection->getOrders());
-        }
-
-        $orderTransfer = $reclamationTransfer->getOrder();
-        $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($orderTransfer->getIdSalesOrder());
+        $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($reclamationTransfer->getOrder()->getIdSalesOrder());
         $reclamationTransfer->setOrder($orderTransfer);
-
-        $reclamationItems = new ArrayObject();
-        foreach ($reclamationTransfer->getReclamationItems() as $reclamationItemTransfer) {
-            $itemTransfer = $this->getOrderItemById($orderTransfer, $reclamationItemTransfer->getOrderItem()->getIdSalesOrderItem());
-            $reclamationItemTransfer->setOrderItem($itemTransfer);
-
-            $reclamationItems->append($reclamationItemTransfer);
-        }
-
-        $reclamationTransfer->setReclamationItems($reclamationItems);
+        $reclamationTransfer->setReclamationItems($this->expandReclamationItems($reclamationTransfer));
 
         return $reclamationTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationTransfer
+     * @return \ArrayObject
      */
-    public function hydrateByOrder(OrderTransfer $orderTransfer): ReclamationTransfer
+    protected function expandReclamationItems(ReclamationTransfer $reclamationTransfer): ArrayObject
     {
-        $orderTransfer->requireItems();
-
-        $reclamationTransfer = new ReclamationTransfer();
-
-        $reclamationTransfer->setOrder($orderTransfer);
-        $reclamationTransfer->setCustomerReference($orderTransfer->getCustomerReference());
-        $reclamationTransfer->setCustomerEmail($orderTransfer->getEmail());
-
-        /** @var \Generated\Shared\Transfer\ReclamationItemTransfer[]|\ArrayObject $reclamationItems */
         $reclamationItems = new ArrayObject();
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $reclamationItemTransfer = new ReclamationItemTransfer();
-            $reclamationItemTransfer->setOrderItem($itemTransfer);
 
+        foreach ($reclamationTransfer->getReclamationItems() as $reclamationItemTransfer) {
+            $itemTransfer = $this->getOrderItemById(
+                $reclamationTransfer->getOrder(),
+                $reclamationItemTransfer->getOrderItem()->getIdSalesOrderItem()
+            );
+
+            $reclamationItemTransfer->setOrderItem($itemTransfer);
             $reclamationItems->append($reclamationItemTransfer);
         }
 
-        $reclamationTransfer->setReclamationItems($reclamationItems);
-
-        return $reclamationTransfer;
+        return $reclamationItems;
     }
 
     /**

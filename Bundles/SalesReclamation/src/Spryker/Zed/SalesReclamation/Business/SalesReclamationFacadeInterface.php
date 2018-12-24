@@ -8,17 +8,17 @@
 namespace Spryker\Zed\SalesReclamation\Business;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
 
 interface SalesReclamationFacadeInterface
 {
     /**
      * Specification:
-     * - Creates new Reclamation by SalesOrder and SalesOrderItemIds.
+     * - Creates new reclamation and reclamation item entities from ReclamationCreateRequestTransfer::Order and
+     *   ReclamationCreateRequestTransfer::OrderItems
+     *
      * - If incoming data inconsistent - return null.
      *
      * @api
@@ -56,8 +56,8 @@ interface SalesReclamationFacadeInterface
     /**
      * Specification:
      * - Gets Reclamation by id from database.
-     * - Hydrates Reclamation with data from database.
-     * - Hydrates Reclamation items with data from database.
+     * - Expands Reclamation with data from database.
+     * - Expands Reclamation items with data from database.
      *
      * @api
      *
@@ -65,33 +65,24 @@ interface SalesReclamationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer|null
      */
-    public function hydrateReclamationByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
+    public function expandReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
 
     /**
      * Specification:
-     * - Hydrates Reclamation with data from order.
-     * - Hydrates Reclamation items with data from order items.
+     * - Maps order transfer to reclamation transfer.
+     * - Maps nested order items transfers to reclamation items.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function hydrateReclamationByOrder(OrderTransfer $orderTransfer): ReclamationTransfer;
-
-    /**
-     * Specification:
-     * - Updates sales order with reclamation id.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-     *
-     * @return void
-     */
-    public function saveOrderReclamation(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
+    public function mapOrderToReclamation(
+        OrderTransfer $orderTransfer,
+        ReclamationTransfer $reclamationTransfer
+    ): ReclamationTransfer;
 
     /**
      * Specification:
