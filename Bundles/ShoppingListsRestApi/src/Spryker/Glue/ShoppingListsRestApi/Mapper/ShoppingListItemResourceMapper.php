@@ -63,22 +63,18 @@ class ShoppingListItemResourceMapper implements ShoppingListItemResourceMapperIn
         RestRequestInterface $restRequest,
         ShoppingListItemTransfer $shoppingListItemTransfer
     ): RestShoppingListItemRequestTransfer {
-        $restShoppingListItemRequestTransfer = (new RestShoppingListItemRequestTransfer())->setShoppingListItem($shoppingListItemTransfer);
-
-        if (!$restRequest->getUser()) {
-            return $restShoppingListItemRequestTransfer;
-        }
-
-        $restShoppingListItemRequestTransfer->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+        $restShoppingListItemRequestTransfer = (new RestShoppingListItemRequestTransfer())->setShoppingListItem($shoppingListItemTransfer)
+            ->setCompanyUserUuid($restRequest->getHttpRequest()->headers->get(ShoppingListsRestApiConfig::X_COMPANY_USER_ID_HEADER_KEY));
 
         $shoppingListResource = $restRequest->findParentResourceByType(ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LISTS);
 
-        if (!$shoppingListResource) {
-            return $restShoppingListItemRequestTransfer;
+        if ($shoppingListResource) {
+            $restShoppingListItemRequestTransfer->setShoppingListUuid($shoppingListResource->getId());
         }
 
-        $restShoppingListItemRequestTransfer->setShoppingListUuid($shoppingListResource->getId())
-            ->setCompanyUserUuid($restRequest->getHttpRequest()->headers->get(ShoppingListsRestApiConfig::X_COMPANY_USER_ID_HEADER_KEY));
+        if ($restRequest->getUser()) {
+            $restShoppingListItemRequestTransfer->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+        }
 
         return $restShoppingListItemRequestTransfer;
     }
