@@ -83,68 +83,68 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function process(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    public function process(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
-        $subscriptionResponse = $this->processSubscription($availabilityNotificationSubscriptionTransfer);
+        $subscriptionResponse = $this->processSubscription($availabilitySubscriptionTransfer);
 
         if ($subscriptionResponse->getIsSuccess()) {
-            $this->sendSubscribedMail($availabilityNotificationSubscriptionTransfer);
+            $this->sendSubscribedMail($availabilitySubscriptionTransfer);
         }
 
         return $subscriptionResponse;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    protected function processSubscription(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    protected function processSubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
-        $availabilityNotificationSubscriptionTransfer->requireEmail();
-        $availabilityNotificationSubscriptionTransfer->requireSku();
+        $availabilitySubscriptionTransfer->requireEmail();
+        $availabilitySubscriptionTransfer->requireSku();
 
-        $isEmailValid = $this->utilValidateService->isEmailFormatValid($availabilityNotificationSubscriptionTransfer->getEmail());
+        $isEmailValid = $this->utilValidateService->isEmailFormatValid($availabilitySubscriptionTransfer->getEmail());
 
         if (!$isEmailValid) {
             return $this->createInvalidEmailResponse();
         }
 
-        $isAlreadySubscribed = $this->availabilitySubscriptionExistingChecker->check($availabilityNotificationSubscriptionTransfer);
+        $isAlreadySubscribed = $this->availabilitySubscriptionExistingChecker->check($availabilitySubscriptionTransfer);
 
         if ($isAlreadySubscribed->getIsSuccess()) {
             return $this->createSubscriptionResponseTransfer(true);
         }
 
         $subscriptionKey = $this->keyGenerator->generateKey();
-        $availabilityNotificationSubscriptionTransfer->setSubscriptionKey($subscriptionKey);
+        $availabilitySubscriptionTransfer->setSubscriptionKey($subscriptionKey);
 
         $store = $this->availabilityNotificationToStoreFacade->getCurrentStore();
-        $availabilityNotificationSubscriptionTransfer->setStore($store);
+        $availabilitySubscriptionTransfer->setStore($store);
 
         $locale = $this->availabilityNotificationToLocaleFacade->getCurrentLocale();
-        $availabilityNotificationSubscriptionTransfer->setLocale($locale);
+        $availabilitySubscriptionTransfer->setLocale($locale);
 
-        $this->entityManager->saveAvailabilitySubscriptionFromTransfer($availabilityNotificationSubscriptionTransfer);
+        $this->entityManager->saveAvailabilitySubscriptionFromTransfer($availabilitySubscriptionTransfer);
 
         return $this->createSubscriptionResponseTransfer(true);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
      * @return void
      */
-    protected function sendSubscribedMail(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): void
+    protected function sendSubscribedMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
     {
         $mailTransfer = (new MailTransfer())
             ->setType(AvailabilityNotificationSubscribedMailTypePlugin::MAIL_TYPE)
-            ->setAvailabilitySubscription($availabilityNotificationSubscriptionTransfer)
-            ->setLocale($availabilityNotificationSubscriptionTransfer->getLocale());
+            ->setAvailabilitySubscription($availabilitySubscriptionTransfer)
+            ->setLocale($availabilitySubscriptionTransfer->getLocale());
 
         $this->mailFacade->handleMail($mailTransfer);
     }

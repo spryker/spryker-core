@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 interface AvailabilitySubscriptionSenderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
      * @return bool
      */
-    public function send(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): bool;
+    public function send(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): bool;
 }

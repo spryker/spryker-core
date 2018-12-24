@@ -37,15 +37,15 @@ class AvailabilitySubscriptionExistingChecker implements AvailabilitySubscriptio
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function check(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    public function check(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
-        $availabilityNotificationSubscriptionTransfer->requireEmail();
-        $availabilityNotificationSubscriptionTransfer->requireSku();
-        $store = $availabilityNotificationSubscriptionTransfer->getStore();
+        $availabilitySubscriptionTransfer->requireEmail();
+        $availabilitySubscriptionTransfer->requireSku();
+        $store = $availabilitySubscriptionTransfer->getStore();
 
         if ($store === null) {
             $store = $this->availabilityNotificationToStoreClient->getCurrentStore();
@@ -53,8 +53,8 @@ class AvailabilitySubscriptionExistingChecker implements AvailabilitySubscriptio
 
         $existingSubscription = $this->repository
             ->findOneByEmailAndSkuAndStore(
-                $availabilityNotificationSubscriptionTransfer->getEmail(),
-                $availabilityNotificationSubscriptionTransfer->getSku(),
+                $availabilitySubscriptionTransfer->getEmail(),
+                $availabilitySubscriptionTransfer->getSku(),
                 $store
             );
 

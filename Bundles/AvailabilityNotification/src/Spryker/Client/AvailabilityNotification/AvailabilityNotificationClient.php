@@ -21,13 +21,13 @@ class AvailabilityNotificationClient extends AbstractClient implements Availabil
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function subscribe(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    public function subscribe(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
-        return $this->getFactory()->createZedAvailabilityNotificationStub()->subscribe($availabilityNotificationSubscriptionTransfer);
+        return $this->getFactory()->createZedAvailabilityNotificationStub()->subscribe($availabilitySubscriptionTransfer);
     }
 
     /**
@@ -35,13 +35,13 @@ class AvailabilityNotificationClient extends AbstractClient implements Availabil
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function unsubscribe(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    public function unsubscribe(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
-        return $this->getFactory()->createZedAvailabilityNotificationStub()->unsubscribe($availabilityNotificationSubscriptionTransfer);
+        return $this->getFactory()->createZedAvailabilityNotificationStub()->unsubscribe($availabilitySubscriptionTransfer);
     }
 
     /**
@@ -49,12 +49,12 @@ class AvailabilityNotificationClient extends AbstractClient implements Availabil
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function checkSubscription(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    public function checkSubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
-        return $this->getFactory()->createZedAvailabilityNotificationStub()->checkSubscription($availabilityNotificationSubscriptionTransfer);
+        return $this->getFactory()->createZedAvailabilityNotificationStub()->checkSubscription($availabilitySubscriptionTransfer);
     }
 }
