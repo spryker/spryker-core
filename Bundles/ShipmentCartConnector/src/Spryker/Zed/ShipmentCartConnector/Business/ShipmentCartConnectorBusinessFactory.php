@@ -22,10 +22,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentCartExpander()
     {
-        return new ShipmentCartExpander(
-            $this->getShipmentFacade(),
-            $this->getPriceFacade()
-        );
+        return new ShipmentCartExpander($this->getShipmentFacade(), $this->getPriceFacade());
     }
 
     /**
@@ -33,10 +30,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentCartValidate()
     {
-        return new ShipmentCartValidator(
-            $this->getShipmentFacade(),
-            $this->getPriceFacade()
-        );
+        return new ShipmentCartValidator($this->getShipmentFacade(), $this->getPriceFacade());
     }
 
     /**
