@@ -8,13 +8,14 @@
 namespace Spryker\Glue\ProductDiscontinuedRestApi\Plugin;
 
 use Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\ConcreteProductsResourceExpanderPluginInterface;
 
 /**
  * @method \Spryker\Glue\ProductDiscontinuedRestApi\ProductDiscontinuedRestApiFactory getFactory()
  */
-class DiscontinuedProductConcreteProductsResourceExpanderPlugin extends AbstractPlugin implements ConcreteProductsResourceExpanderPluginInterface
+class ProductDiscontinuedConcreteProductsResourceExpanderPlugin extends AbstractPlugin implements ConcreteProductsResourceExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -24,17 +25,17 @@ class DiscontinuedProductConcreteProductsResourceExpanderPlugin extends Abstract
      *
      * @param \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer
      * @param int $idProductConcrete
-     * @param string $localeName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer
      */
     public function expand(
         ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer,
         int $idProductConcrete,
-        string $localeName
+        RestRequestInterface $restRequest
     ): ConcreteProductsRestAttributesTransfer {
         return $this->getFactory()
             ->createConcreteProductsResourceExpander()
-            ->expand($concreteProductsRestAttributesTransfer, $localeName);
+            ->expand($concreteProductsRestAttributesTransfer, $restRequest->getMetadata()->getLocale());
     }
 }

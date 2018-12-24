@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface ConcreteProductsResourceExpanderPluginInterface
 {
@@ -19,13 +20,13 @@ interface ConcreteProductsResourceExpanderPluginInterface
      *
      * @param \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer
      * @param int $idProductConcrete
-     * @param string $localeName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer
      */
     public function expand(
         ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer,
         int $idProductConcrete,
-        string $localeName
+        RestRequestInterface $restRequest
     ): ConcreteProductsRestAttributesTransfer;
 }

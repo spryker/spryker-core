@@ -136,10 +136,10 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             ->mapConcreteProductsDataToConcreteProductsRestAttributes($concreteProductData);
         $restConcreteProductsAttributesTransfer = $this->concreteProductAttributeTranslationExpander
             ->addProductAttributeTranslation($restConcreteProductsAttributesTransfer, $restRequest->getMetadata()->getLocale());
-        $restConcreteProductsAttributesTransfer = $this->expandConcreteProduct(
+        $restConcreteProductsAttributesTransfer = $this->expandRestConcreteProductsAttributesTransfer(
             $restConcreteProductsAttributesTransfer,
             $concreteProductData[static::KEY_ID_PRODUCT_CONCRETE],
-            $restRequest->getMetadata()->getLocale()
+            $restRequest
         );
 
         return $this->restResourceBuilder->createRestResource(
@@ -152,22 +152,22 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer
      * @param int $idProductConcrete
-     * @param string $localeName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer
      */
-    protected function expandConcreteProduct(
+    protected function expandRestConcreteProductsAttributesTransfer(
         ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer,
         int $idProductConcrete,
-        string $localeName
+        RestRequestInterface $restRequest
     ): ConcreteProductsRestAttributesTransfer {
         $concreteProductsRestAttributesTransfer = $this->concreteProductAttributeTranslationExpander
-            ->addProductAttributeTranslation($concreteProductsRestAttributesTransfer, $localeName);
+            ->addProductAttributeTranslation($concreteProductsRestAttributesTransfer, $restRequest->getMetadata()->getLocale());
 
         $restConcreteProductsAttributesTransfer = $this->executeExpanderPlugins(
             $concreteProductsRestAttributesTransfer,
             $idProductConcrete,
-            $localeName
+            $restRequest
         );
 
         return $restConcreteProductsAttributesTransfer;
@@ -176,20 +176,20 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer
      * @param int $idProductConcrete
-     * @param string $localeName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer
      */
     protected function executeExpanderPlugins(
         ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer,
         int $idProductConcrete,
-        string $localeName
+        RestRequestInterface $restRequest
     ): ConcreteProductsRestAttributesTransfer {
         foreach ($this->concreteProductsResourceExpanderPlugins as $concreteProductsResourceExpanderPlugin) {
             $concreteProductsRestAttributesTransfer = $concreteProductsResourceExpanderPlugin->expand(
                 $concreteProductsRestAttributesTransfer,
                 $idProductConcrete,
-                $localeName
+                $restRequest
             );
         }
 

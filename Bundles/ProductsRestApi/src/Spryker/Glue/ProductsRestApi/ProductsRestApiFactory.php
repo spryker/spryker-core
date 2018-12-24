@@ -110,6 +110,6 @@ class ProductsRestApiFactory extends AbstractFactory
      */
     public function getConcreteProductResourceExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ProductsRestApiDependencyProvider::PLUGINS_CONCRETE_PRODUCT_RESOURCE_EXPANDER);
+        return $this->getProvidedDependency(ProductsRestApiDependencyProvider::PLUGINS_CONCRETE_PRODUCTS_RESOURCE_EXPANDER);
     }
 }

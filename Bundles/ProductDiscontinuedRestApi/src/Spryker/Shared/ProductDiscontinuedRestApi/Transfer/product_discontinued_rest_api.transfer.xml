@@ -8,4 +8,8 @@
         <property name="discontinuedNote" type="string" />
     </transfer>
 
+    <transfer name="ProductDiscontinuedStorage">
+        <property name="note" type="string" />
+    </transfer>
+
 </transfers>

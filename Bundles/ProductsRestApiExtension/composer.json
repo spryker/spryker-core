@@ -4,9 +4,11 @@
   "description": "ProductsRestApiExtension module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/glue-application": "*",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -23,5 +25,8 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "suggest": {
+    "spryker/glue-application": "If you want to use plugins with glue application."
   }
 }

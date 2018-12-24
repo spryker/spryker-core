@@ -19,7 +19,7 @@ class ProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
-    public const PLUGINS_CONCRETE_PRODUCT_RESOURCE_EXPANDER = 'PLUGINS_CONCRETE_PRODUCT_RESOURCE_EXPANDER';
+    public const PLUGINS_CONCRETE_PRODUCTS_RESOURCE_EXPANDER = 'PLUGINS_CONCRETE_PRODUCTS_RESOURCE_EXPANDER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -72,7 +72,7 @@ class ProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addConcreteProductsResourceExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CONCRETE_PRODUCT_RESOURCE_EXPANDER] = function () {
+        $container[static::PLUGINS_CONCRETE_PRODUCTS_RESOURCE_EXPANDER] = function () {
             return $this->getConcreteProductsResourceExpanderPlugins();
         };
 
