@@ -20,6 +20,7 @@ class AlternativeProductRelationshipByResourceIdPlugin extends AbstractPlugin im
     /**
      * {@inheritdoc}
      *  - Adds alternative-products relationship by concrete product sku.
+     *  - Concrete product sku is taken from resource id.
      *
      * @api
      *
@@ -32,7 +33,7 @@ class AlternativeProductRelationshipByResourceIdPlugin extends AbstractPlugin im
     {
         $this->getFactory()
             ->createProductAlternativesResourceRelationshipExpander()
-            ->addRelationshipsByConcreteSku($resources, $restRequest);
+            ->addRelationshipsByResourceId($resources, $restRequest);
     }
 
     /**

@@ -12,8 +12,6 @@ use Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternative
 use Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductAlternativesRestApi\Processor\Expander\AlternativeProductResourceRelationshipExpander;
 use Spryker\Glue\ProductAlternativesRestApi\Processor\Expander\AlternativeProductResourceRelationshipExpanderInterface;
-use Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\AlternativeProductMapper;
-use Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\AlternativeProductMapperInterface;
 use Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative\AlternativeProductReader;
 use Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative\AlternativeProductReaderInterface;
 
@@ -27,17 +25,8 @@ class ProductAlternativesRestApiFactory extends AbstractFactory
         return new AlternativeProductReader(
             $this->getProductAlternativeStorageClient(),
             $this->getProductStorageClient(),
-            $this->createProductAlternativeMapper(),
             $this->getResourceBuilder()
         );
-    }
-
-    /**
-     * @return \Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\AlternativeProductMapperInterface
-     */
-    public function createProductAlternativeMapper(): AlternativeProductMapperInterface
-    {
-        return new AlternativeProductMapper();
     }
 
     /**

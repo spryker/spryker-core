@@ -17,5 +17,5 @@ interface AlternativeProductResourceRelationshipExpanderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function addRelationshipsByConcreteSku(array $resources, RestRequestInterface $restRequest): array;
+    public function addRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): array;
 }

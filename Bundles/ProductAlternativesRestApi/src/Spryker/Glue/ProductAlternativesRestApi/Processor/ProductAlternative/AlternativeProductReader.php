@@ -17,7 +17,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductAlternativeStorageClientInterface;
 use Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductStorageClientInterface;
-use Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\AlternativeProductMapperInterface;
 use Spryker\Glue\ProductAlternativesRestApi\ProductAlternativesRestApiConfig;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AlternativeProductReader implements AlternativeProductReaderInterface
 {
     protected const SELF_LINK_PATTERN = '%s/%s/%s';
+    protected const KEY_SKU = 'sku';
 
     /**
      * @var \Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductAlternativeStorageClientInterface
@@ -37,11 +37,6 @@ class AlternativeProductReader implements AlternativeProductReaderInterface
     protected $productStorage;
 
     /**
-     * @var \Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\AlternativeProductMapperInterface
-     */
-    protected $productAlternativeMapper;
-
-    /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
@@ -49,18 +44,15 @@ class AlternativeProductReader implements AlternativeProductReaderInterface
     /**
      * @param \Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductAlternativeStorageClientInterface $productAlternativeStorage
      * @param \Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductStorageClientInterface $productStorage
-     * @param \Spryker\Glue\ProductAlternativesRestApi\Processor\Mapper\AlternativeProductMapperInterface $productAlternativeMapper
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(
         ProductAlternativesRestApiToProductAlternativeStorageClientInterface $productAlternativeStorage,
         ProductAlternativesRestApiToProductStorageClientInterface $productStorage,
-        AlternativeProductMapperInterface $productAlternativeMapper,
         RestResourceBuilderInterface $restResourceBuilder
     ) {
         $this->productAlternativeStorage = $productAlternativeStorage;
         $this->productStorage = $productStorage;
-        $this->productAlternativeMapper = $productAlternativeMapper;
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
@@ -139,19 +131,18 @@ class AlternativeProductReader implements AlternativeProductReaderInterface
         RestRequestInterface $restRequest
     ): RestResourceInterface {
         $restProductAlternativeAttributesTransfer = new RestAlternativeProductsAttributesTransfer();
+        $locale = $restRequest->getMetadata()->getLocale();
 
-        foreach ($productAlternativeStorageTransfer->getProductAbstractIds() as $productAbstractId) {
-            $abstractProductStorageData = $this->findAbstractProductById($productAbstractId, $restRequest);
+        foreach ($productAlternativeStorageTransfer->getProductAbstractIds() as $idProductAbstract) {
+            $abstractProductStorageData = $this->productStorage->findProductAbstractStorageData($idProductAbstract, $locale);
             if ($abstractProductStorageData) {
-                $restProductAlternativeAttributesTransfer = $this->productAlternativeMapper
-                    ->mapProductAbstractStorageDataToRestAlternativeProductsAttributesTransfer($abstractProductStorageData, $restProductAlternativeAttributesTransfer);
+                $restProductAlternativeAttributesTransfer->addAbstractProductId($abstractProductStorageData[static::KEY_SKU]);
             }
         }
-        foreach ($productAlternativeStorageTransfer->getProductConcreteIds() as $productConcreteId) {
-            $concreteProductStorageData = $this->findConcreteProductById($productConcreteId, $restRequest);
+        foreach ($productAlternativeStorageTransfer->getProductConcreteIds() as $idProductConcrete) {
+            $concreteProductStorageData = $this->productStorage->findProductConcreteStorageData($idProductConcrete, $locale);
             if ($concreteProductStorageData) {
-                $restProductAlternativeAttributesTransfer = $this->productAlternativeMapper
-                    ->mapProductConcreteStorageDataToRestAlternativeProductsAttributesTransfer($concreteProductStorageData, $restProductAlternativeAttributesTransfer);
+                $restProductAlternativeAttributesTransfer->addConcreteProductId($concreteProductStorageData[static::KEY_SKU]);
             }
         }
 

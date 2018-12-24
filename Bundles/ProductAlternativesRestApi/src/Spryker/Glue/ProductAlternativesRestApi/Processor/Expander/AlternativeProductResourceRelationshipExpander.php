@@ -31,14 +31,14 @@ class AlternativeProductResourceRelationshipExpander implements AlternativeProdu
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function addRelationshipsByConcreteSku(array $resources, RestRequestInterface $restRequest): array
+    public function addRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): array
     {
         foreach ($resources as $resource) {
             $concreteSku = $resource->getId();
 
-            $productAlternative = $this->productAlternativeReader->findConcreteProductAlternativeBySku($concreteSku, $restRequest);
-            if ($productAlternative) {
-                $resource->addRelationship($productAlternative);
+            $productAlternativeResource = $this->productAlternativeReader->findConcreteProductAlternativeBySku($concreteSku, $restRequest);
+            if ($productAlternativeResource) {
+                $resource->addRelationship($productAlternativeResource);
             }
         }
 
