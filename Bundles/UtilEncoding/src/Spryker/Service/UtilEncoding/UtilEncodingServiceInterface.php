@@ -53,9 +53,9 @@ interface UtilEncodingServiceInterface
      *
      * @throws \Spryker\Service\UtilEncoding\Exception\FormatNotSupportedException
      *
-     * @return string
+     * @return string|null
      */
-    public function encodeToFormat(array $data, string $format): string;
+    public function encodeToFormat(array $data, string $format): ?string;
 
     /**
      * Specification:

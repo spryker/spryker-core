@@ -59,11 +59,11 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
      * @param array $data
      * @param string $format
      *
-     * @return string
+     * @return string|null
      *
      * @throws \Spryker\Service\UtilEncoding\Exception\FormatNotSupportedException
      */
-    public function encodeToFormat(array $data, string $format): string
+    public function encodeToFormat(array $data, string $format): ?string
     {
         return $this->getFactory()
             ->createEncoder()
