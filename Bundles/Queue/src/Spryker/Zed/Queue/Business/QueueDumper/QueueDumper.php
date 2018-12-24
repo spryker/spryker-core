@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QueueDumpResponseTransfer;
 use Spryker\Client\Queue\QueueClientInterface;
 use Spryker\Shared\Queue\QueueConfig as SharedConfig;
 use Spryker\Zed\Queue\Business\Exception\MissingQueuePluginException;
+use Spryker\Zed\Queue\Dependency\Service\QueueToUtilEncodingServiceInterface;
 use Spryker\Zed\Queue\QueueConfig;
 
 class QueueDumper implements QueueDumperInterface
@@ -25,27 +26,35 @@ class QueueDumper implements QueueDumperInterface
     protected $queueClient;
 
     /**
-     * @var \Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface[]
-     */
-    protected $messageProcessorPlugins;
-
-    /**
      * @var \Spryker\Zed\Queue\QueueConfig
      */
     protected $queueConfig;
 
     /**
+     * @var \Spryker\Zed\Queue\Dependency\Service\QueueToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
+     * @var \Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface[]
+     */
+    protected $messageProcessorPlugins;
+
+    /**
      * @param \Spryker\Client\Queue\QueueClientInterface $queueClient
      * @param \Spryker\Zed\Queue\QueueConfig $queueConfig
+     * @param \Spryker\Zed\Queue\Dependency\Service\QueueToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface[] $messageProcessorPlugins
      */
     public function __construct(
         QueueClientInterface $queueClient,
         QueueConfig $queueConfig,
+        QueueToUtilEncodingServiceInterface $utilEncodingService,
         array $messageProcessorPlugins
     ) {
         $this->queueClient = $queueClient;
         $this->queueConfig = $queueConfig;
+        $this->utilEncodingService = $utilEncodingService;
         $this->messageProcessorPlugins = $messageProcessorPlugins;
     }
 
@@ -67,6 +76,12 @@ class QueueDumper implements QueueDumperInterface
         if (!$queueReceiveMessageTransfers) {
             return $queueDumpResponseTransfer;
         }
+
+        $data = $this->transformQueueReceiveMessageTransfersToArray($queueReceiveMessageTransfers);
+
+        $queueDumpResponseTransfer->setMessage(
+            $this->utilEncodingService->encodeToFormat($data, $options[static::DUMP_OUTPUT_FORMAT])
+        );
 
         $this->postProcessMessages($queueReceiveMessageTransfers, $options);
 
@@ -91,8 +106,7 @@ class QueueDumper implements QueueDumperInterface
      */
     protected function createQueueDumpResponseTransfer(): QueueDumpResponseTransfer
     {
-        return (new QueueDumpResponseTransfer())
-            ->setCode(200);
+        return new QueueDumpResponseTransfer();
     }
 
     /**

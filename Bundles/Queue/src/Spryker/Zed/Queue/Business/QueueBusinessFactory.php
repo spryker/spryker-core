@@ -14,6 +14,7 @@ use Spryker\Zed\Queue\Business\QueueDumper\QueueDumperInterface;
 use Spryker\Zed\Queue\Business\Task\TaskManager;
 use Spryker\Zed\Queue\Business\Worker\Worker;
 use Spryker\Zed\Queue\Business\Worker\WorkerProgressBar;
+use Spryker\Zed\Queue\Dependency\Service\QueueToUtilEncodingServiceInterface;
 use Spryker\Zed\Queue\QueueDependencyProvider;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -121,7 +122,16 @@ class QueueBusinessFactory extends AbstractBusinessFactory
         return new QueueDumper(
             $this->getQueueClient(),
             $this->getConfig(),
+            $this->getUtilEncodingService(),
             $this->getProcessorMessagePlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Queue\Dependency\Service\QueueToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): QueueToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(QueueDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }
