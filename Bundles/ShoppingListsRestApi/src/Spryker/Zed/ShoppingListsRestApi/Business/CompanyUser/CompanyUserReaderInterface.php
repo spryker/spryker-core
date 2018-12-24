@@ -8,16 +8,14 @@
 namespace Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
 
 interface CompanyUserReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     * @param string $companyUserUuid
+     * @param string $customerReference
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
-    public function findCompanyUserByUuid(
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
-    ): ?CompanyUserTransfer;
+    public function findCompanyUser(string $companyUserUuid, string $customerReference): ?CompanyUserTransfer;
 }

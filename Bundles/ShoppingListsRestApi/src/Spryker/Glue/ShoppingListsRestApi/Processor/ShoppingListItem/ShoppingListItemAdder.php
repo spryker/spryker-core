@@ -71,26 +71,23 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
 
         $restShoppingListItemRequestTransfer = $this->shoppingListItemResourceMapper->mapRestRequestToRestShoppingListItemRequestTransfer(
             $restRequest,
-            new RestShoppingListItemRequestTransfer(),
-            $restShoppingListItemAttributesTransfer
+            (new RestShoppingListItemRequestTransfer())->setShoppingListUuid($shoppingListUuid)
         );
 
         $shoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->addItem($restShoppingListItemRequestTransfer);
 
         if (!$shoppingListItemResponseTransfer->getIsSuccess()) {
-            return $this->createAddItemFailedErrorResponse($shoppingListItemResponseTransfer->getErrors());
+            return $this->createAddItemErrorResponse($shoppingListItemResponseTransfer->getErrors());
         }
 
-        $shoppingListItemTransfer = $shoppingListItemResponseTransfer->getShoppingListItem();
-
         $restShoppingListItemAttributesTransfer = $this->shoppingListItemResourceMapper->mapShoppingListItemTransferToRestShoppingListItemAttributesTransfer(
-            $shoppingListItemTransfer,
+            $shoppingListItemResponseTransfer->getShoppingListItem(),
             new RestShoppingListItemAttributesTransfer()
         );
 
         return $this->buildResponse(
             $restShoppingListItemAttributesTransfer,
-            $shoppingListItemTransfer,
+            $shoppingListItemResponseTransfer->getShoppingListItem(),
             $shoppingListUuid
         );
     }
@@ -111,21 +108,21 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
     }
 
     /**
-     * @param string $shoppingListResourceId
-     * @param string $shoppingListItemResourceId
+     * @param string $idShoppingList
+     * @param string $idShoppingListItem
      *
      * @return string
      */
     protected function createSelfLinkForShoppingListItem(
-        string $shoppingListResourceId,
-        string $shoppingListItemResourceId
+        string $idShoppingList,
+        string $idShoppingListItem
     ): string {
         return sprintf(
             static::SELF_LINK_FORMAT_PATTERN,
             ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LISTS,
-            $shoppingListResourceId,
+            $idShoppingList,
             ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
-            $shoppingListItemResourceId
+            $idShoppingListItem
         );
     }
 
@@ -135,9 +132,9 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
     protected function createShoppingListBadRequestErrorResponse(): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_UUID_NOT_SPECIFIED)
+            ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_ID_NOT_SPECIFIED)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(ShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_UUID_NOT_SPECIFIED);
+            ->setDetail(ShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_ID_NOT_SPECIFIED);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
@@ -147,7 +144,7 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createAddItemFailedErrorResponse(array $errors): RestResponseInterface
+    protected function createAddItemErrorResponse(array $errors): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 

@@ -18,7 +18,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/rest-request-validator": "If you want to use rest request validation."
+    "spryker/rest-request-validator": "If you want to use rest request validation.",
+    "spryker/company-users-rest-api": "If you want to use this module."
   },
   "autoload": {
     "psr-4": {

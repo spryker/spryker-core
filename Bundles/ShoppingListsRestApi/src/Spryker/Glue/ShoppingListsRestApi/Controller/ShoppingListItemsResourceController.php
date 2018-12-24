@@ -21,7 +21,7 @@ class ShoppingListItemsResourceController extends AbstractController
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Add shopping list item."
+     *              "Adds shopping list item."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
@@ -31,14 +31,14 @@ class ShoppingListItemsResourceController extends AbstractController
      *              "name": "X-Company-User-Id",
      *              "in": "header",
      *              "required": true,
-     *              "description": "Company user uuid"
+     *              "description": "Company user id"
      *          }],
      *          "responses": {
-     *              "400": "Can't add an item to shopping list",
-     *              "400": "Shopping list not found."
+     *              "400": "Shopping list id not specified."
      *              "403": "Unauthorized request.",
-     *              "422": "Company user not found."
-     *              "422": "Shopping list not found."
+     *              "403": "Company user not found."
+     *              "404": "Shopping list not found."
+     *              "422": "Can't add an item to shopping list",
      *          },
      *     }
      * })

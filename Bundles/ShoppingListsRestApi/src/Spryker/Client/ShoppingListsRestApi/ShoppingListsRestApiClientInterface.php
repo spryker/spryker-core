@@ -14,10 +14,10 @@ interface ShoppingListsRestApiClientInterface
 {
     /**
      * Specification:
-     *  - Adds item to shopping list.
-     *  - Search for company user and check his customer reference.
-     *  - Search for shopping list.
-     *  - Adds items if previous operation were successful.
+     *  - Retrieves company user by uuid.
+     *  - Checks that company user belongs to current customer.
+     *  - Retrieves shopping list by uuid.
+     *  - Adds items to shopping list.
      *
      * @api
      *

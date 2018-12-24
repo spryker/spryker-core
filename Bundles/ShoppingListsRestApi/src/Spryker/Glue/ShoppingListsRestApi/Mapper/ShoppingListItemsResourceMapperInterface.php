@@ -16,13 +16,13 @@ interface ShoppingListItemsResourceMapperInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function mapRestRequestToShoppingListItemTransfer(
         RestRequestInterface $restRequest,
-        RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
+        ShoppingListItemTransfer $shoppingListItemTransfer
     ): ShoppingListItemTransfer;
 
     /**
@@ -39,13 +39,11 @@ interface ShoppingListItemsResourceMapperInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
-     * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer
      */
     public function mapRestRequestToRestShoppingListItemRequestTransfer(
         RestRequestInterface $restRequest,
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer,
-        RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
+        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
     ): RestShoppingListItemRequestTransfer;
 }

@@ -7,11 +7,9 @@
 
 namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 use Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser\CompanyUserReaderInterface;
@@ -54,16 +52,17 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
             ->requireShoppingListUuid()
             ->requireCompanyUserUuid();
 
-        $companyUserTransfer = $this->companyUserReader->findCompanyUserByUuid($restShoppingListItemRequestTransfer);
+        $companyUserTransfer = $this->companyUserReader->findCompanyUser(
+            $restShoppingListItemRequestTransfer->getCompanyUserUuid(),
+            $restShoppingListItemRequestTransfer->getShoppingListItem()->getCustomerReference()
+        );
 
         if (!$companyUserTransfer) {
             return $this->createCompanyUserNotFoundErrorResponse();
         }
 
-        $shoppingListTransfer = $this->createShoppingListTransfer(
-            $restShoppingListItemRequestTransfer,
-            $companyUserTransfer
-        );
+        $shoppingListTransfer = (new ShoppingListTransfer())->setUuid($restShoppingListItemRequestTransfer->getShoppingListUuid())
+            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
 
         $shoppingListResponseTransfer = $this->shoppingListFacade->findShoppingListByUuid($shoppingListTransfer);
 
@@ -71,11 +70,9 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
             return $this->createShoppingListNotFoundErrorResponse();
         }
 
-        $shoppingListItemTransfer = $this->createShoppingListItemTransfer(
-            $restShoppingListItemRequestTransfer,
-            $companyUserTransfer,
-            $shoppingListResponseTransfer->getShoppingList()
-        );
+        $shoppingListItemTransfer = $restShoppingListItemRequestTransfer->getShoppingListItem();
+        $shoppingListItemTransfer->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+            ->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
 
         $shoppingListItemTransfer = $this->shoppingListFacade->addItem($shoppingListItemTransfer);
 
@@ -89,40 +86,6 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer
-     */
-    protected function createShoppingListTransfer(
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer,
-        CompanyUserTransfer $companyUserTransfer
-    ): ShoppingListTransfer {
-        return (new ShoppingListTransfer())->setUuid($restShoppingListItemRequestTransfer->getShoppingListUuid())
-            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
-     */
-    protected function createShoppingListItemTransfer(
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer,
-        CompanyUserTransfer $companyUserTransfer,
-        ShoppingListTransfer $shoppingListTransfer
-    ): ShoppingListItemTransfer {
-        $shoppingListItemTransfer = $restShoppingListItemRequestTransfer->getShoppingListItem();
-
-        $shoppingListItemTransfer->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
-            ->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
-
-        return $shoppingListItemTransfer;
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     protected function createShoppingListNotFoundErrorResponse(): ShoppingListItemResponseTransfer
@@ -131,7 +94,7 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
             ->setIsSuccess(false)
             ->addError(
                 (new RestErrorMessageTransfer())
-                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->setStatus(Response::HTTP_NOT_FOUND)
                     ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND)
                     ->setDetail(ShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_NOT_FOUND)
             );
@@ -146,7 +109,7 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
             ->setIsSuccess(false)
             ->addError(
                 (new RestErrorMessageTransfer())
-                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->setStatus(Response::HTTP_FORBIDDEN)
                     ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_FOUND)
                     ->setDetail(ShoppingListsRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND)
             );
@@ -161,7 +124,7 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
             ->setIsSuccess(false)
             ->addError(
                 (new RestErrorMessageTransfer())
-                    ->setStatus(Response::HTTP_BAD_REQUEST)
+                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
                     ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_ADD_ITEM)
                     ->setDetail(ShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_ADD_ITEM)
             );
