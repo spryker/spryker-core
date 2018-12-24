@@ -17,7 +17,7 @@ use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 
-class QuoteStorageStrategyProxy
+class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
 {
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'cart.locked.change_denied';
     protected const GLOSSARY_KEY_CHANGE_CURRENCY_FOR_QUOTE_DENIED = 'cart.locked.currency_change_denied';

@@ -261,11 +261,9 @@ class CartOperation implements CartOperationInterface
             $quoteTransfer->getIdQuote(),
             $quoteTransfer->getCustomer()
         );
-
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
-
         $customerQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteTransfer->fromArray($customerQuoteTransfer->modifiedToArray(), true);
 
