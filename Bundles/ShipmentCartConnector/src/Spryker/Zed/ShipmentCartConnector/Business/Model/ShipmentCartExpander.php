@@ -161,8 +161,6 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
         ShipmentMethodTransfer $shipmentMethodTransfer,
         QuoteTransfer $quoteTransfer
     ): void {
-        $priceMode = $quoteTransfer->getPriceMode();
-        $currencyTransfer = $quoteTransfer->getCurrency();
         $shipmentExpenseTypeIdentifier = $this->shipmentFacade->getShipmentExpenseTypeIdentifier();
 
         $shipmentExpense = $shipmentTransfer->getExpense();
@@ -171,6 +169,11 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
             return;
         }
 
-        $this->setExpensePrice($shipmentExpense, $shipmentMethodTransfer, $currencyTransfer, $priceMode);
+        $this->setExpensePrice(
+            $shipmentExpense,
+            $shipmentMethodTransfer,
+            $quoteTransfer->getCurrency(),
+            $quoteTransfer->getPriceMode()
+        );
     }
 }
