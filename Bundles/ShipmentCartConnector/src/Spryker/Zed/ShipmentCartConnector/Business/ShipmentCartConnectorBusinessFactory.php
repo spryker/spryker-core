@@ -9,7 +9,6 @@ namespace Spryker\Zed\ShipmentCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartExpander;
-use Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartExpanderHelper;
 use Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartValidator;
 use Spryker\Zed\ShipmentCartConnector\ShipmentCartConnectorDependencyProvider;
 
@@ -25,8 +24,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentCartExpander(
             $this->getShipmentFacade(),
-            $this->getPriceFacade(),
-            $this->createShipmentCartExpanderHelper()
+            $this->getPriceFacade()
         );
     }
 
@@ -37,8 +35,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentCartValidator(
             $this->getShipmentFacade(),
-            $this->getPriceFacade(),
-            $this->createShipmentCartExpanderHelper()
+            $this->getPriceFacade()
         );
     }
 
@@ -56,13 +53,5 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     protected function getPriceFacade()
     {
         return $this->getProvidedDependency(ShipmentCartConnectorDependencyProvider::FACADE_PRICE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartExpanderHelper
-     */
-    public function createShipmentCartExpanderHelper(): ShipmentCartExpanderHelper
-    {
-        return new ShipmentCartExpanderHelper();
     }
 }

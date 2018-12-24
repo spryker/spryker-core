@@ -38,8 +38,10 @@ class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
      *
      * @return bool
      */
-    public function checkShipment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
-    {
+    public function checkShipment(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool {
         $availableShipmentMethods = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
@@ -48,7 +50,7 @@ class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
             }
 
             $idShipmentMethod = $itemTransfer->getShipment()->getMethod()->getIdShipmentMethod();
-            $shipmentMethodTransfer = $this->findAvailableMethodById($idShipmentMethod, $availableShipmentMethods);
+            $shipmentMethodTransfer = $this->filterAvailableMethodById($idShipmentMethod, $availableShipmentMethods);
 
             if ($idShipmentMethod === null || $shipmentMethodTransfer === null) {
                 $checkoutErrorTransfer = $this->createCheckoutErrorTransfer();
@@ -70,7 +72,7 @@ class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function findAvailableMethodById(
+    protected function filterAvailableMethodById(
         int $idShipmentMethod,
         ShipmentMethodsTransfer $availableShipmentMethods
     ): ?ShipmentMethodTransfer {
