@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
+use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
 
 class QuoteUpdater implements QuoteUpdaterInterface
@@ -21,19 +22,27 @@ class QuoteUpdater implements QuoteUpdaterInterface
     protected $persistentCartFacade;
 
     /**
+     * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface
+     */
+    protected $cartFacade;
+
+    /**
      * @var \Spryker\Zed\CartsRestApi\Business\Cart\QuoteReaderInterface
      */
     protected $quoteReader;
 
     /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
+     * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\CartsRestApi\Business\Cart\QuoteReaderInterface $quoteReader
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
+        CartsRestApiToCartFacadeInterface $cartFacade,
         QuoteReaderInterface $quoteReader
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
+        $this->cartFacade = $cartFacade;
         $this->quoteReader = $quoteReader;
     }
 
@@ -53,7 +62,14 @@ class QuoteUpdater implements QuoteUpdaterInterface
             $quoteTransfer->setCurrency($quoteResponseTransfer->getQuoteTransfer()->getCurrency());
         }
 
+        if (!$quoteTransfer->getStore()->getName()) {
+            $quoteTransfer->setStore($quoteResponseTransfer->getQuoteTransfer()->getStore());
+        }
+
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer()->fromArray($quoteTransfer->modifiedToArray());
+        if (count($quoteTransfer->getItems()) > 0) {
+            $this->cartFacade->reloadItems($quoteTransfer);
+        }
 
         $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())->fromArray($quoteTransfer->modifiedToArray(), true);
         $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
