@@ -13,7 +13,6 @@ use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
-use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
 
 class ProductOptionTaxRateCalculator implements CalculatorInterface
 {
@@ -94,7 +93,7 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
             $idProductOptionValues = array_merge($idProductOptionValues, $this->getProductOptionValueIds($itemTransfer));
         }
 
-        return $idProductOptionValues;
+        return array_unique($idProductOptionValues);
     }
 
     /**
@@ -116,16 +115,11 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
      */
     protected function getShippingCountryIso2CodeByItem(ItemTransfer $itemTransfer): string
     {
-        if (
-            ($itemTransfer->getShipment() === null)
-            || ($itemTransfer->getShipment()->getShippingAddress() === null)
-        ) {
-            return $this->getDefaultTaxCountryIso2Code();
+        if ($this->hasItemShippingAddressDefaultTaxCountryIso2Code($itemTransfer)) {
+            return $itemTransfer->getShipment()->getShippingAddress()->getIso2Code();
         }
 
-        $isoCode = $itemTransfer->getShipment()->getShippingAddress()->getIso2Code();
-
-        return $isoCode ?: $this->getDefaultTaxCountryIso2Code();
+        return $this->getDefaultTaxCountryIso2Code();
     }
 
     /**
@@ -175,6 +169,7 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
         $key = $this->getTaxGroupedKey($idOptionValue, $countryIso2Code);
 
         if (isset($taxRates[$key])) {
+            // todo: to discover if we need `(float)` here later - when debug will be running
             return (float)$taxRates[$key];
         }
 
@@ -193,7 +188,7 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
         $foundResults = $this->queryContainer
             ->queryTaxSetByIdProductOptionValueAndCountryIso2Codes(
                 $idProductOptionValues,
-                $this->getUniqueCountryIso2Codes($countryIso2CodesByIdProductAbstracts)
+                array_unique($countryIso2CodesByIdProductAbstracts)
             )
             ->find();
 
@@ -206,16 +201,6 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param string[] $countryIso2Codes
-     *
-     * @return string[]
-     */
-    protected function getUniqueCountryIso2Codes(array $countryIso2Codes): array
-    {
-        return array_unique($countryIso2Codes);
-    }
-
-    /**
      * @param int $idOptionValue
      * @param string $countryIso2Code
      *
@@ -224,5 +209,19 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     protected function getTaxGroupedKey(int $idOptionValue, string $countryIso2Code): string
     {
         return $countryIso2Code . $idOptionValue;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function hasItemShippingAddressDefaultTaxCountryIso2Code(ItemTransfer $itemTransfer): bool
+    {
+        $shipmentTransfer = $itemTransfer->getShipment();
+
+        return $shipmentTransfer !== null &&
+            $shipmentTransfer->getShippingAddress() !== null &&
+            $shipmentTransfer->getShippingAddress()->getIso2Code() !== null;
     }
 }
