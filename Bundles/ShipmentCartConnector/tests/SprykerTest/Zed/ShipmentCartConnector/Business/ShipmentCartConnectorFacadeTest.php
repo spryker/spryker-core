@@ -120,7 +120,6 @@ class ShipmentCartConnectorFacadeTest extends Unit
     {
         $cartChangeTransfer = (new CartChangeBuilder())->build();
 
-        $itemTransfer = (new ItemBuilder())->build();
         $quoteTransfer = (new QuoteBuilder())
             ->withCurrency()
             ->build();
@@ -133,6 +132,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
 
         $shipmentTransfer->setExpense($shipmentExpense);
 
+        $itemTransfer = (new ItemBuilder())->build();
         $itemTransfer->setShipment($shipmentTransfer);
         $quoteTransfer->addItem($itemTransfer);
 
