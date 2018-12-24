@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReclamationGui\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationItemTableMap;
@@ -48,9 +49,7 @@ class DetailController extends AbstractController
         $eventsGroupedByItem = $this->getFactory()
             ->getOmsFacade()
             ->getManualEventsByIdSalesOrder($reclamationTransfer->getOrder()->getIdSalesOrder());
-        $events = $this->getFactory()
-            ->getOmsFacade()
-            ->getDistinctManualEventsByIdSalesOrder($reclamationTransfer->getOrder()->getIdSalesOrder());
+        $events = $this->getEventsPerReclamationItems($reclamationTransfer->getReclamationItems(), $eventsGroupedByItem);
 
         return $this->viewResponse([
             'reclamation' => $reclamationTransfer,
@@ -100,60 +99,36 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \ArrayObject $reclamationItems
+     * @param $eventsGroupedByItem
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return string[]
      */
-    public function closeItemAction(Request $request): RedirectResponse
+    protected function getEventsPerReclamationItems(ArrayObject $reclamationItems, $eventsGroupedByItem): array
     {
-        $idReclamation = $this->castId($request->get(ReclamationTable::PARAM_ID_RECLAMATION));
-        $idReclamationItem = $this->castId($request->get(static::PARAM_ID_RECLAMATION_ITEM));
-
-        $reclamationItemTransfer = new ReclamationItemTransfer();
-        $reclamationItemTransfer->setIdSalesReclamationItem($idReclamationItem);
-
-        $reclamationItemTransfer = $this->getFactory()
-            ->getSalesReclamationFacade()
-            ->getReclamationItemById($reclamationItemTransfer);
-        $reclamationItemTransfer->setState(SpySalesReclamationItemTableMap::COL_STATE_REFUNDED);
-
-        if (!$reclamationItemTransfer->getIdSalesReclamationItem()) {
-            $this->addErrorMessage(sprintf('Reclamation item with id %s not exists', $idReclamationItem));
-
-            return $this->redirectResponse(
-                Url::generate(
-                    '/sales-reclamation-gui'
-                )->build()
-            );
+        $orderItemsIds = $this->getOrderItemsIdsByReclamationItems($reclamationItems);
+        $events = [];
+        foreach ($orderItemsIds as $orderItemId) {
+            if (!isset($eventsGroupedByItem[$orderItemId])) {
+                continue;
+            }
+            $events = array_merge($events, $eventsGroupedByItem[$orderItemId]);
         }
 
-        if ($reclamationItemTransfer->getFkSalesReclamation() !== $idReclamation) {
-            $this->addErrorMessage(sprintf(
-                'Reclamation with id %s not own this item %s',
-                $idReclamation,
-                $idReclamationItem
-            ));
+        return array_unique($events);
+    }
 
-            return $this->redirectResponse(
-                Url::generate(
-                    '/sales-reclamation-gui'
-                )->build()
-            );
+    /**
+     * @param \ArrayObject $reclamationItems
+     *
+     * @return int[]
+     */
+    protected function getOrderItemsIdsByReclamationItems(ArrayObject $reclamationItems): array
+    {
+        foreach ($reclamationItems as $item) {
+            $orderItemsIds[] = $item->getOrderItem()->getIdSalesOrderItem();
         }
 
-        $this->getFactory()
-            ->getSalesReclamationFacade()
-            ->updateReclamationItem($reclamationItemTransfer);
-
-        $this->addSuccessMessage('Reclamation item refunded');
-
-        return $this->redirectResponse(
-            Url::generate(
-                '/sales-reclamation-gui/detail',
-                [
-                    ReclamationTable::PARAM_ID_RECLAMATION => $idReclamation,
-                ]
-            )->build()
-        );
+        return $orderItemsIds ?? [];
     }
 }

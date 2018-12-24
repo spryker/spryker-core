@@ -9,7 +9,7 @@ function getSelectedItems(idOrderItem) {
         return selectedItems;
     }
 
-    $('.item-check').each(function(){
+    $('.item-check').each(function() {
         if ($(this).prop('checked') === true) {
             selectedItems.push($(this).val());
         }
@@ -26,11 +26,27 @@ function createTriggerUrl(idOrder, idReclamation, eventName) {
         redirect: '/sales-reclamation-gui/detail?id-reclamation=' + idReclamation
     };
 
-    parameters.items = getSelectedItems();
+    parameters = expandParametersWithClaimedOrderItems(parameters);
+
+    if (isSpecificItemsSelected(parameters)) {
+        parameters.items = getSelectedItems();
+    }
 
     var finalUrl = url + '?' + $.param(parameters);
 
     return decodeURIComponent(finalUrl);
+}
+
+function isSpecificItemsSelected(parameters) {
+    return parameters.items.length > 0;
+}
+
+function expandParametersWithClaimedOrderItems(parameters) {
+    $('.item-check').each(function() {
+        parameters.items.push($(this).val());
+    });
+
+    return parameters;
 }
 
 function createTriggerItemUrl(idOrder, idOrderItem, idReclamation, eventName) {
@@ -55,7 +71,7 @@ function disableTrigger($item) {
 }
 
 $(document).ready(function() {
-    $('.trigger-order-single-event').click(function(e){
+    $('.trigger-order-single-event').click(function(e) {
         e.preventDefault();
         var $item = $(this);
 
@@ -69,7 +85,7 @@ $(document).ready(function() {
         window.location = createTriggerItemUrl(idOrder, idOrderItem, idReclamation, eventName);
     });
 
-    $('.trigger-order-event').click(function(e){
+    $('.trigger-order-event').click(function(e) {
         e.preventDefault();
 
         var $item = $(this);
@@ -83,7 +99,7 @@ $(document).ready(function() {
         window.location = createTriggerUrl(idOrder, idReclamation, eventName);
     });
 
-    $('.more-history').click(function(e){
+    $('.more-history').click(function(e) {
         e.preventDefault();
         var idProductItem = $(this).data('id');
         var $history = $('#history_details_' + idProductItem);
@@ -95,7 +111,7 @@ $(document).ready(function() {
         $button.toggleClass('is-shown', isHidden);
     });
 
-    $('.item-check').click(function(){
+    $('.item-check').click(function() {
         var countChecked = $(".item-check[type='checkbox']:checked").length;
         var totalCheckboxItems = $('.item-check').length;
 
@@ -110,14 +126,14 @@ $(document).ready(function() {
         return true;
     });
 
-    $('#check-all-orders').click(function(){
+    $('#check-all-orders').click(function() {
         if ($(this).prop('checked') === true) {
             var checked = true;
         } else {
             var checked = false;
         }
 
-        $('.item-check').each(function(){
+        $('.item-check').each(function() {
             $(this).prop('checked', checked);
         });
     });
