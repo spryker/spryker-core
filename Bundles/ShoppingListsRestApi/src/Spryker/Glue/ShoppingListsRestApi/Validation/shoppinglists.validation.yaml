@@ -5,6 +5,6 @@ shopping-list-items:
         quantity:
         - NotBlank
         - Type:
-              type: numeric
+              type: integer
         - GreaterThan:
               value: 0

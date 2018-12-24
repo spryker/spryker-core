@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
-class ShoppingListItemResourceMapper implements ShoppingListItemResourceMapperInterface
+class ShoppingListItemsResourceMapper implements ShoppingListItemsResourceMapperInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -21,7 +21,7 @@ class ShoppingListItemResourceMapper implements ShoppingListItemResourceMapperIn
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function mapShoppingListItemTransferFromRestRequest(
+    public function mapRestRequestToShoppingListItemTransfer(
         RestRequestInterface $restRequest,
         RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
     ): ShoppingListItemTransfer {
@@ -41,13 +41,15 @@ class ShoppingListItemResourceMapper implements ShoppingListItemResourceMapperIn
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer
      */
     public function mapShoppingListItemTransferToRestShoppingListItemAttributesTransfer(
-        ShoppingListItemTransfer $shoppingListItemTransfer
+        ShoppingListItemTransfer $shoppingListItemTransfer,
+        RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
     ): RestShoppingListItemAttributesTransfer {
-        return (new RestShoppingListItemAttributesTransfer())->fromArray(
+        return $restShoppingListItemAttributesTransfer->fromArray(
             $shoppingListItemTransfer->toArray(),
             true
         );
@@ -55,25 +57,28 @@ class ShoppingListItemResourceMapper implements ShoppingListItemResourceMapperIn
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer
      */
-    public function mapRestShoppingListItemRequestTransferFromRestRequest(
+    public function mapRestRequestToRestShoppingListItemRequestTransfer(
         RestRequestInterface $restRequest,
-        ShoppingListItemTransfer $shoppingListItemTransfer
+        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer,
+        RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
     ): RestShoppingListItemRequestTransfer {
-        $restShoppingListItemRequestTransfer = (new RestShoppingListItemRequestTransfer())->setShoppingListItem($shoppingListItemTransfer)
+        $shoppingListItemTransfer = $this->mapRestRequestToShoppingListItemTransfer(
+            $restRequest,
+            $restShoppingListItemAttributesTransfer
+        );
+
+        $restShoppingListItemRequestTransfer->setShoppingListItem($shoppingListItemTransfer)
             ->setCompanyUserUuid($restRequest->getHttpRequest()->headers->get(ShoppingListsRestApiConfig::X_COMPANY_USER_ID_HEADER_KEY));
 
         $shoppingListResource = $restRequest->findParentResourceByType(ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LISTS);
 
         if ($shoppingListResource) {
             $restShoppingListItemRequestTransfer->setShoppingListUuid($shoppingListResource->getId());
-        }
-
-        if ($restRequest->getUser()) {
-            $restShoppingListItemRequestTransfer->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
         }
 
         return $restShoppingListItemRequestTransfer;

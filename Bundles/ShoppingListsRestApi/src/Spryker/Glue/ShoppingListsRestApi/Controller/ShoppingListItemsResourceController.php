@@ -35,8 +35,10 @@ class ShoppingListItemsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Can't add an item to shopping list",
+     *              "400": "Shopping list not found."
      *              "403": "Unauthorized request.",
-     *              "404": "Shopping list not found."
+     *              "422": "Company user not found."
+     *              "422": "Shopping list not found."
      *          },
      *     }
      * })

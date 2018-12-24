@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ShoppingListsRestApi\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser\CompanyUserReader;
+use Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser\CompanyUserReaderInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemAdder;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemAdderInterface;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToCompanyUserFacadeInterface;
@@ -24,7 +26,15 @@ class ShoppingListsRestApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createShoppingListItemAdder(): ShoppingListItemAdderInterface
     {
-        return new ShoppingListItemAdder($this->getCompanyUserFacade(), $this->getShoppingListFacade());
+        return new ShoppingListItemAdder($this->createCompanyUserReader(), $this->getShoppingListFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser\CompanyUserReaderInterface
+     */
+    public function createCompanyUserReader(): CompanyUserReaderInterface
+    {
+        return new CompanyUserReader($this->getCompanyUserFacade());
     }
 
     /**

@@ -8,22 +8,24 @@
 namespace Spryker\Client\ShoppingListsRestApi;
 
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\RestShoppingListItemResponseTransfer;
 
 interface ShoppingListsRestApiClientInterface
 {
     /**
      * Specification:
      *  - Adds item to shopping list.
-     *  - Required values of RestShoppingListItemRequestTransfer: shoppingListItem, shoppingListUuid, companyUserUuid, customerReference.
+     *  - Search for company user and check his customer reference.
+     *  - Search for shopping list.
+     *  - Adds items if previous operation were successful.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
      */
     public function addItem(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
-    ): ShoppingListItemTransfer;
+    ): RestShoppingListItemResponseTransfer;
 }

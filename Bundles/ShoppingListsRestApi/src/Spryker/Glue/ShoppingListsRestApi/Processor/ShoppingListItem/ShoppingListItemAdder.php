@@ -7,14 +7,17 @@
 
 namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem;
 
+use ArrayObject;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer;
+use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemResourceMapperInterface;
+use Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemsResourceMapperInterface;
 use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,19 +36,19 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemResourceMapperInterface
+     * @var \Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemsResourceMapperInterface
      */
     protected $shoppingListItemResourceMapper;
 
     /**
      * @param \Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface $shoppingListsRestApiClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemResourceMapperInterface $shoppingListItemResourceMapper
+     * @param \Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemsResourceMapperInterface $shoppingListItemResourceMapper
      */
     public function __construct(
         ShoppingListsRestApiClientInterface $shoppingListsRestApiClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        ShoppingListItemResourceMapperInterface $shoppingListItemResourceMapper
+        ShoppingListItemsResourceMapperInterface $shoppingListItemResourceMapper
     ) {
         $this->shoppingListsRestApiClient = $shoppingListsRestApiClient;
         $this->restResourceBuilder = $restResourceBuilder;
@@ -62,48 +65,35 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
         RestRequestInterface $restRequest,
         RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
     ): RestResponseInterface {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
         $shoppingListUuid = $this->findShoppingListIdentifier($restRequest);
         if (!$shoppingListUuid) {
-            return $this->createShoppingListNotFoundErrorResponse();
+            return $this->createShoppingListBadRequestErrorResponse();
         }
 
-        $shoppingListItemTransfer = $this->shoppingListItemResourceMapper->mapShoppingListItemTransferFromRestRequest(
+        $restShoppingListItemRequestTransfer = $this->shoppingListItemResourceMapper->mapRestRequestToRestShoppingListItemRequestTransfer(
             $restRequest,
+            new RestShoppingListItemRequestTransfer(),
             $restShoppingListItemAttributesTransfer
         );
 
-        $restShoppingListItemRequestTransfer = $this->shoppingListItemResourceMapper->mapRestShoppingListItemRequestTransferFromRestRequest(
-            $restRequest,
-            $shoppingListItemTransfer
-        );
+        $restShoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->addItem($restShoppingListItemRequestTransfer);
 
-        $shoppingListItemTransfer = $this->shoppingListsRestApiClient->addItem($restShoppingListItemRequestTransfer);
-
-        if (!$shoppingListItemTransfer->getIdShoppingListItem()) {
-            return $this->createShoppingListCanNotAddItemErrorResponse();
+        if (!$restShoppingListItemResponseTransfer->getIsSuccess()) {
+            return $this->createAddItemFailedErrorResponse($restShoppingListItemResponseTransfer->getErrors());
         }
+
+        $shoppingListItemTransfer = $restShoppingListItemResponseTransfer->getShoppingListItem();
 
         $restShoppingListItemAttributesTransfer = $this->shoppingListItemResourceMapper->mapShoppingListItemTransferToRestShoppingListItemAttributesTransfer(
-            $shoppingListItemTransfer
+            $shoppingListItemTransfer,
+            new RestShoppingListItemAttributesTransfer()
         );
 
-        $shoppingListItemResource = $this->restResourceBuilder->createRestResource(
-            ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
-            $shoppingListItemTransfer->getUuid(),
-            $restShoppingListItemAttributesTransfer
+        return $this->buildResponse(
+            $restShoppingListItemAttributesTransfer,
+            $shoppingListItemTransfer,
+            $shoppingListUuid
         );
-
-        $shoppingListItemResource->addLink(
-            RestLinkInterface::LINK_SELF,
-            $this->createSelfLinkForShoppingListItem(
-                $shoppingListUuid,
-                $shoppingListItemTransfer->getUuid()
-            )
-        );
-
-        return $restResponse->addResource($shoppingListItemResource);
     }
 
     /**
@@ -143,26 +133,60 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createShoppingListNotFoundErrorResponse(): RestResponseInterface
+    protected function createShoppingListBadRequestErrorResponse(): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(ShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_NOT_FOUND);
+            ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_UUID_NOT_SPECIFIED)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(ShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_UUID_NOT_SPECIFIED);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
 
     /**
+     * @param \ArrayObject $errors
+     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createShoppingListCanNotAddItemErrorResponse(): RestResponseInterface
+    protected function createAddItemFailedErrorResponse(ArrayObject $errors): RestResponseInterface
     {
-        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_ADD_ITEM)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(ShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_ADD_ITEM);
+        $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
+        foreach ($errors as $restErrorMessageTransfer) {
+            $restResponse->addError($restErrorMessageTransfer);
+        }
+
+        return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param string $shoppingListUuid
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function buildResponse(
+        RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer,
+        ShoppingListItemTransfer $shoppingListItemTransfer,
+        string $shoppingListUuid
+    ): RestResponseInterface {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        $shoppingListItemResource = $this->restResourceBuilder->createRestResource(
+            ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
+            $shoppingListItemTransfer->getUuid(),
+            $restShoppingListItemAttributesTransfer
+        );
+
+        $shoppingListItemResource->addLink(
+            RestLinkInterface::LINK_SELF,
+            $this->createSelfLinkForShoppingListItem(
+                $shoppingListUuid,
+                $shoppingListItemTransfer->getUuid()
+            )
+        );
+
+        return $restResponse->addResource($shoppingListItemResource);
     }
 }

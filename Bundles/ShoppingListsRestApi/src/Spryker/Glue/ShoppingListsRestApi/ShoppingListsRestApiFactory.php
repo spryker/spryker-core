@@ -8,8 +8,8 @@
 namespace Spryker\Glue\ShoppingListsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemResourceMapper;
-use Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemResourceMapperInterface;
+use Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemsResourceMapper;
+use Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemsResourceMapperInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemAdder;
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemAdderInterface;
 
@@ -31,10 +31,10 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemResourceMapperInterface
+     * @return \Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemsResourceMapperInterface
      */
-    public function createShoppingListItemResourceMapper(): ShoppingListItemResourceMapperInterface
+    public function createShoppingListItemResourceMapper(): ShoppingListItemsResourceMapperInterface
     {
-        return new ShoppingListItemResourceMapper();
+        return new ShoppingListItemsResourceMapper();
     }
 }

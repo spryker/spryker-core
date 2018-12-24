@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ShoppingListsRestApi\Zed;
+namespace Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
-use Generated\Shared\Transfer\RestShoppingListItemResponseTransfer;
 
-interface ShoppingListsRestApiStubInterface
+interface CompanyUserReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
-    public function addItem(
+    public function findCompanyUserByUuid(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
-    ): RestShoppingListItemResponseTransfer;
+    ): ?CompanyUserTransfer;
 }

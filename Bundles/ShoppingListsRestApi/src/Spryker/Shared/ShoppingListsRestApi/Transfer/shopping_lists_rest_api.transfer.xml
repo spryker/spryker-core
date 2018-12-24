@@ -15,12 +15,17 @@
         <property name="shoppingListItem" type="ShoppingListItem"/>
         <property name="shoppingListUuid" type="string"/>
         <property name="companyUserUuid" type="string" />
-        <property name="customerReference" type="string" />
     </transfer>
 
     <transfer name="RestShoppingListItemAttributes">
         <property name="quantity" type="int" restRequestParameter="required"/>
-        <property name="sku" type="string"/>
+        <property name="sku" type="string" restRequestParameter="required"/>
+    </transfer>
+
+    <transfer name="RestShoppingListItemResponse">
+        <property name="ShoppingListItem" type="ShoppingListItem" />
+        <property name="isSuccess" type="bool" />
+        <property name="errors" type="RestErrorMessage[]" singular="error" />
     </transfer>
 
 </transfers>
