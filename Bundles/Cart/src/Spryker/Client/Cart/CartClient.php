@@ -95,7 +95,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function addValidItems(CartChangeTransfer $cartChangeTransfer, array $params = []): QuoteTransfer
     {
-        return $this->getFactory()->createQuoteStorageStrategy($this)->addValidItems($cartChangeTransfer, $params);
+        return $this->getFactory()->createQuoteStorageStrategy()->addValidItems($cartChangeTransfer, $params);
     }
 
     /**
@@ -110,7 +110,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function addItem(ItemTransfer $itemTransfer, array $params = [])
     {
-        return $this->getFactory()->createQuoteStorageStrategy($this)->addItem($itemTransfer, $params);
+        return $this->getFactory()->createQuoteStorageStrategy()->addItem($itemTransfer, $params);
     }
 
     /**
@@ -125,7 +125,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function addItems(array $itemTransfers, array $params = [])
     {
-        return $this->getFactory()->createQuoteStorageStrategy($this)->addItems($itemTransfers, $params);
+        return $this->getFactory()->createQuoteStorageStrategy()->addItems($itemTransfers, $params);
     }
 
     /**
@@ -140,7 +140,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function removeItem($sku, $groupKey = null)
     {
-        return $this->getFactory()->createQuoteStorageStrategy($this)->removeItem($sku, $groupKey);
+        return $this->getFactory()->createQuoteStorageStrategy()->removeItem($sku, $groupKey);
     }
 
     /**
@@ -154,7 +154,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function removeItems(ArrayObject $items)
     {
-        return $this->getFactory()->createQuoteStorageStrategy($this)->removeItems($items);
+        return $this->getFactory()->createQuoteStorageStrategy()->removeItems($items);
     }
 
     /**
@@ -170,7 +170,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function changeItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
-        return $this->getFactory()->createQuoteStorageStrategy($this)->changeItemQuantity($sku, $groupKey, $quantity);
+        return $this->getFactory()->createQuoteStorageStrategy()->changeItemQuantity($sku, $groupKey, $quantity);
     }
 
     /**
@@ -186,7 +186,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
-        return $this->getFactory()->createQuoteStorageStrategy($this)->decreaseItemQuantity($sku, $groupKey, $quantity);
+        return $this->getFactory()->createQuoteStorageStrategy()->decreaseItemQuantity($sku, $groupKey, $quantity);
     }
 
     /**
@@ -202,7 +202,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
-        return $this->getFactory()->createQuoteStorageStrategy($this)->increaseItemQuantity($sku, $groupKey, $quantity);
+        return $this->getFactory()->createQuoteStorageStrategy()->increaseItemQuantity($sku, $groupKey, $quantity);
     }
 
     /**
@@ -214,7 +214,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function reloadItems()
     {
-        $this->getFactory()->createQuoteStorageStrategy($this)->reloadItems();
+        $this->getFactory()->createQuoteStorageStrategy()->reloadItems();
     }
 
     /**
@@ -226,7 +226,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function validateQuote()
     {
-        return $this->getFactory()->createQuoteStorageStrategy($this)->validateQuote();
+        return $this->getFactory()->createQuoteStorageStrategy()->validateQuote();
     }
 
     /**
@@ -240,7 +240,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer
     {
-        return $this->getFactory()->createQuoteStorageStrategy($this)->setQuoteCurrency($currencyTransfer);
+        return $this->getFactory()->createQuoteStorageStrategy()->setQuoteCurrency($currencyTransfer);
     }
 
     /**
@@ -302,6 +302,6 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function isQuoteEditable(): bool
     {
-        return !$this->getQuoteClient()->getQuote()->getIsLocked();
+        return $this->getFactory()->createQuoteStorageStrategy()->isQuoteEditable();
     }
 }

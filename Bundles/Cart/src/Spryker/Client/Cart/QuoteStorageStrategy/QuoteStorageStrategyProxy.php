@@ -13,11 +13,11 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
+use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 
-class QuoteStorageStrategyProxy implements QuoteStorageStrategyPluginInterface
+class QuoteStorageStrategyProxy
 {
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'cart.locked.change_denied';
     protected const GLOSSARY_KEY_CHANGE_CURRENCY_FOR_QUOTE_DENIED = 'cart.locked.currency_change_denied';
@@ -33,42 +33,34 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyPluginInterface
     protected $messengerClient;
 
     /**
-     * @var \Spryker\Client\Cart\CartClientInterface
+     * @var \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface
      */
-    protected $cartClient;
+    protected $quoteClient;
 
     /**
      * @param \Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface $messengerClient
-     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
+     * @param \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface $quoteClient
      * @param \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface $quoteStorageStrategy
      */
     public function __construct(
         CartToMessengerClientInterface $messengerClient,
-        CartClientInterface $cartClient,
+        CartToQuoteInterface $quoteClient,
         QuoteStorageStrategyPluginInterface $quoteStorageStrategy
     ) {
         $this->messengerClient = $messengerClient;
-        $this->cartClient = $cartClient;
+        $this->quoteClient = $quoteClient;
         $this->quoteStorageStrategy = $quoteStorageStrategy;
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return string
+     * @return bool
      */
-    public function getStorageStrategy(): string
+    public function isQuoteEditable(): bool
     {
-        return $this->quoteStorageStrategy->getStorageStrategy();
+        return !$this->getQuote()->getIsLocked();
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param array $params
      *
@@ -86,10 +78,6 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyPluginInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param array $params
      *
@@ -107,10 +95,6 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyPluginInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param array $params
      *
@@ -128,10 +112,6 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyPluginInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $sku
      * @param string|null $groupKey
      *
@@ -149,10 +129,6 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyPluginInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -169,10 +145,6 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyPluginInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $sku
      * @param string|null $groupKey
      * @param int $quantity
@@ -191,10 +163,6 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyPluginInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $sku
      * @param string|null $groupKey
      * @param int $quantity
@@ -213,10 +181,6 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyPluginInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $sku
      * @param string|null $groupKey
      * @param int $quantity
@@ -235,10 +199,6 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyPluginInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return void
      */
     public function reloadItems(): void
@@ -253,10 +213,6 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyPluginInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote(): QuoteResponseTransfer
@@ -269,10 +225,6 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyPluginInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -296,8 +248,8 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyPluginInterface
         $quoteResponseTransfer = new QuoteResponseTransfer();
 
         $quoteResponseTransfer->setIsSuccessful(false);
-        $quoteResponseTransfer->setQuoteTransfer($this->cartClient->getQuote());
-        $quoteResponseTransfer->setCustomer($this->cartClient->getQuote()->getCustomer());
+        $quoteResponseTransfer->setQuoteTransfer($this->quoteClient->getQuote());
+        $quoteResponseTransfer->setCustomer($this->quoteClient->getQuote()->getCustomer());
 
         return $quoteResponseTransfer;
     }
@@ -315,14 +267,6 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyPluginInterface
      */
     protected function getQuote(): QuoteTransfer
     {
-        return $this->cartClient->getQuote();
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isQuoteEditable(): bool
-    {
-        return $this->cartClient->isQuoteEditable();
+        return $this->quoteClient->getQuote();
     }
 }

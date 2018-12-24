@@ -15,8 +15,8 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
+use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProxy;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 
@@ -25,7 +25,7 @@ use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInt
  * @group SprykerTest
  * @group Client
  * @group Cart
- * @group QuoteStorageStrategyProxy
+ * @group QuoteStorageStrategy
  * @group QuoteStorageStrategyProxyTest
  * Add your own group annotations below this line
  */
@@ -34,7 +34,7 @@ class QuoteStorageStrategyProxyTest extends Unit
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $cartClientMock;
+    protected $quoteClientMock;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -59,12 +59,12 @@ class QuoteStorageStrategyProxyTest extends Unit
         parent::setUp();
 
         $this->messengerClientMock = $this->createMock(CartToMessengerClientInterface::class);
-        $this->cartClientMock = $this->createMock(CartClientInterface::class);
+        $this->quoteClientMock = $this->createMock(CartToQuoteInterface::class);
         $this->quoteStorageStrategyMock = $quoteStorageStrategy = $this->createMock(QuoteStorageStrategyPluginInterface::class);
 
         $this->quoteStorageStrategyProxy = new QuoteStorageStrategyProxy(
             $this->messengerClientMock,
-            $this->cartClientMock,
+            $this->quoteClientMock,
             $this->quoteStorageStrategyMock
         );
     }
@@ -384,7 +384,10 @@ class QuoteStorageStrategyProxyTest extends Unit
             $expectedResultType === null ?: (new $expectedResultType())
         );
 
-        $this->cartClientMock->method('isQuoteEditable')->willReturn(true);
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setIsLocked(false);
+
+        $this->quoteClientMock->method('getQuote')->willReturn($quoteTransfer);
 
         //Assert
         $this->quoteStorageStrategyMock->expects($this->once())->method($methodName);
@@ -411,12 +414,12 @@ class QuoteStorageStrategyProxyTest extends Unit
         ?string $expectedResultType = null
     ): void {
         // Assign
-        $this->cartClientMock->method('isQuoteEditable')->willReturn(false);
 
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setCustomer(new CustomerTransfer());
+        $quoteTransfer->setIsLocked(true);
 
-        $this->cartClientMock->method('getQuote')
+        $this->quoteClientMock->method('getQuote')
             ->willReturn($quoteTransfer);
 
         //Assert
