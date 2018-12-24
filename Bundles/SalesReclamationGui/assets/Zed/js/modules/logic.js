@@ -26,10 +26,10 @@ function createTriggerUrl(idOrder, idReclamation, eventName) {
         redirect: '/sales-reclamation-gui/detail?id-reclamation=' + idReclamation
     };
 
-    parameters = expandParametersWithClaimedOrderItems(parameters);
+    parameters.items = getSelectedItems();
 
-    if (isSpecificItemsSelected(parameters)) {
-        parameters.items = getSelectedItems();
+    if (!isSpecificItemsSelected(parameters)) {
+        parameters = expandParametersWithClaimedOrderItems(parameters);
     }
 
     var finalUrl = url + '?' + $.param(parameters);
