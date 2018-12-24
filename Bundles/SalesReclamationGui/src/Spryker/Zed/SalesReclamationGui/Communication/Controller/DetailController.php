@@ -48,7 +48,10 @@ class DetailController extends AbstractController
         $eventsGroupedByItem = $this->getFactory()
             ->getOmsFacade()
             ->getManualEventsByIdSalesOrder($reclamationTransfer->getOrder()->getIdSalesOrder());
-        $events = $this->getEventsPerReclamationItems($reclamationTransfer->getReclamationItems(), $eventsGroupedByItem);
+        $events = $this->getDistinctManualEventsByReclamations(
+            $reclamationTransfer->getReclamationItems(),
+            $eventsGroupedByItem
+        );
 
         return $this->viewResponse([
             'reclamation' => $reclamationTransfer,
@@ -103,7 +106,7 @@ class DetailController extends AbstractController
      *
      * @return string[]
      */
-    protected function getEventsPerReclamationItems(ArrayObject $reclamationItems, array $eventsGroupedByItem): array
+    protected function getDistinctManualEventsByReclamations(ArrayObject $reclamationItems, array $eventsGroupedByItem): array
     {
         $orderItemsIds = $this->getOrderItemsIdsByReclamationItems($reclamationItems);
         $events = [];
