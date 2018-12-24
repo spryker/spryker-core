@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\SprykGui\Communication\Controller;
 
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-
 /**
  * @method \Spryker\Zed\SprykGui\Communication\SprykGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface getFacade()

@@ -21,6 +21,7 @@ use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface;
 
 class Address implements AddressInterface
 {
@@ -45,21 +46,29 @@ class Address implements AddressInterface
     protected $customerExpander;
 
     /**
+     * @var \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface
+     */
+    protected $customerRepository;
+
+    /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface $countryFacade
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface $customerExpander
+     * @param \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface $customerRepository
      */
     public function __construct(
         CustomerQueryContainerInterface $queryContainer,
         CustomerToCountryInterface $countryFacade,
         CustomerToLocaleInterface $localeFacade,
-        CustomerExpanderInterface $customerExpander
+        CustomerExpanderInterface $customerExpander,
+        CustomerRepositoryInterface $customerRepository
     ) {
         $this->queryContainer = $queryContainer;
         $this->countryFacade = $countryFacade;
         $this->localeFacade = $localeFacade;
         $this->customerExpander = $customerExpander;
+        $this->customerRepository = $customerRepository;
     }
 
     /**
@@ -178,6 +187,16 @@ class Address implements AddressInterface
         $addressEntity = $this->updateCustomerAddress($addressTransfer, $customer);
 
         return $this->entityToAddressTransfer($addressEntity);
+    }
+
+    /**
+     * @param int $idCustomerAddress
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCustomerAddressById(int $idCustomerAddress): ?AddressTransfer
+    {
+        return $this->customerRepository->findCustomerAddressById($idCustomerAddress);
     }
 
     /**

@@ -9,9 +9,10 @@ namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Shared\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig as SharedSalesOrderThresholdGuiConfig;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategy\GlobalThresholdDataProviderResolverInterface;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\GlobalThresholdDataProviderResolverInterface;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalThresholdType;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\GlobalHardThresholdType;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\GlobalSoftThresholdType;
 use Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToCurrencyFacadeInterface;
 use Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToSalesOrderThresholdFacadeInterface;
 use Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
@@ -32,33 +33,45 @@ class GlobalThresholdDataProvider
     protected $currencyFacade;
 
     /**
-     * @var \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategy\GlobalThresholdDataProviderResolverInterface
+     * @var \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\GlobalThresholdDataProviderResolverInterface
      */
     protected $globalThresholdDataProviderResolver;
 
     /**
+     * @var \Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[]
+     */
+    protected $formExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToSalesOrderThresholdFacadeInterface $salesOrderThresholdFacade
      * @param \Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToCurrencyFacadeInterface $currencyFacade
-     * @param \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategy\GlobalThresholdDataProviderResolverInterface $globalThresholdDataProviderResolver
+     * @param \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\GlobalThresholdDataProviderResolverInterface $globalThresholdDataProviderResolver
+     * @param \Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[] $formExpanderPlugins
      */
     public function __construct(
         SalesOrderThresholdGuiToSalesOrderThresholdFacadeInterface $salesOrderThresholdFacade,
         SalesOrderThresholdGuiToCurrencyFacadeInterface $currencyFacade,
-        GlobalThresholdDataProviderResolverInterface $globalThresholdDataProviderResolver
+        GlobalThresholdDataProviderResolverInterface $globalThresholdDataProviderResolver,
+        array $formExpanderPlugins
     ) {
         $this->salesOrderThresholdFacade = $salesOrderThresholdFacade;
         $this->currencyFacade = $currencyFacade;
         $this->globalThresholdDataProviderResolver = $globalThresholdDataProviderResolver;
+        $this->formExpanderPlugins = $formExpanderPlugins;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
      * @return array
      */
-    public function getOptions(): array
+    public function getOptions(CurrencyTransfer $currencyTransfer): array
     {
         return [
             'allow_extra_fields' => true,
-            GlobalThresholdType::OPTION_STORES_ARRAY => $this->getStoreList(),
+            GlobalThresholdType::OPTION_CURRENCY_CODE => $currencyTransfer->getCode(),
+            GlobalThresholdType::OPTION_STORE_CURRENCY_ARRAY => $this->getStoreCurrencyList(),
+            GlobalThresholdType::OPTION_HARD_TYPES_ARRAY => $this->getHardTypesList(),
             GlobalThresholdType::OPTION_SOFT_TYPES_ARRAY => $this->getSoftTypesList(),
         ];
     }
@@ -73,26 +86,25 @@ class GlobalThresholdDataProvider
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array {
-        $salesOrderThresholdTransfers = $this->getSalesOrderThresholdTransfers($storeTransfer, $currencyTransfer);
-
         $data = [
-            GlobalThresholdType::FIELD_ID_THRESHOLD_HARD => null,
-            GlobalThresholdType::FIELD_ID_THRESHOLD_SOFT => null,
-            GlobalThresholdType::FIELD_SOFT_THRESHOLD => null,
-            GlobalThresholdType::FIELD_HARD_THRESHOLD => null,
-            GlobalThresholdType::FIELD_SOFT_FIXED_FEE => null,
-            GlobalThresholdType::FIELD_SOFT_FLEXIBLE_FEE => null,
+            GlobalThresholdType::FIELD_HARD => [
+                GlobalHardThresholdType::FIELD_STRATEGY => current($this->getHardTypesList()),
+            ],
+            GlobalThresholdType::FIELD_SOFT => [
+                GlobalSoftThresholdType::FIELD_STRATEGY => current($this->getSoftTypesList()),
+            ],
         ];
+
+        $salesOrderThresholdTransfers = $this->getSalesOrderThresholdTransfers($storeTransfer, $currencyTransfer);
         foreach ($salesOrderThresholdTransfers as $salesOrderThresholdTransfer) {
             if ($thresholdStrategyDataProvider = $this->globalThresholdDataProviderResolver
-                ->hasGlobalThresholdDataProviderByStrategyKey($salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getKey())) {
+                ->hasGlobalThresholdDataProviderByStrategyGroup($salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getThresholdGroup())) {
                 $data = $thresholdStrategyDataProvider = $this->globalThresholdDataProviderResolver
-                    ->resolveGlobalThresholdDataProviderByStrategyKey($salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getKey())
-                    ->getData($data, $salesOrderThresholdTransfer);
+                    ->resolveGlobalThresholdDataProviderByStrategyGroup($salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getThresholdGroup())
+                    ->mapSalesOrderThresholdValueTransferToFormData($salesOrderThresholdTransfer, $data);
             }
         }
 
-        $data[GlobalThresholdType::FIELD_CURRENCY] = $currencyTransfer->getCode();
         $data[GlobalThresholdType::FIELD_STORE_CURRENCY] = $this->formatStoreCurrencyRowValue(
             $storeTransfer,
             $currencyTransfer
@@ -104,23 +116,23 @@ class GlobalThresholdDataProvider
     /**
      * @return array
      */
-    protected function getStoreList(): array
+    protected function getStoreCurrencyList(): array
     {
         $storeWithCurrencyTransfers = $this->currencyFacade->getAllStoresWithCurrencies();
-        $storeList = [];
+        $storeCurrencyList = [];
 
         foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {
             $storeTransfer = $storeWithCurrencyTransfer->getStore();
 
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
-                $storeList[$this->formatStoreCurrencyRowLabel(
+                $storeCurrencyList[$this->formatStoreCurrencyRowLabel(
                     $storeTransfer,
                     $currencyTransfer
                 )] = $this->formatStoreCurrencyRowValue($storeTransfer, $currencyTransfer);
             }
         }
 
-        return $storeList;
+        return $storeCurrencyList;
     }
 
     /**
@@ -142,13 +154,31 @@ class GlobalThresholdDataProvider
     /**
      * @return string[]
      */
+    protected function getHardTypesList(): array
+    {
+        $hardTypesList = [];
+        foreach ($this->formExpanderPlugins as $formExpanderPlugin) {
+            if ($formExpanderPlugin->getThresholdGroup() === SalesOrderThresholdGuiConfig::GROUP_HARD) {
+                $hardTypesList[$formExpanderPlugin->getThresholdName()] = $formExpanderPlugin->getThresholdKey();
+            }
+        }
+
+        return $hardTypesList;
+    }
+
+    /**
+     * @return string[]
+     */
     protected function getSoftTypesList(): array
     {
-        return [
-            "Soft Threshold with message" => SharedSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_MESSAGE,
-            "Soft Threshold with fixed fee" => SharedSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FIXED,
-            "Soft Threshold with flexible fee" => SharedSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE,
-        ];
+        $softTypesList = [];
+        foreach ($this->formExpanderPlugins as $formExpanderPlugin) {
+            if ($formExpanderPlugin->getThresholdGroup() === SalesOrderThresholdGuiConfig::GROUP_SOFT) {
+                $softTypesList[$formExpanderPlugin->getThresholdName()] = $formExpanderPlugin->getThresholdKey();
+            }
+        }
+
+        return $softTypesList;
     }
 
     /**
