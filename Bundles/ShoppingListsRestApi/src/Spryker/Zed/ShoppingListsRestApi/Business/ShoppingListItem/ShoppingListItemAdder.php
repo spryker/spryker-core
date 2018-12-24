@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
-use Generated\Shared\Transfer\RestShoppingListItemResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig;
@@ -45,11 +45,11 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
     /**
      * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function addItem(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
-    ): RestShoppingListItemResponseTransfer {
+    ): ShoppingListItemResponseTransfer {
         $restShoppingListItemRequestTransfer->requireShoppingListItem()
             ->requireShoppingListUuid()
             ->requireCompanyUserUuid();
@@ -83,7 +83,7 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
             return $this->createShoppingListCanNotAddItemErrorResponse();
         }
 
-        return (new RestShoppingListItemResponseTransfer())
+        return (new ShoppingListItemResponseTransfer())
             ->setIsSuccess(true)
             ->setShoppingListItem($shoppingListItemTransfer);
     }
@@ -123,11 +123,11 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    protected function createShoppingListNotFoundErrorResponse(): RestShoppingListItemResponseTransfer
+    protected function createShoppingListNotFoundErrorResponse(): ShoppingListItemResponseTransfer
     {
-        return (new RestShoppingListItemResponseTransfer())
+        return (new ShoppingListItemResponseTransfer())
             ->setIsSuccess(false)
             ->addError(
                 (new RestErrorMessageTransfer())
@@ -138,11 +138,11 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    protected function createCompanyUserNotFoundErrorResponse(): RestShoppingListItemResponseTransfer
+    protected function createCompanyUserNotFoundErrorResponse(): ShoppingListItemResponseTransfer
     {
-        return (new RestShoppingListItemResponseTransfer())
+        return (new ShoppingListItemResponseTransfer())
             ->setIsSuccess(false)
             ->addError(
                 (new RestErrorMessageTransfer())
@@ -153,11 +153,11 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    protected function createShoppingListCanNotAddItemErrorResponse(): RestShoppingListItemResponseTransfer
+    protected function createShoppingListCanNotAddItemErrorResponse(): ShoppingListItemResponseTransfer
     {
-        return (new RestShoppingListItemResponseTransfer())
+        return (new ShoppingListItemResponseTransfer())
             ->setIsSuccess(false)
             ->addError(
                 (new RestErrorMessageTransfer())

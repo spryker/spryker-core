@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem;
 
-use ArrayObject;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
@@ -76,13 +75,13 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
             $restShoppingListItemAttributesTransfer
         );
 
-        $restShoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->addItem($restShoppingListItemRequestTransfer);
+        $shoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->addItem($restShoppingListItemRequestTransfer);
 
-        if (!$restShoppingListItemResponseTransfer->getIsSuccess()) {
-            return $this->createAddItemFailedErrorResponse($restShoppingListItemResponseTransfer->getErrors());
+        if (!$shoppingListItemResponseTransfer->getIsSuccess()) {
+            return $this->createAddItemFailedErrorResponse($shoppingListItemResponseTransfer->getErrors());
         }
 
-        $shoppingListItemTransfer = $restShoppingListItemResponseTransfer->getShoppingListItem();
+        $shoppingListItemTransfer = $shoppingListItemResponseTransfer->getShoppingListItem();
 
         $restShoppingListItemAttributesTransfer = $this->shoppingListItemResourceMapper->mapShoppingListItemTransferToRestShoppingListItemAttributesTransfer(
             $shoppingListItemTransfer,
@@ -144,11 +143,11 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
     }
 
     /**
-     * @param \ArrayObject $errors
+     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer[] $errors
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createAddItemFailedErrorResponse(ArrayObject $errors): RestResponseInterface
+    protected function createAddItemFailedErrorResponse(array $errors): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
