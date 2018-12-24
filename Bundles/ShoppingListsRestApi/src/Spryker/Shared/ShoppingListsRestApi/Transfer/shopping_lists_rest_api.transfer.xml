@@ -22,10 +22,4 @@
         <property name="sku" type="string" restRequestParameter="required"/>
     </transfer>
 
-    <transfer name="RestShoppingListItemResponse">
-        <property name="ShoppingListItem" type="ShoppingListItem" />
-        <property name="isSuccess" type="bool" />
-        <property name="errors" type="RestErrorMessage[]" singular="error" />
-    </transfer>
-
 </transfers>
