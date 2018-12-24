@@ -176,6 +176,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'type' => $this->getPropertyType($property),
             'is_typed_array' => $property['is_typed_array'],
             'bundles' => $property['bundles'],
+            'is_associative' => $property['is_associative'],
         ];
 
         $this->properties[$property['name']] = $propertyInfo;
@@ -223,6 +224,8 @@ class ClassDefinition implements ClassDefinitionInterface
             if ($this->isTypedArray($property)) {
                 $property['is_typed_array'] = true;
             }
+
+            $property['is_associative'] = $this->isAssociativeArray($property);
 
             $normalizedProperties[] = $property;
         }
@@ -527,6 +530,16 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool
      */
+    private function isAssociativeArray(array $property)
+    {
+        return isset($property['associative']) && filter_var($property['associative'], FILTER_VALIDATE_BOOLEAN);
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
     private function isTypedArray(array $property)
     {
         return (bool)preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $property['type']);
@@ -539,6 +552,10 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function getTypeHint(array $property)
     {
+        if ($this->isArray($property) && isset($property['associative'])) {
+            return false;
+        }
+
         if ($this->isArray($property)) {
             return 'array';
         }
@@ -628,6 +645,7 @@ class ClassDefinition implements ClassDefinitionInterface
         }
         $propertyName = $this->getPropertyName($property);
         $methodName = 'add' . ucfirst($propertyName);
+
         $method = [
             'name' => $methodName,
             'property' => $propertyName,
@@ -636,11 +654,18 @@ class ClassDefinition implements ClassDefinitionInterface
             'var' => $this->getAddVar($property),
             'bundles' => $property['bundles'],
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
+            'is_associative' => $this->isAssociativeArray($property),
         ];
 
         $typeHint = $this->getAddTypeHint($property);
         if ($typeHint) {
             $method['typeHint'] = $typeHint;
+        }
+
+        if ($method['is_associative']) {
+            $method['varValue'] = $this->getAddVar($property);
+            $method['typeHintValue'] = $typeHint;
+            $methodName = 'associative' . ucfirst($propertyName);
         }
 
         $this->methods[$methodName] = $method;

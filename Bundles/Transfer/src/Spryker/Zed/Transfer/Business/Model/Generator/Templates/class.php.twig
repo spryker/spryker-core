@@ -52,6 +52,9 @@ class {{ className }} extends {{ abstractClass }}
 {% if methodName starts with 'add' %}
 {{ macro.addAdd(method) -}}
 {% endif %}
+{% if methodName starts with 'associative' %}
+{{ macro.addAssociative(method) -}}
+{% endif %}
 {% if methodName starts with 'require' %}
 {{ macro.addRequire(method) -}}
 {% endif %}
