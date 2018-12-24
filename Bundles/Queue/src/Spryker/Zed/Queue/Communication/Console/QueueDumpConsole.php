@@ -83,15 +83,14 @@ class QueueDumpConsole extends Console
     protected function createQueueDumpRequestTransfer(InputInterface $input): QueueDumpRequestTransfer
     {
         $queueName = $input->getArgument(static::ARGUMENT_QUEUE);
-
-        $options = [
-            QueueConfig::CONFIG_QUEUE_OPTION_NO_ACK => $input->getOption(static::OPTION_NO_ACK),
-            static::OPTION_LIMIT => $input->getOption(static::OPTION_LIMIT),
-            static::OPTION_FORMAT => $input->getOption(static::OPTION_FORMAT),
-        ];
+        $limit = (int) $input->getOption(static::OPTION_LIMIT);
+        $format = $input->getOption(static::OPTION_FORMAT);
+        $acknowledge = $input->getOption(static::OPTION_NO_ACK);
 
         return (new QueueDumpRequestTransfer())
             ->setQueueName($queueName)
-            ->setOptions($options);
+            ->setLimit($limit)
+            ->setFormat($format)
+            ->setAcknowledge($acknowledge);
     }
 }

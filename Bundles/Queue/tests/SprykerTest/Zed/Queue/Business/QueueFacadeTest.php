@@ -36,6 +36,8 @@ class QueueFacadeTest extends Unit
     protected const REGISTERED_QUEUE_NAME = 'event';
     protected const UNREGISTERED_QUEUE_NAME = 'wrongQueueName';
 
+    protected const LIMIT_OPTION = 1;
+
     /**
      * @var \Spryker\Zed\Queue\Business\QueueFacadeInterface
      */
@@ -90,13 +92,9 @@ class QueueFacadeTest extends Unit
      */
     protected function createQueueDumpRequestTransfer(string $queueName): QueueDumpRequestTransfer
     {
-        $options = [
-            'limit' => 1,
-        ];
-
         return (new QueueDumpRequestTransfer())
             ->setQueueName($queueName)
-            ->setOptions($options);
+            ->setLimit(static::LIMIT_OPTION);
     }
 
     /**
@@ -121,7 +119,7 @@ class QueueFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit_Framework_MockObject_MockObject|\PHPUnit\Framework\MockObject\MockBuilder
      */
     protected function createQueueClientMock()
     {

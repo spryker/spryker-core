@@ -41,7 +41,7 @@ interface QueueFacadeInterface
 
     /**
      * Specification
-     *  - Reads events from the queue with an ability to limit amount of events, format output and acknowledge queue messages
+     *  - Dumps event for one specific queue
      *
      * @api
      *

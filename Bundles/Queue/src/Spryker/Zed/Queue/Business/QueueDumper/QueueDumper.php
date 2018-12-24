@@ -67,11 +67,13 @@ class QueueDumper implements QueueDumperInterface
     {
         $queueDumpResponseTransfer = $this->createQueueDumpResponseTransfer();
         $queueName = $queueDumpRequestTransfer->getQueueName();
-        $options = $queueDumpRequestTransfer->getOptions();
+        $limit = $queueDumpRequestTransfer->getLimit();
+        $format = $queueDumpRequestTransfer->getFormat();
+        $acknowledge = $queueDumpRequestTransfer->getAcknowledge();
 
         $this->checkQueuePluginProcessor($queueName);
 
-        $queueReceiveMessageTransfers = $this->receiveQueueMessages($queueName, $options[static::DUMP_LIMIT]);
+        $queueReceiveMessageTransfers = $this->receiveQueueMessages($queueName, $limit);
 
         if (!$queueReceiveMessageTransfers) {
             return $queueDumpResponseTransfer;
@@ -80,10 +82,10 @@ class QueueDumper implements QueueDumperInterface
         $data = $this->transformQueueReceiveMessageTransfersToArray($queueReceiveMessageTransfers);
 
         $queueDumpResponseTransfer->setMessage(
-            $this->utilEncodingService->encodeToFormat($data, $options[static::DUMP_OUTPUT_FORMAT])
+            $this->utilEncodingService->encodeToFormat($data, $format)
         );
 
-        $this->postProcessMessages($queueReceiveMessageTransfers, $options);
+        $this->postProcessMessages($queueReceiveMessageTransfers, (bool) $acknowledge);
 
         return $queueDumpResponseTransfer;
     }
@@ -127,13 +129,13 @@ class QueueDumper implements QueueDumperInterface
 
     /**
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueReceiveMessageTransfers
-     * @param array $options
+     * @param bool $acknowledge
      *
      * @return void
      */
-    protected function postProcessMessages(array $queueReceiveMessageTransfers, array $options = [])
+    protected function postProcessMessages(array $queueReceiveMessageTransfers, bool $acknowledge)
     {
-        if (isset($options[SharedConfig::CONFIG_QUEUE_OPTION_NO_ACK]) && !$options[SharedConfig::CONFIG_QUEUE_OPTION_NO_ACK]) {
+        if (!$acknowledge) {
             return;
         }
 
