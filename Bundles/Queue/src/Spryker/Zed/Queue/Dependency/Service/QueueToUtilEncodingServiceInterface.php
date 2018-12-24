@@ -13,8 +13,6 @@ interface QueueToUtilEncodingServiceInterface
      * @param array $data
      * @param string $format
      *
-     * @throws \Spryker\Service\UtilEncoding\Exception\FormatNotSupportedException
-     *
      * @return string
      */
     public function encodeToFormat(array $data, string $format): string;
