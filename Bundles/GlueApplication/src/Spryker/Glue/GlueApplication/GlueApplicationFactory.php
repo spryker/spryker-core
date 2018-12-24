@@ -312,7 +312,10 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createRestResponseRelationship(): ResponseRelationshipInterface
     {
-        return new ResponseRelationship($this->createRestResourceRelationshipLoader());
+        return new ResponseRelationship(
+            $this->createRestResourceRelationshipLoader(),
+            $this->getConfig()
+        );
     }
 
     /**
