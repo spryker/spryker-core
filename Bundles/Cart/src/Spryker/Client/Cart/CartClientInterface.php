@@ -247,4 +247,14 @@ interface CartClientInterface
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
     public function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer;
+
+    /**
+     * Specification:
+     * - Returns false if quote is locked
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isQuoteEditable(): bool;
 }
