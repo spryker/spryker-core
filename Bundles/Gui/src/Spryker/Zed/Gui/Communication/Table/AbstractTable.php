@@ -928,6 +928,20 @@ abstract class AbstractTable
     }
 
     /**
+     * @param string $title
+     * @param string $class
+     *
+     * @return string
+     */
+    protected function generateLabel(string $title, string $class)
+    {
+        return $this->getTwig()->render('label.twig', [
+            'title' => $title,
+            'class' => $class,
+        ]);
+    }
+
+    /**
      * @param array $buttons
      * @param string $title
      * @param array $defaultOptions
