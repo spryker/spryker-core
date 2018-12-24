@@ -43,12 +43,14 @@ class DetailController extends AbstractController
             return $this->redirectResponse('/sales-reclamation-gui/');
         }
 
+        /** @var array[] $eventsGroupedByItem */
         $eventsGroupedByItem = $this->getFactory()
             ->getOmsFacade()
             ->getManualEventsByIdSalesOrder($reclamationTransfer->getOrder()->getIdSalesOrder());
+
         $events = $this->getFactory()
-            ->getOmsFacade()
-            ->getDistinctManualEventsByIdSalesOrder($reclamationTransfer->getOrder()->getIdSalesOrder());
+            ->createReclamationItemEventsFinder()
+            ->getDistinctManualEventsByReclamationItems($reclamationTransfer->getReclamationItems(), $eventsGroupedByItem);
 
         return $this->viewResponse([
             'reclamation' => $reclamationTransfer,

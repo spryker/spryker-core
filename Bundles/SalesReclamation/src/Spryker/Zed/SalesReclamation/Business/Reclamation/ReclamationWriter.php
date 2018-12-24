@@ -109,6 +109,7 @@ class ReclamationWriter implements ReclamationWriterInterface
         ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer
     ): ReclamationTransfer {
         $orderTransfer = $reclamationCreateRequestTransfer->getOrder();
+        $orderTransfer->setItems($reclamationCreateRequestTransfer->getOrderItems());
         $reclamationTransfer = $this->reclamationMapper->mapOrderToReclamation($orderTransfer, new ReclamationTransfer());
         $reclamationTransfer->setState(SalesReclamationEntityManager::RECLAMATION_STATE_OPEN);
         $reclamationTransfer = $this->salesReclamationEntityManager->saveReclamation($reclamationTransfer);
