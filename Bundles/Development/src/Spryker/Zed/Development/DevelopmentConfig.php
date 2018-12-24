@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class DevelopmentConfig extends AbstractBundleConfig
 {
     public const BUNDLE_PLACEHOLDER = '[BUNDLE]';
+    protected const PHPSTAN_CONFIG_FILENAME = 'phpstan.neon';
 
     public const APPLICATION_NAMESPACES = [
         'Orm',
@@ -183,6 +184,22 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getPhpstanConfigFilename(): string
+    {
+        return static::PHPSTAN_CONFIG_FILENAME;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathToPhpstanModuleTemporaryConfigFolder()
+    {
+        return APPLICATION_ROOT_DIR . '/data/phpstan/';
+    }
+
+    /**
      * Gets path to module config that holds information about engine modules.
      *
      * @return string
@@ -198,10 +215,11 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getExternalToInternalNamespaceMap()
     {
         return [
-            'Psr\\' => 'spryker/log',
+            'Psr\\Log\\' => 'spryker/log',
+            'Psr\\Container\\' => 'spryker/container',
             'Propel\\' => 'spryker/propel-orm',
             'Silex\\' => 'spryker/silex',
-            'Pimple\\' => 'spryker/pimple',
+            'Pimple' => 'spryker/pimple',
             'Predis\\' => 'spryker/redis',
             'Guzzle\\' => 'spryker/guzzle',
             'GuzzleHttp\\' => 'spryker/guzzle',
@@ -409,7 +427,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getArchitectureSnifferDefaultPriority()
+    public function getArchitectureSnifferDefaultPriority(): int
     {
         return 2;
     }
