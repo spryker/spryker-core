@@ -246,10 +246,10 @@ class ProductRelationTable extends AbstractTable
     protected function buildActiveLabel(array $item)
     {
         if (!$item[SpyProductRelationTableMap::COL_IS_ACTIVE]) {
-            return '<span class="label label-danger">Inactive</span>';
+            return $this->generateLabel('Inactive', 'label-danger');
         }
 
-        return '<span class="label label-info">Active</span>';
+        return $this->generateLabel('Active', 'label-info');
     }
 
     /**

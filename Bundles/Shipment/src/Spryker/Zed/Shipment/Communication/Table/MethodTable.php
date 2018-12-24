@@ -203,8 +203,8 @@ class MethodTable extends AbstractTable
         $netMoneyTransferCollectionsGrouped = $this->getNetPricesGroupedByStore($methodPriceCollection->getArrayCopy());
 
         return [
-            SpyShipmentMethodTableMap::COL_IS_ACTIVE => '<span class="label '
-                . (($method->isActive()) ? 'label-success">Activated' : 'label-danger">Disabled') . '</span>',
+            SpyShipmentMethodTableMap::COL_IS_ACTIVE => $method->isActive() ? $this->generateLabel('Activated', 'label-success')
+                : $this->generateLabel('Disabled', 'label-danger'),
             SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER => $method->getShipmentCarrier()->getName(),
             SpyShipmentMethodTableMap::COL_NAME => $method->getName(),
             SpyShipmentMethodPriceTableMap::COL_DEFAULT_GROSS_PRICE => $this->getPricesFromGrouped($grossMoneyTransferCollectionsGrouped),

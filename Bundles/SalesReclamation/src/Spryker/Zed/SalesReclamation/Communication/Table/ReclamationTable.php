@@ -128,10 +128,10 @@ class ReclamationTable extends AbstractTable
         $statusLabel = '';
         switch ($state) {
             case SpySalesReclamationTableMap::COL_STATE_OPEN:
-                $statusLabel = '<span class="label label-success" title="Active">Open</span>';
+                $statusLabel = $this->generateLabel('Open', 'label-success');
                 break;
             case SpySalesReclamationTableMap::COL_STATE_CLOSE:
-                $statusLabel = '<span class="label label-danger" title="Deactivated">Closed</span>';
+                $statusLabel = $this->generateLabel('Closed', 'label-danger');
                 break;
         }
 

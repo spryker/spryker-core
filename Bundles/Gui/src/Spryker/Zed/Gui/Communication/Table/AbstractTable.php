@@ -929,11 +929,11 @@ abstract class AbstractTable
 
     /**
      * @param string $title
-     * @param string $class
+     * @param string|null $class
      *
      * @return string
      */
-    protected function generateLabel(string $title, string $class)
+    protected function generateLabel(string $title, ?string $class): string
     {
         return $this->getTwig()->render('label.twig', [
             'title' => $title,
