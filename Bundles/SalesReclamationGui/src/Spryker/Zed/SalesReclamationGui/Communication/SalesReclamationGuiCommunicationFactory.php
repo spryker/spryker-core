@@ -9,6 +9,8 @@ namespace Spryker\Zed\SalesReclamationGui\Communication;
 
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\SalesReclamationGui\Communication\Model\ReclamationItemEventsFinder;
+use Spryker\Zed\SalesReclamationGui\Communication\Model\ReclamationItemEventsFinderInterface;
 use Spryker\Zed\SalesReclamationGui\Communication\Table\ReclamationTable;
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToOmsFacadeInterface;
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSalesFacadeInterface;
@@ -70,5 +72,13 @@ class SalesReclamationGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getOmsFacade(): SalesReclamationGuiToOmsFacadeInterface
     {
         return $this->getProvidedDependency(SalesReclamationGuiDependencyProvider::FACADE_OMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReclamationGui\Communication\Model\ReclamationItemEventsFinderInterface
+     */
+    public function createReclamationItemEventsFinder(): ReclamationItemEventsFinderInterface
+    {
+        return new ReclamationItemEventsFinder();
     }
 }

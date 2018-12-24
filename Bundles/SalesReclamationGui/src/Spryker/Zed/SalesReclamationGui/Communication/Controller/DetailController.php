@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesReclamationGui\Communication\Controller;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -48,10 +47,10 @@ class DetailController extends AbstractController
         $eventsGroupedByItem = $this->getFactory()
             ->getOmsFacade()
             ->getManualEventsByIdSalesOrder($reclamationTransfer->getOrder()->getIdSalesOrder());
-        $events = $this->getDistinctManualEventsByReclamations(
-            $reclamationTransfer->getReclamationItems(),
-            $eventsGroupedByItem
-        );
+
+        $events = $this->getFactory()
+            ->createReclamationItemEventsFinder()
+            ->getDistinctManualEventsByReclamationItems($reclamationTransfer->getReclamationItems(), $eventsGroupedByItem);
 
         return $this->viewResponse([
             'reclamation' => $reclamationTransfer,
@@ -98,39 +97,5 @@ class DetailController extends AbstractController
                 '/sales-reclamation-gui'
             )->build()
         );
-    }
-
-    /**
-     * @param \ArrayObject $reclamationItems
-     * @param array $eventsGroupedByItem
-     *
-     * @return string[]
-     */
-    protected function getDistinctManualEventsByReclamations(ArrayObject $reclamationItems, array $eventsGroupedByItem): array
-    {
-        $orderItemsIds = $this->getOrderItemsIdsByReclamationItems($reclamationItems);
-        $events = [];
-        foreach ($orderItemsIds as $orderItemId) {
-            if (!isset($eventsGroupedByItem[$orderItemId])) {
-                continue;
-            }
-            $events = array_merge($events, $eventsGroupedByItem[$orderItemId]);
-        }
-
-        return array_unique($events);
-    }
-
-    /**
-     * @param \ArrayObject $reclamationItems
-     *
-     * @return int[]
-     */
-    protected function getOrderItemsIdsByReclamationItems(ArrayObject $reclamationItems): array
-    {
-        foreach ($reclamationItems as $item) {
-            $orderItemsIds[] = $item->getOrderItem()->getIdSalesOrderItem();
-        }
-
-        return $orderItemsIds ?? [];
     }
 }
