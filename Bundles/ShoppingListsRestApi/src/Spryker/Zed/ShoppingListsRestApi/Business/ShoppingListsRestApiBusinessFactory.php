@@ -12,6 +12,8 @@ use Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser\CompanyUserReader;
 use Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser\CompanyUserReaderInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemAdder;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemAdderInterface;
+use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemResponseBuilder;
+use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemResponseBuilderInterface;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToCompanyUserFacadeInterface;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface;
 use Spryker\Zed\ShoppingListsRestApi\ShoppingListsRestApiDependencyProvider;
@@ -26,7 +28,11 @@ class ShoppingListsRestApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createShoppingListItemAdder(): ShoppingListItemAdderInterface
     {
-        return new ShoppingListItemAdder($this->createCompanyUserReader(), $this->getShoppingListFacade());
+        return new ShoppingListItemAdder(
+            $this->createCompanyUserReader(),
+            $this->getShoppingListFacade(),
+            $this->createShoppingListItemResponseBuilder()
+        );
     }
 
     /**
@@ -35,6 +41,14 @@ class ShoppingListsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createCompanyUserReader(): CompanyUserReaderInterface
     {
         return new CompanyUserReader($this->getCompanyUserFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemResponseBuilderInterface
+     */
+    public function createShoppingListItemResponseBuilder(): ShoppingListItemResponseBuilderInterface
+    {
+        return new ShoppingListItemResponseBuilder();
     }
 
     /**

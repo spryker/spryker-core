@@ -22,6 +22,8 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_DETAIL_SHOPPING_LIST_ID_NOT_SPECIFIED = 'Shopping list id not specified.';
 
+    public const FORMAT_SELF_LINK_SHOPPING_LIST_ITEMS_RESOURCE = '%s/%s/%s/%s';
+
     /**
      * @see \Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig::X_COMPANY_USER_ID_HEADER_KEY
      */

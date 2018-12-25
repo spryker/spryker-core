@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\ShoppingListsRestApi\Controller;
 
-use Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -44,16 +43,14 @@ class ShoppingListItemsResourceController extends AbstractController
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function postAction(
-        RestRequestInterface $restRequest,
-        RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
+        RestRequestInterface $restRequest
     ): RestResponseInterface {
         return $this->getFactory()
             ->createShoppingListItemAdder()
-            ->addItem($restRequest, $restShoppingListItemAttributesTransfer);
+            ->addItem($restRequest);
     }
 }

@@ -8,7 +8,7 @@
 namespace Spryker\Client\ShoppingListsRestApi\Zed;
 
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
-use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
+use Generated\Shared\Transfer\RestShoppingListItemResponseTransfer;
 use Spryker\Client\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToZedRequestClientInterface;
 
 class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
@@ -29,17 +29,17 @@ class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
     /**
      * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
      */
     public function addItem(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
-    ): ShoppingListItemResponseTransfer {
-        /** @var \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer */
-        $shoppingListItemResponseTransfer = $this->zedRequestClient->call(
+    ): RestShoppingListItemResponseTransfer {
+        /** @var \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer $restShoppingListItemResponseTransfer */
+        $restShoppingListItemResponseTransfer = $this->zedRequestClient->call(
             '/shopping-lists-rest-api/gateway/add-item',
             $restShoppingListItemRequestTransfer
         );
 
-        return $shoppingListItemResponseTransfer;
+        return $restShoppingListItemResponseTransfer;
     }
 }

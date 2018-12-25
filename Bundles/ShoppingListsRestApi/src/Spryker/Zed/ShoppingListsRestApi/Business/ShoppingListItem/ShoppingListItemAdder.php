@@ -7,14 +7,11 @@
 
 namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem;
 
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
-use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
+use Generated\Shared\Transfer\RestShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 use Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser\CompanyUserReaderInterface;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class ShoppingListItemAdder implements ShoppingListItemAdderInterface
 {
@@ -29,25 +26,33 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
     protected $companyUserReader;
 
     /**
+     * @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemResponseBuilderInterface
+     */
+    protected $shoppingListItemResponseBuilder;
+
+    /**
      * @param \Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser\CompanyUserReaderInterface $companyUserReader
      * @param \Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface $shoppingListFacade
+     * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemResponseBuilderInterface $shoppingListItemResponseBuilder
      */
     public function __construct(
         CompanyUserReaderInterface $companyUserReader,
-        ShoppingListsRestApiToShoppingListFacadeInterface $shoppingListFacade
+        ShoppingListsRestApiToShoppingListFacadeInterface $shoppingListFacade,
+        ShoppingListItemResponseBuilderInterface $shoppingListItemResponseBuilder
     ) {
         $this->companyUserReader = $companyUserReader;
         $this->shoppingListFacade = $shoppingListFacade;
+        $this->shoppingListItemResponseBuilder = $shoppingListItemResponseBuilder;
     }
 
     /**
      * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
      */
     public function addItem(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
-    ): ShoppingListItemResponseTransfer {
+    ): RestShoppingListItemResponseTransfer {
         $restShoppingListItemRequestTransfer->requireShoppingListItem()
             ->requireShoppingListUuid()
             ->requireCompanyUserUuid();
@@ -58,75 +63,30 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
         );
 
         if (!$companyUserTransfer) {
-            return $this->createCompanyUserNotFoundErrorResponse();
+            return $this->shoppingListItemResponseBuilder->createCompanyUserNotFoundErrorResponse();
         }
 
-        $shoppingListTransfer = (new ShoppingListTransfer())->setUuid($restShoppingListItemRequestTransfer->getShoppingListUuid())
+        $shoppingListTransfer = (new ShoppingListTransfer())
+            ->setUuid($restShoppingListItemRequestTransfer->getShoppingListUuid())
             ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
 
         $shoppingListResponseTransfer = $this->shoppingListFacade->findShoppingListByUuid($shoppingListTransfer);
-
         if (!$shoppingListResponseTransfer->getIsSuccess()) {
-            return $this->createShoppingListNotFoundErrorResponse();
+            return $this->shoppingListItemResponseBuilder->createShoppingListNotFoundErrorResponse();
         }
 
-        $shoppingListItemTransfer = $restShoppingListItemRequestTransfer->getShoppingListItem();
-        $shoppingListItemTransfer->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+        $restShoppingListItemRequestTransfer->getShoppingListItem()
+            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
             ->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
 
-        $shoppingListItemTransfer = $this->shoppingListFacade->addItem($shoppingListItemTransfer);
-
+        $shoppingListItemTransfer = $this->shoppingListFacade->addItem($restShoppingListItemRequestTransfer->getShoppingListItem());
         if (!$shoppingListItemTransfer->getIdShoppingListItem()) {
-            return $this->createShoppingListCanNotAddItemErrorResponse();
+            return $this->shoppingListItemResponseBuilder->createShoppingListCanNotAddItemErrorResponse();
         }
 
-        return (new ShoppingListItemResponseTransfer())
+        return $this->shoppingListItemResponseBuilder
+            ->createRestShoppingListItemResponseTransfer()
             ->setIsSuccess(true)
             ->setShoppingListItem($shoppingListItemTransfer);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    protected function createShoppingListNotFoundErrorResponse(): ShoppingListItemResponseTransfer
-    {
-        return (new ShoppingListItemResponseTransfer())
-            ->setIsSuccess(false)
-            ->addError(
-                (new RestErrorMessageTransfer())
-                    ->setStatus(Response::HTTP_NOT_FOUND)
-                    ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND)
-                    ->setDetail(ShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_NOT_FOUND)
-            );
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    protected function createCompanyUserNotFoundErrorResponse(): ShoppingListItemResponseTransfer
-    {
-        return (new ShoppingListItemResponseTransfer())
-            ->setIsSuccess(false)
-            ->addError(
-                (new RestErrorMessageTransfer())
-                    ->setStatus(Response::HTTP_FORBIDDEN)
-                    ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_FOUND)
-                    ->setDetail(ShoppingListsRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND)
-            );
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    protected function createShoppingListCanNotAddItemErrorResponse(): ShoppingListItemResponseTransfer
-    {
-        return (new ShoppingListItemResponseTransfer())
-            ->setIsSuccess(false)
-            ->addError(
-                (new RestErrorMessageTransfer())
-                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_ADD_ITEM)
-                    ->setDetail(ShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_ADD_ITEM)
-            );
     }
 }

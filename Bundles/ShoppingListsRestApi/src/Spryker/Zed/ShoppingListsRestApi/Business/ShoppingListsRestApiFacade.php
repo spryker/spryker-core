@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ShoppingListsRestApi\Business;
 
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
-use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
+use Generated\Shared\Transfer\RestShoppingListItemResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -23,11 +23,11 @@ class ShoppingListsRestApiFacade extends AbstractFacade implements ShoppingLists
      *
      * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
      */
     public function addItem(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
-    ): ShoppingListItemResponseTransfer {
+    ): RestShoppingListItemResponseTransfer {
         return $this->getFactory()->createShoppingListItemAdder()->addItem($restShoppingListItemRequestTransfer);
     }
 }
