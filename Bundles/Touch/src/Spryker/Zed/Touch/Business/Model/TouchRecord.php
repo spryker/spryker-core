@@ -251,21 +251,28 @@ class TouchRecord implements TouchRecordInterface
      *
      * @return int
      */
-    protected function removeTouchEntries(SpyTouchQuery $query)
+    protected function removeTouchEntries(SpyTouchQuery $query): int
     {
-        $deletedCount = 0;
-        $batchCollection = $this->getTouchIdsToRemoveBatchCollection($query);
+        $deletedTouchEntitiesCount = 0;
+        $propelBatchIterator = $this->getTouchIdsToRemoveBatchCollection($query);
 
-        /** @var \Propel\Runtime\Collection\ArrayCollection $batch */
-        foreach ($batchCollection as $batch) {
-            $touchIdsToRemove = $batch->toArray();
-            $this->removeTouchDataForCollectors($touchIdsToRemove);
-            $deletedCount += $query
-                ->filterByIdTouch($touchIdsToRemove, Criteria::IN)
-                ->delete();
+        $deletableTouchIds = [];
+        foreach ($propelBatchIterator as $deletableTouchIdsBatch) {
+            $deletableTouchIds = array_merge(
+                $deletableTouchIds,
+                $deletableTouchIdsBatch->toArray()
+            );
         }
 
-        return $deletedCount;
+        if (count($deletableTouchIds) > 0) {
+            $deletedTouchEntitiesCount += $query
+                ->filterByIdTouch($deletableTouchIds, Criteria::IN)
+                ->delete();
+
+            $this->removeTouchDataForCollectors($deletableTouchIds);
+        }
+
+        return $deletedTouchEntitiesCount;
     }
 
     /**
