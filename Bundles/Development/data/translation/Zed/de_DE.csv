@@ -20,3 +20,6 @@ Reload,"Neu laden"
 require,require
 require-dev,require-dev
 "Suggested dependencies","Empfohlene Abhängigkeiten"
+Dependencies,Abhängigkeiten
+Rules,Regeln
+Module overview,Übersicht der Modul

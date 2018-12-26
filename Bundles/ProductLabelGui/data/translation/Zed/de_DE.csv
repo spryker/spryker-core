@@ -2,6 +2,7 @@ Activate,Aktivieren
 "Assigned products","Zugeordnete Produkte"
 "Available products","Verfügbare Produkte"
 "Back to Product Labels","Zurück zu Produkt-Labels"
+Product Labels,Produkt-Labels
 "Create Product Label","Produkt-Label erstellen"
 "De-select all","Alle Markierungen aufheben"
 Deactivate,Deaktivieren
@@ -13,3 +14,6 @@ Save,Speichern
 "Selected products to de-assign","Ausgewählte Produkte, deren Zuordnung rückgängig gemacht werden soll"
 Translations,Übersetzungen
 View,Ansicht
+View Product Label,Produkt-Label Anzeigen
+"Create a Product Label","Produkt-Label erstellen"
+Edit Product Label,Produkt-Label Bearbeiten
