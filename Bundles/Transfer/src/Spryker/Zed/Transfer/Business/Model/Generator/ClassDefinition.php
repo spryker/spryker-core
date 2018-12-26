@@ -16,6 +16,7 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 class ClassDefinition implements ClassDefinitionInterface
 {
     public const TYPE_FULLY_QUALIFIED = 'type_fully_qualified';
+    public const DEFAULT_ASSOCIATIVE_ARRAY_TYPE = 'string';
 
     /**
      * @var string
@@ -665,7 +666,8 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($method['is_associative']) {
-            $method['var'] = $method['typeHint'] = 'string';
+            $method['var'] = static::DEFAULT_ASSOCIATIVE_ARRAY_TYPE;
+            $method['typeHint'] = static::DEFAULT_ASSOCIATIVE_ARRAY_TYPE;
             $method['varValue'] = $this->getAddVar($property);
             $method['typeHintValue'] = $this->getAddTypeHint($property);
         }
