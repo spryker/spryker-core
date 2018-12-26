@@ -17,7 +17,7 @@ interface ShoppingListsRestApiClientInterface
      *  - Retrieves company user by uuid.
      *  - Checks that company user belongs to current customer.
      *  - Retrieves shopping list by uuid.
-     *  - Adds items to shopping list.
+     *  - Adds item to shopping list.
      *
      * @api
      *

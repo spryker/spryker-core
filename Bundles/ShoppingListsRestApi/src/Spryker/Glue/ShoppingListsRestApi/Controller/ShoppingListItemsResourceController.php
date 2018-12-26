@@ -35,7 +35,6 @@ class ShoppingListItemsResourceController extends AbstractController
      *          "responses": {
      *              "400": "Shopping list id not specified."
      *              "403": "Unauthorized request.",
-     *              "403": "Company user not found."
      *              "404": "Shopping list not found."
      *              "422": "Can't add an item to shopping list",
      *          },

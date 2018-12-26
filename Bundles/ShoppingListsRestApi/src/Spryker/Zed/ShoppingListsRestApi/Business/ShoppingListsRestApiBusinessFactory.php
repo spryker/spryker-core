@@ -12,8 +12,8 @@ use Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser\CompanyUserReader;
 use Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser\CompanyUserReaderInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemAdder;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemAdderInterface;
-use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemResponseBuilder;
-use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemResponseBuilderInterface;
+use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemResponseTransferBuilder;
+use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemResponseTransferBuilderInterface;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToCompanyUserFacadeInterface;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface;
 use Spryker\Zed\ShoppingListsRestApi\ShoppingListsRestApiDependencyProvider;
@@ -31,7 +31,7 @@ class ShoppingListsRestApiBusinessFactory extends AbstractBusinessFactory
         return new ShoppingListItemAdder(
             $this->createCompanyUserReader(),
             $this->getShoppingListFacade(),
-            $this->createShoppingListItemResponseBuilder()
+            $this->createShoppingListItemResponseTransferBuilder()
         );
     }
 
@@ -44,11 +44,11 @@ class ShoppingListsRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemResponseBuilderInterface
+     * @return \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemResponseTransferBuilderInterface
      */
-    public function createShoppingListItemResponseBuilder(): ShoppingListItemResponseBuilderInterface
+    public function createShoppingListItemResponseTransferBuilder(): ShoppingListItemResponseTransferBuilderInterface
     {
-        return new ShoppingListItemResponseBuilder();
+        return new ShoppingListItemResponseTransferBuilder();
     }
 
     /**

@@ -10,48 +10,39 @@ namespace Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder;
 use ArrayObject;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer;
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemsResourceMapperInterface;
 use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class ShoppingListItemRestResponseBuilder implements ShoppingListItemRestResponseBuilderInterface
 {
+    public const FORMAT_SELF_LINK_SHOPPING_LIST_ITEMS_RESOURCE = '%s/%s/%s/%s';
+
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemsResourceMapperInterface
-     */
-    protected $shoppingListItemResourceMapper;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ShoppingListsRestApi\Mapper\ShoppingListItemsResourceMapperInterface $shoppingListItemResourceMapper
      */
-    public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
-        ShoppingListItemsResourceMapperInterface $shoppingListItemResourceMapper
-    ) {
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
+    {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->shoppingListItemResourceMapper = $shoppingListItemResourceMapper;
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\RestErrorMessageTransfer[] $errors
+     * @param \ArrayObject|\Generated\Shared\Transfer\RestErrorMessageTransfer[] $restErrorMessages
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createAddItemErrorResponse(ArrayObject $errors): RestResponseInterface
+    public function createAddItemErrorResponse(ArrayObject $restErrorMessages): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        foreach ($errors as $restErrorMessageTransfer) {
+        foreach ($restErrorMessages as $restErrorMessageTransfer) {
             $restResponse->addError($restErrorMessageTransfer);
         }
 
@@ -82,7 +73,7 @@ class ShoppingListItemRestResponseBuilder implements ShoppingListItemRestRespons
         string $idShoppingListItem
     ): string {
         return sprintf(
-            ShoppingListsRestApiConfig::FORMAT_SELF_LINK_SHOPPING_LIST_ITEMS_RESOURCE,
+            static::FORMAT_SELF_LINK_SHOPPING_LIST_ITEMS_RESOURCE,
             ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LISTS,
             $idShoppingList,
             ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
@@ -91,25 +82,22 @@ class ShoppingListItemRestResponseBuilder implements ShoppingListItemRestRespons
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
      * @param string $idShoppingList
+     * @param string $idShoppingListItem
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createShoppingListItemResponse(
-        ShoppingListItemTransfer $shoppingListItemTransfer,
-        string $idShoppingList
+        RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer,
+        string $idShoppingList,
+        string $idShoppingListItem
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $restShoppingListItemAttributesTransfer = $this->shoppingListItemResourceMapper->mapShoppingListItemTransferToRestShoppingListItemAttributesTransfer(
-            $shoppingListItemTransfer,
-            new RestShoppingListItemAttributesTransfer()
-        );
-
         $shoppingListItemResource = $this->restResourceBuilder->createRestResource(
             ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
-            $shoppingListItemTransfer->getUuid(),
+            $idShoppingListItem,
             $restShoppingListItemAttributesTransfer
         );
 
@@ -117,7 +105,7 @@ class ShoppingListItemRestResponseBuilder implements ShoppingListItemRestRespons
             RestLinkInterface::LINK_SELF,
             $this->createSelfLinkForShoppingListItem(
                 $idShoppingList,
-                $shoppingListItemTransfer->getUuid()
+                $idShoppingListItem
             )
         );
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem;
 
+use Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
 use Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -68,13 +69,19 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
 
         if (!$restShoppingListItemResponseTransfer->getIsSuccess()) {
             return $this->shoppingListItemRestResponseBuilder->createAddItemErrorResponse(
-                $restShoppingListItemResponseTransfer->getErrors()
+                $restShoppingListItemResponseTransfer->getRestErrorMessages()
             );
         }
 
-        return $this->shoppingListItemRestResponseBuilder->createShoppingListItemResponse(
+        $restShoppingListItemAttributesTransfer = $this->shoppingListItemResourceMapper->mapShoppingListItemTransferToRestShoppingListItemAttributesTransfer(
             $restShoppingListItemResponseTransfer->getShoppingListItem(),
-            $idShoppingList
+            new RestShoppingListItemAttributesTransfer()
+        );
+
+        return $this->shoppingListItemRestResponseBuilder->createShoppingListItemResponse(
+            $restShoppingListItemAttributesTransfer,
+            $idShoppingList,
+            $restShoppingListItemResponseTransfer->getShoppingListItem()->getUuid()
         );
     }
 

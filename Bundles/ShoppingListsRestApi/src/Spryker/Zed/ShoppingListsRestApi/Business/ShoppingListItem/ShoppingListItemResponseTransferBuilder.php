@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\RestShoppingListItemResponseTransfer;
 use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
-class ShoppingListItemResponseBuilder implements ShoppingListItemResponseBuilderInterface
+class ShoppingListItemResponseTransferBuilder implements ShoppingListItemResponseTransferBuilderInterface
 {
     /**
      * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
@@ -25,11 +25,11 @@ class ShoppingListItemResponseBuilder implements ShoppingListItemResponseBuilder
     /**
      * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
      */
-    public function createShoppingListNotFoundErrorResponse(): RestShoppingListItemResponseTransfer
+    public function createShoppingListNotFoundErrorResponseTransfer(): RestShoppingListItemResponseTransfer
     {
         return $this->createRestShoppingListItemResponseTransfer()
             ->setIsSuccess(false)
-            ->addError(
+            ->addRestErrorMessage(
                 (new RestErrorMessageTransfer())
                     ->setStatus(Response::HTTP_NOT_FOUND)
                     ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND)
@@ -40,11 +40,11 @@ class ShoppingListItemResponseBuilder implements ShoppingListItemResponseBuilder
     /**
      * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
      */
-    public function createCompanyUserNotFoundErrorResponse(): RestShoppingListItemResponseTransfer
+    public function createCompanyUserNotFoundErrorResponseTransfer(): RestShoppingListItemResponseTransfer
     {
         return $this->createRestShoppingListItemResponseTransfer()
             ->setIsSuccess(false)
-            ->addError(
+            ->addRestErrorMessage(
                 (new RestErrorMessageTransfer())
                     ->setStatus(Response::HTTP_FORBIDDEN)
                     ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_FOUND)
@@ -55,11 +55,11 @@ class ShoppingListItemResponseBuilder implements ShoppingListItemResponseBuilder
     /**
      * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
      */
-    public function createShoppingListCanNotAddItemErrorResponse(): RestShoppingListItemResponseTransfer
+    public function createShoppingListCanNotAddItemErrorResponseTransfer(): RestShoppingListItemResponseTransfer
     {
         return $this->createRestShoppingListItemResponseTransfer()
             ->setIsSuccess(false)
-            ->addError(
+            ->addRestErrorMessage(
                 (new RestErrorMessageTransfer())
                     ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
                     ->setCode(ShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_ADD_ITEM)

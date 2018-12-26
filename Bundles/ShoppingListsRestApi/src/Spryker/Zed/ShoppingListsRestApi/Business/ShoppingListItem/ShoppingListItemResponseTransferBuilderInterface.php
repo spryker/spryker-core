@@ -9,7 +9,7 @@ namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem;
 
 use Generated\Shared\Transfer\RestShoppingListItemResponseTransfer;
 
-interface ShoppingListItemResponseBuilderInterface
+interface ShoppingListItemResponseTransferBuilderInterface
 {
     /**
      * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
@@ -19,15 +19,15 @@ interface ShoppingListItemResponseBuilderInterface
     /**
      * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
      */
-    public function createShoppingListNotFoundErrorResponse(): RestShoppingListItemResponseTransfer;
+    public function createShoppingListNotFoundErrorResponseTransfer(): RestShoppingListItemResponseTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
      */
-    public function createCompanyUserNotFoundErrorResponse(): RestShoppingListItemResponseTransfer;
+    public function createCompanyUserNotFoundErrorResponseTransfer(): RestShoppingListItemResponseTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
      */
-    public function createShoppingListCanNotAddItemErrorResponse(): RestShoppingListItemResponseTransfer;
+    public function createShoppingListCanNotAddItemErrorResponseTransfer(): RestShoppingListItemResponseTransfer;
 }

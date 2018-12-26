@@ -26,23 +26,23 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
     protected $companyUserReader;
 
     /**
-     * @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemResponseBuilderInterface
+     * @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemResponseTransferBuilderInterface
      */
-    protected $shoppingListItemResponseBuilder;
+    protected $shoppingListItemTransferResponseBuilder;
 
     /**
      * @param \Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser\CompanyUserReaderInterface $companyUserReader
      * @param \Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface $shoppingListFacade
-     * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemResponseBuilderInterface $shoppingListItemResponseBuilder
+     * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemResponseTransferBuilderInterface $shoppingListItemResponseTransferBuilder
      */
     public function __construct(
         CompanyUserReaderInterface $companyUserReader,
         ShoppingListsRestApiToShoppingListFacadeInterface $shoppingListFacade,
-        ShoppingListItemResponseBuilderInterface $shoppingListItemResponseBuilder
+        ShoppingListItemResponseTransferBuilderInterface $shoppingListItemResponseTransferBuilder
     ) {
         $this->companyUserReader = $companyUserReader;
         $this->shoppingListFacade = $shoppingListFacade;
-        $this->shoppingListItemResponseBuilder = $shoppingListItemResponseBuilder;
+        $this->shoppingListItemTransferResponseBuilder = $shoppingListItemResponseTransferBuilder;
     }
 
     /**
@@ -63,7 +63,7 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
         );
 
         if (!$companyUserTransfer) {
-            return $this->shoppingListItemResponseBuilder->createCompanyUserNotFoundErrorResponse();
+            return $this->shoppingListItemTransferResponseBuilder->createCompanyUserNotFoundErrorResponseTransfer();
         }
 
         $shoppingListTransfer = (new ShoppingListTransfer())
@@ -72,7 +72,7 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
 
         $shoppingListResponseTransfer = $this->shoppingListFacade->findShoppingListByUuid($shoppingListTransfer);
         if (!$shoppingListResponseTransfer->getIsSuccess()) {
-            return $this->shoppingListItemResponseBuilder->createShoppingListNotFoundErrorResponse();
+            return $this->shoppingListItemTransferResponseBuilder->createShoppingListNotFoundErrorResponseTransfer();
         }
 
         $restShoppingListItemRequestTransfer->getShoppingListItem()
@@ -81,10 +81,10 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
 
         $shoppingListItemTransfer = $this->shoppingListFacade->addItem($restShoppingListItemRequestTransfer->getShoppingListItem());
         if (!$shoppingListItemTransfer->getIdShoppingListItem()) {
-            return $this->shoppingListItemResponseBuilder->createShoppingListCanNotAddItemErrorResponse();
+            return $this->shoppingListItemTransferResponseBuilder->createShoppingListCanNotAddItemErrorResponseTransfer();
         }
 
-        return $this->shoppingListItemResponseBuilder
+        return $this->shoppingListItemTransferResponseBuilder
             ->createRestShoppingListItemResponseTransfer()
             ->setIsSuccess(true)
             ->setShoppingListItem($shoppingListItemTransfer);

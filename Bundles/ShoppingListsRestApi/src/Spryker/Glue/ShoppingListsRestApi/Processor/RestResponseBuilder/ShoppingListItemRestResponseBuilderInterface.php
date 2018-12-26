@@ -8,17 +8,17 @@
 namespace Spryker\Glue\ShoppingListsRestApi\Processor\RestResponseBuilder;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 interface ShoppingListItemRestResponseBuilderInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\RestErrorMessageTransfer[] $errors
+     * @param \ArrayObject|\Generated\Shared\Transfer\RestErrorMessageTransfer[] $restErrorMessages
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createAddItemErrorResponse(ArrayObject $errors): RestResponseInterface;
+    public function createAddItemErrorResponse(ArrayObject $restErrorMessages): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -26,13 +26,15 @@ interface ShoppingListItemRestResponseBuilderInterface
     public function createShoppingListBadRequestErrorResponse(): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
      * @param string $idShoppingList
+     * @param string $idShoppingListItem
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createShoppingListItemResponse(
-        ShoppingListItemTransfer $shoppingListItemTransfer,
-        string $idShoppingList
+        RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer,
+        string $idShoppingList,
+        string $idShoppingListItem
     ): RestResponseInterface;
 }

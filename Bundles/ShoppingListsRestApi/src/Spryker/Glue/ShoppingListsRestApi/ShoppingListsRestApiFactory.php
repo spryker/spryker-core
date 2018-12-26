@@ -37,10 +37,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
      */
     public function createShoppingListItemRestResponseBuilder(): ShoppingListItemRestResponseBuilderInterface
     {
-        return new ShoppingListItemRestResponseBuilder(
-            $this->getResourceBuilder(),
-            $this->createShoppingListItemResourceMapper()
-        );
+        return new ShoppingListItemRestResponseBuilder($this->getResourceBuilder());
     }
 
     /**
