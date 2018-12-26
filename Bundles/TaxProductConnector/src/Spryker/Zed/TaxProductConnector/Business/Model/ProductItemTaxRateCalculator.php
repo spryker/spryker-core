@@ -98,16 +98,11 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      */
     protected function getShippingCountryIso2CodeByItem(ItemTransfer $itemTransfer): string
     {
-        if (
-            ($itemTransfer->getShipment() === null)
-            || ($itemTransfer->getShipment()->getShippingAddress() === null)
-        ) {
-            return $this->getDefaultTaxCountryIso2Code();
+        if ($this->hasItemShippingAddressDefaultTaxCountryIso2Code($itemTransfer)) {
+            return $itemTransfer->getShipment()->getShippingAddress()->getIso2Code();
         }
 
-        $isoCode = $itemTransfer->getShipment()->getShippingAddress()->getIso2Code();
-
-        return $isoCode ?? $this->getDefaultTaxCountryIso2Code();
+        return $this->getDefaultTaxCountryIso2Code();
     }
 
     /**
@@ -181,5 +176,19 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected function getTaxGroupedKey(int $idProductAbstract, string $countryIso2Code): string
     {
         return $countryIso2Code . $idProductAbstract;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function hasItemShippingAddressDefaultTaxCountryIso2Code(ItemTransfer $itemTransfer): bool
+    {
+        $shipmentTransfer = $itemTransfer->getShipment();
+
+        return $shipmentTransfer !== null &&
+            $shipmentTransfer->getShippingAddress() !== null &&
+            $shipmentTransfer->getShippingAddress()->getIso2Code() !== null;
     }
 }
