@@ -32,6 +32,6 @@ class CompanyRoleExpanderPlugin extends AbstractPlugin implements CompanyUsersRe
         CompanyUserTransfer $companyUserTransfer,
         RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
     ): RestCompanyUserAttributesTransfer {
-        return $this->getFactory()->createCompanyBusinessUnitExpander()->expand($companyUserTransfer, $restCompanyUserAttributesTransfer);
+        return $this->getFactory()->createCompanyRoleExpander()->expand($companyUserTransfer, $restCompanyUserAttributesTransfer);
     }
 }

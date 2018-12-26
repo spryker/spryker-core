@@ -16,7 +16,7 @@ class CompanyRolesRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\CompanyRolesRestApi\Processor\Expander\CompanyRoleExpanderInterface
      */
-    public function createCompanyBusinessUnitExpander(): CompanyRoleExpanderInterface
+    public function createCompanyRoleExpander(): CompanyRoleExpanderInterface
     {
         return new CompanyRoleExpander();
     }

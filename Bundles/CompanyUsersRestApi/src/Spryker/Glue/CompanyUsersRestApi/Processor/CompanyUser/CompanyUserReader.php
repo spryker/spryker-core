@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
 use Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig;
@@ -31,21 +32,21 @@ class CompanyUserReader implements CompanyUserReaderInterface
     /**
      * @var \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceExpanderPluginInterface[]
      */
-    protected $companyUserResourceExpanderPlugins;
+    protected $companyUsersResourceExpanderPlugins;
 
     /**
      * @param \Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface $companyUserClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceExpanderPluginInterface[] $companyUserResourceExpanderPlugins
+     * @param \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceExpanderPluginInterface[] $companyUsersResourceExpanderPlugins
      */
     public function __construct(
         CompanyUsersRestApiToCompanyUserClientInterface $companyUserClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        array $companyUserResourceExpanderPlugins
+        array $companyUsersResourceExpanderPlugins
     ) {
         $this->companyUserClient = $companyUserClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->companyUserResourceExpanderPlugins = $companyUserResourceExpanderPlugins;
+        $this->companyUsersResourceExpanderPlugins = $companyUsersResourceExpanderPlugins;
     }
 
     /**
@@ -58,9 +59,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
         $companyUserCollectionTransfer = $this->companyUserClient->getActiveCompanyUsersByCustomerReference($customerTransfer);
 
-        $restResponse = $this->getCompanyUsersResponse($companyUserCollectionTransfer);
-
-        return $restResponse;
+        return $this->getCompanyUsersResponse($companyUserCollectionTransfer);
     }
 
     /**
@@ -75,12 +74,10 @@ class CompanyUserReader implements CompanyUserReaderInterface
             $restCompanyUserAttributesTransfer = (new RestCompanyUserAttributesTransfer())
                 ->fromArray($companyUserTransfer->toArray(), true);
 
-            foreach ($this->companyUserResourceExpanderPlugins as $companyUserResourceExpanderPlugin) {
-                $restCompanyUserAttributesTransfer = $companyUserResourceExpanderPlugin->expand(
-                    $companyUserTransfer,
-                    $restCompanyUserAttributesTransfer
-                );
-            }
+            $this->expandRestCompanyUserAttributesTransferWithCompanyUserData(
+                $restCompanyUserAttributesTransfer,
+                $companyUserTransfer
+            );
 
             $restResource = $this->restResourceBuilder->createRestResource(
                 CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
@@ -92,5 +89,25 @@ class CompanyUserReader implements CompanyUserReaderInterface
         }
 
         return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCompanyUserAttributesTransfer
+     */
+    protected function expandRestCompanyUserAttributesTransferWithCompanyUserData(
+        RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer,
+        CompanyUserTransfer $companyUserTransfer
+    ): RestCompanyUserAttributesTransfer {
+        foreach ($this->companyUsersResourceExpanderPlugins as $companyUserResourceExpanderPlugin) {
+            $restCompanyUserAttributesTransfer = $companyUserResourceExpanderPlugin->expand(
+                $companyUserTransfer,
+                $restCompanyUserAttributesTransfer
+            );
+        }
+
+        return $restCompanyUserAttributesTransfer;
     }
 }
