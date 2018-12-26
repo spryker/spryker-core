@@ -337,4 +337,5 @@ interface ApplicationConstants
     public const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 
     public const FORM_FACTORY = 'FORM_FACTORY';
+    public const CSRF_TOKEN_MANAGER = 'CSRF_TOKEN_MANAGER';
 }

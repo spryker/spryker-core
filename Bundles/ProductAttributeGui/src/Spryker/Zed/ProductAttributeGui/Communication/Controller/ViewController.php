@@ -71,6 +71,7 @@ class ViewController extends AbstractController
             'productAttributesJson' => json_encode($productAttributes),
             'metaAttributesJson' => json_encode($metaAttributes),
             'productAbstract' => $productAbstractTransfer,
+            'csrfTokenId' => $this->getFactory()->getConfig()->getAttributeValuesFormCsrfTokenId(),
         ]);
     }
 
@@ -127,6 +128,7 @@ class ViewController extends AbstractController
             'metaAttributesJson' => json_encode($metaAttributes),
             'productAbstract' => $productAbstractTransfer,
             'product' => $productTransfer,
+            'csrfTokenId' => $this->getFactory()->getConfig()->getAttributeValuesFormCsrfTokenId(),
         ]);
     }
 
