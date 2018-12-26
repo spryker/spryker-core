@@ -112,7 +112,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
      *
      * @return void
      */
-    protected function assertShipmentRequirements(QuoteTransfer $quoteTransfer)
+    protected function assertShipmentRequirements(QuoteTransfer $quoteTransfer): void
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->requireShipment();
@@ -219,8 +219,12 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     ) {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $shipmentMethodTransfer = $itemTransfer->getShipment()->getMethod();
-            $idSalesExpense = $this->findShipmentExpenseId($saveOrderTransfer, $shipmentMethodTransfer->getName());
+            $idSalesExpense = $this->findShipmentExpenseId(
+                $saveOrderTransfer,
+                $shipmentMethodTransfer->getName()
+            );
             if ($idSalesExpense === null) {
+
                 continue;
             }
             $this->createSalesShipmentEntity($salesOrderEntity, $shipmentMethodTransfer, $idSalesExpense);

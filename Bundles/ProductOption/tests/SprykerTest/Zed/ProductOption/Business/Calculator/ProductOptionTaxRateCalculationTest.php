@@ -121,7 +121,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
     {
         $quoteTransfer = $this->createQuoteTransfer();
 
-        $this->createItemTransfers($quoteTransfer);
+        $this->addItemTransfers($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -136,7 +136,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
         $addressTransfer = new AddressTransfer();
         $addressTransfer->setIso2Code('AT');
 
-        $this->createItemTransfers($quoteTransfer, $addressTransfer);
+        $this->addItemTransfers($quoteTransfer, $addressTransfer);
 
         return $quoteTransfer;
     }
@@ -147,14 +147,14 @@ class ProductOptionTaxRateCalculationTest extends Unit
      *
      * @return void
      */
-    protected function createItemTransfers(QuoteTransfer $quoteTransfer, AddressTransfer $addressTransfer = null): void
+    protected function addItemTransfers(QuoteTransfer $quoteTransfer, AddressTransfer $addressTransfer = null): void
     {
         $itemTransfer1 = $this->createProductItemTransfer(1, $addressTransfer);
         $itemTransfer1->addProductOption($this->createProductOption(1));
         $quoteTransfer->addItem($itemTransfer1);
 
         $itemTransfer2 = $this->createProductItemTransfer(2, $addressTransfer);
-        $itemTransfer1->addProductOption($this->createProductOption(2));
+        $itemTransfer2->addProductOption($this->createProductOption(2));
         $quoteTransfer->addItem($itemTransfer2);
     }
 
@@ -168,8 +168,8 @@ class ProductOptionTaxRateCalculationTest extends Unit
     {
         $itemTransfer = $this->createItemTransfer();
         $itemTransfer->setIdProductAbstract($id);
-        $shipment = $this->createShipment($addressTransfer);
-        $itemTransfer->setShipment($shipment);
+        $shipmentTransfer = $this->createShipment($addressTransfer);
+        $itemTransfer->setShipment($shipmentTransfer);
 
         return $itemTransfer;
     }
@@ -181,12 +181,12 @@ class ProductOptionTaxRateCalculationTest extends Unit
      */
     protected function createShipment(AddressTransfer $addressTransfer = null): ShipmentTransfer
     {
-        $shipment = $this->createShipmentTransfer();
+        $shipmentTransfer = $this->createShipmentTransfer();
         if ($addressTransfer !== null) {
-            $shipment->setShippingAddress($addressTransfer);
+            $shipmentTransfer->setShippingAddress($addressTransfer);
         }
 
-        return $shipment;
+        return $shipmentTransfer;
     }
 
     /**

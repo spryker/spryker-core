@@ -242,7 +242,10 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      */
     protected function saveSalesShipment(ShipmentTransfer $shipmentTransfer): SpySalesShipment
     {
-        $salesShipmentEntity = $this->salesQueryContainer->queryShipmentByTransfer($shipmentTransfer)->findOne();
+        $salesShipmentEntity = $this
+            ->salesQueryContainer
+            ->queryShipmentByTransfer($shipmentTransfer)
+            ->findOne();
 
         if ($salesShipmentEntity !== null) {
             return $salesShipmentEntity;

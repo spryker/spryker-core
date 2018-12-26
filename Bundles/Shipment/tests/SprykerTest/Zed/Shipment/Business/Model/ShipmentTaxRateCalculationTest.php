@@ -284,7 +284,7 @@ class ShipmentTaxRateCalculationTest extends Unit
      *
      * @return float
      */
-    protected function getExpenseItemsTaxRateAverage(QuoteTransfer $quoteTransfer)
+    protected function getExpenseItemsTaxRateAverage(QuoteTransfer $quoteTransfer): float
     {
         $taxSum = 0;
         foreach ($quoteTransfer->getItems() as $itemTransfer) {

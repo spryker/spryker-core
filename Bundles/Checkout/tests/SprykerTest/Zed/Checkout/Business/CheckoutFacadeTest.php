@@ -343,9 +343,7 @@ class CheckoutFacadeTest extends Unit
             ->setSpyProduct($productConcrete2)
             ->save();
 
-        $billingAddress = $this->createAddressTransfer();
         $shippingAddress = $this->createAddressTransfer();
-
         $shippingAddress
             ->setAddress2('84')
             ->setZipCode('12346')
@@ -384,6 +382,8 @@ class CheckoutFacadeTest extends Unit
             ->setSubtotal(500);
 
         $quoteTransfer->setTotals($totals);
+
+        $billingAddress = $this->createAddressTransfer();
         $quoteTransfer->setBillingAddress($billingAddress);
 
         $customerTransfer = new CustomerTransfer();
