@@ -144,7 +144,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
             return false;
         }
 
-        if ($resourceRoutePlugin instanceof ResourceWithParentPluginInterface && $resources) {
+        if ($resourceRoutePlugin instanceof ResourceWithParentPluginInterface) {
             $parentResourceType = $resourceRoutePlugin->getParentResourceType();
             return $this->isParentResourceMatching($resources, $parentResourceType);
         }
