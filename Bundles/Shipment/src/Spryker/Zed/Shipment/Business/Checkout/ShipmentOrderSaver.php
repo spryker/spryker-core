@@ -224,9 +224,9 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
                 $shipmentMethodTransfer->getName()
             );
             if ($idSalesExpense === null) {
-
                 continue;
             }
+
             $this->createSalesShipmentEntity($salesOrderEntity, $shipmentMethodTransfer, $idSalesExpense);
         }
     }
