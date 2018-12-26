@@ -343,24 +343,8 @@ class CheckoutFacadeTest extends Unit
             ->setSpyProduct($productConcrete2)
             ->save();
 
-        $billingAddress = new AddressTransfer();
-        $shippingAddress = new AddressTransfer();
-
-        $billingAddress
-            ->setIso2Code('xi')
-            ->setEmail('max@mustermann.de')
-            ->setFirstName('Max')
-            ->setLastName('Mustermann')
-            ->setAddress1('Straße')
-            ->setAddress2('82')
-            ->setZipCode('12345')
-            ->setCity('Entenhausen');
+        $shippingAddress = $this->createAddressTransfer();
         $shippingAddress
-            ->setIso2Code('xi')
-            ->setFirstName('Max')
-            ->setLastName('Mustermann')
-            ->setEmail('max@mustermann.de')
-            ->setAddress1('Straße')
             ->setAddress2('84')
             ->setZipCode('12346')
             ->setCity('Entenhausen2');
@@ -398,6 +382,8 @@ class CheckoutFacadeTest extends Unit
             ->setSubtotal(500);
 
         $quoteTransfer->setTotals($totals);
+
+        $billingAddress = $this->createAddressTransfer();
         $quoteTransfer->setBillingAddress($billingAddress);
 
         $customerTransfer = new CustomerTransfer();
@@ -549,5 +535,24 @@ class CheckoutFacadeTest extends Unit
         $salesBusinessFactoryMock->setContainer($container);
 
         return $salesBusinessFactoryMock;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function createAddressTransfer(): AddressTransfer
+    {
+        $addressTransfer = new AddressTransfer();
+        $addressTransfer
+            ->setIso2Code('xi')
+            ->setEmail('max@mustermann.de')
+            ->setFirstName('Max')
+            ->setLastName('Mustermann')
+            ->setAddress1('Straße')
+            ->setAddress2('82')
+            ->setZipCode('12345')
+            ->setCity('Entenhausen');
+
+        return $addressTransfer;
     }
 }

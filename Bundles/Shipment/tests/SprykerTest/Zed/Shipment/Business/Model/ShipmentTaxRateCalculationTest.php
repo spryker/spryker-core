@@ -40,7 +40,8 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
  */
 class ShipmentTaxRateCalculationTest extends Unit
 {
-    public const DEFAULT_TAX_RATE = 19;
+    public const ZERO_TAX_RATE = 0.0;
+    public const DEFAULT_TAX_RATE = 19.0;
     public const DEFAULT_TAX_COUNTRY = 'DE';
 
     /**
@@ -68,7 +69,7 @@ class ShipmentTaxRateCalculationTest extends Unit
         $shipmentFacadeTest = $this->createShipmentFacade();
         $shipmentFacadeTest->calculateShipmentTaxRate($quoteTransfer);
 
-        $this->assertEquals('0.0', $shipmentMethodTransfer->getTaxRate());
+        $this->assertEquals(self::ZERO_TAX_RATE, $shipmentMethodTransfer->getTaxRate());
     }
 
     /**
@@ -283,7 +284,7 @@ class ShipmentTaxRateCalculationTest extends Unit
      *
      * @return float
      */
-    protected function getExpenseItemsTaxRateAverage(QuoteTransfer $quoteTransfer)
+    protected function getExpenseItemsTaxRateAverage(QuoteTransfer $quoteTransfer): float
     {
         $taxSum = 0;
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
