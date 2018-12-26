@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
+use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
+use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\Filter\Word\UnderscoreToCamelCase;
@@ -663,9 +665,9 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($method['is_associative']) {
+            $method['var'] = $method['typeHint'] = 'string';
             $method['varValue'] = $this->getAddVar($property);
-            $method['typeHintValue'] = $typeHint;
-            $methodName = 'associative' . ucfirst($propertyName);
+            $method['typeHintValue'] = $this->getAddTypeHint($property);
         }
 
         $this->methods[$methodName] = $method;
@@ -733,6 +735,7 @@ class ClassDefinition implements ClassDefinitionInterface
     private function assertProperty(array $property)
     {
         $this->assertPropertyName($property['name']);
+        $this->assertPropertyAssociative($property);
     }
 
     /**
@@ -749,6 +752,52 @@ class ClassDefinition implements ClassDefinitionInterface
                 'Transfer property "%s" needs to be alpha-numeric and camel-case formatted in "%s"!',
                 $propertyName,
                 $this->name
+            ));
+        }
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return void
+     */
+    private function assertPropertyAssociative(array $property)
+    {
+        if (isset($property['associative'])) {
+            $this->assertPropertyAssociativeType($property);
+            $this->assertPropertyAssociativeValue($property);
+        }
+    }
+
+    /**
+     * @param array $property
+     *
+     * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException
+     *
+     * @return void
+     */
+    private function assertPropertyAssociativeValue(array $property)
+    {
+        if (!preg_match('(true|false|1|0)', $property['associative'])) {
+            throw new InvalidAssociativeValueException(
+                'Transfer property "associative" has invalid value. The value has to be "true" or "false".'
+            );
+        }
+    }
+
+    /**
+     * @param array $property
+     *
+     * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException
+     *
+     * @return void
+     */
+    private function assertPropertyAssociativeType(array $property)
+    {
+        if (!$this->isArray($property) && !$this->isCollection($property)) {
+            throw new InvalidAssociativeTypeException(sprintf(
+                'Transfer property "associative" cannot be defined to type: "%s"!',
+                $property['type']
             ));
         }
     }
