@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ShoppingListItemRestResponseBuilder implements ShoppingListItemRestResponseBuilderInterface
 {
-    public const FORMAT_SELF_LINK_SHOPPING_LIST_ITEMS_RESOURCE = '%s/%s/%s/%s';
+    protected const FORMAT_SELF_LINK_SHOPPING_LIST_ITEMS_RESOURCE = '%s/%s/%s/%s';
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
