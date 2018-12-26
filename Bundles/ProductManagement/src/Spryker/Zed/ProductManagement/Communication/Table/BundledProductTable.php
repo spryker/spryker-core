@@ -155,7 +155,6 @@ class BundledProductTable extends AbstractTable
             SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK,
         ]);
 
-        $config->setStateSave(true);
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;

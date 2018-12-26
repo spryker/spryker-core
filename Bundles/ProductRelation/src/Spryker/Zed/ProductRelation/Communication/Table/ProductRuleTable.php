@@ -117,7 +117,6 @@ class ProductRuleTable extends AbstractProductTable
         $this->addRawColumns($config);
 
         $config->setPageLength(10);
-        $config->setStateSave(true);
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;

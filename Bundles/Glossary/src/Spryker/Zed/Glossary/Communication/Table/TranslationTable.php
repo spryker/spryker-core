@@ -86,8 +86,6 @@ class TranslationTable extends AbstractTable
             SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY,
         ]);
 
-        $config->setStateSave(true);
-
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;

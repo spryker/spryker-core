@@ -90,7 +90,6 @@ class CmsBlockTable extends AbstractTable
             static::COL_NAME,
         ]);
 
-        $config->setStateSave(true);
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;

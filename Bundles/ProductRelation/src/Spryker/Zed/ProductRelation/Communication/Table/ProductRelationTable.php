@@ -86,7 +86,6 @@ class ProductRelationTable extends AbstractTable
         $this->setSortableFields($config);
         $this->setSearchableFields($config);
         $this->setDefaultSortField($config);
-        $config->setStateSave(true);
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;

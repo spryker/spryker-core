@@ -72,7 +72,6 @@ class CmsPageTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setStateSave(true);
         $this->setHeaders($config);
         $this->setRawColumns($config);
         $this->setSortableFields($config);

@@ -106,7 +106,6 @@ class ProductTable extends AbstractProductTable
 
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
-        $config->setStateSave(true);
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;

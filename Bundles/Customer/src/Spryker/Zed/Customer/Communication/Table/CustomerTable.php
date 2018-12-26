@@ -105,8 +105,6 @@ class CustomerTable extends AbstractTable
             SpyCustomerAddressTableMap::COL_CITY,
         ]);
 
-        $config->setStateSave(true);
-
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;

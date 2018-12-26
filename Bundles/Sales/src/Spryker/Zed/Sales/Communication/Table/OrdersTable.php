@@ -102,7 +102,6 @@ class OrdersTable extends AbstractTable
 
         $config->setDefaultSortColumnIndex(0);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
-        $config->setStateSave(true);
 
         $this->persistFilters($config);
 

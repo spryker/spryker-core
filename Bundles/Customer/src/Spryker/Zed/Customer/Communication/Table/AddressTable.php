@@ -102,8 +102,6 @@ class AddressTable extends AbstractTable
 
         $config->setUrl(sprintf('address-table?id-customer=%d', $this->idCustomer));
 
-        $config->setStateSave(true);
-
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;
