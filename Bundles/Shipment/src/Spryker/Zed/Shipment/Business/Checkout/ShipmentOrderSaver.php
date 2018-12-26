@@ -16,6 +16,7 @@ use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
+use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
@@ -30,11 +31,20 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
+     * @var \Spryker\Service\Shipment\ShipmentServiceInterface
      */
-    public function __construct(SalesQueryContainerInterface $queryContainer)
-    {
+    protected $shipmentService;
+
+    /**
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
+     * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
+     */
+    public function __construct(
+        SalesQueryContainerInterface $queryContainer,
+        ShipmentServiceInterface $shipmentService
+    ) {
         $this->queryContainer = $queryContainer;
+        $this->shipmentService = $shipmentService;
     }
 
     /**
@@ -61,6 +71,8 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     protected function saveOrderShipmentTransaction(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         $salesOrderEntity = $this->getSalesOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
+
+        $quoteTransfer->getItems();
 
         $this->addExpensesToOrder($quoteTransfer, $salesOrderEntity, $saveOrderTransfer);
         $this->createSalesShipment($quoteTransfer, $salesOrderEntity, $saveOrderTransfer);
