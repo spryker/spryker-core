@@ -18,8 +18,7 @@ use iterable;
 class ShipmentService extends AbstractService implements ShipmentServiceInterface
 {
     /**
-     * Specification:
-     * - Iterates all items grouping them by shipment.
+     * {@inheritdoc}
      *
      * @api
      *

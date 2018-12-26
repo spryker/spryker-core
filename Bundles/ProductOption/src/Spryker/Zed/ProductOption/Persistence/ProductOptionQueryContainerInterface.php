@@ -101,7 +101,7 @@ interface ProductOptionQueryContainerInterface
      * @param int[] $idProductOptionValues
      * @param string[] $countryIso2Codes
      *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
      */
     public function queryTaxSetByIdProductOptionValueAndCountryIso2Codes(array $idProductOptionValues, array $countryIso2Codes): SpyProductOptionValueQuery;
 
