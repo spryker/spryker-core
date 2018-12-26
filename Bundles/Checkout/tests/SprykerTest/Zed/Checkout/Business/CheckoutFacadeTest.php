@@ -286,7 +286,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function getBaseQuoteTransfer()
+    protected function getBaseQuoteTransfer(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
 
@@ -343,34 +343,6 @@ class CheckoutFacadeTest extends Unit
             ->setSpyProduct($productConcrete2)
             ->save();
 
-        $item1 = new ItemTransfer();
-        $item1
-            ->setUnitPrice(4000)
-            ->setSku('OSB1337')
-            ->setQuantity(1)
-            ->setUnitGrossPrice(3000)
-            ->setSumGrossPrice(3000)
-            ->setName('Product1');
-
-        $item2 = new ItemTransfer();
-        $item2
-            ->setUnitPrice(4000)
-            ->setSku('OSB1338')
-            ->setQuantity(1)
-            ->setUnitGrossPrice(4000)
-            ->setSumGrossPrice(4000)
-            ->setName('Product2');
-
-        $quoteTransfer->addItem($item1);
-        $quoteTransfer->addItem($item2);
-
-        $totals = new TotalsTransfer();
-        $totals
-            ->setGrandTotal(1000)
-            ->setSubtotal(500);
-
-        $quoteTransfer->setTotals($totals);
-
         $billingAddress = new AddressTransfer();
         $shippingAddress = new AddressTransfer();
 
@@ -393,21 +365,47 @@ class CheckoutFacadeTest extends Unit
             ->setZipCode('12346')
             ->setCity('Entenhausen2');
 
+        $shipmentTransfer = new ShipmentTransfer();
+        $shipmentTransfer->setMethod(new ShipmentMethodTransfer());
+        $shipmentTransfer->setShippingAddress($shippingAddress);
+
+        $item1 = new ItemTransfer();
+        $item1
+            ->setUnitPrice(4000)
+            ->setSku('OSB1337')
+            ->setQuantity(1)
+            ->setUnitGrossPrice(3000)
+            ->setSumGrossPrice(3000)
+            ->setShipment($shipmentTransfer)
+            ->setName('Product1');
+
+        $item2 = new ItemTransfer();
+        $item2
+            ->setUnitPrice(4000)
+            ->setSku('OSB1338')
+            ->setQuantity(1)
+            ->setUnitGrossPrice(4000)
+            ->setSumGrossPrice(4000)
+            ->setShipment($shipmentTransfer)
+            ->setName('Product2');
+
+        $quoteTransfer->addItem($item1);
+        $quoteTransfer->addItem($item2);
+
+        $totals = new TotalsTransfer();
+        $totals
+            ->setGrandTotal(1000)
+            ->setSubtotal(500);
+
+        $quoteTransfer->setTotals($totals);
         $quoteTransfer->setBillingAddress($billingAddress);
-        $quoteTransfer->setShippingAddress($shippingAddress);
 
         $customerTransfer = new CustomerTransfer();
-
         $customerTransfer
             ->setIsGuest(false)
             ->setEmail('max@mustermann.de');
 
         $quoteTransfer->setCustomer($customerTransfer);
-
-        $shipment = new ShipmentTransfer();
-        $shipment->setMethod(new ShipmentMethodTransfer());
-
-        $quoteTransfer->setShipment($shipment);
 
         $paymentTransfer = new PaymentTransfer();
         $paymentTransfer->setPaymentSelection('no_payment');

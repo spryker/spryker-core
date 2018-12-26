@@ -15,6 +15,7 @@ use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -113,8 +114,10 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
      */
     protected function assertShipmentRequirements(QuoteTransfer $quoteTransfer)
     {
-        $quoteTransfer->requireShipment();
-        $quoteTransfer->getShipment()->requireMethod();
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->requireShipment();
+            $itemTransfer->getShipment()->requireMethod();
+        }
     }
 
     /**
@@ -129,16 +132,35 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         SpySalesOrder $salesOrderEntity,
         SaveOrderTransfer $saveOrderTransfer
     ) {
-        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                $salesOrderExpenseEntity = new SpySalesExpense();
-                $this->hydrateOrderExpenseEntity($salesOrderExpenseEntity, $expenseTransfer);
-                $salesOrderExpenseEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
-                $salesOrderExpenseEntity->save();
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $expenseTransfer = $itemTransfer->getShipment()->getExpense();
+            $salesOrderItem = $this->findSalesOrderItem($salesOrderEntity, $itemTransfer->getIdSalesOrderItem());
+            if (!$salesOrderItem) {
+                continue;
+            }
 
-                $this->setCheckoutResponseExpenses($saveOrderTransfer, $expenseTransfer, $salesOrderExpenseEntity);
+            $salesOrderExpenseEntity = new SpySalesExpense();
+            $this->hydrateOrderExpenseEntity($salesOrderExpenseEntity, $expenseTransfer);
+            $salesOrderExpenseEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
+            $salesOrderExpenseEntity->save();
 
-                $salesOrderEntity->addExpense($salesOrderExpenseEntity);
+            $this->setCheckoutResponseExpenses($saveOrderTransfer, $expenseTransfer, $salesOrderExpenseEntity);
+
+            $salesOrderItem->getSpySalesShipment()->setExpense($salesOrderExpenseEntity);
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
+     * @param int $salesOrderItemId
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     */
+    protected function findSalesOrderItem(SpySalesOrder $order, int $salesOrderItemId): ?SpySalesOrderItem
+    {
+        foreach ($order->getItems() as $salesOrderItem) {
+            if ($salesOrderItem->getIdSalesOrderItem() === $salesOrderItemId) {
+                return $salesOrderItem;
             }
         }
     }
@@ -182,16 +204,16 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         SpySalesOrder $salesOrderEntity,
         SaveOrderTransfer $saveOrderTransfer
     ) {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $shipmentMethodTransfer = $itemTransfer->getShipment()->getMethod();
+            $idSalesExpense = $this->findShipmentExpenseId($saveOrderTransfer, $shipmentMethodTransfer->getName());
+            if (!$idSalesExpense) {
+                continue;
+            }
 
-        $shipmentMethodTransfer = $quoteTransfer->getShipment()->getMethod();
-        $idSalesExpense = $this->findShipmentExpenseId($saveOrderTransfer, $shipmentMethodTransfer->getName());
-
-        if (!$idSalesExpense) {
-            return;
+            $salesShipmentEntity = $this->mapSalesShipmentEntity($salesOrderEntity, $shipmentMethodTransfer, $idSalesExpense);
+            $salesShipmentEntity->save();
         }
-
-        $salesShipmentEntity = $this->mapSalesShipmentEntity($salesOrderEntity, $shipmentMethodTransfer, $idSalesExpense);
-        $salesShipmentEntity->save();
     }
 
     /**
