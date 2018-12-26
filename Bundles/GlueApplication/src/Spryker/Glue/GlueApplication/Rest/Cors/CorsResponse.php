@@ -26,11 +26,6 @@ class CorsResponse implements CorsResponseInterface
     protected $config;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\Uri\UriParserInterface
-     */
-    protected $uriParser;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface $resourceRouteLoader
      * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $config
      */
