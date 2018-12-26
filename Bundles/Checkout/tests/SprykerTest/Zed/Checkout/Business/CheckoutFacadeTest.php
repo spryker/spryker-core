@@ -343,31 +343,17 @@ class CheckoutFacadeTest extends Unit
             ->setSpyProduct($productConcrete2)
             ->save();
 
-        $billingAddress = new AddressTransfer();
-        $shippingAddress = new AddressTransfer();
+        $billingAddress = $this->createAddressTransfer();
+        $shippingAddress = $this->createAddressTransfer();
 
-        $billingAddress
-            ->setIso2Code('xi')
-            ->setEmail('max@mustermann.de')
-            ->setFirstName('Max')
-            ->setLastName('Mustermann')
-            ->setAddress1('Straße')
-            ->setAddress2('82')
-            ->setZipCode('12345')
-            ->setCity('Entenhausen');
         $shippingAddress
-            ->setIso2Code('xi')
-            ->setFirstName('Max')
-            ->setLastName('Mustermann')
-            ->setEmail('max@mustermann.de')
-            ->setAddress1('Straße')
             ->setAddress2('84')
             ->setZipCode('12346')
             ->setCity('Entenhausen2');
 
-        $shipment = new ShipmentTransfer();
-        $shipment->setMethod(new ShipmentMethodTransfer());
-        $shipment->setShippingAddress($shippingAddress);
+        $shipmentTransfer = new ShipmentTransfer();
+        $shipmentTransfer->setMethod(new ShipmentMethodTransfer());
+        $shipmentTransfer->setShippingAddress($shippingAddress);
 
         $item1 = new ItemTransfer();
         $item1
@@ -376,7 +362,7 @@ class CheckoutFacadeTest extends Unit
             ->setQuantity(1)
             ->setUnitGrossPrice(3000)
             ->setSumGrossPrice(3000)
-            ->setShipment($shipment)
+            ->setShipment($shipmentTransfer)
             ->setName('Product1');
 
         $item2 = new ItemTransfer();
@@ -386,7 +372,7 @@ class CheckoutFacadeTest extends Unit
             ->setQuantity(1)
             ->setUnitGrossPrice(4000)
             ->setSumGrossPrice(4000)
-            ->setShipment($shipment)
+            ->setShipment($shipmentTransfer)
             ->setName('Product2');
 
         $quoteTransfer->addItem($item1);
@@ -549,5 +535,24 @@ class CheckoutFacadeTest extends Unit
         $salesBusinessFactoryMock->setContainer($container);
 
         return $salesBusinessFactoryMock;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function createAddressTransfer(): AddressTransfer
+    {
+        $addressTransfer = new AddressTransfer();
+        $addressTransfer
+            ->setIso2Code('xi')
+            ->setEmail('max@mustermann.de')
+            ->setFirstName('Max')
+            ->setLastName('Mustermann')
+            ->setAddress1('Straße')
+            ->setAddress2('82')
+            ->setZipCode('12345')
+            ->setCity('Entenhausen');
+
+        return $addressTransfer;
     }
 }

@@ -255,11 +255,13 @@ class SalesFacadeSaveOrderTest extends Unit
 
         $addressEntity = $salesOrderAddressQuery->findOne();
 
-        $firstItem = $quoteTransfer->getItems()[0];
+        $this->assertCount(1, $quoteTransfer->getItems());
         $this->assertNotNull($addressEntity);
+
+        $item = $quoteTransfer->getItems()[0];
         $this->assertSame(
             $addressEntity->getIdSalesOrderAddress(),
-            $firstItem->getShipment()->getShippingAddress()->getIdSalesOrderAddress()
+            $item->getShipment()->getShippingAddress()->getIdSalesOrderAddress()
         );
     }
 
