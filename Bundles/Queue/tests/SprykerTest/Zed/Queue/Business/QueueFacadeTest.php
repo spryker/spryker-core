@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Queue\Communication\Console;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\QueueDumpRequestTransfer;
+use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Generated\Shared\Transfer\RabbitMqConsumerOptionTransfer;
 use Spryker\Client\Queue\QueueClient;
 use Spryker\Shared\Event\EventConstants;
@@ -37,6 +38,8 @@ class QueueFacadeTest extends Unit
     protected const UNREGISTERED_QUEUE_NAME = 'wrongQueueName';
 
     protected const LIMIT_OPTION = 1;
+    protected const FORMAT_OPTION = 'json';
+    protected const NO_ACK_OPTION = 0;
 
     /**
      * @var \Spryker\Zed\Queue\Business\QueueFacadeInterface
@@ -63,7 +66,7 @@ class QueueFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testQueueDump(): void
+    public function testQueueDumpWithAcknowledge(): void
     {
         $queueFacade = $this->getFacade(static::REGISTERED_QUEUE_NAME);
         $queueDumpRequestTransfer = $this->createQueueDumpRequestTransfer(static::REGISTERED_QUEUE_NAME);
@@ -94,7 +97,9 @@ class QueueFacadeTest extends Unit
     {
         return (new QueueDumpRequestTransfer())
             ->setQueueName($queueName)
-            ->setLimit(static::LIMIT_OPTION);
+            ->setLimit(static::LIMIT_OPTION)
+            ->setFormat(static::FORMAT_OPTION)
+            ->setAcknowledge(static::NO_ACK_OPTION);
     }
 
     /**
@@ -123,8 +128,14 @@ class QueueFacadeTest extends Unit
      */
     protected function createQueueClientMock()
     {
-        return $this->getMockBuilder(QueueClient::class)
+        $queueClientMock = $this->getMockBuilder(QueueClient::class)
             ->getMock();
+
+        $queueClientMock
+            ->method('receiveMessages')
+            ->willReturn([(new QueueReceiveMessageTransfer())]);
+
+        return $queueClientMock;
     }
 
     /**
