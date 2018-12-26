@@ -80,7 +80,6 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         $this->createSalesShipment($quoteTransfer, $salesOrderEntity, $saveOrderTransfer);
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -269,5 +268,4 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
 
         return $salesShipmentEntity;
     }
-
 }

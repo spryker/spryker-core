@@ -7,11 +7,9 @@
 
 namespace Spryker\Service\Shipment;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Kernel\AbstractService;
-use iterable;
 
 /**
  * @method \Spryker\Service\Shipment\ShipmentServiceFactory getFactory()
