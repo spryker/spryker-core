@@ -16,8 +16,9 @@ use Generated\Shared\Transfer\SearchResultDataMapTransfer;
 use Generated\Shared\Transfer\StringFacetMapTransfer;
 use Generated\Shared\Transfer\StringSortMapTransfer;
 use InvalidArgumentException;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface as ProductPageSearchPageMapBuilderInterface;
 
-class PageMapBuilder implements PageMapBuilderInterface
+class PageMapBuilder implements PageMapBuilderInterface, ProductPageSearchPageMapBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
@@ -259,6 +260,7 @@ class PageMapBuilder implements PageMapBuilderInterface
             $value = [$value];
         }
 
-        return array_values(array_filter($value));
+        // removes null, false and empty strings but leaves 0 (zero) values
+        return array_values(array_filter($value, 'strlen'));
     }
 }
