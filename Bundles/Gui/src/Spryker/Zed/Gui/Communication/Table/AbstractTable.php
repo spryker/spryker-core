@@ -911,7 +911,7 @@ abstract class AbstractTable
             $utilSanitizeService = new UtilSanitizeService();
             $url = $utilSanitizeService->escapeHtml($url);
         } else {
-            $url = $url->buildEscaped();
+            $url = $url->build();
         }
 
         if (array_key_exists(self::BUTTON_ICON, $buttonOptions) === true && $buttonOptions[self::BUTTON_ICON] !== null) {
