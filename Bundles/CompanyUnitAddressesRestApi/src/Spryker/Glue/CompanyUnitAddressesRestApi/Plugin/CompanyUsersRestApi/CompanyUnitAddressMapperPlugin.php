@@ -9,17 +9,17 @@ namespace Spryker\Glue\CompanyUnitAddressesRestApi\Plugin\CompanyUsersRestApi;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
-use Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceExpanderPluginInterface;
+use Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceMapperPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Glue\CompanyUnitAddressesRestApi\CompanyUnitAddressesRestApiFactory getFactory()
  */
-class CompanyUnitAddressExpanderPlugin extends AbstractPlugin implements CompanyUsersResourceExpanderPluginInterface
+class CompanyUnitAddressMapperPlugin extends AbstractPlugin implements CompanyUsersResourceMapperPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Expands RestCompanyUserAttributesTransfer with company unit addresses.
+     * - Maps RestCompanyUserAttributesTransfer with company unit addresses.
      *
      * @api
      *
@@ -28,7 +28,7 @@ class CompanyUnitAddressExpanderPlugin extends AbstractPlugin implements Company
      *
      * @return \Generated\Shared\Transfer\RestCompanyUserAttributesTransfer
      */
-    public function expand(
+    public function mapCompanyUserAttributes(
         CompanyUserTransfer $companyUserTransfer,
         RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
     ): RestCompanyUserAttributesTransfer {

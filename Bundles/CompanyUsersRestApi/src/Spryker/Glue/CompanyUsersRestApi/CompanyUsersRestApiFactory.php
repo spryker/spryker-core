@@ -10,6 +10,8 @@ namespace Spryker\Glue\CompanyUsersRestApi;
 use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReader;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReaderInterface;
+use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapper;
+use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CompanyUsersRestApiFactory extends AbstractFactory
@@ -22,8 +24,16 @@ class CompanyUsersRestApiFactory extends AbstractFactory
         return new CompanyUserReader(
             $this->getCompanyUserClient(),
             $this->getResourceBuilder(),
-            $this->getCompanyUsersResourceExpanderPlugin()
+            $this->createCompanyUserResourceMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapperInterface
+     */
+    public function createCompanyUserResourceMapper(): CompanyUserResourceMapperInterface
+    {
+        return new CompanyUserResourceMapper($this->getCompanyUsersResourceMapperPlugin());
     }
 
     /**
@@ -35,10 +45,10 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceExpanderPluginInterface[]
+     * @return \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceMapperPluginInterface[]
      */
-    protected function getCompanyUsersResourceExpanderPlugin(): array
+    protected function getCompanyUsersResourceMapperPlugin(): array
     {
-        return $this->getProvidedDependency(CompanyUsersRestApiDependencyProvider::PLUGINS_COMPANY_USERS_RESOURCE_EXPANDER);
+        return $this->getProvidedDependency(CompanyUsersRestApiDependencyProvider::PLUGINS_COMPANY_USERS_RESOURCE_MAPPER);
     }
 }

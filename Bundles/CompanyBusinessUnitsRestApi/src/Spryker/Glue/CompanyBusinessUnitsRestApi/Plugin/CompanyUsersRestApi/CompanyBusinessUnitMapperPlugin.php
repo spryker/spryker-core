@@ -5,21 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyRolesRestApi\Plugin\CompanyUsersRestApi;
+namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Plugin\CompanyUsersRestApi;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
-use Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceExpanderPluginInterface;
+use Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceMapperPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiFactory getFactory()
+ * @method \Spryker\Glue\CompanyBusinessUnitsRestApi\CompanyBusinessUnitsRestApiFactory getFactory()
  */
-class CompanyRoleExpanderPlugin extends AbstractPlugin implements CompanyUsersResourceExpanderPluginInterface
+class CompanyBusinessUnitMapperPlugin extends AbstractPlugin implements CompanyUsersResourceMapperPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Expands RestCompanyUserAttributesTransfer with company roles.
+     * - Map company business unit to RestCompanyUserAttributesTransfer.
+     * - Runs business unit mapper plugin stack.
      *
      * @api
      *
@@ -28,10 +29,10 @@ class CompanyRoleExpanderPlugin extends AbstractPlugin implements CompanyUsersRe
      *
      * @return \Generated\Shared\Transfer\RestCompanyUserAttributesTransfer
      */
-    public function expand(
+    public function mapCompanyUserAttributes(
         CompanyUserTransfer $companyUserTransfer,
         RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
     ): RestCompanyUserAttributesTransfer {
-        return $this->getFactory()->createCompanyRoleExpander()->expand($companyUserTransfer, $restCompanyUserAttributesTransfer);
+        return $this->getFactory()->createCompanyBusinessUnitMapper()->mapCompanyUserAttributes($companyUserTransfer, $restCompanyUserAttributesTransfer);
     }
 }

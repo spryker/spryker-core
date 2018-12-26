@@ -7,17 +7,17 @@
 
 namespace Spryker\Glue\CompanyRolesRestApi;
 
-use Spryker\Glue\CompanyRolesRestApi\Processor\Expander\CompanyRoleExpander;
-use Spryker\Glue\CompanyRolesRestApi\Processor\Expander\CompanyRoleExpanderInterface;
+use Spryker\Glue\CompanyRolesRestApi\Processor\Mapper\CompanyRoleMapper;
+use Spryker\Glue\CompanyRolesRestApi\Processor\Mapper\CompanyRoleMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CompanyRolesRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\CompanyRolesRestApi\Processor\Expander\CompanyRoleExpanderInterface
+     * @return \Spryker\Glue\CompanyRolesRestApi\Processor\Mapper\CompanyRoleMapperInterface
      */
-    public function createCompanyRoleExpander(): CompanyRoleExpanderInterface
+    public function createCompanyRoleMapper(): CompanyRoleMapperInterface
     {
-        return new CompanyRoleExpander();
+        return new CompanyRoleMapper();
     }
 }

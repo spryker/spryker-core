@@ -17,7 +17,7 @@ use Spryker\Glue\Kernel\Container;
 class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
-    public const PLUGINS_COMPANY_USERS_RESOURCE_EXPANDER = 'PLUGINS_COMPANY_USERS_RESOURCE_EXPANDER';
+    public const PLUGINS_COMPANY_USERS_RESOURCE_MAPPER = 'PLUGINS_COMPANY_USERS_RESOURCE_MAPPER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -28,7 +28,7 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::provideDependencies($container);
         $container = $this->addCompanyUserClient($container);
-        $container = $this->addCompanyUsersResourceExpanderPlugins($container);
+        $container = $this->addCompanyUsersResourceMapperPlugins($container);
 
         return $container;
     }
@@ -52,19 +52,19 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addCompanyUsersResourceExpanderPlugins(Container $container): Container
+    protected function addCompanyUsersResourceMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USERS_RESOURCE_EXPANDER] = function (Container $container) {
-            return $this->getCompanyUsersResourceExpanderPlugins();
+        $container[static::PLUGINS_COMPANY_USERS_RESOURCE_MAPPER] = function (Container $container) {
+            return $this->getCompanyUsersResourceMapperPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceExpanderPluginInterface[]
+     * @return \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceMapperPluginInterface[]
      */
-    protected function getCompanyUsersResourceExpanderPlugins(): array
+    protected function getCompanyUsersResourceMapperPlugins(): array
     {
         return [];
     }

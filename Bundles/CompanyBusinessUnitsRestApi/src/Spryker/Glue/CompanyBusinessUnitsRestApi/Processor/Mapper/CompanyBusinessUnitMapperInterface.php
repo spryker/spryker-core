@@ -5,25 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin;
+namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
 
-interface CompanyUsersResourceExpanderPluginInterface
+interface CompanyBusinessUnitMapperInterface
 {
     /**
-     * Specification:
-     * - Expands the RestCompanyUserAttributesTransfer with additional data.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      * @param \Generated\Shared\Transfer\RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCompanyUserAttributesTransfer
      */
-    public function expand(
+    public function mapCompanyUserAttributes(
         CompanyUserTransfer $companyUserTransfer,
         RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
     ): RestCompanyUserAttributesTransfer;
