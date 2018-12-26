@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
@@ -68,14 +67,40 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
      *
      * @return void
      */
-    protected function saveOrderShipmentTransaction(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    protected function saveOrderShipmentTransaction(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         $salesOrderEntity = $this->getSalesOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
-        $quoteTransfer->getItems();
+        $quoteTransfer->setShipmentGroups(
+            $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems())
+        );
 
+        $this->saveShipmentAddressTransfer($quoteTransfer);
         $this->addExpensesToOrder($quoteTransfer, $salesOrderEntity, $saveOrderTransfer);
         $this->createSalesShipment($quoteTransfer, $salesOrderEntity, $saveOrderTransfer);
+    }
+
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function saveShipmentAddressTransfer(QuoteTransfer $quoteTransfer): void
+    {
+        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
+            $salesOrderAddress = (new SpySalesOrderAddress());
+            $salesOrderAddress->fromArray(
+                $shipmentGroupTransfer->getShipment()->getShippingAddress()->toArray(),
+                true
+            );
+            $salesOrderAddress->save();
+
+            $shipmentGroupTransfer
+                ->getShipment()
+                ->getShippingAddress()
+                ->setIdSalesOrderAddress($salesOrderAddress->getIdSalesOrderAddress());
+        }
     }
 
     /**
@@ -128,6 +153,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->requireShipment();
             $itemTransfer->getShipment()->requireMethod();
+            $itemTransfer->getShipment()->requireShippingAddress();
         }
     }
 
@@ -193,17 +219,18 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         QuoteTransfer $quoteTransfer,
         SpySalesOrder $salesOrderEntity,
         SaveOrderTransfer $saveOrderTransfer
-    ) {
+    ): void {
+        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroup) {
+            $shipmentMethodTransfer = $shipmentGroup->getShipment()->getMethod();
+            $idSalesExpense = $this->findShipmentExpenseId($saveOrderTransfer, $shipmentMethodTransfer->getName());
 
-        $shipmentMethodTransfer = $quoteTransfer->getShipment()->getMethod();
-        $idSalesExpense = $this->findShipmentExpenseId($saveOrderTransfer, $shipmentMethodTransfer->getName());
+            if ($idSalesExpense === null) {
+                continue;
+            }
 
-        if (!$idSalesExpense) {
-            return;
+            $salesShipmentEntity = $this->mapSalesShipmentEntity($salesOrderEntity, $shipmentMethodTransfer, $idSalesExpense);
+            $salesShipmentEntity->save();
         }
-
-        $salesShipmentEntity = $this->mapSalesShipmentEntity($salesOrderEntity, $shipmentMethodTransfer, $idSalesExpense);
-        $salesShipmentEntity->save();
     }
 
     /**
@@ -240,32 +267,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         $salesShipmentEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $salesShipmentEntity->setFkSalesExpense($idSalesExpense);
 
-        // todo: Split Delivery. Get rid from it, after old logic will be removed
-        if (!$salesShipmentEntity->getFkSalesOrderAddress()) {
-            $salesShipmentEntity->setFkSalesOrderAddress($this->getMockSAlesOrderAddressId());
-        }
-
         return $salesShipmentEntity;
     }
 
-    /**
-     * Split Delivery. Get rid from it, after old logic will be removed
-     *
-     * @return int
-     */
-    protected function getMockSAlesOrderAddressId(): int
-    {
-        $country = SpyCountryQuery::create()->findOneByIso2Code('DE');
-
-        $billingAddress = (new SpySalesOrderAddress())
-            ->setFkCountry($country->getIdCountry())
-            ->setFirstName('Serhii')
-            ->setLastName('Spryker')
-            ->setAddress1('Straße des 17. Juni 135')
-            ->setCity('Berlin')
-            ->setZipCode('10623');
-        $billingAddress->save();
-
-        return $billingAddress->getIdSalesOrderAddress();
-    }
 }

@@ -9,6 +9,7 @@ namespace Spryker\Service\Shipment;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Kernel\AbstractService;
 use iterable;
 
@@ -22,44 +23,48 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShipment(array $items): array
+    public function groupItemsByShipment(array $itemTransfers): array
     {
         $shipmentGroupTransfers = [];
 
-        foreach ($items as $item){
-            $hash = $this->getItemHash($item);
+        foreach ($itemTransfers as $itemTransfer) {
+            $itemTransfer->requireShipment();
+
+            $hash = $this->getItemHash($itemTransfer->getShipment());
             if (isset($shipmentGroupTransfers[$hash])) {
-                $shipmentGroupTransfers[$hash]->addItem($item);
+                $shipmentGroupTransfers[$hash]->addItem($itemTransfer);
                 continue;
             }
 
             $shipmentGroupTransfers[$hash] = (new ShipmentGroupTransfer())
-                ->setShipment($item->getShipment())
-                ->addItem($item);
+                ->setShipment($itemTransfer->getShipment())
+                ->addItem($itemTransfer);
         }
 
         return $shipmentGroupTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return string
      */
-    protected function getItemHash(ItemTransfer $item): string
+    protected function getItemHash(ShipmentTransfer $shipmentTransfer): string
     {
         $shippingMethod = '';
-        if ($item->getShipment()->getMethod() == null) {
-            $shippingMethod = $item->getShipment()->getMethod()->getIdShipmentMethod();
+
+        if ($shipmentTransfer->getMethod() !== null) {
+            $shippingMethod = (string)$shipmentTransfer->getMethod()->getIdShipmentMethod();
         }
-        return $shippingMethod
-            . md5(
-                $item->getShipment()->getShippingAddress()->serialize()
-                . $item->getShipment()->getRequestedDeliveryDate()
-            );
+
+        return md5(implode([
+            $shippingMethod,
+            $shipmentTransfer->getShippingAddress()->serialize(),
+            $shipmentTransfer->getRequestedDeliveryDate(),
+        ]));
     }
 }
