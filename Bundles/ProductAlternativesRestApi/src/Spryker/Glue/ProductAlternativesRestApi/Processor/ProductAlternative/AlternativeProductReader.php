@@ -97,28 +97,6 @@ class AlternativeProductReader implements AlternativeProductReaderInterface
     }
 
     /**
-     * @param int $abstractProductId
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return array|null
-     */
-    protected function findAbstractProductById(int $abstractProductId, RestRequestInterface $restRequest): ?array
-    {
-        return $this->productStorage->findProductAbstractStorageData($abstractProductId, $restRequest->getMetadata()->getLocale());
-    }
-
-    /**
-     * @param int $concreteProductId
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return array|null
-     */
-    protected function findConcreteProductById(int $concreteProductId, RestRequestInterface $restRequest): ?array
-    {
-        return $this->productStorage->findProductConcreteStorageData($concreteProductId, $restRequest->getMetadata()->getLocale());
-    }
-
-    /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\ProductAlternativeStorageTransfer $productAlternativeStorageTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest

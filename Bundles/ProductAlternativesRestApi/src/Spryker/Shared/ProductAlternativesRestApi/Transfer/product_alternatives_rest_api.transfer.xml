@@ -8,4 +8,9 @@
         <property name="concreteProductIds" type="string[]" singular="concreteProductId"/>
     </transfer>
 
+    <transfer name="ProductAlternativeStorage">
+        <property name="productAbstractIds" type="array" />
+        <property name="productConcreteIds" type="array" />
+    </transfer>
+
 </transfers>
