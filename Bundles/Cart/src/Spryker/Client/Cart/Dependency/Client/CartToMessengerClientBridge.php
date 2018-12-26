@@ -31,7 +31,7 @@ class CartToMessengerClientBridge implements CartToMessengerClientInterface
      *
      * @return void
      */
-    public function addErrorMessage($message): void
+    public function addErrorMessage($message)
     {
         $this->messengerClient->addErrorMessage($message);
     }

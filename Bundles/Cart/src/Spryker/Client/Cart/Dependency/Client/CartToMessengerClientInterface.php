@@ -19,5 +19,5 @@ interface CartToMessengerClientInterface
      *
      * @return void
      */
-    public function addErrorMessage($message): void;
+    public function addErrorMessage($message);
 }

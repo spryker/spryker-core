@@ -19,8 +19,7 @@ use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInt
 
 class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
 {
-    protected const GLOSSARY_KEY_PERMISSION_FAILED = 'cart.locked.change_denied';
-    protected const GLOSSARY_KEY_CHANGE_CURRENCY_FOR_QUOTE_DENIED = 'cart.locked.currency_change_denied';
+    protected const GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED = 'cart.locked.change_denied';
 
     /**
      * @var \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface
@@ -232,7 +231,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
     public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer
     {
         if (!$this->isQuoteEditable()) {
-            $this->messengerClient->addErrorMessage(static::GLOSSARY_KEY_CHANGE_CURRENCY_FOR_QUOTE_DENIED);
+            $this->messengerClient->addErrorMessage(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED);
 
             return $this->createNotSuccessfulQuoteResponseTransfer();
         }
@@ -259,7 +258,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      */
     protected function addPermissionFailedMessage(): void
     {
-        $this->messengerClient->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
+        $this->messengerClient->addErrorMessage(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED);
     }
 
     /**
