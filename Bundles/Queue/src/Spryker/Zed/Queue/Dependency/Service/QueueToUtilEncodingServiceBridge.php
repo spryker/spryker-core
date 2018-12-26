@@ -26,9 +26,9 @@ class QueueToUtilEncodingServiceBridge implements QueueToUtilEncodingServiceInte
      * @param array $data
      * @param string $format
      *
-     * @return string
+     * @return string|null
      */
-    public function encodeToFormat(array $data, string $format): string
+    public function encodeToFormat(array $data, string $format): ?string
     {
         return $this->utilEncodingService->encodeToFormat($data, $format);
     }

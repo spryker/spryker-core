@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Queue\Communication\Console;
 
 use Generated\Shared\Transfer\QueueDumpRequestTransfer;
-use Spryker\Shared\Queue\QueueConfig;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -35,10 +34,10 @@ class QueueDumpConsole extends Console
     protected const OPTION_FORMAT_DEFAULT = 'json';
     protected const OPTION_FORMAT_DESCRIPTION = 'Defines dump queue message export format';
 
-    protected const OPTION_NO_ACK = 'no-ack';
-    protected const OPTION_NO_ACK_SHORT = 'k';
-    protected const OPTION_NO_ACK_DEFAULT = 0;
-    protected const OPTION_NO_ACK_DESCRIPTION = 'Disable the acknowledgment to keep the message in queue';
+    protected const OPTION_ACK = 'ack';
+    protected const OPTION_ACK_SHORT = 'k';
+    protected const OPTION_ACK_DEFAULT = 0;
+    protected const OPTION_ACK_DESCRIPTION = 'Defined if queue messages must be acknowledged';
 
     public const ARGUMENT_QUEUE = 'queue';
     public const ARGUMENT_QUEUE_DESCRIPTION = 'Name of the queue for receiving the messages';
@@ -51,7 +50,7 @@ class QueueDumpConsole extends Console
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::DESCRIPTION);
         $this->addArgument(static::ARGUMENT_QUEUE, InputArgument::REQUIRED, static::DESCRIPTION);
-        $this->addOption(static::OPTION_NO_ACK, static::OPTION_NO_ACK_SHORT, InputOption::VALUE_OPTIONAL, static::OPTION_NO_ACK_DESCRIPTION, static::OPTION_NO_ACK_DEFAULT);
+        $this->addOption(static::OPTION_ACK, static::OPTION_ACK_SHORT, InputOption::VALUE_OPTIONAL, static::OPTION_ACK_DESCRIPTION, static::OPTION_ACK_DEFAULT);
         $this->addOption(static::OPTION_LIMIT, static::OPTION_LIMIT_SHORT, InputOption::VALUE_OPTIONAL, static::OPTION_LIMIT_DESCRIPTION, static::OPTION_LIMIT_DEFAULT);
         $this->addOption(static::OPTION_FORMAT, static::OPTION_FORMAT_SHORT, InputOption::VALUE_OPTIONAL, static::OPTION_FORMAT_DESCRIPTION, static::OPTION_FORMAT_DEFAULT);
 
@@ -83,9 +82,9 @@ class QueueDumpConsole extends Console
     protected function createQueueDumpRequestTransfer(InputInterface $input): QueueDumpRequestTransfer
     {
         $queueName = $input->getArgument(static::ARGUMENT_QUEUE);
-        $limit = (int) $input->getOption(static::OPTION_LIMIT);
+        $limit = (int)$input->getOption(static::OPTION_LIMIT);
         $format = $input->getOption(static::OPTION_FORMAT);
-        $acknowledge = $input->getOption(static::OPTION_NO_ACK);
+        $acknowledge = $input->getOption(static::OPTION_ACK);
 
         return (new QueueDumpRequestTransfer())
             ->setQueueName($queueName)

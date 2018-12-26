@@ -10,16 +10,12 @@ namespace Spryker\Zed\Queue\Business\QueueDumper;
 use Generated\Shared\Transfer\QueueDumpRequestTransfer;
 use Generated\Shared\Transfer\QueueDumpResponseTransfer;
 use Spryker\Client\Queue\QueueClientInterface;
-use Spryker\Shared\Queue\QueueConfig as SharedConfig;
 use Spryker\Zed\Queue\Business\Exception\MissingQueuePluginException;
 use Spryker\Zed\Queue\Dependency\Service\QueueToUtilEncodingServiceInterface;
 use Spryker\Zed\Queue\QueueConfig;
 
 class QueueDumper implements QueueDumperInterface
 {
-    protected const DUMP_LIMIT = 'limit';
-    protected const DUMP_OUTPUT_FORMAT = 'format';
-
     /**
      * @var \Spryker\Client\Queue\QueueClientInterface
      */
@@ -75,7 +71,7 @@ class QueueDumper implements QueueDumperInterface
 
         $queueReceiveMessageTransfers = $this->receiveQueueMessages($queueName, $limit);
 
-        if (!$queueReceiveMessageTransfers) {
+        if ($queueReceiveMessageTransfers === []) {
             return $queueDumpResponseTransfer;
         }
 
@@ -85,7 +81,7 @@ class QueueDumper implements QueueDumperInterface
             $this->utilEncodingService->encodeToFormat($data, $format)
         );
 
-        $this->postProcessMessages($queueReceiveMessageTransfers, (bool) $acknowledge);
+        $this->postProcessMessages($queueReceiveMessageTransfers, $acknowledge);
 
         return $queueDumpResponseTransfer;
     }
@@ -94,9 +90,9 @@ class QueueDumper implements QueueDumperInterface
      * @param string $queueName
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]|null
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
-    protected function receiveQueueMessages(string $queueName, int $limit): ?array
+    protected function receiveQueueMessages(string $queueName, int $limit): array
     {
         $queueOptions = $this->queueConfig->getQueueReceiverOption($queueName);
 

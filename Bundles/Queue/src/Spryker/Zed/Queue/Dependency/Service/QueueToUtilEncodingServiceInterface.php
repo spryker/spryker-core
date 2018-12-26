@@ -13,7 +13,7 @@ interface QueueToUtilEncodingServiceInterface
      * @param array $data
      * @param string $format
      *
-     * @return string
+     * @return string|null
      */
-    public function encodeToFormat(array $data, string $format): string;
+    public function encodeToFormat(array $data, string $format): ?string;
 }

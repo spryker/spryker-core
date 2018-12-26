@@ -40,8 +40,12 @@ interface QueueFacadeInterface
     public function startWorker($command, OutputInterface $output);
 
     /**
-     * Specification
-     *  - Dumps event for one specific queue
+     * Specification:
+     * - Reads message for the specific queue.
+     * - Gets queue name, limit, acknowledge and format from the transfer object.
+     * - Returns message in the defined format.
+     * - Throws an exception if event doesn't exist.
+     * - Returns transfer object with dumped amount of messages in the defined output format.
      *
      * @api
      *
