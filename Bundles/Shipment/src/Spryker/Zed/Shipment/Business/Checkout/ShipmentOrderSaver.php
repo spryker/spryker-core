@@ -168,13 +168,13 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         SpySalesOrder $salesOrderEntity,
         SaveOrderTransfer $saveOrderTransfer
     ) {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
             $salesOrderExpenseEntity = new SpySalesExpense();
-            $this->hydrateOrderExpenseEntity($salesOrderExpenseEntity, $itemTransfer->getShipment()->getExpense());
+            $this->hydrateOrderExpenseEntity($salesOrderExpenseEntity, $shipmentGroupTransfer->getShipment()->getExpense());
             $salesOrderExpenseEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
             $salesOrderExpenseEntity->save();
 
-            $this->setCheckoutResponseExpenses($saveOrderTransfer, $itemTransfer->getShipment()->getExpense(), $salesOrderExpenseEntity);
+            $this->setCheckoutResponseExpenses($saveOrderTransfer, $shipmentGroupTransfer->getShipment()->getExpense(), $salesOrderExpenseEntity);
 
             $salesOrderEntity->addExpense($salesOrderExpenseEntity);
         }
@@ -219,8 +219,8 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         SpySalesOrder $salesOrderEntity,
         SaveOrderTransfer $saveOrderTransfer
     ): void {
-        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroup) {
-            $shipmentMethodTransfer = $shipmentGroup->getShipment()->getMethod();
+        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
+            $shipmentMethodTransfer = $shipmentGroupTransfer->getShipment()->getMethod();
             $idSalesExpense = $this->findShipmentExpenseId($saveOrderTransfer, $shipmentMethodTransfer->getName());
 
             if ($idSalesExpense === null) {
