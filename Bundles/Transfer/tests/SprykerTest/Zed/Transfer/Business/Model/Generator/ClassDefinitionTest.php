@@ -75,6 +75,7 @@ class ClassDefinitionTest extends Unit
             'type' => ($return === null) ? $type : $return,
             'bundles' => $bundles,
             'is_typed_array' => false,
+            'is_associative' => false,
         ];
 
         if ($singular !== null) {
@@ -308,6 +309,7 @@ class ClassDefinitionTest extends Unit
                 "bundles" => [
                     "Bundle1",
                 ],
+                "is_associative" => false,
             ],
         ];
         $this->assertSame($expected, $properties);
@@ -420,6 +422,7 @@ class ClassDefinitionTest extends Unit
     {
         $method = $this->getMethod($method, $property, $var, $return, $typeHint, $constant, $bundles);
         $method['parent'] = $parent;
+        $method['is_associative'] = false;
 
         return $method;
     }

@@ -22,7 +22,7 @@
             'is_collection' => {{ property.is_collection ? 'true' : 'false' }},
             'is_transfer' => {{ property.is_transfer ? 'true' : 'false' }},
             'rest_request_parameter' => '{{ property.restRequestParameter is defined ? property.restRequestParameter : 'no' }}',
-            'is_associative' => {{ property.is_associative ? 'true' : 'false' }}
+            'is_associative' => {{ property.is_associative ? 'true' : 'false' }},
         ],
     {% endfor -%}
 ];
