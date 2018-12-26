@@ -30,6 +30,7 @@ use Spryker\Zed\ShipmentCartConnector\Business\ShipmentCartConnectorFacade;
  */
 class ShipmentCartConnectorFacadeTest extends Unit
 {
+    public const SKU = 'sku';
     public const CURRENCY_ISO_CODE = 'USD';
 
     /**
@@ -54,17 +55,16 @@ class ShipmentCartConnectorFacadeTest extends Unit
         $updatedCartChangeTransfer = $shipmentCartConnectorFacade->updateShipmentPrice($cartChangeTransfer);
 
         $quoteTransfer = $updatedCartChangeTransfer->getQuote();
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $this->assertSame(
+                $itemTransfer->getShipment()->getMethod()->getCurrencyIsoCode(),
+                $quoteTransfer->getCurrency()->getCode()
+            );
 
-        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-        $itemTransfer = $quoteTransfer->getItems()[0];
-        $this->assertSame(
-            $itemTransfer->getShipment()->getMethod()->getCurrencyIsoCode(),
-            $quoteTransfer->getCurrency()->getCode()
-        );
-
-        $price = $itemTransfer->getShipment()->getMethod()->getStoreCurrencyPrice();
-        $this->assertNotEmpty($price);
-        $this->assertNotEquals(-1, $price);
+            $price = $itemTransfer->getShipment()->getMethod()->getStoreCurrencyPrice();
+            $this->assertNotEmpty($price);
+            $this->assertNotEquals(-1, $price);
+        }
     }
 
     /**
@@ -133,6 +133,8 @@ class ShipmentCartConnectorFacadeTest extends Unit
         $shipmentTransfer->setExpense($shipmentExpense);
 
         $itemTransfer = (new ItemBuilder())->build();
+        $itemTransfer->setSku(self::SKU);
+        $itemTransfer->setGroupKey(self::SKU);
         $itemTransfer->setShipment($shipmentTransfer);
         $quoteTransfer->addItem($itemTransfer);
 
