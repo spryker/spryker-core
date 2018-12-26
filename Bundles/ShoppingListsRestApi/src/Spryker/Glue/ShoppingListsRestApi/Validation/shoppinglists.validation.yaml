@@ -1,0 +1,10 @@
+shopping-list-items:
+    post:
+        sku:
+        - NotBlank
+        quantity:
+        - NotBlank
+        - Type:
+              type: integer
+        - GreaterThan:
+              value: 0

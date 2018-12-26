@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ShoppingListsRestApi;
 
+use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
+use Generated\Shared\Transfer\RestShoppingListItemResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -14,4 +16,20 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ShoppingListsRestApiClient extends AbstractClient implements ShoppingListsRestApiClientInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
+     */
+    public function addItem(
+        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+    ): RestShoppingListItemResponseTransfer {
+        return $this->getFactory()
+            ->createShoppingListsRestApiStub()
+            ->addItem($restShoppingListItemRequestTransfer);
+    }
 }

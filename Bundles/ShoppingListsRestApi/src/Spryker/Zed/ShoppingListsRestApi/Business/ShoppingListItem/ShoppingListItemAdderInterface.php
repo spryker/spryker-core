@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ShoppingListsRestApi\Zed;
+namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem;
 
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemResponseTransfer;
 
-interface ShoppingListsRestApiStubInterface
+interface ShoppingListItemAdderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer

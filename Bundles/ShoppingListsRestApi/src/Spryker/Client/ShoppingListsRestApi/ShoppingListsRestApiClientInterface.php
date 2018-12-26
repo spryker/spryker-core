@@ -7,6 +7,25 @@
 
 namespace Spryker\Client\ShoppingListsRestApi;
 
+use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
+use Generated\Shared\Transfer\RestShoppingListItemResponseTransfer;
+
 interface ShoppingListsRestApiClientInterface
 {
+    /**
+     * Specification:
+     *  - Retrieves company user by uuid.
+     *  - Checks that company user belongs to current customer.
+     *  - Retrieves shopping list by uuid.
+     *  - Adds item to shopping list.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestShoppingListItemResponseTransfer
+     */
+    public function addItem(
+        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+    ): RestShoppingListItemResponseTransfer;
 }

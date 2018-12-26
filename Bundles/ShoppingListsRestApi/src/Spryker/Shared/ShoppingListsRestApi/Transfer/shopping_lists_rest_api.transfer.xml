@@ -7,4 +7,25 @@
         <property name="uuid" type="string" />
     </transfer>
 
+    <transfer name="ShoppingListItem">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="RestShoppingListItemRequest">
+        <property name="shoppingListItem" type="ShoppingListItem"/>
+        <property name="shoppingListUuid" type="string"/>
+        <property name="companyUserUuid" type="string" />
+    </transfer>
+
+    <transfer name="RestShoppingListItemAttributes">
+        <property name="quantity" type="int" restRequestParameter="required"/>
+        <property name="sku" type="string" restRequestParameter="required"/>
+    </transfer>
+
+    <transfer name="RestShoppingListItemResponse">
+        <property name="shoppingListItem" type="ShoppingListItem" />
+        <property name="isSuccess" type="bool" />
+        <property name="restErrorMessages" type="RestErrorMessage[]" singular="restErrorMessage" />
+    </transfer>
+
 </transfers>

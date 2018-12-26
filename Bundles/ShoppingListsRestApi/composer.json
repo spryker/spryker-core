@@ -5,8 +5,12 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/company-user": "^2.0.0",
+    "spryker/glue-application": "^1.9.0",
+    "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.29.0",
     "spryker/shopping-list": "^2.0.0",
+    "spryker/symfony": "^3.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
@@ -14,7 +18,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/rest-request-validator": "If you want to use rest request validation."
+    "spryker/rest-request-validator": "If you want to use rest request validation.",
+    "spryker/company-users-rest-api": "If you want to search company user by uuid."
   },
   "autoload": {
     "psr-4": {
