@@ -1,8 +1,36 @@
 'use strict';
 
+function getLanguage() {
+
+    var locale = $('#locale').val()
+
+    if (locale.indexOf('de') != -1) {
+        return 'German';
+    }
+
+    return 'English';
+}
+
+function getTranslation(language) {
+
+    var translations = {
+        'English': require('./i18n/English.json'),
+        'German': require('./i18n/German.json')
+    }
+
+    if(translations.hasOwnProperty(language)) {
+        return translations[language]
+    }
+
+    return translations['English']
+}
+
+var language = getLanguage()
+
 var defaultConfiguration = {
     scrollX: 'auto',
-    autoWidth: false
+    autoWidth: false,
+    language: getTranslation(language)
 };
 
 var noSearchConfiguration = {
@@ -38,6 +66,14 @@ function onError (e, settings, techNote, message) {
         html: true,
         type: 'error'
     });
+}
+
+function getNavigatorLanguage() {
+    if (navigator.languages && navigator.languages.length) {
+        return navigator.languages[0];
+    } else {
+        return navigator.language || 'en_EN';
+    }
 }
 
 module.exports = {
