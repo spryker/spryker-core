@@ -17,15 +17,16 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class UuidEntityManager extends AbstractEntityManager implements UuidEntityManagerInterface
 {
-    protected const BATCH_SIZE = 200;
-
     /**
      * @param \Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer
+     * @param int $batchSize
      *
      * @return \Generated\Shared\Transfer\UuidGeneratorReportTransfer
      */
-    public function fillEmptyUuids(UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer): UuidGeneratorReportTransfer
-    {
+    public function fillEmptyUuids(
+        UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer,
+        int $batchSize
+    ): UuidGeneratorReportTransfer {
         $count = 0;
         $query = $this->getFactory()
             ->createQueryBuilder()
@@ -35,7 +36,7 @@ class UuidEntityManager extends AbstractEntityManager implements UuidEntityManag
             /** @var \Propel\Runtime\Collection\ObjectCollection $entities */
             $entities = $query
                 ->filterByUuid(null, Criteria::ISNULL)
-                ->limit(static::BATCH_SIZE)
+                ->limit($batchSize)
                 ->find();
 
             $count += $entities->count();

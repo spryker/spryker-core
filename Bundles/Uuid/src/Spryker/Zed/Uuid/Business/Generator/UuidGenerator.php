@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer;
 use Generated\Shared\Transfer\UuidGeneratorReportTransfer;
 use Spryker\Zed\Uuid\Persistence\UuidEntityManagerInterface;
 use Spryker\Zed\Uuid\Persistence\UuidRepositoryInterface;
+use Spryker\Zed\Uuid\UuidConfig;
 
 class UuidGenerator implements UuidGeneratorInterface
 {
@@ -28,15 +29,23 @@ class UuidGenerator implements UuidGeneratorInterface
     protected $entityManager;
 
     /**
+     * @var \Spryker\Zed\Uuid\UuidConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\Uuid\Persistence\UuidRepositoryInterface $repository
      * @param \Spryker\Zed\Uuid\Persistence\UuidEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\Uuid\UuidConfig $config
      */
     public function __construct(
         UuidRepositoryInterface $repository,
-        UuidEntityManagerInterface $entityManager
+        UuidEntityManagerInterface $entityManager,
+        UuidConfig $config
     ) {
         $this->repository = $repository;
         $this->entityManager = $entityManager;
+        $this->config = $config;
     }
 
     /**
@@ -55,6 +64,9 @@ class UuidGenerator implements UuidGeneratorInterface
             throw new Exception(sprintf(static::ERROR_MESSAGE_UUID, $uuidGeneratorConfigurationTransfer->getTable()));
         }
 
-        return $this->entityManager->fillEmptyUuids($uuidGeneratorConfigurationTransfer);
+        return $this->entityManager->fillEmptyUuids(
+            $uuidGeneratorConfigurationTransfer,
+            $this->config->getUuidGeneratorBatchSize()
+        );
     }
 }

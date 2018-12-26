@@ -25,7 +25,8 @@ class UuidBusinessFactory extends AbstractBusinessFactory
     {
         return new UuidGenerator(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getConfig()
         );
     }
 }

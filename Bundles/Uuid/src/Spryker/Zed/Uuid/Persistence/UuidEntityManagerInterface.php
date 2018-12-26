@@ -15,8 +15,12 @@ interface UuidEntityManagerInterface extends EntityManagerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer
+     * @param int $batchSize
      *
      * @return \Generated\Shared\Transfer\UuidGeneratorReportTransfer
      */
-    public function fillEmptyUuids(UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer): UuidGeneratorReportTransfer;
+    public function fillEmptyUuids(
+        UuidGeneratorConfigurationTransfer $uuidGeneratorConfigurationTransfer,
+        int $batchSize
+    ): UuidGeneratorReportTransfer;
 }
