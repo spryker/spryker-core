@@ -46,6 +46,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_MISSING_REQUIRED_PARAMETER = '108';
     public const RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY = '109';
     public const RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART = '110';
+    public const RESPONSE_CODE_CART_CANT_BE_UPDATED = '111';
 
     public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
     public const EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND = 'Item with the given group key not found in the cart.';
@@ -56,6 +57,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER = 'Cart uuid or item group key is not specified.';
     public const EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY = 'Anonymous customer unique id is empty.';
     public const EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART = 'Customer already has a cart.';
+    public const RESPONSE_MESSAGE_PRICE_MODE_CANT_BE_CHANGED = 'Can’t switch price mode when there are items in the cart.';
 
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 

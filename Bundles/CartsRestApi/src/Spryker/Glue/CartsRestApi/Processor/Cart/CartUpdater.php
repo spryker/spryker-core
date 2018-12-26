@@ -9,6 +9,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -81,8 +82,12 @@ class CartUpdater implements CartUpdaterInterface
             ->setStore($storeTransfer);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->updateQuoteByUuid($quoteTransfer);
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
+        if (!$quoteResponseTransfer->getQuoteTransfer()) {
             return $this->createCartNotFoundError($restResponse);
+        }
+
+        if ($quoteResponseTransfer->getErrors()->count()) {
+            return $this->createQuoteErrorResponse($quoteResponseTransfer);
         }
 
         $restResource = $this->cartsResourceMapper->mapCartsResource(
@@ -122,6 +127,26 @@ class CartUpdater implements CartUpdaterInterface
     protected function getStoreTransfer(RestCartsAttributesTransfer $restCartsAttributesTransfer): StoreTransfer
     {
         return (new StoreTransfer())->setName($restCartsAttributesTransfer->getStore());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createQuoteErrorResponse(QuoteResponseTransfer $quoteResponseTransfer): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+        foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
+            $restResponse->addError(
+                (new RestErrorMessageTransfer())
+                    ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED)
+                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->setDetail($quoteErrorTransfer->getMessage())
+            );
+        }
+
+        return $restResponse;
     }
 
     /**
