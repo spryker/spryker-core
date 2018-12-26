@@ -79,9 +79,10 @@ interface PriceProductClientInterface
 
     /**
      * Specification:
-     *  - Resolves current product price as per current customer state, it will try to resolve price based on customer selected currency and price mode.
-     *  - Uses price product filter to resolve product price
-     *  - Defaults to price mode defined in environment configuration if customer not yet selected.
+     * - Resolves current product price as per current customer state, it will try to resolve price based on customer selected currency and price mode.
+     * - Uses price product filter to resolve product price.
+     * - Defaults to price mode defined in environment configuration if customer not yet selected.
+     * - Considers quantity when provided for sum price calculation.
      *
      * @api
      *

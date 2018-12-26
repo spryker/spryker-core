@@ -359,7 +359,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
         $vendor = $this->dasherize($namespace);
         $module = $this->dasherize($module);
         $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
-        $paths = $this->addPath($paths, $path);
+        $paths = $this->addPath($paths, $path, $namespace);
 
         return $paths;
     }
