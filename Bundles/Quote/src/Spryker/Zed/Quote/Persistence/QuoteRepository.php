@@ -134,4 +134,24 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     {
         return $this->getFactory()->createQuoteMapper()->mapQuoteTransfer($quoteEntityTransfer);
     }
+
+    /**
+     * @param string $uuidQuote
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    public function findQuoteByUuid(string $uuidQuote): ?QuoteTransfer
+    {
+        $quoteQuery = $this->getFactory()
+            ->createQuoteQuery()
+            ->joinWithSpyStore()
+            ->filterByUuid($uuidQuote);
+
+        $quoteEntityTransfer = $this->buildQueryFromCriteria($quoteQuery)->findOne();
+        if (!$quoteEntityTransfer) {
+            return null;
+        }
+
+        return $this->getFactory()->createQuoteMapper()->mapQuoteTransfer($quoteEntityTransfer);
+    }
 }
