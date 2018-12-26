@@ -4,16 +4,16 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestCartsAttributes">
-        <property name="priceMode" type="string" />
-        <property name="currency" type="string" />
-        <property name="store" type="string" />
+        <property name="priceMode" type="string" restRequestParameter="required" />
+        <property name="currency" type="string" restRequestParameter="required" />
+        <property name="store" type="string" restRequestParameter="required" />
         <property name="discounts" type="RestCartsDiscounts[]" singular="discount" />
         <property name="totals" type="RestCartsTotals" />
     </transfer>
 
     <transfer name="RestCartItemsAttributes">
-        <property name="sku" type="string" />
-        <property name="quantity" type="int" />
+        <property name="sku" type="string" restRequestParameter="required" />
+        <property name="quantity" type="int" restRequestParameter="required" />
         <property name="groupKey" type="string" />
         <property name="amount" type="int" />
         <property name="calculations" type="RestCartItemCalculations" />
