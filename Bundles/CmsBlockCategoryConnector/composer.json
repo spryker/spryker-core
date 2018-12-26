@@ -6,7 +6,6 @@
   "require": {
     "php": ">=7.1",
     "spryker/category": "^4.0.0",
-    "spryker/category-extension": "^1.0.0",
     "spryker/cms-block": "^1.2.0 || ^2.0.0",
     "spryker/collector": "^5.0.0 || ^6.0.0",
     "spryker/gui": "^3.6.0",

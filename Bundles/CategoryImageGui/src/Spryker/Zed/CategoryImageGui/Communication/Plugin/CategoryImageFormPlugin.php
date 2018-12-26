@@ -5,14 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryImageGui\Communication\Form;
+namespace Spryker\Zed\CategoryImageGui\Communication\Plugin;
 
 use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormPluginInterface;
+use Spryker\Zed\CategoryImageGui\Communication\Form\ImageSetCollectionForm;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\CategoryImageGui\Communication\CategoryImageGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CategoryImageGui\CategoryImageGuiConfig getConfig()
  */
 class CategoryImageFormPlugin extends AbstractPlugin implements CategoryFormPluginInterface
 {

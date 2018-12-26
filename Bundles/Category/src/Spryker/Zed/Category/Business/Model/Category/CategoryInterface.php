@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 interface CategoryInterface
 {
     /**
-     * @deprecated User \Spryker\Zed\Category\Business\Model\CategoryReaderInterface::findCategoryById() instead.
+     * @deprecated Use \Spryker\Zed\Category\Business\Model\CategoryReaderInterface::findCategoryById() instead.
      *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
