@@ -81,13 +81,14 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
 
     /**
      * @param string $resourceType
+     * @param array $resources
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
      * @return array
      */
-    public function getAvailableMethods(string $resourceType, Request $httpRequest): array
+    public function getAvailableMethods(string $resourceType, array $resources, Request $httpRequest): array
     {
-        $resourcePlugin = $this->findResourcePlugin($resourceType, [], $httpRequest);
+        $resourcePlugin = $this->findResourcePlugin($resourceType, $resources, $httpRequest);
 
         if ($resourcePlugin === null) {
             return [];

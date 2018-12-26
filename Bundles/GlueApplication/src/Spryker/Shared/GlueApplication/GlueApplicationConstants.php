@@ -27,4 +27,12 @@ interface GlueApplicationConstants
      * @api
      */
     public const GLUE_APPLICATION_REST_DEBUG = 'GLUE_APPLICATION_REST_DEBUG';
+
+    /**
+     * Specification:
+     *   The domain name returned as allowed in CORS headers.
+     *
+     * @api
+     */
+    public const GLUE_APPLICATION_CORS_DOMAIN = 'GLUE_APPLICATION_CORS_DOMAIN';
 }

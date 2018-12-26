@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface;
+use Spryker\Glue\GlueApplication\Rest\Uri\UriParserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,18 +33,26 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
     protected $config;
 
     /**
+     * @var \Spryker\Glue\GlueApplication\Rest\Uri\UriParserInterface
+     */
+    protected $uriParser;
+
+    /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface[] $requestValidatorPlugins
      * @param \Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface $resourceRouteLoader
      * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $config
+     * @param \Spryker\Glue\GlueApplication\Rest\Uri\UriParserInterface $uriParser
      */
     public function __construct(
         array $requestValidatorPlugins,
         ResourceRouteLoaderInterface $resourceRouteLoader,
-        GlueApplicationConfig $config
+        GlueApplicationConfig $config,
+        UriParserInterface $uriParser
     ) {
         $this->requestValidatorPlugins = $requestValidatorPlugins;
         $this->resourceRouteLoader = $resourceRouteLoader;
         $this->config = $config;
+        $this->uriParser = $uriParser;
     }
 
     /**
@@ -106,9 +115,11 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
         if (!$requestedMethod) {
             return null;
         }
+        $resources = $this->uriParser->parse($request);
 
         $availableMethods = $this->resourceRouteLoader->getAvailableMethods(
             $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_TYPE),
+            $resources,
             $request
         );
 

@@ -224,7 +224,12 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createRestHttpRequestValidator(): HttpRequestValidatorInterface
     {
-        return new HttpRequestValidator($this->getValidateRequestPlugins(), $this->createRestResourceRouteLoader(), $this->getConfig());
+        return new HttpRequestValidator(
+            $this->getValidateRequestPlugins(),
+            $this->createRestResourceRouteLoader(),
+            $this->getConfig(),
+            $this->createRestUriParser()
+        );
     }
 
     /**
@@ -280,7 +285,11 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createRestCorsResponse(): CorsResponseInterface
     {
-        return new CorsResponse($this->createRestResourceRouteLoader(), $this->getConfig());
+        return new CorsResponse(
+            $this->createRestResourceRouteLoader(),
+            $this->getConfig(),
+            $this->createRestUriParser()
+        );
     }
 
     /**
