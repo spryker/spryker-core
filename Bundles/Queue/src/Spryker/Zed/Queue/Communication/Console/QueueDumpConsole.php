@@ -37,7 +37,7 @@ class QueueDumpConsole extends Console
     protected const OPTION_ACK = 'ack';
     protected const OPTION_ACK_SHORT = 'k';
     protected const OPTION_ACK_DEFAULT = 0;
-    protected const OPTION_ACK_DESCRIPTION = 'Defined if queue messages must be acknowledged';
+    protected const OPTION_ACK_DESCRIPTION = 'Defines if queue messages must be acknowledged';
 
     public const ARGUMENT_QUEUE = 'queue';
     public const ARGUMENT_QUEUE_DESCRIPTION = 'Name of the queue for receiving the messages';
