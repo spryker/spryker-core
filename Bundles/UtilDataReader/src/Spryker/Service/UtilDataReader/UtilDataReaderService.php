@@ -101,8 +101,6 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
      *
      * @api
      *
-     * @deprecated Use getBatchIteratorOrdered() instead, getPropelBatchIteratorOrdered() does not work with sliced data.
-     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param int $chunkSize
      *
@@ -117,6 +115,8 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Use getBatchIteratorOrdered() instead, getPropelBatchIteratorOrdered() does not work with sliced data.
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param int $chunkSize

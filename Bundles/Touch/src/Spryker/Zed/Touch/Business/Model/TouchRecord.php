@@ -13,6 +13,7 @@ use Orm\Zed\Touch\Persistence\SpyTouch;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Connection\ConnectionInterface;
+use Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Throwable;
@@ -254,22 +255,22 @@ class TouchRecord implements TouchRecordInterface
     protected function removeTouchEntries(SpyTouchQuery $query): int
     {
         $deletedTouchEntitiesCount = 0;
-        $propelBatchIterator = $this->getTouchIdsToRemoveBatchCollection($query);
+        $propelBatchIterator = $this->getTouchIdsToRemovePropelBatchIterator($query);
 
-        $deletableTouchIds = [];
-        foreach ($propelBatchIterator as $deletableTouchIdsBatch) {
-            $deletableTouchIds = array_merge(
-                $deletableTouchIds,
-                $deletableTouchIdsBatch->toArray()
+        $touchIdsToRemove = [];
+        foreach ($propelBatchIterator as $touchIdsToRemoveBatch) {
+            $touchIdsToRemove = array_merge(
+                $touchIdsToRemove,
+                $touchIdsToRemoveBatch->toArray()
             );
         }
 
-        if (count($deletableTouchIds) > 0) {
+        if (count($touchIdsToRemove) > 0) {
             $deletedTouchEntitiesCount += $query
-                ->filterByIdTouch($deletableTouchIds, Criteria::IN)
+                ->filterByIdTouch($touchIdsToRemove, Criteria::IN)
                 ->delete();
 
-            $this->removeTouchDataForCollectors($deletableTouchIds);
+            $this->removeTouchDataForCollectors($touchIdsToRemove);
         }
 
         return $deletedTouchEntitiesCount;
@@ -280,7 +281,7 @@ class TouchRecord implements TouchRecordInterface
      *
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
-    protected function getTouchIdsToRemoveBatchCollection(SpyTouchQuery $query)
+    protected function getTouchIdsToRemovePropelBatchIterator(SpyTouchQuery $query): CountableIteratorInterface
     {
         $touchIdsToRemoveQuery = $query->select(SpyTouchTableMap::COL_ID_TOUCH);
 
