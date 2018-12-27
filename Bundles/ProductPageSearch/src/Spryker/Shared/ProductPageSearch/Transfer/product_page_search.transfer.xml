@@ -59,7 +59,6 @@
         <property name="data" type="array" />
         <property name="structuredData" type="string" />
         <property name="key" type="string" />
-        <property name="productListMap" type="ProductListMap" />
     </transfer>
 
     <transfer name="ProductConcreteCriteriaFilter">

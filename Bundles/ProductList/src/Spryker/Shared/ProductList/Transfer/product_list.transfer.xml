@@ -27,4 +27,9 @@
         <property name="quote" type="Quote"/>
     </transfer>
 
+    <transfer name="ProductConcretePageSearch">
+        <property name="fkProduct" type="int"/>
+        <property name="productListMap" type="ProductListMap"/>
+    </transfer>
+
 </transfers>

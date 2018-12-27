@@ -226,5 +226,7 @@ interface ProductListFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
      */
-    public function expandProductConcretePageSearchTransferWithProductLists(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): ProductConcretePageSearchTransfer;
+    public function expandProductConcretePageSearchTransferWithProductLists(
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+    ): ProductConcretePageSearchTransfer;
 }

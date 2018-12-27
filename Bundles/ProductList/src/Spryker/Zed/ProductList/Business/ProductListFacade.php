@@ -268,8 +268,9 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
      */
-    public function expandProductConcretePageSearchTransferWithProductLists(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): ProductConcretePageSearchTransfer
-    {
+    public function expandProductConcretePageSearchTransferWithProductLists(
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+    ): ProductConcretePageSearchTransfer {
         return $this->getFactory()
             ->createProductConcretePageSearchExpander()
             ->expandProductConcretePageSearchTransferWithProductLists($productConcretePageSearchTransfer);
