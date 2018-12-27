@@ -9,13 +9,13 @@
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/tax": "^4.0.0 || ^5.0.0",
-    "spryker/zed-request": "^3.0.0",
-    "spryker/country": "*"
+    "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/calculation": "*",
     "spryker/propel": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/country": "*"
   },
   "suggest": {
     "spryker/calculation": "If you want to use Calculation plugins."
