@@ -36,6 +36,16 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     }
 
     /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getRawProductConcrete(string $concreteSku): ProductConcreteTransfer
+    {
+        return $this->productFacade->getRawProductConcrete($concreteSku);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
