@@ -15,7 +15,7 @@ use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemsResource
 use Spryker\Glue\ShoppingListsRestApi\Processor\Request\RestRequestReaderInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\Response\RestResponseWriterInterface;
 
-class ShoppingListItemAdder implements ShoppingListItemAdderInterface
+class ShoppingListItemUpdater implements ShoppingListItemUpdaterInterface
 {
     /**
      * @var \Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface
@@ -61,13 +61,13 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addShoppingListItem(
+    public function updateShoppingListItem(
         RestRequestInterface $restRequest,
         RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
     ): RestResponseInterface {
 
         $restResponse = $this->restResponseWriter->createRestResponse();
-        $restShoppingListItemRequestTransfer = $this->restRequestReader->readRestShoppingListItemRequestTransferFromRequest(
+        $restShoppingListItemRequestTransfer = $this->restRequestReader->readRestShoppingListItemRequestTransferWithUuidFromRequest(
             $restRequest
         );
 
@@ -83,7 +83,7 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
             $restShoppingListItemRequestTransfer
         );
 
-        $shoppingListItemResponseTransfer = $this->shoppingListClient->addItem($restShoppingListItemRequestTransfer);
+        $shoppingListItemResponseTransfer = $this->shoppingListClient->updateShoppingListItem($restShoppingListItemRequestTransfer);
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
             return $this->restResponseWriter->writeErrorsFromErrorCodes(

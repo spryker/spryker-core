@@ -119,6 +119,40 @@ class ShoppingListsRestApiClient extends AbstractClient implements ShoppingLists
     ): ShoppingListItemResponseTransfer {
         return $this->getFactory()
             ->createShoppingListsRestApiStub()
-            ->addItem($restShoppingListItemRequestTransfer);
+            ->addShoppingListItem($restShoppingListItemRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function deleteItem(
+        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+    ): ShoppingListItemResponseTransfer {
+        return $this->getFactory()
+            ->createShoppingListsRestApiStub()
+            ->deleteShoppingListItem($restShoppingListItemRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItem(
+        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+    ): ShoppingListItemResponseTransfer {
+        return $this->getFactory()
+            ->createShoppingListsRestApiStub()
+            ->updateShoppingListItem($restShoppingListItemRequestTransfer);
     }
 }

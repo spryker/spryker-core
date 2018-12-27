@@ -120,12 +120,46 @@ class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function addItem(
+    public function addShoppingListItem(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
         /** @var \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer */
         $shoppingListItemResponseTransfer = $this->zedRequestClient->call(
-            '/shopping-lists-rest-api/gateway/add-item',
+            '/shopping-lists-rest-api/gateway/add-shopping-list-item',
+            $restShoppingListItemRequestTransfer
+        );
+
+        return $shoppingListItemResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function deleteShoppingListItem(
+        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+    ): ShoppingListItemResponseTransfer {
+        /** @var \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer */
+        $shoppingListItemResponseTransfer = $this->zedRequestClient->call(
+            '/shopping-lists-rest-api/gateway/delete-shopping-list-item',
+            $restShoppingListItemRequestTransfer
+        );
+
+        return $shoppingListItemResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItem(
+        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+    ): ShoppingListItemResponseTransfer {
+        /** @var \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer */
+        $shoppingListItemResponseTransfer = $this->zedRequestClient->call(
+            '/shopping-lists-rest-api/gateway/update-shopping-list-item',
             $restShoppingListItemRequestTransfer
         );
 

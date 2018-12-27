@@ -24,8 +24,14 @@ use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListUpdater;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListUpdaterInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemAdder;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemAdderInterface;
+use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemDeleter;
+use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemDeleterInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemMapper;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemMapperInterface;
+use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemReader;
+use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemReaderInterface;
+use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemUpdater;
+use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemUpdaterInterface;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToCompanyUserFacadeInterface;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface;
 use Spryker\Zed\ShoppingListsRestApi\ShoppingListsRestApiDependencyProvider;
@@ -92,6 +98,39 @@ class ShoppingListsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getShoppingListFacade(),
             $this->createShoppingListItemMapper(),
             $this->createShoppingListsRestApiReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemUpdaterInterface
+     */
+    public function createShoppingListItemUpdater(): ShoppingListItemUpdaterInterface
+    {
+        return new ShoppingListItemUpdater(
+            $this->getShoppingListFacade(),
+            $this->createShoppingListItemReader()
+        );
+    }
+
+    /***
+     * @return \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemDeleterInterface
+     */
+    public function createShoppingListItemDeleter(): ShoppingListItemDeleterInterface
+    {
+        return new ShoppingListItemDeleter(
+            $this->getShoppingListFacade(),
+            $this->createShoppingListItemReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemReaderInterface
+     */
+    public function createShoppingListItemReader(): ShoppingListItemReaderInterface
+    {
+        return new ShoppingListItemReader(
+            $this->createShoppingListsRestApiReader(),
+            $this->createShoppingListItemMapper()
         );
     }
 

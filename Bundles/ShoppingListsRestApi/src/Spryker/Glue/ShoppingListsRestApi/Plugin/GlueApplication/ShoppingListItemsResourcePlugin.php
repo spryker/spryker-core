@@ -29,7 +29,10 @@ class ShoppingListItemsResourcePlugin extends AbstractPlugin implements Resource
     public function configure(
         ResourceRouteCollectionInterface $resourceRouteCollection
     ): ResourceRouteCollectionInterface {
-        $resourceRouteCollection->addPost(ShoppingListsRestApiConfig::ACTION_SHOPPING_LIST_ITEMS_POST);
+        $resourceRouteCollection
+            ->addPost(ShoppingListsRestApiConfig::ACTION_SHOPPING_LIST_ITEMS_POST)
+            ->addPatch(ShoppingListsRestApiConfig::ACTION_SHOPPING_LIST_ITEMS_PATCH, true)
+            ->addDelete(ShoppingListsRestApiConfig::ACTION_SHOPPING_LIST_ITEMS_DELETE, true);
 
         return $resourceRouteCollection;
     }

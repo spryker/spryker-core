@@ -105,4 +105,40 @@ interface ShoppingListsRestApiClientInterface
     public function addItem(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Retrieves company user by uuid.
+     *  - Checks that company user belongs to current customer.
+     *  - Retrieves shopping list by uuid.
+     *  - Retrieves shopping list item by uuid.
+     *  - Removes item from shopping list.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function deleteItem(
+        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+    ): ShoppingListItemResponseTransfer;
+
+    /**
+     *  Specification:
+     *  - Retrieves company user by uuid.
+     *  - Checks that company user belongs to current customer.
+     *  - Retrieves shopping list by uuid.
+     *  - Retrieves shopping list item by uuid.
+     *  - Updates shopping list item.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItem(
+        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+    ): ShoppingListItemResponseTransfer;
 }

@@ -60,7 +60,9 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
             ->requireShoppingListUuid()
             ->requireCompanyUserUuid();
         $restShoppingListItemRequestTransfer->getShoppingListItem()
-            ->requireCustomerReference();
+            ->requireCustomerReference()
+            ->requireSku()
+            ->requireQuantity();
 
         $shoppingListResponseTransferByUuid = $this->shoppingListReader->findShoppingListByUuid(
             $this->shoppingListItemMapper->mapRestShoppingListItemRequestTransferToRestShoppingListRequestTransfer(

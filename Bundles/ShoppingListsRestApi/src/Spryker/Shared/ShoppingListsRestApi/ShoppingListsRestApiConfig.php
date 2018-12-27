@@ -30,6 +30,14 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_UPDATE = 'Requested operation requires write access permission.';
     public const RESPONSE_CODE_SHOPPING_LIST_CANNOT_ADD_ITEM = '1507';
     public const RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_ADD_ITEM = 'Cannot add an item to shopping list';
+    public const RESPONSE_CODE_SHOPPING_LIST_ITEM_NOT_FOUND = '1508';
+    public const RESPONSE_DETAIL_SHOPPING_LIST_ITEM_NOT_FOUND = 'Shopping list item not found.';
+    public const RESPONSE_CODE_SHOPPING_LIST_CANNOT_UPDATE_ITEM = '1509';
+    public const RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_UPDATE_ITEM = 'Cannot update the shopping list item';
+    public const RESPONSE_CODE_SHOPPING_LIST_CANNOT_DELETE_ITEM = '1510';
+    public const RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_DELETE_ITEM = 'Shopping list item could not be deleted.';
+    public const RESPONSE_CODE_SHOPPING_LIST_ITEM_ID_NOT_SPECIFIED = '1511';
+    public const RESPONSE_DETAIL_SHOPPING_LIST_ITEM_ID_NOT_SPECIFIED = 'Shopping list item id is not specified.';
 
     /**
      * @addTo \Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig::RESPONSE_ERROR_MAP

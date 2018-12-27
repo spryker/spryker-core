@@ -60,6 +60,15 @@ interface RestRequestReaderInterface
     ): RestShoppingListItemRequestTransfer;
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer
+     */
+    public function readRestShoppingListItemRequestTransferWithUuidFromRequest(
+        RestRequestInterface $restRequest
+    ): RestShoppingListItemRequestTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\CustomerErrorTransfer[] $errors
      *
      * @return string[]

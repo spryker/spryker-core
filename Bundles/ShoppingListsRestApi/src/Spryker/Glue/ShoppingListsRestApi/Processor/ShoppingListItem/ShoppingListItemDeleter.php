@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem;
 
-use Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer;
 use Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -15,7 +14,7 @@ use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemsResource
 use Spryker\Glue\ShoppingListsRestApi\Processor\Request\RestRequestReaderInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\Response\RestResponseWriterInterface;
 
-class ShoppingListItemAdder implements ShoppingListItemAdderInterface
+class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
 {
     /**
      * @var \Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface
@@ -57,17 +56,15 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addShoppingListItem(
-        RestRequestInterface $restRequest,
-        RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
+    public function deleteShoppingListItem(
+        RestRequestInterface $restRequest
     ): RestResponseInterface {
 
         $restResponse = $this->restResponseWriter->createRestResponse();
-        $restShoppingListItemRequestTransfer = $this->restRequestReader->readRestShoppingListItemRequestTransferFromRequest(
+        $restShoppingListItemRequestTransfer = $this->restRequestReader->readRestShoppingListItemRequestTransferWithUuidFromRequest(
             $restRequest
         );
 
@@ -78,12 +75,7 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
             );
         }
 
-        $restShoppingListItemRequestTransfer = $this->shoppingListItemsResourceMapper->mapRestShoppingListItemAttributesTransferToRestShoppingListItemRequestTransfer(
-            $restShoppingListItemAttributesTransfer,
-            $restShoppingListItemRequestTransfer
-        );
-
-        $shoppingListItemResponseTransfer = $this->shoppingListClient->addItem($restShoppingListItemRequestTransfer);
+        $shoppingListItemResponseTransfer = $this->shoppingListClient->deleteItem($restShoppingListItemRequestTransfer);
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
             return $this->restResponseWriter->writeErrorsFromErrorCodes(
@@ -92,11 +84,6 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
             );
         }
 
-        $shoppingListItemResource = $this->restResponseWriter->createRestResourceFromShoppingListItemTransfer(
-            $shoppingListItemResponseTransfer->getShoppingListItem(),
-            $restShoppingListItemRequestTransfer->getShoppingListUuid()
-        );
-
-        return $restResponse->addResource($shoppingListItemResource);
+        return $restResponse;
     }
 }

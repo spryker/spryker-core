@@ -66,7 +66,25 @@ interface ShoppingListsRestApiStubInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function addItem(
+    public function addShoppingListItem(
+        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+    ): ShoppingListItemResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function deleteShoppingListItem(
+        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+    ): ShoppingListItemResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItem(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer;
 }

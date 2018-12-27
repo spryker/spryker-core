@@ -101,6 +101,11 @@ class RestRequestReader implements RestRequestReaderInterface
         }
 
         $restShoppingListRequestTransfer = $this->readRestShoppingListRequestTransferFromRequest($restRequest);
+
+        if (count($restShoppingListRequestTransfer->getErrors()) > 0) {
+            return $restShoppingListRequestTransfer;
+        }
+
         $restShoppingListRequestTransfer->getShoppingList()->setUuid($uuidShoppingList);
 
         return $restShoppingListRequestTransfer;
@@ -134,6 +139,33 @@ class RestRequestReader implements RestRequestReaderInterface
                 (new ShoppingListItemTransfer())
                     ->setCustomerReference($restShoppingListRequestTransfer->getCustomerReference())
             );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer
+     */
+    public function readRestShoppingListItemRequestTransferWithUuidFromRequest(
+        RestRequestInterface $restRequest
+    ): RestShoppingListItemRequestTransfer {
+
+        $uuidShoppingListItem = $restRequest->getResource()->getId();
+        if (!$uuidShoppingListItem) {
+            return (new RestShoppingListItemRequestTransfer())->addError(
+                SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_ITEM_ID_NOT_SPECIFIED
+            );
+        }
+
+        $restShoppingListItemRequestTransfer = $this->readRestShoppingListItemRequestTransferFromRequest($restRequest);
+
+        if (count($restShoppingListItemRequestTransfer->getErrors()) > 0) {
+            return $restShoppingListItemRequestTransfer;
+        }
+
+        $restShoppingListItemRequestTransfer->getShoppingListItem()->setUuid($uuidShoppingListItem);
+
+        return $restShoppingListItemRequestTransfer;
     }
 
     /**

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface ShoppingListItemAdderInterface
+interface ShoppingListItemUpdaterInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -19,7 +19,7 @@ interface ShoppingListItemAdderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addShoppingListItem(
+    public function updateShoppingListItem(
         RestRequestInterface $restRequest,
         RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
     ): RestResponseInterface;

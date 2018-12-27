@@ -56,6 +56,82 @@ class ShoppingListItemsResourceController extends AbstractController
     ): RestResponseInterface {
         return $this->getFactory()
             ->createShoppingListItemAdder()
-            ->addItem($restRequest, $restShoppingListItemAttributesTransfer);
+            ->addShoppingListItem($restRequest, $restShoppingListItemAttributesTransfer);
+    }
+
+    /**
+     * @Glue({
+     *     "patch": {
+     *          "summary": [
+     *              "Updates shopping list item."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          },
+     *          {
+     *              "name": "X-Company-User-Id",
+     *              "in": "header",
+     *              "required": true,
+     *              "description": "Company user id"
+     *          }],
+     *          "responses": {
+     *              "400": "Shopping list id or list item id not specified.",
+     *              "403": "Unauthorized request.",
+     *              "404": "Shopping list or list item not found.",
+     *              "422": "Cannot update the shopping list item"
+     *          },
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShoppingListItemAttributesTransfer"
+     *     }
+     * })
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function patchAction(
+        RestRequestInterface $restRequest,
+        RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
+    ): RestResponseInterface {
+        return $this->getFactory()
+            ->createShoppingListItemUpdater()
+            ->updateShoppingListItem($restRequest, $restShoppingListItemAttributesTransfer);
+    }
+
+    /**
+     * @Glue({
+     *     "delete": {
+     *          "summary": [
+     *              "Deletes item from a shopping list."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          },
+     *          {
+     *              "name": "X-Company-User-Id",
+     *              "in": "header",
+     *              "required": true,
+     *              "description": "Company user id"
+     *          }],
+     *          "responses": {
+     *              "400": "Bad Response.",
+     *              "403": "Unauthorized request.",
+     *              "404": "Not Found",
+     *              "422": "Cannot delete the shopping list item"
+     *          },
+     *     }
+     * })
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        return $this->getFactory()
+            ->createShoppingListItemDeleter()
+            ->deleteShoppingListItem($restRequest);
     }
 }

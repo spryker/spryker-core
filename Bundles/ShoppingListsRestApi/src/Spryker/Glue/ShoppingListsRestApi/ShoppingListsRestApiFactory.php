@@ -27,6 +27,9 @@ use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListUpdater
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListUpdaterInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemAdder;
 use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemAdderInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemDeleter;
+use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemUpdater;
+use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemUpdaterInterface;
 
 /**
  * @method \Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface getClient()
@@ -91,6 +94,32 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     public function createShoppingListItemAdder(): ShoppingListItemAdderInterface
     {
         return new ShoppingListItemAdder(
+            $this->getShoppingListsClient(),
+            $this->createShoppingListItemsResourceMapper(),
+            $this->createRestRequestReader(),
+            $this->createRestRequestWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemUpdaterInterface
+     */
+    public function createShoppingListItemUpdater(): ShoppingListItemUpdaterInterface
+    {
+        return new ShoppingListItemUpdater(
+            $this->getShoppingListsClient(),
+            $this->createShoppingListItemsResourceMapper(),
+            $this->createRestRequestReader(),
+            $this->createRestRequestWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemDeleter
+     */
+    public function createShoppingListItemDeleter(): ShoppingListItemDeleter
+    {
+        return new ShoppingListItemDeleter(
             $this->getShoppingListsClient(),
             $this->createShoppingListItemsResourceMapper(),
             $this->createRestRequestReader(),
