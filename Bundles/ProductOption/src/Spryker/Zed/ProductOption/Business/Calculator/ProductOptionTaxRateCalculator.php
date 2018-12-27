@@ -13,6 +13,7 @@ use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
+use \ArrayObject;
 
 class ProductOptionTaxRateCalculator implements CalculatorInterface
 {
@@ -65,11 +66,11 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return string[]
      */
-    protected function getCountryIso2CodesByIdProductAbstracts(array $itemTransfers): array
+    protected function getCountryIso2CodesByIdProductAbstracts(ArrayObject $itemTransfers): array
     {
         $countryIso2CodesByIdProductAbstracts = [];
 

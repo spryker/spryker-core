@@ -14,6 +14,7 @@ use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
+use \ArrayObject;
 
 class ProductItemTaxRateCalculator implements CalculatorInterface
 {
@@ -64,11 +65,11 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return string[]
      */
-    protected function getCountryIso2CodesByIdProductAbstracts(array $itemTransfers): array
+    protected function getCountryIso2CodesByIdProductAbstracts(ArrayObject $itemTransfers): array
     {
         $countryIso2CodesByIdProductAbstracts = [];
 
