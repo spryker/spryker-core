@@ -13,9 +13,6 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "suggest": {
-    "spryker/company-users-rest-api": "If you want to use this module."
-  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

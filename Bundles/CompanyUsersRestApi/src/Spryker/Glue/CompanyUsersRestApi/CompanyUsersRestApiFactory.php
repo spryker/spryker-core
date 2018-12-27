@@ -23,8 +23,8 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     {
         return new CompanyUserReader(
             $this->getCompanyUserClient(),
-            $this->getResourceBuilder(),
-            $this->createCompanyUserMapper()
+            $this->createCompanyUserMapper(),
+            $this->getResourceBuilder()
         );
     }
 

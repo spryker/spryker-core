@@ -40,7 +40,7 @@ class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
             (new RestCompanyBusinessUnitAttributesTransfer())
                 ->fromArray($companyUserTransfer->toArray(), true)
         );
-        $restCompanyUserAttributesTransfer = $this->executeCompanyBusinessUnitMapperPlugins($companyUserTransfer, $restCompanyUserAttributesTransfer);
+        $restCompanyUserAttributesTransfer = $this->executeCompanyBusinessUnitAttributesMapperPlugins($companyUserTransfer, $restCompanyUserAttributesTransfer);
 
         return $restCompanyUserAttributesTransfer;
     }
@@ -51,7 +51,7 @@ class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCompanyUserAttributesTransfer
      */
-    protected function executeCompanyBusinessUnitMapperPlugins(
+    protected function executeCompanyBusinessUnitAttributesMapperPlugins(
         CompanyUserTransfer $companyUserTransfer,
         RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
     ): RestCompanyUserAttributesTransfer {

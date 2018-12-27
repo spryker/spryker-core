@@ -25,28 +25,28 @@ class CompanyUserReader implements CompanyUserReaderInterface
     protected $companyUserClient;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
-
-    /**
      * @var \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface
      */
     protected $companyUserMapper;
 
     /**
+     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     */
+    protected $restResourceBuilder;
+
+    /**
      * @param \Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface $companyUserClient
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface $companyUserMapper
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(
         CompanyUsersRestApiToCompanyUserClientInterface $companyUserClient,
-        RestResourceBuilderInterface $restResourceBuilder,
-        CompanyUserMapperInterface $companyUserMapper
+        CompanyUserMapperInterface $companyUserMapper,
+        RestResourceBuilderInterface $restResourceBuilder
     ) {
         $this->companyUserClient = $companyUserClient;
-        $this->restResourceBuilder = $restResourceBuilder;
         $this->companyUserMapper = $companyUserMapper;
+        $this->restResourceBuilder = $restResourceBuilder;
     }
 
     /**
