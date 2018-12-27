@@ -28,7 +28,7 @@ class CompanyUsersResourceRoutePlugin extends AbstractPlugin implements Resource
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
-            ->addGet(CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS_ACTION_NAME_GET);
+            ->addGet(CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS_GET_ACTION_NAME);
 
         return $resourceRouteCollection;
     }

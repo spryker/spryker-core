@@ -76,13 +76,13 @@ class CompanyUnitAddressFacadeTest extends Unit
         ]);
 
         $companyBusinessUnitTransfer->setDefaultBillingAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
+        $this->companyBusinessUnitFacade->update($companyBusinessUnitTransfer);
 
         // Act
-        $this->companyBusinessUnitFacade->update($companyBusinessUnitTransfer);
         $companyBusinessUnitTransfer = $this->companyUnitAddressFacade->expandCompanyBusinessUnitWithCompanyUnitAddressCollection($companyBusinessUnitTransfer);
-        $companyUnitAddressCollectionTransfer = $companyBusinessUnitTransfer->getAddressCollection();
 
         // Assert
+        $companyUnitAddressCollectionTransfer = $companyBusinessUnitTransfer->getAddressCollection();
         $this->assertInstanceOf(CompanyUnitAddressCollectionTransfer::class, $companyUnitAddressCollectionTransfer);
         $this->assertCount(1, $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses());
         $this->assertTrue($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()[0]->getIsDefaultBilling());

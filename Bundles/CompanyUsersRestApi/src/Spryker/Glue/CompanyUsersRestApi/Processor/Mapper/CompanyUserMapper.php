@@ -38,23 +38,23 @@ class CompanyUserMapper implements CompanyUserMapperInterface
         $restCompanyUserAttributesTransfer = $restCompanyUserAttributesTransfer
             ->fromArray($companyUserTransfer->toArray(), true);
 
-        $this->executeCompanyUserMapperPlugin(
-            $restCompanyUserAttributesTransfer,
-            $companyUserTransfer
+        $this->executeCompanyUserAttributesMapperPlugins(
+            $companyUserTransfer,
+            $restCompanyUserAttributesTransfer
         );
 
         return $restCompanyUserAttributesTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCompanyUserAttributesTransfer
      */
-    protected function executeCompanyUserMapperPlugin(
-        RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer,
-        CompanyUserTransfer $companyUserTransfer
+    protected function executeCompanyUserAttributesMapperPlugins(
+        CompanyUserTransfer $companyUserTransfer,
+        RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
     ): RestCompanyUserAttributesTransfer {
         foreach ($this->companyUserAttributesMapperPlugins as $companyUserAttributesMapperPlugin) {
             $restCompanyUserAttributesTransfer = $companyUserAttributesMapperPlugin->mapCompanyUserAttributes(

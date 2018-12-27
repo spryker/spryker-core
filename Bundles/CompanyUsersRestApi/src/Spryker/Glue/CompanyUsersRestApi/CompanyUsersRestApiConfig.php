@@ -13,5 +13,5 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_COMPANY_USERS = 'company-users';
     public const CONTROLLER_RESOURCE_COMPANY_USERS = 'company-users-resource';
-    public const RESOURCE_COMPANY_USERS_ACTION_NAME_GET = 'get';
+    public const RESOURCE_COMPANY_USERS_GET_ACTION_NAME = 'get';
 }

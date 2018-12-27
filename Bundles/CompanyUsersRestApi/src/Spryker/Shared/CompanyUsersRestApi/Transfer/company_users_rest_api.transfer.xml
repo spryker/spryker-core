@@ -25,4 +25,8 @@
         <property name="status" type="string" />
     </transfer>
 
+    <transfer name="Customer">
+        <property name="customerReference" type="string" />
+    </transfer>
+
 </transfers>

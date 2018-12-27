@@ -34,7 +34,7 @@ class CompanyBusinessUnitsRestApiDependencyProvider extends AbstractBundleDepend
      */
     protected function addCompanyBusinessUnitAttributesMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_BUSINESS_UNIT_ATTRIBUTES_MAPPER] = function (Container $container) {
+        $container[static::PLUGINS_COMPANY_BUSINESS_UNIT_ATTRIBUTES_MAPPER] = function () {
             return $this->getCompanyBusinessUnitAttributesMapperPlugins();
         };
 

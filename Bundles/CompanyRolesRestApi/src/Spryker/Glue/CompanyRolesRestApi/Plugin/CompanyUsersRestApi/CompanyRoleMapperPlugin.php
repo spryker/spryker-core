@@ -19,7 +19,7 @@ class CompanyRoleMapperPlugin extends AbstractPlugin implements CompanyUserAttri
 {
     /**
      * {@inheritdoc}
-     * - Maps Company Roles to RestCompanyUserAttributesTransfer.
+     * - Maps company roles data to RestCompanyUserAttributesTransfer.
      *
      * @api
      *

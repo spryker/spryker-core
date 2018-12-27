@@ -41,7 +41,7 @@ class CompanyBusinessUnitExpander implements CompanyBusinessUnitExpanderInterfac
             );
 
         $companyUnitAddressCollectionTransfer = $this->repository->getCompanyUnitAddressCollection($criteriaFilterTransfer);
-        $companyUnitAddressCollectionTransfer = $this->markCompanyUnitAddressAsDefaultBilling($companyBusinessUnitTransfer, $companyUnitAddressCollectionTransfer);
+        $companyUnitAddressCollectionTransfer = $this->markDefaultBillingAddress($companyBusinessUnitTransfer, $companyUnitAddressCollectionTransfer);
 
         $companyBusinessUnitTransfer->setAddressCollection($companyUnitAddressCollectionTransfer);
 
@@ -54,7 +54,7 @@ class CompanyBusinessUnitExpander implements CompanyBusinessUnitExpanderInterfac
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */
-    protected function markCompanyUnitAddressAsDefaultBilling(
+    protected function markDefaultBillingAddress(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
         CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
     ): CompanyUnitAddressCollectionTransfer {

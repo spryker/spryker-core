@@ -14,7 +14,7 @@ interface CompanyUserAttributesMapperPluginInterface
 {
     /**
      * Specification:
-     * - Maps Company user data to RestCompanyUserAttributesTransfer.
+     * - Maps company user data to RestCompanyUserAttributesTransfer.
      *
      * @api
      *

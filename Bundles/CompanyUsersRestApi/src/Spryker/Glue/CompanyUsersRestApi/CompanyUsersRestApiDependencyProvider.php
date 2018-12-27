@@ -54,7 +54,7 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCompanyUserAttributesMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USER_ATTRIBUTES_MAPPER] = function (Container $container) {
+        $container[static::PLUGINS_COMPANY_USER_ATTRIBUTES_MAPPER] = function () {
             return $this->getCompanyUserAttributesMapperPlugins();
         };
 

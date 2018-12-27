@@ -59,7 +59,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
         $companyUserCollectionTransfer = $this->companyUserClient->getActiveCompanyUsersByCustomerReference($customerTransfer);
 
-        return $this->getCompanyUsersResponse($companyUserCollectionTransfer);
+        return $this->buildCompanyUserCollectionResponse($companyUserCollectionTransfer);
     }
 
     /**
@@ -67,7 +67,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getCompanyUsersResponse(CompanyUserCollectionTransfer $companyUserCollectionTransfer): RestResponseInterface
+    protected function buildCompanyUserCollectionResponse(CompanyUserCollectionTransfer $companyUserCollectionTransfer): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUserTransfer) {
