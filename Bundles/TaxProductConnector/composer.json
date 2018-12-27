@@ -9,11 +9,11 @@
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/tax": "^4.0.0 || ^5.0.0",
-    "spryker/zed-request": "^3.0.0"
+    "spryker/zed-request": "^3.0.0",
+    "spryker/country": "*"
   },
   "require-dev": {
     "spryker/calculation": "*",
-    "spryker/country": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

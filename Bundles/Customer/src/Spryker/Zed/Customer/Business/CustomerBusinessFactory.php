@@ -17,6 +17,7 @@ use Spryker\Zed\Customer\Business\Customer\CustomerReaderInterface;
 use Spryker\Zed\Customer\Business\Customer\EmailValidator;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpander;
 use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver as ObsoleteCustomerOrderSaver;
+use Spryker\Zed\Customer\Business\Model\CustomerOrderSaverInterface as ObsoleteCustomerOrderSaverInterface;
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
 use Spryker\Zed\Customer\Business\Sales\CustomerOrderHydrator;
@@ -124,7 +125,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Customer\Business\Model\CustomerOrderSaverInterface
      */
-    public function createCustomerOrderSaver(): CustomerOrderSaverInterface
+    public function createCustomerOrderSaver(): ObsoleteCustomerOrderSaverInterface
     {
         return new ObsoleteCustomerOrderSaver(
             $this->createCustomer(),
