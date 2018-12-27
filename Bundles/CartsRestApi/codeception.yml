@@ -1,5 +1,7 @@
 namespace: CartsRestApi
 actor: Tester
+include:
+    - tests/SprykerTest/Zed/CartsRestApi
 paths:
     tests: tests
     log: tests/_output

@@ -365,6 +365,34 @@ class CompanyUser implements CompanyUserInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
+    public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($companyUserTransfer) {
+            $companyUserTransfer->requireIdCompanyUser();
+
+            return $this->executeDeleteCompanyUserTransaction($companyUserTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    protected function executeDeleteCompanyUserTransaction(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        $this->companyUserPluginExecutor->executePreDeletePlugins($companyUserTransfer);
+
+        $this->companyUserEntityManager->deleteCompanyUserById($companyUserTransfer->getIdCompanyUser());
+
+        return (new CompanyUserResponseTransfer())->setIsSuccessful(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
     protected function executeSavePreCheckPlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         foreach ($this->companyUserSavePreCheckPlugins as $companyUserSavePreCheckPlugin) {

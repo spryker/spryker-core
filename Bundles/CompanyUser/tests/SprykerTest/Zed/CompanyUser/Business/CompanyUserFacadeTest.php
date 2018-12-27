@@ -369,4 +369,29 @@ class CompanyUserFacadeTest extends Test
     {
         return $this->tester->getFacade();
     }
+
+    /**
+     * @return void
+     */
+    public function testDeleteCompanyUserShouldRemoveCompanyUserFromStorageWithoutCustomerAnonymizing(): void
+    {
+        // Assign
+        $companyTransfer = $this->tester->haveCompany();
+        $customerTransfer = (new CustomerBuilder())->build();
+        $companyUserTransfer = $this->tester->haveCompanyUser(
+            [
+                'customer' => $customerTransfer,
+                'fk_company' => $companyTransfer->getIdCompany(),
+            ]
+        );
+        $idCompanyUser = $companyUserTransfer->getIdCompanyUser();
+
+        // Act
+        $this->getFacade()->deleteCompanyUser($companyUserTransfer);
+
+        // Assert
+        $this->expectException(TypeError::class);
+        $this->getFacade()->getCompanyUserById($idCompanyUser);
+        $this->assertSame($customerTransfer, $this->tester->getLocator()->customer()->facade()->getCustomer($customerTransfer));
+    }
 }
