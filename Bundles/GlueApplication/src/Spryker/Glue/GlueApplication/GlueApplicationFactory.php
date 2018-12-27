@@ -94,6 +94,7 @@ class GlueApplicationFactory extends AbstractFactory
         return new RequestFormatter(
             $this->createRestRequestMetaDataExtractor(),
             $this->createRestRequestResourceExtractor(),
+            $this->getConfig(),
             $this->getFormatRequestPlugins()
         );
     }
@@ -312,10 +313,7 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createRestResponseRelationship(): ResponseRelationshipInterface
     {
-        return new ResponseRelationship(
-            $this->createRestResourceRelationshipLoader(),
-            $this->getConfig()
-        );
+        return new ResponseRelationship($this->createRestResourceRelationshipLoader());
     }
 
     /**

@@ -6,7 +6,6 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\Response;
 
-use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\ResourceRelationshipLoaderInterface;
 
@@ -23,20 +22,11 @@ class ResponseRelationship implements ResponseRelationshipInterface
     protected $alreadyLoadedResources = [];
 
     /**
-     * @var \Spryker\Glue\GlueApplication\GlueApplicationConfig
-     */
-    protected $glueApplicationConfig;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\ResourceRelationshipLoaderInterface $resourceRelationshipProviderLoader
-     * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $glueApplicationConfig
      */
-    public function __construct(
-        ResourceRelationshipLoaderInterface $resourceRelationshipProviderLoader,
-        GlueApplicationConfig $glueApplicationConfig
-    ) {
+    public function __construct(ResourceRelationshipLoaderInterface $resourceRelationshipProviderLoader)
+    {
         $this->resourceRelationshipProviderLoader = $resourceRelationshipProviderLoader;
-        $this->glueApplicationConfig = $glueApplicationConfig;
     }
 
     /**
@@ -80,10 +70,6 @@ class ResponseRelationship implements ResponseRelationshipInterface
      */
     public function processIncluded(array $resources, RestRequestInterface $restRequest): array
     {
-        if (!$restRequest->getInclude() && !$this->glueApplicationConfig->getIsEagerRelatedResourcesInclusionEnabled()) {
-            return [];
-        }
-
         $included = [];
         foreach ($resources as $resource) {
             $this->processRelationships($resource->getRelationships(), $restRequest, $included);
