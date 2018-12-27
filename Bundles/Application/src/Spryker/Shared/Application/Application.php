@@ -8,8 +8,8 @@
 namespace Spryker\Shared\Application;
 
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface;
-use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationExtensionInterface;
+use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
+use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernel;
@@ -19,14 +19,14 @@ use Symfony\Component\HttpKernel\TerminableInterface;
 class Application implements HttpKernelInterface, TerminableInterface
 {
     /**
-     * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface[]
+     * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
-    protected $extensions = [];
+    protected $plugins = [];
 
     /**
-     * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationExtensionInterface[]
+     * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface[]
      */
-    protected $bootableExtensions = [];
+    protected $bootablePlugins = [];
 
     /**
      * @var \Spryker\Service\Container\ContainerInterface
@@ -47,17 +47,17 @@ class Application implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * @param \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface $applicationExtension
+     * @param \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface $applicationPlugin
      *
      * @return $this
      */
-    public function registerApplicationExtension(ApplicationExtensionInterface $applicationExtension)
+    public function registerApplicationPlugin(ApplicationPluginInterface $applicationPlugin)
     {
-        $this->extensions[] = $applicationExtension;
-        $applicationExtension->provideExtension($this->container);
+        $this->plugins[] = $applicationPlugin;
+        $this->container = $applicationPlugin->providePlugin($this->container);
 
-        if ($applicationExtension instanceof BootableApplicationExtensionInterface) {
-            $this->bootableExtensions[] = $applicationExtension;
+        if ($applicationPlugin instanceof BootableApplicationPluginInterface) {
+            $this->bootablePlugins[] = $applicationPlugin;
         }
 
         return $this;
@@ -70,7 +70,7 @@ class Application implements HttpKernelInterface, TerminableInterface
     {
         if (!$this->booted) {
             $this->booted = true;
-            $this->bootExtensions();
+            $this->bootPlugins();
         }
 
         return $this;
@@ -120,10 +120,10 @@ class Application implements HttpKernelInterface, TerminableInterface
     /**
      * @return void
      */
-    protected function bootExtensions(): void
+    protected function bootPlugins(): void
     {
-        foreach ($this->bootableExtensions as $bootableExtension) {
-            $bootableExtension->bootExtension($this->container);
+        foreach ($this->bootablePlugins as $bootablePlugin) {
+            $this->container = $bootablePlugin->bootPlugin($this->container);
         }
     }
 
