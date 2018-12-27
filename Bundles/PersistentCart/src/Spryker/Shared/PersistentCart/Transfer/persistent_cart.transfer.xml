@@ -53,7 +53,7 @@
     </transfer>
 
     <transfer name="QuoteResponse">
-        <property name="isSuccessful" type="Customer"/>
+        <property name="isSuccessful" type="bool"/>
         <property name="quoteTransfer" type="Quote"/>
         <property name="customer" type="Customer"/>
     </transfer>
@@ -71,7 +71,7 @@
     </transfer>
 
     <transfer name="CartChange">
-        <property name="items" type="Item" singular="item"/>
+        <property name="items" type="Item[]" singular="item"/>
         <property name="quote" type="Quote"/>
     </transfer>
 

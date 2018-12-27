@@ -19,7 +19,7 @@
     </transfer>
 
     <transfer name="QuoteCollection">
-        <property name="quotes" type="Quote" singular="quote"/>
+        <property name="quotes" type="Quote[]" singular="quote"/>
     </transfer>
 
     <transfer name="QuoteCriteriaFilter">
