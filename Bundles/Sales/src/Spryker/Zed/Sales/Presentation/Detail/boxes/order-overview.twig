@@ -37,10 +37,6 @@
                     <p><b>{{ 'All orders of the customer' | trans }}:</b> ({{ order.totalOrderCount }})</p>
                  {% endif %}
             </div>
-            <div class="col-xs-12 col-md-4">
-                {{ render(controller('/sales/comment/list', {'request': app.request})) }}
-                {{ add_comments | raw }}
-            </div>
         </div>
 
     {% endblock %}
