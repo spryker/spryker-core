@@ -14,6 +14,19 @@ use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
 class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
 {
     /**
+     * @var \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperPluginInterface[]
+     */
+    protected $companyBusinessUnitMapperPlugins;
+
+    /**
+     * @param \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperPluginInterface[] $companyBusinessUnitMapperPlugins
+     */
+    public function __construct(array $companyBusinessUnitMapperPlugins)
+    {
+        $this->companyBusinessUnitMapperPlugins = $companyBusinessUnitMapperPlugins;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      * @param \Generated\Shared\Transfer\RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
      *
@@ -42,7 +55,14 @@ class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
         CompanyUserTransfer $companyUserTransfer,
         RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
     ): RestCompanyUserAttributesTransfer {
-        //TODO: inject and run plugins here.
+        foreach ($this->companyBusinessUnitMapperPlugins as $companyBusinessUnitMapperPlugin) {
+            $restCompanyUserAttributesTransfer->setCompanyBusinessUnit(
+                $companyBusinessUnitMapperPlugin->mapCompanyBusinessUnitAttributes(
+                    $companyUserTransfer->getCompanyBusinessUnit(),
+                    $restCompanyUserAttributesTransfer->getCompanyBusinessUnit()
+                )
+            );
+        }
 
         return $restCompanyUserAttributesTransfer;
     }

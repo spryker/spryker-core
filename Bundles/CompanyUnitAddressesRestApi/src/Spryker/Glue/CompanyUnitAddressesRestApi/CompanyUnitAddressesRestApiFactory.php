@@ -7,17 +7,17 @@
 
 namespace Spryker\Glue\CompanyUnitAddressesRestApi;
 
-use Spryker\Glue\CompanyUnitAddressesRestApi\Processor\Expander\CompanyUnitAddressExpander;
-use Spryker\Glue\CompanyUnitAddressesRestApi\Processor\Expander\CompanyUnitAddressExpanderInterface;
+use Spryker\Glue\CompanyUnitAddressesRestApi\Processor\Mapper\CompanyBusinessUnitAddressMapper;
+use Spryker\Glue\CompanyUnitAddressesRestApi\Processor\Mapper\CompanyBusinessUnitAddressMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CompanyUnitAddressesRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\CompanyUnitAddressesRestApi\Processor\Expander\CompanyUnitAddressExpanderInterface
+     * @return \Spryker\Glue\CompanyUnitAddressesRestApi\Processor\Mapper\CompanyBusinessUnitAddressMapperInterface
      */
-    public function createCompanyUnitAddressExpander(): CompanyUnitAddressExpanderInterface
+    public function createCompanyBusinessUnitAddressMapper(): CompanyBusinessUnitAddressMapperInterface
     {
-        return new CompanyUnitAddressExpander();
+        return new CompanyBusinessUnitAddressMapper();
     }
 }
