@@ -11,8 +11,8 @@ use Codeception\Test\Unit;
 use Spryker\Service\Container\Container;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Application\Application;
-use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface;
-use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationExtensionInterface;
+use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
+use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -30,14 +30,14 @@ class ApplicationTest extends Unit
     /**
      * @return void
      */
-    public function testApplicationRegisterApplicationExtension(): void
+    public function testApplicationRegisterApplicationPlugin(): void
     {
         //Arrange
         $container = $this->createContainer();
         $application = $this->createApplication($container);
 
         //Act
-        $application->registerApplicationExtension($this->createApplicationExtension());
+        $application->registerApplicationPlugin($this->createApplicationPlugin());
 
         //Assert
         $this->assertTrue($container->has(static::SERVICE));
@@ -46,14 +46,14 @@ class ApplicationTest extends Unit
     /**
      * @return void
      */
-    public function testApplicationRunBootableApplicationExtensions(): void
+    public function testApplicationRunBootableApplicationPlugins(): void
     {
         //Arrange
         $container = $this->createContainer();
         $application = $this->createApplication($container);
 
         //Act
-        $application->registerApplicationExtension($this->createBootableApplicationExtension());
+        $application->registerApplicationPlugin($this->createBootableApplicationPlugin());
         $application->boot();
 
         //Assert
@@ -63,15 +63,15 @@ class ApplicationTest extends Unit
     /**
      * @return void
      */
-    public function testApplicationRunsBootableApplicationExtensionsOnlyOnce(): void
+    public function testApplicationRunsBootableApplicationPluginsOnlyOnce(): void
     {
         //Arrange
         $container = $this->createContainer();
         $application = $this->createApplication($container);
-        $serviceProvider = $this->createBootableApplicationExtension();
+        $serviceProvider = $this->createBootableApplicationPlugin();
 
         //Act
-        $application->registerApplicationExtension($serviceProvider);
+        $application->registerApplicationPlugin($serviceProvider);
         $application->boot();
         $application->boot();
 
@@ -98,32 +98,34 @@ class ApplicationTest extends Unit
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface
      */
-    protected function createApplicationExtension(): ApplicationExtensionInterface
+    protected function createApplicationPlugin(): ApplicationPluginInterface
     {
-        return new class implements ApplicationExtensionInterface
+        return new class implements ApplicationPluginInterface
         {
             /**
              * @param \Spryker\Service\Container\ContainerInterface $container
              *
-             * @return void
+             * @return \Spryker\Service\Container\ContainerInterface
              */
-            public function provideExtension(ContainerInterface $container): void
+            public function providePlugin(ContainerInterface $container): ContainerInterface
             {
                 $container->set(ApplicationTest::SERVICE, function () {
                     return [ApplicationTest::SERVICE_PROPERTY => true];
                 });
+
+                return $container;
             }
         };
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface
      */
-    protected function createBootableApplicationExtension(): ApplicationExtensionInterface
+    protected function createBootableApplicationPlugin(): ApplicationPluginInterface
     {
-        return new class implements ApplicationExtensionInterface, BootableApplicationExtensionInterface
+        return new class implements ApplicationPluginInterface, BootableApplicationPluginInterface
         {
             /**
              * @var int
@@ -133,23 +135,26 @@ class ApplicationTest extends Unit
             /**
              * @param \Spryker\Service\Container\ContainerInterface $container
              *
-             * @return void
+             * @return \Spryker\Service\Container\ContainerInterface
              */
-            public function provideExtension(ContainerInterface $container): void
+            public function providePlugin(ContainerInterface $container): ContainerInterface
             {
+                return $container;
             }
 
             /**
              * @param \Spryker\Service\Container\ContainerInterface $container
              *
-             * @return void
+             * @return \Spryker\Service\Container\ContainerInterface
              */
-            public function bootExtension(ContainerInterface $container): void
+            public function bootPlugin(ContainerInterface $container): ContainerInterface
             {
                 $this->runs++;
                 $container->set(ApplicationTest::SERVICE, function () {
                     return [ApplicationTest::SERVICE_PROPERTY => true];
                 });
+
+                return $container;
             }
         };
     }

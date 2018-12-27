@@ -9,18 +9,18 @@ namespace Spryker\Shared\ApplicationExtension\Dependency\Plugin;
 
 use Spryker\Service\Container\ContainerInterface;
 
-interface ApplicationExtensionInterface
+interface ApplicationPluginInterface
 {
     /**
      * Specification:
-     * - Adds an ApplicationExtension to the application.
-     * - Do not use ContainerInterface::get() outside of a callback.
+     * - Adds an ApplicationPlugin to the application.
+     * - Do not use `ContainerInterface::get()` outside of a callback.
      *
      * @api
      *
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return void
+     * @return \Spryker\Service\Container\ContainerInterface
      */
-    public function provideExtension(ContainerInterface $container): void;
+    public function providePlugin(ContainerInterface $container): ContainerInterface;
 }

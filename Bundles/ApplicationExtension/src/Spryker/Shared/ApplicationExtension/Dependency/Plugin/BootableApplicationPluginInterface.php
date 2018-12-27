@@ -9,18 +9,18 @@ namespace Spryker\Shared\ApplicationExtension\Dependency\Plugin;
 
 use Spryker\Service\Container\ContainerInterface;
 
-interface BootableApplicationExtensionInterface
+interface BootableApplicationPluginInterface
 {
     /**
      * Specification:
-     * - Boots an ApplicationExtension.
+     * - Boots an ApplicationPlugin.
      * - This method is called after all services are registered and should be used for "dynamic" configuration.
      *
      * @api
      *
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return void
+     * @return \Spryker\Service\Container\ContainerInterface
      */
-    public function bootExtension(ContainerInterface $container): void;
+    public function bootPlugin(ContainerInterface $container): ContainerInterface;
 }
