@@ -45,6 +45,9 @@ class DiscountDataHelper extends Module
             $discountCalculatorTransfer->addMoneyValue($moneyValueTransfer);
         }
 
+        $discountConditionTransfer = $discountConfigurator->getDiscountCondition();
+        $discountConditionTransfer->setMinimumItemAmount(1);
+
         $this->debugSection('Discount', $discountConfigurator->toArray());
         $discountId = $discountFacade->saveDiscount($discountConfigurator);
         $this->debugSection('Discount Id', $discountId);
