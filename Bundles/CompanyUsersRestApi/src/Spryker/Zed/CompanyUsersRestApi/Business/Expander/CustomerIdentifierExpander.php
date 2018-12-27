@@ -18,7 +18,7 @@ class CustomerIdentifierExpander implements CustomerIdentifierExpanderInterface
      *
      * @return \Generated\Shared\Transfer\CustomerIdentifierTransfer
      */
-    public function expand(
+    public function expandCustomerIdentifier(
         CustomerIdentifierTransfer $customerIdentifierTransfer,
         CustomerTransfer $customerTransfer
     ): CustomerIdentifierTransfer {

@@ -15,7 +15,6 @@ use Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerI
 /**
  * @method \Spryker\Zed\CompanyUsersRestApi\Business\CompanyUsersRestApiFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyUsersRestApi\CompanyUsersRestApiConfig getConfig()
- * @method \Spryker\Zed\CompanyUsersRestApi\Communication\CompanyUsersRestApiCommunicationFactory getFactory()
  */
 class CompanyUserOauthCustomerIdentifierExpanderPlugin extends AbstractPlugin implements OauthCustomerIdentifierExpanderPluginInterface
 {
