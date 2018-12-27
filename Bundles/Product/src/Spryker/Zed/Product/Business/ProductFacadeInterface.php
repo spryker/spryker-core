@@ -839,4 +839,16 @@ interface ProductFacadeInterface
      * @return string
      */
     public function generateProductConcreteSku(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer): string;
+
+    /**
+     * Specification:
+     * - Returns concrete product transfers array by their product ids.
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteTransfersByProductIds(array $productIds): array;
 }
