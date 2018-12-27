@@ -7,6 +7,7 @@
 namespace SprykerTest\Glue\GlueApplication\Rest\Request;
 
 use Codeception\Test\Unit;
+use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -95,6 +96,7 @@ class RequestFormatterTest extends Unit
         return new RequestFormatter(
             $this->createRequestMetaDataExtractorMock(),
             new RequestResourceExtractor($restResourceBuilderMock, $this->createDecoderMatcherMock()),
+            new GlueApplicationConfig(),
             []
         );
     }
