@@ -47,7 +47,7 @@ class UuidEntityManager extends AbstractEntityManager implements UuidEntityManag
         } while ($entities->count());
 
         return (new UuidGeneratorReportTransfer())
-            ->setUuidGeneratorConfiguration($uuidGeneratorConfigurationTransfer)
+            ->setTable($uuidGeneratorConfigurationTransfer->getTable())
             ->setCount($count);
     }
 }

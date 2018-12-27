@@ -1,7 +1,6 @@
 parameters:
     ignoreErrors:
         - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\ModelCriteria::#'
-        - '#Parameter \#1 $tableName of method .+UtilUuidGeneratorFacadeInterface::generateUuids\(\) expects string, array<string>|bool|string|null given#'
 
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 

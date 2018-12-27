@@ -9,7 +9,7 @@
     </transfer>
 
     <transfer name="UuidGeneratorReport">
-        <property name="uuidGeneratorConfiguration" type="UuidGeneratorConfiguration"/>
+        <property name="table" type="string"/>
         <property name="count" type="int"/>
     </transfer>
 

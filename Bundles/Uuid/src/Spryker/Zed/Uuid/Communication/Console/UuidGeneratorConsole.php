@@ -68,7 +68,7 @@ class UuidGeneratorConsole extends Console
         return sprintf(
             static::SUCCESS_MESSAGE,
             $uuidGeneratorReportTransfer->getCount(),
-            $uuidGeneratorReportTransfer->getUuidGeneratorConfiguration()->getTable()
+            $uuidGeneratorReportTransfer->getTable()
         );
     }
 }

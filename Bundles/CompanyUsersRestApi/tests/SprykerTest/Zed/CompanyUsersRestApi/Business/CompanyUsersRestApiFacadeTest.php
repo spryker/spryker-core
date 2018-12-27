@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\CompanyUsersRestApi\Business;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 
@@ -39,12 +38,7 @@ class CompanyUsersRestApiFacadeTest extends Test
         $customerTransfer = $this->tester->haveCustomer();
         $companyTransfer = $this->tester->haveCompany();
 
-        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
-            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-        ]);
-
         $companyUserTransfer = $this->tester->haveCompanyUser([
-            CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
             CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
             CompanyUserTransfer::CUSTOMER => $customerTransfer,
         ]);

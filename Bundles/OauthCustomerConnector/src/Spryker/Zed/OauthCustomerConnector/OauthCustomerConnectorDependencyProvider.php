@@ -20,6 +20,7 @@ class OauthCustomerConnectorDependencyProvider extends AbstractBundleDependencyP
 {
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const FACADE_OAUTH = 'FACADE_OAUTH';
+
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     public const PLUGINS_OAUTH_CUSTOMER_IDENTIFIER_EXPANDER = 'PLUGINS_OAUTH_CUSTOMER_IDENTIFIER_EXPANDER';
@@ -88,7 +89,7 @@ class OauthCustomerConnectorDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addOauthCustomerIdentifierExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_OAUTH_CUSTOMER_IDENTIFIER_EXPANDER] = function (Container $container) {
+        $container[static::PLUGINS_OAUTH_CUSTOMER_IDENTIFIER_EXPANDER] = function () {
             return $this->getOauthCustomerIdentifierExpanderPlugins();
         };
 
