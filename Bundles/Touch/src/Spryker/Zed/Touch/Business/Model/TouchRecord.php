@@ -257,15 +257,14 @@ class TouchRecord implements TouchRecordInterface
         $deletedTouchEntitiesCount = 0;
         $propelBatchIterator = $this->getTouchIdsToRemovePropelBatchIterator($query);
 
-        $touchIdsToRemove = [];
+        $touchIdGroupsToRemove = [];
         foreach ($propelBatchIterator as $touchIdsToRemoveBatch) {
-            $touchIdsToRemove = array_merge(
-                $touchIdsToRemove,
-                $touchIdsToRemoveBatch->toArray()
-            );
+            $touchIdGroupsToRemove[] = $touchIdsToRemoveBatch->toArray();
         }
 
-        if (count($touchIdsToRemove) > 0) {
+        if (count($touchIdGroupsToRemove) > 0) {
+            $touchIdsToRemove = array_merge(...$touchIdGroupsToRemove);
+
             $deletedTouchEntitiesCount += $query
                 ->filterByIdTouch($touchIdsToRemove, Criteria::IN)
                 ->delete();
