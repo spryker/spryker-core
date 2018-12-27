@@ -168,7 +168,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    private function getValidBaseQuoteTransfer()
+    private function getValidBaseQuoteTransfer(): QuoteTransfer
     {
         $country = new SpyCountry();
         $country->setIso2Code('ix');
@@ -203,7 +203,7 @@ class SalesFacadeSaveOrderTest extends Unit
 
         $totals->setTaxTotal((new TaxTotalTransfer())->setAmount(10));
 
-        $quoteTransfer->setShippingAddress($shippingAddress)
+        $quoteTransfer
             ->setBillingAddress($billingAddress)
             ->setTotals($totals);
 
@@ -215,8 +215,9 @@ class SalesFacadeSaveOrderTest extends Unit
         $quoteTransfer->setCustomer($customerTransfer);
 
         $shipmentTransfer = new ShipmentTransfer();
-        $shipmentTransfer->setMethod(new ShipmentMethodTransfer());
-        $quoteTransfer->setShipment($shipmentTransfer);
+        $shipmentTransfer
+            ->setMethod(new ShipmentMethodTransfer())
+            ->setShippingAddress($shippingAddress);
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer
@@ -224,6 +225,7 @@ class SalesFacadeSaveOrderTest extends Unit
             ->setUnitGrossPrice(1)
             ->setSumGrossPrice(1)
             ->setQuantity(1)
+            ->setShipment($shipmentTransfer)
             ->setName('test-name')
             ->setSku('sku-test');
         $quoteTransfer->addItem($itemTransfer);
@@ -239,7 +241,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return void
      */
-    public function testSaveOrderCreatesShippingAddressAndAssignsItToOrder()
+    public function testSaveOrderCreatesShippingAddressAndAssignsItToOrder(): void
     {
         $salesOrderAddressQuery = SpySalesOrderAddressQuery::create()
             ->filterByAddress1('address-1-2-test')
@@ -253,9 +255,14 @@ class SalesFacadeSaveOrderTest extends Unit
 
         $addressEntity = $salesOrderAddressQuery->findOne();
 
+        $this->assertCount(1, $quoteTransfer->getItems());
         $this->assertNotNull($addressEntity);
-        $this->assertSame($addressEntity->getIdSalesOrderAddress(), $quoteTransfer->getShippingAddress()
-            ->getIdSalesOrderAddress());
+
+        $item = $quoteTransfer->getItems()[0];
+        $this->assertSame(
+            $addressEntity->getIdSalesOrderAddress(),
+            $item->getShipment()->getShippingAddress()->getIdSalesOrderAddress()
+        );
     }
 
     /**

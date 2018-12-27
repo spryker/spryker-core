@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -173,7 +174,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
      *
      * @return void
      */
-    protected function assertShipmentRequirements(QuoteTransfer $quoteTransfer)
+    protected function assertShipmentRequirements(QuoteTransfer $quoteTransfer): void
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->requireShipment();
@@ -194,10 +195,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         SpySalesOrder $salesOrderEntity,
         SaveOrderTransfer $saveOrderTransfer
     ) {
-        $salesOrderExpenseEntity = new SpySalesExpense();
-        $this->hydrateOrderExpenseEntity($salesOrderExpenseEntity, $shipmentGroupTransfer->getShipment()->getExpense());
-        $salesOrderExpenseEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
-        $salesOrderExpenseEntity->save();
+        $salesOrderExpenseEntity = $this->createSpySalesExpense($shipmentGroupTransfer->getShipment()->getExpense(), $salesOrderEntity->getIdSalesOrder());
 
         $shipmentGroupTransfer
             ->getShipment()
@@ -207,6 +205,22 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         $this->setCheckoutResponseExpenses($saveOrderTransfer, $shipmentGroupTransfer->getShipment()->getExpense(), $salesOrderExpenseEntity);
 
         $salesOrderEntity->addExpense($salesOrderExpenseEntity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpense
+     */
+    protected function createSpySalesExpense(ExpenseTransfer $expenseTransfer, int $idSalesOrder): SpySalesExpense
+    {
+        $salesOrderExpenseEntity = new SpySalesExpense();
+        $this->hydrateOrderExpenseEntity($salesOrderExpenseEntity, $expenseTransfer);
+        $salesOrderExpenseEntity->setFkSalesOrder($idSalesOrder);
+        $salesOrderExpenseEntity->save();
+
+        return $salesOrderExpenseEntity;
     }
 
     /**
