@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
+use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
+use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
@@ -107,9 +109,12 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface
      */
-    public function createCheckoutShipmentOrderSaver()
+    public function createCheckoutShipmentOrderSaver(): ShipmentOrderSaverInterface
     {
-        return new CheckoutShipmentOrderSaver($this->getSalesQueryContainer());
+        return new CheckoutShipmentOrderSaver(
+            $this->getSalesQueryContainer(),
+            $this->getShipmentService()
+        );
     }
 
     /**
@@ -158,5 +163,13 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     protected function getSalesQueryContainer()
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::QUERY_CONTAINER_SALES);
+    }
+
+    /**
+     * @return \Spryker\Service\Shipment\ShipmentServiceInterface
+     */
+    public function getShipmentService(): ShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::SERVICE_SHIPMENT);
     }
 }

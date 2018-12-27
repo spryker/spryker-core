@@ -14,7 +14,7 @@ interface ShipmentServiceInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransferTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
