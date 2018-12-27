@@ -16,9 +16,6 @@ class ReclamationWriter implements ReclamationWriterInterface
 {
     use TransactionTrait;
 
-    protected const RECLAMATION_STATE_OPEN = 'Open';
-    protected const RECLAMATION_STATE_CLOSE = 'Close';
-
     /**
      * @var \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface
      */
@@ -67,7 +64,7 @@ class ReclamationWriter implements ReclamationWriterInterface
     {
         $reclamationTransfer->requireIdSalesReclamation();
 
-        $reclamationTransfer->setState(static::RECLAMATION_STATE_CLOSE);
+        $reclamationTransfer->setIsOpen(true);
 
         return $this->salesReclamationEntityManager->saveReclamation($reclamationTransfer);
     }
@@ -105,7 +102,7 @@ class ReclamationWriter implements ReclamationWriterInterface
         $orderTransfer->setItems($reclamationCreateRequestTransfer->getOrderItems());
         $reclamationTransfer = $this->reclamationMapper
             ->mapOrderTransferToReclamationTransfer($orderTransfer, new ReclamationTransfer());
-        $reclamationTransfer->setState(static::RECLAMATION_STATE_OPEN);
+        $reclamationTransfer->setIsOpen(false);
         $reclamationTransfer = $this->salesReclamationEntityManager->saveReclamation($reclamationTransfer);
 
         foreach ($reclamationTransfer->getReclamationItems() as $reclamationItemTransfer) {

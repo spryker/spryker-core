@@ -8,7 +8,7 @@
         <property name="customerName" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="customerEmail" type="string"/>
-        <property name="state" type="string"/>
+        <property name="isOpen" type="bool"/>
         <property name="order" type="Order" />
         <property name="reclamationItems" type="ReclamationItem[]" singular="ReclamationItem" />
         <property name="createdOrders" type="Order[]" singular="Order" />
