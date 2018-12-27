@@ -83,7 +83,7 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements NamedPageMa
     protected function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
     {
         foreach ($this->getFactory()->getProductConcretePageMapExpanderPlugins() as $productConcretePageMapExpanderPlugin) {
-            $pageMapTransfer = $productConcretePageMapExpanderPlugin->expandProductPageMap($pageMapTransfer, $pageMapBuilder, $productData, $localeTransfer);
+            $pageMapTransfer = $productConcretePageMapExpanderPlugin->expand($pageMapTransfer, $pageMapBuilder, $productData, $localeTransfer);
         }
 
         return $pageMapTransfer;

@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductList\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGenerator;
 use Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface;
+use Spryker\Zed\ProductList\Business\ProductConcretePageSearchExpander\ProductConcretePageSearchExpander;
+use Spryker\Zed\ProductList\Business\ProductConcretePageSearchExpander\ProductConcretePageSearchExpanderInterface;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListReader;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface;
@@ -179,6 +181,14 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getUtilTextService()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductList\Business\ProductConcretePageSearchExpander\ProductConcretePageSearchExpanderInterface
+     */
+    public function createProductConcretePageSearchExpander(): ProductConcretePageSearchExpanderInterface
+    {
+        return new ProductConcretePageSearchExpander($this->createProductListReader());
     }
 
     /**
