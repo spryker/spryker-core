@@ -2,7 +2,7 @@
     {% block widget_content %}
         <div class="row">
             <div class="col-xs-12 col-md-4">
-                <p><b>{{ 'Reference' | trans }}:</b></p><p>{{ order.customerReference }}</p>
+                <p><b>{{ 'Reference' | trans }}:</b></p><p><a href="{{ url('/customer/view', {'id-customer': order.fkCustomer}) }}" target="_blank">{{ order.customerReference }}</a></p>
                 <p><b>{{ 'Name' | trans }}:</b></p><p>{{ order.firstName ~ ' ' ~ order.lastName }}</p>
                 <p><b>{{ 'Email' | trans }}:</b></p><p>{{ order.email }}</p>
                 <p><b>{{ 'Previous orders count' | trans }}:</b></p><p>{{ order.totalOrderCount }}</p>
