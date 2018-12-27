@@ -1,0 +1,26 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Order Items' } %}
+
+    {% block widget_content %}
+
+        <table class="footable table toggle-arrow-tiny" data-qa="order-item-list">
+            <thead>
+            <tr class="text-left">
+                <th><input type="checkbox" id="check-all-orders" /></th>
+                <th colspan="2">{{ 'Product' | trans }}</th>
+                <th>{{ 'Quantity' | trans }}</th>
+                <th>{{ 'Unit Price' | trans }} <small>({{ order.priceMode }})</small></th>
+                <th>{{ 'Item total' | trans }}</th>
+                <th>{{ 'State' | trans }}</th>
+                <th>{{ 'Trigger event' | trans }}</th>
+            </tr>
+            </thead>
+            {% if order.itemGroups is defined and order.itemGroups | length > 0 %}
+              {% embed '@Sales/Detail/boxes/item-group.twig' with {groups: order.itemGroups} %}{% endembed %}
+            {% else %}
+              {% embed '@Sales/Detail/boxes/no-group-items.twig' with {items: order.items} %}{% endembed %}
+            {% endif %}
+        </table>
+
+    {% endblock %}
+
+{% endembed %}

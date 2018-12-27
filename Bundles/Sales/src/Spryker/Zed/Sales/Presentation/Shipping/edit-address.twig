@@ -1,0 +1,29 @@
+{% extends '@Sales/Layout/layout.twig' %}
+
+{% set widget_title = 'Address details' %}
+{% block section_title 'Edit Address for Order: ' ~ idSalesOrder %}
+
+{% block action %}
+    {{ viewActionButton('/sales/detail/?id-sales-order=' ~ idSalesOrder, 'View Order' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Address Details' } %}
+
+
+        {% block widget_content %}
+
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+
+                <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+            {{ form_end(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+    <div id="items">{% include '@Sales/Shipping/boxes/items.twig' %}</div>
+
+{% endblock %}
