@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\ProductOption\Business\Calculator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
-use \ArrayObject;
 
 class ProductOptionTaxRateCalculator implements CalculatorInterface
 {
@@ -194,7 +194,11 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
             ->find();
 
         foreach ($foundResults as $data) {
-            $key = $this->getTaxGroupedKey($data[ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE], $data[SpyCountryTableMap::COL_ISO2_CODE]);
+            $key = $this->getTaxGroupedKey(
+                $data[ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE],
+                $data[SpyCountryTableMap::COL_ISO2_CODE]
+            );
+
             $groupedResults[$key] = $data[ProductOptionQueryContainer::COL_MAX_TAX_RATE];
         }
 

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Customer\Business;
 
 use Spryker\Zed\Customer\Business\Anonymizer\CustomerAnonymizer;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver;
+use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Customer\CustomerReader;
@@ -123,17 +124,25 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Customer\Business\Model\CustomerOrderSaverInterface
      */
-    public function createCustomerOrderSaver()
+    public function createCustomerOrderSaver(): CustomerOrderSaverInterface
     {
-        return new ObsoleteCustomerOrderSaver($this->createCustomer(), $this->createAddress());
+        return new ObsoleteCustomerOrderSaver(
+            $this->createCustomer(),
+            $this->createAddress(),
+            $this->getQueryContainer()
+        );
     }
 
     /**
      * @return \Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface
      */
-    public function createCheckoutCustomerOrderSaver()
+    public function createCheckoutCustomerOrderSaver(): CustomerOrderSaverInterface
     {
-        return new CustomerOrderSaver($this->createCustomer(), $this->createAddress());
+        return new CustomerOrderSaver(
+            $this->createCustomer(),
+            $this->createAddress(),
+            $this->getQueryContainer()
+        );
     }
 
     /**

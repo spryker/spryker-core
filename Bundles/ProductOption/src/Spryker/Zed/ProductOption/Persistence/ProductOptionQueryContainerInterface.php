@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 
 interface ProductOptionQueryContainerInterface
 {

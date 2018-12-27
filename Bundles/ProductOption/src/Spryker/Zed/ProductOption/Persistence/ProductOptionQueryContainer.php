@@ -18,7 +18,6 @@ use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTa
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use PDO;

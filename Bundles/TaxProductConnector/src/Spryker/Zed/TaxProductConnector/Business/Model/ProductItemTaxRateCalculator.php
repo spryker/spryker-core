@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\TaxProductConnector\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
@@ -14,7 +15,6 @@ use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
-use \ArrayObject;
 
 class ProductItemTaxRateCalculator implements CalculatorInterface
 {
@@ -146,7 +146,6 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
 
         return $groupedResults;
     }
-
 
     /**
      * @param string[] $countryIso2CodesByIdProductAbstracts

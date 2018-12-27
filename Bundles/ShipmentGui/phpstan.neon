@@ -1,10 +1,6 @@
 parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
-    ignoreErrors:
-    - '#Call to an undefined method .+Criteria::.+\(\).#'
-    - '#Cannot access offset .+ on .+SpyShipmentMethod#'
-
 services:
     -
         class: PhpStan\DynamicType\FacadeDynamicTypeExtension
