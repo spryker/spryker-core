@@ -82,11 +82,11 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return string[]
      */
-    protected function getIdProductOptionValues(array $itemTransfers): array
+    protected function getIdProductOptionValues(ArrayObject $itemTransfers): array
     {
         $idProductOptionValues = [];
 
