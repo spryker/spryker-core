@@ -15,7 +15,6 @@ interface UuidFacadeInterface
     /**
      * Specification:
      * - Generates and fills uuid field for records where this field is null.
-     * - Returns count of updated records.
      *
      * @api
      *

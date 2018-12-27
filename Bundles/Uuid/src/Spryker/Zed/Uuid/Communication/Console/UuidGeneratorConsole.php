@@ -26,7 +26,7 @@ class UuidGeneratorConsole extends Console
 
     protected const ARGUMENT_MODULE = 'module';
     protected const ARGUMENT_TABLE = 'table';
-    protected const SUCCESS_MESSAGE = 'UUID was generated for %d records in %s table.';
+    protected const SUCCESS_MESSAGE = 'Uuid was generated for %d records in %s table.';
 
     /**
      * @return void
@@ -39,8 +39,8 @@ class UuidGeneratorConsole extends Console
             ->setDescription(static::COMMAND_DESCRIPTION)
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>');
 
-        $this->addArgument(static::ARGUMENT_MODULE, InputArgument::REQUIRED, 'Module name, e.g. `Wishlist`, `Tax`, etc.');
-        $this->addArgument(static::ARGUMENT_TABLE, InputArgument::REQUIRED, 'Database table name, e.g. `spy_wishlist`, `spy_tax_set`, etc.');
+        $this->addArgument(static::ARGUMENT_MODULE, InputArgument::REQUIRED, 'Name of the module that defines the database table, e.g. "Wishlist".');
+        $this->addArgument(static::ARGUMENT_TABLE, InputArgument::REQUIRED, 'Database table name, e.g. "spy_wishlist".');
     }
 
     /**
