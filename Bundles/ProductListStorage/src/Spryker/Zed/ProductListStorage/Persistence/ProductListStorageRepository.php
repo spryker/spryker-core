@@ -177,7 +177,7 @@ class ProductListStorageRepository extends AbstractRepository implements Product
      */
     public function getProductListWhitelistEnumValue(): int
     {
-        return $this->getProductListEnumValue(SpyProductListTableMap::COL_TYPE_WHITELIST);
+        return $this->getProductListTypeEnumValueByTypeName(SpyProductListTableMap::COL_TYPE_WHITELIST);
     }
 
     /**
@@ -185,7 +185,7 @@ class ProductListStorageRepository extends AbstractRepository implements Product
      */
     public function getProductListBlacklistEnumValue(): int
     {
-        return $this->getProductListEnumValue(SpyProductListTableMap::COL_TYPE_BLACKLIST);
+        return $this->getProductListTypeEnumValueByTypeName(SpyProductListTableMap::COL_TYPE_BLACKLIST);
     }
 
     /**
@@ -193,7 +193,7 @@ class ProductListStorageRepository extends AbstractRepository implements Product
      *
      * @return int
      */
-    protected function getProductListEnumValue(string $type): int
+    protected function getProductListTypeEnumValueByTypeName(string $type): int
     {
         $enumForType = array_flip(SpyProductListTableMap::getValueSet(SpyProductListTableMap::COL_TYPE));
 

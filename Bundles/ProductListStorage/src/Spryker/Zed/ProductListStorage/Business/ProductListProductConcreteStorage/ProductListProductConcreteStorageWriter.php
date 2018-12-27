@@ -51,7 +51,7 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
      */
     public function publish(array $productConcreteIds): void
     {
-        $productLists = $this->productListFacade->getProductListsIdsByIdProductIn($productConcreteIds);
+        $productLists = $this->productListFacade->getProductListsIdsByProductIds($productConcreteIds);
 
         $productConcreteProductListStorageEntities = $this->findProductConcreteProductListStorageEntities($productConcreteIds);
         $indexedProductConcreteProductListStorageEntities = $this->indexProductConcreteProductListStorageEntities($productConcreteProductListStorageEntities);

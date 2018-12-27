@@ -93,23 +93,9 @@ interface ProductListRepositoryInterface
     /**
      * @param int[] $productIds
      *
-     * @return int[]
-     */
-    public function getProductAbstractIdsByProductIds(array $productIds): array;
-
-    /**
-     * @param int[] $productIds
-     *
      * @return array
      */
     public function getProductListIdsByProductIds(array $productIds): array;
-
-    /**
-     * @param int[] $productAbstractIds
-     *
-     * @return array
-     */
-    public function getProductConcreteCountByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * @param int[] $productAbstractIds

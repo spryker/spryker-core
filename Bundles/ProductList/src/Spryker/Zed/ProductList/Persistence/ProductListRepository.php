@@ -135,24 +135,6 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     /**
      * @param int[] $productIds
      *
-     * @return int[]
-     */
-    public function getProductAbstractIdsByProductIds(array $productIds): array
-    {
-        /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
-        $productQuery = $this->getFactory()
-            ->getProductQuery()
-            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_ID_PRODUCT]);
-
-        return $productQuery
-            ->filterByIdProduct_In($productIds)
-            ->find()
-            ->toKeyValue(SpyProductTableMap::COL_ID_PRODUCT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
-    }
-
-    /**
-     * @param int[] $productIds
-     *
      * @return array
      */
     public function getProductListIdsByProductIds(array $productIds): array
@@ -440,28 +422,6 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
                 $this->getProductAbstractIdsRelatedToCategories($productListIds)
             )
         );
-    }
-
-    /**
-     * @param int[] $productAbstractIds
-     *
-     * @return array
-     */
-    public function getProductConcreteCountByProductAbstractIds(array $productAbstractIds): array
-    {
-        return $this->getFactory()
-            ->getProductQuery()
-            ->addAsColumn(static::COL_CONCRETE_PRODUCT_COUNT, sprintf('COUNT(%s)', SpyProductTableMap::COL_ID_PRODUCT))
-            ->addAsColumn(static::COL_ID_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
-            ->select([
-                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-            ])
-            ->filterByFkProductAbstract_In($productAbstractIds)
-            ->groupBy([
-                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-            ])
-            ->find()
-            ->toArray(static::COL_ID_PRODUCT_ABSTRACT);
     }
 
     /**

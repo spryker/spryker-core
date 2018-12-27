@@ -14,6 +14,7 @@ use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Spryker\Zed\ProductList\Business\ProductListCategoryRelation\ProductListCategoryRelationReaderInterface;
 use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationReaderInterface;
+use Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface;
 use Spryker\Zed\ProductList\Persistence\ProductListRepository;
 use Spryker\Zed\ProductList\Persistence\ProductListRepositoryInterface;
 
@@ -35,18 +36,26 @@ class ProductListReader implements ProductListReaderInterface
     private $productListProductConcreteRelationReader;
 
     /**
+     * @var \Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface
+     */
+    protected $productFacade;
+
+    /**
      * @param \Spryker\Zed\ProductList\Persistence\ProductListRepositoryInterface $productListRepository
      * @param \Spryker\Zed\ProductList\Business\ProductListCategoryRelation\ProductListCategoryRelationReaderInterface $productListCategoryRelationReader
      * @param \Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationReaderInterface $productListProductConcreteRelationReader
+     * @param \Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface $productFacade
      */
     public function __construct(
         ProductListRepositoryInterface $productListRepository,
         ProductListCategoryRelationReaderInterface $productListCategoryRelationReader,
-        ProductListProductConcreteRelationReaderInterface $productListProductConcreteRelationReader
+        ProductListProductConcreteRelationReaderInterface $productListProductConcreteRelationReader,
+        ProductListToProductFacadeInterface $productFacade
     ) {
         $this->productListRepository = $productListRepository;
         $this->productListCategoryRelationReader = $productListCategoryRelationReader;
         $this->productListProductConcreteRelationReader = $productListProductConcreteRelationReader;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -66,8 +75,7 @@ class ProductListReader implements ProductListReaderInterface
      */
     public function getProductListsByProductIds(array $productIds): array
     {
-        $concreteToAbstractMap = $this->productListRepository
-            ->getProductAbstractIdsByProductIds($productIds);
+        $concreteToAbstractMap = $this->productFacade->getProductConcreteIdsByAbstractProductIds($productIds);
 
         $productConcreteLists = $this->mapProductListIdsByIdProductConcreteAndType(
             $this->productListRepository->getProductListIdsByProductIds($productIds)
@@ -173,7 +181,7 @@ class ProductListReader implements ProductListReaderInterface
 
             return $this->isEveryConcreteProductInList(
                 $item,
-                $productConcreteCountByProductAbstractIds[$idProductAbstract][ProductListRepository::COL_CONCRETE_PRODUCT_COUNT]
+                $productConcreteCountByProductAbstractIds[$idProductAbstract]
             );
         });
     }
@@ -216,7 +224,7 @@ class ProductListReader implements ProductListReaderInterface
      */
     protected function getProductConcreteCountByProductAbstractIds(array $productAbstractIds): array
     {
-        return $this->productListRepository->getProductConcreteCountByProductAbstractIds($productAbstractIds);
+        return $this->productFacade->getProductConcreteCountByProductAbstractIds($productAbstractIds);
     }
 
     /**

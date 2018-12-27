@@ -20,6 +20,13 @@ interface ProductConcreteManagerInterface
     public function hasProductConcrete($sku);
 
     /**
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteCountByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @throws \Exception
@@ -96,6 +103,13 @@ interface ProductConcreteManagerInterface
      * @return int[]
      */
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByAbstractProductIds(array $productAbstractIds): array;
 
     /**
      * @param int $idProductConcrete

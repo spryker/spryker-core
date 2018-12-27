@@ -51,7 +51,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      */
     public function publish(array $productAbstractIds): void
     {
-        $productLists = $this->productListFacade->getProductAbstractListsIdsByIdProductAbstractIn($productAbstractIds);
+        $productLists = $this->productListFacade->getProductAbstractListsIdsByProductAbstractIds($productAbstractIds);
 
         $productAbstractProductListStorageEntities = $this->findProductAbstractProductListStorageEntities($productAbstractIds);
         $indexedProductAbstractProductListStorageEntities = $this->indexProductAbstractProductListStorageEntities($productAbstractProductListStorageEntities);

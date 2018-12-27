@@ -106,6 +106,16 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteCountByProductAbstractIds(array $productAbstractIds): array
+    {
+        return $this->productRepository->getProductConcreteCountByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return int
@@ -326,6 +336,16 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
     {
         return $this->productRepository->findProductConcreteIdsByAbstractProductId($idProductAbstract);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByAbstractProductIds(array $productAbstractIds): array
+    {
+        return $this->productRepository->getProductAbstractIdsByProductConcreteIds($productAbstractIds);
     }
 
     /**

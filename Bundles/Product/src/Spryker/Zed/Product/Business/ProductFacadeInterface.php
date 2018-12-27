@@ -225,16 +225,16 @@ interface ProductFacadeInterface
      */
     public function findProductConcreteIdBySku($sku);
 
-   /**
-    * Specification:
-    * - Returns concrete products transfers filtered by skus.
-    *
-    * @api
-    *
-    * @param string[] $skus
-    *
-    * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
-    */
+    /**
+     * Specification:
+     * - Returns concrete products transfers filtered by skus.
+     *
+     * @api
+     *
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
     public function findProductConcretesBySkus(array $skus): array;
 
     /**
@@ -775,6 +775,32 @@ interface ProductFacadeInterface
      * @return int[]
      */
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
+
+    /**
+     * Specification:
+     * - Returns product concrete ids by each product abstract id.
+     * - Keys are product concrete ids. Values are product abstract ids.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByAbstractProductIds(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Returns product concrete count for each product abstract id.
+     * - Keys are product abstract ids. Values are related products counts.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteCountByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * Specification:

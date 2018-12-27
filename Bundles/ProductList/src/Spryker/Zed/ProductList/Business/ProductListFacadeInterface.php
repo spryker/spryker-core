@@ -63,8 +63,8 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product lists for product abstract ids and its categories.
-     *  - Return format is: [idProductAbstract => [type => [idProductList...]].
+     * - Retrieves product lists for product abstract ids and its categories.
+     * - Returns product list where keys are product abstract IDs, values are arrays with product list ids by type.
      *
      * @api
      *
@@ -72,22 +72,22 @@ interface ProductListFacadeInterface
      *
      * @return array
      */
-    public function getProductAbstractListsIdsByIdProductAbstractIn(array $productAbstractIds): array;
+    public function getProductAbstractListsIdsByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * Specification:
-     *  - Retrieves product lists for product ids and its abstract products.
-     *  - Returns product list where keys are product concrete IDs, values are arrays with product list ids by type.
+     * - Retrieves product lists for product ids and its abstract products.
+     * - Returns product list where keys are product concrete IDs, values are arrays with product list ids by type.
      *
-     * Example [1 => ['blacklist' => [3]].
+     * Example [1 => [0 => [3]].
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param int[] $productIds
      *
      * @return array
      */
-    public function getProductListsIdsByIdProductIn(array $productConcreteIds): array;
+    public function getProductListsIdsByProductIds(array $productIds): array;
 
     /**
      * Specification:

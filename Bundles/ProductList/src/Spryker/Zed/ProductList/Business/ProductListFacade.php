@@ -83,8 +83,6 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * @deprecated Use ProductListFacade::getProductWhitelistIdsByIdProductAbstract() instead.
-     *
      * {@inheritdoc}
      *
      * @api
@@ -93,7 +91,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @return array
      */
-    public function getProductAbstractListsIdsByIdProductAbstractIn(array $productAbstractIds): array
+    public function getProductAbstractListsIdsByProductAbstractIds(array $productAbstractIds): array
     {
         return $this->getFactory()
             ->createProductListReader()
@@ -105,18 +103,20 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param int[] $productIds
      *
      * @return array
      */
-    public function getProductListsIdsByIdProductIn(array $productConcreteIds): array
+    public function getProductListsIdsByProductIds(array $productIds): array
     {
         return $this->getFactory()
             ->createProductListReader()
-            ->getProductListsByProductIds($productConcreteIds);
+            ->getProductListsByProductIds($productIds);
     }
 
     /**
+     * @deprecated Use ProductListFacade::getProductWhitelistIdsByIdProductAbstract() instead.
+     *
      * {@inheritdoc}
      *
      * @api

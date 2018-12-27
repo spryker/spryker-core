@@ -30,7 +30,7 @@ class ProductListDataLoaderPlugin extends AbstractPlugin implements ProductPageD
     {
         $productList = $this->getFactory()
             ->getProductListFacade()
-            ->getProductAbstractListsIdsByIdProductAbstractIn($loadTransfer->getProductAbstractIds());
+            ->getProductAbstractListsIdsByProductAbstractIds($loadTransfer->getProductAbstractIds());
 
         $updatedPayloadTransfers = $this->updatePayloadTransfers(
             $loadTransfer->getPayloadTransfers(),
