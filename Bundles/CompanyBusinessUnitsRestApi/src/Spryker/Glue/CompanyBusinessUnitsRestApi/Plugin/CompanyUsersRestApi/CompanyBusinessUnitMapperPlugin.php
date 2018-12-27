@@ -9,13 +9,13 @@ namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Plugin\CompanyUsersRestApi;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
-use Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceMapperPluginInterface;
+use Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUserAttributesMapperPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Glue\CompanyBusinessUnitsRestApi\CompanyBusinessUnitsRestApiFactory getFactory()
  */
-class CompanyBusinessUnitMapperPlugin extends AbstractPlugin implements CompanyUsersResourceMapperPluginInterface
+class CompanyBusinessUnitMapperPlugin extends AbstractPlugin implements CompanyUserAttributesMapperPluginInterface
 {
     /**
      * {@inheritdoc}

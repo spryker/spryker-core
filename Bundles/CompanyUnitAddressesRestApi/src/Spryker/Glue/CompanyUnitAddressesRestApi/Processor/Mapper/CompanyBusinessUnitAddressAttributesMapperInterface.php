@@ -5,24 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyUnitAddressesRestApi\Plugin\CompanyUsersRestApi;
+namespace Spryker\Glue\CompanyUnitAddressesRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
-use Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperPluginInterface;
-use Spryker\Glue\Kernel\AbstractPlugin;
 
-/**
- * @method \Spryker\Glue\CompanyUnitAddressesRestApi\CompanyUnitAddressesRestApiFactory getFactory()
- */
-class CompanyBusinessUnitAddressMapperPlugin extends AbstractPlugin implements CompanyBusinessUnitMapperPluginInterface
+interface CompanyBusinessUnitAddressAttributesMapperInterface
 {
     /**
-     * {@inheritdoc}
-     * - Maps the Business unit addresses to RestBusinessUnitAttributesTransfer.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
      *
@@ -31,8 +21,5 @@ class CompanyBusinessUnitAddressMapperPlugin extends AbstractPlugin implements C
     public function mapCompanyBusinessUnitAttributes(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
         RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
-    ): RestCompanyBusinessUnitAttributesTransfer {
-        return $this->getFactory()->createCompanyBusinessUnitAddressMapper()
-            ->mapCompanyBusinessUnitAttributes($companyBusinessUnitTransfer, $restCompanyBusinessUnitAttributesTransfer);
-    }
+    ): RestCompanyBusinessUnitAttributesTransfer;
 }

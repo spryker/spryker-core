@@ -18,14 +18,14 @@ class CompanyBusinessUnitsRestApiFactory extends AbstractFactory
      */
     public function createCompanyBusinessUnitMapper(): CompanyBusinessUnitMapperInterface
     {
-        return new CompanyBusinessUnitMapper($this->getCompanyBusinessUnitMapperPlugins());
+        return new CompanyBusinessUnitMapper($this->getCompanyBusinessUnitAttributesMapperPlugins());
     }
 
     /**
-     * @return \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperPluginInterface[]
+     * @return \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitAttributesMapperPluginInterface[]
      */
-    public function getCompanyBusinessUnitMapperPlugins(): array
+    public function getCompanyBusinessUnitAttributesMapperPlugins(): array
     {
-        return $this->getProvidedDependency(CompanyBusinessUnitsRestApiDependencyProvider::PLUGINS_COMPANY_BUSINESS_UNIT_MAPPER);
+        return $this->getProvidedDependency(CompanyBusinessUnitsRestApiDependencyProvider::PLUGINS_COMPANY_BUSINESS_UNIT_ATTRIBUTES_MAPPER);
     }
 }

@@ -17,7 +17,7 @@ use Spryker\Glue\Kernel\Container;
 class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
-    public const PLUGINS_COMPANY_USERS_RESOURCE_MAPPER = 'PLUGINS_COMPANY_USERS_RESOURCE_MAPPER';
+    public const PLUGINS_COMPANY_USER_ATTRIBUTES_MAPPER = 'PLUGINS_COMPANY_USER_ATTRIBUTES_MAPPER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -28,7 +28,7 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::provideDependencies($container);
         $container = $this->addCompanyUserClient($container);
-        $container = $this->addCompanyUsersResourceMapperPlugins($container);
+        $container = $this->addCompanyUserAttributesMapperPlugins($container);
 
         return $container;
     }
@@ -52,19 +52,19 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addCompanyUsersResourceMapperPlugins(Container $container): Container
+    protected function addCompanyUserAttributesMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USERS_RESOURCE_MAPPER] = function (Container $container) {
-            return $this->getCompanyUsersResourceMapperPlugins();
+        $container[static::PLUGINS_COMPANY_USER_ATTRIBUTES_MAPPER] = function (Container $container) {
+            return $this->getCompanyUserAttributesMapperPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceMapperPluginInterface[]
+     * @return \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUserAttributesMapperPluginInterface[]
      */
-    protected function getCompanyUsersResourceMapperPlugins(): array
+    protected function getCompanyUserAttributesMapperPlugins(): array
     {
         return [];
     }

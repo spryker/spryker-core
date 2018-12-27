@@ -9,17 +9,17 @@ namespace Spryker\Glue\CompanyRolesRestApi\Plugin\CompanyUsersRestApi;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
-use Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceMapperPluginInterface;
+use Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUserAttributesMapperPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiFactory getFactory()
  */
-class CompanyRoleMapperPlugin extends AbstractPlugin implements CompanyUsersResourceMapperPluginInterface
+class CompanyRoleMapperPlugin extends AbstractPlugin implements CompanyUserAttributesMapperPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Expands RestCompanyUserAttributesTransfer with company roles.
+     * - Maps Company Roles to RestCompanyUserAttributesTransfer.
      *
      * @api
      *

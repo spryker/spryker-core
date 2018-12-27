@@ -10,7 +10,7 @@ namespace Spryker\Glue\CompanyUsersRestApi\Processor\Mapper;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
 
-interface CompanyUserResourceMapperInterface
+interface CompanyUserMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer

@@ -10,8 +10,8 @@ namespace Spryker\Glue\CompanyUsersRestApi;
 use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReader;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReaderInterface;
-use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapper;
-use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapperInterface;
+use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapper;
+use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CompanyUsersRestApiFactory extends AbstractFactory
@@ -24,16 +24,16 @@ class CompanyUsersRestApiFactory extends AbstractFactory
         return new CompanyUserReader(
             $this->getCompanyUserClient(),
             $this->getResourceBuilder(),
-            $this->createCompanyUserResourceMapper()
+            $this->createCompanyUserMapper()
         );
     }
 
     /**
-     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapperInterface
+     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface
      */
-    public function createCompanyUserResourceMapper(): CompanyUserResourceMapperInterface
+    public function createCompanyUserMapper(): CompanyUserMapperInterface
     {
-        return new CompanyUserResourceMapper($this->getCompanyUsersResourceMapperPlugin());
+        return new CompanyUserMapper($this->getCompanyUserAttributesMapperPlugin());
     }
 
     /**
@@ -45,10 +45,10 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceMapperPluginInterface[]
+     * @return \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUserAttributesMapperPluginInterface[]
      */
-    protected function getCompanyUsersResourceMapperPlugin(): array
+    protected function getCompanyUserAttributesMapperPlugin(): array
     {
-        return $this->getProvidedDependency(CompanyUsersRestApiDependencyProvider::PLUGINS_COMPANY_USERS_RESOURCE_MAPPER);
+        return $this->getProvidedDependency(CompanyUsersRestApiDependencyProvider::PLUGINS_COMPANY_USER_ATTRIBUTES_MAPPER);
     }
 }

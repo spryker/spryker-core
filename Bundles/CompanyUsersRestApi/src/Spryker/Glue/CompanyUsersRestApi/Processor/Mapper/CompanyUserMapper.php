@@ -10,19 +10,19 @@ namespace Spryker\Glue\CompanyUsersRestApi\Processor\Mapper;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
 
-class CompanyUserResourceMapper implements CompanyUserResourceMapperInterface
+class CompanyUserMapper implements CompanyUserMapperInterface
 {
     /**
-     * @var \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceMapperPluginInterface[]
+     * @var \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUserAttributesMapperPluginInterface[]
      */
-    protected $companyUsersResourceMapperPlugins;
+    protected $companyUserAttributesMapperPlugins;
 
     /**
-     * @param \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUsersResourceMapperPluginInterface[] $companyUsersResourceMapperPlugins
+     * @param \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUserAttributesMapperPluginInterface[] $companyUserAttributesMapperPlugins
      */
-    public function __construct(array $companyUsersResourceMapperPlugins)
+    public function __construct(array $companyUserAttributesMapperPlugins)
     {
-        $this->companyUsersResourceMapperPlugins = $companyUsersResourceMapperPlugins;
+        $this->companyUserAttributesMapperPlugins = $companyUserAttributesMapperPlugins;
     }
 
     /**
@@ -56,8 +56,8 @@ class CompanyUserResourceMapper implements CompanyUserResourceMapperInterface
         RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer,
         CompanyUserTransfer $companyUserTransfer
     ): RestCompanyUserAttributesTransfer {
-        foreach ($this->companyUsersResourceMapperPlugins as $companyUsersResourceMapperPlugin) {
-            $restCompanyUserAttributesTransfer = $companyUsersResourceMapperPlugin->mapCompanyUserAttributes(
+        foreach ($this->companyUserAttributesMapperPlugins as $companyUserAttributesMapperPlugin) {
+            $restCompanyUserAttributesTransfer = $companyUserAttributesMapperPlugin->mapCompanyUserAttributes(
                 $companyUserTransfer,
                 $restCompanyUserAttributesTransfer
             );

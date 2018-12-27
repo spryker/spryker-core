@@ -10,11 +10,11 @@ namespace Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
 
-interface CompanyUsersResourceMapperPluginInterface
+interface CompanyUserAttributesMapperPluginInterface
 {
     /**
      * Specification:
-     * - Expands the RestCompanyUserAttributesTransfer with additional data.
+     * - Maps Company user data to RestCompanyUserAttributesTransfer.
      *
      * @api
      *

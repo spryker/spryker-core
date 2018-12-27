@@ -14,16 +14,16 @@ use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
 class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
 {
     /**
-     * @var \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperPluginInterface[]
+     * @var \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitAttributesMapperPluginInterface[]
      */
-    protected $companyBusinessUnitMapperPlugins;
+    protected $companyBusinessUnitAttributesMapperPlugins;
 
     /**
-     * @param \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperPluginInterface[] $companyBusinessUnitMapperPlugins
+     * @param \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitAttributesMapperPluginInterface[] $companyBusinessUnitAttributesMapperPlugins
      */
-    public function __construct(array $companyBusinessUnitMapperPlugins)
+    public function __construct(array $companyBusinessUnitAttributesMapperPlugins)
     {
-        $this->companyBusinessUnitMapperPlugins = $companyBusinessUnitMapperPlugins;
+        $this->companyBusinessUnitAttributesMapperPlugins = $companyBusinessUnitAttributesMapperPlugins;
     }
 
     /**
@@ -55,9 +55,9 @@ class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
         CompanyUserTransfer $companyUserTransfer,
         RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
     ): RestCompanyUserAttributesTransfer {
-        foreach ($this->companyBusinessUnitMapperPlugins as $companyBusinessUnitMapperPlugin) {
+        foreach ($this->companyBusinessUnitAttributesMapperPlugins as $companyBusinessUnitAttributesMapperPlugin) {
             $restCompanyUserAttributesTransfer->setCompanyBusinessUnit(
-                $companyBusinessUnitMapperPlugin->mapCompanyBusinessUnitAttributes(
+                $companyBusinessUnitAttributesMapperPlugin->mapCompanyBusinessUnitAttributes(
                     $companyUserTransfer->getCompanyBusinessUnit(),
                     $restCompanyUserAttributesTransfer->getCompanyBusinessUnit()
                 )

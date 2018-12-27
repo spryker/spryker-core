@@ -5,14 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyUnitAddressesRestApi\Processor\Mapper;
+namespace Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
 
-interface CompanyBusinessUnitAddressMapperInterface
+interface CompanyBusinessUnitAttributesMapperPluginInterface
 {
     /**
+     * Specification:
+     * - Maps CompanyBusinessUnitTransfer to RestCompanyBusinessUnitAttributes.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
      *

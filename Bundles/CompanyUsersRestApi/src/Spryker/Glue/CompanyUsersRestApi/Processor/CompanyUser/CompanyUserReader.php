@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
 use Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig;
 use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface;
-use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapperInterface;
+use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -30,23 +30,23 @@ class CompanyUserReader implements CompanyUserReaderInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapperInterface
+     * @var \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface
      */
-    protected $companyUserResourceMapper;
+    protected $companyUserMapper;
 
     /**
      * @param \Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface $companyUserClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserResourceMapperInterface $companyUserResourceMapper
+     * @param \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface $companyUserMapper
      */
     public function __construct(
         CompanyUsersRestApiToCompanyUserClientInterface $companyUserClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        CompanyUserResourceMapperInterface $companyUserResourceMapper
+        CompanyUserMapperInterface $companyUserMapper
     ) {
         $this->companyUserClient = $companyUserClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->companyUserResourceMapper = $companyUserResourceMapper;
+        $this->companyUserMapper = $companyUserMapper;
     }
 
     /**
@@ -71,7 +71,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUserTransfer) {
-            $restCompanyUserAttributesTransfer = $this->companyUserResourceMapper
+            $restCompanyUserAttributesTransfer = $this->companyUserMapper
                 ->mapCompanyUserTransferToRestCompanyUserAttributesTransfer($companyUserTransfer, new RestCompanyUserAttributesTransfer());
 
             $restResource = $this->restResourceBuilder->createRestResource(

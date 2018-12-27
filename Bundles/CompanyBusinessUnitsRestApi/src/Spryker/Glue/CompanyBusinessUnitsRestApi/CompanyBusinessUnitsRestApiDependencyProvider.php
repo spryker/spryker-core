@@ -12,7 +12,7 @@ use Spryker\Glue\Kernel\Container;
 
 class CompanyBusinessUnitsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PLUGINS_COMPANY_BUSINESS_UNIT_MAPPER = 'PLUGINS_COMPANY_BUSINESS_UNIT_MAPPER';
+    public const PLUGINS_COMPANY_BUSINESS_UNIT_ATTRIBUTES_MAPPER = 'PLUGINS_COMPANY_BUSINESS_UNIT_ATTRIBUTES_MAPPER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -22,7 +22,7 @@ class CompanyBusinessUnitsRestApiDependencyProvider extends AbstractBundleDepend
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-        $container = $this->addCompanyBusinessUnitMapperPlugins($container);
+        $container = $this->addCompanyBusinessUnitAttributesMapperPlugins($container);
 
         return $container;
     }
@@ -32,19 +32,19 @@ class CompanyBusinessUnitsRestApiDependencyProvider extends AbstractBundleDepend
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addCompanyBusinessUnitMapperPlugins(Container $container): Container
+    protected function addCompanyBusinessUnitAttributesMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_BUSINESS_UNIT_MAPPER] = function (Container $container) {
-            return $this->getCompanyBusinessUnitMapperPlugins();
+        $container[static::PLUGINS_COMPANY_BUSINESS_UNIT_ATTRIBUTES_MAPPER] = function (Container $container) {
+            return $this->getCompanyBusinessUnitAttributesMapperPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperPluginInterface[]
+     * @return \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitAttributesMapperPluginInterface[]
      */
-    protected function getCompanyBusinessUnitMapperPlugins(): array
+    protected function getCompanyBusinessUnitAttributesMapperPlugins(): array
     {
         return [];
     }

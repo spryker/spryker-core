@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
 use Generated\Shared\Transfer\RestCompanyUnitAddressAttributesTransfer;
 
-class CompanyBusinessUnitAddressMapper implements CompanyBusinessUnitAddressMapperInterface
+class CompanyBusinessUnitAddressAttributesMapper implements CompanyBusinessUnitAddressAttributesMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
