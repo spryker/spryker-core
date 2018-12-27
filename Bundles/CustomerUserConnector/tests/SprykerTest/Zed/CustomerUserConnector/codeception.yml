@@ -25,3 +25,4 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
                 - \SprykerTest\Shared\User\Helper\UserDataHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
