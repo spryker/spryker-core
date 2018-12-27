@@ -8,8 +8,6 @@
 namespace Spryker\Zed\SalesReclamation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationExpander;
-use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationExpanderInterface;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationMapper;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationMapperInterface;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationReader;
@@ -39,15 +37,7 @@ class SalesReclamationBusinessFactory extends AbstractBusinessFactory
      */
     public function createReclamationReader(): ReclamationReaderInterface
     {
-        return new ReclamationReader($this->getRepository());
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationExpanderInterface
-     */
-    public function createReclamationExpander(): ReclamationExpanderInterface
-    {
-        return new ReclamationExpander($this->getSalesFacade(), $this->getRepository());
+        return new ReclamationReader($this->getRepository(), $this->getSalesFacade());
     }
 
     /**

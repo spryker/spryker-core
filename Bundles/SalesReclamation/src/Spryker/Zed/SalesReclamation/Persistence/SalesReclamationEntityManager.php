@@ -20,11 +20,6 @@ use Spryker\Zed\SalesReclamation\Persistence\Propel\Mapper\SalesReclamationMappe
 class SalesReclamationEntityManager extends AbstractEntityManager implements SalesReclamationEntityManagerInterface
 {
     /**
-     * @see \Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap::COL_STATE_OPEN
-     */
-    public const RECLAMATION_STATE_OPEN = 'Open';
-
-    /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SalesReclamation\Business\Reclamation;
 
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
-use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 
 interface ReclamationWriterInterface
@@ -25,12 +24,5 @@ interface ReclamationWriterInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function updateReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
-     */
-    public function updateReclamationItem(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer;
+    public function closeReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer;
 }

@@ -20,7 +20,6 @@ class DetailController extends AbstractController
 {
     protected const PARAM_ID_RECLAMATION_ITEM = 'id-reclamation-item';
     protected const PARAM_ID_RECLAMATION = 'id-reclamation';
-    protected const RECLAMATION_CLOSE_STATE = 'Close';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -35,13 +34,7 @@ class DetailController extends AbstractController
 
         $reclamationTransfer = $this->getFactory()
             ->getSalesReclamationFacade()
-            ->expandReclamation($reclamationTransfer);
-
-        if (!$reclamationTransfer->getIdSalesReclamation()) {
-            $this->addErrorMessage(sprintf('No reclamation with given id %s', $idReclamation));
-
-            return $this->redirectResponse('/sales-reclamation-gui/');
-        }
+            ->getReclamationById($reclamationTransfer);
 
         /** @var array[] $eventsGroupedByItem */
         $eventsGroupedByItem = $this->getFactory()
@@ -73,24 +66,11 @@ class DetailController extends AbstractController
 
         $reclamationTransfer = $this->getFactory()
             ->getSalesReclamationFacade()
-            ->getReclamationById($reclamationTransfer);
+            ->closeReclamation($reclamationTransfer);
 
-        if (!$reclamationTransfer->getIdSalesReclamation()) {
-            $this->addErrorMessage(sprintf('Reclamation with id %s not exists', $idReclamation));
-
-            return $this->redirectResponse(
-                Url::generate(
-                    '/sales-reclamation-gui'
-                )->build()
-            );
-        }
-
-        $reclamationTransfer->setState(static::RECLAMATION_CLOSE_STATE);
-        $this->getFactory()
-            ->getSalesReclamationFacade()
-            ->updateReclamation($reclamationTransfer);
-
-        $this->addSuccessMessage(sprintf('Reclamation with id %s closed', $idReclamation));
+        $this->addSuccessMessage(
+            sprintf('Reclamation with id %s closed', $reclamationTransfer->getIdSalesReclamation())
+        );
 
         return $this->redirectResponse(
             Url::generate(

@@ -8,15 +8,16 @@
 namespace Spryker\Zed\SalesReclamation\Business\Reclamation;
 
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
-use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManager;
 use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface;
 
 class ReclamationWriter implements ReclamationWriterInterface
 {
     use TransactionTrait;
+
+    protected const RECLAMATION_STATE_OPEN = 'Open';
+    protected const RECLAMATION_STATE_CLOSE = 'Close';
 
     /**
      * @var \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface
@@ -48,7 +49,7 @@ class ReclamationWriter implements ReclamationWriterInterface
     public function createReclamation(
         ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer
     ): ReclamationTransfer {
-        $this->assertRequiredAttributes($reclamationCreateRequestTransfer);
+        $this->assertReclamationCreateRequestRequiredAttributes($reclamationCreateRequestTransfer);
 
         return $this->getTransactionHandler()->handleTransaction(
             function () use ($reclamationCreateRequestTransfer) {
@@ -62,21 +63,13 @@ class ReclamationWriter implements ReclamationWriterInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function updateReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
+    public function closeReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
     {
         $reclamationTransfer->requireIdSalesReclamation();
 
-        return $this->salesReclamationEntityManager->saveReclamation($reclamationTransfer);
-    }
+        $reclamationTransfer->setState(static::RECLAMATION_STATE_CLOSE);
 
-    /**
-     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
-     */
-    public function updateReclamationItem(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer
-    {
-        return $this->salesReclamationEntityManager->saveReclamationItem($reclamationItemTransfer);
+        return $this->salesReclamationEntityManager->saveReclamation($reclamationTransfer);
     }
 
     /**
@@ -84,7 +77,7 @@ class ReclamationWriter implements ReclamationWriterInterface
      *
      * @return void
      */
-    protected function assertRequiredAttributes(
+    protected function assertReclamationCreateRequestRequiredAttributes(
         ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer
     ): void {
         $reclamationCreateRequestTransfer
@@ -110,8 +103,9 @@ class ReclamationWriter implements ReclamationWriterInterface
     ): ReclamationTransfer {
         $orderTransfer = $reclamationCreateRequestTransfer->getOrder();
         $orderTransfer->setItems($reclamationCreateRequestTransfer->getOrderItems());
-        $reclamationTransfer = $this->reclamationMapper->mapOrderToReclamation($orderTransfer, new ReclamationTransfer());
-        $reclamationTransfer->setState(SalesReclamationEntityManager::RECLAMATION_STATE_OPEN);
+        $reclamationTransfer = $this->reclamationMapper
+            ->mapOrderTransferToReclamationTransfer($orderTransfer, new ReclamationTransfer());
+        $reclamationTransfer->setState(static::RECLAMATION_STATE_OPEN);
         $reclamationTransfer = $this->salesReclamationEntityManager->saveReclamation($reclamationTransfer);
 
         foreach ($reclamationTransfer->getReclamationItems() as $reclamationItemTransfer) {

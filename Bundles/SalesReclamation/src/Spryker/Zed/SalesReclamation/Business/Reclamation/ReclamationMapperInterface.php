@@ -18,7 +18,7 @@ interface ReclamationMapperInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function mapOrderToReclamation(
+    public function mapOrderTransferToReclamationTransfer(
         OrderTransfer $orderTransfer,
         ReclamationTransfer $reclamationTransfer
     ): ReclamationTransfer;

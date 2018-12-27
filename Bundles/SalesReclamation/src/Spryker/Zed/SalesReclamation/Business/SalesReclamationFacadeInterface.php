@@ -9,7 +9,6 @@ namespace Spryker\Zed\SalesReclamation\Business;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
-use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 
 interface SalesReclamationFacadeInterface
@@ -25,13 +24,13 @@ interface SalesReclamationFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationTransfer|null
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function createReclamation(ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer): ?ReclamationTransfer;
+    public function createReclamation(ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer): ReclamationTransfer;
 
     /**
      * Specification:
-     * - Updates existing sales reclamation entity.
+     * - Changes reclamation state value to close.
      *
      * @api
      *
@@ -39,33 +38,7 @@ interface SalesReclamationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function updateReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer;
-
-    /**
-     * Specification:
-     * - Updates existing sales reclamation item entity.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
-     */
-    public function updateReclamationItem(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer;
-
-    /**
-     * Specification:
-     * - Gets Reclamation by id from database.
-     * - Expands Reclamation with data from database.
-     * - Expands Reclamation items with data from database.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
-     *
-     * @return \Generated\Shared\Transfer\ReclamationTransfer|null
-     */
-    public function expandReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
+    public function closeReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer;
 
     /**
      * Specification:
@@ -79,22 +52,10 @@ interface SalesReclamationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function mapOrderToReclamation(
+    public function mapOrderTransferToReclamationTransfer(
         OrderTransfer $orderTransfer,
         ReclamationTransfer $reclamationTransfer
     ): ReclamationTransfer;
-
-    /**
-     * Specification:
-     * - Returns reclamation item entity by id.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
-     */
-    public function getReclamationItemById(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer;
 
     /**
      * Specification:
@@ -103,6 +64,8 @@ interface SalesReclamationFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     *
+     * @throws \Spryker\Zed\SalesReclamation\Business\Exception\ReclamationNotFoundException
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */

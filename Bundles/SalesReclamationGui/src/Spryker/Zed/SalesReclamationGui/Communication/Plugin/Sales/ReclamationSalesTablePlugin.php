@@ -9,7 +9,6 @@ namespace Spryker\Zed\SalesReclamationGui\Communication\Plugin\Sales;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface;
-use Spryker\Zed\SalesReclamationGui\Communication\Controller\CreateController;
 
 class ReclamationSalesTablePlugin implements SalesTablePluginInterface
 {
@@ -19,6 +18,11 @@ class ReclamationSalesTablePlugin implements SalesTablePluginInterface
      * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_ID_SALES_ORDER
      */
     protected const COL_ID_SALES_ORDER = 'spy_sales_order.id_sales_order';
+
+    /**
+     * @see \Spryker\Zed\SalesReclamationGui\Communication\Controller\CreateController::COL_ID_SALES_ORDER
+     */
+    protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
 
     /**
      * @api
@@ -46,7 +50,7 @@ class ReclamationSalesTablePlugin implements SalesTablePluginInterface
     {
         return $buttonGenerator(
             Url::generate(static::URL_CREATE_RECLAMATION, [
-                CreateController::PARAM_ID_SALES_ORDER => $idSalesOrder,
+                static::PARAM_ID_SALES_ORDER => $idSalesOrder,
             ]),
             'Claim',
             [

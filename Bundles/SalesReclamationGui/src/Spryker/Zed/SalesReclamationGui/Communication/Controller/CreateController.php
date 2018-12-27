@@ -41,7 +41,7 @@ class CreateController extends AbstractController
 
         $reclamation = $this->getFactory()
             ->getSalesReclamationFacade()
-            ->mapOrderToReclamation($orderTransfer, new ReclamationTransfer());
+            ->mapOrderTransferToReclamationTransfer($orderTransfer, new ReclamationTransfer());
 
         $orderItemIds = $request->request->getDigits(static::PARAM_IDS_SALES_ORDER_ITEMS);
 
@@ -53,7 +53,7 @@ class CreateController extends AbstractController
 
         $reclamationTransfer = $this->createReclamation($orderTransfer, (array)$orderItemIds);
 
-        if ($orderItemIds && $reclamationTransfer) {
+        if ($reclamationTransfer) {
             $this->addSuccessMessage(sprintf(
                 'Reclamation id:%s for order %s successfully created',
                 $reclamationTransfer->getIdSalesReclamation(),
@@ -69,6 +69,10 @@ class CreateController extends AbstractController
                 )->build()
             );
         }
+
+        return $this->viewResponse([
+            'reclamation' => $reclamation,
+        ]);
     }
 
     /**
@@ -83,7 +87,7 @@ class CreateController extends AbstractController
         $reclamationCreateRequestTransfer->setOrder($orderTransfer);
 
         foreach ($orderItemIds as $idOrderItem) {
-            $orderItemsTransfer = $this->getOrderItemById($orderTransfer, $idOrderItem);
+            $orderItemsTransfer = $this->findOrderItemById($orderTransfer, $idOrderItem);
 
             if (!$orderItemsTransfer) {
                 $this->addErrorMessage(sprintf(
@@ -102,7 +106,7 @@ class CreateController extends AbstractController
             ->getSalesReclamationFacade()
             ->createReclamation($reclamationCreateRequestTransfer);
 
-        if (!$reclamationTransfer) {
+        if (!$reclamationTransfer->getIdSalesReclamation()) {
             $this->addErrorMessage('Can not create reclamation');
         }
 
@@ -115,7 +119,7 @@ class CreateController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    protected function getOrderItemById(OrderTransfer $orderTransfer, int $idOrderItem): ?ItemTransfer
+    protected function findOrderItemById(OrderTransfer $orderTransfer, int $idOrderItem): ?ItemTransfer
     {
         foreach ($orderTransfer->getItems() as $orderItemTransfer) {
             if ($orderItemTransfer->getIdSalesOrderItem() === $idOrderItem) {
