@@ -218,7 +218,7 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     * - Expands the provided ProductConcretePageSearchTransfer object with product lisstss data and returns the modified version.
+     * - Expands ProductConcretePageSearchTransfer with product lists data and returns the modified object.
      *
      * @api
      *
