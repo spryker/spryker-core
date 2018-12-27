@@ -64,7 +64,7 @@ interface RestRequestInterface
     public function getInclude(): array;
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface|null
      */
     public function getUser(): ?UserInterface;
 
