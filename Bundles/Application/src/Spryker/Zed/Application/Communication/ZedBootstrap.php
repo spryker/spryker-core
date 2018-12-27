@@ -102,6 +102,7 @@ class ZedBootstrap
         }
 
         $this->registerServiceProvider();
+        $this->setupApplication();
     }
 
     /**
@@ -115,12 +116,11 @@ class ZedBootstrap
     }
 
     /**
-     * @return array
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface[]
      */
     protected function getApplicationExtensions(): array
     {
-        return $this->getProvidedDependency('key');
+        return $this->getProvidedDependency(ApplicationDependencyProvider::APPLICATION_EXTENSIONS);
     }
 
     /**

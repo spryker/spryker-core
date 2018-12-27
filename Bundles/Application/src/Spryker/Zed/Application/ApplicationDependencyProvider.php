@@ -37,6 +37,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_PROVIDER_API = 'SERVICE_PROVIDER_API';
     public const INTERNAL_CALL_SERVICE_PROVIDER = 'INTERNAL_CALL_SERVICE_PROVIDER';
     public const INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION = 'INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION';
+    public const APPLICATION_EXTENSIONS = 'APPLICATION_EXTENSIONS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -182,6 +183,18 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addApplicationExtensions(Container $container): Container
+    {
+        $container->set(static::APPLICATION_EXTENSIONS, function (Container $container) {
+            return $this->getApplicationExtensions();
+        });
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return \Silex\ServiceProviderInterface[]
      */
     protected function getApiServiceProviders(Container $container)
@@ -205,6 +218,14 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Silex\ServiceProviderInterface[]
      */
     protected function getInternalCallServiceProvidersWithAuthentication(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface[]
+     */
+    protected function getApplicationExtensions(): array
     {
         return [];
     }
