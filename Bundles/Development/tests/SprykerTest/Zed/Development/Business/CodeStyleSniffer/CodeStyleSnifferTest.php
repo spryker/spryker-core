@@ -145,7 +145,8 @@ class CodeStyleSnifferTest extends Unit
         $codingStandard = $developmentConfig->getCodingStandard();
 
         if ($options['level'] === 2) {
-            $codingStandard = $developmentConfig->getStrictCodingStandard();
+            /** @see \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfiguration::getCodingStandard() */
+            $codingStandard = APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR . 'spryker/code-sniffer/SprykerStrict/ruleset.xml';
         }
 
         $codeStyleSnifferMock = $this
