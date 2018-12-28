@@ -71,6 +71,13 @@ class AlternativeProductReader implements AlternativeProductReaderInterface
         }
 
         $concreteProductSku = $concreteProductResource->getId();
+        if (!$this->productStorage->findProductConcreteStorageDataByMapping(
+            static::KEY_SKU,
+            $concreteProductSku,
+            $restRequest->getMetadata()->getLocale()
+        )) {
+            return $restResponse->addError($this->createConcreteProductNotFoundError());
+        }
 
         $restResource = $this->findConcreteProductAlternativeBySku($concreteProductSku, $restRequest);
         if (!$restResource) {
@@ -150,6 +157,19 @@ class AlternativeProductReader implements AlternativeProductReaderInterface
             ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED);
+
+        return $restErrorTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createConcreteProductNotFoundError(): RestErrorMessageTransfer
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_CONCRETE_PRODUCT)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_CONCRETE_PRODUCT);
 
         return $restErrorTransfer;
     }
