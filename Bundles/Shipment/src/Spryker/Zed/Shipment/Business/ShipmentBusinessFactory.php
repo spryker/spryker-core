@@ -106,7 +106,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentOrderSaver(
             $this->getSalesQueryContainer(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
+            $this->getCountryFacade()
         );
     }
 
@@ -117,7 +118,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new CheckoutShipmentOrderSaver(
             $this->getSalesQueryContainer(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
+            $this->getCountryFacade()
         );
     }
 
@@ -175,5 +177,13 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function getShipmentService(): ShipmentServiceInterface
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::SERVICE_SHIPMENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCountryInterface
+     */
+    protected function getCountryFacade()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_COUNTRY);
     }
 }

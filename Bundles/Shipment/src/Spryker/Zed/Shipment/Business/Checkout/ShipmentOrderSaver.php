@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business\Checkout;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -19,6 +20,7 @@ use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCountryInterface;
 
 class ShipmentOrderSaver implements ShipmentOrderSaverInterface
 {
@@ -35,15 +37,23 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     protected $shipmentService;
 
     /**
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface
+     */
+    protected $countryFacade;
+
+    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
+     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCountryInterface $countryFacade
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
-        ShipmentServiceInterface $shipmentService
+        ShipmentServiceInterface $shipmentService,
+        ShipmentToCountryInterface $countryFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->shipmentService = $shipmentService;
+        $this->countryFacade = $countryFacade;
     }
 
     /**
@@ -115,17 +125,14 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
      */
     protected function saveShipmentAddressTransfer(ShipmentGroupTransfer $shipmentGroupTransfer): void
     {
-        $salesOrderAddress = (new SpySalesOrderAddress());
-        $salesOrderAddress->fromArray(
-            $shipmentGroupTransfer->getShipment()->getShippingAddress()->toArray(),
-            true
-        );
-        $salesOrderAddress->save();
+        $shippingAddressTransfer = $shipmentGroupTransfer->getShipment()->getShippingAddress();
+
+        $this->saveSalesOrderAddress($shippingAddressTransfer);
 
         $shipmentGroupTransfer
             ->getShipment()
             ->getShippingAddress()
-            ->setIdSalesOrderAddress($salesOrderAddress->getIdSalesOrderAddress());
+            ->setIdSalesOrderAddress($shippingAddressTransfer->getIdSalesOrderAddress());
     }
 
     /**
@@ -287,4 +294,43 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
 
         return $salesShipmentEntity;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return void
+     */
+    protected function saveSalesOrderAddress(AddressTransfer $addressTransfer): void
+    {
+        $salesOrderAddressEntity = $this->createSalesOrderAddressEntity();
+        $this->hydrateSalesOrderAddress($addressTransfer, $salesOrderAddressEntity);
+        $salesOrderAddressEntity->save();
+
+        $addressTransfer->setIdSalesOrderAddress($salesOrderAddressEntity->getIdSalesOrderAddress());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $salesOrderAddressEntity
+     *
+     * @return void
+     */
+    protected function hydrateSalesOrderAddress(
+        AddressTransfer $addressTransfer,
+        SpySalesOrderAddress $salesOrderAddressEntity
+    ): void {
+        $salesOrderAddressEntity->fromArray($addressTransfer->toArray());
+        $salesOrderAddressEntity->setFkCountry(
+            $this->countryFacade->getIdCountryByIso2Code($addressTransfer->getIso2Code())
+        );
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
+     */
+    protected function createSalesOrderAddressEntity(): SpySalesOrderAddress
+    {
+        return new SpySalesOrderAddress();
+    }
+
 }
