@@ -64,7 +64,7 @@ class ReclamationWriter implements ReclamationWriterInterface
     {
         $reclamationTransfer->requireIdSalesReclamation();
 
-        $reclamationTransfer->setIsOpen(true);
+        $reclamationTransfer->setIsOpen(false);
 
         return $this->salesReclamationEntityManager->saveReclamation($reclamationTransfer);
     }
@@ -102,7 +102,7 @@ class ReclamationWriter implements ReclamationWriterInterface
         $orderTransfer->setItems($reclamationCreateRequestTransfer->getOrderItems());
         $reclamationTransfer = $this->reclamationMapper
             ->mapOrderTransferToReclamationTransfer($orderTransfer, new ReclamationTransfer());
-        $reclamationTransfer->setIsOpen(false);
+        $reclamationTransfer->setIsOpen(true);
         $reclamationTransfer = $this->salesReclamationEntityManager->saveReclamation($reclamationTransfer);
 
         foreach ($reclamationTransfer->getReclamationItems() as $reclamationItemTransfer) {

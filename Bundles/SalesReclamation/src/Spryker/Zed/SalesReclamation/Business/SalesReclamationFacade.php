@@ -76,9 +76,9 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
      *
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationTransfer
-     *
      * @throws \Spryker\Zed\SalesReclamation\Business\Exception\ReclamationNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
     public function getReclamationById(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
     {

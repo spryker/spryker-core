@@ -32,7 +32,7 @@
 
 {% embed '@Gui/Partials/widget.twig' with {widget_title: widget_title} %}
     {% block widget_header_content %}
-        Reclamation state: {{ reclamation.state ? 'Open' | trans : 'Close' | trans }}
+        Reclamation state: {{ reclamation.isOpen ? 'Open' | trans : 'Close' | trans }}
     {% endblock %}
 
     {% block widget_content %}

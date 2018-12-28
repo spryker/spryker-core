@@ -26,7 +26,7 @@ class SalesReclamationEntityManager extends AbstractEntityManager implements Sal
      */
     public function saveReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
     {
-        $reclamationTransfer->requireState();
+        $reclamationTransfer->requireIsOpen();
 
         $salesReclamationEntity = $this->getMapper()
             ->mapReclamationTransferToEntity($reclamationTransfer, new SpySalesReclamation());

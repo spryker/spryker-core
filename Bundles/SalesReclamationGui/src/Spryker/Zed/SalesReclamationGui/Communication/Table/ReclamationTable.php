@@ -58,7 +58,7 @@ class ReclamationTable extends AbstractTable
             SpySalesReclamationTableMap::COL_CUSTOMER_NAME,
         ]);
 
-        $config->addRawColumn(SpySalesReclamationTableMap::COL_STATE);
+        $config->addRawColumn(SpySalesReclamationTableMap::COL_IS_OPEN);
         $config->addRawColumn(static::COL_ACTIONS);
 
         return $config;
@@ -74,7 +74,7 @@ class ReclamationTable extends AbstractTable
             SpySalesReclamationTableMap::COL_CREATED_AT => 'Created',
             SpySalesReclamationTableMap::COL_CUSTOMER_NAME => 'Customer',
             SpySalesReclamationTableMap::COL_CUSTOMER_EMAIL => 'Email',
-            SpySalesReclamationTableMap::COL_STATE => 'State',
+            SpySalesReclamationTableMap::COL_IS_OPEN => 'State',
             SpySalesReclamationTableMap::COL_FK_SALES_ORDER => 'Order id',
             static::COL_ACTIONS => 'Actions',
         ];
@@ -108,8 +108,8 @@ class ReclamationTable extends AbstractTable
                 ),
                 SpySalesReclamationTableMap::COL_CUSTOMER_NAME => $item[SpySalesReclamationTableMap::COL_CUSTOMER_NAME],
                 SpySalesReclamationTableMap::COL_CUSTOMER_EMAIL => $item[SpySalesReclamationTableMap::COL_CUSTOMER_EMAIL],
-                SpySalesReclamationTableMap::COL_STATE => $this->createStateLabel(
-                    $item[SpySalesReclamationTableMap::COL_STATE]
+                SpySalesReclamationTableMap::COL_IS_OPEN => $this->createStateLabel(
+                    $item[SpySalesReclamationTableMap::COL_IS_OPEN]
                 ),
                 SpySalesReclamationTableMap::COL_FK_SALES_ORDER => $item[SpySalesReclamationTableMap::COL_FK_SALES_ORDER],
                 static::COL_ACTIONS => $this->createActions($item),
@@ -126,17 +126,10 @@ class ReclamationTable extends AbstractTable
      */
     protected function createStateLabel(string $state): string
     {
-        $stateLabel = '';
-        switch ($state) {
-            case SpySalesReclamationTableMap::COL_STATE_OPEN:
-                $stateLabel = '<span class="label label-success" title="Active">Open</span>';
-                break;
-            case SpySalesReclamationTableMap::COL_STATE_CLOSE:
-                $stateLabel = '<span class="label label-danger" title="Deactivated">Closed</span>';
-                break;
+        if ($state) {
+            return '<span class="label label-success" title="Active">Open</span>';
         }
-
-        return $stateLabel;
+        return '<span class="label label-danger" title="Deactivated">Closed</span>';
     }
 
     /**
@@ -147,12 +140,11 @@ class ReclamationTable extends AbstractTable
     protected function createActions(array $item): string
     {
         $idReclamation = $item[SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION];
-        $isClosed = $item[SpySalesReclamationTableMap::COL_STATE] === SpySalesReclamationTableMap::COL_STATE_CLOSE;
         $buttons = [];
 
         $buttons[] = $this->createViewAction((int)$idReclamation);
 
-        if (!$isClosed) {
+        if ($item[SpySalesReclamationTableMap::COL_IS_OPEN]) {
             $buttons[] = $this->createCloseAction((int)$idReclamation);
         }
 
