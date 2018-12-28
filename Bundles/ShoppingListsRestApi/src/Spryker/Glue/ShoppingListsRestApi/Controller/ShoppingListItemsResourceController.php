@@ -65,16 +65,18 @@ class ShoppingListItemsResourceController extends AbstractController
      *          "summary": [
      *              "Updates shopping list item."
      *          ],
-     *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
-     *          },
-     *          {
-     *              "name": "X-Company-User-Id",
-     *              "in": "header",
-     *              "required": true,
-     *              "description": "Company user id"
-     *          }],
+     *          "parameters": [
+     *              {
+     *                  "name": "Accept-Language",
+     *                  "in": "header"
+     *              },
+     *              {
+     *                  "name": "X-Company-User-Id",
+     *                  "in": "header",
+     *                  "required": true,
+     *                  "description": "Company user id"
+     *              }
+     *          ],
      *          "responses": {
      *              "400": "Shopping list id or list item id not specified.",
      *              "403": "Unauthorized request.",
@@ -105,22 +107,24 @@ class ShoppingListItemsResourceController extends AbstractController
      *          "summary": [
      *              "Deletes item from a shopping list."
      *          ],
-     *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
-     *          },
-     *          {
-     *              "name": "X-Company-User-Id",
-     *              "in": "header",
-     *              "required": true,
-     *              "description": "Company user id"
-     *          }],
+     *          "parameters": [
+     *              {
+     *                  "name": "Accept-Language",
+     *                  "in": "header"
+     *              },
+     *              {
+     *                  "name": "X-Company-User-Id",
+     *                  "in": "header",
+     *                  "required": true,
+     *                  "description": "Company user id"
+     *              }
+     *          ],
      *          "responses": {
      *              "400": "Bad Response.",
      *              "403": "Unauthorized request.",
      *              "404": "Not Found",
      *              "422": "Cannot delete the shopping list item"
-     *          },
+     *          }
      *     }
      * })
      *

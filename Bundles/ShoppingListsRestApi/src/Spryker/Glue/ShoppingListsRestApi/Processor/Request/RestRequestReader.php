@@ -43,7 +43,7 @@ class RestRequestReader implements RestRequestReaderInterface
         if (!$companyUserUuid) {
             return (new CustomerResponseTransfer())->addError(
                 (new CustomerErrorTransfer())
-                    ->setMessage(SharedShoppingListsRestApiConfig::RESPONSE_CODE_X_COMPANY_USER_ID_HEADER_KEY_NOT_SPECIFIED)
+                    ->setMessage(SharedShoppingListsRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_FOUND)
             );
         }
 

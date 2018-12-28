@@ -34,33 +34,33 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
             'status' => Response::HTTP_BAD_REQUEST,
             'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_ID_NOT_SPECIFIED,
         ],
-        SharedShoppingListsRestApiConfig::RESPONSE_CODE_X_COMPANY_USER_ID_HEADER_KEY_NOT_SPECIFIED => [
-            'status' => Response::HTTP_UNAUTHORIZED,
-            'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_X_COMPANY_USER_ID_HEADER_KEY_NOT_SPECIFIED,
-        ],
-        SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND => [
-            'status' => Response::HTTP_NOT_FOUND,
-            'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_NOT_FOUND,
+        SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_ITEM_ID_NOT_SPECIFIED => [
+            'status' => Response::HTTP_BAD_REQUEST,
+            'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_ITEM_ID_NOT_SPECIFIED,
         ],
         SharedShoppingListsRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_FOUND => [
             'status' => Response::HTTP_UNAUTHORIZED,
             'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND,
         ],
-        SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_DUPLICATE_NAME => [
-            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_DUPLICATE_NAME,
-        ],
-        SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_UPDATE => [
-            'status' => Response::HTTP_UNAUTHORIZED,
-            'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_UPDATE,
-        ],
-        SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_ADD_ITEM => [
-            'status' => Response::HTTP_UNAUTHORIZED,
-            'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_ADD_ITEM,
+        SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND => [
+            'status' => Response::HTTP_NOT_FOUND,
+            'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_NOT_FOUND,
         ],
         SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_ITEM_NOT_FOUND => [
             'status' => Response::HTTP_NOT_FOUND,
             'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_ITEM_NOT_FOUND,
+        ],
+        SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_UPDATE => [
+            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_UPDATE,
+        ],
+        SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_DUPLICATE_NAME => [
+            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_DUPLICATE_NAME,
+        ],
+        SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_ADD_ITEM => [
+            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_ADD_ITEM,
         ],
         SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_UPDATE_ITEM => [
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
@@ -69,10 +69,6 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
         SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_DELETE_ITEM => [
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
             'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_DELETE_ITEM,
-        ],
-        SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_ITEM_ID_NOT_SPECIFIED => [
-            'status' => Response::HTTP_BAD_REQUEST,
-            'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_ITEM_ID_NOT_SPECIFIED,
         ],
     ];
 }
