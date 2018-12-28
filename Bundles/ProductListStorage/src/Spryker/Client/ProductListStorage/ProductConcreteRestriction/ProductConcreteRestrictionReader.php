@@ -55,7 +55,7 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
         $customerWhitelistIds = $customer->getCustomerProductListCollection()->getWhitelistIds() ?: [];
         $customerBlacklistIds = $customer->getCustomerProductListCollection()->getBlacklistIds() ?: [];
 
-        return $this->checkIfProductConcreteIsRestricted($idProduct, $customerWhitelistIds, $customerBlacklistIds);
+        return $this->isProductConcreteRestrictedInProductLists($idProduct, $customerWhitelistIds, $customerBlacklistIds);
     }
 
     /**
@@ -65,14 +65,14 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
      *
      * @return bool
      */
-    protected function checkIfProductConcreteIsRestricted(
+    protected function isProductConcreteRestrictedInProductLists(
         int $idProduct,
         array $customerWhitelistIds,
         array $customerBlacklistIds
     ): bool {
         $productListProductConcreteStorageTransfer = $this->productListProductConcreteStorageReader->findProductConcreteProductListStorage($idProduct);
 
-        $isProductRestrictedInBlackList = $this->checkIfProductConcreteRestrictedInBlacklist(
+        $isProductRestrictedInBlackList = $this->isProductConcreteRestrictedInBlacklist(
             $productListProductConcreteStorageTransfer,
             $customerBlacklistIds
         );
@@ -80,7 +80,7 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
             return true;
         }
 
-        $isProductRestrictedInWhiteList = $this->checkIfProductConcreteRestrictedInWhitelist(
+        $isProductRestrictedInWhiteList = $this->isProductConcreteRestrictedInWhitelist(
             $productListProductConcreteStorageTransfer,
             $customerWhitelistIds
         );
@@ -97,7 +97,7 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
      *
      * @return bool
      */
-    protected function checkIfProductConcreteRestrictedInWhitelist(
+    protected function isProductConcreteRestrictedInWhitelist(
         ?ProductConcreteProductListStorageTransfer $productListProductConcreteStorageTransfer,
         array $customerWhitelistIds
     ): bool {
@@ -120,7 +120,7 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
      *
      * @return bool
      */
-    protected function checkIfProductConcreteRestrictedInBlacklist(
+    protected function isProductConcreteRestrictedInBlacklist(
         ?ProductConcreteProductListStorageTransfer $productListProductConcreteStorageTransfer,
         array $customerBlacklistIds
     ): bool {
