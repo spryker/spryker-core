@@ -19,7 +19,7 @@ class CompanyBusinessUnitMapperPlugin extends AbstractPlugin implements CompanyU
 {
     /**
      * {@inheritdoc}
-     * - Map company business unit data to RestCompanyUserAttributesTransfer.
+     * - Maps company business unit data to RestCompanyUserAttributesTransfer.
      *
      * @api
      *

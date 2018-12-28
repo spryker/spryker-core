@@ -37,17 +37,20 @@ class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
         CompanyUserTransfer $companyUserTransfer,
         RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
     ): RestCompanyUserAttributesTransfer {
-        $restCompanyBusinessUnitAttributesTransfer = new RestCompanyBusinessUnitAttributesTransfer();
+        $companyBusinessUnitTransfer = $companyUserTransfer->getCompanyBusinessUnit();
+        if ($companyBusinessUnitTransfer === null) {
+            return $restCompanyUserAttributesTransfer;
+        }
+
+        $restCompanyBusinessUnitAttributesTransfer = (new RestCompanyBusinessUnitAttributesTransfer())
+            ->fromArray($companyBusinessUnitTransfer->toArray(), true);
 
         $restCompanyBusinessUnitAttributesTransfer = $this->executeCompanyBusinessUnitAttributesMapperPlugins(
-            $companyUserTransfer->getCompanyBusinessUnit(),
+            $companyBusinessUnitTransfer,
             $restCompanyBusinessUnitAttributesTransfer
         );
 
-        $restCompanyUserAttributesTransfer->setCompanyBusinessUnit(
-            $restCompanyBusinessUnitAttributesTransfer
-                ->fromArray($companyUserTransfer->toArray(), true)
-        );
+        $restCompanyUserAttributesTransfer->setCompanyBusinessUnit($restCompanyBusinessUnitAttributesTransfer);
 
         return $restCompanyUserAttributesTransfer;
     }

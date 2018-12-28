@@ -19,7 +19,7 @@ class CompanyBusinessUnitAddressAttributesMapperPlugin extends AbstractPlugin im
 {
     /**
      * {@inheritdoc}
-     * - Maps the business unit addresses data to RestBusinessUnitAttributesTransfer.
+     * - Maps company business unit addresses data to RestBusinessUnitAttributesTransfer.
      *
      * @api
      *

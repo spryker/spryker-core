@@ -10,6 +10,9 @@ namespace Spryker\Glue\CompanyBusinessUnitsRestApi;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
+/**
+ * @method \Spryker\Glue\CompanyBusinessUnitsRestApi\CompanyBusinessUnitsRestApiConfig getConfig()
+ */
 class CompanyBusinessUnitsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_COMPANY_BUSINESS_UNIT_ATTRIBUTES_MAPPER = 'PLUGINS_COMPANY_BUSINESS_UNIT_ATTRIBUTES_MAPPER';
