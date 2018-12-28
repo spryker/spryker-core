@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\ProductDiscontinuedStorage
+namespace: SprykerTest\Zed\ProductAlternativeStorage
 
 paths:
     tests: .
@@ -12,9 +12,9 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Business:
+    Communication:
         path: Communication
-        class_name: ProductDiscontinuedStorageCommunicationTester
+        class_name: ProductAlternativeStorageCommunicationTester
         modules:
             enabled:
                 - Asserts
