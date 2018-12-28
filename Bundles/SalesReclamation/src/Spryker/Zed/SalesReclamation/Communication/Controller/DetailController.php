@@ -38,7 +38,7 @@ class DetailController extends AbstractController
             ->hydrateReclamationByIdReclamation($reclamationTransfer);
 
         if (!$reclamationTransfer) {
-            $this->addErrorMessage(sprintf('No reclamation with given id %s', $idReclamation));
+            $this->addErrorMessage('No reclamation with given id %s', ['%s' => $idReclamation]);
 
             return $this->redirectResponse('/sales-reclamation/');
         }
@@ -62,7 +62,7 @@ class DetailController extends AbstractController
             ->findOneByIdSalesReclamation($idReclamation);
 
         if (!$reclamation) {
-            $this->addErrorMessage(sprintf('Reclamation with id %s not exists', $idReclamation));
+            $this->addErrorMessage('Reclamation with id %s not exists', ['%s' => $idReclamation]);
 
             return $this->redirectResponse(
                 Url::generate(
@@ -74,7 +74,7 @@ class DetailController extends AbstractController
         $reclamation->setState(SpySalesReclamationTableMap::COL_STATE_CLOSE);
         $reclamation->save();
 
-        $this->addSuccessMessage(sprintf('Reclamation with id %s closed', $idReclamation));
+        $this->addSuccessMessage('Reclamation with id %s closed', ['%s' => $idReclamation]);
 
         return $this->redirectResponse(
             Url::generate(
@@ -98,7 +98,7 @@ class DetailController extends AbstractController
             ->findOneByIdSalesReclamationItem($idReclamationItem);
 
         if (!$reclamationItem) {
-            $this->addErrorMessage(sprintf('Reclamation item with id %s not exists', $idReclamationItem));
+            $this->addErrorMessage('Reclamation item with id %s not exists', ['%s' => $idReclamationItem]);
 
             return $this->redirectResponse(
                 Url::generate(
@@ -107,11 +107,10 @@ class DetailController extends AbstractController
             );
         }
         if ($reclamationItem->getFkSalesReclamation() !== $idReclamation) {
-            $this->addErrorMessage(sprintf(
-                'Reclamation with id %s not own this item %s',
-                $idReclamation,
-                $idReclamationItem
-            ));
+            $this->addErrorMessage('Reclamation with id %s not own this item %d', [
+                '%s' => $idReclamation,
+                '%d' => $idReclamationItem,
+            ]);
 
             return $this->redirectResponse(
                 Url::generate(

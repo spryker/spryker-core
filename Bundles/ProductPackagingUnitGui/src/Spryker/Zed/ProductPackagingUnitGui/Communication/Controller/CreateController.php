@@ -63,10 +63,7 @@ class CreateController extends AbstractProductPackagingUnitGuiController
                 ->createProductPackagingUnitType($productPackagingUnitTypeTransfer);
 
             if (!$productPackagingUnitTypeTransfer->getIdProductPackagingUnitType()) {
-                $this->addErrorMessage(sprintf(
-                    static::MESSAGE_ERROR_PACKAGING_UNIT_TYPE_CREATE,
-                    $productPackagingUnitTypeTransfer->getName()
-                ));
+                $this->addErrorMessage(static::MESSAGE_ERROR_PACKAGING_UNIT_TYPE_CREATE);
 
                 return $this->redirectResponse($redirectUrl);
             }
@@ -75,10 +72,7 @@ class CreateController extends AbstractProductPackagingUnitGuiController
 
             return $this->redirectResponse($redirectUrl);
         } catch (Throwable $exception) {
-            $this->addErrorMessage(sprintf(
-                static::MESSAGE_ERROR_PACKAGING_UNIT_TYPE_CREATE,
-                $productPackagingUnitTypeTransfer->getName()
-            ));
+            $this->addErrorMessage(static::MESSAGE_ERROR_PACKAGING_UNIT_TYPE_CREATE);
 
             return $this->viewResponse([
                 'availableLocales' => $availableLocales,
@@ -86,10 +80,7 @@ class CreateController extends AbstractProductPackagingUnitGuiController
             ]);
         }
 
-        $this->addSuccessMessage(sprintf(
-            static::MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_CREATE,
-            $productPackagingUnitTypeTransfer->getName()
-        ));
+        $this->addSuccessMessage(static::MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_CREATE);
 
         return $this->redirectResponse($redirectUrl);
     }

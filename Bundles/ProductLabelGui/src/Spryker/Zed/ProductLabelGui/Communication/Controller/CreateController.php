@@ -89,10 +89,9 @@ class CreateController extends AbstractController
             );
         }
 
-        $this->addSuccessMessage(sprintf(
-            'Product label #%d successfully created.',
-            $productLabelTransfer->getIdProductLabel()
-        ));
+        $this->addSuccessMessage('Product label #%d successfully created.', [
+            '%d' => $productLabelTransfer->getIdProductLabel(),
+        ]);
 
         return true;
     }

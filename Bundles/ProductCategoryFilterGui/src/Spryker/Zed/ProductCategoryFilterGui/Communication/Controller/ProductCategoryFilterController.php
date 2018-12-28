@@ -74,7 +74,7 @@ class ProductCategoryFilterController extends AbstractController
                 ->getProductCategoryFilterFacade()
                 ->$facadeFunction($productCategoryFilterTransfer);
 
-            $this->addSuccessMessage(sprintf('Filters for Category "%s" were updated successfully.', $category->getName()));
+            $this->addSuccessMessage('Filters for Category "%s" were updated successfully.', ['%s' => $category->getName()]);
         }
 
         $filters = [];
@@ -140,7 +140,7 @@ class ProductCategoryFilterController extends AbstractController
 
         $redirectUrl = self::REDIRECT_ADDRESS . '?' . self::PARAM_ID_CATEGORY_NODE . '=' . $idCategory;
 
-        $this->addSuccessMessage(sprintf('Filters for Category "%s" were deleted successfully.', $category->getName()));
+        $this->addSuccessMessage('Filters for Category "%s" were deleted successfully.', ['%s' => $category->getName()]);
 
         return $this->redirectResponse($redirectUrl);
     }

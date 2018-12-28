@@ -89,7 +89,7 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
                 $form = $this->createForm($request, $quoteTransfer);
                 $form->setData($quoteTransfer->toArray());
             }
-            $this->addMessage(sprintf($message, $voucherCode), $isSuccessMessage);
+            $this->addMessage($message, ['%s' => $voucherCode], $isSuccessMessage);
 
             $this->uniqueFlashMessages();
         }
@@ -124,14 +124,16 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
 
     /**
      * @param string $message
+     * @param array $parameters
      * @param bool $isSuccess
      *
      * @return void
      */
-    protected function addMessage($message, $isSuccess = true)
+    protected function addMessage($message, $parameters = [], $isSuccess = true)
     {
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue($message);
+        $messageTransfer->setParameters($parameters);
 
         if ($isSuccess) {
             $this->messengerFacade->addSuccessMessage($messageTransfer);

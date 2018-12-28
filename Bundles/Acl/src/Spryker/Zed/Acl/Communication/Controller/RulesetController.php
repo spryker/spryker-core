@@ -45,7 +45,7 @@ class RulesetController extends AbstractController
         $removeStatus = $this->getFacade()->removeRule($idRule);
 
         if ($removeStatus) {
-            $this->addSuccessMessage(sprintf('Rule with id "%d" was successfully removed!', $idRule));
+            $this->addSuccessMessage('Rule with id "%d" was successfully removed!', ['%d' => $idRule]);
         } else {
             $this->addErrorMessage('Failed to remove rule');
         }

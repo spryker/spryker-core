@@ -86,9 +86,7 @@ class GlobalController extends AbstractController
 
         $this->saveSalesOrderThreshold($softSalesOrderThresholdTransfer);
 
-        $this->addSuccessMessage(sprintf(
-            'The Global Threshold is saved successfully.'
-        ));
+        $this->addSuccessMessage('The Global Threshold is saved successfully.');
 
         return $this->redirectResponse($request->getRequestUri());
     }

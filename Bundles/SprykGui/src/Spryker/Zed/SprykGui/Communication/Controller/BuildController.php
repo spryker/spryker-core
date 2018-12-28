@@ -42,7 +42,9 @@ class BuildController extends AbstractController
 
             $runResult = $this->getFacade()->runSpryk($request->query->get('spryk'), $formData);
             if ($runResult) {
-                $this->addSuccessMessage(sprintf('Spryk "%s" executed successfully.', $request->query->get('spryk')));
+                $this->addSuccessMessage('Spryk "%s" executed successfully.', [
+                    '%s' => $request->query->get('spryk'),
+                ]);
                 $messages = explode("\n", rtrim($runResult, "\n"));
             }
         }

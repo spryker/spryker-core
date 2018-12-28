@@ -54,10 +54,9 @@ class EditCompanyBusinessUnitController extends AbstractController
                 ->update($companyBusinessUnitTransfer);
 
             if (!$companyResponseTransfer->getIsSuccessful()) {
-                $this->addErrorMessage(sprintf(
-                    static::MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_ERROR,
-                    $companyBusinessUnitTransfer->getName()
-                ));
+                $this->addErrorMessage(static::MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_ERROR, [
+                    '%s' => $companyBusinessUnitTransfer->getName(),
+                ]);
 
                 return $this->viewResponse([
                     'form' => $form->createView(),
@@ -65,10 +64,9 @@ class EditCompanyBusinessUnitController extends AbstractController
                 ]);
             }
 
-            $this->addSuccessMessage(sprintf(
-                static::MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_SUCCESS,
-                $companyBusinessUnitTransfer->getName()
-            ));
+            $this->addSuccessMessage(static::MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_SUCCESS, [
+                '%s' => $companyBusinessUnitTransfer->getName(),
+            ]);
 
             return $this->redirectResponse($redirectUrl);
         }

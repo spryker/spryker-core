@@ -52,11 +52,10 @@ class CreateController extends AbstractController
         $reclamationTransfer = $this->createReclamation($orderTransfer, ...$idsOrderItem);
 
         if ($reclamationTransfer) {
-            $this->addSuccessMessage(sprintf(
-                'Reclamation id:%s for order %s sucessfully created',
-                $reclamationTransfer->getIdSalesReclamation(),
-                $orderTransfer->getOrderReference()
-            ));
+            $this->addSuccessMessage('Reclamation id:%s for order %s sucessfully created', [
+                '%s' => $reclamationTransfer->getIdSalesReclamation(),
+                '%d' => $orderTransfer->getOrderReference(),
+            ]);
         }
 
         return $this->redirectResponse(
@@ -100,11 +99,10 @@ class CreateController extends AbstractController
             $orderItemsTransfer = $this->getOrderItemById($orderTransfer, $idOrderItem);
 
             if (!$orderItemsTransfer) {
-                $this->addErrorMessage(sprintf(
-                    'OrderItem with id %s not belong to order %s',
-                    $idOrderItem,
-                    $orderTransfer->getIdSalesOrder()
-                ));
+                $this->addErrorMessage('OrderItem with id %s not belong to order %d', [
+                    '%s' => $idOrderItem,
+                    '%d' => $orderTransfer->getIdSalesOrder(),
+                ]);
 
                 return null;
             }

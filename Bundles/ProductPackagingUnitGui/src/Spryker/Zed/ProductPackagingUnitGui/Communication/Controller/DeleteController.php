@@ -28,18 +28,16 @@ class DeleteController extends AbstractProductPackagingUnitGuiController
         $productPackagingUnitTypeTransfer = $this->findProductPackagingUnitTypeById($idProductPackagingUnitType);
 
         if ($this->deleteProductPackagingUnitType($productPackagingUnitTypeTransfer)) {
-            $this->addSuccessMessage(sprintf(
-                static::MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_DELETE,
-                $productPackagingUnitTypeTransfer->getName()
-            ));
+            $this->addSuccessMessage(static::MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_DELETE, [
+                '%s' => $productPackagingUnitTypeTransfer->getName(),
+            ]);
 
             return $this->redirectResponse(ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST);
         }
 
-        $this->addErrorMessage(sprintf(
-            static::MESSAGE_ERROR_PACKAGING_UNIT_TYPE_DELETE,
-            $productPackagingUnitTypeTransfer->getName()
-        ));
+        $this->addErrorMessage(static::MESSAGE_ERROR_PACKAGING_UNIT_TYPE_DELETE, [
+            '%s' => $productPackagingUnitTypeTransfer->getName(),
+        ]);
 
         return $this->redirectResponse($this->getErorrRedirectUrl($idProductPackagingUnitType, $request));
     }
