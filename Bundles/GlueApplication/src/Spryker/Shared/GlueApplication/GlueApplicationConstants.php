@@ -30,9 +30,10 @@ interface GlueApplicationConstants
 
     /**
      * Specification:
-     *   The domain name returned as allowed in CORS headers.
+     *  - The domain name returned as allowed in 'access-control-allow-origin' CORS headers.
+     *  - Only one domain should be passed, due to CORS policy
      *
      * @api
      */
-    public const GLUE_APPLICATION_CORS_DOMAIN = 'GLUE_APPLICATION_CORS_DOMAIN';
+    public const GLUE_APPLICATION_CORS_ALLOW_ORIGIN = 'GLUE_APPLICATION_CORS_ALLOW_ORIGIN';
 }

@@ -42,7 +42,7 @@ class GlueApplicationConfig extends AbstractBundleConfig
      */
     public function getCorsAllowOrigin(): string
     {
-        return $this->get(GlueApplicationConstants::GLUE_APPLICATION_CORS_DOMAIN);
+        return $this->get(GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN);
     }
 
     /**
