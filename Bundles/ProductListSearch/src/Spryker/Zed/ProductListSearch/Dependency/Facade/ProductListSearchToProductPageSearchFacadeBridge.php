@@ -42,4 +42,14 @@ class ProductListSearchToProductPageSearchFacadeBridge implements ProductListSea
     {
         $this->productPageSearchFacade->publish($productAbstractIds);
     }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return void
+     */
+    public function publishProductConcretes(array $productConcreteIds): void
+    {
+        $this->productPageSearchFacade->publishProductConcretes($productConcreteIds);
+    }
 }

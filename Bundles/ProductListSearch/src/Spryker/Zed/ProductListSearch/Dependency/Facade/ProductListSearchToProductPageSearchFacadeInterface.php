@@ -23,4 +23,11 @@ interface ProductListSearchToProductPageSearchFacadeInterface
      * @return void
      */
     public function refresh(array $productAbstractIds, array $pageDataExpanderPluginNames = []): void;
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return void
+     */
+    public function publishProductConcretes(array $productConcreteIds): void;
 }
