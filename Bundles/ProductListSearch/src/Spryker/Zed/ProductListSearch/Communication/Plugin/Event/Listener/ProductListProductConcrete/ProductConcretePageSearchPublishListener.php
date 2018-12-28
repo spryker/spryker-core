@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListProductConcrete;
 
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
@@ -17,7 +17,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
  */
-class ProductListProductConcreteSearchPublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductConcretePageSearchPublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 

@@ -16,9 +16,9 @@ use Spryker\Zed\ProductList\Dependency\ProductListEvents;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListCategorySearchListener;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListProductCategoryPublishSearchListener;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListProductCategorySearchListener;
+use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListProductConcrete\ProductConcretePageSearchPublishListener;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListProductConcretePublishSearchListener;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListProductConcreteSearchListener;
-use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListProductConcreteSearchPublishListener;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListSearchListener;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductSearchListener;
 
@@ -222,7 +222,7 @@ class ProductListSearchEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductListProductConcreteCreateProductConcreteSearchPublishListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_CREATE, new ProductListProductConcreteSearchPublishListener());
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_CREATE, new ProductConcretePageSearchPublishListener());
     }
 
     /**
@@ -232,7 +232,7 @@ class ProductListSearchEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductListProductConcreteUpdateProductConcreteSearchPublishListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_UPDATE, new ProductListProductConcreteSearchPublishListener());
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_UPDATE, new ProductConcretePageSearchPublishListener());
     }
 
     /**
@@ -242,6 +242,6 @@ class ProductListSearchEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductListProductConcreteDeleteProductConcreteSearchPublishListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_DELETE, new ProductListProductConcreteSearchPublishListener());
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_DELETE, new ProductConcretePageSearchPublishListener());
     }
 }
