@@ -119,7 +119,7 @@ class ShoppingListsResourceController extends AbstractController
         RestShoppingListAttributesTransfer $restShoppingListAttributesTransfer
     ): RestResponseInterface {
         return $this->getFactory()
-            ->createShoppingListsCreator()
+            ->createShoppingListCreator()
             ->createShoppingList($restRequest, $restShoppingListAttributesTransfer);
     }
 
@@ -162,7 +162,7 @@ class ShoppingListsResourceController extends AbstractController
         RestShoppingListAttributesTransfer $restShoppingListAttributesTransfer
     ): RestResponseInterface {
         return $this->getFactory()
-            ->createShoppingListsUpdater()
+            ->createShoppingListUpdater()
             ->updateShoppingList($restRequest, $restShoppingListAttributesTransfer);
     }
 
@@ -200,7 +200,7 @@ class ShoppingListsResourceController extends AbstractController
     public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createShoppingListsDeleter()
+            ->createShoppingListDeleter()
             ->deleteShoppingList($restRequest);
     }
 }

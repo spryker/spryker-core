@@ -18,7 +18,7 @@ interface ShoppingListsRestApiFacadeInterface
 {
     /**
      * Specification:
-     *  - Gets company user id by the uuid
+     *  - Gets company user id by the uuid.
      *  - Gets shopping list collection by the customer reference and the company user id.
      *
      * @api
@@ -33,7 +33,7 @@ interface ShoppingListsRestApiFacadeInterface
 
     /**
      * Specification:
-     *  - Gets company user id by the uuid
+     *  - Gets company user id by the uuid.
      *  - Finds shopping list by the uuid, the customer reference and the company user id.
      *
      * @api

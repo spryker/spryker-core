@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ShoppingListsRestApi\Processor\Mapper;
+namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem;
 
 use Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
-class ShoppingListItemsResourceMapper implements ShoppingListItemsResourceMapperInterface
+class ShoppingListItemMapper implements ShoppingListItemMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer

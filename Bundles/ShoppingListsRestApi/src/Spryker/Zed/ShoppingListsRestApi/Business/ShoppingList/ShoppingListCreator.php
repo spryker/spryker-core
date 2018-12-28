@@ -60,7 +60,7 @@ class ShoppingListCreator implements ShoppingListCreatorInterface
         $restShoppingListRequestTransfer->getShoppingList()
             ->requireName();
 
-        $customerResponseTransfer = $this->customerReader->findCustomer(
+        $customerResponseTransfer = $this->customerReader->findCustomerByCustomerReferenceAndCompanyUserUuid(
             $restShoppingListRequestTransfer->getCustomerReference(),
             $restShoppingListRequestTransfer->getCompanyUserUuid()
         );
@@ -87,7 +87,6 @@ class ShoppingListCreator implements ShoppingListCreatorInterface
 
         $shoppingListTransfer->setUuid($shoppingListResponseTransfer->getShoppingList()->getUuid());
 
-        // Fetching fulfilled structure (include `owner`)
         return $this->shoppingListFacade->findShoppingListByUuid($shoppingListTransfer);
     }
 }

@@ -81,7 +81,6 @@ class ShoppingListUpdater implements ShoppingListUpdaterInterface
             );
         }
 
-        // Fetching fulfilled structure (include `owner`)
         return $this->shoppingListFacade->findShoppingListByUuid($shoppingListTransfer);
     }
 }

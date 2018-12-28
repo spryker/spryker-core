@@ -54,12 +54,12 @@ class ShoppingListReader implements ShoppingListReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
-    public function getCustomerShoppingListCollection(CustomerTransfer $customerTransfer
-    ): ShoppingListCollectionTransfer
-    {
+    public function getCustomerShoppingListCollection(
+        CustomerTransfer $customerTransfer
+    ): ShoppingListCollectionTransfer {
         $customerTransfer->requireCompanyUserTransfer();
 
-        $customerResponseTransfer = $this->customerReader->findCustomer(
+        $customerResponseTransfer = $this->customerReader->findCustomerByCustomerReferenceAndCompanyUserUuid(
             $customerTransfer->getCustomerReference(),
             $customerTransfer->getCompanyUserTransfer()->getUuid()
         );
@@ -87,7 +87,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $restShoppingListRequestTransfer->getShoppingList()
             ->requireUuid();
 
-        $customerResponseTransfer = $this->customerReader->findCustomer(
+        $customerResponseTransfer = $this->customerReader->findCustomerByCustomerReferenceAndCompanyUserUuid(
             $restShoppingListRequestTransfer->getCustomerReference(),
             $restShoppingListRequestTransfer->getCompanyUserUuid()
         );

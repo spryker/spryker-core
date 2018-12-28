@@ -10,7 +10,6 @@ namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList;
 use Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListsResourceMapperInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\Request\RestRequestReaderInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\Response\RestResponseWriterInterface;
 
@@ -19,10 +18,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
     /**
      * @var \Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface
      */
-    protected $shoppingListClient;
+    protected $shoppingListsRestApiClient;
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListsResourceMapperInterface
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListMapperInterface
      */
     protected $shoppingListsResourceMapper;
 
@@ -37,18 +36,18 @@ class ShoppingListReader implements ShoppingListReaderInterface
     protected $restResponseWriter;
 
     /**
-     * @param \Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface $shoppingListClient
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListsResourceMapperInterface $shoppingListsResourceMapper
+     * @param \Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface $shoppingListsRestApiClient
+     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListMapperInterface $shoppingListsResourceMapper
      * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Request\RestRequestReaderInterface $restRequestReader
      * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Response\RestResponseWriterInterface $restResponseWriter
      */
     public function __construct(
-        ShoppingListsRestApiClientInterface $shoppingListClient,
-        ShoppingListsResourceMapperInterface $shoppingListsResourceMapper,
+        ShoppingListsRestApiClientInterface $shoppingListsRestApiClient,
+        ShoppingListMapperInterface $shoppingListsResourceMapper,
         RestRequestReaderInterface $restRequestReader,
         RestResponseWriterInterface $restResponseWriter
     ) {
-        $this->shoppingListClient = $shoppingListClient;
+        $this->shoppingListsRestApiClient = $shoppingListsRestApiClient;
         $this->shoppingListsResourceMapper = $shoppingListsResourceMapper;
         $this->restRequestReader = $restRequestReader;
         $this->restResponseWriter = $restResponseWriter;
@@ -73,7 +72,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
             );
         }
 
-        $shoppingListCollectionTransfer = $this->shoppingListClient->getCustomerShoppingListCollection(
+        $shoppingListCollectionTransfer = $this->shoppingListsRestApiClient->getCustomerShoppingListCollection(
             $customerResponseTransfer->getCustomerTransfer()
         );
 
@@ -110,7 +109,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
             );
         }
 
-        $shoppingListResponseTransfer = $this->shoppingListClient->findShoppingListByUuid($restShoppingListRequestTransfer);
+        $shoppingListResponseTransfer = $this->shoppingListsRestApiClient->findShoppingListByUuid($restShoppingListRequestTransfer);
 
         if ($shoppingListResponseTransfer->getIsSuccess() === false) {
             return $this->restResponseWriter->writeErrorsFromErrorCodes(

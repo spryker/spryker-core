@@ -16,8 +16,8 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemsResourceMapperInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListsResourceMapperInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListMapperInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemMapperInterface;
 use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
 class RestResponseWriter implements RestResponseWriterInterface
@@ -30,24 +30,24 @@ class RestResponseWriter implements RestResponseWriterInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListsResourceMapperInterface
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListMapperInterface
      */
     protected $shoppingListsResourceMapper;
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemsResourceMapperInterface
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemMapperInterface
      */
     protected $shoppingListItemsResourceMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListsResourceMapperInterface $shoppingListsResourceMapper
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemsResourceMapperInterface $shoppingListItemsResourceMapper
+     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListMapperInterface $shoppingListsResourceMapper
+     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemMapperInterface $shoppingListItemsResourceMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        ShoppingListsResourceMapperInterface $shoppingListsResourceMapper,
-        ShoppingListItemsResourceMapperInterface $shoppingListItemsResourceMapper
+        ShoppingListMapperInterface $shoppingListsResourceMapper,
+        ShoppingListItemMapperInterface $shoppingListItemsResourceMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->shoppingListsResourceMapper = $shoppingListsResourceMapper;

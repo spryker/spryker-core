@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ShoppingListsRestApi\Processor\Mapper;
+namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList;
 
 use Generated\Shared\Transfer\RestShoppingListAttributesTransfer;
 use Generated\Shared\Transfer\RestShoppingListRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
-class ShoppingListsResourceMapper implements ShoppingListsResourceMapperInterface
+interface ShoppingListMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
@@ -22,11 +22,7 @@ class ShoppingListsResourceMapper implements ShoppingListsResourceMapperInterfac
     public function mapShoppingListTransferToRestShoppingListsAttributesTransfer(
         ShoppingListTransfer $shoppingListTransfer,
         RestShoppingListAttributesTransfer $restShoppingListAttributesTransfer
-    ): RestShoppingListAttributesTransfer {
-        $restShoppingListAttributesTransfer->fromArray($shoppingListTransfer->toArray(), true);
-
-        return $restShoppingListAttributesTransfer;
-    }
+    ): RestShoppingListAttributesTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\RestShoppingListAttributesTransfer $restShoppingListAttributesTransfer
@@ -37,12 +33,5 @@ class ShoppingListsResourceMapper implements ShoppingListsResourceMapperInterfac
     public function mapRestShoppingListAttributesTransferToRestShoppingListRequestTransfer(
         RestShoppingListAttributesTransfer $restShoppingListAttributesTransfer,
         RestShoppingListRequestTransfer $restShoppingListRequestTransfer
-    ): RestShoppingListRequestTransfer {
-        $restShoppingListRequestTransfer->getShoppingList()->fromArray(
-            $restShoppingListAttributesTransfer->toArray(),
-            true
-        );
-
-        return $restShoppingListRequestTransfer;
-    }
+    ): RestShoppingListRequestTransfer;
 }

@@ -32,7 +32,8 @@ class ShoppingListsRestApiFacade extends AbstractFacade implements ShoppingLists
     public function getCustomerShoppingListCollection(
         CustomerTransfer $customerTransfer
     ): ShoppingListCollectionTransfer {
-        return $this->getFactory()->createShoppingListsRestApiReader()
+        return $this->getFactory()
+            ->createShoppingListReader()
             ->getCustomerShoppingListCollection($customerTransfer);
     }
 
@@ -49,7 +50,7 @@ class ShoppingListsRestApiFacade extends AbstractFacade implements ShoppingLists
         RestShoppingListRequestTransfer $restShoppingListRequestTransfer
     ): ShoppingListResponseTransfer {
         return $this->getFactory()
-            ->createShoppingListsRestApiReader()
+            ->createShoppingListReader()
             ->findShoppingListByUuid($restShoppingListRequestTransfer);
     }
 
@@ -66,7 +67,7 @@ class ShoppingListsRestApiFacade extends AbstractFacade implements ShoppingLists
         RestShoppingListRequestTransfer $restShoppingListRequestTransfer
     ): ShoppingListResponseTransfer {
         return $this->getFactory()
-            ->createShoppingListsRestApiCreator()
+            ->createShoppingListCreator()
             ->createShoppingList($restShoppingListRequestTransfer);
     }
 
@@ -83,7 +84,7 @@ class ShoppingListsRestApiFacade extends AbstractFacade implements ShoppingLists
         RestShoppingListRequestTransfer $restShoppingListRequestTransfer
     ): ShoppingListResponseTransfer {
         return $this->getFactory()
-            ->createShoppingListsRestApiUpdater()
+            ->createShoppingListUpdater()
             ->updateShoppingList($restShoppingListRequestTransfer);
     }
 
@@ -100,7 +101,7 @@ class ShoppingListsRestApiFacade extends AbstractFacade implements ShoppingLists
         RestShoppingListRequestTransfer $restShoppingListRequestTransfer
     ): ShoppingListResponseTransfer {
         return $this->getFactory()
-            ->createShoppingListsRestApiDeleter()
+            ->createShoppingListDeleter()
             ->deleteShoppingList($restShoppingListRequestTransfer);
     }
 

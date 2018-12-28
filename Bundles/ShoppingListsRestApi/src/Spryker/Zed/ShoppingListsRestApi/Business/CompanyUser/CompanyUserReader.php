@@ -34,7 +34,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function findCompanyUser(string $companyUserUuid, string $customerReference): CompanyUserResponseTransfer
+    public function findCompanyUserByUuid(string $companyUserUuid, string $customerReference): CompanyUserResponseTransfer
     {
         $companyUserTransfer = $this->companyUserFacade->findCompanyUserByUuid(
             (new CompanyUserTransfer())->setUuid($companyUserUuid)

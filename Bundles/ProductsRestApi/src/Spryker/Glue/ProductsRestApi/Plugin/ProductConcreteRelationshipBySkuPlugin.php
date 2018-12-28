@@ -31,7 +31,7 @@ class ProductConcreteRelationshipBySkuPlugin extends AbstractPlugin implements R
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createConcreteProductsRelationshipExpander()
+            ->createConcreteProductRelationshipExpander()
             ->addResourceRelationshipsBySku($resources, $restRequest);
     }
 

@@ -93,7 +93,7 @@ class ProductsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\ProductsRestApi\Processor\RelationshipExpander\ConcreteProductRelationshipExpanderInterface
      */
-    public function createConcreteProductsRelationshipExpander(): ConcreteProductRelationshipExpanderInterface
+    public function createConcreteProductRelationshipExpander(): ConcreteProductRelationshipExpanderInterface
     {
         return new ConcreteProductRelationshipExpander(
             $this->createConcreteProductsReader()

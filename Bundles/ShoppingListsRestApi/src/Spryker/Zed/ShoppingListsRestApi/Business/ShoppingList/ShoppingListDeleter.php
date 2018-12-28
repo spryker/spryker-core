@@ -67,8 +67,7 @@ class ShoppingListDeleter implements ShoppingListDeleterInterface
 
         $shoppingListTransfer = $this->shoppingListMapper->mapShoppingListResponseTransferToShoppingListTransfer(
             $shoppingListResponseTransferByUuid,
-            (new ShoppingListTransfer())
-                ->setName($restShoppingListRequestTransfer->getShoppingList()->getName())
+            new ShoppingListTransfer()
         );
 
         $shoppingListResponseTransfer = $this->shoppingListFacade->removeShoppingList($shoppingListTransfer);

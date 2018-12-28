@@ -17,5 +17,5 @@ interface CustomerReaderInterface
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function findCustomer(string $customerReference, string $companyUserUuid): CustomerResponseTransfer;
+    public function findCustomerByCustomerReferenceAndCompanyUserUuid(string $customerReference, string $companyUserUuid): CustomerResponseTransfer;
 }
