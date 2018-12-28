@@ -34,6 +34,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_TAX = 'FACADE_TAX';
     public const SHIPMENT_METHOD_FILTER_PLUGINS = 'SHIPMENT_METHOD_FILTER_PLUGINS';
+    public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -144,6 +145,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCurrencyFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMethodFilterPlugins($container);
+        $container = $this->addShipmentService($container);
 
         return $container;
     }
@@ -219,5 +221,19 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     protected function getMethodFilterPlugins(Container $container)
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentService(Container $container): Container
+    {
+        $container[static::SERVICE_SHIPMENT] = function (Container $container) {
+            return $container->getLocator()->shipment()->service();
+        };
+
+        return $container;
     }
 }
