@@ -24,13 +24,4 @@ interface ProductAlternativesRestApiToProductStorageClientInterface
      * @return array|null
      */
     public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array;
-
-    /**
-     * @param string $mappingType
-     * @param string $identifier
-     * @param string $localeName
-     *
-     * @return array|null
-     */
-    public function findProductConcreteStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array;
 }

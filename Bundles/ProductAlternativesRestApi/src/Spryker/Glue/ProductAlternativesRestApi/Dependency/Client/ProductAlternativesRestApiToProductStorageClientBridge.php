@@ -43,16 +43,4 @@ class ProductAlternativesRestApiToProductStorageClientBridge implements ProductA
     {
         return $this->productStorageClient->findProductAbstractStorageData($idProductAbstract, $localeName);
     }
-
-    /**
-     * @param string $mappingType
-     * @param string $identifier
-     * @param string $localeName
-     *
-     * @return array|null
-     */
-    public function findProductConcreteStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array
-    {
-        return $this->productStorageClient->findProductConcreteStorageDataByMapping($mappingType, $identifier, $localeName);
-    }
 }
