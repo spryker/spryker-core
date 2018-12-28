@@ -54,7 +54,7 @@ class ZedBootstrap
         $this->serviceContainer
             = $this->application
             = $this->getBaseApplication();
-//check it
+
         $this->sprykerApplication = new SprykerApplication($this->serviceContainer);
         $this->config = new ApplicationConfig();
     }
@@ -110,17 +110,17 @@ class ZedBootstrap
      */
     protected function setupApplication(): void
     {
-        foreach ($this->getApplicationExtensions() as $applicationExtension) {
-            $this->sprykerApplication->registerApplicationExtension($applicationExtension);
+        foreach ($this->getApplicationPlugins() as $applicationPlugin) {
+            $this->sprykerApplication->registerApplicationPlugin($applicationPlugin);
         }
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface[]
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
-    protected function getApplicationExtensions(): array
+    protected function getApplicationPlugins(): array
     {
-        return $this->getProvidedDependency(ApplicationDependencyProvider::APPLICATION_EXTENSIONS);
+        return $this->getProvidedDependency(ApplicationDependencyProvider::PLUGINS_APPLICATION);
     }
 
     /**

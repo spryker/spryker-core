@@ -38,7 +38,7 @@ abstract class AbstractGlueBootstrap
     protected $sprykerApplication;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\GlueApplicationConfig 
+     * @var \Spryker\Glue\GlueApplication\GlueApplicationConfig
      */
     protected $config;
 
@@ -108,16 +108,16 @@ abstract class AbstractGlueBootstrap
      */
     protected function setupApplication(): void
     {
-        foreach ($this->getApplicationPlugins() as $applicationPlugins) {
-            $this->sprykerApplication->registerApplicationExtension($applicationPlugins);
+        foreach ($this->getApplicationPlugins() as $applicationPlugin) {
+            $this->sprykerApplication->registerApplicationPlugin($applicationPlugin);
         }
     }
 
     /**
-     * @return array
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
     protected function getApplicationPlugins(): array
     {
-        return $this->getProvidedDependency(GlueApplicationDependencyProvider::APPLICATION_GLUE);
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_APPLICATION);
     }
 }

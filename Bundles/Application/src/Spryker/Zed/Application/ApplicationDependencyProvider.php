@@ -37,7 +37,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_PROVIDER_API = 'SERVICE_PROVIDER_API';
     public const INTERNAL_CALL_SERVICE_PROVIDER = 'INTERNAL_CALL_SERVICE_PROVIDER';
     public const INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION = 'INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION';
-    public const APPLICATION_EXTENSIONS = 'APPLICATION_EXTENSIONS';
+    public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -62,6 +62,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addApiServiceProviders($container);
         $container = $this->addInternalCallServiceProviders($container);
         $container = $this->addInternalCallServiceProvidersWithAuthentication($container);
+        $container = $this->addApplicationPlugins($container);
 
         return $container;
     }
@@ -185,10 +186,10 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addApplicationExtensions(Container $container): Container
+    protected function addApplicationPlugins(Container $container): Container
     {
-        $container->set(static::APPLICATION_EXTENSIONS, function (Container $container) {
-            return $this->getApplicationExtensions();
+        $container->set(static::PLUGINS_APPLICATION, function (Container $container): array {
+            return $this->getApplicationPlugins();
         });
     }
 
@@ -223,9 +224,9 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface[]
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
-    protected function getApplicationExtensions(): array
+    protected function getApplicationPlugins(): array
     {
         return [];
     }
