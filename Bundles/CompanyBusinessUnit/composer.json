@@ -18,6 +18,9 @@
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/company-user": "If you want to have company users management functionality: ^2.0.0"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",

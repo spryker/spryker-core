@@ -75,9 +75,4 @@
         <property name="text" type="string"/>
     </transfer>
 
-    <transfer name="CompanyUserResponse">
-        <property name="isSuccessful" type="bool"/>
-        <property name="messages" type="ResponseMessage[]" singular="message"/>
-    </transfer>
-
 </transfers>
