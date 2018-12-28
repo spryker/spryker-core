@@ -120,13 +120,13 @@ class ReclamationTable extends AbstractTable
     }
 
     /**
-     * @param string $state
+     * @param bool $isOpen
      *
      * @return string
      */
-    protected function createStateLabel(string $state): string
+    protected function createStateLabel(bool $isOpen): string
     {
-        if ($state) {
+        if ($isOpen) {
             return '<span class="label label-success" title="Active">Open</span>';
         }
         return '<span class="label label-danger" title="Deactivated">Closed</span>';
