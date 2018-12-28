@@ -17,11 +17,18 @@ class BaseMessageTray
     protected $translationPlugin;
 
     /**
-     * @param \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface $translationPlugin
+     * @var \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface
      */
-    public function __construct(TranslationPluginInterface $translationPlugin)
+    protected $fallbackTranslationPlugin;
+
+    /**
+     * @param \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface $translationPlugin
+     * @param \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface $fallbackTranslationPlugin
+     */
+    public function __construct(TranslationPluginInterface $translationPlugin, TranslationPluginInterface $fallbackTranslationPlugin)
     {
         $this->translationPlugin = $translationPlugin;
+        $this->fallbackTranslationPlugin = $fallbackTranslationPlugin;
     }
 
     /**
@@ -34,7 +41,11 @@ class BaseMessageTray
     {
         $translation = $keyName;
         if ($this->translationPlugin->hasKey($keyName)) {
-            $translation = $this->translationPlugin->translate($keyName, $data);
+            return $this->translationPlugin->translate($keyName, $data);
+        }
+
+        if ($this->fallbackTranslationPlugin->hasKey($keyName)) {
+            return $this->fallbackTranslationPlugin->translate($keyName, $data);
         }
 
         return $translation;

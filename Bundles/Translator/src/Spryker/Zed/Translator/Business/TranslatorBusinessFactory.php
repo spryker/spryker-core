@@ -14,6 +14,8 @@ use Spryker\Zed\Translator\Business\Cache\CacheClearer;
 use Spryker\Zed\Translator\Business\Cache\CacheClearerInterface;
 use Spryker\Zed\Translator\Business\Finder\TranslationFinder;
 use Spryker\Zed\Translator\Business\Finder\TranslationFinderInterface;
+use Spryker\Zed\Translator\Business\Key\KeyManager;
+use Spryker\Zed\Translator\Business\Key\KeyManagerInterface;
 use Spryker\Zed\Translator\Business\Translator\Translator;
 use Spryker\Zed\Translator\Business\Translator\TranslatorInterface;
 use Spryker\Zed\Translator\TranslatorDependencyProvider;
@@ -75,6 +77,14 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
         }
 
         return $translator;
+    }
+
+    /**
+     * @return \Spryker\Zed\Translator\Business\Key\KeyManagerInterface
+     */
+    public function createKeyManager(): KeyManagerInterface
+    {
+        return new KeyManager($this->createTranslator());
     }
 
     /**

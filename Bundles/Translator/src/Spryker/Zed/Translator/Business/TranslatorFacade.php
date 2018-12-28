@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Translator\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -41,5 +42,33 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     public function clearTranslationCache(): void
     {
         $this->getFactory()->createCacheClearer()->clearCache();
+    }
+
+    /**
+     * @api
+     *
+     * @param string $keyName
+     *
+     * @return bool
+     */
+    public function hasTranslation($keyName)
+    {
+        return $this->getFactory()->createKeyManager()->hasKey($keyName);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $keyName
+     * @param array $data
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return string
+     */
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null)
+    {
+         $translator = $this->getFactory()->createTranslator();
+
+         return $translator->trans($keyName, $data, $localeTransfer->getLocaleName());
     }
 }

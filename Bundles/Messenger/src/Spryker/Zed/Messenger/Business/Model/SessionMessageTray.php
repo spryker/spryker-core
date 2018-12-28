@@ -22,10 +22,11 @@ class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface $translationPlugin
+     * @param \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface $fallbackTranslationPlugin
      */
-    public function __construct(SessionInterface $session, TranslationPluginInterface $translationPlugin)
+    public function __construct(SessionInterface $session, TranslationPluginInterface $translationPlugin, TranslationPluginInterface $fallbackTranslationPlugin)
     {
-        parent::__construct($translationPlugin);
+        parent::__construct($translationPlugin, $fallbackTranslationPlugin);
         $this->session = $session;
     }
 

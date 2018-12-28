@@ -19,6 +19,7 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SESSION = 'session';
     public const PLUGIN_TRANSLATION = 'translation plugin';
+    public const PLUGIN_FALLBACK_TRANSLATION = 'fallback translation plugin';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,6 +30,7 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addSession($container);
         $container = $this->addTranslationPlugin($container);
+        $container = $this->addFallbackTranslationPlugin($container);
 
         return $container;
     }
@@ -55,6 +57,20 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
     protected function addTranslationPlugin(Container $container)
     {
         $container[static::PLUGIN_TRANSLATION] = function (Container $container) {
+            return new TranslationPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFallbackTranslationPlugin(Container $container)
+    {
+        $container[static::PLUGIN_FALLBACK_TRANSLATION] = function (Container $container) {
             return new TranslationPlugin();
         };
 

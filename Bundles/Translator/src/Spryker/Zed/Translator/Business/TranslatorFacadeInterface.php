@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Translator\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface TranslatorFacadeInterface
 {
     /**
@@ -28,4 +30,32 @@ interface TranslatorFacadeInterface
      * @return void
      */
     public function clearTranslationCache(): void;
+
+    /**
+     * Specification:
+     *  - Finds a key in the dictionary.
+     *
+     * @api
+     *
+     * @param string $keyName
+     *
+     * @return bool
+     */
+    public function hasTranslation($keyName);
+
+    /**
+     * Specification:
+     *  - Finds a translation for the specified key for the particular locale.
+     *
+     * @api
+     *
+     * @param string $keyName
+     * @param array $data
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
+     *
+     * @return string
+     */
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null);
 }
