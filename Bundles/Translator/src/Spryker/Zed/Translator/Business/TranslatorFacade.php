@@ -68,7 +68,8 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null)
     {
          $translator = $this->getFactory()->createTranslator();
+         $locale = $localeTransfer ? $localeTransfer->getLocaleName() : null;
 
-         return $translator->trans($keyName, $data, $localeTransfer->getLocaleName());
+         return $translator->trans($keyName, $data, $locale);
     }
 }
