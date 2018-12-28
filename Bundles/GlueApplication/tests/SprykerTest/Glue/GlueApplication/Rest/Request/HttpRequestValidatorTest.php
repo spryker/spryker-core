@@ -12,7 +12,6 @@ use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidator;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface;
-use Spryker\Glue\GlueApplication\Rest\Uri\UriParser;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -85,6 +84,6 @@ class HttpRequestValidatorTest extends Unit
      */
     public function createHttpRequestValidator(array $validatorPlugins = []): HttpRequestValidatorInterface
     {
-        return new HttpRequestValidator($validatorPlugins, $this->createResourceRouteLoaderMock(), new GlueApplicationConfig(), new UriParser());
+        return new HttpRequestValidator($validatorPlugins, $this->createResourceRouteLoaderMock(), new GlueApplicationConfig());
     }
 }

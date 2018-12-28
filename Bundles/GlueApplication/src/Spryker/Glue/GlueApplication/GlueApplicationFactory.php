@@ -227,8 +227,7 @@ class GlueApplicationFactory extends AbstractFactory
         return new HttpRequestValidator(
             $this->getValidateRequestPlugins(),
             $this->createRestResourceRouteLoader(),
-            $this->getConfig(),
-            $this->createRestUriParser()
+            $this->getConfig()
         );
     }
 
@@ -285,7 +284,7 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createRestCorsResponse(): CorsResponseInterface
     {
-        return new CorsResponse($this->createRestResourceRouteLoader(), $this->getConfig(), $this->createRestUriParser());
+        return new CorsResponse($this->createRestResourceRouteLoader(), $this->getConfig());
     }
 
     /**

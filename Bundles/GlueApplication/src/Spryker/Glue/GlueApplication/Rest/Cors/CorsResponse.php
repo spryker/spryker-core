@@ -12,7 +12,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface;
-use Spryker\Glue\GlueApplication\Rest\Uri\UriParserInterface;
 
 class CorsResponse implements CorsResponseInterface
 {
@@ -27,23 +26,15 @@ class CorsResponse implements CorsResponseInterface
     protected $config;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\Uri\UriParserInterface
-     */
-    protected $uriParser;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface $resourceRouteLoader
      * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $config
-     * @param \Spryker\Glue\GlueApplication\Rest\Uri\UriParserInterface $uriParser
      */
     public function __construct(
         ResourceRouteLoaderInterface $resourceRouteLoader,
-        GlueApplicationConfig $config,
-        UriParserInterface $uriParser
+        GlueApplicationConfig $config
     ) {
         $this->resourceRouteLoader = $resourceRouteLoader;
         $this->config = $config;
-        $this->uriParser = $uriParser;
     }
 
     /**
@@ -54,11 +45,10 @@ class CorsResponse implements CorsResponseInterface
      */
     public function addCorsHeaders(RestRequestInterface $restRequest, RestResponseInterface $restResponse): RestResponseInterface
     {
-        $resources = $this->uriParser->parse($restRequest->getHttpRequest());
         $availableMethods = $this->resourceRouteLoader
             ->getAvailableMethods(
                 $restRequest->getResource()->getType(),
-                $resources,
+                $restRequest->getParentResources(),
                 $restRequest->getHttpRequest()
             );
         $restResponse->addHeader(
