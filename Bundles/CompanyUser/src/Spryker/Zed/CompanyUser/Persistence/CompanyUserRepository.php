@@ -261,13 +261,13 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     public function hasCompanyUser(CompanyUserTransfer $companyUserTransfer): bool
     {
         $companyUserTransfer
-            ->requireFkCustomer()
+            ->requireCustomer()
             ->requireFkCompanyBusinessUnit();
 
         return $this->getFactory()
             ->createCompanyUserQuery()
             ->filterByFkCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit())
-            ->filterByFkCustomer($companyUserTransfer->getFkCustomer())
+            ->filterByFkCustomer($companyUserTransfer->getCustomer()->getIdCustomer())
             ->exists();
     }
 }

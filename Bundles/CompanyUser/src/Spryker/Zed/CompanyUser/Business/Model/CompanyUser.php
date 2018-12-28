@@ -197,12 +197,12 @@ class CompanyUser implements CompanyUserInterface
     protected function executeCreateTransaction(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
         $companyUserResponseTransfer = $this->registerCustomer($companyUserResponseTransfer);
-        $companyUserResponseTransfer = $this->companyUserPluginExecutor->executePreSavePlugins($companyUserResponseTransfer);
 
         if (!$companyUserResponseTransfer->getIsSuccessful()) {
             return $companyUserResponseTransfer;
         }
 
+        $companyUserResponseTransfer = $this->companyUserPluginExecutor->executePreSavePlugins($companyUserResponseTransfer);
         $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
         $companyUserTransfer = $this->companyUserEntityManager->saveCompanyUser($companyUserTransfer);
         $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);

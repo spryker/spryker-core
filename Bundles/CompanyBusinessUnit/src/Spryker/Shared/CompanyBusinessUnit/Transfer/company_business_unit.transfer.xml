@@ -74,5 +74,4 @@
     <transfer name="ResponseMessage">
         <property name="text" type="string"/>
     </transfer>
-
 </transfers>
