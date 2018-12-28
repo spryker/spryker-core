@@ -21,7 +21,7 @@ class CompanyUserOauthCustomerIdentifierExpanderPlugin extends AbstractPlugin im
 {
     /**
      * {@inheritdoc}
-     * - Expands the CustomerIdentifierTransfer with company user's uuid if exists.
+     * - Expands the CustomerIdentifierTransfer with company user's uuid if it is set up in CustomerTransfer.
      *
      * @api
      *

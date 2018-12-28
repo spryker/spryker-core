@@ -32,6 +32,6 @@ class CompanyUsersRestApiFacade extends AbstractFacade implements CompanyUsersRe
     ): CustomerIdentifierTransfer {
         return $this->getFactory()
             ->createCustomerIdentifierExpander()
-            ->expand($customerIdentifierTransfer, $customerTransfer);
+            ->expandCustomerIdentifier($customerIdentifierTransfer, $customerTransfer);
     }
 }
