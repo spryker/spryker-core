@@ -300,10 +300,11 @@ class CompanyBusinessUnitFacadeTest extends Test
                 CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
             ]
         );
+        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())->setCompanyUser($companyUserTransfer);
 
         // Act
         $existsCompanyUser = $this->getFacade()
-            ->checkUniqueCompanyUser($companyUserTransfer);
+            ->checkIfCompanyUserUnique($companyUserResponseTransfer);
 
         // Assert
         $this->assertTrue($existsCompanyUser->getIsSuccessful());
@@ -318,14 +319,15 @@ class CompanyBusinessUnitFacadeTest extends Test
         $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
         $customerTransfer = $this->tester->haveCustomer();
 
-        $notExistentСompanyUserTransfer = (new CompanyUserBuilder())
+        $notExistentCompanyUserTransfer = (new CompanyUserBuilder())
             ->build()
             ->setFkCustomer($customerTransfer->getIdCustomer())
             ->setFkCompanyBusinessUnit($businessUnitTransfer->getFkCompany());
+        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())->setCompanyUser($notExistentCompanyUserTransfer);
 
         // Act
         $existsCompanyUser = $this->getFacade()
-            ->checkUniqueCompanyUser($notExistentСompanyUserTransfer);
+            ->checkIfCompanyUserUnique($companyUserResponseTransfer);
 
         // Assert
         $this->assertFalse($existsCompanyUser->getIsSuccessful());

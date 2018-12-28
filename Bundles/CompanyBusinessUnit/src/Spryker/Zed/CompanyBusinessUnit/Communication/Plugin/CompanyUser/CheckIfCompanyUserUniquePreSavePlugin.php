@@ -8,15 +8,14 @@
 namespace Spryker\Zed\CompanyBusinessUnit\Communication\Plugin\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserSavePreCheckPluginInterface;
+use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSavePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyBusinessUnit\CompanyBusinessUnitConfig getConfig()
  */
-class CheckUniqueCompanyUserByBusinessUnitSavePreCheckPlugin extends AbstractPlugin implements CompanyUserSavePreCheckPluginInterface
+class CheckIfCompanyUserUniquePreSavePlugin extends AbstractPlugin implements CompanyUserPreSavePluginInterface
 {
     /**
      * {@inheritdoc}
@@ -24,13 +23,13 @@ class CheckUniqueCompanyUserByBusinessUnitSavePreCheckPlugin extends AbstractPlu
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function check(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    public function preSave(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
         return $this->getFacade()
-            ->checkUniqueCompanyUser($companyUserTransfer);
+            ->checkIfCompanyUserUnique($companyUserResponseTransfer);
     }
 }

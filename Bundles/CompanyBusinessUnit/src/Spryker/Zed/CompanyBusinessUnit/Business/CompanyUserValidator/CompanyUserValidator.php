@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyUserValidator;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface;
 
@@ -19,7 +18,7 @@ class CompanyUserValidator implements CompanyUserValidatorInterface
     /**
      * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface
      */
-    protected $repository;
+    protected $companyBusinessUnitRepository;
 
     /**
      * @param \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface $companyBusinessUnitRepository
@@ -27,20 +26,19 @@ class CompanyUserValidator implements CompanyUserValidatorInterface
     public function __construct(
         CompanyBusinessUnitRepositoryInterface $companyBusinessUnitRepository
     ) {
-        $this->repository = $companyBusinessUnitRepository;
+        $this->companyBusinessUnitRepository = $companyBusinessUnitRepository;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function checkUniqueCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
-    {
-        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())->setIsSuccessful(true);
-
-        $existsCompanyUser = $this->repository
-            ->hasCompanyUser($companyUserTransfer);
+    public function checkIfCompanyUserUnique(
+        CompanyUserResponseTransfer $companyUserResponseTransfer
+    ): CompanyUserResponseTransfer {
+        $existsCompanyUser = $this->companyBusinessUnitRepository
+            ->hasCompanyUser($companyUserResponseTransfer->getCompanyUser());
 
         if (!$existsCompanyUser) {
             return $companyUserResponseTransfer;
