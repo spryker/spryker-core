@@ -252,4 +252,22 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
 
         return $query->count();
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return bool
+     */
+    public function hasCompanyUser(CompanyUserTransfer $companyUserTransfer): bool
+    {
+        $companyUserTransfer
+            ->requireFkCustomer()
+            ->requireFkCompanyBusinessUnit();
+
+        return $this->getFactory()
+            ->createCompanyUserQuery()
+            ->filterByFkCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit())
+            ->filterByFkCustomer($companyUserTransfer->getFkCustomer())
+            ->exists();
+    }
 }

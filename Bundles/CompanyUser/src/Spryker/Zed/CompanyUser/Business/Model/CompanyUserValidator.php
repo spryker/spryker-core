@@ -5,40 +5,44 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyUserValidator;
+namespace Spryker\Zed\CompanyUser\Business\Model;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
-use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface;
+use Spryker\Zed\CompanyUser\Persistence\CompanyUserRepositoryInterface;
 
 class CompanyUserValidator implements CompanyUserValidatorInterface
 {
     protected const MESSAGE_ERROR_COMPANY_USER_ALREADY_ATTACHED = 'Customer already attached to this business unit.';
 
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface
+     * @var \Spryker\Zed\CompanyUser\Persistence\CompanyUserRepositoryInterface
      */
-    protected $companyBusinessUnitRepository;
+    protected $companyUserRepository;
 
     /**
-     * @param \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface $companyBusinessUnitRepository
+     * @param \Spryker\Zed\CompanyUser\Persistence\CompanyUserRepositoryInterface $companyUserRepository
      */
     public function __construct(
-        CompanyBusinessUnitRepositoryInterface $companyBusinessUnitRepository
+        CompanyUserRepositoryInterface $companyUserRepository
     ) {
-        $this->companyBusinessUnitRepository = $companyBusinessUnitRepository;
+        $this->companyUserRepository = $companyUserRepository;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function checkIfCompanyUserUnique(
-        CompanyUserResponseTransfer $companyUserResponseTransfer
-    ): CompanyUserResponseTransfer {
-        $existsCompanyUser = $this->companyBusinessUnitRepository
-            ->hasCompanyUser($companyUserResponseTransfer->getCompanyUser());
+    public function checkIfCompanyUserUnique(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())
+            ->setCompanyUser($companyUserTransfer)
+            ->setIsSuccessful(true);
+
+        $existsCompanyUser = $this->companyUserRepository
+            ->hasCompanyUser($companyUserTransfer);
 
         if (!$existsCompanyUser) {
             return $companyUserResponseTransfer;

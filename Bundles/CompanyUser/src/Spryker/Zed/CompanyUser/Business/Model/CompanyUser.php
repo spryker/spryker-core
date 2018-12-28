@@ -44,21 +44,29 @@ class CompanyUser implements CompanyUserInterface
     protected $companyUserPluginExecutor;
 
     /**
+     * @var \Spryker\Zed\CompanyUser\Business\Model\CompanyUserValidatorInterface
+     */
+    protected $companyUserValidator;
+
+    /**
      * @param \Spryker\Zed\CompanyUser\Persistence\CompanyUserRepositoryInterface $companyUserRepository
      * @param \Spryker\Zed\CompanyUser\Persistence\CompanyUserEntityManagerInterface $companyUserEntityManager
      * @param \Spryker\Zed\CompanyUser\Dependency\Facade\CompanyUserToCustomerFacadeInterface $customerFacade
      * @param \Spryker\Zed\CompanyUser\Business\Model\CompanyUserPluginExecutorInterface $companyUserPluginExecutor
+     * @param \Spryker\Zed\CompanyUser\Business\Model\CompanyUserValidatorInterface $companyUserValidator
      */
     public function __construct(
         CompanyUserRepositoryInterface $companyUserRepository,
         CompanyUserEntityManagerInterface $companyUserEntityManager,
         CompanyUserToCustomerFacadeInterface $customerFacade,
-        CompanyUserPluginExecutorInterface $companyUserPluginExecutor
+        CompanyUserPluginExecutorInterface $companyUserPluginExecutor,
+        CompanyUserValidatorInterface $companyUserValidator
     ) {
         $this->companyUserRepository = $companyUserRepository;
         $this->companyUserEntityManager = $companyUserEntityManager;
         $this->customerFacade = $customerFacade;
         $this->companyUserPluginExecutor = $companyUserPluginExecutor;
+        $this->companyUserValidator = $companyUserValidator;
     }
 
     /**
@@ -68,9 +76,11 @@ class CompanyUser implements CompanyUserInterface
      */
     public function create(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())
-            ->setCompanyUser($companyUserTransfer)
-            ->setIsSuccessful(true);
+        $companyUserResponseTransfer = $this->companyUserValidator->checkIfCompanyUserUnique($companyUserTransfer);
+
+        if (!$companyUserResponseTransfer->getIsSuccessful()) {
+            return $companyUserResponseTransfer;
+        }
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyUserResponseTransfer) {
             return $this->executeCreateTransaction($companyUserResponseTransfer);
@@ -84,9 +94,11 @@ class CompanyUser implements CompanyUserInterface
      */
     public function save(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())
-            ->setCompanyUser($companyUserTransfer)
-            ->setIsSuccessful(true);
+        $companyUserResponseTransfer = $this->companyUserValidator->checkIfCompanyUserUnique($companyUserTransfer);
+
+        if (!$companyUserResponseTransfer->getIsSuccessful()) {
+            return $companyUserResponseTransfer;
+        }
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyUserResponseTransfer) {
             $companyUserResponseTransfer = $this->executeSaveTransaction($companyUserResponseTransfer);
