@@ -2,44 +2,113 @@
 
     {% block widget_content %}
         <div class="row">
-            <div class="col-xs-12 col-md-4">
-                <p><b>{{ 'Order Reference' | trans }}:</b> {{ order.orderReference }}</p>
-                <p><b>{{ 'Order date' | trans }}:</b> {{ order.createdAt | formatDateTime }}</p>
-                <p><b>{{ 'Grand total' | trans }}:</b> {{ order.totals.grandTotal | money(true, order.currencyIsoCode) }}</p>
-                <p><b>{{ 'Discount' | trans }}:</b> {{ order.totals.discountTotal | money(true, order.currencyIsoCode) }}</p>
-                <p><b>{{ 'Unique Product Quantity' | trans }}:</b> {{ order.uniqueProductQuantity }}</p>
+            <div class="col-xs-12 col-md-6">
+                <p><b>{{ 'Reference' | trans }}</b></p><p>{{ order.orderReference }}</p>
+                <p><b>{{ 'Date' | trans }}:</b></p><p>{{ order.createdAt | formatDateTime }}</p>
+                <p><b>{{ 'Unique Product Quantity' | trans }}:</b></p><p>{{ order.uniqueProductQuantity }}</p>
             </div>
-            <div class="col-xs-12 col-md-4">
-                {% if order.customerReference %}
-                    <p><b>{{ 'Customer Reference' | trans }}:</b>
-                      {{ order.customerReference }}
-                    </p>
-                {% endif %}
-                <p><b>{{ 'Customer name' | trans }}:</b>
-                    {% if order.customerReference %}
-                        <a href="{{ url('/customer/view', {'id-customer': order.fkCustomer}) }}" target="_blank">{{ order.salutation }} {{ order.firstName }} {{ order.lastName }}</a>
-                    {% else %}
-                        {{ order.salutation }} {{ order.firstName }} {{ order.lastName }}
-                    {% endif %}
-                </p>
-              {% if order.customer is not null and order.customer.dateOfBirth %}
-                  <p><b>{{ 'Date of Birth' | trans }}:</b>
-                    {{ order.customer.dateOfBirth | formatDate }}
-                  </p>
-              {% endif %}
-                <p><b>{{ 'Email' | trans }}:</b> {{ order.email }}</p>
-                <p><b>{{ 'Status' | trans }}:</b>
-                    {% for state in distinctOrderStates %}
-                      <span class="label label-info">{{ state }}</span>
+            <div class="col-xs-12 col-md-6">
+                <p><b>{{ 'Totals' | trans }}</b></p>
+                <table class="footable table toggle-arrow-tiny" data-qa="totals-list">
+                    <tbody>
+                    {% for orderItem in groupedOrderItems %}
+                        <tr>
+                            <th>{{ orderItem.name }} x {{ orderItem.quantity }}</th>
+                            <th></th>
+                            <td class="text-right">{{ orderItem.price | money(true, order.currencyIsoCode)  }}</td>
+                            <th></th>
+                        </tr>
+                        {% for orderItemOption in orderItem.productOptions %}
+                            <tr>
+                                <td> + <span class="label">{{ 'Option' | trans }}</span> {{ orderItemOption.value }}</td>
+                                <td></td>
+                                <td class="text-right">{{ orderItemOption.sumPrice | money(true, order.currencyIsoCode) }}</td>
+                                <td></td>
+                            </tr>
+                        {% endfor %}
                     {% endfor %}
-                </p>
-                 {% if order.totalOrderCount > 0 %}
-                    <p><b>{{ 'All orders of the customer' | trans }}:</b> ({{ order.totalOrderCount }})</p>
-                 {% endif %}
-            </div>
-            <div class="col-xs-12 col-md-4">
-                {{ render(controller('/sales/comment/list', {'request': app.request})) }}
-                {{ add_comments | raw }}
+
+                    {% if order.bundleItems is defined %}
+                        {% for orderItem in order.bundleItems %}
+                            <tr>
+                                <th>{{ orderItem.name }}</th>
+                                <th></th>
+                                <td class="text-right">{{ orderItem.sumPrice | money(true, order.currencyIsoCode)  }}</td>
+                                <th></th>
+                            </tr>
+                            {% for bundledItem in order.items if bundledItem.relatedBundleItemIdentifier == orderItem.bundleItemIdentifier %}
+                                <tr>
+                                    <th></th>
+                                    <th>{{ bundledItem.name }}</th>
+                                    <td class="text-right">{{ bundledItem.sumPrice | money(true, order.currencyIsoCode)  }}</td>
+                                    <td></td>
+                                </tr>
+                                {% for orderItemOption in bundledItem.productOptions %}
+                                    <tr>
+                                        <td></td>
+                                        <td> + {{ orderItemOption.value }}</td>
+                                        <td class="text-right">{{ orderItemOption.sumPrice | money(true, order.currencyIsoCode)  }}</td>
+                                        <td></td>
+                                    </tr>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+
+                    <tr class="subtotal-row">
+                        <td><strong>{{ 'Sub total' | trans }}</strong></td>
+                        <td></td>
+                        <td class="text-right"><strong>{{ order.totals.subtotal | money(true, order.currencyIsoCode) }}</strong></td>
+                        <td></td>
+                    </tr>
+                    {% for expense in order.expenses %}
+                        <tr>
+                            <td>
+                                {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' %}
+                                    {{ 'Shipment' | trans }} - {{ expense.name }}
+                                {% endif %}
+                                {% if expense.type == 'THRESHOLD_EXPENSE_TYPE' %}
+                                    {{ 'Surcharge' | trans }}
+                                {% endif %}
+                            </td>
+                            <td></td>
+                            <td class="text-right">{{ expense.sumPrice | money(true, order.currencyIsoCode)  }}</td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td>{{ 'Discount' | trans }}</td>
+                        <td></td>
+                        <td class="text-right">-{{ order.totals.discountTotal | default(0) | money(true, order.currencyIsoCode) }}</td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td>{{ 'Canceled amount' | trans }}</td>
+                        <td></td>
+                        <td class="text-right" data-qa="grand-total" data-qa-grand-total-raw="{{ order.totals.canceledTotal }}">-{{ order.totals.canceledTotal | default(0) | money(true, order.currencyIsoCode) }}</td>
+                        <td></td>
+                    </tr>
+
+                    <tr class="grandTotal-row">
+                        <td>
+                            <strong>{{ 'GRAND TOTAL' | trans }}</strong>
+                        </td>
+                        <td></td>
+                        <td class="text-right" data-qa="grand-total" data-qa-grand-total-raw="{{ order.totals.grandTotal }}">
+                            <strong>{{ order.totals.grandTotal | money(true, order.currencyIsoCode) }}</strong>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'Total taxes' | trans }}</td>
+                        <td></td>
+                        <td class="text-right">{{ order.totals.taxTotal.amount | money(true, order.currencyIsoCode) }}</td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
