@@ -111,7 +111,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     public function getCodingStandard(): string
     {
         if ($this->getLevel() === static::LEVEL_SPRYKER_STRICT) {
-            return $this->developmentConfig->getStrictCodingStandard();
+            return APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR . 'spryker/code-sniffer/SprykerStrict/ruleset.xml';
         }
 
         return $this->developmentConfig->getCodingStandard();

@@ -149,19 +149,6 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
-     * Either a relative or full path to the stricter ruleset.xml or a name of an installed
-     * standard (see `phpcs -i` for a list of available ones).
-     *
-     * @return string
-     */
-    public function getStrictCodingStandard()
-    {
-        $vendorDir = APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR;
-
-        return $vendorDir . 'spryker/code-sniffer/SprykerStrict/ruleset.xml';
-    }
-
-    /**
      * Either a relative or full path to the ruleset.xml or a name of an installed
      * standard. Can also be a comma separated list of multiple ones.
      *
