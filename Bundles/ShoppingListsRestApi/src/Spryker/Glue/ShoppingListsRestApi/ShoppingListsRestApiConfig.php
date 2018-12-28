@@ -28,6 +28,7 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
     public const ACTION_SHOPPING_LIST_ITEMS_DELETE = 'delete';
     public const ACTION_SHOPPING_LIST_ITEMS_PATCH = 'patch';
 
+    public const RESPONSE_UNEXPECTED_HTTP_STATUS = Response::HTTP_INTERNAL_SERVER_ERROR;
     public const RESPONSE_ERROR_MAP = [
         SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_ID_NOT_SPECIFIED => [
             'status' => Response::HTTP_BAD_REQUEST,

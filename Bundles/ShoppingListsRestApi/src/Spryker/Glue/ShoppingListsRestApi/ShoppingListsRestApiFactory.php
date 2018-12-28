@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\ShoppingListsRestApi;
 
-use Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemsResourceMapper;
 use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemsResourceMapperInterface;
@@ -42,7 +41,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     public function createShoppingListsReader(): ShoppingListReaderInterface
     {
         return new ShoppingListReader(
-            $this->getShoppingListsClient(),
+            $this->getClient(),
             $this->createShoppingListsResourceMapper(),
             $this->createRestRequestReader(),
             $this->createRestRequestWriter()
@@ -55,7 +54,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     public function createShoppingListsCreator(): ShoppingListCreatorInterface
     {
         return new ShoppingListCreator(
-            $this->getShoppingListsClient(),
+            $this->getClient(),
             $this->createShoppingListsResourceMapper(),
             $this->createRestRequestReader(),
             $this->createRestRequestWriter()
@@ -68,7 +67,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     public function createShoppingListsUpdater(): ShoppingListUpdaterInterface
     {
         return new ShoppingListUpdater(
-            $this->getShoppingListsClient(),
+            $this->getClient(),
             $this->createShoppingListsResourceMapper(),
             $this->createRestRequestReader(),
             $this->createRestRequestWriter()
@@ -81,7 +80,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     public function createShoppingListsDeleter(): ShoppingListDeleterInterface
     {
         return new ShoppingListDeleter(
-            $this->getShoppingListsClient(),
+            $this->getClient(),
             $this->createShoppingListsResourceMapper(),
             $this->createRestRequestReader(),
             $this->createRestRequestWriter()
@@ -94,7 +93,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     public function createShoppingListItemAdder(): ShoppingListItemAdderInterface
     {
         return new ShoppingListItemAdder(
-            $this->getShoppingListsClient(),
+            $this->getClient(),
             $this->createShoppingListItemsResourceMapper(),
             $this->createRestRequestReader(),
             $this->createRestRequestWriter()
@@ -107,7 +106,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     public function createShoppingListItemUpdater(): ShoppingListItemUpdaterInterface
     {
         return new ShoppingListItemUpdater(
-            $this->getShoppingListsClient(),
+            $this->getClient(),
             $this->createShoppingListItemsResourceMapper(),
             $this->createRestRequestReader(),
             $this->createRestRequestWriter()
@@ -120,19 +119,11 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     public function createShoppingListItemDeleter(): ShoppingListItemDeleter
     {
         return new ShoppingListItemDeleter(
-            $this->getShoppingListsClient(),
+            $this->getClient(),
             $this->createShoppingListItemsResourceMapper(),
             $this->createRestRequestReader(),
             $this->createRestRequestWriter()
         );
-    }
-
-    /**
-     * @return \Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface
-     */
-    public function getShoppingListsClient(): ShoppingListsRestApiClientInterface
-    {
-        return $this->getClient();
     }
 
     /**

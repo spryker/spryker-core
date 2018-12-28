@@ -19,7 +19,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListItemsResourceMapperInterface;
 use Spryker\Glue\ShoppingListsRestApi\Processor\Mapper\ShoppingListsResourceMapperInterface;
 use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
-use Symfony\Component\HttpFoundation\Response;
 
 class RestResponseWriter implements RestResponseWriterInterface
 {
@@ -75,7 +74,7 @@ class RestResponseWriter implements RestResponseWriterInterface
     ): RestResponseInterface {
         foreach ($errorCodes as $errorCode) {
             $errorSignature = ShoppingListsRestApiConfig::RESPONSE_ERROR_MAP[$errorCode] ?? [
-                    'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                    'status' => ShoppingListsRestApiConfig::RESPONSE_UNEXPECTED_HTTP_STATUS,
                     'detail' => $errorCode,
                 ];
 
