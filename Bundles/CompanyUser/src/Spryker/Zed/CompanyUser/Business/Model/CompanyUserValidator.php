@@ -42,7 +42,7 @@ class CompanyUserValidator implements CompanyUserValidatorInterface
             ->setIsSuccessful(true);
 
         $existsCompanyUser = $this->companyUserRepository
-            ->hasCompanyUser($companyUserTransfer);
+            ->isCompanyUserExists($companyUserTransfer);
 
         if (!$existsCompanyUser) {
             return $companyUserResponseTransfer;
