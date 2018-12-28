@@ -147,7 +147,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
      *
      * @return void
      */
-    protected function addItemTransfers(QuoteTransfer $quoteTransfer, AddressTransfer $addressTransfer = null): void
+    protected function addItemTransfers(QuoteTransfer $quoteTransfer, ?AddressTransfer $addressTransfer = null): void
     {
         $itemTransfer1 = $this->createProductItemTransfer(1, $addressTransfer);
         $itemTransfer1->addProductOption($this->createProductOption(1));
@@ -164,7 +164,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createProductItemTransfer($id, AddressTransfer $addressTransfer = null): ItemTransfer
+    protected function createProductItemTransfer($id, ?AddressTransfer $addressTransfer = null): ItemTransfer
     {
         $itemTransfer = $this->createItemTransfer();
         $itemTransfer->setIdProductAbstract($id);
@@ -179,7 +179,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    protected function createShipment(AddressTransfer $addressTransfer = null): ShipmentTransfer
+    protected function createShipment(?AddressTransfer $addressTransfer = null): ShipmentTransfer
     {
         $shipmentTransfer = $this->createShipmentTransfer();
         if ($addressTransfer !== null) {

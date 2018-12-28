@@ -86,6 +86,8 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
         $existingAddresses = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->requireShipment();
+
             $hash = $this->createAddressTransferHash($itemTransfer->getShipment()->getShippingAddress());
 
             if (isset($existingAddresses[$hash])) {

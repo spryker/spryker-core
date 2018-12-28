@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\TaxProductConnector\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
+use Spryker\Zed\TaxProductConnector\Business\Model\Country\ProductOptionCountryTableMapInterface;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
@@ -64,11 +65,11 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return string[]
      */
-    protected function getCountryIso2CodesByIdProductAbstracts(array $itemTransfers): array
+    protected function getCountryIso2CodesByIdProductAbstracts(ArrayObject $itemTransfers): array
     {
         $countryIso2CodesByIdProductAbstracts = [];
 
@@ -139,13 +140,12 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
             ->find();
 
         foreach ($foundResults as $data) {
-            $key = $this->getTaxGroupedKey($data[TaxProductConnectorQueryContainer::COL_ID_ABSTRACT_PRODUCT], $data[SpyCountryTableMap::COL_ISO2_CODE]);
+            $key = $this->getTaxGroupedKey($data[TaxProductConnectorQueryContainer::COL_ID_ABSTRACT_PRODUCT], $data[ProductOptionCountryTableMapInterface::COL_ISO2_CODE]);
             $groupedResults[$key] = $data[TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE];
         }
 
         return $groupedResults;
     }
-
 
     /**
      * @param string[] $countryIso2CodesByIdProductAbstracts
