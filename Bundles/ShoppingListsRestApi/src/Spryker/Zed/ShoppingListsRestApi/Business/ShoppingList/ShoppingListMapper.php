@@ -24,7 +24,6 @@ class ShoppingListMapper implements ShoppingListMapperInterface
         ShoppingListResponseTransfer $shoppingListResponseTransfer,
         ShoppingListTransfer $shoppingListTransfer
     ): ShoppingListTransfer {
-
         $shoppingListTransfer
             ->setUuid($shoppingListResponseTransfer->getShoppingList()->getUuid())
             ->setCustomerReference($shoppingListResponseTransfer->getShoppingList()->getCustomerReference())
@@ -44,7 +43,6 @@ class ShoppingListMapper implements ShoppingListMapperInterface
         CustomerResponseTransfer $customerResponseTransfer,
         ShoppingListResponseTransfer $shoppingListResponseTransfer
     ): ShoppingListResponseTransfer {
-
         $shoppingListResponseTransfer->setIsSuccess(false);
 
         foreach ($customerResponseTransfer->getErrors() as $customerErrorTransfer) {
@@ -64,7 +62,6 @@ class ShoppingListMapper implements ShoppingListMapperInterface
     public function mapShoppingListResponseErrorsToRestCodes(
         ShoppingListResponseTransfer $shoppingListResponseTransfer
     ): ShoppingListResponseTransfer {
-
         $errorCodes = [];
         foreach ($shoppingListResponseTransfer->getErrors() as $error) {
             $errorCodes[] = ShoppingListsRestApiConfig::RESPONSE_ERROR_MAP[$error] ?? $error;

@@ -68,7 +68,6 @@ class RestRequestReader implements RestRequestReaderInterface
     public function readRestShoppingListRequestTransferFromRequest(
         RestRequestInterface $restRequest
     ): RestShoppingListRequestTransfer {
-
         $customerResponseTransfer = $this->readCustomerResponseTransferFromRequest($restRequest);
 
         if ($customerResponseTransfer->getIsSuccess() === false) {
@@ -93,7 +92,6 @@ class RestRequestReader implements RestRequestReaderInterface
         ?string $uuidShoppingList,
         RestRequestInterface $restRequest
     ): RestShoppingListRequestTransfer {
-
         if (!$uuidShoppingList) {
             return (new RestShoppingListRequestTransfer())->addError(
                 SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_ID_NOT_SPECIFIED
@@ -119,7 +117,6 @@ class RestRequestReader implements RestRequestReaderInterface
     public function readRestShoppingListItemRequestTransferFromRequest(
         RestRequestInterface $restRequest
     ): RestShoppingListItemRequestTransfer {
-
         $uuidShoppingList = $this->readParentUuidShoppingList($restRequest);
         $restShoppingListRequestTransfer = $this->readRestShoppingListRequestTransferWithUuidFromRequest(
             $uuidShoppingList,
@@ -149,7 +146,6 @@ class RestRequestReader implements RestRequestReaderInterface
     public function readRestShoppingListItemRequestTransferWithUuidFromRequest(
         RestRequestInterface $restRequest
     ): RestShoppingListItemRequestTransfer {
-
         $uuidShoppingListItem = $restRequest->getResource()->getId();
         if (!$uuidShoppingListItem) {
             return (new RestShoppingListItemRequestTransfer())->addError(

@@ -65,7 +65,6 @@ class ShoppingListCreator implements ShoppingListCreatorInterface
         RestRequestInterface $restRequest,
         RestShoppingListAttributesTransfer $restShoppingListAttributesTransfer
     ): RestResponseInterface {
-
         $restResponse = $this->restResponseWriter->createRestResponse();
 
         $restShoppingListRequestTransfer = $this->restRequestReader->readRestShoppingListRequestTransferFromRequest(

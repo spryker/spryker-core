@@ -96,7 +96,6 @@ class ShoppingListReader implements ShoppingListReaderInterface
         string $uuidShoppingList,
         RestRequestInterface $restRequest
     ): RestResponseInterface {
-
         $restResponse = $this->restResponseWriter->createRestResponse();
 
         $restShoppingListRequestTransfer = $this->restRequestReader->readRestShoppingListRequestTransferWithUuidFromRequest(

@@ -62,7 +62,6 @@ class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
     public function deleteShoppingListItem(
         RestRequestInterface $restRequest
     ): RestResponseInterface {
-
         $restResponse = $this->restResponseWriter->createRestResponse();
         $restShoppingListItemRequestTransfer = $this->restRequestReader->readRestShoppingListItemRequestTransferWithUuidFromRequest(
             $restRequest

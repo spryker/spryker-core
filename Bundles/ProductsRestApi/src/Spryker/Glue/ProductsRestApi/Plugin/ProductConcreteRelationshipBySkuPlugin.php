@@ -10,6 +10,7 @@ namespace Spryker\Glue\ProductsRestApi\Plugin;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
+use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 
 /**
  * @method \Spryker\Glue\ProductsRestApi\ProductsRestApiFactory getFactory()
@@ -18,6 +19,7 @@ class ProductConcreteRelationshipBySkuPlugin extends AbstractPlugin implements R
 {
     /**
      * {@inheritdoc}
+     * - Adds product-concrete relationship by product sku.
      *
      * @api
      *
@@ -42,6 +44,6 @@ class ProductConcreteRelationshipBySkuPlugin extends AbstractPlugin implements R
      */
     public function getRelationshipResourceType(): string
     {
-        return 'concrete-products';
+        return ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS;
     }
 }

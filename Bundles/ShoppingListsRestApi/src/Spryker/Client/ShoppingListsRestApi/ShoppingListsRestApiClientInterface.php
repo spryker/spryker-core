@@ -17,9 +17,8 @@ use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 interface ShoppingListsRestApiClientInterface
 {
     /**
-     * TODO
      * Specification:
-     *  - Gets company user id by the uuid
+     *  - Gets company user id by the uuid.
      *  - Gets shopping list collection by the customer reference and the company user id.
      *
      * @api
@@ -34,7 +33,7 @@ interface ShoppingListsRestApiClientInterface
 
     /**
      * Specification:
-     *  - Gets company user id by the uuid
+     *  - Gets company user id by the uuid.
      *  - Finds shopping list by the uuid, the customer reference and the company user id.
      *
      * @api

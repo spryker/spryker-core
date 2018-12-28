@@ -25,7 +25,6 @@ class ShoppingListItemMapper implements ShoppingListItemMapperInterface
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer,
         RestShoppingListRequestTransfer $restShoppingListRequestTransfer
     ): RestShoppingListRequestTransfer {
-
         return $restShoppingListRequestTransfer
             ->setCompanyUserUuid($restShoppingListItemRequestTransfer->getCompanyUserUuid())
             ->setCustomerReference($restShoppingListItemRequestTransfer->getShoppingListItem()->getCustomerReference())

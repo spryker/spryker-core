@@ -24,7 +24,6 @@ class ShoppingListsResourceMapper implements ShoppingListsResourceMapperInterfac
         RestShoppingListAttributesTransfer $restShoppingListAttributesTransfer
     ): RestShoppingListAttributesTransfer {
         $restShoppingListAttributesTransfer->fromArray($shoppingListTransfer->toArray(), true);
-//        $restShoppingListAttributesTransfer->setNumberOfItems($shoppingListTransfer->getNumberOfItems() ?? 0);
 
         return $restShoppingListAttributesTransfer;
     }

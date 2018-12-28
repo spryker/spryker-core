@@ -65,7 +65,6 @@ class ShoppingListItemUpdater implements ShoppingListItemUpdaterInterface
         RestRequestInterface $restRequest,
         RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
     ): RestResponseInterface {
-
         $restResponse = $this->restResponseWriter->createRestResponse();
         $restShoppingListItemRequestTransfer = $this->restRequestReader->readRestShoppingListItemRequestTransferWithUuidFromRequest(
             $restRequest

@@ -65,7 +65,6 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
         RestRequestInterface $restRequest,
         RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
     ): RestResponseInterface {
-
         $restResponse = $this->restResponseWriter->createRestResponse();
         $restShoppingListItemRequestTransfer = $this->restRequestReader->readRestShoppingListItemRequestTransferFromRequest(
             $restRequest

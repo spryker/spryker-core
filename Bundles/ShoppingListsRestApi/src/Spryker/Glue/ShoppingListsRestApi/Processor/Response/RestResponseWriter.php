@@ -73,7 +73,6 @@ class RestResponseWriter implements RestResponseWriterInterface
         array $errorCodes,
         RestResponseInterface $restResponse
     ): RestResponseInterface {
-
         foreach ($errorCodes as $errorCode) {
             $errorSignature = ShoppingListsRestApiConfig::RESPONSE_ERROR_MAP[$errorCode] ?? [
                     'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
@@ -99,7 +98,6 @@ class RestResponseWriter implements RestResponseWriterInterface
     public function createRestResourceFromShoppingListTransfer(
         ShoppingListTransfer $shoppingListTransfer
     ): RestResourceInterface {
-
         $restShoppingListsAttributesTransfer = $this->shoppingListsResourceMapper->mapShoppingListTransferToRestShoppingListsAttributesTransfer(
             $shoppingListTransfer,
             new RestShoppingListAttributesTransfer()
@@ -124,7 +122,6 @@ class RestResponseWriter implements RestResponseWriterInterface
         ShoppingListTransfer $shoppingListTransfer,
         RestResourceInterface $shoppingListResource
     ): RestResourceInterface {
-
         foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
             $shoppingListResource->addRelationship(
                 $this->createRestResourceFromShoppingListItemTransfer(
@@ -147,7 +144,6 @@ class RestResponseWriter implements RestResponseWriterInterface
         ShoppingListItemTransfer $shoppingListItemTransfer,
         string $idShoppingList
     ): RestResourceInterface {
-
         $restShoppingListItemAttributesTransfer = $this->shoppingListItemsResourceMapper->mapShoppingListItemTransferToRestShoppingListItemAttributesTransfer(
             $shoppingListItemTransfer,
             new RestShoppingListItemAttributesTransfer()
