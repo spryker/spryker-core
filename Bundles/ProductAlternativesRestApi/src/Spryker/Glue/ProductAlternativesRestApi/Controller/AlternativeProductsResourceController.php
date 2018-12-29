@@ -17,6 +17,22 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class AlternativeProductsResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *      "getCollection": {
+     *          "summary": [
+     *              "Retrieves alternative products of concrete product."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "400": "Concrete product id is not specified.",
+     *              "404": "Alternative products not found."
+     *          }
+     *      }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
