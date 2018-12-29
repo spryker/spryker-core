@@ -14,6 +14,10 @@
     "spryker/glue-application": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/glue-application": "If you want to use RestRequestInterface.",
+    "spryker/products-rest-api": "If you want to use plugins with ProductsRestApi module."
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
@@ -28,9 +32,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/glue-application": "If you want to use RestRequestInterface.",
-    "spryker/products-rest-api": "If you want to use plugins with ProductsRestApi module."
   }
 }
