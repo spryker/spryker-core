@@ -39,6 +39,6 @@ class QuoteApprovalFactory extends AbstractFactory
      */
     protected function getZedRequestClient(): QuoteApprovalToZedRequestClientInterface
     {
-        return $zedStub = $this->getProvidedDependency(QuoteApprovalDependencyProvider::CLIENT_ZED_REQUEST);
+        return $this->getProvidedDependency(QuoteApprovalDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }

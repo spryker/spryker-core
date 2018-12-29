@@ -82,7 +82,6 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
             return $quoteReposneTransfer;
         }
 
-        $quoteApproveRequester = $quoteApproveRequestTransfer->getCustomer();
         $quoteTransfer = $quoteApproveRequestTransfer->getQuote();
 
         $quoteTransfer = $this->updateShareDetails($quoteTransfer, $quoteApproveRequestTransfer->getIdApprover());
@@ -132,7 +131,7 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
         $requestSender = $quoteApproveRequestTransfer->getCustomer();
         $quoteOwner = $quoteApproveRequestTransfer->getQuote()->getCustomer();
 
-        return $quoteOwner->getCustomerReference() === $quoteOwner->getCustomerReference();
+        return $requestSender->getCustomerReference() === $quoteOwner->getCustomerReference();
     }
 
     /**
