@@ -10,6 +10,7 @@ namespace Spryker\Service\Shipment;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Kernel\AbstractService;
+use \ArrayObject;
 
 /**
  * @method \Spryker\Service\Shipment\ShipmentServiceFactory getFactory()
@@ -21,13 +22,13 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShipment(array $itemTransfers): array
+    public function groupItemsByShipment(ArrayObject $itemTransfers): ArrayObject
     {
-        $shipmentGroupTransfers = [];
+        $shipmentGroupTransfers = new ArrayObject();
 
         foreach ($itemTransfers as $itemTransfer) {
             $itemTransfer->requireShipment();
