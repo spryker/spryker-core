@@ -53,7 +53,8 @@ interface CompanyUserClientInterface
 
     /**
      * Specification:
-     * - Retrieves company users collection by company id.
+     * - Retrieves company user collection according provided filter.
+     * - Ignores company users with anonymised customers.
      *
      * @api
      *

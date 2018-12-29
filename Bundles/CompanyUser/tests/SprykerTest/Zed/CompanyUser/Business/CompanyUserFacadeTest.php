@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CompanyUser\Business;
 
 use Codeception\TestCase\Test;
+use DateTime;
 use Generated\Shared\DataBuilder\CompanyResponseBuilder;
 use Generated\Shared\DataBuilder\CompanyUserBuilder;
 use Generated\Shared\DataBuilder\CompanyUserCriteriaFilterBuilder;
@@ -199,6 +200,32 @@ class CompanyUserFacadeTest extends Test
 
         // Assert
         $this->assertCount(1, $companyUserCollectionTransfer->getCompanyUsers());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompanyUserCollectionIgnoresAnonymizedCustomers(): void
+    {
+        // Assign
+        $companyTransfer = $this->tester->haveCompany(['is_active' => true]);
+        $customerTransfer = (new CustomerBuilder())->build();
+        $customerTransfer->setAnonymizedAt(new DateTime());
+
+        $this->tester->haveCompanyUser(
+            [
+                'customer' => $customerTransfer,
+                'fk_company' => $companyTransfer->getIdCompany(),
+            ]
+        );
+
+        $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterBuilder(['id_company' => $companyTransfer->getIdCompany()]))->build();
+
+        // Act
+        $companyUserCollectionTransfer = $this->getFacade()->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertCount(0, $companyUserCollectionTransfer->getCompanyUsers());
     }
 
     /**
@@ -412,5 +439,30 @@ class CompanyUserFacadeTest extends Test
     protected function getFacade()
     {
         return $this->tester->getFacade();
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteCompanyUserShouldRemoveCompanyUserFromStorageWithoutCustomerAnonymizing(): void
+    {
+        // Assign
+        $companyTransfer = $this->tester->haveCompany();
+        $customerTransfer = (new CustomerBuilder())->build();
+        $companyUserTransfer = $this->tester->haveCompanyUser(
+            [
+                'customer' => $customerTransfer,
+                'fk_company' => $companyTransfer->getIdCompany(),
+            ]
+        );
+        $idCompanyUser = $companyUserTransfer->getIdCompanyUser();
+
+        // Act
+        $this->getFacade()->deleteCompanyUser($companyUserTransfer);
+
+        // Assert
+        $this->expectException(TypeError::class);
+        $this->getFacade()->getCompanyUserById($idCompanyUser);
+        $this->assertSame($customerTransfer, $this->tester->getLocator()->customer()->facade()->getCustomer($customerTransfer));
     }
 }
