@@ -56,6 +56,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->createShipmentMethodTransformer(),
             $this->getCurrencyFacade(),
             $this->getStoreFacade(),
+            $this->getShipmentService(),
             $this->getPlugins(),
             $this->getMethodFilterPlugins()
         );

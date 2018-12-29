@@ -9,6 +9,12 @@ namespace Spryker\Zed\Shipment\Communication\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * Interface ShipmentMethodPricePluginInterface
+ * @package Spryker\Zed\Shipment\Communication\Plugin
+ *
+ * @deprecated Use \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodPricePluginInterface instead
+ */
 interface ShipmentMethodPricePluginInterface
 {
     /**

@@ -8,12 +8,17 @@
 namespace Spryker\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
+use phpDocumentor\Reflection\Types\Null_;
+use phpDocumentor\Reflection\Types\This;
+use Spryker\Service\Shipment\ShipmentService;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface;
+use Spryker\Zed\Shipment\Business\ShipmentFacade;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
@@ -47,6 +52,11 @@ class Method implements MethodInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Service\Shipment\ShipmentService
+     */
+    protected $shipmentService;
+
+    /**
      * @var \Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface[]
      */
     protected $shipmentMethodFilters;
@@ -67,6 +77,7 @@ class Method implements MethodInterface
      * @param \Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface $methodTransformer
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface $currencyFacade
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface $storeFacade
+     * @param \Spryker\Service\Shipment\ShipmentService $shipmentFacade
      * @param array $plugins
      * @param \Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface[] $shipmentMethodFilters
      */
@@ -76,6 +87,7 @@ class Method implements MethodInterface
         ShipmentMethodTransformerInterface $methodTransformer,
         ShipmentToCurrencyInterface $currencyFacade,
         ShipmentToStoreInterface $storeFacade,
+        ShipmentService $shipmentFacade,
         array $plugins,
         array $shipmentMethodFilters
     ) {
@@ -84,6 +96,8 @@ class Method implements MethodInterface
         $this->methodTransformer = $methodTransformer;
         $this->currencyFacade = $currencyFacade;
         $this->storeFacade = $storeFacade;
+        $this->shipmentService = $shipmentService;
+        $this->shipmentFacade = $shipmentFacade;
         $this->plugins = $plugins;
         $this->shipmentMethodFilters = $shipmentMethodFilters;
     }
@@ -107,6 +121,8 @@ class Method implements MethodInterface
     }
 
     /**
+     * @deprecated
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
@@ -120,6 +136,21 @@ class Method implements MethodInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): array
+    {
+        $shipmentGroupTransferArray = $this->getShipmentGroupWithAvailableMethods($quoteTransfer);
+        $shipmentGroupTransferArray = $this->applyFilters($shipmentGroupTransferArray, $quoteTransfer);
+
+        return $shipmentGroupTransferArray;
+    }
+
+    /**
+     * @deprecated Use getAvailableMethodsByShipmentTransfer() instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
@@ -145,6 +176,72 @@ class Method implements MethodInterface
         }
 
         return $shipmentMethodsTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    protected function getShipmentGroupWithAvailableMethods(QuoteTransfer $quoteTransfer): array
+    {
+        $methods = $this->queryContainer->queryActiveMethodsWithMethodPricesAndCarrier()->find();
+        $shipmentGroupTransfers = $this->getShipmentGroups($quoteTransfer);
+
+        foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
+            $shipmentGroupTransfer->setAvailableShipmentMethods(
+                $this->getAvailableMethodForShipmentGroup($shipmentGroupTransfer, $methods)
+            );
+        }
+
+        return $shipmentGroupTransfers;
+    }
+
+    protected function getAvailableMethodForShipmentGroup(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        ShipmentMethodsTransfer $methods,
+        QuoteTransfer $quoteTransfer
+    ): ShipmentMethodsTransfer {
+        $shipmentMethodsTransfer = new ShipmentMethodsTransfer();
+        foreach ($methods as $shipmentMethodEntity) {
+            $isShipmentMethodAvailableForShipmentGroup = $this->isShipmentMethodAvailableForShipmentGroup(
+                $shipmentMethodEntity,
+                $shipmentGroupTransfer,
+                $quoteTransfer
+            );
+
+            if ($isShipmentMethodAvailableForShipmentGroup === false) {
+                continue;
+            }
+
+            $storeCurrencyPrice = $this->getShipmentGroupShippingPrice($shipmentMethodEntity, $shipmentGroupTransfer, $quoteTransfer);
+
+            if ($storeCurrencyPrice === null) {
+                continue;
+            }
+
+            $shipmentMethodTransfer = $this->transformShipmentMethodByShipmentGroup(
+                $shipmentMethodEntity,
+                $shipmentGroupTransfer,
+                $quoteTransfer,
+                $storeCurrencyPrice
+            );
+            $shipmentMethodsTransfer->addMethod($shipmentMethodTransfer);
+        }
+
+        return $shipmentMethodsTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    protected function getShipmentGroups(QuoteTransfer $quoteTransfer): array
+    {
+        $shipmentGroupTransfer = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+
+        return $shipmentGroupTransfer;
     }
 
     /**
@@ -186,6 +283,38 @@ class Method implements MethodInterface
             ->setCurrencyIsoCode(
                 $quoteTransfer->getCurrency()->getCode()
             );
+
+        return $shipmentMethodTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $storeCurrencyPrice
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     */
+    protected function transformShipmentMethodByShipmentGroup(
+        SpyShipmentMethod $shipmentMethodEntity,
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        QuoteTransfer $quoteTransfer,
+        $storeCurrencyPrice
+    ): ShipmentMethodTransfer {
+        $quoteTransfer
+            ->requireCurrency()
+            ->getCurrency()
+            ->requireCode();
+
+        $shipmentMethodTransfer = $this->methodTransformer->transformEntityToTransfer($shipmentMethodEntity);
+        $shipmentMethodTransfer
+            ->setStoreCurrencyPrice($storeCurrencyPrice)
+            ->setDeliveryTime(
+                $this->getDeliveryTimeForShippingGroup($shipmentMethodEntity, $shipmentGroupTransfer, $quoteTransfer)
+            )
+            ->setCurrencyIsoCode(
+                $quoteTransfer->getCurrency()->getCode()
+            )
+        ;
 
         return $shipmentMethodTransfer;
     }
@@ -339,6 +468,8 @@ class Method implements MethodInterface
     }
 
     /**
+     * @deprecated use isShipmentMethodAvailable() instead
+     *
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -349,9 +480,31 @@ class Method implements MethodInterface
         $availabilityPlugins = $this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS];
         $isAvailable = true;
 
-        if (isset($availabilityPlugins[$method->getAvailabilityPlugin()])) {
+        if ($this->isSetAvailabilityPlugin($method, $availabilityPlugins)) {
             $availabilityPlugin = $this->getAvailabilityPlugin($method, $availabilityPlugins);
             $isAvailable = $availabilityPlugin->isAvailable($quoteTransfer);
+        }
+
+        return $isAvailable;
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isShipmentMethodAvailableForShipmentGroup(
+        SpyShipmentMethod $method,
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        QuoteTransfer $quoteTransfer
+    ) {
+        $availabilityPlugins = $this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS];
+        $isAvailable = true;
+
+        if ($this->isSetAvailabilityPlugin($method, $availabilityPlugins)) {
+            $availabilityPlugin = $this->getAvailabilityPlugin($method, $availabilityPlugins);
+            $isAvailable = $availabilityPlugin->isAvailable($shipmentGroupTransfer, $quoteTransfer);
         }
 
         return $isAvailable;
@@ -370,6 +523,19 @@ class Method implements MethodInterface
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
+     * @param array $availabilityPlugins
+     *
+     * @return bool
+     */
+    protected function isSetAvailabilityPlugin(SpyShipmentMethod $method, array $availabilityPlugins): bool
+    {
+        return isset($availabilityPlugins[$method->getAvailabilityPlugin()]);
+    }
+
+    /**
+     * @deprecated
+     *
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int|null
@@ -382,6 +548,45 @@ class Method implements MethodInterface
         if (isset($pricePlugins[$method->getPricePlugin()])) {
             $pricePlugin = $this->getPricePlugin($method, $pricePlugins);
             return $pricePlugin->getPrice($quoteTransfer);
+        }
+
+        $methodPriceEntity = $this->queryContainer
+            ->queryMethodPriceByShipmentMethodAndStoreCurrency(
+                $method->getIdShipmentMethod(),
+                $idStore,
+                $this->getIdCurrencyByIsoCode($quoteTransfer->getCurrency()->getCode())
+            )
+            ->findOne();
+
+        if ($methodPriceEntity === null) {
+            return null;
+        }
+
+        $price = $quoteTransfer->getPriceMode() === ShipmentConstants::PRICE_MODE_GROSS ?
+            $methodPriceEntity->getDefaultGrossPrice() :
+            $methodPriceEntity->getDefaultNetPrice();
+
+        return $price;
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int|null
+     */
+    protected function getShipmentGroupShippingPrice(
+        SpyShipmentMethod $method,
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        QuoteTransfer $quoteTransfer
+    ): ?int {
+        $idStore = $this->storeFacade->getCurrentStore()->getIdStore();
+        $pricePlugins = $this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS];
+
+        if (isset($pricePlugins[$method->getPricePlugin()])) {
+            $pricePlugin = $this->getPricePlugin($method, $pricePlugins);
+            return $pricePlugin->getPrice($shipmentGroupTransfer, $quoteTransfer);
         }
 
         $methodPriceEntity = $this->queryContainer
@@ -431,6 +636,8 @@ class Method implements MethodInterface
     }
 
     /**
+     * @deprecated
+     *
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -447,6 +654,40 @@ class Method implements MethodInterface
         }
 
         return $deliveryTime;
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int|null
+     */
+    protected function getDeliveryTimeForShippingGroup(
+        SpyShipmentMethod $method,
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        QuoteTransfer $quoteTransfer
+    ): ?int {
+        $deliveryTime = null;
+        $deliveryTimePlugins = $this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS];
+
+        if ($this->issetDeliveryTimePlugin($method, $deliveryTimePlugins)) {
+            $deliveryTimePlugin = $this->getDeliveryTimePlugin($method, $deliveryTimePlugins);
+            $deliveryTime = $deliveryTimePlugin->getTime($shipmentGroupTransfer, $quoteTransfer);
+        }
+
+        return $deliveryTime;
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
+     * @param array $deliveryTimePlugins
+     *
+     * @return bool
+     */
+    protected function issetDeliveryTimePlugin(SpyShipmentMethod $method, array $deliveryTimePlugins): bool
+    {
+        return isset($deliveryTimePlugins[$method->getDeliveryTimePlugin()]);
     }
 
     /**

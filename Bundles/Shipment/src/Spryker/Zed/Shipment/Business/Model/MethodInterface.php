@@ -27,6 +27,13 @@ interface MethodInterface
     public function getAvailableMethods(QuoteTransfer $quoteTransfer);
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     */
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer);
+
+    /**
      * @param int $idMethod
      *
      * @return bool

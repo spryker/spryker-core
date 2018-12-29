@@ -10,17 +10,18 @@ namespace Spryker\Zed\Shipment\Communication\Plugin;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * Interface ShipmentMethodAvailabilityPluginInterface
+ * Interface ShipmentMethodDeliveryTimePluginInterface
  * @package Spryker\Zed\Shipment\Communication\Plugin
  *
- * @deprecated Use \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface instead
+ * @deprecated
  */
-interface ShipmentMethodAvailabilityPluginInterface
+interface ShipmentMethodDeliveryTimePluginInterface
 {
     /**
+     * @param \Spryker\Zed\Shipment\Communication\Plugin\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return bool
+     * @return int
      */
-    public function isAvailable(QuoteTransfer $quoteTransfer);
+    public function getTime(ShipmentGroupTransfer $shipmentGroupTransfer, QuoteTransfer $quoteTransfer): int;
 }

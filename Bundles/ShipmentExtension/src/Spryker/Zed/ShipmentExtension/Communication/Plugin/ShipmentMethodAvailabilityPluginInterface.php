@@ -5,22 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Shipment\Communication\Plugin;
+namespace Spryker\Zed\ShipmentExtension\Communication\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-/**
- * Interface ShipmentMethodAvailabilityPluginInterface
- * @package Spryker\Zed\Shipment\Communication\Plugin
- *
- * @deprecated Use \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface instead
- */
 interface ShipmentMethodAvailabilityPluginInterface
 {
     /**
+     * @param \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isAvailable(QuoteTransfer $quoteTransfer);
+    public function isAvailable(ShipmentGroupTransfer $shipmentGroupTransfer, QuoteTransfer $quoteTransfer): bool;
 }

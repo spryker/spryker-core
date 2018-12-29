@@ -115,6 +115,18 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethodsTransfer
+     */
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
+    {
+        $methodModel = $this->getFactory()->createMethod();
+
+        return $methodModel->getAvailableMethodsByShipment($quoteTransfer);
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @api
