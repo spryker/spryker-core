@@ -28,33 +28,6 @@
                         {% endfor %}
                     {% endfor %}
 
-                    {% if order.bundleItems is defined %}
-                        {% for orderItem in order.bundleItems %}
-                            <tr>
-                                <th>{{ orderItem.name }}</th>
-                                <th></th>
-                                <td class="text-right">{{ orderItem.sumPrice | money(true, order.currencyIsoCode)  }}</td>
-                                <th></th>
-                            </tr>
-                            {% for bundledItem in order.items if bundledItem.relatedBundleItemIdentifier == orderItem.bundleItemIdentifier %}
-                                <tr>
-                                    <th></th>
-                                    <th>{{ bundledItem.name }}</th>
-                                    <td class="text-right">{{ bundledItem.sumPrice | money(true, order.currencyIsoCode)  }}</td>
-                                    <td></td>
-                                </tr>
-                                {% for orderItemOption in bundledItem.productOptions %}
-                                    <tr>
-                                        <td></td>
-                                        <td> + {{ orderItemOption.value }}</td>
-                                        <td class="text-right">{{ orderItemOption.sumPrice | money(true, order.currencyIsoCode)  }}</td>
-                                        <td></td>
-                                    </tr>
-                                {% endfor %}
-                            {% endfor %}
-                        {% endfor %}
-                    {% endif %}
-
                     <tr class="subtotal-row">
                         <td><strong>{{ 'Sub total' | trans }}</strong></td>
                         <td></td>
