@@ -43,7 +43,7 @@ interface MultiCartFacadeInterface
 
     /**
      * Specification:
-     * - Adds customer quote collection to quote response transfer after cart operation handling.
+     * - Adds filtered by store customer quote collection to quote response transfer after cart operation handling.
      * - Replace quote with active quote if it exist.
      *
      * @api
