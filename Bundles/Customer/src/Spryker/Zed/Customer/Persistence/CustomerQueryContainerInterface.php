@@ -94,15 +94,6 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
-     */
-    public function queryAddressByTransfer(AddressTransfer $addressTransfer): SpyCustomerAddressQuery;
-
-    /**
-     * @api
-     *
      * @param string $email
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
