@@ -76,7 +76,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
 
             $restResource = $this->restResourceBuilder->createRestResource(
                 CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
-                (string)$companyUserTransfer->getIdCompanyUser(),
+                $companyUserTransfer->getUuid(),
                 $restCompanyUserAttributesTransfer
             );
 

@@ -14,7 +14,7 @@ interface CompanyBusinessUnitAttributesMapperPluginInterface
 {
     /**
      * Specification:
-     * - Maps company business unit data to RestCompanyBusinessUnitAttributes.
+     * - Maps company business unit data to RestCompanyBusinessUnitAttributesTransfer.
      *
      * @api
      *

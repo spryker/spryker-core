@@ -1,7 +1,0 @@
-{
-  "include": {
-    "CompanyUser": "Will be required after introducing of company-users resource.",
-    "GlueApplication": "Will be required after introducing of company-users resource.",
-    "GlueApplicationExtension": "Will be required after introducing of company-users resource."
-  }
-}
