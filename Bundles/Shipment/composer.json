@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/country": "*",
     "spryker/currency": "^3.1.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.13.0",
@@ -25,10 +26,10 @@
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/country": "*",
+    "spryker/oms": "*",
     "spryker/propel": "*",
     "spryker/testify": "*",
-    "spryker/zed-navigation": "*",
-    "spryker/oms": "*"
+    "spryker/zed-navigation": "*"
   },
   "suggest": {
     "spryker/calculation": "If you want to use Calculation plugins.",
