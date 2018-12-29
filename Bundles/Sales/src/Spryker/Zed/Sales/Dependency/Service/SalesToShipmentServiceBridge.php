@@ -25,10 +25,6 @@ class SalesToShipmentServiceBridge implements SalesToShipmentServiceInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]

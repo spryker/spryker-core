@@ -32,7 +32,6 @@
     "spryker/config": "*",
     "spryker/price": "*",
     "spryker/product": "*",
-    "spryker/shipment": "*",
     "spryker/stock": "*",
     "spryker/testify": "*",
     "spryker/zed-navigation": "*"
