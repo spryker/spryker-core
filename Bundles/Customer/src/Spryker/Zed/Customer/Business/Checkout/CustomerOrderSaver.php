@@ -11,10 +11,9 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Spryker\Zed\Customer\Business\Customer\AddressInterface;
 use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface;
 
 class CustomerOrderSaver implements CustomerOrderSaverInterface
 {
@@ -29,23 +28,23 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     protected $address;
 
     /**
-     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
+     * @var \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface
      */
-    protected $queryContainer;
+    protected $customerRepository;
 
     /**
      * @param \Spryker\Zed\Customer\Business\Customer\CustomerInterface $customer
      * @param \Spryker\Zed\Customer\Business\Customer\AddressInterface $address
-     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface $customerRepository
      */
     public function __construct(
         CustomerInterface $customer,
         AddressInterface $address,
-        CustomerQueryContainerInterface $queryContainer
+        CustomerRepositoryInterface $customerRepository
     ) {
         $this->customer = $customer;
         $this->address = $address;
-        $this->queryContainer = $queryContainer;
+        $this->customerRepository = $customerRepository;
     }
 
     /**
@@ -87,39 +86,16 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->requireShipment();
+            $addressTransfer = $itemTransfer->getShipment()->getShippingAddress();
 
-            $hash = $this->createAddressTransferHash($itemTransfer->getShipment()->getShippingAddress());
-
-            if (isset($existingAddresses[$hash])) {
-                $itemTransfer->getShipment()->setShippingAddress($existingAddresses[$hash]);
-
-                $this->processCustomerAddress($itemTransfer->getShipment()->getShippingAddress(), $customer);
-
-                continue;
+            $hash = $this->createAddressTransferHash($addressTransfer);
+            if (!isset($existingAddresses[$hash])) {
+                $existingAddresses[$hash] = $this ->customerRepository->findAddressByAddressData($addressTransfer);
             }
 
-            $addressEntity = $this->queryContainer->queryAddressByTransfer($itemTransfer->getShipment()->getShippingAddress())->findOne();
-
-            if ($addressEntity !== null) {
-                $addressTransfer = $this->entityToAddressTransfer($addressEntity);
-                $itemTransfer->getShipment()->setShippingAddress($addressTransfer);
-                $existingAddresses[$hash] = $addressTransfer;
-            }
-
-            $this->processCustomerAddress($itemTransfer->getShipment()->getShippingAddress(), $customer);
+            $itemTransfer->getShipment()->setShippingAddress($existingAddresses[$hash]);
+            $this->processCustomerAddress($existingAddresses[$hash], $customer);
         }
-    }
-
-    /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomerAddress $entity
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    protected function entityToAddressTransfer(SpyCustomerAddress $entity): AddressTransfer
-    {
-        $addressTransfer = new AddressTransfer();
-
-        return $addressTransfer->fromArray($entity->toArray(), true);
     }
 
     /**
@@ -193,7 +169,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
      */
     protected function createAddressTransferHash(AddressTransfer $addressTransfer): string
     {
-        return md5(sprintf(
+        return sprintf(
             '%s %s %s %s %s %s %s %s %s %s',
             $addressTransfer->getFkCustomer(),
             $addressTransfer->getFirstName(),
@@ -205,6 +181,6 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
             $addressTransfer->getCity(),
             $addressTransfer->getFkCountry(),
             $addressTransfer->getPhone()
-        ));
+        );
     }
 }

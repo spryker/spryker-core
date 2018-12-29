@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer\Persistence;
 
 use ArrayObject;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
@@ -57,6 +58,34 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
         return $this->getFactory()
             ->createCustomerMapper()
             ->mapCustomerEntityToCustomer($customerEntity->toArray());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer
+    {
+        $addressEntity = $this->getFactory()
+            ->createSpyCustomerAddressQuery()
+            ->filterByFkCustomer($addressTransfer->getFkCustomer())
+            ->filterByFirstName($addressTransfer->getFirstName())
+            ->filterByLastName($addressTransfer->getLastName())
+            ->filterByAddress1($addressTransfer->getAddress1())
+            ->filterByAddress2($addressTransfer->getAddress2())
+            ->filterByAddress3($addressTransfer->getAddress3())
+            ->filterByZipCode($addressTransfer->getZipCode())
+            ->filterByCity($addressTransfer->getCity())
+            ->filterByFkCountry($addressTransfer->getFkCountry())
+            ->filterByPhone($addressTransfer->getPhone())
+            ->findOne();
+
+        if ($addressEntity === null) {
+            return null;
+        }
+
+        return $addressTransfer->fromArray($addressEntity->toArray(), true);
     }
 
     /**
