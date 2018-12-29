@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductListSearch\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductListSearch\Business\ProductAbstract\ProductAbstractReader;
 use Spryker\Zed\ProductListSearch\Business\ProductAbstract\ProductAbstractReaderInterface;
+use Spryker\Zed\ProductListSearch\Business\ProductConcrete\ProductConcreteReader;
+use Spryker\Zed\ProductListSearch\Business\ProductConcrete\ProductConcreteReaderInterface;
 
 /**
  * @method \Spryker\Zed\ProductListSearch\Persistence\ProductListSearchRepositoryInterface getRepository()
@@ -23,6 +25,16 @@ class ProductListSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractReader(): ProductAbstractReaderInterface
     {
         return new ProductAbstractReader(
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListSearch\Business\ProductConcrete\ProductConcreteReaderInterface
+     */
+    public function createProductConcreteReader(): ProductConcreteReaderInterface
+    {
+        return new ProductConcreteReader(
             $this->getRepository()
         );
     }

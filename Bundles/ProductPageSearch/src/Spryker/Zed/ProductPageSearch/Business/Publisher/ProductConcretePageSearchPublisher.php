@@ -26,6 +26,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     use TransactionTrait;
 
     protected const IDENTIFIER_PRODUCT_CONCRETE_PAGE_SEARCH = 'id_product_concrete_page_search';
+    protected const IDENTIFIER_STRUCTURED_DATA = 'structured_data';
 
     /**
      * @var \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReaderInterface
@@ -310,8 +311,9 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      */
     protected function getStructuredDataFromProductConcretePageSearchTransfer(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): string
     {
-        $data = $productConcretePageSearchTransfer->toArray();
+        $data = $productConcretePageSearchTransfer->toArray(false);
         unset($data[static::IDENTIFIER_PRODUCT_CONCRETE_PAGE_SEARCH]);
+        unset($data[static::IDENTIFIER_STRUCTURED_DATA]);
 
         return $this->utilEncoding->encodeJson($data);
     }
