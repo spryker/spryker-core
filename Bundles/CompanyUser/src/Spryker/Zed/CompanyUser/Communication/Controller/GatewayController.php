@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -67,6 +68,17 @@ class GatewayController extends AbstractGatewayController
     public function getCompanyUserByIdAction(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
     {
         return $this->getFacade()->getCompanyUserById($companyUserTransfer->getIdCompanyUser());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getActiveCompanyUsersByCustomerReferenceAction(
+        CustomerTransfer $customerTransfer
+    ): CompanyUserCollectionTransfer {
+        return $this->getFacade()->getActiveCompanyUsersByCustomerReference($customerTransfer);
     }
 
     /**

@@ -41,7 +41,7 @@ class ProductOptionSynchronizationDataPlugin extends AbstractPlugin implements S
      */
     public function hasStore(): bool
     {
-        return false;
+        return true;
     }
 
     /**

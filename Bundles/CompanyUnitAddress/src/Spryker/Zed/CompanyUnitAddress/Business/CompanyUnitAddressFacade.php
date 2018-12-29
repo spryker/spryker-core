@@ -113,4 +113,21 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
             ->createCompanyBusinessUnitAddressWriter()
             ->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function expandCompanyBusinessUnitWithCompanyUnitAddressCollection(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitTransfer {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitExpander()
+            ->expandCompanyBusinessUnitWithCompanyUnitAddressCollection($companyBusinessUnitTransfer);
+    }
 }

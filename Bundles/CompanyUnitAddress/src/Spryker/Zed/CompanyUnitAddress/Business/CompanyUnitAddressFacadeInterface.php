@@ -97,4 +97,19 @@ interface CompanyUnitAddressFacadeInterface
     public function saveCompanyBusinessUnitAddresses(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): void;
+
+    /**
+     * Specification:
+     * - Expands company business unit transfer with company unit address collection.
+     * - Marks company business unit address as default billing in the company unit address collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function expandCompanyBusinessUnitWithCompanyUnitAddressCollection(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitTransfer;
 }

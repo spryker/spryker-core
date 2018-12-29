@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Zed\CompanyUser\Dependency\Facade\CompanyUserToCustomerFacadeInterface;
 use Spryker\Zed\CompanyUser\Persistence\CompanyUserEntityManagerInterface;
@@ -158,6 +159,24 @@ class CompanyUser implements CompanyUserInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getActiveCompanyUsersByCustomerReference(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer
+    {
+        $customerTransfer->requireCustomerReference();
+
+        $companyUserCollectionTransfer = $this->companyUserRepository->getActiveCompanyUsersByCustomerReference($customerTransfer->getCustomerReference());
+
+        foreach ($companyUserCollectionTransfer->getCompanyUsers() as &$companyUserTransfer) {
+            $this->companyUserPluginExecutor->executeHydrationPlugins($companyUserTransfer);
+        }
+
+        return $companyUserCollectionTransfer;
     }
 
     /**
@@ -346,5 +365,33 @@ class CompanyUser implements CompanyUserInterface
         }
 
         return $companyUserResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($companyUserTransfer) {
+            $companyUserTransfer->requireIdCompanyUser();
+
+            return $this->executeDeleteCompanyUserTransaction($companyUserTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    protected function executeDeleteCompanyUserTransaction(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        $this->companyUserPluginExecutor->executePreDeletePlugins($companyUserTransfer);
+
+        $this->companyUserEntityManager->deleteCompanyUserById($companyUserTransfer->getIdCompanyUser());
+
+        return (new CompanyUserResponseTransfer())->setIsSuccessful(true);
     }
 }
