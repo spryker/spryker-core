@@ -103,6 +103,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use getAvailableMethodsByShipment() instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
@@ -117,9 +119,9 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Zed\Shipment\Business\ShipmentMethodsTransfer
+     * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): array
     {
         $methodModel = $this->getFactory()->createMethod();
 

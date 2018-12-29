@@ -21,6 +21,8 @@ class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
     /**
      * @api
      *
+     * @deprecated Use getAvailableMethodsByShipment() instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
@@ -28,5 +30,17 @@ class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
     public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
         return $this->getFacade()->getAvailableMethods($quoteTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFacade()->getAvailableMethodsByShipment($quoteTransfer);
     }
 }

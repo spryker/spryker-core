@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
+     * @deprecated Use getAvailableMethodsByShipment() instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
@@ -23,5 +25,15 @@ class GatewayController extends AbstractGatewayController
     public function getAvailableMethodsAction(QuoteTransfer $quoteTransfer)
     {
         return $this->getFacade()->getAvailableMethods($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    public function getAvailableMethodsByShipmentAction(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFacade()->getAvailableMethodsByShipment($quoteTransfer);
     }
 }

@@ -5,16 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Shipment\Communication\Plugin;
+namespace Spryker\Zed\ShipmentExtension\Communication\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-/**
- * Interface ShipmentMethodDeliveryTimePluginInterface
- * @package Spryker\Zed\Shipment\Communication\Plugin
- *
- * @deprecated
- */
 interface ShipmentMethodDeliveryTimePluginInterface
 {
     /**

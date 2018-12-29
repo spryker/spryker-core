@@ -12,11 +12,21 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface ManualOrderEntryGuiToShipmentFacadeInterface
 {
     /**
+     * @deprecated Use getAvailableMethodsByShipment() instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer);
+
+    /**
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer);
 
     /**
      * @param int $idShipmentMethod

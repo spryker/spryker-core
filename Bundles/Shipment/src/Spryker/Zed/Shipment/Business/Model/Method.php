@@ -121,7 +121,7 @@ class Method implements MethodInterface
     }
 
     /**
-     * @deprecated
+     * @deprecated Use getAvailableMethodsByShipment() instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -255,6 +255,9 @@ class Method implements MethodInterface
         $shipmentMethods = $shipmentMethodsTransfer->getMethods();
 
         foreach ($this->shipmentMethodFilters as $shipmentMethodFilter) {
+            /**
+             * @todo Ask Jeremy what to do here, probably should be done in separate ticket.
+             */
             $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods($shipmentMethods, $quoteTransfer);
         }
 
@@ -514,7 +517,7 @@ class Method implements MethodInterface
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param array $availabilityPlugins
      *
-     * @return \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface
+     * @return \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface|\Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface
      */
     protected function getAvailabilityPlugin(SpyShipmentMethod $method, array $availabilityPlugins)
     {

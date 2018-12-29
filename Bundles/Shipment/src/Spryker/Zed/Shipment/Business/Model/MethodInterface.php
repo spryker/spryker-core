@@ -20,6 +20,8 @@ interface MethodInterface
     public function create(ShipmentMethodTransfer $methodTransfer);
 
     /**
+     * @deprecated Use getAvailableMethodsByShipment() instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
@@ -29,7 +31,7 @@ interface MethodInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer);
 

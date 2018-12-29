@@ -13,11 +13,20 @@ use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 interface ShipmentCheckoutConnectorToShipmentFacadeInterface
 {
     /**
+     * @deprecated Use getAvailableMethodsByShipment() instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): array;
 
     /**
      * @param int $idShipmentMethod

@@ -107,9 +107,9 @@ interface ShipmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer;
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): array;
 
     /**
      * Specification:
