@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Oauth\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthClientTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
@@ -218,7 +219,14 @@ class OauthFacadeTest extends Unit
         $userProviderPluginMock->method('getUser')->willReturnCallback(
             function (OauthUserTransfer $oauthUserTransfer) {
                 $oauthUserTransfer->setIsSuccess(true)
-                    ->setUserIdentifier(1);
+                    ->setUserIdentifier(
+                        json_encode(
+                            (new CustomerIdentifierTransfer())
+                                ->setCustomerReference('DE--test')
+                                ->setIdCustomer(999)
+                                ->toArray()
+                        )
+                    );
 
                 return $oauthUserTransfer;
             }
