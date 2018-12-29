@@ -37,7 +37,6 @@ class ManualOrderEntryGuiToShipmentFacadeBridge implements ManualOrderEntryGuiTo
     }
 
     /**
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]

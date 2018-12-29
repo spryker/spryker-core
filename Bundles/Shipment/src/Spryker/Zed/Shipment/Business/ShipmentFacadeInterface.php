@@ -76,8 +76,6 @@ interface ShipmentFacadeInterface
     public function findMethodById($idShipmentMethod);
 
     /**
-     * @deprecated Use getAvailableMethodsByShipment() instead
-     *
      * Specification:
      * - Retrieves active shipment methods.
      * - Calculates shipment method delivery time using its assigned ShipmentMethodDeliveryTimePluginInterface plugin.
@@ -87,6 +85,8 @@ interface ShipmentFacadeInterface
      * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin requirements.
      *
      * @api
+     *
+     * @deprecated Use getAvailableMethodsByShipment() instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

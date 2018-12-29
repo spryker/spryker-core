@@ -117,6 +117,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]

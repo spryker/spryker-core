@@ -21,7 +21,6 @@ interface ManualOrderEntryGuiToShipmentFacadeInterface
     public function getAvailableMethods(QuoteTransfer $quoteTransfer);
 
     /**
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
