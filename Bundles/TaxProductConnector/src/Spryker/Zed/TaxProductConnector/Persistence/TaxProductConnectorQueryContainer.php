@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\TaxProductConnector\Persistence;
 
-use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
@@ -15,6 +14,7 @@ use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\TaxProductConnector\Business\Model\Country\ProductOptionCountryTableMapInterface;
 
 /**
  * @method \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorPersistenceFactory getFactory()
@@ -160,6 +160,6 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
                 ->endUse()
                 ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', static::COL_MAX_TAX_RATE)
             ->endUse()
-            ->select([SpyCountryTableMap::COL_ISO2_CODE, static::COL_MAX_TAX_RATE, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT]);
+            ->select([ProductOptionCountryTableMapInterface::COL_ISO2_CODE, static::COL_MAX_TAX_RATE, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT]);
     }
 }

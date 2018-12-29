@@ -10,6 +10,7 @@ namespace Spryker\Zed\Shipment;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCountryBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreBridge;
@@ -31,6 +32,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    public const FACADE_COUNTRY = 'FACADE_COUNTRY';
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_TAX = 'FACADE_TAX';
     public const SHIPMENT_METHOD_FILTER_PLUGINS = 'SHIPMENT_METHOD_FILTER_PLUGINS';
@@ -146,6 +148,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreFacade($container);
         $container = $this->addMethodFilterPlugins($container);
         $container = $this->addShipmentService($container);
+        $container = $this->addCountryFacade($container);
 
         return $container;
     }
@@ -232,6 +235,20 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SERVICE_SHIPMENT] = function (Container $container) {
             return $container->getLocator()->shipment()->service();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCountryFacade(Container $container)
+    {
+        $container[static::FACADE_COUNTRY] = function (Container $container) {
+            return new ShipmentToCountryBridge($container->getLocator()->country()->facade());
         };
 
         return $container;
