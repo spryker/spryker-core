@@ -311,7 +311,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      */
     protected function getStructuredDataFromProductConcretePageSearchTransfer(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): string
     {
-        $data = $productConcretePageSearchTransfer->toArray(false);
+        $data = $productConcretePageSearchTransfer->toArray();
         unset($data[static::IDENTIFIER_PRODUCT_CONCRETE_PAGE_SEARCH]);
         unset($data[static::IDENTIFIER_STRUCTURED_DATA]);
 
