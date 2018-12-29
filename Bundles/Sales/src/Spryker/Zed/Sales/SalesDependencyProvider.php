@@ -33,8 +33,8 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
-    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const STORE = 'STORE';
 
     public const ORDER_EXPANDER_PRE_SAVE_PLUGINS = 'ORDER_EXPANDER_PRE_SAVE_PLUGINS';
