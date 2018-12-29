@@ -127,32 +127,6 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
-     */
-    public function queryAddressByTransfer(AddressTransfer $addressTransfer): SpyCustomerAddressQuery
-    {
-        return $this
-            ->getFactory()
-            ->createSpyCustomerAddressQuery()
-            ->filterByFkCustomer($addressTransfer->getFkCustomer())
-            ->filterByFirstName($addressTransfer->getFirstName())
-            ->filterByLastName($addressTransfer->getLastName())
-            ->filterByAddress1($addressTransfer->getAddress1())
-            ->filterByAddress2($addressTransfer->getAddress2())
-            ->filterByAddress3($addressTransfer->getAddress3())
-            ->filterByZipCode($addressTransfer->getZipCode())
-            ->filterByCity($addressTransfer->getCity())
-            ->filterByFkCountry($addressTransfer->getFkCountry())
-            ->filterByPhone($addressTransfer->getPhone());
-    }
-
-    /**
      * @api
      *
      * @inheritdoc
