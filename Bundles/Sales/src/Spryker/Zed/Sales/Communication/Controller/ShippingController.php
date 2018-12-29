@@ -43,7 +43,7 @@ class ShippingController extends AbstractController
             return $this->redirectResponse(Url::generate('/sales')->build());
         }
 
-        $dataProvider = $this->getFactory()->createAddressFormDataProvider();
+        $dataProvider = $this->getFactory()->createCorrectShippingAddressFormDataProvider();
         $form = $this->getFactory()
             ->getAddressForm(
                 $dataProvider->getData($idShippingAddress),
@@ -72,7 +72,7 @@ class ShippingController extends AbstractController
         return $this->viewResponse([
             'idSalesOrder' => $idSalesOrder,
             'order' => $orderTransfer,
-            'form' => $form->createView(),
+            'addressForm' => $form->createView(),
             'eventsGroupedByItem' => [],
         ]);
     }

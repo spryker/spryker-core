@@ -1,5 +1,14 @@
 {% extends '@Sales/Layout/layout.twig' %}
 
+
+
+{% set forms = [
+    addressForm,
+    addressForm
+] %}
+{% set backUrl = '/sales/detail/?id-sales-order=' ~ idSalesOrder %}
+{% set title = 'Edit Shipment' | trans %}
+
 {% set widget_title = 'Address details' %}
 {% block section_title 'Edit Address for Order: ' ~ idSalesOrder %}
 
@@ -14,12 +23,30 @@
 
         {% block widget_content %}
 
-            {{ form_start(form) }}
-                {{ form_widget(form) }}
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    {% for form in forms %}
+                        <li class="">
+                            {% set tabId = form.address_id.vars.value %}
+                            <a data-toggle="tab" href="#tab-{{ tabId }}" id="assigned-tab-label">{{ form.address1.vars.value }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="tab-content">
+                    {% for form in forms %}
+                        {% set tabId = form.address_id.vars.value %}
+                        <div id="tab-{{ tabId }}" class="tab-pane">
+                            <div class="panel-body">
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
 
-                <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
-            {{ form_end(form) }}
-
+                            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
         {% endblock %}
 
     {% endembed %}

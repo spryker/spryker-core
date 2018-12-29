@@ -14,6 +14,7 @@ use Spryker\Zed\Sales\Communication\Form\CommentForm;
 use Spryker\Zed\Sales\Communication\Form\CustomerForm;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CommentFormDataProvider;
+use Spryker\Zed\Sales\Communication\Form\DataProvider\CorrectShippingAddressFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
 use Spryker\Zed\Sales\Communication\Table\CustomerOrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
@@ -125,6 +126,14 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function createAddressFormDataProvider()
     {
         return new AddressFormDataProvider(
+            $this->getQueryContainer(),
+            $this->getCountryFacade()
+        );
+    }
+
+    public function createCorrectShippingAddressFormDataProvider()
+    {
+        return new CorrectShippingAddressFormDataProvider(
             $this->getQueryContainer(),
             $this->getCountryFacade()
         );
