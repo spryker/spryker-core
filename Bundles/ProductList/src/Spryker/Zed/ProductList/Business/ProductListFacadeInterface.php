@@ -229,4 +229,16 @@ interface ProductListFacadeInterface
     public function expandProductConcretePageSearchTransferWithProductLists(
         ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
     ): ProductConcretePageSearchTransfer;
+
+    /**
+     * Specification:
+     *  - Finds product concrete ids by product list ids.
+     *
+     * @api
+     *
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByProductListIds(array $productListIds): array;
 }

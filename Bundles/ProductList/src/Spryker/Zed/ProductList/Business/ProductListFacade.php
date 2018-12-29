@@ -275,4 +275,21 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
             ->createProductConcretePageSearchExpander()
             ->expandProductConcretePageSearchTransferWithProductLists($productConcretePageSearchTransfer);
     }
+
+    /**
+     * Specification:
+     *  - Finds product concrete ids by product list ids.
+     *
+     * @api
+     *
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByProductListIds(array $productListIds): array
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->findProductConcreteIdsByProductListIds($productListIds);
+    }
 }
