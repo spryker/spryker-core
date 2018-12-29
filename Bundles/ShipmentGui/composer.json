@@ -1,5 +1,5 @@
 {
-  "name": "spryker/shipment",
+  "name": "spryker/shipment-gui",
   "type": "library",
   "description": "Shipment module",
   "license": "proprietary",
