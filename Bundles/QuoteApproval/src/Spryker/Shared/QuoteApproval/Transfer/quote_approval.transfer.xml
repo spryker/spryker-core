@@ -15,4 +15,14 @@
         <property name="updatedAt" type="string"/>
     </transfer>
 
+    <transfer name="QuoteApproveRequest">
+        <property name="customer" type="Customer"/>
+        <property name="quote" type="Quote"/>
+        <property name="idApprover" type="int"/>
+    </transfer>
+
+    <transfer name="QuoteUpdateRequestAttributes">
+        <property name="isLocked" type="bool"/>
+    </transfer>
+
 </transfers>

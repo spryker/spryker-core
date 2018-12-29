@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\QuoteApproval;
 
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\QuoteApproveRequestTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -29,5 +32,32 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
         return $this->getFactory()
             ->createQuoteApprovalStatusCalculator()
             ->calculateQuoteStatus($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApproveRequestTransfer $quoteApproveRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function sendApproveRequest(
+        QuoteApproveRequestTransfer $quoteApproveRequestTransfer
+    ): QuoteResponseTransfer {
+        return $this->getFactory()->createZedStub()->sendApproveRequest($quoteApproveRequestTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getPotentialQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
+    {
+        return $this->getFactory()->createZedStub()->getPotentialQuoteApproversList($quoteTransfer);
     }
 }
