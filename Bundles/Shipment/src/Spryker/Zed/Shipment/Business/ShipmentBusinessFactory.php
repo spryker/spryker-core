@@ -17,6 +17,7 @@ use Spryker\Zed\Shipment\Business\Model\MethodPrice;
 use Spryker\Zed\Shipment\Business\Model\ShipmentCarrierReader;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
+use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaverInterface as ModelShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
@@ -102,9 +103,13 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaverInterface
      */
-    public function createShipmentOrderSaver()
+    public function createShipmentOrderSaver(): ModelShipmentOrderSaverInterface
     {
-        return new ShipmentOrderSaver($this->getSalesQueryContainer());
+        return new ShipmentOrderSaver(
+            $this->getSalesQueryContainer(),
+            $this->getShipmentService(),
+            $this->getCountryFacade()
+        );
     }
 
     /**
@@ -114,7 +119,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new CheckoutShipmentOrderSaver(
             $this->getSalesQueryContainer(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
+            $this->getCountryFacade()
         );
     }
 
@@ -172,5 +178,13 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function getShipmentService(): ShipmentServiceInterface
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::SERVICE_SHIPMENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCountryInterface
+     */
+    protected function getCountryFacade()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_COUNTRY);
     }
 }

@@ -4,6 +4,9 @@ parameters:
     ignoreErrors:
     - '#Call to an undefined method .+Criteria::.+\(\).#'
     - '#Method .+ProductOptionQueryContainer::query.+\(\) should return Orm\\Zed\\ProductOption\\Persistence\\SpyProductOptionGroupQuery but returns .+Query.#'
+    - '#Cannot access offset .+idProductOptionValue.+ on .+SpyProductOptionValue#'
+    - '#Cannot access offset .+spy_country\.iso2.+ on .+SpyProductOptionValue#'
+    - '#Cannot access offset .+MaxTaxRate.+ on .+SpyProductOptionValue#'
 
 services:
     -
