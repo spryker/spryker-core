@@ -20,6 +20,7 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaverInterface as ModelShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCountryInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
@@ -182,7 +183,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCountryInterface
      */
-    protected function getCountryFacade()
+    public function getCountryFacade(): ShipmentToCountryInterface
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_COUNTRY);
     }
