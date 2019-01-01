@@ -12,6 +12,8 @@ use Spryker\Zed\Quote\Business\GuestQuote\GuestQuoteDeleter;
 use Spryker\Zed\Quote\Business\GuestQuote\GuestQuoteDeleterInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteDeleter;
 use Spryker\Zed\Quote\Business\Model\QuoteDeleterInterface;
+use Spryker\Zed\Quote\Business\Model\QuotePluginExecutor;
+use Spryker\Zed\Quote\Business\Model\QuotePluginExecutorInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteReader;
 use Spryker\Zed\Quote\Business\Model\QuoteReaderInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteWriter;
@@ -60,7 +62,18 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     public function createQuoteReader(): QuoteReaderInterface
     {
         return new QuoteReader(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createQuotePluginExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Quote\Business\Model\QuotePluginExecutorInterface
+     */
+    public function createQuotePluginExecutor(): QuotePluginExecutorInterface
+    {
+        return new QuotePluginExecutor(
+            $this->getQuoteHydrationPlugins()
         );
     }
 
@@ -102,6 +115,14 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade()
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Quote\Business\Model\QuoteHydrationPluginInterface[]
+     */
+    public function getQuoteHydrationPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_HYDRATION);
     }
 
     /**

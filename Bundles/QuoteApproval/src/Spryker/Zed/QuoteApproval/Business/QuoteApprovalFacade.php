@@ -61,4 +61,16 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
     {
         return $this->getFactory()->createQuoteApprovalWriter()->updateApprovals($quoteTransfer);
     }
+
+    /**
+     * @api
+     *
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
+     */
+    public function getQuoteApprovalsByIdQuote(int $idQuote): array
+    {
+        return $this->getFactory()->createQuoteApprovalReader()->getQuoteApprovalsByIdQuote($idQuote);
+    }
 }

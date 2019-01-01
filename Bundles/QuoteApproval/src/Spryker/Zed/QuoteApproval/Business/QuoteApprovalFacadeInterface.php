@@ -52,4 +52,16 @@ interface QuoteApprovalFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function updateApprovals(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Returns list of quote approval transfers by quote id.
+     *
+     * @api
+     *
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
+     */
+    public function getQuoteApprovalsByIdQuote(int $idQuote): array;
 }

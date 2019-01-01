@@ -25,6 +25,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const PLUGINS_QUOTE_DELETE_BEFORE = 'PLUGINS_QUOTE_DELETE_BEFORE';
     public const PLUGINS_QUOTE_DELETE_AFTER = 'PLUGINS_QUOTE_DELETE_AFTER';
+    public const PLUGINS_QUOTE_HYDRATION = 'PLUGINS_QUOTE_HYDRATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -40,6 +41,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteUpdateBeforePlugins($container);
         $container = $this->addQuoteDeleteBeforePlugins($container);
         $container = $this->addQuoteDeleteAfterPlugins($container);
+        $container = $this->addQuoteHydrationPlugins($container);
 
         return $container;
     }
@@ -93,6 +95,20 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::PLUGINS_QUOTE_CREATE_AFTER] = function (Container $container) {
             return $this->getQuoteCreateAfterPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteHydrationPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUOTE_HYDRATION] = function (Container $container) {
+            return $this->getQuoteHydrationPlugins();
         };
 
         return $container;
@@ -172,6 +188,14 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
      */
     protected function getQuoteCreateAfterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\Quote\Business\Model\QuoteHydrationPluginInterface[]
+     */
+    protected function getQuoteHydrationPlugins(): array
     {
         return [];
     }

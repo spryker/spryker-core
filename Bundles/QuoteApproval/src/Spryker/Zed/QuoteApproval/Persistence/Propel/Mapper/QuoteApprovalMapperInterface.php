@@ -22,4 +22,15 @@ interface QuoteApprovalMapperInterface
         QuoteApprovalTransfer $quoteApprovalTransfer,
         SpyQuoteApproval $quoteApprovalEntity
     ): SpyQuoteApproval;
+
+    /**
+     * @param \Orm\Zed\QuoteApproval\Persistence\SpyQuoteApproval $quoteApprovalEntity
+     * @param \Generated\Shared\Transfer\QuoteApprovalTransfer $quoteApprovalTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer
+     */
+    public function mapQuoteApprovalEntityToTransfer(
+        SpyQuoteApproval $quoteApprovalEntity,
+        QuoteApprovalTransfer $quoteApprovalTransfer
+    ): QuoteApprovalTransfer;
 }

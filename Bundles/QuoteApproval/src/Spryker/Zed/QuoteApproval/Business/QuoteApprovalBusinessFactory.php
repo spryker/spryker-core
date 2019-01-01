@@ -10,6 +10,8 @@ namespace Spryker\Zed\QuoteApproval\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\QuoteApproval\Business\Model\PotentialQuoteApproversListProvider;
 use Spryker\Zed\QuoteApproval\Business\Model\PotentialQuoteApproversListProviderInterface;
+use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalReader;
+use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalReaderInterface;
 use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestSender;
 use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestSenderInterface;
 use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalWriter;
@@ -49,6 +51,16 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
         return new PotentialQuoteApproversListProvider(
             $this->getCompanyRoleFacade(),
             $this->getCompanyUserFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalReaderInterface
+     */
+    public function createQuoteApprovalReader(): QuoteApprovalReaderInterface
+    {
+        return new QuoteApprovalReader(
+            $this->getRepository()
         );
     }
 

@@ -9,6 +9,7 @@ namespace Spryker\Zed\QuoteApproval\Dependency\Facade;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 
 class QuoteApprovalToCompanyUserFacadeBridge implements QuoteApprovalToCompanyUserFacadeInterface
 {
@@ -34,5 +35,15 @@ class QuoteApprovalToCompanyUserFacadeBridge implements QuoteApprovalToCompanyUs
         CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
     ): CompanyUserCollectionTransfer {
         return $this->companyUserFacade->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
+    }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer
+    {
+        return $this->companyUserFacade->getCompanyUserById($idCompanyUser);
     }
 }

@@ -83,7 +83,7 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
     protected function removeOldQuoteApprovals(QuoteTransfer $quoteTransfer): void
     {
         $quoteApprovalIds = $this->quoteApprovalRepository
-            ->findQuoteQuoteApprovalIdCollection($quoteTransfer->getIdQuote());
+            ->findQuoteApprovalIdCollectionByIdQuote($quoteTransfer->getIdQuote());
 
         foreach ($quoteTransfer->getApprovals() as $approval) {
             $idQuoteApproval = $approval->getIdQuoteApproval();
