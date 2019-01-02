@@ -73,11 +73,11 @@ class AlternativeProductReader implements AlternativeProductReaderInterface
         $concreteProductSku = $concreteProductResource->getId();
 
         $restResource = $this->findConcreteProductAlternativeBySku($concreteProductSku, $restRequest);
-        if (!$restResource) {
-            $restResource = $this->buildProductAlternativeResource($concreteProductSku, new ProductAlternativeStorageTransfer(), $restRequest);
+        if ($restResource) {
+            return $restResponse->addResource($restResource);
         }
 
-        return $restResponse->addResource($restResource);
+        return $restResponse->addError($this->createAlternativeProductsNotFoundError());
     }
 
     /**
@@ -150,6 +150,19 @@ class AlternativeProductReader implements AlternativeProductReaderInterface
             ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED);
+
+        return $restErrorTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createAlternativeProductsNotFoundError(): RestErrorMessageTransfer
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductAlternativesRestApiConfig::RESPONSE_CODE_ALTERNATIVE_PRODUCTS_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(ProductAlternativesRestApiConfig::RESPONSE_DETAIL_ALTERNATIVE_PRODUCTS_NOT_FOUND);
 
         return $restErrorTransfer;
     }

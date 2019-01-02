@@ -11,6 +11,9 @@
     "spryker/glue-application": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/glue-application": "If you want to use plugins with glue application."
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
@@ -25,8 +28,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/glue-application": "If you want to use plugins with glue application."
   }
 }
