@@ -224,4 +224,20 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
             ->createCompanyUserStatusHandler()
             ->disableCompanyUser($companyUserTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyUser()
+            ->deleteCompanyUser($companyUserTransfer);
+    }
 }
