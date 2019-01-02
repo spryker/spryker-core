@@ -464,7 +464,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         ->find()
         ->toArray();
 
-        // todo: check if innerJoinWithCountry is correct
         return $this->getFactory()->createProductOptionValueQuery()
             ->filterByIdProductOptionValue($idProductOptionValues, Criteria::IN)
             ->withColumn(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE, static::COL_ID_PRODUCT_OPTION_VALUE)
@@ -473,8 +472,9 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                 ->useSpyTaxSetQuery()
                     ->useSpyTaxSetTaxQuery()
                         ->useSpyTaxRateQuery()
-                            ->innerJoinWithCountry()
-                            ->withColumn(ProductOptionCountryTableMapInterface::COL_ISO2_CODE)
+                            ->useCountryQuery()
+                                ->withColumn(ProductOptionCountryTableMapInterface::COL_ISO2_CODE)
+                            ->endUse()
                             ->filterByFkCountry($idCountryList, Criteria::IN)
                             ->_or()
                             ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)

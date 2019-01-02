@@ -32,7 +32,7 @@ class ShipmentCartConnectorToShipmentFacadeBridge implements ShipmentCartConnect
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
         return $this->shipmentFacade->getAvailableMethods($quoteTransfer);
     }

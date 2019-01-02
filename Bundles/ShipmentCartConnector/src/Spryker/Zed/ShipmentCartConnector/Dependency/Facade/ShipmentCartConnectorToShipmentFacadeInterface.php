@@ -19,7 +19,7 @@ interface ShipmentCartConnectorToShipmentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer;
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

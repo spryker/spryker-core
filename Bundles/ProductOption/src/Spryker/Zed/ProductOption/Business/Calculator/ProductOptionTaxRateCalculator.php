@@ -170,7 +170,6 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
         $key = $this->getTaxGroupedKey($idOptionValue, $countryIso2Code);
 
         if (isset($taxRates[$key])) {
-            // todo: to discover if we need `(float)` here later - when debug will be running
             return (float)$taxRates[$key];
         }
 
