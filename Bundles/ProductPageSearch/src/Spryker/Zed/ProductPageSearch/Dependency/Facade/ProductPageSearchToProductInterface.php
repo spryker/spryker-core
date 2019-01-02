@@ -46,4 +46,11 @@ interface ProductPageSearchToProductInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getProductConcreteTransfersByProductIds(array $productIds): array;
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     */
+    public function findProductEntityTransfersByProductIds(array $productIds): array;
 }
