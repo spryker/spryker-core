@@ -84,7 +84,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
      *
      * @return $this
      */
-    public function setModuleConfig(array $moduleConfig): CodeStyleSnifferConfigurationInterface
+    public function setModuleConfig(array $moduleConfig)
     {
         $this->moduleConfig = $moduleConfig;
 
@@ -96,7 +96,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
      *
      * @return $this
      */
-    public function setConfigurationOptions(array $configurationOptions): CodeStyleSnifferConfigurationInterface
+    public function setConfigurationOptions(array $configurationOptions)
     {
         $this->configurationOptions = $configurationOptions;
 

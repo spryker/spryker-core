@@ -14,14 +14,14 @@ interface CodeStyleSnifferConfigurationInterface
      *
      * @return $this
      */
-    public function setModuleConfig(array $moduleConfig): self;
+    public function setModuleConfig(array $moduleConfig);
 
     /**
      * @param array $configurationOptions
      *
      * @return $this
      */
-    public function setConfigurationOptions(array $configurationOptions): self;
+    public function setConfigurationOptions(array $configurationOptions);
 
     /**
      * Returns the list of paths to the coding standards which should be used in current CodeStyleSniffer run.
