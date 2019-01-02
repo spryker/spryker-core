@@ -69,7 +69,6 @@ class ResponseHeaders implements ResponseHeadersInterface
             RequestConstantsInterface::HEADER_ACCESS_CONTROL_ALLOW_ORIGIN,
             $this->config->getCorsAllowOrigin()
         );
-        $httpResponse->headers->set(RequestConstantsInterface::HEADER_ACCESS_CONTROL_ALLOW_CREDENTIALS, 'true');
 
         $httpResponse = $this->executeResponseHeaderPlugins($httpResponse, $restResponse, $restRequest);
 
