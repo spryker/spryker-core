@@ -245,7 +245,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCountryFacade(Container $container)
+    protected function addCountryFacade(Container $container): Container
     {
         $container[static::FACADE_COUNTRY] = function (Container $container) {
             return new ShipmentToCountryBridge($container->getLocator()->country()->facade());

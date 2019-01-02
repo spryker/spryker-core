@@ -130,7 +130,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         return new ObsoleteCustomerOrderSaver(
             $this->createCustomer(),
             $this->createAddress(),
-            $this->getQueryContainer()
+            $this->getRepository()
         );
     }
 
@@ -142,7 +142,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         return new CustomerOrderSaver(
             $this->createCustomer(),
             $this->createAddress(),
-            $this->getQueryContainer()
+            $this->getRepository()
         );
     }
 

@@ -89,9 +89,9 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
         int $idShipmentMethod,
         ShipmentMethodsTransfer $availableShipmentMethods
     ): ?ShipmentMethodTransfer {
-        foreach ($availableShipmentMethods->getMethods() as $shipentMethodTransfer) {
-            if ($idShipmentMethod === $shipentMethodTransfer->getIdShipmentMethod()) {
-                return $shipentMethodTransfer;
+        foreach ($availableShipmentMethods->getMethods() as $shipmentMethodTransfer) {
+            if ($idShipmentMethod === $shipmentMethodTransfer->getIdShipmentMethod()) {
+                return $shipmentMethodTransfer;
             }
         }
 
