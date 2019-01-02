@@ -80,7 +80,7 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    protected function updateQuoteWithStatus(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer, string $status)
+    protected function updateQuoteWithStatus(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer, string $status): QuoteApprovalResponseTransfer
     {
         $quoteApprovalResponseTransfer = $this->createDefaultQuoteApprovalResponseTransfer();
 

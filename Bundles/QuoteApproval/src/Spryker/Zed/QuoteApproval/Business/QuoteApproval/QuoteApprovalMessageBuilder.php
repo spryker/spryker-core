@@ -14,8 +14,8 @@ use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterf
 
 class QuoteApprovalMessageBuilder implements QuoteApprovalMessageBuilderInterface
 {
-    protected const FIRST_NAME_PARAMETER = 'first_name';
-    protected const LAST_NAME_PARAMETER = 'last_name';
+    protected const PARAMETER_FIRST_NAME = 'first_name';
+    protected const PARAMETER_LAST_NAME = 'last_name';
     protected const MESSAGE_SUCCESS = 'quote_approval_widget.cart.success_message.';
 
     /**
@@ -52,8 +52,8 @@ class QuoteApprovalMessageBuilder implements QuoteApprovalMessageBuilderInterfac
         $customerResponseTransfer = $this->customerFacade->findCustomerByReference($quoteResponseTransfer->getQuoteTransfer()->getCustomerReference());
         $messageTransfer = (new MessageTransfer())->setValue(static::MESSAGE_SUCCESS . $status)
             ->setParameters([
-                static::FIRST_NAME_PARAMETER => $customerResponseTransfer->getCustomerTransfer()->getFirstName(),
-                static::LAST_NAME_PARAMETER => $customerResponseTransfer->getCustomerTransfer()->getLastName(),
+                static::PARAMETER_FIRST_NAME => $customerResponseTransfer->getCustomerTransfer()->getFirstName(),
+                static::PARAMETER_LAST_NAME => $customerResponseTransfer->getCustomerTransfer()->getLastName(),
             ]);
 
         return $messageTransfer;
