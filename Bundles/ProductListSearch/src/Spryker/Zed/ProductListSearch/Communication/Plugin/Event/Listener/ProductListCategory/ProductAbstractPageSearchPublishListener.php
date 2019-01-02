@@ -5,13 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListCategory;
 
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListCategoryTableMap;
 use Spryker\Shared\ProductListSearch\ProductListSearchConfig;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductList\Dependency\ProductListEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
@@ -19,7 +18,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
  */
-class ProductListProductCategorySearchListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductAbstractPageSearchPublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -44,24 +43,5 @@ class ProductListProductCategorySearchListener extends AbstractPlugin implements
             $this->getFacade()->getProductAbstractIdsByCategoryIds($categoryIds),
             [ProductListSearchConfig::PLUGIN_PRODUCT_LIST_DATA]
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     * @param string $eventName
-     *
-     * @return int[]
-     */
-    protected function getProductListProductCategoryIds($eventTransfers, $eventName): array
-    {
-        if ($eventName === ProductListEvents::ENTITY_SPY_PRODUCT_LIST_CATEGORY_CREATE) {
-            return $this->getFactory()
-                ->getEventBehaviorFacade()
-                ->getEventTransferIds($eventTransfers);
-        }
-
-        return $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventTransfers, SpyProductListCategoryTableMap::COL_FK_CATEGORY);
     }
 }
