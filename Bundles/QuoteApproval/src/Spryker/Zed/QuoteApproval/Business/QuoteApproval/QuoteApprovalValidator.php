@@ -83,10 +83,6 @@ class QuoteApprovalValidator implements QuoteApprovalValidatorInterface
     {
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById($quoteApprovalTransfer->getFkQuote());
 
-        if (!$this->can(ApproveQuotePermissionPlugin::KEY, $quoteResponseTransfer->getQuoteTransfer())) {
-            return false;
-        }
-
-        return true;
+        return $this->can(ApproveQuotePermissionPlugin::KEY, $quoteResponseTransfer->getQuoteTransfer());
     }
 }
