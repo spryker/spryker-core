@@ -16,6 +16,8 @@ use Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CommentFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CorrectShippingAddressFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
+use Spryker\Zed\Sales\Communication\Form\DataProvider\EditShippingFormDataProvider;
+use Spryker\Zed\Sales\Communication\Form\EditShipmentForm;
 use Spryker\Zed\Sales\Communication\Table\CustomerOrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilder;
@@ -131,9 +133,33 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    public function createCorrectShippingAddressFormDataProvider()
+    /**
+     * @deprecated Use `getCommentForm()` instead.
+     *
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createEditShippingForm(array $formData = [], array $formOptions = [])
     {
-        return new CorrectShippingAddressFormDataProvider(
+        return $this->getFormFactory()->create(EditShipmentForm::class, $formData, $formOptions);
+    }
+
+    /**
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getEditShippingForm(array $formData = [], array $formOptions = [])
+    {
+        return $this->createEditShippingForm($formData, $formOptions);
+    }
+
+    public function createEditShippingFormDataProvider()
+    {
+        return new EditShippingFormDataProvider(
             $this->getQueryContainer(),
             $this->getCountryFacade()
         );

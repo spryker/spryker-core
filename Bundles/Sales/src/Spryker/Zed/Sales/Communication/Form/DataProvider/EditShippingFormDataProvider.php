@@ -9,10 +9,11 @@ namespace Spryker\Zed\Sales\Communication\Form\DataProvider;
 
 use Spryker\Zed\Sales\Communication\Form\AddressForm;
 use Spryker\Zed\Sales\Communication\Form\CustomerForm;
+use Spryker\Zed\Sales\Communication\Form\EditShipmentForm;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
-class CorrectShippingAddressFormDataProvider extends AbstractSalesFormDataProvider
+class EditShippingFormDataProvider extends AbstractSalesFormDataProvider
 {
     /**
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface
@@ -28,6 +29,7 @@ class CorrectShippingAddressFormDataProvider extends AbstractSalesFormDataProvid
         SalesToCountryInterface $countryFacade
     ) {
         parent::__construct($salesQueryContainer);
+
         $this->countryFacade = $countryFacade;
     }
 
@@ -42,6 +44,7 @@ class CorrectShippingAddressFormDataProvider extends AbstractSalesFormDataProvid
 
         return [
             AddressForm::FIELD_ID => $address->getIdSalesOrderAddress(),
+            EditShipmentForm::FIELD_DELIVERY_ADDRESS => $address->getDeliveryAddress(),
             AddressForm::FIELD_ADDRESS_1 => $address->getAddress1(),
             AddressForm::FIELD_ADDRESS_2 => $address->getAddress2(),
         ];
