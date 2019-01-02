@@ -13,8 +13,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageDataExpanderPluginInterface;
 
 /**
- * @api
- *
  * @method \Spryker\Zed\ProductList\Business\ProductListFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductList\ProductListConfig getConfig()
  */

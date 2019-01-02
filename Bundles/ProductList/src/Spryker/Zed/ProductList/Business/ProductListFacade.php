@@ -277,8 +277,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * Specification:
-     *  - Finds product concrete ids by product list ids.
+     * {@inheritdoc}
      *
      * @api
      *
