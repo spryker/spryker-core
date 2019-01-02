@@ -23,6 +23,7 @@ use Spryker\Zed\CompanyUserGui\CompanyUserGuiDependencyProvider;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeInterface;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCustomerFacadeInterface;
+use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableDeleteActionPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -161,7 +162,9 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CompanyUserTable(
             $this->getCompanyUserPropelQuery(),
-            $this->createCompanyUserTableExpanderPluginExecutor()
+            $this->createCompanyUserTableExpanderPluginExecutor(),
+            $this->getCompanyUserTableActionExpanderPlugins(),
+            $this->getCompanyUserTableDeleteActionPlugin()
         );
     }
 
@@ -179,5 +182,21 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCompanyUserTablePrepareDataExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionExpanderPluginInterface[]
+     */
+    public function getCompanyUserTableActionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PLUGINS_COMPANY_USER_TABLE_ACTION_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableDeleteActionPluginInterface|null
+     */
+    public function getCompanyUserTableDeleteActionPlugin(): ?CompanyUserTableDeleteActionPluginInterface
+    {
+        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PLUGIN_COMPANY_USER_TABLE_DELETE_ACTION);
     }
 }
