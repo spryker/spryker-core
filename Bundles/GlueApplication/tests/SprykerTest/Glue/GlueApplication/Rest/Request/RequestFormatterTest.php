@@ -7,6 +7,7 @@
 namespace SprykerTest\Glue\GlueApplication\Rest\Request;
 
 use Codeception\Test\Unit;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -38,7 +39,7 @@ class RequestFormatterTest extends Unit
      */
     public function testFormatRequestShouldSetRestRequest(): void
     {
-        $requestFormatter = $this->createRequestFormatter(new RestResourceBuilder());
+        $requestFormatter = $this->createRequestFormatter(new RestResourceBuilder(), $this->createGlueApplicationConfigMock());
 
         $request = $this->createRequest();
 
@@ -63,7 +64,7 @@ class RequestFormatterTest extends Unit
      */
     public function testFormatRequestWhenIncludeEmptyShouldExcludeRel(): void
     {
-        $requestFormatter = $this->createRequestFormatter(new RestResourceBuilder());
+        $requestFormatter = $this->createRequestFormatter(new RestResourceBuilder(), $this->createGlueApplicationConfigMock());
 
         $request = Request::create(
             '/',
@@ -86,17 +87,69 @@ class RequestFormatterTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testFormatRequestWhenEagerRelatedResourcesInclusionDisabledShouldExcludeRel(): void
+    {
+        $requestFormatter = $this->createRequestFormatter(new RestResourceBuilder(), $this->createGlueApplicationConfigMock(false));
+
+        $request = Request::create(
+            '/',
+            Request::METHOD_GET,
+            [],
+            [],
+            [],
+            [
+                'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
+                'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
+                'Accept-Language' => 'en; de;q=0.5',
+            ]
+        );
+
+        $restRequest = $requestFormatter->formatRequest($request);
+
+        $this->assertTrue($restRequest->getExcludeRelationship());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFormatRequestWhenEagerRelatedResourcesInclusionEnabledShouldNotExcludeRel(): void
+    {
+        $requestFormatter = $this->createRequestFormatter(new RestResourceBuilder(), $this->createGlueApplicationConfigMock(true));
+
+        $request = Request::create(
+            '/',
+            Request::METHOD_GET,
+            [],
+            [],
+            [],
+            [
+                'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
+                'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
+                'Accept-Language' => 'en; de;q=0.5',
+            ]
+        );
+
+        $restRequest = $requestFormatter->formatRequest($request);
+
+        $this->assertNotTrue($restRequest->getExcludeRelationship());
+    }
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilderMock
+     * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $glueApplicationConfigMock
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestFormatterInterface
      */
     protected function createRequestFormatter(
-        RestResourceBuilderInterface $restResourceBuilderMock
+        RestResourceBuilderInterface $restResourceBuilderMock,
+        GlueApplicationConfig $glueApplicationConfigMock
     ): RequestFormatterInterface {
         return new RequestFormatter(
             $this->createRequestMetaDataExtractorMock(),
             new RequestResourceExtractor($restResourceBuilderMock, $this->createDecoderMatcherMock()),
-            new GlueApplicationConfig(),
+            $glueApplicationConfigMock,
             []
         );
     }
@@ -121,6 +174,22 @@ class RequestFormatterTest extends Unit
     protected function createDecoderMatcherMock(): DecoderMatcherInterface
     {
         return $this->getMockBuilder(DecoderMatcherInterface::class)->getMock();
+    }
+
+    /**
+     * @param bool $isEagerRelatedResourcesInclusionEnabled
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\GlueApplicationConfig
+     */
+    protected function createGlueApplicationConfigMock(bool $isEagerRelatedResourcesInclusionEnabled = true): MockObject
+    {
+        $glueApplicationConfigMock = $this->getMockBuilder(GlueApplicationConfig::class)
+            ->setMethods(['getIsEagerRelatedResourcesInclusionEnabled'])
+            ->getMock();
+        $glueApplicationConfigMock->method('getIsEagerRelatedResourcesInclusionEnabled')
+            ->willReturn($isEagerRelatedResourcesInclusionEnabled);
+
+        return $glueApplicationConfigMock;
     }
 
     /**
