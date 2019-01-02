@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser;
 
+use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\ResponseMessageTransfer;
+use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig as SharedShoppingListsRestApiConfig;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToCompanyUserFacadeInterface;
 
 class CompanyUserReader implements CompanyUserReaderInterface
@@ -29,18 +32,25 @@ class CompanyUserReader implements CompanyUserReaderInterface
      * @param string $companyUserUuid
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function findCompanyUser(string $companyUserUuid, string $customerReference): ?CompanyUserTransfer
+    public function findCompanyUserByUuid(string $companyUserUuid, string $customerReference): CompanyUserResponseTransfer
     {
         $companyUserTransfer = $this->companyUserFacade->findCompanyUserByUuid(
             (new CompanyUserTransfer())->setUuid($companyUserUuid)
         );
 
         if (!$companyUserTransfer || ($companyUserTransfer->getCustomer()->getCustomerReference() !== $customerReference)) {
-            return null;
+            return (new CompanyUserResponseTransfer())
+                ->setIsSuccessful(false)
+                ->addMessage(
+                    (new ResponseMessageTransfer())
+                        ->setText(SharedShoppingListsRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_FOUND)
+                );
         }
 
-        return $companyUserTransfer;
+        return (new CompanyUserResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setCompanyUser($companyUserTransfer);
     }
 }

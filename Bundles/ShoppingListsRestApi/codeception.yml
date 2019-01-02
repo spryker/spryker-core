@@ -1,5 +1,7 @@
 namespace: ShoppingListsRestApi
 actor: Tester
+include:
+    - tests/SprykerTest/Zed/ShoppingListsRestApi
 paths:
     tests: tests
     log: tests/_output

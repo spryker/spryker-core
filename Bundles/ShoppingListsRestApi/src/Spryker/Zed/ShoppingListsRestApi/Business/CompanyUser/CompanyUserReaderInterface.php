@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 
 interface CompanyUserReaderInterface
 {
@@ -15,7 +15,7 @@ interface CompanyUserReaderInterface
      * @param string $companyUserUuid
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function findCompanyUser(string $companyUserUuid, string $customerReference): ?CompanyUserTransfer;
+    public function findCompanyUserByUuid(string $companyUserUuid, string $customerReference): CompanyUserResponseTransfer;
 }

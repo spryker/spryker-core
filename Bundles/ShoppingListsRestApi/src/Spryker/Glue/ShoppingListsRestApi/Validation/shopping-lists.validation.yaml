@@ -1,0 +1,29 @@
+shopping-lists:
+    post:
+        name:
+            - NotBlank
+            - Required
+    patch:
+        name:
+            - NotBlank
+            - Required
+shopping-list-items:
+    post:
+        sku:
+            - Required
+            - NotBlank
+        quantity:
+            - Required
+            - NotBlank
+            -   Type:
+                    type: integer
+            -   GreaterThan:
+                    value: 0
+    patch:
+        quantity:
+            - Required
+            - NotBlank
+            -   Type:
+                    type: integer
+            -   GreaterThan:
+                    value: 0

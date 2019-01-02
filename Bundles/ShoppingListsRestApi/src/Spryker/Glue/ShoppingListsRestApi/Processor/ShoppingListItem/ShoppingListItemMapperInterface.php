@@ -5,26 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ShoppingListsRestApi\Mapper;
+namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem;
 
 use Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface ShoppingListItemsResourceMapperInterface
+interface ShoppingListItemMapperInterface
 {
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
-     */
-    public function mapRestRequestToShoppingListItemTransfer(
-        RestRequestInterface $restRequest,
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListItemTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
@@ -37,13 +25,13 @@ interface ShoppingListItemsResourceMapperInterface
     ): RestShoppingListItemAttributesTransfer;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RestShoppingListItemRequestTransfer
      */
-    public function mapRestRequestToRestShoppingListItemRequestTransfer(
-        RestRequestInterface $restRequest,
-        RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
+    public function mapRestShoppingListItemAttributesTransferToRestShoppingListItemRequestTransfer(
+        RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer,
+        RestShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): RestShoppingListItemRequestTransfer;
 }

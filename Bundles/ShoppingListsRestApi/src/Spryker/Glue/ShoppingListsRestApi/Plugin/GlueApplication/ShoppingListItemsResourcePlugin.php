@@ -26,9 +26,13 @@ class ShoppingListItemsResourcePlugin extends AbstractPlugin implements Resource
      *
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
      */
-    public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
-    {
-        $resourceRouteCollection->addPost(ShoppingListsRestApiConfig::ACTION_SHOPPING_LIST_ITEMS_POST);
+    public function configure(
+        ResourceRouteCollectionInterface $resourceRouteCollection
+    ): ResourceRouteCollectionInterface {
+        $resourceRouteCollection
+            ->addPost(ShoppingListsRestApiConfig::ACTION_SHOPPING_LIST_ITEMS_POST)
+            ->addPatch(ShoppingListsRestApiConfig::ACTION_SHOPPING_LIST_ITEMS_PATCH)
+            ->addDelete(ShoppingListsRestApiConfig::ACTION_SHOPPING_LIST_ITEMS_DELETE);
 
         return $resourceRouteCollection;
     }
