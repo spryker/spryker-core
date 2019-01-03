@@ -15,6 +15,7 @@ use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterfac
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CustomerAddressReader implements CustomerAddressReaderInterface
 {
@@ -50,10 +51,11 @@ class CustomerAddressReader implements CustomerAddressReaderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function getAddressesByCustomerReference(RestResourceInterface $restResource): RestResourceInterface
+    public function getAddressesByCustomerReference(RestResourceInterface $restResource, RestRequestInterface $restRequest): RestResourceInterface
     {
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($restResource->getId());
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
@@ -62,25 +64,27 @@ class CustomerAddressReader implements CustomerAddressReaderInterface
             return $restResource;
         }
 
-        foreach ($customerResponseTransfer->getCustomerTransfer()->getAddresses()->getAddresses() as $addressTransfer) {
-            $restAddressAttributesTransfer = $this->addressesResourceMapper
-                ->mapAddressTransferToRestAddressAttributesTransfer(
-                    $addressTransfer,
-                    $customerResponseTransfer->getCustomerTransfer()
+        if (!$restRequest->getExcludeRelationship()) {
+            foreach ($customerResponseTransfer->getCustomerTransfer()->getAddresses()->getAddresses() as $addressTransfer) {
+                $restAddressAttributesTransfer = $this->addressesResourceMapper
+                    ->mapAddressTransferToRestAddressAttributesTransfer(
+                        $addressTransfer,
+                        $customerResponseTransfer->getCustomerTransfer()
+                    );
+
+                $addressRestResource = $this->restResourceBuilder->createRestResource(
+                    CustomersRestApiConfig::RESOURCE_ADDRESSES,
+                    $addressTransfer->getUuid(),
+                    $restAddressAttributesTransfer
                 );
 
-            $addressRestResource = $this->restResourceBuilder->createRestResource(
-                CustomersRestApiConfig::RESOURCE_ADDRESSES,
-                $addressTransfer->getUuid(),
-                $restAddressAttributesTransfer
-            );
+                $addressRestResource->addLink(
+                    RestLinkInterface::LINK_SELF,
+                    $this->createSelfLink($customerTransfer, $addressTransfer)
+                );
 
-            $addressRestResource->addLink(
-                RestLinkInterface::LINK_SELF,
-                $this->createSelfLink($customerTransfer, $addressTransfer)
-            );
-
-            $restResource->addRelationship($addressRestResource);
+                $restResource->addRelationship($addressRestResource);
+            }
         }
 
         return $restResource;
