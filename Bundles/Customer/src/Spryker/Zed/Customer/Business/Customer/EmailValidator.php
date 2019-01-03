@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Customer\Business\Customer;
 
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
@@ -55,5 +56,17 @@ class EmailValidator implements EmailValidatorInterface
             ->findOne();
 
         return ($customerEntity === null);
+    }
+
+    /**
+     * @param string $email
+     *
+     * @return bool
+     */
+    public function isEmailLengthValid(string $email): bool
+    {
+        $maxAllowedLength = SpyCustomerTableMap::getTableMap()->getColumn(SpyCustomerTableMap::COL_EMAIL)->getSize();
+
+        return strlen($email) <= $maxAllowedLength;
     }
 }

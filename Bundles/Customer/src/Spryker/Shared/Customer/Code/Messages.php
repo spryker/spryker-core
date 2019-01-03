@@ -28,6 +28,7 @@ interface Messages
     public const CUSTOMER_EMAIL_ALREADY_USED = 'customer.email.already.used';
     public const CUSTOMER_EMAIL_FORMAT_INVALID = 'customer.email.format.invalid';
     public const CUSTOMER_EMAIL_INVALID = 'customer.email.invalid';
+    public const CUSTOMER_EMAIL_TOO_LONG = 'customer.email.length.exceeded';
     public const CUSTOMER_TOKEN_INVALID = 'customer.token.invalid';
     public const CUSTOMER_ANONYMIZATION_SUCCESS = 'customer.anonymization.success';
     public const CUSTOMER_ANONYMIZATION_FAILED = 'customer.anonymization.failed';
