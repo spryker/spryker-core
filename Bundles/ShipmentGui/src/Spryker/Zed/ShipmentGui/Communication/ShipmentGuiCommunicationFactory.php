@@ -32,7 +32,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface
+     * @return \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCountryInterface
      */
     public function getCountryFacade()
     {
@@ -40,11 +40,19 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface
+     * @return \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesInterface
      */
     public function getSalesFacade()
     {
         return $this->getProvidedDependency(ShipmentGuiDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface
+     */
+    public function getShipmentFacade()
+    {
+        return $this->getProvidedDependency(ShipmentGuiDependencyProvider::FACADE_SHIPMENT);
     }
 
     /**
@@ -62,7 +70,8 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ShippingFormDataProvider(
             $this->getRepository(),
-            $this->createAddressFormDataProvider()
+            $this->createAddressFormDataProvider(),
+            $this->getShipmentFacade()
         );
     }
 

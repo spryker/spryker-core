@@ -10,6 +10,8 @@ namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\AddressForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentForm;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCountryInterface;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentBridge;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface;
 use Spryker\Zed\ShipmentGui\Persistence\ShipmentGuiRepositoryInterface;
 
 class ShippingFormDataProvider
@@ -20,20 +22,28 @@ class ShippingFormDataProvider
     protected $shipmentGuiRepository;
 
     /**
-     * @var Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider
+     * @var \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\AddressFormDataProvider
      */
     protected $addressFormDataProvider;
 
     /**
+     * @var \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface
+     */
+    protected $shipmentFacade;
+
+    /**
      * @param \Spryker\Zed\ShipmentGui\Persistence\ShipmentGuiQueryContainerInterface $shipmentGuiQueryContainer
      * @param AddressFormDataProvider $addressFormDataProvider
+     * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface $shipmentFacade
      */
     public function __construct(
         ShipmentGuiRepositoryInterface $shipmentGuiRepository,
-        AddressFormDataProvider $addressFormDataProvider
+        AddressFormDataProvider $addressFormDataProvider,
+        ShipmentGuiToShipmentInterface $shipmentFacade
     ) {
         $this->shipmentGuiRepository = $shipmentGuiRepository;
         $this->addressFormDataProvider = $addressFormDataProvider;
+        $this->shipmentFacade = $shipmentFacade;
     }
 
     /**
@@ -58,7 +68,7 @@ class ShippingFormDataProvider
 
         $formData = array_merge(
             [
-                //EditShipmentForm::OPTION_SHIPMENT_ADDRESS => ,
+                //ShipmentForm::OPTION_SHIPMENT_ADDRESS => $this->createShipmentMethodOptionList(),
                 ShipmentForm::FIELD_SHIPMENT_METHOD => $shipmentEntity->getCarrierName(),
                 ShipmentForm::FIELD_SHIPMENT_DATE => $shipmentEntity->getRequestedDeliveryDate(),
             ],
@@ -78,11 +88,29 @@ class ShippingFormDataProvider
     {
         $options =  array_merge(
             [
-                //self::OPTION_SHIPMENT_METHOD => $this->createShipmentMethodOptionList(),
+                ShipmentForm::OPTION_SHIPMENT_METHOD => $this->createShipmentMethodOptionList(
+                    $this->shipmentFacade->getAvailableMethods()
+                ),
             ],
             $this->addressFormDataProvider->getOptions()
         );
 
         return $options;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodCollection
+     *
+     * @return Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider
+     */
+    protected function createShipmentMethodOptionList(ShipmentMethodsTransfer $shipmentMethodCollection)
+    {
+        $data = [];
+
+        foreach ($shipmentMethodCollection->getMethods() as $shipmentMethod) {
+            $data[$shipmentMethod->getIdShipmentMethod()] = $shipmentMethod->getCarrierName();
+        }
+
+        return $data;
     }
 }

@@ -34,6 +34,7 @@ class ShipmentForm extends AbstractType
     public const FIELD_SHIPMENT_DATE = 'delivery_date';
     public const FIELD_ORDER_ITEMS_FORM_ID = 'order_items_form_id';
     public const FIELD_SHIPMENT_METHOD = 'shipment_method';
+    public const OPTION_SHIPMENT_METHOD = 'data';
     public const FIELD_DELIVERY_ADDRESS = 'delivery_address';
 
     /**
@@ -106,7 +107,8 @@ class ShipmentForm extends AbstractType
                 'constraints' => [
                     new Blank(),
                 ],
-            ]
+            ],
+            $builder->getOptions()
         );
 
         return $this;
@@ -154,10 +156,11 @@ class ShipmentForm extends AbstractType
     {
         $builder->add(
             self::FIELD_SHIPMENT_METHOD,
-            TextType::class, [
+            ChoiceType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],
+                'choices' => $builder->getOption(self::OPTION_SHIPMENT_METHOD),
             ]
         );
 
