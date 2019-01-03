@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\NavigationsRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\NavigationStorageTransfer;
-
 class NavigationsRestApiToNavigationStorageClientBridge implements NavigationsRestApiToNavigationStorageClientInterface
 {
     /**
@@ -30,7 +28,7 @@ class NavigationsRestApiToNavigationStorageClientBridge implements NavigationsRe
      *
      * @return \Generated\Shared\Transfer\NavigationStorageTransfer|null
      */
-    public function findNavigationTreeByKey($navigationKey, $localeName): ?NavigationStorageTransfer
+    public function findNavigationTreeByKey($navigationKey, $localeName)
     {
         return $this->navigationStorageClient->findNavigationTreeByKey($navigationKey, $localeName);
     }
