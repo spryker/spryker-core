@@ -8,6 +8,7 @@
 namespace Spryker\Client\QuoteApproval\Zed;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer;
 use Generated\Shared\Transfer\QuoteApproveRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -40,6 +41,25 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
         $quoteResponseTransfer = $this->zedRequestClient->call(
             '/quote-approval/gateway/send-quote-approve-request',
             $quoteApproveRequestTransfer
+        );
+
+        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function cancelApprovalRequest(
+        QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+    ): QuoteResponseTransfer {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call(
+            '/quote-approval/gateway/cancel-quote-approval-request',
+            $quoteApprovalCancelRequestTransfer
         );
 
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();

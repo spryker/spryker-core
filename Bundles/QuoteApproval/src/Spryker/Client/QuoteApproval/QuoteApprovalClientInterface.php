@@ -8,6 +8,7 @@
 namespace Spryker\Client\QuoteApproval;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer;
 use Generated\Shared\Transfer\QuoteApproveRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -42,6 +43,22 @@ interface QuoteApprovalClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function sendApproveRequest(QuoteApproveRequestTransfer $quoteApproveRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Unlocks quote.
+     * - Removes cart sharing with approver.
+     * - Removes quote approval request.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function cancelApprovalRequest(
+        QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+    ): QuoteResponseTransfer;
 
     /**
      * Specification:

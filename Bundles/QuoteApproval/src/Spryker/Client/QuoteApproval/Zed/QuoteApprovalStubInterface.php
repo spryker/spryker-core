@@ -8,6 +8,7 @@
 namespace Spryker\Client\QuoteApproval\Zed;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer;
 use Generated\Shared\Transfer\QuoteApproveRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -20,6 +21,15 @@ interface QuoteApprovalStubInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function sendApproveRequest(QuoteApproveRequestTransfer $quoteApproveRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function cancelApprovalRequest(
+        QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+    ): QuoteResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

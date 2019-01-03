@@ -92,11 +92,9 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
                 continue;
             }
 
-            if (!in_array($idQuoteApproval, $quoteApprovalIds)) {
-                continue;
-            }
-
-            $this->quoteApproavalEntityManager->deleteQuoteApprovalById($idQuoteApproval);
+            unset($quoteApprovalIds[array_search($idQuoteApproval, $quoteApprovalIds)]);
         }
+
+        $this->quoteApproavalEntityManager->deleteQuoteApprovalByIds($quoteApprovalIds);
     }
 }

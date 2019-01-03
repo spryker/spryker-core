@@ -8,6 +8,7 @@
 namespace Spryker\Zed\QuoteApproval\Business;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer;
 use Generated\Shared\Transfer\QuoteApproveRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -28,6 +29,22 @@ interface QuoteApprovalFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function sendQuoteApproveRequest(QuoteApproveRequestTransfer $quoteApproveRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Unlocks quote.
+     * - Removes all existing cart sharing.
+     * - Remove quote approval.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function cancelQuoteApprovalRequest(
+        QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+    ): QuoteResponseTransfer;
 
     /**
      * Specification:

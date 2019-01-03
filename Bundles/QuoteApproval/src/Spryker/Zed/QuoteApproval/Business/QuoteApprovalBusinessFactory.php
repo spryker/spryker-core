@@ -12,6 +12,8 @@ use Spryker\Zed\QuoteApproval\Business\Model\PotentialQuoteApproversListProvider
 use Spryker\Zed\QuoteApproval\Business\Model\PotentialQuoteApproversListProviderInterface;
 use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalReader;
 use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalReaderInterface;
+use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestCanceller;
+use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestCancellerInterface;
 use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestSender;
 use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestSenderInterface;
 use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalWriter;
@@ -41,6 +43,17 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->getCompanyRoleFacade(),
             $this->getMessengerFacade(),
             $this->getCompanyUserFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestCancellerInterface
+     */
+    public function createQuoteApprovalRequestCanceller(): QuoteApprovalRequestCancellerInterface
+    {
+        return new QuoteApprovalRequestCanceller(
+            $this->getCartFacade(),
+            $this->getQuoteFacade()
         );
     }
 

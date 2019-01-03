@@ -97,7 +97,7 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
         $quoteTransfer = $this->cartFacade->lockQuote($quoteTransfer);
         $quoteTransfer = $this->updateQuoteApprovalRequests($quoteTransfer, $quoteApproveRequestTransfer->getIdApprover());
 
-        $this->quoteFacade->updateQuote($quoteTransfer);
+        $quoteReposneTransfer = $this->quoteFacade->updateQuote($quoteTransfer);
 
         return $quoteReposneTransfer;
     }

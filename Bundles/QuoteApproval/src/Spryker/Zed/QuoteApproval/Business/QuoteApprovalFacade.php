@@ -8,6 +8,7 @@
 namespace Spryker\Zed\QuoteApproval\Business;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer;
 use Generated\Shared\Transfer\QuoteApproveRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -32,6 +33,21 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
     public function sendQuoteApproveRequest(QuoteApproveRequestTransfer $quoteApproveRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createQuoteApprovalRequestSender()->sendQuoteApproveRequest($quoteApproveRequestTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function cancelQuoteApprovalRequest(
+        QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+    ): QuoteResponseTransfer {
+        return $this->getFactory()
+            ->createQuoteApprovalRequestCanceller()
+            ->cancelQuoteApprovalRequest($quoteApprovalCancelRequestTransfer);
     }
 
     /**

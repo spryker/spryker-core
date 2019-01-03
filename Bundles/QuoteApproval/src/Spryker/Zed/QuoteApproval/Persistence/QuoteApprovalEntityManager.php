@@ -40,19 +40,22 @@ class QuoteApprovalEntityManager extends AbstractEntityManager implements QuoteA
 
         $quoteApprovalEntity->save();
 
-        return $quoteApprovalTransfer;
+        return $this->getFactory()
+            ->createQuoteApprovalMapper()
+            ->mapQuoteApprovalEntityToTransfer($quoteApprovalEntity, $quoteApprovalTransfer);
     }
 
     /**
-     * @param int $idQuoteApproval
+     * @param array $quoteApprovalIds
      *
      * @return void
      */
-    public function deleteQuoteApprovalById(int $idQuoteApproval): void
+    public function deleteQuoteApprovalByIds(array $quoteApprovalIds): void
     {
         $this->getFactory()
             ->createQuoteApprovalQuery()
-            ->filterByIdQuoteApproval($idQuoteApproval)
+            ->filterByIdQuoteApproval_In($quoteApprovalIds)
+            ->find()
             ->delete();
     }
 }

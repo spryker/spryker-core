@@ -23,9 +23,9 @@ interface QuoteApprovalEntityManagerInterface
     ): QuoteApprovalTransfer;
 
     /**
-     * @param int $idQuoteApproval
+     * @param array $quoteApprovalIds
      *
      * @return void
      */
-    public function deleteQuoteApprovalById(int $idQuoteApproval): void;
+    public function deleteQuoteApprovalByIds(array $quoteApprovalIds): void;
 }
