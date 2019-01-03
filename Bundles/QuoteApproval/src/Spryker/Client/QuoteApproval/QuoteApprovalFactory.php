@@ -8,7 +8,6 @@
 namespace Spryker\Client\QuoteApproval;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToQuoteClientInterface;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface;
 use Spryker\Client\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculator;
 use Spryker\Client\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface;
@@ -41,13 +40,5 @@ class QuoteApprovalFactory extends AbstractFactory
     protected function getZedRequestClient(): QuoteApprovalToZedRequestClientInterface
     {
         return $this->getProvidedDependency(QuoteApprovalDependencyProvider::CLIENT_ZED_REQUEST);
-    }
-
-    /**
-     * @return \Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToQuoteClientInterface
-     */
-    public function getQuoteClient(): QuoteApprovalToQuoteClientInterface
-    {
-        return $this->getProvidedDependency(QuoteApprovalDependencyProvider::CLIENT_QUOTE);
     }
 }
