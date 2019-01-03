@@ -23,3 +23,7 @@ require-dev,require-dev
 Dependencies,Abhängigkeiten
 Rules,Regeln
 Module overview,Übersicht der Modul
+
+Stability,Stabilität
+"Architecture Sniffer","Architektur-Sniffer"
+"Used Plugins","Verwendete Plugins"

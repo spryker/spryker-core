@@ -7,3 +7,9 @@ Add,Add
 "Reset to global settings","Reset to global settings"
 Save,Save
 Search,Search
+"Overview of Category Filters","Overview of Category Filters"
+"Category Id","Category Id"
+"There are no manual filter preferences defined for this category. The filters listed bellow are global settings. To define manual references for this category, modify the filters below.","There are no manual filter preferences defined for this category. The filters listed bellow are global settings. To define manual references for this category, modify the filters below."
+"Search and Filters","Search and Filters"
+"Type first three letters of an existing filter key for suggestions.","Type first three letters of an existing filter key for suggestions."
+"Category Filters","Category Filters"

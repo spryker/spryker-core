@@ -19,7 +19,7 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' }  %}
         {% block widget_content %}
             <p>
-                <strong>Store relation:</strong>
+                <strong>{{ 'Store relation' | trans }}:</strong>
                 {% for storeName in relatedStoreNames %}
                     <span class="label label-info">{{ storeName }}</span>
                 {% endfor %}
@@ -75,7 +75,7 @@
                         <p>{{ item }}</p>
                     {% endfor %}
                 {% else %}
-                    <p>No records</p>
+                    <p>{{ 'No records' | trans }}</p>
                 {% endif %}
             {% endblock %}
         {% endembed %}
