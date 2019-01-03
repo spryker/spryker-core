@@ -109,14 +109,15 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
     /**
      * @param string $schemaName
      * @param string $ref
+     * @param bool $isNullableId
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
      */
-    public function createResponseDataSchema(string $schemaName, string $ref): SchemaDataTransfer
+    public function createResponseDataSchema(string $schemaName, string $ref, bool $isNullableId = false): SchemaDataTransfer
     {
         $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
         $schemaData->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_TYPE_STRING));
-        $schemaData->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_ID, static::VALUE_TYPE_STRING));
+        $schemaData->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_ID, static::VALUE_TYPE_STRING, $isNullableId));
         $schemaData->addProperty($this->schemaComponentBuilder->createReferencePropertyTransfer(static::KEY_ATTRIBUTES, $ref));
         $schemaData->addProperty($this->schemaComponentBuilder->createReferencePropertyTransfer(static::KEY_LINKS, static::SCHEMA_NAME_LINKS));
 

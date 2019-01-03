@@ -46,10 +46,11 @@ interface SchemaBuilderInterface
     /**
      * @param string $schemaName
      * @param string $ref
+     * @param bool $isNullableId
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
      */
-    public function createResponseDataSchema(string $schemaName, string $ref): SchemaDataTransfer;
+    public function createResponseDataSchema(string $schemaName, string $ref, bool $isNullableId = false): SchemaDataTransfer;
 
     /**
      * @param string $schemaName
