@@ -137,6 +137,33 @@ class RequestFormatterTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testFormatRequestWhenEagerRelatedResourcesInclusionDisabledAndIncludeNotEmptyShouldNotExcludeRel(): void
+    {
+        $requestFormatter = $this->createRequestFormatter(new RestResourceBuilder(), $this->createGlueApplicationConfigMock(false));
+
+        $request = Request::create(
+            '/',
+            Request::METHOD_GET,
+            [
+                'include' => 'test'
+            ],
+            [],
+            [],
+            [
+                'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
+                'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
+                'Accept-Language' => 'en; de;q=0.5',
+            ]
+        );
+
+        $restRequest = $requestFormatter->formatRequest($request);
+
+        $this->assertNotTrue($restRequest->getExcludeRelationship());
+    }
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilderMock
      * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $glueApplicationConfigMock
      *
