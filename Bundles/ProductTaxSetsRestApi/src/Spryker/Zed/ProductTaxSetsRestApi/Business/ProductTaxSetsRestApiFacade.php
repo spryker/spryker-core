@@ -20,6 +20,8 @@ class ProductTaxSetsRestApiFacade extends AbstractFacade implements ProductTaxSe
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @return void
      */
     public function updateTaxSetsWithoutUuid(): void

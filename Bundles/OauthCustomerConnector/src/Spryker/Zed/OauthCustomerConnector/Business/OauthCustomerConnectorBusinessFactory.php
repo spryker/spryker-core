@@ -32,7 +32,8 @@ class OauthCustomerConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CustomerProvider(
             $this->getCustomerFacade(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
+            $this->getOauthCustomerIdentifierExpanderPlugins()
         );
     }
 
@@ -82,5 +83,13 @@ class OauthCustomerConnectorBusinessFactory extends AbstractBusinessFactory
     public function getUtilEncodingService(): OauthCustomerConnectorToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(OauthCustomerConnectorDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerIdentifierExpanderPluginInterface[]
+     */
+    public function getOauthCustomerIdentifierExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthCustomerConnectorDependencyProvider::PLUGINS_OAUTH_CUSTOMER_IDENTIFIER_EXPANDER);
     }
 }

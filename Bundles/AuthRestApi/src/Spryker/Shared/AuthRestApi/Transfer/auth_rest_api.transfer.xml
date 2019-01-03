@@ -13,6 +13,7 @@
     </transfer>
 
     <transfer name="RestRefreshTokensAttributes">
+        <property name="tokenType" type="string" />
         <property name="expiresIn" type="string" />
         <property name="accessToken" type="string" />
         <property name="refreshToken" type="string" restRequestParameter="required" />

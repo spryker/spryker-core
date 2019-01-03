@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CompanyUserInterface
 {
@@ -56,6 +57,13 @@ interface CompanyUserInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
     public function findActiveCompanyUserByCustomerId(int $idCustomer): ?CompanyUserTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getActiveCompanyUsersByCustomerReference(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
