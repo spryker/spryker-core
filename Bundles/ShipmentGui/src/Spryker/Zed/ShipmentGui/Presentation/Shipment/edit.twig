@@ -1,4 +1,4 @@
-{% extends '@Sales/Layout/layout.twig' %}
+{% extends '@ShipmentGui/Layout/layout.twig' %}
 
 {% set backUrl = '/sales/detail/?id-sales-order=' ~ idSalesOrder %}
 {% set title = 'Edit Shipment' | trans %}
@@ -20,12 +20,12 @@
             {{ form_start(form) }}
             {{ form_widget(form) }}
 
+            <div id="items">{% include '@ShipmentGui/Shipment/boxes/items.twig' %}</div>
+
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
             {{ form_end(form) }}
         {% endblock %}
 
     {% endembed %}
-
-    {#<div id="items">{% include '@Sales/Shipping/boxes/items.twig' %}</div>#}
 
 {% endblock %}

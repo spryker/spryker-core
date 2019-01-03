@@ -40,6 +40,14 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface
+     */
+    public function getSalesFacade()
+    {
+        return $this->getProvidedDependency(ShipmentGuiDependencyProvider::FACADE_SALES);
+    }
+
+    /**
      * @param array $formData
      * @param array $formOptions
      *

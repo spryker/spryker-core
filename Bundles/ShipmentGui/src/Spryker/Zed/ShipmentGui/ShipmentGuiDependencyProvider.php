@@ -10,6 +10,7 @@ namespace Spryker\Zed\ShipmentGui;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCountryBridge;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesBridge;
 
 /**
  * @method \Spryker\Zed\ShipmentGui\ShipmentGuiConfig getConfig()
@@ -17,6 +18,7 @@ use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCountryBridge;
 class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COUNTRY = 'FACADE_COUNTRY';
+    public const FACADE_SALES = 'FACADE_SALES';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,9 +40,11 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = $this->addCountryFacade($container);
+        $container = $this->addSalesFacade($container);
 
         return $container;
     }
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -50,6 +54,20 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_COUNTRY] = function (Container $container) {
             return new ShipmentGuiToCountryBridge($container->getLocator()->country()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesFacade(Container $container)
+    {
+        $container[static::FACADE_SALES] = function (Container $container) {
+            return new ShipmentGuiToSalesBridge($container->getLocator()->sales()->facade());
         };
 
         return $container;

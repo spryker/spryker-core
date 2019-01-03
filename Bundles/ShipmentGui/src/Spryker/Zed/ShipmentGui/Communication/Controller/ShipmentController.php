@@ -26,6 +26,20 @@ class ShipmentController extends AbstractController
         $idSalesOrder = $this->castId($request->query->get(SalesConfig::PARAM_ID_SALES_ORDER));
         $idShipment = $this->castId($request->query->get('id-shipment'));
 
+        $orderTransfer = $this
+            ->getFactory()
+            ->getSalesFacade()
+            ->findOrderByIdSalesOrder($idSalesOrder);
+
+        if ($orderTransfer === null) {
+            $this->addErrorMessage(sprintf(
+                'Sales order #%d not found.',
+                $idSalesOrder
+            ));
+
+            return $this->redirectResponse(Url::generate('/sales')->build());
+        }
+
         $dataProvider = $this->getFactory()->createEditShippingFormDataProvider();
         $form = $this->getFactory()
             ->getEditShippingForm(
@@ -55,7 +69,9 @@ class ShipmentController extends AbstractController
         return $this->viewResponse([
             'idSalesOrder' => $idSalesOrder,
             'form' => $form->createView(),
+            'items' => [],
             'eventsGroupedByItem' => [],
+            'order' => $orderTransfer,
         ]);
     }
 }
