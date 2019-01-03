@@ -9,6 +9,7 @@ namespace Spryker\Glue\NavigationsRestApi\Processor\Navigation;
 
 use Generated\Shared\Transfer\NavigationStorageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\RestNavigationTreeAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -101,7 +102,10 @@ class NavigationReader implements NavigationReaderInterface
         NavigationStorageTransfer $navigationStorageTransfer
     ): RestResourceInterface {
         $restNavigationTreeAttributesTransfer = $this->navigationMapper
-            ->mapNavigationStorageTransferToRestNavigationTreeAttributesTransfer($navigationStorageTransfer);
+            ->mapNavigationStorageTransferToRestNavigationTreeAttributesTransfer(
+                $navigationStorageTransfer,
+                new RestNavigationTreeAttributesTransfer()
+            );
 
         return $this->restResourceBuilder->createRestResource(
             NavigationsRestApiConfig::RESOURCE_NAVIGATION_TREES,

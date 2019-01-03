@@ -14,12 +14,14 @@ class NavigationMapper implements NavigationMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\NavigationStorageTransfer $navigationStorageTransfer
+     * @param \Generated\Shared\Transfer\RestNavigationTreeAttributesTransfer $restNavigationTreeAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestNavigationTreeAttributesTransfer
      */
     public function mapNavigationStorageTransferToRestNavigationTreeAttributesTransfer(
-        NavigationStorageTransfer $navigationStorageTransfer
+        NavigationStorageTransfer $navigationStorageTransfer,
+        RestNavigationTreeAttributesTransfer $restNavigationTreeAttributesTransfer
     ): RestNavigationTreeAttributesTransfer {
-        return (new RestNavigationTreeAttributesTransfer())->fromArray($navigationStorageTransfer->toArray(), true);
+        return $restNavigationTreeAttributesTransfer->fromArray($navigationStorageTransfer->toArray(), true);
     }
 }

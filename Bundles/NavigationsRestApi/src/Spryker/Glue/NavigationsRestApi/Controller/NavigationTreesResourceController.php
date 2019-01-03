@@ -39,6 +39,6 @@ class NavigationTreesResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createNavigationsReader()->getNavigationTreeByKey($restRequest);
+        return $this->getFactory()->createNavigationReader()->getNavigationTreeByKey($restRequest);
     }
 }

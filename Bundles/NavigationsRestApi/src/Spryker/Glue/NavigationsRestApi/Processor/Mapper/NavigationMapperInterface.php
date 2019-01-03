@@ -14,10 +14,12 @@ interface NavigationMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\NavigationStorageTransfer $navigationStorageTransfer
+     * @param \Generated\Shared\Transfer\RestNavigationTreeAttributesTransfer $restNavigationTreeAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestNavigationTreeAttributesTransfer
      */
     public function mapNavigationStorageTransferToRestNavigationTreeAttributesTransfer(
-        NavigationStorageTransfer $navigationStorageTransfer
+        NavigationStorageTransfer $navigationStorageTransfer,
+        RestNavigationTreeAttributesTransfer $restNavigationTreeAttributesTransfer
     ): RestNavigationTreeAttributesTransfer;
 }

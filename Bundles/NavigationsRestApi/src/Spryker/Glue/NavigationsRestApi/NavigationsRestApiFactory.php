@@ -19,7 +19,7 @@ class NavigationsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\NavigationsRestApi\Processor\Navigation\NavigationReaderInterface
      */
-    public function createNavigationsReader(): NavigationReaderInterface
+    public function createNavigationReader(): NavigationReaderInterface
     {
         return new NavigationReader(
             $this->getNavigationStorageClient(),
