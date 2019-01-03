@@ -83,7 +83,7 @@ class AvailabilitySubscriptionChecker implements AvailabilitySubscriptionChecker
         StoreTransfer $store,
         bool $isExists
     ): AvailabilitySubscriptionExistenceTransfer {
-        return (new AvailabilitySubscriptionExistenceTransfer)
+        return (new AvailabilitySubscriptionExistenceTransfer())
             ->setSku($sku)
             ->setEmail($email)
             ->setStore($store)
