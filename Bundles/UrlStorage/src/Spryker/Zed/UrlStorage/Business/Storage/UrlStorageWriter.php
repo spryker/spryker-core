@@ -10,6 +10,7 @@ namespace Spryker\Zed\UrlStorage\Business\Storage;
 use ArrayObject;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Orm\Zed\UrlStorage\Persistence\SpyUrlStorage;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Url\Persistence\Propel\AbstractSpyUrl;
 use Spryker\Zed\UrlStorage\Business\Exception\MissingResourceException;
 use Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface;
@@ -38,15 +39,26 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     protected $isSendingToQueue = true;
 
     /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
      * @param \Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface $utilSanitize
      * @param \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
+     * @param \Spryker\Shared\Kernel\Store $store
      */
-    public function __construct(UrlStorageToUtilSanitizeServiceInterface $utilSanitize, UrlStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
-    {
+    public function __construct(
+        UrlStorageToUtilSanitizeServiceInterface $utilSanitize,
+        UrlStorageQueryContainerInterface $queryContainer,
+        $isSendingToQueue,
+        Store $store
+    ) {
         $this->utilSanitize = $utilSanitize;
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
+        $this->store = $store;
     }
 
     /**
@@ -57,7 +69,8 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     public function publish(array $urlIds)
     {
         $urls = $this->findUrls($urlIds);
-        $urlStorageTransfers = $this->mapUrlsToUrlStorageTransfers($urls);
+        $locales = $this->store->getLocales();
+        $urlStorageTransfers = $this->mapUrlsToUrlStorageTransfers($urls, $locales);
 
         $urlStorageEntities = $this->findUrlStorageEntitiesByIds($urlIds);
         $this->storeData($urlStorageTransfers, $urlStorageEntities);
@@ -144,6 +157,23 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     }
 
     /**
+     * @param array $localeUrl
+     * @param array $urlResourceArguments
+     *
+     * @return array
+     */
+    public function findResourceArgumentForLocaleUrls(array $localeUrl, array $urlResourceArguments)
+    {
+        $urlResourceArgumentType = $urlResourceArguments[static::RESOURCE_TYPE];
+        $resourcePrefix = AbstractSpyUrl::RESOURCE_PREFIX . $urlResourceArgumentType;
+
+        return [
+            static::RESOURCE_TYPE => $urlResourceArgumentType,
+            static::RESOURCE_VALUE => $localeUrl[$resourcePrefix],
+        ];
+    }
+
+    /**
      * @param string $columnName
      * @param string $value
      *
@@ -156,19 +186,21 @@ class UrlStorageWriter implements UrlStorageWriterInterface
 
     /**
      * @param array $urls
+     * @param array $locales
      *
      * @return \Generated\Shared\Transfer\UrlStorageTransfer[]
      */
-    protected function mapUrlsToUrlStorageTransfers(array $urls)
+    protected function mapUrlsToUrlStorageTransfers(array $urls, array $locales)
     {
         $localeUrls = $this->findLocaleUrls($urls);
+        $localesCount = count($locales);
 
         $urlStorageTransfers = [];
         foreach ($urls as $url) {
             $urlResource = $this->findResourceArguments($url);
             $urlStorageTransfer = (new UrlStorageTransfer())->fromArray($url, true);
             $urlStorageTransfer->setLocaleUrls(
-                $this->getLocaleUrlsForUrl($localeUrls[$urlResource[static::RESOURCE_TYPE]], $urlResource)
+                $this->getLocaleUrlsForUrl($localeUrls[$urlResource[static::RESOURCE_TYPE]], $urlResource, $localesCount)
             );
 
             $urlStorageTransfers[] = $urlStorageTransfer;
@@ -180,16 +212,23 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     /**
      * @param array $localeUrls
      * @param array $urlResourceArguments
+     * @param int $localesCount
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\UrlStorageTransfer[]
      */
-    protected function getLocaleUrlsForUrl(array $localeUrls, array $urlResourceArguments)
+    protected function getLocaleUrlsForUrl(array $localeUrls, array $urlResourceArguments, int $localesCount)
     {
         $siblingUrls = new ArrayObject();
-        foreach ($localeUrls as $localeUrl) {
-            $resourceArguments = $this->findResourceArguments($localeUrl);
+        foreach ($localeUrls as $key => $localeUrl) {
+            $resourceArguments = $this->findResourceArgumentForLocaleUrls($localeUrl, $urlResourceArguments);
+
             if ($urlResourceArguments[static::RESOURCE_VALUE] === $resourceArguments[static::RESOURCE_VALUE]) {
                 $siblingUrls[] = $localeUrl;
+                unset($localeUrls[$key]);
+            }
+
+            if (count($siblingUrls) === $localesCount) {
+                break;
             }
         }
 
