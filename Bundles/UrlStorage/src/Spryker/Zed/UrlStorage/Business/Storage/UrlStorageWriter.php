@@ -10,9 +10,9 @@ namespace Spryker\Zed\UrlStorage\Business\Storage;
 use ArrayObject;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Orm\Zed\UrlStorage\Persistence\SpyUrlStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Url\Persistence\Propel\AbstractSpyUrl;
 use Spryker\Zed\UrlStorage\Business\Exception\MissingResourceException;
+use Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToStoreFacadeInterface;
 use Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface;
 
@@ -39,26 +39,26 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     protected $isSendingToQueue = true;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToStoreFacadeInterface
      */
-    protected $store;
+    protected $storeFacade;
 
     /**
      * @param \Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface $utilSanitize
      * @param \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         UrlStorageToUtilSanitizeServiceInterface $utilSanitize,
         UrlStorageQueryContainerInterface $queryContainer,
         $isSendingToQueue,
-        Store $store
+        UrlStorageToStoreFacadeInterface $storeFacade
     ) {
         $this->utilSanitize = $utilSanitize;
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
-        $this->store = $store;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -69,9 +69,9 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     public function publish(array $urlIds)
     {
         $urls = $this->findUrls($urlIds);
-        $locales = $this->store->getLocales();
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $locales = $storeTransfer->getAvailableLocaleIsoCodes();
         $urlStorageTransfers = $this->mapUrlsToUrlStorageTransfers($urls, $locales);
-
         $urlStorageEntities = $this->findUrlStorageEntitiesByIds($urlIds);
         $this->storeData($urlStorageTransfers, $urlStorageEntities);
     }

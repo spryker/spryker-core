@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\UrlStorage\Business;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\UrlStorage\Business\Storage\RedirectStorageWriter;
 use Spryker\Zed\UrlStorage\Business\Storage\UrlStorageWriter;
+use Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToStoreFacadeInterface;
 use Spryker\Zed\UrlStorage\UrlStorageDependencyProvider;
 
 /**
@@ -53,9 +53,9 @@ class UrlStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToStoreFacadeInterface
      */
-    public function getStore(): Store
+    public function getStore(): UrlStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(UrlStorageDependencyProvider::STORE);
     }
