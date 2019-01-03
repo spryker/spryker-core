@@ -88,7 +88,7 @@ class OauthCustomerConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerIdentifierExpanderPluginInterface[]
      */
-    protected function getOauthCustomerIdentifierExpanderPlugins(): array
+    public function getOauthCustomerIdentifierExpanderPlugins(): array
     {
         return $this->getProvidedDependency(OauthCustomerConnectorDependencyProvider::PLUGINS_OAUTH_CUSTOMER_IDENTIFIER_EXPANDER);
     }

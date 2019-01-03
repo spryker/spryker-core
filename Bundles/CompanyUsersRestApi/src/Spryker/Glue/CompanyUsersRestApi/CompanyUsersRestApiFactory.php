@@ -47,7 +47,7 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUserAttributesMapperPluginInterface[]
      */
-    protected function getCompanyUserAttributesMapperPlugin(): array
+    public function getCompanyUserAttributesMapperPlugin(): array
     {
         return $this->getProvidedDependency(CompanyUsersRestApiDependencyProvider::PLUGINS_COMPANY_USER_ATTRIBUTES_MAPPER);
     }

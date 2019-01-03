@@ -17,6 +17,7 @@ use Spryker\Glue\Kernel\Container;
 class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
+
     public const PLUGINS_COMPANY_USER_ATTRIBUTES_MAPPER = 'PLUGINS_COMPANY_USER_ATTRIBUTES_MAPPER';
 
     /**
