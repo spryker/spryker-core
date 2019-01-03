@@ -22,7 +22,7 @@
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
 
-        <index name="spy_availability_subscription-index-subscription_key">
+        <index name="spy_availability_subscription-subscription_key">
             <index-column name="subscription_key" />
         </index>
 

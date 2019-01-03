@@ -9,7 +9,6 @@ namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
 use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface;
 
@@ -23,18 +22,18 @@ class AvailabilitySubscriptionChecker implements AvailabilitySubscriptionChecker
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface
      */
-    protected $repository;
+    protected $availabilityNotificationRepository;
 
     /**
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface $availabilityNotificationToStoreClient
-     * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface $repository
+     * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository
      */
     public function __construct(
         AvailabilityNotificationToStoreFacadeInterface $availabilityNotificationToStoreClient,
-        AvailabilityNotificationRepositoryInterface $repository
+        AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository
     ) {
         $this->availabilityNotificationToStoreClient = $availabilityNotificationToStoreClient;
-        $this->repository = $repository;
+        $this->availabilityNotificationRepository = $availabilityNotificationRepository;
     }
 
     /**
@@ -52,8 +51,8 @@ class AvailabilitySubscriptionChecker implements AvailabilitySubscriptionChecker
             $store = $this->availabilityNotificationToStoreClient->getCurrentStore();
         }
 
-        $existingSubscription = $this->repository
-            ->findOneByEmailAndSkuAndStore(
+        $existingSubscription = $this->availabilityNotificationRepository
+            ->findOneBy(
                 $availabilitySubscriptionTransfer->getEmail(),
                 $availabilitySubscriptionTransfer->getSku(),
                 $store
@@ -61,31 +60,9 @@ class AvailabilitySubscriptionChecker implements AvailabilitySubscriptionChecker
 
         $isExists = $existingSubscription !== null;
 
-        return $this->createAvailabilitySubscriptionExistenceTransfer(
-            $availabilitySubscriptionTransfer->getSku(),
-            $availabilitySubscriptionTransfer->getEmail(),
-            $store,
-            $isExists
-        );
-    }
-
-    /**
-     * @param string $sku
-     * @param string $email
-     * @param \Generated\Shared\Transfer\StoreTransfer $store
-     * @param bool $isExists
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer
-     */
-    protected function createAvailabilitySubscriptionExistenceTransfer(
-        string $sku,
-        string $email,
-        StoreTransfer $store,
-        bool $isExists
-    ): AvailabilitySubscriptionExistenceTransfer {
         return (new AvailabilitySubscriptionExistenceTransfer())
-            ->setSku($sku)
-            ->setEmail($email)
+            ->setSku($availabilitySubscriptionTransfer->getSku())
+            ->setEmail($availabilitySubscriptionTransfer->getEmail())
             ->setStore($store)
             ->setIsExists($isExists);
     }

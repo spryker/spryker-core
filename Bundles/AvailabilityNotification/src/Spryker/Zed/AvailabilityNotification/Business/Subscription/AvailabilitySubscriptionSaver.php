@@ -35,21 +35,29 @@ class AvailabilitySubscriptionSaver implements AvailabilitySubscriptionSaverInte
     protected $availabilityNotificationToLocaleFacade;
 
     /**
+     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface
+     */
+    protected $availabilitySubscriptionExistingChecker;
+
+    /**
      * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface $entityManager
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface $keyGenerator
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface $availabilityNotificationToStoreFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface $availabilityNotificationToLocaleFacade
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface $availabilitySubscriptionExistingChecker
      */
     public function __construct(
         AvailabilityNotificationEntityManagerInterface $entityManager,
         AvailabilitySubscriptionKeyGeneratorInterface $keyGenerator,
         AvailabilityNotificationToStoreFacadeInterface $availabilityNotificationToStoreFacade,
-        AvailabilityNotificationToLocaleFacadeInterface $availabilityNotificationToLocaleFacade
+        AvailabilityNotificationToLocaleFacadeInterface $availabilityNotificationToLocaleFacade,
+        AvailabilitySubscriptionCheckerInterface $availabilitySubscriptionExistingChecker
     ) {
         $this->entityManager = $entityManager;
         $this->keyGenerator = $keyGenerator;
         $this->availabilityNotificationToStoreFacade = $availabilityNotificationToStoreFacade;
         $this->availabilityNotificationToLocaleFacade = $availabilityNotificationToLocaleFacade;
+        $this->availabilitySubscriptionExistingChecker = $availabilitySubscriptionExistingChecker;
     }
 
     /**
@@ -59,6 +67,12 @@ class AvailabilitySubscriptionSaver implements AvailabilitySubscriptionSaverInte
      */
     public function save(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
     {
+        $availabilitySubscriptionExistenceTransfer = $this->availabilitySubscriptionExistingChecker->checkExistence($availabilitySubscriptionTransfer);
+
+        if ($availabilitySubscriptionExistenceTransfer->getIsExists()) {
+            return;
+        }
+
         $subscriptionKey = $this->keyGenerator->generateKey();
         $availabilitySubscriptionTransfer->setSubscriptionKey($subscriptionKey);
 

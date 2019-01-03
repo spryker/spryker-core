@@ -19,7 +19,7 @@ interface AvailabilityNotificationRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findOneByEmailAndSkuAndStore(string $email, string $sku, StoreTransfer $storeTransfer): ?AvailabilitySubscriptionTransfer;
+    public function findOneBy(string $email, string $sku, StoreTransfer $storeTransfer): ?AvailabilitySubscriptionTransfer;
 
     /**
      * @param string $subscriptionKey

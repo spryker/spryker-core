@@ -40,7 +40,6 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     {
         return new AvailabilitySubscriptionProcessor(
             $this->createAvailabilitySubscriptionSaver(),
-            $this->createAvailabilitySubscriptionChecker(),
             $this->createAvailabilityNotificationSender(),
             $this->getUtilValidateService()
         );
@@ -65,7 +64,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface
      */
-    protected function createSubscriptionKeyGenerator(): AvailabilitySubscriptionKeyGeneratorInterface
+    public function createSubscriptionKeyGenerator(): AvailabilitySubscriptionKeyGeneratorInterface
     {
         return new AvailabilitySubscriptionKeyGenerator($this->getUtilTextService());
     }
@@ -73,13 +72,14 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaverInterface
      */
-    protected function createAvailabilitySubscriptionSaver(): AvailabilitySubscriptionSaverInterface
+    public function createAvailabilitySubscriptionSaver(): AvailabilitySubscriptionSaverInterface
     {
         return new AvailabilitySubscriptionSaver(
             $this->getEntityManager(),
             $this->createSubscriptionKeyGenerator(),
             $this->getStoreFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->createAvailabilitySubscriptionChecker()
         );
     }
 

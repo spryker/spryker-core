@@ -21,11 +21,6 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
     protected $availabilitySubscriptionSaver;
 
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface
-     */
-    protected $availabilitySubscriptionExistingChecker;
-
-    /**
      * @var \Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSenderInterface
      */
     protected $availabilityNotificationSender;
@@ -37,18 +32,15 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
 
     /**
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaverInterface $availabilitySubscriptionSaver
-     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface $availabilitySubscriptionExistingChecker
      * @param \Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSenderInterface $availabilityNotificationSender
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface $utilValidateService
      */
     public function __construct(
         AvailabilitySubscriptionSaverInterface $availabilitySubscriptionSaver,
-        AvailabilitySubscriptionCheckerInterface $availabilitySubscriptionExistingChecker,
         AvailabilityNotificationSenderInterface $availabilityNotificationSender,
         AvailabilityNotificationToUtilValidateServiceInterface $utilValidateService
     ) {
         $this->availabilitySubscriptionSaver = $availabilitySubscriptionSaver;
-        $this->availabilitySubscriptionExistingChecker = $availabilitySubscriptionExistingChecker;
         $this->availabilityNotificationSender = $availabilityNotificationSender;
         $this->utilValidateService = $utilValidateService;
     }
@@ -60,7 +52,8 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
      */
     public function process(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
-        $this->assertAvailabilitySubscriptionTransfer($availabilitySubscriptionTransfer);
+        $availabilitySubscriptionTransfer->requireEmail();
+        $availabilitySubscriptionTransfer->requireSku();
 
         $isEmailValid = $this->utilValidateService->isEmailFormatValid($availabilitySubscriptionTransfer->getEmail());
 
@@ -68,28 +61,11 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
             return $this->createInvalidEmailResponse();
         }
 
-        $availabilitySubscriptionExistenceTransfer = $this->availabilitySubscriptionExistingChecker->checkExistence($availabilitySubscriptionTransfer);
-
-        if ($availabilitySubscriptionExistenceTransfer->getIsExists()) {
-            return $this->createSubscriptionResponseTransfer(true);
-        }
-
         $this->availabilitySubscriptionSaver->save($availabilitySubscriptionTransfer);
 
         $this->availabilityNotificationSender->sendSubscribedMail($availabilitySubscriptionTransfer);
 
         return $this->createSubscriptionResponseTransfer(true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
-     *
-     * @return void
-     */
-    protected function assertAvailabilitySubscriptionTransfer(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
-    {
-        $availabilitySubscriptionTransfer->requireEmail();
-        $availabilitySubscriptionTransfer->requireSku();
     }
 
     /**

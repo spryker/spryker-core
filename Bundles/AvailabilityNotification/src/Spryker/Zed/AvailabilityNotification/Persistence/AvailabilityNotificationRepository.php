@@ -24,7 +24,7 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findOneByEmailAndSkuAndStore(
+    public function findOneBy(
         string $email,
         string $sku,
         StoreTransfer $storeTransfer
