@@ -107,7 +107,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     ): void {
         foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
             foreach ($salesOrderEntity->getItems() as $itemEntity) {
-                if ($itemTransfer->getIdOrderItem() !== $itemEntity->getIdSalesOrderItem()) {
+                if ($itemTransfer->getIdSalesOrderItem() !== $itemEntity->getIdSalesOrderItem()) {
                     continue;
                 }
 
@@ -128,11 +128,6 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         $shippingAddressTransfer = $shipmentGroupTransfer->getShipment()->getShippingAddress();
 
         $this->saveSalesOrderAddress($shippingAddressTransfer);
-
-        $shipmentGroupTransfer
-            ->getShipment()
-            ->getShippingAddress()
-            ->setIdSalesOrderAddress($shippingAddressTransfer->getIdSalesOrderAddress());
     }
 
     /**
