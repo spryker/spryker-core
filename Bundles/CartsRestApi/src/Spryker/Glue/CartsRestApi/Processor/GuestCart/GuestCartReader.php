@@ -59,7 +59,7 @@ class GuestCartReader extends CartReader implements GuestCartReaderInterface
         }
 
         return $this->guestCartRestResponseBuilder
-            ->createGuestCartRestResponse($quoteCollectionTransfer->getQuotes()->offsetGet(0));
+            ->createGuestCartRestResponse($quoteCollectionTransfer->getQuotes()->offsetGet(0), $restRequest);
     }
 
     /**
@@ -87,6 +87,6 @@ class GuestCartReader extends CartReader implements GuestCartReaderInterface
     protected function getRestResponse(RestRequestInterface $restRequest, QuoteResponseTransfer $quoteResponseTransfer): RestResponseInterface
     {
         return $this->guestCartRestResponseBuilder
-            ->createGuestCartRestResponse($quoteResponseTransfer->getQuoteTransfer());
+            ->createGuestCartRestResponse($quoteResponseTransfer->getQuoteTransfer(), $restRequest);
     }
 }

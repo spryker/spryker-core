@@ -34,7 +34,7 @@ class CustomersToAddressesRelationshipPlugin extends AbstractPlugin implements R
 
             $this->getFactory()
                 ->createCustomerAddressReader()
-                ->getAddressesByCustomerReference($resource);
+                ->getAddressesByCustomerReference($resource, $restRequest);
         }
     }
 
