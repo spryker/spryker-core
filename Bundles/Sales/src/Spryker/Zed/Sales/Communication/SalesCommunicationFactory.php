@@ -134,38 +134,6 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getCommentForm()` instead.
-     *
-     * @param array $formData
-     * @param array $formOptions
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createEditShippingForm(array $formData = [], array $formOptions = [])
-    {
-        return $this->getFormFactory()->create(EditShipmentForm::class, $formData, $formOptions);
-    }
-
-    /**
-     * @param array $formData
-     * @param array $formOptions
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getEditShippingForm(array $formData = [], array $formOptions = [])
-    {
-        return $this->createEditShippingForm($formData, $formOptions);
-    }
-
-    public function createEditShippingFormDataProvider()
-    {
-        return new EditShippingFormDataProvider(
-            $this->getQueryContainer(),
-            $this->getCountryFacade()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Sales\Communication\Table\OrdersTable
      */
     public function createOrdersTable()

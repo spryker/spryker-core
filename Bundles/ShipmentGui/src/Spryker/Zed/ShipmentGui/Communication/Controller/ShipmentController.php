@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Communication\Controller;
+namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -14,48 +14,31 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
- * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
- * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface getRepository()
- */
-class ShippingController extends AbstractController
+class ShipmentController extends AbstractController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function editAddressAction(Request $request)
+    public function editAction(Request $request)
     {
         $idSalesOrder = $this->castId($request->query->get(SalesConfig::PARAM_ID_SALES_ORDER));
-        $idShippingAddress = $this->castId($request->query->get('id-shipping-address'));
+        $idShipment = $this->castId($request->query->get('id-shipment'));
 
-        $orderTransfer = $this->getFacade()->findOrderByIdSalesOrder($idSalesOrder);
-
-        if ($orderTransfer === null) {
-            $this->addErrorMessage(sprintf(
-                'Sales order #%d not found.',
-                $idSalesOrder
-            ));
-
-            return $this->redirectResponse(Url::generate('/sales')->build());
-        }
-
-        $dataProvider = $this->getFactory()->createCorrectShippingAddressFormDataProvider();
+        $dataProvider = $this->getFactory()->createEditShippingFormDataProvider();
         $form = $this->getFactory()
-            ->getAddressForm(
-                $dataProvider->getData($idShippingAddress),
+            ->getEditShippingForm(
+                $dataProvider->getData($idShipment),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $addressTransfer = (new AddressTransfer())->fromArray($form->getData(), true);
-            $addressTransfer->setIdSalesOrderAddress($idShippingAddress);
+            $addressTransfer->setIdSalesOrderAddress($idShipment);
             $this->getFacade()
-                ->updateOrderAddress($addressTransfer, $idShippingAddress);
+                ->updateOrderAddress($addressTransfer, $idShipment);
 
             $this->addSuccessMessage('Address successfully updated.');
 
@@ -71,8 +54,7 @@ class ShippingController extends AbstractController
 
         return $this->viewResponse([
             'idSalesOrder' => $idSalesOrder,
-            'order' => $orderTransfer,
-            'addressForm' => $form->createView(),
+            'form' => $form->createView(),
             'eventsGroupedByItem' => [],
         ]);
     }

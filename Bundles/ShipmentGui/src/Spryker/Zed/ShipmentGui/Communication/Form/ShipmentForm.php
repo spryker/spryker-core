@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Communication\Form;
+namespace Spryker\Zed\ShipmentGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\Blank;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -27,24 +28,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
  * @method \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface getRepository()
  */
-class EditShipmentForm extends AbstractType
+class ShipmentForm extends AbstractType
 {
     public const FIELD_ADDRESS_FORM_ID = 'address_form_id';
-    public const FIELD_DELIVERY_DATE = 'delivery_date';
+    public const FIELD_SHIPMENT_DATE = 'delivery_date';
     public const FIELD_ORDER_ITEMS_FORM_ID = 'order_items_form_id';
     public const FIELD_SHIPMENT_METHOD = 'shipment_method';
     public const FIELD_DELIVERY_ADDRESS = 'delivery_address';
-
-
-    protected $addressForm;
-
-    protected $orderItemsForm;
-
-    public function __construct(FormTypeInterface $addressForm, FormTypeInterface $orderItemsForm)
-    {
-        $this->addressForm = $addressForm;
-        $this->orderItemsForm = $orderItemsForm;
-    }
 
     /**
      * @return string
@@ -71,8 +61,8 @@ class EditShipmentForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(self::OPTION_SALUTATION_CHOICES);
-        $resolver->setRequired(self::OPTION_COUNTRY_CHOICES);
+        $resolver->setRequired(AddressForm::OPTION_SALUTATION_CHOICES);
+        $resolver->setRequired(AddressForm::OPTION_COUNTRY_CHOICES);
     }
 
     /**
@@ -97,10 +87,10 @@ class EditShipmentForm extends AbstractType
     {
         $this
             ->addAddressForm($builder)
-            ->addOrderItemsForm($builder)
+//            ->addOrderItemsForm($builder)
             ->addShipmentMethodField($builder)
             ->addDeliveryDateField($builder)
-            ;
+        ;
     }
 
     /**
@@ -114,6 +104,7 @@ class EditShipmentForm extends AbstractType
             self::FIELD_DELIVERY_ADDRESS,
             RadioType::class, [
                 'constraints' => [
+                    new Blank(),
                 ],
             ]
         );
@@ -131,7 +122,8 @@ class EditShipmentForm extends AbstractType
     {
         $builder->add(
             self::FIELD_ADDRESS_FORM_ID,
-            $this->addressForm
+            AddressForm::class,
+            $builder->getOptions()
         );
 
         return $this;
@@ -146,8 +138,8 @@ class EditShipmentForm extends AbstractType
     protected function addOrderItemsForm(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_ITEMS_FORM_ID,
-            $this->orderItemsForm
+            self::FIELD_ORDER_ITEMS_FORM_ID,
+            $builder->getOptions()
         );
 
         return $this;
@@ -180,7 +172,7 @@ class EditShipmentForm extends AbstractType
     public function addDeliveryDateField(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_DELIVERY_DATE,
+            self::FIELD_SHIPMENT_DATE,
             TextType::class, [
                 'constraints' => [
                 ],
