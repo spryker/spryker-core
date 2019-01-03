@@ -160,12 +160,23 @@ class UrlStorageWriter implements UrlStorageWriterInterface
      * @param array $localeUrl
      * @param array $urlResourceArguments
      *
+     * @throws \Spryker\Zed\UrlStorage\Business\Exception\MissingResourceException
+     *
      * @return array
      */
     public function findResourceArgumentForLocaleUrls(array $localeUrl, array $urlResourceArguments)
     {
         $urlResourceArgumentType = $urlResourceArguments[static::RESOURCE_TYPE];
         $resourcePrefix = AbstractSpyUrl::RESOURCE_PREFIX . $urlResourceArgumentType;
+
+        if (!isset($localeUrl[$resourcePrefix])) {
+            throw new MissingResourceException(
+                sprintf(
+                    'Encountered a URL entity that is missing a resource prefix: %s',
+                    $resourcePrefix
+                )
+            );
+        }
 
         return [
             static::RESOURCE_TYPE => $urlResourceArgumentType,
