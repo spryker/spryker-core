@@ -14,6 +14,8 @@ use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubsc
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionProcessor;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionProcessorInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaver;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaverInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityUnsubscriptionProcessor;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityUnsubscriptionProcessorInterface;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSender;
@@ -37,13 +39,10 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     public function createAvailabilitySubscriptionProcessor(): AvailabilitySubscriptionProcessorInterface
     {
         return new AvailabilitySubscriptionProcessor(
-            $this->getEntityManager(),
-            $this->createAvailabilitySubscriptionExistingChecker(),
+            $this->createAvailabilitySubscriptionSaver(),
+            $this->createAvailabilitySubscriptionChecker(),
             $this->createAvailabilityNotificationSender(),
-            $this->getUtilValidateService(),
-            $this->createSubscriptionKeyGenerator(),
-            $this->getStoreFacade(),
-            $this->getLocaleFacade()
+            $this->getUtilValidateService()
         );
     }
 
@@ -58,7 +57,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface
      */
-    public function createAvailabilitySubscriptionExistingChecker(): AvailabilitySubscriptionCheckerInterface
+    public function createAvailabilitySubscriptionChecker(): AvailabilitySubscriptionCheckerInterface
     {
         return new AvailabilitySubscriptionChecker($this->getStoreFacade(), $this->getRepository());
     }
@@ -69,6 +68,19 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     protected function createSubscriptionKeyGenerator(): AvailabilitySubscriptionKeyGeneratorInterface
     {
         return new AvailabilitySubscriptionKeyGenerator($this->getUtilTextService());
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaverInterface
+     */
+    protected function createAvailabilitySubscriptionSaver(): AvailabilitySubscriptionSaverInterface
+    {
+        return new AvailabilitySubscriptionSaver(
+            $this->getEntityManager(),
+            $this->createSubscriptionKeyGenerator(),
+            $this->getStoreFacade(),
+            $this->getLocaleFacade()
+        );
     }
 
     /**

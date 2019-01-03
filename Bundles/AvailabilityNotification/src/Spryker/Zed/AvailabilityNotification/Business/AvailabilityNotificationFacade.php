@@ -49,7 +49,7 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
     public function checkExistence(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionExistenceTransfer
     {
         return $this->getFactory()
-            ->createAvailabilitySubscriptionExistingChecker()
+            ->createAvailabilitySubscriptionChecker()
             ->checkExistence($availabilitySubscriptionTransfer);
     }
 

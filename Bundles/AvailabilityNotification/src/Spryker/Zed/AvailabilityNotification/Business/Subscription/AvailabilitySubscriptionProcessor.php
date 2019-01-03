@@ -11,17 +11,14 @@ use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Spryker\Shared\Customer\Code\Messages;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSenderInterface;
-use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface;
-use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface;
-use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface;
 
 class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProcessorInterface
 {
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface
+     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaverInterface
      */
-    protected $entityManager;
+    protected $availabilitySubscriptionSaver;
 
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface
@@ -31,7 +28,7 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSenderInterface
      */
-    protected $sender;
+    protected $availabilityNotificationSender;
 
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface
@@ -39,45 +36,21 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
     protected $utilValidateService;
 
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface
-     */
-    protected $keyGenerator;
-
-    /**
-     * @var \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface
-     */
-    protected $availabilityNotificationToStoreFacade;
-
-    /**
-     * @var \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface
-     */
-    protected $availabilityNotificationToLocaleFacade;
-
-    /**
-     * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaverInterface $availabilitySubscriptionSaver
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface $availabilitySubscriptionExistingChecker
-     * @param \Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSenderInterface $sender
+     * @param \Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSenderInterface $availabilityNotificationSender
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface $utilValidateService
-     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface $keyGenerator
-     * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface $availabilityNotificationToStoreFacade
-     * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface $availabilityNotificationToLocaleFacade
      */
     public function __construct(
-        AvailabilityNotificationEntityManagerInterface $entityManager,
+        AvailabilitySubscriptionSaverInterface $availabilitySubscriptionSaver,
         AvailabilitySubscriptionCheckerInterface $availabilitySubscriptionExistingChecker,
-        AvailabilityNotificationSenderInterface $sender,
-        AvailabilityNotificationToUtilValidateServiceInterface $utilValidateService,
-        AvailabilitySubscriptionKeyGeneratorInterface $keyGenerator,
-        AvailabilityNotificationToStoreFacadeInterface $availabilityNotificationToStoreFacade,
-        AvailabilityNotificationToLocaleFacadeInterface $availabilityNotificationToLocaleFacade
+        AvailabilityNotificationSenderInterface $availabilityNotificationSender,
+        AvailabilityNotificationToUtilValidateServiceInterface $utilValidateService
     ) {
-        $this->entityManager = $entityManager;
+        $this->availabilitySubscriptionSaver = $availabilitySubscriptionSaver;
         $this->availabilitySubscriptionExistingChecker = $availabilitySubscriptionExistingChecker;
-        $this->sender = $sender;
+        $this->availabilityNotificationSender = $availabilityNotificationSender;
         $this->utilValidateService = $utilValidateService;
-        $this->keyGenerator = $keyGenerator;
-        $this->availabilityNotificationToStoreFacade = $availabilityNotificationToStoreFacade;
-        $this->availabilityNotificationToLocaleFacade = $availabilityNotificationToLocaleFacade;
     }
 
     /**
@@ -101,9 +74,9 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
             return $this->createSubscriptionResponseTransfer(true);
         }
 
-        $this->saveAvailabilitySubscription($availabilitySubscriptionTransfer);
+        $this->availabilitySubscriptionSaver->save($availabilitySubscriptionTransfer);
 
-        $this->sender->sendSubscribedMail($availabilitySubscriptionTransfer);
+        $this->availabilityNotificationSender->sendSubscribedMail($availabilitySubscriptionTransfer);
 
         return $this->createSubscriptionResponseTransfer(true);
     }
@@ -117,25 +90,6 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
     {
         $availabilitySubscriptionTransfer->requireEmail();
         $availabilitySubscriptionTransfer->requireSku();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
-     *
-     * @return void
-     */
-    protected function saveAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
-    {
-        $subscriptionKey = $this->keyGenerator->generateKey();
-        $availabilitySubscriptionTransfer->setSubscriptionKey($subscriptionKey);
-
-        $store = $this->availabilityNotificationToStoreFacade->getCurrentStore();
-        $availabilitySubscriptionTransfer->setStore($store);
-
-        $locale = $this->availabilityNotificationToLocaleFacade->getCurrentLocale();
-        $availabilitySubscriptionTransfer->setLocale($locale);
-
-        $this->entityManager->saveAvailabilitySubscription($availabilitySubscriptionTransfer);
     }
 
     /**
