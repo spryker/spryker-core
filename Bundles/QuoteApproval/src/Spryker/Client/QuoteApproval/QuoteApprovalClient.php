@@ -46,7 +46,13 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     public function sendApproveRequest(
         QuoteApproveRequestTransfer $quoteApproveRequestTransfer
     ): QuoteResponseTransfer {
-        return $this->getFactory()->createZedStub()->sendApproveRequest($quoteApproveRequestTransfer);
+        $quoteResponseTransfer = $this->getFactory()->createZedStub()->sendApproveRequest($quoteApproveRequestTransfer);
+
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->getFactory()->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
+        }
+
+        return $quoteResponseTransfer;
     }
 
     /**

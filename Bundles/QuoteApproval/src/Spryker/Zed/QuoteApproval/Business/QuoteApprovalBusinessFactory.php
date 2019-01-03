@@ -39,7 +39,8 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->getCartFacade(),
             $this->getQuoteFacade(),
             $this->getCompanyRoleFacade(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
+            $this->getCompanyUserFacade()
         );
     }
 

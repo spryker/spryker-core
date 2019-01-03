@@ -19,6 +19,7 @@ use Spryker\Shared\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyRoleFacadeInterface;
+use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToMessengerFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface;
 
@@ -47,21 +48,29 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
     protected $companyRoleFacade;
 
     /**
+     * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface
+     */
+    protected $companyUserFacade;
+
+    /**
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyRoleFacadeInterface $companyRoleFacade
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToMessengerFacadeInterface $messengerFacade
+     * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface $companyUserFacade
      */
     public function __construct(
         QuoteApprovalToCartFacadeInterface $cartFacade,
         QuoteApprovalToQuoteFacadeInterface $quoteFacade,
         QuoteApprovalToCompanyRoleFacadeInterface $companyRoleFacade,
-        QuoteApprovalToMessengerFacadeInterface $messengerFacade
+        QuoteApprovalToMessengerFacadeInterface $messengerFacade,
+        QuoteApprovalToCompanyUserFacadeInterface $companyUserFacade
     ) {
         $this->cartFacade = $cartFacade;
         $this->quoteFacade = $quoteFacade;
         $this->companyRoleFacade = $companyRoleFacade;
         $this->messengerFacade = $messengerFacade;
+        $this->companyUserFacade = $companyUserFacade;
     }
 
     /**
@@ -180,11 +189,21 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
 
         $quoteApprovalTransfer->setStatus(QuoteApprovalConfig::STATUS_WAITING);
         $quoteApprovalTransfer->setApprover(
-            (new CompanyUserTransfer())->setIdCompanyUser($idApprover)
+            $this->getCompanyUserById($idApprover)
         );
 
         $quoteTransfer->addApproval($quoteApprovalTransfer);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    protected function getCompanyUserById(int $idCompanyUser): ?CompanyUserTransfer
+    {
+        return $this->companyUserFacade->getCompanyUserById($idCompanyUser);
     }
 }
