@@ -23,7 +23,7 @@ class UtilValidateService extends AbstractService implements UtilValidateService
      *
      * @return bool
      */
-    public function isEmailFormatValid(string $email): bool
+    public function isEmailFormatValid($email)
     {
         return $this->getFactory()
             ->getEmailValidator()

@@ -9,12 +9,12 @@ namespace Spryker\Zed\AvailabilityNotification\Communication\Plugin;
 
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 
-interface AvailabilitySubscriptionSenderInterface
+interface AvailabilityNotificationSenderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
-     * @return bool
+     * @return void
      */
-    public function send(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): bool;
+    public function sendSubscribedMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void;
 }

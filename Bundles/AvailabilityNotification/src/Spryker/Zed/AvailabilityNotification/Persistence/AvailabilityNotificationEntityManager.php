@@ -21,7 +21,7 @@ class AvailabilityNotificationEntityManager extends AbstractEntityManager implem
      *
      * @return void
      */
-    public function saveAvailabilitySubscriptionFromTransfer(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
+    public function saveAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
     {
         $subscriptionEntity = new SpyAvailabilitySubscription();
         $subscriptionEntity->fromArray($availabilitySubscriptionTransfer->toArray());

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business;
 
+use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 
@@ -14,11 +15,11 @@ interface AvailabilityNotificationFacadeInterface
 {
     /**
      * Specification:
-     * - Subscribe by provided subscription email, customer reference, product sku in a case insensitive way.
-     * - Adds subscription:
-     *      - Validates email.
-     *      - Create subscription if subscription is not created already.
-     *      - Sends confirmation email.
+     * - Subscribe customer to product availability
+     *   by provided subscription email, customer reference, product sku in a case insensitive way.
+     * - Validates email.
+     * - Create subscription if subscription is not created already.
+     * - Sends success email.
      *
      * @api
      *
@@ -36,13 +37,13 @@ interface AvailabilityNotificationFacadeInterface
      *
      * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer
      */
-    public function checkSubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer;
+    public function checkExistence(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionExistenceTransfer;
 
     /**
      * Specification:
-     * - Remove provided subscription.
+     * - Removes provided subscription.
      *
      * @api
      *

@@ -7,15 +7,30 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
-use Spryker\Service\UtilText\UtilTextService;
+use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilTextServiceInterface;
 
 class AvailabilitySubscriptionKeyGenerator implements AvailabilitySubscriptionKeyGeneratorInterface
 {
+    public const DEFAULT_STRING_LENGTH = 32;
+
+    /**
+     * @var \Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilTextServiceInterface
+     */
+    protected $utilTextService;
+
+    /**
+     * @param \Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilTextServiceInterface $utilTextService
+     */
+    public function __construct(AvailabilityNotificationToUtilTextServiceInterface $utilTextService)
+    {
+        $this->utilTextService = $utilTextService;
+    }
+
     /**
      * @return string
      */
     public function generateKey(): string
     {
-        return (new UtilTextService())->generateRandomString(32);
+        return $this->utilTextService->generateRandomString(static::DEFAULT_STRING_LENGTH);
     }
 }

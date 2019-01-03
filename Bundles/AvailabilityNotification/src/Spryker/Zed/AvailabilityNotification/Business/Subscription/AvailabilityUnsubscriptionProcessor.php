@@ -33,6 +33,8 @@ class AvailabilityUnsubscriptionProcessor implements AvailabilityUnsubscriptionP
      */
     public function process(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
+        $availabilitySubscriptionTransfer->requireSubscriptionKey();
+
         $this->entityManager->deleteBySubscriptionKey($availabilitySubscriptionTransfer->getSubscriptionKey());
 
         return (new AvailabilitySubscriptionResponseTransfer())->setIsSuccess(true);

@@ -16,7 +16,7 @@ interface AvailabilityNotificationEntityManagerInterface
      *
      * @return void
      */
-    public function saveAvailabilitySubscriptionFromTransfer(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void;
+    public function saveAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void;
 
     /**
      * @param string $subscriptionKey

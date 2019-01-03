@@ -11,6 +11,7 @@ use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificat
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeBridge;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeBridge;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeBridge;
+use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilTextServiceBridge;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -23,6 +24,7 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
     public const FACADE_STORE = 'FACADE_STORE';
 
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+    public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -35,6 +37,7 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
         $container = $this->addUtilValidateService($container);
         $container = $this->addStoreClient($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addUtilTextService($container);
 
         return $container;
     }
@@ -61,6 +64,20 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
     {
         $container[static::SERVICE_UTIL_VALIDATE] = function (Container $container) {
             return new AvailabilityNotificationToUtilValidateServiceBridge($container->getLocator()->utilValidate()->service());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilTextService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_TEXT] = function (Container $container) {
+            return new AvailabilityNotificationToUtilTextServiceBridge($container->getLocator()->utilText()->service());
         };
 
         return $container;

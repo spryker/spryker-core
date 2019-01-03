@@ -9,11 +9,9 @@ namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
-use Generated\Shared\Transfer\MailTransfer;
-use Spryker\Shared\AvailabilityNotification\Messages\Messages;
-use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationSubscribedMailTypePlugin;
+use Spryker\Shared\Customer\Code\Messages;
+use Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface;
-use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface;
@@ -26,14 +24,14 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
     protected $entityManager;
 
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionExistingCheckerInterface
+     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface
      */
     protected $availabilitySubscriptionExistingChecker;
 
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface
+     * @var \Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSenderInterface
      */
-    protected $mailFacade;
+    protected $sender;
 
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface
@@ -57,8 +55,8 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
 
     /**
      * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface $entityManager
-     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionExistingCheckerInterface $availabilitySubscriptionExistingChecker
-     * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface $mailFacade
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface $availabilitySubscriptionExistingChecker
+     * @param \Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSenderInterface $sender
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface $utilValidateService
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface $keyGenerator
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface $availabilityNotificationToStoreFacade
@@ -66,8 +64,8 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
      */
     public function __construct(
         AvailabilityNotificationEntityManagerInterface $entityManager,
-        AvailabilitySubscriptionExistingCheckerInterface $availabilitySubscriptionExistingChecker,
-        AvailabilityNotificationToMailFacadeInterface $mailFacade,
+        AvailabilitySubscriptionCheckerInterface $availabilitySubscriptionExistingChecker,
+        AvailabilityNotificationSenderInterface $sender,
         AvailabilityNotificationToUtilValidateServiceInterface $utilValidateService,
         AvailabilitySubscriptionKeyGeneratorInterface $keyGenerator,
         AvailabilityNotificationToStoreFacadeInterface $availabilityNotificationToStoreFacade,
@@ -75,7 +73,7 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
     ) {
         $this->entityManager = $entityManager;
         $this->availabilitySubscriptionExistingChecker = $availabilitySubscriptionExistingChecker;
-        $this->mailFacade = $mailFacade;
+        $this->sender = $sender;
         $this->utilValidateService = $utilValidateService;
         $this->keyGenerator = $keyGenerator;
         $this->availabilityNotificationToStoreFacade = $availabilityNotificationToStoreFacade;
@@ -89,24 +87,7 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
      */
     public function process(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
-        $subscriptionResponse = $this->processSubscription($availabilitySubscriptionTransfer);
-
-        if ($subscriptionResponse->getIsSuccess()) {
-            $this->sendSubscribedMail($availabilitySubscriptionTransfer);
-        }
-
-        return $subscriptionResponse;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
-     */
-    protected function processSubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
-    {
-        $availabilitySubscriptionTransfer->requireEmail();
-        $availabilitySubscriptionTransfer->requireSku();
+        $this->assertAvailabilitySubscriptionTransfer($availabilitySubscriptionTransfer);
 
         $isEmailValid = $this->utilValidateService->isEmailFormatValid($availabilitySubscriptionTransfer->getEmail());
 
@@ -114,22 +95,15 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
             return $this->createInvalidEmailResponse();
         }
 
-        $isAlreadySubscribed = $this->availabilitySubscriptionExistingChecker->check($availabilitySubscriptionTransfer);
+        $availabilitySubscriptionExistenceTransfer = $this->availabilitySubscriptionExistingChecker->checkExistence($availabilitySubscriptionTransfer);
 
-        if ($isAlreadySubscribed->getIsSuccess()) {
+        if ($availabilitySubscriptionExistenceTransfer->getIsExists()) {
             return $this->createSubscriptionResponseTransfer(true);
         }
 
-        $subscriptionKey = $this->keyGenerator->generateKey();
-        $availabilitySubscriptionTransfer->setSubscriptionKey($subscriptionKey);
+        $this->saveAvailabilitySubscription($availabilitySubscriptionTransfer);
 
-        $store = $this->availabilityNotificationToStoreFacade->getCurrentStore();
-        $availabilitySubscriptionTransfer->setStore($store);
-
-        $locale = $this->availabilityNotificationToLocaleFacade->getCurrentLocale();
-        $availabilitySubscriptionTransfer->setLocale($locale);
-
-        $this->entityManager->saveAvailabilitySubscriptionFromTransfer($availabilitySubscriptionTransfer);
+        $this->sender->sendSubscribedMail($availabilitySubscriptionTransfer);
 
         return $this->createSubscriptionResponseTransfer(true);
     }
@@ -139,14 +113,29 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
      *
      * @return void
      */
-    protected function sendSubscribedMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
+    protected function assertAvailabilitySubscriptionTransfer(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
     {
-        $mailTransfer = (new MailTransfer())
-            ->setType(AvailabilityNotificationSubscribedMailTypePlugin::MAIL_TYPE)
-            ->setAvailabilitySubscription($availabilitySubscriptionTransfer)
-            ->setLocale($availabilitySubscriptionTransfer->getLocale());
+        $availabilitySubscriptionTransfer->requireEmail();
+        $availabilitySubscriptionTransfer->requireSku();
+    }
 
-        $this->mailFacade->handleMail($mailTransfer);
+    /**
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     *
+     * @return void
+     */
+    protected function saveAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
+    {
+        $subscriptionKey = $this->keyGenerator->generateKey();
+        $availabilitySubscriptionTransfer->setSubscriptionKey($subscriptionKey);
+
+        $store = $this->availabilityNotificationToStoreFacade->getCurrentStore();
+        $availabilitySubscriptionTransfer->setStore($store);
+
+        $locale = $this->availabilityNotificationToLocaleFacade->getCurrentLocale();
+        $availabilitySubscriptionTransfer->setLocale($locale);
+
+        $this->entityManager->saveAvailabilitySubscription($availabilitySubscriptionTransfer);
     }
 
     /**
@@ -155,7 +144,7 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
     protected function createInvalidEmailResponse(): AvailabilitySubscriptionResponseTransfer
     {
         return $this->createSubscriptionResponseTransfer(false)
-            ->setErrorMessage(Messages::INVALID_EMAIL_FORMAT);
+            ->setErrorMessage(Messages::CUSTOMER_EMAIL_FORMAT_INVALID);
     }
 
     /**

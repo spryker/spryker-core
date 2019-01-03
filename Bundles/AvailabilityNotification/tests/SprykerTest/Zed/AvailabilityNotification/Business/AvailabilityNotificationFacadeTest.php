@@ -90,9 +90,9 @@ class AvailabilityNotificationFacadeTest extends Unit
 
         $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
 
-        $response = $this->availabilityNotificationFacade->checkSubscription($availabilityNotificationSubscription);
+        $response = $this->availabilityNotificationFacade->checkExistence($availabilityNotificationSubscription);
 
-        $this->assertTrue($response->getIsSuccess());
+        $this->assertTrue($response->getIsExists());
     }
 
     /**
@@ -102,9 +102,9 @@ class AvailabilityNotificationFacadeTest extends Unit
     {
         $availabilityNotificationSubscription = $this->createSubscription();
 
-        $response = $this->availabilityNotificationFacade->checkSubscription($availabilityNotificationSubscription);
+        $response = $this->availabilityNotificationFacade->checkExistence($availabilityNotificationSubscription);
 
-        $this->assertFalse($response->getIsSuccess());
+        $this->assertFalse($response->getIsExists());
     }
 
     /**
@@ -129,7 +129,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
      */
-    protected function createSubscription()
+    protected function createSubscription(): AvailabilitySubscriptionTransfer
     {
         $subscription = new AvailabilitySubscriptionTransfer();
         $subscription->setEmail('example@spryker.com');
@@ -142,7 +142,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
      */
-    protected function createInvalidSubscription()
+    protected function createInvalidSubscription(): AvailabilitySubscriptionTransfer
     {
         $subscription = new AvailabilitySubscriptionTransfer();
         $subscription->setEmail('invalid<>example@spryker.com');

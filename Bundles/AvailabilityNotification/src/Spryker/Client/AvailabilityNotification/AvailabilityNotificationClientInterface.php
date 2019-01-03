@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\AvailabilityNotification;
 
+use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 
@@ -15,7 +16,6 @@ interface AvailabilityNotificationClientInterface
     /**
      * Specification:
      * - Subscribe a user for product availability.
-     * - Returns AvailabilitySubscriptionResponseTransfer.
      *
      * @api
      *
@@ -28,7 +28,6 @@ interface AvailabilityNotificationClientInterface
     /**
      * Specification:
      * - Unsubscribe a user for product availability.
-     * - Returns AvailabilitySubscriptionResponseTransfer.
      *
      * @api
      *
@@ -41,13 +40,12 @@ interface AvailabilityNotificationClientInterface
     /**
      * Specification:
      * - Check if user is subscribed for product availability.
-     * - Returns AvailabilitySubscriptionResponseTransfer.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer
      */
-    public function checkSubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer;
+    public function checkExistence(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionExistenceTransfer;
 }

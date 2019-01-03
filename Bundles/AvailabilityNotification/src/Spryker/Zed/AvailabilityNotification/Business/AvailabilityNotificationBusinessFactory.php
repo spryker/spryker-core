@@ -8,17 +8,20 @@
 namespace Spryker\Zed\AvailabilityNotification\Business;
 
 use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationDependencyProvider;
-use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionExistingChecker;
-use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionExistingCheckerInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionChecker;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGenerator;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionProcessor;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionProcessorInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityUnsubscriptionProcessor;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityUnsubscriptionProcessorInterface;
+use Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSender;
+use Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
+use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilTextServiceInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -36,7 +39,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
         return new AvailabilitySubscriptionProcessor(
             $this->getEntityManager(),
             $this->createAvailabilitySubscriptionExistingChecker(),
-            $this->getMailFacade(),
+            $this->createAvailabilityNotificationSender(),
             $this->getUtilValidateService(),
             $this->createSubscriptionKeyGenerator(),
             $this->getStoreFacade(),
@@ -53,11 +56,11 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionExistingCheckerInterface
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface
      */
-    public function createAvailabilitySubscriptionExistingChecker(): AvailabilitySubscriptionExistingCheckerInterface
+    public function createAvailabilitySubscriptionExistingChecker(): AvailabilitySubscriptionCheckerInterface
     {
-        return new AvailabilitySubscriptionExistingChecker($this->getStoreFacade(), $this->getRepository());
+        return new AvailabilitySubscriptionChecker($this->getStoreFacade(), $this->getRepository());
     }
 
     /**
@@ -65,7 +68,15 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSubscriptionKeyGenerator(): AvailabilitySubscriptionKeyGeneratorInterface
     {
-        return new AvailabilitySubscriptionKeyGenerator();
+        return new AvailabilitySubscriptionKeyGenerator($this->getUtilTextService());
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSenderInterface
+     */
+    public function createAvailabilityNotificationSender(): AvailabilityNotificationSenderInterface
+    {
+        return new AvailabilityNotificationSender($this->getMailFacade());
     }
 
     /**
@@ -85,9 +96,17 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilTextServiceInterface
+     */
+    protected function getUtilTextService(): AvailabilityNotificationToUtilTextServiceInterface
+    {
+        return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
      * @return \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface
      */
-    public function getStoreFacade(): AvailabilityNotificationToStoreFacadeInterface
+    protected function getStoreFacade(): AvailabilityNotificationToStoreFacadeInterface
     {
         return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::FACADE_STORE);
     }
@@ -95,7 +114,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface
      */
-    public function getLocaleFacade(): AvailabilityNotificationToLocaleFacadeInterface
+    protected function getLocaleFacade(): AvailabilityNotificationToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::FACADE_LOCALE);
     }

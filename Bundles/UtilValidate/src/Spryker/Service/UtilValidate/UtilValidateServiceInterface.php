@@ -18,5 +18,5 @@ interface UtilValidateServiceInterface
      *
      * @return bool
      */
-    public function isEmailFormatValid(string $email): bool;
+    public function isEmailFormatValid($email);
 }
