@@ -20,13 +20,13 @@
         <column name="id_content_localized" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_content" required="true" type="INTEGER"/>
         <column name="fk_locale" required="false" type="INTEGER"/>
+        <column name="parameters" required="true" type="VARCHAR"/>
         <foreign-key name="spy_content_localized-fk_content" foreignTable="spy_content">
             <reference local="fk_content" foreign="id_content"/>
         </foreign-key>
         <foreign-key name="spy_content_localized-fk_locale" foreignTable="spy_locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
-        <column name="parameters" required="true" type="VARCHAR"/>
         <unique name="fk_content_unique_fk_locale_unique">
             <unique-column name="fk_content"/>
             <unique-column name="fk_locale"/>

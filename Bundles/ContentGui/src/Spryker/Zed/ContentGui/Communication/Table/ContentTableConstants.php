@@ -18,6 +18,6 @@ interface ContentTableConstants
     public const COL_UPDATED_AT = SpyContentTableMap::COL_UPDATED_AT;
 
     public const REQUEST_ID_CONTENT = 'id-content';
-    public const URL_CONTENT_EDIT = '#';
+    public const URL_CONTENT_EDIT = '/content-gui/edit-content';
     public const COL_ACTIONS = 'actions';
 }
