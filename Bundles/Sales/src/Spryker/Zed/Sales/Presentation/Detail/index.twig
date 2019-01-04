@@ -11,6 +11,7 @@
 {% block content %}
 
     <div id="order-overview">{% include '@Sales/Detail/boxes/order-overview.twig' %}</div>
+    <div id="customer">{% include '@Sales/Detail/boxes/customer.twig' %}</div>
     <div id="items">{% include '@Sales/Detail/boxes/items.twig' %}</div>
     {% include '@Sales/Detail/boxes/totals.twig' %}
     {% for blockName, externalBlock in blocks %}
