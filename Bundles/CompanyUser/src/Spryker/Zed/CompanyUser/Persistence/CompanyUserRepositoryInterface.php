@@ -76,5 +76,5 @@ interface CompanyUserRepositoryInterface
      *
      * @return bool
      */
-    public function isCompanyUserExists(CompanyUserTransfer $companyUserTransfer): bool;
+    public function checkIfCompanyUserExists(CompanyUserTransfer $companyUserTransfer): bool;
 }

@@ -263,7 +263,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      *
      * @return bool
      */
-    public function isCompanyUserExists(CompanyUserTransfer $companyUserTransfer): bool
+    public function checkIfCompanyUserExists(CompanyUserTransfer $companyUserTransfer): bool
     {
         $companyUserTransfer
             ->requireCustomer()
