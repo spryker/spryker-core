@@ -31,7 +31,7 @@ interface MethodInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentGroupsTransfer
      */
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer);
 

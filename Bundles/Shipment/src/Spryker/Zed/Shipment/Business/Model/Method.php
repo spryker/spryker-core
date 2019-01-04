@@ -8,11 +8,13 @@
 namespace Spryker\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupsTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\Shipment\ShipmentService;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface;
@@ -20,6 +22,7 @@ use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
+use ArrayObject;
 
 class Method implements MethodInterface
 {
@@ -84,7 +87,7 @@ class Method implements MethodInterface
         ShipmentMethodTransformerInterface $methodTransformer,
         ShipmentToCurrencyInterface $currencyFacade,
         ShipmentToStoreInterface $storeFacade,
-        ShipmentService $shipmentFacade,
+        ShipmentService $shipmentService,
         array $plugins,
         array $shipmentMethodFilters
     ) {
@@ -93,7 +96,7 @@ class Method implements MethodInterface
         $this->methodTransformer = $methodTransformer;
         $this->currencyFacade = $currencyFacade;
         $this->storeFacade = $storeFacade;
-        $this->shipmentFacade = $shipmentFacade;
+        $this->shipmentService = $shipmentService;
         $this->plugins = $plugins;
         $this->shipmentMethodFilters = $shipmentMethodFilters;
     }
@@ -134,12 +137,12 @@ class Method implements MethodInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentGroupsTransfer
      */
-    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): array
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupsTransfer
     {
         $shipmentGroupTransferArray = $this->getShipmentGroupWithAvailableMethods($quoteTransfer);
-        $shipmentGroupTransferArray = $this->applyFilters($shipmentGroupTransferArray, $quoteTransfer);
+//        $shipmentGroupTransferArray = $this->applyFilters($shipmentGroupTransferArray, $quoteTransfer);
 
         return $shipmentGroupTransferArray;
     }
@@ -177,20 +180,20 @@ class Method implements MethodInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentGroupsTransfer
      */
-    protected function getShipmentGroupWithAvailableMethods(QuoteTransfer $quoteTransfer): array
+    protected function getShipmentGroupWithAvailableMethods(QuoteTransfer $quoteTransfer): ShipmentGroupsTransfer
     {
         $methods = $this->queryContainer->queryActiveMethodsWithMethodPricesAndCarrier()->find();
-        $shipmentGroupTransfers = $this->getShipmentGroups($quoteTransfer);
+        $shipmentGroupsTransfer = $this->getShipmentGroups($quoteTransfer);
 
-        foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
+        foreach ($shipmentGroupsTransfer->getGroups() as $shipmentGroupTransfer) {
             $shipmentGroupTransfer->setAvailableShipmentMethods(
                 $this->getAvailableMethodForShipmentGroup($shipmentGroupTransfer, $methods, $quoteTransfer)
             );
         }
 
-        return $shipmentGroupTransfers;
+        return $shipmentGroupsTransfer;
     }
 
     /**
@@ -202,7 +205,7 @@ class Method implements MethodInterface
      */
     protected function getAvailableMethodForShipmentGroup(
         ShipmentGroupTransfer $shipmentGroupTransfer,
-        ShipmentMethodsTransfer $methods,
+        ObjectCollection $methods,
         QuoteTransfer $quoteTransfer
     ): ShipmentMethodsTransfer {
         $shipmentMethodsTransfer = new ShipmentMethodsTransfer();
@@ -238,13 +241,13 @@ class Method implements MethodInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentGroupsTransfer
      */
-    protected function getShipmentGroups(QuoteTransfer $quoteTransfer): \ArrayObject
+    protected function getShipmentGroups(QuoteTransfer $quoteTransfer): ShipmentGroupsTransfer
     {
-        $shipmentGroupTransfer = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+        $shipmentGroupsTransfer = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
 
-        return $shipmentGroupTransfer;
+        return $shipmentGroupsTransfer;
     }
 
     /**

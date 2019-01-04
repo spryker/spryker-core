@@ -7,6 +7,7 @@
 namespace Spryker\Service\Shipment;
 
 use \ArrayObject;
+use Generated\Shared\Transfer\ShipmentGroupsTransfer;
 
 interface ShipmentServiceInterface
 {
@@ -18,7 +19,7 @@ interface ShipmentServiceInterface
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * ç
      */
-    public function groupItemsByShipment(ArrayObject $itemTransfers): ArrayObject;
+    public function groupItemsByShipment(ArrayObject $itemTransfers): ShipmentGroupsTransfer;
 }

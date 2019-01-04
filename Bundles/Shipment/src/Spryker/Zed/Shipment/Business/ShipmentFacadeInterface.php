@@ -12,8 +12,10 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Shared\Transfer\ShipmentGroupsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
+use ArrayObject;
 
 interface ShipmentFacadeInterface
 {
@@ -107,9 +109,9 @@ interface ShipmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentGroupsTransfer
      */
-    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): array;
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer);
 
     /**
      * Specification:
