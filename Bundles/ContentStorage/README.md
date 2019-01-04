@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/content-storage.svg)](https://travis-ci.org/spryker/content-storage)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/content-storage/badge.svg)](https://coveralls.io/github/spryker/content-storage)
 
-{{ADD DESCRIPTION HERE}}
+Manages storage for content entities.
 
 ## Installation
 

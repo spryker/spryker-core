@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/content-item.svg)](https://travis-ci.org/spryker/content-item)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/content-item/badge.svg)](https://coveralls.io/github/spryker/content-item)
 
-{{ADD DESCRIPTION HERE}}
+This module has content items.
 
 ## Installation
 

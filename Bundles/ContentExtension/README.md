@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/content-extension.svg)](https://travis-ci.org/spryker/content-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/content-extension/badge.svg)](https://coveralls.io/github/spryker/content-extension)
 
-{{ADD DESCRIPTION HERE}}
+ContentExtension module provides plugin interfaces used by Content module.
 
 ## Installation
 
