@@ -31,7 +31,7 @@ interface GlueApplicationConstants
     /**
      * Specification:
      *  - The domain name returned as allowed in 'access-control-allow-origin' CORS headers.
-     *  - Ether '*' or single domain should be passed, due to CORS policy
+     *  - Ether '*' or single domain should be passed, due to CORS policy.
      *
      * @api
      */
