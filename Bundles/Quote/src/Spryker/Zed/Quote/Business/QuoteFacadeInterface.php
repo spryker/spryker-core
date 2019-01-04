@@ -13,12 +13,13 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface QuoteFacadeInterface
 {
     /**
      * Specification:
-     * - Create new quote entity if it does not exist.
+     * - Creates new quote entity if it does not exist.
      *
      * @api
      *
@@ -42,9 +43,11 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Find quote for customer.
+     * - Finds quote for customer.
      *
      * @api
+     *
+     * @deprecated Use findQuoteByCustomerAndStore() instead.
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
@@ -54,7 +57,20 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Find quote by id.
+     * - Find quote for customer using a store.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByCustomerAndStore(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds quote by id.
      *
      * @api
      *
@@ -66,7 +82,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Remove quote from DB.
+     * - Removes quote from DB.
      *
      * @api
      *
@@ -78,7 +94,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Get quote storage strategy type.
+     * - Gets quote storage strategy type.
      *
      * @api
      *
@@ -88,7 +104,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Get quote collection filtered by criteria.
+     * - Gets quote collection filtered by criteria.
      *
      * @api
      *
@@ -100,7 +116,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Map Quote Entity Transfer to quote transfer.
+     * - Maps Quote Entity Transfer to quote transfer.
      *
      * @api
      *
@@ -120,4 +136,20 @@ interface QuoteFacadeInterface
      * @return void
      */
     public function deleteExpiredGuestQuote(): void;
+
+    /**
+     * Specification:
+     * - Finds quote by uuid.
+     * - Requires uuid field to be set in QuoteTransfer.
+     * - Uuid is not a required field and could be missing.
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

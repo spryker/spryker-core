@@ -53,7 +53,7 @@ class RestTestAttributesTransfer extends AbstractTransfer
     ];
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getAttribute1(): ?string
     {
@@ -63,7 +63,7 @@ class RestTestAttributesTransfer extends AbstractTransfer
     /**
      * @param string $attribute1
      *
-     * @return \SprykerTest\Glue\GlueApplication\Stub\RestTestAttributesTransfer
+     * @return $this
      */
     public function setAttribute1(string $attribute1): self
     {
@@ -74,7 +74,7 @@ class RestTestAttributesTransfer extends AbstractTransfer
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getAttribute2(): ?string
     {
@@ -84,7 +84,7 @@ class RestTestAttributesTransfer extends AbstractTransfer
     /**
      * @param string $attribute2
      *
-     * @return \SprykerTest\Glue\GlueApplication\Stub\RestTestAttributesTransfer
+     * @return $this
      */
     public function setAttribute2(string $attribute2): self
     {

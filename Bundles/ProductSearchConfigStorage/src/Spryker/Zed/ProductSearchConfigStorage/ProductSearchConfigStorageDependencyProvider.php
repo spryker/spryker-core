@@ -13,6 +13,9 @@ use Spryker\Zed\ProductSearch\ProductSearchConfig;
 use Spryker\Zed\ProductSearchConfigStorage\Dependency\Facade\ProductSearchConfigStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\ProductSearchConfigStorage\Dependency\Facade\ProductSearchConfigStorageToProductSearchFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ProductSearchConfigStorage\ProductSearchConfigStorageConfig getConfig()
+ */
 class ProductSearchConfigStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT_SEARCH = 'FACADE_PRODUCT_SEARCH';

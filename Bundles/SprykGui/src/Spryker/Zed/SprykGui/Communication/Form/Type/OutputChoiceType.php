@@ -14,6 +14,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\SprykGui\SprykGuiConfig getConfig()
+ * @method \Spryker\Zed\SprykGui\Communication\SprykGuiCommunicationFactory getFactory()
  */
 class OutputChoiceType extends AbstractType
 {
@@ -34,7 +36,7 @@ class OutputChoiceType extends AbstractType
             'choices' => function (Options $options) {
                 return $options[static::OUTPUT_CHOICES];
             },
-            'choice_label' => 'type',
+            'choice_label' => 'name',
             'choice_value' => 'type',
         ]);
     }

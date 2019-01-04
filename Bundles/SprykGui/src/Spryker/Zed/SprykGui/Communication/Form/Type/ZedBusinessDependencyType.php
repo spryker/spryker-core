@@ -22,6 +22,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\SprykGui\SprykGuiConfig getConfig()
+ * @method \Spryker\Zed\SprykGui\Communication\SprykGuiCommunicationFactory getFactory()
  */
 class ZedBusinessDependencyType extends AbstractType
 {
@@ -112,7 +114,7 @@ class ZedBusinessDependencyType extends AbstractType
             $argumentTransfer = new ArgumentTransfer();
             $argumentTransfer->setName(sprintf(
                 '%s (%sBusinessFactory::%s())',
-                $methodTransfer->getReturnType()->getType(),
+                $methodTransfer->getReturnType()->getName(),
                 $moduleTransfer->getName(),
                 $methodTransfer->getName()
             ));
@@ -143,7 +145,7 @@ class ZedBusinessDependencyType extends AbstractType
      */
     protected function getVariableProposal(MethodInformationTransfer $methodTransfer): string
     {
-        $typeFragments = explode('\\', $methodTransfer->getReturnType()->getType());
+        $typeFragments = explode('\\', $methodTransfer->getReturnType()->getName());
         $classOrInterfaceName = array_pop($typeFragments);
         $classOrInterfaceName = str_replace('Interface', '', $classOrInterfaceName);
 

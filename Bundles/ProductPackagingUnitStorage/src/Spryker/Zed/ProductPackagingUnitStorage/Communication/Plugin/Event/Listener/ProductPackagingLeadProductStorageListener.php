@@ -15,6 +15,7 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
 /**
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
  */
 class ProductPackagingLeadProductStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

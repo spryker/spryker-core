@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Oms\Communication\OmsCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {

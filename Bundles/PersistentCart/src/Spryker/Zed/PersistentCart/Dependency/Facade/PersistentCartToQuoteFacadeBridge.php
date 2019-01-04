@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 class PersistentCartToQuoteFacadeBridge implements PersistentCartToQuoteFacadeInterface
 {
@@ -49,6 +50,8 @@ class PersistentCartToQuoteFacadeBridge implements PersistentCartToQuoteFacadeIn
     }
 
     /**
+     * @deprecated Use findQuoteByCustomerAndStore() instead.
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -56,6 +59,17 @@ class PersistentCartToQuoteFacadeBridge implements PersistentCartToQuoteFacadeIn
     public function findQuoteByCustomer(CustomerTransfer $customerTransfer): QuoteResponseTransfer
     {
         return $this->quoteFacade->findQuoteByCustomer($customerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByCustomerAndStore(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): QuoteResponseTransfer
+    {
+        return $this->quoteFacade->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
     }
 
     /**
