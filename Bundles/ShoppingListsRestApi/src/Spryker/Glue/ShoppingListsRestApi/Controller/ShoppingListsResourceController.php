@@ -71,14 +71,14 @@ class ShoppingListsResourceController extends AbstractController
         $idShoppingList = $restRequest->getResource()->getId();
 
         if ($idShoppingList !== null) {
-            return $this->getFactory()->createShoppingListsReader()->getCustomerShoppingList(
+            return $this->getFactory()->createShoppingListReader()->getCustomerShoppingList(
                 $idShoppingList,
                 $restRequest
             );
         }
 
         return $this->getFactory()
-            ->createShoppingListsReader()
+            ->createShoppingListReader()
             ->getCustomerShoppingListCollection($restRequest);
     }
 
@@ -101,7 +101,6 @@ class ShoppingListsResourceController extends AbstractController
      *              }
      *          ],
      *          "responses": {
-     *              "401": "Write access is required.",
      *              "403": "Unauthorized request.",
      *              "422": "Cannot create a shopping list."
      *          },
@@ -143,7 +142,6 @@ class ShoppingListsResourceController extends AbstractController
      *          ],
      *          "responses": {
      *              "400": "Shopping list id not specified.",
-     *              "401": "Write access is required.",
      *              "403": "Unauthorized request.",
      *              "404": "Shopping list not found.",
      *              "422": "Cannot patch a shopping list."
@@ -186,7 +184,6 @@ class ShoppingListsResourceController extends AbstractController
      *          ],
      *          "responses": {
      *              "400": "Shopping list id not specified.",
-     *              "401": "Write access is required.",
      *              "403": "Unauthorized request.",
      *              "404": "Shopping list not found."
      *          }

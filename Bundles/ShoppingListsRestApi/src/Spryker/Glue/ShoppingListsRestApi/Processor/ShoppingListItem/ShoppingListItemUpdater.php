@@ -69,9 +69,9 @@ class ShoppingListItemUpdater implements ShoppingListItemUpdaterInterface
             $restRequest
         );
 
-        if (count($restShoppingListItemRequestTransfer->getErrors()) > 0) {
+        if (count($restShoppingListItemRequestTransfer->getErrorCodes()) > 0) {
             return $this->restResponseWriter->writeErrorsFromErrorCodes(
-                $restShoppingListItemRequestTransfer->getErrors(),
+                $restShoppingListItemRequestTransfer->getErrorCodes(),
                 $restResponse
             );
         }
