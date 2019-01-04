@@ -63,14 +63,4 @@ class ContentGuiToContentFacadeBridge implements ContentGuiToContentFacadeBridge
     {
         return $this->contentFacade->update($contentTransfer);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
-     *
-     * @return void
-     */
-    public function delete(ContentTransfer $contentTransfer): void
-    {
-        $this->contentFacade->delete($contentTransfer);
-    }
 }

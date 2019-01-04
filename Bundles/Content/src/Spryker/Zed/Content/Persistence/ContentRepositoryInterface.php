@@ -17,9 +17,9 @@ interface ContentRepositoryInterface
      *
      * @param int $id
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer
+     * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
-    public function findContentById(int $id): ContentTransfer;
+    public function findContentById(int $id): ?ContentTransfer;
 
     /**
      * Specification:
@@ -27,7 +27,7 @@ interface ContentRepositoryInterface
      *
      * @param string $uuid
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer
+     * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
-    public function findContentByUUID(string $uuid): ContentTransfer;
+    public function findContentByUUID(string $uuid): ?ContentTransfer;
 }

@@ -38,11 +38,4 @@ interface ContentGuiToContentFacadeBridgeInterface
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
     public function update(ContentTransfer $contentTransfer): ContentTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
-     *
-     * @return void
-     */
-    public function delete(ContentTransfer $contentTransfer): void;
 }

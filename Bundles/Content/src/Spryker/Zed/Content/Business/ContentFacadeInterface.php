@@ -14,30 +14,35 @@ interface ContentFacadeInterface
     /**
      * Specification:
      * - Find content item by id
+     * - Returns ContentTransfer if found, NULL otherwise
      *
      * @api
      *
      * @param int $id
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer
+     * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
-    public function findContentById(int $id): ContentTransfer;
+    public function findContentById(int $id): ?ContentTransfer;
 
     /**
      * Specification:
      * - Find content item by uuid
+     * - Returns ContentTransfer if found, NULL otherwise.
      *
      * @api
      *
      * @param string $uuid
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer
+     * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
-    public function findContentByUUID(string $uuid): ContentTransfer;
+    public function findContentByUUID(string $uuid): ?ContentTransfer;
 
     /**
      * Specification:
-     * - Create content item by uuid
+     * - Creates a new content item entity
+     * - Uses incoming transfer to set entity fields
+     * - Persists the entity to DB
+     * - Sets ID to the returning transfer
      *
      * @api
      *
@@ -49,25 +54,19 @@ interface ContentFacadeInterface
 
     /**
      * Specification:
-     * - Update content item by uuid
+     * - Finds a content item record by ID in DB
+     * - Throws exception if not found
+     * - Uses incoming transfer to set entity fields
+     * - Persists the entity to DB
+     * - Sets ID to the returning transfer
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
     public function update(ContentTransfer $contentTransfer): ContentTransfer;
-
-    /**
-     * Specification:
-     * - Delete content item by uuid
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
-     *
-     * @return void
-     */
-    public function delete(ContentTransfer $contentTransfer): void;
 }

@@ -43,18 +43,4 @@ class ContentEntityManager extends AbstractEntityManager implements ContentEntit
 
         return $this->getFactory()->createContentMapper()->mapContentEntityToTransfer($spyContentEntity);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
-     *
-     * @return void
-     */
-    public function delete(ContentTransfer $contentTransfer): void
-    {
-        $spyContentEntity = $this->getFactory()
-            ->createContentQuery()
-            ->findByIdContent($contentTransfer->getIdContent());
-
-        $spyContentEntity->delete();
-    }
 }

@@ -47,19 +47,19 @@ class ContentFormDataProvider
     public function getData(?int $contentId = null): ContentTransfer
     {
         if ($contentId) {
-            $contentTransfer = $this->contentFacade->findContentById($contentId);
-        } else {
-            $contentTransfer = new ContentTransfer();
+            return $this->contentFacade->findContentById($contentId);
+        }
 
-            foreach ($this->getAvailableLocales() as $locale) {
-                $localizedContentTransfer = new LocalizedContentTransfer();
-                $localizedContentTransfer->setLocaleName($locale->getLocaleName());
-                $localizedContentTransfer->setFkLocale($locale->getIdLocale());
+        $contentTransfer = new ContentTransfer();
 
-                $localizedContentTransfer->setParameters(json_encode([]));
+        foreach ($this->getAvailableLocales() as $locale) {
+            $localizedContentTransfer = new LocalizedContentTransfer();
+            $localizedContentTransfer->setLocaleName($locale->getLocaleName());
+            $localizedContentTransfer->setFkLocale($locale->getIdLocale());
 
-                $contentTransfer->addLocalizedContent($localizedContentTransfer);
-            }
+            $localizedContentTransfer->setParameters(json_encode([]));
+
+            $contentTransfer->addLocalizedContent($localizedContentTransfer);
         }
 
         return $contentTransfer;
@@ -73,7 +73,9 @@ class ContentFormDataProvider
         return [
             'data_class' => ContentTransfer::class,
             ContentForm::OPTION_AVAILABLE_LOCALES => $this->getAvailableLocales(),
-            ContentForm::OPTION_CONTENT_ITEM_ENTITY => 'AbstractProductList',
+            ContentForm::OPTION_CONTENT_CATEGORY_CANDIDATE_KEY => 'AbstractProductListCategory',
+            ContentForm::OPTION_CONTENT_TERM_CANDIDATE_KEY => 'AbstractProductListTerm',
+            ContentForm::OPTION_CONTENT_TYPE_CANDIDATE_KEY => 'AbstractProductListType',
             ContentForm::OPTION_CONTENT_ITEM_TERM_FORM => AbstractProductListContentTermForm::class,
             ContentForm::OPTION_CONTENT_ITEM_TRANSFORM => function (?string $params = null) {
                 $data = new ContentAbstractProductListTransfer();

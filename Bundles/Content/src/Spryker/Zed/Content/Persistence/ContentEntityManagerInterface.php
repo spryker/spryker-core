@@ -20,15 +20,4 @@ interface ContentEntityManagerInterface
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
     public function saveContent(ContentTransfer $contentTransfer): ContentTransfer;
-
-    /**
-     * Specification:
-     * - Finds a content by content ID.
-     * - Deletes the content.
-     *
-     * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
-     *
-     * @return void
-     */
-    public function delete(ContentTransfer $contentTransfer): void;
 }

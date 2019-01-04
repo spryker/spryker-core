@@ -48,14 +48,4 @@ class ContentWriter implements ContentWriterInterface
 
         return $this->contentEntityManager->saveContent($contentTransfer);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
-     *
-     * @return void
-     */
-    public function delete(ContentTransfer $contentTransfer): void
-    {
-        $this->contentEntityManager->delete($contentTransfer);
-    }
 }

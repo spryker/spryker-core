@@ -15,7 +15,9 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*",
-    "spryker/event": "*"
+    "spryker/event": "*",
+    "spryker/propel": "*",
+    "spryker/queue": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"

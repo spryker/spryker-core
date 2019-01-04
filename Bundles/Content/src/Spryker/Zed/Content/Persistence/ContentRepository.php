@@ -20,13 +20,17 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
      *
      * @param int $id
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer
+     * @return null|\Generated\Shared\Transfer\ContentTransfer
      */
-    public function findContentById(int $id): ContentTransfer
+    public function findContentById(int $id): ?ContentTransfer
     {
         $contentEntity = $this->getFactory()
             ->createContentQuery()
             ->findOneByIdContent($id);
+
+        if ($contentEntity === null) {
+            return null;
+        }
 
         return $this->getFactory()->createContentMapper()->mapContentEntityToTransfer($contentEntity);
     }
@@ -36,14 +40,18 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
      *
      * @param string $uuid
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer
+     * @return null|\Generated\Shared\Transfer\ContentTransfer
      */
-    public function findContentByUUID(string $uuid): ContentTransfer
+    public function findContentByUUID(string $uuid): ?ContentTransfer
     {
         $contentEntity = $this
             ->getFactory()
             ->createContentQuery()
             ->findOneByUuid($uuid);
+
+        if ($contentEntity === null) {
+            return null;
+        }
 
         return $this->getFactory()->createContentMapper()->mapContentEntityToTransfer($contentEntity);
     }

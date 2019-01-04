@@ -24,9 +24,9 @@ class ContentFacade extends AbstractFacade implements ContentFacadeInterface
      *
      * @param int $id
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer
+     * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
-    public function findContentById(int $id): ContentTransfer
+    public function findContentById(int $id): ?ContentTransfer
     {
         return $this->getFactory()->createContentReader()->findContentById($id);
     }
@@ -38,9 +38,9 @@ class ContentFacade extends AbstractFacade implements ContentFacadeInterface
      *
      * @param string $uuid
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer
+     * @return null|\Generated\Shared\Transfer\ContentTransfer
      */
-    public function findContentByUUID(string $uuid): ContentTransfer
+    public function findContentByUUID(string $uuid): ?ContentTransfer
     {
         return $this->getFactory()->createContentReader()->findContentByUUID($uuid);
     }
@@ -66,24 +66,12 @@ class ContentFacade extends AbstractFacade implements ContentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     *
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
     public function update(ContentTransfer $contentTransfer): ContentTransfer
     {
         return $this->getFactory()->createContentWriter()->update($contentTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
-     *
-     * @return void
-     */
-    public function delete(ContentTransfer $contentTransfer): void
-    {
-        $this->getFactory()->createContentWriter()->delete($contentTransfer);
     }
 }

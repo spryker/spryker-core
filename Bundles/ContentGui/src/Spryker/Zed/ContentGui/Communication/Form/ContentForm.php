@@ -30,7 +30,9 @@ class ContentForm extends AbstractType
     public const FIELD_LOCALES = 'localizedContents';
 
     public const OPTION_AVAILABLE_LOCALES = 'OPTION_AVAILABLE_LOCALES';
-    public const OPTION_CONTENT_ITEM_ENTITY = 'CONTENT_ITEM_ENTITY';
+    public const OPTION_CONTENT_CATEGORY_CANDIDATE_KEY = 'OPTION_CONTENT_CATEGORY_CANDIDATE_KEY';
+    public const OPTION_CONTENT_TERM_CANDIDATE_KEY = 'OPTION_CONTENT_TERM_CANDIDATE_KEY';
+    public const OPTION_CONTENT_TYPE_CANDIDATE_KEY = 'OPTION_CONTENT_TYPE_CANDIDATE_KEY';
     public const OPTION_CONTENT_ITEM_TERM_FORM = 'OPTION_CONTENT_ITEM_TERM_FORM';
     public const OPTION_CONTENT_ITEM_TRANSFORM = 'OPTION_CONTENT_ITEM_TRANSFORM';
     public const OPTION_CONTENT_ITEM_REVERS_TRANSFORM = 'OPTION_CONTENT_ITEM_REVERS_TRANSFORM';
@@ -47,7 +49,9 @@ class ContentForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(static::OPTION_AVAILABLE_LOCALES);
-        $resolver->setRequired(static::OPTION_CONTENT_ITEM_ENTITY);
+        $resolver->setRequired(static::OPTION_CONTENT_CATEGORY_CANDIDATE_KEY);
+        $resolver->setRequired(static::OPTION_CONTENT_TERM_CANDIDATE_KEY);
+        $resolver->setRequired(static::OPTION_CONTENT_TYPE_CANDIDATE_KEY);
         $resolver->setRequired(static::OPTION_CONTENT_ITEM_TERM_FORM);
         $resolver->setRequired(static::OPTION_CONTENT_ITEM_TRANSFORM);
         $resolver->setRequired(static::OPTION_CONTENT_ITEM_REVERS_TRANSFORM);
@@ -62,12 +66,12 @@ class ContentForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addNameKeyField($builder)
-            ->addDescriptionKeyField($builder)
+            ->addNameField($builder)
+            ->addDescriptionField($builder)
             ->addLocaleCollection($builder, $options)
-            ->addContentCategoryCandidateKey($builder, $options[static::OPTION_CONTENT_ITEM_ENTITY])
-            ->addContentTermCandidateKey($builder, $options[static::OPTION_CONTENT_ITEM_ENTITY])
-            ->addContentTypeCandidateKey($builder, $options[static::OPTION_CONTENT_ITEM_ENTITY]);
+            ->addContentCategoryCandidateKey($builder, $options[static::OPTION_CONTENT_CATEGORY_CANDIDATE_KEY])
+            ->addContentTermCandidateKey($builder, $options[static::OPTION_CONTENT_TERM_CANDIDATE_KEY])
+            ->addContentTypeCandidateKey($builder, $options[static::OPTION_CONTENT_TYPE_CANDIDATE_KEY]);
     }
 
     /**
@@ -75,7 +79,7 @@ class ContentForm extends AbstractType
      *
      * @return $this
      */
-    protected function addNameKeyField(FormBuilderInterface $builder)
+    protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_NAME, TextType::class, [
             'attr' => [
@@ -93,7 +97,7 @@ class ContentForm extends AbstractType
      *
      * @return $this
      */
-    protected function addDescriptionKeyField(FormBuilderInterface $builder)
+    protected function addDescriptionField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_DESCRIPTION, TextType::class, [
             'attr' => [

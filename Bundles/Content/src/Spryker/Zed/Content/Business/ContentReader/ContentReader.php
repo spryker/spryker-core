@@ -28,9 +28,9 @@ class ContentReader implements ContentReaderInterface
     /**
      * @param int $id
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer
+     * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
-    public function findContentById(int $id): ContentTransfer
+    public function findContentById(int $id): ?ContentTransfer
     {
         return $this->contentRepository->findContentById($id);
     }
@@ -38,9 +38,9 @@ class ContentReader implements ContentReaderInterface
     /**
      * @param string $uuid
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer
+     * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
-    public function findContentByUUID(string $uuid): ContentTransfer
+    public function findContentByUUID(string $uuid): ?ContentTransfer
     {
         return $this->contentRepository->findContentByUUID($uuid);
     }
