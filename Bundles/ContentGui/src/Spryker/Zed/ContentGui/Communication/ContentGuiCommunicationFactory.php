@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ContentTransfer;
 use Orm\Zed\Content\Persistence\SpyContentQuery;
 use Spryker\Zed\ContentGui\Communication\Form\ContentForm;
 use Spryker\Zed\ContentGui\Communication\Form\DataProvider\ContentFormDataProvider;
+use Spryker\Zed\ContentGui\Communication\Form\DataProvider\ContentFormDataProviderInterface;
 use Spryker\Zed\ContentGui\Communication\Table\ContentTable;
 use Spryker\Zed\ContentGui\Communication\Tabs\ContentTabs;
 use Spryker\Zed\ContentGui\ContentGuiDependencyProvider;
@@ -40,9 +41,9 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ContentGui\Communication\Form\DataProvider\ContentFormDataProvider
+     * @return \Spryker\Zed\ContentGui\Communication\Form\DataProvider\ContentFormDataProviderInterface
      */
-    public function createContentFormDataProvider(): ContentFormDataProvider
+    public function createContentFormDataProvider(): ContentFormDataProviderInterface
     {
         return new ContentFormDataProvider($this->getContentFacade(), $this->getLocaleFacade());
     }

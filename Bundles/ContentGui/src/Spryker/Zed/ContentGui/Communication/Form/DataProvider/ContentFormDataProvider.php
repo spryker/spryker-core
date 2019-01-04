@@ -17,7 +17,7 @@ use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToContentFacadeBridgeInt
 use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToLocaleFacadeBridgeInterface;
 use Spryker\Zed\ContentItem\Form\AbstractProductListContentTermForm;
 
-class ContentFormDataProvider
+class ContentFormDataProvider implements ContentFormDataProviderInterface
 {
     /**
      * @var \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToContentFacadeBridgeInterface
