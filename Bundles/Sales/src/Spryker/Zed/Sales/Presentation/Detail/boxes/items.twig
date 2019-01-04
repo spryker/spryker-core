@@ -20,26 +20,59 @@
 
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Order Items' } %}
 
+    {% block widget_title -%}
+        <h5>{{ 'Order Items' | trans }}</h5>
+        <div class="pull-right">
+            <a class="btn btn-default" href="#">{{ 'Create Shipment' | trans }}</a>
+        </div>
+    {% endblock %}
     {% block widget_content %}
+        {% for keys, shipmentOrderItems in groupedOrderItemsByShipment %}
+            <div>
+                <h3>Shipment {{ loop.index }} of {{ loop.length }}</h3>
+                <div class="pull-right"><a class="btn btn-default" href="#">{{ 'Edit Shipment' | trans }}</a></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <p><b>{{ 'Delivery Address' | trans }}:</b> {{ shipmentOrderItems.shipment.shippingAddress.salutation
+                        ~ ' ' ~ shipmentOrderItems.shipment.shippingAddress.firstName ~ ' '
+                        ~ shipmentOrderItems.shipment.shippingAddress.lastName ~ ', '
+                        ~ shipmentOrderItems.shipment.shippingAddress.address1 ~ ' '
+                        ~ shipmentOrderItems.shipment.shippingAddress.address2 ~ ', '
+                        ~ shipmentOrderItems.shipment.shippingAddress.address3 ~ ' '
+                        ~ shipmentOrderItems.shipment.shippingAddress.company ~ ', '
+                        ~ shipmentOrderItems.shipment.shippingAddress.zipCode ~ ', '
+                        ~ shipmentOrderItems.shipment.shippingAddress.city ~ ', '
+                        ~ shipmentOrderItems.shipment.shippingAddress.country.name}}</p>
+                    <p><b>{{ 'Delivery Method' | trans }}:</b> {{ shipmentOrderItems.shipment.carrier.name }}</p>
+                    <p><b>{{ 'Shipping Method' | trans }}:</b> {{ shipmentOrderItems.shipment.method.name }}</p>
+                    <p><b>{{ 'Request delivery date' | trans }}:</b> {{ shipmentOrderItems.shipment.requestedDeliveryDate }}</p>
+                </div>
+            </div>
+            <h4>{{ 'Trigger all matching states of order inside this shipment' | trans }}</h4>
+            <div>
+                {% for event in events %}
+                    <a class="btn btn-primary trigger-order-event" data-id-sales-order="{{ order.idSalesOrder }}" data-event="{{ event }}" href="#">{{ event }}</a>
+                {% endfor %}
+            </div>
+            <table class="footable table toggle-arrow-tiny" data-qa="order-item-list">
+                <thead>
+                <tr class="text-left">
+                    <th><input type="checkbox" id="check-all-orders" /></th>
+                    <th colspan="2">{{ 'Product' | trans }}</th>
+                    <th>{{ 'Quantity' | trans }}</th>
+                    <th>{{ 'Unit Price' | trans }} <small>({{ order.priceMode }})</small></th>
+                    <th>{{ 'Item total' | trans }}</th>
+                    <th>{{ 'State' | trans }}</th>
+                    <th>{{ 'Trigger event' | trans }}</th>
+                </tr>
+                </thead>
 
-        <table class="footable table toggle-arrow-tiny" data-qa="order-item-list">
-            <thead>
-            <tr class="text-left">
-                <th><input type="checkbox" id="check-all-orders" /></th>
-                <th colspan="2">{{ 'Product' | trans }}</th>
-                <th>{{ 'Quantity' | trans }}</th>
-                <th>{{ 'Unit Price' | trans }} <small>({{ order.priceMode }})</small></th>
-                <th>{{ 'Item total' | trans }}</th>
-                <th>{{ 'State' | trans }}</th>
-                <th>{{ 'Trigger event' | trans }}</th>
-            </tr>
-            </thead>
-            {% if order.itemGroups is defined and order.itemGroups | length > 0 %}
-              {% embed '@Sales/Detail/boxes/item-group.twig' with {groups: order.itemGroups} %}{% endembed %}
-            {% else %}
-              {% embed '@Sales/Detail/boxes/no-group-items.twig' with {items: order.items} %}{% endembed %}
-            {% endif %}
-        </table>
+                {% embed '@Sales/Detail/boxes/no-group-items.twig' with {items: shipmentOrderItems.items} %}{% endembed %}
+            </table>
+        {% endfor %}
+
+
 
     {% endblock %}
 
