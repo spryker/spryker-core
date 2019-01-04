@@ -80,4 +80,11 @@ interface QuoteRepositoryInterface
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function findExpiredGuestQuotes(DateTime $lifetimeLimitDate, int $limit): QuoteCollectionTransfer;
+
+    /**
+     * @param string $uuidQuote
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    public function findQuoteByUuid(string $uuidQuote): ?QuoteTransfer;
 }

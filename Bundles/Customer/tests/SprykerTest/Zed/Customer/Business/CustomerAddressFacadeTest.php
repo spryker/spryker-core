@@ -250,6 +250,39 @@ class CustomerAddressFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCheckAddressExistsByIdCustomerAddressShouldReturnTrueOnExistedAddress(): void
+    {
+        $customerTransfer = $this->createCustomerWithAddress();
+
+        $addresses = $customerTransfer->getAddresses()->getAddresses();
+        $addressTransfer = $addresses[0];
+        $idCustomerAddress = $addressTransfer->getIdCustomerAddress();
+
+        $result = $this->customerFacade->findCustomerAddressById($idCustomerAddress);
+
+        $this->assertNotNull($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckAddressExistsByIdCustomerAddressShouldReturnFalseOnNonExistedAddress(): void
+    {
+        $customerTransfer = $this->createCustomerWithAddress();
+
+        $addresses = $customerTransfer->getAddresses()->getAddresses();
+        $addressTransfer = $addresses[0];
+        $idCustomerAddress = $addressTransfer->getIdCustomerAddress();
+        $this->customerFacade->deleteAddress($addressTransfer);
+
+        $result = $this->customerFacade->findCustomerAddressById($idCustomerAddress);
+
+        $this->assertNull($result);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function createCustomerWithAddress()
