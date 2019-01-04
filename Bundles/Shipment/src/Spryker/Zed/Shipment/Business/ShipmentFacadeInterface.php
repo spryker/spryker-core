@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
+use \ArrayObject;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -255,4 +256,16 @@ interface ShipmentFacadeInterface
      * @return bool
      */
     public function isShipmentMethodActive($idShipmentMethod);
+
+    /**
+     * Specification:
+     * - Retrieves shipment groups.
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    public function getShipmentGroups(ArrayObject $itemsCollection): ArrayObject;
 }

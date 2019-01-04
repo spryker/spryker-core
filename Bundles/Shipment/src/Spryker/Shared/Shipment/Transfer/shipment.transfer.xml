@@ -118,4 +118,8 @@
         <property name="currency" type="Currency" />
     </transfer>
 
+    <transfer name="ShipmentGroupCollection">
+        <property name="groups" type="ShipmentGroup[]" singular="group" />
+    </transfer>
+
 </transfers>

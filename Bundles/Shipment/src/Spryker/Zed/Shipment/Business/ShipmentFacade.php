@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
+use \ArrayObject;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -296,5 +298,21 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function getShipmentExpenseTypeIdentifier()
     {
         return ShipmentConstants::SHIPMENT_EXPENSE_TYPE;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    public function getShipmentGroups(ArrayObject $itemTransfersCollection): ArrayObject
+    {
+        return $this->getFactory()
+            ->getShipmentService()
+            ->groupItemsByShipment($itemTransfersCollection);
     }
 }
