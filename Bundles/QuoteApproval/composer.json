@@ -7,7 +7,12 @@
     "spryker/company-user": "^2.0.0",
     "spryker/kernel": "^3.17.0",
     "spryker/permission-extension": "^1.0.0",
-    "spryker/quote": "^2.0.0"
+    "spryker/quote": "^2.0.0",
+    "spryker/cart": "^5.0.0",
+    "spryker/company-role": "^1.0.0",
+    "spryker/messenger": "^3.0.0",
+    "spryker/zed-request": "^3.0.0",
+    "spryker/quote-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

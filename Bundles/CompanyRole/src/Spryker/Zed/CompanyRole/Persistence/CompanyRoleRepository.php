@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
+use Orm\Zed\CompanyRole\Persistence\Map\SpyCompanyRoleToCompanyUserTableMap;
 use Orm\Zed\CompanyRole\Persistence\SpyCompanyRole;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -184,6 +185,26 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         }
 
         return $permissionCollectionTransfer;
+    }
+
+    /**
+     * @param string $permissionKey
+     *
+     * @return int[]
+     */
+    public function findCompanyUserIdsByPermissionKey(string $permissionKey): array
+    {
+        return $this->getFactory()
+            ->createCompanyRoleQuery()
+            ->joinWithSpyCompanyRoleToCompanyUser()
+            ->useSpyCompanyRoleToPermissionQuery()
+                ->usePermissionQuery()
+                   ->filterByKey($permissionKey)
+                ->endUse()
+            ->endUse()
+            ->select([SpyCompanyRoleToCompanyUserTableMap::COL_FK_COMPANY_USER])
+            ->find()
+            ->toArray();
     }
 
     /**
