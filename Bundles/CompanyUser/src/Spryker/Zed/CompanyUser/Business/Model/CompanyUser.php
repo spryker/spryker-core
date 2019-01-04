@@ -44,7 +44,7 @@ class CompanyUser implements CompanyUserInterface
     protected $companyUserPluginExecutor;
 
     /**
-     * @var \Spryker\Zed\CompanyUser\Business\Model\CompanyUserValidatorInterface
+     * @var \Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserValidatorInterface
      */
     protected $companyUserValidator;
 
@@ -53,7 +53,7 @@ class CompanyUser implements CompanyUserInterface
      * @param \Spryker\Zed\CompanyUser\Persistence\CompanyUserEntityManagerInterface $companyUserEntityManager
      * @param \Spryker\Zed\CompanyUser\Dependency\Facade\CompanyUserToCustomerFacadeInterface $customerFacade
      * @param \Spryker\Zed\CompanyUser\Business\Model\CompanyUserPluginExecutorInterface $companyUserPluginExecutor
-     * @param \Spryker\Zed\CompanyUser\Business\Model\CompanyUserValidatorInterface $companyUserValidator
+     * @param \Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserValidatorInterface $companyUserValidator
      */
     public function __construct(
         CompanyUserRepositoryInterface $companyUserRepository,

@@ -9,12 +9,12 @@ namespace Spryker\Zed\CompanyUser\Business;
 
 use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserStatusHandler;
 use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserStatusHandlerInterface;
+use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserValidator;
+use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserValidatorInterface;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUser;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserInterface;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserPluginExecutor;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserPluginExecutorInterface;
-use Spryker\Zed\CompanyUser\Business\Model\CompanyUserValidator;
-use Spryker\Zed\CompanyUser\Business\Model\CompanyUserValidatorInterface;
 use Spryker\Zed\CompanyUser\CompanyUserDependencyProvider;
 use Spryker\Zed\CompanyUser\Dependency\Facade\CompanyUserToCustomerFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -52,7 +52,7 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUser\Business\Model\CompanyUserValidatorInterface
+     * @return \Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserValidatorInterface
      */
     public function createCompanyUserValidator(): CompanyUserValidatorInterface
     {
