@@ -18,6 +18,8 @@ use Spryker\Zed\Quote\Business\Model\QuoteWriter;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutor;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutorInterface;
+use Spryker\Zed\Quote\Business\Validator\QuoteValidator;
+use Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface;
 use Spryker\Zed\Quote\QuoteConfig;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
 
@@ -37,7 +39,8 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createQuoteWriterPluginExecutor(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->createQuoteValidator()
         );
     }
 
@@ -85,6 +88,16 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
         return new GuestQuoteDeleter(
             $this->getEntityManager(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface
+     */
+    public function createQuoteValidator(): QuoteValidatorInterface
+    {
+        return new QuoteValidator(
+            $this->getStoreFacade()
         );
     }
 

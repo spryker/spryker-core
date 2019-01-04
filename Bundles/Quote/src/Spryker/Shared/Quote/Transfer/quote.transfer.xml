@@ -33,5 +33,14 @@
         <property name="idCompanyUser" type="int"/>
     </transfer>
 
+    <transfer name="QuoteValidationResponse">
+        <property name="isValid" type="bool"/>
+        <property name="errors" type="QuoteError[]"/>
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="message" type="string"/>
+    </transfer>
+
 </transfers>
 

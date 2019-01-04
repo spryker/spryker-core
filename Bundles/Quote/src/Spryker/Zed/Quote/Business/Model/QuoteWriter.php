@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\Quote\Business\Model;
 
-use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface;
 use Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface;
 use Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface;
 use Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface;
-use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 
 class QuoteWriter implements QuoteWriterInterface
 {
@@ -41,21 +40,29 @@ class QuoteWriter implements QuoteWriterInterface
     protected $quoteWriterPluginExecutor;
 
     /**
+     * @var \Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface
+     */
+    protected $quoteValidator;
+
+    /**
      * @param \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface $quoteEntityManager
      * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
      * @param \Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutorInterface $quoteWriterPluginExecutor
      * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface $quoteValidator
      */
     public function __construct(
         QuoteEntityManagerInterface $quoteEntityManager,
         QuoteRepositoryInterface $quoteRepository,
         QuoteWriterPluginExecutorInterface $quoteWriterPluginExecutor,
-        QuoteToStoreFacadeInterface $storeFacade
+        QuoteToStoreFacadeInterface $storeFacade,
+        QuoteValidatorInterface $quoteValidator
     ) {
         $this->quoteEntityManager = $quoteEntityManager;
         $this->storeFacade = $storeFacade;
         $this->quoteRepository = $quoteRepository;
         $this->quoteWriterPluginExecutor = $quoteWriterPluginExecutor;
+        $this->quoteValidator = $quoteValidator;
     }
 
     /**
@@ -83,15 +90,14 @@ class QuoteWriter implements QuoteWriterInterface
             return $this->createQuoteResponseTransfer($quoteTransfer, false);
         }
 
-        try {
-            $quoteTransfer = $this->addStoreToQuote($quoteTransfer);
-        } catch (StoreNotFoundException $exception) {
-            $quoteErrorTransfer = (new QuoteErrorTransfer())->setMessage(
-                $exception->getMessage()
-            );
+        $quoteValidationResponseTransfer = $this->quoteValidator->validate($quoteTransfer);
 
-            return $this->createQuoteResponseTransfer($quoteTransfer, false)->addError($quoteErrorTransfer);
+        if (!$quoteValidationResponseTransfer->getIsValid()) {
+            return $this->createQuoteResponseTransfer($quoteTransfer, false)
+                ->setErrors($quoteValidationResponseTransfer->getErrors());
         }
+
+        $quoteTransfer = $this->addStoreToQuote($quoteTransfer);
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
             return $this->executeCreateTransaction($quoteTransfer);
@@ -110,15 +116,14 @@ class QuoteWriter implements QuoteWriterInterface
             return $this->createQuoteResponseTransfer($quoteTransfer, false);
         }
 
-        try {
-            $quoteTransfer = $this->addStoreToQuote($quoteTransfer);
-        } catch (StoreNotFoundException $exception) {
-            $quoteErrorTransfer = (new QuoteErrorTransfer())->setMessage(
-                $exception->getMessage()
-            );
+        $quoteValidationResponseTransfer = $this->quoteValidator->validate($quoteTransfer);
 
-            return $this->createQuoteResponseTransfer($quoteTransfer, false)->addError($quoteErrorTransfer);
+        if (!$quoteValidationResponseTransfer->getIsValid()) {
+            return $this->createQuoteResponseTransfer($quoteTransfer, false)
+                ->setErrors($quoteValidationResponseTransfer->getErrors());
         }
+
+        $quoteTransfer = $this->addStoreToQuote($quoteTransfer);
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
             return $this->executeUpdateTransaction($quoteTransfer);
