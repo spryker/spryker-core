@@ -16,11 +16,10 @@ interface SchemaComponentBuilderInterface
      * @param string $key
      * @param string $schemaName
      * @param array $objectMetadata
-     * @param bool $isNullable
      *
      * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    public function createObjectSchemaTypeTransfer(string $key, string $schemaName, array $objectMetadata, bool $isNullable = false): SchemaPropertyTransfer;
+    public function createObjectSchemaTypeTransfer(string $key, string $schemaName, array $objectMetadata): SchemaPropertyTransfer;
 
     /**
      * @param string $key
@@ -85,18 +84,16 @@ interface SchemaComponentBuilderInterface
     /**
      * @param string $metadataKey
      * @param array $metadataValue
-     * @param bool $isNullable
      *
      * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    public function createResponseSchemaPropertyTransfer(string $metadataKey, array $metadataValue, bool $isNullable = false): SchemaPropertyTransfer;
+    public function createResponseSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer;
 
     /**
      * @param string $metadataKey
      * @param array $metadataValue
-     * @param bool $isNullable
      *
      * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    public function createRequestSchemaPropertyTransfer(string $metadataKey, array $metadataValue, bool $isNullable = false): SchemaPropertyTransfer;
+    public function createRequestSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer;
 }

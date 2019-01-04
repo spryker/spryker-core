@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\AnnotationTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidTransferClassException;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
@@ -145,7 +146,10 @@ class RestApiDocumentationSchemaGeneratorTest extends Unit
      */
     public function testAddResponseResourceSchemaForPluginWithAlternativeTransferNameShouldGenerateValidResponseResourceSchemas(): void
     {
-        $this->schemaGenerator->addResponseResourceSchemaForPlugin(new TestResourceRoutePlugin(), RestTestAlternativeAttributesTransfer::class);
+        $this->schemaGenerator->addResponseResourceSchemaForPlugin(
+            new TestResourceRoutePlugin(),
+            (new AnnotationTransfer())->setResponseAttributesClassName(RestTestAlternativeAttributesTransfer::class)
+        );
 
         $schemas = $this->schemaGenerator->getSchemas();
 

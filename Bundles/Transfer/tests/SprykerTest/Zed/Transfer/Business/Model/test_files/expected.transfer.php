@@ -68,6 +68,7 @@ class CatFaceTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'no',
+            'is_nullable' => false,
         ],
         self::ITEM => [
             'type' => 'Generated\Shared\Transfer\ItemTransfer',
@@ -75,6 +76,7 @@ class CatFaceTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => true,
             'rest_request_parameter' => 'no',
+            'is_nullable' => false,
         ],
         self::ITEMS => [
             'type' => 'Generated\Shared\Transfer\ItemTransfer',
@@ -82,6 +84,7 @@ class CatFaceTransfer extends AbstractTransfer
             'is_collection' => true,
             'is_transfer' => true,
             'rest_request_parameter' => 'no',
+            'is_nullable' => false,
         ],
         self::TYPED_ARRAY => [
             'type' => 'string[]',
@@ -89,6 +92,7 @@ class CatFaceTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'no',
+            'is_nullable' => false,
         ],
     ];
 

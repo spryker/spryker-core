@@ -17,6 +17,7 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
     protected const KEY_LINKS = 'links';
     protected const KEY_RELATIONSHIPS = 'relationships';
     protected const KEY_REST_REQUEST_PARAMETER = 'rest_request_parameter';
+    protected const KEY_IS_NULLABLE = 'is_nullable';
     protected const KEY_SELF = 'self';
     protected const KEY_TYPE = 'type';
 
