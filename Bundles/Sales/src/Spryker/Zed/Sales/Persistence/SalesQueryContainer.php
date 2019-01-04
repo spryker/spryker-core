@@ -10,6 +10,7 @@ namespace Spryker\Zed\Sales\Persistence;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -194,12 +195,31 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     public function querySalesOrderDetails($idSalesOrder)
     {
         $query = $this->getFactory()->createSalesOrderQuery()
-         ->setModelAlias('order')
-         ->filterByIdSalesOrder($idSalesOrder)
-         ->innerJoinWith('order.BillingAddress billingAddress')
-         ->innerJoinWith('billingAddress.Country billingCountry')
-         ->innerJoinWith('order.ShippingAddress shippingAddress')
-         ->innerJoinWith('shippingAddress.Country shippingCountry');
+            ->setModelAlias('order')
+            ->filterByIdSalesOrder($idSalesOrder)
+            ->innerJoinWith('order.BillingAddress billingAddress')
+            ->innerJoinWith('billingAddress.Country billingCountry')
+            ->leftJoinWith('order.ShippingAddress shippingAddress')
+            ->leftJoinWith('shippingAddress.Country shippingCountry');
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function querySalesOrderItemsWithShippingAddresses($idSalesOrder): SpySalesOrderItemQuery
+    {
+        $query = $this->getFactory()->createSalesOrderItemQuery()
+            ->setModelAlias('orderItem')
+            ->filterByFkSalesOrder($idSalesOrder)
+            ->innerJoinWith('orderItem.SpySalesShipment shipment')
+            ->innerJoinWith('shipment.SpySalesOrderAddress address')
+            ->innerJoinWith('address.Country shippingCountry');
 
         return $query;
     }
