@@ -36,8 +36,7 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
             $hash = $this->getItemHash($itemTransfer->getShipment());
             if (!isset($shipmentGroupTransfers[$hash])) {
                 $shipmentGroupTransfers[$hash] = (new ShipmentGroupTransfer())
-                    ->setShipment($itemTransfer->getShipment())
-                    ->addItem($itemTransfer);
+                    ->setShipment($itemTransfer->getShipment());
             }
 
             $shipmentGroupTransfers[$hash]->addItem($itemTransfer);
