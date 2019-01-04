@@ -52,7 +52,8 @@ class QuoteApprovalValidator implements QuoteApprovalValidatorInterface
      */
     public function canDeleteQuoteApprovalRequest(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer, QuoteApprovalTransfer $quoteApprovalTransfer): bool
     {
-        return $this->isValidQuoteApprovalRequest($quoteApprovalRequestTransfer, $quoteApprovalTransfer);
+        return $this->isValidQuoteApprovalRequest($quoteApprovalRequestTransfer, $quoteApprovalTransfer)
+            && !$this->hasUpdateQuoteApprovalPermissions($quoteApprovalTransfer);
     }
 
     /**

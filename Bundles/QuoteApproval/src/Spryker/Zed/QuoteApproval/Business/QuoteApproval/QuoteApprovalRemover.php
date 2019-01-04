@@ -14,7 +14,7 @@ use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface;
 
 class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
 {
-    protected const STATUS_NAME = 'Canceled';
+    protected const STATUS_NAME = 'canceled';
 
     /**
      * @var \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalValidatorInterface

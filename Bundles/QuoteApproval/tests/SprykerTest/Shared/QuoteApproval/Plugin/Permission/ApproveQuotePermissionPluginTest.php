@@ -90,7 +90,7 @@ class ApproveQuotePermissionPluginTest extends Unit
      */
     public function testCanWithLessGrandTotalAmountReturnFalse(): void
     {
-        $configuration[static::FIELD_MULTI_CURRENCY][static::CURRENCY_CODE] = 99;
+        $configuration[static::FIELD_MULTI_CURRENCY][static::CURRENCY_CODE] = static::CENT_AMOUNT - 1;
         $quoteTransfer = $this->createQuoteTransfer();
 
         $approveQuotePermissionPlugin = $this->createApproveQuotePermissionPlugin();
