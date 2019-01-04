@@ -7,16 +7,20 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
+use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
+use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
 use Spryker\Zed\Shipment\Business\Model\ShipmentCarrierReader;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
+use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaverInterface as ModelShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCountryInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
@@ -99,17 +103,25 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaverInterface
      */
-    public function createShipmentOrderSaver()
+    public function createShipmentOrderSaver(): ModelShipmentOrderSaverInterface
     {
-        return new ShipmentOrderSaver($this->getSalesQueryContainer());
+        return new ShipmentOrderSaver(
+            $this->getSalesQueryContainer(),
+            $this->getShipmentService(),
+            $this->getCountryFacade()
+        );
     }
 
     /**
      * @return \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface
      */
-    public function createCheckoutShipmentOrderSaver()
+    public function createCheckoutShipmentOrderSaver(): ShipmentOrderSaverInterface
     {
-        return new CheckoutShipmentOrderSaver($this->getSalesQueryContainer());
+        return new CheckoutShipmentOrderSaver(
+            $this->getSalesQueryContainer(),
+            $this->getShipmentService(),
+            $this->getCountryFacade()
+        );
     }
 
     /**
@@ -158,5 +170,21 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     protected function getSalesQueryContainer()
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::QUERY_CONTAINER_SALES);
+    }
+
+    /**
+     * @return \Spryker\Service\Shipment\ShipmentServiceInterface
+     */
+    public function getShipmentService(): ShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::SERVICE_SHIPMENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCountryInterface
+     */
+    public function getCountryFacade(): ShipmentToCountryInterface
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_COUNTRY);
     }
 }

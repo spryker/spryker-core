@@ -60,6 +60,7 @@ class AddressMapper extends BaseMapper
      */
     protected function prepareAddressTransfer()
     {
+        // todo: Split Delivery. Refactor shipment to new way and refactor RatepayRequestTransfer
         if ($this->type == ApiConstants::REQUEST_MODEL_ADDRESS_TYPE_DELIVERY) {
             $requestAddressTransfer = $this->requestTransfer->setShippingAddress(new RatepayRequestAddressTransfer())->getShippingAddress()
                 ->setFirstName($this->addressTransfer->requireFirstName()->getFirstName())

@@ -18,6 +18,7 @@
     "spryker/sales-extension": "^1.1.0",
     "spryker/sales-split": "^3.0.0",
     "spryker/sequence-number": "^3.0.0",
+    "spryker/shipment": "^6.6.3",
     "spryker/symfony": "^3.0.0",
     "spryker/user": "^3.0.0",
     "spryker/util-date-time": "^1.0.0",
@@ -31,7 +32,6 @@
     "spryker/config": "*",
     "spryker/price": "*",
     "spryker/product": "*",
-    "spryker/shipment": "*",
     "spryker/stock": "*",
     "spryker/testify": "*",
     "spryker/zed-navigation": "*"

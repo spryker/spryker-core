@@ -18,6 +18,7 @@ use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
 use Spryker\Zed\Sales\Communication\Table\CustomerOrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilder;
+use Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesSplit\Communication\Form\DataProvider\OrderItemSplitDataProvider;
 use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
@@ -221,6 +222,14 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function getCountryFacade()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_COUNTRY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceInterface
+     */
+    public function getShipmentService(): SalesToShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::SERVICE_SHIPMENT);
     }
 
     /**

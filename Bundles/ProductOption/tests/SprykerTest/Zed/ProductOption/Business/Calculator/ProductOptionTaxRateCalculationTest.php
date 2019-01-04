@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeBridge;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
@@ -116,11 +117,11 @@ class ProductOptionTaxRateCalculationTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransferWithoutShippingAddress()
+    protected function createQuoteTransferWithoutShippingAddress(): QuoteTransfer
     {
         $quoteTransfer = $this->createQuoteTransfer();
 
-        $this->createItemTransfers($quoteTransfer);
+        $this->addItemTransfers($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -128,55 +129,80 @@ class ProductOptionTaxRateCalculationTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransferWithShippingAddress()
+    protected function createQuoteTransferWithShippingAddress(): QuoteTransfer
     {
         $quoteTransfer = $this->createQuoteTransfer();
-
-        $this->createItemTransfers($quoteTransfer);
 
         $addressTransfer = new AddressTransfer();
         $addressTransfer->setIso2Code('AT');
 
-        $quoteTransfer->setShippingAddress($addressTransfer);
+        $this->addItemTransfers($quoteTransfer, $addressTransfer);
 
         return $quoteTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
      *
      * @return void
      */
-    protected function createItemTransfers(QuoteTransfer $quoteTransfer)
+    protected function addItemTransfers(QuoteTransfer $quoteTransfer, ?AddressTransfer $addressTransfer = null): void
     {
-        $itemTransfer1 = $this->createProductItemTransfer(1);
+        $itemTransfer1 = $this->createProductItemTransfer(1, $addressTransfer);
         $itemTransfer1->addProductOption($this->createProductOption(1));
         $quoteTransfer->addItem($itemTransfer1);
 
-        $itemTransfer2 = $this->createProductItemTransfer(2);
-        $itemTransfer1->addProductOption($this->createProductOption(2));
+        $itemTransfer2 = $this->createProductItemTransfer(2, $addressTransfer);
+        $itemTransfer2->addProductOption($this->createProductOption(2));
         $quoteTransfer->addItem($itemTransfer2);
     }
 
     /**
      * @param int $id
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createProductItemTransfer($id)
+    protected function createProductItemTransfer($id, ?AddressTransfer $addressTransfer = null): ItemTransfer
     {
         $itemTransfer = $this->createItemTransfer();
         $itemTransfer->setIdProductAbstract($id);
+        $shipmentTransfer = $this->createShipment($addressTransfer);
+        $itemTransfer->setShipment($shipmentTransfer);
 
         return $itemTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    protected function createShipment(?AddressTransfer $addressTransfer = null): ShipmentTransfer
+    {
+        $shipmentTransfer = $this->createShipmentTransfer();
+        if ($addressTransfer !== null) {
+            $shipmentTransfer->setShippingAddress($addressTransfer);
+        }
+
+        return $shipmentTransfer;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer()
+    protected function createQuoteTransfer(): QuoteTransfer
     {
         return new QuoteTransfer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    protected function createShipmentTransfer(): ShipmentTransfer
+    {
+        return new ShipmentTransfer();
     }
 
     /**

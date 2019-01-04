@@ -3,7 +3,9 @@ parameters:
 
     ignoreErrors:
     - '#Call to an undefined method .+Criteria::.+\(\).#'
-    - "#Casting to int something that's already int#"
+    - '#Cannot access offset .+IdProductAbstract.+ on .+SpyTaxSet#'
+    - '#Cannot access offset .+spy_country\.iso2.+ on .+SpyTaxSet#'
+    - '#Cannot access offset .+MaxTaxRate.+ on .+SpyTaxSet#'
 
 services:
     -
