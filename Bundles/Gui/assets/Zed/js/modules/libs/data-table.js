@@ -1,31 +1,30 @@
 'use strict';
 
-function getLanguage() {
+function getLocale() {
 
     var locale = $('#locale').val()
 
-    if (locale.indexOf('de') != -1) {
-        return 'German';
-    }
-
-    return 'English';
+    return locale.split('_')[0].split('-')[0];
 }
 
 function getTranslation(language) {
 
-    var translations = {
-        'English': require('./i18n/English.json'),
-        'German': require('./i18n/German.json')
+    var translations = {}
+
+    var languages = ['en', 'de']
+
+    for (var i=0; i<languages.length; i++) {
+        translations[languages[i]] = require('./i18n/' + languages[i] + '.json')
     }
 
     if(translations.hasOwnProperty(language)) {
         return translations[language]
     }
 
-    return translations['English']
+    return translations['en']
 }
 
-var language = getLanguage()
+var language = getLocale()
 
 var defaultConfiguration = {
     scrollX: 'auto',
