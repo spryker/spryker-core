@@ -1,0 +1,56 @@
+{% block _shipment_form_order_items_entry_orderItem %}
+    {% set idProductAbstract = order_item.vars.value.id %}
+    {% set idOrderItem = order_item.vars.value.id %}
+    {% set order_itemName = order_item.vars.value.name %}
+    {% set order_itemSku = order_item.vars.value.sku %}
+
+    <tr>
+        {#{% set image = order_item.metadata.image %}#}
+        {% set image = '' %}
+
+        <td class="item-checker">
+            XXXXXXXXXXXXXX
+            {#<input type="checkbox" name="order-item" value="{{ idOrderItemSalesOrderItem }}" class="item-check" />#}
+            {#{{ form_widget(field_order_item_assigned) }}#}
+        </td>
+        <td>
+            <img class="product-image" src="{{ image }}"/>
+        </td>
+        <td>
+            <div>
+                <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': idProductAbstract, 'id-product': idOrderItem, 'type': 'regular'}) }}">
+                    {{ order_itemName }}
+                </a>
+            </div>
+            <div class="sku">
+                {{ 'Sku' | trans }}: {{ form_row(order_item.sku) }}
+            </div>
+
+            {# {% if order_item.metadata.superAttributes is not null and order_item.metadata.superAttributes | length > 0 %}
+                 <div class="variant-details">
+                     <h3>{{ 'Variant Details' | trans }}</h3>
+                     {% for attributeName, attributeValue in order_item.metadata.superAttributes | slice(0,2) %}
+                         <div>{{ attributeName }}: {{ attributeValue }}</div>
+                     {% endfor %}
+
+                     {% if order_item.metadata.superAttributes | length > 2 %}
+                         <div id="attribute_details_{{ order_item.IdSalesOrderItem }}" class="hidden">
+                             {% for attributeName, attributeValue in order_item.metadata.superAttributes | slice(2) %}
+                                 <div>{{ attributeName }}: {{ attributeValue }}</div>
+                             {% endfor %}
+                         </div>
+
+                         <a id="attribute-details-btn-{{ order_item.IdSalesOrderItem }}" class="btn btn-sm more-attributes is-hidden" data-id="{{ order_item.IdSalesOrderItem }}"><span class="show-more">{{ 'Show more' | trans }}</span><span class="show-less">{{ 'Show less' | trans }}</span></a>
+                     {% endif %}
+                 </div>
+             {% endif %}#}
+        </td>
+        <td>
+            {#{{ form_widget(field_order_item_quantity) }}#}
+            QUANTITY
+        </td>
+        <td>
+            CURRENT SHIPMENT
+        </td>
+    </tr>
+{% endblock %}

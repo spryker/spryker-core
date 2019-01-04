@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Spryker\Zed\ShipmentGui\Communication\Form\AddressForm;
-use Spryker\Zed\ShipmentGui\Communication\Form\OrderItemCollectionForm;
+use Spryker\Zed\ShipmentGui\Communication\Form\OrderItemCollectionType;
 use Spryker\Zed\ShipmentGui\Communication\Form\OrderItemForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentForm;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCountryInterface;
@@ -83,11 +84,10 @@ class ShippingFormDataProvider
     /**
      * @return array
      */
-    public function getOptions($orderTransfer)
+    public function getOptions()
     {
         $options =  array_merge(
             [
-                OrderItemCollectionForm::CHOICES_ORDER_ITEM => $this->createOrderItemOptionList($orderTransfer),
                 ShipmentForm::OPTION_SHIPMENT_METHOD => [
                     'Shipment example 1' => 1,
                     'Shipment example 2' => 2,
@@ -99,26 +99,23 @@ class ShippingFormDataProvider
         return $options;
     }
 
-    protected function createOrderItemOptionList($orderTransfer)
+
+    public function getShipmentFormTransfer(ShipmentMethodsTransfer $shipmentMethodCollection, $orderTransfer)
     {
+        $shipmentEntity = $this
+            ->shipmentGuiRepository
+            ->getShipmentById($idShipment);
 
-
-        return $orderTransfer->getItems();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodCollection
-     *
-     * @return Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider
-     */
-    protected function createShipmentMethodOptionList(ShipmentMethodsTransfer $shipmentMethodCollection)
-    {
-        $data = [];
-
-        foreach ($shipmentMethodCollection->getMethods() as $shipmentMethod) {
-            $data[$shipmentMethod->getIdShipmentMethod()] = $shipmentMethod->getCarrierName();
+        if ($shipmentEntity === null) {
+            return null;
         }
 
-        return $data;
+        $shipmentAddressEntity = $shipmentEntity->getSpySalesOrderAddress();
+
+        $shipmentFormTransfer = new ShipmentFormTransfer();
+        $shipmentFormTransfer->setShippingAddress($shipmentAddressEntity);
+        $shipmentFormTransfer->setOrderItems($orderTransfer->getItems());
+
+        return $shipmentFormTransfer;
     }
 }

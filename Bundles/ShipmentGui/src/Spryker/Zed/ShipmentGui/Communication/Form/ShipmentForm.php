@@ -32,20 +32,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ShipmentForm extends AbstractType
 {
-    public const FORM_ADDRESS = 'addressForm';
-    public const FORM_ORDER_ITEMS = 'orderItemsForm';
-    public const FIELD_SHIPMENT_DATE = 'delivery_date';
-    public const FIELD_SHIPMENT_METHOD = 'shipment_method';
-    public const OPTION_SHIPMENT_METHOD = 'data';
+    public const FIELD_ADDRESS = 'shippingAddress';
+    public const FIELD_ORDER_ITEMS = 'order_items';
+    public const FIELD_SHIPMENT_DATE = 'requestedDeliveryDate';
+    public const FIELD_SHIPMENT_METHOD = 'method';
+    public const CHOICES_SHIPMENT_METHOD = 'choices_shipment_method';
     public const FIELD_DELIVERY_ADDRESS = 'delivery_address';
-
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'shipmentForm';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -54,17 +46,9 @@ class ShipmentForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(OrderItemCollectionForm::CHOICES_ORDER_ITEM);
-        $resolver->setRequired(OrderItemCollectionForm::CHOICES_ORDER_ITEM);
-
         $resolver->setRequired(AddressForm::OPTION_SALUTATION_CHOICES);
         $resolver->setRequired(AddressForm::OPTION_COUNTRY_CHOICES);
-
-        $resolver->setDefaults([
-            OrderItemCollectionForm::CHOICES_ORDER_ITEM => [],
-        ]);
-
-
+        $resolver->setRequired(self::CHOICES_SHIPMENT_METHOD);
     }
 
     /**
@@ -85,18 +69,36 @@ class ShipmentForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return $this
+     */
+    protected function addOrderItemsForm(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            self::FIELD_ORDER_ITEMS,
+            CollectionType::class,
+            [
+                'entry_type' => OrderItemType::class,
+                'entry_options' => [
+                    'label' => false,
+                ],
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
     public function addDeliveryAddressField(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_DELIVERY_ADDRESS,
-            RadioType::class, [
-                'constraints' => [
-                    new Blank(),
-                ],
-            ],
+            self::FIELD_ORDER_ITEMS,
+            CollectionType::class,
             []
         );
 
@@ -112,30 +114,11 @@ class ShipmentForm extends AbstractType
     protected function addAddressForm(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FORM_ADDRESS,
+            self::FIELD_ADDRESS,
             AddressForm::class,
             [
                 AddressForm::OPTION_SALUTATION_CHOICES => $builder->getOption(AddressForm::OPTION_SALUTATION_CHOICES),
                 AddressForm::OPTION_COUNTRY_CHOICES=> $builder->getOption(AddressForm::OPTION_COUNTRY_CHOICES),
-            ]
-        );
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
-     *
-     * @return $this
-     */
-    protected function addOrderItemsForm(FormBuilderInterface $builder)
-    {
-        $builder->add(
-            self::FORM_ORDER_ITEMS,
-            OrderItemCollectionForm::class,
-            [
-                OrderItemCollectionForm::CHOICES_ORDER_ITEM => $builder->getOption(OrderItemCollectionForm::CHOICES_ORDER_ITEM),
             ]
         );
 
@@ -156,7 +139,7 @@ class ShipmentForm extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-                'choices' => $builder->getOption(self::OPTION_SHIPMENT_METHOD),
+                'choices' => $builder->getOption(self::CHOICES_SHIPMENT_METHOD),
             ]
         );
 

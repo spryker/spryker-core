@@ -9,9 +9,11 @@ namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
+use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentForm;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -45,16 +47,31 @@ class ShipmentController extends AbstractController
             return $this->redirectResponse(Url::generate('/sales')->build());
         }
 
-        $shippingFormDataProvider = $this->getFactory()->createShippingFormDataProvider();
-        $form = $this->getFactory()
-            ->getShippingForm(
-                $shippingFormDataProvider->getData($idShipment, $orderTransfer),
-                $shippingFormDataProvider->getOptions($orderTransfer)
+        // get shipment
+
+        //$shipmentAddressEntity = $shipmentEntity->getSpySalesOrderAddress();
+
+        $shipmentFormTransfer = new ShipmentFormTransfer();
+        $shipmentFormTransfer->setOrderItems($orderTransfer->getItems());
+
+        ////////////////
+
+        $shipmentForm = $this->getFactory()
+            ->getShipmentForm(
+                $shipmentFormTransfer,
+                array_merge(
+                    $this->getFactory()->createAddressFormDataProvider()->getOptions(),
+                    [
+                        ShipmentForm::CHOICES_SHIPMENT_METHOD => [
+                            'Meth 1' => 1,
+                        ],
+                    ]
+                )
             )
             ->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $addressTransfer = (new AddressTransfer())->fromArray($form->getData(), true);
+        if ($shipmentForm->isSubmitted() && $shipmentForm->isValid()) {
+            $addressTransfer = (new AddressTransfer())->fromArray($shipmentForm->getData(), true);
             $addressTransfer->setIdSalesOrderAddress($idShipment);
             $this->getFacade()
                 ->updateOrderAddress($addressTransfer, $idShipment);
@@ -70,10 +87,12 @@ class ShipmentController extends AbstractController
                 )->build()
             );
         }
-
+/*dump($shipmentForm->createView());
+        exit();*/
         return $this->viewResponse([
             'idSalesOrder' => $idSalesOrder,
-            'form' => $form->createView(),
+            'shipmentForm' => $shipmentForm->createView(),
+            'orderItemTransferCollection' => $orderTransfer->getItems()->getArrayCopy(),
             'eventsGroupedByItem' => [],
             'order' => $orderTransfer,
         ]);
