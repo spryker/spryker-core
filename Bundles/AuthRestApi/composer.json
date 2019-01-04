@@ -16,7 +16,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/oauth-customer-connector": "If you want to authorize customers via Oauth module."
+    "spryker/oauth-customer-connector": "If you want to authorize customers via Oauth module.",
     "spryker/rest-request-validator": "If you want to use rest request validation."
   },
   "autoload": {

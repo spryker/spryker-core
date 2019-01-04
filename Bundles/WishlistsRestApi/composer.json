@@ -17,7 +17,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens."
+    "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
     "spryker/rest-request-validator": "If you want to use rest request validation."
   },
   "autoload": {
