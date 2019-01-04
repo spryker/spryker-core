@@ -24,7 +24,8 @@ class PermissionFactory extends AbstractFactory
     public function createPermissionFinder(): PermissionFinderInterface
     {
         return new PermissionFinder(
-            $this->getPermissionPlugins()
+            $this->getPermissionPlugins(),
+            $this->getPermissionStoragePlugins()
         );
     }
 
@@ -34,7 +35,6 @@ class PermissionFactory extends AbstractFactory
     public function createPermissionExecutor(): PermissionExecutorInterface
     {
         return new PermissionExecutor(
-            $this->getPermissionStoragePlugins(),
             $this->createPermissionFinder()
         );
     }

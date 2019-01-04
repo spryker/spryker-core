@@ -83,7 +83,8 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
         $quoteReposneTransfer = $this->createQuoteResponseTransfer($quoteApproveRequestTransfer);
 
         if (!$this->isRequestSentByQuoteOwner($quoteApproveRequestTransfer)
-            || !$this->isApproverHasPermission($quoteApproveRequestTransfer->getIdApprover())) {
+            || !$this->isApproverHasPermission($quoteApproveRequestTransfer->getIdApprover())
+            || !empty($quoteApproveRequestTransfer->getQuote()->getApprovals())) {
             $quoteReposneTransfer->setIsSuccessful(false);
 
             $this->addPermissionFailedErrorMessage();
