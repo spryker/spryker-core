@@ -9,7 +9,9 @@ namespace Spryker\Zed\ShipmentGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -30,9 +32,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ShipmentForm extends AbstractType
 {
-    public const FIELD_ADDRESS_FORM_ID = 'address_form_id';
+    public const FORM_ADDRESS = 'addressForm';
+    public const FORM_ORDER_ITEMS = 'orderItemsForm';
     public const FIELD_SHIPMENT_DATE = 'delivery_date';
-    public const FIELD_ORDER_ITEMS_FORM_ID = 'order_items_form_id';
     public const FIELD_SHIPMENT_METHOD = 'shipment_method';
     public const OPTION_SHIPMENT_METHOD = 'data';
     public const FIELD_DELIVERY_ADDRESS = 'delivery_address';
@@ -42,17 +44,7 @@ class ShipmentForm extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'address';
-    }
-
-    /**
-     * @deprecated Use `getBlockPrefix()` instead.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
+        return 'shipmentForm';
     }
 
     /**
@@ -62,20 +54,17 @@ class ShipmentForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setDefined(OrderItemCollectionForm::CHOICES_ORDER_ITEM);
+        $resolver->setRequired(OrderItemCollectionForm::CHOICES_ORDER_ITEM);
+
         $resolver->setRequired(AddressForm::OPTION_SALUTATION_CHOICES);
         $resolver->setRequired(AddressForm::OPTION_COUNTRY_CHOICES);
-    }
 
-    /**
-     * @deprecated Use `configureOptions()` instead.
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-     *
-     * @return void
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
+        $resolver->setDefaults([
+            OrderItemCollectionForm::CHOICES_ORDER_ITEM => [],
+        ]);
+
+
     }
 
     /**
@@ -88,7 +77,7 @@ class ShipmentForm extends AbstractType
     {
         $this
             ->addAddressForm($builder)
-//            ->addOrderItemsForm($builder)
+            ->addOrderItemsForm($builder)
             ->addShipmentMethodField($builder)
             ->addDeliveryDateField($builder)
         ;
@@ -108,7 +97,7 @@ class ShipmentForm extends AbstractType
                     new Blank(),
                 ],
             ],
-            $builder->getOptions()
+            []
         );
 
         return $this;
@@ -123,9 +112,12 @@ class ShipmentForm extends AbstractType
     protected function addAddressForm(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_ADDRESS_FORM_ID,
+            self::FORM_ADDRESS,
             AddressForm::class,
-            $builder->getOptions()
+            [
+                AddressForm::OPTION_SALUTATION_CHOICES => $builder->getOption(AddressForm::OPTION_SALUTATION_CHOICES),
+                AddressForm::OPTION_COUNTRY_CHOICES=> $builder->getOption(AddressForm::OPTION_COUNTRY_CHOICES),
+            ]
         );
 
         return $this;
@@ -140,8 +132,11 @@ class ShipmentForm extends AbstractType
     protected function addOrderItemsForm(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_ORDER_ITEMS_FORM_ID,
-            $builder->getOptions()
+            self::FORM_ORDER_ITEMS,
+            OrderItemCollectionForm::class,
+            [
+                OrderItemCollectionForm::CHOICES_ORDER_ITEM => $builder->getOption(OrderItemCollectionForm::CHOICES_ORDER_ITEM),
+            ]
         );
 
         return $this;
@@ -156,7 +151,8 @@ class ShipmentForm extends AbstractType
     {
         $builder->add(
             self::FIELD_SHIPMENT_METHOD,
-            ChoiceType::class, [
+            ChoiceType::class,
+            [
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -176,7 +172,8 @@ class ShipmentForm extends AbstractType
     {
         $builder->add(
             self::FIELD_SHIPMENT_DATE,
-            TextType::class, [
+            TextType::class,
+            [
                 'constraints' => [
                 ],
             ]

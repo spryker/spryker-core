@@ -66,7 +66,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(AddressForm::class, $formData, $formOptions);
     }
 
-    public function createEditShippingFormDataProvider()
+    public function createShippingFormDataProvider()
     {
         return new ShippingFormDataProvider(
             $this->getRepository(),
@@ -81,7 +81,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getEditShippingForm(array $formData = [], array $formOptions = [])
+    public function getShippingForm(array $formData = [], array $formOptions = [])
     {
         return $this->getFormFactory()->create(
             ShipmentForm::class,

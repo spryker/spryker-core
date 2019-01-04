@@ -1,26 +1,28 @@
 {% extends '@ShipmentGui/Layout/layout.twig' %}
 
-{% set backUrl = '/sales/detail/?id-sales-order=' ~ idSalesOrder %}
-{% set title = 'Edit Shipment' | trans %}
+{% block content%}
 
-{% set widget_title = 'Address details' %}
-{% block section_title 'Edit Address for Order: ' ~ idSalesOrder %}
+    {% set backUrl = '/sales/detail/?id-sales-order=' ~ idSalesOrder %}
+    {% set title = 'Edit Shipment' | trans %}
 
-{% block action %}
-    {{ viewActionButton('/sales/detail/?id-sales-order=' ~ idSalesOrder, 'View Order' | trans) }}
-{% endblock %}
+    {% set widget_title = 'Address details' %}
+    {% block section_title 'Edit Address for Order: ' ~ idSalesOrder %}
 
-{% block content %}
-
+    {% block action %}
+        {{ viewActionButton('/sales/detail/?id-sales-order=' ~ idSalesOrder, 'View Order' | trans) }}
+    {% endblock %}
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Address Details' } %}
-
 
         {% block widget_content %}
 
+            {% form_theme form with ['@ShipmentGui/Shipment/fields/order-items-grid.twig', '@ShipmentGui/Shipment/fields/order-items-grid-row.twig'] %}
             {{ form_start(form) }}
             {{ form_widget(form) }}
 
-            <div id="items">{% include '@ShipmentGui/Shipment/boxes/items.twig' %}</div>
+            {{ form_widget(form.children.orderItemsForm) }}
+
+            {{ form_widget(form.shipment_method) }}
+            {{ form_widget(form.delivery_date) }}
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
             {{ form_end(form) }}
@@ -28,4 +30,4 @@
 
     {% endembed %}
 
-{% endblock %}
+{%endblock %}

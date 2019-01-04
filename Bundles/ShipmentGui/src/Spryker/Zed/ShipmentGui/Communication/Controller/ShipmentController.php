@@ -45,11 +45,11 @@ class ShipmentController extends AbstractController
             return $this->redirectResponse(Url::generate('/sales')->build());
         }
 
-        $dataProvider = $this->getFactory()->createEditShippingFormDataProvider();
+        $shippingFormDataProvider = $this->getFactory()->createShippingFormDataProvider();
         $form = $this->getFactory()
-            ->getEditShippingForm(
-                $dataProvider->getData($idShipment),
-                $dataProvider->getOptions()
+            ->getShippingForm(
+                $shippingFormDataProvider->getData($idShipment, $orderTransfer),
+                $shippingFormDataProvider->getOptions($orderTransfer)
             )
             ->handleRequest($request);
 
@@ -74,7 +74,6 @@ class ShipmentController extends AbstractController
         return $this->viewResponse([
             'idSalesOrder' => $idSalesOrder,
             'form' => $form->createView(),
-            'items' => [],
             'eventsGroupedByItem' => [],
             'order' => $orderTransfer,
         ]);
