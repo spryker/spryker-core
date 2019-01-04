@@ -108,4 +108,28 @@ interface CartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function cleanUpItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     *  - Locks quote by setting `isLocked` transfer property to true.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     *  - Unlocks quote by setting `isLocked` transfer property to false.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

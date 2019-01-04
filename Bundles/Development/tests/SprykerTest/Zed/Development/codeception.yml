@@ -25,3 +25,4 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\Development\Helper\IdeAutoCompletion
                 - \SprykerTest\Zed\Development\Helper\DependencyValidatorModule
+                - \SprykerTest\Zed\Development\Helper\SnifferConfigurationHelper

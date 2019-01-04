@@ -42,6 +42,7 @@
 
     <transfer name="Quote">
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+        <property name="isLocked" type="bool" defaultValue="false"/>
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">

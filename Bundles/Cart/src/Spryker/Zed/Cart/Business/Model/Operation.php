@@ -232,6 +232,30 @@ class Operation implements OperationInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
+    public function lock(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $quoteTransfer->setIsLocked(true);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function unlock(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $quoteTransfer->setIsLocked(false);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
     protected function executePostReloadItemsPlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($this->postReloadItemsPlugins as $postReloadItemPlugin) {

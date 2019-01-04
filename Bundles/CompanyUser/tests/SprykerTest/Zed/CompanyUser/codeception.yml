@@ -26,3 +26,4 @@ suites:
                 - \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
                 - \SprykerTest\Zed\Company\Helper\CompanyHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
