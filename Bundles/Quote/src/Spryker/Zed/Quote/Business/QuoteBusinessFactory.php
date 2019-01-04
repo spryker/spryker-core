@@ -20,6 +20,7 @@ use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutor;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutorInterface;
 use Spryker\Zed\Quote\Business\Validator\QuoteValidator;
 use Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface;
+use Spryker\Zed\Quote\Dependency\Facade\QuoteToPriceFacadeInterface;
 use Spryker\Zed\Quote\QuoteConfig;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
 
@@ -97,7 +98,8 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     public function createQuoteValidator(): QuoteValidatorInterface
     {
         return new QuoteValidator(
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getPriceFacade()
         );
     }
 
@@ -115,6 +117,14 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade()
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Quote\Dependency\Facade\QuoteToPriceFacadeInterface
+     */
+    public function getPriceFacade(): QuoteToPriceFacadeInterface
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::FACADE_PRICE);
     }
 
     /**
