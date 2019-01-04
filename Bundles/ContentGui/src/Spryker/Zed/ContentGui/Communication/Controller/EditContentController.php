@@ -61,11 +61,11 @@ class EditContentController extends AbstractController
      */
     protected function createContent(FormInterface $contentForm): bool
     {
-        /** @var \Generated\Shared\Transfer\ContentTransfer $contentTransfer */
-        $contentTransfer = $contentForm->getData();
+        /** @var \Generated\Shared\Transfer\ContentTransfer $data */
+        $data = $contentForm->getData();
         $contentTransfer = $this->getFactory()
             ->getContentFacade()
-            ->create($contentTransfer);
+            ->create($data);
 
         if (!$contentTransfer->getIdContent()) {
             $this->addErrorMessage(static::MESSAGE_ERROR_CONTENT_CREATE);

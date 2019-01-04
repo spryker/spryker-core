@@ -59,7 +59,7 @@ class CreateContentController extends AbstractController
      */
     protected function createContent(FormInterface $contentForm): bool
     {
-        /** @var \Generated\Shared\Transfer\ContentTransfer $contentTransfer */
+        /** @var \Generated\Shared\Transfer\ContentTransfer $data */
         $data = $contentForm->getData();
         $contentTransfer = $this->getFactory()
             ->getContentFacade()
