@@ -4,6 +4,8 @@
 parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
+    ignoreErrors:
+        - '#QuoteApprovalToPermissionFacadeInterface::can() expects array|int|string|null#'
 services:
     -
         class: PhpStan\DynamicType\FacadeDynamicTypeExtension

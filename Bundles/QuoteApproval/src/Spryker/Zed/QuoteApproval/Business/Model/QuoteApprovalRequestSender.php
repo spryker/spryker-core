@@ -18,9 +18,9 @@ use Generated\Shared\Transfer\ShareDetailTransfer;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface;
-use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyRoleFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToMessengerFacadeInterface;
+use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToPermissionFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface;
 
 class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
@@ -43,32 +43,32 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
     protected $messengerFacade;
 
     /**
-     * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyRoleFacadeInterface
-     */
-    protected $companyRoleFacade;
-
-    /**
      * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface
      */
     protected $companyUserFacade;
 
     /**
+     * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToPermissionFacadeInterface
+     */
+    protected $permissionFacade;
+
+    /**
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface $quoteFacade
-     * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyRoleFacadeInterface $companyRoleFacade
+     * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToPermissionFacadeInterface $permissionFacade
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToMessengerFacadeInterface $messengerFacade
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface $companyUserFacade
      */
     public function __construct(
         QuoteApprovalToCartFacadeInterface $cartFacade,
         QuoteApprovalToQuoteFacadeInterface $quoteFacade,
-        QuoteApprovalToCompanyRoleFacadeInterface $companyRoleFacade,
+        QuoteApprovalToPermissionFacadeInterface $permissionFacade,
         QuoteApprovalToMessengerFacadeInterface $messengerFacade,
         QuoteApprovalToCompanyUserFacadeInterface $companyUserFacade
     ) {
         $this->cartFacade = $cartFacade;
         $this->quoteFacade = $quoteFacade;
-        $this->companyRoleFacade = $companyRoleFacade;
+        $this->permissionFacade = $permissionFacade;
         $this->messengerFacade = $messengerFacade;
         $this->companyUserFacade = $companyUserFacade;
     }
@@ -81,10 +81,12 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
     public function sendQuoteApproveRequest(QuoteApproveRequestTransfer $quoteApproveRequestTransfer): QuoteResponseTransfer
     {
         $quoteReposneTransfer = $this->createQuoteResponseTransfer($quoteApproveRequestTransfer);
+        $approverTransfer = $this->getCompanyUserById($quoteApproveRequestTransfer->getIdApprover());
+        $quoteTransfer = $quoteApproveRequestTransfer->getQuote();
 
         if (!$this->isRequestSentByQuoteOwner($quoteApproveRequestTransfer)
-            || !$this->isApproverHasPermission($quoteApproveRequestTransfer->getIdApprover())
-            || !empty($quoteApproveRequestTransfer->getQuote()->getApprovals())) {
+            || !$this->permissionFacade->can(ApproveQuotePermissionPlugin::KEY, $approverTransfer->getIdCompanyUser(), $quoteTransfer)
+            || count($quoteApproveRequestTransfer->getQuote()->getApprovals())) {
             $quoteReposneTransfer->setIsSuccessful(false);
 
             $this->addPermissionFailedErrorMessage();
@@ -92,11 +94,9 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
             return $quoteReposneTransfer;
         }
 
-        $quoteTransfer = $quoteApproveRequestTransfer->getQuote();
-
         $quoteTransfer = $this->updateShareDetails($quoteTransfer, $quoteApproveRequestTransfer->getIdApprover());
         $quoteTransfer = $this->cartFacade->lockQuote($quoteTransfer);
-        $quoteTransfer = $this->updateQuoteApprovalRequests($quoteTransfer, $quoteApproveRequestTransfer->getIdApprover());
+        $quoteTransfer = $this->updateQuoteApprovalRequests($quoteTransfer, $approverTransfer);
 
         $quoteReposneTransfer = $this->quoteFacade->updateQuote($quoteTransfer);
 
@@ -145,24 +145,6 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
     }
 
     /**
-     * @param int $idApprover
-     *
-     * @return bool
-     */
-    protected function isApproverHasPermission(int $idApprover): bool
-    {
-        $permissionCollectionTransfer = $this->companyRoleFacade->findPermissionsByIdCompanyUser($idApprover);
-
-        foreach ($permissionCollectionTransfer->getPermissions() as $permission) {
-            if ($permission->getKey() === ApproveQuotePermissionPlugin::KEY) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $idApprover
      *
@@ -180,17 +162,19 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int $idApprover
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $approver
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function updateQuoteApprovalRequests(QuoteTransfer $quoteTransfer, int $idApprover): QuoteTransfer
-    {
+    protected function updateQuoteApprovalRequests(
+        QuoteTransfer $quoteTransfer,
+        CompanyUserTransfer $approver
+    ): QuoteTransfer {
         $quoteApprovalTransfer = new QuoteApprovalTransfer();
 
         $quoteApprovalTransfer->setStatus(QuoteApprovalConfig::STATUS_WAITING);
         $quoteApprovalTransfer->setApprover(
-            $this->getCompanyUserById($idApprover)
+            $approver
         );
 
         $quoteTransfer->addApproval($quoteApprovalTransfer);

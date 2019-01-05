@@ -22,6 +22,7 @@ use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterfa
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyRoleFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToMessengerFacadeInterface;
+use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToPermissionFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface;
 use Spryker\Zed\QuoteApproval\QuoteApprovalDependencyProvider;
 
@@ -40,7 +41,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
         return new QuoteApprovalRequestSender(
             $this->getCartFacade(),
             $this->getQuoteFacade(),
-            $this->getCompanyRoleFacade(),
+            $this->getPermissionFacade(),
             $this->getMessengerFacade(),
             $this->getCompanyUserFacade()
         );
@@ -64,7 +65,8 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     {
         return new PotentialQuoteApproversListProvider(
             $this->getCompanyRoleFacade(),
-            $this->getCompanyUserFacade()
+            $this->getCompanyUserFacade(),
+            $this->getPermissionFacade()
         );
     }
 
@@ -127,5 +129,13 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     public function getMessengerFacade(): QuoteApprovalToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(QuoteApprovalDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToPermissionFacadeInterface
+     */
+    public function getPermissionFacade(): QuoteApprovalToPermissionFacadeInterface
+    {
+        return $this->getProvidedDependency(QuoteApprovalDependencyProvider::FACADE_PERMISSION);
     }
 }

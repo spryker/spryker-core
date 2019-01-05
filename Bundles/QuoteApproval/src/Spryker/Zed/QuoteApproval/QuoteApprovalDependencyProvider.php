@@ -13,6 +13,7 @@ use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyRoleFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToMessengerFacadeBridge;
+use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToPermissionFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeBridge;
 
 /**
@@ -25,6 +26,7 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
     public const FACADE_CART = 'FACADE_CART';
     public const FACADE_QUOTE = 'FACADE_QUOTE';
+    public const FACADE_PERMISSION = 'FACADE_PERMISSION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,6 +40,7 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyRoleFacade($container);
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addMessengerFacade($container);
+        $container = $this->addPermissionFacade($container);
 
         return $container;
     }
@@ -90,11 +93,9 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCompanyUserFacade(Container $container): Container
     {
         $container[static::FACADE_COMPANY_USER] = function (Container $container) {
-            $quoteApprovalToCompanyUserFacadeBridge = new QuoteApprovalToCompanyUserFacadeBridge(
+            return new QuoteApprovalToCompanyUserFacadeBridge(
                 $container->getLocator()->companyUser()->facade()
             );
-
-            return $quoteApprovalToCompanyUserFacadeBridge;
         };
 
         return $container;
@@ -108,11 +109,9 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCompanyRoleFacade(Container $container): Container
     {
         $container[static::FACADE_COMPANY_ROLE] = function (Container $container) {
-            $quoteApprovalToCompanyRoleFacadeBridge = new QuoteApprovalToCompanyRoleFacadeBridge(
+            return new QuoteApprovalToCompanyRoleFacadeBridge(
                 $container->getLocator()->companyRole()->facade()
             );
-
-            return $quoteApprovalToCompanyRoleFacadeBridge;
         };
 
         return $container;
@@ -126,11 +125,25 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
     protected function addMessengerFacade(Container $container): Container
     {
         $container[static::FACADE_MESSENGER] = function (Container $container) {
-            $quoteApprovalToMessengerFacadeBridge = new QuoteApprovalToMessengerFacadeBridge(
+            return new QuoteApprovalToMessengerFacadeBridge(
                 $container->getLocator()->messenger()->facade()
             );
+        };
 
-            return $quoteApprovalToMessengerFacadeBridge;
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPermissionFacade(Container $container): Container
+    {
+        $container[static::FACADE_PERMISSION] = function (Container $container) {
+            return new QuoteApprovalToPermissionFacadeBridge(
+                $container->getLocator()->permission()->facade()
+            );
         };
 
         return $container;
