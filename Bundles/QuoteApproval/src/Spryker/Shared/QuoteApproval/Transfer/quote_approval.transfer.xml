@@ -9,13 +9,10 @@
 
     <transfer name="QuoteApproval">
         <property name="idQuoteApproval" type="int"/>
-        <property name="approver" type="companyUser"/>
+        <property name="approver" type="CompanyUser"/>
         <property name="status" type="string"/>
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
-    </transfer>
-
-    <transfer name="CompanyUser">
     </transfer>
 
     <transfer name="QuoteApproveRequest">
