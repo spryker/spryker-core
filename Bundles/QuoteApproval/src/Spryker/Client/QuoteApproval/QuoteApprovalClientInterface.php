@@ -17,9 +17,9 @@ interface QuoteApprovalClientInterface
 {
     /**
      * Specification:
-     * - Calculates approval status for quote
+     * - Calculates approval status for quote.
      * - Returns status `Approved` if at least one approval request has status `Approved`.
-     * - Returns status `Waiting` if at least one approval request in status `Waiting` and all other are `Desclined`.
+     * - Returns status `Waiting` if at least one approval request in status `Waiting` and there is no `Approved` requests.
      * - Returns status `Desclined` if all all approval requests are declined.
      *
      * @api
@@ -28,13 +28,13 @@ interface QuoteApprovalClientInterface
      *
      * @return string|null
      */
-    public function getQuoteStatus(QuoteTransfer $quoteTransfer): ?string;
+    public function findQuoteStatus(QuoteTransfer $quoteTransfer): ?string;
 
     /**
      * Specification:
-     * - Share quote to approver with read only access.
+     * - Shares quote to approver with read only access.
      * - Locks quote.
-     * - Create QuoteApproval with `Waiting` status.
+     * - Creates QuoteApproval with `Waiting` status.
      *
      * @api
      *

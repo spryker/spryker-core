@@ -10,11 +10,6 @@ namespace Spryker\Client\Cart\Dependency\Client;
 interface CartToMessengerClientInterface
 {
     /**
-     * Specification:
-     *  - Writes error message to flash bag.
-     *
-     * @api
-     *
      * @param string $message
      *
      * @return void

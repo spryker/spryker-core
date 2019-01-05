@@ -250,7 +250,7 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Returns false if quote is locked
+     * - Returns false if quote is locked.
      *
      * @api
      *

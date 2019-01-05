@@ -28,7 +28,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      *
      * @return string|null
      */
-    public function getQuoteStatus(QuoteTransfer $quoteTransfer): ?string
+    public function findQuoteStatus(QuoteTransfer $quoteTransfer): ?string
     {
         return $this->getFactory()
             ->createQuoteApprovalStatusCalculator()
