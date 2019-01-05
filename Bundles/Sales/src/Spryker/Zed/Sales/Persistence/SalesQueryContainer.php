@@ -197,9 +197,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
          ->setModelAlias('order')
          ->filterByIdSalesOrder($idSalesOrder)
          ->innerJoinWith('order.BillingAddress billingAddress')
-         ->innerJoinWith('billingAddress.Country billingCountry')
-         ->innerJoinWith('order.ShippingAddress shippingAddress')
-         ->innerJoinWith('shippingAddress.Country shippingCountry');
+         ->innerJoinWith('billingAddress.Country billingCountry');
 
         return $query;
     }
