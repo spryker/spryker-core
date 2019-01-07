@@ -325,7 +325,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPluginInterface[]
+     * @return \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsVersionTransferExpanderPluginInterface[]
      */
     protected function getCmsVersionTransferExpanderPlugins(): array
     {
