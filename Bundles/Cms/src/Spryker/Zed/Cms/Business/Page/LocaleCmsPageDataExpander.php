@@ -25,12 +25,12 @@ class LocaleCmsPageDataExpander implements LocaleCmsPageDataExpanderInterface
     public const PARAM_META_DESCRIPTION = 'meta_description';
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
+     * @var \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
      */
     protected $cmsPageDataExpanderPlugins;
 
     /**
-     * @param array $cmsPageDataExpanderPlugins
+     * @param \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface[] $cmsPageDataExpanderPlugins
      */
     public function __construct(array $cmsPageDataExpanderPlugins)
     {

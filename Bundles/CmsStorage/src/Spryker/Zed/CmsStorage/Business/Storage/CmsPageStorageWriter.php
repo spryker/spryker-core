@@ -34,7 +34,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     protected $cmsFacade;
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
+     * @var \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
      */
     protected $contentWidgetDataExpanderPlugins = [];
 
@@ -51,7 +51,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     /**
      * @param \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToCmsInterface $cmsFacade
-     * @param \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[] $contentWidgetDataExpanderPlugins
+     * @param \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface[] $contentWidgetDataExpanderPlugins
      * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
