@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Cms\Business\Page;
 
-use Exception;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Shared\Cms\CmsConstants;
@@ -49,7 +48,6 @@ class CmsPageActivator implements CmsPageActivatorInterface
     /**
      * @param int $idCmsPage
      *
-     * @throws \Exception
      * @throws \Throwable
      *
      * @return void
@@ -69,9 +67,6 @@ class CmsPageActivator implements CmsPageActivatorInterface
             $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage());
 
             $this->cmsQueryContainer->getConnection()->commit();
-        } catch (Exception $exception) {
-            $this->cmsQueryContainer->getConnection()->rollBack();
-            throw $exception;
         } catch (Throwable $exception) {
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
@@ -101,7 +96,6 @@ class CmsPageActivator implements CmsPageActivatorInterface
     /**
      * @param int $idCmsPage
      *
-     * @throws \Exception
      * @throws \Throwable
      *
      * @return void
@@ -119,9 +113,6 @@ class CmsPageActivator implements CmsPageActivatorInterface
             $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage());
 
             $this->cmsQueryContainer->getConnection()->commit();
-        } catch (Exception $exception) {
-            $this->cmsQueryContainer->getConnection()->rollBack();
-            throw $exception;
         } catch (Throwable $exception) {
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
