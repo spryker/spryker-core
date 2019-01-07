@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Cms\Business\Page;
 
-use Exception;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
@@ -92,7 +91,6 @@ class CmsPageSaver implements CmsPageSaverInterface
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
-     * @throws \Exception
      * @throws \Throwable
      *
      * @return int
@@ -120,9 +118,6 @@ class CmsPageSaver implements CmsPageSaverInterface
             $this->saveCmsPageLocalizedMetaAttributes($cmsPageTransfer, $localizedAttributeEntities);
 
             $this->cmsQueryContainer->getConnection()->commit();
-        } catch (Exception $exception) {
-            $this->cmsQueryContainer->getConnection()->rollBack();
-            throw $exception;
         } catch (Throwable $exception) {
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
@@ -134,7 +129,6 @@ class CmsPageSaver implements CmsPageSaverInterface
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
-     * @throws \Exception
      * @throws \Throwable
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
@@ -177,9 +171,6 @@ class CmsPageSaver implements CmsPageSaverInterface
             }
 
             $this->cmsQueryContainer->getConnection()->commit();
-        } catch (Exception $exception) {
-            $this->cmsQueryContainer->getConnection()->rollBack();
-            throw $exception;
         } catch (Throwable $exception) {
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;

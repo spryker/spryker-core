@@ -10,7 +10,6 @@
     "spryker/glossary": "^3.1.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.28.0",
-    "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/store": "^1.0.0",
