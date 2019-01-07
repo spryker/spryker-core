@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Cms\Business\Mapping;
 
-use Exception;
 use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
@@ -58,7 +57,6 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     /**
      * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
      *
-     * @throws \Exception
      * @throws \Throwable
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
@@ -78,9 +76,6 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
                 $glossaryAttributesTransfer->setFkCmsGlossaryMapping($idCmsGlossaryMapping);
             }
             $this->cmsQueryContainer->getConnection()->commit();
-        } catch (Exception $exception) {
-            $this->cmsQueryContainer->getConnection()->rollBack();
-            throw $exception;
         } catch (Throwable $exception) {
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
