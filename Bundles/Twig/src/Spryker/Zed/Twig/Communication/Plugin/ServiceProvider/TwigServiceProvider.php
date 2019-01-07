@@ -132,17 +132,18 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
     {
         $request = $this->app['request_stack']->getCurrentRequest();
         $controller = $request->attributes->get('_controller');
+        $route = $request->attributes->get('_template');
 
-        if (!is_string($controller) || empty($controller)) {
-            return null;
-        }
+//        if (!is_string($controller) || empty($controller)) {
+//            return null;
+//        }
 
-        if (isset($parameters['alternativeRoute'])) {
-            $route = (string)$parameters['alternativeRoute'];
-        } else {
-            $route = (new RouteResolver())
-                ->buildRouteFromControllerServiceName($controller);
-        }
+//        if (isset($parameters['alternativeRoute'])) {
+//            $route = (string)$parameters['alternativeRoute'];
+//        } else {
+//            $route = (new RouteResolver())
+//                ->buildRouteFromControllerServiceName($controller);
+//        }
 
         return $this->app->render('@' . $route . '.twig', $parameters);
     }

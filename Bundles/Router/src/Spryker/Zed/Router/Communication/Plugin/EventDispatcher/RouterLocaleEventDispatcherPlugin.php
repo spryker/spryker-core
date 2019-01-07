@@ -11,6 +11,7 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
@@ -18,6 +19,10 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\RequestContextAwareInterface;
 
+/**
+ * @method \Spryker\Zed\Router\RouterConfig getConfig()
+ * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
+ */
 class RouterLocaleEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     protected const EVENT_PRIORITY_KERNEL_REQUEST = 16;
@@ -121,7 +126,7 @@ class RouterLocaleEventDispatcherPlugin extends AbstractPlugin implements EventD
      */
     protected function getUrlMatcher(ContainerInterface $container): RequestContextAwareInterface
     {
-        return $container->get(static::SERVICE_URL_MATCHER);
+        return $container->get(RouterApplicationPlugin::SERVICE_CHAIN_ROUTER);
     }
 
     /**

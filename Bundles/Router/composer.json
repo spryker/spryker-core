@@ -5,21 +5,24 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/event-dispatcher-extension": "^1.0.0"
+    "spryker/event-dispatcher-extension": "^1.0.0",
+    "spryker/application-extension": "^1.0.0",
+    "spryker/container": "^1.1.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/log": "^3.0.0",
+    "spryker/router-extension": "^1.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/zend": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/container": "*",
     "spryker/event-dispatcher": "*",
-    "spryker/kernel": "*",
-    "spryker/symfony": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/container": "If you want to use EventDispatcher plugin.",
-    "spryker/event-dispatcher": "If you want to use EventDispatcher plugin.",
-    "spryker/kernel": "If you want to use EventDispatcher plugin.",
-    "spryker/symfony": "If you want to use EventDispatcher plugin."
+    "spryker/event-dispatcher": "If you want to use the RouterLocaleEventDispatcher plugin.",
+    "spryker/silex": "If you want to use the RouterListenerEventDispatcher plugin."
   },
   "autoload": {
     "psr-4": {

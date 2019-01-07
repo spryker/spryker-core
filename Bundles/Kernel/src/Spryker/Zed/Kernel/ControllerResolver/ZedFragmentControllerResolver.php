@@ -21,6 +21,15 @@ class ZedFragmentControllerResolver extends SilexControllerResolver
      */
     protected function createController($controller)
     {
+        if (strpos($controller, ':') !== false) {
+            [$moduleName, $controllerName, $actionName] = explode(':', $controller);
+
+            $bundleControllerAction = new BundleControllerAction($moduleName, $controllerName, $actionName);
+            $controller = $this->resolveController($bundleControllerAction);
+
+            return [$controller, $bundleControllerAction->getAction() . 'Action'];
+        }
+
         [$bundle, $controllerName, $actionName] = explode('/', ltrim($controller, '/'));
 
         $bundleControllerAction = new BundleControllerAction($bundle, $controllerName, $actionName);

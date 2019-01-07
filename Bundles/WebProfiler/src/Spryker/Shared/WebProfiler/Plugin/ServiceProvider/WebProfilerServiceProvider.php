@@ -40,6 +40,7 @@ use Symfony\Component\HttpKernel\EventListener\ProfilerListener;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\Profiler\FileProfilerStorage;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
+use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Stopwatch\Stopwatch;
 use Twig\Profiler\Profile;
 
@@ -239,7 +240,7 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
      *
      * @return \Silex\ControllerCollection
      */
-    public function connect(Application $app)
+    public function connect(Application $app, ?RouteCollection $routeCollection = null)
     {
         $controllers = $app['controllers_factory'];
 

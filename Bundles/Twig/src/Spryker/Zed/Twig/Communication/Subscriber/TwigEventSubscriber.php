@@ -80,6 +80,10 @@ class TwigEventSubscriber implements EventSubscriberInterface
         $request = $this->getRequestStack()->getCurrentRequest();
         $controller = $request->attributes->get('_controller');
 
+        if ($request->attributes->has('_template')) {
+            return $this->render(sprintf('@%s.twig', $request->attributes->get('_template')), $params);
+        }
+
         if (!is_string($controller)) {
             return null;
         }

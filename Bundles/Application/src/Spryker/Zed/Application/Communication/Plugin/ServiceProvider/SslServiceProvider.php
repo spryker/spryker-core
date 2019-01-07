@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Use `\Spryker\Zed\Router\Communication\Plugin\EventDispatcher\RouterSslRedirectEventDispatcherPlugin` instead.
+ *
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
@@ -29,7 +31,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
     {
         $this->setTrustedProxies();
         $this->setTrustedHosts();
-        $this->addProtocolCheck($app);
+//        $this->addProtocolCheck($app);
     }
 
     /**

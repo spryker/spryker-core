@@ -11,6 +11,13 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 
+/**
+ * @deprecated Use `\Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin` instead.
+ * @deprecated Use `\Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin` instead.
+ *
+ * Requesting the `url_matcher` from the container returned an instance of the ChainRouter. Instead of using several keys
+ * pointing to the ChainRouter we only use `routers` from now on.
+ */
 class RoutingServiceProvider implements ServiceProviderInterface
 {
     /**

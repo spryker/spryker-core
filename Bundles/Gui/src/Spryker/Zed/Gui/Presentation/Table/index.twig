@@ -1,7 +1,7 @@
 {% set baseUrl = config.baseUrl is not empty ? config.baseUrl : '/' ~ app.request.get('module') ~ '/' ~ app.request.get('controller') ~ '/' %}
 <table
     class="table table-striped table-bordered table-hover {{ config.class | default('gui-table-data') }}"
-    data-ajax="{{ baseUrl }}{{ config.url }}"
+    data-ajax="/{{ app.request.get('module') }}/{{ app.request.get('controller') }}/{{ config.url | trim('/', 'left') }}"
     id="{{ config.tableId }}"
     data-processing="{{ config.processing is defined and config.processing ? 'true' : 'false' }}"
     data-server-side="{{ config.serverSide is defined and config.serverSide ? 'true' : 'false' }}"

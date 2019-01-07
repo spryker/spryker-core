@@ -9,6 +9,9 @@ namespace Spryker\Yves\Application\Plugin\Provider;
 
 use Silex\ControllerProviderInterface as SilexControllerProviderInterface;
 
+/**
+ * @deprecated TODO
+ */
 interface ControllerProviderInterface extends SilexControllerProviderInterface
 {
     /**
