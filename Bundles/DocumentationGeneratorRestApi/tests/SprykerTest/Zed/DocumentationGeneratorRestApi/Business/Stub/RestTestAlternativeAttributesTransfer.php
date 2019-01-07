@@ -56,7 +56,7 @@ class RestTestAlternativeAttributesTransfer extends AbstractTransfer
     ];
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getAttribute3(): ?string
     {
@@ -77,7 +77,7 @@ class RestTestAlternativeAttributesTransfer extends AbstractTransfer
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getAttribute4(): ?string
     {

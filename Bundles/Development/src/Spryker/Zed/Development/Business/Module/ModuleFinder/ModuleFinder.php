@@ -176,7 +176,6 @@ class ModuleFinder implements ModuleFinderInterface
         return array_filter([
             $this->config->getPathToCore(),
             $this->config->getPathToShop(),
-            $this->config->getPathToSdk(),
             $this->config->getPathToEco(),
         ], 'is_dir');
     }
@@ -319,7 +318,7 @@ class ModuleFinder implements ModuleFinderInterface
         $moduleTransfer
             ->setName($moduleName)
             ->setNameDashed($moduleNameDashed)
-            ->setPath($directoryInfo->getRealPath())
+            ->setPath($directoryInfo->getRealPath() . DIRECTORY_SEPARATOR)
             ->setIsStandalone(false);
 
         return $moduleTransfer;
