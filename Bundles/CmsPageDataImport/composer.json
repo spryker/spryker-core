@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-page-data-import",
+  "type": "library",
   "description": "CmsPageDataImport module",
   "license": "MIT",
   "require": {

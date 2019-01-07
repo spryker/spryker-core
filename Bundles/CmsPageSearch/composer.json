@@ -20,14 +20,12 @@
     "spryker/elastica": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
-    "spryker/propel-query-builder": "*",
-    "spryker/propel-orm": "*",
     "spryker/testify": "*",
     "spryker/url": "*"
   },
   "suggest": {
-    "spryker/elastica": "If you want to use Elastica plugins.",
     "spryker/config": "If you want to use config.",
+    "spryker/elastica": "If you want to use Elastica plugins.",
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
     "spryker/url": "If you want to use Url plugins, minimum required version: 3.3.0"
   },

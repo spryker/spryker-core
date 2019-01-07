@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-extension",
+  "type": "library",
   "description": "CmsExtension module",
   "license": "proprietary",
   "require": {
