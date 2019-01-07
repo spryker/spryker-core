@@ -30,6 +30,21 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
     }
 
     /**
+     * Specification:
+     * - Returns true if quote is applicable for checkout, false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()->createProccedCheckoutPluginExecutor()->execute($quoteTransfer);
+    }
+
+    /**
      * @return \Spryker\Client\Checkout\Zed\CheckoutStubInterface
      */
     protected function getZedStub()

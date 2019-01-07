@@ -15,9 +15,13 @@
     "spryker/quote-extension": "^1.0.0",
     "spryker/permission": "^1.0.0"
   },
+  "suggest": {
+    "spryker/checkout": "^4.0.0"
+  },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/checkout": "^4.0.0"
   },
   "autoload": {
     "psr-4": {
