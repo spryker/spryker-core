@@ -53,7 +53,7 @@ class CmsPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
      */
-    public function createLocaleQuery(): LocaleQueryContainerInterface
+    public function getLocaleQuery(): LocaleQueryContainerInterface
     {
         return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_LOCALE);
     }
