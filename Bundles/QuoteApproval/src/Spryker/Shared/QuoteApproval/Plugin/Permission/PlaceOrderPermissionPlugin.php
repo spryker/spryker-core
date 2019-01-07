@@ -13,8 +13,7 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPlu
 class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
 {
     public const KEY = 'PlaceOrderPermissionPlugin';
-
-    protected const FIELD_MULTI_CURRENCY = 'multi_currency';
+    public const FIELD_MULTI_CURRENCY = 'multi_currency';
 
     /**
      * {@inheritdoc}
