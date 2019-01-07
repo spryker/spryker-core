@@ -62,6 +62,8 @@ class PermissionClient extends AbstractClient implements PermissionClientInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $permissionKey

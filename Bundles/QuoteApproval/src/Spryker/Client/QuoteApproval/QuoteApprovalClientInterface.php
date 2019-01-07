@@ -62,7 +62,7 @@ interface QuoteApprovalClientInterface
 
     /**
      * Specification:
-     * - Returns collection of CompanyUser's which can approve particular quote.
+     * - Returns collection of company users which can approve particular quote.
      *
      * @api
      *

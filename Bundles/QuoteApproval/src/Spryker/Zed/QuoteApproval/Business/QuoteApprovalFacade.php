@@ -79,6 +79,8 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idQuote

@@ -30,8 +30,7 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
     }
 
     /**
-     * Specification:
-     * - Returns true if quote is applicable for checkout, false otherwise.
+     * {@inheritdoc}
      *
      * @api
      *

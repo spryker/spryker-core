@@ -155,10 +155,10 @@ class QuoteReader implements QuoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    protected function executePlugins(?QuoteTransfer $quoteTransfer = null): ?QuoteTransfer
+    protected function executePlugins(?QuoteTransfer $quoteTransfer): ?QuoteTransfer
     {
         if (!$quoteTransfer) {
-            return $quoteTransfer;
+            return null;
         }
 
         return $this->quotePluginExecutor->executeHydrationPlugins($quoteTransfer);

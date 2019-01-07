@@ -50,7 +50,7 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function providePersistenceLayerDependencies(Container $container)
+    public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = $this->addCompanyUserFacade($container);
 
@@ -62,7 +62,7 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCartFacade(Container $container)
+    protected function addCartFacade(Container $container): Container
     {
         $container[static::FACADE_CART] = function (Container $container) {
             return new QuoteApprovalToCartFacadeBridge($container->getLocator()->cart()->facade());
@@ -76,7 +76,7 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addQuoteFacade(Container $container)
+    protected function addQuoteFacade(Container $container): Container
     {
         $container[static::FACADE_QUOTE] = function (Container $container) {
             return new QuoteApprovalToQuoteFacadeBridge($container->getLocator()->quote()->facade());

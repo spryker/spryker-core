@@ -36,7 +36,7 @@ class CheckoutDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addQuoteProceedCheckoutCheckPlugins(Container $container)
+    protected function addQuoteProceedCheckoutCheckPlugins(Container $container): Container
     {
         $container[static::PLUGINS_QUOTE_PROCEED_CHECKOUT_CHECK] = function () {
             return $this->getQuoteProceedCheckoutCheckPlugins();

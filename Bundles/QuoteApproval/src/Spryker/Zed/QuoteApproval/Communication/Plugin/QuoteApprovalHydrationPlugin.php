@@ -19,6 +19,9 @@ use Spryker\Zed\Quote\Business\Model\QuoteHydrationPluginInterface;
 class QuoteApprovalHydrationPlugin extends AbstractPlugin implements QuoteHydrationPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Hydrates quote approvals.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

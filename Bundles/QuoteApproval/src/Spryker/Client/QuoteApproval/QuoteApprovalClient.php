@@ -51,6 +51,8 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
@@ -64,6 +66,8 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
