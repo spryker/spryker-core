@@ -194,10 +194,12 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     public function querySalesOrderDetails($idSalesOrder)
     {
         $query = $this->getFactory()->createSalesOrderQuery()
-         ->setModelAlias('order')
-         ->filterByIdSalesOrder($idSalesOrder)
-         ->innerJoinWith('order.BillingAddress billingAddress')
-         ->innerJoinWith('billingAddress.Country billingCountry');
+            ->setModelAlias('order')
+            ->filterByIdSalesOrder($idSalesOrder)
+            ->innerJoinWith('order.BillingAddress billingAddress')
+            ->innerJoinWith('billingAddress.Country billingCountry')
+            ->leftJoinWith('order.ShippingAddress shippingAddress')
+            ->leftJoinWith('shippingAddress.Country shippingCountry');
 
         return $query;
     }
