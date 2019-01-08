@@ -67,22 +67,19 @@ class RelatedProductReader implements RelatedProductReaderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param string|null $sku
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function readRelatedProducts(RestRequestInterface $restRequest, ?string $sku = null): RestResponseInterface
+    public function readRelatedProducts(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        if (!$sku) {
-            $parentResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
-            if (!$parentResource || !$parentResource->getId()) {
-                return $restResponse->addError($this->createProductAbstractSkuMissingError());
-            }
-
-            $sku = $parentResource->getId();
+        $parentResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
+        if (!$parentResource || !$parentResource->getId()) {
+            return $restResponse->addError($this->createProductAbstractSkuMissingError());
         }
+
+        $sku = $parentResource->getId();
 
         $localeName = $restRequest->getMetadata()->getLocale();
 

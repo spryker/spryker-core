@@ -14,9 +14,8 @@ interface RelatedProductReaderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param string|null $sku
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function readRelatedProducts(RestRequestInterface $restRequest, ?string $sku = null): RestResponseInterface;
+    public function readRelatedProducts(RestRequestInterface $restRequest): RestResponseInterface;
 }
