@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\UpSellingProductsRestApi\Plugin;
 
-use Generated\Shared\Transfer\RestUpSellingProductsAttributesTransfer;
+use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
@@ -67,7 +67,7 @@ class UpSellingProductsForCartResourceRoutePlugin extends AbstractPlugin impleme
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestUpSellingProductsAttributesTransfer::class;
+        return AbstractProductsRestAttributesTransfer::class;
     }
 
     /**

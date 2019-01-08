@@ -7,25 +7,20 @@
 
 namespace Spryker\Glue\RelatedProductsRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductRelationStorageClientInterface;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductStorageClientInterface;
-use Spryker\Glue\RelatedProductsRestApi\Processor\Mapper\RelatedProductsResourceMapperInterface;
-use Spryker\Glue\RelatedProductsRestApi\RelatedProductsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class RelatedProductReader implements RelatedProductReaderInterface
 {
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-
-    protected const SELF_LINK_FORMAT = '%s/%s/%s';
 
     /**
      * @var \Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductStorageClientInterface
@@ -43,26 +38,18 @@ class RelatedProductReader implements RelatedProductReaderInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\RelatedProductsRestApi\Processor\Mapper\RelatedProductsResourceMapperInterface
-     */
-    protected $relatedProductsResourceMapper;
-
-    /**
      * @param \Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductRelationStorageClientInterface $productRelationStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\RelatedProductsRestApi\Processor\Mapper\RelatedProductsResourceMapperInterface $relatedProductsResourceMapper
      */
     public function __construct(
         RelatedProductsRestApiToProductStorageClientInterface $productStorageClient,
         RelatedProductsRestApiToProductRelationStorageClientInterface $productRelationStorageClient,
-        RestResourceBuilderInterface $restResourceBuilder,
-        RelatedProductsResourceMapperInterface $relatedProductsResourceMapper
+        RestResourceBuilderInterface $restResourceBuilder
     ) {
         $this->productStorageClient = $productStorageClient;
         $this->productRelationStorageClient = $productRelationStorageClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->relatedProductsResourceMapper = $relatedProductsResourceMapper;
     }
 
     /**
@@ -80,7 +67,6 @@ class RelatedProductReader implements RelatedProductReaderInterface
         }
 
         $sku = $parentResource->getId();
-
         $localeName = $restRequest->getMetadata()->getLocale();
 
         $abstractProductData = $this->productStorageClient
@@ -97,9 +83,9 @@ class RelatedProductReader implements RelatedProductReaderInterface
         $relatedProductsEntityTransfer = $this->productRelationStorageClient
             ->findRelatedProducts($abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT], $localeName);
 
-        $restResource = $this->buildRelatedProductsResource($sku, $relatedProductsEntityTransfer);
+        $this->addAbstractProductsResource($restResponse, $relatedProductsEntityTransfer);
 
-        return $restResponse->addResource($restResource);
+        return $restResponse;
     }
 
     /**
@@ -129,30 +115,21 @@ class RelatedProductReader implements RelatedProductReaderInterface
     }
 
     /**
-     * @param string $sku
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return void
      */
-    protected function buildRelatedProductsResource(string $sku, array $productViewTransfers): RestResourceInterface
+    protected function addAbstractProductsResource(RestResponseInterface $restResponse, array $productViewTransfers): void
     {
-        $restRelatedProductsAttributesTransfer = $this->relatedProductsResourceMapper
-            ->mapRelatedProductsTransferToRestRelatedProductsAttributesTransfer($productViewTransfers);
+        foreach ($productViewTransfers as $productViewTransfer) {
+            $restResource = $this->restResourceBuilder->createRestResource(
+                ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+                $productViewTransfer->getSku(),
+                (new AbstractProductsRestAttributesTransfer())->fromArray($productViewTransfer->toArray(), true)
+            );
 
-        $restResource = $this->restResourceBuilder->createRestResource(
-            RelatedProductsRestApiConfig::RESOURCE_RELATED_PRODUCTS,
-            $sku,
-            $restRelatedProductsAttributesTransfer
-        );
-
-        $restResourceSelfLink = sprintf(
-            static::SELF_LINK_FORMAT,
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            $sku,
-            RelatedProductsRestApiConfig::RESOURCE_RELATED_PRODUCTS
-        );
-        $restResource->addLink(RestLinkInterface::LINK_SELF, $restResourceSelfLink);
-
-        return $restResource;
+            $restResponse->addResource($restResource);
+        }
     }
 }

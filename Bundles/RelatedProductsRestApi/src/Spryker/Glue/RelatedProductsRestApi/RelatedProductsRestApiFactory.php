@@ -10,8 +10,6 @@ namespace Spryker\Glue\RelatedProductsRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductRelationStorageClientInterface;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductStorageClientInterface;
-use Spryker\Glue\RelatedProductsRestApi\Processor\Mapper\RelatedProductsResourceMapper;
-use Spryker\Glue\RelatedProductsRestApi\Processor\Mapper\RelatedProductsResourceMapperInterface;
 use Spryker\Glue\RelatedProductsRestApi\Processor\Reader\RelatedProductReader;
 use Spryker\Glue\RelatedProductsRestApi\Processor\Reader\RelatedProductReaderInterface;
 
@@ -25,17 +23,8 @@ class RelatedProductsRestApiFactory extends AbstractFactory
         return new RelatedProductReader(
             $this->getProductStorageClient(),
             $this->getProductRelationStorageClient(),
-            $this->getResourceBuilder(),
-            $this->createRelatedProductsResourceMapper()
+            $this->getResourceBuilder()
         );
-    }
-
-    /**
-     * @return \Spryker\Glue\RelatedProductsRestApi\Processor\Mapper\RelatedProductsResourceMapperInterface
-     */
-    public function createRelatedProductsResourceMapper(): RelatedProductsResourceMapperInterface
-    {
-        return new RelatedProductsResourceMapper();
     }
 
     /**

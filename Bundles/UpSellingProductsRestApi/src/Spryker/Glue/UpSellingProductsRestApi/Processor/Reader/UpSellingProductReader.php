@@ -7,24 +7,19 @@
 
 namespace Spryker\Glue\UpSellingProductsRestApi\Processor\Reader;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToProductRelationStorageClientInterface;
-use Spryker\Glue\UpSellingProductsRestApi\Processor\Mapper\UpSellingProductsResourceMapperInterface;
-use Spryker\Glue\UpSellingProductsRestApi\UpSellingProductsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class UpSellingProductReader implements UpSellingProductReaderInterface
 {
-    protected const SELF_LINK_FORMAT = '%s/%s/%s';
-
     /**
      * @var \Spryker\Glue\UpSellingProductsRestApi\Processor\Reader\QuoteReaderInterface
      */
@@ -41,56 +36,18 @@ abstract class UpSellingProductReader implements UpSellingProductReaderInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\UpSellingProductsRestApi\Processor\Mapper\UpSellingProductsResourceMapperInterface
-     */
-    protected $upSellingProductsResourceMapper;
-
-    /**
      * @param \Spryker\Glue\UpSellingProductsRestApi\Processor\Reader\QuoteReaderInterface $quoteReader
      * @param \Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToProductRelationStorageClientInterface $productRelationStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\UpSellingProductsRestApi\Processor\Mapper\UpSellingProductsResourceMapperInterface $upSellingProductsResourceMapper
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
         UpSellingProductsRestApiToProductRelationStorageClientInterface $productRelationStorageClient,
-        RestResourceBuilderInterface $restResourceBuilder,
-        UpSellingProductsResourceMapperInterface $upSellingProductsResourceMapper
+        RestResourceBuilderInterface $restResourceBuilder
     ) {
         $this->quoteReader = $quoteReader;
         $this->productRelationStorageClient = $productRelationStorageClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->upSellingProductsResourceMapper = $upSellingProductsResourceMapper;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $localeName
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    protected function getUpSellingProductsResource(QuoteTransfer $quoteTransfer, string $localeName): RestResourceInterface
-    {
-        $upSellingProducts = $this->productRelationStorageClient
-            ->findUpSellingProducts($quoteTransfer, $localeName);
-        $restUpSellingProductsAttributesTransfers = $this->upSellingProductsResourceMapper
-            ->mapUpSellingProductsTransferToRestUpSellingProductsAttributesTransfer($upSellingProducts);
-
-        $uuid = $quoteTransfer->getUuid();
-        $restResource = $this->restResourceBuilder->createRestResource(
-            UpSellingProductsRestApiConfig::RESOURCE_UP_SELLING_PRODUCTS,
-            $uuid,
-            $restUpSellingProductsAttributesTransfers
-        );
-        $restResourceSelfLink = sprintf(
-            static::SELF_LINK_FORMAT,
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            $uuid,
-            UpSellingProductsRestApiConfig::RESOURCE_UP_SELLING_PRODUCTS
-        );
-        $restResource->addLink(RestLinkInterface::LINK_SELF, $restResourceSelfLink);
-
-        return $restResource;
     }
 
     /**
@@ -113,12 +70,31 @@ abstract class UpSellingProductReader implements UpSellingProductReaderInterface
             return $restResponse->addError($this->createCartNotFoundError());
         }
 
-        $restResource = $this->getUpSellingProductsResource(
-            $quoteTransfer,
-            $restRequest->getMetadata()->getLocale()
-        );
+        $upSellingProducts = $this->productRelationStorageClient
+            ->findUpSellingProducts($quoteTransfer, $restRequest->getMetadata()->getLocale());
 
-        return $restResponse->addResource($restResource);
+        $this->addAbstractProductsResource($restResponse, $upSellingProducts);
+
+        return $restResponse;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     *
+     * @return void
+     */
+    protected function addAbstractProductsResource(RestResponseInterface $restResponse, array $productViewTransfers): void
+    {
+        foreach ($productViewTransfers as $productViewTransfer) {
+            $restResource = $this->restResourceBuilder->createRestResource(
+                ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+                $productViewTransfer->getSku(),
+                (new AbstractProductsRestAttributesTransfer())->fromArray($productViewTransfer->toArray(), true)
+            );
+
+            $restResponse->addResource($restResource);
+        }
     }
 
     /**
