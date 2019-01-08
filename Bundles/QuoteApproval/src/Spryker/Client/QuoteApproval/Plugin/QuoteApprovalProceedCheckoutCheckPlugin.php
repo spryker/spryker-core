@@ -35,8 +35,8 @@ class QuoteApprovalProceedCheckoutCheckPlugin extends AbstractPlugin implements 
             return true;
         }
 
-        if (!$permissionClient->can(PlaceOrderPermissionPlugin::KEY)) {
-            return false;
+        if ($permissionClient->can(PlaceOrderPermissionPlugin::KEY, $quoteTransfer)) {
+            return true;
         }
 
         $quoteApprovalStatus = $this->getFactory()
