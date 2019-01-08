@@ -19,6 +19,7 @@ class UpSellingProductsForGuestCartResourceRoutePlugin extends AbstractPlugin im
 {
     /**
      * {@inheritdoc}
+     *  - Configures available actions for up-selling-products for guest cart resource.
      *
      * @api
      *

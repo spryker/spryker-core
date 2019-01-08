@@ -19,6 +19,7 @@ class RelatedProductsResourceRoutePlugin extends AbstractPlugin implements Resou
 {
     /**
      * {@inheritdoc}
+     *  - Configures available actions for related-products resource.
      *
      * @api
      *
