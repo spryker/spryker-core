@@ -41,19 +41,40 @@ use SprykerTest\Zed\UrlStorage\UrlStorageConfigMock;
 class UrlStorageListenerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\UrlStorage\UrlStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
+     * @var \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected $urlTransfer;
+
+    /**
+     * @return void
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $urlRedirectTransfer = $this->tester->haveUrlRedirect();
+        $this->urlTransfer = $urlRedirectTransfer->getSource();
+    }
+
+    /**
      * @return void
      */
     public function testUrlStorageListenerStoreData(): void
     {
         // Prepare
-        $idUrl = $this->prepareUrlMockData();
-        $beforeCount = SpyUrlStorageQuery::create()->count();
+        $this->createSpyUrlStorageQuery()->filterByUrl($this->urlTransfer->getUrl())->delete();
+        $beforeCount = $this->createSpyUrlStorageQuery()->count();
 
         $urlStorageListener = new UrlStorageListener();
         $urlStorageListener->setFacade($this->getUrlStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($idUrl),
+            (new EventEntityTransfer())->setId($this->urlTransfer->getIdUrl()),
         ];
 
         // Act
@@ -69,14 +90,14 @@ class UrlStorageListenerTest extends Unit
     public function testUrlStoragePublishListener(): void
     {
         // Prepare
-        $idUrl = $this->prepareUrlMockData();
+        $this->createSpyUrlStorageQuery()->filterByUrl($this->urlTransfer->getUrl())->delete();
         $beforeCount = SpyUrlStorageQuery::create()->count();
 
         $urlStorageListener = new UrlStoragePublishListener();
         $urlStorageListener->setFacade($this->getUrlStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($idUrl),
+            (new EventEntityTransfer())->setId($this->urlTransfer->getIdUrl()),
         ];
 
         // Act
@@ -92,19 +113,18 @@ class UrlStorageListenerTest extends Unit
     public function testUrlStorageUnpublishListener(): void
     {
         // Prepare
-        $idUrl = $this->prepareUrlMockData();
         $urlStorageListener = new UrlStorageUnpublishListener();
         $urlStorageListener->setFacade($this->getUrlStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($idUrl),
+            (new EventEntityTransfer())->setId($this->urlTransfer->getIdUrl()),
         ];
 
         // Act
         $urlStorageListener->handleBulk($eventTransfers, UrlEvents::URL_UNPUBLISH);
 
         // Assert
-        $this->assertSame(0, SpyUrlStorageQuery::create()->filterByFkUrl($idUrl)->count());
+        $this->assertSame(0, SpyUrlStorageQuery::create()->filterByFkUrl($this->urlTransfer->getIdUrl())->count());
     }
 
     /**
@@ -195,12 +215,12 @@ class UrlStorageListenerTest extends Unit
      */
     protected function assertUrlStorage(int $beforeCount): void
     {
-        $urlStorageCount = SpyUrlStorageQuery::create()->count();
+        $urlStorageCount = $this->createSpyUrlStorageQuery()->count();
         $this->assertSame($beforeCount + 1, $urlStorageCount);
-        $spyUrlStorage = SpyUrlStorageQuery::create()->orderByIdUrlStorage()->findOneByUrl('/de');
+        $spyUrlStorage = $this->createSpyUrlStorageQuery()->orderByIdUrlStorage()->findOneByUrl($this->urlTransfer->getUrl());
         $this->assertNotNull($spyUrlStorage);
         $data = $spyUrlStorage->getData();
-        $this->assertSame('/de', $data['url']);
+        $this->assertSame($this->urlTransfer->getUrl(), $data['url']);
     }
 
     /**
@@ -216,23 +236,6 @@ class UrlStorageListenerTest extends Unit
         $spyUrlStorage = SpyUrlRedirectStorageQuery::create()->orderByIdUrlRedirectStorage()->findOneByFkUrlRedirect($idRedirect);
         $data = $spyUrlStorage->getData();
         $this->assertSame('/test-redirect', $data['to_url']);
-    }
-
-    /**
-     * @return int
-     */
-    protected function prepareUrlMockData(): int
-    {
-        SpyUrlStorageQuery::create()->deleteAll();
-        SpyUrlQuery::create()->filterByUrl('/de')->delete();
-
-        $spyUrlEntity = new SpyUrl();
-        $spyUrlEntity->setUrl('/de');
-        $spyUrlEntity->setFkLocale(46);
-        $spyUrlEntity->setFkResourcePage(1);
-        $spyUrlEntity->save();
-
-        return $spyUrlEntity->getIdUrl();
     }
 
     /**
@@ -255,5 +258,13 @@ class UrlStorageListenerTest extends Unit
         $url->save();
 
         return $redirectUrl->getIdUrlRedirect();
+    }
+
+    /**
+     * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorageQuery
+     */
+    protected function createSpyUrlStorageQuery(): SpyUrlStorageQuery
+    {
+        return new SpyUrlStorageQuery();
     }
 }

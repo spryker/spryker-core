@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use Spryker\Zed\ProductDiscontinued\Dependency\ProductDiscontinuedEvents;
 use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedStorageListener;
 use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedStoragePublishListener;
@@ -31,7 +30,7 @@ use Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorag
 class ProductDiscontinuedStorageListenerTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\ProductDiscontinuedStorage\ProductDiscontinuedStorageBusinessTester
+     * @var \SprykerTest\Zed\ProductDiscontinuedStorage\ProductDiscontinuedStorageCommunicationTester
      */
     protected $tester;
 
@@ -60,23 +59,16 @@ class ProductDiscontinuedStorageListenerTest extends Unit
         $this->productDiscontinuedStorageRepository = new ProductDiscontinuedStorageRepository();
 
         $this->productDiscontinuedStorageListener = new ProductDiscontinuedStorageListener();
-        $this->productDiscontinuedStorageListener->setFacade($this->tester->getFacade());
+        $this->productDiscontinuedStorageListener->setFacade($this->tester->getMockedFacade());
 
-        $productConcrete = $this->tester->haveProduct();
-        $productDiscontinuedRequestTransfer = (new ProductDiscontinueRequestTransfer())
-            ->setIdProduct($productConcrete->getIdProductConcrete());
-        $this->productDiscontinuedTransfer = $this->tester->getProductDiscontinuedFacade()->markProductAsDiscontinued(
-            $productDiscontinuedRequestTransfer
-        )
-            ->getProductDiscontinued();
+        $this->productDiscontinuedTransfer = $this->tester->createProductDiscontinued();
     }
 
     /**
      * @return void
      */
-    public function testProductDiscontinuedStorageEntityCanBePublished()
+    public function testProductDiscontinuedStorageEntityCanBePublished(): void
     {
-        $this->markTestSkipped('No availability to skip entity transfer sending to Queue');
         // Arrange
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productDiscontinuedTransfer->getIdProductDiscontinued()),
@@ -93,15 +85,14 @@ class ProductDiscontinuedStorageListenerTest extends Unit
             );
 
         // Assert
-        $this->assertCount(1, $productDiscontinuedEntityTransfers);
+        $this->assertCount(count($this->tester->getLocaleFacade()->getAvailableLocales()), $productDiscontinuedEntityTransfers);
     }
 
     /**
      * @return void
      */
-    public function testProductDiscontinuedStorageEntityCanBeUnpublished()
+    public function testProductDiscontinuedStorageEntityCanBeUnpublished(): void
     {
-        $this->markTestSkipped('No availability to skip entity transfer sending to Queue');
         // Arrange
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productDiscontinuedTransfer->getIdProductDiscontinued()),
