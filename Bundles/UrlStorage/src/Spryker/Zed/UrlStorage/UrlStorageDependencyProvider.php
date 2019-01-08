@@ -22,7 +22,7 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
     public const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    public const STORE = 'STORE';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,7 +31,7 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $this->addEventBehaviorFacade($container);
+        $container = $this->addEventBehaviorFacade($container);
 
         return $container;
     }
@@ -43,8 +43,8 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $this->addUtilSanitizeService($container);
-        $this->addStore($container);
+        $container = $this->addUtilSanitizeService($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -56,7 +56,7 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $this->addUrlQueryContainer($container);
+        $container = $this->addUrlQueryContainer($container);
 
         return $container;
     }
@@ -64,48 +64,56 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilSanitizeService(Container $container)
+    protected function addUtilSanitizeService(Container $container): Container
     {
         $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
             return new UrlStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
         };
+
+        return $container;
     }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addEventBehaviorFacade(Container $container)
+    protected function addEventBehaviorFacade(Container $container): Container
     {
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new UrlStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
         };
+
+        return $container;
     }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUrlQueryContainer(Container $container)
+    protected function addUrlQueryContainer(Container $container): Container
     {
         $container[static::QUERY_CONTAINER_URL] = function (Container $container) {
             return new UrlStorageToUrlQueryContainerBridge($container->getLocator()->url()->queryContainer());
         };
+
+        return $container;
     }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStore(Container $container)
+    protected function addStoreFacade(Container $container): Container
     {
-        $container[self::STORE] = function (Container $container) {
+        $container[static::FACADE_STORE] = function (Container $container) {
             return new UrlStorageToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
+
+        return $container;
     }
 }

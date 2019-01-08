@@ -28,7 +28,7 @@ class UrlStorageBusinessFactory extends AbstractBusinessFactory
             $this->getUtilSanitizeService(),
             $this->getQueryContainer(),
             $this->getConfig()->isSendingToQueue(),
-            $this->getStore()
+            $this->getStoreFacade()
         );
     }
 
@@ -55,8 +55,8 @@ class UrlStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToStoreFacadeInterface
      */
-    public function getStore(): UrlStorageToStoreFacadeInterface
+    public function getStoreFacade(): UrlStorageToStoreFacadeInterface
     {
-        return $this->getProvidedDependency(UrlStorageDependencyProvider::STORE);
+        return $this->getProvidedDependency(UrlStorageDependencyProvider::FACADE_STORE);
     }
 }
