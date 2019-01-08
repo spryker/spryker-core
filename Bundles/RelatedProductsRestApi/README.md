@@ -7,7 +7,7 @@ RelatedProductsRestApi module provides API endpoint for related products.
 ## Installation
 
 ```
-composer require spryker/product-relations-rest-api
+composer require spryker/related-products-rest-api
 ```
 
 ## Documentation
