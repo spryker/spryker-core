@@ -23,7 +23,7 @@ class RelatedProductsResourceMapper implements RelatedProductsResourceMapperInte
 
         foreach ($productViewTransfers as $productViewTransfer) {
             $abstractProductsRestAttributesTransfer = new AbstractProductsRestAttributesTransfer();
-            $restRelatedProductsAttributesTransfer->addRelatedProducts($abstractProductsRestAttributesTransfer
+            $restRelatedProductsAttributesTransfer->addRelatedProduct($abstractProductsRestAttributesTransfer
                 ->fromArray($productViewTransfer->toArray(), true));
         }
 

@@ -23,7 +23,7 @@ class UpSellingProductsResourceMapper implements UpSellingProductsResourceMapper
 
         foreach ($productViewTransfers as $productViewTransfer) {
             $abstractProductsRestAttributesTransfer = new AbstractProductsRestAttributesTransfer();
-            $restUpSellingProductsAttributesTransfer->addUpSellingProducts($abstractProductsRestAttributesTransfer
+            $restUpSellingProductsAttributesTransfer->addUpSellingProduct($abstractProductsRestAttributesTransfer
                 ->fromArray($productViewTransfer->toArray(), true));
         }
 
