@@ -2,7 +2,11 @@
 
 function getLocale() {
     var locale = $('#locale').val()
-    return locale.split('_')[0].split('-')[0];
+    if (typeof(locale) === 'string') {
+
+        return locale.split('_')[0].split('-')[0];
+    }
+    return 'en';
 }
 
 function getTranslation(locale) {
@@ -50,14 +54,6 @@ function onError (e, settings, techNote, message) {
         html: true,
         type: 'error'
     });
-}
-
-function getNavigatorLanguage() {
-    if (navigator.languages && navigator.languages.length) {
-        return navigator.languages[0];
-    } else {
-        return navigator.language || 'en_EN';
-    }
 }
 
 module.exports = {
