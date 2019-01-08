@@ -19,6 +19,8 @@ use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
 
 class EventDispatcher implements EventDispatcherInterface
 {
+    protected const DUMP_EVENT_NAME = 'console';
+
     /**
      * @var \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
@@ -107,14 +109,14 @@ class EventDispatcher implements EventDispatcherInterface
 
         if (is_subclass_of($listenerContext->getListenerName(), EventHandlerInterface::class)) {
             foreach ($transfers as $transfer) {
-                $listenerContext->handle($transfer, 'console');
+                $listenerContext->handle($transfer, static::DUMP_EVENT_NAME);
             }
 
             return;
         }
 
         if (is_subclass_of($listenerContext->getListenerName(), EventBulkHandlerInterface::class)) {
-            $listenerContext->handleBulk($transfers, 'console');
+            $listenerContext->handleBulk($transfers, static::DUMP_EVENT_NAME);
 
             return;
         }
@@ -206,7 +208,7 @@ class EventDispatcher implements EventDispatcherInterface
     /**
      * @param string $eventName
      *
-     * @return \SplPriorityQueue|\Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface[]
+     * @return \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface[]|\SplPriorityQueue
      */
     protected function extractEventListeners($eventName)
     {

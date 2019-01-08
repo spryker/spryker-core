@@ -21,7 +21,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class QueueDumpConsole extends Console
 {
-    public const COMMAND_NAME = 'queue:dump:start';
+    public const COMMAND_NAME = 'queue:dump';
     protected const DESCRIPTION = 'Dump queue content';
 
     protected const OPTION_LIMIT = 'limit';
@@ -32,7 +32,7 @@ class QueueDumpConsole extends Console
     protected const OPTION_FORMAT = 'format';
     protected const OPTION_FORMAT_SHORT = 'f';
     protected const OPTION_FORMAT_DEFAULT = 'json';
-    protected const OPTION_FORMAT_DESCRIPTION = 'Defines dump queue message export format';
+    protected const OPTION_FORMAT_DESCRIPTION = 'Defines dump queue message export format (e.g json, csv)';
 
     protected const OPTION_ACK = 'ack';
     protected const OPTION_ACK_SHORT = 'k';
