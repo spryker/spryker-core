@@ -43,6 +43,7 @@ class ErrorLogger implements ErrorLoggerInterface
             $message = $this->buildMessage($exception);
             $this->createMonitoringService()->setError($message, $exception);
             $this->getLogger()->critical($message, ['exception' => $exception]);
+            unset($message);
         } catch (Throwable $internalException) {
             $this->createMonitoringService()->setError($internalException->getMessage(), $exception);
         }
