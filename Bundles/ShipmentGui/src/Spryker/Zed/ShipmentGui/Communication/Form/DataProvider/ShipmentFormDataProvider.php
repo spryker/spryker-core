@@ -17,7 +17,7 @@ use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentBridge;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface;
 use Spryker\Zed\ShipmentGui\Persistence\ShipmentGuiRepositoryInterface;
 
-class ShippingFormDataProvider
+class ShipmentFormDataProvider
 {
     /**
      * @var \Spryker\Zed\ShipmentGui\Persistence\ShipmentGuiQueryContainerInterface
@@ -54,8 +54,28 @@ class ShippingFormDataProvider
      *
      * @return array
      */
-    public function getData($idShipment, $orderTransfer)
+    public function getTransferByIdShipment($idShipment, $orderTransfer)
     {
+        $shipment = $this->getFactory()->getRepository()->getShipmentById($idShipment);
+
+        if ($shipment === null) {
+            $this->addErrorMessage(sprintf(
+                'Shipment #%d not found.',
+                $idShipment
+            ));
+
+            return $this
+                ->redirectResponse(Url::generate('/sales')
+                    ->build());
+        }
+
+
+
+
+
+
+
+
         $shipmentEntity = $this
             ->shipmentGuiRepository
             ->getShipmentById($idShipment);
@@ -97,6 +117,19 @@ class ShippingFormDataProvider
         );
 
         return $options;
+
+
+
+
+        array_merge(
+            $this->getFactory()->createAddressFormDataProvider()->getOptions(),
+            [
+                ShipmentForm::CHOICES_SHIPMENT_METHOD => [
+                    'Meth 1' => 1,
+                    'Meth 2' => 2,
+                ],
+            ]
+        )
     }
 
 

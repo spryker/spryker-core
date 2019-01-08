@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form;
 
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -134,7 +136,7 @@ class ShipmentForm extends AbstractType
     {
         $builder->add(
             self::FIELD_SHIPMENT_METHOD,
-            ChoiceType::class,
+            ShipmentMethodType::class,
             [
                 'choices' => $builder->getOption(self::CHOICES_SHIPMENT_METHOD),
             ]
@@ -154,6 +156,7 @@ class ShipmentForm extends AbstractType
             self::FIELD_SHIPMENT_DATE,
             TextType::class,
             [
+                'required' => false,
             ]
         );
 

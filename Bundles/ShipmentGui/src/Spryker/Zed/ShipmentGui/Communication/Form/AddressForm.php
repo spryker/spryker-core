@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -74,18 +75,11 @@ class AddressForm extends AbstractType
     {
         $resolver->setRequired(self::OPTION_SALUTATION_CHOICES);
         $resolver->setRequired(self::OPTION_COUNTRY_CHOICES);
-    }
 
-    /**
-     * @deprecated Use `configureOptions()` instead.
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-     *
-     * @return void
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
+        $resolver->setDefaults(array(
+            'data_class' => AddressTransfer::class,
+            'empty_data' => new AddressTransfer(),
+        ));
     }
 
     /**

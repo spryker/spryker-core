@@ -1,7 +1,6 @@
 {% extends '@ShipmentGui/Layout/layout.twig' %}
 
 {% block content %}
-
     {% set backUrl = '/sales/detail/?id-sales-order=' ~ idSalesOrder %}
     {% set title = 'Edit Shipment' | trans %}
 
@@ -11,29 +10,27 @@
     {% block action %}
         {{ viewActionButton('/sales/detail/?id-sales-order=' ~ idSalesOrder, 'View Order' | trans) }}
     {% endblock %}
+
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Address Details' } %}
-
         {% block widget_content %}
-
             {{ form_start(shipmentForm) }}
             {{ form_widget(shipmentForm.shippingAddress) }}
 
             <div id="items">
                 <table class="footable table toggle-arrow-tiny" data-qa="order-item-list">
                     <thead>
-                     <tr class="text-left">
-                        <th>{{ 'Select' | trans }}</th>
-                         <th>{{ 'Image' | trans }}</th>
-                        <th>{{ 'Product' | trans }}</th>
-                        <th>{{ 'Quantity' | trans }}</th>
-                        <th>{{ 'State' | trans }}</th>
-                        <th>{{ 'Current shipment' | trans }}</th>
-                    </tr>
+                         <tr class="text-left">
+                             <th>{{ 'Assign' | trans }}</th>
+                             <th>{{ 'Image' | trans }}</th>
+                             <th>{{ 'Product' | trans }}</th>
+                             <th>{{ 'Quantity' | trans }}</th>
+                             <th>{{ 'State' | trans }}</th>
+                             <th>{{ 'Current shipment' | trans }}</th>
+                        </tr>
                     </thead>
                     <tbody>
                     {% for order_item in shipmentForm.order_items %}
                         {% set order_item_data = order_item.vars.data %}
-
                         <tr>
                             {#{% set image = order_item.metadata.image %}#}
                             {% set image = '' %}
@@ -57,7 +54,7 @@
                             <td>
                                 {{ order_item_data.quantity }}
                             </td>
-                            <td>
+                            <td class="state-history">
                                 <div>
                                     <a href="{{ url('/oms/index/draw', {'process': order_item_data.process, 'state': order_item_data.state.name}) }}" target="_blank">{{ (order_item_data.stateHistory | first).name }}</a> ({{ order_item_data.process }})
                                 </div>
@@ -67,13 +64,16 @@
                                             <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
                                         {% endfor %}
                                     </div>
-
-                                    <a id="history-btn-{{ order_item_data.idSalesOrderItem }}" class="btn btn-sm more-history is-hidden" data-id="{{ order_item_data.idSalesOrderItem }}"><span class="show-more">{{ 'Show history' | trans }}</span><span class="show-less">{{ 'Hide history' | trans }}</span></a>
+                                    <a id="history-btn-{{ order_item_data.idSalesOrderItem }}"
+                                       class="btn btn-sm more-history is-hidden"
+                                       data-id="{{ order_item_data.idSalesOrderItem }}">
+                                        <span class="show-more">{{ 'Show history' | trans }}</span>
+                                        <span class="show-less">{{ 'Hide history' | trans }}</span>
+                                    </a>
                                 {% endif %}
                             </td>
                             <td>
-                                {#{{ shipmentForm.vars.value.method.name }}#}
-                                SHIPMENT METHOD
+                                {{ order_item_data.shipment.method.name }}
                             </td>
                         </tr>
                     {% endfor %}
@@ -82,12 +82,10 @@
             </div>
 
             {{ form_widget(shipmentForm.method) }}
-            {{ form_widget(shipmentForm.requestedDeliveryDate) }}
+            {{ form_row(shipmentForm.requestedDeliveryDate) }}
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}"/>
             {{ form_end(shipmentForm) }}
         {% endblock %}
-
     {% endembed %}
-
 {% endblock %}
