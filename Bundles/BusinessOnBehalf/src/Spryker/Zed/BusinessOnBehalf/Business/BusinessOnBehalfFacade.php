@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\BusinessOnBehalf\Business\BusinessOnBehalfBusinessFactory getFactory()
+ * @method \Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfRepositoryInterface getRepository()
  */
 class BusinessOnBehalfFacade extends AbstractFacade implements BusinessOnBehalfFacadeInterface
 {

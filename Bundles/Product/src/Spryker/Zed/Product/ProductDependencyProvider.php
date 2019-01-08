@@ -17,6 +17,9 @@ use Spryker\Zed\Product\Dependency\QueryContainer\ProductToUrlBridge as ProductT
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingBridge;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextBridge;
 
+/**
+ * @method \Spryker\Zed\Product\ProductConfig getConfig()
+ */
 class ProductDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';

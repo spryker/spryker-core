@@ -17,6 +17,8 @@ use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttribute;
 use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParents;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNode;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeChecker;
+use Spryker\Zed\Category\Business\Model\CategoryReader;
+use Spryker\Zed\Category\Business\Model\CategoryReaderInterface;
 use Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateReader;
 use Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateSync;
 use Spryker\Zed\Category\Business\Model\CategoryToucher;
@@ -363,5 +365,15 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createCategoryHydrator(): CategoryHydratorInterface
     {
         return new CategoryHydrator($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\CategoryReaderInterface
+     */
+    public function createCategoryReader(): CategoryReaderInterface
+    {
+        return new CategoryReader(
+            $this->getRepository()
+        );
     }
 }

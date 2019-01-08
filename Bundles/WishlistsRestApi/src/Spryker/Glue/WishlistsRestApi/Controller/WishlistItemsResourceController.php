@@ -18,6 +18,22 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class WishlistItemsResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "delete": {
+     *          "summary": [
+     *              "Removes item from the wishlist."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "404": "Wishlist not found.",
+     *              "422": "Wishlist item not found."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -30,6 +46,22 @@ class WishlistItemsResourceController extends AbstractController
     }
 
     /**
+     * @Glue({
+     *     "post": {
+     *          "summary": [
+     *              "Adds an item to the wishlist."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "400": "Can't add an item.",
+     *              "404": "Wishlist not found."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer
      *

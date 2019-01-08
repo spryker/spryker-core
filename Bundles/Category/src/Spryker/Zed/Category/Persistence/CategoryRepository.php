@@ -115,4 +115,34 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->endUse()
             ->exists();
     }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findCategoryById(int $idCategory): ?CategoryTransfer
+    {
+        $spyCategoryEntity = $this->getFactory()
+            ->createCategoryQuery()
+            ->leftJoinWithNode()
+            ->useNodeQuery(null, Criteria::LEFT_JOIN)
+                ->filterByFkCategory($idCategory)
+            ->endUse()
+            ->leftJoinWithAttribute()
+            ->useAttributeQuery(null, Criteria::LEFT_JOIN)
+                ->filterByFkCategory($idCategory)
+            ->endUse()
+            ->findByIdCategory($idCategory)
+            ->getFirst();
+
+        if ($spyCategoryEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()->createCategoryMapper()->mapCategoryWithRelations(
+            $spyCategoryEntity,
+            new CategoryTransfer()
+        );
+    }
 }

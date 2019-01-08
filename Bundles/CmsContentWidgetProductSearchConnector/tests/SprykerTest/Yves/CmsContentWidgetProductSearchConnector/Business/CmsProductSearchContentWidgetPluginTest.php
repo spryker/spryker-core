@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\CmsContentWidgetProductSetConnector\Business;
+namespace SprykerTest\Yves\CmsContentWidgetProductSetConnector\Business;
 
 use Codeception\Test\Unit;
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
@@ -15,7 +15,7 @@ use Spryker\Yves\CmsContentWidgetProductSearchConnector\Plugin\CmsProductSearchC
 /**
  * Auto-generated group annotations
  * @group SprykerTest
- * @group Zed
+ * @group Yves
  * @group CmsContentWidgetProductSetConnector
  * @group Business
  * @group CmsProductSearchContentWidgetPluginTest

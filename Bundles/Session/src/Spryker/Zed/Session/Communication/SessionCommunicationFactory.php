@@ -17,6 +17,7 @@ use Spryker\Zed\Session\SessionDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Session\SessionConfig getConfig()
+ * @method \Spryker\Zed\Session\Business\SessionFacadeInterface getFacade()
  */
 class SessionCommunicationFactory extends AbstractCommunicationFactory
 {

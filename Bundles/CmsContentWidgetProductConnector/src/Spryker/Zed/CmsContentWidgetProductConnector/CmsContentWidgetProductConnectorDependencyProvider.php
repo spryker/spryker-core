@@ -11,6 +11,9 @@ use Spryker\Zed\CmsContentWidgetProductConnector\Dependency\QueryContainer\CmsCo
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsContentWidgetProductConnector\CmsContentWidgetProductConnectorConfig getConfig()
+ */
 class CmsContentWidgetProductConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_PRODUCT = 'PRODUCT_QUERY_CONTAINER';

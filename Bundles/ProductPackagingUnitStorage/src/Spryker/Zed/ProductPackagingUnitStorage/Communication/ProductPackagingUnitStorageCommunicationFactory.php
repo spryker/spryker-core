@@ -13,6 +13,9 @@ use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependenc
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  */
 class ProductPackagingUnitStorageCommunicationFactory extends AbstractCommunicationFactory
 {

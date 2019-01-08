@@ -9,6 +9,7 @@ namespace Spryker\Client\Storage;
 
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Storage\Redis\Service;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Storage\StorageConstants;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,6 +21,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     public const KEY_USED = 'used';
     public const KEY_NEW = 'new';
     public const KEY_INIT = 'init';
+
+    protected const CACHE_KEY_PREFIX = 'cache';
 
     /**
      * All keys which have been used for the last request with same URL
@@ -449,9 +452,14 @@ class StorageClient extends AbstractClient implements StorageClientInterface
             return '';
         }
 
-        $baseRequestUrI = strtok($requestUri, '?');
+        $baseRequestUri = strtok($requestUri, '?');
 
-        return 'StorageClient_' . $serverName . $baseRequestUrI;
+        return implode(':', [
+            static::CACHE_KEY_PREFIX,
+            Store::getInstance()->getCurrentLocale(),
+            $serverName,
+            $baseRequestUri,
+        ]);
     }
 
     /**

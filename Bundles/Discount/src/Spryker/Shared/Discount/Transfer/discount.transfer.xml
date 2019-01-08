@@ -142,6 +142,7 @@
 
     <transfer name="DiscountCondition">
         <property name="decisionRuleQueryString" type="string" />
+        <property name="minimumItemAmount" type="int" />
     </transfer>
 
     <transfer name="DiscountVoucher">
@@ -153,6 +154,7 @@
         <property name="code" type="string" />
         <property name="randomGeneratedCodeLength" type="int" />
         <property name="maxNumberOfUses" type="int" />
+        <property name="numberOfUses" type="int" />
     </transfer>
 
     <transfer name="CheckoutResponse">

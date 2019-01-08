@@ -30,9 +30,11 @@ interface KernelConstants
     public const AUTO_LOADER_UNRESOLVABLE_CACHE_ENABLED = 'ENABLE_AUTO_LOADER_UNRESOLVABLE_CACHE';
     public const AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER = 'AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER';
     public const AUTO_LOADER_CACHE_FILE_NO_LOCK = 'AUTO_LOADER_CACHE_FILE_NO_LOCK';
+    public const AUTO_LOADER_CACHE_FILE_PATH = 'KERNEL:AUTO_LOADER_CACHE_FILE_PATH';
 
     /**
      * A set of whitelist domains, that every external URL is checked against, before redirect.
      */
     public const DOMAIN_WHITELIST = 'KERNEL:DOMAIN_WHITELIST';
+    public const STRICT_DOMAIN_REDIRECT = 'KERNEL:STRICT_DOMAIN_REDIRECT';
 }
