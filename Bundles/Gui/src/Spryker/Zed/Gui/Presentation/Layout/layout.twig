@@ -88,7 +88,7 @@
             <div>
                 <strong>Copyright</strong> Spryker GmbH &copy; {{ 'now'|date('Y') }}
             </div>
-            <input type="hidden" name="locale" id="locale" value="{{ app.locale }}" />
+            <input type="hidden" name="locale" id="locale" value="{{ app.translator.getLocale() }}" />
         </div>
 
     </div>
