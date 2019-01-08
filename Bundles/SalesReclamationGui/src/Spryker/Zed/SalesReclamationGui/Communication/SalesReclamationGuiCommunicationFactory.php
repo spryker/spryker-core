@@ -9,8 +9,8 @@ namespace Spryker\Zed\SalesReclamationGui\Communication;
 
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\SalesReclamationGui\Communication\ReclamationItemEvents\ReclamationItemEventsFinder;
-use Spryker\Zed\SalesReclamationGui\Communication\ReclamationItemEvents\ReclamationItemEventsFinderInterface;
+use Spryker\Zed\SalesReclamationGui\Communication\ReclamationItem\ReclamationItemEventsFinder;
+use Spryker\Zed\SalesReclamationGui\Communication\ReclamationItem\ReclamationItemEventsFinderInterface;
 use Spryker\Zed\SalesReclamationGui\Communication\Table\ReclamationTable;
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToOmsFacadeInterface;
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSalesFacadeInterface;
@@ -75,7 +75,7 @@ class SalesReclamationGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\SalesReclamationGui\Communication\ReclamationItemEvents\ReclamationItemEventsFinderInterface
+     * @return \Spryker\Zed\SalesReclamationGui\Communication\ReclamationItem\ReclamationItemEventsFinderInterface
      */
     public function createReclamationItemEventsFinder(): ReclamationItemEventsFinderInterface
     {

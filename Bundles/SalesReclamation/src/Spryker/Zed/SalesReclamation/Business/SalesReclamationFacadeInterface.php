@@ -30,7 +30,7 @@ interface SalesReclamationFacadeInterface
 
     /**
      * Specification:
-     * - Changes reclamation state value to close.
+     * - Changes reclamation state to close.
      *
      * @api
      *
