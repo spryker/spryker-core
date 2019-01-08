@@ -54,7 +54,7 @@ class Application implements HttpKernelInterface, TerminableInterface
     public function registerApplicationPlugin(ApplicationPluginInterface $applicationPlugin)
     {
         $this->plugins[] = $applicationPlugin;
-        $this->container = $applicationPlugin->providePlugin($this->container);
+        $this->container = $applicationPlugin->provide($this->container);
 
         if ($applicationPlugin instanceof BootableApplicationPluginInterface) {
             $this->bootablePlugins[] = $applicationPlugin;
@@ -123,7 +123,7 @@ class Application implements HttpKernelInterface, TerminableInterface
     protected function bootPlugins(): void
     {
         foreach ($this->bootablePlugins as $bootablePlugin) {
-            $this->container = $bootablePlugin->bootPlugin($this->container);
+            $this->container = $bootablePlugin->boot($this->container);
         }
     }
 
