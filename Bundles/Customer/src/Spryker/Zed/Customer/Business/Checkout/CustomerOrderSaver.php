@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Customer\Business\Customer\AddressInterface;
 use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
 use Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface;
@@ -31,6 +32,11 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
      * @var \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface
      */
     protected $customerRepository;
+
+    /**
+     * @var \Generated\Shared\Transfer\AddressTransfer[]
+     */
+    protected $existingAddresses = [];
 
     /**
      * @param \Spryker\Zed\Customer\Business\Customer\CustomerInterface $customer
@@ -80,22 +86,42 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
      */
     protected function persistAddresses(QuoteTransfer $quoteTransfer, CustomerTransfer $customer)
     {
+        if ($quoteTransfer->getIsAddressSavingSkipped()) {
+            return;
+        }
+
         $this->processCustomerAddress($quoteTransfer->getBillingAddress(), $customer);
 
-        $existingAddresses = [];
+        $this->existingAddresses = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->requireShipment();
-            $addressTransfer = $itemTransfer->getShipment()->getShippingAddress();
 
-            $hash = $this->createAddressTransferHash($addressTransfer);
-            if (!isset($existingAddresses[$hash])) {
-                $existingAddresses[$hash] = $this ->customerRepository->findAddressByAddressData($addressTransfer);
-            }
+            $addressTransfer = $this->getCustomerAddress($itemTransfer->getShipment());
+            $itemTransfer->getShipment()->setShippingAddress($addressTransfer);
 
-            $itemTransfer->getShipment()->setShippingAddress($existingAddresses[$hash]);
-            $this->processCustomerAddress($existingAddresses[$hash], $customer);
+            $this->processCustomerAddress($addressTransfer, $customer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function getCustomerAddress(ShipmentTransfer $shipmentTransfer)
+    {
+        $addressTransfer = $shipmentTransfer->getShippingAddress();
+
+        $key = $this->getAddressTransferKey($addressTransfer);
+        if (!isset($existingAddresses[$key])) {
+            $existingAddresses[$key] = $this->customerRepository->findAddressByAddressData($addressTransfer);
+        }
+        if ($existingAddresses[$key] !== null) {
+            return $existingAddresses[$key];
+        }
+
+        return $addressTransfer;
     }
 
     /**
@@ -167,7 +193,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
      *
      * @return string
      */
-    protected function createAddressTransferHash(AddressTransfer $addressTransfer): string
+    protected function getAddressTransferKey(AddressTransfer $addressTransfer): string
     {
         return sprintf(
             '%s %s %s %s %s %s %s %s %s %s',

@@ -75,7 +75,8 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getCountryFacade(),
             $this->getLocaleFacade(),
-            $this->createCustomerExpander()
+            $this->createCustomerExpander(),
+            $this->getRepository()
         );
     }
 
@@ -130,7 +131,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         return new ObsoleteCustomerOrderSaver(
             $this->createCustomer(),
             $this->createAddress(),
-            $this->getQueryContainer()
+            $this->getRepository()
         );
     }
 
@@ -142,7 +143,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         return new CustomerOrderSaver(
             $this->createCustomer(),
             $this->createAddress(),
-            $this->getQueryContainer()
+            $this->getRepository()
         );
     }
 

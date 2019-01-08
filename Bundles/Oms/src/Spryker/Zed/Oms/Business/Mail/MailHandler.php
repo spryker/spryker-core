@@ -81,7 +81,7 @@ class MailHandler
     {
         $orderTransfer = $this->saleFacade->getOrderByIdSalesOrder($salesOrderEntity->getIdSalesOrder());
 
-        $shippingAddressTransfer = $this->getShippingAddressTransfer($salesOrderEntity);
+        $shippingAddressTransfer = $this->mapShippingAddressEntityToShippingAddressTransfer($salesOrderEntity);
         $orderTransfer->setShippingAddress($shippingAddressTransfer);
 
         $billingAddressTransfer = $this->getBillingAddressTransfer($salesOrderEntity);
@@ -98,9 +98,9 @@ class MailHandler
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return null|\Generated\Shared\Transfer\AddressTransfer
      */
-    protected function getShippingAddressTransfer(SpySalesOrder $salesOrderEntity)
+    protected function mapShippingAddressEntityToShippingAddressTransfer(SpySalesOrder $salesOrderEntity): ?AddressTransfer
     {
         $shippingAddressEntity = $salesOrderEntity->getShippingAddress();
 

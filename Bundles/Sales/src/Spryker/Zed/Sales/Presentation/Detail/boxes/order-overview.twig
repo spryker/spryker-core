@@ -82,6 +82,12 @@
                     </tr>
                     </tbody>
                 </table>
+            <div class="col-xs-12 col-md-4">
+                <p><b>{{ 'Status' | trans }}:</b>
+                    {% for state in distinctOrderStates %}
+                      <span class="label label-info">{{ state }}</span>
+                    {% endfor %}
+                </p>
             </div>
         </div>
 

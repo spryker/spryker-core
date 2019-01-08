@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Customer\Persistence;
 
-use Generated\Shared\Transfer\AddressTransfer;
-use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 

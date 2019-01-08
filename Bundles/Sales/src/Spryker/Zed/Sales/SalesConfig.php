@@ -66,12 +66,12 @@ class SalesConfig extends AbstractBundleConfig
      *
      * @return bool
      */
-    public function isTestOrder(QuoteTransfer $quoteTransfer)
+    public function isTestOrder(QuoteTransfer $quoteTransfer): bool
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $shippingTransfer = $itemTransfer->getShipment()->getShippingAddress();
 
-            if ($shippingTransfer->getFirstName() !== self::TEST_CUSTOMER_FIRST_NAME) {
+            if ($shippingTransfer->getFirstName() !== static::TEST_CUSTOMER_FIRST_NAME) {
                 return false;
             }
         }

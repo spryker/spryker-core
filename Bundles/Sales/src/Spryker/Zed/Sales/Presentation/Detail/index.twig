@@ -11,11 +11,13 @@
 {% block content %}
 
     <div id="order-overview">{% include '@Sales/Detail/boxes/order-overview.twig' %}</div>
+    <div id="customer">{% include '@Sales/Detail/boxes/customer.twig' %}</div>
     <div id="items">{% include '@Sales/Detail/boxes/items.twig' %}</div>
     {% for blockName, externalBlock in blocks %}
     <div id="{{ blockName }}">{{ externalBlock | raw }}</div>
     {% endfor %}
     <div id="address">{% include '@Sales/Detail/boxes/addresses.twig' %}</div>
+    <div id="comments">{% include '@Sales/Detail/boxes/comments.twig' %}</div>
 
 {% endblock %}
 

@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Checkout\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
@@ -542,17 +543,6 @@ class CheckoutFacadeTest extends Unit
      */
     protected function createAddressTransfer(): AddressTransfer
     {
-        $addressTransfer = new AddressTransfer();
-        $addressTransfer
-            ->setIso2Code('xi')
-            ->setEmail('max@mustermann.de')
-            ->setFirstName('Max')
-            ->setLastName('Mustermann')
-            ->setAddress1('Straße')
-            ->setAddress2('82')
-            ->setZipCode('12345')
-            ->setCity('Entenhausen');
-
-        return $addressTransfer;
+        return (new AddressBuilder())->build();
     }
 }

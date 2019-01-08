@@ -54,6 +54,9 @@ class DetailController extends AbstractController
 
         $groupedOrderItems = $this->getFacade()
             ->getUniqueOrderItemsCollection($orderTransfer->getItems());
+        $groupedOrderItemsByShipment = $this->getFactory()
+            ->getShipmentService()
+            ->groupItemsByShipment($orderTransfer->getItems());
 
         return array_merge([
             'eventsGroupedByItem' => $eventsGroupedByItem,
@@ -62,6 +65,7 @@ class DetailController extends AbstractController
             'order' => $orderTransfer,
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
             'groupedOrderItems' => $groupedOrderItems,
+            'groupedOrderItemsByShipment' => $groupedOrderItemsByShipment,
         ], $blockResponseData);
     }
 
