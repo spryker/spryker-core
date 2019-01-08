@@ -87,11 +87,10 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      *
      * @return bool
      */
-    public function hasPriceForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
+    public function hasPriceForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): bool
     {
         return $this->priceProductRepository
-                ->findProductConcretePricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer)
-                ->count() > 0;
+            ->hasProductConcretePricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
     }
 
     /**

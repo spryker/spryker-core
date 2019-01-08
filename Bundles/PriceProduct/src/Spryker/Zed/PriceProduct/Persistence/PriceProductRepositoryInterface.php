@@ -93,4 +93,20 @@ interface PriceProductRepositoryInterface
      * @return int|null
      */
     public function findIdPriceProductForProductConcrete(PriceProductTransfer $priceProductTransfer): ?int;
+
+    /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return bool
+     */
+    public function hasProductAbstractPricesBySkuAndCriteria(string $abstractSku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): bool;
+
+    /**
+     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return bool
+     */
+    public function hasProductConcretePricesBySkuAndCriteria(string $concreteSku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): bool;
 }
