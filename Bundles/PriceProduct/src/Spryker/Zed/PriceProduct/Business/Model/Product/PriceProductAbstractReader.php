@@ -285,7 +285,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractInAndCriteria(array $productAbstractIds, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array
+    public function findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria(array $productAbstractIds, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array
     {
         if (!$priceProductCriteriaTransfer) {
             $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();

@@ -507,10 +507,10 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractInAndCriteria(array $productAbstractIds, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array
+    public function findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria(array $productAbstractIds, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array
     {
         return $this->getFactory()
             ->createPriceProductAbstractReader()
-            ->findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractInAndCriteria($productAbstractIds, $priceProductCriteriaTransfer);
+            ->findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria($productAbstractIds, $priceProductCriteriaTransfer);
     }
 }
