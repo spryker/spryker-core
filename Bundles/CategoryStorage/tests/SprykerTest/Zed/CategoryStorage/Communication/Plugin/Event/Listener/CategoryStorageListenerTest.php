@@ -372,7 +372,7 @@ class CategoryStorageListenerTest extends Unit
     protected function assertCategoryTreeStorage(): void
     {
         $categoryStorageCount = SpyCategoryTreeStorageQuery::create()->count();
-        $this->assertEquals(2, $categoryStorageCount);
+        $this->assertGreaterThanOrEqual(2, $categoryStorageCount);
 
         $spyCategoryNodeStorage = SpyCategoryTreeStorageQuery::create()->findOne();
         $data = $spyCategoryNodeStorage->getData();
