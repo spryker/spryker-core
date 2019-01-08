@@ -22,5 +22,5 @@ interface ApplicationPluginInterface
      *
      * @return \Spryker\Service\Container\ContainerInterface
      */
-    public function providePlugin(ContainerInterface $container): ContainerInterface;
+    public function provide(ContainerInterface $container): ContainerInterface;
 }

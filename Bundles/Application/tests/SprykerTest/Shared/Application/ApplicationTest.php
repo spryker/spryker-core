@@ -109,7 +109,7 @@ class ApplicationTest extends Unit
              *
              * @return \Spryker\Service\Container\ContainerInterface
              */
-            public function providePlugin(ContainerInterface $container): ContainerInterface
+            public function provide(ContainerInterface $container): ContainerInterface
             {
                 $container->set(ApplicationTest::SERVICE, function () {
                     return [ApplicationTest::SERVICE_PROPERTY => true];
@@ -137,7 +137,7 @@ class ApplicationTest extends Unit
              *
              * @return \Spryker\Service\Container\ContainerInterface
              */
-            public function providePlugin(ContainerInterface $container): ContainerInterface
+            public function provide(ContainerInterface $container): ContainerInterface
             {
                 return $container;
             }
@@ -147,7 +147,7 @@ class ApplicationTest extends Unit
              *
              * @return \Spryker\Service\Container\ContainerInterface
              */
-            public function bootPlugin(ContainerInterface $container): ContainerInterface
+            public function boot(ContainerInterface $container): ContainerInterface
             {
                 $this->runs++;
                 $container->set(ApplicationTest::SERVICE, function () {

@@ -22,5 +22,5 @@ interface BootableApplicationPluginInterface
      *
      * @return \Spryker\Service\Container\ContainerInterface
      */
-    public function bootPlugin(ContainerInterface $container): ContainerInterface;
+    public function boot(ContainerInterface $container): ContainerInterface;
 }
