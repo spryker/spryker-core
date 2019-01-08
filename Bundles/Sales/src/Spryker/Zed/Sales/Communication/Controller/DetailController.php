@@ -53,7 +53,7 @@ class DetailController extends AbstractController
         }
 
         $groupedOrderItems = $this->getFacade()
-            ->getUniqueOrderItemsCollection($orderTransfer->getItems());
+            ->getUniqueOrderItems($orderTransfer->getItems());
         $groupedOrderItemsByShipment = $this->getFactory()
             ->getShipmentService()
             ->groupItemsByShipment($orderTransfer->getItems());

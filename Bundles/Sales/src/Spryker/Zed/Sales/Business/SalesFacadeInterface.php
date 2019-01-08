@@ -256,11 +256,14 @@ interface SalesFacadeInterface
     public function createSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer;
 
     /**
+     * Specification:
+     * - Creates array of unique order items.
+     *
      * @api
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return array
      */
-    public function getUniqueOrderItemsCollection(ArrayObject $itemTransfers): array;
+    public function getUniqueOrderItems(ArrayObject $itemTransfers): array;
 }

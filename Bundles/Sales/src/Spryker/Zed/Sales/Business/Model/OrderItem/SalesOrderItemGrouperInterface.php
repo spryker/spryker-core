@@ -16,5 +16,5 @@ interface SalesOrderItemGrouperInterface
      *
      * @return array
      */
-    public function getUniqueOrderItemsCollection(ArrayObject $itemTransfers): array;
+    public function getUniqueOrderItems(ArrayObject $itemTransfers): array;
 }
