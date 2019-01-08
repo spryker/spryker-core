@@ -93,7 +93,8 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves company users collection.
+     * - Retrieves company user collection according provided filter.
+     * - Ignores company users with anonymised customers.
      *
      * @api
      *
