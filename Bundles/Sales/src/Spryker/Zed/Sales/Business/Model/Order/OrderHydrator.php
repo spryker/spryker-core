@@ -254,7 +254,10 @@ class OrderHydrator implements OrderHydratorInterface
 
         $this->hydrateStateHistory($orderItemEntity, $itemTransfer);
         $this->hydrateCurrentSalesOrderItemState($orderItemEntity, $itemTransfer);
-        $this->hydrateItemShipping($orderItemEntity, $itemTransfer);
+
+        if ($orderItemEntity->getSpySalesShipment() !== null) {
+            $this->hydrateItemShipping($orderItemEntity, $itemTransfer);
+        }
 
         return $itemTransfer;
     }
