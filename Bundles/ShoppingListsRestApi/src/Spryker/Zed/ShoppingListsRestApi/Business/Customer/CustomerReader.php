@@ -34,9 +34,14 @@ class CustomerReader implements CustomerReaderInterface
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function findCustomerByCustomerReferenceAndCompanyUserUuid(string $customerReference, string $companyUserUuid): CustomerResponseTransfer
-    {
-        $companyUserResponseTransfer = $this->companyUserReader->findCompanyUserByUuid($companyUserUuid, $customerReference);
+    public function findCustomerByCustomerReferenceAndCompanyUserUuid(
+        string $customerReference,
+        string $companyUserUuid
+    ): CustomerResponseTransfer {
+        $companyUserResponseTransfer = $this->companyUserReader->findCompanyUserByUuid(
+            $companyUserUuid,
+            $customerReference
+        );
 
         if ($companyUserResponseTransfer->getIsSuccessful() === false) {
             return $this->mapCompanyUserResponseMessagesToCustomerResponseErrors(

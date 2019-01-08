@@ -22,8 +22,14 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
      */
     public const CANNOT_UPDATE_SHOPPING_LIST = 'customer.account.shopping_list.error.cannot_update';
 
+    /**
+     * @see \Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriter::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED
+     */
+    public const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED = 'customer.account.shopping_list.delete.failed';
+
     public const RESPONSE_ERROR_MAP = [
         self::DUPLICATE_NAME_SHOPPING_LIST => SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_DUPLICATE_NAME,
-        self::CANNOT_UPDATE_SHOPPING_LIST => SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_UPDATE,
+        self::CANNOT_UPDATE_SHOPPING_LIST => SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_MANAGE,
+        self::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED => SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_MANAGE,
     ];
 }

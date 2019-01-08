@@ -51,6 +51,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
     protected const BAD_CUSTOMER_REFERENCE = 'BAD_CUSTOMER_REFERENCE';
     protected const GOOD_SHOPPING_LIST_UUID = 'GOOD_SHOPPING_LIST_UUID';
     protected const BAD_SHOPPING_LIST_UUID = 'BAD_SHOPPING_LIST_UUID';
+    protected const FOREIGN_SHOPPING_LIST_UUID = 'FOREIGN_SHOPPING_LIST_UUID';
     protected const NO_PERMISSION_SHOPPING_LIST_UUID = 'NO_PERMISSION_SHOPPING_LIST_UUID';
     protected const GOOD_SHOPPING_LIST_NAME = 'GOOD_SHOPPING_LIST_NAME';
     protected const BAD_SHOPPING_LIST_NAME = 'BAD_SHOPPING_LIST_NAME';
@@ -94,15 +95,15 @@ class ShoppingListsRestApiFacadeTest extends Unit
                 (new CompanyUserTransfer())
                     ->setUuid(static::COMPANY_USER_UUID)
             );
-        $shoppingListCollectionTransfer = $shoppingListsRestApiFacade->getCustomerShoppingListCollection($customerTransfer);
+        $restShoppingListCollectionResponseTransfer = $shoppingListsRestApiFacade->getCustomerShoppingListCollection($customerTransfer);
 
-        $this->assertCount(2, $shoppingListCollectionTransfer->getShoppingLists());
+        $this->assertCount(2, $restShoppingListCollectionResponseTransfer->getShoppingLists());
     }
 
     /**
      * @return void
      */
-    public function testShoppingListsRestApiFacadeWillGetCustomerShoppingListCollectionWithEmptyResult(): void
+    public function testShoppingListsRestApiFacadeWillNotGetCustomerShoppingListCollectionWithWrongCompanyUser(): void
     {
         /** @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade $shoppingListsRestApiFacade */
         $shoppingListsRestApiFacade = $this->tester->getFacade();
@@ -114,9 +115,14 @@ class ShoppingListsRestApiFacadeTest extends Unit
                 (new CompanyUserTransfer())
                     ->setUuid(static::COMPANY_USER_UUID)
             );
-        $shoppingListCollectionTransfer = $shoppingListsRestApiFacade->getCustomerShoppingListCollection($customerTransfer);
+        $restShoppingListCollectionResponseTransfer = $shoppingListsRestApiFacade->getCustomerShoppingListCollection($customerTransfer);
 
-        $this->assertCount(0, $shoppingListCollectionTransfer->getShoppingLists());
+        $this->assertCount(1, $restShoppingListCollectionResponseTransfer->getErrorCodes());
+        $this->assertEquals(
+            SharedShoppingListsRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_FOUND,
+            $restShoppingListCollectionResponseTransfer->getErrorCodes()[0]
+        );
+        $this->assertCount(0, $restShoppingListCollectionResponseTransfer->getShoppingLists());
     }
 
     /**
@@ -124,7 +130,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
      *
      * @return void
      */
-    public function testShoppingListsRestApiFacadeWillGetCustomerShoppingListCollectionWithoutCompanyUser(): void
+    public function testShoppingListsRestApiFacadeWillNotGetCustomerShoppingListCollectionWithoutCompanyUser(): void
     {
         /** @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade $shoppingListsRestApiFacade */
         $shoppingListsRestApiFacade = $this->tester->getFacade();
@@ -164,7 +170,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testShoppingListsRestApiFacadeWillFindShoppingListByUuidThatDoesNotExist(): void
+    public function testShoppingListsRestApiFacadeWillNotFindShoppingListByUuidThatDoesNotExist(): void
     {
         /** @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade $shoppingListsRestApiFacade */
         $shoppingListsRestApiFacade = $this->tester->getFacade();
@@ -187,7 +193,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
      *
      * @return void
      */
-    public function testShoppingListsRestApiFacadeWillFindShoppingListByUuidWithoutCompanyUser(): void
+    public function testShoppingListsRestApiFacadeWillNotFindShoppingListByUuidWithoutCompanyUser(): void
     {
         /** @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade $shoppingListsRestApiFacade */
         $shoppingListsRestApiFacade = $this->tester->getFacade();
@@ -231,7 +237,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testShoppingListsRestApiFacadeWillCreateShoppingListWhenNameAlreadyExists(): void
+    public function testShoppingListsRestApiFacadeWillNotCreateShoppingListWhenNameAlreadyExists(): void
     {
         /** @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade $shoppingListsRestApiFacade */
         $shoppingListsRestApiFacade = $this->tester->getFacade();
@@ -257,7 +263,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
      *
      * @return void
      */
-    public function testShoppingListsRestApiFacadeWillCreateShoppingListWithoutName(): void
+    public function testShoppingListsRestApiFacadeWillNotCreateShoppingListWithoutName(): void
     {
         /** @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade $shoppingListsRestApiFacade */
         $shoppingListsRestApiFacade = $this->tester->getFacade();
@@ -275,7 +281,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
      *
      * @return void
      */
-    public function testShoppingListsRestApiFacadeWillCreateShoppingListWithoutCompanyUser(): void
+    public function testShoppingListsRestApiFacadeWillNotCreateShoppingListWithoutCompanyUser(): void
     {
         /** @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade $shoppingListsRestApiFacade */
         $shoppingListsRestApiFacade = $this->tester->getFacade();
@@ -324,7 +330,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testShoppingListsRestApiFacadeWillUpdateShoppingListWhenNameAlreadyExists(): void
+    public function testShoppingListsRestApiFacadeWillNotUpdateShoppingListWhenNameAlreadyExists(): void
     {
         /** @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade $shoppingListsRestApiFacade */
         $shoppingListsRestApiFacade = $this->tester->getFacade();
@@ -349,7 +355,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testShoppingListsRestApiFacadeWillUpdateShoppingListThatDoesNotExist(): void
+    public function testShoppingListsRestApiFacadeWillNotUpdateShoppingListThatDoesNotExist(): void
     {
         /** @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade $shoppingListsRestApiFacade */
         $shoppingListsRestApiFacade = $this->tester->getFacade();
@@ -376,7 +382,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
      *
      * @return void
      */
-    public function testShoppingListsRestApiFacadeWillUpdateShoppingListWithoutName(): void
+    public function testShoppingListsRestApiFacadeWillNotUpdateShoppingListWithoutName(): void
     {
         /** @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade $shoppingListsRestApiFacade */
         $shoppingListsRestApiFacade = $this->tester->getFacade();
@@ -397,7 +403,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
      *
      * @return void
      */
-    public function testShoppingListsRestApiFacadeWillUpdateShoppingListWithoutCompanyUser(): void
+    public function testShoppingListsRestApiFacadeWillNotUpdateShoppingListWithoutCompanyUser(): void
     {
         /** @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade $shoppingListsRestApiFacade */
         $shoppingListsRestApiFacade = $this->tester->getFacade();
@@ -438,7 +444,31 @@ class ShoppingListsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testShoppingListsRestApiFacadeWillDeleteShoppingListThatDoesNotExist(): void
+    public function testShoppingListsRestApiFacadeWillNotDeleteShoppingListThatBelongToOtherCustomer(): void
+    {
+        /** @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade $shoppingListsRestApiFacade */
+        $shoppingListsRestApiFacade = $this->tester->getFacade();
+        $shoppingListsRestApiFacade->setFactory($this->getMockShoppingListsRestApiFactory());
+
+        $restShoppingListRequestTransfer = (new RestShoppingListRequestTransfer())
+            ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
+            ->setCompanyUserUuid(static::COMPANY_USER_UUID)
+            ->setShoppingList(
+                (new ShoppingListTransfer())
+                    ->setUuid(static::FOREIGN_SHOPPING_LIST_UUID)
+            );
+        $shoppingListResponseTransfer = $shoppingListsRestApiFacade->deleteShoppingList($restShoppingListRequestTransfer);
+
+        $this->assertFalse($shoppingListResponseTransfer->getIsSuccess());
+        $this->assertEquals([
+            SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_MANAGE,
+        ], $shoppingListResponseTransfer->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testShoppingListsRestApiFacadeWillNotDeleteShoppingListThatDoesNotExist(): void
     {
         /** @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade $shoppingListsRestApiFacade */
         $shoppingListsRestApiFacade = $this->tester->getFacade();
@@ -464,7 +494,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
      *
      * @return void
      */
-    public function testShoppingListsRestApiFacadeWillDeleteShoppingListWithoutCompanyUser(): void
+    public function testShoppingListsRestApiFacadeWillNotDeleteShoppingListWithoutCompanyUser(): void
     {
         /** @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade $shoppingListsRestApiFacade */
         $shoppingListsRestApiFacade = $this->tester->getFacade();
@@ -502,9 +532,18 @@ class ShoppingListsRestApiFacadeTest extends Unit
 
         $this->assertTrue($shoppingListItemResponseTransfer->getIsSuccess());
         $this->assertEquals(static::GOOD_SKU, $shoppingListItemResponseTransfer->getShoppingListItem()->getSku());
-        $this->assertEquals(static::GOOD_QUANTITY, $shoppingListItemResponseTransfer->getShoppingListItem()->getQuantity());
-        $this->assertEquals(static::SHOPPING_LIST_UUID, $shoppingListItemResponseTransfer->getShoppingListItem()->getUuid());
-        $this->assertEquals(static::SHOPPING_LIST_ITEM_ID, $shoppingListItemResponseTransfer->getShoppingListItem()->getIdShoppingListItem());
+        $this->assertEquals(
+            static::GOOD_QUANTITY,
+            $shoppingListItemResponseTransfer->getShoppingListItem()->getQuantity()
+        );
+        $this->assertEquals(
+            static::SHOPPING_LIST_UUID,
+            $shoppingListItemResponseTransfer->getShoppingListItem()->getUuid()
+        );
+        $this->assertEquals(
+            static::SHOPPING_LIST_ITEM_ID,
+            $shoppingListItemResponseTransfer->getShoppingListItem()->getIdShoppingListItem()
+        );
     }
 
     /**
@@ -692,8 +731,14 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->updateShoppingListItem($restShoppingListRequestTransfer);
 
         $this->assertTrue($shoppingListItemResponseTransfer->getIsSuccess());
-        $this->assertEquals(static::GOOD_QUANTITY, $shoppingListItemResponseTransfer->getShoppingListItem()->getQuantity());
-        $this->assertEquals(static::SHOPPING_LIST_ID, $shoppingListItemResponseTransfer->getShoppingListItem()->getFkShoppingList());
+        $this->assertEquals(
+            static::GOOD_QUANTITY,
+            $shoppingListItemResponseTransfer->getShoppingListItem()->getQuantity()
+        );
+        $this->assertEquals(
+            static::SHOPPING_LIST_ID,
+            $shoppingListItemResponseTransfer->getShoppingListItem()->getFkShoppingList()
+        );
     }
 
     /**
@@ -1009,7 +1054,8 @@ class ShoppingListsRestApiFacadeTest extends Unit
                 ->setIdCompanyUser(static::COMPANY_USER_ID)
                 ->setUuid($shoppingListTransfer->getUuid())
                 ->setName($this->lastShoppingListName)
-                ->setOwner(static::OWNER_NAME) // Owner is defined only in read methods
+                // Owner is defined only in read methods
+                ->setOwner(static::OWNER_NAME)
                 ->addItems(
                     (new ShoppingListItemTransfer())
                         ->setQuantity(static::GOOD_QUANTITY)
@@ -1098,6 +1144,13 @@ class ShoppingListsRestApiFacadeTest extends Unit
         if ($shoppingListTransfer->getUuid() === static::BAD_SHOPPING_LIST_UUID) {
             $shoppingListResponseTransfer->setIsSuccess(false)
                 ->addError(SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND);
+
+            return $shoppingListResponseTransfer;
+        }
+
+        if ($shoppingListTransfer->getUuid() === static::FOREIGN_SHOPPING_LIST_UUID) {
+            $shoppingListResponseTransfer->setIsSuccess(false)
+                ->addError(ShoppingListsRestApiConfig::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED);
 
             return $shoppingListResponseTransfer;
         }

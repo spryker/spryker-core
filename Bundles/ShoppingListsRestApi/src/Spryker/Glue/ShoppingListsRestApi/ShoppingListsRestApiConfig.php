@@ -50,9 +50,9 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
             'status' => Response::HTTP_NOT_FOUND,
             'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_ITEM_NOT_FOUND,
         ],
-        SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_UPDATE => [
+        SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_MANAGE => [
             'status' => Response::HTTP_FORBIDDEN,
-            'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_UPDATE,
+            'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_MANAGE,
         ],
         SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_DUPLICATE_NAME => [
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
