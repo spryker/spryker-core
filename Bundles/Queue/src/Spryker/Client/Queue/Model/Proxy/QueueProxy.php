@@ -115,25 +115,25 @@ class QueueProxy implements QueueProxyInterface
     /**
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
-     * @return bool
+     * @return void
      */
     public function acknowledge(QueueReceiveMessageTransfer $queueReceiveMessageTransfer)
     {
         $queueAdapter = $this->getQueueAdapter($queueReceiveMessageTransfer->getQueueName());
 
-        return $queueAdapter->acknowledge($queueReceiveMessageTransfer);
+        $queueAdapter->acknowledge($queueReceiveMessageTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
-     * @return bool
+     * @return void
      */
     public function reject(QueueReceiveMessageTransfer $queueReceiveMessageTransfer)
     {
         $queueAdapter = $this->getQueueAdapter($queueReceiveMessageTransfer->getQueueName());
 
-        return $queueAdapter->reject($queueReceiveMessageTransfer);
+        $queueAdapter->reject($queueReceiveMessageTransfer);
     }
 
     /**
