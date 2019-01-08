@@ -44,6 +44,8 @@ class ShipmentMapper implements ShipmentMapperInterface
 
         $orderItemEntity->fromArray($itemTransfer->toArray());
         $orderItemEntity->setFkSalesShipment($idSalesShipment);
+        // @todo: remove this hack
+        $orderItemEntity->setNew(false);
 
         return $orderItemEntity;
     }

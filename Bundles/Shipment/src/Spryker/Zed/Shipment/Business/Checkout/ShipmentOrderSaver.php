@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business\Checkout;
 
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -114,7 +115,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         OrderTransfer $salesOrderTransfer,
         SaveOrderTransfer $saveOrderTransfer
     ): void {
-        $expenseTransfer = $shipmentGroupTransfer->getShipment()->getExpense();
+        $expenseTransfer = $this->sanitizeExpenseSumPrices($shipmentGroupTransfer->getShipment()->getExpense());
         $expenseTransfer->setFkSalesOrder($salesOrderTransfer->getIdSalesOrder());
         $expenseTransfer = $this->salesFacade->createSalesExpense($expenseTransfer);
 
@@ -125,6 +126,25 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
 
         $salesOrderTransfer->addExpense($expenseTransfer);
         $saveOrderTransfer->addOrderExpense($expenseTransfer);
+    }
+
+    /**
+     * @deprecated For BC reasons the missing sum prices are mirrored from unit prices
+     *
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    protected function sanitizeExpenseSumPrices(ExpenseTransfer $expenseTransfer)
+    {
+        $expenseTransfer->setSumGrossPrice($expenseTransfer->getSumGrossPrice() ?? $expenseTransfer->getUnitGrossPrice());
+        $expenseTransfer->setSumNetPrice($expenseTransfer->getSumNetPrice() ?? $expenseTransfer->getUnitNetPrice());
+        $expenseTransfer->setSumPrice($expenseTransfer->getSumPrice() ?? $expenseTransfer->getUnitPrice());
+        $expenseTransfer->setSumTaxAmount($expenseTransfer->getSumTaxAmount() ?? $expenseTransfer->getUnitTaxAmount());
+        $expenseTransfer->setSumDiscountAmountAggregation($expenseTransfer->getSumDiscountAmountAggregation() ?? $expenseTransfer->getUnitDiscountAmountAggregation());
+        $expenseTransfer->setSumPriceToPayAggregation($expenseTransfer->getSumPriceToPayAggregation() ?? $expenseTransfer->getUnitPriceToPayAggregation());
+
+        return $expenseTransfer;
     }
 
     /**

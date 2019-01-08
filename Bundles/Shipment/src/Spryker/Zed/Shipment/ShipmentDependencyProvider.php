@@ -102,7 +102,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSalesFacade(Container $container): ShipmentToSalesInterface
+    protected function addSalesFacade(Container $container): Container
     {
         $container[static::FACADE_SALES] = function (Container $container) {
             return new ShipmentToSalesBridge($container->getLocator()->sales()->facade());
@@ -167,6 +167,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMethodFilterPlugins($container);
         $container = $this->addShipmentService($container);
         $container = $this->addCountryFacade($container);
+        $container = $this->addSalesFacade($container);
 
         return $container;
     }
