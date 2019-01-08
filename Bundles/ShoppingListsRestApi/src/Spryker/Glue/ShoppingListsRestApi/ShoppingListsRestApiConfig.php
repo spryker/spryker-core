@@ -39,7 +39,7 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
             'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_ITEM_ID_NOT_SPECIFIED,
         ],
         SharedShoppingListsRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_FOUND => [
-            'status' => Response::HTTP_UNAUTHORIZED,
+            'status' => Response::HTTP_FORBIDDEN,
             'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND,
         ],
         SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND => [
@@ -51,7 +51,7 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
             'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_ITEM_NOT_FOUND,
         ],
         SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_UPDATE => [
-            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            'status' => Response::HTTP_FORBIDDEN,
             'detail' => SharedShoppingListsRestApiConfig::RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_UPDATE,
         ],
         SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_DUPLICATE_NAME => [

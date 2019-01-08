@@ -120,7 +120,7 @@ class ShoppingListItemsResourceController extends AbstractController
      *              }
      *          ],
      *          "responses": {
-     *              "400": "Bad Response.",
+     *              "400": "Shopping list id or list item id not specified.",
      *              "403": "Unauthorized request.",
      *              "404": "Not Found",
      *              "422": "Cannot delete the shopping list item"

@@ -11,14 +11,14 @@
         <property name="shoppingList" type="ShoppingList" />
         <property name="companyUserUuid" type="string" />
         <property name="customerReference" type="string" />
-        <property name="errors" type="array" singular="error" />
+        <property name="errorCodes" type="string[]" singular="errorCode" />
     </transfer>
 
     <transfer name="RestShoppingListAttributes">
         <property name="owner" type="string" />
         <property name="name" type="string" restRequestParameter="required" />
         <property name="numberOfItems" type="int" />
-        <property name="updatedAt" type="string" />
+        <property name="updatedAt" type="string" nullable="true" />
         <property name="createdAt" type="string" />
     </transfer>
 
@@ -30,7 +30,7 @@
         <property name="shoppingListItem" type="ShoppingListItem" />
         <property name="shoppingListUuid" type="string" />
         <property name="companyUserUuid" type="string" />
-        <property name="errors" type="array" singular="error" />
+        <property name="errorCodes" type="string[]" singular="errorCode" />
     </transfer>
 
     <transfer name="RestShoppingListItemAttributes">

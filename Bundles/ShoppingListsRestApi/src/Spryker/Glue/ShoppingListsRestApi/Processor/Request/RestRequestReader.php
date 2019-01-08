@@ -44,7 +44,7 @@ class RestRequestReader implements RestRequestReaderInterface
             return (new CustomerResponseTransfer())->addError(
                 (new CustomerErrorTransfer())
                     ->setMessage(SharedShoppingListsRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_FOUND)
-            );
+            )->setIsSuccess(false);
         }
 
         $customerTransfer = (new CustomerTransfer())
@@ -71,7 +71,7 @@ class RestRequestReader implements RestRequestReaderInterface
         $customerResponseTransfer = $this->readCustomerResponseTransferFromRequest($restRequest);
 
         if ($customerResponseTransfer->getIsSuccess() === false) {
-            return (new RestShoppingListRequestTransfer())->setErrors(
+            return (new RestShoppingListRequestTransfer())->setErrorCodes(
                 $this->mapCustomerResponseErrorsToErrorsCodes($customerResponseTransfer->getErrors()->getArrayCopy())
             );
         }
@@ -93,14 +93,14 @@ class RestRequestReader implements RestRequestReaderInterface
         RestRequestInterface $restRequest
     ): RestShoppingListRequestTransfer {
         if (!$uuidShoppingList) {
-            return (new RestShoppingListRequestTransfer())->addError(
+            return (new RestShoppingListRequestTransfer())->addErrorCode(
                 SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_ID_NOT_SPECIFIED
             );
         }
 
         $restShoppingListRequestTransfer = $this->readRestShoppingListRequestTransferFromRequest($restRequest);
 
-        if (count($restShoppingListRequestTransfer->getErrors()) > 0) {
+        if (count($restShoppingListRequestTransfer->getErrorCodes()) > 0) {
             return $restShoppingListRequestTransfer;
         }
 
@@ -123,9 +123,9 @@ class RestRequestReader implements RestRequestReaderInterface
             $restRequest
         );
 
-        if (count($restShoppingListRequestTransfer->getErrors()) > 0) {
-            return (new RestShoppingListItemRequestTransfer())->setErrors(
-                $restShoppingListRequestTransfer->getErrors()
+        if (count($restShoppingListRequestTransfer->getErrorCodes()) > 0) {
+            return (new RestShoppingListItemRequestTransfer())->setErrorCodes(
+                $restShoppingListRequestTransfer->getErrorCodes()
             );
         }
 
@@ -148,14 +148,14 @@ class RestRequestReader implements RestRequestReaderInterface
     ): RestShoppingListItemRequestTransfer {
         $uuidShoppingListItem = $restRequest->getResource()->getId();
         if (!$uuidShoppingListItem) {
-            return (new RestShoppingListItemRequestTransfer())->addError(
+            return (new RestShoppingListItemRequestTransfer())->addErrorCode(
                 SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_ITEM_ID_NOT_SPECIFIED
             );
         }
 
         $restShoppingListItemRequestTransfer = $this->readRestShoppingListItemRequestTransferFromRequest($restRequest);
 
-        if (count($restShoppingListItemRequestTransfer->getErrors()) > 0) {
+        if (count($restShoppingListItemRequestTransfer->getErrorCodes()) > 0) {
             return $restShoppingListItemRequestTransfer;
         }
 

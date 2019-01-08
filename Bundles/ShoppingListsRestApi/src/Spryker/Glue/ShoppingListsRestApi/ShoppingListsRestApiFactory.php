@@ -38,7 +38,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListReaderInterface
      */
-    public function createShoppingListsReader(): ShoppingListReaderInterface
+    public function createShoppingListReader(): ShoppingListReaderInterface
     {
         return new ShoppingListReader(
             $this->getClient(),
