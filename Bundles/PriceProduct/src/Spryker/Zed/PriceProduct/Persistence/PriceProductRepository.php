@@ -154,7 +154,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      *
      * @return $this
      */
-    protected function addJoinProductConcreteBySku(SpyPriceProductStoreQuery $priceProductStoreQuery, $concreteSku): self
+    protected function addJoinProductConcreteBySku(SpyPriceProductStoreQuery $priceProductStoreQuery, $concreteSku)
     {
         $priceProductStoreQuery
             ->joinWithPriceProduct()
@@ -175,7 +175,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      *
      * @return $this
      */
-    protected function addJoinProductAbstractBySku(SpyPriceProductStoreQuery $priceProductStoreQuery, $abstractSku): self
+    protected function addJoinProductAbstractBySku(SpyPriceProductStoreQuery $priceProductStoreQuery, $abstractSku)
     {
         $priceProductStoreQuery
             ->joinWithPriceProduct()
