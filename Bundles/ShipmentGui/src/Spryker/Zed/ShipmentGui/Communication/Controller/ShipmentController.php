@@ -87,14 +87,11 @@ class ShipmentController extends AbstractController
                 )->build()
             );
         }
-/*dump($shipmentForm->createView());
-        exit();*/
+//dump($shipmentForm->createView());
+//exit();
         return $this->viewResponse([
             'idSalesOrder' => $idSalesOrder,
             'shipmentForm' => $shipmentForm->createView(),
-            'orderItemTransferCollection' => $orderTransfer->getItems()->getArrayCopy(),
-            'eventsGroupedByItem' => [],
-            'order' => $orderTransfer,
         ]);
     }
 }

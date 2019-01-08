@@ -136,9 +136,6 @@ class ShipmentForm extends AbstractType
             self::FIELD_SHIPMENT_METHOD,
             ChoiceType::class,
             [
-                'constraints' => [
-                    new NotBlank(),
-                ],
                 'choices' => $builder->getOption(self::CHOICES_SHIPMENT_METHOD),
             ]
         );
@@ -157,8 +154,6 @@ class ShipmentForm extends AbstractType
             self::FIELD_SHIPMENT_DATE,
             TextType::class,
             [
-                'constraints' => [
-                ],
             ]
         );
 

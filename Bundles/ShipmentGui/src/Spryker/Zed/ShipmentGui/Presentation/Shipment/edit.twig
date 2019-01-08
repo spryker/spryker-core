@@ -14,14 +14,16 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Address Details' } %}
 
         {% block widget_content %}
+
             {{ form_start(shipmentForm) }}
             {{ form_widget(shipmentForm.shippingAddress) }}
 
             <div id="items">
                 <table class="footable table toggle-arrow-tiny" data-qa="order-item-list">
                     <thead>
-                    <tr class="text-left">
+                     <tr class="text-left">
                         <th>{{ 'Select' | trans }}</th>
+                         <th>{{ 'Image' | trans }}</th>
                         <th>{{ 'Product' | trans }}</th>
                         <th>{{ 'Quantity' | trans }}</th>
                         <th>{{ 'State' | trans }}</th>
@@ -30,58 +32,48 @@
                     </thead>
                     <tbody>
                     {% for order_item in shipmentForm.order_items %}
-                        {% set idProductAbstract = order_item.vars.value.id %}
-                        {% set idOrderItem = order_item.vars.value.id %}
-                        {% set order_itemName = order_item.vars.value.name %}
-                        {% set order_itemSku = order_item.vars.value.sku %}
+                        {% set order_item_data = order_item.vars.data %}
 
                         <tr>
                             {#{% set image = order_item.metadata.image %}#}
                             {% set image = '' %}
 
                             <td class="item-checker">
-                                XXXXXXXXXXXXXX
-                                {#<input type="checkbox" name="order-item" value="{{ idOrderItemSalesOrderItem }}" class="item-check" />#}
-                                {#{{ form_widget(field_order_item_assigned) }}#}
+                                {{ form_widget(order_item.assigned) }}
                             </td>
                             <td>
                                 <img class="product-image" src="{{ image }}"/>
                             </td>
                             <td>
                                 <div>
-                                    <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': idProductAbstract, 'id-product': idOrderItem, 'type': 'regular'}) }}">
-                                        {{ order_itemName }}
+                                    <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': order_item_data.idProductAbstract, 'id-product': order_item_data.id, 'type': 'regular'}) }}">
+                                        {{ order_item_data.name }}
                                     </a>
                                 </div>
                                 <div class="sku">
-                                    {{ 'Sku' | trans }}: {{ form_row(order_item.name) }} {{ form_row(order_item.quantity) }} {{ form_row(order_item.sku) }} {{ form_row(order_item.assigned) }}
+                                    {{ 'Sku' | trans }}: <span>{{ order_item_data.sku }}</span>
                                 </div>
-
-                                {# {% if order_item.metadata.superAttributes is not null and order_item.metadata.superAttributes | length > 0 %}
-                                     <div class="variant-details">
-                                         <h3>{{ 'Variant Details' | trans }}</h3>
-                                         {% for attributeName, attributeValue in order_item.metadata.superAttributes | slice(0,2) %}
-                                             <div>{{ attributeName }}: {{ attributeValue }}</div>
-                                         {% endfor %}
-
-                                         {% if order_item.metadata.superAttributes | length > 2 %}
-                                             <div id="attribute_details_{{ order_item.IdSalesOrderItem }}" class="hidden">
-                                                 {% for attributeName, attributeValue in order_item.metadata.superAttributes | slice(2) %}
-                                                     <div>{{ attributeName }}: {{ attributeValue }}</div>
-                                                 {% endfor %}
-                                             </div>
-
-                                             <a id="attribute-details-btn-{{ order_item.IdSalesOrderItem }}" class="btn btn-sm more-attributes is-hidden" data-id="{{ order_item.IdSalesOrderItem }}"><span class="show-more">{{ 'Show more' | trans }}</span><span class="show-less">{{ 'Show less' | trans }}</span></a>
-                                         {% endif %}
-                                     </div>
-                                 {% endif %}#}
                             </td>
                             <td>
-                                {#{{ form_widget(field_order_item_quantity) }}#}
-                                QUANTITY
+                                {{ order_item_data.quantity }}
                             </td>
                             <td>
-                                CURRENT SHIPMENT
+                                <div>
+                                    <a href="{{ url('/oms/index/draw', {'process': order_item_data.process, 'state': order_item_data.state.name}) }}" target="_blank">{{ (order_item_data.stateHistory | first).name }}</a> ({{ order_item_data.process }})
+                                </div>
+                                {% if order_item_data.stateHistory | length > 1 %}
+                                    <div id="history_details_{{ order_item_data.idSalesOrderItem }}" class="hidden">
+                                        {% for stateHistory in order_item_data.stateHistory | slice(1) %}
+                                            <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
+                                        {% endfor %}
+                                    </div>
+
+                                    <a id="history-btn-{{ order_item_data.idSalesOrderItem }}" class="btn btn-sm more-history is-hidden" data-id="{{ order_item_data.idSalesOrderItem }}"><span class="show-more">{{ 'Show history' | trans }}</span><span class="show-less">{{ 'Hide history' | trans }}</span></a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {#{{ shipmentForm.vars.value.method.name }}#}
+                                SHIPMENT METHOD
                             </td>
                         </tr>
                     {% endfor %}
@@ -90,7 +82,6 @@
             </div>
 
             {{ form_widget(shipmentForm.method) }}
-
             {{ form_widget(shipmentForm.requestedDeliveryDate) }}
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}"/>
