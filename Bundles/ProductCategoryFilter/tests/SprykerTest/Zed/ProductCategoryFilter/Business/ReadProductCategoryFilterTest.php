@@ -51,6 +51,7 @@ class ReadProductCategoryFilterTest extends Unit
         $categories = $this->tester->getFacade()->getAllProductCategoriesWithFilters();
 
         // Assert
-        $this->assertSame([$productCategoryFilter1->getFkCategory(), $productCategoryFilter2->getFkCategory()], $categories);
+        $this->assertContains($productCategoryFilter1->getFkCategory(), $categories);
+        $this->assertContains($productCategoryFilter2->getFkCategory(), $categories);
     }
 }

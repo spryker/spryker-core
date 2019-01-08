@@ -79,6 +79,8 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
+     * @module Customer
+     *
      * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      *
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
@@ -89,7 +91,10 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     {
         $queryCompanyUser = $this->getFactory()
             ->createCompanyUserQuery()
-            ->joinWithCustomer();
+            ->joinWithCustomer()
+            ->useCustomerQuery()
+                ->filterByAnonymizedAt(null, Criteria::ISNULL)
+            ->endUse();
 
         $this->applyFilters($queryCompanyUser, $criteriaFilterTransfer);
 
@@ -208,7 +213,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      *
      * @param int $idCompany
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
     public function findInitialCompanyUserByCompanyId(int $idCompany): ?CompanyUserTransfer
     {
