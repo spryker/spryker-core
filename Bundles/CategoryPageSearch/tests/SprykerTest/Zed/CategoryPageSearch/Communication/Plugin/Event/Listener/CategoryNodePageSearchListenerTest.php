@@ -63,7 +63,7 @@ class CategoryNodePageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertGreaterThan($beforeCount, $afterCount);
         $this->assertCategoryPageSearch();
     }
 
@@ -87,7 +87,7 @@ class CategoryNodePageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertGreaterThan($beforeCount, $afterCount);
         $this->assertCategoryPageSearch();
     }
 
@@ -110,7 +110,7 @@ class CategoryNodePageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount - 2, $afterCount);
+        $this->assertLessThan($beforeCount, $afterCount);
     }
 
     /**
@@ -206,7 +206,7 @@ class CategoryNodePageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertGreaterThan($beforeCount, $afterCount);
         $this->assertCategoryPageSearch();
     }
 
@@ -231,7 +231,7 @@ class CategoryNodePageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertGreaterThan($beforeCount, $afterCount);
         $this->assertCategoryPageSearch();
     }
 
@@ -281,7 +281,7 @@ class CategoryNodePageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertGreaterThan($beforeCount, $afterCount);
         $this->assertCategoryPageSearch();
     }
 
@@ -308,7 +308,7 @@ class CategoryNodePageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertGreaterThan($beforeCount, $afterCount);
         $this->assertCategoryPageSearch();
     }
 
@@ -334,7 +334,7 @@ class CategoryNodePageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount - 2, $afterCount);
+        $this->assertLessThan($beforeCount, $afterCount);
     }
 
     /**
