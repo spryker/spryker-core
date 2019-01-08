@@ -15,13 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-/**
- * @method \Spryker\Zed\ShipmentGui\Business\SalesFacadeInterface getFacade()
- * @method \Spryker\Zed\ShipmentGui\Communication\SalesCommunicationFactory getFactory()
- * @method \Spryker\Zed\ShipmentGui\Persistence\SalesQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ShipmentGui\SalesConfig getConfig()
- * @method \Spryker\Zed\ShipmentGui\Persistence\SalesRepositoryInterface getRepository()
- */
 class CustomerForm extends AbstractType
 {
     public const OPTION_SALUTATION_CHOICES = 'salutation_choices';

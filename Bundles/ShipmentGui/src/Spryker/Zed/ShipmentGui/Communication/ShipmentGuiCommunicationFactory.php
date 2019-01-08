@@ -10,13 +10,10 @@ namespace Spryker\Zed\ShipmentGui\Communication;
 use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\AddressFormDataProvider;
-use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider;
-use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShippingFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentForm;
 use Spryker\Zed\ShipmentGui\ShipmentGuiDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ShipmentGui\Persistence\ShipmentGuiRepositoryInterface getRepository()
  * @method \Spryker\Zed\ShipmentGui\ShipmentGuiConfig getConfig()
  * @method \Spryker\Zed\ShipmentGui\Business\ShipmentGuiFacadeInterface getFacade()
  */
@@ -28,7 +25,6 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createAddressFormDataProvider()
     {
         return new AddressFormDataProvider(
-            $this->getRepository(),
             $this->getCountryFacade()
         );
     }
@@ -47,35 +43,6 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getSalesFacade()
     {
         return $this->getProvidedDependency(ShipmentGuiDependencyProvider::FACADE_SALES);
-    }
-
-    /**
-     * @return \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface
-     */
-    public function getShipmentFacade()
-    {
-        return $this->getProvidedDependency(ShipmentGuiDependencyProvider::FACADE_SHIPMENT);
-    }
-
-    /**
-     * @param array $formData
-     * @param array $formOptions
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getAddressForm(array $formData = [], array $formOptions = [])
-    {
-        return $this->getFormFactory()->create(AddressForm::class, $formData, $formOptions);
-    }
-
-    public function createShipmentFormDataProvider()
-    {
-        return new ShipmentFormDataProvider(
-            $this->getRepository()->getShipmentById(),
-            $this->createAddressFormDataProvider(),
-            $this->getShipmentFacade(),
-
-        );
     }
 
     /**

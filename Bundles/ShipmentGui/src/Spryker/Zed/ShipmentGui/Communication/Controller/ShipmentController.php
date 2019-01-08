@@ -10,10 +10,12 @@ namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentFormTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentForm;
+use Spryker\Zed\ShipmentGui\ShipmentGuiConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -30,11 +32,11 @@ class ShipmentController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idShipment = $this->castId($request->query->get('id-shipment'));
+        $idSalesOrder = $this->castId($request->query->get(ShipmentGuiConfig::PARAM_ID_SALES_ORDER));
         $orderTransfer = $this
             ->getFactory()
-            ->getShipmentFacade()
-            ->findBy($idSalesOrder);
+            ->getSalesFacade()
+            ->findOrderByIdSalesOrder($idSalesOrder);
 
         if ($orderTransfer === null) {
             $this->addErrorMessage(sprintf(
@@ -42,20 +44,74 @@ class ShipmentController extends AbstractController
                 $idSalesOrder
             ));
 
+            return $this->redirectResponse(Url::generate('/sales')->build());
+        }
+
+        $idShipment = $this->castId($request->query->get(ShipmentGuiConfig::PARAM_ID_SHIPMENT));
+        /**
+         * @todo: Replace with real logic.
+         */
+        /** @var ShipmentTransfer $shipmentTransfer */
+        $shipmentTransfer = (function () use ($idShipment): ShipmentTransfer {
+            $spySalesShipment = \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery::create()
+                ->findOneByIdSalesShipment($idShipment);
+
+            $shipmentTransfer = new ShipmentTransfer();
+            $shipmentTransfer->setMethod((new ShipmentMethodTransfer())->setName($spySalesShipment->getName()));
+            $shipmentTransfer->setShippingAddress(
+                (new AddressTransfer())->fromArray(
+                    $spySalesShipment->getOrder()->getShippingAddress()->toArray(),
+                    true
+                )
+            );
+
+            return $shipmentTransfer;
+        })();
+
+        if ($shipmentTransfer === null) {
+            $this->addErrorMessage(sprintf(
+                'Shipment with #%d not found.',
+                $idShipment
+            ));
+
             return $this
                 ->redirectResponse(Url::generate('/sales')
                     ->build());
         }
 
-        $shipmentFormDataProvider = $this->getFactory()->createShipmentFormDataProvider();
+        /**
+         * @todo: Replace with real logic.
+         */
+        $shipmentFormTransfer = (function () use ($orderTransfer, $shipmentTransfer) {
+            $shipmentFormTransfer = new ShipmentFormTransfer();
+            $shipmentFormTransfer->setMethod($shipmentTransfer->getMethod());
+            $shipmentFormTransfer->setRequestedDeliveryDate($shipmentTransfer->getRequestedDeliveryDate());
+            $shipmentFormTransfer->setShippingAddress($shipmentTransfer->getShippingAddress());
+            $shipmentFormTransfer->setOrderItems($orderTransfer->getItems());
 
-        $shipmentFormTransfer = new ShipmentFormTransfer();
-        $shipmentFormTransfer->setOrderItems($orderTransfer->getItems());
+            return $shipmentFormTransfer;
+        })();
+        /**
+         * @todo: Replace with real logic.
+         */
+        $addressFormDataprovider = $this->getFactory()->createAddressFormDataProvider();
+        $shipmentFormOptions = (function () use ($orderTransfer, $addressFormDataprovider) {
+            $formOptions = array_merge(
+                [
+                    ShipmentForm::CHOICES_SHIPMENT_METHOD => [
+                        'Meth 1' => 1,
+                    ]
+                ],
+                $addressFormDataprovider->getOptions()
+            );
+
+            return $formOptions;
+        })();
 
         $shipmentForm = $this->getFactory()
             ->getShipmentForm(
-                $shipmentFormDataProvider->getTransferByIdShipment($idShipment),
-                $shipmentFormDataProvider->getOptions()
+                $shipmentFormTransfer,
+                $shipmentFormOptions
             )
             ->handleRequest($request);
 
@@ -69,16 +125,16 @@ class ShipmentController extends AbstractController
              * Add address for shipment
              */
 
-//            $this->addSuccessMessage('Address successfully updated.');
-//
-//            return $this->redirectResponse(
-//                Url::generate(
-//                    '/sales/detail',
-//                    [
-//                        SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder,
-//                    ]
-//                )->build()
-//            );
+            $this->addSuccessMessage('Address successfully updated.');
+
+            return $this->redirectResponse(
+                Url::generate(
+                    '/sales/detail',
+                    [
+                        SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder,
+                    ]
+                )->build()
+            );
         }
 
         return $this->viewResponse([

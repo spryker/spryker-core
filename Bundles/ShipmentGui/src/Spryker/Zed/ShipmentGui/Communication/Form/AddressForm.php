@@ -19,13 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-/**
- * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
- * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
- * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\Sales\SalesConfig getConfig()
- * @method \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface getRepository()
- */
 class AddressForm extends AbstractType
 {
     public const FIELD_SALUTATION = 'salutation';

@@ -208,6 +208,25 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     /**
      * @api
      *
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function querySalesOrderItemsWithShippingAddresses($idSalesOrder): SpySalesOrderItemQuery
+    {
+        $query = $this->getFactory()->createSalesOrderItemQuery()
+            ->setModelAlias('orderItem')
+            ->filterByFkSalesOrder($idSalesOrder)
+            ->innerJoinWith('orderItem.SpySalesShipment shipment')
+            ->innerJoinWith('shipment.SpySalesOrderAddress address')
+            ->innerJoinWith('address.Country shippingCountry');
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
      * @param int $idCustomer
      * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
      *
