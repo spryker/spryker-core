@@ -91,7 +91,7 @@ class Application implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * @internal Don't use this method unless you know why.
+     * @internal This method is called from the run() method and is for internal use only.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $type
