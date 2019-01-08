@@ -101,7 +101,8 @@ interface CompanyUnitAddressFacadeInterface
     /**
      * Specification:
      * - Finds a company unit address by id.
-     * - Extends returned company unit address with plugins.
+     * - Returns null if unit adress does not exist.
+     * - Expands company business unit with extra data using plugins.
      *
      * @api
      *

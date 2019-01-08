@@ -77,6 +77,7 @@ interface CompanyFacadeInterface
     /**
      * Specification:
      * - Finds a company by id.
+     * - Returns null if company does not exist.
      *
      * @api
      *

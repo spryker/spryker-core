@@ -155,15 +155,15 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
         $query = $this->getSpyCompanyBusinessUnitQuery()
             ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit);
 
-        $companyBusinessUnitEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+        $companyBusinessUnitEntity = $query->findOne();
 
-        if (!$companyBusinessUnitEntityTransfer) {
+        if (!$companyBusinessUnitEntity) {
             return null;
         }
 
         return $this->getFactory()
             ->createCompanyBusinessUnitMapper()
-            ->mapEntityTransferToBusinessUnitTransfer($companyBusinessUnitEntityTransfer, new CompanyBusinessUnitTransfer());
+            ->mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer($companyBusinessUnitEntity, new CompanyBusinessUnitTransfer());
     }
 
     /**

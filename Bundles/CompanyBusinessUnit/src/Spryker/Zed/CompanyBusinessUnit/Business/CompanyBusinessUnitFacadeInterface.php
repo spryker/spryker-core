@@ -154,6 +154,7 @@ interface CompanyBusinessUnitFacadeInterface
     /**
      * Specification:
      * - Finds company business unit by id.
+     * - Returns null if business unit does not exist.
      *
      * @api
      *
