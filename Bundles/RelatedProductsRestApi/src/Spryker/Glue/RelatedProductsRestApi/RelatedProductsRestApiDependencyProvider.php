@@ -59,7 +59,9 @@ class RelatedProductsRestApiDependencyProvider extends AbstractBundleDependencyP
     protected function addProductStorageClient(Container $container): Container
     {
         $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
-            return new RelatedProductsRestApiToProductStorageClientBridge($container->getLocator()->productStorage()->client());
+            return new RelatedProductsRestApiToProductStorageClientBridge(
+                $container->getLocator()->productStorage()->client()
+            );
         };
 
         return $container;

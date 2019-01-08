@@ -17,5 +17,5 @@ interface UpSellingProductsRestApiToProductRelationStorageClientInterface
     *
     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
     */
-    public function findUpSellingProducts(QuoteTransfer $quoteTransfer, string $localeName);
+    public function findUpSellingProducts(QuoteTransfer $quoteTransfer, $localeName);
 }

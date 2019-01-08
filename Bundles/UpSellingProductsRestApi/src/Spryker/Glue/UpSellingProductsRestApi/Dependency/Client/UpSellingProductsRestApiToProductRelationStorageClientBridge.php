@@ -30,7 +30,7 @@ class UpSellingProductsRestApiToProductRelationStorageClientBridge implements Up
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function findUpSellingProducts(QuoteTransfer $quoteTransfer, string $localeName)
+    public function findUpSellingProducts(QuoteTransfer $quoteTransfer, $localeName)
     {
         return $this->productRelationStorageClient->findUpSellingProducts($quoteTransfer, $localeName);
     }

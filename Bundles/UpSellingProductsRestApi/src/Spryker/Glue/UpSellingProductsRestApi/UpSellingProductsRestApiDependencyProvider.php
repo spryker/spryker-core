@@ -62,7 +62,9 @@ class UpSellingProductsRestApiDependencyProvider extends AbstractBundleDependenc
     protected function addProductStorageClient(Container $container): Container
     {
         $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
-            return new UpSellingProductsRestApiToProductStorageClientBridge($container->getLocator()->productStorage()->client());
+            return new UpSellingProductsRestApiToProductStorageClientBridge(
+                $container->getLocator()->productStorage()->client()
+            );
         };
 
         return $container;
@@ -76,7 +78,9 @@ class UpSellingProductsRestApiDependencyProvider extends AbstractBundleDependenc
     protected function addCartsRestApiClient(Container $container): Container
     {
         $container[static::CLIENT_CARTS_REST_API] = function (Container $container) {
-            return new UpSellingProductsRestApiToCartsRestApiClientBridge($container->getLocator()->cartsRestApi()->client());
+            return new UpSellingProductsRestApiToCartsRestApiClientBridge(
+                $container->getLocator()->cartsRestApi()->client()
+            );
         };
 
         return $container;
