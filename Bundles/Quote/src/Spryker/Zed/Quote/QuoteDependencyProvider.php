@@ -9,7 +9,7 @@ namespace Spryker\Zed\Quote;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Quote\Dependency\Facade\QuoteToPriceFacade;
+use Spryker\Zed\Quote\Dependency\Facade\QuoteToPriceFacadeBridge;
 use Spryker\Zed\Quote\Dependency\Facade\QuoteToPriceFacadeInterface;
 use Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeBridge;
 use Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceBridge;
@@ -95,8 +95,8 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPriceFacade(Container $container): Container
     {
-        $container[self::FACADE_PRICE] = function (Container $container): QuoteToPriceFacadeInterface {
-            return new QuoteToPriceFacade(
+        $container[static::FACADE_PRICE] = function (Container $container): QuoteToPriceFacadeInterface {
+            return new QuoteToPriceFacadeBridge(
                 $container->getLocator()->price()->facade()
             );
         };

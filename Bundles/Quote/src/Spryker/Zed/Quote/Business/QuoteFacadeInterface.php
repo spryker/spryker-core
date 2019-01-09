@@ -20,6 +20,7 @@ interface QuoteFacadeInterface
     /**
      * Specification:
      * - Creates new quote entity if it does not exist.
+     * - Validates quote by store, currency and price mode before saving.
      *
      * @api
      *
@@ -32,6 +33,7 @@ interface QuoteFacadeInterface
     /**
      * Specification:
      * - Updates existing quote entity from QuoteTransfer.
+     * - Validates quote by store, currency and price mode before saving.
      *
      * @api
      *

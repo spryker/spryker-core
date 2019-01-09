@@ -18,21 +18,11 @@ use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 
 class QuoteValidator implements QuoteValidatorInterface
 {
-    protected const MESSAGE_STORE_DATA_IS_MISSING = 'Store data is missing.';
-    protected const MESSAGE_PRICE_MODE_DATA_IS_MISSING = 'Price mode data is missing.';
-    protected const MESSAGE_PRICE_MODE_DATA_IS_INCORRECT = 'Price mode "%s" does not exist.';
-    protected const MESSAGE_CURRENCY_DATA_IS_MISSING = 'Currency data is missing.';
-    protected const MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'Currency with ISO code "%s" does not exist for given store.';
-
-    /**
-     * @var \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected $quoteTransfer;
-
-    /**
-     * @var \Generated\Shared\Transfer\QuoteValidationResponseTransfer
-     */
-    protected $quoteValidationResponseTransfer;
+    protected const MESSAGE_STORE_DATA_IS_MISSING = 'quote.validation.error.store_is_missing';
+    protected const MESSAGE_PRICE_MODE_DATA_IS_MISSING = 'quote.validation.error.price_mode_is_missing';
+    protected const MESSAGE_PRICE_MODE_DATA_IS_INCORRECT = 'quote.validation.error.price_mode_is_incorrect';
+    protected const MESSAGE_CURRENCY_DATA_IS_MISSING = 'quote.validation.error.currency_mode_is_missing';
+    protected const MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'quote.validation.error.currency_mode_is_incorrect';
 
     /**
      * @var \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface
@@ -48,10 +38,8 @@ class QuoteValidator implements QuoteValidatorInterface
      * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToPriceFacadeInterface $priceFacade
      */
-    public function __construct(
-        QuoteToStoreFacadeInterface $storeFacade,
-        QuoteToPriceFacadeInterface $priceFacade
-    ) {
+    public function __construct(QuoteToStoreFacadeInterface $storeFacade, QuoteToPriceFacadeInterface $priceFacade)
+    {
         $this->storeFacade = $storeFacade;
         $this->priceFacade = $priceFacade;
     }
@@ -63,107 +51,119 @@ class QuoteValidator implements QuoteValidatorInterface
      */
     public function validate(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
-        $this->initialize($quoteTransfer);
-        $this->validateStoreAndCurrency();
-        $this->validatePriceMode();
+        $quoteValidationResponseTransfer = $this->initQuoteValidationResponseTransfer();
+        $quoteValidationResponseTransfer = $this->validateStoreAndCurrency($quoteTransfer, $quoteValidationResponseTransfer);
+        $quoteValidationResponseTransfer = $this->validatePriceMode($quoteTransfer, $quoteValidationResponseTransfer);
 
-        return $this->quoteValidationResponseTransfer;
+        return $quoteValidationResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    protected function initialize(QuoteTransfer $quoteTransfer): void
-    {
-        $this->quoteTransfer = clone $quoteTransfer;
-
-        $this->quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
-            ->setIsValid(true)
-            ->setErrors(new ArrayObject());
-    }
-
-    /**
-     * @param string $message
-     * @param mixed ...$replacements
-     *
-     * @return void
-     */
-    protected function addValidationError(string $message, ...$replacements): void
-    {
-        if ($replacements) {
-            $message = vsprintf($message, $replacements);
-        }
-
-        $quoteErrorTransfer = (new QuoteErrorTransfer())->setMessage($message);
-        $this->quoteValidationResponseTransfer
-            ->addErrors($quoteErrorTransfer)
-            ->setIsValid(false);
-    }
-
-    /**
-     * @return void
-     */
-    protected function validateStoreAndCurrency(): void
-    {
-        $storeTransfer = $this->quoteTransfer->getStore();
+    protected function validateStoreAndCurrency(
+        QuoteTransfer $quoteTransfer,
+        QuoteValidationResponseTransfer $quoteValidationResponseTransfer
+    ): QuoteValidationResponseTransfer {
+        $storeTransfer = $quoteTransfer->getStore();
 
         if (!$storeTransfer || !$storeTransfer->getName()) {
-            $this->addValidationError(static::MESSAGE_STORE_DATA_IS_MISSING);
-
-            return;
+            return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_STORE_DATA_IS_MISSING);
         }
 
         try {
             $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());
         } catch (StoreNotFoundException $exception) {
-            $this->addValidationError($exception->getMessage());
-
-            return;
+            return $this->addValidationError($quoteValidationResponseTransfer, $exception->getMessage());
         }
 
-        $this->validateCurrency($storeTransfer);
+        return $this->validateCurrency($quoteTransfer, $storeTransfer, $quoteValidationResponseTransfer);
     }
 
     /**
-     * @return void
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    protected function validatePriceMode(): void
-    {
-        $priceMode = $this->quoteTransfer->getPriceMode();
+    protected function validateCurrency(
+        QuoteTransfer $quoteTransfer,
+        StoreTransfer $storeTransfer,
+        QuoteValidationResponseTransfer $quoteValidationResponseTransfer
+    ): QuoteValidationResponseTransfer {
+        $currencyTransfer = $quoteTransfer->getCurrency();
+        $currencyCode = $currencyTransfer->getCode();
+
+        if (!$currencyTransfer || !$currencyCode) {
+            return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_CURRENCY_DATA_IS_MISSING);
+        }
+
+        if (array_search($currencyCode, $storeTransfer->getAvailableCurrencyIsoCodes()) === false) {
+            return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_CURRENCY_DATA_IS_INCORRECT, $currencyCode);
+        }
+
+        return $quoteValidationResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    protected function validatePriceMode(
+        QuoteTransfer $quoteTransfer,
+        QuoteValidationResponseTransfer $quoteValidationResponseTransfer
+    ): QuoteValidationResponseTransfer {
+        $priceMode = $quoteTransfer->getPriceMode();
 
         if (!$priceMode) {
-            $this->addValidationError(static::MESSAGE_PRICE_MODE_DATA_IS_MISSING);
-
-            return;
+            return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_PRICE_MODE_DATA_IS_MISSING);
         }
 
         $availablePiceModes = $this->priceFacade->getPriceModes();
 
         if (!isset($availablePiceModes[$priceMode])) {
-            $this->addValidationError(static::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT, $priceMode);
+            return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT, $priceMode);
         }
+
+        return $quoteValidationResponseTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    protected function validateCurrency(StoreTransfer $storeTransfer): void
+    protected function initQuoteValidationResponseTransfer(): QuoteValidationResponseTransfer
     {
-        $currencyTransfer = $this->quoteTransfer->getCurrency();
-        $currencyCode = $currencyTransfer->getCode();
+        return (new QuoteValidationResponseTransfer())
+            ->setIsSuccess(true)
+            ->setErrors(new ArrayObject());
+    }
 
-        if (!$currencyTransfer || !$currencyCode) {
-            $this->addValidationError(static::MESSAGE_CURRENCY_DATA_IS_MISSING);
-
-            return;
+    /**
+     * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
+     * @param string $message
+     * @param mixed ...$replacements
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    protected function addValidationError(
+        QuoteValidationResponseTransfer $quoteValidationResponseTransfer,
+        string $message,
+        ...$replacements
+    ): QuoteValidationResponseTransfer {
+        if ($replacements) {
+            $message = vsprintf($message, $replacements);
         }
 
-        if (array_search($currencyCode, $storeTransfer->getAvailableCurrencyIsoCodes()) === false) {
-            $this->addValidationError(static::MESSAGE_CURRENCY_DATA_IS_INCORRECT, $currencyCode);
-        }
+        $quoteErrorTransfer = (new QuoteErrorTransfer())->setMessage($message);
+
+        return $quoteValidationResponseTransfer
+            ->addErrors($quoteErrorTransfer)
+            ->setIsSuccess(false);
     }
 }

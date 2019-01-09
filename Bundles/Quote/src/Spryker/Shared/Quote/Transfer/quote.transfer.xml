@@ -34,7 +34,7 @@
     </transfer>
 
     <transfer name="QuoteValidationResponse">
-        <property name="isValid" type="bool"/>
+        <property name="isSuccess" type="bool"/>
         <property name="errors" type="QuoteError[]"/>
     </transfer>
 

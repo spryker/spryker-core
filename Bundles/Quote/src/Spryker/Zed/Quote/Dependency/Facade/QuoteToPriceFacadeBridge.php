@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Quote\Dependency\Facade;
 
-class QuoteToPriceFacade implements QuoteToPriceFacadeInterface
+class QuoteToPriceFacadeBridge implements QuoteToPriceFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Price\Business\PriceFacadeInterface
