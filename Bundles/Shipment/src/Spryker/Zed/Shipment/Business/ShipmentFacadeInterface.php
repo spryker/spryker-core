@@ -84,7 +84,8 @@ interface ShipmentFacadeInterface
      * - Selects shipment method price for the provided currency and current store.
      * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
      * - Excludes shipment methods which do not have a valid price as a result.
-     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin requirements.
+     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin
+     * requirements.
      *
      * @api
      *
@@ -103,7 +104,8 @@ interface ShipmentFacadeInterface
      * - Selects shipment method price for the provided currency and current store.
      * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
      * - Excludes shipment methods which do not have a valid price as a result.
-     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin requirements.
+     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin
+     * requirements.
      *
      * @api
      *
@@ -120,7 +122,8 @@ interface ShipmentFacadeInterface
      * - Selects shipment method price for the provided currency and current store.
      * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
      * - Excludes shipment methods which do not have a valid price as a result.
-     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin requirements.
+     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin
+     * requirements.
      *
      * @api
      *
@@ -243,9 +246,12 @@ interface ShipmentFacadeInterface
     /**
      * Specification:
      * - Transforms provided ShipmentMethod entity into ShipmentMethod transfer object.
-     * - ShipmentMethod transfer object's CarrierName field is populated using ShipmentMethod entity's carrier connection.
-     * - ShipmentMethod entity related ShipmentMethodPrice entities are transformed to MoneyValue transfer object collection.
-     * - Currency transfer object in MoneyValue transfer objects is populated using the corresponding ShipmentMethodPrice entity's currency reference.
+     * - ShipmentMethod transfer object's CarrierName field is populated using ShipmentMethod entity's carrier
+     * connection.
+     * - ShipmentMethod entity related ShipmentMethodPrice entities are transformed to MoneyValue transfer object
+     * collection.
+     * - Currency transfer object in MoneyValue transfer objects is populated using the corresponding
+     * ShipmentMethodPrice entity's currency reference.
      *
      * @api
      *
@@ -276,4 +282,16 @@ interface ShipmentFacadeInterface
      * @return bool
      */
     public function isShipmentMethodActive($idShipmentMethod);
+
+    /**
+     * Specification:
+     * - Retrieves shipment groups.
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    public function getShipmentGroups(ArrayObject $itemsCollection);
 }

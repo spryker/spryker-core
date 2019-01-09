@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ShipmentGroupsTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Kernel\AbstractService;
-use \ArrayObject;
+use ArrayObject;
 
 /**
  * @method \Spryker\Service\Shipment\ShipmentServiceFactory getFactory()
@@ -23,21 +23,22 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
      *
      * @api
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfersCollection
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupsTransfer
      */
-    public function groupItemsByShipment(ArrayObject $itemTransfers): ShipmentGroupsTransfer
+    public function groupItemsByShipment(ArrayObject $itemTransfersCollection): ShipmentGroupsTransfer
     {
         $shipmentGroupsArray = new ArrayObject();
 
-        foreach ($itemTransfers as $itemTransfer) {
+        foreach ($itemTransfersCollection as $itemTransfer) {
             $itemTransfer->requireShipment();
 
             $hash = $this->getItemHash($itemTransfer->getShipment());
             if (!isset($shipmentGroupsArray[$hash])) {
                 $shipmentGroupsArray[$hash] = (new ShipmentGroupTransfer())
-                    ->setShipment($itemTransfer->getShipment());
+                    ->setShipment($itemTransfer->getShipment())
+                    ->setHash($hash);
             }
 
             $shipmentGroupsArray[$hash]->addItem($itemTransfer);

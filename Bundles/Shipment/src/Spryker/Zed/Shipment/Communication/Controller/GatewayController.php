@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\Shipment\Communication\Controller;
 
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
+use Generated\Shared\Transfer\ShipmentGroupsTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -35,5 +38,17 @@ class GatewayController extends AbstractGatewayController
     public function getAvailableMethodsByShipmentAction(QuoteTransfer $quoteTransfer)
     {
         return $this->getFacade()->getAvailableMethodsByShipment($quoteTransfer);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     */
+    public function getShipmentGroupsAction(ItemCollectionTransfer $itemCollectionTransfer): ShipmentGroupsTransfer
+    {
+        $shipmentGroups = $this->getFacade()->getShipmentGroups($itemCollectionTransfer->getItems());
+
+        return $shipmentGroups;
     }
 }

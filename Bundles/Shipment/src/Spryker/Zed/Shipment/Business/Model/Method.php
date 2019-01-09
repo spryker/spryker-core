@@ -141,10 +141,10 @@ class Method implements MethodInterface
      */
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupsTransfer
     {
-        $shipmentGroupTransferArray = $this->getShipmentGroupWithAvailableMethods($quoteTransfer);
+        $shipmentGroupsTransfer = $this->getShipmentGroupWithAvailableMethods($quoteTransfer);
 //        $shipmentGroupTransferArray = $this->applyFilters($shipmentGroupTransferArray, $quoteTransfer);
 
-        return $shipmentGroupTransferArray;
+        return $shipmentGroupsTransfer;
     }
 
     /**

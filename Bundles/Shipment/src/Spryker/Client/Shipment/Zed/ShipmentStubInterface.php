@@ -7,7 +7,10 @@
 
 namespace Spryker\Client\Shipment\Zed;
 
+use \ArrayObject;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupsTransfer;
 
 interface ShipmentStubInterface
 {
@@ -21,6 +24,13 @@ interface ShipmentStubInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer);
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupsTransfer
+     */
+    public function getShipmentGroups(ItemCollectionTransfer $itemCollectionTransfer);
 
     /**
      * @api

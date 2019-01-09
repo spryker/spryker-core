@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\Shipment;
 
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupsTransfer;
 
 interface ShipmentClientInterface
 {
@@ -30,4 +32,11 @@ interface ShipmentClientInterface
      * @return \Generated\Shared\Transfer\ShipmentGroupsTransfer
      */
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer);
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupsTransfer
+     */
+    public function getShipmentGroups(ItemCollectionTransfer $itemCollectionTransfer);
 }
