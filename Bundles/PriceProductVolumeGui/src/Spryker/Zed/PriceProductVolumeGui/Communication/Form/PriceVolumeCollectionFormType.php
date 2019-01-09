@@ -192,6 +192,8 @@ class PriceVolumeCollectionFormType extends AbstractType
                         ->buildViolation(sprintf('Quantity "%d" already exists.', $priceProductVolumeItemTransfer->getQuantity()))
                         ->atPath(PriceVolumeFormType::FIELD_QUANTITY)
                         ->addViolation();
+
+                    break;
                 }
             }
 
