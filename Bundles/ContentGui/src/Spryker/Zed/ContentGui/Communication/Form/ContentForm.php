@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ContentGui\Communication\Form;
 
-use Generated\Shared\Transfer\LocalizedContentTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -24,13 +23,11 @@ class ContentForm extends AbstractType
 {
     public const FIELD_NAME = 'name';
     public const FIELD_DESCRIPTION = 'description';
-    public const FIELD_CONTENT_CATEGORY_CANDIDATE_KEY = 'content_category_candidate_key';
     public const FIELD_CONTENT_TERM_CANDIDATE_KEY = 'content_term_candidate_key';
     public const FIELD_CONTENT_TYPE_CANDIDATE_KEY = 'content_type_candidate_key';
     public const FIELD_LOCALES = 'localizedContents';
 
     public const OPTION_AVAILABLE_LOCALES = 'OPTION_AVAILABLE_LOCALES';
-    public const OPTION_CONTENT_CATEGORY_CANDIDATE_KEY = 'OPTION_CONTENT_CATEGORY_CANDIDATE_KEY';
     public const OPTION_CONTENT_TERM_CANDIDATE_KEY = 'OPTION_CONTENT_TERM_CANDIDATE_KEY';
     public const OPTION_CONTENT_TYPE_CANDIDATE_KEY = 'OPTION_CONTENT_TYPE_CANDIDATE_KEY';
     public const OPTION_CONTENT_ITEM_TERM_FORM = 'OPTION_CONTENT_ITEM_TERM_FORM';
@@ -38,8 +35,6 @@ class ContentForm extends AbstractType
     public const OPTION_CONTENT_ITEM_REVERS_TRANSFORM = 'OPTION_CONTENT_ITEM_REVERS_TRANSFORM';
 
     public const TYPE_DATA = 'data';
-
-    use ArrayObjectTransformerTrait;
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -49,7 +44,6 @@ class ContentForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(static::OPTION_AVAILABLE_LOCALES);
-        $resolver->setRequired(static::OPTION_CONTENT_CATEGORY_CANDIDATE_KEY);
         $resolver->setRequired(static::OPTION_CONTENT_TERM_CANDIDATE_KEY);
         $resolver->setRequired(static::OPTION_CONTENT_TYPE_CANDIDATE_KEY);
         $resolver->setRequired(static::OPTION_CONTENT_ITEM_TERM_FORM);
@@ -69,7 +63,6 @@ class ContentForm extends AbstractType
             ->addNameField($builder)
             ->addDescriptionField($builder)
             ->addLocaleCollection($builder, $options)
-            ->addContentCategoryCandidateKey($builder, $options[static::OPTION_CONTENT_CATEGORY_CANDIDATE_KEY])
             ->addContentTermCandidateKey($builder, $options[static::OPTION_CONTENT_TERM_CANDIDATE_KEY])
             ->addContentTypeCandidateKey($builder, $options[static::OPTION_CONTENT_TYPE_CANDIDATE_KEY]);
     }
@@ -81,7 +74,7 @@ class ContentForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_NAME, TextType::class, [
+        $builder->add(static::FIELD_NAME, TextType::class, [
             'attr' => [
                 'placeholder' => 'Name',
             ],
@@ -99,32 +92,13 @@ class ContentForm extends AbstractType
      */
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_DESCRIPTION, TextType::class, [
+        $builder->add(static::FIELD_DESCRIPTION, TextType::class, [
             'attr' => [
                 'placeholder' => 'Description',
             ],
             'label' => false,
             'constraints' => $this->getFieldDefaultConstraints(),
         ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string $value
-     *
-     * @return $this
-     */
-    protected function addContentCategoryCandidateKey(FormBuilderInterface $builder, string $value): self
-    {
-        $builder->add(
-            static::FIELD_CONTENT_CATEGORY_CANDIDATE_KEY,
-            HiddenType::class,
-            [
-                'data' => $value,
-            ]
-        );
 
         return $this;
     }
@@ -175,11 +149,10 @@ class ContentForm extends AbstractType
      */
     protected function addLocaleCollection(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_LOCALES, CollectionType::class, [
+        $builder->add(static::FIELD_LOCALES, CollectionType::class, [
             'entry_type' => LocalizedContentForm::class,
             'entry_options' => [
                 'label' => false,
-                'data_class' => LocalizedContentTransfer::class,
                 'attr' => [
                     'rows' => 10,
                 ],
@@ -188,9 +161,6 @@ class ContentForm extends AbstractType
                 static::OPTION_CONTENT_ITEM_REVERS_TRANSFORM => $options[static::OPTION_CONTENT_ITEM_REVERS_TRANSFORM],
             ],
         ]);
-
-        $builder->get(self::FIELD_LOCALES)
-            ->addModelTransformer($this->createArrayObjectModelTransformer());
 
         return $this;
     }

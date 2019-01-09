@@ -11,7 +11,7 @@
     "spryker/symfony": "^3.2.0",
     "spryker/util-text": "^1.2.1",
     "spryker/util-date-time": "^1.0.2",
-    "spryker/content-item": "^0.1.0",
+    "spryker/content-product-connector": "^0.1.0",
     "spryker/locale": "^3.0.0"
   },
   "require-dev": {

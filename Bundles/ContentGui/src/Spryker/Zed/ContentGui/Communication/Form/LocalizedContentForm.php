@@ -11,7 +11,9 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\ContentGui\Communication\ContentGuiCommunicationFactory getFactory()
@@ -21,9 +23,7 @@ class LocalizedContentForm extends AbstractType
     public const FIELD_FK_LOCALE = 'fk_locale';
     public const FIELD_NAME = 'locale_name';
 
-    public const FIELD_PARAMETRES = 'parameters';
-
-    use ArrayObjectTransformerTrait;
+    public const FIELD_PARAMETERS = 'parameters';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -35,6 +35,19 @@ class LocalizedContentForm extends AbstractType
         $resolver->setRequired(ContentForm::OPTION_CONTENT_ITEM_TERM_FORM);
         $resolver->setRequired(ContentForm::OPTION_CONTENT_ITEM_TRANSFORM);
         $resolver->setRequired(ContentForm::OPTION_CONTENT_ITEM_REVERS_TRANSFORM);
+
+        $resolver->setDefaults([
+            'required' => true,
+            'validation_groups' => function (FormInterface $form) {
+                $submittedData = $form->getData();
+
+                if ($submittedData->getFkLocale() !== null) {
+                    return null;
+                }
+
+                return [Constraint::DEFAULT_GROUP];
+            },
+        ]);
     }
 
     /**
@@ -45,9 +58,9 @@ class LocalizedContentForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addParameterCollection($builder, $options);
-        $this->addLocaleName($builder);
         $this->addFkLocale($builder);
+        $this->addLocaleName($builder);
+        $this->addParameterCollection($builder, $options);
     }
 
     /**
@@ -57,7 +70,7 @@ class LocalizedContentForm extends AbstractType
      */
     protected function addLocaleName(FormBuilderInterface $builder): self
     {
-        $builder->add(static::FIELD_FK_LOCALE, HiddenType::class);
+        $builder->add(static::FIELD_NAME, HiddenType::class);
 
         return $this;
     }
@@ -69,7 +82,7 @@ class LocalizedContentForm extends AbstractType
      */
     protected function addFkLocale(FormBuilderInterface $builder): self
     {
-        $builder->add(static::FIELD_NAME, HiddenType::class);
+        $builder->add(static::FIELD_FK_LOCALE, HiddenType::class);
 
         return $this;
     }
@@ -83,14 +96,14 @@ class LocalizedContentForm extends AbstractType
     protected function addParameterCollection(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            self::FIELD_PARAMETRES,
+            static::FIELD_PARAMETERS,
             $options[ContentForm::OPTION_CONTENT_ITEM_TERM_FORM],
             [
                 'label' => false,
             ]
         );
 
-        $builder->get(self::FIELD_PARAMETRES)
+        $builder->get(static::FIELD_PARAMETERS)
             ->addModelTransformer(new CallbackTransformer(
                 $options[ContentForm::OPTION_CONTENT_ITEM_TRANSFORM],
                 $options[ContentForm::OPTION_CONTENT_ITEM_REVERS_TRANSFORM]

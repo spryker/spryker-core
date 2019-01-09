@@ -7,7 +7,6 @@
         <column name="description" required="false" type="VARCHAR" size="255"/>
         <column name="content_term_candidate_key" required="true" type="VARCHAR" size="255"/>
         <column name="content_type_candidate_key" required="true" type="VARCHAR" size="255"/>
-        <column name="content_category_candidate_key" required="true" type="VARCHAR" size="255"/>
         <column name="uuid" required="false" type="VARCHAR" size="36"/>
         <unique name="spy_content-unique-uuid">
             <unique-column name="uuid"/>

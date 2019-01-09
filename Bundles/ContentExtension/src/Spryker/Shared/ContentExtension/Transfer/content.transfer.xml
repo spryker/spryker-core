@@ -9,7 +9,6 @@
         <property name="description" type="string" />
         <property name="contentTermCandidateKey" type="string" />
         <property name="contentTypeCandidateKey" type="string" />
-        <property name="contentCategoryCandidateKey" type="string" />
         <property name="localizedContents" type="LocalizedContent[]" singular="localizedContent" />
         <property name="uuid" type="string" />
     </transfer>

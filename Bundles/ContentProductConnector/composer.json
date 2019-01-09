@@ -1,7 +1,7 @@
 {
-  "name": "spryker/content-item",
+  "name": "spryker/content-product-connector",
   "type": "library",
-  "description": "ContentItem module",
+  "description": "ContentProductConnector module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",

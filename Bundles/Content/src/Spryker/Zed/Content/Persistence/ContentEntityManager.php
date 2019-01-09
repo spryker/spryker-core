@@ -35,10 +35,15 @@ class ContentEntityManager extends AbstractEntityManager implements ContentEntit
                 ->filterByFkContent($contentTransfer->getIdContent())
                 ->filterByFkLocale($localizedContent->getFkLocale())
                 ->findOneOrCreate();
-            $contentLocalizedEntity->fromArray($localizedContent->toArray());
 
+            if ($localizedContent->getParameters() == null) {
+                $spyContentEntity->removeSpyContentLocalized($contentLocalizedEntity);
+                continue;
+            }
+            $contentLocalizedEntity->fromArray($localizedContent->toArray());
             $spyContentEntity->addSpyContentLocalized($contentLocalizedEntity);
         }
+
         $spyContentEntity->save();
 
         return $this->getFactory()->createContentMapper()->mapContentEntityToTransfer($spyContentEntity);
