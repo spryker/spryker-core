@@ -90,7 +90,7 @@ class CmsBlockProductDataProvider
             ->queryProductAbstractWithName($idLocale)
             ->select([
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-                SpyProductAbstractTableMap::COL_SKU
+                SpyProductAbstractTableMap::COL_SKU,
             ])
             ->find();
 
