@@ -24,7 +24,7 @@ class UpSellingProductsForGuestCartResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createGuestCartUpSellingProductsReader()
+            ->createUpSellingProductsReader()
             ->readUpSellingProducts($restRequest);
     }
 }

@@ -43,7 +43,7 @@ class UpSellingProductsForCartResourceRoutePlugin extends AbstractPlugin impleme
      */
     public function getResourceType(): string
     {
-        return UpSellingProductsRestApiConfig::RESOURCE_UP_SELLING_PRODUCTS;
+        return UpSellingProductsRestApiConfig::UP_SELLING_PRODUCTS_RELATIONSHIP_NAME;
     }
 
     /**

@@ -18,7 +18,7 @@ use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToProductRelationStorageClientInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-abstract class UpSellingProductReader implements UpSellingProductReaderInterface
+class UpSellingProductReader implements UpSellingProductReaderInterface
 {
     /**
      * @var \Spryker\Glue\UpSellingProductsRestApi\Processor\Reader\QuoteReaderInterface
@@ -102,7 +102,11 @@ abstract class UpSellingProductReader implements UpSellingProductReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    abstract protected function findParentResourceByType(RestRequestInterface $restRequest): ?RestResourceInterface;
+    protected function findParentResourceByType(RestRequestInterface $restRequest): ?RestResourceInterface
+    {
+        return $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_CARTS)
+            ?? $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_GUEST_CARTS);
+    }
 
     /**
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer

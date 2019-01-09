@@ -36,11 +36,11 @@ class AnonymousCustomerUniqueIdValidator implements AnonymousCustomerUniqueIdVal
      */
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
-        if (!$httpRequest->headers->has(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID)) {
+        if ($this->isAnonymousHeaderSet($httpRequest)) {
             return null;
         }
 
-        if (empty($httpRequest->headers->get(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID))
+        if (!$this->isAnonymousHeaderSet($httpRequest)
             && in_array($restRequest->getResource()->getType(), $this->config->getGuestCartResources(), true)
         ) {
             return (new RestErrorMessageTransfer())
@@ -50,5 +50,16 @@ class AnonymousCustomerUniqueIdValidator implements AnonymousCustomerUniqueIdVal
         }
 
         return null;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
+     *
+     * @return bool
+     */
+    protected function isAnonymousHeaderSet(Request $httpRequest): bool
+    {
+        return $httpRequest->headers->has(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID)
+            && $httpRequest->headers->get(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID);
     }
 }
