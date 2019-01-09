@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\Customer;
 
-use Spryker\Client\Customer\Model\CustomerAddress;
-use Spryker\Client\Customer\Model\CustomerSecuredPattern;
-use Spryker\Client\Customer\Model\CustomerSecuredPatternInterface;
+use Spryker\Client\Customer\Customer\CustomerAddress;
+use Spryker\Client\Customer\Customer\CustomerSecuredPattern;
+use Spryker\Client\Customer\Customer\CustomerSecuredPatternInterface;
 use Spryker\Client\Customer\Session\CustomerSession;
 use Spryker\Client\Customer\Zed\CustomerStub;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -28,7 +28,7 @@ class CustomerFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Customer\Model\CustomerAddressInterface
+     * @return \Spryker\Client\Customer\Customer\CustomerAddressInterface
      */
     public function createCustomerAddress()
     {
@@ -75,7 +75,7 @@ class CustomerFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Customer\Model\CustomerSecuredPatternInterface
+     * @return \Spryker\Client\Customer\Customer\CustomerSecuredPatternInterface
      */
     public function createCustomerSecuredPattern(): CustomerSecuredPatternInterface
     {
