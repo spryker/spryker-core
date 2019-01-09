@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Model\Address;
+namespace Spryker\Zed\Sales\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 
-interface OrderAddressUpdaterInterface
+interface SalesOrderAddressMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param int $idAddress
      *
-     * @return bool
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
      */
-    public function update(AddressTransfer $addressTransfer, $idAddress);
+    public function mapAddressTransferToSalesOrderAddressEntity(AddressTransfer $addressTransfer): SpySalesOrderAddress;
 }
