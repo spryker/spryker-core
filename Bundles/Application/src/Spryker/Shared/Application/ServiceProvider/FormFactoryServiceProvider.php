@@ -11,7 +11,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Kernel\ContainerGlobals;
-use Symfony\Bridge\Twig\Form\TwigRenderer;
+use Symfony\Component\Form\FormRenderer;
 use Twig\RuntimeLoader\FactoryRuntimeLoader;
 use Twig_Environment;
 
@@ -32,7 +32,7 @@ class FormFactoryServiceProvider implements ServiceProviderInterface
         $app['twig'] = $app->share(
             $app->extend('twig', function (Twig_Environment $twig) use ($app) {
                 $data = [
-                    TwigRenderer::class => function () use ($app) {
+                    FormRenderer::class => function () use ($app) {
                         return $app['twig.form.renderer'];
                     },
                 ];
