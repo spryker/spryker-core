@@ -17,6 +17,7 @@ class NavigationTreesResourceRoutePlugin extends AbstractPlugin implements Resou
 {
     /**
      * {@inheritdoc}
+     *  - Configures available actions for navigation-trees resource.
      *
      * @api
      *
