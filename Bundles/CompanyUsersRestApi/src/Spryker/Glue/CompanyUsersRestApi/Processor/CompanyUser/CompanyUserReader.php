@@ -10,12 +10,14 @@ namespace Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig;
 use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class CompanyUserReader implements CompanyUserReaderInterface
 {
@@ -56,6 +58,12 @@ class CompanyUserReader implements CompanyUserReaderInterface
      */
     public function getCompanyUsersByCustomerReference(RestRequestInterface $restRequest): RestResponseInterface
     {
+        $idCompanyUser = $restRequest->getResource()->getId();
+
+        if ($idCompanyUser !== null) {
+            return $this->buildNotImplementedErrorResponse();
+        }
+
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
         $companyUserCollectionTransfer = $this->companyUserClient->getActiveCompanyUsersByCustomerReference($customerTransfer);
 
@@ -84,5 +92,18 @@ class CompanyUserReader implements CompanyUserReaderInterface
         }
 
         return $restResponse;
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function buildNotImplementedErrorResponse(): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_NOT_IMPLEMENTED)
+            ->setCode(CompanyUsersRestApiConfig::RESPONSE_CODE_RESOURCE_NOT_IMPLEMENTED)
+            ->setDetail(CompanyUsersRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED);
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
 }
