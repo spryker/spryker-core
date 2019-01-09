@@ -36,14 +36,14 @@ class AnonymousCustomerUniqueIdValidator implements AnonymousCustomerUniqueIdVal
      */
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
-        if ($this->isAnonymousHeaderSet($httpRequest) && !$this->isAnonymousHeaderRequired($restRequest)) {
-            return null;
+        if (!$this->isAnonymousHeaderSet($httpRequest) && $this->isAnonymousHeaderRequired($restRequest)) {
+            return (new RestErrorMessageTransfer())
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setCode(CartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
+                ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
         }
 
-        return (new RestErrorMessageTransfer())
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
+        return null;
     }
 
     /**

@@ -29,7 +29,7 @@ class UpSellingProductsForCartResourceRoutePlugin extends AbstractPlugin impleme
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection->addGet(UpSellingProductsRestApiConfig::ACTION_UP_SELLING_PRODUCTS_GET, false);
+        $resourceRouteCollection->addGet(UpSellingProductsRestApiConfig::ACTION_UP_SELLING_PRODUCTS_GET);
 
         return $resourceRouteCollection;
     }
