@@ -17,6 +17,18 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class UpSellingProductsForGuestCartResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieves list of all up-selling products of items in guest cart."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }]
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

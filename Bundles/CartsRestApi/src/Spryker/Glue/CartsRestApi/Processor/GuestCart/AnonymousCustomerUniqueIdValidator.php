@@ -41,7 +41,8 @@ class AnonymousCustomerUniqueIdValidator implements AnonymousCustomerUniqueIdVal
         }
 
         if (!$this->isAnonymousHeaderSet($httpRequest)
-            && in_array($restRequest->getResource()->getType(), $this->config->getGuestCartResources(), true)
+            && (in_array($restRequest->getResource()->getType(), $this->config->getGuestCartResources(), true)
+            || $this->isParentResourceBelongsToGuestCartResources($restRequest))
         ) {
             return (new RestErrorMessageTransfer())
                 ->setStatus(Response::HTTP_BAD_REQUEST)
@@ -61,5 +62,21 @@ class AnonymousCustomerUniqueIdValidator implements AnonymousCustomerUniqueIdVal
     {
         return $httpRequest->headers->has(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID)
             && $httpRequest->headers->get(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
+    protected function isParentResourceBelongsToGuestCartResources(RestRequestInterface $restRequest): bool
+    {
+        foreach ($this->config->getGuestCartResources() as $resource) {
+            if (in_array($restRequest->findParentResourceByType($resource)->getType(), $this->config->getGuestCartResources(), true)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

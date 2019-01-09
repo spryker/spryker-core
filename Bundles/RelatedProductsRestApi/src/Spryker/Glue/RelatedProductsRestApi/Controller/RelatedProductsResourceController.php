@@ -17,6 +17,18 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class RelatedProductsResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieves list of all related products of abstract product."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }]
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
