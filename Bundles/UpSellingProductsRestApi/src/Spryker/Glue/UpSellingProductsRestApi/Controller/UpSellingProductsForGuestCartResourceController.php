@@ -23,8 +23,9 @@ class UpSellingProductsForGuestCartResourceController extends AbstractController
      *              "Retrieves list of all up-selling products of items in guest cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "name": "X-Anonymous-Customer-Unique-Id",
+     *              "in": "header",
+     *              "required": true
      *          }]
      *     }
      * })
@@ -36,7 +37,7 @@ class UpSellingProductsForGuestCartResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createUpSellingProductsReader()
+            ->createUpSellingProductReader()
             ->readUpSellingProducts($restRequest);
     }
 }

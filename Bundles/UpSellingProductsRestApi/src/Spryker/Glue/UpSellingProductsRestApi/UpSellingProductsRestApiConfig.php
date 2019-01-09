@@ -11,7 +11,7 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class UpSellingProductsRestApiConfig extends AbstractBundleConfig
 {
-    public const UP_SELLING_PRODUCTS_RELATIONSHIP_NAME = 'up-selling-products';
+    public const RELATIONSHIP_NAME_UP_SELLING_PRODUCTS = 'up-selling-products';
     public const CONTROLLER_CART_UP_SELLING_PRODUCTS = 'up-selling-products-for-cart-resource';
     public const CONTROLLER_GUEST_CART_UP_SELLING_PRODUCTS = 'up-selling-products-for-guest-cart-resource';
     public const ACTION_UP_SELLING_PRODUCTS_GET = 'get';

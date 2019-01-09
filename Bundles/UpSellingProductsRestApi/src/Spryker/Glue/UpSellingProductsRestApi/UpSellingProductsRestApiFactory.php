@@ -29,7 +29,7 @@ class UpSellingProductsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\UpSellingProductsRestApi\Processor\Reader\UpSellingProductReaderInterface
      */
-    public function createUpSellingProductsReader(): UpSellingProductReaderInterface
+    public function createUpSellingProductReader(): UpSellingProductReaderInterface
     {
         return new UpSellingProductReader(
             $this->createQuoteReader(),

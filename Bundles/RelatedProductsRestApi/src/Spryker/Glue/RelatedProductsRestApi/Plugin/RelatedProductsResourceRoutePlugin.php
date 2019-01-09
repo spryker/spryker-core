@@ -43,7 +43,7 @@ class RelatedProductsResourceRoutePlugin extends AbstractPlugin implements Resou
      */
     public function getResourceType(): string
     {
-        return RelatedProductsRestApiConfig::RESOURCE_RELATED_PRODUCTS;
+        return RelatedProductsRestApiConfig::RELATIONSHIP_NAME_RELATED_PRODUCTS;
     }
 
     /**
