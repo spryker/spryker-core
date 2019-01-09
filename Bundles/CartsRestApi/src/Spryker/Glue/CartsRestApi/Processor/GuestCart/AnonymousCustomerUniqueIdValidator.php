@@ -36,21 +36,14 @@ class AnonymousCustomerUniqueIdValidator implements AnonymousCustomerUniqueIdVal
      */
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
-        if ($this->isAnonymousHeaderSet($httpRequest)) {
+        if ($this->isAnonymousHeaderSet($httpRequest) && !$this->isAnonymousHeaderRequired($restRequest)) {
             return null;
         }
 
-        if (!$this->isAnonymousHeaderSet($httpRequest)
-            && (in_array($restRequest->getResource()->getType(), $this->config->getGuestCartResources(), true)
-            || $this->isParentResourceBelongsToGuestCartResources($restRequest))
-        ) {
-            return (new RestErrorMessageTransfer())
-                ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setCode(CartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
-                ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
-        }
-
-        return null;
+        return (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
     }
 
     /**
@@ -69,10 +62,14 @@ class AnonymousCustomerUniqueIdValidator implements AnonymousCustomerUniqueIdVal
      *
      * @return bool
      */
-    protected function isParentResourceBelongsToGuestCartResources(RestRequestInterface $restRequest): bool
+    protected function isAnonymousHeaderRequired(RestRequestInterface $restRequest): bool
     {
+        if (in_array($restRequest->getResource()->getType(), $this->config->getGuestCartResources(), true)) {
+            return true;
+        }
+
         foreach ($this->config->getGuestCartResources() as $resource) {
-            if (in_array($restRequest->findParentResourceByType($resource)->getType(), $this->config->getGuestCartResources(), true)) {
+            if ($restRequest->findParentResourceByType($resource)) {
                 return true;
             }
         }
