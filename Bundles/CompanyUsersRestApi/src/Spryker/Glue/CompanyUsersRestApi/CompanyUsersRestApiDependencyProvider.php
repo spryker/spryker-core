@@ -18,8 +18,6 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
 {
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
 
-    public const PLUGINS_COMPANY_USER_ATTRIBUTES_MAPPER = 'PLUGINS_COMPANY_USER_ATTRIBUTES_MAPPER';
-
     /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
@@ -29,7 +27,6 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::provideDependencies($container);
         $container = $this->addCompanyUserClient($container);
-        $container = $this->addCompanyUserAttributesMapperPlugins($container);
 
         return $container;
     }
@@ -46,27 +43,5 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
         };
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addCompanyUserAttributesMapperPlugins(Container $container): Container
-    {
-        $container[static::PLUGINS_COMPANY_USER_ATTRIBUTES_MAPPER] = function () {
-            return $this->getCompanyUserAttributesMapperPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUserAttributesMapperPluginInterface[]
-     */
-    protected function getCompanyUserAttributesMapperPlugins(): array
-    {
-        return [];
     }
 }
