@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductListStorage\ProductConcreteRestriction;
 
+use Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer;
 use Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface;
 use Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductListProductConcreteStorageReaderInterface;
 
@@ -54,7 +55,7 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
         $customerWhitelistIds = $customer->getCustomerProductListCollection()->getWhitelistIds() ?: [];
         $customerBlacklistIds = $customer->getCustomerProductListCollection()->getBlacklistIds() ?: [];
 
-        return $this->checkIfProductConcreteIsRestricted($idProduct, $customerWhitelistIds, $customerBlacklistIds);
+        return $this->isProductConcreteRestrictedInProductLists($idProduct, $customerWhitelistIds, $customerBlacklistIds);
     }
 
     /**
@@ -64,32 +65,75 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
      *
      * @return bool
      */
-    protected function checkIfProductConcreteIsRestricted(
+    protected function isProductConcreteRestrictedInProductLists(
         int $idProduct,
         array $customerWhitelistIds,
         array $customerBlacklistIds
     ): bool {
-        if (empty($customerBlacklistIds) && empty($customerWhitelistIds)) {
-            return false;
-        }
-
         $productListProductConcreteStorageTransfer = $this->productListProductConcreteStorageReader->findProductConcreteProductListStorage($idProduct);
 
-        if ($productListProductConcreteStorageTransfer) {
-            $isProductInBlacklist = !empty(array_intersect($productListProductConcreteStorageTransfer->getIdBlacklists(), $customerBlacklistIds));
-            $isProductInWhitelist = !empty(array_intersect($productListProductConcreteStorageTransfer->getIdWhitelists(), $customerWhitelistIds));
+        $isProductRestrictedInBlackList = $this->isProductConcreteRestrictedInBlacklist(
+            $productListProductConcreteStorageTransfer,
+            $customerBlacklistIds
+        );
+        if ($isProductRestrictedInBlackList) {
+            return true;
+        }
 
-            if (empty($customerWhitelistIds)) {
-                return $isProductInBlacklist;
-            }
-
-            if (empty($customerBlacklistIds)) {
-                return !$isProductInWhitelist;
-            }
-
-            return $isProductInBlacklist || !$isProductInWhitelist;
+        $isProductRestrictedInWhiteList = $this->isProductConcreteRestrictedInWhitelist(
+            $productListProductConcreteStorageTransfer,
+            $customerWhitelistIds
+        );
+        if ($isProductRestrictedInWhiteList) {
+            return true;
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer|null $productListProductConcreteStorageTransfer
+     * @param int[] $customerWhitelistIds
+     *
+     * @return bool
+     */
+    protected function isProductConcreteRestrictedInWhitelist(
+        ?ProductConcreteProductListStorageTransfer $productListProductConcreteStorageTransfer,
+        array $customerWhitelistIds
+    ): bool {
+        if (empty($customerWhitelistIds)) {
+            return false;
+        }
+
+        if ($productListProductConcreteStorageTransfer === null) {
+            return true;
+        }
+
+        $isProductInWhitelist = empty(array_intersect($productListProductConcreteStorageTransfer->getIdWhitelists(), $customerWhitelistIds));
+
+        return $isProductInWhitelist;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer|null $productListProductConcreteStorageTransfer
+     * @param int[] $customerBlacklistIds
+     *
+     * @return bool
+     */
+    protected function isProductConcreteRestrictedInBlacklist(
+        ?ProductConcreteProductListStorageTransfer $productListProductConcreteStorageTransfer,
+        array $customerBlacklistIds
+    ): bool {
+        if (empty($customerBlacklistIds)) {
+            return false;
+        }
+
+        if ($productListProductConcreteStorageTransfer === null) {
+            return false;
+        }
+
+        $isProductInBlacklist = !empty(array_intersect($productListProductConcreteStorageTransfer->getIdBlacklists(), $customerBlacklistIds));
+
+        return $isProductInBlacklist;
     }
 }
