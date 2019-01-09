@@ -58,7 +58,7 @@ class ProductType extends AbstractType
      *
      * @return $this
      */
-    protected function addSkuField(FormBuilderInterface $builder, array $options): self
+    protected function addSkuField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_SKU, TextType::class, [
             'label' => 'SKU',
@@ -74,7 +74,7 @@ class ProductType extends AbstractType
      *
      * @return $this
      */
-    protected function addQuantityField(FormBuilderInterface $builder, array $options): self
+    protected function addQuantityField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_QUANTITY, TextType::class, [
             'label' => 'Quantity',
