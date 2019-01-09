@@ -1,6 +1,6 @@
 # UpSellingProductsRestApi Module
-[![Build Status](https://travis-ci.org/spryker/product-relations-rest-api.svg)](https://travis-ci.org/spryker/product-relations-rest-api)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/product-relations-rest-api/badge.svg)](https://coveralls.io/github/spryker/product-relations-rest-api)
+[![Build Status](https://travis-ci.org/spryker/up-selling-products-rest-api.svg)](https://travis-ci.org/spryker/up-selling-products-rest-api)
+[![Coverage Status](https://coveralls.io/repos/github/spryker/up-selling-products-rest-api/badge.svg)](https://coveralls.io/github/spryker/up-selling-products-rest-api)
 
 UpSellingProductsRestApi module provides API endpoint for up-selling products.
 

@@ -1,3 +1,3 @@
-# RelatedProductsRestApi Changelog
+# UpSellingProductsRestApi Changelog
 
-[Release Changelog](https://github.com/spryker/product-relations-rest-api/releases)
+[Release Changelog](https://github.com/spryker/up-selling-products-rest-api/releases)

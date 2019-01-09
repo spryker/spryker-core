@@ -1,6 +1,6 @@
 # RelatedProductsRestApi Module
-[![Build Status](https://travis-ci.org/spryker/product-relations-rest-api.svg)](https://travis-ci.org/spryker/product-relations-rest-api)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/product-relations-rest-api/badge.svg)](https://coveralls.io/github/spryker/product-relations-rest-api)
+[![Build Status](https://travis-ci.org/spryker/related-products-rest-api.svg)](https://travis-ci.org/spryker/related-products-rest-api)
+[![Coverage Status](https://coveralls.io/repos/github/spryker/related-products-rest-api/badge.svg)](https://coveralls.io/github/spryker/related-products-rest-api)
 
 RelatedProductsRestApi module provides API endpoint for related products.
 

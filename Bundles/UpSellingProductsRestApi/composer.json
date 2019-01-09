@@ -1,7 +1,7 @@
 {
   "name": "spryker/up-selling-products-rest-api",
   "type": "library",
-  "description": "RelatedProductsRestApi module",
+  "description": "UpSellingProductsRestApi module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",

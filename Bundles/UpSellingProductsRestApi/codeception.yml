@@ -1,4 +1,4 @@
-namespace: RelatedProductsRestApi
+namespace: UpSellingProductsRestApi
 actor: Tester
 paths:
     tests: tests
