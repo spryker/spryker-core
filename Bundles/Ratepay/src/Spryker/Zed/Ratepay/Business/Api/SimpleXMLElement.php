@@ -16,7 +16,7 @@ class SimpleXMLElement extends SimpleXMLElementSimpleXMLElement
      * @param string $sName
      * @param string $sValue
      *
-     * @return $this
+     * @return static
      */
     public function addCDataChild($sName, $sValue)
     {
