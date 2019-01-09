@@ -16,7 +16,7 @@
     </transfer>
 
     <transfer name="QuoteRequestCollection">
-        <property name="QuoteRequests" type="QuoteRequests[]"/>
+        <property name="quoteRequests" type="QuoteRequest[]" singular="quoteRequest" />
     </transfer>
 
     <transfer name="QuoteRequest">
@@ -29,13 +29,13 @@
         <property name="metadata" type="string"/>
         <property name="validUntil" type="string"/>
 
-        <property name="QuoteRequestVersions" type="QuoteRequestVersion[]"/>
+        <property name="quoteRequestVersions" type="QuoteRequestVersion[]" singular="quoteRequestVersion" />
 
         <property name="latestVersionStatus" type="string"/>
     </transfer>
 
     <transfer name="QuoteRequestVersion">
-        <property name="idQuoteRequestVersion" type="string"/>
+        <property name="idQuoteRequestVersion" type="int"/>
 
         <property name="version" type="int"/>
         <property name="versionName" type="string"/>
