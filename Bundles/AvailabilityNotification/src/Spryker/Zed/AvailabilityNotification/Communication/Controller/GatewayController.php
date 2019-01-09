@@ -46,4 +46,15 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->checkExistence($availabilitySubscriptionTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
+     */
+    public function findAction(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer)
+    {
+        return $this->getFacade()
+            ->findAvailabilityNotification($availabilitySubscriptionTransfer);
+    }
 }

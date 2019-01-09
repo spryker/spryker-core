@@ -64,4 +64,16 @@ interface AvailabilityNotificationFacadeInterface
      * @return void
      */
     public function anonymizeSubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void;
+
+    /**
+     * Specification:
+     * - Find availability notification by email and sku for current store.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
+     */
+    public function findAvailabilityNotification(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer);
 }

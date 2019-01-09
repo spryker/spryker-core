@@ -83,4 +83,20 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
     public function anonymizeSubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
     {
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
+     */
+    public function findAvailabilityNotification(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer)
+    {
+        return $this->getFactory()
+            ->createAvailabilityNotificationReader()
+            ->findSubscriptionByEmailAndSku($availabilitySubscriptionTransfer);
+    }
 }

@@ -14,6 +14,8 @@ use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubsc
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionProcessor;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionProcessorInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReader;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaver;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaverInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityUnsubscriptionProcessor;
@@ -89,6 +91,17 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     public function createAvailabilityNotificationSender(): AvailabilityNotificationSenderInterface
     {
         return new AvailabilityNotificationSender($this->getMailFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface
+     */
+    public function createAvailabilityNotificationReader(): AvailabilitySubscriptionReaderInterface
+    {
+        return new AvailabilitySubscriptionReader(
+            $this->getStoreFacade(),
+            $this->getRepository()
+        );
     }
 
     /**
