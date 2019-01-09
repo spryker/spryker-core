@@ -11,9 +11,9 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculator;
-use Spryker\Client\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
+use Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculator;
+use Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface;
 
 /**
  * Auto-generated group annotations
@@ -162,7 +162,7 @@ class QuoteApprovalStatusCalculatorTest extends Unit
     }
 
     /**
-     * @return \Spryker\Client\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface
+     * @return \Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface
      */
     protected function createQuoteApprovalStatusCalculator(): QuoteApprovalStatusCalculatorInterface
     {

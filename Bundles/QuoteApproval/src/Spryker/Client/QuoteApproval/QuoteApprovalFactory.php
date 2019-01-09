@@ -10,15 +10,15 @@ namespace Spryker\Client\QuoteApproval;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToPermissionClientInterface;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface;
-use Spryker\Client\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculator;
-use Spryker\Client\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStub;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface;
+use Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculator;
+use Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface;
 
 class QuoteApprovalFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface
+     * @return \Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface
      */
     public function createQuoteApprovalStatusCalculator(): QuoteApprovalStatusCalculatorInterface
     {

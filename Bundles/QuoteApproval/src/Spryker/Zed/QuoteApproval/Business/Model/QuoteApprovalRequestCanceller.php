@@ -8,14 +8,18 @@
 namespace Spryker\Zed\QuoteApproval\Business\Model;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface;
+use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToMessengerFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface;
 
 class QuoteApprovalRequestCanceller implements QuoteApprovalRequestCancellerInterface
 {
+    protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+
     /**
      * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface
      */
@@ -27,15 +31,23 @@ class QuoteApprovalRequestCanceller implements QuoteApprovalRequestCancellerInte
     protected $quoteFacade;
 
     /**
+     * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToMessengerFacadeInterface
+     */
+    protected $messengerFacade;
+
+    /**
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface $quoteFacade
+     * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToMessengerFacadeInterface $messengerFacade
      */
     public function __construct(
         QuoteApprovalToCartFacadeInterface $cartFacade,
-        QuoteApprovalToQuoteFacadeInterface $quoteFacade
+        QuoteApprovalToQuoteFacadeInterface $quoteFacade,
+        QuoteApprovalToMessengerFacadeInterface $messengerFacade
     ) {
         $this->cartFacade = $cartFacade;
         $this->quoteFacade = $quoteFacade;
+        $this->messengerFacade = $messengerFacade;
     }
 
     /**
@@ -46,6 +58,12 @@ class QuoteApprovalRequestCanceller implements QuoteApprovalRequestCancellerInte
     public function cancelQuoteApprovalRequest(
         QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
     ): QuoteResponseTransfer {
+        if (!$this->isRequestSentByQuoteOwner($quoteApprovalCancelRequestTransfer)) {
+            $this->addPermissionFailedErrorMessage();
+
+            return $this->createNotSuccesfullQuoteResponseTransfer($quoteApprovalCancelRequestTransfer);
+        }
+
         $quoteTransfer = $quoteApprovalCancelRequestTransfer->getQuote();
 
         $this->cartFacade->unlockQuote($quoteTransfer);
@@ -58,6 +76,20 @@ class QuoteApprovalRequestCanceller implements QuoteApprovalRequestCancellerInte
         $quoteTransfer = $this->removeCartShare($quoteTransfer);
 
         return $this->quoteFacade->updateQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isRequestSentByQuoteOwner(
+        QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+    ): bool {
+        $requestSender = $quoteApprovalCancelRequestTransfer->getCustomer();
+        $quoteOwner = $quoteApprovalCancelRequestTransfer->getQuote()->getCustomer();
+
+        return $requestSender->getCustomerReference() === $quoteOwner->getCustomerReference();
     }
 
     /**
@@ -93,5 +125,47 @@ class QuoteApprovalRequestCanceller implements QuoteApprovalRequestCancellerInte
         $quoteTransfer->setApprovals($quoteApprovals);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function createNotSuccesfullQuoteResponseTransfer(
+        QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+    ): QuoteResponseTransfer {
+        $quoteReposneTransfer = new QuoteResponseTransfer();
+
+        $quoteReposneTransfer->setIsSuccessful(false);
+        $quoteReposneTransfer->setQuoteTransfer($quoteApprovalCancelRequestTransfer->getQuote());
+        $quoteReposneTransfer->setCustomer($quoteApprovalCancelRequestTransfer->getCustomer());
+
+        return $quoteReposneTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function addPermissionFailedErrorMessage(): void
+    {
+        $this->messengerFacade->addErrorMessage(
+            $this->createMessageTransfer(
+                static::GLOSSARY_KEY_PERMISSION_FAILED
+            )
+        );
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createMessageTransfer(string $message): MessageTransfer
+    {
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue($message);
+
+        return $messageTransfer;
     }
 }

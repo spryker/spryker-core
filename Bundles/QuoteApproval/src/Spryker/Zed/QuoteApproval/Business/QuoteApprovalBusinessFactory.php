@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\QuoteApproval\Business;
 
+use Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculator;
+use Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\QuoteApproval\Business\Model\PotentialQuoteApproversListProvider;
 use Spryker\Zed\QuoteApproval\Business\Model\PotentialQuoteApproversListProviderInterface;
@@ -16,6 +18,8 @@ use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestCanceller;
 use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestCancellerInterface;
 use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestSender;
 use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestSenderInterface;
+use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestValidator;
+use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestValidatorInterface;
 use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalWriter;
 use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalWriterInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface;
@@ -41,10 +45,29 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
         return new QuoteApprovalRequestSender(
             $this->getCartFacade(),
             $this->getQuoteFacade(),
-            $this->getPermissionFacade(),
             $this->getMessengerFacade(),
-            $this->getCompanyUserFacade()
+            $this->getCompanyUserFacade(),
+            $this->createQuoteApprovalRequestValidator()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestValidatorInterface
+     */
+    public function createQuoteApprovalRequestValidator(): QuoteApprovalRequestValidatorInterface
+    {
+        return new QuoteApprovalRequestValidator(
+            $this->getPermissionFacade(),
+            $this->createQuoteApprovalStatusCalculator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface
+     */
+    public function createQuoteApprovalStatusCalculator(): QuoteApprovalStatusCalculatorInterface
+    {
+        return new QuoteApprovalStatusCalculator();
     }
 
     /**
@@ -54,7 +77,8 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteApprovalRequestCanceller(
             $this->getCartFacade(),
-            $this->getQuoteFacade()
+            $this->getQuoteFacade(),
+            $this->getMessengerFacade()
         );
     }
 

@@ -15,12 +15,10 @@ use Generated\Shared\Transfer\QuoteApproveRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
-use Spryker\Shared\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToMessengerFacadeInterface;
-use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToPermissionFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface;
 
 class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
@@ -49,29 +47,29 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
     protected $companyUserFacade;
 
     /**
-     * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToPermissionFacadeInterface
+     * @var \Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestValidatorInterface
      */
-    protected $permissionFacade;
+    protected $quoteApprovalRequestValidator;
 
     /**
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface $quoteFacade
-     * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToPermissionFacadeInterface $permissionFacade
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToMessengerFacadeInterface $messengerFacade
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface $companyUserFacade
+     * @param \Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestValidatorInterface $quoteApprovalRequestValidator
      */
     public function __construct(
         QuoteApprovalToCartFacadeInterface $cartFacade,
         QuoteApprovalToQuoteFacadeInterface $quoteFacade,
-        QuoteApprovalToPermissionFacadeInterface $permissionFacade,
         QuoteApprovalToMessengerFacadeInterface $messengerFacade,
-        QuoteApprovalToCompanyUserFacadeInterface $companyUserFacade
+        QuoteApprovalToCompanyUserFacadeInterface $companyUserFacade,
+        QuoteApprovalRequestValidatorInterface $quoteApprovalRequestValidator
     ) {
         $this->cartFacade = $cartFacade;
         $this->quoteFacade = $quoteFacade;
-        $this->permissionFacade = $permissionFacade;
         $this->messengerFacade = $messengerFacade;
         $this->companyUserFacade = $companyUserFacade;
+        $this->quoteApprovalRequestValidator = $quoteApprovalRequestValidator;
     }
 
     /**
@@ -85,9 +83,7 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
         $approverTransfer = $this->getCompanyUserById($quoteApproveRequestTransfer->getIdApprover());
         $quoteTransfer = $quoteApproveRequestTransfer->getQuote();
 
-        if (!$this->isRequestSentByQuoteOwner($quoteApproveRequestTransfer)
-            || !$this->permissionFacade->can(ApproveQuotePermissionPlugin::KEY, $approverTransfer->getIdCompanyUser(), $quoteTransfer)
-            || count($quoteApproveRequestTransfer->getQuote()->getApprovals())) {
+        if (!$this->quoteApprovalRequestValidator->isApproveRequestValid($quoteApproveRequestTransfer)) {
             $quoteReposneTransfer->setIsSuccessful(false);
 
             $this->addPermissionFailedErrorMessage();
