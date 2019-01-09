@@ -8,16 +8,23 @@
 namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 
 interface ShipmentGuiToShipmentInterface
 {
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
-     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer);
+    public function getMethods();
+
+    /**
+     * @api
+     *
+     * @param int $idShipment
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
+     */
+    public function findShipmentById(int $idShipment): ?ShipmentTransfer;
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
+use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -209,10 +210,24 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     {
         return $this->getFactory()
             ->createSalesShipmentQuery()
-            ->filterByFkSalesOrder($idSalesOrder);
+            ->filterByIdSalesShipment($idSalesOrder);
     }
 
     /**
+     * @api
+     *
+     * @param int $idSalesShipment
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
+     */
+    public function querySalesShipmentById(int $idSalesShipment): SpySalesShipmentQuery
+    {
+        return $this->getFactory()
+            ->createSalesShipmentQuery()
+            ->filterByIdSalesShipment($idSalesShipment);
+    }
+
+        /**
      * @api
      *
      * @param string $carrierName

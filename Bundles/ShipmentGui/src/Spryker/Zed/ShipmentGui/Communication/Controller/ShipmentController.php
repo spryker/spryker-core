@@ -48,25 +48,10 @@ class ShipmentController extends AbstractController
         }
 
         $idShipment = $this->castId($request->query->get(ShipmentGuiConfig::PARAM_ID_SHIPMENT));
-        /**
-         * @todo: Replace with real logic.
-         */
-        /** @var ShipmentTransfer $shipmentTransfer */
-        $shipmentTransfer = (function () use ($idShipment): ShipmentTransfer {
-            $spySalesShipment = \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery::create()
-                ->findOneByIdSalesShipment($idShipment);
 
-            $shipmentTransfer = new ShipmentTransfer();
-            $shipmentTransfer->setMethod((new ShipmentMethodTransfer())->setName($spySalesShipment->getName()));
-            $shipmentTransfer->setShippingAddress(
-                (new AddressTransfer())->fromArray(
-                    $spySalesShipment->getOrder()->getShippingAddress()->toArray(),
-                    true
-                )
-            );
-
-            return $shipmentTransfer;
-        })();
+        $shipmentTransfer = $this->getFactory()
+            ->getShipmentFacade()
+            ->findShipmentById($idShipment);
 
         if ($shipmentTransfer === null) {
             $this->addErrorMessage(sprintf(
@@ -83,24 +68,29 @@ class ShipmentController extends AbstractController
          * @todo: Replace with real logic.
          */
         $shipmentFormTransfer = (function () use ($orderTransfer, $shipmentTransfer) {
-            $shipmentFormTransfer = new ShipmentFormTransfer();
-            $shipmentFormTransfer->setMethod($shipmentTransfer->getMethod());
-            $shipmentFormTransfer->setRequestedDeliveryDate($shipmentTransfer->getRequestedDeliveryDate());
-            $shipmentFormTransfer->setShippingAddress($shipmentTransfer->getShippingAddress());
+            $shipmentFormTransfer = (new ShipmentFormTransfer())
+                ->fromArray($shipmentTransfer->toArray(), true);
             $shipmentFormTransfer->setOrderItems($orderTransfer->getItems());
 
             return $shipmentFormTransfer;
         })();
+
+        $addressFormDataprovider = $this->getFactory()->createAddressFormDataProvider();
+
         /**
          * @todo: Replace with real logic.
          */
-        $addressFormDataprovider = $this->getFactory()->createAddressFormDataProvider();
-        $shipmentFormOptions = (function () use ($orderTransfer, $addressFormDataprovider) {
+        $shipmentMethodCollection = $this->getFactory()
+            ->getShipmentFacade()
+            ->getMethods();
+        $shipmentFormOptions = (function () use ($orderTransfer, $addressFormDataprovider, $shipmentMethodCollection) {
+            $shipmentMethodChoices = [];
+            foreach ($shipmentMethodCollection as $shipmentMethod) {
+                $shipmentMethodChoices[$shipmentMethod->getName()] = $shipmentMethod->getName();
+            }
             $formOptions = array_merge(
                 [
-                    ShipmentForm::CHOICES_SHIPMENT_METHOD => [
-                        'Meth 1' => 1,
-                    ]
+                    ShipmentForm::CHOICES_SHIPMENT_METHOD => $shipmentMethodChoices,
                 ],
                 $addressFormDataprovider->getOptions()
             );
@@ -117,24 +107,19 @@ class ShipmentController extends AbstractController
 
         if ($shipmentForm->isSubmitted() && $shipmentForm->isValid()) {
             /**
-             * Update shipment
-             */
-//            $this->getFacade()
-//                ->updateOrderAddress($addressTransfer, $idShipment);
-            /**
-             * Add address for shipment
+             * @todo: Update or Create shipment address
              */
 
-            $this->addSuccessMessage('Address successfully updated.');
-
-            return $this->redirectResponse(
-                Url::generate(
-                    '/sales/detail',
-                    [
-                        SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder,
-                    ]
-                )->build()
-            );
+//            $this->addSuccessMessage('Address successfully updated.');
+//
+//            return $this->redirectResponse(
+//                Url::generate(
+//                    '/sales/detail',
+//                    [
+//                        ShipmentGuiConfig::PARAM_ID_SALES_ORDER => $idSalesOrder,
+//                    ]
+//                )->build()
+//            );
         }
 
         return $this->viewResponse([

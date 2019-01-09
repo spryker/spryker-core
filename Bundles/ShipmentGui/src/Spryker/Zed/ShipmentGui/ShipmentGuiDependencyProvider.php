@@ -30,6 +30,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addCountryFacade($container);
+        $container = $this->addShipmentFacade($container);
 
         return $container;
     }
@@ -42,6 +43,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = $this->addCountryFacade($container);
+        $container = $this->addShipmentFacade($container);
         $container = $this->addSalesFacade($container);
 
         return $container;
@@ -56,6 +58,20 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_COUNTRY] = function (Container $container) {
             return new ShipmentGuiToCountryBridge($container->getLocator()->country()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentFacade(Container $container)
+    {
+        $container[static::FACADE_SHIPMENT] = function (Container $container) {
+            return new ShipmentGuiToShipmentBridge($container->getLocator()->shipment()->facade());
         };
 
         return $container;

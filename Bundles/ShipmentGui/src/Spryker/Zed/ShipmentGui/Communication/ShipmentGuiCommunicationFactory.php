@@ -46,6 +46,14 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface
+     */
+    public function getShipmentFacade()
+    {
+        return $this->getProvidedDependency(ShipmentGuiDependencyProvider::FACADE_SHIPMENT);
+    }
+
+    /**
      * @param array $formData
      * @param array $formOptions
      *

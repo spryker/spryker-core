@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Shipment\Business\ShipmentFacadeInterface;
 
 class ShipmentGuiToShipmentBridge implements ShipmentGuiToShipmentInterface
@@ -26,10 +27,18 @@ class ShipmentGuiToShipmentBridge implements ShipmentGuiToShipmentInterface
     }
 
     /**
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     */
+    public function getMethods()
+    {
+        return $this->shipmentFacade->getMethods();
+    }
+
+    /**
      * @inheritdoc
      */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
+    public function findShipmentById(int $idShipment): ?ShipmentTransfer
     {
-        return $this->shipmentFacade->getAvailableMethods($idSalesOrder);
+        return $this->shipmentFacade->findShipmentById($idShipment);
     }
 }

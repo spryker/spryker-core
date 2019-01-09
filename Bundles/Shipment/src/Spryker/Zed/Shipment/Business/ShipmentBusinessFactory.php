@@ -14,12 +14,15 @@ use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
+use Spryker\Zed\Shipment\Business\Model\Shipment;
 use Spryker\Zed\Shipment\Business\Model\ShipmentCarrierReader;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaverInterface as ModelShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
+use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentTransformer;
+use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentTransformerInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCountryInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
@@ -64,12 +67,33 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentInterface
+     */
+    public function createShipment()
+    {
+        return new Shipment(
+            $this->getQueryContainer(),
+            $this->createShipmentTransformer()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface
      */
     public function createShipmentMethodTransformer()
     {
         return new ShipmentMethodTransformer(
             $this->getCurrencyFacade(),
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentTransformerInterface
+     */
+    public function createShipmentTransformer(): ShipmentTransformerInterface
+    {
+        return new ShipmentTransformer(
             $this->getQueryContainer()
         );
     }
