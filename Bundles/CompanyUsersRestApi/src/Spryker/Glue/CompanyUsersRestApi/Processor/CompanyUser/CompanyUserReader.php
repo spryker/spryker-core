@@ -104,8 +104,6 @@ class CompanyUserReader implements CompanyUserReaderInterface
             ->setCode(CompanyUsersRestApiConfig::RESPONSE_CODE_RESOURCE_NOT_IMPLEMENTED)
             ->setDetail(CompanyUsersRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED);
 
-        return $this->restResourceBuilder->createRestResponse()
-            ->addError($restErrorMessageTransfer)
-            ->setStatus(Response::HTTP_NOT_IMPLEMENTED);
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
 }
