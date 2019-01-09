@@ -1,3 +1,3 @@
-# ContentItem Changelog
+# content-product-connector Changelog
 
-[Release Changelog](https://github.com/spryker/content-item/releases)
+[Release Changelog](https://github.com/spryker/content-product-connector/releases)

@@ -1,4 +1,4 @@
-namespace: ContentItem
+namespace: ContentProductConnector
 actor: Tester
 paths:
     tests: tests
