@@ -8,8 +8,4 @@
         <property name="availableShipmentMethods" type="ShipmentMethods" singular="availableShipmentMethod" />
     </transfer>
 
-    <transfer name="ShipmentGroups">
-        <property name="groups" type="ShipmentGroup[]" singular="group" />
-    </transfer>
-
 </transfers>

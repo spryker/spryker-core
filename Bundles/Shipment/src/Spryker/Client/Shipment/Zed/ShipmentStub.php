@@ -10,7 +10,7 @@ namespace Spryker\Client\Shipment\Zed;
 use \ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentGroupsTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class ShipmentStub implements ShipmentStubInterface
@@ -44,9 +44,9 @@ class ShipmentStub implements ShipmentStubInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      */
-    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer)
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
     {
         /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupTransferArray */
         $shipmentGroupTransferArray = $this->zedStub->call('/shipment/gateway/get-available-methods-by-shipment', $quoteTransfer);
@@ -57,9 +57,9 @@ class ShipmentStub implements ShipmentStubInterface
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupsTransfer
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      */
-    public function getShipmentGroups(ItemCollectionTransfer $itemCollectionTransfer): ShipmentGroupsTransfer
+    public function getShipmentGroupCollectionTransfer(ItemCollectionTransfer $itemCollectionTransfer): ShipmentGroupCollectionTransfer
     {
         /** @var \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer $shipmentGroupCollectionTransfer */
         $shipmentGroupCollectionTransfer = $this->zedStub->call('/shipment/gateway/get-shipment-groups', $itemCollectionTransfer);

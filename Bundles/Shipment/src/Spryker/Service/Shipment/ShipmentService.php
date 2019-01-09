@@ -7,6 +7,7 @@
 
 namespace Spryker\Service\Shipment;
 
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Kernel\AbstractService;
@@ -44,6 +45,25 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
         }
 
         return $shipmentGroupTransfers;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     */
+    public function getShipmentGroupCollectionTransfer(ArrayObject $itemTransfers): ShipmentGroupCollectionTransfer
+    {
+        $shipmentGroupCollectionTransfer = new ShipmentGroupCollectionTransfer();
+        $shipmentGroupCollectionTransfer->setGroups(
+            $this->groupItemsByShipment($itemTransfers)
+        );
+
+        return $shipmentGroupCollectionTransfer;
     }
 
     /**

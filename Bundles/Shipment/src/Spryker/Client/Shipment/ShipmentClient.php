@@ -8,8 +8,8 @@
 namespace Spryker\Client\Shipment;
 
 use Generated\Shared\Transfer\ItemCollectionTransfer;
-use Generated\Shared\Transfer\ShipmentGroupsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -46,10 +46,10 @@ class ShipmentClient extends AbstractClient implements ShipmentClientInterface
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupsTransfer
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      */
-    public function getShipmentGroups(ItemCollectionTransfer $itemCollectionTransfer): ShipmentGroupsTransfer
+    public function getShipmentGroupCollectionTransfer(ItemCollectionTransfer $itemCollectionTransfer): ShipmentGroupCollectionTransfer
     {
-        return $this->getFactory()->createZedStub()->getShipmentGroups($itemCollectionTransfer);
+        return $this->getFactory()->createZedStub()->getShipmentGroupCollectionTransfer($itemCollectionTransfer);
     }
 }
