@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Customer\Customer;
+namespace Spryker\Client\Customer\CustomerSecuredPattern;
 
 interface CustomerSecuredPatternInterface
 {

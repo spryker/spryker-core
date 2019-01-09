@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\Customer;
 
-use Spryker\Client\Customer\Customer\CustomerAddress;
-use Spryker\Client\Customer\Customer\CustomerSecuredPattern;
-use Spryker\Client\Customer\Customer\CustomerSecuredPatternInterface;
+use Spryker\Client\Customer\CustomerAddress\CustomerAddress;
+use Spryker\Client\Customer\CustomerSecuredPattern\CustomerSecuredPattern;
+use Spryker\Client\Customer\CustomerSecuredPattern\CustomerSecuredPatternInterface;
 use Spryker\Client\Customer\Session\CustomerSession;
 use Spryker\Client\Customer\Zed\CustomerStub;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -28,7 +28,7 @@ class CustomerFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Customer\Customer\CustomerAddressInterface
+     * @return \Spryker\Client\Customer\CustomerAddress\CustomerAddressInterface
      */
     public function createCustomerAddress()
     {
@@ -75,7 +75,7 @@ class CustomerFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Customer\Customer\CustomerSecuredPatternInterface
+     * @return \Spryker\Client\Customer\CustomerSecuredPattern\CustomerSecuredPatternInterface
      */
     public function createCustomerSecuredPattern(): CustomerSecuredPatternInterface
     {
@@ -83,7 +83,7 @@ class CustomerFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PermissionExtension\Dependency\Plugin\CustomerSecuredPatternPermissionPluginInterface[]
+     * @return \Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternPermissionPluginInterface[]
      */
     public function getCustomerSecuredPatternPermissionPlugins(): array
     {

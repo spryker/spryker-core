@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\CustomerAccessPermission\Plugin;
 
+use Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternPermissionPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\PermissionExtension\Dependency\Plugin\CustomerSecuredPatternPermissionPluginInterface;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\InfrastructuralPermissionPluginInterface;
 
 /**

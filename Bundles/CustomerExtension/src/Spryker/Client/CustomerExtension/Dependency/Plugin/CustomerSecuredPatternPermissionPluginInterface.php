@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PermissionExtension\Dependency\Plugin;
+namespace Spryker\Client\CustomerExtension\Dependency\Plugin;
 
 interface CustomerSecuredPatternPermissionPluginInterface
 {

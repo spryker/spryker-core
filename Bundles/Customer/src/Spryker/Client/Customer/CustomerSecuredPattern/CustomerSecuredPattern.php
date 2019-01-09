@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Customer\Customer;
+namespace Spryker\Client\Customer\CustomerSecuredPattern;
 
 use Spryker\Client\Customer\CustomerConfig;
 
@@ -17,13 +17,13 @@ class CustomerSecuredPattern implements CustomerSecuredPatternInterface
     protected $customerConfig;
 
     /**
-     * @var \Spryker\Client\PermissionExtension\Dependency\Plugin\CustomerSecuredPatternPermissionPluginInterface[]
+     * @var \Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternPermissionPluginInterface[]
      */
     protected $customerSecuredPatternPermissionPlugins;
 
     /**
      * @param \Spryker\Client\Customer\CustomerConfig $customerConfig
-     * @param \Spryker\Client\PermissionExtension\Dependency\Plugin\CustomerSecuredPatternPermissionPluginInterface[] $customerSecuredPatternPermissionPlugins
+     * @param \Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternPermissionPluginInterface[] $customerSecuredPatternPermissionPlugins
      */
     public function __construct(
         CustomerConfig $customerConfig,
