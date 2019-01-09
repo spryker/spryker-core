@@ -75,4 +75,25 @@
         <property name="confirmPassword" type="string" restRequestParameter="required" />
     </transfer>
 
+    <transfer name="Quote">
+        <property name="customer" type="Customer"/>
+        <property name="customerReference" type="string"/>
+        <property name="billingAddress" type="Address"/>
+        <property name="shippingAddress" type="Address"/>
+    </transfer>
+
+    <transfer name="RestCheckoutRequestAttributes">
+        <property name="customer" type="RestCustomer"/>
+        <property name="billingAddress" type="RestAddress"/>
+        <property name="shippingAddress" type="RestAddress"/>
+    </transfer>
+
+    <transfer name="RestCustomer">
+        <property name="customerReference" type="string" />
+    </transfer>
+
+    <transfer name="RestAddress">
+        <property name="id" type="string" />
+    </transfer>
+
 </transfers>

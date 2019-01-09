@@ -7,11 +7,10 @@
 
 namespace Spryker\Service\Shipment;
 
-use Generated\Shared\Transfer\ShipmentGroupsTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Kernel\AbstractService;
-use ArrayObject;
+use \ArrayObject;
 
 /**
  * @method \Spryker\Service\Shipment\ShipmentServiceFactory getFactory()
@@ -23,31 +22,28 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
      *
      * @api
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfersCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupsTransfer
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShipment(ArrayObject $itemTransfersCollection): ShipmentGroupsTransfer
+    public function groupItemsByShipment(ArrayObject $itemTransfers): ArrayObject
     {
-        $shipmentGroupsArray = new ArrayObject();
+        $shipmentGroupTransfers = new ArrayObject();
 
-        foreach ($itemTransfersCollection as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
             $itemTransfer->requireShipment();
 
             $hash = $this->getItemHash($itemTransfer->getShipment());
-            if (!isset($shipmentGroupsArray[$hash])) {
-                $shipmentGroupsArray[$hash] = (new ShipmentGroupTransfer())
+            if (!isset($shipmentGroupTransfers[$hash])) {
+                $shipmentGroupTransfers[$hash] = (new ShipmentGroupTransfer())
                     ->setShipment($itemTransfer->getShipment())
                     ->setHash($hash);
             }
 
-            $shipmentGroupsArray[$hash]->addItem($itemTransfer);
+            $shipmentGroupTransfers[$hash]->addItem($itemTransfer);
         }
 
-        $shipmentGroupsTransfers = new ShipmentGroupsTransfer();
-        $shipmentGroupsTransfers->setGroups($shipmentGroupsArray);
-
-        return $shipmentGroupsTransfers;
+        return $shipmentGroupTransfers;
     }
 
     /**

@@ -10,6 +10,7 @@ namespace Spryker\Client\ProductOptionStorage\Storage;
 use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\Kernel\Locator;
+use Spryker\Client\Kernel\PermissionAwareTrait;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface;
@@ -19,6 +20,8 @@ use Spryker\Shared\ProductOptionStorage\ProductOptionStorageConfig as SharedProd
 
 class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @var \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface
      */
@@ -126,7 +129,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
 
         $key = $this->generateKey($idProductAbstract);
 
-        return $this->storageClient->get($key);
+        return $this->storageClient->get($key) ?? [];
     }
 
     /**
@@ -138,6 +141,10 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     {
         $productAbstractOptionStorageTransfer = new ProductAbstractOptionStorageTransfer();
         $productAbstractOptionStorageTransfer->fromArray($productAbstractOptionStorageData, true);
+
+        if (!$this->can('SeePricePermissionPlugin')) {
+            return $productAbstractOptionStorageTransfer;
+        }
 
         foreach ($productAbstractOptionStorageTransfer->getProductOptionGroups() as $productOptionGroup) {
             $this->valuePriceReader->resolvePrices($productOptionGroup);
