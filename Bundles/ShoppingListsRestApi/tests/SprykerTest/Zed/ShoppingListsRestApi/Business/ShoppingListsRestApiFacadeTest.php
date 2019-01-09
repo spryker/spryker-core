@@ -461,7 +461,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
 
         $this->assertFalse($shoppingListResponseTransfer->getIsSuccess());
         $this->assertEquals([
-            SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_MANAGE,
+            SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED,
         ], $shoppingListResponseTransfer->getErrors());
     }
 
