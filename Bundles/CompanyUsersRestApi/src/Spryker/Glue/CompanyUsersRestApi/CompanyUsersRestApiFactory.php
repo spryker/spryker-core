@@ -33,7 +33,7 @@ class CompanyUsersRestApiFactory extends AbstractFactory
      */
     public function createCompanyUserMapper(): CompanyUserMapperInterface
     {
-        return new CompanyUserMapper($this->getCompanyUserAttributesMapperPlugin());
+        return new CompanyUserMapper();
     }
 
     /**
@@ -42,13 +42,5 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     public function getCompanyUserClient(): CompanyUsersRestApiToCompanyUserClientInterface
     {
         return $this->getProvidedDependency(CompanyUsersRestApiDependencyProvider::CLIENT_COMPANY_USER);
-    }
-
-    /**
-     * @return \Spryker\Glue\CompanyUsersRestApiExtension\Dependency\Plugin\CompanyUserAttributesMapperPluginInterface[]
-     */
-    public function getCompanyUserAttributesMapperPlugin(): array
-    {
-        return $this->getProvidedDependency(CompanyUsersRestApiDependencyProvider::PLUGINS_COMPANY_USER_ATTRIBUTES_MAPPER);
     }
 }
