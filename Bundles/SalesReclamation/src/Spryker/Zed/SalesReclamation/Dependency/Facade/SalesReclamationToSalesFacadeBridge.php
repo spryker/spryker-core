@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\SalesReclamation\Dependency\Facade;
 
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
+
 class SalesReclamationToSalesFacadeBridge implements SalesReclamationToSalesFacadeInterface
 {
     /**
@@ -30,5 +34,27 @@ class SalesReclamationToSalesFacadeBridge implements SalesReclamationToSalesFaca
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
         return $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    {
+        $this->salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param int $idSalesOrder
+     *
+     * @return void
+     */
+    public function updateOrder(OrderTransfer $orderTransfer, $idSalesOrder)
+    {
+        $this->salesFacade->updateOrder($orderTransfer, $idSalesOrder);
     }
 }

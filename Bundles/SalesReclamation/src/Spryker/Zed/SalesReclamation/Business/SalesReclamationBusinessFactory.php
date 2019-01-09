@@ -8,55 +8,51 @@
 namespace Spryker\Zed\SalesReclamation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SalesReclamation\Business\Order\ReclamationSaver;
-use Spryker\Zed\SalesReclamation\Business\Order\ReclamationSaverInterface;
-use Spryker\Zed\SalesReclamation\Business\Reclamation\Creator;
-use Spryker\Zed\SalesReclamation\Business\Reclamation\CreatorInterface;
-use Spryker\Zed\SalesReclamation\Business\Reclamation\Hydrator;
-use Spryker\Zed\SalesReclamation\Business\Reclamation\HydratorInterface;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationMapper;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationMapperInterface;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationReader;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationReaderInterface;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationWriter;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationWriterInterface;
 use Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface;
 use Spryker\Zed\SalesReclamation\SalesReclamationDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesReclamation\SalesReclamationConfig getConfig()
- * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface getRepository()
  */
 class SalesReclamationBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\CreatorInterface
+     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationWriterInterface
      */
-    public function createReclamationCreator(): CreatorInterface
+    public function createReclamationWriter(): ReclamationWriterInterface
     {
-        return new Creator();
+        return new ReclamationWriter($this->getEntityManager(), $this->createReclamationMapper());
     }
 
     /**
-     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\HydratorInterface
+     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationReaderInterface
      */
-    public function createReclamationHydrator(): HydratorInterface
+    public function createReclamationReader(): ReclamationReaderInterface
     {
-        return new Hydrator(
-            $this->getQueryContainer(),
-            $this->getSalesFacade()
-        );
+        return new ReclamationReader($this->getRepository(), $this->getSalesFacade());
     }
 
     /**
-     * @return \Spryker\Zed\SalesReclamation\Business\Order\ReclamationSaverInterface
+     * @return \Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface
      */
-    public function createReclamationOrderSaver(): ReclamationSaverInterface
-    {
-        return new ReclamationSaver(
-            $this->getQueryContainer()
-        );
-    }
-
-        /**
-         * @return \Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface
-         */
     public function getSalesFacade(): SalesReclamationToSalesFacadeInterface
     {
         return $this->getProvidedDependency(SalesReclamationDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationMapperInterface
+     */
+    public function createReclamationMapper(): ReclamationMapperInterface
+    {
+        return new ReclamationMapper();
     }
 }
