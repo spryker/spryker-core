@@ -26,6 +26,7 @@ use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterf
 class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
 {
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+    protected const GLOSSARY_KEY_APPROVAL_REQUEST_SENT = 'quote_approval.approval_request.sent';
 
     /**
      * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface
@@ -100,6 +101,8 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
 
         $quoteReposneTransfer = $this->quoteFacade->updateQuote($quoteTransfer);
 
+        $this->addSuccessMessage();
+
         return $quoteReposneTransfer;
     }
 
@@ -125,10 +128,36 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
      */
     protected function addPermissionFailedErrorMessage(): void
     {
-        $messageTransfer = new MessageTransfer();
-        $messageTransfer->setValue(static::GLOSSARY_KEY_PERMISSION_FAILED);
+        $this->messengerFacade->addErrorMessage(
+            $this->createMessageTransfer(
+                static::GLOSSARY_KEY_PERMISSION_FAILED
+            )
+        );
+    }
 
-        $this->messengerFacade->addErrorMessage($messageTransfer);
+    /**
+     * @return void
+     */
+    protected function addSuccessMessage(): void
+    {
+        $this->messengerFacade->addSuccessMessage(
+            $this->createMessageTransfer(
+                static::GLOSSARY_KEY_APPROVAL_REQUEST_SENT
+            )
+        );
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createMessageTransfer(string $message): MessageTransfer
+    {
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue($message);
+
+        return $messageTransfer;
     }
 
     /**

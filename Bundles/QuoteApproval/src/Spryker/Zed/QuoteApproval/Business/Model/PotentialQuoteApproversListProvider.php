@@ -57,11 +57,7 @@ class PotentialQuoteApproversListProvider implements PotentialQuoteApproversList
         $approverIds = $this->getPotentialApproversIds();
         $idBusinessUnit = $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getFkCompanyBusinessUnit();
 
-        $filterTransfer = new CompanyUserCriteriaFilterTransfer();
-        $filterTransfer->setCompanyUserIds($approverIds);
-
-        $potentialApproversList = $this->companyUserFacade->getCompanyUserCollection($filterTransfer);
-
+        $potentialApproversList = $this->getCompanyUserCollectionByIds($approverIds);
         $potentialApproversList = $this->filterByBusinessUnit($potentialApproversList, $idBusinessUnit);
         $potentialApproversList = $this->filterCompanyUsersWhichCantApproveQuote(
             $potentialApproversList,
@@ -69,6 +65,23 @@ class PotentialQuoteApproversListProvider implements PotentialQuoteApproversList
         );
 
         return $potentialApproversList;
+    }
+
+    /**
+     * @param array $companyUserIds
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    protected function getCompanyUserCollectionByIds(array $companyUserIds): CompanyUserCollectionTransfer
+    {
+        if (!$companyUserIds) {
+            return new CompanyUserCollectionTransfer();
+        }
+
+        $filterTransfer = new CompanyUserCriteriaFilterTransfer();
+        $filterTransfer->setCompanyUserIds($companyUserIds);
+
+        return $this->companyUserFacade->getCompanyUserCollection($filterTransfer);
     }
 
     /**

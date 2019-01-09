@@ -33,4 +33,14 @@ class QuoteApprovalToMessengerFacadeBridge implements QuoteApprovalToMessengerFa
     {
         $this->messengerFacade->addErrorMessage($message);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
+     *
+     * @return void
+     */
+    public function addSuccessMessage(MessageTransfer $message)
+    {
+        $this->messengerFacade->addSuccessMessage($message);
+    }
 }
