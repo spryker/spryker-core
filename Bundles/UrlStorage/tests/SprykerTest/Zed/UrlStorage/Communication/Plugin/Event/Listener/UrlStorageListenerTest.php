@@ -216,7 +216,7 @@ class UrlStorageListenerTest extends Unit
     protected function assertUrlStorage(int $beforeCount): void
     {
         $urlStorageCount = $this->createSpyUrlStorageQuery()->count();
-        $this->assertSame($beforeCount + 1, $urlStorageCount);
+        $this->assertGreaterThan($beforeCount, $urlStorageCount);
         $spyUrlStorage = $this->createSpyUrlStorageQuery()->orderByIdUrlStorage()->findOneByUrl($this->urlTransfer->getUrl());
         $this->assertNotNull($spyUrlStorage);
         $data = $spyUrlStorage->getData();
@@ -232,7 +232,7 @@ class UrlStorageListenerTest extends Unit
     protected function assertRedirectStorage(int $idRedirect, int $beforeCount): void
     {
         $redirectStorageCount = SpyUrlRedirectStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $redirectStorageCount);
+        $this->assertGreaterThan($beforeCount, $redirectStorageCount);
         $spyUrlStorage = SpyUrlRedirectStorageQuery::create()->orderByIdUrlRedirectStorage()->findOneByFkUrlRedirect($idRedirect);
         $data = $spyUrlStorage->getData();
         $this->assertSame('/test-redirect', $data['to_url']);

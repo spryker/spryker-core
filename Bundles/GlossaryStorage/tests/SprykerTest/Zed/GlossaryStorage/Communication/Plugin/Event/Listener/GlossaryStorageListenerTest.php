@@ -187,7 +187,8 @@ class GlossaryStorageListenerTest extends Unit
         $glossaryTranslationStorageListener->handleBulk($eventTransfers, GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_UPDATE);
 
         // Assert
-        $this->assertGlossaryStorageCount($idGlossaryKey, $beforeCount - 1);
+        $glossaryStorageCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey($idGlossaryKey)->count();
+        $this->assertLessThan($beforeCount, $glossaryStorageCount);
     }
 
     /**
@@ -228,7 +229,8 @@ class GlossaryStorageListenerTest extends Unit
         $glossaryTranslationStorageListener->handleBulk($eventTransfers, GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_UPDATE);
 
         // Assert
-        $this->assertGlossaryStorageCount($idGlossaryKey, $beforeCount - 1);
+        $glossaryStorageCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey($idGlossaryKey)->count();
+        $this->assertLessThan($beforeCount, $glossaryStorageCount);
     }
 
     /**
@@ -249,7 +251,8 @@ class GlossaryStorageListenerTest extends Unit
      */
     protected function assertGlossaryStorage(int $idGlossaryKey, int $beforeCount): void
     {
-        $this->assertGlossaryStorageCount($idGlossaryKey, $beforeCount + 2);
+        $glossaryStorageCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey($idGlossaryKey)->count();
+        $this->assertGreaterThan($beforeCount, $glossaryStorageCount);
         $spyGlossaryStorage = $this->createGlossaryStorageQuery()
             ->orderByFkGlossaryKey()
             ->filterByLocale('en_US')
@@ -257,19 +260,6 @@ class GlossaryStorageListenerTest extends Unit
         $this->assertNotNull($spyGlossaryStorage);
         $this->assertSame('cart.remove.items.success', $spyGlossaryStorage->getData()['GlossaryKey']['key']);
         $this->assertSame('Products were removed successfully', $spyGlossaryStorage->getData()['value']);
-    }
-
-    /**
-     * @param int $idGlossaryKey
-     * @param int $expectedCount
-     *
-     * @return void
-     */
-    protected function assertGlossaryStorageCount(int $idGlossaryKey, int $expectedCount): void
-    {
-        $glossaryStorageCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey($idGlossaryKey)->count();
-        $this->assertGreaterThan(0, $glossaryStorageCount);
-        $this->assertEquals($expectedCount, $glossaryStorageCount);
     }
 
     /**

@@ -323,7 +323,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
     }
 
     /**
@@ -348,7 +348,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
         $this->assertProductPageAbstractSearch();
     }
 
@@ -374,7 +374,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
         $this->assertProductPageAbstractSearch();
     }
 
@@ -406,7 +406,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
     }
 
     /**
@@ -431,7 +431,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
         $this->assertProductPageAbstractSearch();
     }
 
@@ -486,7 +486,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
         $this->assertProductPageAbstractSearch();
     }
 
@@ -518,7 +518,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
     }
 
     /**
@@ -543,7 +543,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
         $this->assertProductPageAbstractSearch();
     }
 
@@ -578,7 +578,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
     }
 
     /**
@@ -606,7 +606,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
         $this->assertProductPageAbstractSearch();
     }
 

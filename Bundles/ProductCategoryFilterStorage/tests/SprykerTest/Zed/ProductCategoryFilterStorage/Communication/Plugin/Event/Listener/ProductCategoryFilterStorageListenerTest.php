@@ -89,7 +89,7 @@ class ProductCategoryFilterStorageListenerTest extends Unit
     protected function assertProductCategoryFilterStorage($beforeCount)
     {
         $productCategoryFilterStorageCount = SpyProductCategoryFilterStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $productCategoryFilterStorageCount);
+        $this->assertGreaterThan($beforeCount, $productCategoryFilterStorageCount);
         $spyProductCategoryFilterStorage = SpyProductCategoryFilterStorageQuery::create()->orderByIdProductCategoryFilterStorage()->findOne();
         $this->assertNotNull($spyProductCategoryFilterStorage);
     }

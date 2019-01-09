@@ -245,7 +245,7 @@ class ProductLabelStorageListenerTest extends Unit
     protected function assertProductAbstractLabelGroupStorage(int $beforeCount): void
     {
         $productLabelStorageCount = SpyProductAbstractLabelStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 348, $productLabelStorageCount);
+        $this->assertGreaterThan($beforeCount, $productLabelStorageCount);
     }
 
     /**

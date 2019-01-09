@@ -182,7 +182,7 @@ class NavigationStorageListenerTest extends Unit
     {
         $navigationStorageCount = SpyNavigationStorageQuery::create()->count();
 
-        $this->assertSame($beforeCount + 2, $navigationStorageCount);
+        $this->assertGreaterThan($beforeCount, $navigationStorageCount);
         $spyNavigationStorage = SpyNavigationStorageQuery::create()
             ->orderByIdNavigationStorage()
             ->findOneByFkNavigation(1);

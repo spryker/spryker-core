@@ -238,7 +238,7 @@ class ProductOptionStorageListenerTest extends Unit
     protected function assertProductAbstractOptionGroupStorage($beforeCount)
     {
         $productOptionStorageCount = SpyProductAbstractOptionStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $productOptionStorageCount);
+        $this->assertGreaterThan($beforeCount, $productOptionStorageCount);
     }
 
     /**
@@ -249,7 +249,7 @@ class ProductOptionStorageListenerTest extends Unit
     protected function assertProductAbstractOptionStorage($beforeCount)
     {
         $productOptionStorageCount = SpyProductAbstractOptionStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $productOptionStorageCount);
+        $this->assertGreaterThan($beforeCount, $productOptionStorageCount);
         $spyProductAbstractOptionStorage = SpyProductAbstractOptionStorageQuery::create()->orderByIdProductAbstractOptionStorage()->findOneByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract());
         $this->assertNotNull($spyProductAbstractOptionStorage);
         $data = $spyProductAbstractOptionStorage->getData();
