@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\UpSellingProductsRestApi\Controller;
+namespace Spryker\Glue\RelatedProductsRestApi\Controller;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
 
 /**
- * @method \Spryker\Glue\UpSellingProductsRestApi\UpSellingProductsRestApiFactory getFactory()
+ * @method \Spryker\Glue\RelatedProductsRestApi\RelatedProductsRestApiFactory getFactory()
  */
-class UpSellingProductsForCartResourceController extends AbstractController
+class RelatedProductsController extends AbstractController
 {
     /**
      * @Glue({
      *     "getCollection": {
      *          "summary": [
-     *              "Retrieves list of all up-selling products of items in cart."
+     *              "Retrieves list of all related products of abstract product."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
@@ -36,7 +36,7 @@ class UpSellingProductsForCartResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createUpSellingProductReader()
-            ->readUpSellingProducts($restRequest);
+            ->createRelatedProductReader()
+            ->readRelatedProducts($restRequest);
     }
 }

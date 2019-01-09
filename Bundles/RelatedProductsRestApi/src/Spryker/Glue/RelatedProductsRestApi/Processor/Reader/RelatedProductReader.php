@@ -83,7 +83,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
         $relatedProductsEntityTransfer = $this->productRelationStorageClient
             ->findRelatedProducts($abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT], $localeName);
 
-        $this->addAbstractProductsResource($restResponse, $relatedProductsEntityTransfer);
+        $this->addAbstractProductResources($restResponse, $relatedProductsEntityTransfer);
 
         return $restResponse;
     }
@@ -120,7 +120,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
      *
      * @return void
      */
-    protected function addAbstractProductsResource(RestResponseInterface $restResponse, array $productViewTransfers): void
+    protected function addAbstractProductResources(RestResponseInterface $restResponse, array $productViewTransfers): void
     {
         foreach ($productViewTransfers as $productViewTransfer) {
             $restResource = $this->restResourceBuilder->createRestResource(

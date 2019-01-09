@@ -73,7 +73,7 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
         $upSellingProducts = $this->productRelationStorageClient
             ->findUpSellingProducts($quoteTransfer, $restRequest->getMetadata()->getLocale());
 
-        $this->addAbstractProductsResource($restResponse, $upSellingProducts);
+        $this->addAbstractProductResources($restResponse, $upSellingProducts);
 
         return $restResponse;
     }
@@ -84,7 +84,7 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
      *
      * @return void
      */
-    protected function addAbstractProductsResource(RestResponseInterface $restResponse, array $productViewTransfers): void
+    protected function addAbstractProductResources(RestResponseInterface $restResponse, array $productViewTransfers): void
     {
         foreach ($productViewTransfers as $productViewTransfer) {
             $restResource = $this->restResourceBuilder->createRestResource(
