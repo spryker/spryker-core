@@ -93,7 +93,7 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findAvailabilityNotification(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer)
+    public function findAvailabilityNotification(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer
     {
         return $this->getFactory()
             ->createAvailabilityNotificationReader()
