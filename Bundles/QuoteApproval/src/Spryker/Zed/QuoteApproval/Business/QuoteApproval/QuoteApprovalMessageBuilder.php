@@ -14,8 +14,8 @@ use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterf
 
 class QuoteApprovalMessageBuilder implements QuoteApprovalMessageBuilderInterface
 {
-    protected const PARAMETER_FIRST_NAME = 'first_name';
-    protected const PARAMETER_LAST_NAME = 'last_name';
+    protected const PARAMETER_FIRST_NAME = '%first_name%';
+    protected const PARAMETER_LAST_NAME = '%last_name%';
     protected const MESSAGE_SUCCESS = 'quote_approval_widget.cart.success_message.';
 
     /**
