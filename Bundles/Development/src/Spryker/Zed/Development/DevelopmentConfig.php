@@ -441,4 +441,14 @@ class DevelopmentConfig extends AbstractBundleConfig
     {
         return 3;
     }
+
+    /**
+     * Gets CodeSniffer default level. The higher, the better.
+     *
+     * @return int
+     */
+    public function getCodeSnifferLevel(): int
+    {
+        return 1;
+    }
 }
