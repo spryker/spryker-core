@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlockProductConnector\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Spryker\Zed\CmsBlockProductConnector\Communication\Form\CmsBlockProductAbstractType;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleInterface;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerInterface;
@@ -87,15 +88,19 @@ class CmsBlockProductDataProvider
 
         $productAbstracts = $this->productAbstractQueryContainer
             ->queryProductAbstractWithName($idLocale)
+            ->select([
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+                SpyProductAbstractTableMap::COL_SKU
+            ])
             ->find();
 
         $productAbstractArray = [];
 
         foreach ($productAbstracts as $spyProductAbstract) {
-            $label = $spyProductAbstract->getVirtualColumn(static::PRODUCT_ABSTRACT_VIRTUAL_COLUMN_NAME) .
-                ' (SKU: ' . $spyProductAbstract->getSku() . ')';
+            $label = $spyProductAbstract[static::PRODUCT_ABSTRACT_VIRTUAL_COLUMN_NAME] .
+                ' (SKU: ' . $spyProductAbstract[SpyProductAbstractTableMap::COL_SKU] . ')';
 
-            $productAbstractArray[$label] = $spyProductAbstract->getIdProductAbstract();
+            $productAbstractArray[$label] = $spyProductAbstract[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT];
         }
 
         return $productAbstractArray;
