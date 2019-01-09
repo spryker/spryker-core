@@ -5,13 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative;
+namespace Spryker\Glue\ProductAlternativesRestApi\Processor\ConcreteAlternativeProduct;
 
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface AlternativeProductReaderInterface
+interface ConcreteAlternativeProductReaderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -19,12 +18,4 @@ interface AlternativeProductReaderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function getConcreteProductAlternative(RestRequestInterface $restRequest): RestResponseInterface;
-
-    /**
-     * @param string $sku
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
-     */
-    public function findConcreteProductAlternativeBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface;
 }

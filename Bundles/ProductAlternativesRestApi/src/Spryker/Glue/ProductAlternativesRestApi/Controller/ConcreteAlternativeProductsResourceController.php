@@ -14,13 +14,13 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\ProductAlternativesRestApi\ProductAlternativesRestApiFactory getFactory()
  */
-class AlternativeProductsResourceController extends AbstractController
+class ConcreteAlternativeProductsResourceController extends AbstractController
 {
     /**
      * @Glue({
      *      "getCollection": {
      *          "summary": [
-     *              "Retrieves alternative products of concrete product."
+     *              "Retrieves concrete alternative products of concrete product."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
@@ -28,7 +28,7 @@ class AlternativeProductsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Concrete product id is not specified.",
-     *              "404": "Alternative products not found."
+     *              "404": "Concrete alternative products not found."
      *          }
      *      }
      * })
@@ -40,7 +40,7 @@ class AlternativeProductsResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createProductAlternativeReader()
+            ->createConcreteAlternativeProductReader()
             ->getConcreteProductAlternative($restRequest);
     }
 }
