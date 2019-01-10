@@ -27,8 +27,8 @@ class UpSellingProductsForCartController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Cart with given uuid not found.",
-     *              "404": "Cart uuid is missing."
+     *              "400": "Cart id is missing.",
+     *              "404": "Cart with given id is not found."
      *          }
      *     }
      * })
