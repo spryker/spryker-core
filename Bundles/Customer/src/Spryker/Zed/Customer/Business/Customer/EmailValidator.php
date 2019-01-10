@@ -67,6 +67,6 @@ class EmailValidator implements EmailValidatorInterface
     {
         $maxAllowedLength = SpyCustomerTableMap::getTableMap()->getColumn(SpyCustomerTableMap::COL_EMAIL)->getSize();
 
-        return strlen($email) <= $maxAllowedLength;
+        return mb_strlen($email) <= $maxAllowedLength;
     }
 }
