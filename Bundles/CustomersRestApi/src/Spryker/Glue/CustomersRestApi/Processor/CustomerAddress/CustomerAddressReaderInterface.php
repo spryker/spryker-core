@@ -8,15 +8,13 @@
 namespace Spryker\Glue\CustomersRestApi\Processor\CustomerAddress;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface CustomerAddressReaderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function getAddressesByCustomerReference(RestResourceInterface $resource, RestRequestInterface $restRequest): RestResourceInterface;
+    public function getAddressesByCustomerReference(RestResourceInterface $resource): RestResourceInterface;
 }

@@ -16,7 +16,6 @@ use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterface
@@ -64,11 +63,10 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer, RestRequestInterface $restRequest): RestResponseInterface
+    public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer): RestResponseInterface
     {
         $cartResource = $this->restResourceBuilder->createRestResource(
             CartsRestApiConfig::RESOURCE_GUEST_CARTS,
@@ -76,10 +74,8 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
             $this->cartsResourceMapper->mapQuoteTransferToRestCartsAttributesTransfer($quoteTransfer)
         );
 
-        if (!$restRequest->getExcludeRelationship()) {
-            foreach ($quoteTransfer->getItems() as $itemTransfer) {
-                $cartResource->addRelationship($this->createGuestCartItemResource($itemTransfer, $cartResource->getId()));
-            }
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $cartResource->addRelationship($this->createGuestCartItemResource($itemTransfer, $cartResource->getId()));
         }
 
         return $this->createEmptyGuestCartRestResponse()->addResource($cartResource);

@@ -147,7 +147,7 @@ class RequestFormatterTest extends Unit
             '/',
             Request::METHOD_GET,
             [
-                'include' => 'test'
+                'include' => 'test',
             ],
             [],
             [],

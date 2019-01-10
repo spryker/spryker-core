@@ -60,10 +60,7 @@ class CartsResourceMapper implements CartsResourceMapperInterface
             $quoteTransfer->getUuid(),
             $restCartsAttributesTransfer
         );
-
-        if (!$restRequest->getExcludeRelationship()) {
-            $this->mapCartItems($quoteTransfer, $cartResource);
-        }
+        $this->mapCartItems($quoteTransfer, $cartResource);
 
         return $cartResource;
     }

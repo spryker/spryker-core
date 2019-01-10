@@ -99,7 +99,7 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
             $quoteTransfer = $this->guestCartReader->getCustomerQuote($restRequest)
                 ?? $this->guestCartCreator->createQuoteTransfer($restRequest);
 
-            return $this->addItemToQuote($quoteTransfer, $restCartItemsAttributesTransfer, $restRequest);
+            return $this->addItemToQuote($quoteTransfer, $restCartItemsAttributesTransfer);
         }
 
         $quoteResponseTransfer = $this->guestCartReader->getQuoteTransferByUuid($parentResource->getId(), $restRequest);
@@ -107,21 +107,17 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
             return $this->guestCartRestResponseBuilder->createGuestCartNotFoundErrorRestResponse();
         }
 
-        return $this->addItemToQuote($quoteResponseTransfer->getQuoteTransfer(), $restCartItemsAttributesTransfer, $restRequest);
+        return $this->addItemToQuote($quoteResponseTransfer->getQuoteTransfer(), $restCartItemsAttributesTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addItemToQuote(
-        QuoteTransfer $quoteTransfer,
-        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer,
-        RestRequestInterface $restRequest
-    ): RestResponseInterface {
+    protected function addItemToQuote(QuoteTransfer $quoteTransfer, RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): RestResponseInterface
+    {
         $this->quoteClient->setQuote($quoteTransfer);
         $quoteTransfer = $this->cartClient->addItem(
             $this->cartItemsResourceMapper->mapItemAttributesToItemTransfer($restCartItemsAttributesTransfer)
@@ -132,6 +128,6 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
             return $this->guestCartRestResponseBuilder->createGuestCartErrorRestResponseFromErrorMessageTransfer($errors);
         }
 
-        return $this->guestCartRestResponseBuilder->createGuestCartRestResponse($quoteTransfer, $restRequest);
+        return $this->guestCartRestResponseBuilder->createGuestCartRestResponse($quoteTransfer);
     }
 }

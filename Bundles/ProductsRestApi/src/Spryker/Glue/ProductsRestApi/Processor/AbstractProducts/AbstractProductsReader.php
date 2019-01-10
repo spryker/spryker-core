@@ -107,10 +107,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             $restAbstractProductsAttributesTransfer->getSku(),
             $restAbstractProductsAttributesTransfer
         );
-
-        if (!$restRequest->getExcludeRelationship()) {
-            $restResource = $this->addConcreteProducts($restResource, $restRequest);
-        }
+        $restResource = $this->addConcreteProducts($restResource, $restRequest);
 
         return $response->addResource($restResource);
     }
