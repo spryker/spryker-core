@@ -216,10 +216,6 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      */
     public function validateQuote(): QuoteResponseTransfer
     {
-        if (!$this->isQuoteEditable()) {
-            return $this->createNotSuccessfulQuoteResponseTransfer();
-        }
-
         return $this->quoteStorageStrategy->validateQuote();
     }
 
