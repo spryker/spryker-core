@@ -76,21 +76,38 @@ class ShipmentController extends AbstractController
         })();
 
         $addressFormDataprovider = $this->getFactory()->createAddressFormDataProvider();
-
-        /**
-         * @todo: Replace with real logic.
-         */
         $shipmentMethodCollection = $this->getFactory()
             ->getShipmentFacade()
             ->getMethods();
-        $shipmentFormOptions = (function () use ($orderTransfer, $addressFormDataprovider, $shipmentMethodCollection) {
+        /**
+         * @todo: Replace with real logic.
+         */
+        $shipmentAddressCollection = (function () {
+            $collection = [
+                1 => 'Volkswagen Group, Hellmuth-Hirth-Strasse 1',
+                0 => 'Create New',
+            ];
+
+            return $collection;
+        })();
+        $shipmentFormOptions = (function () use ($shipmentTransfer, $orderTransfer, $addressFormDataprovider, $shipmentMethodCollection, $shipmentAddressCollection) {
+            $assignedOrderItems = [];
+            foreach ($orderTransfer->getItems() as $orderItem) {
+                if ($orderItem->getId() == 27) {
+                    $assignedOrderItems[] = $orderItem->getId();
+                }
+            }
+
             $shipmentMethodChoices = [];
             foreach ($shipmentMethodCollection as $shipmentMethod) {
                 $shipmentMethodChoices[$shipmentMethod->getName()] = $shipmentMethod->getName();
             }
+
             $formOptions = array_merge(
                 [
                     ShipmentForm::CHOICES_SHIPMENT_METHOD => $shipmentMethodChoices,
+                    ShipmentForm::CHOICES_SHIPMENT_ADDRESS => $shipmentAddressCollection,
+                    ShipmentForm::SELECTED_ORDER_ITEMS => $assignedOrderItems,
                 ],
                 $addressFormDataprovider->getOptions()
             );

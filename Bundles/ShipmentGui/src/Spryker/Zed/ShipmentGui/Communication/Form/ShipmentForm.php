@@ -27,12 +27,15 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ShipmentForm extends AbstractType
 {
+    public const FIELD_SHIPMENT_ADDRESS_ID = 'idShippingAddress';
     public const FIELD_ADDRESS = 'shippingAddress';
     public const FIELD_ORDER_ITEMS = 'order_items';
+    public const FIELD_DELIVERY_ADDRESS = 'delivery_address';
+    public const CHOICES_SHIPMENT_METHOD = 'choices_shipment_method';
+    public const CHOICES_SHIPMENT_ADDRESS = 'choices_shipment_address';
     public const FIELD_SHIPMENT_DATE = 'requestedDeliveryDate';
     public const FIELD_SHIPMENT_METHOD = 'method';
-    public const CHOICES_SHIPMENT_METHOD = 'choices_shipment_method';
-    public const FIELD_DELIVERY_ADDRESS = 'delivery_address';
+    public const SELECTED_ORDER_ITEMS = 'selected_order_items';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -44,6 +47,8 @@ class ShipmentForm extends AbstractType
         $resolver->setRequired(AddressForm::OPTION_SALUTATION_CHOICES);
         $resolver->setRequired(AddressForm::OPTION_COUNTRY_CHOICES);
         $resolver->setRequired(self::CHOICES_SHIPMENT_METHOD);
+        $resolver->setRequired(self::CHOICES_SHIPMENT_ADDRESS);
+        $resolver->setDefault(self::SELECTED_ORDER_ITEMS, []);
     }
 
     /**
@@ -55,11 +60,32 @@ class ShipmentForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
+            ->addShipmentAddressIdField($builder)
             ->addAddressForm($builder)
             ->addOrderItemsForm($builder)
             ->addShipmentMethodField($builder)
             ->addDeliveryDateField($builder)
         ;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return $this
+     */
+    protected function addShipmentAddressIdField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            self::FIELD_SHIPMENT_ADDRESS_ID,
+            ChoiceType::class,
+            [
+                'choices' => array_flip($builder->getOption(self::CHOICES_SHIPMENT_ADDRESS)),
+                'label' => 'Delivery Address',
+            ]
+        );
+
+        return $this;
     }
 
     /**
@@ -77,6 +103,7 @@ class ShipmentForm extends AbstractType
                 'entry_type' => OrderItemType::class,
                 'entry_options' => [
                     'label' => false,
+                    OrderItemType::ASSIGNED_ID_COLLECTION => $builder->getOption(self::SELECTED_ORDER_ITEMS),
                 ],
             ]
         );

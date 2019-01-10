@@ -14,6 +14,7 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Address Details' } %}
         {% block widget_content %}
             {{ form_start(shipmentForm) }}
+            {{ form_widget(shipmentForm.idShippingAddress) }}
             {{ form_widget(shipmentForm.shippingAddress) }}
 
             <div id="items">
@@ -32,14 +33,12 @@
                     {% for order_item in shipmentForm.order_items %}
                         {% set order_item_data = order_item.vars.data %}
                         <tr>
-                            {#{% set image = order_item.metadata.image %}#}
-                            {% set image = '' %}
 
                             <td class="item-checker">
                                 {{ form_widget(order_item.assigned) }}
                             </td>
                             <td>
-                                <img class="product-image" src="{{ image }}"/>
+                                <img class="product-image" src="{{ order_item_data.metadata.image }}" width="100"/>
                             </td>
                             <td>
                                 <div>
