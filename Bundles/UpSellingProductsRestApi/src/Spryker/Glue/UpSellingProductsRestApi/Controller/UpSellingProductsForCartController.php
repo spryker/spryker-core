@@ -25,7 +25,11 @@ class UpSellingProductsForCartController extends AbstractController
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
-     *          }]
+     *          }],
+     *          "responses": {
+     *              "400": "Cart with given uuid not found.",
+     *              "404": "Cart uuid is missing."
+     *          }
      *     }
      * })
      *

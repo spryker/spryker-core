@@ -25,7 +25,11 @@ class RelatedProductsController extends AbstractController
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
-     *          }]
+     *          }],
+     *          "responses": {
+     *              "400": "Abstract product sku is not specified.",
+     *              "404": "Abstract product is not found."
+     *          }
      *     }
      * })
      *

@@ -97,6 +97,30 @@ class RelatedProductReader implements RelatedProductReaderInterface
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     *
+     * @return void
+     */
+    protected function addAbstractProductResources(
+        RestRequestInterface $restRequest,
+        RestResponseInterface $restResponse,
+        array $productViewTransfers
+    ): void {
+        foreach ($productViewTransfers as $productViewTransfer) {
+            $abstractProductResource = $this->productsRestApiResource->findProductAbstractBySku(
+                $productViewTransfer->getSku(),
+                $restRequest
+            );
+
+            if ($abstractProductResource) {
+                $restResponse->addResource($abstractProductResource);
+            }
+        }
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
     protected function createProductAbstractSkuMissingError(): RestErrorMessageTransfer
@@ -120,29 +144,5 @@ class RelatedProductReader implements RelatedProductReaderInterface
             ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ABSTRACT_PRODUCT);
 
         return $restErrorTransfer;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
-     *
-     * @return void
-     */
-    protected function addAbstractProductResources(
-        RestRequestInterface $restRequest,
-        RestResponseInterface $restResponse,
-        array $productViewTransfers
-    ): void {
-        foreach ($productViewTransfers as $productViewTransfer) {
-            $abstractProductResource = $this->productsRestApiResource->findProductAbstractBySku(
-                $productViewTransfer->getSku(),
-                $restRequest
-            );
-
-            if ($abstractProductResource) {
-                $restResponse->addResource($abstractProductResource);
-            }
-        }
     }
 }
