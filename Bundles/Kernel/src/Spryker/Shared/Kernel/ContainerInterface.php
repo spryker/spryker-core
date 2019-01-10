@@ -18,9 +18,9 @@ interface ContainerInterface extends ArrayAccess
 
     /**
      * @param string $id
-     * @param callable $callable
+     * @param \Closure|object $service
      *
-     * @return \Closure
+     * @return \Closure|object
      */
-    public function extend($id, $callable);
+    public function extend(string $id, $service);
 }
