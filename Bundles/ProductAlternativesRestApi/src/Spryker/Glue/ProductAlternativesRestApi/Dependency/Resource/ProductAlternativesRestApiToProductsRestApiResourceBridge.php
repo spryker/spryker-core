@@ -26,6 +26,17 @@ class ProductAlternativesRestApiToProductsRestApiResourceBridge implements Produ
     }
 
     /**
+     * @param string $sku
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     */
+    public function findProductConcreteBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
+    {
+        return $this->productsRestApiResource->findProductConcreteBySku($sku, $restRequest);
+    }
+
+    /**
      * @param int $idProductAbstract
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *

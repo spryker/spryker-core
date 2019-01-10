@@ -60,12 +60,17 @@ class AbstractAlternativeProductReader implements AbstractAlternativeProductRead
         }
 
         $concreteProductSku = $concreteProductResource->getId();
-        $productAlternativeStorageTransfer = $this->productAlternativeStorage->findProductAlternativeStorage($concreteProductSku);
-        if (!$productAlternativeStorageTransfer) {
+        $concreteProductResource = $this->productsRestApiResource->findProductConcreteBySku($concreteProductSku, $restRequest);
+        if (!$concreteProductResource) {
             return $this->alternativeProductsRestResponseBuilder->createAlternativeProductsNotFoundError();
         }
 
         $restResponse = $this->alternativeProductsRestResponseBuilder->createRestResponse();
+        $productAlternativeStorageTransfer = $this->productAlternativeStorage->findProductAlternativeStorage($concreteProductSku);
+        if (!$productAlternativeStorageTransfer) {
+            return $restResponse;
+        }
+
         $this->addAbstractProductResources($restResponse, $productAlternativeStorageTransfer, $restRequest);
 
         return $restResponse;
