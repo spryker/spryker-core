@@ -34,5 +34,5 @@ interface AbstractProductsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findAbstractProductById(int $idProductAbstract, RestRequestInterface $restRequest): ?RestResourceInterface;
+    public function findProductAbstractById(int $idProductAbstract, RestRequestInterface $restRequest): ?RestResourceInterface;
 }

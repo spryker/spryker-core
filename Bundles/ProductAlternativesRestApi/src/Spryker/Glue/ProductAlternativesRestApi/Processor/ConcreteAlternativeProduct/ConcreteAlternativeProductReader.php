@@ -83,7 +83,7 @@ class ConcreteAlternativeProductReader implements ConcreteAlternativeProductRead
         RestRequestInterface $restRequest
     ): RestResponseInterface {
         foreach ($productAlternativeStorageTransfer->getProductConcreteIds() as $idProductConcrete) {
-            $concreteProductResource = $this->productsRestApiResource->findConcreteProductById($idProductConcrete, $restRequest);
+            $concreteProductResource = $this->productsRestApiResource->findProductConcreteById($idProductConcrete, $restRequest);
             if ($concreteProductResource) {
                 $restResponse->addResource($concreteProductResource);
             }

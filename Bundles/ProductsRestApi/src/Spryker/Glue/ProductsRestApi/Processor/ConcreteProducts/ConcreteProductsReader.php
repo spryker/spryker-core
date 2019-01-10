@@ -154,7 +154,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findConcreteProductById(int $idProductConcrete, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findProductConcreteById(int $idProductConcrete, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         $concreteProductData = $this->productStorageClient->findProductConcreteStorageData(
             $idProductConcrete,

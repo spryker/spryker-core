@@ -84,7 +84,7 @@ class AbstractAlternativeProductReader implements AbstractAlternativeProductRead
         RestRequestInterface $restRequest
     ): RestResponseInterface {
         foreach ($productAlternativeStorageTransfer->getProductAbstractIds() as $idProductAbstract) {
-            $abstractProductResource = $this->productsRestApiResource->findAbstractProductById($idProductAbstract, $restRequest);
+            $abstractProductResource = $this->productsRestApiResource->findProductAbstractById($idProductAbstract, $restRequest);
             if ($abstractProductResource) {
                 $restResponse->addResource($abstractProductResource);
             }

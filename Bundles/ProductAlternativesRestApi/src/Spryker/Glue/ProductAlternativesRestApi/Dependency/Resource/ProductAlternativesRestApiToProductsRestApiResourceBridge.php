@@ -31,9 +31,9 @@ class ProductAlternativesRestApiToProductsRestApiResourceBridge implements Produ
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findAbstractProductById(int $idProductAbstract, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findProductAbstractById(int $idProductAbstract, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        return $this->productsRestApiResource->findAbstractProductById($idProductAbstract, $restRequest);
+        return $this->productsRestApiResource->findProductAbstractById($idProductAbstract, $restRequest);
     }
 
     /**
@@ -42,8 +42,8 @@ class ProductAlternativesRestApiToProductsRestApiResourceBridge implements Produ
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findConcreteProductById(int $idProductConcrete, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findProductConcreteById(int $idProductConcrete, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        return $this->productsRestApiResource->findConcreteProductById($idProductConcrete, $restRequest);
+        return $this->productsRestApiResource->findProductConcreteById($idProductConcrete, $restRequest);
     }
 }
