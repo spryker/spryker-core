@@ -51,11 +51,31 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use createMethodReader() instead.
+     *
      * @return \Spryker\Zed\Shipment\Business\Model\MethodInterface
      */
     public function createMethod()
     {
+        /** @ToDo Replace with MethodReader*/
         return new Method(
+            $this->getQueryContainer(),
+            $this->createMethodPrice(),
+            $this->createShipmentMethodTransformer(),
+            $this->getCurrencyFacade(),
+            $this->getStoreFacade(),
+            $this->getShipmentService(),
+            $this->getPlugins(),
+            $this->getMethodFilterPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Model\MethodReader
+     */
+    public function createMethodReader()
+    {
+        return new MethodReader(
             $this->getQueryContainer(),
             $this->createMethodPrice(),
             $this->createShipmentMethodTransformer(),

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
-interface MethodInterface
+interface MethodReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
@@ -21,13 +21,11 @@ interface MethodInterface
     public function create(ShipmentMethodTransfer $methodTransfer);
 
     /**
-     * @deprecated Use getAvailableMethodsByShipment() instead.
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer);
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ArrayObject;
 
     /**
      * @param int $idMethod

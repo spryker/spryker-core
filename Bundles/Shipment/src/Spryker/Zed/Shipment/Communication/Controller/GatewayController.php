@@ -35,6 +35,8 @@ class GatewayController extends AbstractGatewayController
      */
     public function getAvailableMethodsByShipmentAction(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
     {
-        return $this->getFacade()->getAvailableMethodsByShipment($quoteTransfer);
+        return (new ShipmentGroupCollectionTransfer())->setGroups(
+            $this->getFacade()->getAvailableMethodsByShipment($quoteTransfer)
+        );
     }
 }

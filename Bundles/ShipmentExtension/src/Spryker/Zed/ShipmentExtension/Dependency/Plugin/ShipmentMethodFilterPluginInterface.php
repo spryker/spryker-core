@@ -5,26 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Shipment\Dependency\Plugin;
+namespace Spryker\Zed\ShipmentExtension\Dependency\Plugin;
 
 use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
-/**
- * @deprecated Use \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface instead.
- *
- * Interface ShipmentMethodFilterPluginInterface
- * @package Spryker\Zed\Shipment\Dependency\Plugin
- */
 interface ShipmentMethodFilterPluginInterface
 {
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      */
-    public function filterShipmentMethods(ArrayObject $shipmentMethods, QuoteTransfer $quoteTransfer);
+    public function filterShipmentMethods(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        ArrayObject $shipmentMethods,
+        QuoteTransfer $quoteTransfer): ArrayObject;
 }

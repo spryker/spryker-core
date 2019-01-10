@@ -24,6 +24,10 @@ interface ShipmentClientInterface
     public function getAvailableMethods(QuoteTransfer $quoteTransfer);
 
     /**
+     * Specification:
+     * - The logic behind the method is similar as its deprecated variant, but the available method checks and hydraits
+     * the ShipmentMethodTransfer shipments in the quote.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
