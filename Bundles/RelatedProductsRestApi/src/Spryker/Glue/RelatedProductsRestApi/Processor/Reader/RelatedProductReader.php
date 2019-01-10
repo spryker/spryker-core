@@ -129,10 +129,17 @@ class RelatedProductReader implements RelatedProductReaderInterface
      *
      * @return void
      */
-    protected function addAbstractProductResources(RestRequestInterface $restRequest, RestResponseInterface $restResponse, array $productViewTransfers): void
-    {
+    protected function addAbstractProductResources(
+        RestRequestInterface $restRequest,
+        RestResponseInterface $restResponse,
+        array $productViewTransfers
+    ): void {
         foreach ($productViewTransfers as $productViewTransfer) {
-            $abstractProductResource = $this->productsRestApiResource->findProductAbstractBySku($productViewTransfer->getSku(), $restRequest);
+            $abstractProductResource = $this->productsRestApiResource->findProductAbstractBySku(
+                $productViewTransfer->getSku(),
+                $restRequest
+            );
+
             if ($abstractProductResource) {
                 $restResponse->addResource($abstractProductResource);
             }

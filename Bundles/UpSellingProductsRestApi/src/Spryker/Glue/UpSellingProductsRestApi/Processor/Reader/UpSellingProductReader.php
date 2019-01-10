@@ -7,15 +7,14 @@
 
 namespace Spryker\Glue\UpSellingProductsRestApi\Processor\Reader;
 
-use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToProductRelationStorageClientInterface;
+use Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class UpSellingProductReader implements UpSellingProductReaderInterface
@@ -31,6 +30,11 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     protected $productRelationStorageClient;
 
     /**
+     * @var \Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceInterface
+     */
+    protected $productsRestApiResource;
+
+    /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
@@ -38,15 +42,18 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     /**
      * @param \Spryker\Glue\UpSellingProductsRestApi\Processor\Reader\QuoteReaderInterface $quoteReader
      * @param \Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToProductRelationStorageClientInterface $productRelationStorageClient
+     * @param \Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceInterface $productsRestApiResource
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
         UpSellingProductsRestApiToProductRelationStorageClientInterface $productRelationStorageClient,
+        UpSellingProductsRestApiToProductsRestApiResourceInterface $productsRestApiResource,
         RestResourceBuilderInterface $restResourceBuilder
     ) {
         $this->quoteReader = $quoteReader;
         $this->productRelationStorageClient = $productRelationStorageClient;
+        $this->productsRestApiResource = $productsRestApiResource;
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
@@ -73,27 +80,32 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
         $upSellingProducts = $this->productRelationStorageClient
             ->findUpSellingProducts($quoteTransfer, $restRequest->getMetadata()->getLocale());
 
-        $this->addAbstractProductResources($restResponse, $upSellingProducts);
+        $this->addAbstractProductResources($restRequest, $restResponse, $upSellingProducts);
 
         return $restResponse;
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
      *
      * @return void
      */
-    protected function addAbstractProductResources(RestResponseInterface $restResponse, array $productViewTransfers): void
-    {
+    protected function addAbstractProductResources(
+        RestRequestInterface $restRequest,
+        RestResponseInterface $restResponse,
+        array $productViewTransfers
+    ): void {
         foreach ($productViewTransfers as $productViewTransfer) {
-            $restResource = $this->restResourceBuilder->createRestResource(
-                ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+            $abstractProductResource = $this->productsRestApiResource->findProductAbstractBySku(
                 $productViewTransfer->getSku(),
-                (new AbstractProductsRestAttributesTransfer())->fromArray($productViewTransfer->toArray(), true)
+                $restRequest
             );
 
-            $restResponse->addResource($restResource);
+            if ($abstractProductResource) {
+                $restResponse->addResource($abstractProductResource);
+            }
         }
     }
 
