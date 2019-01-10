@@ -19,7 +19,7 @@ class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
     protected $salesService;
 
     /**
-     * @var array
+     * @var \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface[]
      */
     protected $strategyContainer;
 
@@ -27,7 +27,7 @@ class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @param \Spryker\Zed\Sales\Dependency\Service\SalesToSalesServiceInterface $salesService
-     * @param array $strategyContainer
+     * @param array|\Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface[] $strategyContainer
      */
     public function __construct(SalesToSalesServiceInterface $salesService, array $strategyContainer)
     {

@@ -30,12 +30,14 @@ class ItemsGrouper implements ItemsGrouperInterface
         foreach ($itemTransfers as $itemTransfer) {
             $this->assertRequiredShipment($itemTransfer);
 
-            $hash = $this->getItemHash($itemTransfer->getShipment());
-            if (!isset($shipmentGroupTransfers[$hash])) {
-                $shipmentGroupTransfers[$hash] = $this->createNewShipmentGroupTransfer($itemTransfer->getShipment());
+            $key = $this->getItemShipmentKey($itemTransfer->getShipment());
+            if (!isset($shipmentGroupTransfers[$key])) {
+                $shipmentGroupTransfers[$key] = $this
+                    ->createNewShipmentGroupTransfer()
+                    ->setShipment($itemTransfer->getShipment());
             }
 
-            $shipmentGroupTransfers[$hash]->addItem($itemTransfer);
+            $shipmentGroupTransfers[$key]->addItem($itemTransfer);
         }
 
         return $shipmentGroupTransfers;
@@ -58,7 +60,7 @@ class ItemsGrouper implements ItemsGrouperInterface
      *
      * @return string
      */
-    protected function getItemHash(ShipmentTransfer $shipmentTransfer): string
+    protected function getItemShipmentKey(ShipmentTransfer $shipmentTransfer): string
     {
         return sprintf(
             static::SHIPMENT_TRANSFER_KEY_PATTERN,
@@ -91,12 +93,10 @@ class ItemsGrouper implements ItemsGrouperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     *
-     * @return string
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    protected function createNewShipmentGroupTransfer(ShipmentTransfer $shipmentTransfer): ShipmentGroupTransfer
+    protected function createNewShipmentGroupTransfer(): ShipmentGroupTransfer
     {
-        return (new ShipmentGroupTransfer())->setShipment($shipmentTransfer);
+        return (new ShipmentGroupTransfer());
     }
 }
