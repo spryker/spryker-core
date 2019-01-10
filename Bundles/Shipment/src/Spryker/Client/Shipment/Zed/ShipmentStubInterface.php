@@ -26,13 +26,6 @@ interface ShipmentStubInterface
     public function getAvailableMethods(QuoteTransfer $quoteTransfer);
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
-     */
-    public function getShipmentGroupCollectionTransfer(ItemCollectionTransfer $itemCollectionTransfer): ShipmentGroupCollectionTransfer;
-
-    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

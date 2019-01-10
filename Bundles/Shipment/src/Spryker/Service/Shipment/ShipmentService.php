@@ -48,25 +48,6 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
-     */
-    public function getShipmentGroupCollectionTransfer(ArrayObject $itemTransfers): ShipmentGroupCollectionTransfer
-    {
-        $shipmentGroupCollectionTransfer = new ShipmentGroupCollectionTransfer();
-        $shipmentGroupCollectionTransfer->setGroups(
-            $this->groupItemsByShipment($itemTransfers)
-        );
-
-        return $shipmentGroupCollectionTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return string

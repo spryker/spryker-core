@@ -316,20 +316,4 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     {
         return ShipmentConstants::SHIPMENT_EXPENSE_TYPE;
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
-     */
-    public function getShipmentGroupCollectionTransfer(ArrayObject $itemTransfersCollection): ShipmentGroupCollectionTransfer
-    {
-        return $this->getFactory()
-            ->getShipmentService()
-            ->getShipmentGroupCollectionTransfer($itemTransfersCollection);
-    }
 }

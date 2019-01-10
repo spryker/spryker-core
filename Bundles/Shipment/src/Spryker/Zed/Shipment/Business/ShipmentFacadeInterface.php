@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use ArrayObject;
@@ -112,7 +113,7 @@ interface ShipmentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      */
-    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer);
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer;
 
     /**
      * Specification:
@@ -281,16 +282,4 @@ interface ShipmentFacadeInterface
      * @return bool
      */
     public function isShipmentMethodActive($idShipmentMethod);
-
-    /**
-     * Specification:
-     * - Retrieves shipment groups.
-     *
-     * @api
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
-     */
-    public function getShipmentGroupCollectionTransfer(ArrayObject $itemTransfersCollection): ShipmentGroupCollectionTransfer;
 }
