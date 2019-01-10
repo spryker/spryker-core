@@ -41,7 +41,7 @@ class AssignedProductConcreteRelationTabs extends AbstractTabs
      *
      * @return $this
      */
-    protected function addAssignedProductTab(TabsViewTransfer $tabsViewTransfer): self
+    protected function addAssignedProductTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
@@ -59,7 +59,7 @@ class AssignedProductConcreteRelationTabs extends AbstractTabs
      *
      * @return $this
      */
-    protected function addDeassignmentProductTab(TabsViewTransfer $tabsViewTransfer): self
+    protected function addDeassignmentProductTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer

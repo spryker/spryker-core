@@ -78,7 +78,7 @@ class AddressCollectionType extends AbstractType
      *
      * @return $this
      */
-    protected function addShippingAddressSubForm(FormBuilderInterface $builder, array $options): self
+    protected function addShippingAddressSubForm(FormBuilderInterface $builder, array $options)
     {
         $options = [
             'data_class' => AddressTransfer::class,
@@ -106,7 +106,7 @@ class AddressCollectionType extends AbstractType
      *
      * @return $this
      */
-    protected function addSameAsShipmentCheckbox(FormBuilderInterface $builder): self
+    protected function addSameAsShipmentCheckbox(FormBuilderInterface $builder)
     {
         $builder->add(
             static::FIELD_BILLING_SAME_AS_SHIPPING,
@@ -125,7 +125,7 @@ class AddressCollectionType extends AbstractType
      *
      * @return $this
      */
-    protected function addBillingAddressSubForm(FormBuilderInterface $builder, array $options): self
+    protected function addBillingAddressSubForm(FormBuilderInterface $builder, array $options)
     {
         $options = [
             'data_class' => AddressTransfer::class,
