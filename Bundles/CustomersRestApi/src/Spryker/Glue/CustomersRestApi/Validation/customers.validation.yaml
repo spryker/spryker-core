@@ -3,8 +3,6 @@ customers:
     email:
       - NotBlank
       - Email
-      - Length:
-          max: 255
     salutation:
       - NotBlank
     firstName:

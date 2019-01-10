@@ -14,6 +14,7 @@ interface RestApiErrorInterface
 {
     public const ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED = 'customer.email.already.used';
     public const ERROR_MESSAGE_CUSTOMER_EMAIL_INVALID = 'customer.email.format.invalid';
+    public const ERROR_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED = 'customer.email.length.exceeded';
     public const ERROR_CUSTOMER_PASSWORD_INVALID = 'customer.password.invalid';
 
     /**
