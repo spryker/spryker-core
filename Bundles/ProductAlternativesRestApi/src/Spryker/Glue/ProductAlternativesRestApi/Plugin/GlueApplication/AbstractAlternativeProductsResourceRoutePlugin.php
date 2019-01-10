@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ProductAlternativesRestApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\RestAlternativeProductsAttributesTransfer;
+use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
@@ -41,7 +41,7 @@ class AbstractAlternativeProductsResourceRoutePlugin extends AbstractPlugin impl
      */
     public function getResourceType(): string
     {
-        return ProductAlternativesRestApiConfig::RESOURCE_ABSTRACT_ALTERNATIVE_PRODUCTS;
+        return ProductAlternativesRestApiConfig::RELATIONSHIP_NAME_ABSTRACT_ALTERNATIVE_PRODUCTS;
     }
 
     /**
@@ -65,7 +65,7 @@ class AbstractAlternativeProductsResourceRoutePlugin extends AbstractPlugin impl
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestAlternativeProductsAttributesTransfer::class;
+        return AbstractProductsRestAttributesTransfer::class;
     }
 
     /**

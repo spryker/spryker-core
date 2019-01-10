@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ProductAlternativesRestApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\RestAlternativeProductsAttributesTransfer;
+use Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
@@ -42,7 +42,7 @@ class ConcreteAlternativeProductsResourceRoutePlugin extends AbstractPlugin impl
      */
     public function getResourceType(): string
     {
-        return ProductAlternativesRestApiConfig::RESOURCE_CONCRETE_ALTERNATIVE_PRODUCTS;
+        return ProductAlternativesRestApiConfig::RELATIONSHIP_NAME_CONCRETE_ALTERNATIVE_PRODUCTS;
     }
 
     /**
@@ -66,7 +66,7 @@ class ConcreteAlternativeProductsResourceRoutePlugin extends AbstractPlugin impl
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestAlternativeProductsAttributesTransfer::class;
+        return ConcreteProductsRestAttributesTransfer::class;
     }
 
     /**
