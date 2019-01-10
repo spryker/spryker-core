@@ -7,10 +7,16 @@
 
 namespace Spryker\Zed\CategoryImage\Business;
 
-use Spryker\Zed\CategoryImage\Business\Model\ImageSet\Reader;
-use Spryker\Zed\CategoryImage\Business\Model\ImageSet\ReaderInterface;
-use Spryker\Zed\CategoryImage\Business\Model\ImageSet\Writer;
-use Spryker\Zed\CategoryImage\Business\Model\ImageSet\WriterInterface;
+use Spryker\Zed\CategoryImage\Business\ImageSet\CategoryExpander;
+use Spryker\Zed\CategoryImage\Business\ImageSet\CategoryExpanderInterface;
+use Spryker\Zed\CategoryImage\Business\ImageSet\ImageSetCreator;
+use Spryker\Zed\CategoryImage\Business\ImageSet\ImageSetCreatorInterface;
+use Spryker\Zed\CategoryImage\Business\ImageSet\ImageSetDeleter;
+use Spryker\Zed\CategoryImage\Business\ImageSet\ImageSetDeleterInterface;
+use Spryker\Zed\CategoryImage\Business\ImageSet\ImageSetReader;
+use Spryker\Zed\CategoryImage\Business\ImageSet\ImageSetReaderInterface;
+use Spryker\Zed\CategoryImage\Business\ImageSet\ImageSetUpdater;
+use Spryker\Zed\CategoryImage\Business\ImageSet\ImageSetUpdaterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -21,21 +27,52 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class CategoryImageBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\CategoryImage\Business\Model\ImageSet\ReaderInterface
+     * @return \Spryker\Zed\CategoryImage\Business\ImageSet\ImageSetReaderInterface
      */
-    public function createCategoryImageReader(): ReaderInterface
+    public function createImageSetReader(): ImageSetReaderInterface
     {
-        return new Reader(
+        return new ImageSetReader(
             $this->getRepository()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CategoryImage\Business\Model\ImageSet\WriterInterface
+     * @return \Spryker\Zed\CategoryImage\Business\ImageSet\CategoryExpanderInterface
      */
-    public function createCategoryImageWriter(): WriterInterface
+    public function createCategoryExpander(): CategoryExpanderInterface
     {
-        return new Writer(
+        return new CategoryExpander(
+            $this->createImageSetReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryImage\Business\ImageSet\ImageSetCreatorInterface
+     */
+    public function createImageSetCreator(): ImageSetCreatorInterface
+    {
+        return new ImageSetCreator(
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryImage\Business\ImageSet\ImageSetUpdaterInterface
+     */
+    public function createImageSetUpdated(): ImageSetUpdaterInterface
+    {
+        return new ImageSetUpdater(
+            $this->getRepository(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryImage\Business\ImageSet\ImageSetDeleterInterface
+     */
+    public function createImageSetDeleter(): ImageSetDeleterInterface
+    {
+        return new ImageSetDeleter(
             $this->getRepository(),
             $this->getEntityManager()
         );

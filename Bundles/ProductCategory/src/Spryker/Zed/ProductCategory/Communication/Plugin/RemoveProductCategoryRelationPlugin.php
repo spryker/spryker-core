@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCategory\Communication\Plugin;
 
-use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface;
+use Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**

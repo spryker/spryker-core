@@ -8,14 +8,14 @@
 namespace Spryker\Zed\CategoryImage\Communication\Plugin;
 
 use Generated\Shared\Transfer\CategoryTransfer;
-use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUpdateAfterPluginInterface;
+use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryTransferExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CategoryImage\Business\CategoryImageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryImage\CategoryImageConfig getConfig()
  */
-class CategoryAfterUpdatePlugin extends AbstractPlugin implements CategoryUpdateAfterPluginInterface
+class CategoryImageSetExpanderPlugin extends AbstractPlugin implements CategoryTransferExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -26,8 +26,8 @@ class CategoryAfterUpdatePlugin extends AbstractPlugin implements CategoryUpdate
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function execute(CategoryTransfer $categoryTransfer): CategoryTransfer
+    public function expandCategory(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
-        return $this->getFacade()->updateCategoryImageSetsForCategory($categoryTransfer);
+        return $this->getFacade()->expandCategoryWithImageSets($categoryTransfer);
     }
 }

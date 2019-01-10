@@ -24,33 +24,31 @@ interface CategoryImageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    public function getCategoryImagesSetsByCategoryId(int $idCategory): array;
+    public function getCategoryImageSetsByIdCategory(int $idCategory): array;
 
     /**
      * Specification:
      * - Persists all provided image sets to database for the given category.
-     * - Returns CategoryTransfer along with the data from the persisted CategoryImageSetTransfers.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
+     * @return void
      */
-    public function createCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): CategoryTransfer;
+    public function createCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): void;
 
     /**
      * Specification:
-     * - Persists all provided image sets to database for the given category.
-     * - Returns CategoryTransfer along with the data from the persisted CategoryImageSetTransfers.
+     * - Updates image sets for the given category.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
+     * @return void
      */
-    public function updateCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): CategoryTransfer;
+    public function updateCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): void;
 
     /**
      * Specification:
@@ -67,6 +65,7 @@ interface CategoryImageFacadeInterface
     /**
      * Specification:
      * - Expands the CategoryTransfer with the category's image sets from database.
+     * - Returns expanded CategoryTransfer.
      *
      * @api
      *

@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\CategoryImage\Business\CategoryImageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryImage\CategoryImageConfig getConfig()
  */
-class CategoryAfterCreatePlugin extends AbstractPlugin implements CategoryCreateAfterPluginInterface
+class CategoryImageSetCreatorPlugin extends AbstractPlugin implements CategoryCreateAfterPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -24,10 +24,10 @@ class CategoryAfterCreatePlugin extends AbstractPlugin implements CategoryCreate
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
+     * @return void
      */
-    public function execute(CategoryTransfer $categoryTransfer): CategoryTransfer
+    public function execute(CategoryTransfer $categoryTransfer): void
     {
-        return $this->getFacade()->createCategoryImageSetsForCategory($categoryTransfer);
+        $this->getFacade()->createCategoryImageSetsForCategory($categoryTransfer);
     }
 }

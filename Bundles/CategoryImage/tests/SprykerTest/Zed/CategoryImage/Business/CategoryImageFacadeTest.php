@@ -27,11 +27,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 class CategoryImageFacadeTest extends Test
 {
     public const DEFAULT_CATEGORY_IMAGE_SET_COUNT = 1;
-    public const LOCALE_DE = 'de_DE';
-    public const MAX_CATEGORY_IMAGE_SET_COLLECTION_SIZE = 5;
-    public const DUMMY_CATEGORY_IMAGE_SET_NAME = 'category-image-set-name';
-    public const DUMMY_EXTERNAL_URL_SMALL = 'external-url-small';
-    public const DUMMY_EXTERNAL_URL_LARGE = 'external-url-large';
+    public const MAX_CATEGORY_IMAGE_SET_COUNT = 5;
 
     /**
      * @return void
@@ -40,7 +36,7 @@ class CategoryImageFacadeTest extends Test
     {
         // Assign
         $categoryImageSetTransferCollection = $this->buildCategoryImageSetTransferCollection(
-            rand(1, static::MAX_CATEGORY_IMAGE_SET_COLLECTION_SIZE)
+            rand(1, static::MAX_CATEGORY_IMAGE_SET_COUNT)
         );
         $categoryTransfer = $this->tester->haveCategory();
         $categoryTransfer->setImageSets(new ArrayObject($categoryImageSetTransferCollection));
@@ -48,7 +44,7 @@ class CategoryImageFacadeTest extends Test
         $this->getFacade()->createCategoryImageSetsForCategory($categoryTransfer);
 
         // Act
-        $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImagesSetsByCategoryId(
+        $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImageSetsByIdCategory(
             $categoryTransfer->getIdCategory()
         );
 
@@ -71,13 +67,12 @@ class CategoryImageFacadeTest extends Test
         $categoryTransfer->setImageSets(new ArrayObject($categoryImageSetCollection));
 
         // Act
-        $resultCategoryTransfer = $this->getFacade()->createCategoryImageSetsForCategory($categoryTransfer);
-        $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImagesSetsByCategoryId(
-            $resultCategoryTransfer->getIdCategory()
+        $this->getFacade()->createCategoryImageSetsForCategory($categoryTransfer);
+        $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImageSetsByIdCategory(
+            $categoryTransfer->getIdCategory()
         );
 
         // Assert
-        $this->assertSame($categoryTransfer, $resultCategoryTransfer);
         $this->assertNotEmpty($dbCategoryImageSetCollection);
         $this->assertEquals(static::DEFAULT_CATEGORY_IMAGE_SET_COUNT, count($dbCategoryImageSetCollection));
         $this->assertEquals(
@@ -100,21 +95,17 @@ class CategoryImageFacadeTest extends Test
         $this->getFacade()->createCategoryImageSetsForCategory($categoryTransfer);
 
         // Act
-        $categoryImage->setExternalUrlSmall(static::DUMMY_EXTERNAL_URL_SMALL);
-        $categoryImage->setExternalUrlLarge(static::DUMMY_EXTERNAL_URL_LARGE);
-        $categoryImageSet->setName(static::DUMMY_CATEGORY_IMAGE_SET_NAME);
-
         $this->getFacade()->updateCategoryImageSetsForCategory($categoryTransfer);
 
-        $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImagesSetsByCategoryId(
+        $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImageSetsByIdCategory(
             $categoryTransfer->getIdCategory()
         );
         $dbCategoryImageSet = $dbCategoryImageSetCollection[0];
 
         // Assert
-        $this->assertEquals(static::DUMMY_CATEGORY_IMAGE_SET_NAME, $dbCategoryImageSet->getName());
-        $this->assertEquals(static::DUMMY_EXTERNAL_URL_SMALL, $dbCategoryImageSet->getCategoryImages()[0]->getExternalUrlSmall());
-        $this->assertEquals(static::DUMMY_EXTERNAL_URL_LARGE, $dbCategoryImageSet->getCategoryImages()[0]->getExternalUrlLarge());
+        $this->assertEquals($categoryImageSet->getName(), $dbCategoryImageSet->getName());
+        $this->assertEquals($categoryImage->getExternalUrlSmall(), $dbCategoryImageSet->getCategoryImages()[0]->getExternalUrlSmall());
+        $this->assertEquals($categoryImage->getExternalUrlLarge(), $dbCategoryImageSet->getCategoryImages()[0]->getExternalUrlLarge());
     }
 
     /**
@@ -124,13 +115,13 @@ class CategoryImageFacadeTest extends Test
     {
         // Assign
         $categoryTransfer = $this->tester->haveCategory();
-        $categoryImageSetCollection = $this->buildCategoryImageSetTransferCollection(rand(2, static::MAX_CATEGORY_IMAGE_SET_COLLECTION_SIZE));
+        $categoryImageSetCollection = $this->buildCategoryImageSetTransferCollection(rand(2, static::MAX_CATEGORY_IMAGE_SET_COUNT));
         $categoryTransfer->setImageSets(new ArrayObject($categoryImageSetCollection));
 
         $this->getFacade()->createCategoryImageSetsForCategory($categoryTransfer);
 
         // Act
-        $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImagesSetsByCategoryId(
+        $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImageSetsByIdCategory(
             $categoryTransfer->getIdCategory()
         );
         $randomImageSetKeyToBeDeleted = array_rand($categoryImageSetCollection);
@@ -142,7 +133,7 @@ class CategoryImageFacadeTest extends Test
         unset($categoryImageSetCollection[$randomImageSetKeyToBeDeleted]);
         $categoryTransfer->setImageSets(new ArrayObject($categoryImageSetCollection));
         $this->getFacade()->updateCategoryImageSetsForCategory($categoryTransfer);
-        $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImagesSetsByCategoryId(
+        $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImageSetsByIdCategory(
             $categoryTransfer->getIdCategory()
         );
 
@@ -160,7 +151,7 @@ class CategoryImageFacadeTest extends Test
     {
         // Assign
         $categoryTransfer = $this->tester->haveCategory();
-        $categoryImageSetCollection = $this->buildCategoryImageSetTransferCollection(rand(2, static::MAX_CATEGORY_IMAGE_SET_COLLECTION_SIZE));
+        $categoryImageSetCollection = $this->buildCategoryImageSetTransferCollection(rand(2, static::MAX_CATEGORY_IMAGE_SET_COUNT));
         $categoryTransfer->setImageSets(new ArrayObject($categoryImageSetCollection));
         $this->getFacade()->createCategoryImageSetsForCategory($categoryTransfer);
 
@@ -168,7 +159,7 @@ class CategoryImageFacadeTest extends Test
         $this->getFacade()->deleteCategoryImageSetsByIdCategory($categoryTransfer->getIdCategory());
 
         // Assert
-        $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImagesSetsByCategoryId(
+        $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImageSetsByIdCategory(
             $categoryTransfer->getIdCategory()
         );
         $this->assertEmpty($dbCategoryImageSetCollection);
@@ -182,7 +173,7 @@ class CategoryImageFacadeTest extends Test
         // Assign
         $categoryTransfer = $this->tester->haveCategory();
         $categoryImageSetCollection = $this->buildCategoryImageSetTransferCollection(
-            rand(1, static::MAX_CATEGORY_IMAGE_SET_COLLECTION_SIZE)
+            rand(1, static::MAX_CATEGORY_IMAGE_SET_COUNT)
         );
         $categoryTransfer->setImageSets(new ArrayObject($categoryImageSetCollection));
         $this->getFacade()->createCategoryImageSetsForCategory($categoryTransfer);
@@ -222,10 +213,6 @@ class CategoryImageFacadeTest extends Test
      */
     protected function haveLocale(array $seedData = []): LocaleTransfer
     {
-        $seedData = $seedData + [
-            'localeName' => static::LOCALE_DE,
-        ];
-
         return $this->tester->haveLocale($seedData);
     }
 

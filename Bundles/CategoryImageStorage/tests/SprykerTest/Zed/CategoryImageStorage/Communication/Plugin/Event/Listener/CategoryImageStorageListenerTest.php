@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\CategoryImageStorage\Communication;
+namespace SprykerTest\Zed\CategoryImageStorage\Communication\Plugin\Event\Listener;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryTransfer;
@@ -23,7 +23,6 @@ use Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Listener\Categor
 use Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Listener\CategoryImageSetCategoryImageStorageListener;
 use Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Listener\CategoryImageSetStorageListener;
 use Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Listener\CategoryImageStorageListener;
-use SprykerTest\Zed\CategoryImage\Helper\CategoryImageDataHelper;
 
 /**
  * Auto-generated group annotations
@@ -31,10 +30,13 @@ use SprykerTest\Zed\CategoryImage\Helper\CategoryImageDataHelper;
  * @group Zed
  * @group CategoryImageStorage
  * @group Communication
- * @group CategoryImageSynchronizationPluginTest
+ * @group Plugin
+ * @group Event
+ * @group Listener
+ * @group CategoryImageStorageListenerTest
  * Add your own group annotations below this line
  */
-class CategoryImageSynchronizationPluginTest extends Unit
+class CategoryImageStorageListenerTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\CategoryImageStorage\CategoryImageStorageCommunicationTester
@@ -45,6 +47,11 @@ class CategoryImageSynchronizationPluginTest extends Unit
      * @var \Generated\Shared\Transfer\CategoryTransfer
      */
     protected $categoryTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\CategoryImageSetTransfer
+     */
+    protected $categoryImageSetTransfer;
 
     /**
      * {@inheritdoc}
@@ -69,7 +76,7 @@ class CategoryImageSynchronizationPluginTest extends Unit
      */
     public function testCategoryImagePublishStorageListenerStoreData(): void
     {
-        SpyCategoryImageStorageQuery::create()->filterByFkCategory($this->categoryTransfer->getIdCategory())->delete();
+        $this->cleanupCategoryImageStorage();
         $beforeCount = SpyCategoryImageStorageQuery::create()->count();
         $categoryImagePublishStorageListener = new CategoryImagePublishStorageListener();
         $categoryImagePublishStorageListener->setFacade($this->tester->getFacade());
@@ -109,7 +116,7 @@ class CategoryImageSynchronizationPluginTest extends Unit
      */
     public function testCategoryImageSetStorageListenerStoreData(): void
     {
-        SpyCategoryImageStorageQuery::create()->filterByFkCategory($this->categoryTransfer->getIdCategory())->delete();
+        $this->cleanupCategoryImageStorage();
         $beforeCount = SpyCategoryImageStorageQuery::create()->count();
         $categoryImageSetStorageListener = new CategoryImageSetStorageListener();
         $categoryImageSetStorageListener->setFacade($this->tester->getFacade());
@@ -129,7 +136,7 @@ class CategoryImageSynchronizationPluginTest extends Unit
      */
     public function testCategoryImageStorageListenerStoreData(): void
     {
-        SpyCategoryImageStorageQuery::create()->filterByFkCategory($this->categoryTransfer->getIdCategory())->delete();
+        $this->cleanupCategoryImageStorage();
         $beforeCount = SpyCategoryImageStorageQuery::create()->count();
         $categoryImagePublishStorageListener = new CategoryImageStorageListener();
         $categoryImagePublishStorageListener->setFacade($this->tester->getFacade());
@@ -148,10 +155,21 @@ class CategoryImageSynchronizationPluginTest extends Unit
     /**
      * @return void
      */
+    public function _after()
+    {
+        parent::_after();
+
+        $this->cleanupCategoryImageStorage();
+    }
+
+    /**
+     * @return void
+     */
     protected function setUpData(): void
     {
         $this->categoryTransfer = $this->tester->haveCategory();
-        $this->tester->haveCategoryImageSetForCategory($this->categoryTransfer);
+        $this->categoryImageSetTransfer = $this->tester
+            ->haveCategoryImageSetForCategory($this->categoryTransfer);
     }
 
     /**
@@ -168,7 +186,7 @@ class CategoryImageSynchronizationPluginTest extends Unit
             ->findOneByFkCategory($this->categoryTransfer->getIdCategory());
         $this->assertNotNull($categoryImageStorage);
         $data = $categoryImageStorage->getData();
-        $this->assertSame(CategoryImageDataHelper::IMAGE_SET_NAME, $data['image_sets'][0]['name']);
+        $this->assertSame($this->categoryImageSetTransfer->getName(), $data['image_sets'][0]['name']);
     }
 
     /**
@@ -203,5 +221,17 @@ class CategoryImageSynchronizationPluginTest extends Unit
             ->select(SpyCategoryImageTableMap::COL_ID_CATEGORY_IMAGE)
             ->find()
             ->getData();
+    }
+
+    /**
+     * @return void
+     */
+    protected function cleanupCategoryImageStorage(): void
+    {
+        SpyCategoryImageStorageQuery::create()
+            ->filterByFkCategory(
+                $this->categoryTransfer->getIdCategory()
+            )
+            ->delete();
     }
 }

@@ -5,19 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryExtension\Dependency\Plugin;
+namespace Spryker\Zed\CategoryImage\Business\ImageSet;
 
-interface CategoryRelationDeletePluginInterface
+interface ImageSetDeleterInterface
 {
     /**
-     * Specification:
-     *  - Cleans up category entity relations.
-     *
-     * @api
-     *
      * @param int $idCategory
      *
      * @return void
      */
-    public function delete($idCategory);
+    public function deleteCategoryImageSetsByIdCategory(int $idCategory): void;
 }

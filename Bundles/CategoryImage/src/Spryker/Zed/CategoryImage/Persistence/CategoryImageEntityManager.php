@@ -10,10 +10,7 @@ namespace Spryker\Zed\CategoryImage\Persistence;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Generated\Shared\Transfer\CategoryImageTransfer;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImage;
-use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageQuery;
-use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImage;
-use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -22,37 +19,14 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class CategoryImageEntityManager extends AbstractEntityManager implements CategoryImageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CategoryImageTransfer $categoryImageTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageTransfer
-     */
-    public function saveCategoryImage(CategoryImageTransfer $categoryImageTransfer): CategoryImageTransfer
-    {
-        $categoryImageEntity = SpyCategoryImageQuery::create()
-            ->filterByIdCategoryImage(
-                $categoryImageTransfer->getIdCategoryImage()
-            )
-            ->findOneOrCreate();
-
-        $categoryImageEntity = $this->getFactory()
-            ->createCategoryImageMapper()
-            ->mapCategoryImageToEntity($categoryImageEntity, $categoryImageTransfer);
-
-        $categoryImageEntity->save();
-
-        $categoryImageTransfer->setIdCategoryImage($categoryImageEntity->getIdCategoryImage());
-
-        return $categoryImageTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
      */
     public function saveCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer): CategoryImageSetTransfer
     {
-        $categoryImageSetEntity = SpyCategoryImageSetQuery::create()
+        $categoryImageSetEntity = $this->getFactory()
+            ->getCategoryImageSetQuery()
             ->filterByIdCategoryImageSet(
                 $categoryImageSetTransfer->getIdCategoryImageSet()
             )
@@ -68,25 +42,60 @@ class CategoryImageEntityManager extends AbstractEntityManager implements Catego
             $categoryImageSetEntity->getIdCategoryImageSet()
         );
 
+        foreach ($categoryImageSetTransfer->getCategoryImages() as $categoryImageTransfer) {
+            $this->saveCategoryImage($categoryImageTransfer, $categoryImageSetTransfer->getIdCategoryImageSet());
+        }
+
         return $categoryImageSetTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSet
+     * @param \Generated\Shared\Transfer\CategoryImageTransfer $categoryImageTransfer
+     * @param int $idCategoryImageSet
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageTransfer
+     */
+    public function saveCategoryImage(
+        CategoryImageTransfer $categoryImageTransfer,
+        int $idCategoryImageSet
+    ): CategoryImageTransfer {
+        $categoryImageEntity = $this->getFactory()
+            ->getCategoryImageQuery()
+            ->filterByIdCategoryImage(
+                $categoryImageTransfer->getIdCategoryImage()
+            )
+            ->findOneOrCreate();
+
+        $categoryImageEntity = $this->getFactory()
+            ->createCategoryImageMapper()
+            ->mapCategoryImageToEntity($categoryImageEntity, $categoryImageTransfer);
+
+        $categoryImageEntity->save();
+        $categoryImageTransfer->setIdCategoryImage($categoryImageEntity->getIdCategoryImage());
+        $this->saveCategoryImageToImageSet(
+            $categoryImageTransfer->getIdCategoryImage(),
+            $idCategoryImageSet,
+            $categoryImageTransfer->getSortOrder()
+        );
+
+        return $categoryImageTransfer;
+    }
+
+    /**
+     * @param int $idCategoryImageSet
      *
      * @return void
      */
-    public function deleteCategoryImageSet(CategoryImageSetTransfer $categoryImageSet): void
+    public function deleteCategoryImageSetById(int $idCategoryImageSet): void
     {
-        $categoryImageSetEntity = SpyCategoryImageSetQuery::create()
-            ->filterByIdCategoryImageSet(
-                $categoryImageSet->getIdCategoryImageSet()
-            )
+        $categoryImageSetEntity = $this->getFactory()
+            ->getCategoryImageSetQuery()
+            ->filterByIdCategoryImageSet($idCategoryImageSet)
             ->findOne();
 
         if ($categoryImageSetEntity) {
             foreach ($categoryImageSetEntity->getSpyCategoryImageSetToCategoryImages() as $categoryImageSetToCategoryImage) {
-                $this->deleteCategoryImageSetToCategoryImageEntity($categoryImageSetToCategoryImage);
+                $this->deleteCategoryImageSetToCategoryImageRelation($categoryImageSetToCategoryImage);
             }
 
             $categoryImageSetEntity->delete();
@@ -94,42 +103,42 @@ class CategoryImageEntityManager extends AbstractEntityManager implements Catego
     }
 
     /**
-     * @param int $idCategoryImageSet
      * @param int $idCategoryImage
-     * @param int|null $sortOrder
-     *
-     * @return int
-     */
-    public function saveCategoryImageSetToCategoryImage(int $idCategoryImageSet, int $idCategoryImage, $sortOrder = null): int
-    {
-        $categoryImageRelationEntity = SpyCategoryImageSetToCategoryImageQuery::create()
-            ->filterByFkCategoryImageSet($idCategoryImageSet)
-            ->filterByFkCategoryImage($idCategoryImage)
-            ->findOneOrCreate();
-
-        $categoryImageRelationEntity->setSortOrder((int)$sortOrder);
-        $categoryImageRelationEntity->save();
-
-        return $categoryImageRelationEntity->getIdCategoryImageSetToCategoryImage();
-    }
-
-    /**
      * @param int $idCategoryImageSet
-     * @param int $idCategoryImage
      *
      * @return void
      */
-    public function deleteCategoryImageSetToCategoryImage(int $idCategoryImageSet, int $idCategoryImage): void
+    public function deleteCategoryImageFromImageSetById(int $idCategoryImage, int $idCategoryImageSet): void
     {
-        $categoryImageSetToCategoryImageEntity = SpyCategoryImageSetToCategoryImageQuery::create()
+        $categoryImageSetToCategoryImageEntity = $this->getFactory()
+            ->getCategoryImageSetToCategoryImageQuery()
             ->filterByFkCategoryImageSet($idCategoryImageSet)
             ->filterByFkCategoryImage($idCategoryImage)
             ->joinWithSpyCategoryImage()
             ->findOne();
 
         if ($categoryImageSetToCategoryImageEntity) {
-            $this->deleteCategoryImageSetToCategoryImageEntity($categoryImageSetToCategoryImageEntity);
+            $this->deleteCategoryImageSetToCategoryImageRelation($categoryImageSetToCategoryImageEntity);
         }
+    }
+
+    /**
+     * @param int $idCategoryImage
+     * @param int $idCategoryImageSet
+     * @param int|null $sortOrder
+     *
+     * @return void
+     */
+    protected function saveCategoryImageToImageSet(int $idCategoryImage, int $idCategoryImageSet, $sortOrder = null): void
+    {
+        $categoryImageRelationEntity = $this->getFactory()
+            ->getCategoryImageSetToCategoryImageQuery()
+            ->filterByFkCategoryImageSet($idCategoryImageSet)
+            ->filterByFkCategoryImage($idCategoryImage)
+            ->findOneOrCreate();
+
+        $categoryImageRelationEntity->setSortOrder((int)$sortOrder);
+        $categoryImageRelationEntity->save();
     }
 
     /**
@@ -137,7 +146,7 @@ class CategoryImageEntityManager extends AbstractEntityManager implements Catego
      *
      * @return void
      */
-    protected function deleteCategoryImageSetToCategoryImageEntity(
+    protected function deleteCategoryImageSetToCategoryImageRelation(
         SpyCategoryImageSetToCategoryImage $categoryImageSetToCategoryImageEntity
     ): void {
         $categoryImage = $categoryImageSetToCategoryImageEntity->getSpyCategoryImage();

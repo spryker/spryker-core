@@ -10,7 +10,7 @@ namespace Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Listener;
 use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageSetToCategoryImageTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\CategoryImageStorage\Communication\CategoryImageStorageCommunicationFactory getFactory()
@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
  */
 class CategoryImageSetCategoryImageStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use TransactionTrait;
+    use DatabaseTransactionHandlerTrait;
 
     /**
      * @param array $transfers
@@ -30,15 +30,18 @@ class CategoryImageSetCategoryImageStorageListener extends AbstractPlugin implem
      */
     public function handleBulk(array $transfers, $eventName)
     {
-        $this->getTransactionHandler()->handleTransaction(function () use ($transfers) {
-            $categoryImageSetIds = $this->getFactory()
-                ->getEventBehaviorFacade()
-                ->getEventTransferForeignKeys($transfers, SpyCategoryImageSetToCategoryImageTableMap::COL_FK_CATEGORY_IMAGE_SET);
-            $categoryIds = $this->getRepository()
-                ->getCategoryIdsByCategoryImageSetIds($categoryImageSetIds)
-                ->getData();
+        $this->preventTransaction();
 
-            $this->getFacade()->publishCategoryImages($categoryIds);
-        });
+        $categoryImageSetIds = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransferForeignKeys(
+                $transfers,
+                SpyCategoryImageSetToCategoryImageTableMap::COL_FK_CATEGORY_IMAGE_SET
+            );
+        $categoryIds = $this->getRepository()
+            ->getCategoryIdsByCategoryImageSetIds($categoryImageSetIds)
+            ->getData();
+
+        $this->getFacade()->publishCategoryImages($categoryIds);
     }
 }

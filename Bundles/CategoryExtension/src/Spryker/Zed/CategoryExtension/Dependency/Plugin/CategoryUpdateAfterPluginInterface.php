@@ -19,7 +19,7 @@ interface CategoryUpdateAfterPluginInterface
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
+     * @return void
      */
-    public function execute(CategoryTransfer $categoryTransfer): CategoryTransfer;
+    public function execute(CategoryTransfer $categoryTransfer): void;
 }

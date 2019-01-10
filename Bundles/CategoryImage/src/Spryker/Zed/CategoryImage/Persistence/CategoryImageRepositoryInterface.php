@@ -18,7 +18,7 @@ interface CategoryImageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    public function getCategoryImageSetsByCategoryId(int $idCategory, array $excludeIdCategoryImageSets = []): array;
+    public function getCategoryImageSetsByIdCategory(int $idCategory, array $excludeIdCategoryImageSets = []): array;
 
     /**
      * @param int $idCategoryImageSet

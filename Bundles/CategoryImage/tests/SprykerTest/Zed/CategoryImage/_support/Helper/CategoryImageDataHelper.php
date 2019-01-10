@@ -11,7 +11,6 @@ use ArrayObject;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CategoryImageBuilder;
 use Generated\Shared\DataBuilder\CategoryImageSetBuilder;
-use Generated\Shared\DataBuilder\LocaleBuilder;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageQuery;
@@ -20,36 +19,35 @@ use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImageQuery;
 use Spryker\Zed\CategoryImage\Business\CategoryImageFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
+use SprykerTest\Zed\Locale\Helper\LocaleDataHelper;
 
 class CategoryImageDataHelper extends Module
 {
     use LocatorHelperTrait;
     use DataCleanupHelperTrait;
 
-    public const IMAGE_URL_SMALL = 'image-url-small';
-    public const IMAGE_URL_LARGE = 'image-url-large';
-    public const IMAGE_SET_NAME = 'category-image-set';
-    public const SORT_ORDER = 1;
-    public const LOCALE_NAME_DE = 'de_DE';
-    public const LOCALE_ID_DE = 46;
+    public const NAMESPACE_ROOT = '\\';
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param array $seedData
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
      */
-    public function haveCategoryImageSetForCategory(CategoryTransfer $categoryTransfer, array $seedData = [])
+    public function haveCategoryImageSetForCategory(CategoryTransfer $categoryTransfer, array $seedData = []): CategoryImageSetTransfer
     {
+        $seedData = $seedData + [
+                'idCategory' => $categoryTransfer->getIdCategory(),
+            ];
         $categoryImageSetTransfer = $this->buildCategoryImageSetTransfer($seedData);
         $categoryTransfer->addImageSet($categoryImageSetTransfer);
-        $this->getCategoryImageFacade()->updateCategoryImageSetsForCategory($categoryTransfer);
+        $this->getCategoryImageFacade()->createCategoryImageSetsForCategory($categoryTransfer);
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($categoryImageSetTransfer) {
             $this->cleanupCategoryImageSet($categoryImageSetTransfer);
         });
 
-        return $categoryTransfer;
+        return $categoryImageSetTransfer;
     }
 
     /**
@@ -60,8 +58,6 @@ class CategoryImageDataHelper extends Module
     public function buildCategoryImageSetTransfer(array $seedData = [])
     {
         $seedData = $seedData + [
-                'idCategoryImageSet' => null,
-                'name' => static::IMAGE_SET_NAME,
                 'categoryImages' => new ArrayObject([
                     $this->buildCategoryImageTransfer($seedData),
                 ]),
@@ -78,13 +74,6 @@ class CategoryImageDataHelper extends Module
      */
     public function buildCategoryImageTransfer(array $seedData = [])
     {
-        $seedData = $seedData + [
-            'idCategoryImage' => null,
-            'externalUrlSmall' => static::IMAGE_URL_SMALL,
-            'externalUrlLarge' => static::IMAGE_URL_LARGE,
-            'sortOrder' => static::SORT_ORDER,
-
-        ];
         return (new CategoryImageBuilder($seedData))->build();
     }
 
@@ -95,11 +84,7 @@ class CategoryImageDataHelper extends Module
      */
     public function buildLocaleTransfer(array $seedData = [])
     {
-        $seedData = $seedData + [
-            'idLocale' => static::LOCALE_ID_DE,
-            'localeName' => static::LOCALE_NAME_DE,
-        ];
-        return (new LocaleBuilder($seedData))->build();
+        return $this->getModule(static::NAMESPACE_ROOT . LocaleDataHelper::class)->haveLocale($seedData);
     }
 
     /**

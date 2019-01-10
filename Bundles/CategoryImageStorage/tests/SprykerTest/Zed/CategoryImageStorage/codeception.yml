@@ -26,4 +26,4 @@ suites:
       - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
       - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
       - \SprykerTest\Zed\CategoryImage\Helper\CategoryImageDataHelper
-      - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+      - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper

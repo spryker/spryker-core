@@ -5,21 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryExtension\Dependency\Plugin;
+namespace Spryker\Zed\CategoryImage\Business\ImageSet;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 
-interface CategoryCreateAfterPluginInterface
+interface ImageSetUpdaterInterface
 {
     /**
-     * Specification:
-     * - Execute actions after category is created.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
      */
-    public function execute(CategoryTransfer $categoryTransfer): void;
+    public function updateCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): void;
 }

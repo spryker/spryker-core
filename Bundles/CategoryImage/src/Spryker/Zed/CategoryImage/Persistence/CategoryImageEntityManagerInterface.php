@@ -17,10 +17,14 @@ interface CategoryImageEntityManagerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CategoryImageTransfer $categoryImageTransfer
+     * @param int $idCategoryImageSet
      *
      * @return \Generated\Shared\Transfer\CategoryImageTransfer
      */
-    public function saveCategoryImage(CategoryImageTransfer $categoryImageTransfer): CategoryImageTransfer;
+    public function saveCategoryImage(
+        CategoryImageTransfer $categoryImageTransfer,
+        int $idCategoryImageSet
+    ): CategoryImageTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
@@ -30,26 +34,17 @@ interface CategoryImageEntityManagerInterface
     public function saveCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer): CategoryImageSetTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSet
+     * @param int $idCategoryImageSet
      *
      * @return void
      */
-    public function deleteCategoryImageSet(CategoryImageSetTransfer $categoryImageSet): void;
+    public function deleteCategoryImageSetById(int $idCategoryImageSet): void;
 
     /**
-     * @param int $idCategoryImageSet
      * @param int $idCategoryImage
-     * @param int|null $sortOrder
-     *
-     * @return int
-     */
-    public function saveCategoryImageSetToCategoryImage(int $idCategoryImageSet, int $idCategoryImage, $sortOrder = null): int;
-
-    /**
      * @param int $idCategoryImageSet
-     * @param int $idCategoryImage
      *
      * @return void
      */
-    public function deleteCategoryImageSetToCategoryImage(int $idCategoryImageSet, int $idCategoryImage): void;
+    public function deleteCategoryImageFromImageSetById(int $idCategoryImage, int $idCategoryImageSet): void;
 }

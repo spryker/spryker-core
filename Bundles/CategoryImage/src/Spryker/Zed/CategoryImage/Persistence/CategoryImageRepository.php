@@ -23,7 +23,7 @@ class CategoryImageRepository extends AbstractRepository implements CategoryImag
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    public function getCategoryImageSetsByCategoryId(int $idCategory, array $excludeIdCategoryImageSets = []): array
+    public function getCategoryImageSetsByIdCategory(int $idCategory, array $excludeIdCategoryImageSets = []): array
     {
         $categoryImageSetEntityCollection = SpyCategoryImageSetQuery::create()
             ->joinWithSpyCategoryImageSetToCategoryImage()
