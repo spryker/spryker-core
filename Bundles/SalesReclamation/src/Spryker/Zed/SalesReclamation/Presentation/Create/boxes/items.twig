@@ -1,15 +1,15 @@
 {% set order = reclamation.order %}
-{% set widget_title %}
-    Order
-    <a href="{{ url('/sales/detail', {'id-sales-order': reclamation.order.idSalesOrder}) }}"
-       target="_blank"
-    >
-        {{ reclamation.order.orderReference }}
-    </a>
-    items:
-{% endset %}
 
-{% embed '@Gui/Partials/widget.twig' with { widget_title: widget_title } %}
+{% embed '@Gui/Partials/widget.twig' %}
+
+    {% block widget_title %}
+        <h5>Order
+        <a href="{{ url('/sales/detail', {'id-sales-order': reclamation.order.idSalesOrder}) }}"
+           target="_blank"
+        >
+            {{ reclamation.order.orderReference }}
+        </a></h5>
+    {% endblock %}
 
     {% block widget_content %}
 

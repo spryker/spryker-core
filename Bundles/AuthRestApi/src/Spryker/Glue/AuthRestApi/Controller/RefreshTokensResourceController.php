@@ -26,6 +26,7 @@ class RefreshTokensResourceController extends AbstractController
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer",
      *          "responses": {
      *              "401": "Failed to authenticate user."
      *          }

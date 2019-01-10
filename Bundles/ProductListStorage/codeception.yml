@@ -3,6 +3,7 @@ actor: Tester
 
 include:
     - tests/SprykerTest/Zed/ProductListStorage
+    - tests/SprykerTest/Client/ProductListStorage
 
 paths:
     tests: tests
