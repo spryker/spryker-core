@@ -15,7 +15,7 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPl
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\UpSellingProductsRestApi\UpSellingProductsRestApiConfig;
 
-class UpSellingProductsForCartResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
+class UpSellingProductsForCartRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
      * {@inheritdoc}
