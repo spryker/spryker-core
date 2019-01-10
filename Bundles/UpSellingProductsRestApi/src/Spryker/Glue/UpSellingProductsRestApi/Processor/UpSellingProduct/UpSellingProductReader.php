@@ -63,13 +63,11 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     public function readUpSellingProducts(RestRequestInterface $restRequest): RestResponseInterface
     {
         $parentResource = $this->findParentResourceByType($restRequest);
-
         if (!$parentResource || !$parentResource->getId()) {
             return $this->upSellingProductRestResponseBuilder->createCartIdMissingError();
         }
 
         $quoteTransfer = $this->quoteReader->findQuoteByUuid($restRequest, $parentResource->getId());
-
         if (!$quoteTransfer) {
             return $this->upSellingProductRestResponseBuilder->createCartNotFoundError();
         }

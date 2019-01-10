@@ -11,19 +11,32 @@ use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductRelationStorageClientInterface;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductStorageClientInterface;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Resource\RelatedProductsRestApiToProductsRestApiResourceInterface;
-use Spryker\Glue\RelatedProductsRestApi\Processor\Reader\RelatedProductReader;
-use Spryker\Glue\RelatedProductsRestApi\Processor\Reader\RelatedProductReaderInterface;
+use Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct\RelatedProductReader;
+use Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct\RelatedProductReaderInterface;
+use Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct\RelatedProductRestResponseBuilder;
+use Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct\RelatedProductRestResponseBuilderInterface;
 
 class RelatedProductsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\RelatedProductsRestApi\Processor\Reader\RelatedProductReaderInterface
+     * @return \Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct\RelatedProductReaderInterface
      */
     public function createRelatedProductReader(): RelatedProductReaderInterface
     {
         return new RelatedProductReader(
             $this->getProductStorageClient(),
             $this->getProductRelationStorageClient(),
+            $this->getProductsRestApiResource(),
+            $this->createRelatedProductRestResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct\RelatedProductRestResponseBuilderInterface
+     */
+    public function createRelatedProductRestResponseBuilder(): RelatedProductRestResponseBuilderInterface
+    {
+        return new RelatedProductRestResponseBuilder(
             $this->getProductsRestApiResource(),
             $this->getResourceBuilder()
         );
