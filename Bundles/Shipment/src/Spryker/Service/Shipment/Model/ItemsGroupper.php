@@ -8,12 +8,16 @@
 namespace Spryker\Service\Shipment\Model;
 
 use \ArrayObject;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 
 class ItemsGroupper implements ItemsGroupperInterface
 {
+    protected const SHIPMENT_TRANSFER_KEY_PATTERN = '%s-%s-%s';
+    protected const ADDRESS_TRANSFER_KEY_PATTERN = '%s %s %s %s %s %s %s %s %s %s';
+
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
@@ -46,6 +50,7 @@ class ItemsGroupper implements ItemsGroupperInterface
     {
         $itemTransfer->requireShipment();
         $itemTransfer->getShipment()->requireMethod();
+        $itemTransfer->getShipment()->requireShippingAddress();
     }
 
     /**
@@ -55,9 +60,34 @@ class ItemsGroupper implements ItemsGroupperInterface
      */
     protected function getItemHash(ShipmentTransfer $shipmentTransfer): string
     {
-        return $shipmentTransfer->getMethod()->getIdShipmentMethod()
-            . $shipmentTransfer->getShippingAddress()->serialize()
-            . $shipmentTransfer->getRequestedDeliveryDate();
+        return sprintf(
+            static::SHIPMENT_TRANSFER_KEY_PATTERN,
+            $shipmentTransfer->getMethod()->getIdShipmentMethod(),
+            $this->getAddressTransferKey($shipmentTransfer->getShippingAddress()),
+            $shipmentTransfer->getRequestedDeliveryDate()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return string
+     */
+    protected function getAddressTransferKey(AddressTransfer $addressTransfer): string
+    {
+        return sprintf(
+            static::ADDRESS_TRANSFER_KEY_PATTERN,
+            $addressTransfer->getFkCustomer(),
+            $addressTransfer->getFirstName(),
+            $addressTransfer->getLastName(),
+            $addressTransfer->getAddress1(),
+            $addressTransfer->getAddress2(),
+            $addressTransfer->getAddress3(),
+            $addressTransfer->getZipCode(),
+            $addressTransfer->getCity(),
+            $addressTransfer->getFkCountry(),
+            $addressTransfer->getPhone()
+        );
     }
 
     /**
