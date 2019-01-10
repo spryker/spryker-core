@@ -26,7 +26,6 @@ class RelatedProductsRestApiFactory extends AbstractFactory
         return new RelatedProductReader(
             $this->getProductStorageClient(),
             $this->getProductRelationStorageClient(),
-            $this->getProductsRestApiResource(),
             $this->createRelatedProductRestResponseBuilder()
         );
     }

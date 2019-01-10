@@ -12,7 +12,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToProductRelationStorageClientInterface;
-use Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceInterface;
 use Spryker\Glue\UpSellingProductsRestApi\Processor\Quote\QuoteReaderInterface;
 
 class UpSellingProductReader implements UpSellingProductReaderInterface
@@ -28,11 +27,6 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     protected $productRelationStorageClient;
 
     /**
-     * @var \Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceInterface
-     */
-    protected $productsRestApiResource;
-
-    /**
      * @var \Spryker\Glue\UpSellingProductsRestApi\Processor\UpSellingProduct\UpSellingProductRestResponseBuilderInterface
      */
     protected $upSellingProductRestResponseBuilder;
@@ -40,18 +34,15 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     /**
      * @param \Spryker\Glue\UpSellingProductsRestApi\Processor\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToProductRelationStorageClientInterface $productRelationStorageClient
-     * @param \Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceInterface $productsRestApiResource
      * @param \Spryker\Glue\UpSellingProductsRestApi\Processor\UpSellingProduct\UpSellingProductRestResponseBuilderInterface $upSellingProductRestResponseBuilder
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
         UpSellingProductsRestApiToProductRelationStorageClientInterface $productRelationStorageClient,
-        UpSellingProductsRestApiToProductsRestApiResourceInterface $productsRestApiResource,
         UpSellingProductRestResponseBuilderInterface $upSellingProductRestResponseBuilder
     ) {
         $this->quoteReader = $quoteReader;
         $this->productRelationStorageClient = $productRelationStorageClient;
-        $this->productsRestApiResource = $productsRestApiResource;
         $this->upSellingProductRestResponseBuilder = $upSellingProductRestResponseBuilder;
     }
 

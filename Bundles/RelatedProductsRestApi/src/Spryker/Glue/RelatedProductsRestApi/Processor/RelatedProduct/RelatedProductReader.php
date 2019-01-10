@@ -12,7 +12,6 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductRelationStorageClientInterface;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductStorageClientInterface;
-use Spryker\Glue\RelatedProductsRestApi\Dependency\Resource\RelatedProductsRestApiToProductsRestApiResourceInterface;
 
 class RelatedProductReader implements RelatedProductReaderInterface
 {
@@ -30,11 +29,6 @@ class RelatedProductReader implements RelatedProductReaderInterface
     protected $productRelationStorageClient;
 
     /**
-     * @var \Spryker\Glue\RelatedProductsRestApi\Dependency\Resource\RelatedProductsRestApiToProductsRestApiResourceInterface
-     */
-    protected $productsRestApiResource;
-
-    /**
      * @var \Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct\RelatedProductRestResponseBuilderInterface
      */
     protected $relatedProductRestResponseBuilder;
@@ -42,18 +36,15 @@ class RelatedProductReader implements RelatedProductReaderInterface
     /**
      * @param \Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductRelationStorageClientInterface $productRelationStorageClient
-     * @param \Spryker\Glue\RelatedProductsRestApi\Dependency\Resource\RelatedProductsRestApiToProductsRestApiResourceInterface $productsRestApiResource
      * @param \Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct\RelatedProductRestResponseBuilderInterface $relatedProductRestResponseBuilder
      */
     public function __construct(
         RelatedProductsRestApiToProductStorageClientInterface $productStorageClient,
         RelatedProductsRestApiToProductRelationStorageClientInterface $productRelationStorageClient,
-        RelatedProductsRestApiToProductsRestApiResourceInterface $productsRestApiResource,
         RelatedProductRestResponseBuilderInterface $relatedProductRestResponseBuilder
     ) {
         $this->productStorageClient = $productStorageClient;
         $this->productRelationStorageClient = $productRelationStorageClient;
-        $this->productsRestApiResource = $productsRestApiResource;
         $this->relatedProductRestResponseBuilder = $relatedProductRestResponseBuilder;
     }
 

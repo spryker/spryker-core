@@ -37,7 +37,6 @@ class UpSellingProductsRestApiFactory extends AbstractFactory
         return new UpSellingProductReader(
             $this->createQuoteReader(),
             $this->getProductRelationStorageClient(),
-            $this->getProductsRestApiResource(),
             $this->createUpSellingProductRestResponseBuilder()
         );
     }
