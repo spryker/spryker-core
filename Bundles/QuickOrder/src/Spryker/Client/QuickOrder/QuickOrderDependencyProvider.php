@@ -15,6 +15,7 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const PLUGINS_PRODUCT_CONCRETE_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_EXPANDER';
+    public const PLUGINS_QUICK_ORDER_VALIDATION = 'PLUGINS_QUICK_ORDER_VALIDATION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -25,6 +26,7 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addProductStorageClient($container);
         $container = $this->addProductConcreteExpanderPlugins($container);
+        $container = $this->addQuickOrderValidationPlugins($container);
 
         return $container;
     }
@@ -44,9 +46,31 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addQuickOrderValidationPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUICK_ORDER_VALIDATION] = function () {
+            return $this->getQuickOrderValidationPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface[]
      */
     protected function getProductConcreteExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidatorPluginInterface[]
+     */
+    protected function getQuickOrderValidationPlugins(): array
     {
         return [];
     }

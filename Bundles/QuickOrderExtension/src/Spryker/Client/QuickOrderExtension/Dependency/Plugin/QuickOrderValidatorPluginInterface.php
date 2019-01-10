@@ -5,16 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\QuickOrder\Product;
+namespace Spryker\Client\QuickOrderExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuickOrderTransfer;
 
-interface ProductConcreteResolverInterface
+interface QuickOrderValidatorPluginInterface
 {
     /**
+     * Specification:
+     * - Validate QuickOrderTransfer.
+     * - Executed on quick order page.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
+    public function validate(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
 }

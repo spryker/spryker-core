@@ -13,6 +13,8 @@ use Spryker\Client\QuickOrder\Expander\ProductConcreteExpander;
 use Spryker\Client\QuickOrder\Expander\ProductConcreteExpanderInterface;
 use Spryker\Client\QuickOrder\Product\ProductConcreteResolver;
 use Spryker\Client\QuickOrder\Product\ProductConcreteResolverInterface;
+use Spryker\Client\QuickOrder\Validator\QuickOrderValidator;
+use Spryker\Client\QuickOrder\Validator\QuickOrderValidatorInterface;
 
 class QuickOrderFactory extends AbstractFactory
 {
@@ -22,6 +24,14 @@ class QuickOrderFactory extends AbstractFactory
     public function createProductConcreteExpander(): ProductConcreteExpanderInterface
     {
         return new ProductConcreteExpander($this->getProductConcreteExpanderPlugins());
+    }
+
+    /**
+     * @return \Spryker\Client\QuickOrder\Validator\QuickOrderValidatorInterface
+     */
+    public function createQuickOrderValidator(): QuickOrderValidatorInterface
+    {
+        return new QuickOrderValidator($this->getQuickOrderValidationPlugins());
     }
 
     /**
@@ -40,6 +50,14 @@ class QuickOrderFactory extends AbstractFactory
     public function getProductConcreteExpanderPlugins(): array
     {
         return $this->getProvidedDependency(QuickOrderDependencyProvider::PLUGINS_PRODUCT_CONCRETE_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidatorPluginInterface[]
+     */
+    public function getQuickOrderValidationPlugins(): array
+    {
+        return $this->getProvidedDependency(QuickOrderDependencyProvider::PLUGINS_QUICK_ORDER_VALIDATION);
     }
 
     /**

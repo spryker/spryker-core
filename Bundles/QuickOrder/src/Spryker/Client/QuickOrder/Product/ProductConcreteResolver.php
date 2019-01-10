@@ -9,7 +9,6 @@ namespace Spryker\Client\QuickOrder\Product;
 
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface;
 
@@ -20,6 +19,7 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
     protected const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     protected const SKU = 'sku';
     protected const NAME = 'name';
+    protected const MESSAGE_INVALID_SKU = 'quick-order.upload-order.errors.upload-order-invalid-sku-item';
 
     /**
      * @var \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface
@@ -37,31 +37,26 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[] Keys are product SKUs
+     * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array
+    public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
     {
-        $skus = array_map(function (QuickOrderItemTransfer $quickOrderItemTransfer) {
-            return $quickOrderItemTransfer->getSku();
-        }, $quickOrderTransfer->getItems()->getArrayCopy());
-
-        $productConcreteTransfers = [];
-        foreach ($skus as $index => $sku) {
-            if (empty($sku)) {
+        foreach ($quickOrderTransfer->getItems() as $quickOrderItemTransfer) {
+            if (empty($quickOrderItemTransfer->getSku())) {
                 continue;
             }
 
-            $productConcreteTransfer = $this->findProductConcreteBySku($sku);
+            $productConcreteTransfer = $this->findProductConcreteBySku($quickOrderItemTransfer->getSku());
 
             if ($productConcreteTransfer === null) {
-                unset($quickOrderTransfer->getItems()[$index]);
-                continue;
+                $productConcreteTransfer = (new ProductConcreteTransfer())->setSku($quickOrderItemTransfer->getSku());
+                $quickOrderItemTransfer->addErrorMessage(static::MESSAGE_INVALID_SKU);
             }
 
-            $productConcreteTransfers[] = $productConcreteTransfer;
+            $quickOrderItemTransfer->setProductConcrete($productConcreteTransfer);
         }
 
-        return $productConcreteTransfers;
+        return $quickOrderTransfer;
     }
 
     /**

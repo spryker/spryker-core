@@ -10,6 +10,8 @@ namespace Spryker\Client\PriceProductStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface;
 use Spryker\Client\PriceProductStorage\Expander\ProductViewPriceExpander;
+use Spryker\Client\PriceProductStorage\Plugin\QuickOrder\Validator\PriceProductQuickOrderValidator;
+use Spryker\Client\PriceProductStorage\Plugin\QuickOrder\Validator\PriceProductQuickOrderValidatorInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReader;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolver;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolverInterface;
@@ -71,6 +73,16 @@ class PriceProductStorageFactory extends AbstractFactory
             $this->createPriceConcreteStorageReader(),
             $this->getPriceProductService(),
             $this->getPriceProductClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorage\Plugin\QuickOrder\Validator\PriceProductQuickOrderValidatorInterface
+     */
+    public function createPriceProductQuickOrderValidator(): PriceProductQuickOrderValidatorInterface
+    {
+        return new PriceProductQuickOrderValidator(
+            $this->createPriceConcreteResolver()
         );
     }
 
