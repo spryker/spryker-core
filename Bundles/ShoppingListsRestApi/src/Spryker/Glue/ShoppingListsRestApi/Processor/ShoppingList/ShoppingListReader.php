@@ -72,11 +72,18 @@ class ShoppingListReader implements ShoppingListReaderInterface
             );
         }
 
-        $shoppingListCollectionTransfer = $this->shoppingListsRestApiClient->getCustomerShoppingListCollection(
+        $restShoppingListCollectionResponseTransfer = $this->shoppingListsRestApiClient->getCustomerShoppingListCollection(
             $customerResponseTransfer->getCustomerTransfer()
         );
 
-        foreach ($shoppingListCollectionTransfer->getShoppingLists() as $shoppingListTransfer) {
+        if (count($restShoppingListCollectionResponseTransfer->getErrorCodes()) > 0) {
+            return $this->restResponseWriter->writeErrorsFromErrorCodes(
+                $restShoppingListCollectionResponseTransfer->getErrorCodes(),
+                $restResponse
+            );
+        }
+
+        foreach ($restShoppingListCollectionResponseTransfer->getShoppingLists() as $shoppingListTransfer) {
             $restResponse->addResource(
                 $this->restResponseWriter->createRestResourceFromShoppingListTransfer($shoppingListTransfer)
             );

@@ -8,9 +8,9 @@
 namespace Spryker\Zed\ShoppingListsRestApi\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\RestShoppingListRequestTransfer;
-use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -23,11 +23,11 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     * @return \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer
      */
     public function getCustomerShoppingListCollectionAction(
         CustomerTransfer $customerTransfer
-    ): ShoppingListCollectionTransfer {
+    ): RestShoppingListCollectionResponseTransfer {
         return $this->getFacade()->getCustomerShoppingListCollection($customerTransfer);
     }
 

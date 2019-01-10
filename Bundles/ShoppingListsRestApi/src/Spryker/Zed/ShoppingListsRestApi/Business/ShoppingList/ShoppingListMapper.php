@@ -8,12 +8,29 @@
 namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
 class ShoppingListMapper implements ShoppingListMapperInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer $restShoppingListCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer
+     */
+    public function mapShoppingListCollectionTransferToRestShoppingListCollectionResponseTransfer(
+        ShoppingListCollectionTransfer $shoppingListCollectionTransfer,
+        RestShoppingListCollectionResponseTransfer $restShoppingListCollectionResponseTransfer
+    ): RestShoppingListCollectionResponseTransfer {
+        return $restShoppingListCollectionResponseTransfer->setShoppingLists(
+            $shoppingListCollectionTransfer->getShoppingLists()
+        );
+    }
+
     /**
      * @param \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
@@ -52,6 +69,25 @@ class ShoppingListMapper implements ShoppingListMapperInterface
         }
 
         return $shoppingListResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer $restShoppingListCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer
+     */
+    public function mapCustomerResponseErrorsToRestShoppingListCollectionResponseErrors(
+        CustomerResponseTransfer $customerResponseTransfer,
+        RestShoppingListCollectionResponseTransfer $restShoppingListCollectionResponseTransfer
+    ): RestShoppingListCollectionResponseTransfer {
+        foreach ($customerResponseTransfer->getErrors() as $customerErrorTransfer) {
+            $restShoppingListCollectionResponseTransfer->addErrorCode(
+                $customerErrorTransfer->getMessage()
+            );
+        }
+
+        return $restShoppingListCollectionResponseTransfer;
     }
 
     /**

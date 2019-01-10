@@ -12,10 +12,13 @@ use Generated\Shared\Transfer\CustomerResponseTransfer;
 interface CustomerReaderInterface
 {
     /**
-     * @param string $customerReference
      * @param string $companyUserUuid
+     * @param string $customerReference
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function findCustomerByCustomerReferenceAndCompanyUserUuid(string $customerReference, string $companyUserUuid): CustomerResponseTransfer;
+    public function findCustomerByCompanyUserUuidAndCustomerReference(
+        string $companyUserUuid,
+        string $customerReference
+    ): CustomerResponseTransfer;
 }

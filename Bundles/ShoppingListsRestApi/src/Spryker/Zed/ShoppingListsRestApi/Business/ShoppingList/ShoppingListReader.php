@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\RestShoppingListRequestTransfer;
-use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig as SharedShoppingListsRestApiConfig;
@@ -52,24 +51,31 @@ class ShoppingListReader implements ShoppingListReaderInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     * @return \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer
      */
     public function getCustomerShoppingListCollection(
         CustomerTransfer $customerTransfer
-    ): ShoppingListCollectionTransfer {
+    ): RestShoppingListCollectionResponseTransfer {
         $customerTransfer->requireCompanyUserTransfer();
 
-        $customerResponseTransfer = $this->customerReader->findCustomerByCustomerReferenceAndCompanyUserUuid(
-            $customerTransfer->getCustomerReference(),
-            $customerTransfer->getCompanyUserTransfer()->getUuid()
+        $customerResponseTransfer = $this->customerReader->findCustomerByCompanyUserUuidAndCustomerReference(
+            $customerTransfer->getCompanyUserTransfer()->getUuid(),
+            $customerTransfer->getCustomerReference()
         );
 
         if ($customerResponseTransfer->getIsSuccess() === false) {
-            return (new ShoppingListCollectionTransfer())
-                ->setShoppingLists(new ArrayObject());
+            return $this->shoppingListMapper->mapCustomerResponseErrorsToRestShoppingListCollectionResponseErrors(
+                $customerResponseTransfer,
+                new RestShoppingListCollectionResponseTransfer()
+            );
         }
 
-        return $this->shoppingListFacade->getCustomerShoppingListCollection($customerResponseTransfer->getCustomerTransfer());
+        return $this->shoppingListMapper->mapShoppingListCollectionTransferToRestShoppingListCollectionResponseTransfer(
+            $this->shoppingListFacade->getCustomerShoppingListCollection(
+                $customerResponseTransfer->getCustomerTransfer()
+            ),
+            new RestShoppingListCollectionResponseTransfer()
+        );
     }
 
     /**
@@ -87,9 +93,9 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $restShoppingListRequestTransfer->getShoppingList()
             ->requireUuid();
 
-        $customerResponseTransfer = $this->customerReader->findCustomerByCustomerReferenceAndCompanyUserUuid(
-            $restShoppingListRequestTransfer->getCustomerReference(),
-            $restShoppingListRequestTransfer->getCompanyUserUuid()
+        $customerResponseTransfer = $this->customerReader->findCustomerByCompanyUserUuidAndCustomerReference(
+            $restShoppingListRequestTransfer->getCompanyUserUuid(),
+            $restShoppingListRequestTransfer->getCustomerReference()
         );
 
         if ($customerResponseTransfer->getIsSuccess() === false) {

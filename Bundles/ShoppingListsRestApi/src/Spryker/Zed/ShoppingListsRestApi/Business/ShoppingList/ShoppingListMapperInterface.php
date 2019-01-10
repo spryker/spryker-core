@@ -8,11 +8,24 @@
 namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
 interface ShoppingListMapperInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer $restShoppingListCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer
+     */
+    public function mapShoppingListCollectionTransferToRestShoppingListCollectionResponseTransfer(
+        ShoppingListCollectionTransfer $shoppingListCollectionTransfer,
+        RestShoppingListCollectionResponseTransfer $restShoppingListCollectionResponseTransfer
+    ): RestShoppingListCollectionResponseTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
@@ -34,6 +47,17 @@ interface ShoppingListMapperInterface
         CustomerResponseTransfer $customerResponseTransfer,
         ShoppingListResponseTransfer $shoppingListResponseTransfer
     ): ShoppingListResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer $restShoppingListCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer
+     */
+    public function mapCustomerResponseErrorsToRestShoppingListCollectionResponseErrors(
+        CustomerResponseTransfer $customerResponseTransfer,
+        RestShoppingListCollectionResponseTransfer $restShoppingListCollectionResponseTransfer
+    ): RestShoppingListCollectionResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer

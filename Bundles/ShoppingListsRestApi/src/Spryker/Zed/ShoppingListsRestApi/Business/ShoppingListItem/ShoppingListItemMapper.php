@@ -44,7 +44,6 @@ class ShoppingListItemMapper implements ShoppingListItemMapperInterface
         ShoppingListResponseTransfer $shoppingListResponseTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
     ): ShoppingListItemResponseTransfer {
-
         return $shoppingListItemResponseTransfer->setIsSuccess(false)
             ->setErrors($shoppingListResponseTransfer->getErrors());
     }

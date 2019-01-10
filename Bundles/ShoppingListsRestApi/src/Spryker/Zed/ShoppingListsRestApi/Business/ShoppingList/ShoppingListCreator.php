@@ -60,9 +60,9 @@ class ShoppingListCreator implements ShoppingListCreatorInterface
         $restShoppingListRequestTransfer->getShoppingList()
             ->requireName();
 
-        $customerResponseTransfer = $this->customerReader->findCustomerByCustomerReferenceAndCompanyUserUuid(
-            $restShoppingListRequestTransfer->getCustomerReference(),
-            $restShoppingListRequestTransfer->getCompanyUserUuid()
+        $customerResponseTransfer = $this->customerReader->findCustomerByCompanyUserUuidAndCustomerReference(
+            $restShoppingListRequestTransfer->getCompanyUserUuid(),
+            $restShoppingListRequestTransfer->getCustomerReference()
         );
 
         if ($customerResponseTransfer->getIsSuccess() === false) {

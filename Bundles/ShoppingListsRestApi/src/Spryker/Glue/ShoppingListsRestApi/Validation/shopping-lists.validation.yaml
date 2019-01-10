@@ -3,10 +3,14 @@ shopping-lists:
         name:
             - NotBlank
             - Required
+            -   Length:
+                    max: 255
     patch:
         name:
             - NotBlank
             - Required
+            -   Length:
+                    max: 255
 shopping-list-items:
     post:
         sku:
@@ -19,6 +23,8 @@ shopping-list-items:
                     type: integer
             -   GreaterThan:
                     value: 0
+            -   LessThan:
+                    value: 2147483647
     patch:
         quantity:
             - Required
@@ -27,3 +33,5 @@ shopping-list-items:
                     type: integer
             -   GreaterThan:
                     value: 0
+            -   LessThan:
+                    value: 2147483647

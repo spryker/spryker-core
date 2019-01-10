@@ -6,22 +6,22 @@
           package="src.Orm.Zed.ShoppingList.Persistence">
 
     <table name="spy_shopping_list">
-        <column name="uuid" required="false" type="VARCHAR" size="36"/>
+        <column name="uuid" required="false" type="VARCHAR" size="36" />
         <unique name="spy_shopping_list-unique-uuid">
-            <unique-column name="uuid"/>
+            <unique-column name="uuid" />
         </unique>
         <behavior name="uuid">
-            <parameter name="key_columns" value="id_shopping_list.customer_reference"/>
+            <parameter name="key_columns" value="id_shopping_list.customer_reference" />
         </behavior>
     </table>
 
     <table name="spy_shopping_list_item">
-        <column name="uuid" required="false" type="VARCHAR" size="36"/>
+        <column name="uuid" required="false" type="VARCHAR" size="36" />
         <unique name="spy_shopping_list_item-unique-uuid">
-            <unique-column name="uuid"/>
+            <unique-column name="uuid" />
         </unique>
         <behavior name="uuid">
-            <parameter name="key_columns" value="id_shopping_list_item.fk_shopping_list"/>
+            <parameter name="key_columns" value="id_shopping_list_item.fk_shopping_list" />
         </behavior>
     </table>
 

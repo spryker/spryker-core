@@ -26,8 +26,8 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_SHOPPING_LIST_NOT_FOUND = 'Shopping list not found.';
     public const RESPONSE_CODE_SHOPPING_LIST_ITEM_NOT_FOUND = '1505';
     public const RESPONSE_DETAIL_SHOPPING_LIST_ITEM_NOT_FOUND = 'Shopping list item not found.';
-    public const RESPONSE_CODE_SHOPPING_LIST_CANNOT_UPDATE = '1506';
-    public const RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_UPDATE = 'Requested operation requires write access permission.';
+    public const RESPONSE_CODE_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED = '1506';
+    public const RESPONSE_DETAIL_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED = 'Requested operation requires write access permission.';
     public const RESPONSE_CODE_SHOPPING_LIST_DUPLICATE_NAME = '1507';
     public const RESPONSE_DETAIL_SHOPPING_LIST_DUPLICATE_NAME = 'Shopping list with given name already exists.';
     public const RESPONSE_CODE_SHOPPING_LIST_CANNOT_ADD_ITEM = '1508';
