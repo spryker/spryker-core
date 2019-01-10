@@ -29,7 +29,7 @@ class AbstractAlternativeProductsResourceRoutePlugin extends AbstractPlugin impl
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        return $resourceRouteCollection->addGet(ProductAlternativesRestApiConfig::ACTION_CONCRETE_ALTERNATIVE_PRODUCTS_GET, false);
+        return $resourceRouteCollection->addGet(ProductAlternativesRestApiConfig::ACTION_ABSTRACT_ALTERNATIVE_PRODUCTS_GET, false);
     }
 
     /**
