@@ -10,25 +10,31 @@ namespace Spryker\Zed\SprykGui\Business\Option\Output;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\ReturnTypeCollectionTransfer;
 use Generated\Shared\Transfer\ReturnTypeTransfer;
+use Spryker\Zed\SprykGui\Business\Finder\AccessibleTransfer\AccessibleTransferFinderInterface;
 use Spryker\Zed\SprykGui\Business\Option\OptionBuilderInterface;
+use Spryker\Zed\SprykGui\Business\PhpInternal\Type\TypeInterface;
 
 class DefaultOutputOptionBuilder implements OptionBuilderInterface
 {
     /**
-     * @var array
+     * @var \Spryker\Zed\SprykGui\Business\Finder\AccessibleTransfer\AccessibleTransferFinderInterface
      */
-    protected $types = [
-        'void',
-        'string',
-        'bool',
-        'array',
-        'int',
-        'float',
-        'mixed',
-        'object',
-        'callback',
-        'iterable',
-    ];
+    protected $accessibleTransferFinder;
+
+    /**
+     * @var \Spryker\Zed\SprykGui\Business\PhpInternal\Type\TypeInterface
+     */
+    protected $types;
+
+    /**
+     * @param \Spryker\Zed\SprykGui\Business\Finder\AccessibleTransfer\AccessibleTransferFinderInterface $accessibleTransferFinder
+     * @param \Spryker\Zed\SprykGui\Business\PhpInternal\Type\TypeInterface $types
+     */
+    public function __construct(AccessibleTransferFinderInterface $accessibleTransferFinder, TypeInterface $types)
+    {
+        $this->accessibleTransferFinder = $accessibleTransferFinder;
+        $this->types = $types;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
@@ -39,13 +45,29 @@ class DefaultOutputOptionBuilder implements OptionBuilderInterface
     {
         $optionsTransfer = $moduleTransfer->requireOptions()->getOptions();
         $returnTypeCollectionTransfer = $optionsTransfer->getReturnTypeCollection();
+
         if (!$returnTypeCollectionTransfer) {
             $returnTypeCollectionTransfer = new ReturnTypeCollectionTransfer();
         }
 
-        foreach ($this->types as $type) {
+        $accessibleTransferCollection = $this->accessibleTransferFinder->findAccessibleTransfers($moduleTransfer->getName());
+
+        foreach ($accessibleTransferCollection->getTransferClassNames() as $transferClassName) {
+            $classNameFragments = explode('\\', $transferClassName);
+            $classNameShort = array_pop($classNameFragments);
             $returnTypeTransfer = new ReturnTypeTransfer();
             $returnTypeTransfer
+                ->setName($classNameShort)
+                ->setType($transferClassName)
+                ->setIsPhpSeven(false);
+
+            $returnTypeCollectionTransfer->addReturnType($returnTypeTransfer);
+        }
+
+        foreach ($this->types->getTypes() as $type) {
+            $returnTypeTransfer = new ReturnTypeTransfer();
+            $returnTypeTransfer
+                ->setName($type)
                 ->setType($type)
                 ->setIsPhpSeven(true);
 

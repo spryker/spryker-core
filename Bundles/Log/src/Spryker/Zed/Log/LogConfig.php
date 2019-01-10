@@ -18,9 +18,11 @@ class LogConfig extends AbstractBundleConfig
     protected $logDirectoryConstants = [
         LogConstants::LOG_FILE_PATH_YVES,
         LogConstants::LOG_FILE_PATH_ZED,
+        LogConstants::LOG_FILE_PATH_GLUE,
         LogConstants::LOG_FILE_PATH,
         LogConstants::EXCEPTION_LOG_FILE_PATH_YVES,
         LogConstants::EXCEPTION_LOG_FILE_PATH_ZED,
+        LogConstants::EXCEPTION_LOG_FILE_PATH_GLUE,
         LogConstants::EXCEPTION_LOG_FILE_PATH,
         LogConstants::LOG_FOLDER_PATH_INSTALLATION,
     ];

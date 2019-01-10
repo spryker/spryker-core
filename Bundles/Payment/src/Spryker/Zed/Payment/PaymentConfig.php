@@ -19,4 +19,12 @@ class PaymentConfig extends AbstractBundleConfig
     {
         return $this->get(PaymentConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING);
     }
+
+    /**
+     * @return array
+     */
+    public function getSalesPaymentMethodTypes(): array
+    {
+        return [];
+    }
 }
