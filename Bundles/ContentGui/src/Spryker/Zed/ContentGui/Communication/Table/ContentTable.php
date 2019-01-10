@@ -61,8 +61,8 @@ class ContentTable extends AbstractTable
         $config->setSearchable([
             ContentTableConstants::COL_ID_CONTENT,
             ContentTableConstants::COL_NAME,
+            ContentTableConstants::COL_DESCRIPTION,
             ContentTableConstants::COL_CONTENT_TYPE_CANDIDATE_KEY,
-            ContentTableConstants::COL_UPDATED_AT,
         ]);
 
         return $config;
