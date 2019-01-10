@@ -7,11 +7,10 @@
 
 namespace Spryker\Service\Shipment;
 
-use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Kernel\AbstractService;
-use \ArrayObject;
 
 /**
  * @method \Spryker\Service\Shipment\ShipmentServiceFactory getFactory()

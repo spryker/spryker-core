@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
-use \ArrayObject;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -22,6 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Shipment\Business\ShipmentBusinessFactory getFactory()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentEntityManager getEntityManager()
  */
 class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
 {

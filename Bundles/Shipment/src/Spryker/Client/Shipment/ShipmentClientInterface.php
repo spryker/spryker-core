@@ -8,6 +8,7 @@
 namespace Spryker\Client\Shipment;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 
 interface ShipmentClientInterface
 {
