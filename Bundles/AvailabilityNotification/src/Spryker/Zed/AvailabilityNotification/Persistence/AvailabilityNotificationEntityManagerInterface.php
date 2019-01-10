@@ -24,4 +24,11 @@ interface AvailabilityNotificationEntityManagerInterface
      * @return void
      */
     public function deleteBySubscriptionKey(string $subscriptionKey): void;
+
+    /**
+     * @param string $customerReference
+     *
+     * @return void
+     */
+    public function deleteByCustomerReference(string $customerReference): void;
 }

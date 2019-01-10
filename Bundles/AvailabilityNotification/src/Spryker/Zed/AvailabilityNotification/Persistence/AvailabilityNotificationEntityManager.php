@@ -43,4 +43,17 @@ class AvailabilityNotificationEntityManager extends AbstractEntityManager implem
             ->filterBySubscriptionKey($subscriptionKey)
             ->delete();
     }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return void
+     */
+    public function deleteByCustomerReference(string $customerReference): void
+    {
+        $this->getFactory()
+            ->createAvailabilitySubscriptionQuery()
+            ->filterByCustomerReference($customerReference)
+            ->delete();
+    }
 }
