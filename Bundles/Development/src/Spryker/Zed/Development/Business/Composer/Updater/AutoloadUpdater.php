@@ -23,6 +23,7 @@ class AutoloadUpdater implements UpdaterInterface
     public const SPRYKER_TEST_NAMESPACE = 'SprykerTest';
     public const SPRYKER_NAMESPACE = 'Spryker';
     public const SPRYKER_SHOP_NAMESPACE = 'SprykerShop';
+    public const SPRYKER_ECO_NAMESPACE = 'SprykerEco';
 
     public const PSR_0 = 'psr-0';
     public const PSR_4 = 'psr-4';
@@ -53,6 +54,7 @@ class AutoloadUpdater implements UpdaterInterface
     protected $autoloadPSR4Whitelist = [
         self::SPRYKER_NAMESPACE,
         self::SPRYKER_SHOP_NAMESPACE,
+        self::SPRYKER_ECO_NAMESPACE,
         self::BASE_HELPER_DIRECTORY,
     ];
 
@@ -62,6 +64,7 @@ class AutoloadUpdater implements UpdaterInterface
     protected $sprykerCodeNamespaces = [
         self::SPRYKER_NAMESPACE,
         self::SPRYKER_SHOP_NAMESPACE,
+        self::SPRYKER_ECO_NAMESPACE,
     ];
 
     /**

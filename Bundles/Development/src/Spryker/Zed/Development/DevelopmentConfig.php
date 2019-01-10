@@ -215,10 +215,11 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getExternalToInternalNamespaceMap()
     {
         return [
-            'Psr\\' => 'spryker/log',
+            'Psr\\Log\\' => 'spryker/log',
+            'Psr\\Container\\' => 'spryker/container',
             'Propel\\' => 'spryker/propel-orm',
             'Silex\\' => 'spryker/silex',
-            'Pimple\\' => 'spryker/pimple',
+            'Pimple' => 'spryker/pimple',
             'Predis\\' => 'spryker/redis',
             'Guzzle\\' => 'spryker/guzzle',
             'GuzzleHttp\\' => 'spryker/guzzle',
@@ -439,5 +440,15 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getPhpstanLevel()
     {
         return 3;
+    }
+
+    /**
+     * Gets CodeSniffer default level. The higher, the better.
+     *
+     * @return int
+     */
+    public function getCodeSnifferLevel(): int
+    {
+        return 1;
     }
 }
