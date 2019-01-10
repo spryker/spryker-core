@@ -9,26 +9,12 @@ namespace Spryker\Service\Shipment;
 
 use Spryker\Service\Kernel\AbstractService;
 use \ArrayObject;
-use Spryker\Service\Shipment\Model\ItemsGroupperInterface;
 
 /**
  * @method \Spryker\Service\Shipment\ShipmentServiceFactory getFactory()
  */
 class ShipmentService extends AbstractService implements ShipmentServiceInterface
 {
-    /**
-     * @var ItemsGroupperInterface
-     */
-    protected $itemsGroupper;
-
-    /**
-     * @param ItemsGroupperInterface $itemsGroupper
-     */
-    public function __construct(ItemsGroupperInterface $itemsGroupper)
-    {
-        $this->itemsGroupper = $itemsGroupper;
-    }
-
     /**
      * {@inheritdoc}
      *
@@ -40,6 +26,6 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
      */
     public function groupItemsByShipment(ArrayObject $itemTransfers): ArrayObject
     {
-        return $this->itemsGroupper->groupByShipment($itemTransfers);
+        return $this->getFactory()->createItemsGrouper()->groupByShipment($itemTransfers);
     }
 }

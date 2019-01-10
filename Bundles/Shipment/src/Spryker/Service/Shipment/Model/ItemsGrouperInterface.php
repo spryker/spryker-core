@@ -8,7 +8,7 @@ namespace Spryker\Service\Shipment\Model;
 
 use ArrayObject;
 
-interface ItemsGroupperInterface
+interface ItemsGrouperInterface
 {
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers

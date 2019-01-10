@@ -8,16 +8,16 @@
 namespace Spryker\Service\Shipment;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
-use Spryker\Service\Shipment\Model\ItemsGroupper;
-use Spryker\Service\Shipment\Model\ItemsGroupperInterface;
+use Spryker\Service\Shipment\Model\ItemsGrouper;
+use Spryker\Service\Shipment\Model\ItemsGrouperInterface;
 
 class ShipmentServiceFactory extends AbstractServiceFactory
 {
     /**
-     * @return ItemsGroupperInterface
+     * @return ItemsGrouperInterface
      */
-    public function createItemsGroupper(): ItemsGroupperInterface
+    public function createItemsGrouper(): ItemsGrouperInterface
     {
-        return new ItemsGroupper();
+        return new ItemsGrouper();
     }
 }

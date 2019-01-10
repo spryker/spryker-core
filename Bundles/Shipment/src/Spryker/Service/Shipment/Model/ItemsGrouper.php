@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 
-class ItemsGroupper implements ItemsGroupperInterface
+class ItemsGrouper implements ItemsGrouperInterface
 {
     protected const SHIPMENT_TRANSFER_KEY_PATTERN = '%s-%s-%s';
     protected const ADDRESS_TRANSFER_KEY_PATTERN = '%s %s %s %s %s %s %s %s %s %s';
