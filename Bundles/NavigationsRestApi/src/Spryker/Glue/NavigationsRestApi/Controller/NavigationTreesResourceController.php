@@ -27,8 +27,8 @@ class NavigationTreesResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Navigation key not specified.",
-     *              "404": "Navigation not found."
+     *              "400": "Navigation tree id not specified.",
+     *              "404": "Navigation tree not found."
      *          }
      *     }
      * })
