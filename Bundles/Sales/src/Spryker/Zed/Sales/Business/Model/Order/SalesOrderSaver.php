@@ -23,6 +23,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
+use Spryker\Zed\Sales\Dependency\Service\SalesToSalesServiceInterface;
 use Spryker\Zed\Sales\SalesConfig;
 
 class SalesOrderSaver implements SalesOrderSaverInterface
@@ -75,6 +76,11 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $salesOrderItemMapper;
 
     /**
+     * @var \Spryker\Zed\Sales\Dependency\Service\SalesToSalesServiceInterface
+     */
+    protected $salesService;
+
+    /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface $countryFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface $orderReferenceGenerator
@@ -84,6 +90,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      * @param \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[] $orderExpanderPreSavePlugins
      * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
      * @param \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface $salesOrderItemMapper
+     * @param \Spryker\Zed\Sales\Dependency\Service\SalesToSalesServiceInterface $salesService
      */
     public function __construct(
         SalesToCountryInterface $countryFacade,
@@ -94,7 +101,8 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         Store $store,
         $orderExpanderPreSavePlugins,
         SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor,
-        SalesOrderItemMapperInterface $salesOrderItemMapper
+        SalesOrderItemMapperInterface $salesOrderItemMapper,
+        SalesToSalesServiceInterface $salesService
     ) {
         $this->countryFacade = $countryFacade;
         $this->omsFacade = $omsFacade;
@@ -105,6 +113,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $this->orderExpanderPreSavePlugins = $orderExpanderPreSavePlugins;
         $this->salesOrderSaverPluginExecutor = $salesOrderSaverPluginExecutor;
         $this->salesOrderItemMapper = $salesOrderItemMapper;
+        $this->salesService = $salesService;
     }
 
     /**
@@ -185,10 +194,16 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected function hydrateAddresses(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
     {
         $billingAddressEntity = $this->saveSalesOrderAddress($quoteTransfer->getBillingAddress());
-        $shippingAddressEntity = $this->saveSalesOrderAddress($quoteTransfer->getShippingAddress());
-
         $salesOrderEntity->setBillingAddress($billingAddressEntity);
-        $salesOrderEntity->setShippingAddress($shippingAddressEntity);
+
+        /**
+         * @deprecated Will be removed when this module uses next major Shipment version with multi shipment feature.
+         */
+
+        if ($this->salesService->checkSplitDeliveryEnabledByQuote($quoteTransfer) === false) {
+            $shippingAddressEntity = $this->saveSalesOrderAddress($quoteTransfer->getShippingAddress());
+            $salesOrderEntity->setShippingAddress($shippingAddressEntity);
+        }
     }
 
     /**

@@ -7,7 +7,7 @@
         <property name="idCustomer" type="int" />
         <property name="currency" type="Currency" />
         <property name="customer" type="Customer" />
-        <property name="shippingAddress" type="Address" />
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead." />
         <property name="billingAddress" type="Address" />
         <property name="voucherCode" type="string" />
         <property name="voucherDiscounts" type="Discount[]" />
