@@ -7,13 +7,15 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Communication\Controller;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacadeInterface getFacade()
+ * @method \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationBusinessFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {
@@ -38,12 +40,12 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer
      */
-    public function checkExistenceAction(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionExistenceTransfer
+    public function checkExistenceAction(AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer): AvailabilitySubscriptionExistenceResponseTransfer
     {
-        return $this->getFacade()->checkExistence($availabilitySubscriptionTransfer);
+        return $this->getFacade()->checkExistence($availabilitySubscriptionExistenceRequestTransfer);
     }
 }

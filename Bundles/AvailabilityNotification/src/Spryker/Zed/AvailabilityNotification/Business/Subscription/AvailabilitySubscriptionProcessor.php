@@ -57,11 +57,11 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
 
         $isEmailValid = $this->utilValidateService->isEmailFormatValid($availabilitySubscriptionTransfer->getEmail());
 
-        if (!$isEmailValid) {
+        if ($isEmailValid === false) {
             return $this->createInvalidEmailResponse();
         }
 
-        $this->availabilitySubscriptionSaver->save($availabilitySubscriptionTransfer);
+        $availabilitySubscriptionTransfer = $this->availabilitySubscriptionSaver->save($availabilitySubscriptionTransfer);
 
         $this->availabilityNotificationSender->sendSubscribedMail($availabilitySubscriptionTransfer);
 

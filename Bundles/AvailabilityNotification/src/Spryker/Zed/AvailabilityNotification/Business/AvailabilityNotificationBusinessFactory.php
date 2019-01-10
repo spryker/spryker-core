@@ -22,6 +22,9 @@ use Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotifi
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMoneyFacadeInterface;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeInterface;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilTextServiceInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface;
@@ -50,7 +53,11 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
      */
     public function createAvailabilityUnsubscriptionProcessor(): AvailabilityUnsubscriptionProcessorInterface
     {
-        return new AvailabilityUnsubscriptionProcessor($this->getEntityManager());
+        return new AvailabilityUnsubscriptionProcessor(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->getProductFacade()
+        );
     }
 
     /**
@@ -88,7 +95,12 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
      */
     public function createAvailabilityNotificationSender(): AvailabilityNotificationSenderInterface
     {
-        return new AvailabilityNotificationSender($this->getMailFacade());
+        return new AvailabilityNotificationSender(
+            $this->getMailFacade(),
+            $this->getProductFacade(),
+            $this->getMoneyFacade(),
+            $this->getPriceProductFacade()
+        );
     }
 
     /**
@@ -129,5 +141,29 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     protected function getLocaleFacade(): AvailabilityNotificationToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface
+     */
+    protected function getProductFacade(): AvailabilityNotificationToProductFacadeInterface
+    {
+        return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMoneyFacadeInterface
+     */
+    protected function getMoneyFacade(): AvailabilityNotificationToMoneyFacadeInterface
+    {
+        return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeInterface
+     */
+    protected function getPriceProductFacade(): AvailabilityNotificationToPriceProductFacadeInterface
+    {
+        return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 }
