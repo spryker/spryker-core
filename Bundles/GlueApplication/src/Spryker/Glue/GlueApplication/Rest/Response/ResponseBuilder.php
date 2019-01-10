@@ -147,13 +147,23 @@ class ResponseBuilder implements ResponseBuilderInterface
         bool $includeRelations,
         RestRequestInterface $restRequest
     ): array {
-
         $data = $restResource->toArray($includeRelations);
 
         if (count($restRequest->getFields()) > 0 && isset($restRequest->getFields()[$restResource->getType()])) {
             $data[RestResourceInterface::RESOURCE_ATTRIBUTES] = array_intersect_key(
                 $data[RestResourceInterface::RESOURCE_ATTRIBUTES],
                 array_flip($restRequest->getFields()[$restResource->getType()]->getAttributes())
+            );
+        }
+
+        if ($restRequest->getExcludeRelationship()) {
+            unset($data[RestResourceInterface::RESOURCE_RELATIONSHIPS]);
+        }
+
+        if (count($restRequest->getInclude()) && array_key_exists(RestResourceInterface::RESOURCE_RELATIONSHIPS, $data)) {
+            $data[RestResourceInterface::RESOURCE_RELATIONSHIPS] = array_intersect_key(
+                $data[RestResourceInterface::RESOURCE_RELATIONSHIPS],
+                $restRequest->getInclude()
             );
         }
 
