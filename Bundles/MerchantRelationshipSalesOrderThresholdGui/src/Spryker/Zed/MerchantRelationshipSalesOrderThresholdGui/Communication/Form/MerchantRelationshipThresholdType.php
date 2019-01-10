@@ -78,7 +78,7 @@ class MerchantRelationshipThresholdType extends AbstractType
      *
      * @return $this
      */
-    protected function addStoreCurrencyField(FormBuilderInterface $builder, array $options): self
+    protected function addStoreCurrencyField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_STORE_CURRENCY, Select2ComboBoxType::class, [
             'label' => 'Store and Currency',
@@ -97,7 +97,7 @@ class MerchantRelationshipThresholdType extends AbstractType
      *
      * @return $this
      */
-    protected function addIdMerchantRelationshipField(FormBuilderInterface $builder): self
+    protected function addIdMerchantRelationshipField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_MERCHANT_RELATIONSHIP, HiddenType::class, [
             'required' => true,
@@ -112,7 +112,7 @@ class MerchantRelationshipThresholdType extends AbstractType
      *
      * @return $this
      */
-    protected function addHardThresholdForm(FormBuilderInterface $builder, array $options): self
+    protected function addHardThresholdForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_HARD, MerchantRelationshipHardThresholdType::class, [
             static::OPTION_HARD_TYPES_ARRAY => $options[static::OPTION_HARD_TYPES_ARRAY],
@@ -128,7 +128,7 @@ class MerchantRelationshipThresholdType extends AbstractType
      *
      * @return $this
      */
-    protected function addSoftThresholdForm(FormBuilderInterface $builder, array $options): self
+    protected function addSoftThresholdForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_SOFT, MerchantRelationshipSoftThresholdType::class, [
             static::OPTION_SOFT_TYPES_ARRAY => $options[static::OPTION_SOFT_TYPES_ARRAY],

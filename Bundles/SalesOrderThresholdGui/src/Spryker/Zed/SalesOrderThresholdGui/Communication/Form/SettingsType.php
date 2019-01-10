@@ -49,7 +49,7 @@ class SettingsType extends AbstractType
      *
      * @return $this
      */
-    protected function addTaxSetField(FormBuilderInterface $builder, array $options): self
+    protected function addTaxSetField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             static::FIELD_TAX_SET,

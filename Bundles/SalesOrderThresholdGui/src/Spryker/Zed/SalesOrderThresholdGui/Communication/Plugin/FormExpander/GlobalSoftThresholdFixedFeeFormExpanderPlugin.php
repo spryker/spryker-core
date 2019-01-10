@@ -110,7 +110,7 @@ class GlobalSoftThresholdFixedFeeFormExpanderPlugin extends AbstractPlugin imple
      *
      * @return $this
      */
-    protected function addSoftFixedFeeField(FormBuilderInterface $builder, array $options): self
+    protected function addSoftFixedFeeField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_SOFT_FIXED_FEE, MoneyType::class, [
             'label' => 'Enter fixed fee',

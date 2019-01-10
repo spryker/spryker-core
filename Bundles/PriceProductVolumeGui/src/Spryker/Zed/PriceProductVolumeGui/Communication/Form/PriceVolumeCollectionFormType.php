@@ -72,7 +72,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addVolumesField(FormBuilderInterface $builder, array $options): self
+    protected function addVolumesField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_VOLUMES, CollectionType::class, [
             'entry_type' => PriceVolumeFormType::class,
@@ -96,7 +96,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addNetPriceField(FormBuilderInterface $builder, array $options): self
+    protected function addNetPriceField(FormBuilderInterface $builder, array $options)
     {
         $this->addPriceField($builder, $options, static::FIELD_NET_PRICE);
 
@@ -109,7 +109,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addGrossPriceField(FormBuilderInterface $builder, array $options): self
+    protected function addGrossPriceField(FormBuilderInterface $builder, array $options)
     {
         $this->addPriceField($builder, $options, static::FIELD_GROSS_PRICE);
 
@@ -123,7 +123,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addPriceField(FormBuilderInterface $builder, array $options, string $name): self
+    protected function addPriceField(FormBuilderInterface $builder, array $options, string $name)
     {
         $builder->add($name, MoneyType::class, [
             'label' => false,
@@ -192,6 +192,8 @@ class PriceVolumeCollectionFormType extends AbstractType
                         ->buildViolation(sprintf('Quantity "%d" already exists.', $priceProductVolumeItemTransfer->getQuantity()))
                         ->atPath(PriceVolumeFormType::FIELD_QUANTITY)
                         ->addViolation();
+
+                    break;
                 }
             }
 
