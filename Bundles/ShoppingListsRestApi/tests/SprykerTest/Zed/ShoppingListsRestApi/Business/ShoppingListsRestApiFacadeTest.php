@@ -1056,7 +1056,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
                 ->setName($this->lastShoppingListName)
                 // Owner is defined only in read methods
                 ->setOwner(static::OWNER_NAME)
-                ->addItems(
+                ->addItem(
                     (new ShoppingListItemTransfer())
                         ->setQuantity(static::GOOD_QUANTITY)
                         ->setSku(static::GOOD_SKU)
