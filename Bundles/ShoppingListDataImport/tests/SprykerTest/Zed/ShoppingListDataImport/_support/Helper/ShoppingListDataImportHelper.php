@@ -12,19 +12,9 @@ use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnitQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUserQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListItemQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Map\RelationMap;
 
 class ShoppingListDataImportHelper extends Module
 {
-    /**
-     * @return void
-     */
-    public function ensureShoppingListDatabaseTableIsEmpty(): void
-    {
-        $this->cleanTableRelations($this->getShoppingListQuery());
-    }
-
     /**
      * @return void
      */
@@ -115,28 +105,5 @@ class ShoppingListDataImportHelper extends Module
     protected function getShoppingListCompanyBusinessUnitQuery(): SpyShoppingListCompanyBusinessUnitQuery
     {
         return SpyShoppingListCompanyBusinessUnitQuery::create();
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param array $processedEntities
-     *
-     * @return void
-     */
-    protected function cleanTableRelations(ModelCriteria $query, array $processedEntities = []): void
-    {
-        $relations = $query->getTableMap()->getRelations();
-
-        foreach ($relations as $relationMap) {
-            $relationType = $relationMap->getType();
-            $fullyQualifiedQueryModel = $relationMap->getLocalTable()->getClassname() . 'Query';
-            if ($relationType === RelationMap::ONE_TO_MANY && !in_array($fullyQualifiedQueryModel, $processedEntities)) {
-                $processedEntities[] = $fullyQualifiedQueryModel;
-                $fullyQualifiedQueryModelObject = $fullyQualifiedQueryModel::create();
-                $this->cleanTableRelations($fullyQualifiedQueryModelObject, $processedEntities);
-            }
-        }
-
-        $query->deleteAll();
     }
 }
