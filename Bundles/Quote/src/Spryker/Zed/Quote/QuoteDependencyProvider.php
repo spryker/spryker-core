@@ -9,8 +9,6 @@ namespace Spryker\Zed\Quote;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Quote\Dependency\Facade\QuoteToPriceFacadeBridge;
-use Spryker\Zed\Quote\Dependency\Facade\QuoteToPriceFacadeInterface;
 use Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeBridge;
 use Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceBridge;
 
@@ -20,7 +18,6 @@ use Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceBridge;
 class QuoteDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_STORE = 'FACADE_STORE';
-    public const FACADE_PRICE = 'FACADE_PRICE';
     public const PLUGINS_QUOTE_CREATE_AFTER = 'PLUGINS_QUOTE_CREATE_AFTER';
     public const PLUGINS_QUOTE_CREATE_BEFORE = 'PLUGINS_QUOTE_CREATE_BEFORE';
     public const PLUGINS_QUOTE_UPDATE_AFTER = 'PLUGINS_QUOTE_UPDATE_AFTER';
@@ -28,6 +25,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const PLUGINS_QUOTE_DELETE_BEFORE = 'PLUGINS_QUOTE_DELETE_BEFORE';
     public const PLUGINS_QUOTE_DELETE_AFTER = 'PLUGINS_QUOTE_DELETE_AFTER';
+    public const PLUGINS_QUOTE_VALIDATE = 'PLUGINS_QUOTE_VALIDATE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,13 +35,13 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addStoreFacade($container);
-        $container = $this->addPriceFacade($container);
         $container = $this->addQuoteCreateAfterPlugins($container);
         $container = $this->addQuoteCreateBeforePlugins($container);
         $container = $this->addQuoteUpdateAfterPlugins($container);
         $container = $this->addQuoteUpdateBeforePlugins($container);
         $container = $this->addQuoteDeleteBeforePlugins($container);
         $container = $this->addQuoteDeleteAfterPlugins($container);
+        $container = $this->addQuoteValidatePlugins($container);
 
         return $container;
     }
@@ -83,22 +81,6 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_STORE] = function (Container $container) {
             return new QuoteToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addPriceFacade(Container $container): Container
-    {
-        $container[static::FACADE_PRICE] = function (Container $container): QuoteToPriceFacadeInterface {
-            return new QuoteToPriceFacadeBridge(
-                $container->getLocator()->price()->facade()
-            );
         };
 
         return $container;
@@ -189,6 +171,20 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteValidatePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUOTE_VALIDATE] = function (Container $container) {
+            return $this->getQuoteValidatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
      */
     protected function getQuoteCreateAfterPlugins(): array
@@ -232,6 +228,14 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteDeleteAfterPluginInterface[]
      */
     protected function getQuoteDeleteAfterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatePluginInterface[]
+     */
+    protected function getQuoteValidatePlugins(): array
     {
         return [];
     }

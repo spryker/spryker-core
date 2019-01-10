@@ -12,15 +12,12 @@ use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\Quote\Dependency\Facade\QuoteToPriceFacadeInterface;
 use Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface;
 use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 
 class QuoteValidator implements QuoteValidatorInterface
 {
     protected const MESSAGE_STORE_DATA_IS_MISSING = 'quote.validation.error.store_is_missing';
-    protected const MESSAGE_PRICE_MODE_DATA_IS_MISSING = 'quote.validation.error.price_mode_is_missing';
-    protected const MESSAGE_PRICE_MODE_DATA_IS_INCORRECT = 'quote.validation.error.price_mode_is_incorrect';
     protected const MESSAGE_CURRENCY_DATA_IS_MISSING = 'quote.validation.error.currency_mode_is_missing';
     protected const MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'quote.validation.error.currency_mode_is_incorrect';
 
@@ -30,18 +27,18 @@ class QuoteValidator implements QuoteValidatorInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\Quote\Dependency\Facade\QuoteToPriceFacadeInterface
+     * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatePluginInterface[]
      */
-    protected $priceFacade;
+    protected $validatePlugins;
 
     /**
      * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToPriceFacadeInterface $priceFacade
+     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatePluginInterface[] $validatePlugins
      */
-    public function __construct(QuoteToStoreFacadeInterface $storeFacade, QuoteToPriceFacadeInterface $priceFacade)
+    public function __construct(QuoteToStoreFacadeInterface $storeFacade, array $validatePlugins)
     {
         $this->storeFacade = $storeFacade;
-        $this->priceFacade = $priceFacade;
+        $this->validatePlugins = $validatePlugins;
     }
 
     /**
@@ -53,7 +50,7 @@ class QuoteValidator implements QuoteValidatorInterface
     {
         $quoteValidationResponseTransfer = $this->initQuoteValidationResponseTransfer();
         $quoteValidationResponseTransfer = $this->validateStoreAndCurrency($quoteTransfer, $quoteValidationResponseTransfer);
-        $quoteValidationResponseTransfer = $this->validatePriceMode($quoteTransfer, $quoteValidationResponseTransfer);
+        $quoteValidationResponseTransfer = $this->validatePluginsExecute($quoteTransfer, $quoteValidationResponseTransfer);
 
         return $quoteValidationResponseTransfer;
     }
@@ -115,20 +112,16 @@ class QuoteValidator implements QuoteValidatorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    protected function validatePriceMode(
+    protected function validatePluginsExecute(
         QuoteTransfer $quoteTransfer,
         QuoteValidationResponseTransfer $quoteValidationResponseTransfer
     ): QuoteValidationResponseTransfer {
-        $priceMode = $quoteTransfer->getPriceMode();
-
-        if (!$priceMode) {
-            return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_PRICE_MODE_DATA_IS_MISSING);
+        if (!$this->validatePlugins) {
+            return $quoteValidationResponseTransfer;
         }
 
-        $availablePiceModes = $this->priceFacade->getPriceModes();
-
-        if (!isset($availablePiceModes[$priceMode])) {
-            return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT, $priceMode);
+        foreach ($this->validatePlugins as $validatePlugin) {
+            $quoteValidationResponseTransfer = $validatePlugin->validate($quoteTransfer, $quoteValidationResponseTransfer);
         }
 
         return $quoteValidationResponseTransfer;
