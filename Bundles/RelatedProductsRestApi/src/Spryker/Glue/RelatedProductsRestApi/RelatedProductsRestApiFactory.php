@@ -10,6 +10,7 @@ namespace Spryker\Glue\RelatedProductsRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductRelationStorageClientInterface;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductStorageClientInterface;
+use Spryker\Glue\RelatedProductsRestApi\Dependency\Resource\RelatedProductsRestApiToProductsRestApiResourceInterface;
 use Spryker\Glue\RelatedProductsRestApi\Processor\Reader\RelatedProductReader;
 use Spryker\Glue\RelatedProductsRestApi\Processor\Reader\RelatedProductReaderInterface;
 
@@ -23,6 +24,7 @@ class RelatedProductsRestApiFactory extends AbstractFactory
         return new RelatedProductReader(
             $this->getProductStorageClient(),
             $this->getProductRelationStorageClient(),
+            $this->getProductsRestApiResource(),
             $this->getResourceBuilder()
         );
     }
@@ -41,5 +43,13 @@ class RelatedProductsRestApiFactory extends AbstractFactory
     public function getProductStorageClient(): RelatedProductsRestApiToProductStorageClientInterface
     {
         return $this->getProvidedDependency(RelatedProductsRestApiDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\RelatedProductsRestApi\Dependency\Resource\RelatedProductsRestApiToProductsRestApiResourceInterface
+     */
+    public function getProductsRestApiResource(): RelatedProductsRestApiToProductsRestApiResourceInterface
+    {
+        return $this->getProvidedDependency(RelatedProductsRestApiDependencyProvider::RESOURCE_PRODUCTS_REST_API);
     }
 }
