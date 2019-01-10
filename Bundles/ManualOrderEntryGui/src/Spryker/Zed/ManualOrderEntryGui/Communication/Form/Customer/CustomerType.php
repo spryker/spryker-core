@@ -46,7 +46,7 @@ class CustomerType extends AbstractType
      *
      * @return $this
      */
-    protected function addSalutationField(FormBuilderInterface $builder): self
+    protected function addSalutationField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_SALUTATION, ChoiceType::class, [
             'choices' => $this->getSalutationChoices(),
@@ -78,7 +78,7 @@ class CustomerType extends AbstractType
      *
      * @return $this
      */
-    protected function addFirstNameField(FormBuilderInterface $builder): self
+    protected function addFirstNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FIRST_NAME, TextType::class, [
             'label' => 'First Name',
@@ -96,7 +96,7 @@ class CustomerType extends AbstractType
      *
      * @return $this
      */
-    protected function addLastNameField(FormBuilderInterface $builder): self
+    protected function addLastNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_LAST_NAME, TextType::class, [
             'label' => 'Last Name',
@@ -114,7 +114,7 @@ class CustomerType extends AbstractType
      *
      * @return $this
      */
-    protected function addEmailField(FormBuilderInterface $builder): self
+    protected function addEmailField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => 'Email',

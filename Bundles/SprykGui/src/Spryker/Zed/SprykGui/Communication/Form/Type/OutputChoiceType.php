@@ -36,7 +36,7 @@ class OutputChoiceType extends AbstractType
             'choices' => function (Options $options) {
                 return $options[static::OUTPUT_CHOICES];
             },
-            'choice_label' => 'type',
+            'choice_label' => 'name',
             'choice_value' => 'type',
         ]);
     }

@@ -29,7 +29,7 @@ class MerchantRelationshipChoiceFormType extends AbstractType
      *
      * @return $this
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): self
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addFkMerchantRelationshipField($builder, $options);
 
