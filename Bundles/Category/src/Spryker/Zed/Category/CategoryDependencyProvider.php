@@ -183,7 +183,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRelationDeletePluginStack(Container $container)
     {
-        $container[static::PLUGIN_STACK_RELATION_DELETE] = Container::share(function () {
+        $container[static::PLUGIN_STACK_RELATION_DELETE] = $container->share(function () {
             return $this->getRelationDeletePluginStack();
         });
 
@@ -197,7 +197,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRelationUpdatePluginStack(Container $container)
     {
-        $container[static::PLUGIN_STACK_RELATION_UPDATE] = Container::share(function () {
+        $container[static::PLUGIN_STACK_RELATION_UPDATE] = $container->share(function () {
             return $this->getRelationUpdatePluginStack();
         });
 
@@ -211,7 +211,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryUrlPathPlugins(Container $container)
     {
-        $container[static::PLUGINS_CATEGORY_URL_PATH] = Container::share(function () {
+        $container[static::PLUGINS_CATEGORY_URL_PATH] = $container->share(function () {
             return $this->getCategoryUrlPathPlugins();
         });
 
@@ -225,7 +225,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRelationReadPluginStack(Container $container)
     {
-        $container[static::PLUGIN_STACK_RELATION_READ] = Container::share(function () {
+        $container[static::PLUGIN_STACK_RELATION_READ] = $container->share(function () {
             return $this->getRelationReadPluginStack();
         });
 
