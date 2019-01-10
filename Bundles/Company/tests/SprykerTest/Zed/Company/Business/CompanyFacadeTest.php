@@ -48,7 +48,7 @@ class CompanyFacadeTest extends Test
     public function testFindCompanyByIdReturnsTransfer(): void
     {
         //Arrange
-        $companyTransfer = $this->tester->haveCompany(['is_active' => false]);
+        $companyTransfer = $this->tester->haveCompany();
 
         //Act
         $companyTransfer = $this->getFacade()->findCompanyById($companyTransfer->getIdCompany());
