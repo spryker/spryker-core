@@ -66,9 +66,8 @@ class ConcreteAlternativeProductReader implements ConcreteAlternativeProductRead
         }
 
         $restResponse = $this->alternativeProductsRestResponseBuilder->createRestResponse();
-        $this->addConcreteProductResources($restResponse, $productAlternativeStorageTransfer, $restRequest);
 
-        return $restResponse;
+        return $this->addConcreteProductResources($restResponse, $productAlternativeStorageTransfer, $restRequest);
     }
 
     /**
