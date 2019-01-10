@@ -17,7 +17,7 @@ interface CompanyUserReaderInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function findCompanyUserByUuid(
+    public function findCompanyUserByUuidAndCustomerReference(
         string $companyUserUuid,
         string $customerReference
     ): CompanyUserResponseTransfer;

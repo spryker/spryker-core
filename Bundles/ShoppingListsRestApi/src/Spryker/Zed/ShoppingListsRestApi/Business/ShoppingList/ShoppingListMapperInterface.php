@@ -21,7 +21,7 @@ interface ShoppingListMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer
      */
-    public function mapShoppingListResponseTransferToRestShoppingListCollectionResponseTransfer(
+    public function mapShoppingListCollectionTransferToRestShoppingListCollectionResponseTransfer(
         ShoppingListCollectionTransfer $shoppingListCollectionTransfer,
         RestShoppingListCollectionResponseTransfer $restShoppingListCollectionResponseTransfer
     ): RestShoppingListCollectionResponseTransfer;

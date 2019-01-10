@@ -22,11 +22,10 @@ class ShoppingListMapper implements ShoppingListMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer
      */
-    public function mapShoppingListResponseTransferToRestShoppingListCollectionResponseTransfer(
+    public function mapShoppingListCollectionTransferToRestShoppingListCollectionResponseTransfer(
         ShoppingListCollectionTransfer $shoppingListCollectionTransfer,
         RestShoppingListCollectionResponseTransfer $restShoppingListCollectionResponseTransfer
     ): RestShoppingListCollectionResponseTransfer {
-
         return $restShoppingListCollectionResponseTransfer->setShoppingLists(
             $shoppingListCollectionTransfer->getShoppingLists()
         );
@@ -82,7 +81,6 @@ class ShoppingListMapper implements ShoppingListMapperInterface
         CustomerResponseTransfer $customerResponseTransfer,
         RestShoppingListCollectionResponseTransfer $restShoppingListCollectionResponseTransfer
     ): RestShoppingListCollectionResponseTransfer {
-
         foreach ($customerResponseTransfer->getErrors() as $customerErrorTransfer) {
             $restShoppingListCollectionResponseTransfer->addErrorCode(
                 $customerErrorTransfer->getMessage()

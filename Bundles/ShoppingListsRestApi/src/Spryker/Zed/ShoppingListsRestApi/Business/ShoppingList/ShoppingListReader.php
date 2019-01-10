@@ -58,9 +58,9 @@ class ShoppingListReader implements ShoppingListReaderInterface
     ): RestShoppingListCollectionResponseTransfer {
         $customerTransfer->requireCompanyUserTransfer();
 
-        $customerResponseTransfer = $this->customerReader->findCustomerByCustomerReferenceAndCompanyUserUuid(
-            $customerTransfer->getCustomerReference(),
-            $customerTransfer->getCompanyUserTransfer()->getUuid()
+        $customerResponseTransfer = $this->customerReader->findCustomerByCompanyUserUuidAndCustomerReference(
+            $customerTransfer->getCompanyUserTransfer()->getUuid(),
+            $customerTransfer->getCustomerReference()
         );
 
         if ($customerResponseTransfer->getIsSuccess() === false) {
@@ -70,7 +70,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
             );
         }
 
-        return $this->shoppingListMapper->mapShoppingListResponseTransferToRestShoppingListCollectionResponseTransfer(
+        return $this->shoppingListMapper->mapShoppingListCollectionTransferToRestShoppingListCollectionResponseTransfer(
             $this->shoppingListFacade->getCustomerShoppingListCollection(
                 $customerResponseTransfer->getCustomerTransfer()
             ),
@@ -93,9 +93,9 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $restShoppingListRequestTransfer->getShoppingList()
             ->requireUuid();
 
-        $customerResponseTransfer = $this->customerReader->findCustomerByCustomerReferenceAndCompanyUserUuid(
-            $restShoppingListRequestTransfer->getCustomerReference(),
-            $restShoppingListRequestTransfer->getCompanyUserUuid()
+        $customerResponseTransfer = $this->customerReader->findCustomerByCompanyUserUuidAndCustomerReference(
+            $restShoppingListRequestTransfer->getCompanyUserUuid(),
+            $restShoppingListRequestTransfer->getCustomerReference()
         );
 
         if ($customerResponseTransfer->getIsSuccess() === false) {
