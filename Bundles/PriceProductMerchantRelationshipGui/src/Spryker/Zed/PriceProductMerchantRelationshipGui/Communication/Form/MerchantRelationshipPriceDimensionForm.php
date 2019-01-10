@@ -60,7 +60,7 @@ class MerchantRelationshipPriceDimensionForm extends AbstractType
      *
      * @return $this
      */
-    protected function addMerchantRelationshipCollectionField(FormBuilderInterface $builder, array $options): self
+    protected function addMerchantRelationshipCollectionField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(PriceProductDimensionTransfer::ID_MERCHANT_RELATIONSHIP, ChoiceType::class, [
             'choices' => $options[static::OPTION_VALUES_MERCHANT_RELATIONSHIP_CHOICES],
