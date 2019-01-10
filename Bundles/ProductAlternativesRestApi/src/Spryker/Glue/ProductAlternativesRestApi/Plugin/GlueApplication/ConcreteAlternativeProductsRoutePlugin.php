@@ -19,7 +19,7 @@ class ConcreteAlternativeProductsRoutePlugin extends AbstractPlugin implements R
 {
     /**
      * {@inheritdoc}
-     * - Configures available actions for concrete-alternative-products resource.
+     *  - Configures action to retrieve concrete alternative products collection.
      *
      * @api
      *

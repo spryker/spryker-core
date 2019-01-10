@@ -18,7 +18,4 @@ class ProductAlternativesRestApiConfig extends AbstractBundleConfig
 
     public const ACTION_ABSTRACT_ALTERNATIVE_PRODUCTS_GET = 'get';
     public const ACTION_CONCRETE_ALTERNATIVE_PRODUCTS_GET = 'get';
-
-    public const RESPONSE_CODE_ALTERNATIVE_PRODUCTS_NOT_FOUND = '315';
-    public const RESPONSE_DETAIL_ALTERNATIVE_PRODUCTS_NOT_FOUND = 'Alternative products not found.';
 }

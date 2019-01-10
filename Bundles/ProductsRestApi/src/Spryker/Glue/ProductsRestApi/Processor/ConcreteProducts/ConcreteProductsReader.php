@@ -103,8 +103,8 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     public function findProductConcretesByProductConcreteSkus(array $productConcreteSkus, RestRequestInterface $restRequest): array
     {
         $results = [];
-        foreach ($productConcreteSkus as $idResource) {
-            $productResource = $this->findProductConcreteBySku($idResource, $restRequest);
+        foreach ($productConcreteSkus as $productConcreteSku) {
+            $productResource = $this->findProductConcreteBySku($productConcreteSku, $restRequest);
             if (!$productResource) {
                 continue;
             }

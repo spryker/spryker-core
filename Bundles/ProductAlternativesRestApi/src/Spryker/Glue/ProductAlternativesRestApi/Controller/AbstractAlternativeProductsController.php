@@ -20,7 +20,7 @@ class AbstractAlternativeProductsController extends AbstractController
      * @Glue({
      *      "getCollection": {
      *          "summary": [
-     *              "Retrieves concrete alternative products of concrete product."
+     *              "Retrieves abstract alternative products of concrete product."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
@@ -28,7 +28,7 @@ class AbstractAlternativeProductsController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Concrete product id is not specified.",
-     *              "404": "Concrete alternative products not found."
+     *              "404": "Concrete product not found."
      *          }
      *      }
      * })
@@ -41,6 +41,6 @@ class AbstractAlternativeProductsController extends AbstractController
     {
         return $this->getFactory()
             ->createAbstractAlternativeProductReader()
-            ->getAbstractProductAlternative($restRequest);
+            ->getAbstractAlternativeProductCollection($restRequest);
     }
 }

@@ -17,5 +17,5 @@ interface AbstractAlternativeProductReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getAbstractProductAlternative(RestRequestInterface $restRequest): RestResponseInterface;
+    public function getAbstractAlternativeProductCollection(RestRequestInterface $restRequest): RestResponseInterface;
 }

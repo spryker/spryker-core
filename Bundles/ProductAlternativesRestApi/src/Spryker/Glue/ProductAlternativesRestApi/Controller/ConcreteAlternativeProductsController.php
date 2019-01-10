@@ -28,7 +28,7 @@ class ConcreteAlternativeProductsController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Concrete product id is not specified.",
-     *              "404": "Concrete alternative products not found."
+     *              "404": "Concrete product not found."
      *          }
      *      }
      * })
@@ -41,6 +41,6 @@ class ConcreteAlternativeProductsController extends AbstractController
     {
         return $this->getFactory()
             ->createConcreteAlternativeProductReader()
-            ->getConcreteProductAlternative($restRequest);
+            ->getConcreteAlternativeProductCollection($restRequest);
     }
 }

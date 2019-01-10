@@ -10,7 +10,6 @@ namespace Spryker\Glue\ProductAlternativesRestApi\Processor\RestResponseBuilder;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Glue\ProductAlternativesRestApi\ProductAlternativesRestApiConfig;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -56,9 +55,9 @@ class AlternativeProductsRestResponseBuilder implements AlternativeProductsRestR
     public function createAlternativeProductsNotFoundError(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ProductAlternativesRestApiConfig::RESPONSE_CODE_ALTERNATIVE_PRODUCTS_NOT_FOUND)
+            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_CONCRETE_PRODUCT)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(ProductAlternativesRestApiConfig::RESPONSE_DETAIL_ALTERNATIVE_PRODUCTS_NOT_FOUND);
+            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_CONCRETE_PRODUCT);
 
         return $this->createRestResponse()->addError($restErrorTransfer);
     }
