@@ -18,6 +18,7 @@
     "spryker/company": "*",
     "spryker/permission": "*",
     "spryker/propel": "*",
+    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "autoload": {
