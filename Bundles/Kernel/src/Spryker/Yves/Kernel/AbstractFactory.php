@@ -103,11 +103,11 @@ abstract class AbstractFactory implements FactoryInterface
             $this->container = $this->createContainerWithProvidedDependencies();
         }
 
-        if ($this->container->offsetExists($key) === false) {
+        if ($this->container->has($key) === false) {
             throw new ContainerKeyNotFoundException($this, $key);
         }
 
-        return $this->container[$key];
+        return $this->container->get($key);
     }
 
     /**

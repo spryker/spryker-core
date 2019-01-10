@@ -5,13 +5,13 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/silexphp": "^1.0.0"
+    "spryker/silexphp": "^0.1.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   },
   "config": {
