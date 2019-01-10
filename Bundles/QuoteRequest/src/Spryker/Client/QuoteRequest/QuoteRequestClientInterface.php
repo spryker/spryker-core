@@ -5,16 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteRequest\Persistence;
+namespace Spryker\Client\QuoteRequest;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 
-interface QuoteRequestEntityManagerInterface
+interface QuoteRequestClientInterface
 {
     /**
+     * Specification:
+     *  - Makes Zed request.
+     *  - Creates new quote request.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
-    public function create(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer;
+    public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer;
 }
