@@ -8,16 +8,16 @@
 namespace Spryker\Service\Sales;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
-use Spryker\Service\Sales\Model\SplitDeliveryEnabledChecker;
-use Spryker\Service\Sales\Model\SplitDeliveryEnabledCheckerInterface;
+use Spryker\Service\Sales\Items\ItemHasOwnShipmentTransferChecker;
+use Spryker\Service\Sales\Items\ItemHasOwnShipmentTransferCheckerInterface;
 
 class SalesServiceFactory extends AbstractServiceFactory
 {
     /**
-     * @return \Spryker\Service\Sales\Model\SplitDeliveryEnabledCheckerInterface
+     * @return \Spryker\Service\Sales\Items\ItemHasOwnShipmentTransferCheckerInterface
      */
-    public function createSplitDeliveryEnabledChecker(): SplitDeliveryEnabledCheckerInterface
+    public function createSplitDeliveryEnabledChecker(): ItemHasOwnShipmentTransferCheckerInterface
     {
-        return new SplitDeliveryEnabledChecker();
+        return new ItemHasOwnShipmentTransferChecker();
     }
 }

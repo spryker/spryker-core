@@ -10,7 +10,7 @@ namespace Spryker\Sales\Shipment;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Service\Kernel\AbstractService;
-use Spryker\Service\Sales\Model\SplitDeliveryEnabledCheckerInterface;
+use Spryker\Service\Sales\Items\ItemHasOwnShipmentTransferCheckerInterface;
 
 /**
  * @method \Spryker\Service\Sales\SalesServiceFactory getFactory()
@@ -18,20 +18,20 @@ use Spryker\Service\Sales\Model\SplitDeliveryEnabledCheckerInterface;
 class SalesService extends AbstractService implements SalesServiceInterface
 {
     /**
-     * @var \Spryker\Service\Sales\Model\SplitDeliveryEnabledCheckerInterface
+     * @var \Spryker\Service\Sales\Items\ItemHasOwnShipmentTransferCheckerInterface
      */
-    protected $splitDeliveryEnabledChecker;
+    protected $itemHasOwnShipmentTransferChecker;
 
     /**
-     * @return \Spryker\Service\Sales\Model\SplitDeliveryEnabledCheckerInterface
+     * @return \Spryker\Service\Sales\Items\ItemHasOwnShipmentTransferCheckerInterface
      */
-    protected function getSplitDeliveryEnabledChecker(): SplitDeliveryEnabledCheckerInterface
+    protected function getItemHasOwnShipmentTransferChecker(): ItemHasOwnShipmentTransferCheckerInterface
     {
-        if ($this->splitDeliveryEnabledChecker === null) {
-            $this->splitDeliveryEnabledChecker = $this->getFactory()->createSplitDeliveryEnabledChecker();
+        if ($this->itemHasOwnShipmentTransferChecker === null) {
+            $this->itemHasOwnShipmentTransferChecker = $this->getFactory()->createSplitDeliveryEnabledChecker();
         }
 
-        return $this->splitDeliveryEnabledChecker;
+        return $this->itemHasOwnShipmentTransferChecker;
     }
 
     /**
@@ -43,9 +43,9 @@ class SalesService extends AbstractService implements SalesServiceInterface
      *
      * @return bool
      */
-    public function checkSplitDeliveryEnabledByQuote(QuoteTransfer $quoteTransfer): bool
+    public function checkQuoteItemHasOwnShipmentTransfer(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->getSplitDeliveryEnabledChecker()->checkByQuote($quoteTransfer);
+        return $this->getItemHasOwnShipmentTransferChecker()->checkByQuote($quoteTransfer);
     }
 
     /**
@@ -57,8 +57,8 @@ class SalesService extends AbstractService implements SalesServiceInterface
      *
      * @return bool
      */
-    public function checkSplitDeliveryEnabledByOrder(OrderTransfer $orderTransfer): bool
+    public function checkOrderItemHasOwnShipmentTransfer(OrderTransfer $orderTransfer): bool
     {
-        return $this->getSplitDeliveryEnabledChecker()->checkByOrder($orderTransfer);
+        return $this->getItemHasOwnShipmentTransferChecker()->checkByOrder($orderTransfer);
     }
 }

@@ -9,7 +9,7 @@ namespace Spryker\Service\Shipment;
 
 use Spryker\Service\Kernel\AbstractService;
 use \ArrayObject;
-use Spryker\Service\Shipment\Model\ItemsGrouperInterface;
+use Spryker\Service\Shipment\Items\ItemsGrouperInterface;
 
 /**
  * @method \Spryker\Service\Shipment\ShipmentServiceFactory getFactory()
@@ -17,12 +17,12 @@ use Spryker\Service\Shipment\Model\ItemsGrouperInterface;
 class ShipmentService extends AbstractService implements ShipmentServiceInterface
 {
     /**
-     * @var \Spryker\Service\Shipment\Model\ItemsGrouperInterface
+     * @var \Spryker\Service\Shipment\Items\ItemsGrouperInterface
      */
     protected $itemsGrouper;
 
     /**
-     * @return \Spryker\Service\Shipment\Model\ItemsGrouperInterface
+     * @return \Spryker\Service\Shipment\Items\ItemsGrouperInterface
      */
     protected function getItemsGrouper(): ItemsGrouperInterface
     {

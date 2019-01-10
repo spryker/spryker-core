@@ -8,8 +8,8 @@
 namespace Spryker\Service\Shipment;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
-use Spryker\Service\Shipment\Model\ItemsGrouper;
-use Spryker\Service\Shipment\Model\ItemsGrouperInterface;
+use Spryker\Service\Shipment\Items\ItemsGrouper;
+use Spryker\Service\Shipment\Items\ItemsGrouperInterface;
 
 class ShipmentServiceFactory extends AbstractServiceFactory
 {

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Model\Order;
+namespace Spryker\Zed\Sales\Business\Order;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -20,6 +20,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface;
+use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface;
+use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
@@ -185,10 +188,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected function hydrateAddresses(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
     {
         $billingAddressEntity = $this->saveSalesOrderAddress($quoteTransfer->getBillingAddress());
-        $shippingAddressEntity = $this->saveSalesOrderAddress($quoteTransfer->getShippingAddress());
-
         $salesOrderEntity->setBillingAddress($billingAddressEntity);
-        $salesOrderEntity->setShippingAddress($shippingAddressEntity);
     }
 
     /**

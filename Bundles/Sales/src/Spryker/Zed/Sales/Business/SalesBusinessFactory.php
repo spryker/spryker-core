@@ -26,11 +26,14 @@ use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
-use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
+use Spryker\Zed\Sales\Business\Order\SalesOrderSaver;
+use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver as SalesOrderSaverDeprecated;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper;
+use Spryker\Zed\Sales\Business\Order\OrderSaverStrategyResolver;
+use Spryker\Zed\Sales\Business\Order\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToSalesServiceInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
@@ -124,6 +127,45 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->createOrderItemMapper(),
             $this->getSalesService()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface
+     */
+    public function createSalesOrderSaverDeprecated()
+    {
+        return new SalesOrderSaverDeprecated(
+            $this->getCountryFacade(),
+            $this->getOmsFacade(),
+            $this->createReferenceGenerator(),
+            $this->getConfig(),
+            $this->getLocaleQueryContainer(),
+            $this->getStore(),
+            $this->getOrderExpanderPreSavePlugins(),
+            $this->createSalesOrderSaverPluginExecutor(),
+            $this->createOrderItemMapper(),
+            $this->getSalesService()
+        );
+    }
+
+    /**
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return \Spryker\Zed\Sales\Business\Order\OrderSaverStrategyResolverInterface
+     */
+    public function createOrderSaverStrategyResolver(): OrderSaverStrategyResolverInterface
+    {
+        $strategyContainer = [];
+
+        $strategyContainer[OrderSaverStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+            return $this->createSalesOrderSaverDeprecated();
+        };
+
+        $strategyContainer[OrderSaverStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+            return $this->createSalesOrderSaver();
+        };
+
+        return new OrderSaverStrategyResolver($this->getSalesService(), $strategyContainer);
     }
 
     /**

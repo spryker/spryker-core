@@ -22,7 +22,7 @@ interface SalesServiceInterface
      *
      * @return bool
      */
-    public function checkSplitDeliveryEnabledByQuote(QuoteTransfer $quoteTransfer): bool;
+    public function checkQuoteItemHasOwnShipmentTransfer(QuoteTransfer $quoteTransfer): bool;
 
     /**
      * Specification:
@@ -34,5 +34,5 @@ interface SalesServiceInterface
      *
      * @return bool
      */
-    public function checkSplitDeliveryEnabledByOrder(OrderTransfer $orderTransfer): bool;
+    public function checkOrderItemHasOwnShipmentTransfer(OrderTransfer $orderTransfer): bool;
 }

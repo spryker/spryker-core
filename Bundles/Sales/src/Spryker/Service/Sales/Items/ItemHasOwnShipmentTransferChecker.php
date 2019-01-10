@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Sales\Model;
+namespace Spryker\Service\Sales\Items;
 
 use \ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class SplitDeliveryEnabledChecker implements SplitDeliveryEnabledCheckerInterface
+class ItemHasOwnShipmentTransferChecker implements ItemHasOwnShipmentTransferCheckerInterface
 {
-    protected const CHECK_SPLIT_DELIVERY_METHOD_NAME = 'getShipment';
+    protected const PROPERTY_NAME_SHIPMENT_TRANSFER = 'shipment';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -22,7 +22,7 @@ class SplitDeliveryEnabledChecker implements SplitDeliveryEnabledCheckerInterfac
      */
     public function checkByQuote(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->isSplitDeliveryEnabled($quoteTransfer->getItems());
+        return $this->hasItemOwnShipmentTransfer($quoteTransfer->getItems());
     }
 
     /**
@@ -32,7 +32,7 @@ class SplitDeliveryEnabledChecker implements SplitDeliveryEnabledCheckerInterfac
      */
     public function checkByOrder(OrderTransfer $orderTransfer): bool
     {
-        return $this->isSplitDeliveryEnabled($orderTransfer->getItems());
+        return $this->hasItemOwnShipmentTransfer($orderTransfer->getItems());
     }
 
     /**
@@ -40,14 +40,15 @@ class SplitDeliveryEnabledChecker implements SplitDeliveryEnabledCheckerInterfac
      *
      * @return bool
      */
-    protected function isSplitDeliveryEnabled(?ArrayObject $items): bool
+    protected function hasItemOwnShipmentTransfer(?ArrayObject $items): bool
     {
         if (empty($items)) {
             return false;
         }
 
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = current($items);
 
-        return method_exists($itemTransfer, static::CHECK_SPLIT_DELIVERY_METHOD_NAME);
+        return $itemTransfer->offsetExists(static::PROPERTY_NAME_SHIPMENT_TRANSFER);
     }
 }

@@ -31,9 +31,9 @@ class SalesToSalesServiceBridge implements SalesToSalesServiceInterface
      *
      * @return bool
      */
-    public function checkSplitDeliveryEnabledByQuote(QuoteTransfer $quoteTransfer): bool
+    public function checkQuoteItemHasOwnShipmentTransfer(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->salesService->checkSplitDeliveryEnabledByQuote($quoteTransfer);
+        return $this->salesService->checkQuoteItemHasOwnShipmentTransfer($quoteTransfer);
     }
 
     /**
@@ -41,8 +41,8 @@ class SalesToSalesServiceBridge implements SalesToSalesServiceInterface
      *
      * @return bool
      */
-    public function checkSplitDeliveryEnabledByOrder(OrderTransfer $orderTransfer): bool
+    public function checkOrderItemHasOwnShipmentTransfer(OrderTransfer $orderTransfer): bool
     {
-        return $this->salesService->checkSplitDeliveryEnabledByOrder($orderTransfer);
+        return $this->salesService->checkOrderItemHasOwnShipmentTransfer($orderTransfer);
     }
 }

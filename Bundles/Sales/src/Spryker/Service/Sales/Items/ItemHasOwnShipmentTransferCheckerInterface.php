@@ -4,12 +4,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Sales\Model;
+namespace Spryker\Service\Sales\Items;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface SplitDeliveryEnabledCheckerInterface
+interface ItemHasOwnShipmentTransferCheckerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
