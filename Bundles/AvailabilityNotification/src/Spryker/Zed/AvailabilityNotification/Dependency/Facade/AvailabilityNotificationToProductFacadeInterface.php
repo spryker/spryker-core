@@ -16,7 +16,7 @@ interface AvailabilityNotificationToProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function findProductAbstractById(int $idProductAbstract): ?ProductAbstractTransfer;
+    public function findProductAbstractById($idProductAbstract);
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer

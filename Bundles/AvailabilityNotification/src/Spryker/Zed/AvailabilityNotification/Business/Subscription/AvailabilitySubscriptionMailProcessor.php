@@ -56,13 +56,12 @@ class AvailabilitySubscriptionMailProcessor implements AvailabilitySubscriptionM
     }
 
     /**
-     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
      */
-    public function processProductBecomeAvailableSubscription(string $sku, StoreTransfer $storeTransfer, ProductConcreteTransfer $productConcreteTransfer): void
+    public function processProductBecomeAvailableSubscription(StoreTransfer $storeTransfer, ProductConcreteTransfer $productConcreteTransfer): void
     {
         $availabilitySubscriptionCollectionTransfer = $this->availabilityNotificationRepository
             ->findBySkuAndStore($productConcreteTransfer->getSku(), $storeTransfer->getIdStore());
@@ -114,6 +113,8 @@ class AvailabilitySubscriptionMailProcessor implements AvailabilitySubscriptionM
                     $yvesBaseUrl = Config::get(ApplicationConstants::BASE_URL_YVES);
                     $productFullUrl = $yvesBaseUrl . $localizedUrlTransfer->getUrl();
                     $mailTransfer->setProductUrl($productFullUrl);
+
+                    return $mailTransfer;
                 }
             }
         }
@@ -133,6 +134,8 @@ class AvailabilitySubscriptionMailProcessor implements AvailabilitySubscriptionM
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
             if ($availabilitySubscriptionTransfer->getLocale()->getIdLocale() === $localizedAttributesTransfer->getLocale()->getIdLocale()) {
                 $mailTransfer->setLocalizedAttributes($localizedAttributesTransfer);
+
+                return $mailTransfer;
             }
         }
 

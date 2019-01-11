@@ -30,7 +30,7 @@ class AvailabilityToEventFacadeBridge implements AvailabilityToEventFacadeInterf
      *
      * @return void
      */
-    public function trigger(string $eventName, TransferInterface $transfer): void
+    public function trigger($eventName, TransferInterface $transfer)
     {
         $this->eventFacade->trigger($eventName, $transfer);
     }

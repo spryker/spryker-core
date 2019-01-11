@@ -29,7 +29,7 @@ class AvailabilityNotificationToProductFacadeBridge implements AvailabilityNotif
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function findProductAbstractById(int $idProductAbstract): ?ProductAbstractTransfer
+    public function findProductAbstractById($idProductAbstract)
     {
         return $this->productFacade->findProductAbstractById($idProductAbstract);
     }

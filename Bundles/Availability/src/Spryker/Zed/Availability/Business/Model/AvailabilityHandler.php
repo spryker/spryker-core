@@ -168,7 +168,8 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             $this->touchAvailabilityAbstract($spyAvailabilityEntity->getFkAvailabilityAbstract());
         }
 
-        if (($this->isAvailabilityStatusChanged($currentQuantity, $quantity) || $isNeverOutOfStockModified) && ($quantity > 0 || $spyAvailabilityEntity->getIsNeverOutOfStock() === true)) {
+        if (($this->isAvailabilityStatusChanged($currentQuantity, $quantity) || $isNeverOutOfStockModified)
+            && ($quantity > 0 || $spyAvailabilityEntity->getIsNeverOutOfStock() === true)) {
             $productConcreteTransfer = $this->productFacade->getProductConcrete($sku);
             $availabilityNotificationTransfer = (new AvailabilityNotificationTransfer())
                 ->setSku($sku)

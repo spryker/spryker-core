@@ -17,5 +17,5 @@ interface AvailabilityToEventFacadeInterface
      *
      * @return void
      */
-    public function trigger(string $eventName, TransferInterface $transfer): void;
+    public function trigger($eventName, TransferInterface $transfer);
 }

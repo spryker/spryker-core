@@ -73,11 +73,10 @@ interface AvailabilityNotificationFacadeInterface
      *
      * @api
      *
-     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
      */
-    public function processAvailabilityNotificationSubscription(string $sku, StoreTransfer $storeTransfer, ProductConcreteTransfer $productConcreteTransfer): void;
+    public function processAvailabilityNotificationSubscription(StoreTransfer $storeTransfer, ProductConcreteTransfer $productConcreteTransfer): void;
 }

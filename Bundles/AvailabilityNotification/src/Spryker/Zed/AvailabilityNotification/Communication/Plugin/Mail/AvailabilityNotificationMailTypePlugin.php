@@ -33,7 +33,6 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
 
     /**
      * @api
-     * @api
      *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
      *
