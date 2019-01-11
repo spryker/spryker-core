@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CustomerExtension\Dependency\Plugin;
 
-interface CustomerSecuredPatternPermissionPluginInterface
+interface CustomerSecuredPatternRulePluginInterface
 {
     /**
      * Specification:

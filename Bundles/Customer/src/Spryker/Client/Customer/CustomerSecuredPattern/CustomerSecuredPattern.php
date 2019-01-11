@@ -17,13 +17,13 @@ class CustomerSecuredPattern implements CustomerSecuredPatternInterface
     protected $customerConfig;
 
     /**
-     * @var \Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternPermissionPluginInterface[]
+     * @var \Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternRulePluginInterface[]
      */
     protected $customerSecuredPatternPermissionPlugins;
 
     /**
      * @param \Spryker\Client\Customer\CustomerConfig $customerConfig
-     * @param \Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternPermissionPluginInterface[] $customerSecuredPatternPermissionPlugins
+     * @param \Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternRulePluginInterface[] $customerSecuredPatternPermissionPlugins
      */
     public function __construct(
         CustomerConfig $customerConfig,

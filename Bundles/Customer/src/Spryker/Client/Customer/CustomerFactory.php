@@ -83,7 +83,7 @@ class CustomerFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternPermissionPluginInterface[]
+     * @return \Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternRulePluginInterface[]
      */
     public function getCustomerSecuredPatternPermissionPlugins(): array
     {
