@@ -9,6 +9,7 @@ namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface;
 
 class AvailabilityUnsubscriptionProcessor implements AvailabilityUnsubscriptionProcessorInterface
@@ -19,11 +20,18 @@ class AvailabilityUnsubscriptionProcessor implements AvailabilityUnsubscriptionP
     protected $entityManager;
 
     /**
-     * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface $entityManager
+     * @var \Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSenderInterface
      */
-    public function __construct(AvailabilityNotificationEntityManagerInterface $entityManager)
+    protected $availabilityNotificationSender;
+
+    /**
+     * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSenderInterface $availabilityNotificationSender
+     */
+    public function __construct(AvailabilityNotificationEntityManagerInterface $entityManager, AvailabilityNotificationSenderInterface $availabilityNotificationSender)
     {
         $this->entityManager = $entityManager;
+        $this->availabilityNotificationSender = $availabilityNotificationSender;
     }
 
     /**
@@ -36,6 +44,7 @@ class AvailabilityUnsubscriptionProcessor implements AvailabilityUnsubscriptionP
         $availabilitySubscriptionTransfer->requireSubscriptionKey();
 
         $this->entityManager->deleteBySubscriptionKey($availabilitySubscriptionTransfer->getSubscriptionKey());
+        $this->availabilityNotificationSender->sendUnsubscribedMail($availabilitySubscriptionTransfer);
 
         return (new AvailabilitySubscriptionResponseTransfer())->setIsSuccess(true);
     }

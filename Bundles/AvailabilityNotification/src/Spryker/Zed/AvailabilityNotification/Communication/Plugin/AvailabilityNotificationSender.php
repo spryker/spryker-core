@@ -10,6 +10,7 @@ namespace Spryker\Zed\AvailabilityNotification\Communication\Plugin;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationSubscribedMailTypePlugin;
+use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationUnsubscribedMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 
 class AvailabilityNotificationSender implements AvailabilityNotificationSenderInterface
@@ -36,6 +37,21 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
     {
         $mailTransfer = (new MailTransfer())
             ->setType(AvailabilityNotificationSubscribedMailTypePlugin::MAIL_TYPE)
+            ->setAvailabilitySubscription($availabilitySubscriptionTransfer)
+            ->setLocale($availabilitySubscriptionTransfer->getLocale());
+
+        $this->mailFacade->handleMail($mailTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     *
+     * @return void
+     */
+    public function sendUnsubscribedMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
+    {
+        $mailTransfer = (new MailTransfer())
+            ->setType(AvailabilityNotificationUnsubscribedMailTypePlugin::MAIL_TYPE)
             ->setAvailabilitySubscription($availabilitySubscriptionTransfer)
             ->setLocale($availabilitySubscriptionTransfer->getLocale());
 

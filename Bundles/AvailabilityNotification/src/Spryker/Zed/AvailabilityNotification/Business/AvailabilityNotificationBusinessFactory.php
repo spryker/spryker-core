@@ -52,7 +52,10 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
      */
     public function createAvailabilityUnsubscriptionProcessor(): AvailabilityUnsubscriptionProcessorInterface
     {
-        return new AvailabilityUnsubscriptionProcessor($this->getEntityManager());
+        return new AvailabilityUnsubscriptionProcessor(
+            $this->getEntityManager(),
+            $this->createAvailabilityNotificationSender()
+        );
     }
 
     /**
