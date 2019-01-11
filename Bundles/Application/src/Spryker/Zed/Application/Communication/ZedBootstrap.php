@@ -68,9 +68,7 @@ class ZedBootstrap
             return Config::get(ApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
         });
 
-        $this->serviceContainer->set('locale', function () {
-            return Store::getInstance()->getCurrentLocale();
-        });
+        $this->serviceContainer->set('locale', Store::getInstance()->getCurrentLocale());
 
         $this->enableHttpMethodParameterOverride();
         $this->setUp();
