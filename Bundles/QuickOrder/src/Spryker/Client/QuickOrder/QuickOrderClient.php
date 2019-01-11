@@ -76,6 +76,6 @@ class QuickOrderClient extends AbstractClient implements QuickOrderClientInterfa
     {
         return $this->getFactory()
             ->createQuickOrderValidator()
-            ->validate($quickOrderTransfer);
+            ->validateQuickOrder($quickOrderTransfer);
     }
 }

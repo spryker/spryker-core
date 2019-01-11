@@ -13,8 +13,8 @@ interface QuickOrderValidationPluginInterface
 {
     /**
      * Specification:
-     * - Validate price, qty, discontinued option for QuickOrderTransfer item product.
-     * - Executes on quick order page, when UploadOrder form data processing.
+     * - Validates QuickOrderTransfer items.
+     * - Executes when processing UploadOrder form, add specific error message to the QuickOrderItem transfer.
      *
      * @api
      *

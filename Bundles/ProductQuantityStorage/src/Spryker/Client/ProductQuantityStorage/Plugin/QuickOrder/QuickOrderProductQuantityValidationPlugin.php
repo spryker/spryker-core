@@ -32,6 +32,6 @@ class QuickOrderProductQuantityValidationPlugin extends AbstractPlugin implement
     {
         return $this->getFactory()
             ->createQuantityQuickOrderTransferValidator()
-            ->validateQuickOrder($quickOrderTransfer);
+            ->validateItemsInQuickOrder($quickOrderTransfer);
     }
 }

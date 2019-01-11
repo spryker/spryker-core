@@ -9,12 +9,12 @@ namespace Spryker\Client\QuickOrder\Validator;
 
 use Generated\Shared\Transfer\QuickOrderTransfer;
 
-interface QuickOrderValidationInterface
+interface QuickOrderValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function validate(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
+    public function validateQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
 }

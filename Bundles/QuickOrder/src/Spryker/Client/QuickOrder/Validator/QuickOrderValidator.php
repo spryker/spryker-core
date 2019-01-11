@@ -9,7 +9,7 @@ namespace Spryker\Client\QuickOrder\Validator;
 
 use Generated\Shared\Transfer\QuickOrderTransfer;
 
-class QuickOrderValidation implements QuickOrderValidationInterface
+class QuickOrderValidator implements QuickOrderValidatorInterface
 {
     /**
      * @var \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidationPluginInterface[]
@@ -29,7 +29,7 @@ class QuickOrderValidation implements QuickOrderValidationInterface
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function validate(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
+    public function validateQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
     {
         foreach ($this->quickOrderValidationPlugins as $quickOrderValidationPlugin) {
             $quickOrderTransfer = $quickOrderValidationPlugin->validateQuickOrderItemProduct($quickOrderTransfer);

@@ -13,8 +13,8 @@ use Spryker\Client\QuickOrder\Expander\ProductConcreteExpander;
 use Spryker\Client\QuickOrder\Expander\ProductConcreteExpanderInterface;
 use Spryker\Client\QuickOrder\Product\ProductConcreteResolver;
 use Spryker\Client\QuickOrder\Product\ProductConcreteResolverInterface;
-use Spryker\Client\QuickOrder\Validator\QuickOrderValidation;
-use Spryker\Client\QuickOrder\Validator\QuickOrderValidationInterface;
+use Spryker\Client\QuickOrder\Validator\QuickOrderValidator;
+use Spryker\Client\QuickOrder\Validator\QuickOrderValidatorInterface;
 
 class QuickOrderFactory extends AbstractFactory
 {
@@ -27,11 +27,11 @@ class QuickOrderFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\QuickOrder\Validator\QuickOrderValidationInterface
+     * @return \Spryker\Client\QuickOrder\Validator\QuickOrderValidatorInterface
      */
-    public function createQuickOrderValidator(): QuickOrderValidationInterface
+    public function createQuickOrderValidator(): QuickOrderValidatorInterface
     {
-        return new QuickOrderValidation($this->getQuickOrderValidationPlugins());
+        return new QuickOrderValidator($this->getQuickOrderValidationPlugins());
     }
 
     /**

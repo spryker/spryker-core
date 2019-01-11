@@ -32,6 +32,6 @@ class QuickOrderProductPriceValidationPlugin extends AbstractPlugin implements Q
     {
         return $this->getFactory()
             ->createPriceProductQuickOrderValidator()
-            ->validateQuickOrder($quickOrderTransfer);
+            ->validateItemsInQuickOrder($quickOrderTransfer);
     }
 }

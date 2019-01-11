@@ -34,7 +34,7 @@ class QuantityQuickOrderValidation implements QuantityQuickOrderValidationInterf
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function validateQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
+    public function validateItemsInQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
     {
         foreach ($quickOrderTransfer->getItems() as $orderItemTransfer) {
             $productConcreteTransfer = $orderItemTransfer->getProductConcrete();
