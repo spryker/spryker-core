@@ -277,11 +277,12 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
 
         $dispatcher->addSubscriber($app['profiler.listener']);
 
+        $app->mount($app['profiler.mount_prefix'], $this->connect($app));
+
         if ($app['web_profiler.debug_toolbar.enable']) {
             $dispatcher->addSubscriber($app['web_profiler.toolbar.listener']);
         }
 
         $dispatcher->addSubscriber($app['profiler']->get('request'));
-        $app->mount($app['profiler.mount_prefix'], $this->connect($app));
     }
 }

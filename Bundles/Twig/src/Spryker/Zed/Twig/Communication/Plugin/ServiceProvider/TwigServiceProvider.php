@@ -22,6 +22,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Twig\RuntimeLoader\FactoryRuntimeLoader;
 use Twig_Environment;
 use Twig_Loader_Chain;
+use Twig_Loader_Filesystem;
 
 /**
  * @method \Spryker\Zed\Twig\TwigConfig getConfig()
@@ -155,9 +156,11 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         }
         $path = $guiDirectory . '/src/Spryker/Zed/Gui/Presentation/Form/Type';
 
-        $this->app['twig.loader.filesystem']->addPath(
-            $path
-        );
+        $this->app->extend('twig.loader.filesystem', function (Twig_Loader_Filesystem $loader) use ($path) {
+            $loader->addPath($path);
+
+            return $loader;
+        });
 
         $files = new FilesystemIterator($path, FilesystemIterator::SKIP_DOTS | FilesystemIterator::KEY_AS_PATHNAME);
 
