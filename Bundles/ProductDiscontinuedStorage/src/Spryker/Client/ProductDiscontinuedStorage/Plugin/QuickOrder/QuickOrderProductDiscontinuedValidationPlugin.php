@@ -31,7 +31,7 @@ class QuickOrderProductDiscontinuedValidationPlugin extends AbstractPlugin imple
     public function validateQuickOrderItemProduct(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
     {
         return $this->getFactory()
-                    ->createProductDiscontinuedQuickOrderValidator()
-                    ->validateQuickOrder($quickOrderTransfer);
+            ->createProductDiscontinuedQuickOrderValidator()
+            ->validateQuickOrder($quickOrderTransfer);
     }
 }
