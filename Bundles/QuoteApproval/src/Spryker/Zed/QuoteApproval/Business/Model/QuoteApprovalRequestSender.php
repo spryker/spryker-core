@@ -90,7 +90,7 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
             return $quoteReposneTransfer;
         }
 
-        $quoteTransfer = $this->updateShareDetails($quoteTransfer, $quoteApproveRequestTransfer->getIdApprover());
+        $quoteTransfer = $this->updateQuoteShareDetails($quoteTransfer, $quoteApproveRequestTransfer->getIdApprover());
         $quoteTransfer = $this->cartFacade->lockQuote($quoteTransfer);
         $quoteTransfer = $this->updateQuoteApprovalRequests($quoteTransfer, $approverTransfer);
 
@@ -174,7 +174,7 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function updateShareDetails(QuoteTransfer $quoteTransfer, int $idApprover): QuoteTransfer
+    protected function updateQuoteShareDetails(QuoteTransfer $quoteTransfer, int $idApprover): QuoteTransfer
     {
         $shareDetailTransfer = new ShareDetailTransfer();
 
@@ -209,9 +209,9 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
     /**
      * @param int $idCompanyUser
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    protected function getCompanyUserById(int $idCompanyUser): ?CompanyUserTransfer
+    protected function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer
     {
         return $this->companyUserFacade->getCompanyUserById($idCompanyUser);
     }
