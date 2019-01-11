@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscription;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class AvailabilitySubscriptionMapper implements AvailabilitySubscriptionMapperInterface
 {
@@ -35,5 +37,22 @@ class AvailabilitySubscriptionMapper implements AvailabilitySubscriptionMapperIn
         $availabilitySubscriptionTransfer->setLocale($localeTransfer);
 
         return $availabilitySubscriptionTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $availabilitySubscriptionEntities
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer
+     */
+    public function mapAvailabilitySubscriptionTransferCollection(ObjectCollection $availabilitySubscriptionEntities): AvailabilitySubscriptionCollectionTransfer
+    {
+        $availabilitySubscriptionCollectionTransfer = new AvailabilitySubscriptionCollectionTransfer();
+
+        foreach ($availabilitySubscriptionEntities as $availabilitySubscriptionEntity) {
+            $availabilitySubscriptionTransfer = $this->mapAvailabilitySubscriptionTransfer($availabilitySubscriptionEntity);
+            $availabilitySubscriptionCollectionTransfer->addAvailabilitySubscription($availabilitySubscriptionTransfer);
+        }
+
+        return $availabilitySubscriptionCollectionTransfer;
     }
 }

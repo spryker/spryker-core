@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscription;
+use Propel\Runtime\Collection\ObjectCollection;
 
 interface AvailabilitySubscriptionMapperInterface
 {
@@ -18,4 +20,11 @@ interface AvailabilitySubscriptionMapperInterface
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
      */
     public function mapAvailabilitySubscriptionTransfer(SpyAvailabilitySubscription $availabilitySubscriptionEntityTransfer): AvailabilitySubscriptionTransfer;
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $availabilitySubscriptionEntities
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer
+     */
+    public function mapAvailabilitySubscriptionTransferCollection(ObjectCollection $availabilitySubscriptionEntities): AvailabilitySubscriptionCollectionTransfer;
 }

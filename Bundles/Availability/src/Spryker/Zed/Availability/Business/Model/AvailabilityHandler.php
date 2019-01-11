@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
+use Generated\Shared\Transfer\AvailabilityNotificationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Spryker\Shared\Availability\AvailabilityConfig;
 use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
+use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
@@ -51,12 +54,18 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface
+     */
+    protected $eventFacade;
+
+    /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface $touchFacade
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface $productFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface $eventFacade
      */
     public function __construct(
         SellableInterface $sellable,
@@ -64,7 +73,8 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         AvailabilityToTouchInterface $touchFacade,
         AvailabilityQueryContainerInterface $queryContainer,
         AvailabilityToProductInterface $productFacade,
-        AvailabilityToStoreFacadeInterface $storeFacade
+        AvailabilityToStoreFacadeInterface $storeFacade,
+        AvailabilityToEventFacadeInterface $eventFacade
     ) {
         $this->sellable = $sellable;
         $this->stockFacade = $stockFacade;
@@ -72,6 +82,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $this->queryContainer = $queryContainer;
         $this->productFacade = $productFacade;
         $this->storeFacade = $storeFacade;
+        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -155,6 +166,18 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
         if ($this->isAvailabilityStatusChanged($currentQuantity, $quantity) || $isNeverOutOfStockModified) {
             $this->touchAvailabilityAbstract($spyAvailabilityEntity->getFkAvailabilityAbstract());
+        }
+
+        if (($this->isAvailabilityStatusChanged($currentQuantity, $quantity) || $isNeverOutOfStockModified) && ($quantity > 0 || $spyAvailabilityEntity->getIsNeverOutOfStock() === true)) {
+            $productConcreteTransfer = $this->productFacade->getProductConcrete($sku);
+            $availabilityNotificationTransfer = (new AvailabilityNotificationTransfer())
+                ->setSku($sku)
+                ->setStore($storeTransfer)
+                ->setProductConcrete($productConcreteTransfer);
+            $this->eventFacade->trigger(
+                AvailabilityEvents::AVAILABILITY_NOTIFICATION,
+                $availabilityNotificationTransfer
+            );
         }
 
         return $spyAvailabilityEntity;

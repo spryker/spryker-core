@@ -31,4 +31,14 @@ class AvailabilityToProductBridge implements AvailabilityToProductInterface
     {
         return $this->productFacade->getAbstractSkuFromProductConcrete($productConcreteSku);
     }
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProductConcrete(string $concreteSku)
+    {
+        return $this->productFacade->getProductConcrete($concreteSku);
+    }
 }
