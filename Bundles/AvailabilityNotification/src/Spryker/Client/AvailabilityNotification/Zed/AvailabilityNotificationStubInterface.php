@@ -37,7 +37,7 @@ interface AvailabilityNotificationStubInterface
     /**
      * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findAvailabilityNotification(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionTransfer;
+    public function findAvailabilityNotification(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer;
 }
