@@ -1,12 +1,13 @@
-{% set widget_title %}
-    {{ 'Order' | trans }}
-    <a href="{{ url('/sales/detail', {'id-sales-order': reclamation.order.idSalesOrder}) }}">
-        {{ reclamation.order.orderReference }}
-    </a>
-    {{ 'items' | trans }}:
-{% endset %}
-
-{% embed '@Gui/Partials/widget.twig' with {widget_title: widget_title} %}
+{% embed '@Gui/Partials/widget.twig' %}
+    {% block widget_title %}
+        <h5>
+            {{ 'Order' | trans }}
+            <a href="{{ url('/sales/detail', {'id-sales-order': reclamation.order.idSalesOrder}) }}">
+                {{ reclamation.order.orderReference }}
+            </a>
+            {{ 'items' | trans }}:
+        </h5>
+    {% endblock %}
     {% block widget_header_content %}
         {{ 'Reclamation state' | trans }}: {{ reclamation.status | trans }}
     {% endblock %}

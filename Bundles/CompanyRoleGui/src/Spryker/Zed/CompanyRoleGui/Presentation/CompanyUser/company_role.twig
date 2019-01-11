@@ -1,6 +1,6 @@
 <div id="company-user_company_role_collection">
     <div class="form-group">
-        <label>{{ 'Assigned Roles' | trans }}</label>
+        <label>{{ 'Assigned Roles' | trans }} *</label>
         {% for child in form %}
             {% if child.vars.data %}
                 {{ form_widget(child) }}

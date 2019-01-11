@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SprykGui\Communication\Controller;
 
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,9 +19,9 @@ class BuildController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): array
     {
         $spryk = $request->query->get('spryk');
 
