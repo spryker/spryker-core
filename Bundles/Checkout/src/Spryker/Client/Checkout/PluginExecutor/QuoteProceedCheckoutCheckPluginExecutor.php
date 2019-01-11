@@ -25,7 +25,7 @@ class QuoteProceedCheckoutCheckPluginExecutor implements QuoteProceedCheckoutChe
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */

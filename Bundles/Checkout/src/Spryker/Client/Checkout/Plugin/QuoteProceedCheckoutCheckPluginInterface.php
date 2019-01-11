@@ -15,7 +15,7 @@ interface QuoteProceedCheckoutCheckPluginInterface
      * Specification:
      * - Returns true if quote applicable for checkout.
      * - Returns false if quite is not applicable for checkout.
-     * - If at least one plugin returns false - quote is not applocable for checkout.
+     * - If at least one plugin returns false - quote is not applicable for checkout.
      *
      * @api
      *

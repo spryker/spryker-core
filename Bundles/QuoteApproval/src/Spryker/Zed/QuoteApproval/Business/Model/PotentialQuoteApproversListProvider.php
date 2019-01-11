@@ -55,7 +55,13 @@ class PotentialQuoteApproversListProvider implements PotentialQuoteApproversList
     public function getApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
     {
         $approverIds = $this->getPotentialApproversIds();
-        $idBusinessUnit = $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getFkCompanyBusinessUnit();
+        $quoteTransfer->requireCustomer();
+
+        $customer = $quoteTransfer->getCustomer();
+        $customer->requireCompanyUserTransfer();
+
+        $companyUser = $customer->getCompanyUserTransfer();
+        $idBusinessUnit = $companyUser->getFkCompanyBusinessUnit();
 
         $potentialApproversList = $this->getCompanyUserCollectionByIds($approverIds);
         $potentialApproversList = $this->filterByBusinessUnit($potentialApproversList, $idBusinessUnit);

@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface QuoteProceedCheckoutCheckPluginExecutorInterface
 {
     /**
-     * Executes provided plugins, returns false if at least one plugin returns false, returns true otherwise.
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool

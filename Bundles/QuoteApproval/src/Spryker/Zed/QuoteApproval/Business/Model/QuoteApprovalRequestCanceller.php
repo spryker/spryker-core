@@ -61,7 +61,10 @@ class QuoteApprovalRequestCanceller implements QuoteApprovalRequestCancellerInte
         if (!$this->isRequestSentByQuoteOwner($quoteApprovalCancelRequestTransfer)) {
             $this->addPermissionFailedErrorMessage();
 
-            return $this->createNotSuccesfullQuoteResponseTransfer($quoteApprovalCancelRequestTransfer);
+            return (new QuoteResponseTransfer())
+                ->setIsSuccessful(false)
+                ->setQuoteTransfer($quoteApprovalCancelRequestTransfer->getQuote())
+                ->setCustomer($quoteApprovalCancelRequestTransfer->getCustomer());
         }
 
         $quoteTransfer = $quoteApprovalCancelRequestTransfer->getQuote();
@@ -125,23 +128,6 @@ class QuoteApprovalRequestCanceller implements QuoteApprovalRequestCancellerInte
         $quoteTransfer->setApprovals($quoteApprovals);
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function createNotSuccesfullQuoteResponseTransfer(
-        QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
-    ): QuoteResponseTransfer {
-        $quoteReposneTransfer = new QuoteResponseTransfer();
-
-        $quoteReposneTransfer->setIsSuccessful(false);
-        $quoteReposneTransfer->setQuoteTransfer($quoteApprovalCancelRequestTransfer->getQuote());
-        $quoteReposneTransfer->setCustomer($quoteApprovalCancelRequestTransfer->getCustomer());
-
-        return $quoteReposneTransfer;
     }
 
     /**

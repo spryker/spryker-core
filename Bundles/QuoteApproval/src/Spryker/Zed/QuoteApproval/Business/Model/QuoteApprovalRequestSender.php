@@ -85,7 +85,6 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
 
         if (!$this->quoteApprovalRequestValidator->isApproveRequestValid($quoteApproveRequestTransfer)) {
             $quoteReposneTransfer->setIsSuccessful(false);
-
             $this->addPermissionFailedErrorMessage();
 
             return $quoteReposneTransfer;
