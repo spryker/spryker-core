@@ -20,7 +20,7 @@
     "spryker/propel": "*",
     "spryker/queue": "*",
     "spryker/testify": "*",
-    "spryker/rabbit-mq": "^2.2.0"
+    "spryker/locale": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
