@@ -15,6 +15,11 @@
         <property name="forceSkipValidation" type="bool" />
     </transfer>
 
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int" />
+        <property name="fkCompanyBusinessUnit" type="int"/>
+    </transfer>
+
     <transfer name="QuoteRequestCollection">
         <property name="quoteRequests" type="QuoteRequest[]" singular="quoteRequest" />
     </transfer>
@@ -22,12 +27,14 @@
     <transfer name="QuoteRequest">
         <property name="idQuoteRequest" type="int"/>
 
-        <property name="fkUser" type="int"/>
+        <property name="fkCompanyUser" type="int"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
         <property name="customerReference" type="string"/>
 
         <property name="quoteRequestReference" type="string"/>
         <property name="metadata" type="string"/>
         <property name="validUntil" type="string"/>
+        <property name="isCanceled" type="bool"/>
 
         <property name="quoteRequestVersions" type="QuoteRequestVersion[]" singular="quoteRequestVersion" />
 
@@ -36,6 +43,9 @@
 
     <transfer name="QuoteRequestVersion">
         <property name="idQuoteRequestVersion" type="int"/>
+
+        <property name="fkUser" type="int"/>
+        <property name="fkQuoteRequest" type="int"/>
 
         <property name="version" type="int"/>
         <property name="versionName" type="string"/>

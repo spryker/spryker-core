@@ -8,6 +8,7 @@
 namespace Spryker\Zed\QuoteRequest\Communication\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -16,12 +17,12 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
-    public function createQuoteRequestAction(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer
+    public function createQuoteRequestFromQuoteAction(QuoteTransfer $quoteTransfer): QuoteRequestTransfer
     {
-        return $this->getFacade()->createQuoteRequest($quoteRequestTransfer);
+        return $this->getFacade()->createQuoteRequestFromQuote($quoteTransfer);
     }
 }

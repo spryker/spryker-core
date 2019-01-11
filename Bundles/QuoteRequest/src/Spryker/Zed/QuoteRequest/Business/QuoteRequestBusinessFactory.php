@@ -8,6 +8,10 @@
 namespace Spryker\Zed\QuoteRequest\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriter;
+use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriterInterface;
+use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCustomerFacadeInterface;
+use Spryker\Zed\QuoteRequest\QuoteRequestDependencyProvider;
 
 /**
  * @method \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface getEntityManager()
@@ -16,4 +20,24 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class QuoteRequestBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriterInterface
+     */
+    public function createQuoteRequestWriter(): QuoteRequestWriterInterface
+    {
+        return new QuoteRequestWriter(
+            $this->getConfig(),
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->getCustomerFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCustomerFacadeInterface
+     */
+    public function getCustomerFacade(): QuoteRequestToCustomerFacadeInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestDependencyProvider::FACADE_CUSTOMER);
+    }
 }

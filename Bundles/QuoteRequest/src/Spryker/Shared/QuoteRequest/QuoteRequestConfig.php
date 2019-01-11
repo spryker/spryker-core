@@ -16,4 +16,6 @@ class QuoteRequestConfig extends AbstractSharedConfig
     public const STATUS_IN_PROGRESS = 'In progress';
     public const STATUS_READY = 'Ready';
     public const STATUS_CLOSED = 'Closed';
+
+    public const DEFAULT_VERSION = 1;
 }

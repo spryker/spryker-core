@@ -8,9 +8,13 @@
 namespace Spryker\Zed\QuoteRequest\Persistence;
 
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery;
+use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestMapper;
 use Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestMapperInterface;
+use Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestVersionMapper;
+use Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestVersionMapperInterface;
+use Spryker\Zed\QuoteRequest\QuoteRequestDependencyProvider;
 
 /**
  * @method \Spryker\Zed\QuoteRequest\QuoteRequestConfig getConfig()
@@ -28,10 +32,37 @@ class QuoteRequestPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersionQuery
+     */
+    public function createQuoteRequestVersionQuery(): SpyQuoteRequestVersionQuery
+    {
+        return SpyQuoteRequestVersionQuery::create();
+    }
+
+    /**
      * @return \Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestMapperInterface
      */
     public function createQuoteRequestMapper(): QuoteRequestMapperInterface
     {
         return new QuoteRequestMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestVersionMapperInterface
+     */
+    public function createQuoteRequestVersionMapper(): QuoteRequestVersionMapperInterface
+    {
+        return new QuoteRequestVersionMapper(
+            $this->getConfig(),
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServiceInterface
+     */
+    protected function getUtilEncodingService()
+    {
+        return $this->getProvidedDependency(QuoteRequestDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\QuoteRequest\Persistence;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
+use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -20,7 +22,7 @@ class QuoteRequestEntityManager extends AbstractEntityManager implements QuoteRe
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
-    public function create(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer
+    public function saveQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer
     {
         $quoteRequestEntity = $this->getFactory()
             ->createQuoteRequestQuery()
@@ -35,5 +37,68 @@ class QuoteRequestEntityManager extends AbstractEntityManager implements QuoteRe
         $quoteRequestTransfer->setIdQuoteRequest($quoteRequestEntity->getIdQuoteRequest());
 
         return $quoteRequestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
+     */
+    public function saveQuoteRequestVersion(
+        QuoteRequestVersionTransfer $quoteRequestVersionTransfer
+    ): QuoteRequestVersionTransfer {
+        $quoteRequestVersionEntity = $this->getFactory()
+            ->createQuoteRequestVersionQuery()
+            ->filterByIdQuoteRequestVersion($quoteRequestVersionTransfer->getIdQuoteRequestVersion())
+            ->findOne();
+
+        if ($quoteRequestVersionEntity !== null) {
+            return $this->updateQuoteRequestVersion($quoteRequestVersionTransfer, $quoteRequestVersionEntity);
+        }
+
+        return $this->createQuoteRequestVersion($quoteRequestVersionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
+     */
+    protected function createQuoteRequestVersion(
+        QuoteRequestVersionTransfer $quoteRequestVersionTransfer
+    ): QuoteRequestVersionTransfer {
+        $quoteRequestVersionEntity = $this->getFactory()
+            ->createQuoteRequestVersionMapper()
+            ->mapQuoteRequestVersionTransferToQuoteRequestVersionEntity(
+                $quoteRequestVersionTransfer,
+                new SpyQuoteRequestVersion()
+            );
+
+        $quoteRequestVersionEntity->save();
+        $quoteRequestVersionTransfer->setIdQuoteRequestVersion($quoteRequestVersionEntity->getIdQuoteRequestVersion());
+
+        return $quoteRequestVersionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer
+     * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion $quoteRequestVersionEntity
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
+     */
+    protected function updateQuoteRequestVersion(
+        QuoteRequestVersionTransfer $quoteRequestVersionTransfer,
+        SpyQuoteRequestVersion $quoteRequestVersionEntity
+    ): QuoteRequestVersionTransfer {
+        $quoteRequestVersionEntity = $this->getFactory()
+            ->createQuoteRequestVersionMapper()
+            ->mapQuoteRequestVersionTransferToQuoteRequestVersionEntity(
+                $quoteRequestVersionTransfer,
+                $quoteRequestVersionEntity
+            );
+
+        $quoteRequestVersionEntity->save();
+
+        return $quoteRequestVersionTransfer;
     }
 }

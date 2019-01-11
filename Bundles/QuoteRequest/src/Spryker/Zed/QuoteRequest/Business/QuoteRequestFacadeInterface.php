@@ -8,18 +8,19 @@
 namespace Spryker\Zed\QuoteRequest\Business;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteRequestFacadeInterface
 {
     /**
      * Specification:
-     * - Creates new quote request.
+     * - Creates new quote request from QuoteTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
-    public function createQuoteRequest(QuoteRequestTransfer $shoppingListTransfer): QuoteRequestTransfer;
+    public function createQuoteRequestFromQuote(QuoteTransfer $quoteTransfer): QuoteRequestTransfer;
 }
