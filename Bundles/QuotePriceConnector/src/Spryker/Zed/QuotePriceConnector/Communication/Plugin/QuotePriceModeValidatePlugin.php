@@ -23,7 +23,7 @@ class QuotePriceModeValidatePlugin extends AbstractPlugin implements QuoteValida
 
     /**
      * {@inheritdoc}
-     * - Validate quote price mode before saving.
+     * - Validate price mode of quote before saving.
      *
      * @api
      *
@@ -45,7 +45,11 @@ class QuotePriceModeValidatePlugin extends AbstractPlugin implements QuoteValida
         $availablePiceModes = $this->getFactory()->getPriceFacade()->getPriceModes();
 
         if (!isset($availablePiceModes[$priceMode])) {
-            return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT, $priceMode);
+            return $this->addValidationError(
+                $quoteValidationResponseTransfer,
+                static::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT,
+                ['{{price_mode}}' => $priceMode]
+            );
         }
 
         return $quoteValidationResponseTransfer;
@@ -54,17 +58,17 @@ class QuotePriceModeValidatePlugin extends AbstractPlugin implements QuoteValida
     /**
      * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
      * @param string $message
-     * @param mixed ...$replacements
+     * @param array $replacements
      *
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
     protected function addValidationError(
         QuoteValidationResponseTransfer $quoteValidationResponseTransfer,
         string $message,
-        ...$replacements
+        array $replacements = []
     ): QuoteValidationResponseTransfer {
         if ($replacements) {
-            $message = vsprintf($message, $replacements);
+            $message = strtr($message, $replacements);
         }
 
         $quoteErrorTransfer = (new QuoteErrorTransfer())->setMessage($message);

@@ -29,16 +29,16 @@ class QuoteValidator implements QuoteValidatorInterface
     /**
      * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatePluginInterface[]
      */
-    protected $validatePlugins;
+    protected $quoteValidatePlugins;
 
     /**
      * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatePluginInterface[] $validatePlugins
+     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatePluginInterface[] $quoteValidatePlugins
      */
-    public function __construct(QuoteToStoreFacadeInterface $storeFacade, array $validatePlugins)
+    public function __construct(QuoteToStoreFacadeInterface $storeFacade, array $quoteValidatePlugins)
     {
         $this->storeFacade = $storeFacade;
-        $this->validatePlugins = $validatePlugins;
+        $this->quoteValidatePlugins = $quoteValidatePlugins;
     }
 
     /**
@@ -50,7 +50,7 @@ class QuoteValidator implements QuoteValidatorInterface
     {
         $quoteValidationResponseTransfer = $this->initQuoteValidationResponseTransfer();
         $quoteValidationResponseTransfer = $this->validateStoreAndCurrency($quoteTransfer, $quoteValidationResponseTransfer);
-        $quoteValidationResponseTransfer = $this->validatePluginsExecute($quoteTransfer, $quoteValidationResponseTransfer);
+        $quoteValidationResponseTransfer = $this->executeQuoteValidationPlugins($quoteTransfer, $quoteValidationResponseTransfer);
 
         return $quoteValidationResponseTransfer;
     }
@@ -100,7 +100,11 @@ class QuoteValidator implements QuoteValidatorInterface
         }
 
         if (array_search($currencyCode, $storeTransfer->getAvailableCurrencyIsoCodes()) === false) {
-            return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_CURRENCY_DATA_IS_INCORRECT, $currencyCode);
+            return $this->addValidationError(
+                $quoteValidationResponseTransfer,
+                static::MESSAGE_CURRENCY_DATA_IS_INCORRECT,
+                ['{{iso_code}}' => $currencyCode]
+            );
         }
 
         return $quoteValidationResponseTransfer;
@@ -112,16 +116,16 @@ class QuoteValidator implements QuoteValidatorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    protected function validatePluginsExecute(
+    protected function executeQuoteValidationPlugins(
         QuoteTransfer $quoteTransfer,
         QuoteValidationResponseTransfer $quoteValidationResponseTransfer
     ): QuoteValidationResponseTransfer {
-        if (!$this->validatePlugins) {
+        if (!$this->quoteValidatePlugins) {
             return $quoteValidationResponseTransfer;
         }
 
-        foreach ($this->validatePlugins as $validatePlugin) {
-            $quoteValidationResponseTransfer = $validatePlugin->validate($quoteTransfer, $quoteValidationResponseTransfer);
+        foreach ($this->quoteValidatePlugins as $quoteValidatePlugin) {
+            $quoteValidationResponseTransfer = $quoteValidatePlugin->validate($quoteTransfer, $quoteValidationResponseTransfer);
         }
 
         return $quoteValidationResponseTransfer;
@@ -140,17 +144,17 @@ class QuoteValidator implements QuoteValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
      * @param string $message
-     * @param mixed ...$replacements
+     * @param array $replacements
      *
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
     protected function addValidationError(
         QuoteValidationResponseTransfer $quoteValidationResponseTransfer,
         string $message,
-        ...$replacements
+        array $replacements = []
     ): QuoteValidationResponseTransfer {
         if ($replacements) {
-            $message = vsprintf($message, $replacements);
+            $message = strtr($message, $replacements);
         }
 
         $quoteErrorTransfer = (new QuoteErrorTransfer())->setMessage($message);

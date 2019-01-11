@@ -4,9 +4,9 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "*",
-    "spryker/price": "*",
-    "spryker/quote-extension": "*"
+    "spryker/kernel": "^3.0.0",
+    "spryker/price": "^4.2.3",
+    "spryker/quote-extension": "^1.2.0"
   },
   "autoload": {
     "psr-4": {
