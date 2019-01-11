@@ -5,6 +5,8 @@
 
     <transfer name="Quote">
         <property name="approvals" type="QuoteApproval[]" singular="approval"/>
+        <property name="totals" type="Totals" />
+        <property name="currency" type="Currency" />
     </transfer>
 
     <transfer name="QuoteApproval">
@@ -36,7 +38,21 @@
         <property name="quoteApprovals" type="QuoteApproval[]" singular="quoteApproval"/>
     </transfer>
 
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser" />
+    </transfer>
+
     <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string" />
+        <property name="symbol" type="string" />
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="grandTotal" type="int" />
     </transfer>
 
 </transfers>
