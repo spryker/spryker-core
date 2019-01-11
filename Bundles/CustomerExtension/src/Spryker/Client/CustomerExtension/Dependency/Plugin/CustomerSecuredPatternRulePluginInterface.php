@@ -11,7 +11,7 @@ interface CustomerSecuredPatternRulePluginInterface
 {
     /**
      * Specification:
-     * - Checks if plugin applicable.
+     * - Checks if rule is applicable.
      *
      * @api
      *
