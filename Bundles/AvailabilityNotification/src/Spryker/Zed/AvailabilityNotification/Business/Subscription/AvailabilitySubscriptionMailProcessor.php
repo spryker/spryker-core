@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
+use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -70,30 +71,71 @@ class AvailabilitySubscriptionMailProcessor implements AvailabilitySubscriptionM
             $mailTransfer = new MailTransfer();
             $mailTransfer->setAvailabilitySubscription($availabilitySubscription);
             $mailTransfer->setProductConcrete($productConcreteTransfer);
-            $productAbstractTransfer = $this->productFacade->findProductAbstractById($productConcreteTransfer->getFkProductAbstract());
-            $productPrice = $this->priceProductFacade->findProductPriceBySku($sku);
-            $mailTransfer->setProductPrice($productPrice);
+            $mailTransfer = $this->setProductPrice($mailTransfer, $productConcreteTransfer->getSku());
             $mailTransfer->setCurrencyIsoCode($storeTransfer->getDefaultCurrencyIsoCode());
-
-            if ($productAbstractTransfer) {
-                $productUrlTransfer = $this->productFacade->getProductUrl($productAbstractTransfer);
-                foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
-                    if ($availabilitySubscription->getLocale()->getIdLocale() === $localizedUrlTransfer->getLocale()->getIdLocale()) {
-                        $yvesBaseUrl = Config::get(ApplicationConstants::BASE_URL_YVES);
-                        $productFullUrl = $yvesBaseUrl . $localizedUrlTransfer->getUrl();
-                        $mailTransfer->setProductUrl($productFullUrl);
-                    }
-                }
-            }
-
-            foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
-                if ($availabilitySubscription->getLocale()->getIdLocale() === $localizedAttributesTransfer->getLocale()->getIdLocale()) {
-                    $mailTransfer->setLocalizedAttributes($localizedAttributesTransfer);
-                }
-            }
-
+            $mailTransfer = $this->setProductUrl($mailTransfer, $productConcreteTransfer->getFkProductAbstract(), $availabilitySubscription);
+            $mailTransfer = $this->setLocalizedAttributes($mailTransfer, $productConcreteTransfer, $availabilitySubscription);
             $mailTransfer->setType(AvailabilityNotificationMailTypePlugin::MAIL_TYPE);
+
             $this->mailFacade->handleMail($mailTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\MailTransfer
+     */
+    protected function setProductPrice(MailTransfer $mailTransfer, string $sku): MailTransfer
+    {
+        $mailTransfer->setProductPrice(
+            $this->priceProductFacade->findProductPriceBySku($sku)
+        );
+
+        return $mailTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     * @param int $fkProductAbstract
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MailTransfer
+     */
+    protected function setProductUrl(MailTransfer $mailTransfer, int $fkProductAbstract, AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): MailTransfer
+    {
+        $productAbstractTransfer = $this->productFacade->findProductAbstractById($fkProductAbstract);
+
+        if ($productAbstractTransfer) {
+            $productUrlTransfer = $this->productFacade->getProductUrl($productAbstractTransfer);
+            foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
+                if ($availabilitySubscriptionTransfer->getLocale()->getIdLocale() === $localizedUrlTransfer->getLocale()->getIdLocale()) {
+                    $yvesBaseUrl = Config::get(ApplicationConstants::BASE_URL_YVES);
+                    $productFullUrl = $yvesBaseUrl . $localizedUrlTransfer->getUrl();
+                    $mailTransfer->setProductUrl($productFullUrl);
+                }
+            }
+        }
+
+        return $mailTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MailTransfer
+     */
+    protected function setLocalizedAttributes(MailTransfer $mailTransfer, ProductConcreteTransfer $productConcreteTransfer, AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): MailTransfer
+    {
+        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
+            if ($availabilitySubscriptionTransfer->getLocale()->getIdLocale() === $localizedAttributesTransfer->getLocale()->getIdLocale()) {
+                $mailTransfer->setLocalizedAttributes($localizedAttributesTransfer);
+            }
+        }
+
+        return $mailTransfer;
     }
 }
