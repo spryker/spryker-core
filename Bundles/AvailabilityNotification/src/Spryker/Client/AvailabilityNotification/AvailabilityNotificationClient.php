@@ -75,10 +75,10 @@ class AvailabilityNotificationClient extends AbstractClient implements Availabil
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findAvailabilityNotification(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer
+    public function findAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer
     {
         return $this->getFactory()
             ->createZedAvailabilityNotificationStub()
-            ->findAvailabilityNotification($availabilitySubscriptionTransfer);
+            ->findAvailabilitySubscription($availabilitySubscriptionTransfer);
     }
 }

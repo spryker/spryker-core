@@ -72,7 +72,7 @@ class AvailabilityNotificationStub implements AvailabilityNotificationStubInterf
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findAvailabilityNotification(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer
+    public function findAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer
     {
         /**
          * @var \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer

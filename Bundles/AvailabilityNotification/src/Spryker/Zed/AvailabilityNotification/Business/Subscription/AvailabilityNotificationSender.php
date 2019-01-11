@@ -77,7 +77,7 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
      *
      * @return void
      */
-    public function sendSubscribedMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
+    public function sendSubscriptionMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
     {
         $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilitySubscriptionTransfer->getSku());
         $productAttributes = $this->getProductAttributes(
@@ -102,7 +102,7 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
      *
      * @return void
      */
-    public function sendUnsubscribedMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
+    public function sendUnsubscriptionMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
     {
         $mailTransfer = (new MailTransfer())
             ->setType(AvailabilityNotificationUnsubscribedMailTypePlugin::MAIL_TYPE)

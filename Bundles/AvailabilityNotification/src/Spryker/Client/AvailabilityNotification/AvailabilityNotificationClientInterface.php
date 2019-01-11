@@ -52,7 +52,7 @@ interface AvailabilityNotificationClientInterface
 
     /**
      * Specification:
-     * - Find availability notification by sku and email for current store.
+     * - Finds availability subscription by sku and email for current store.
      *
      * @api
      *
@@ -60,5 +60,5 @@ interface AvailabilityNotificationClientInterface
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findAvailabilityNotification(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer;
+    public function findAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer;
 }

@@ -16,12 +16,12 @@ interface AvailabilityNotificationSenderInterface
      *
      * @return void
      */
-    public function sendSubscribedMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void;
+    public function sendSubscriptionMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
      * @return void
      */
-    public function sendUnsubscribedMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void;
+    public function sendUnsubscriptionMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void;
 }

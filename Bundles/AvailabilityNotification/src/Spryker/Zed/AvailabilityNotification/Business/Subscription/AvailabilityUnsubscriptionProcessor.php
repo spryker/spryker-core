@@ -68,7 +68,7 @@ class AvailabilityUnsubscriptionProcessor implements AvailabilityUnsubscriptionP
 
         $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilitySubscriptionTransfer->getSku());
         $this->entityManager->deleteBySubscriptionKey($availabilitySubscriptionTransfer->getSubscriptionKey());
-        $this->availabilityNotificationSender->sendUnsubscribedMail($availabilitySubscriptionTransfer);
+        $this->availabilityNotificationSender->sendUnsubscriptionMail($availabilitySubscriptionTransfer);
 
         return (new AvailabilitySubscriptionResponseTransfer())
             ->setIsSuccess(true)

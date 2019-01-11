@@ -40,5 +40,5 @@ interface AvailabilityNotificationStubInterface
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findAvailabilityNotification(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer;
+    public function findAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer;
 }
