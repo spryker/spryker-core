@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
+use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserValidatorInterface;
 use Spryker\Zed\CompanyUser\Dependency\Facade\CompanyUserToCustomerFacadeInterface;
 use Spryker\Zed\CompanyUser\Persistence\CompanyUserEntityManagerInterface;
 use Spryker\Zed\CompanyUser\Persistence\CompanyUserRepositoryInterface;
