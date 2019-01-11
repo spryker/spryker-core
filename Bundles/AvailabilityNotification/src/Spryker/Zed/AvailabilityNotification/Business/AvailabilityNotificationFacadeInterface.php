@@ -10,6 +10,7 @@ namespace Spryker\Zed\AvailabilityNotification\Business;
 use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface AvailabilityNotificationFacadeInterface
 {
@@ -76,4 +77,17 @@ interface AvailabilityNotificationFacadeInterface
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
     public function findAvailabilityNotification(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer;
+
+    /**
+     * Specification:
+     * - Send mails to all users which subscribed to product availability notification.
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return void
+     */
+    public function processAvailabilityNotificationSubscription(string $sku, StoreTransfer $storeTransfer): void;
 }

@@ -12,6 +12,8 @@ use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubsc
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGenerator;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionMailProcessor;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionMailProcessorInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionProcessor;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionProcessorInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReader;
@@ -24,6 +26,8 @@ use Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotifi
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\AvailabilityNotificationSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeInterface;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilTextServiceInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface;
@@ -32,6 +36,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface getRepository()
  * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
  */
 class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
 {
@@ -108,6 +113,20 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionMailProcessorInterface
+     */
+    public function createAvailabilityNotificationMailProcessor(): AvailabilitySubscriptionMailProcessorInterface
+    {
+        return new AvailabilitySubscriptionMailProcessor(
+            $this->getRepository(),
+            $this->getMailFacade(),
+            $this->getProductFacade(),
+            $this->getPriceProductFacade(),
+            $this->getConfig()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface
      */
     protected function getMailFacade(): AvailabilityNotificationToMailFacadeInterface
@@ -145,5 +164,21 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     protected function getLocaleFacade(): AvailabilityNotificationToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface
+     */
+    protected function getProductFacade(): AvailabilityNotificationToProductFacadeInterface
+    {
+        return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeInterface
+     */
+    protected function getPriceProductFacade(): AvailabilityNotificationToPriceProductFacadeInterface
+    {
+        return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 }

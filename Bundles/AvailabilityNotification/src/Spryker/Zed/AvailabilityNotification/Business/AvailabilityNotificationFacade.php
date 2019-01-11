@@ -10,6 +10,7 @@ namespace Spryker\Zed\AvailabilityNotification\Business;
 use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -98,5 +99,22 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
         return $this->getFactory()
             ->createAvailabilityNotificationReader()
             ->findSubscriptionByEmailAndSku($availabilitySubscriptionTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return void
+     */
+    public function processAvailabilityNotificationSubscription(string $sku, StoreTransfer $storeTransfer): void
+    {
+        $this->getFactory()
+            ->createAvailabilityNotificationMailProcessor()
+            ->processProductBecomeAvailableSubscription($sku, $storeTransfer);
     }
 }
