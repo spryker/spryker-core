@@ -191,6 +191,8 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::PLUGINS_APPLICATION, function (Container $container): array {
             return $this->getApplicationPlugins();
         });
+
+        return $container;
     }
 
     /**
