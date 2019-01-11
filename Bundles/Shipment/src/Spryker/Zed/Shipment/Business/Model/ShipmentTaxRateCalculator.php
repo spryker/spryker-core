@@ -13,6 +13,9 @@ use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
+/**
+ * @deprecated Use \Spryker\Zed\Shipment\Business\Calculator\ShipmentTaxRateCalculator instead.
+ */
 class ShipmentTaxRateCalculator implements CalculatorInterface
 {
     /**

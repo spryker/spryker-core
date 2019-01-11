@@ -25,8 +25,8 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
 use Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaver;
-use Spryker\Zed\ProductOption\Business\StrategyResolver\ProductOptionTaxRateCalculatorStrategyResolver;
-use Spryker\Zed\ProductOption\Business\StrategyResolver\ProductOptionTaxRateCalculatorStrategyResolverInterface;
+use Spryker\Zed\ProductOption\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
+use Spryker\Zed\ProductOption\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface;
 use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToTaxServiceInterface;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
@@ -273,16 +273,16 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return \Spryker\Zed\ProductOption\Business\StrategyResolver\ProductOptionTaxRateCalculatorStrategyResolver
+     * @return \Spryker\Zed\ProductOption\Business\StrategyResolver\TaxRateCalculatorStrategyResolver
      */
-    public function createProductItemTaxRateCalculatorStrategyResolver(): ProductOptionTaxRateCalculatorStrategyResolverInterface
+    public function createProductItemTaxRateCalculatorStrategyResolver(): TaxRateCalculatorStrategyResolverInterface
     {
         $strategyContainer = [];
 
         $strategyContainer = $this->addStrategyProductOptionTaxRateCalculatorWithoutMultipleShipmentTaxRate($strategyContainer);
         $strategyContainer = $this->addStrategyProductOptionTaxRateCalculatorWithMultipleShipmentTaxRate($strategyContainer);
 
-        return new ProductOptionTaxRateCalculatorStrategyResolver($this->getTaxService(), $strategyContainer);
+        return new TaxRateCalculatorStrategyResolver($this->getTaxService(), $strategyContainer);
     }
 
     /**
@@ -292,7 +292,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
      */
     protected function addStrategyProductOptionTaxRateCalculatorWithoutMultipleShipmentTaxRate(array $strategyContainer): array
     {
-        $strategyContainer[ProductOptionTaxRateCalculatorStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+        $strategyContainer[TaxRateCalculatorStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createProductOptionTaxRateCalculator();
         };
 
@@ -306,7 +306,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
      */
     protected function addStrategyProductOptionTaxRateCalculatorWithMultipleShipmentTaxRate(array $strategyContainer): array
     {
-        $strategyContainer[ProductOptionTaxRateCalculatorStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+        $strategyContainer[TaxRateCalculatorStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createProductOptionTaxRateWithItemShipmentTaxRateCalculator();
         };
 

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Shipment\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
@@ -16,7 +17,11 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentCarrierReader;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
+use Spryker\Zed\Shipment\Business\Calculator\ShipmentTaxRateCalculator as ShipmentTaxRateCalculatorWithItemShipmentTaxRate;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
+use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
+use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface;
+use Spryker\Zed\Shipment\Dependency\Service\ShipmentToSalesServiceInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
@@ -113,11 +118,72 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use createShipmentTaxCalculatorWithItemShipmentTaxRate() instead.
+     *
      * @return \Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator
      */
     public function createShipmentTaxCalculator()
     {
         return new ShipmentTaxRateCalculator($this->getQueryContainer(), $this->getTaxFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface
+     */
+    public function createShipmentTaxCalculatorWithItemShipmentTaxRate(): CalculatorInterface
+    {
+        return new ShipmentTaxRateCalculatorWithItemShipmentTaxRate($this->getQueryContainer(), $this->getTaxFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\Service\ShipmentToSalesServiceInterface
+     */
+    public function getSalesService(): ShipmentToSalesServiceInterface
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::SERVICE_SALES);
+    }
+
+    /**
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return \Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface
+     */
+    public function createShipmentTaxCalculatorStrategyResolver(): TaxRateCalculatorStrategyResolverInterface
+    {
+        $strategyContainer = [];
+
+        $strategyContainer = $this->addStrategySalesOrderSaverWithoutMultipleShipmentAddress($strategyContainer);
+        $strategyContainer = $this->addStrategySalesOrderSaverWithMultipleShipmentAddress($strategyContainer);
+
+        return new TaxRateCalculatorStrategyResolver($this->getSalesService(), $strategyContainer);
+    }
+
+    /**
+     * @param array $strategyContainer
+     *
+     * @return array
+     */
+    protected function addStrategySalesOrderSaverWithoutMultipleShipmentAddress(array $strategyContainer): array
+    {
+        $strategyContainer[TaxRateCalculatorStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+            return $this->createShipmentTaxCalculator();
+        };
+
+        return $strategyContainer;
+    }
+
+    /**
+     * @param array $strategyContainer
+     *
+     * @return array
+     */
+    protected function addStrategySalesOrderSaverWithMultipleShipmentAddress(array $strategyContainer): array
+    {
+        $strategyContainer[TaxRateCalculatorStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+            return $this->createShipmentTaxCalculatorWithItemShipmentTaxRate();
+        };
+
+        return $strategyContainer;
     }
 
     /**

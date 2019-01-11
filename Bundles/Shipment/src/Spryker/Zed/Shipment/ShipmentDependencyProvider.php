@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreBridge;
+use Spryker\Zed\Shipment\Dependency\Service\ShipmentToSalesServiceBridge;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
 use Spryker\Zed\Shipment\Exception\MissingMoneyCollectionFormTypePluginException;
 
@@ -35,6 +36,8 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_TAX = 'FACADE_TAX';
     public const SHIPMENT_METHOD_FILTER_PLUGINS = 'SHIPMENT_METHOD_FILTER_PLUGINS';
 
+    public const SERVICE_SALES = 'SERVICE_SALES';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -54,6 +57,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreFacade($container);
         $container = $this->addCurrencyFacade($container);
         $container = $this->addMoneyCollectionFormTypePlugin($container);
+        $container = $this->addSalesService($container);
 
         $container[static::FACADE_TAX] = function (Container $container) {
             return new ShipmentToTaxBridge($container->getLocator()->tax()->facade());
@@ -123,6 +127,20 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addSalesService(Container $container)
+    {
+        $container[static::SERVICE_SALES] = function (Container $container) {
+            return new ShipmentToSalesServiceBridge($container->getLocator()->sales()->service());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[static::PLUGINS] = function (Container $container) {
@@ -144,6 +162,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCurrencyFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMethodFilterPlugins($container);
+        $container = $this->addSalesService($container);
 
         return $container;
     }

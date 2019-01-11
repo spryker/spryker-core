@@ -8,10 +8,10 @@ namespace Spryker\Zed\ProductOption\Business\StrategyResolver;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
+use Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToTaxServiceInterface;
 
-class ProductOptionTaxRateCalculatorStrategyResolver implements ProductOptionTaxRateCalculatorStrategyResolverInterface
+class TaxRateCalculatorStrategyResolver implements TaxRateCalculatorStrategyResolverInterface
 {
     /**
      * @var \Spryker\Zed\Sales\Dependency\Service\SalesToSalesServiceInterface
@@ -19,7 +19,7 @@ class ProductOptionTaxRateCalculatorStrategyResolver implements ProductOptionTax
     protected $service;
 
     /**
-     * @var \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface[]
+     * @var \Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface[]
      */
     protected $strategyContainer;
 
@@ -27,7 +27,7 @@ class ProductOptionTaxRateCalculatorStrategyResolver implements ProductOptionTax
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @param \Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToTaxServiceInterface $service
-     * @param array|\Spryker\Zed\Tax\Business\Model\CalculatorInterface[] $strategyContainer
+     * @param array|\Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface[] $strategyContainer
      */
     public function __construct(ProductOptionToTaxServiceInterface $service, array $strategyContainer)
     {
@@ -40,7 +40,7 @@ class ProductOptionTaxRateCalculatorStrategyResolver implements ProductOptionTax
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Zed\Tax\Business\Model\CalculatorInterface
+     * @return \Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface
      */
     public function resolveByQuote(QuoteTransfer $quoteTransfer): CalculatorInterface
     {

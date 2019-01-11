@@ -4,10 +4,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Order;
+namespace Spryker\Zed\Sales\Business\StrategyResolver;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
+use Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToSalesServiceInterface;
 
 class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface

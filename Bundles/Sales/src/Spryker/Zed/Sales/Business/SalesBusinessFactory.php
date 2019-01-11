@@ -33,8 +33,8 @@ use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper;
-use Spryker\Zed\Sales\Business\Order\OrderSaverStrategyResolver;
-use Spryker\Zed\Sales\Business\Order\OrderSaverStrategyResolverInterface;
+use Spryker\Zed\Sales\Business\StrategyResolver\OrderSaverStrategyResolver;
+use Spryker\Zed\Sales\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface as SalesOrderSaverMultipleShipmentAddressInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToSalesServiceInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
@@ -151,9 +151,17 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Sales\Dependency\Service\SalesToSalesServiceInterface
+     */
+    public function getSalesService(): SalesToSalesServiceInterface
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::SERVICE_SALES);
+    }
+
+    /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return \Spryker\Zed\Sales\Business\Order\OrderSaverStrategyResolverInterface
+     * @return \Spryker\Zed\Sales\Business\StrategyResolver\OrderSaverStrategyResolverInterface
      */
     public function createOrderSaverStrategyResolver(): OrderSaverStrategyResolverInterface
     {
@@ -398,13 +406,5 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new ExpenseWriter(
             $this->getEntityManager()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Dependency\Service\SalesToSalesServiceInterface
-     */
-    public function getSalesService(): SalesToSalesServiceInterface
-    {
-        return $this->getProvidedDependency(SalesDependencyProvider::SERVICE_SALES);
     }
 }

@@ -7,14 +7,11 @@
 
 namespace Spryker\Zed\Shipment\Business\Model;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface as CalculatorWithItemShipmentTaxRateInterface;
 
-interface CalculatorInterface
+/**
+ * @deprecated Use \Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface instead.
+ */
+interface CalculatorInterface extends CalculatorWithItemShipmentTaxRateInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function recalculate(QuoteTransfer $quoteTransfer);
 }
