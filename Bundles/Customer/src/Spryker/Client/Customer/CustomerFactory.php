@@ -79,15 +79,15 @@ class CustomerFactory extends AbstractFactory
      */
     public function createCustomerSecuredPattern(): CustomerSecuredPatternInterface
     {
-        return new CustomerSecuredPattern($this->getConfig(), $this->getCustomerSecuredPatternPermissionPlugins());
+        return new CustomerSecuredPattern($this->getConfig(), $this->getCustomerSecuredPatternRulePlugins());
     }
 
     /**
      * @return \Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternRulePluginInterface[]
      */
-    public function getCustomerSecuredPatternPermissionPlugins(): array
+    public function getCustomerSecuredPatternRulePlugins(): array
     {
-        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_SECURED_PATTERN_PERMISSION);
+        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_SECURED_PATTERN_RULE);
     }
 
     /**

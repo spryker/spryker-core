@@ -19,30 +19,30 @@ class CustomerSecuredPattern implements CustomerSecuredPatternInterface
     /**
      * @var \Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternRulePluginInterface[]
      */
-    protected $customerSecuredPatternPermissionPlugins;
+    protected $customerSecuredPatternRulePlugins;
 
     /**
      * @param \Spryker\Client\Customer\CustomerConfig $customerConfig
-     * @param \Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternRulePluginInterface[] $customerSecuredPatternPermissionPlugins
+     * @param \Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternRulePluginInterface[] $customerSecuredPatternRulePlugins
      */
     public function __construct(
         CustomerConfig $customerConfig,
-        array $customerSecuredPatternPermissionPlugins
+        array $customerSecuredPatternRulePlugins
     ) {
         $this->customerConfig = $customerConfig;
-        $this->customerSecuredPatternPermissionPlugins = $customerSecuredPatternPermissionPlugins;
+        $this->customerSecuredPatternRulePlugins = $customerSecuredPatternRulePlugins;
     }
 
     /**
      * @return string
      */
-    public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string
+    public function getCustomerSecuredPattern(): string
     {
         $customerSecuredPattern = $this->customerConfig->getCustomerSecuredPattern();
 
-        foreach ($this->customerSecuredPatternPermissionPlugins as $customerSecuredPatternPermissionPlugin) {
-            if ($customerSecuredPatternPermissionPlugin->isApplicable()) {
-                $customerSecuredPattern = $customerSecuredPatternPermissionPlugin->execute($customerSecuredPattern);
+        foreach ($this->customerSecuredPatternRulePlugins as $customerSecuredPatternRulePlugin) {
+            if ($customerSecuredPatternRulePlugin->isApplicable()) {
+                $customerSecuredPattern = $customerSecuredPatternRulePlugin->execute($customerSecuredPattern);
             }
         }
 

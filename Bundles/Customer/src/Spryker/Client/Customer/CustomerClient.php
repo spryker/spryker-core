@@ -487,10 +487,10 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      *
      * @return string
      */
-    public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string
+    public function getCustomerSecuredPattern(): string
     {
         return $this->getFactory()
             ->createCustomerSecuredPattern()
-            ->getCustomerSecuredPatternForUnauthenticatedCustomerAccess();
+            ->getCustomerSecuredPattern();
     }
 }

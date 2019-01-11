@@ -12,5 +12,5 @@ interface CustomerSecuredPatternInterface
     /**
      * @return string
      */
-    public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string;
+    public function getCustomerSecuredPattern(): string;
 }

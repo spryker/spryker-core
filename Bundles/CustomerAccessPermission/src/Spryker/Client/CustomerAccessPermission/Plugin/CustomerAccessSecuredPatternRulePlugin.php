@@ -9,13 +9,12 @@ namespace Spryker\Client\CustomerAccessPermission\Plugin;
 
 use Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternRulePluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Shared\PermissionExtension\Dependency\Plugin\InfrastructuralPermissionPluginInterface;
 
 /**
  * @method \Spryker\Client\CustomerAccessPermission\CustomerAccessPermissionFactory getFactory()
  * @method \Spryker\Client\CustomerAccessPermission\CustomerAccessPermissionConfig getConfig()
  */
-class CustomerSecuredPatternRulePlugin extends AbstractPlugin implements InfrastructuralPermissionPluginInterface, CustomerSecuredPatternRulePluginInterface
+class CustomerAccessSecuredPatternRulePlugin extends AbstractPlugin implements CustomerSecuredPatternRulePluginInterface
 {
     /**
      * {@inheritdoc}

@@ -21,7 +21,7 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_CUSTOMER_SESSION_GET = 'PLUGINS_CUSTOMER_SESSION_GET';
     public const PLUGINS_CUSTOMER_SESSION_SET = 'PLUGINS_CUSTOMER_SESSION_SET';
     public const PLUGINS_DEFAULT_ADDRESS_CHANGE = 'PLUGINS_DEFAULT_ADDRESS_CHANGE';
-    public const PLUGINS_CUSTOMER_SECURED_PATTERN_PERMISSION = 'PLUGINS_CUSTOMER_SECURED_PATTERN_PERMISSION';
+    public const PLUGINS_CUSTOMER_SECURED_PATTERN_RULE = 'PLUGINS_CUSTOMER_SECURED_PATTERN_RULE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -35,7 +35,7 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
         $container = $this->addZedRequestClient($container);
         $container = $this->addCustomerSessionGetPlugins($container);
         $container = $this->addCustomerSessionSetPlugins($container);
-        $container = $this->addCustomerSecuredPatternPermissionPlugins($container);
+        $container = $this->addCustomerSecuredPatternRulePlugins($container);
 
         return $container;
     }
@@ -67,7 +67,7 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
     /**
      * @return \Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternRulePluginInterface[]
      */
-    protected function getCustomerSecuredPatternPermissionPlugins(): array
+    protected function getCustomerSecuredPatternRulePlugins(): array
     {
         return [];
     }
@@ -147,10 +147,10 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function addCustomerSecuredPatternPermissionPlugins(Container $container): Container
+    public function addCustomerSecuredPatternRulePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CUSTOMER_SECURED_PATTERN_PERMISSION] = function () {
-            return $this->getCustomerSecuredPatternPermissionPlugins();
+        $container[static::PLUGINS_CUSTOMER_SECURED_PATTERN_RULE] = function () {
+            return $this->getCustomerSecuredPatternRulePlugins();
         };
 
         return $container;
