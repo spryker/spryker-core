@@ -12,11 +12,8 @@
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/mail": "^4.0.0",
-<<<<<<< HEAD
-=======
     "spryker/price-product": "^2.7.0",
     "spryker/product": "^6.8.0",
->>>>>>> fab8ecb9d17012f07a4b41e8d60a631b843b5c15
     "spryker/store": "^1.5.0",
     "spryker/util-text": "^1.2.0",
     "spryker/util-validate": "^1.0.0",
