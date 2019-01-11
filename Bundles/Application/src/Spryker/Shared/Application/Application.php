@@ -84,10 +84,19 @@ class Application implements HttpKernelInterface, TerminableInterface
         $request = Request::createFromGlobals();
 
         $this->container->set('request', $request);
-
+        $this->flush();
         $response = $this->handle($request);
         $response->send();
         $this->terminate($request, $response);
+    }
+
+    /**
+     * @return void
+     */
+    private function flush()
+    {
+        $this->container->get('routes')
+            ->addCollection($this->container->get('controllers')->flush());
     }
 
     /**
