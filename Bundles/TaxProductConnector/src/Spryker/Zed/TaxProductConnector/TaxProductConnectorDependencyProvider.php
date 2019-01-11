@@ -70,7 +70,7 @@ class TaxProductConnectorDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addTaxService(Container $container): TaxProductConnectorToTaxServiceInterface
+    protected function addTaxService(Container $container)
     {
         $container[static::SERVICE_TAX] = function (Container $container) {
             return new TaxProductConnectorToTaxServiceBridge($container->getLocator()->tax()->service());

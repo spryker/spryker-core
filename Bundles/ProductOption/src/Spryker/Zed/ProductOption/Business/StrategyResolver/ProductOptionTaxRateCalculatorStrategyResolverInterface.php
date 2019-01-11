@@ -4,12 +4,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\TaxProductConnector\Business\StrategyResolver;
+namespace Spryker\Zed\ProductOption\Business\StrategyResolver;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 
-interface ProductItemTaxRateCalculatorStrategyResolverInterface
+interface ProductOptionTaxRateCalculatorStrategyResolverInterface
 {
     public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
     public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';

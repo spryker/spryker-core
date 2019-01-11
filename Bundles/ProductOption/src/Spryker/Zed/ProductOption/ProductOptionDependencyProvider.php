@@ -21,6 +21,7 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeBridge;
 use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToCountryQueryContainerBridge;
 use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToSalesQueryContainerBridge;
+use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToTaxServiceBridge;
 use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingServiceBridge;
 use Spryker\Zed\ProductOption\Exception\MissingMoneyCollectionFormTypePluginException;
 
@@ -45,6 +46,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     public const QUERY_CONTAINER_COUNTRY = 'QUERY_CONTAINER_COUNTRY';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_TAX = 'SERVICE_TAX';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -73,6 +75,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreFacade($container);
         $container = $this->addPriceFacade($container);
         $container = $this->addEventFacade($container);
+        $container = $this->addTaxService($container);
 
         return $container;
     }
@@ -128,6 +131,20 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_EVENT] = function (Container $container) {
             return new ProductOptionToEventFacadeBridge($container->getLocator()->event()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTaxService(Container $container)
+    {
+        $container[static::SERVICE_TAX] = function (Container $container) {
+            return new ProductOptionToTaxServiceBridge($container->getLocator()->tax()->service());
         };
 
         return $container;
@@ -213,6 +230,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addCurrencyFacade($container);
         $container = $this->addMoneyCollectionFormTypePlugin($container);
+        $container = $this->addTaxService($container);
 
         return $container;
     }

@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ProductOption\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator;
+use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateWithItemShipmentTaxRateCalculator;
 use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupIdHydrator;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader;
@@ -23,6 +25,9 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
 use Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaver;
+use Spryker\Zed\ProductOption\Business\StrategyResolver\ProductOptionTaxRateCalculatorStrategyResolver;
+use Spryker\Zed\ProductOption\Business\StrategyResolver\ProductOptionTaxRateCalculatorStrategyResolverInterface;
+use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToTaxServiceInterface;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -129,6 +134,14 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     public function createProductOptionTaxRateCalculator()
     {
         return new ProductOptionTaxRateCalculator($this->getQueryContainer(), $this->getTaxFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface
+     */
+    public function createProductOptionTaxRateWithItemShipmentTaxRateCalculator(): CalculatorInterface
+    {
+        return new ProductOptionTaxRateWithItemShipmentTaxRateCalculator($this->getQueryContainer(), $this->getTaxFacade());
     }
 
     /**
@@ -245,5 +258,56 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getPriceFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToTaxServiceInterface
+     */
+    protected function getTaxService(): ProductOptionToTaxServiceInterface
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::SERVICE_TAX);
+    }
+
+    /**
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return \Spryker\Zed\ProductOption\Business\StrategyResolver\ProductOptionTaxRateCalculatorStrategyResolver
+     */
+    public function createProductItemTaxRateCalculatorStrategyResolver(): ProductOptionTaxRateCalculatorStrategyResolverInterface
+    {
+        $strategyContainer = [];
+
+        $strategyContainer = $this->addStrategyProductOptionTaxRateCalculatorWithoutMultipleShipmentTaxRate($strategyContainer);
+        $strategyContainer = $this->addStrategyProductOptionTaxRateCalculatorWithMultipleShipmentTaxRate($strategyContainer);
+
+        return new ProductOptionTaxRateCalculatorStrategyResolver($this->getTaxService(), $strategyContainer);
+    }
+
+    /**
+     * @param array|\Spryker\Zed\Tax\Business\Model\CalculatorInterface[] $strategyContainer
+     *
+     * @return array|\Spryker\Zed\Tax\Business\Model\CalculatorInterface[]
+     */
+    protected function addStrategyProductOptionTaxRateCalculatorWithoutMultipleShipmentTaxRate(array $strategyContainer): array
+    {
+        $strategyContainer[ProductOptionTaxRateCalculatorStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+            return $this->createProductOptionTaxRateCalculator();
+        };
+
+        return $strategyContainer;
+    }
+
+    /**
+     * @param array|\Spryker\Zed\Tax\Business\Model\CalculatorInterface[] $strategyContainer
+     *
+     * @return array|\Spryker\Zed\Tax\Business\Model\CalculatorInterface[]
+     */
+    protected function addStrategyProductOptionTaxRateCalculatorWithMultipleShipmentTaxRate(array $strategyContainer): array
+    {
+        $strategyContainer[ProductOptionTaxRateCalculatorStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+            return $this->createProductOptionTaxRateWithItemShipmentTaxRateCalculator();
+        };
+
+        return $strategyContainer;
     }
 }
