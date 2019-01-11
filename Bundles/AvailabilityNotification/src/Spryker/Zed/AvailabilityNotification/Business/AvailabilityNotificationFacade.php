@@ -85,6 +85,6 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
     {
         $this->getFactory()
             ->createSubscriptionAnonymizer()
-            ->process($customerTransfer);
+            ->anonymizeSubscription($customerTransfer);
     }
 }

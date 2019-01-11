@@ -31,7 +31,7 @@ class AvailabilitySubscriptionAnonymizer implements AvailabilitySubscriptionAnon
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function process(CustomerTransfer $customerTransfer): AvailabilitySubscriptionResponseTransfer
+    public function anonymizeSubscription(CustomerTransfer $customerTransfer): AvailabilitySubscriptionResponseTransfer
     {
         $customerTransfer->requireCustomerReference();
 
