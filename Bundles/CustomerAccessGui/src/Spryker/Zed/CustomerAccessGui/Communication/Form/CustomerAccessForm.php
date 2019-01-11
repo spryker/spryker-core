@@ -51,7 +51,7 @@ class CustomerAccessForm extends AbstractType
      *
      * @return $this
      */
-    protected function addContentTypeAccess(FormBuilderInterface $builder, array $options): self
+    protected function addContentTypeAccess(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_CONTENT_TYPE_ACCESS, ChoiceType::class, [
             'expanded' => true,
