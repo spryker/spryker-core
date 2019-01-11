@@ -52,6 +52,8 @@ class DetailController extends AbstractController
             return $blockResponseData;
         }
 
+        $groupedOrderItems = $this->getFacade()
+            ->getUniqueOrderItems($orderTransfer->getItems());
         $groupedOrderItemsByShipment = $this->getFactory()
             ->getShipmentService()
             ->groupItemsByShipment($orderTransfer->getItems());
@@ -62,6 +64,7 @@ class DetailController extends AbstractController
             'distinctOrderStates' => $distinctOrderStates,
             'order' => $orderTransfer,
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
+            'groupedOrderItems' => $groupedOrderItems,
             'groupedOrderItemsByShipment' => $groupedOrderItemsByShipment,
         ], $blockResponseData);
     }
