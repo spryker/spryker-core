@@ -13,6 +13,8 @@ use Spryker\Service\Kernel\AbstractService;
 use Spryker\Service\Sales\Items\ItemHasOwnShipmentTransferCheckerInterface;
 
 /**
+ * @deprecated Remove service layer after multiple shipment will be released.
+ *
  * @method \Spryker\Service\Tax\TaxServiceFactory getFactory()
  */
 class TaxService extends AbstractService implements TaxServiceInterface

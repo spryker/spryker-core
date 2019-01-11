@@ -26,5 +26,4 @@
     <transfer name="Quote">
         <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup" />
     </transfer>
-
 </transfers>

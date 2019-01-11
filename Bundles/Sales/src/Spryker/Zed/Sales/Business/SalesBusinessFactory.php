@@ -27,7 +27,7 @@ use Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface;
-use Spryker\Zed\Sales\Business\Order\SalesOrderSaver as SalesOrderSaverMultipleShipmentAddress;
+use Spryker\Zed\Sales\Business\Order\SalesOrderSaver as SalesOrderSaverMultipleShippingAddress;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer;
@@ -35,7 +35,7 @@ use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderSaverStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
-use Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface as SalesOrderSaverMultipleShipmentAddressInterface;
+use Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface as SalesOrderSaverMultipleShippingAddressInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToSalesServiceInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
@@ -113,7 +113,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createSalesOrderSaverMultipleShipmentAddress() instead.
+     * @deprecated Use createSalesOrderSaverMultipleShippingAddress() instead.
      *
      * @return \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface
      */
@@ -135,9 +135,9 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface
      */
-    public function createSalesOrderSaverMultipleShipmentAddress(): SalesOrderSaverMultipleShipmentAddressInterface
+    public function createSalesOrderSaverMultipleShippingAddress(): SalesOrderSaverMultipleShippingAddressInterface
     {
-        return new SalesOrderSaverMultipleShipmentAddress(
+        return new SalesOrderSaverMultipleShippingAddress(
             $this->getCountryFacade(),
             $this->getOmsFacade(),
             $this->createReferenceGenerator(),
@@ -167,8 +167,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         $strategyContainer = [];
 
-        $strategyContainer = $this->addStrategySalesOrderSaverWithoutMultipleShipmentAddress($strategyContainer);
-        $strategyContainer = $this->addStrategySalesOrderSaverWithMultipleShipmentAddress($strategyContainer);
+        $strategyContainer = $this->addStrategySalesOrderSaverWithoutMultipleShippingAddress($strategyContainer);
+        $strategyContainer = $this->addStrategySalesOrderSaverWithMultipleShippingAddress($strategyContainer);
 
         return new OrderSaverStrategyResolver($this->getSalesService(), $strategyContainer);
     }
@@ -178,7 +178,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      *
      * @return array
      */
-    protected function addStrategySalesOrderSaverWithoutMultipleShipmentAddress(array $strategyContainer): array
+    protected function addStrategySalesOrderSaverWithoutMultipleShippingAddress(array $strategyContainer): array
     {
         $strategyContainer[OrderSaverStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createSalesOrderSaver();
@@ -192,10 +192,10 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      *
      * @return array
      */
-    protected function addStrategySalesOrderSaverWithMultipleShipmentAddress(array $strategyContainer): array
+    protected function addStrategySalesOrderSaverWithMultipleShippingAddress(array $strategyContainer): array
     {
         $strategyContainer[OrderSaverStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
-            return $this->createSalesOrderSaverMultipleShipmentAddress();
+            return $this->createSalesOrderSaverMultipleShippingAddress();
         };
 
         return $strategyContainer;

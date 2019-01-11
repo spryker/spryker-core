@@ -152,8 +152,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         $strategyContainer = [];
 
-        $strategyContainer = $this->addStrategySalesOrderSaverWithoutMultipleShipmentAddress($strategyContainer);
-        $strategyContainer = $this->addStrategySalesOrderSaverWithMultipleShipmentAddress($strategyContainer);
+        $strategyContainer = $this->addStrategySalesOrderSaverWithoutMultipleShippingAddress($strategyContainer);
+        $strategyContainer = $this->addStrategySalesOrderSaverWithMultipleShippingAddress($strategyContainer);
 
         return new TaxRateCalculatorStrategyResolver($this->getSalesService(), $strategyContainer);
     }
@@ -163,7 +163,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      *
      * @return array
      */
-    protected function addStrategySalesOrderSaverWithoutMultipleShipmentAddress(array $strategyContainer): array
+    protected function addStrategySalesOrderSaverWithoutMultipleShippingAddress(array $strategyContainer): array
     {
         $strategyContainer[TaxRateCalculatorStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createShipmentTaxCalculator();
@@ -177,7 +177,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      *
      * @return array
      */
-    protected function addStrategySalesOrderSaverWithMultipleShipmentAddress(array $strategyContainer): array
+    protected function addStrategySalesOrderSaverWithMultipleShippingAddress(array $strategyContainer): array
     {
         $strategyContainer[TaxRateCalculatorStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createShipmentTaxCalculatorWithItemShipmentTaxRate();

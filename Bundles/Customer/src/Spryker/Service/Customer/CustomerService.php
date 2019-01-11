@@ -5,27 +5,27 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Sales;
+namespace Spryker\Service\Customer;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Service\Kernel\AbstractService;
-use Spryker\Service\Sales\Items\ItemHasOwnShipmentTransferCheckerInterface;
+use Spryker\Service\Customer\Items\ItemHasOwnShipmentTransferCheckerInterface;
 
 /**
  * @deprecated Remove service layer after multiple shipment will be released.
  *
- * @method \Spryker\Service\Sales\SalesServiceFactory getFactory()
+ * @method \Spryker\Service\Customer\CustomerServiceFactory getFactory()
  */
-class SalesService extends AbstractService implements SalesServiceInterface
+class CustomerService extends AbstractService implements CustomerServiceInterface
 {
     /**
-     * @var \Spryker\Service\Sales\Items\ItemHasOwnShipmentTransferCheckerInterface
+     * @var \Spryker\Service\Customer\Items\ItemHasOwnShipmentTransferCheckerInterface
      */
     protected $itemHasOwnShipmentTransferChecker;
 
     /**
-     * @return \Spryker\Service\Sales\Items\ItemHasOwnShipmentTransferCheckerInterface
+     * @return \Spryker\Service\Customer\Items\ItemHasOwnShipmentTransferCheckerInterface
      */
     protected function getItemHasOwnShipmentTransferChecker(): ItemHasOwnShipmentTransferCheckerInterface
     {

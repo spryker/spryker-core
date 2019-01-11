@@ -78,6 +78,10 @@
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="expenses" type="Expense[]" singular="expense"/>
     </transfer>
+    
+    <transfer name="Item">
+        <property name="shipment" type="Shipment" />
+    </transfer>
 
     <transfer name="SaveOrder">
         <property name="orderExpenses" type="Expense[]" singular="orderExpense"/>

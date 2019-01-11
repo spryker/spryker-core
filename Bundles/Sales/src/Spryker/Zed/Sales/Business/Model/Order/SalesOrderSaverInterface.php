@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
-use Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface as SalesOrderSaverMultipleShipmentAddressInterface;
+use Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface as SalesOrderSaverMultipleShippingAddressInterface;
 
 /**
  * @deprecated Use \Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface instead.
  */
-interface SalesOrderSaverInterface extends SalesOrderSaverMultipleShipmentAddressInterface
+interface SalesOrderSaverInterface extends SalesOrderSaverMultipleShippingAddressInterface
 {
 }

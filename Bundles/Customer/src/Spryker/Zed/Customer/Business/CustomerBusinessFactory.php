@@ -9,6 +9,8 @@ namespace Spryker\Zed\Customer\Business;
 
 use Spryker\Zed\Customer\Business\Anonymizer\CustomerAnonymizer;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver;
+use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface;
+use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverWithMultiShippingAddress;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Customer\CustomerReader;
@@ -19,7 +21,10 @@ use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver as ObsoleteCustomerOr
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
 use Spryker\Zed\Customer\Business\Sales\CustomerOrderHydrator;
+use Spryker\Zed\Customer\Business\StrategyResolver\OrderSaverStrategyResolver;
+use Spryker\Zed\Customer\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Customer\Dependency\Service\CustomerToCustomerServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -130,11 +135,25 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated  Use createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
+     *
      * @return \Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface
      */
     public function createCheckoutCustomerOrderSaver()
     {
         return new CustomerOrderSaver($this->createCustomer(), $this->createAddress());
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface
+     */
+    public function createCheckoutCustomerOrderSaverWithMultiShippingAddress(): CustomerOrderSaverInterface
+    {
+        return new CustomerOrderSaverWithMultiShippingAddress(
+            $this->createCustomer(),
+            $this->createAddress(),
+            $this->getRepository()
+        );
     }
 
     /**
@@ -209,6 +228,57 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     protected function getUtilValidateService()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_UTIL_VALIDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Service\CustomerToCustomerServiceInterface
+     */
+    public function getCustomerService(): CustomerToCustomerServiceInterface
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_CUSTOMER);
+    }
+
+    /**
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return \Spryker\Zed\Customer\Business\StrategyResolver\OrderSaverStrategyResolverInterface
+     */
+    public function createCustomerOrderSaverStrategyResolver(): OrderSaverStrategyResolverInterface
+    {
+        $strategyContainer = [];
+
+        $strategyContainer = $this->addStrategyCustomerOrderSaverWithoutMultipleShippingAddress($strategyContainer);
+        $strategyContainer = $this->addStrategyCustomerOrderSaverWithMultipleShippingAddress($strategyContainer);
+
+        return new OrderSaverStrategyResolver($this->getCustomerService(), $strategyContainer);
+    }
+
+    /**
+     * @param array $strategyContainer
+     *
+     * @return array
+     */
+    protected function addStrategyCustomerOrderSaverWithoutMultipleShippingAddress(array $strategyContainer): array
+    {
+        $strategyContainer[OrderSaverStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+            return $this->createCustomerOrderSaver();
+        };
+
+        return $strategyContainer;
+    }
+
+    /**
+     * @param array $strategyContainer
+     *
+     * @return array
+     */
+    protected function addStrategyCustomerOrderSaverWithMultipleShippingAddress(array $strategyContainer): array
+    {
+        $strategyContainer[OrderSaverStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+            return $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress();
+        };
+
+        return $strategyContainer;
     }
 
     /**

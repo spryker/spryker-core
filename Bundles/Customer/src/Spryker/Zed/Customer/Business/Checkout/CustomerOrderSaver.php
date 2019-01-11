@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Customer\Business\Customer\AddressInterface;
 use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
 
+/**
+ * @deprecated Use CustomerOrderSaverWithMultiShippingAddress instead.
+ */
 class CustomerOrderSaver implements CustomerOrderSaverInterface
 {
     /**

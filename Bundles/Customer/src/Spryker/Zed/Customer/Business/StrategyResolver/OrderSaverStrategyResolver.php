@@ -4,12 +4,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\StrategyResolver;
+namespace Spryker\Zed\Customer\Business\StrategyResolver;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface;
-use Spryker\Zed\Sales\Dependency\Service\SalesToSalesServiceInterface;
+use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface;
+use Spryker\Zed\Customer\Dependency\Service\CustomerToCustomerServiceInterface;
 
 /**
  * @deprecated Remove strategy resolver after multiple shipment will be released.
@@ -17,7 +17,7 @@ use Spryker\Zed\Sales\Dependency\Service\SalesToSalesServiceInterface;
 class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
 {
     /**
-     * @var \Spryker\Zed\Sales\Dependency\Service\SalesToSalesServiceInterface
+     * @var \Spryker\Zed\Customer\Dependency\Service\CustomerToCustomerServiceInterface
      */
     protected $service;
 
@@ -29,10 +29,10 @@ class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @param \Spryker\Zed\Sales\Dependency\Service\SalesToSalesServiceInterface $service
-     * @param array|\Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface[] $strategyContainer
+     * @param \Spryker\Zed\Customer\Dependency\Service\CustomerToCustomerServiceInterface $service
+     * @param array|\Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface[] $strategyContainer
      */
-    public function __construct(SalesToSalesServiceInterface $service, array $strategyContainer)
+    public function __construct(CustomerToCustomerServiceInterface $service, array $strategyContainer)
     {
         $this->service = $service;
         $this->strategyContainer = $strategyContainer;
@@ -43,9 +43,9 @@ class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface
+     * @return \Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface
      */
-    public function resolveByQuote(QuoteTransfer $quoteTransfer): SalesOrderSaverInterface
+    public function resolveByQuote(QuoteTransfer $quoteTransfer): CustomerOrderSaverInterface
     {
         if ($this->service->checkQuoteItemHasOwnShipmentTransfer($quoteTransfer) === false) {
             return $this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT];

@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\Shipment\Dependency\Service\ShipmentToSalesServiceInterface;
 
+/**
+ * @deprecated Remove strategy resolver after multiple shipment will be released.
+ */
 class TaxRateCalculatorStrategyResolver implements TaxRateCalculatorStrategyResolverInterface
 {
     /**

@@ -146,6 +146,7 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
      * @param int[] $productOptionValueIds
      * @param string $countryIso2Code
      *
+     * @todo: fix return type or composer dependency
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]
      */
     protected function findTaxRatesByIdOptionValueAndCountryIso2Code(array $productOptionValueIds, $countryIso2Code)
