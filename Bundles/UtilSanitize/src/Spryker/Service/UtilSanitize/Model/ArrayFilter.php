@@ -33,6 +33,10 @@ class ArrayFilter implements ArrayFilterInterface
                 $filteredArray[$key] = $result;
                 continue;
             }
+            if (is_bool($value)) {
+                $filteredArray[$key] = $value;
+                continue;
+            }
             if (is_string($value) && strlen($value)) {
                 $filteredArray[$key] = $value;
                 continue;
