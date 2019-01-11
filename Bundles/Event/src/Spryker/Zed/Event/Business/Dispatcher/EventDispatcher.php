@@ -138,7 +138,7 @@ class EventDispatcher implements EventDispatcherInterface
             return new $listenerName();
         }
 
-        $foundListeners = $this->findEventListenersByShortName($listenerName);
+        $foundListeners = $this->findListenersByShortName($listenerName);
 
         if (count($foundListeners) === 0) {
             throw new EventListenerNotFoundException(sprintf(
@@ -158,26 +158,39 @@ class EventDispatcher implements EventDispatcherInterface
     }
 
     /**
-     * @param string $desiredEventListenerName
+     * @param string $desiredListenerName
      *
      * @return \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface[]
      */
-    protected function findEventListenersByShortName(string $desiredEventListenerName): array
+    protected function findListenersByShortName(string $desiredListenerName): array
     {
         $foundEventListeners = [];
 
         foreach ($this->eventCollection as $eventName => $eventListeners) {
             foreach ($eventListeners as $eventListener) {
                 /** @var \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener */
-                $compareSymbolsFromEnd = -(strlen($desiredEventListenerName));
+                $extractedListenerName = $this->extractListenerNameFromFullyQualifiedName($eventListener, $desiredListenerName);
 
-                if (substr($eventListener->getListenerName(), $compareSymbolsFromEnd) === $desiredEventListenerName) {
+                if ($extractedListenerName === $desiredListenerName) {
                     $foundEventListeners[$eventListener->getListenerName()] = $eventListener;
                 }
             }
         }
 
         return $foundEventListeners;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener
+     * @param string $desiredListenerName
+     *
+     * @return string
+     */
+    protected function extractListenerNameFromFullyQualifiedName(EventListenerContextInterface $eventListener, string $desiredListenerName): string
+    {
+        $compareSymbolsFromEnd = -(strlen($desiredListenerName));
+
+        return substr($eventListener->getListenerName(), $compareSymbolsFromEnd);
     }
 
     /**
