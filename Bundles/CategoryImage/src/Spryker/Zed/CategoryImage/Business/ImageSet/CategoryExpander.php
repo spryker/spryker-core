@@ -15,7 +15,7 @@ class CategoryExpander implements CategoryExpanderInterface
     /**
      * @var \Spryker\Zed\CategoryImage\Business\ImageSet\ImageSetReaderInterface
      */
-    private $imageSetReader;
+    protected $imageSetReader;
 
     /**
      * @param \Spryker\Zed\CategoryImage\Business\ImageSet\ImageSetReaderInterface $imageSetReader

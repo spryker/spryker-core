@@ -20,12 +20,12 @@ class ImageSetUpdater implements ImageSetUpdaterInterface
     /**
      * @var \Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface
      */
-    private $categoryImageRepository;
+    protected $categoryImageRepository;
 
     /**
      * @var \Spryker\Zed\CategoryImage\Persistence\CategoryImageEntityManagerInterface
      */
-    private $categoryImageEntityManager;
+    protected $categoryImageEntityManager;
 
     /**
      * @param \Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface $categoryImageRepository
