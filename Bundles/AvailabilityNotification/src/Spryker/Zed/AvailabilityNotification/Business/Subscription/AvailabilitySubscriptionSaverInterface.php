@@ -14,7 +14,7 @@ interface AvailabilitySubscriptionSaverInterface
     /**
      * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
      */
-    public function save(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void;
+    public function save(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionTransfer;
 }

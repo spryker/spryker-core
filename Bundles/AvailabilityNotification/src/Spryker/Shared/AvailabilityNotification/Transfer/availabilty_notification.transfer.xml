@@ -14,19 +14,27 @@
     </transfer>
 
     <transfer name="AvailabilitySubscriptionResponse">
+        <property name="availabilitySubscription" type="AvailabilitySubscription" />
+        <property name="product" type="ProductConcrete" />
         <property name="isSuccess" type="bool" default="true" />
         <property name="errorMessage" type="string" />
     </transfer>
 
-    <transfer name="AvailabilitySubscriptionExistence">
+    <transfer name="AvailabilitySubscriptionExistenceRequest">
+        <property name="subscriptionKey" type="string" />
         <property name="sku" type="string" />
         <property name="email" type="string" />
-        <property name="store" type="Store" />
-        <property name="isExists" type="bool" default="true" />
+    </transfer>
+
+    <transfer name="AvailabilitySubscriptionExistenceResponse">
+        <property name="availabilitySubscription" type="AvailabilitySubscription" />
     </transfer>
 
     <transfer name="Mail">
+        <property name="product" type="ProductConcrete" />
+        <property name="productAttributes" type="array" />
         <property name="availabilitySubscription" type="AvailabilitySubscription" />
+        <property name="availabilityUnsubscriptionLink" type="string" />
         <property name="productConcrete" type="ProductConcrete"/>
         <property name="localizedAttributes" type="LocalizedAttributes"/>
         <property name="productUrl" type="string"/>

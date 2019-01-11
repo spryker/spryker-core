@@ -14,6 +14,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 /**
  * @method \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacadeInterface getFacade()
  * @method \Spryker\Zed\AvailabilityNotification\Communication\AvailabilityNotificationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
  */
 class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
