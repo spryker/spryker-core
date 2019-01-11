@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductPackagingUnitStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageMapper\ProductPackagingUnitStorageMapper;
+use Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageMapper\ProductPackagingUnitStorageMapperInterface;
 use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependencyProvider;
 
@@ -25,5 +27,13 @@ class ProductPackagingUnitStorageCommunicationFactory extends AbstractCommunicat
     public function getEventBehaviorFacade(): ProductPackagingUnitStorageToEventBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(ProductPackagingUnitStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageMapper\ProductPackagingUnitStorageMapperInterface
+     */
+    public function createProductAbstractPackagingStorageMapper(): ProductPackagingUnitStorageMapperInterface
+    {
+        return new ProductPackagingUnitStorageMapper();
     }
 }

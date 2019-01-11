@@ -23,4 +23,3 @@ interface ProductPackagingStorageReaderInterface
      */
     public function getProductAbstractPackagingStorageEntities(array $productAbstractIds): array;
 }
-``
