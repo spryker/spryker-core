@@ -10,7 +10,7 @@ namespace Spryker\Zed\AvailabilityNotification\Business\Anonymizer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
-interface AvailabilitySubscriptionAnonymizerProcessorInterface
+interface AvailabilitySubscriptionAnonymizerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

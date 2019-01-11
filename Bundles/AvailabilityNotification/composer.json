@@ -16,7 +16,6 @@
     "spryker/util-text": "^1.2.1"
   },
   "require-dev": {
-    "spryker/availability": "^1.0.0",
     "spryker/code-sniffer": "*",
     "spryker/propel": "^3.8.0",
     "spryker/testify": "*"

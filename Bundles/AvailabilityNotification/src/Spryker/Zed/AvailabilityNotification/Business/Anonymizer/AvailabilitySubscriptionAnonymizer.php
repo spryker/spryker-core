@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface;
 
-class AvailabilitySubscriptionAnonymizerProcessor implements AvailabilitySubscriptionAnonymizerProcessorInterface
+class AvailabilitySubscriptionAnonymizer implements AvailabilitySubscriptionAnonymizerInterface
 {
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface
