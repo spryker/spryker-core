@@ -14,12 +14,15 @@ use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Sales\SalesConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
+use \ArrayObject;
 
 class SalesConfig extends AbstractBundleConfig
 {
     public const PARAM_ID_SALES_ORDER = 'id-sales-order';
     public const PARAM_CUSTOMER_REFERENCE = 'customer-reference';
     public const TEST_CUSTOMER_FIRST_NAME = 'test order';
+
+    protected const PROPERTY_NAME_SHIPMENT_TRANSFER = 'shipment';
 
     /**
      * Separator for the sequence number
@@ -68,12 +71,14 @@ class SalesConfig extends AbstractBundleConfig
      */
     public function isTestOrder(QuoteTransfer $quoteTransfer)
     {
-        $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
-        if ($shippingAddressTransfer === null || $shippingAddressTransfer->getFirstName() !== self::TEST_CUSTOMER_FIRST_NAME) {
-            return false;
+        /**
+         * @deprecated Remove this code after multiple shipment will be released.
+         */
+        if ($this->hasItemOwnShipmentTransfer($quoteTransfer->getItems()) === false){
+            return $this->isTestOrderWithoutMultiShippingAddress($quoteTransfer);
         }
 
-        return true;
+        return $this->isTestOrderWithMultiShippingAddress($quoteTransfer);
     }
 
     /**
@@ -106,5 +111,55 @@ class SalesConfig extends AbstractBundleConfig
     public function getSalesDetailExternalBlocksUrls()
     {
         return [];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isTestOrderWithoutMultiShippingAddress(QuoteTransfer $quoteTransfer): bool
+    {
+        $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
+        if ($shippingAddressTransfer === null || $shippingAddressTransfer->getFirstName() !== self::TEST_CUSTOMER_FIRST_NAME) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isTestOrderWithMultiShippingAddress(QuoteTransfer $quoteTransfer): bool
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $shippingTransfer = $itemTransfer->getShipment()->getShippingAddress();
+
+            if ($shippingTransfer->getFirstName() !== static::TEST_CUSTOMER_FIRST_NAME) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return bool
+     */
+    protected function hasItemOwnShipmentTransfer(?ArrayObject $items): bool
+    {
+        if (empty($items)) {
+            return false;
+        }
+
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = current($items);
+
+        return $itemTransfer->offsetExists(static::PROPERTY_NAME_SHIPMENT_TRANSFER);
     }
 }
