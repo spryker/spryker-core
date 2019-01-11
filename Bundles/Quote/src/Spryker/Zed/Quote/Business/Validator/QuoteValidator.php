@@ -20,6 +20,7 @@ class QuoteValidator implements QuoteValidatorInterface
     protected const MESSAGE_STORE_DATA_IS_MISSING = 'quote.validation.error.store_is_missing';
     protected const MESSAGE_CURRENCY_DATA_IS_MISSING = 'quote.validation.error.currency_mode_is_missing';
     protected const MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'quote.validation.error.currency_mode_is_incorrect';
+    protected const GLOSSARY_KEY_ISO_CODE = '{{iso_code}}';
 
     /**
      * @var \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface
@@ -103,7 +104,7 @@ class QuoteValidator implements QuoteValidatorInterface
             return $this->addValidationError(
                 $quoteValidationResponseTransfer,
                 static::MESSAGE_CURRENCY_DATA_IS_INCORRECT,
-                ['{{iso_code}}' => $currencyCode]
+                [static::GLOSSARY_KEY_ISO_CODE => $currencyCode]
             );
         }
 

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuotePriceConnector\Communication\Plugin;
+namespace Spryker\Zed\Price\Communication\Plugin;
 
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -14,12 +14,15 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatePluginInterface;
 
 /**
- * @method \Spryker\Zed\QuotePriceConnector\Communication\QuotePriceCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Price\Business\PriceFacade getFacade()
+ * @method \Spryker\Zed\Price\Communication\PriceCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Price\PriceConfig getConfig()
  */
 class QuotePriceModeValidatePlugin extends AbstractPlugin implements QuoteValidatePluginInterface
 {
     protected const MESSAGE_PRICE_MODE_DATA_IS_MISSING = 'quote.validation.error.price_mode_is_missing';
     protected const MESSAGE_PRICE_MODE_DATA_IS_INCORRECT = 'quote.validation.error.price_mode_is_incorrect';
+    protected const GLOSSARY_KEY_PRICE_MODE = '{{price_mode}}';
 
     /**
      * {@inheritdoc}
@@ -42,13 +45,13 @@ class QuotePriceModeValidatePlugin extends AbstractPlugin implements QuoteValida
             return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_PRICE_MODE_DATA_IS_MISSING);
         }
 
-        $availablePiceModes = $this->getFactory()->getPriceFacade()->getPriceModes();
+        $availablePiceModes = $this->getFacade()->getPriceModes();
 
         if (!isset($availablePiceModes[$priceMode])) {
             return $this->addValidationError(
                 $quoteValidationResponseTransfer,
                 static::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT,
-                ['{{price_mode}}' => $priceMode]
+                [static::GLOSSARY_KEY_PRICE_MODE => $priceMode]
             );
         }
 
