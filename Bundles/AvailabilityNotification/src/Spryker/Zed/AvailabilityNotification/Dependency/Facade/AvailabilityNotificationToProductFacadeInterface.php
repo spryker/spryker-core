@@ -24,4 +24,11 @@ interface AvailabilityNotificationToProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
     public function getProductUrl(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProductConcrete($concreteSku);
 }

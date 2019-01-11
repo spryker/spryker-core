@@ -14,11 +14,4 @@ interface AvailabilityToProductInterface
      * @return string
      */
     public function getAbstractSkuFromProductConcrete($productConcreteSku);
-
-    /**
-     * @param string $concreteSku
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function getProductConcrete($concreteSku);
 }

@@ -34,6 +34,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface getRepository()
  * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
  */
 class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
 {
@@ -104,7 +105,8 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getMailFacade(),
             $this->getProductFacade(),
-            $this->getPriceProductFacade()
+            $this->getPriceProductFacade(),
+            $this->getConfig()
         );
     }
 

@@ -43,4 +43,14 @@ class AvailabilityNotificationToProductFacadeBridge implements AvailabilityNotif
     {
         return $this->productFacade->getProductUrl($productAbstractTransfer);
     }
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProductConcrete($concreteSku)
+    {
+        return $this->productFacade->getProductConcrete($concreteSku);
+    }
 }

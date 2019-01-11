@@ -59,7 +59,7 @@ interface AvailabilityEvents
 
     /**
      * Specification:
-     * - This event will be used for sending email for subscribers if product is available again.
+     * - This event will be used for notifying subscribers if product is available again.
      */
     public const AVAILABILITY_NOTIFICATION = 'availability_notification';
 }

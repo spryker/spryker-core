@@ -11,8 +11,7 @@ use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Config\Config;
+use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeInterface;
@@ -42,33 +41,41 @@ class AvailabilitySubscriptionMailProcessor implements AvailabilitySubscriptionM
     protected $priceProductFacade;
 
     /**
+     * @var \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface $mailFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeInterface $priceProductFacade
+     * @param \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig $config
      */
-    public function __construct(AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository, AvailabilityNotificationToMailFacadeInterface $mailFacade, AvailabilityNotificationToProductFacadeInterface $productFacade, AvailabilityNotificationToPriceProductFacadeInterface $priceProductFacade)
+    public function __construct(AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository, AvailabilityNotificationToMailFacadeInterface $mailFacade, AvailabilityNotificationToProductFacadeInterface $productFacade, AvailabilityNotificationToPriceProductFacadeInterface $priceProductFacade, AvailabilityNotificationConfig $config)
     {
         $this->availabilityNotificationRepository = $availabilityNotificationRepository;
         $this->mailFacade = $mailFacade;
         $this->productFacade = $productFacade;
         $this->priceProductFacade = $priceProductFacade;
+        $this->config = $config;
     }
 
     /**
+     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
      */
-    public function processProductBecomeAvailableSubscription(StoreTransfer $storeTransfer, ProductConcreteTransfer $productConcreteTransfer): void
+    public function processProductBecomeAvailableSubscription(string $sku, StoreTransfer $storeTransfer): void
     {
         $availabilitySubscriptionCollectionTransfer = $this->availabilityNotificationRepository
-            ->findBySkuAndStore($productConcreteTransfer->getSku(), $storeTransfer->getIdStore());
+            ->findBySkuAndStore($sku, $storeTransfer->getIdStore());
 
         foreach ($availabilitySubscriptionCollectionTransfer->getAvailabilitySubscriptions() as $availabilitySubscription) {
             $mailTransfer = new MailTransfer();
             $mailTransfer->setAvailabilitySubscription($availabilitySubscription);
+            $productConcreteTransfer = $this->productFacade->getProductConcrete($sku);
             $mailTransfer->setProductConcrete($productConcreteTransfer);
             $mailTransfer = $this->setProductPrice($mailTransfer, $productConcreteTransfer->getSku());
             $mailTransfer->setCurrencyIsoCode($storeTransfer->getDefaultCurrencyIsoCode());
@@ -110,7 +117,7 @@ class AvailabilitySubscriptionMailProcessor implements AvailabilitySubscriptionM
             $productUrlTransfer = $this->productFacade->getProductUrl($productAbstractTransfer);
             foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
                 if ($availabilitySubscriptionTransfer->getLocale()->getIdLocale() === $localizedUrlTransfer->getLocale()->getIdLocale()) {
-                    $yvesBaseUrl = Config::get(ApplicationConstants::BASE_URL_YVES);
+                    $yvesBaseUrl = $this->config->getBaseUrlYves();
                     $productFullUrl = $yvesBaseUrl . $localizedUrlTransfer->getUrl();
                     $mailTransfer->setProductUrl($productFullUrl);
 

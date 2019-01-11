@@ -14,6 +14,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 /**
  * @method \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacadeInterface getFacade()
  * @method \Spryker\Zed\AvailabilityNotification\Communication\AvailabilityNotificationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
  */
 class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
@@ -89,9 +90,11 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      */
     protected function setRecipient(MailBuilderInterface $mailBuilder): self
     {
-        $customerTransfer = $mailBuilder->getMailTransfer()->requireAvailabilitySubscription()->getAvailabilitySubscription();
+        $mailTransfer = $mailBuilder->getMailTransfer();
+        $mailTransfer->requireAvailabilitySubscription();
+        $availabilitySubscriptionTransfer = $mailTransfer->getAvailabilitySubscription();
 
-        $mailBuilder->addRecipient($customerTransfer->getEmail(), '');
+        $mailBuilder->addRecipient($availabilitySubscriptionTransfer->getEmail(), '');
 
         return $this;
     }

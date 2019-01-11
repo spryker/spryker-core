@@ -170,11 +170,9 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
         if (($this->isAvailabilityStatusChanged($currentQuantity, $quantity) || $isNeverOutOfStockModified)
             && ($quantity > 0 || $spyAvailabilityEntity->getIsNeverOutOfStock() === true)) {
-            $productConcreteTransfer = $this->productFacade->getProductConcrete($sku);
             $availabilityNotificationTransfer = (new AvailabilityNotificationTransfer())
                 ->setSku($sku)
-                ->setStore($storeTransfer)
-                ->setProductConcrete($productConcreteTransfer);
+                ->setStore($storeTransfer);
             $this->eventFacade->trigger(
                 AvailabilityEvents::AVAILABILITY_NOTIFICATION,
                 $availabilityNotificationTransfer

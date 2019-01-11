@@ -13,13 +13,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacadeInterface getFacade()
  * @method \Spryker\Zed\AvailabilityNotification\Communication\AvailabilityNotificationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
  */
 class AvailabilityNotificationListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
-     * Specification
-     *  - Listeners needs to implement this interface to execute the codes for more
-     *  than one event at same time (Bulk Operation)
+     * {@inheritdoc}
+     *
+     * - Notify subscribed users when product is available again.
      *
      * @api
      *
@@ -34,8 +35,7 @@ class AvailabilityNotificationListener extends AbstractPlugin implements EventBu
             $this->getFacade()
                 ->processAvailabilityNotificationSubscription(
                     $transfer->getSku(),
-                    $transfer->getStore(),
-                    $transfer->getProductConcrete()
+                    $transfer->getStore()
                 );
         }
     }

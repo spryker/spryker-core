@@ -7,16 +7,15 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 interface AvailabilitySubscriptionMailProcessorInterface
 {
     /**
+     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
      */
-    public function processProductBecomeAvailableSubscription(StoreTransfer $storeTransfer, ProductConcreteTransfer $productConcreteTransfer): void;
+    public function processProductBecomeAvailableSubscription(string $sku, StoreTransfer $storeTransfer): void;
 }
