@@ -69,7 +69,7 @@ interface AvailabilityNotificationFacadeInterface
 
     /**
      * Specification:
-     * - Find availability notification by email and sku for current store.
+     * - Finds availability notification by email and sku for current store.
      *
      * @api
      *
