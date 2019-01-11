@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryImage\Business\ImageSet;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CategoryTransfer;
 
 interface ImageSetCreatorInterface
@@ -14,7 +15,7 @@ interface ImageSetCreatorInterface
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return void
+     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    public function createCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): void;
+    public function createCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): ArrayObject;
 }

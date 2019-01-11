@@ -17,8 +17,6 @@ use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttribute;
 use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParents;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNode;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeChecker;
-use Spryker\Zed\Category\Business\Model\CategoryPluginExecutor;
-use Spryker\Zed\Category\Business\Model\CategoryPluginExecutorInterface;
 use Spryker\Zed\Category\Business\Model\CategoryReader;
 use Spryker\Zed\Category\Business\Model\CategoryReaderInterface;
 use Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateReader;
@@ -27,6 +25,8 @@ use Spryker\Zed\Category\Business\Model\CategoryToucher;
 use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTree;
 use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrl;
 use Spryker\Zed\Category\Business\Model\CategoryWriter;
+use Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutor;
+use Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface;
 use Spryker\Zed\Category\Business\Renderer\CategoryTreeRenderer;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeReader;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeWriter;
@@ -407,7 +407,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Category\Business\Model\CategoryPluginExecutorInterface
+     * @return \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface
      */
     protected function createPluginExecutor(): CategoryPluginExecutorInterface
     {

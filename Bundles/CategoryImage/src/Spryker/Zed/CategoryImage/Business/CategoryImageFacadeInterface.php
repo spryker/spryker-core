@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryImage\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CategoryTransfer;
 
 /**
@@ -29,14 +30,15 @@ interface CategoryImageFacadeInterface
     /**
      * Specification:
      * - Persists all provided image sets to database for the given category.
+     * - Returns the collection of transfers for persisted image sets.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return void
+     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    public function createCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): void;
+    public function createCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): ArrayObject;
 
     /**
      * Specification:

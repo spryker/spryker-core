@@ -16,6 +16,7 @@ use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInter
 use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface;
 use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface;
+use Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
@@ -68,7 +69,7 @@ class Category
     protected $eventFacade;
 
     /**
-     * @var \Spryker\Zed\Category\Business\Model\CategoryPluginExecutorInterface
+     * @var \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface
      */
     protected $categoryPluginExecutor;
 
@@ -86,7 +87,7 @@ class Category
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface[] $deletePlugins
      * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface[] $updatePlugins
-     * @param \Spryker\Zed\Category\Business\Model\CategoryPluginExecutorInterface $categoryPluginExecutor
+     * @param \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface $categoryPluginExecutor
      * @param \Spryker\Zed\Category\Business\Model\CategoryReaderInterface $categoryReader
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface|null $eventFacade
      */

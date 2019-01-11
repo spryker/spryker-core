@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category\Business\Model;
 
 use Generated\Shared\Transfer\CategoryTransfer;
+use Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface;
 use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 
 class CategoryReader implements CategoryReaderInterface
@@ -18,13 +19,13 @@ class CategoryReader implements CategoryReaderInterface
     protected $repository;
 
     /**
-     * @var \Spryker\Zed\Category\Business\Model\CategoryPluginExecutorInterface
+     * @var \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface
      */
     protected $categoryPluginExecutor;
 
     /**
      * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $repository
-     * @param \Spryker\Zed\Category\Business\Model\CategoryPluginExecutorInterface $categoryPluginExecutor
+     * @param \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface $categoryPluginExecutor
      */
     public function __construct(
         CategoryRepositoryInterface $repository,

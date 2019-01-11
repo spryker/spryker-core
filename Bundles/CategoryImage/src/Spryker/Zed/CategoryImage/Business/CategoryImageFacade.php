@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryImage\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -40,11 +41,11 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return void
+     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    public function createCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): void
+    public function createCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): ArrayObject
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createImageSetCreator()
             ->createCategoryImageSetsForCategory($categoryTransfer);
     }
