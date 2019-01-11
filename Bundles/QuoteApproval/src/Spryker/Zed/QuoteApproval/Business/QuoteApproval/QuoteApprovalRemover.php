@@ -82,7 +82,7 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
         $this->quoteApprovalEntityManager->deleteQuoteApprovalById($quoteApprovalRequestTransfer->getIdQuoteApproval());
 
         $quoteApprovalResponseTransfer->setIsSuccessful(true)
-            ->setMessage($this->quoteApprovalMessageBuilder->getSuccessMessage($quoteApprovalTransfer, self::STATUS_NAME));
+            ->setMessage($this->quoteApprovalMessageBuilder->getSuccessMessage($quoteApprovalTransfer, static::STATUS_NAME));
 
         return $quoteApprovalResponseTransfer;
     }
