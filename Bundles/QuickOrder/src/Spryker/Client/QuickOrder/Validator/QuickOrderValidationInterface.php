@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductStorage\Plugin\QuickOrder\Validator;
+namespace Spryker\Client\QuickOrder\Validator;
 
 use Generated\Shared\Transfer\QuickOrderTransfer;
 
-interface PriceProductQuickOrderValidatorInterface
+interface QuickOrderValidationInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function validateQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
+    public function validate(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
 }

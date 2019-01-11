@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductDiscontinuedStorage\Plugin\QuickOrder\Validator;
+namespace Spryker\Client\ProductDiscontinuedStorage\Validator;
 
 use Generated\Shared\Transfer\QuickOrderTransfer;
 
-interface DiscontinuedAvailabilityQuickOrderValidatorInterface
+interface DiscontinuedAvailabilityQuickOrderValidationInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer

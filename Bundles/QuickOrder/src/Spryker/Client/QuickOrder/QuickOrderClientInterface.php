@@ -19,9 +19,21 @@ interface QuickOrderClientInterface
      *
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array;
+
+    /**
+     * Specification:
+     * - Extend the QuickOrderTransfer with ProductConcreteTransfers.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
+    public function addProductsToQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
 
     /**
      * Specification:
@@ -37,7 +49,8 @@ interface QuickOrderClientInterface
 
     /**
      * Specification:
-     * - Validate QuickOrderTransfer.
+     * - Validate QuickOrderTransfer item product.
+     * - If product data not valid, QuickOrderItemTransfer will be updated with the error message
      *
      * @api
      *

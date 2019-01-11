@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductQuantityStorage\Plugin\QuickOrder\Validator;
+namespace Spryker\Client\ProductQuantityStorage\Validator;
 
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
 
-class QuantityQuickOrderValidator implements QuantityQuickOrderValidatorInterface
+class QuantityQuickOrderValidation implements QuantityQuickOrderValidationInterface
 {
-    protected const ERROR_QUANTITY_MIN_NOT_FULFILLED = 'quick-order.upload-order.errors.upload-order-invalid-quantity-min';
-    protected const ERROR_QUANTITY_MAX_NOT_FULFILLED = 'quick-order.upload-order.errors.upload-order-invalid-quantity-max';
-    protected const ERROR_QUANTITY_INTERVAL_NOT_FULFILLED = 'quick-order.upload-order.errors.upload-order-invalid-quantity-interval';
+    protected const ERROR_MESSAGE_QUANTITY_MIN_NOT_FULFILLED = 'quick-order.upload-order.errors.upload-order-invalid-quantity-min';
+    protected const ERROR_MESSAGE_QUANTITY_MAX_NOT_FULFILLED = 'quick-order.upload-order.errors.upload-order-invalid-quantity-max';
+    protected const ERROR_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED = 'quick-order.upload-order.errors.upload-order-invalid-quantity-interval';
 
     /**
      * @var \Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface
@@ -56,15 +56,15 @@ class QuantityQuickOrderValidator implements QuantityQuickOrderValidatorInterfac
             $quantity = $orderItemTransfer->getQuantity();
 
             if ($quantity !== 0 && $quantity < $min) {
-                $orderItemTransfer->addErrorMessage(static::ERROR_QUANTITY_MIN_NOT_FULFILLED);
+                $orderItemTransfer->addErrorMessages(static::ERROR_MESSAGE_QUANTITY_MIN_NOT_FULFILLED);
             }
 
             if ($quantity !== 0 && ($quantity - $min) % $interval !== 0) {
-                $orderItemTransfer->addErrorMessage(static::ERROR_QUANTITY_INTERVAL_NOT_FULFILLED);
+                $orderItemTransfer->addErrorMessages(static::ERROR_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED);
             }
 
             if ($max !== null && $quantity > $max) {
-                $orderItemTransfer->addErrorMessage(static::ERROR_QUANTITY_MAX_NOT_FULFILLED);
+                $orderItemTransfer->addErrorMessages(static::ERROR_MESSAGE_QUANTITY_MAX_NOT_FULFILLED);
             }
         }
 

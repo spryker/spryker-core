@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductStorage\Plugin\QuickOrder\Validator;
+namespace Spryker\Client\PriceProductStorage\Validator;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolverInterface;
 
-class PriceProductQuickOrderValidator implements PriceProductQuickOrderValidatorInterface
+class PriceProductQuickOrderValidation implements PriceProductQuickOrderValidationInterface
 {
     protected const ERROR_NO_PRICE_PRODUCT = 'quick-order.upload-order.errors.upload-order-no-price-product';
 
@@ -51,7 +51,7 @@ class PriceProductQuickOrderValidator implements PriceProductQuickOrderValidator
                 ->resolveCurrentProductPriceTransfer($priceProductFilterTransfer);
 
             if (!$priceProductTransfer->getPrice()) {
-                $orderItemTransfer->addErrorMessage(static::ERROR_NO_PRICE_PRODUCT);
+                $orderItemTransfer->addErrorMessages(static::ERROR_NO_PRICE_PRODUCT);
             }
         }
 

@@ -9,13 +9,13 @@ namespace Spryker\Client\ProductDiscontinuedStorage\Plugin\QuickOrder;
 
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidatorPluginInterface;
+use Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidationPluginInterface;
 
 /**
  * @method \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageClientInterface getClient()
  * @method \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageFactory getFactory()
  */
-class QuickOrderDiscontinuedValidationPlugin extends AbstractPlugin implements QuickOrderValidatorPluginInterface
+class QuickOrderProductDiscontinuedValidationPlugin extends AbstractPlugin implements QuickOrderValidationPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -28,10 +28,10 @@ class QuickOrderDiscontinuedValidationPlugin extends AbstractPlugin implements Q
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function validate(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
+    public function validateQuickOrderItemProduct(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
     {
         return $this->getFactory()
-                    ->createDiscontinuedQuickOrderTransferValidator()
+                    ->createProductDiscontinuedQuickOrderValidator()
                     ->validateQuickOrder($quickOrderTransfer);
     }
 }

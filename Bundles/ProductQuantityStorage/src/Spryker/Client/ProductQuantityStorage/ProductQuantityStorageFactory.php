@@ -10,14 +10,14 @@ namespace Spryker\Client\ProductQuantityStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageClientInterface;
 use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceInterface;
-use Spryker\Client\ProductQuantityStorage\Plugin\QuickOrder\Validator\QuantityQuickOrderValidator;
-use Spryker\Client\ProductQuantityStorage\Plugin\QuickOrder\Validator\QuantityQuickOrderValidatorInterface;
 use Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolver;
 use Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolverInterface;
 use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounder;
 use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounderInterface;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReader;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
+use Spryker\Client\ProductQuantityStorage\Validator\QuantityQuickOrderValidation;
+use Spryker\Client\ProductQuantityStorage\Validator\QuantityQuickOrderValidationInterface;
 
 class ProductQuantityStorageFactory extends AbstractFactory
 {
@@ -33,11 +33,11 @@ class ProductQuantityStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductQuantityStorage\Plugin\QuickOrder\Validator\QuantityQuickOrderValidatorInterface
+     * @return \Spryker\Client\ProductQuantityStorage\Validator\QuantityQuickOrderValidationInterface
      */
-    public function createQuantityQuickOrderTransferValidator(): QuantityQuickOrderValidatorInterface
+    public function createQuantityQuickOrderTransferValidator(): QuantityQuickOrderValidationInterface
     {
-        return new QuantityQuickOrderValidator(
+        return new QuantityQuickOrderValidation(
             $this->createProductQuantityStorageReader()
         );
     }

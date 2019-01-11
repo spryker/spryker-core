@@ -9,6 +9,7 @@ namespace Spryker\Client\QuickOrder\Product;
 
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface;
 
@@ -37,9 +38,39 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[] Keys are product SKUs
+     */
+    public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array
+    {
+        $skus = array_map(function (QuickOrderItemTransfer $quickOrderItemTransfer) {
+            return $quickOrderItemTransfer->getSku();
+        }, $quickOrderTransfer->getItems()->getArrayCopy());
+
+        $productConcreteTransfers = [];
+        foreach ($skus as $index => $sku) {
+            if (empty($sku)) {
+                continue;
+            }
+
+            $productConcreteTransfer = $this->findProductConcreteBySku($sku);
+
+            if ($productConcreteTransfer === null) {
+                unset($quickOrderTransfer->getItems()[$index]);
+                continue;
+            }
+
+            $productConcreteTransfers[] = $productConcreteTransfer;
+        }
+
+        return $productConcreteTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
+    public function addProductsToQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
     {
         foreach ($quickOrderTransfer->getItems() as $quickOrderItemTransfer) {
             if (empty($quickOrderItemTransfer->getSku())) {

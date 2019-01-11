@@ -22,13 +22,29 @@ class QuickOrderClient extends AbstractClient implements QuickOrderClientInterfa
      *
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\QuickOrderTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
+    public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array
     {
         return $this->getFactory()
             ->createProductConcreteResolver()
             ->getProductsByQuickOrder($quickOrderTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderTransfer
+     */
+    public function addProductsToQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
+    {
+        return $this->getFactory()
+                    ->createProductConcreteResolver()
+                    ->addProductsToQuickOrder($quickOrderTransfer);
     }
 
     /**
@@ -59,7 +75,7 @@ class QuickOrderClient extends AbstractClient implements QuickOrderClientInterfa
     public function validateQuickOrderTransfer(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
     {
         return $this->getFactory()
-                    ->createQuickOrderValidator()
-                    ->validate($quickOrderTransfer);
+            ->createQuickOrderValidator()
+            ->validate($quickOrderTransfer);
     }
 }

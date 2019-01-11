@@ -12,8 +12,8 @@ use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontin
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToLocaleClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToStorageClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Service\ProductDiscontinuedStorageToSynchronizationServiceInterface;
-use Spryker\Client\ProductDiscontinuedStorage\Plugin\QuickOrder\Validator\DiscontinuedAvailabilityQuickOrderValidator;
-use Spryker\Client\ProductDiscontinuedStorage\Plugin\QuickOrder\Validator\DiscontinuedAvailabilityQuickOrderValidatorInterface;
+use Spryker\Client\ProductDiscontinuedStorage\Validator\DiscontinuedAvailabilityQuickOrderValidation;
+use Spryker\Client\ProductDiscontinuedStorage\Validator\DiscontinuedAvailabilityQuickOrderValidationInterface;
 use Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedChecker\ProductDiscontinuedChecker;
 use Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedChecker\ProductDiscontinuedCheckerInterface;
 use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedAvailabilityProductViewExpander;
@@ -68,11 +68,11 @@ class ProductDiscontinuedStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductDiscontinuedStorage\Plugin\QuickOrder\Validator\DiscontinuedAvailabilityQuickOrderValidatorInterface
+     * @return \Spryker\Client\ProductDiscontinuedStorage\Validator\DiscontinuedAvailabilityQuickOrderValidationInterface
      */
-    public function createDiscontinuedQuickOrderTransferValidator(): DiscontinuedAvailabilityQuickOrderValidatorInterface
+    public function createProductDiscontinuedQuickOrderValidator(): DiscontinuedAvailabilityQuickOrderValidationInterface
     {
-        return new DiscontinuedAvailabilityQuickOrderValidator(
+        return new DiscontinuedAvailabilityQuickOrderValidation(
             $this->createProductDiscontinuedStorageReader(),
             $this->getLocaleClient()
         );

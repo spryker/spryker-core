@@ -9,13 +9,13 @@ namespace Spryker\Client\ProductQuantityStorage\Plugin\QuickOrder;
 
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidatorPluginInterface;
+use Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidationPluginInterface;
 
 /**
  * @method \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageClientInterface getClient()
  * @method \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageFactory getFactory()
  */
-class QuickOrderQuantityValidationPlugin extends AbstractPlugin implements QuickOrderValidatorPluginInterface
+class QuickOrderProductQuantityValidationPlugin extends AbstractPlugin implements QuickOrderValidationPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -28,7 +28,7 @@ class QuickOrderQuantityValidationPlugin extends AbstractPlugin implements Quick
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function validate(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
+    public function validateQuickOrderItemProduct(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
     {
         return $this->getFactory()
                     ->createQuantityQuickOrderTransferValidator()
