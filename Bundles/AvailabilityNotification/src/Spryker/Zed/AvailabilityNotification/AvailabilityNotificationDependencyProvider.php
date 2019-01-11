@@ -19,6 +19,9 @@ use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotifica
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
+ */
 class AvailabilityNotificationDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MAIL = 'FACADE_MAIL';
@@ -31,8 +34,6 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
 
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
-
-    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

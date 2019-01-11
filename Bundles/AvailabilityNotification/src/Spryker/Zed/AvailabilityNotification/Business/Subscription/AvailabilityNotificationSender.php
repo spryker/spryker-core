@@ -5,15 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AvailabilityNotification\Communication\Plugin;
+namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Config\Config;
+use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationSubscribedMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMoneyFacadeInterface;
@@ -47,21 +46,29 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
     protected $priceProductFacade;
 
     /**
+     * @var \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig
+     */
+    protected $availabilityNotificationConfig;
+
+    /**
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface $mailFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMoneyFacadeInterface $moneyFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeInterface $priceProductFacade
+     * @param \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig $availabilityNotificationConfig
      */
     public function __construct(
         AvailabilityNotificationToMailFacadeInterface $mailFacade,
         AvailabilityNotificationToProductFacadeInterface $productFacade,
         AvailabilityNotificationToMoneyFacadeInterface $moneyFacade,
-        AvailabilityNotificationToPriceProductFacadeInterface $priceProductFacade
+        AvailabilityNotificationToPriceProductFacadeInterface $priceProductFacade,
+        AvailabilityNotificationConfig $availabilityNotificationConfig
     ) {
         $this->mailFacade = $mailFacade;
         $this->productFacade = $productFacade;
         $this->moneyFacade = $moneyFacade;
         $this->priceProductFacade = $priceProductFacade;
+        $this->availabilityNotificationConfig = $availabilityNotificationConfig;
     }
 
     /**
@@ -96,11 +103,10 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
      */
     protected function createUnsubscriptionLink(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): string
     {
-        $baseUrl = Config::get(ApplicationConstants::BASE_URL_YVES);
         $params = [static::PARAM_SUBSCRIPTION_KEY => $availabilitySubscriptionTransfer->getSubscriptionKey()];
         $unsubscriptionUrl = Url::generate(static::ROUTE_UNSUBSCRIBE, $params)->build();
 
-        return $baseUrl . $unsubscriptionUrl;
+        return $this->availabilityNotificationConfig->getBaseUrl() . $unsubscriptionUrl;
     }
 
     /**
