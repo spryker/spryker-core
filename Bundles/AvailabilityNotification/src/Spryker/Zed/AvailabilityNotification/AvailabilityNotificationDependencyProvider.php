@@ -129,7 +129,7 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      */
     protected function addMailFacade(Container $container): Container
     {
-        $container[self::FACADE_MAIL] = function (Container $container) {
+        $container[static::FACADE_MAIL] = function (Container $container) {
             return new AvailabilityNotificationToMailFacadeBridge($container->getLocator()->mail()->facade());
         };
 
@@ -143,7 +143,7 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[self::FACADE_PRODUCT] = function (Container $container) {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new AvailabilityNotificationToProductFacadeBridge($container->getLocator()->product()->facade());
         };
 
@@ -157,7 +157,7 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      */
     protected function addGlossaryFacade(Container $container): Container
     {
-        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+        $container[static::FACADE_GLOSSARY] = function (Container $container) {
             return new AvailabilityNotificationToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
         };
 
@@ -171,7 +171,7 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      */
     protected function addMoneyFacade(Container $container): Container
     {
-        $container[self::FACADE_MONEY] = function (Container $container) {
+        $container[static::FACADE_MONEY] = function (Container $container) {
             return new AvailabilityNotificationToMoneyFacadeBridge($container->getLocator()->money()->facade());
         };
 
@@ -185,7 +185,7 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      */
     protected function addPriceProductFacade(Container $container): Container
     {
-        $container[self::FACADE_PRICE_PRODUCT] = function (Container $container) {
+        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
             return new AvailabilityNotificationToPriceProductFacadeBridge($container->getLocator()->priceProduct()->facade());
         };
 
