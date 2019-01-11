@@ -5,8 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductList;
 
+use Spryker\Shared\ProductListSearch\ProductListSearchConfig;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -16,7 +17,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
  */
-class ProductListProductCategoryPublishSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductAbstractPageSearchPublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -30,13 +31,15 @@ class ProductListProductCategoryPublishSearchListener extends AbstractPlugin imp
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName): void
+    public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $productListIds = $this->getFactory()
+            ->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        $this->getFactory()->getProductPageSearchFacade()->publish(
-            $this->getFacade()->getProductAbstractIdsByCategoryIds($categoryIds)
+        $this->getFactory()->getProductPageSearchFacade()->refresh(
+            $this->getFactory()->getProductListFacade()->getProductAbstractIdsByProductListIds($productListIds),
+            [ProductListSearchConfig::PLUGIN_PRODUCT_LIST_DATA]
         );
     }
 }

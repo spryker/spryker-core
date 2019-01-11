@@ -29,4 +29,11 @@ interface ProductListSearchToProductListFacadeInterface
      * @return int[]
      */
     public function getProductAbstractIdsByProductListIds(array $productListIds): array;
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByProductListIds(array $productListIds): array;
 }

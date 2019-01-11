@@ -32,4 +32,16 @@ interface ProductListSearchFacadeInterface
      * @return int[]
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
+
+    /**
+     * Specification:
+     *  - Finds list of concrete product ids by category ids.
+     *
+     * @api
+     *
+     * @param int[] $categoryIds
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByCategoryIds(array $categoryIds): array;
 }

@@ -154,4 +154,14 @@ class ProductListReader implements ProductListReaderInterface
     {
         return $this->productListRepository->getProductAbstractIdsByProductListIds($productListIds);
     }
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByProductListIds(array $productListIds): array
+    {
+        return $this->productListRepository->findProductConcreteIdsByProductListIds($productListIds);
+    }
 }

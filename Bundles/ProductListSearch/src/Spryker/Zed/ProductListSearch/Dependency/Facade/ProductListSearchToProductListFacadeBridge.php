@@ -51,4 +51,14 @@ class ProductListSearchToProductListFacadeBridge implements ProductListSearchToP
     {
         return $this->productListFacade->getProductAbstractIdsByProductListIds($productListIds);
     }
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByProductListIds(array $productListIds): array
+    {
+        return $this->productListFacade->findProductConcreteIdsByProductListIds($productListIds);
+    }
 }

@@ -5,8 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductConcrete;
 
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Shared\ProductListSearch\ProductListSearchConfig;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -17,7 +18,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
  */
-class ProductListSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductAbstractPageSearchPublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -31,15 +32,13 @@ class ProductListSearchListener extends AbstractPlugin implements EventBulkHandl
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->preventTransaction();
-        $productListIds = $this->getFactory()
-            ->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $productAbstractIds = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransferForeignKeys($eventTransfers, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
 
-        $this->getFactory()->getProductPageSearchFacade()->refresh(
-            $this->getFactory()->getProductListFacade()->getProductAbstractIdsByProductListIds($productListIds),
-            [ProductListSearchConfig::PLUGIN_PRODUCT_LIST_DATA]
-        );
+        $this->getFactory()->getProductPageSearchFacade()->refresh($productAbstractIds, [ProductListSearchConfig::PLUGIN_PRODUCT_LIST_DATA]);
     }
 }
