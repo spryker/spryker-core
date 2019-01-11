@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Sales;
+namespace Spryker\Service\Tax;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface SalesServiceInterface
+interface TaxServiceInterface
 {
     /**
      * Specification:

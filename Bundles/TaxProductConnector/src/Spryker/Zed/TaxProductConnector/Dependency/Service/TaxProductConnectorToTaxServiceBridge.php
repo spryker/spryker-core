@@ -5,23 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Dependency\Service;
+namespace Spryker\Zed\TaxProductConnector\Dependency\Service;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Service\Sales\SalesServiceInterface;
+use Spryker\Service\Tax\TaxServiceInterface;
 
-class SalesToSalesServiceBridge implements SalesToSalesServiceInterface
+class TaxProductConnectorToTaxServiceBridge implements TaxProductConnectorToTaxServiceInterface
 {
     /**
-     * @var \Spryker\Service\Sales\SalesServiceInterface
+     * @var \Spryker\Service\Tax\TaxServiceInterface
      */
     private $service;
 
     /**
-     * @param \Spryker\Service\Sales\SalesServiceInterface $service
+     * @param \Spryker\Service\Tax\TaxServiceInterface $service
      */
-    public function __construct(SalesServiceInterface $service)
+    public function __construct(TaxServiceInterface $service)
     {
         $this->service = $service;
     }

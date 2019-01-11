@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Sales;
+namespace Spryker\Service\Tax;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -13,17 +13,17 @@ use Spryker\Service\Kernel\AbstractService;
 use Spryker\Service\Sales\Items\ItemHasOwnShipmentTransferCheckerInterface;
 
 /**
- * @method \Spryker\Service\Sales\SalesServiceFactory getFactory()
+ * @method \Spryker\Service\Tax\TaxServiceFactory getFactory()
  */
-class SalesService extends AbstractService implements SalesServiceInterface
+class TaxService extends AbstractService implements TaxServiceInterface
 {
     /**
-     * @var \Spryker\Service\Sales\Items\ItemHasOwnShipmentTransferCheckerInterface
+     * @var \Spryker\Service\Tax\Items\ItemHasOwnShipmentTransferCheckerInterface
      */
     protected $itemHasOwnShipmentTransferChecker;
 
     /**
-     * @return \Spryker\Service\Sales\Items\ItemHasOwnShipmentTransferCheckerInterface
+     * @return \Spryker\Service\Tax\Items\ItemHasOwnShipmentTransferCheckerInterface
      */
     protected function getItemHasOwnShipmentTransferChecker(): ItemHasOwnShipmentTransferCheckerInterface
     {

@@ -4,11 +4,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Order;
+namespace Spryker\Zed\TaxProductConnector\Business\StrategyResolver;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface;
+use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 
-interface OrderSaverStrategyResolverInterface
+interface ProductItemTaxRateCalculatorStrategyResolverInterface
 {
     public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
     public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
@@ -16,7 +18,7 @@ interface OrderSaverStrategyResolverInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface
+     * @return \Spryker\Zed\Tax\Business\Model\CalculatorInterface
      */
-    public function resolveByQuote(QuoteTransfer $quoteTransfer): SalesOrderSaverInterface;
+    public function resolveByQuote(QuoteTransfer $quoteTransfer): CalculatorInterface;
 }
