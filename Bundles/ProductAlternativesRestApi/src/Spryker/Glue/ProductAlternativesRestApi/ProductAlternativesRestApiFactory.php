@@ -9,32 +9,46 @@ namespace Spryker\Glue\ProductAlternativesRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductAlternativeStorageClientInterface;
-use Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductStorageClientInterface;
-use Spryker\Glue\ProductAlternativesRestApi\Processor\Expander\AlternativeProductResourceRelationshipExpander;
-use Spryker\Glue\ProductAlternativesRestApi\Processor\Expander\AlternativeProductResourceRelationshipExpanderInterface;
-use Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative\AlternativeProductReader;
-use Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative\AlternativeProductReaderInterface;
+use Spryker\Glue\ProductAlternativesRestApi\Dependency\Resource\ProductAlternativesRestApiToProductsRestApiResourceInterface;
+use Spryker\Glue\ProductAlternativesRestApi\Processor\AbstractAlternativeProduct\AbstractAlternativeProductReader;
+use Spryker\Glue\ProductAlternativesRestApi\Processor\AbstractAlternativeProduct\AbstractAlternativeProductReaderInterface;
+use Spryker\Glue\ProductAlternativesRestApi\Processor\ConcreteAlternativeProduct\ConcreteAlternativeProductReader;
+use Spryker\Glue\ProductAlternativesRestApi\Processor\ConcreteAlternativeProduct\ConcreteAlternativeProductReaderInterface;
+use Spryker\Glue\ProductAlternativesRestApi\Processor\RestResponseBuilder\AlternativeProductsRestResponseBuilder;
+use Spryker\Glue\ProductAlternativesRestApi\Processor\RestResponseBuilder\AlternativeProductsRestResponseBuilderInterface;
 
 class ProductAlternativesRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ProductAlternativesRestApi\Processor\ProductAlternative\AlternativeProductReaderInterface
+     * @return \Spryker\Glue\ProductAlternativesRestApi\Processor\ConcreteAlternativeProduct\ConcreteAlternativeProductReaderInterface
      */
-    public function createProductAlternativeReader(): AlternativeProductReaderInterface
+    public function createConcreteAlternativeProductReader(): ConcreteAlternativeProductReaderInterface
     {
-        return new AlternativeProductReader(
+        return new ConcreteAlternativeProductReader(
             $this->getProductAlternativeStorageClient(),
-            $this->getProductStorageClient(),
-            $this->getResourceBuilder()
+            $this->getProductsRestApiResource(),
+            $this->createAlternativeProductsRestResponseBuilder()
         );
     }
 
     /**
-     * @return \Spryker\Glue\ProductAlternativesRestApi\Processor\Expander\AlternativeProductResourceRelationshipExpanderInterface
+     * @return \Spryker\Glue\ProductAlternativesRestApi\Processor\AbstractAlternativeProduct\AbstractAlternativeProductReaderInterface
      */
-    public function createProductAlternativesResourceRelationshipExpander(): AlternativeProductResourceRelationshipExpanderInterface
+    public function createAbstractAlternativeProductReader(): AbstractAlternativeProductReaderInterface
     {
-        return new AlternativeProductResourceRelationshipExpander($this->createProductAlternativeReader());
+        return new AbstractAlternativeProductReader(
+            $this->getProductAlternativeStorageClient(),
+            $this->getProductsRestApiResource(),
+            $this->createAlternativeProductsRestResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductAlternativesRestApi\Processor\RestResponseBuilder\AlternativeProductsRestResponseBuilderInterface
+     */
+    public function createAlternativeProductsRestResponseBuilder(): AlternativeProductsRestResponseBuilderInterface
+    {
+        return new AlternativeProductsRestResponseBuilder($this->getResourceBuilder());
     }
 
     /**
@@ -46,10 +60,10 @@ class ProductAlternativesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductStorageClientInterface
+     * @return \Spryker\Glue\ProductAlternativesRestApi\Dependency\Resource\ProductAlternativesRestApiToProductsRestApiResourceInterface
      */
-    public function getProductStorageClient(): ProductAlternativesRestApiToProductStorageClientInterface
+    public function getProductsRestApiResource(): ProductAlternativesRestApiToProductsRestApiResourceInterface
     {
-        return $this->getProvidedDependency(ProductAlternativesRestApiDependencyProvider::CLIENT_PRODUCT_STORAGE);
+        return $this->getProvidedDependency(ProductAlternativesRestApiDependencyProvider::RESOURCE_PRODUCTS_REST_API);
     }
 }

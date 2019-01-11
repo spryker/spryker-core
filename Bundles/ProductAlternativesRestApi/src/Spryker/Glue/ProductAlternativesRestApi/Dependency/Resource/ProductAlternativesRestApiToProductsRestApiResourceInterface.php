@@ -5,32 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsRestApi;
+namespace Spryker\Glue\ProductAlternativesRestApi\Dependency\Resource;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface ProductsRestApiResourceInterface
+interface ProductAlternativesRestApiToProductsRestApiResourceInterface
 {
     /**
-     * Specification:
-     *  - Retrieves abstract product resource by sku.
-     *
-     * @api
-     *
-     * @param string $sku
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
-     */
-    public function findProductAbstractBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface;
-
-    /**
-     * Specification:
-     *  - Retrieves concrete product resource by sku.
-     *
-     * @api
-     *
      * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -39,11 +21,6 @@ interface ProductsRestApiResourceInterface
     public function findProductConcreteBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface;
 
     /**
-     * Specification:
-     * - Retrieves abstract product resource by id.
-     *
-     * @api
-     *
      * @param int $idProductAbstract
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -52,11 +29,6 @@ interface ProductsRestApiResourceInterface
     public function findProductAbstractById(int $idProductAbstract, RestRequestInterface $restRequest): ?RestResourceInterface;
 
     /**
-     * Specification:
-     *  - Retrieves concrete product resource by id.
-     *
-     * @api
-     *
      * @param int $idProductConcrete
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *

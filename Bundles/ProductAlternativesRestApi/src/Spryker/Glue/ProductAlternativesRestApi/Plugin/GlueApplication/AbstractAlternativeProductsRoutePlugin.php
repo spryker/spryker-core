@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ProductAlternativesRestApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\RestAlternativeProductsAttributesTransfer;
+use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
@@ -15,11 +15,11 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\ProductAlternativesRestApi\ProductAlternativesRestApiConfig;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 
-class AlternativeProductsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
+class AbstractAlternativeProductsRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Configures available actions for product-alternatives resource.
+     *  - Configures action to retrieve abstract alternative products collection.
      *
      * @api
      *
@@ -29,7 +29,7 @@ class AlternativeProductsResourceRoutePlugin extends AbstractPlugin implements R
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        return $resourceRouteCollection->addGet(ProductAlternativesRestApiConfig::ACTION_ALTERNATIVE_PRODUCTS_GET, false);
+        return $resourceRouteCollection->addGet(ProductAlternativesRestApiConfig::ACTION_ABSTRACT_ALTERNATIVE_PRODUCTS_GET, false);
     }
 
     /**
@@ -41,7 +41,7 @@ class AlternativeProductsResourceRoutePlugin extends AbstractPlugin implements R
      */
     public function getResourceType(): string
     {
-        return ProductAlternativesRestApiConfig::RESOURCE_ALTERNATIVE_PRODUCTS;
+        return ProductAlternativesRestApiConfig::RELATIONSHIP_NAME_ABSTRACT_ALTERNATIVE_PRODUCTS;
     }
 
     /**
@@ -53,7 +53,7 @@ class AlternativeProductsResourceRoutePlugin extends AbstractPlugin implements R
      */
     public function getController(): string
     {
-        return ProductAlternativesRestApiConfig::CONTROLLER_ALTERNATIVE_PRODUCTS;
+        return ProductAlternativesRestApiConfig::CONTROLLER_ABSTRACT_ALTERNATIVE_PRODUCTS;
     }
 
     /**
@@ -65,7 +65,7 @@ class AlternativeProductsResourceRoutePlugin extends AbstractPlugin implements R
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestAlternativeProductsAttributesTransfer::class;
+        return AbstractProductsRestAttributesTransfer::class;
     }
 
     /**

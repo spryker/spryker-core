@@ -81,7 +81,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
 
         $resourceIdentifier = $restRequest->getResource()->getId();
 
-        if (empty($resourceIdentifier)) {
+        if (!$resourceIdentifier) {
             return $this->addAbstractSkuNotSpecifiedError($response);
         }
 
@@ -131,6 +131,34 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             return null;
         }
 
+        return $this->createRestResourceFromAbstractProductStorageData($abstractProductData);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     */
+    public function findProductAbstractById(int $idProductAbstract, RestRequestInterface $restRequest): ?RestResourceInterface
+    {
+        $abstractProductData = $this->productStorageClient
+            ->findProductAbstractStorageData($idProductAbstract, $restRequest->getMetadata()->getLocale());
+
+        if (!$abstractProductData) {
+            return null;
+        }
+
+        return $this->createRestResourceFromAbstractProductStorageData($abstractProductData);
+    }
+
+    /**
+     * @param array $abstractProductData
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function createRestResourceFromAbstractProductStorageData(array $abstractProductData): RestResourceInterface
+    {
         $restAbstractProductsAttributesTransfer = $this->abstractProductsResourceMapper
             ->mapAbstractProductsDataToAbstractProductsRestAttributes($abstractProductData);
 
