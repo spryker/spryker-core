@@ -28,6 +28,18 @@ class AvailabilityNotificationToPriceProductFacadeBridge implements Availability
      *
      * @return int|null
      */
+    public function findPriceBySku($sku, $priceTypeName = null)
+    {
+        return $this->priceProductFacade
+            ->findPriceBySku($sku, $priceTypeName);
+    }
+
+    /**
+     * @param string $sku
+     * @param string|null $priceTypeName
+     *
+     * @return int|null
+     */
     public function findProductPriceBySku(string $sku, ?string $priceTypeName = null): ?int
     {
         return $this->priceProductFacade->findPriceBySku($sku, $priceTypeName);
