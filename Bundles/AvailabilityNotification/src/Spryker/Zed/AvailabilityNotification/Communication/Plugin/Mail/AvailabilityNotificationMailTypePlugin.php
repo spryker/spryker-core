@@ -12,13 +12,15 @@ use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 /**
+ * @api
+ *
  * @method \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacadeInterface getFacade()
  * @method \Spryker\Zed\AvailabilityNotification\Communication\AvailabilityNotificationCommunicationFactory getFactory()
  * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
  */
-class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
+class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-    public const MAIL_TYPE = 'AVAILABILITY_NOTIFICATION_SUBSCRIBED_MAIL';
+    public const MAIL_TYPE = 'AVAILABILITY_NOTIFICATION_MAIL';
 
     /**
      * @api
@@ -54,7 +56,7 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      */
     protected function setSubject(MailBuilderInterface $mailBuilder): self
     {
-        $mailBuilder->setSubject('mail.availability_notification.subscribed.subject');
+        $mailBuilder->setSubject($mailBuilder->getMailTransfer()->getLocalizedAttributes()->getName());
 
         return $this;
     }
@@ -66,7 +68,7 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      */
     protected function setHtmlTemplate(MailBuilderInterface $mailBuilder): self
     {
-        $mailBuilder->setHtmlTemplate('AvailabilityNotification/mail/subscribed.html.twig');
+        $mailBuilder->setHtmlTemplate('AvailabilityNotification/mail/notification.html.twig');
 
         return $this;
     }
@@ -78,7 +80,7 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      */
     protected function setTextTemplate(MailBuilderInterface $mailBuilder): self
     {
-        $mailBuilder->setTextTemplate('AvailabilityNotification/mail/subscribed.text.twig');
+        $mailBuilder->setTextTemplate('AvailabilityNotification/mail/notification.text.twig');
 
         return $this;
     }
@@ -90,11 +92,9 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      */
     protected function setRecipient(MailBuilderInterface $mailBuilder): self
     {
-        $mailTransfer = $mailBuilder->getMailTransfer();
-        $mailTransfer->requireAvailabilitySubscription();
-        $availabilitySubscriptionTransfer = $mailTransfer->getAvailabilitySubscription();
+        $customerTransfer = $mailBuilder->getMailTransfer()->requireAvailabilitySubscription()->getAvailabilitySubscription();
 
-        $mailBuilder->addRecipient($availabilitySubscriptionTransfer->getEmail(), '');
+        $mailBuilder->addRecipient($customerTransfer->getEmail(), '');
 
         return $this;
     }
