@@ -1,0 +1,14 @@
+{{ mail.localizedAttributes.name }}
+{{ 'The wait is over, you can now add this product inside your cart.' | trans }}
+
+{{ mail.localizedAttributes.name }}
+Attributes:
+{% for attribute in mail.localizedAttributes.attributes %}
+    {{ attribute }}
+{% endfor %}
+Price: {{ mail.productPrice | money(true, mail.currencyIsoCode) }}
+
+Copyright © current year company name, All rights reserved.
+
+Want to change how you receive these emails?
+You can unsubscribe from this list.

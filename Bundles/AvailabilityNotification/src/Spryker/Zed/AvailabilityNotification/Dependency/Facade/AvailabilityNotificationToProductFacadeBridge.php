@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+
 class AvailabilityNotificationToProductFacadeBridge implements AvailabilityNotificationToProductFacadeInterface
 {
     /**
@@ -20,6 +22,26 @@ class AvailabilityNotificationToProductFacadeBridge implements AvailabilityNotif
     public function __construct($productFacade)
     {
         $this->productFacade = $productFacade;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstractById($idProductAbstract)
+    {
+        return $this->productFacade->findProductAbstractById($idProductAbstract);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductUrlTransfer
+     */
+    public function getProductUrl(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        return $this->productFacade->getProductUrl($productAbstractTransfer);
     }
 
     /**

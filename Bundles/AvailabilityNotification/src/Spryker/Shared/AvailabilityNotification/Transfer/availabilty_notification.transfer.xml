@@ -35,6 +35,15 @@
         <property name="productAttributes" type="array" />
         <property name="availabilitySubscription" type="AvailabilitySubscription" />
         <property name="availabilityUnsubscriptionLink" type="string" />
+        <property name="productConcrete" type="ProductConcrete"/>
+        <property name="localizedAttributes" type="LocalizedAttributes"/>
+        <property name="productUrl" type="string"/>
+        <property name="productPrice" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+    </transfer>
+
+    <transfer name="AvailabilitySubscriptionCollection">
+        <property name="availabilitySubscriptions" type="AvailabilitySubscription[]" singular="availabilitySubscription"/>
     </transfer>
 
 </transfers>

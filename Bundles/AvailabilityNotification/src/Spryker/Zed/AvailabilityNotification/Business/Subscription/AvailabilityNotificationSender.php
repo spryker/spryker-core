@@ -106,7 +106,7 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
         $params = [static::PARAM_SUBSCRIPTION_KEY => $availabilitySubscriptionTransfer->getSubscriptionKey()];
         $unsubscriptionUrl = Url::generate(static::ROUTE_UNSUBSCRIBE, $params)->build();
 
-        return $this->availabilityNotificationConfig->getBaseUrl() . $unsubscriptionUrl;
+        return $this->availabilityNotificationConfig->getBaseUrlYves() . $unsubscriptionUrl;
     }
 
     /**

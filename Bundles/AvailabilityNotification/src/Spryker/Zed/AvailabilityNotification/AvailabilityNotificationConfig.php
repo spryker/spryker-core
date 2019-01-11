@@ -16,7 +16,7 @@ class AvailabilityNotificationConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getBaseUrl()
+    public function getBaseUrlYves(): string
     {
         return Config::get(ApplicationConstants::BASE_URL_YVES);
     }

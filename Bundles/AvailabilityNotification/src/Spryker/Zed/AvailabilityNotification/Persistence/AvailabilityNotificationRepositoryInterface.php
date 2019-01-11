@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence;
 
+use Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
@@ -27,4 +28,12 @@ interface AvailabilityNotificationRepositoryInterface
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
     public function findOneBySubscriptionKey(string $subscriptionKey): ?AvailabilitySubscriptionTransfer;
+
+    /**
+     * @param string $sku
+     * @param int $fkStore
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer
+     */
+    public function findBySkuAndStore(string $sku, int $fkStore): AvailabilitySubscriptionCollectionTransfer;
 }

@@ -7,8 +7,24 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+
 interface AvailabilityNotificationToProductFacadeInterface
 {
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstractById($idProductAbstract);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductUrlTransfer
+     */
+    public function getProductUrl(ProductAbstractTransfer $productAbstractTransfer);
+
     /**
      * @param string $concreteSku
      *

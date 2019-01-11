@@ -16,4 +16,12 @@ interface AvailabilityNotificationToPriceProductFacadeInterface
      * @return int|null
      */
     public function findPriceBySku($sku, $priceTypeName = null);
+
+    /**
+     * @param string $sku
+     * @param string|null $priceTypeName
+     *
+     * @return int|null
+     */
+    public function findProductPriceBySku(string $sku, ?string $priceTypeName = null): ?int;
 }

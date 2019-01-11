@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface AvailabilityNotificationFacadeInterface
 {
@@ -65,4 +66,17 @@ interface AvailabilityNotificationFacadeInterface
      * @return void
      */
     public function anonymizeSubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void;
+
+    /**
+     * Specification:
+     * - Send mails to all users which subscribed to product availability notification.
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return void
+     */
+    public function processAvailabilityNotificationSubscription(string $sku, StoreTransfer $storeTransfer): void;
 }

@@ -14,6 +14,8 @@ use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubsc
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGenerator;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionMailProcessor;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionMailProcessorInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionProcessor;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionProcessorInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaver;
@@ -34,6 +36,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
  * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface getRepository()
  * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
  */
 class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
 {
@@ -100,6 +103,20 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
             $this->getMailFacade(),
             $this->getProductFacade(),
             $this->getMoneyFacade(),
+            $this->getPriceProductFacade(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionMailProcessorInterface
+     */
+    public function createAvailabilityNotificationMailProcessor(): AvailabilitySubscriptionMailProcessorInterface
+    {
+        return new AvailabilitySubscriptionMailProcessor(
+            $this->getRepository(),
+            $this->getMailFacade(),
+            $this->getProductFacade(),
             $this->getPriceProductFacade(),
             $this->getConfig()
         );

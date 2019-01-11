@@ -27,9 +27,9 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
     public const FACADE_MAIL = 'FACADE_MAIL';
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
-    public const FACADE_STORE = 'FACADE_STORE';
-    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_MONEY = 'FACADE_MONEY';
 
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
@@ -63,6 +63,22 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
     {
         $container = $this->addMailFacade($container);
         $container = $this->addGlossaryFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductFacade(Container $container): Container
+    {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
+            return new AvailabilityNotificationToProductFacadeBridge(
+                $container->getLocator()->product()->facade()
+            );
+        };
 
         return $container;
     }
@@ -132,20 +148,6 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
     {
         $container[static::FACADE_MAIL] = function (Container $container) {
             return new AvailabilityNotificationToMailFacadeBridge($container->getLocator()->mail()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductFacade(Container $container): Container
-    {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
-            return new AvailabilityNotificationToProductFacadeBridge($container->getLocator()->product()->facade());
         };
 
         return $container;
