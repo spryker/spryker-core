@@ -26,9 +26,8 @@ class QuoteApprovalValidator implements QuoteApprovalValidatorInterface
     /**
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface $quoteFacade
      */
-    public function __construct(
-        QuoteApprovalToQuoteFacadeInterface $quoteFacade
-    ) {
+    public function __construct(QuoteApprovalToQuoteFacadeInterface $quoteFacade)
+    {
         $this->quoteFacade = $quoteFacade;
     }
 
@@ -84,6 +83,10 @@ class QuoteApprovalValidator implements QuoteApprovalValidatorInterface
     {
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById($quoteApprovalTransfer->getFkQuote());
 
-        return $this->can(ApproveQuotePermissionPlugin::KEY, $quoteResponseTransfer->getQuoteTransfer());
+        return $this->can(
+            ApproveQuotePermissionPlugin::KEY,
+            $quoteApprovalTransfer->getFkCompanyUser(),
+            $quoteResponseTransfer->getQuoteTransfer()
+        );
     }
 }

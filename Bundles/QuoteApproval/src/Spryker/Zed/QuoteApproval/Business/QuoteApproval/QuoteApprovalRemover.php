@@ -59,7 +59,7 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function cancelQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function cancelQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         $quoteApprovalResponseTransfer = (new QuoteApprovalResponseTransfer())
             ->setIsSuccessful(false);
@@ -79,7 +79,7 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
             return $quoteApprovalResponseTransfer;
         }
 
-        $this->quoteApprovalEntityManager->deleteQuoteApproval($quoteApprovalRequestTransfer->getIdQuoteApproval());
+        $this->quoteApprovalEntityManager->deleteQuoteApprovalById($quoteApprovalRequestTransfer->getIdQuoteApproval());
 
         $quoteApprovalResponseTransfer->setIsSuccessful(true)
             ->setMessage($this->quoteApprovalMessageBuilder->getSuccessMessage($quoteApprovalTransfer, self::STATUS_NAME));

@@ -22,17 +22,17 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
      */
     public function findQuoteApprovalById(int $idQuoteApproval): ?QuoteApprovalTransfer
     {
-        $spyQuoteApproval = $this->getFactory()
+        $quoteApprovalEntity = $this->getFactory()
             ->createSpyQuoteApprovalQuery()
             ->findOneByIdQuoteApproval($idQuoteApproval);
 
-        if ($spyQuoteApproval === null) {
+        if ($quoteApprovalEntity === null) {
             return null;
         }
 
         $quoteApprovalTransfer = $this->getFactory()
             ->createQuoteApprovalMapper()
-            ->mapEntityToQuoteApprovalTransfer($spyQuoteApproval, new QuoteApprovalTransfer());
+            ->mapEntityToQuoteApprovalTransfer($quoteApprovalEntity, new QuoteApprovalTransfer());
 
         return $quoteApprovalTransfer;
     }

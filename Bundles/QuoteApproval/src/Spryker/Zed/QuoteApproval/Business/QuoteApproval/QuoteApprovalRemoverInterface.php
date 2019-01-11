@@ -17,5 +17,5 @@ interface QuoteApprovalRemoverInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function cancelQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer;
+    public function cancelQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer;
 }

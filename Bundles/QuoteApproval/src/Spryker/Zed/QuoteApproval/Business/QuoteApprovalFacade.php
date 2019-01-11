@@ -27,11 +27,11 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function approveQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function approveQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteApprovalWriter()
-            ->approveQuote($quoteApprovalRequestTransfer);
+            ->approveQuoteApproval($quoteApprovalRequestTransfer);
     }
 
     /**
@@ -43,11 +43,11 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function declineQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function declineQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteApprovalWriter()
-            ->declineQuote($quoteApprovalRequestTransfer);
+            ->declineQuoteApproval($quoteApprovalRequestTransfer);
     }
 
     /**
@@ -59,10 +59,10 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function cancelQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function cancelQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteApprovalRemover()
-            ->cancelQuote($quoteApprovalRequestTransfer);
+            ->cancelQuoteApproval($quoteApprovalRequestTransfer);
     }
 }

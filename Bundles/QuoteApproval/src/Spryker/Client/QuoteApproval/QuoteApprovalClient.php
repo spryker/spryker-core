@@ -25,11 +25,11 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function approveQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function approveQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteApprovalStub()
-            ->approveQuote($quoteApprovalRequestTransfer);
+            ->approveQuoteApproval($quoteApprovalRequestTransfer);
     }
 
     /**
@@ -41,11 +41,11 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function declineQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function declineQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteApprovalStub()
-            ->declineQuote($quoteApprovalRequestTransfer);
+            ->declineQuoteApproval($quoteApprovalRequestTransfer);
     }
 
     /**
@@ -57,10 +57,10 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function cancelQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function cancelQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteApprovalStub()
-            ->cancelQuote($quoteApprovalRequestTransfer);
+            ->cancelQuoteApproval($quoteApprovalRequestTransfer);
     }
 }

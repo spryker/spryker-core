@@ -8,9 +8,9 @@
 namespace Spryker\Client\QuoteApproval;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStub;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface;
-use Spryker\Zed\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface;
 
 class QuoteApprovalFactory extends AbstractFactory
 {
@@ -25,7 +25,7 @@ class QuoteApprovalFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface
+     * @return \Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface
      */
     public function getZedRequestClient(): QuoteApprovalToZedRequestClientInterface
     {

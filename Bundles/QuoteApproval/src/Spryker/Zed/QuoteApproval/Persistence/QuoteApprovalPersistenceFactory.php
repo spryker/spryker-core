@@ -10,7 +10,6 @@ namespace Spryker\Zed\QuoteApproval\Persistence;
 use Orm\Zed\QuoteApproval\Persistence\SpyQuoteApprovalQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\QuoteApproval\Persistence\Mapper\QuoteApprovalMapper;
-use Spryker\Zed\QuoteApproval\Persistence\Mapper\QuoteApprovalMapperInterface;
 
 /**
  * @method \Spryker\Zed\QuoteApproval\QuoteApprovalConfig getConfig()
@@ -29,9 +28,9 @@ class QuoteApprovalPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApproval\Persistence\Mapper\QuoteApprovalMapperInterface
+     * @return \Spryker\Zed\QuoteApproval\Persistence\Mapper\QuoteApprovalMapper
      */
-    public function createQuoteApprovalMapper(): QuoteApprovalMapperInterface
+    public function createQuoteApprovalMapper(): QuoteApprovalMapper
     {
         return new QuoteApprovalMapper();
     }

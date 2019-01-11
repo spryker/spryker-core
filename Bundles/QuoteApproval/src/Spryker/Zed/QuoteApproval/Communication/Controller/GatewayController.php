@@ -21,9 +21,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function approveQuoteAction(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function approveQuoteApprovalAction(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-        return $this->getFacade()->approveQuote($quoteApprovalRequestTransfer);
+        return $this->getFacade()->approveQuoteApproval($quoteApprovalRequestTransfer);
     }
 
     /**
@@ -31,9 +31,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function declineQuoteAction(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function declineQuoteApprovalAction(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-        return $this->getFacade()->declineQuote($quoteApprovalRequestTransfer);
+        return $this->getFacade()->declineQuoteApproval($quoteApprovalRequestTransfer);
     }
 
     /**
@@ -41,8 +41,8 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function cancelQuoteAction(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function cancelQuoteApprovalAction(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-        return $this->getFacade()->cancelQuote($quoteApprovalRequestTransfer);
+        return $this->getFacade()->cancelQuoteApproval($quoteApprovalRequestTransfer);
     }
 }

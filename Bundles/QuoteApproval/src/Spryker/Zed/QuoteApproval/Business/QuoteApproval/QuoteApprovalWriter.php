@@ -59,7 +59,7 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function approveQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function approveQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         return $this->updateQuoteWithStatus($quoteApprovalRequestTransfer, QuoteApprovalConfig::STATUS_APPROVED);
     }
@@ -69,7 +69,7 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function declineQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function declineQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         return $this->updateQuoteWithStatus($quoteApprovalRequestTransfer, QuoteApprovalConfig::STATUS_DECLINED);
     }
@@ -82,7 +82,8 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
      */
     protected function updateQuoteWithStatus(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer, string $status): QuoteApprovalResponseTransfer
     {
-        $quoteApprovalResponseTransfer = $this->createDefaultQuoteApprovalResponseTransfer();
+        $quoteApprovalResponseTransfer = (new QuoteApprovalResponseTransfer())
+            ->setIsSuccessful(false);
 
         if (!$quoteApprovalRequestTransfer->getIdQuoteApproval()) {
             return $quoteApprovalResponseTransfer;
@@ -102,15 +103,6 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
         $quoteApprovalResponseTransfer = $this->updateQuoteApprovalWithStatus($quoteApprovalTransfer, $status);
 
         return $quoteApprovalResponseTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
-     */
-    protected function createDefaultQuoteApprovalResponseTransfer(): QuoteApprovalResponseTransfer
-    {
-        return (new QuoteApprovalResponseTransfer())
-            ->setIsSuccessful(false);
     }
 
     /**

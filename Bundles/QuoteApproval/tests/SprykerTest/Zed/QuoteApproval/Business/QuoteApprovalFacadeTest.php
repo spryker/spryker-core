@@ -19,6 +19,7 @@ use Orm\Zed\QuoteApproval\Persistence\SpyQuoteApprovalQuery;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
+use Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -88,6 +89,7 @@ class QuoteApprovalFacadeTest extends Unit
             CompanyUserTransfer::COMPANY_ROLE_COLLECTION => new ArrayObject($this->companyRole),
         ]);
 
+        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
         $storeTransfer = $this->tester->haveStore();
 
         $quoteEntity = new SpyQuote();
@@ -114,7 +116,7 @@ class QuoteApprovalFacadeTest extends Unit
             ->setIdQuoteApproval($quoteApprovalEntity->getIdQuoteApproval());
 
         /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer */
-        $quoteApprovalResponseTransfer = $this->tester->getFacade()->approveQuote($quoteApprovalRequestTransfer);
+        $quoteApprovalResponseTransfer = $this->getFacade()->approveQuoteApproval($quoteApprovalRequestTransfer);
 
         $this->assertTrue($quoteApprovalResponseTransfer->getIsSuccessful());
         $this->assertSame($quoteApprovalResponseTransfer->getQuoteApproval()->getStatus(), QuoteApprovalConfig::STATUS_APPROVED);
@@ -132,7 +134,7 @@ class QuoteApprovalFacadeTest extends Unit
             ->setIdQuoteApproval($quoteApprovalEntity->getIdQuoteApproval());
 
         /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer */
-        $quoteApprovalResponseTransfer = $this->tester->getFacade()->declineQuote($quoteApprovalRequestTransfer);
+        $quoteApprovalResponseTransfer = $this->getFacade()->declineQuoteApproval($quoteApprovalRequestTransfer);
 
         $this->assertTrue($quoteApprovalResponseTransfer->getIsSuccessful());
         $this->assertSame($quoteApprovalResponseTransfer->getQuoteApproval()->getStatus(), QuoteApprovalConfig::STATUS_DECLINED);
@@ -149,7 +151,7 @@ class QuoteApprovalFacadeTest extends Unit
             ->setIdQuoteApproval($quoteApprovalEntity->getIdQuoteApproval());
 
         /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer */
-        $quoteApprovalResponseTransfer = $this->tester->getFacade()->cancelQuote($quoteApprovalRequestTransfer);
+        $quoteApprovalResponseTransfer = $this->getFacade()->cancelQuoteApproval($quoteApprovalRequestTransfer);
 
         $quoteApprovalCount = (new SpyQuoteApprovalQuery())
             ->findByIdQuoteApproval($quoteApprovalEntity->getIdQuoteApproval())
@@ -171,5 +173,13 @@ class QuoteApprovalFacadeTest extends Unit
             ->save();
 
         return $quoteApprovalEntity;
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacadeInterface
+     */
+    protected function getFacade(): QuoteApprovalFacadeInterface
+    {
+        return $this->getFacade();
     }
 }

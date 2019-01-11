@@ -9,17 +9,17 @@ namespace Spryker\Client\QuoteApproval\Zed;
 
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
-use Spryker\Zed\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface;
+use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface;
 
 class QuoteApprovalStub implements QuoteApprovalStubInterface
 {
     /**
-     * @var \Spryker\Zed\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface
+     * @var \Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface
      */
     protected $zedRequestClient;
 
     /**
-     * @param \Spryker\Zed\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface $zedRequestClient
+     * @param \Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface $zedRequestClient
      */
     public function __construct(QuoteApprovalToZedRequestClientInterface $zedRequestClient)
     {
@@ -31,11 +31,11 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function approveQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function approveQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer */
         $quoteApprovalResponseTransfer = $this->zedRequestClient->call(
-            '/quote-approval/gateway/approve-quote',
+            '/quote-approval/gateway/approve-quote-approval',
             $quoteApprovalRequestTransfer
         );
 
@@ -47,11 +47,11 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function declineQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function declineQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer */
         $quoteApprovalResponseTransfer = $this->zedRequestClient->call(
-            '/quote-approval/gateway/decline-quote',
+            '/quote-approval/gateway/decline-quote-approval',
             $quoteApprovalRequestTransfer
         );
 
@@ -63,11 +63,11 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function cancelQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function cancelQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer */
         $quoteApprovalResponseTransfer = $this->zedRequestClient->call(
-            '/quote-approval/gateway/cancel-quote',
+            '/quote-approval/gateway/cancel-quote-approval',
             $quoteApprovalRequestTransfer
         );
 

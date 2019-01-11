@@ -9,7 +9,7 @@ namespace Spryker\Client\QuoteApproval;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Zed\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientBridge;
+use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientBridge;
 
 class QuoteApprovalDependencyProvider extends AbstractDependencyProvider
 {

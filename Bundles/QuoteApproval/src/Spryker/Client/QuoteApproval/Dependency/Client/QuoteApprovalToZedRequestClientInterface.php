@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteApproval\Dependency\Client;
+namespace Spryker\Client\QuoteApproval\Dependency\Client;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
