@@ -10,6 +10,8 @@ namespace Spryker\Zed\Availability\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 interface AvailabilityFacadeInterface
@@ -85,6 +87,18 @@ interface AvailabilityFacadeInterface
      * @return int
      */
     public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer);
+
+    /**
+     * Specification:
+     *  - Checks if product in shopping list item is available.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
+     */
+    public function checkShoppingListItemProductIsAvailable(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListPreAddItemCheckResponseTransfer;
 
     /**
      * Specification:

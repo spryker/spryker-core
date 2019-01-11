@@ -9,7 +9,6 @@ namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem;
 
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
-use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig as SharedShoppingListsRestApiConfig;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface;
 
 class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
@@ -20,19 +19,27 @@ class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
     protected $shoppingListFacade;
 
     /**
+     * @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemMapperInterface
+     */
+    protected $shoppingListItemMapper;
+
+    /**
      * @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemReaderInterface
      */
     protected $shoppingListItemReader;
 
     /**
      * @param \Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface $shoppingListFacade
+     * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemMapperInterface $shoppingListItemMapper
      * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemReaderInterface $shoppingListItemReader
      */
     public function __construct(
         ShoppingListsRestApiToShoppingListFacadeInterface $shoppingListFacade,
+        ShoppingListItemMapperInterface $shoppingListItemMapper,
         ShoppingListItemReaderInterface $shoppingListItemReader
     ) {
         $this->shoppingListFacade = $shoppingListFacade;
+        $this->shoppingListItemMapper = $shoppingListItemMapper;
         $this->shoppingListItemReader = $shoppingListItemReader;
     }
 
@@ -64,7 +71,9 @@ class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
         $shoppingListItemResponseTransfer = $this->shoppingListFacade->removeItemById($shoppingListItemResponseTransfer->getShoppingListItem());
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
-            return $shoppingListItemResponseTransfer->addError(SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_DELETE_ITEM);
+            return $this->shoppingListItemMapper->mapShoppingListResponseErrorsToRestCodes(
+                $shoppingListItemResponseTransfer
+            );
         }
 
         return $shoppingListItemResponseTransfer;

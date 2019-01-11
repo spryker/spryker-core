@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
+use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
@@ -14,6 +17,8 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterfac
 
 class Sellable implements SellableInterface
 {
+    protected const ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_AVAILABLE = 'customer.account.shopping_list_item.error.product_not_available';
+
     /**
      * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
      */
@@ -107,6 +112,32 @@ class Sellable implements SellableInterface
     public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer)
     {
         return $this->calculateStock($sku, $storeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
+     */
+    public function checkShoppingListItemProductIsAvailable(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListPreAddItemCheckResponseTransfer {
+        $shoppingListPreAddItemCheckResponseTransfer = new ShoppingListPreAddItemCheckResponseTransfer();
+
+        if ($this->isProductSellable(
+            $shoppingListItemTransfer->getSku(),
+            $shoppingListItemTransfer->getQuantity()
+        )) {
+            return $shoppingListPreAddItemCheckResponseTransfer
+                ->setIsSuccess(true);
+        }
+
+        return $shoppingListPreAddItemCheckResponseTransfer
+            ->setIsSuccess(false)
+            ->addMessage(
+                (new MessageTransfer())
+                    ->setValue(static::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_AVAILABLE)
+            );
     }
 
     /**

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\RestShoppingListRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
+use Spryker\Zed\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
 class ShoppingListItemMapper implements ShoppingListItemMapperInterface
 {
@@ -46,5 +47,23 @@ class ShoppingListItemMapper implements ShoppingListItemMapperInterface
     ): ShoppingListItemResponseTransfer {
         return $shoppingListItemResponseTransfer->setIsSuccess(false)
             ->setErrors($shoppingListResponseTransfer->getErrors());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function mapShoppingListResponseErrorsToRestCodes(
+        ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
+    ): ShoppingListItemResponseTransfer {
+        $errorCodes = [];
+        foreach ($shoppingListItemResponseTransfer->getErrors() as $error) {
+            $errorCodes[] = ShoppingListsRestApiConfig::RESPONSE_ERROR_MAP[$error] ?? $error;
+        }
+
+        $shoppingListItemResponseTransfer->setErrors($errorCodes);
+
+        return $shoppingListItemResponseTransfer;
     }
 }

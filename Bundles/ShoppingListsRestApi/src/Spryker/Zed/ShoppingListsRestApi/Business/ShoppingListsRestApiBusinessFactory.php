@@ -108,6 +108,7 @@ class ShoppingListsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new ShoppingListItemUpdater(
             $this->getShoppingListFacade(),
+            $this->createShoppingListItemMapper(),
             $this->createShoppingListItemReader()
         );
     }
@@ -119,6 +120,7 @@ class ShoppingListsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new ShoppingListItemDeleter(
             $this->getShoppingListFacade(),
+            $this->createShoppingListItemMapper(),
             $this->createShoppingListItemReader()
         );
     }

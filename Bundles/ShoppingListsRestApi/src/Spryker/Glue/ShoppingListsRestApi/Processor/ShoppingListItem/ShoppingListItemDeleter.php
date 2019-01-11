@@ -73,7 +73,7 @@ class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
             );
         }
 
-        $shoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->deleteItem($restShoppingListItemRequestTransfer);
+        $shoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->deleteShoppingListItem($restShoppingListItemRequestTransfer);
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
             return $this->restResponseWriter->writeErrorsFromErrorCodes(

@@ -117,7 +117,7 @@ class ShoppingListsRestApiFacade extends AbstractFacade implements ShoppingLists
     public function addShoppingListItem(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
-        return $this->getFactory()->createShoppingListItemAdder()->addItem($restShoppingListItemRequestTransfer);
+        return $this->getFactory()->createShoppingListItemAdder()->addShoppingListItem($restShoppingListItemRequestTransfer);
     }
 
     /**
