@@ -34,17 +34,4 @@ class Container extends KernelContainer implements TestifyContainerInterface
     {
         return $this->locator;
     }
-
-    /**
-     * @param string $key
-     * @param mixed $value
-     *
-     * @return $this
-     */
-    public function set($key, $value)
-    {
-        $this[$key] = $value;
-
-        return $this;
-    }
 }
