@@ -124,9 +124,7 @@ class QuoteApprovalStatusCalculatorTest extends Unit
      */
     public function testCalculateQuoteStatusWithEmptyDataShouldReturnNull(): void
     {
-        $statuses = [];
-
-        $quoteTransfer = $this->createQuoteTransfer($statuses);
+        $quoteTransfer = $this->createQuoteTransfer();
         $result = $this->createQuoteApprovalStatusCalculator()->calculateQuoteStatus($quoteTransfer);
 
         $this->assertNull($result);
@@ -137,7 +135,7 @@ class QuoteApprovalStatusCalculatorTest extends Unit
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer(array $statuses): QuoteTransfer
+    protected function createQuoteTransfer(array $statuses = []): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setApprovals($this->createQuoteApprovalTransfers($statuses));
