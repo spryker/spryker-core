@@ -242,7 +242,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function saveOrderShipment(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         $this->getFactory()
-            ->createCheckoutShipmentOrderSaver()
+            ->createCheckoutShipmentOrderSaverStrategyResolver()
+            ->resolveByQuote($quoteTransfer)
             ->saveOrderShipment($quoteTransfer, $saveOrderTransfer);
     }
 

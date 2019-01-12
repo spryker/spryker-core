@@ -37,7 +37,7 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
         AddressInterface $address,
         CustomerRepositoryInterface $customerRepository
     ) {
-        parent::__construct();
+        parent::__construct($customer, $address);
 
         $this->customerRepository = $customerRepository;
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Persistence;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -31,5 +32,41 @@ class SalesEntityManager extends AbstractEntityManager implements SalesEntityMan
         $expenseTransfer->setIdSalesExpense($salesOrderExpenseEntity->getIdSalesExpense());
 
         return $expenseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function createSalesOrderAddress(AddressTransfer $addressTransfer): AddressTransfer
+    {
+        $salesOrderAddressEntity = $this->getFactory()
+            ->createSalesOrderAddressMapper()
+            ->mapAddressTransferToSalesOrderAddressEntity($addressTransfer);
+
+        $salesOrderAddressEntity->save();
+
+        $addressTransfer->setIdSalesOrderAddress($salesOrderAddressEntity->getIdSalesOrderAddress());
+
+        return $addressTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function updateSalesOrderAddress(AddressTransfer $addressTransfer): AddressTransfer
+    {
+        $salesOrderAddressEntity = $this->getFactory()
+            ->createSalesOrderAddressMapper()
+            ->mapAddressTransferToSalesOrderAddressEntity($addressTransfer);
+
+        $salesOrderAddressEntity->save();
+
+        $addressTransfer->setIdSalesOrderAddress($salesOrderAddressEntity->getIdSalesOrderAddress());
+
+        return $addressTransfer;
     }
 }

@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyBridge;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreBridge;
 use Spryker\Zed\Shipment\Dependency\Service\ShipmentToSalesServiceBridge;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
@@ -32,11 +33,13 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_TAX = 'FACADE_TAX';
     public const SHIPMENT_METHOD_FILTER_PLUGINS = 'SHIPMENT_METHOD_FILTER_PLUGINS';
 
     public const SERVICE_SALES = 'SERVICE_SALES';
+    public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -99,6 +102,20 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addSalesFacade(Container $container): Container
+    {
+        $container[static::FACADE_SALES] = function (Container $container) {
+            return new ShipmentToSalesFacadeBridge($container->getLocator()->sales()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addStoreFacade(Container $container)
     {
         $container[static::FACADE_STORE] = function (Container $container) {
@@ -141,6 +158,20 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addShipmentService(Container $container)
+    {
+        $container[static::SERVICE_SHIPMENT] = function (Container $container) {
+            return $container->getLocator()->shipment()->service();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[static::PLUGINS] = function (Container $container) {
@@ -160,9 +191,11 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container = $this->addCurrencyFacade($container);
+        $container = $this->addSalesFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMethodFilterPlugins($container);
         $container = $this->addSalesService($container);
+        $container = $this->addShipmentService($container);
 
         return $container;
     }

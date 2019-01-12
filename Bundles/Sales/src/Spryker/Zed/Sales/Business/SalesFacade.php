@@ -288,8 +288,24 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress)
     {
         return $this->getFactory()
-            ->createOrderAddressUpdater()
-            ->update($addressesTransfer, $idAddress);
+            ->createOrderAddressWriter()
+            ->update($addressesTransfer, (int)$idAddress);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function createOrderAddress(AddressTransfer $addressesTransfer): AddressTransfer
+    {
+        return $this->getFactory()
+            ->createOrderAddressWriter()
+            ->create($addressesTransfer);
     }
 
     /**

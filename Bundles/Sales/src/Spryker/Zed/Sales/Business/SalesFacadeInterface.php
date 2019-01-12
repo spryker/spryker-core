@@ -121,6 +121,19 @@ interface SalesFacadeInterface
     public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress);
 
     /**
+     * Specification:
+     * - Creates new order address with values from the addresses transfer
+     * - Returns addresses transfer with id of newly created order address.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function createOrderAddress(AddressTransfer $addressesTransfer): AddressTransfer;
+
+    /**
      * Returns a list of of orders for the given customer id and (optional) filters.
      *
      * @api

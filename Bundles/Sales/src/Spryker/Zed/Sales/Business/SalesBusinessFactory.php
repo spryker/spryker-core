@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Sales\Business\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriter;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface;
 use Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdater;
@@ -278,6 +279,18 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createOrderAddressUpdater()
     {
         return new OrderAddressUpdater($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface
+     */
+    public function createOrderAddressWriter()
+    {
+        return new OrderAddressWriter(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->getCountryFacade()
+        );
     }
 
     /**
