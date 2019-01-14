@@ -726,7 +726,7 @@ class ProductFormAdd extends AbstractType
      *
      * @return $this
      */
-    protected function executeProductAbstractFormExpanderPlugins(FormBuilderInterface $builder, array $options): self
+    protected function executeProductAbstractFormExpanderPlugins(FormBuilderInterface $builder, array $options)
     {
         foreach ($this->getFactory()->getProductAbstractFormExpanderPlugins() as $formExpanderPlugin) {
             $builder = $formExpanderPlugin->expand($builder, $options);
