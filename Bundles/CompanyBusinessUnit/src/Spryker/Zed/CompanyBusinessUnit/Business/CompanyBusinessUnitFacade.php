@@ -145,6 +145,24 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
      *
      * @api
      *
+     * @internal will work if uuid field is provided.
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|null
+     */
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitReader()
+            ->findCompanyBusinessUnitByUuid($companyBusinessUnitTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer

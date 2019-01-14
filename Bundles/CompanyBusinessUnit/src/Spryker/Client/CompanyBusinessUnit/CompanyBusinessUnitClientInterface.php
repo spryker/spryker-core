@@ -32,6 +32,18 @@ interface CompanyBusinessUnitClientInterface
 
     /**
      * Specification:
+     * - Finds a company business unit by uuid in the transfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|null
+     */
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitResponseTransfer;
+
+    /**
+     * Specification:
      * - Creates new company business unit.
      *
      * @api

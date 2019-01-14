@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" name="zed" namespace="Orm\Zed\CompanyBusinessUnit\Persistence" package="src.Orm.Zed.CompanyBusinessUnit.Persistence">
+
+    <table name="spy_company_business_unit" phpName="SpyCompanyBusinessUnit">
+        <column name="uuid" required="false" type="VARCHAR" size="36"/>
+        <unique name="spy_company_business_unit-unique-uuid">
+            <unique-column name="uuid"/>
+        </unique>
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_company_business_unit.fk_company"/>
+        </behavior>
+    </table>
+
+</database>

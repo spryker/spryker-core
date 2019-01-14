@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFinder;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface;
@@ -46,5 +47,27 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
         $companyBusinessUnitTransfer = $this->companyBusinessUnitPluginExecutor->executeTransferExpanderPlugins($companyBusinessUnitTransfer);
 
         return $companyBusinessUnitTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|null
+     */
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitResponseTransfer
+    {
+        $companyBusinessUnitResponseTransfer = (new CompanyBusinessUnitResponseTransfer())->setIsSuccessful(false);
+
+        $companyBusinessUnitTransfer = $this->companyBusinessUnitRepository->findCompanyBusinessUnitByUuid(
+            $companyBusinessUnitTransfer->getUuid()
+        );
+        if (!$companyBusinessUnitTransfer) {
+            return $companyBusinessUnitResponseTransfer;
+        }
+
+        return $companyBusinessUnitResponseTransfer
+            ->setIsSuccessful(true)
+            ->setCompanyBusinessUnitTransfer($this->companyBusinessUnitPluginExecutor
+                ->executeTransferExpanderPlugins($companyBusinessUnitTransfer));
     }
 }
