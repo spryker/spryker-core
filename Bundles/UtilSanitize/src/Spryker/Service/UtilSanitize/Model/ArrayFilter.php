@@ -20,23 +20,15 @@ class ArrayFilter implements ArrayFilterInterface
     {
         $filteredArray = [];
         foreach ($array as $key => $value) {
-            if ($value === null) {
+            if (is_array($value)) {
+                $value = $this->arrayFilterRecursive($value);
+            }
+
+            if ($this->isEmptyValue($value)) {
                 continue;
             }
 
-            if ($this->isValidArray($value)) {
-                $result = $this->arrayFilterRecursive($value);
-                if (!$result) {
-                    continue;
-                }
-
-                $filteredArray[$key] = $result;
-                continue;
-            }
-
-            if ($this->isValidCountable($value) || $this->isValidScalar($value)) {
-                $filteredArray[$key] = $value;
-            }
+            $filteredArray[$key] = $value;
         }
 
         return $filteredArray;
@@ -47,28 +39,16 @@ class ArrayFilter implements ArrayFilterInterface
      *
      * @return bool
      */
-    protected function isValidArray($value): bool
+    protected function isEmptyValue($value): bool
     {
-        return is_array($value) && $value;
-    }
+        if (is_string($value)) {
+            return $value === '';
+        }
 
-    /**
-     * @param mixed $value
-     *
-     * @return bool
-     */
-    protected function isValidCountable($value): bool
-    {
-        return $value instanceof Countable && count($value) !== 0;
-    }
+        if ($value instanceof Countable || is_array($value)) {
+            return count($value) === 0;
+        }
 
-    /**
-     * @param mixed $value
-     *
-     * @return bool
-     */
-    protected function isValidScalar($value): bool
-    {
-        return is_bool($value) || is_numeric($value) || (is_string($value) && $value !== '') || (!$value instanceof Countable && $value);
+        return !(is_scalar($value) || $value);
     }
 }
