@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConfig;
 use Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConnectorToShipmentFacadeInterface;
 
+/**
+ * @deprecated Use \Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheck instead.
+ */
 class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
 {
     public const TRANSLATION_KEY_SHIPMENT_NOT_VALID = 'checkout.pre.check.shipment.failed';

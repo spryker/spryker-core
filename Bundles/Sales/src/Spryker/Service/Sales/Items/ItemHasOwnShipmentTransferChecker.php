@@ -7,7 +7,7 @@
 
 namespace Spryker\Service\Sales\Items;
 
-use \ArrayObject;
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 

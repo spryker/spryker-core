@@ -10,7 +10,7 @@ namespace Spryker\Service\Shipment;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Service\Kernel\AbstractService;
-use \ArrayObject;
+use ArrayObject;
 use Spryker\Service\Shipment\Items\ItemHasOwnShipmentTransferCheckerInterface;
 use Spryker\Service\Shipment\Items\ItemsGrouperInterface;
 

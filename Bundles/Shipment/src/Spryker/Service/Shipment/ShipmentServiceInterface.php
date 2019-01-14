@@ -6,7 +6,7 @@
  */
 namespace Spryker\Service\Shipment;
 
-use \ArrayObject;
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 

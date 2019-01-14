@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Sales\SalesConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
-use \ArrayObject;
+use ArrayObject;
 
 class SalesConfig extends AbstractBundleConfig
 {
@@ -114,6 +114,8 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Remove this code after multiple shipment will be released.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -147,6 +149,8 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Remove this code after multiple shipment will be released.
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return bool
