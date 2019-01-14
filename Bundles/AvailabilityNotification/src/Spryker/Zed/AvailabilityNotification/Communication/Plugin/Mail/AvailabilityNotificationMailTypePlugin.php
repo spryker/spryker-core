@@ -54,10 +54,10 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
      *
      * @return $this
      */
-    protected function setSubject(MailBuilderInterface $mailBuilder)
+    protected function setSubject(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $productLocalizedName = $mailBuilder->getMailTransfer()->getLocalizedAttributes()->getName();
-        $subject = $productLocalizedName . ' is available again!';
+        $subject = sprintf('%s is available again!', $productLocalizedName);
         $mailBuilder->setSubject($subject);
 
         return $this;
@@ -68,7 +68,7 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
      *
      * @return $this
      */
-    protected function setHtmlTemplate(MailBuilderInterface $mailBuilder)
+    protected function setHtmlTemplate(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $mailBuilder->setHtmlTemplate('AvailabilityNotification/mail/notification.html.twig');
 
@@ -80,7 +80,7 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
      *
      * @return $this
      */
-    protected function setTextTemplate(MailBuilderInterface $mailBuilder)
+    protected function setTextTemplate(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $mailBuilder->setTextTemplate('AvailabilityNotification/mail/notification.text.twig');
 
@@ -92,7 +92,7 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
      *
      * @return $this
      */
-    protected function setRecipient(MailBuilderInterface $mailBuilder)
+    protected function setRecipient(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $customerTransfer = $mailBuilder->getMailTransfer()->requireAvailabilitySubscription()->getAvailabilitySubscription();
 
@@ -106,7 +106,7 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
      *
      * @return $this
      */
-    protected function setSender(MailBuilderInterface $mailBuilder)
+    protected function setSender(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
 

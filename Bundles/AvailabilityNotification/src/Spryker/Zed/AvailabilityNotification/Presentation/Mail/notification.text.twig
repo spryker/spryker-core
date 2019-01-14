@@ -1,14 +1,14 @@
 {{ mail.localizedAttributes.name }}
-{{ 'You can now add' | trans ~ ' ' ~ mail.localizedAttributes.name ~ ' to your cart again, do not miss this opportunity!' }}
+{{ 'You can now add' | trans ~ ' ' ~ mail.localizedAttributes.name ~ ' to your cart again, do not miss this opportunity!' | trans }}
 
 {{ mail.localizedAttributes.name }}
-Attributes:
+{{ 'Attributes:' | trans }}
 {% for attribute in mail.localizedAttributes.attributes %}
     {{ attribute }}
 {% endfor %}
-Price: {{ mail.productPrice | money(true, mail.currencyIsoCode) }}
+{{ 'Price:' | trans }} {{ mail.productPrice | money(true, mail.currencyIsoCode) }}
 
-Copyright © current year company name, All rights reserved.
+{{ 'Copyright © current year company name, All rights reserved.' | trans }}
 
-Want to change how you receive these emails?
-You can unsubscribe from this list.
+{{ 'Want to change how you receive these emails?
+You can unsubscribe from this list.' | trans }}
