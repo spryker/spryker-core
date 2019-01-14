@@ -206,6 +206,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @todo: check for usages and remove if not.
+     *
      * @return \Spryker\Zed\Shipment\Dependency\Service\ShipmentToSalesServiceInterface
      */
     public function getSalesService(): ShipmentToSalesServiceInterface
@@ -214,7 +216,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Dependency\Service\ShipmentToSalesServiceInterface
+     * @return \Spryker\Service\Shipment\ShipmentServiceInterface
      */
     public function getShipmentService(): ShipmentToSalesServiceInterface
     {
@@ -233,7 +235,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         $strategyContainer = $this->addStrategySalesOrderSaverWithoutMultipleShippingAddress($strategyContainer);
         $strategyContainer = $this->addStrategySalesOrderSaverWithMultipleShippingAddress($strategyContainer);
 
-        return new TaxRateCalculatorStrategyResolver($this->getSalesService(), $strategyContainer);
+        return new TaxRateCalculatorStrategyResolver($this->getShipmentService(), $strategyContainer);
     }
 
     /**
@@ -276,7 +278,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         $strategyContainer = $this->addCheckoutShipmentOrderSaverWithoutMultipleShippingAddress($strategyContainer);
         $strategyContainer = $this->addCheckoutShipmentOrderSaverWithMultipleShippingAddress($strategyContainer);
 
-        return new OrderSaverStrategyResolver($this->getSalesService(), $strategyContainer);
+        return new OrderSaverStrategyResolver($this->getShipmentService(), $strategyContainer);
     }
 
     /**

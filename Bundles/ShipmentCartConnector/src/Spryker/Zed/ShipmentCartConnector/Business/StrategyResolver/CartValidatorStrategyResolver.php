@@ -4,35 +4,35 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Shipment\Business\StrategyResolver;
+namespace Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface;
+use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface;
+use Spryker\Zed\ShipmentCartConnector\Dependency\Service\ShipmentCartConnectorToShipmentServiceInterface;
 
 /**
  * @deprecated Remove strategy resolver after multiple shipment will be released.
  */
-class TaxRateCalculatorStrategyResolver implements TaxRateCalculatorStrategyResolverInterface
+class CartValidatorStrategyResolver implements CartValidatorStrategyResolverInterface
 {
     /**
-     * @var \Spryker\Zed\Shipment\Dependency\Service\ShipmentToSalesServiceInterface
+     * @var \Spryker\Zed\ShipmentCartConnector\Dependency\Service\ShipmentCartConnectorToShipmentServiceInterface
      */
     protected $service;
 
     /**
-     * @var \Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface[]
+     * @var \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface[]
      */
     protected $strategyContainer;
 
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @param \Spryker\Service\Shipment\ShipmentServiceInterface $service
-     * @param array|\Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface[] $strategyContainer
+     * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Service\ShipmentCartConnectorToShipmentServiceInterface $service
+     * @param array|\Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface[] $strategyContainer
      */
-    public function __construct(ShipmentServiceInterface $service, array $strategyContainer)
+    public function __construct(ShipmentCartConnectorToShipmentServiceInterface $service, array $strategyContainer)
     {
         $this->service = $service;
         $this->strategyContainer = $strategyContainer;
@@ -43,9 +43,9 @@ class TaxRateCalculatorStrategyResolver implements TaxRateCalculatorStrategyReso
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface
+     * @return \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface
      */
-    public function resolveByQuote(QuoteTransfer $quoteTransfer): CalculatorInterface
+    public function resolveByQuote(QuoteTransfer $quoteTransfer): ShipmentCartValidatorInterface
     {
         if ($this->service->checkQuoteItemHasOwnShipmentTransfer($quoteTransfer) === false) {
             return $this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT];

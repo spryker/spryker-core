@@ -9,6 +9,9 @@ namespace Spryker\Zed\TaxProductConnector\Business\StrategyResolver;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 
+/**
+ * @deprecated Remove strategy resolver after multiple shipment will be released.
+ */
 interface ProductItemTaxRateCalculatorStrategyResolverInterface
 {
     public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';

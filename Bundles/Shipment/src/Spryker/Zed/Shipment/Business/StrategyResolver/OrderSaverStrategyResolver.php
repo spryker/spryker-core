@@ -7,9 +7,9 @@
 namespace Spryker\Zed\Shipment\Business\StrategyResolver;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface;
-use Spryker\Zed\Shipment\Dependency\Service\ShipmentToSalesServiceInterface;
+use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface;
 
 /**
  * @deprecated Remove strategy resolver after multiple shipment will be released.
@@ -22,17 +22,17 @@ class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
     protected $service;
 
     /**
-     * @var \Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface[]
+     * @var \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface[]
      */
     protected $strategyContainer;
 
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @param \Spryker\Zed\Shipment\Dependency\Service\ShipmentToSalesServiceInterface $service
-     * @param array|\Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface[] $strategyContainer
+     * @param \Spryker\Service\Shipment\ShipmentServiceInterface $service
+     * @param array|\Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface[] $strategyContainer
      */
-    public function __construct(ShipmentToSalesServiceInterface $service, array $strategyContainer)
+    public function __construct(ShipmentServiceInterface $service, array $strategyContainer)
     {
         $this->service = $service;
         $this->strategyContainer = $strategyContainer;
@@ -43,9 +43,9 @@ class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface
+     * @return \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface
      */
-    public function resolveByQuote(QuoteTransfer $quoteTransfer): CalculatorInterface
+    public function resolveByQuote(QuoteTransfer $quoteTransfer): ShipmentOrderSaverInterface
     {
         if ($this->service->checkQuoteItemHasOwnShipmentTransfer($quoteTransfer) === false) {
             return $this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT];

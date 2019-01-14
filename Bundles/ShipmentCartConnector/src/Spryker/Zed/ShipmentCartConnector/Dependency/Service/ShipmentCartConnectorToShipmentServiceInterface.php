@@ -5,22 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Customer;
+namespace Spryker\Zed\ShipmentCartConnector\Dependency\Service;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-/**
- * @deprecated Remove service layer after multiple shipment will be released.
- */
-interface CustomerServiceInterface
+interface ShipmentCartConnectorToShipmentServiceInterface
 {
     /**
-     * Specification:
-     * - Checks quote item has own shipment transfer object.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -28,11 +20,6 @@ interface CustomerServiceInterface
     public function checkQuoteItemHasOwnShipmentTransfer(QuoteTransfer $quoteTransfer): bool;
 
     /**
-     * Specification:
-     * - Checks sales order item has own shipment transfer object.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool

@@ -7,8 +7,11 @@
 
 namespace Spryker\Service\Shipment;
 
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Service\Kernel\AbstractService;
 use \ArrayObject;
+use Spryker\Service\Shipment\Items\ItemHasOwnShipmentTransferCheckerInterface;
 use Spryker\Service\Shipment\Items\ItemsGrouperInterface;
 
 /**
@@ -20,6 +23,57 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
      * @var \Spryker\Service\Shipment\Items\ItemsGrouperInterface
      */
     protected $itemsGrouper;
+
+    /**
+     * @var \Spryker\Service\Shipment\Items\ItemHasOwnShipmentTransferCheckerInterface
+     */
+    protected $itemHasOwnShipmentTransferChecker;
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    public function groupItemsByShipment(ArrayObject $itemTransfers): ArrayObject
+    {
+        return $this->getItemsGrouper()->groupByShipment($itemTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @deprecated Remove strategy resolver after multiple shipment will be released.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function checkQuoteItemHasOwnShipmentTransfer(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getItemHasOwnShipmentTransferChecker()->checkByQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @deprecated Remove strategy resolver after multiple shipment will be released.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    public function checkOrderItemHasOwnShipmentTransfer(OrderTransfer $orderTransfer): bool
+    {
+        return $this->getItemHasOwnShipmentTransferChecker()->checkByOrder($orderTransfer);
+    }
 
     /**
      * @return \Spryker\Service\Shipment\Items\ItemsGrouperInterface
@@ -34,16 +88,14 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \Spryker\Service\Shipment\Items\ItemHasOwnShipmentTransferCheckerInterface
      */
-    public function groupItemsByShipment(ArrayObject $itemTransfers): ArrayObject
+    protected function getItemHasOwnShipmentTransferChecker(): ItemHasOwnShipmentTransferCheckerInterface
     {
-        return $this->getItemsGrouper()->groupByShipment($itemTransfers);
+        if ($this->itemHasOwnShipmentTransferChecker === null) {
+            $this->itemHasOwnShipmentTransferChecker = $this->getFactory()->createSplitDeliveryEnabledChecker();
+        }
+
+        return $this->itemHasOwnShipmentTransferChecker;
     }
 }

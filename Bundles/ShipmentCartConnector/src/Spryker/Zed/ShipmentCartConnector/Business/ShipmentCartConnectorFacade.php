@@ -26,7 +26,10 @@ class ShipmentCartConnectorFacade extends AbstractFacade implements ShipmentCart
      */
     public function updateShipmentPrice(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFactory()->createShipmentCartExpander()->updateShipmentPrice($cartChangeTransfer);
+        return $this->getFactory()
+            ->createShipmentCartExpanderStrategyResolver()
+            ->resolveByQuote($cartChangeTransfer->getQuote())
+            ->updateShipmentPrice($cartChangeTransfer);
     }
 
     /**
@@ -40,6 +43,9 @@ class ShipmentCartConnectorFacade extends AbstractFacade implements ShipmentCart
      */
     public function validateShipment(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFactory()->createShipmentCartValidate()->validateShipment($cartChangeTransfer);
+        return $this->getFactory()
+            ->createShipmentCartValidatorStrategyResolver()
+            ->resolveByQuote($cartChangeTransfer->getQuote())
+            ->validateShipment($cartChangeTransfer);
     }
 }
