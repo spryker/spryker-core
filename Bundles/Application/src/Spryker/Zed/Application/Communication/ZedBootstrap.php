@@ -48,9 +48,6 @@ class ZedBootstrap
 
     public function __construct()
     {
-        // Currently the SilexApplication is an instance of our ContainerInterface
-        // to make both applications use the same container we use the old application
-        // as the current container
         $this->serviceContainer
             = $this->application
             = $this->getBaseApplication();

@@ -44,9 +44,6 @@ abstract class AbstractGlueBootstrap
 
     public function __construct()
     {
-        // Currently the SilexApplication is an instance of our ContainerInterface
-        // to make both applications use the same container we use the old application
-        // as the current container
         $this->serviceContainer
             = $this->application
             = new SilexApplication();
@@ -58,17 +55,18 @@ abstract class AbstractGlueBootstrap
     }
 
     /**
-     * @return \Spryker\Glue\Kernel\Application
+     * @return \Spryker\Shared\Application\Application
      */
-    public function boot(): SilexApplication
+    public function boot(): Application
     {
         $this->registerServiceProviders();
 
         $this->setupApplication();
 
+        $this->application->boot();
         $this->sprykerApplication->boot();
 
-        return $this->application;
+        return $this->sprykerApplication;
     }
 
     /**
