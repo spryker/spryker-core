@@ -7,7 +7,8 @@
 
 namespace Spryker\Client\AvailabilityNotification\Zed;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Spryker\Client\AvailabilityNotification\Dependency\Client\AvailabilityNotificationToZedRequestClientInterface;
@@ -54,15 +55,33 @@ class AvailabilityNotificationStub implements AvailabilityNotificationStubInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer
      */
-    public function checkExistence(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionExistenceTransfer
+    public function checkExistence(AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer): AvailabilitySubscriptionExistenceResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer $availabilitySubscriptionExistenceTransfer */
-        $availabilitySubscriptionExistenceTransfer = $this->zedRequestClient->call('/availability-notification/gateway/check-existence', $availabilitySubscriptionTransfer);
+        /** @var \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer $availabilitySubscriptionExistenceTransfer */
+        $availabilitySubscriptionExistenceTransfer = $this->zedRequestClient->call('/availability-notification/gateway/check-existence', $availabilitySubscriptionExistenceRequestTransfer);
 
         return $availabilitySubscriptionExistenceTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
+     */
+    public function findAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer
+    {
+        /**
+         * @var \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+         */
+        $availabilitySubscriptionTransfer = $this->zedRequestClient->call(
+            '/availability-notification/gateway/find',
+            $availabilitySubscriptionTransfer
+        );
+
+        return $availabilitySubscriptionTransfer;
     }
 }

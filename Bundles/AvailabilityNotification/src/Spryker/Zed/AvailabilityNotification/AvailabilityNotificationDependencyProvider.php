@@ -10,18 +10,27 @@ namespace Spryker\Zed\AvailabilityNotification;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToGlossaryFacadeBridge;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeBridge;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeBridge;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMoneyFacadeBridge;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeBridge;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeBridge;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeBridge;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilTextServiceBridge;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
+ */
 class AvailabilityNotificationDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MAIL = 'FACADE_MAIL';
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_MONEY = 'FACADE_MONEY';
 
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
@@ -35,9 +44,12 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
     {
         $container = $this->addMailFacade($container);
         $container = $this->addUtilValidateService($container);
-        $container = $this->addStoreClient($container);
+        $container = $this->addStoreFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addUtilTextService($container);
+        $container = $this->addProductFacade($container);
+        $container = $this->addMoneyFacade($container);
+        $container = $this->addPriceProductFacade($container);
 
         return $container;
     }
@@ -51,6 +63,22 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
     {
         $container = $this->addMailFacade($container);
         $container = $this->addGlossaryFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductFacade(Container $container): Container
+    {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
+            return new AvailabilityNotificationToProductFacadeBridge(
+                $container->getLocator()->product()->facade()
+            );
+        };
 
         return $container;
     }
@@ -88,7 +116,7 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStoreClient(Container $container): Container
+    protected function addStoreFacade(Container $container): Container
     {
         $container[static::FACADE_STORE] = function (Container $container) {
             return new AvailabilityNotificationToStoreFacadeBridge($container->getLocator()->store()->facade());
@@ -118,7 +146,7 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      */
     protected function addMailFacade(Container $container): Container
     {
-        $container[self::FACADE_MAIL] = function (Container $container) {
+        $container[static::FACADE_MAIL] = function (Container $container) {
             return new AvailabilityNotificationToMailFacadeBridge($container->getLocator()->mail()->facade());
         };
 
@@ -132,8 +160,36 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      */
     protected function addGlossaryFacade(Container $container): Container
     {
-        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+        $container[static::FACADE_GLOSSARY] = function (Container $container) {
             return new AvailabilityNotificationToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMoneyFacade(Container $container): Container
+    {
+        $container[static::FACADE_MONEY] = function (Container $container) {
+            return new AvailabilityNotificationToMoneyFacadeBridge($container->getLocator()->money()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductFacade(Container $container): Container
+    {
+        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+            return new AvailabilityNotificationToPriceProductFacadeBridge($container->getLocator()->priceProduct()->facade());
         };
 
         return $container;

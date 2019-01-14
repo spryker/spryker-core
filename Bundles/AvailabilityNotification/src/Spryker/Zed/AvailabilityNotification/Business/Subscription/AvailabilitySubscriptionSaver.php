@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
+use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
@@ -63,14 +64,18 @@ class AvailabilitySubscriptionSaver implements AvailabilitySubscriptionSaverInte
     /**
      * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
      */
-    public function save(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
+    public function save(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionTransfer
     {
-        $availabilitySubscriptionExistenceTransfer = $this->availabilitySubscriptionExistingChecker->checkExistence($availabilitySubscriptionTransfer);
+        $availabilitySubscriptionExistenceRequestTransfer = (new AvailabilitySubscriptionExistenceRequestTransfer())
+            ->setSku($availabilitySubscriptionTransfer->getSku())
+            ->setEmail($availabilitySubscriptionTransfer->getEmail());
 
-        if ($availabilitySubscriptionExistenceTransfer->getIsExists()) {
-            return;
+        $availabilitySubscriptionExistenceResponseTransfer = $this->availabilitySubscriptionExistingChecker->checkExistence($availabilitySubscriptionExistenceRequestTransfer);
+
+        if ($availabilitySubscriptionExistenceResponseTransfer->getAvailabilitySubscription() !== null) {
+            return $availabilitySubscriptionExistenceResponseTransfer->getAvailabilitySubscription();
         }
 
         $subscriptionKey = $this->keyGenerator->generateKey();
@@ -83,5 +88,7 @@ class AvailabilitySubscriptionSaver implements AvailabilitySubscriptionSaverInte
         $availabilitySubscriptionTransfer->setLocale($locale);
 
         $this->entityManager->saveAvailabilitySubscription($availabilitySubscriptionTransfer);
+
+        return $availabilitySubscriptionTransfer;
     }
 }

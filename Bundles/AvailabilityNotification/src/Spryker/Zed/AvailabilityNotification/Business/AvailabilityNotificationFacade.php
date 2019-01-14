@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -43,15 +45,15 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer
      */
-    public function checkExistence(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionExistenceTransfer
+    public function checkExistence(AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer): AvailabilitySubscriptionExistenceResponseTransfer
     {
         return $this->getFactory()
             ->createAvailabilitySubscriptionChecker()
-            ->checkExistence($availabilitySubscriptionTransfer);
+            ->checkExistence($availabilitySubscriptionExistenceRequestTransfer);
     }
 
     /**
@@ -86,5 +88,38 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
         $this->getFactory()
             ->createSubscriptionAnonymizer()
             ->anonymizeSubscription($customerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
+     */
+    public function findAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer
+    {
+        return $this->getFactory()
+            ->createAvailabilityNotificationReader()
+            ->findSubscriptionByEmailAndSku($availabilitySubscriptionTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return void
+     */
+    public function processAvailabilityNotificationSubscription(string $sku, StoreTransfer $storeTransfer): void
+    {
+        $this->getFactory()
+            ->createAvailabilityNotificationMailProcessor()
+            ->processProductBecomeAvailableSubscription($sku, $storeTransfer);
     }
 }

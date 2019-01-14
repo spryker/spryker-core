@@ -16,9 +16,9 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  * @method \Spryker\Zed\AvailabilityNotification\Communication\AvailabilityNotificationCommunicationFactory getFactory()
  * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
  */
-class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
+class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-    public const MAIL_TYPE = 'AVAILABILITY_NOTIFICATION_SUBSCRIBED_MAIL';
+    public const MAIL_TYPE = 'AVAILABILITY_NOTIFICATION_UNSUBSCRIBED_MAIL';
 
     /**
      * @api
@@ -54,7 +54,7 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      */
     protected function setSubject(MailBuilderInterface $mailBuilder): self
     {
-        $mailBuilder->setSubject('mail.availability_notification.subscribed.subject');
+        $mailBuilder->setSubject('mail.availability_notification.unsubscribed.subject');
 
         return $this;
     }
@@ -66,7 +66,7 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      */
     protected function setHtmlTemplate(MailBuilderInterface $mailBuilder): self
     {
-        $mailBuilder->setHtmlTemplate('AvailabilityNotification/mail/subscribed.html.twig');
+        $mailBuilder->setHtmlTemplate('AvailabilityNotification/mail/unsubscribed.html.twig');
 
         return $this;
     }
@@ -78,7 +78,7 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      */
     protected function setTextTemplate(MailBuilderInterface $mailBuilder): self
     {
-        $mailBuilder->setTextTemplate('AvailabilityNotification/mail/subscribed.text.twig');
+        $mailBuilder->setTextTemplate('AvailabilityNotification/mail/unsubscribed.text.twig');
 
         return $this;
     }
@@ -90,9 +90,7 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      */
     protected function setRecipient(MailBuilderInterface $mailBuilder): self
     {
-        $mailTransfer = $mailBuilder->getMailTransfer();
-        $mailTransfer->requireAvailabilitySubscription();
-        $availabilitySubscriptionTransfer = $mailTransfer->getAvailabilitySubscription();
+        $availabilitySubscriptionTransfer = $mailBuilder->getMailTransfer()->requireAvailabilitySubscription()->getAvailabilitySubscription();
 
         $mailBuilder->addRecipient($availabilitySubscriptionTransfer->getEmail(), '');
 

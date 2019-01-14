@@ -9,7 +9,9 @@ namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface;
+use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface;
 
 class AvailabilityUnsubscriptionProcessor implements AvailabilityUnsubscriptionProcessorInterface
 {
@@ -19,11 +21,32 @@ class AvailabilityUnsubscriptionProcessor implements AvailabilityUnsubscriptionP
     protected $entityManager;
 
     /**
-     * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface $entityManager
+     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSenderInterface
      */
-    public function __construct(AvailabilityNotificationEntityManagerInterface $entityManager)
+    protected $availabilityNotificationSender;
+
+    /**
+     * @var \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface
+     */
+    protected $availabilityNotificationRepository;
+
+    /**
+     * @var \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface
+     */
+    protected $productFacade;
+
+    /**
+     * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSenderInterface $availabilityNotificationSender
+     * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository
+     * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface $productFacade
+     */
+    public function __construct(AvailabilityNotificationEntityManagerInterface $entityManager, AvailabilityNotificationSenderInterface $availabilityNotificationSender, AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository, AvailabilityNotificationToProductFacadeInterface $productFacade)
     {
         $this->entityManager = $entityManager;
+        $this->availabilityNotificationSender = $availabilityNotificationSender;
+        $this->availabilityNotificationRepository = $availabilityNotificationRepository;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -35,8 +58,20 @@ class AvailabilityUnsubscriptionProcessor implements AvailabilityUnsubscriptionP
     {
         $availabilitySubscriptionTransfer->requireSubscriptionKey();
 
-        $this->entityManager->deleteBySubscriptionKey($availabilitySubscriptionTransfer->getSubscriptionKey());
+        $availabilitySubscriptionTransfer = $this->availabilityNotificationRepository->findOneBySubscriptionKey($availabilitySubscriptionTransfer->getSubscriptionKey());
 
-        return (new AvailabilitySubscriptionResponseTransfer())->setIsSuccess(true);
+        if ($availabilitySubscriptionTransfer === null) {
+            return (new AvailabilitySubscriptionResponseTransfer())
+                ->setIsSuccess(false)
+                ->setErrorMessage('Subscription doesn\'t exist');
+        }
+
+        $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilitySubscriptionTransfer->getSku());
+        $this->entityManager->deleteBySubscriptionKey($availabilitySubscriptionTransfer->getSubscriptionKey());
+        $this->availabilityNotificationSender->sendUnsubscriptionMail($availabilitySubscriptionTransfer);
+
+        return (new AvailabilitySubscriptionResponseTransfer())
+            ->setIsSuccess(true)
+            ->setProduct($productConcreteTransfer);
     }
 }

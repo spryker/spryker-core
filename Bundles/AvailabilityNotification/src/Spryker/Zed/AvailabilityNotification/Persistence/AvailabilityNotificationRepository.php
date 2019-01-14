@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence;
 
+use Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery;
@@ -59,6 +60,24 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
         }
 
         return $this->getFactory()->createAvailabilitySubscriptionMapper()->mapAvailabilitySubscriptionTransfer($availabilitySubscriptionEntity);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $fkStore
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer
+     */
+    public function findBySkuAndStore(string $sku, int $fkStore): AvailabilitySubscriptionCollectionTransfer
+    {
+        $availabilitySubscriptionEntities = $this->querySubscription()
+            ->filterBySku($sku)
+            ->filterByFkStore($fkStore)
+            ->find();
+
+        return $this->getFactory()
+            ->createAvailabilitySubscriptionMapper()
+            ->mapAvailabilitySubscriptionTransferCollection($availabilitySubscriptionEntities);
     }
 
     /**

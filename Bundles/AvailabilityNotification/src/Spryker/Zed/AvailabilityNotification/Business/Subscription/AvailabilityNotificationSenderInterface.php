@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AvailabilityNotification\Communication\Plugin;
+namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 
@@ -16,5 +16,12 @@ interface AvailabilityNotificationSenderInterface
      *
      * @return void
      */
-    public function sendSubscribedMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void;
+    public function sendSubscriptionMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     *
+     * @return void
+     */
+    public function sendUnsubscriptionMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void;
 }

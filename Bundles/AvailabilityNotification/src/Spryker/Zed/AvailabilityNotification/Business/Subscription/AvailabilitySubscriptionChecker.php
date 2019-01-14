@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer;
-use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface;
 
@@ -37,33 +37,58 @@ class AvailabilitySubscriptionChecker implements AvailabilitySubscriptionChecker
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer
      */
-    public function checkExistence(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionExistenceTransfer
-    {
-        $availabilitySubscriptionTransfer->requireEmail();
-        $availabilitySubscriptionTransfer->requireSku();
-        $store = $availabilitySubscriptionTransfer->getStore();
-
-        if ($store === null) {
-            $store = $this->availabilityNotificationToStoreClient->getCurrentStore();
+    public function checkExistence(
+        AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+    ): AvailabilitySubscriptionExistenceResponseTransfer {
+        if ($availabilitySubscriptionExistenceRequestTransfer->getSubscriptionKey() !== null) {
+            return $this->findBySubscriptionKey($availabilitySubscriptionExistenceRequestTransfer);
         }
 
-        $existingSubscription = $this->availabilityNotificationRepository
+        return $this->findByEmailAndSku($availabilitySubscriptionExistenceRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer
+     */
+    protected function findBySubscriptionKey(
+        AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+    ): AvailabilitySubscriptionExistenceResponseTransfer {
+        $availabilitySubscriptionExistenceRequestTransfer->requireSubscriptionKey();
+
+        $availabilitySubscription = $this->availabilityNotificationRepository
+            ->findOneBySubscriptionKey($availabilitySubscriptionExistenceRequestTransfer->getSubscriptionKey());
+
+        return (new AvailabilitySubscriptionExistenceResponseTransfer())
+            ->setAvailabilitySubscription($availabilitySubscription);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer
+     */
+    protected function findByEmailAndSku(
+        AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+    ): AvailabilitySubscriptionExistenceResponseTransfer {
+        $availabilitySubscriptionExistenceRequestTransfer->requireEmail();
+        $availabilitySubscriptionExistenceRequestTransfer->requireSku();
+
+        $store = $this->availabilityNotificationToStoreClient->getCurrentStore();
+
+        $availabilitySubscriptionTransfer = $this->availabilityNotificationRepository
             ->findOneBy(
-                $availabilitySubscriptionTransfer->getEmail(),
-                $availabilitySubscriptionTransfer->getSku(),
+                $availabilitySubscriptionExistenceRequestTransfer->getEmail(),
+                $availabilitySubscriptionExistenceRequestTransfer->getSku(),
                 $store
             );
 
-        $isExists = $existingSubscription !== null;
-
-        return (new AvailabilitySubscriptionExistenceTransfer())
-            ->setSku($availabilitySubscriptionTransfer->getSku())
-            ->setEmail($availabilitySubscriptionTransfer->getEmail())
-            ->setStore($store)
-            ->setIsExists($isExists);
+        return (new AvailabilitySubscriptionExistenceResponseTransfer())
+            ->setAvailabilitySubscription($availabilitySubscriptionTransfer);
     }
 }
