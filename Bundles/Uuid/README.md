@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/uuid.svg)](https://travis-ci.org/spryker/uuid)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/uuid/badge.svg)](https://coveralls.io/github/spryker/uuid)
 
-Uuid modules provides assets to manage UUIDs.
+Uuid modules provides UUID management functionality.
 
 ## Installation
 

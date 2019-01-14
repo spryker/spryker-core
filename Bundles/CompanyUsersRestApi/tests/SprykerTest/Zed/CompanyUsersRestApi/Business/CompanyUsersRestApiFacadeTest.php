@@ -70,6 +70,6 @@ class CompanyUsersRestApiFacadeTest extends Test
         );
 
         // Assert
-        $this->assertEquals(null, $expandedCustomerIdentifierTransfer->getIdCompanyUser());
+        $this->assertNull($expandedCustomerIdentifierTransfer->getIdCompanyUser());
     }
 }

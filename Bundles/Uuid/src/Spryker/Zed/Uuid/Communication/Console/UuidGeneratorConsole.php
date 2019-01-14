@@ -39,8 +39,8 @@ class UuidGeneratorConsole extends Console
             ->setDescription(static::COMMAND_DESCRIPTION)
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>');
 
-        $this->addArgument(static::ARGUMENT_MODULE, InputArgument::REQUIRED, 'Name of the module that defines the database table, e.g. "Wishlist".');
-        $this->addArgument(static::ARGUMENT_TABLE, InputArgument::REQUIRED, 'Database table name, e.g. "spy_wishlist".');
+        $this->addArgument(static::ARGUMENT_MODULE, InputArgument::REQUIRED, 'Name of the module that defines the database table, e.g. "Quote".');
+        $this->addArgument(static::ARGUMENT_TABLE, InputArgument::REQUIRED, 'Database table name, e.g. "spy_quote".');
     }
 
     /**

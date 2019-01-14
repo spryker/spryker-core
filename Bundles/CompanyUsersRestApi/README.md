@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/company-users-rest-api.svg)](https://travis-ci.org/spryker/company-users-rest-api)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/company-users-rest-api/badge.svg)](https://coveralls.io/github/spryker/company-users-rest-api)
 
-CompanyUsersRestApi module provides rest API endpoints to get company users.
+CompanyUsersRestApi module provides rest API endpoints for company-users resource.
 
 ## Installation
 
