@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\QuoteRequest\Business;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -32,5 +34,21 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
         return $this->getFactory()
             ->createQuoteRequestWriter()
             ->createQuoteRequestFromQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
+     */
+    public function getCustomerQuoteRequestCollection(CustomerTransfer $customerTransfer): QuoteRequestCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestReader()
+            ->getCustomerQuoteRequestCollection($customerTransfer);
     }
 }

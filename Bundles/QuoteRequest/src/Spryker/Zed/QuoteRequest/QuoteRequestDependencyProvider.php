@@ -10,6 +10,7 @@ namespace Spryker\Zed\QuoteRequest;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCustomerFacadeBridge;
+use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToSequenceNumberBridge;
 use Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServiceBridge;
 
 /**
@@ -17,6 +18,7 @@ use Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServic
  */
 class QuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -29,6 +31,7 @@ class QuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
+        $container = $this->addSequenceNumberFacade($container);
         $container = $this->addCustomerFacade($container);
 
         return $container;
@@ -44,6 +47,20 @@ class QuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::providePersistenceLayerDependencies($container);
 
         $container = $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSequenceNumberFacade(Container $container): Container
+    {
+        $container[static::FACADE_SEQUENCE_NUMBER] = function (Container $container) {
+            return new QuoteRequestToSequenceNumberBridge($container->getLocator()->sequenceNumber()->facade());
+        };
 
         return $container;
     }

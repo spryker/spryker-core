@@ -7,12 +7,22 @@
 
 namespace Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\SpyQuoteRequestEntityTransfer;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequest;
 
 interface QuoteRequestMapperInterface
 {
+    /**
+     * @param array $quoteRequestEntityTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
+     */
+    public function mapEntityCollectionToTransferCollection(
+        array $quoteRequestEntityTransferCollection
+    ): QuoteRequestCollectionTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\SpyQuoteRequestEntityTransfer $quoteRequestEntityTransfer
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer

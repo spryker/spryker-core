@@ -8,7 +8,10 @@
 namespace Spryker\Zed\QuoteRequest;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
+use Spryker\Shared\QuoteRequest\QuoteRequestConstants;
+use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class QuoteRequestConfig extends AbstractBundleConfig
@@ -40,5 +43,31 @@ class QuoteRequestConfig extends AbstractBundleConfig
             QuoteTransfer::CURRENCY,
             QuoteTransfer::PRICE_MODE,
         ];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
+     */
+    public function getQuoteRequestReferenceDefaults()
+    {
+        $sequenceNumberSettingsTransfer = (new SequenceNumberSettingsTransfer())
+            ->setName(QuoteRequestConstants::NAME_QUOTE_REQUEST_REFERENCE);
+
+        $sequenceNumberPrefixParts = [];
+        $sequenceNumberPrefixParts[] = 'RfQ'; // TODO: ask Karoly about it;
+        $sequenceNumberPrefixParts[] = $this->get(SequenceNumberConstants::ENVIRONMENT_PREFIX);
+
+        $prefix = implode($this->getUniqueIdentifierSeparator(), $sequenceNumberPrefixParts) . $this->getUniqueIdentifierSeparator();
+        $sequenceNumberSettingsTransfer->setPrefix($prefix);
+
+        return $sequenceNumberSettingsTransfer;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getUniqueIdentifierSeparator(): string
+    {
+        return '-';
     }
 }

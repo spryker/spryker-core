@@ -41,21 +41,29 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     protected $customerFacade;
 
     /**
+     * @var \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface
+     */
+    protected $referenceGenerator;
+
+    /**
      * @param \Spryker\Zed\QuoteRequest\QuoteRequestConfig $config
      * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface $entityManager
      * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface $repository
      * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCustomerFacadeInterface $customerFacade
+     * @param \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface $referenceGenerator
      */
     public function __construct(
         QuoteRequestConfig $config,
         QuoteRequestEntityManagerInterface $entityManager,
         QuoteRequestRepositoryInterface $repository,
-        QuoteRequestToCustomerFacadeInterface $customerFacade
+        QuoteRequestToCustomerFacadeInterface $customerFacade,
+        QuoteRequestReferenceGeneratorInterface $referenceGenerator
     ) {
         $this->config = $config;
         $this->entityManager = $entityManager;
         $this->repository = $repository;
         $this->customerFacade = $customerFacade;
+        $this->referenceGenerator = $referenceGenerator;
     }
 
     /**
@@ -83,8 +91,9 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         $quoteRequestVersionTransfer = $this->createQuoteRequestVersionTransfer($quoteTransfer);
 
         $quoteRequestTransfer->setLatestVersionStatus($quoteRequestVersionTransfer->getStatus());
-        // TODO: generate quoteRequestReference
-        $quoteRequestTransfer->setQuoteRequestReference('test-' . $quoteRequestVersionTransfer->getVersion());
+        $quoteRequestTransfer->setQuoteRequestReference(
+            $this->referenceGenerator->generateQuoteRequestReference($quoteRequestTransfer)
+        );
 
         $quoteRequestTransfer = $this->entityManager->saveQuoteRequest($quoteRequestTransfer);
 
@@ -109,13 +118,9 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             // TODO: is feature only for b2b?
         }
 
-        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
-
         $quoteRequestTransfer = (new QuoteRequestTransfer())
             ->setIsCanceled(false)
-            ->setCustomerReference($customerTransfer->getCustomerReference())
-            ->setFkCompanyUser($companyUserTransfer->getIdCompanyUser())
-            ->setFkCompanyBusinessUnit($companyUserTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnit());
+            ->setCompanyUser($customerTransfer->getCompanyUserTransfer());
 
         return $quoteRequestTransfer;
     }

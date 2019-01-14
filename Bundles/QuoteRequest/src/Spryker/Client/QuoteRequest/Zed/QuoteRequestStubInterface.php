@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\QuoteRequest\Zed;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -18,4 +20,13 @@ interface QuoteRequestStubInterface
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
     public function createQuoteRequestFromQuote(QuoteTransfer $quoteTransfer): QuoteRequestTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
+     */
+    public function getCustomerQuoteRequestCollection(
+        CustomerTransfer $customerTransfer
+    ): QuoteRequestCollectionTransfer;
 }

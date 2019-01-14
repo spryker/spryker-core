@@ -8,9 +8,14 @@
 namespace Spryker\Zed\QuoteRequest\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReader;
+use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface;
+use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGenerator;
+use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriter;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriterInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCustomerFacadeInterface;
+use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToSequenceNumberInterface;
 use Spryker\Zed\QuoteRequest\QuoteRequestDependencyProvider;
 
 /**
@@ -29,7 +34,29 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
+            $this->createQuoteRequestReferenceGenerator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface
+     */
+    public function createQuoteRequestReader(): QuoteRequestReaderInterface
+    {
+        return new QuoteRequestReader(
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface
+     */
+    protected function createQuoteRequestReferenceGenerator(): QuoteRequestReferenceGeneratorInterface
+    {
+        return new QuoteRequestReferenceGenerator(
+            $this->getSequenceNumberFacade(),
+            $this->getConfig()->getQuoteRequestReferenceDefaults()
         );
     }
 
@@ -39,5 +66,13 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     public function getCustomerFacade(): QuoteRequestToCustomerFacadeInterface
     {
         return $this->getProvidedDependency(QuoteRequestDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToSequenceNumberInterface
+     */
+    protected function getSequenceNumberFacade(): QuoteRequestToSequenceNumberInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestDependencyProvider::FACADE_SEQUENCE_NUMBER);
     }
 }
