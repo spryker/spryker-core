@@ -15,6 +15,7 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
     public const KEY = 'ApproveQuotePermissionPlugin';
 
     protected const FIELD_MULTI_CURRENCY = 'multi_currency';
+    protected const KEY_SEPARATOR = '_';
 
     /**
      * {@inheritdoc}
@@ -37,12 +38,14 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
 
         $centAmount = $quoteTransfer->getTotals()->getGrandTotal();
         $currencyCode = $quoteTransfer->getCurrency()->getCode();
+        $storeName = $quoteTransfer->getStore()->getName();
+        $key = $storeName . static::KEY_SEPARATOR . $currencyCode;
 
-        if (!isset($configuration[static::FIELD_MULTI_CURRENCY][$currencyCode])) {
+        if (!isset($configuration[static::FIELD_MULTI_CURRENCY][$key])) {
             return true;
         }
 
-        if ($configuration[static::FIELD_MULTI_CURRENCY][$currencyCode] < (int)$centAmount) {
+        if ($configuration[static::FIELD_MULTI_CURRENCY][$key] < (int)$centAmount) {
             return false;
         }
 
