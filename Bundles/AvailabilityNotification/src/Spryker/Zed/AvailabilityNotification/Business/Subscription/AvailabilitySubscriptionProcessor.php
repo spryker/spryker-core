@@ -62,7 +62,7 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
 
         $availabilitySubscriptionTransfer = $this->availabilitySubscriptionSaver->save($availabilitySubscriptionTransfer);
 
-        $this->availabilityNotificationSender->sendSubscribedMail($availabilitySubscriptionTransfer);
+        $this->availabilityNotificationSender->sendSubscriptionMail($availabilitySubscriptionTransfer);
 
         return $this->createSubscriptionResponseTransfer(true);
     }

@@ -69,6 +69,18 @@ interface AvailabilityNotificationFacadeInterface
 
     /**
      * Specification:
+     * - Finds availability notification by email and sku for current store.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
+     */
+    public function findAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer;
+
+    /**
+     * Specification:
      * - Send mails to all users which subscribed to product availability notification.
      *
      * @api

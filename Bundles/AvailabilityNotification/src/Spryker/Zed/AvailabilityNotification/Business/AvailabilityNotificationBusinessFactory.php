@@ -18,6 +18,8 @@ use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubsc
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionMailProcessorInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionProcessor;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionProcessorInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReader;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaver;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaverInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityUnsubscriptionProcessor;
@@ -36,7 +38,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
  * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface getRepository()
  * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
  */
 class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
 {
@@ -59,6 +60,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     {
         return new AvailabilityUnsubscriptionProcessor(
             $this->getEntityManager(),
+            $this->createAvailabilityNotificationSender(),
             $this->getRepository(),
             $this->getProductFacade()
         );
@@ -105,6 +107,17 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
             $this->getMoneyFacade(),
             $this->getPriceProductFacade(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface
+     */
+    public function createAvailabilityNotificationReader(): AvailabilitySubscriptionReaderInterface
+    {
+        return new AvailabilitySubscriptionReader(
+            $this->getStoreFacade(),
+            $this->getRepository()
         );
     }
 

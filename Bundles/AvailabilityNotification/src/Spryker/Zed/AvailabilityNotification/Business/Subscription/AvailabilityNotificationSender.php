@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationSubscribedMailTypePlugin;
+use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationUnsubscribedMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMoneyFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeInterface;
@@ -76,7 +77,7 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
      *
      * @return void
      */
-    public function sendSubscribedMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
+    public function sendSubscriptionMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
     {
         $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilitySubscriptionTransfer->getSku());
         $productAttributes = $this->getProductAttributes(
@@ -91,6 +92,21 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
             ->setProductAttributes($productAttributes)
             ->setAvailabilitySubscription($availabilitySubscriptionTransfer)
             ->setAvailabilityUnsubscriptionLink($unsubscriptionLink)
+            ->setLocale($availabilitySubscriptionTransfer->getLocale());
+
+        $this->mailFacade->handleMail($mailTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     *
+     * @return void
+     */
+    public function sendUnsubscriptionMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
+    {
+        $mailTransfer = (new MailTransfer())
+            ->setType(AvailabilityNotificationUnsubscribedMailTypePlugin::MAIL_TYPE)
+            ->setAvailabilitySubscription($availabilitySubscriptionTransfer)
             ->setLocale($availabilitySubscriptionTransfer->getLocale());
 
         $this->mailFacade->handleMail($mailTransfer);

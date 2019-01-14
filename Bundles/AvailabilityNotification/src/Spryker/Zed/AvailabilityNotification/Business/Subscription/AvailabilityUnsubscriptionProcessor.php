@@ -21,6 +21,11 @@ class AvailabilityUnsubscriptionProcessor implements AvailabilityUnsubscriptionP
     protected $entityManager;
 
     /**
+     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSenderInterface
+     */
+    protected $availabilityNotificationSender;
+
+    /**
      * @var \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface
      */
     protected $availabilityNotificationRepository;
@@ -32,15 +37,14 @@ class AvailabilityUnsubscriptionProcessor implements AvailabilityUnsubscriptionP
 
     /**
      * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSenderInterface $availabilityNotificationSender
      * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface $productFacade
      */
-    public function __construct(
-        AvailabilityNotificationEntityManagerInterface $entityManager,
-        AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository,
-        AvailabilityNotificationToProductFacadeInterface $productFacade
-    ) {
+    public function __construct(AvailabilityNotificationEntityManagerInterface $entityManager, AvailabilityNotificationSenderInterface $availabilityNotificationSender, AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository, AvailabilityNotificationToProductFacadeInterface $productFacade)
+    {
         $this->entityManager = $entityManager;
+        $this->availabilityNotificationSender = $availabilityNotificationSender;
         $this->availabilityNotificationRepository = $availabilityNotificationRepository;
         $this->productFacade = $productFacade;
     }
@@ -64,6 +68,7 @@ class AvailabilityUnsubscriptionProcessor implements AvailabilityUnsubscriptionP
 
         $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilitySubscriptionTransfer->getSku());
         $this->entityManager->deleteBySubscriptionKey($availabilitySubscriptionTransfer->getSubscriptionKey());
+        $this->availabilityNotificationSender->sendUnsubscriptionMail($availabilitySubscriptionTransfer);
 
         return (new AvailabilitySubscriptionResponseTransfer())
             ->setIsSuccess(true)
