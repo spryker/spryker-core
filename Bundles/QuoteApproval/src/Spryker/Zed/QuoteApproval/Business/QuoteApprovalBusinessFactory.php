@@ -10,18 +10,18 @@ namespace Spryker\Zed\QuoteApproval\Business;
 use Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculator;
 use Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\QuoteApproval\Business\Model\PotentialQuoteApproversListProvider;
-use Spryker\Zed\QuoteApproval\Business\Model\PotentialQuoteApproversListProviderInterface;
-use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalReader;
-use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalReaderInterface;
-use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestCanceller;
-use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestCancellerInterface;
-use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestSender;
-use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestSenderInterface;
-use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestValidator;
-use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestValidatorInterface;
-use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalWriter;
-use Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalWriterInterface;
+use Spryker\Zed\QuoteApproval\Business\QuoteApprovalReader\QuoteApprovalReader;
+use Spryker\Zed\QuoteApproval\Business\QuoteApprovalReader\QuoteApprovalReaderInterface;
+use Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestCanceller;
+use Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestCancellerInterface;
+use Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestSender;
+use Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestSenderInterface;
+use Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestValidator;
+use Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestValidatorInterface;
+use Spryker\Zed\QuoteApproval\Business\QuoteApprovalWriter\QuoteApprovalWriter;
+use Spryker\Zed\QuoteApproval\Business\QuoteApprovalWriter\QuoteApprovalWriterInterface;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproversProvider\PotentialQuoteApproversListProvider;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproversProvider\PotentialQuoteApproversListProviderInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyRoleFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface;
@@ -38,7 +38,7 @@ use Spryker\Zed\QuoteApproval\QuoteApprovalDependencyProvider;
 class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestSenderInterface
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestSenderInterface
      */
     public function createQuoteApprovalRequestSender(): QuoteApprovalRequestSenderInterface
     {
@@ -52,7 +52,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestValidatorInterface
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestValidatorInterface
      */
     public function createQuoteApprovalRequestValidator(): QuoteApprovalRequestValidatorInterface
     {
@@ -71,7 +71,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestCancellerInterface
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestCancellerInterface
      */
     public function createQuoteApprovalRequestCanceller(): QuoteApprovalRequestCancellerInterface
     {
@@ -83,7 +83,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApproval\Business\Model\PotentialQuoteApproversListProviderInterface
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApproversProvider\PotentialQuoteApproversListProviderInterface
      */
     public function createPotentialQuoteApproversProvider(): PotentialQuoteApproversListProviderInterface
     {
@@ -95,7 +95,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalReaderInterface
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApprovalReader\QuoteApprovalReaderInterface
      */
     public function createQuoteApprovalReader(): QuoteApprovalReaderInterface
     {
@@ -105,7 +105,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalWriterInterface
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApprovalWriter\QuoteApprovalWriterInterface
      */
     public function createQuoteApprovalWriter(): QuoteApprovalWriterInterface
     {

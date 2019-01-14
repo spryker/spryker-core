@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteApproval\Business\Model;
+namespace Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest;
 
 use Generated\Shared\Transfer\QuoteApproveRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;

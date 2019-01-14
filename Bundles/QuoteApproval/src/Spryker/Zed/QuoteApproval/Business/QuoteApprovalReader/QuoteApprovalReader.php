@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteApproval\Business\Model;
+namespace Spryker\Zed\QuoteApproval\Business\QuoteApprovalReader;
 
 use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface;
 

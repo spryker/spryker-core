@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteApproval\Business\Model;
+namespace Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CompanyUserTransfer;
@@ -47,7 +47,7 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
     protected $companyUserFacade;
 
     /**
-     * @var \Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestValidatorInterface
+     * @var \Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestValidatorInterface
      */
     protected $quoteApprovalRequestValidator;
 
@@ -56,7 +56,7 @@ class QuoteApprovalRequestSender implements QuoteApprovalRequestSenderInterface
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToMessengerFacadeInterface $messengerFacade
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface $companyUserFacade
-     * @param \Spryker\Zed\QuoteApproval\Business\Model\QuoteApprovalRequestValidatorInterface $quoteApprovalRequestValidator
+     * @param \Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestValidatorInterface $quoteApprovalRequestValidator
      */
     public function __construct(
         QuoteApprovalToCartFacadeInterface $cartFacade,
