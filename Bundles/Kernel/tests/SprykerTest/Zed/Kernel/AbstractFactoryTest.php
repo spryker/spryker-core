@@ -59,7 +59,7 @@ class AbstractFactoryTest extends Unit
     public function testGetProvidedDependency()
     {
         $container = new Container();
-        $container[self::CONTAINER_KEY] = self::CONTAINER_VALUE;
+        $container->set(self::CONTAINER_KEY, self::CONTAINER_VALUE);
         $factory = new Factory();
 
         $factory->setContainer($container);
@@ -72,7 +72,7 @@ class AbstractFactoryTest extends Unit
     public function testGetProvidedDependencyShouldResolveContainer()
     {
         $container = new Container();
-        $container[self::CONTAINER_KEY] = self::CONTAINER_VALUE;
+        $container->set(self::CONTAINER_KEY, self::CONTAINER_VALUE);
 
         $factoryMock = $this->getFactoryMock(['createContainerWithProvidedDependencies']);
         $factoryMock->expects($this->once())->method('createContainerWithProvidedDependencies')->willReturn($container);
@@ -101,7 +101,7 @@ class AbstractFactoryTest extends Unit
     protected function getDependencyInjectorResolverMock()
     {
         $container = new Container();
-        $container[self::CONTAINER_KEY] = self::CONTAINER_VALUE;
+        $container->set(self::CONTAINER_KEY, self::CONTAINER_VALUE);
 
         $dependencyInjectorMock = $this->getMockBuilder(DependencyInjectorInterface::class)->getMock();
         $dependencyInjectorMock->expects($this->once())->method('injectBusinessLayerDependencies')->willReturn($container);
