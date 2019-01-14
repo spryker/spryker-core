@@ -24,7 +24,7 @@ class ArrayFilter implements ArrayFilterInterface
                 continue;
             }
 
-            if (is_array($value)) {
+            if ($this->isValidArray($value)) {
                 $result = $this->arrayFilterRecursive($value);
                 if (!$result) {
                     continue;
@@ -33,23 +33,42 @@ class ArrayFilter implements ArrayFilterInterface
                 $filteredArray[$key] = $result;
                 continue;
             }
-            if (is_bool($value)) {
-                $filteredArray[$key] = $value;
-                continue;
-            }
-            if (is_string($value) && strlen($value)) {
-                $filteredArray[$key] = $value;
-                continue;
-            }
-            if ($value instanceof Countable && count($value) !== 0) {
-                $filteredArray[$key] = $value;
-                continue;
-            }
-            if (!$value instanceof Countable && $value) {
+
+            if ($this->isValidCountable($value) || $this->isValidScalar($value)) {
                 $filteredArray[$key] = $value;
             }
         }
 
         return $filteredArray;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return bool
+     */
+    protected function isValidArray($value): bool
+    {
+        return is_array($value) && $value;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return bool
+     */
+    protected function isValidCountable($value): bool
+    {
+        return $value instanceof Countable && count($value) !== 0;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return bool
+     */
+    protected function isValidScalar($value): bool
+    {
+        return is_bool($value) || is_numeric($value) || (is_string($value) && $value !== '') || (!$value instanceof Countable && $value);
     }
 }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Service\UtilSanitize;
+namespace SprykerTest\Service\UtilSanitize\Model;
 
 use ArrayObject;
 use Codeception\Test\Unit;
@@ -17,6 +17,7 @@ use stdClass;
  * @group SprykerTest
  * @group Service
  * @group UtilSanitize
+ * @group Model
  * @group ArrayFilterTest
  * Add your own group annotations below this line
  */
@@ -52,7 +53,9 @@ class ArrayFilterTest extends Unit
         $result = $arrayFilter->arrayFilterRecursive($array);
 
         $expected = [
+            'false' => $array['false'],
             'true' => $array['true'],
+            'zero' => $array['zero'],
             'stringZero' => '0',
             'someObject' => $array['someObject'],
             'countable' => $array['countable'],
@@ -64,6 +67,7 @@ class ArrayFilterTest extends Unit
                 ],
             ],
         ];
+
         $this->assertSame($expected, $result);
     }
 
