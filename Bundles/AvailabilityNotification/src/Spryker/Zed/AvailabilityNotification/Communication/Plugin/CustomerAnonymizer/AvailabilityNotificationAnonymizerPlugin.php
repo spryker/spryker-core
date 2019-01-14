@@ -17,10 +17,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\AvailabilityNotification\Communication\AvailabilityNotificationCommunicationFactory getFactory()
  * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
  */
-class CustomerUnsubscribePlugin extends AbstractPlugin implements CustomerAnonymizerPluginInterface
+class AvailabilityNotificationAnonymizerPlugin extends AbstractPlugin implements CustomerAnonymizerPluginInterface
 {
     /**
      * {@inheritdoc}
+     * - Removes all customer subscriptions on product availability notifications.
      *
      * @api
      *
