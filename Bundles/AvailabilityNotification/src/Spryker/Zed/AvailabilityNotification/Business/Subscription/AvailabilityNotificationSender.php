@@ -109,7 +109,30 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
             ->setAvailabilitySubscription($availabilitySubscriptionTransfer)
             ->setLocale($availabilitySubscriptionTransfer->getLocale());
 
+        $mailTransfer = $this->setLocalizedAttributes($mailTransfer, $availabilitySubscriptionTransfer);
+
         $this->mailFacade->handleMail($mailTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MailTransfer
+     */
+    protected function setLocalizedAttributes(MailTransfer $mailTransfer, AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): MailTransfer
+    {
+        $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilitySubscriptionTransfer->getSku());
+
+        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
+            if ($availabilitySubscriptionTransfer->getLocale()->getIdLocale() === $localizedAttributesTransfer->getLocale()->getIdLocale()) {
+                $mailTransfer->setLocalizedAttributes($localizedAttributesTransfer);
+
+                return $mailTransfer;
+            }
+        }
+
+        return $mailTransfer;
     }
 
     /**
