@@ -314,7 +314,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             ->groupBy(SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_PROCESS)
             ->groupBy(static::DATE_WINDOW);
 
-        if (!empty($stateBlacklist)) {
+        if ($stateBlacklist) {
             $query->filterByFkOmsOrderItemState($stateBlacklist, Criteria::NOT_IN);
         }
 
