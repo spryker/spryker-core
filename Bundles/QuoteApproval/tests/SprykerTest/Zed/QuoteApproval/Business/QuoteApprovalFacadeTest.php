@@ -297,7 +297,7 @@ class QuoteApprovalFacadeTest extends Unit
     protected function approverCanApproveUpToAmount(int $amount, string $currencyCode): void
     {
         $this->addApproveQuotePermission([
-        ApproveQuotePermissionPlugin::FIELD_MULTI_CURRENCY => [
+        ApproveQuotePermissionPlugin::FIELD_STORE_MULTI_CURRENCY => [
             $currencyCode => $amount,
         ]]);
     }
