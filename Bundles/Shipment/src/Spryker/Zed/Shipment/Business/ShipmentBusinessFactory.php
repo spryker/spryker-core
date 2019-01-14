@@ -14,6 +14,7 @@ use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
+use Spryker\Zed\Shipment\Business\Model\MethodReader;
 use Spryker\Zed\Shipment\Business\Model\ShipmentCarrierReader;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
@@ -64,7 +65,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->createShipmentMethodTransformer(),
             $this->getCurrencyFacade(),
             $this->getStoreFacade(),
-            $this->getShipmentService(),
             $this->getPlugins(),
             $this->getMethodFilterPlugins()
         );

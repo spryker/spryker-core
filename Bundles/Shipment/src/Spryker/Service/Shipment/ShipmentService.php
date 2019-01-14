@@ -61,7 +61,7 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
 
         return md5(implode([
             $shippingMethod,
-            $shipmentTransfer->getShippingAddress()->serialize(),
+            $shipmentTransfer->getShippingAddress()->getAddress1(),
             $shipmentTransfer->getRequestedDeliveryDate(),
         ]));
     }

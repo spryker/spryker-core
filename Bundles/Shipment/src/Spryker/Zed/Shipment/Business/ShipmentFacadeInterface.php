@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;

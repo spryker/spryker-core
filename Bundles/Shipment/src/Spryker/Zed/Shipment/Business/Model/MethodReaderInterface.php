@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;

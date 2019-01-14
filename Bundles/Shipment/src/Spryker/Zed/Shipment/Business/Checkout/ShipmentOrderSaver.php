@@ -80,7 +80,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
             $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems())
         );
 
-        foreach ($quoteTransfer->getShipmentGroups()->getGroups() as $shipmentGroupTransfer) {
+        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
             $this->saveShipmentAddressTransfer($shipmentGroupTransfer);
             $this->addExpensesToOrder($shipmentGroupTransfer, $salesOrderTransfer, $saveOrderTransfer);
             $idSalesShipment = $this->entityManager->createSalesShipment(

@@ -213,7 +213,7 @@ class MethodReader implements MethodReaderInterface
     protected function applyFilters(
         ArrayObject $shipmentGroupCollectionTransafers,
         QuoteTransfer $quoteTransfer
-    ): ShipmentMethodsTransfer {
+    ): ArrayObject {
         foreach ($shipmentGroupCollectionTransafers as $shipmentGroupTransfer) {
             $shipmentMethods = $shipmentGroupTransfer->getAvailableShipmentMethods();
             foreach ($this->shipmentMethodFilters as $shipmentMethodFilter) {
