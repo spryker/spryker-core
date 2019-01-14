@@ -109,16 +109,16 @@ class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorIn
     public function executeAddShoppingListItemPreCheckPlugins(
         ShoppingListItemTransfer $shoppingListItemTransfer
     ): ShoppingListPreAddItemCheckResponseTransfer {
-
-        $commonShoppingListPreAddItemCheckResponseTransfer = new ShoppingListPreAddItemCheckResponseTransfer();
+        $commonShoppingListPreAddItemCheckResponseTransfer = (new ShoppingListPreAddItemCheckResponseTransfer())
+            ->setIsSuccess(true);
 
         foreach ($this->addItemPreCheckPlugins as $preAddItemCheckPlugin) {
             $shoppingListPreAddItemCheckResponseTransfer = $preAddItemCheckPlugin->check($shoppingListItemTransfer);
             if ($shoppingListPreAddItemCheckResponseTransfer->getIsSuccess() === false) {
                 $this->processErrorMessages(
                     $shoppingListPreAddItemCheckResponseTransfer,
-                    $commonShoppingListPreAddItemCheckResponseTransfer
-                )->setIsSuccess(false);
+                    $commonShoppingListPreAddItemCheckResponseTransfer->setIsSuccess(false)
+                );
             }
         }
 

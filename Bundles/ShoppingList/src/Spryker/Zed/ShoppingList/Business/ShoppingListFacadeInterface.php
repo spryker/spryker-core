@@ -97,7 +97,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     *  - Update shopping list item.
+     *  - Updates shopping list item.
      *  - Adds update shopping list success message if shopping list successfully updated.
      *  - Fails and adds error message when quantity is lesser equal than zero or bigger than 2147483647.
      *

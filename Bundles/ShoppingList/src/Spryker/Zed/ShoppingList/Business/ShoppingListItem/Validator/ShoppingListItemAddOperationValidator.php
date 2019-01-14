@@ -64,7 +64,6 @@ class ShoppingListItemAddOperationValidator extends ShoppingListItemOperationVal
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
     ): bool {
-
         return $this->validateShoppingListItemToBeAdded($shoppingListItemTransfer, $shoppingListItemResponseTransfer)
             && $this->resolveShoppingListItemParent($shoppingListItemTransfer, $shoppingListItemResponseTransfer);
     }
@@ -106,7 +105,6 @@ class ShoppingListItemAddOperationValidator extends ShoppingListItemOperationVal
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
     ): bool {
-
         return $this->validateShoppingListItemQuantity($shoppingListItemTransfer, $shoppingListItemResponseTransfer)
             && $this->validateShoppingListItemSku($shoppingListItemTransfer, $shoppingListItemResponseTransfer)
             && $this->performShoppingListItemAddPreCheckPlugins($shoppingListItemTransfer, $shoppingListItemResponseTransfer);
@@ -170,18 +168,18 @@ class ShoppingListItemAddOperationValidator extends ShoppingListItemOperationVal
     ): bool {
         $shoppingListPreAddItemCheckResponseTransfer = $this->pluginExecutor->executeAddShoppingListItemPreCheckPlugins($shoppingListItemTransfer);
 
-        if ($shoppingListPreAddItemCheckResponseTransfer->getIsSuccess() === false) {
-            foreach ($shoppingListPreAddItemCheckResponseTransfer->getMessages() as $messageTransfer) {
-                $shoppingListItemResponseTransfer->addError($messageTransfer->getValue());
-            }
-
-            $this->addFailedMessage($shoppingListItemTransfer);
-            $shoppingListItemResponseTransfer->setIsSuccess(false);
-
-            return false;
+        if ($shoppingListPreAddItemCheckResponseTransfer->getIsSuccess() === true) {
+            return true;
         }
 
-        return true;
+        foreach ($shoppingListPreAddItemCheckResponseTransfer->getMessages() as $messageTransfer) {
+            $shoppingListItemResponseTransfer->addError($messageTransfer->getValue());
+        }
+
+        $this->addFailedMessage($shoppingListItemTransfer);
+        $shoppingListItemResponseTransfer->setIsSuccess(false);
+
+        return false;
     }
 
     /**
@@ -255,7 +253,6 @@ class ShoppingListItemAddOperationValidator extends ShoppingListItemOperationVal
     protected function createShoppingListTransfer(
         ShoppingListItemTransfer $shoppingListItemTransfer
     ): ShoppingListTransfer {
-
         return (new ShoppingListTransfer())
             ->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList())
             ->setIdCompanyUser($shoppingListItemTransfer->getIdCompanyUser())

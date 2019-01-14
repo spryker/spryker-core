@@ -22,6 +22,7 @@ class AvailabilityShoppingListAddItemPreCheckPlugin extends AbstractPlugin imple
 {
     /**
      * {@inheritdoc}
+     *  - Checks if the concrete product within the shopping list item is available.
      *
      * @api
      *
@@ -32,7 +33,6 @@ class AvailabilityShoppingListAddItemPreCheckPlugin extends AbstractPlugin imple
     public function check(
         ShoppingListItemTransfer $shoppingListItemTransfer
     ): ShoppingListPreAddItemCheckResponseTransfer {
-
         return $this->getFacade()->checkShoppingListItemProductIsAvailable($shoppingListItemTransfer);
     }
 }

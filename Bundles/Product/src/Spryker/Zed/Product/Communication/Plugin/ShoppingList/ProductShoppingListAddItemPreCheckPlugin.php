@@ -22,6 +22,7 @@ class ProductShoppingListAddItemPreCheckPlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritdoc}
+     *  - Checks if the concrete product within the shopping list item is active.
      *
      * @api
      *
@@ -32,7 +33,6 @@ class ProductShoppingListAddItemPreCheckPlugin extends AbstractPlugin implements
     public function check(
         ShoppingListItemTransfer $shoppingListItemTransfer
     ): ShoppingListPreAddItemCheckResponseTransfer {
-
         return $this->getFacade()->checkShoppingListItemProductIsActive($shoppingListItemTransfer);
     }
 }

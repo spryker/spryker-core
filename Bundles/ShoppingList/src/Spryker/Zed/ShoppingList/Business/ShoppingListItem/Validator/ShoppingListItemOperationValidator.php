@@ -19,6 +19,7 @@ abstract class ShoppingListItemOperationValidator implements ShoppingListItemOpe
 {
     use PermissionAwareTrait;
 
+    protected const MAX_QUANTITY = 2147483647; // 32 bit integer
     protected const GLOSSARY_PARAM_SKU = '%sku%';
 
     protected const ERROR_SHOPPING_LIST_NOT_FOUND = 'customer.account.shopping_list_item.error.not_found';
@@ -169,7 +170,7 @@ abstract class ShoppingListItemOperationValidator implements ShoppingListItemOpe
         $shoppingListItemTransfer->requireQuantity();
 
         $quantity = $shoppingListItemTransfer->getQuantity();
-        if ($quantity <= 0 || $quantity > 2147483647) {
+        if ($quantity <= 0 || $quantity > static::MAX_QUANTITY) {
             $this->addFailedMessage($shoppingListItemTransfer);
             $shoppingListItemResponseTransfer
                 ->addError(static::ERROR_SHOPPING_LIST_ITEM_QUANTITY_NOT_VALID)

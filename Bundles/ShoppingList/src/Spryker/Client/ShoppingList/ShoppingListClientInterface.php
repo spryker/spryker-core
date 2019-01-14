@@ -87,7 +87,7 @@ interface ShoppingListClientInterface
      * Specification:
      *  - Makes Zed request.
      *  - Hydrates ShoppingListItem with provided optional params.
-     *  - Add item to shopping list.
+     *  - Adds item to shopping list.
      *  - Updates customer permissions.
      *  - Get messages from zed request and put them to session.
      *
@@ -106,7 +106,7 @@ interface ShoppingListClientInterface
     /**
      * Specification:
      *  - Makes Zed request.
-     *  - Update shopping list item.
+     *  - Updates shopping list item.
      *  - Updates customer permissions.
      *  - Get messages from Zed request and put them to session.
      *
