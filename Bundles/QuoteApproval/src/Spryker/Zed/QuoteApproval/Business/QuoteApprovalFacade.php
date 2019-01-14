@@ -36,6 +36,8 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer

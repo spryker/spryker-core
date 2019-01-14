@@ -52,7 +52,6 @@ class QuoteApprovalMapper implements QuoteApprovalMapperInterface
         SpyQuoteApproval $quoteApprovalEntity,
         QuoteApprovalTransfer $quoteApprovalTransfer
     ): QuoteApprovalTransfer {
-
         $quoteApprovalTransfer->fromArray($quoteApprovalEntity->toArray(), true);
         $approver = $this->companyUserFacade->getCompanyUserById($quoteApprovalEntity->getFkCompanyUser());
         $quoteApprovalTransfer->setApprover($approver);
