@@ -35,11 +35,14 @@ class QuoteApprovalProceedCheckoutCheckPlugin extends AbstractPlugin implements 
             return true;
         }
 
+        if ($permissionClient->can(PlaceOrderPermissionPlugin::KEY, $quoteTransfer)) {
+            return true;
+        }
+
         $quoteApprovalStatus = $this->getFactory()
             ->createQuoteApprovalStatusCalculator()
             ->calculateQuoteStatus($quoteTransfer);
 
-        return $permissionClient->can(PlaceOrderPermissionPlugin::KEY, $quoteTransfer)
-            && $quoteApprovalStatus === QuoteApprovalConfig::STATUS_APPROVED;
+        return $quoteApprovalStatus === QuoteApprovalConfig::STATUS_APPROVED;
     }
 }
