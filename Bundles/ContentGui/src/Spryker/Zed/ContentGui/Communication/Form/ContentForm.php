@@ -28,8 +28,6 @@ class ContentForm extends AbstractType
     public const FIELD_LOCALES = 'localizedContents';
 
     public const OPTION_AVAILABLE_LOCALES = 'OPTION_AVAILABLE_LOCALES';
-    public const OPTION_CONTENT_TERM_CANDIDATE_KEY = 'OPTION_CONTENT_TERM_CANDIDATE_KEY';
-    public const OPTION_CONTENT_TYPE_CANDIDATE_KEY = 'OPTION_CONTENT_TYPE_CANDIDATE_KEY';
     public const OPTION_CONTENT_ITEM_TERM_FORM = 'OPTION_CONTENT_ITEM_TERM_FORM';
     public const OPTION_CONTENT_ITEM_TRANSFORM = 'OPTION_CONTENT_ITEM_TRANSFORM';
     public const OPTION_CONTENT_ITEM_REVERS_TRANSFORM = 'OPTION_CONTENT_ITEM_REVERS_TRANSFORM';
@@ -44,8 +42,6 @@ class ContentForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(static::OPTION_AVAILABLE_LOCALES);
-        $resolver->setRequired(static::OPTION_CONTENT_TERM_CANDIDATE_KEY);
-        $resolver->setRequired(static::OPTION_CONTENT_TYPE_CANDIDATE_KEY);
         $resolver->setRequired(static::OPTION_CONTENT_ITEM_TERM_FORM);
         $resolver->setRequired(static::OPTION_CONTENT_ITEM_TRANSFORM);
         $resolver->setRequired(static::OPTION_CONTENT_ITEM_REVERS_TRANSFORM);
@@ -62,9 +58,9 @@ class ContentForm extends AbstractType
         $this
             ->addNameField($builder)
             ->addDescriptionField($builder)
-            ->addLocaleCollection($builder, $options)
-            ->addContentTermCandidateKey($builder, $options[static::OPTION_CONTENT_TERM_CANDIDATE_KEY])
-            ->addContentTypeCandidateKey($builder, $options[static::OPTION_CONTENT_TYPE_CANDIDATE_KEY]);
+            ->addContentTermCandidateKey($builder)
+            ->addContentTypeCandidateKey($builder)
+            ->addLocaleCollection($builder, $options);
     }
 
     /**
@@ -105,18 +101,14 @@ class ContentForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string $value
      *
      * @return $this
      */
-    protected function addContentTermCandidateKey(FormBuilderInterface $builder, string $value): self
+    protected function addContentTermCandidateKey(FormBuilderInterface $builder): self
     {
         $builder->add(
             static::FIELD_CONTENT_TERM_CANDIDATE_KEY,
-            HiddenType::class,
-            [
-                'data' => $value,
-            ]
+            HiddenType::class
         );
 
         return $this;
@@ -124,18 +116,14 @@ class ContentForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string $value
      *
      * @return $this
      */
-    protected function addContentTypeCandidateKey(FormBuilderInterface $builder, string $value): self
+    protected function addContentTypeCandidateKey(FormBuilderInterface $builder): self
     {
         $builder->add(
             static::FIELD_CONTENT_TYPE_CANDIDATE_KEY,
-            HiddenType::class,
-            [
-                'data' => $value,
-            ]
+            HiddenType::class
         );
 
         return $this;

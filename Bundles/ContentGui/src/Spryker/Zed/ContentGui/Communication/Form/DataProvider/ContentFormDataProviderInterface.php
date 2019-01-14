@@ -12,14 +12,18 @@ use Generated\Shared\Transfer\ContentTransfer;
 interface ContentFormDataProviderInterface
 {
     /**
+     * @param string $termKey
      * @param int|null $contentId
      *
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
-    public function getData(?int $contentId = null): ContentTransfer;
+    public function getData(string $termKey, ?int $contentId = null): ContentTransfer;
 
     /**
+     * @param string $termKey
+     * @param int|null $contentId
+     *
      * @return array
      */
-    public function getOptions(): array;
+    public function getOptions(string $termKey, ?int $contentId = null): array;
 }

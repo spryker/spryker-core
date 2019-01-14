@@ -12,9 +12,13 @@ use Orm\Zed\Content\Persistence\SpyContentQuery;
 use Spryker\Zed\ContentGui\Communication\Form\ContentForm;
 use Spryker\Zed\ContentGui\Communication\Form\DataProvider\ContentFormDataProvider;
 use Spryker\Zed\ContentGui\Communication\Form\DataProvider\ContentFormDataProviderInterface;
+use Spryker\Zed\ContentGui\Communication\Resolver\ContentResolver;
+use Spryker\Zed\ContentGui\Communication\Resolver\ContentResolverInterface;
 use Spryker\Zed\ContentGui\Communication\Table\ContentTable;
 use Spryker\Zed\ContentGui\Communication\Tabs\ContentTabs;
 use Spryker\Zed\ContentGui\ContentGuiDependencyProvider;
+use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToContentFacadeBridgeInterface;
+use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToLocaleFacadeBridgeInterface;
 use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
@@ -45,7 +49,11 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createContentFormDataProvider(): ContentFormDataProviderInterface
     {
-        return new ContentFormDataProvider($this->getContentFacade(), $this->getLocaleFacade());
+        return new ContentFormDataProvider(
+            $this->createContentResolver(),
+            $this->getContentFacade(),
+            $this->getLocaleFacade()
+        );
     }
 
     /**
@@ -78,7 +86,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToLocaleFacadeBridgeInterface
      */
-    public function getLocaleFacade()
+    public function getLocaleFacade(): ContentGuiToLocaleFacadeBridgeInterface
     {
         return $this->getProvidedDependency(ContentGuiDependencyProvider::FACADE_LOCALE);
     }
@@ -86,8 +94,24 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToContentFacadeBridgeInterface
      */
-    public function getContentFacade()
+    public function getContentFacade(): ContentGuiToContentFacadeBridgeInterface
     {
         return $this->getProvidedDependency(ContentGuiDependencyProvider::FACADE_CONTENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentGui\Communication\Resolver\ContentResolverInterface
+     */
+    public function createContentResolver(): ContentResolverInterface
+    {
+        return new ContentResolver($this->getContentItemPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface[]
+     */
+    public function getContentItemPlugins(): array
+    {
+        return $this->getProvidedDependency(ContentGuiDependencyProvider::PLUGIN_CONTENT_ITEM_PLUGINS);
     }
 }

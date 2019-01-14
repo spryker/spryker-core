@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Container;
 
 class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const PLUGIN_CONTENT_ITEM_PLUGINS = 'PLUGIN_CONTENT_ITEM_PLUGINS';
     public const PROPEL_QUERY_CONTENT = 'PROPEL_QUERY_CONTENT';
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
@@ -29,12 +30,36 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addPropelContentQuery($container);
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addLocaleFacadeService($container);
         $container = $this->addContentFacade($container);
+        $container = $this->addContentItemPlugins($container);
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addContentItemPlugins(Container $container)
+    {
+        $container[static::PLUGIN_CONTENT_ITEM_PLUGINS] = function () {
+            return $this->getContentItemPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface[]
+     */
+    protected function getContentItemPlugins(): array
+    {
+        return [];
     }
 
     /**

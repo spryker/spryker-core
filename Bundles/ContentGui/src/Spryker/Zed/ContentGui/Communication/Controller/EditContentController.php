@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class EditContentController extends AbstractController
 {
     protected const PARAM_ID_CONTENT = 'id-content';
+    protected const PARAM_TERM_KEY = 'term-key';
     protected const PARAM_REDIRECT_URL = 'redirect-url';
     protected const URL_REDIRECT_CONTENT_PAGE = '/content-gui/list-content';
     protected const MESSAGE_ERROR_CONTENT_CREATE = 'Content item update failed.';
@@ -30,11 +31,12 @@ class EditContentController extends AbstractController
     public function indexAction(Request $request)
     {
         $contentId = $request->query->get(static::PARAM_ID_CONTENT);
+        $termKey = $request->query->get(static::PARAM_TERM_KEY, '');
         $dataProvider = $this->getFactory()->createContentFormDataProvider();
         $contentForm = $this->getFactory()
             ->getContentForm(
-                $dataProvider->getData($contentId),
-                $dataProvider->getOptions()
+                $dataProvider->getData($termKey, $contentId),
+                $dataProvider->getOptions($termKey, $contentId)
             )
             ->handleRequest($request);
 

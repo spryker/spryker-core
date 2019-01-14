@@ -24,6 +24,7 @@ class ListContentController extends AbstractController
 
         return $this->viewResponse([
             'contentItems' => $contentTable->render(),
+            'termKeys' => $this->getFactory()->createContentResolver()->getTermKeys(),
         ]);
     }
 

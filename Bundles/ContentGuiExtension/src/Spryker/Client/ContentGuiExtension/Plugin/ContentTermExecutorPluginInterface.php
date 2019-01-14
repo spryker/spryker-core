@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ContentExtension\Plugin;
+namespace Spryker\Client\ContentGuiExtension\Plugin;
 
 interface ContentTermExecutorPluginInterface
 {

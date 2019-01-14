@@ -120,7 +120,10 @@ class ContentTable extends AbstractTable
     {
         $buttons = [];
 
-        $urlParams = [ContentTableConstants::REQUEST_ID_CONTENT => $contentItem[ContentTableConstants::COL_ID_CONTENT]];
+        $urlParams = [
+            ContentTableConstants::REQUEST_TERM_KEY => $contentItem[ContentTableConstants::COL_ID_CONTENT],
+            ContentTableConstants::REQUEST_ID_CONTENT => $contentItem[ContentTableConstants::COL_ID_CONTENT],
+        ];
 
         $buttons[] = $this->generateEditButton(
             Url::generate(ContentTableConstants::URL_CONTENT_EDIT, $urlParams),

@@ -5,8 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ContentExtension\Plugin;
+namespace Spryker\Zed\ContentGui\Communication\Exception;
 
-interface ContentRelationshipPluginInterface
+use Exception;
+
+class MissingContentTermFormTypePluginException extends Exception
 {
 }

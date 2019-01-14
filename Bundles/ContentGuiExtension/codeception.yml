@@ -1,4 +1,4 @@
-namespace: ContentExtension
+namespace: ContentGuiExtension
 actor: Tester
 paths:
     tests: tests

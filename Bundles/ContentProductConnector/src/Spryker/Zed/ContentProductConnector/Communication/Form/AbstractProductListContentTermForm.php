@@ -5,9 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ContentProductConnector\Form;
+namespace Spryker\Zed\ContentProductConnector\Communication\Form;
 
-use Spryker\Zed\ContentExtension\ContentTermFormInterface;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,7 +18,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
-class AbstractProductListContentTermForm extends AbstractType implements ContentTermFormInterface
+class AbstractProductListContentTermForm extends AbstractType
 {
     public const FIELD_SKUS = 'skus';
 
@@ -81,8 +80,6 @@ class AbstractProductListContentTermForm extends AbstractType implements Content
             'entry_type' => TextType::class,
             'label' => false,
             'prototype' => true,
-            'allow_delete' => true,
-            'delete_empty' => true,
             'entry_options' => [
                 'label' => false,
                 'attr' => [
