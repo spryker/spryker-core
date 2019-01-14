@@ -45,6 +45,6 @@ class ContainerTest extends Unit
 
         $container = new Container($containerGlobals->getContainerGlobals());
 
-        $this->assertSame(self::TEST_VALUE, $container[self::TEST_KEY]);
+        $this->assertSame(self::TEST_VALUE, $container->get(self::TEST_KEY));
     }
 }
