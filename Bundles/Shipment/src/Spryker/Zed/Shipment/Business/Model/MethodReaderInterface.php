@@ -19,7 +19,7 @@ interface MethodReaderInterface
      *
      * @return int
      */
-    public function create(ShipmentMethodTransfer $methodTransfer);
+    public function create(ShipmentMethodTransfer $methodTransfer): int;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -33,33 +33,33 @@ interface MethodReaderInterface
      *
      * @return bool
      */
-    public function hasMethod($idMethod);
+    public function hasMethod($idMethod): bool;
 
     /**
      * @param int $idMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    public function getShipmentMethodTransferById($idMethod);
+    public function getShipmentMethodTransferById($idMethod): ShipmentMethodTransfer;
 
     /**
      * @param int $idShipmentMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findShipmentMethodTransferById($idShipmentMethod);
+    public function findShipmentMethodTransferById($idShipmentMethod): ?ShipmentMethodTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
-    public function getShipmentMethodTransfers();
+    public function getShipmentMethodTransfers(): array;
 
     /**
      * @param int $idMethod
      *
      * @return bool
      */
-    public function deleteMethod($idMethod);
+    public function deleteMethod($idMethod): bool;
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
@@ -74,12 +74,12 @@ interface MethodReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer);
+    public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer): ?ShipmentMethodTransfer;
 
     /**
      * @param int $idShipmentMethod
      *
      * @return bool
      */
-    public function isShipmentMethodActive($idShipmentMethod);
+    public function isShipmentMethodActive($idShipmentMethod): bool;
 }

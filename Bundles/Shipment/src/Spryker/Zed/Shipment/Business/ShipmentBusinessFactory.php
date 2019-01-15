@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
@@ -24,6 +25,7 @@ use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCountryInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
+use Spryker\Zed\Shipment\Business\Transfer\TransferBuilder;
 
 /**
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
@@ -84,6 +86,16 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getShipmentService(),
             $this->getPlugins(),
             $this->getMethodFilterPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Transfer\TransferBuilder
+     */
+    public function createTransferBuilder(): TransferBuilder
+    {
+        return new TransferBuilder(
+            $this->createMethodReader()
         );
     }
 

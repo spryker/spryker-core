@@ -21,9 +21,6 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
  * @deprecated Use MethodReader instead.
- *
- * Class Method
- * @package Spryker\Zed\Shipment\Business\Model
  */
 class Method implements MethodInterface
 {
@@ -128,7 +125,7 @@ class Method implements MethodInterface
     }
 
     /**
-     * @deprecated Use MethodReader::getAvailableMethodsByShipmentTransfer() instead
+     * @deprecated Use MethodReader::getAvailableMethodsByShipmentTransfer() instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

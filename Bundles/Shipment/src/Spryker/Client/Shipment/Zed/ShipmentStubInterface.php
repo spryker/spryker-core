@@ -13,9 +13,7 @@ use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 interface ShipmentStubInterface
 {
     /**
-     * @api
-     *
-     * @deprecated Use getAvailableMethodsByShipment() instead
+     * @deprecated Use getAvailableMethodsByShipment() instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -24,8 +22,6 @@ interface ShipmentStubInterface
     public function getAvailableMethods(QuoteTransfer $quoteTransfer);
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer

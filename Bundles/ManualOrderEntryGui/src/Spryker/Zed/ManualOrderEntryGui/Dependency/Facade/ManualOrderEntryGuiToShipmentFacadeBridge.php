@@ -26,7 +26,7 @@ class ManualOrderEntryGuiToShipmentFacadeBridge implements ManualOrderEntryGuiTo
     }
 
     /**
-     * @deprecated Use getAvailableMethodsByShipment() instead
+     * @deprecated Use getAvailableMethodsByShipment() instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

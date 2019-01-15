@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 
@@ -88,7 +89,7 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
-     * @deprecated Use getAvailableMethodsByShipment() instead
+     * @deprecated Use getAvailableMethodsByShipment() instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -113,6 +114,24 @@ interface ShipmentFacadeInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ArrayObject;
+
+    /**
+     * Specification:
+     * - Retrieves active shipment methods for every shipment group in QuoteTransfer.
+     * - Calculates shipment method delivery time using its assigned ShipmentMethodDeliveryTimePluginInterface plugin.
+     * - Selects shipment method price for the provided currency and current store.
+     * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
+     * - Excludes shipment methods which do not have a valid price as a result.
+     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin
+     * requirements.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     */
+    public function getAvailableMethodsByShipmentGroups(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer;
 
     /**
      * Specification:
@@ -207,7 +226,7 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
-     * @deprecated Use saveOrderShipment() instead
+     * @deprecated Use saveOrderShipment() instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse

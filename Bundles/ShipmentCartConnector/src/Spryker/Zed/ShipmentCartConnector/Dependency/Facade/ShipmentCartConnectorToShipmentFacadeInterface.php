@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 interface ShipmentCartConnectorToShipmentFacadeInterface
 {
     /**
-     * @deprecated Use getAvailableMethodsByShipment() instead
+     * @deprecated Use getAvailableMethodsByShipment() instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

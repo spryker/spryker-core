@@ -105,7 +105,7 @@ class MethodReader implements MethodReaderInterface
      *
      * @return int
      */
-    public function create(ShipmentMethodTransfer $methodTransfer)
+    public function create(ShipmentMethodTransfer $methodTransfer): int
     {
         $methodEntity = new SpyShipmentMethod();
         $methodEntity->fromArray($methodTransfer->toArray());
@@ -266,7 +266,7 @@ class MethodReader implements MethodReaderInterface
      *
      * @return bool
      */
-    public function hasMethod($idMethod)
+    public function hasMethod($idMethod): bool
     {
         $methodQuery = $this->queryContainer->queryMethodByIdMethod($idMethod);
 
@@ -278,7 +278,7 @@ class MethodReader implements MethodReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    public function getShipmentMethodTransferById($idMethod)
+    public function getShipmentMethodTransferById($idMethod): ShipmentMethodTransfer
     {
         $shipmentMethodTransfer = new ShipmentMethodTransfer();
 
@@ -295,7 +295,7 @@ class MethodReader implements MethodReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findShipmentMethodTransferById($idShipmentMethod)
+    public function findShipmentMethodTransferById($idShipmentMethod): ?ShipmentMethodTransfer
     {
         $shipmentMethodEntity = $this->queryContainer
             ->queryActiveMethodsWithMethodPricesAndCarrierById($idShipmentMethod)
@@ -315,7 +315,7 @@ class MethodReader implements MethodReaderInterface
     /**
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
-    public function getShipmentMethodTransfers()
+    public function getShipmentMethodTransfers(): array
     {
         $shipmentMethodTransfers = [];
 
@@ -336,7 +336,7 @@ class MethodReader implements MethodReaderInterface
      *
      * @return bool
      */
-    public function deleteMethod($idMethod)
+    public function deleteMethod($idMethod): bool
     {
         $methodQuery = $this->queryContainer->queryMethodByIdMethod($idMethod);
         $entity = $methodQuery->findOne();
@@ -374,7 +374,7 @@ class MethodReader implements MethodReaderInterface
      *
      * @return bool
      */
-    public function isShipmentMethodActive($idShipmentMethod)
+    public function isShipmentMethodActive($idShipmentMethod): bool
     {
         $idShipmentMethod = $this->queryContainer
             ->queryActiveShipmentMethodByIdShipmentMethod($idShipmentMethod)
@@ -390,7 +390,7 @@ class MethodReader implements MethodReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer)
+    public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer): ?ShipmentMethodTransfer
     {
         $shipmentMethodEntity = $this->queryContainer
             ->queryMethodByIdMethod($idShipmentMethod)
@@ -420,7 +420,7 @@ class MethodReader implements MethodReaderInterface
         SpyShipmentMethod $method,
         ShipmentGroupTransfer $shipmentGroupTransfer,
         QuoteTransfer $quoteTransfer
-    ) {
+    ): bool {
         $availabilityPlugins = $this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS];
         $isAvailable = true;
 
