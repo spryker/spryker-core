@@ -61,19 +61,13 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
             (new CompanyBusinessUnitTransfer())->setUuid($uuid)
         );
 
-        $companyBusinessUnitTransfer = null;
-
-        if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
-            $companyBusinessUnitTransfer = $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer();
-        }
-
-        if (!$companyBusinessUnitTransfer) {
+        if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()) {
             return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitNotFoundError();
         }
 
         $restCompanyBusinessUnitAttributesTransfer = $this->companyBusinessUnitMapperInterface
             ->mapCompanyBusinessUnitAttributesTransferToRestCompanyBusinessUnitAttributesTransfer(
-                $companyBusinessUnitTransfer,
+                $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer(),
                 new RestCompanyBusinessUnitAttributesTransfer()
             );
 
