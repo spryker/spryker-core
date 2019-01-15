@@ -74,7 +74,7 @@ class AbstractProductListContentTermForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSkusField(FormBuilderInterface $builder): self
+    protected function addSkusField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_SKUS, CollectionType::class, [
             'entry_type' => TextType::class,

@@ -68,7 +68,7 @@ class LocalizedContentForm extends AbstractType
      *
      * @return $this
      */
-    protected function addLocaleName(FormBuilderInterface $builder): self
+    protected function addLocaleName(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_NAME, HiddenType::class);
 
@@ -80,7 +80,7 @@ class LocalizedContentForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFkLocale(FormBuilderInterface $builder): self
+    protected function addFkLocale(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FK_LOCALE, HiddenType::class);
 

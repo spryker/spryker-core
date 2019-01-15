@@ -29,7 +29,7 @@ interface ContentPluginInterface
     /**
      * @param array|null $params
      *
-     * @return \Generated\Shared\Transfer\ContentAbstractProductListTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function getTransferObject(?array $params = null): AbstractTransfer;
 }

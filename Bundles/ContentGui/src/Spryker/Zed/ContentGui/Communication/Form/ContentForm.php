@@ -104,7 +104,7 @@ class ContentForm extends AbstractType
      *
      * @return $this
      */
-    protected function addContentTermCandidateKey(FormBuilderInterface $builder): self
+    protected function addContentTermCandidateKey(FormBuilderInterface $builder)
     {
         $builder->add(
             static::FIELD_CONTENT_TERM_CANDIDATE_KEY,
@@ -119,7 +119,7 @@ class ContentForm extends AbstractType
      *
      * @return $this
      */
-    protected function addContentTypeCandidateKey(FormBuilderInterface $builder): self
+    protected function addContentTypeCandidateKey(FormBuilderInterface $builder)
     {
         $builder->add(
             static::FIELD_CONTENT_TYPE_CANDIDATE_KEY,
