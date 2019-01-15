@@ -114,7 +114,7 @@ trait BundleDependencyProviderResolverAwareTrait
     ): Container;
 
     /**
-     * @param \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector $dependencyInjector
+     * @param \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjector $dependencyInjector
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
