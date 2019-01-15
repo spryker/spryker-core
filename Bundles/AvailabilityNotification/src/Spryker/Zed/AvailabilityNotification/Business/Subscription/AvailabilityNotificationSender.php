@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationSubscribedMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationUnsubscribedMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
@@ -47,29 +45,29 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
     protected $priceProductFacade;
 
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig
+     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGeneratorInterface
      */
-    protected $availabilityNotificationConfig;
+    protected $urlGenerator;
 
     /**
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface $mailFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMoneyFacadeInterface $moneyFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeInterface $priceProductFacade
-     * @param \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig $availabilityNotificationConfig
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         AvailabilityNotificationToMailFacadeInterface $mailFacade,
         AvailabilityNotificationToProductFacadeInterface $productFacade,
         AvailabilityNotificationToMoneyFacadeInterface $moneyFacade,
         AvailabilityNotificationToPriceProductFacadeInterface $priceProductFacade,
-        AvailabilityNotificationConfig $availabilityNotificationConfig
+        UrlGeneratorInterface $urlGenerator
     ) {
         $this->mailFacade = $mailFacade;
         $this->productFacade = $productFacade;
         $this->moneyFacade = $moneyFacade;
         $this->priceProductFacade = $priceProductFacade;
-        $this->availabilityNotificationConfig = $availabilityNotificationConfig;
+        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -84,7 +82,7 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
             $productConcreteTransfer,
             $availabilitySubscriptionTransfer->getLocale()
         );
-        $unsubscriptionLink = $this->createUnsubscriptionLink($availabilitySubscriptionTransfer);
+        $unsubscriptionLink = $this->urlGenerator->createUnsubscriptionLink($availabilitySubscriptionTransfer);
 
         $mailTransfer = (new MailTransfer())
             ->setType(AvailabilityNotificationSubscribedMailTypePlugin::MAIL_TYPE)
@@ -133,19 +131,6 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
         }
 
         return $mailTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
-     *
-     * @return string
-     */
-    protected function createUnsubscriptionLink(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): string
-    {
-        $params = [static::PARAM_SUBSCRIPTION_KEY => $availabilitySubscriptionTransfer->getSubscriptionKey()];
-        $unsubscriptionUrl = Url::generate(static::ROUTE_UNSUBSCRIBE, $params)->build();
-
-        return $this->availabilityNotificationConfig->getBaseUrlYves() . $unsubscriptionUrl;
     }
 
     /**

@@ -24,6 +24,8 @@ use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubsc
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaverInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityUnsubscriptionProcessor;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityUnsubscriptionProcessorInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGenerator;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGeneratorInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMoneyFacadeInterface;
@@ -106,7 +108,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->getMoneyFacade(),
             $this->getPriceProductFacade(),
-            $this->getConfig()
+            $this->createUrlGenerator()
         );
     }
 
@@ -131,7 +133,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
             $this->getMailFacade(),
             $this->getProductFacade(),
             $this->getPriceProductFacade(),
-            $this->getConfig()
+            $this->createUrlGenerator()
         );
     }
 
@@ -197,5 +199,13 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     public function getPriceProductFacade(): AvailabilityNotificationToPriceProductFacadeInterface
     {
         return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::FACADE_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGeneratorInterface
+     */
+    protected function createUrlGenerator(): UrlGeneratorInterface
+    {
+        return new UrlGenerator($this->getConfig());
     }
 }
