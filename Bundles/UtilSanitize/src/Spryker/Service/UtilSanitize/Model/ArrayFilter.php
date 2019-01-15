@@ -20,32 +20,35 @@ class ArrayFilter implements ArrayFilterInterface
     {
         $filteredArray = [];
         foreach ($array as $key => $value) {
-            if ($value === null) {
-                continue;
-            }
-
             if (is_array($value)) {
-                $result = $this->arrayFilterRecursive($value);
-                if (!$result) {
-                    continue;
-                }
+                $value = $this->arrayFilterRecursive($value);
+            }
 
-                $filteredArray[$key] = $result;
+            if ($this->isEmptyValue($value)) {
                 continue;
             }
-            if (is_string($value) && strlen($value)) {
-                $filteredArray[$key] = $value;
-                continue;
-            }
-            if ($value instanceof Countable && count($value) !== 0) {
-                $filteredArray[$key] = $value;
-                continue;
-            }
-            if (!$value instanceof Countable && $value) {
-                $filteredArray[$key] = $value;
-            }
+
+            $filteredArray[$key] = $value;
         }
 
         return $filteredArray;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return bool
+     */
+    protected function isEmptyValue($value): bool
+    {
+        if (is_string($value)) {
+            return $value === '';
+        }
+
+        if ($value instanceof Countable || is_array($value)) {
+            return count($value) === 0;
+        }
+
+        return !(is_scalar($value) || $value);
     }
 }
