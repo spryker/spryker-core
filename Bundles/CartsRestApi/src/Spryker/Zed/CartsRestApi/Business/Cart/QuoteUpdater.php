@@ -34,11 +34,6 @@ class QuoteUpdater implements QuoteUpdaterInterface
     protected $quoteReader;
 
     /**
-     * @var bool
-     */
-    protected $isReloadItems = true;
-
-    /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\CartsRestApi\Business\Cart\QuoteReaderInterface $quoteReader
@@ -68,11 +63,17 @@ class QuoteUpdater implements QuoteUpdaterInterface
         $originalQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteTransfer = $this->processQuoteData($quoteTransfer, $originalQuoteTransfer);
 
-        $quoteResponseTransfer = $this->validateQuoteResponse($originalQuoteTransfer, $quoteTransfer, $quoteResponseTransfer);
+        $quoteResponseTransfer = $this->validateQuoteResponse(
+            $originalQuoteTransfer,
+            $quoteTransfer,
+            $quoteResponseTransfer
+        );
+
         if ($quoteResponseTransfer->getIsSuccessful()) {
-            $quoteTransfer = $originalQuoteTransfer->fromArray($quoteTransfer->modifiedToArray());
-            $this->reloadItems($quoteTransfer);
-            $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())->fromArray($quoteTransfer->modifiedToArray(), true);
+            $quoteTransfer = $this->cartFacade->reloadItems($originalQuoteTransfer
+                ->fromArray($quoteTransfer->modifiedToArray()));
+            $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())
+                ->fromArray($quoteTransfer->modifiedToArray(), true);
             $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
                 ->fromArray($quoteTransfer->modifiedToArray(), true);
             $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
@@ -106,18 +107,6 @@ class QuoteUpdater implements QuoteUpdaterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    protected function reloadItems(QuoteTransfer $quoteTransfer): void
-    {
-        if ($this->isReloadItems) {
-            $this->cartFacade->reloadItems($quoteTransfer);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $originalQuoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -126,7 +115,6 @@ class QuoteUpdater implements QuoteUpdaterInterface
     {
         if (!$quoteTransfer->getCurrency()->getCode()) {
             $quoteTransfer->setCurrency($originalQuoteTransfer->getCurrency());
-            $this->isReloadItems = false;
         }
 
         if (!$quoteTransfer->getStore()->getName()) {
