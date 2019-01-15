@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ProductAlternativesRestApi\Processor\RestResponseBuilder;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface AlternativeProductRestResponseBuilderInterface
 {
@@ -30,4 +31,26 @@ interface AlternativeProductRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createRouteNotFoundError(): RestResponseInterface;
+
+    /**
+     * @param array $abstractProductIds
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function buildAbstractAlternativeProductCollectionResponse(
+        array $abstractProductIds,
+        RestRequestInterface $restRequest
+    ): RestResponseInterface;
+
+    /**
+     * @param array $concreteProductIds
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function buildConcreteAlternativeProductCollectionResponse(
+        array $concreteProductIds,
+        RestRequestInterface $restRequest
+    ): RestResponseInterface;
 }

@@ -28,7 +28,6 @@ class ProductAlternativesRestApiFactory extends AbstractFactory
         return new ConcreteAlternativeProductReader(
             $this->getProductAlternativeStorageClient(),
             $this->getProductStorageClient(),
-            $this->getProductsRestApiResource(),
             $this->createAlternativeProductRestResponseBuilder()
         );
     }
@@ -41,7 +40,6 @@ class ProductAlternativesRestApiFactory extends AbstractFactory
         return new AbstractAlternativeProductReader(
             $this->getProductAlternativeStorageClient(),
             $this->getProductStorageClient(),
-            $this->getProductsRestApiResource(),
             $this->createAlternativeProductRestResponseBuilder()
         );
     }
@@ -51,7 +49,10 @@ class ProductAlternativesRestApiFactory extends AbstractFactory
      */
     public function createAlternativeProductRestResponseBuilder(): AlternativeProductRestResponseBuilderInterface
     {
-        return new AlternativeProductRestResponseBuilder($this->getResourceBuilder());
+        return new AlternativeProductRestResponseBuilder(
+            $this->getResourceBuilder(),
+            $this->getProductsRestApiResource()
+        );
     }
 
     /**

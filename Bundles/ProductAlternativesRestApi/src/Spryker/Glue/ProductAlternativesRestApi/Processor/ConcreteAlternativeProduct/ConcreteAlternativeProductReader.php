@@ -7,12 +7,10 @@
 
 namespace Spryker\Glue\ProductAlternativesRestApi\Processor\ConcreteAlternativeProduct;
 
-use Generated\Shared\Transfer\ProductAlternativeStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductAlternativeStorageClientInterface;
 use Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductStorageClientInterface;
-use Spryker\Glue\ProductAlternativesRestApi\Dependency\Resource\ProductAlternativesRestApiToProductsRestApiResourceInterface;
 use Spryker\Glue\ProductAlternativesRestApi\Processor\RestResponseBuilder\AlternativeProductRestResponseBuilderInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 
@@ -31,31 +29,23 @@ class ConcreteAlternativeProductReader implements ConcreteAlternativeProductRead
     protected $productStorage;
 
     /**
-     * @var \Spryker\Glue\ProductAlternativesRestApi\Dependency\Resource\ProductAlternativesRestApiToProductsRestApiResourceInterface
-     */
-    protected $productsRestApiResource;
-
-    /**
      * @var \Spryker\Glue\ProductAlternativesRestApi\Processor\RestResponseBuilder\AlternativeProductRestResponseBuilderInterface
      */
-    protected $alternativeProductsRestResponseBuilder;
+    protected $alternativeProductRestResponseBuilder;
 
     /**
      * @param \Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductAlternativeStorageClientInterface $productAlternativeStorage
      * @param \Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductStorageClientInterface $productStorage
-     * @param \Spryker\Glue\ProductAlternativesRestApi\Dependency\Resource\ProductAlternativesRestApiToProductsRestApiResourceInterface $productsRestApiResource
-     * @param \Spryker\Glue\ProductAlternativesRestApi\Processor\RestResponseBuilder\AlternativeProductRestResponseBuilderInterface $alternativeProductsRestResponseBuilder
+     * @param \Spryker\Glue\ProductAlternativesRestApi\Processor\RestResponseBuilder\AlternativeProductRestResponseBuilderInterface $alternativeProductRestResponseBuilder
      */
     public function __construct(
         ProductAlternativesRestApiToProductAlternativeStorageClientInterface $productAlternativeStorage,
         ProductAlternativesRestApiToProductStorageClientInterface $productStorage,
-        ProductAlternativesRestApiToProductsRestApiResourceInterface $productsRestApiResource,
-        AlternativeProductRestResponseBuilderInterface $alternativeProductsRestResponseBuilder
+        AlternativeProductRestResponseBuilderInterface $alternativeProductRestResponseBuilder
     ) {
         $this->productAlternativeStorage = $productAlternativeStorage;
         $this->productStorage = $productStorage;
-        $this->productsRestApiResource = $productsRestApiResource;
-        $this->alternativeProductsRestResponseBuilder = $alternativeProductsRestResponseBuilder;
+        $this->alternativeProductRestResponseBuilder = $alternativeProductRestResponseBuilder;
     }
 
     /**
@@ -67,7 +57,7 @@ class ConcreteAlternativeProductReader implements ConcreteAlternativeProductRead
     {
         $concreteProductResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS);
         if (!$concreteProductResource) {
-            return $this->alternativeProductsRestResponseBuilder->createConcreteProductSkuMissingError();
+            return $this->alternativeProductRestResponseBuilder->createConcreteProductSkuMissingError();
         }
 
         $concreteProductSku = $concreteProductResource->getId();
@@ -77,37 +67,13 @@ class ConcreteAlternativeProductReader implements ConcreteAlternativeProductRead
             $restRequest->getMetadata()->getLocale()
         );
         if (!$concreteProductStorageData) {
-            return $this->alternativeProductsRestResponseBuilder->createConcreteProductNotFoundError();
+            return $this->alternativeProductRestResponseBuilder->createConcreteProductNotFoundError();
         }
 
-        return $this->buildRestResponse(
-            $this->productAlternativeStorage->findProductAlternativeStorage($concreteProductSku),
-            $restRequest
-        );
-    }
+        $productAlternativeStorageTransfer = $this->productAlternativeStorage->findProductAlternativeStorage($concreteProductSku);
+        $concreteProductIds = $productAlternativeStorageTransfer ? $productAlternativeStorageTransfer->getProductConcreteIds() : [];
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAlternativeStorageTransfer|null $productAlternativeStorageTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function buildRestResponse(
-        ?ProductAlternativeStorageTransfer $productAlternativeStorageTransfer,
-        RestRequestInterface $restRequest
-    ): RestResponseInterface {
-        $restResponse = $this->alternativeProductsRestResponseBuilder->createRestResponse();
-        if (!$productAlternativeStorageTransfer) {
-            return $restResponse;
-        }
-
-        foreach ($productAlternativeStorageTransfer->getProductConcreteIds() as $idProductConcrete) {
-            $concreteProductResource = $this->productsRestApiResource->findProductConcreteById($idProductConcrete, $restRequest);
-            if ($concreteProductResource) {
-                $restResponse->addResource($concreteProductResource);
-            }
-        }
-
-        return $restResponse;
+        return $this->alternativeProductRestResponseBuilder
+            ->buildConcreteAlternativeProductCollectionResponse($concreteProductIds, $restRequest);
     }
 }

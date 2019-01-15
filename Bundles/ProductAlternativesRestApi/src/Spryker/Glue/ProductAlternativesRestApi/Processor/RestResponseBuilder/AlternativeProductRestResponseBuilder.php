@@ -10,6 +10,8 @@ namespace Spryker\Glue\ProductAlternativesRestApi\Processor\RestResponseBuilder;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\ProductAlternativesRestApi\Dependency\Resource\ProductAlternativesRestApiToProductsRestApiResourceInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,11 +23,20 @@ class AlternativeProductRestResponseBuilder implements AlternativeProductRestRes
     protected $restResourceBuilder;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @var \Spryker\Glue\ProductAlternativesRestApi\Dependency\Resource\ProductAlternativesRestApiToProductsRestApiResourceInterface
      */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
-    {
+    protected $productsRestApiResource;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\ProductAlternativesRestApi\Dependency\Resource\ProductAlternativesRestApiToProductsRestApiResourceInterface $productsRestApiResource
+     */
+    public function __construct(
+        RestResourceBuilderInterface $restResourceBuilder,
+        ProductAlternativesRestApiToProductsRestApiResourceInterface $productsRestApiResource
+    ) {
         $this->restResourceBuilder = $restResourceBuilder;
+        $this->productsRestApiResource = $productsRestApiResource;
     }
 
     /**
@@ -72,5 +83,49 @@ class AlternativeProductRestResponseBuilder implements AlternativeProductRestRes
             ->setDetail(Response::$statusTexts[Response::HTTP_NOT_FOUND]);
 
         return $this->createRestResponse()->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param array $abstractProductIds
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function buildAbstractAlternativeProductCollectionResponse(
+        array $abstractProductIds,
+        RestRequestInterface $restRequest
+    ): RestResponseInterface {
+        $restResponse = $this->createRestResponse();
+
+        foreach ($abstractProductIds as $idProductAbstract) {
+            $abstractProductResource = $this->productsRestApiResource->findProductAbstractById($idProductAbstract, $restRequest);
+            if ($abstractProductResource) {
+                $restResponse->addResource($abstractProductResource);
+            }
+        }
+
+        return $restResponse;
+    }
+
+    /**
+     * @param array $concreteProductIds
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function buildConcreteAlternativeProductCollectionResponse(
+        array $concreteProductIds,
+        RestRequestInterface $restRequest
+    ): RestResponseInterface {
+        $restResponse = $this->createRestResponse();
+
+        foreach ($concreteProductIds as $idProductConcrete) {
+            $abstractProductResource = $this->productsRestApiResource->findProductConcreteById($idProductConcrete, $restRequest);
+            if ($abstractProductResource) {
+                $restResponse->addResource($abstractProductResource);
+            }
+        }
+
+        return $restResponse;
     }
 }
