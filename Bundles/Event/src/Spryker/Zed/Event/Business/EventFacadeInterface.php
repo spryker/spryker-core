@@ -46,7 +46,7 @@ interface EventFacadeInterface
 
     /**
      * Specification:
-     * - Triggers event processing by listener name with optional parameter event name.
+     * - Triggers event processing by listener name with an optional parameter event name.
      * - Listener name is a listener class name in short, qualified or a fully qualified form.
      * - Throws an exception if event listener is not found or ambiguous.
      *
