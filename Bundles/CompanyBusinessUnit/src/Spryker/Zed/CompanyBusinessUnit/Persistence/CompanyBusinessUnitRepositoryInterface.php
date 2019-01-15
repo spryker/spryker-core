@@ -23,13 +23,6 @@ interface CompanyBusinessUnitRepositoryInterface
     ): CompanyBusinessUnitTransfer;
 
     /**
-     * @param string $uuid
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
-     */
-    public function findCompanyBusinessUnitByUuid(string $uuid): ?CompanyBusinessUnitTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
@@ -58,4 +51,11 @@ interface CompanyBusinessUnitRepositoryInterface
      * @return string[]
      */
     public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
+
+    /**
+     * @param string $uuid
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
+     */
+    public function findCompanyBusinessUnitByUuid(string $uuid): ?CompanyBusinessUnitTransfer;
 }

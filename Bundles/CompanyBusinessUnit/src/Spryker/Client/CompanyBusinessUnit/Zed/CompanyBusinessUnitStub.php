@@ -50,22 +50,6 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|null
-     */
-    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer */
-        $companyBusinessUnitResponseTransfer = $this->zedRequestClient->call(
-            '/company-business-unit/gateway/find-company-business-unit-by-uuid',
-            $companyBusinessUnitTransfer
-        );
-
-        return $companyBusinessUnitResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
     public function createCompanyBusinessUnit(
@@ -145,5 +129,21 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
         );
 
         return $companyBusinessUnitTreeNodeCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|null
+     */
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer */
+        $companyBusinessUnitResponseTransfer = $this->zedRequestClient->call(
+            '/company-business-unit/gateway/find-company-business-unit-by-uuid',
+            $companyBusinessUnitTransfer
+        );
+
+        return $companyBusinessUnitResponseTransfer;
     }
 }

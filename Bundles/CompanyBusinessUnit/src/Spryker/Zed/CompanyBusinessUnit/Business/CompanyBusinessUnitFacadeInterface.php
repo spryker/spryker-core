@@ -115,20 +115,6 @@ interface CompanyBusinessUnitFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves a company business unit by uuid.
-     *
-     * @api
-     *
-     * @internal will work if uuid field is provided.
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|null
-     */
-    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitResponseTransfer;
-
-    /**
-     * Specification:
      * - Assigns a default business unit to the company user in case there is none defined.
      *
      * @api
@@ -164,4 +150,18 @@ interface CompanyBusinessUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer
      */
     public function getCustomerCompanyBusinessUnitTree(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeNodeCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves a company business unit by uuid.
+     *
+     * @api
+     *
+     * @internal will work if uuid field is provided.
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|null
+     */
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitResponseTransfer;
 }

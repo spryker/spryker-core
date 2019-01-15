@@ -34,16 +34,6 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|null
-     */
-    public function findCompanyBusinessUnitByUuidAction(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitResponseTransfer
-    {
-        return $this->getFacade()->findCompanyBusinessUnitByUuid($companyBusinessUnitTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
     public function createAction(
@@ -93,5 +83,15 @@ class GatewayController extends AbstractGatewayController
     public function getCustomerCompanyBusinessUnitTreeAction(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeNodeCollectionTransfer
     {
         return $this->getFacade()->getCustomerCompanyBusinessUnitTree($customerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|null
+     */
+    public function findCompanyBusinessUnitByUuidAction(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitResponseTransfer
+    {
+        return $this->getFacade()->findCompanyBusinessUnitByUuid($companyBusinessUnitTransfer);
     }
 }

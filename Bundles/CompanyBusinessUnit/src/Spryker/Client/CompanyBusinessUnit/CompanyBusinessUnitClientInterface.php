@@ -32,18 +32,6 @@ interface CompanyBusinessUnitClientInterface
 
     /**
      * Specification:
-     * - Finds a company business unit by uuid in the transfer
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|null
-     */
-    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitResponseTransfer;
-
-    /**
-     * Specification:
      * - Creates new company business unit.
      *
      * @api
@@ -111,4 +99,16 @@ interface CompanyBusinessUnitClientInterface
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer
      */
     public function getCustomerCompanyBusinessUnitTree(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeNodeCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds a company business unit by uuid in the transfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|null
+     */
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitResponseTransfer;
 }
