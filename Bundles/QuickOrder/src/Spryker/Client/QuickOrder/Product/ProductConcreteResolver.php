@@ -20,7 +20,7 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
     protected const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     protected const SKU = 'sku';
     protected const NAME = 'name';
-    protected const MESSAGE_INVALID_SKU = 'quick-order.upload-order.errors.upload-order-invalid-sku-item';
+    protected const ERROR_MESSAGE_INVALID_SKU = 'quick-order.upload-order.errors.upload-order-invalid-sku-item';
 
     /**
      * @var \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface
@@ -28,11 +28,28 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
     protected $productStorageClient;
 
     /**
-     * @param \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface $productStorageClient
+     * @var \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidationPluginInterface[]
      */
-    public function __construct(QuickOrderToProductStorageClientInterface $productStorageClient)
-    {
+    protected $quickOrderValidationPlugins;
+
+    /**
+     * @var \Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface[]
+     */
+    protected $productConcreteExpanderPlugins;
+
+    /**
+     * @param \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface $productStorageClient
+     * @param \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidationPluginInterface[] $quickOrderValidatorPlugins
+     * @param \Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface[] $productConcreteExpanderPlugins
+     */
+    public function __construct(
+        QuickOrderToProductStorageClientInterface $productStorageClient,
+        array $quickOrderValidatorPlugins,
+        array $productConcreteExpanderPlugins
+    ) {
         $this->productStorageClient = $productStorageClient;
+        $this->quickOrderValidationPlugins = $quickOrderValidatorPlugins;
+        $this->productConcreteExpanderPlugins = $productConcreteExpanderPlugins;
     }
 
     /**
@@ -81,10 +98,12 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
 
             if ($productConcreteTransfer === null) {
                 $productConcreteTransfer = (new ProductConcreteTransfer())->setSku($quickOrderItemTransfer->getSku());
-                $quickOrderItemTransfer->addErrorMessage(static::MESSAGE_INVALID_SKU);
+                $quickOrderItemTransfer->addErrorMessages(static::ERROR_MESSAGE_INVALID_SKU);
             }
 
             $quickOrderItemTransfer->setProductConcrete($productConcreteTransfer);
+            $this->validateQuickOrderItem($quickOrderItemTransfer);
+            $this->expandQuickOrderItem($quickOrderItemTransfer);
         }
 
         return $quickOrderTransfer;
@@ -110,5 +129,33 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
         return $productConcreteTransfer
             ->setFkProductAbstract($productConcreteStorageData[static::ID_PRODUCT_ABSTRACT])
             ->addLocalizedAttributes($localizedAttributesTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
+     *
+     * @return void
+     */
+    protected function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): void
+    {
+        foreach ($this->quickOrderValidationPlugins as $quickOrderValidationPlugin) {
+            $quickOrderValidationPlugin->validateQuickOrderItemProduct($quickOrderItemTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
+     *
+     * @return void
+     */
+    protected function expandQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): void
+    {
+        if ($quickOrderItemTransfer->getProductConcrete()->getIdProductConcrete()) {
+            foreach ($this->productConcreteExpanderPlugins as $productConcreteExpanderPlugin) {
+                $expandedProductConcrete = $productConcreteExpanderPlugin->expand([$quickOrderItemTransfer->getProductConcrete()]);
+            }
+
+            $quickOrderItemTransfer->setProductConcrete($expandedProductConcrete[0]);
+        }
     }
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\PriceProductStorage\Plugin\QuickOrder;
 
-use Generated\Shared\Transfer\QuickOrderTransfer;
+use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidationPluginInterface;
 
@@ -19,19 +19,19 @@ class QuickOrderProductPriceValidationPlugin extends AbstractPlugin implements Q
 {
     /**
      * {@inheritdoc}
-     * - Validate provided QuickOrderTransfer with price validation.
-     * - Returns the unchanged provided QuickOrderTransfer when no validation errors.
+     * - Validate provided QuickOrderItemTransfer with price validation.
+     * - Returns the unchanged provided QuickOrderItemTransfer when no validation errors.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
      *
-     * @return \Generated\Shared\Transfer\QuickOrderTransfer
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
-    public function validateQuickOrderItemProduct(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
+    public function validateQuickOrderItemProduct(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
         return $this->getFactory()
             ->createPriceProductQuickOrderValidator()
-            ->validateItemsInQuickOrder($quickOrderTransfer);
+            ->validateQuickOrderItem($quickOrderItemTransfer);
     }
 }

@@ -7,14 +7,14 @@
 
 namespace Spryker\Client\PriceProductStorage\Validator;
 
-use Generated\Shared\Transfer\QuickOrderTransfer;
+use Generated\Shared\Transfer\QuickOrderItemTransfer;
 
 interface PriceProductQuickOrderValidationInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
      *
-     * @return \Generated\Shared\Transfer\QuickOrderTransfer
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
-    public function validateItemsInQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
+    public function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer;
 }

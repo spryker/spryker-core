@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductQuantityStorage\Validator;
 
-use Generated\Shared\Transfer\QuickOrderTransfer;
+use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
 
 class QuantityQuickOrderValidation implements QuantityQuickOrderValidationInterface
@@ -30,44 +30,42 @@ class QuantityQuickOrderValidation implements QuantityQuickOrderValidationInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
      *
-     * @return \Generated\Shared\Transfer\QuickOrderTransfer
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
-    public function validateItemsInQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
+    public function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
-        foreach ($quickOrderTransfer->getItems() as $orderItemTransfer) {
-            $productConcreteTransfer = $orderItemTransfer->getProductConcrete();
+        $productConcreteTransfer = $quickOrderItemTransfer->getProductConcrete();
 
-            if (!$productConcreteTransfer || !$productConcreteTransfer->getIdProductConcrete()) {
-                continue;
-            }
-
-            $productQuantityTransfer = $this->productQuantityStorageReader
-                ->findProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
-
-            if (!$productQuantityTransfer) {
-                continue;
-            }
-
-            $min = $productQuantityTransfer->getQuantityMin();
-            $max = $productQuantityTransfer->getQuantityMax();
-            $interval = $productQuantityTransfer->getQuantityInterval();
-            $quantity = $orderItemTransfer->getQuantity();
-
-            if ($quantity !== 0 && $quantity < $min) {
-                $orderItemTransfer->addErrorMessages(static::ERROR_MESSAGE_QUANTITY_MIN_NOT_FULFILLED);
-            }
-
-            if ($quantity !== 0 && ($quantity - $min) % $interval !== 0) {
-                $orderItemTransfer->addErrorMessages(static::ERROR_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED);
-            }
-
-            if ($max !== null && $quantity > $max) {
-                $orderItemTransfer->addErrorMessages(static::ERROR_MESSAGE_QUANTITY_MAX_NOT_FULFILLED);
-            }
+        if (!$productConcreteTransfer || !$productConcreteTransfer->getIdProductConcrete()) {
+            return $quickOrderItemTransfer;
         }
 
-        return $quickOrderTransfer;
+        $productQuantityTransfer = $this->productQuantityStorageReader
+            ->findProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
+
+        if (!$productQuantityTransfer) {
+            return $quickOrderItemTransfer;
+        }
+
+        $min = $productQuantityTransfer->getQuantityMin();
+        $max = $productQuantityTransfer->getQuantityMax();
+        $interval = $productQuantityTransfer->getQuantityInterval();
+        $quantity = $quickOrderItemTransfer->getQuantity();
+
+        if ($quantity !== 0 && $quantity < $min) {
+            $quickOrderItemTransfer->addErrorMessages(static::ERROR_MESSAGE_QUANTITY_MIN_NOT_FULFILLED);
+        }
+
+        if ($quantity !== 0 && ($quantity - $min) % $interval !== 0) {
+            $quickOrderItemTransfer->addErrorMessages(static::ERROR_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED);
+        }
+
+        if ($max !== null && $quantity > $max) {
+            $quickOrderItemTransfer->addErrorMessages(static::ERROR_MESSAGE_QUANTITY_MAX_NOT_FULFILLED);
+        }
+
+        return $quickOrderItemTransfer;
     }
 }

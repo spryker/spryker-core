@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductDiscontinuedStorage\Validator;
 
-use Generated\Shared\Transfer\QuickOrderTransfer;
+use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToLocaleClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface;
 
@@ -36,27 +36,25 @@ class DiscontinuedAvailabilityQuickOrderValidation implements DiscontinuedAvaila
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
      *
-     * @return \Generated\Shared\Transfer\QuickOrderTransfer
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
-    public function validateItemsInQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
+    public function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
-        foreach ($quickOrderTransfer->getItems() as $orderItemTransfer) {
-            $productConcreteTransfer = $orderItemTransfer->getProductConcrete();
+        $productConcreteTransfer = $quickOrderItemTransfer->getProductConcrete();
 
-            if (!$productConcreteTransfer) {
-                continue;
-            }
-
-            $productDiscontinuedTransfer = $this->productDiscontinuedStorageReader
-                ->findProductDiscontinuedStorage($productConcreteTransfer->getSku(), $this->localeClient->getCurrentLocale());
-
-            if ($productDiscontinuedTransfer) {
-                $orderItemTransfer->addErrorMessages(static::ERROR_MESSAGE_DISCONTINUED_PRODUCT);
-            }
+        if (!$productConcreteTransfer) {
+            return $quickOrderItemTransfer;
         }
 
-        return $quickOrderTransfer;
+        $productDiscontinuedTransfer = $this->productDiscontinuedStorageReader
+            ->findProductDiscontinuedStorage($productConcreteTransfer->getSku(), $this->localeClient->getCurrentLocale());
+
+        if ($productDiscontinuedTransfer) {
+            $quickOrderItemTransfer->addErrorMessages(static::ERROR_MESSAGE_DISCONTINUED_PRODUCT);
+        }
+
+        return $quickOrderItemTransfer;
     }
 }

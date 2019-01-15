@@ -7,20 +7,20 @@
 
 namespace Spryker\Client\QuickOrderExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\QuickOrderTransfer;
+use Generated\Shared\Transfer\QuickOrderItemTransfer;
 
 interface QuickOrderValidationPluginInterface
 {
     /**
      * Specification:
-     * - Validates QuickOrderTransfer items.
+     * - Validates QuickOrderItemTransfer items.
      * - Executes when processing UploadOrder form, add specific error message to the QuickOrderItem transfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
      *
-     * @return \Generated\Shared\Transfer\QuickOrderTransfer
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
-    public function validateQuickOrderItemProduct(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
+    public function validateQuickOrderItemProduct(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer;
 }
