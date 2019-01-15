@@ -34,16 +34,6 @@ class EditController extends AbstractController
     protected const MESSAGE_KEY = '{{strategy_group}}';
 
     /**
-     * @uses \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Plugin\FormExpander\MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin::FIELD_SOFT_FIXED_FEE
-     */
-    protected const FIELD_SOFT_FIXED_FEE = 'fixedFee';
-
-    /**
-     * @uses \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Plugin\FormExpander\MerchantRelationshipSoftThresholdFlexibleFeeFormExpanderPlugin::FIELD_SOFT_FLEXIBLE_FEE
-     */
-    protected const FIELD_SOFT_FLEXIBLE_FEE = 'flexibleFee';
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array

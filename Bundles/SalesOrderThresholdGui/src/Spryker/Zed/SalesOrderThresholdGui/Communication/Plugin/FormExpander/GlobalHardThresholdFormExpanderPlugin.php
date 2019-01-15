@@ -94,4 +94,14 @@ class GlobalHardThresholdFormExpanderPlugin extends AbstractPlugin implements Sa
 
         return $salesOrderThresholdValueTransfer;
     }
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getDependenceFields(): array
+    {
+        return [];
+    }
 }

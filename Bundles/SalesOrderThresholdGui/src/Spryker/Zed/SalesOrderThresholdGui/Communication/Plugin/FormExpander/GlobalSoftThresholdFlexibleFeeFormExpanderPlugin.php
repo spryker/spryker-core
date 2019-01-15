@@ -127,4 +127,16 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
 
         return $this;
     }
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getDependenceFields(): array
+    {
+        return [
+            static::FIELD_SOFT_FLEXIBLE_FEE,
+        ];
+    }
 }

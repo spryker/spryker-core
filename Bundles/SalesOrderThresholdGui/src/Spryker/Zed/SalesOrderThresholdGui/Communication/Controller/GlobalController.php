@@ -12,9 +12,6 @@ use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\MerchantRelationshipThresholdType;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\AbstractMerchantRelationshipThresholdType;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipSalesOrderThresholdGuiConfig;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalThresholdType;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\AbstractGlobalThresholdType;
 use Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
@@ -29,17 +26,8 @@ class GlobalController extends AbstractController
 {
     protected const PARAM_STORE_CURRENCY_REQUEST = 'store_currency';
     protected const MESSAGE_UPDATE_SUCCESSFUL = 'The Global Thresholds is saved successfully.';
-    protected const MESSAGE_UPDATE_SOFT_STRATEGY_ERROR = 'To save Soft threshold - enter value that is higher that 0 in "threshold value" field, to delete threshold set all values equal to 0 or left them empty and save.';
-
-    /**
-     * @uses \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Plugin\FormExpander\MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin::FIELD_SOFT_FIXED_FEE
-     */
-    protected const FIELD_SOFT_FIXED_FEE = 'fixedFee';
-
-    /**
-     * @uses \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Plugin\FormExpander\MerchantRelationshipSoftThresholdFlexibleFeeFormExpanderPlugin::FIELD_SOFT_FLEXIBLE_FEE
-     */
-    protected const FIELD_SOFT_FLEXIBLE_FEE = 'flexibleFee';
+    protected const MESSAGE_UPDATE_SOFT_STRATEGY_ERROR = 'To save {{strategy_group}} threshold - enter value that is higher than 0 in "Threshold value" field. To delete threshold set all values equal to 0 or left them empty and save.';
+    protected const MESSAGE_KEY = '{{strategy_group}}';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -85,7 +73,14 @@ class GlobalController extends AbstractController
         CurrencyTransfer $currencyTransfer
     ): RedirectResponse {
         $data = $globalThresholdForm->getData();
-        $this->checkSoftStrategy($data);
+        $this->checkStrategy(
+            $data[GlobalThresholdType::FIELD_HARD],
+            SalesOrderThresholdGuiConfig::GROUP_HARD
+        );
+        $this->checkStrategy(
+            $data[GlobalThresholdType::FIELD_SOFT],
+            SalesOrderThresholdGuiConfig::GROUP_SOFT
+        );
 
         $this->handleThresholdData(
             $data[GlobalThresholdType::FIELD_HARD],
@@ -222,34 +217,32 @@ class GlobalController extends AbstractController
 
     /**
      * @param array $data
+     * @param string $strategyGroup
      *
      * @return void
      */
-    protected function checkSoftStrategy(array $data): void
+    protected function checkStrategy(array $data, string $strategyGroup): void
     {
-        $strategiesToCheck = [
-            MerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FIXED,
-            MerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE,
-        ];
+        $plugins = $this->getFactory()->getSalesOrderThresholdFormExpanderPlugins();
 
-        $softTreshold = $data[MerchantRelationshipThresholdType::FIELD_SOFT];
+        foreach ($plugins as $plugin) {
+            if ($plugin->getThresholdGroup() !== $strategyGroup || !$plugin->getDependenceFields()) {
+                continue;
+            }
 
-        if (!in_array($softTreshold[AbstractMerchantRelationshipThresholdType::FIELD_STRATEGY], $strategiesToCheck)
-            || !empty($softTreshold[AbstractMerchantRelationshipThresholdType::FIELD_THRESHOLD])) {
-            return;
+            if ($plugin->getThresholdGroup() === $strategyGroup
+                && $plugin->getThresholdKey() !== $data[AbstractGlobalThresholdType::FIELD_STRATEGY]
+            ) {
+                continue;
+            }
+
+            foreach ($plugin->getDependenceFields() as $field) {
+                if ($data[$field] && !$data[AbstractGlobalThresholdType::FIELD_THRESHOLD]) {
+                    $message = strtr(static::MESSAGE_UPDATE_SOFT_STRATEGY_ERROR, [static::MESSAGE_KEY => $strategyGroup]);
+                    $this->addErrorMessage($message);
+                    return;
+                }
+            }
         }
-
-        if ($softTreshold[AbstractMerchantRelationshipThresholdType::FIELD_STRATEGY] === MerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FIXED
-            && !$softTreshold[static::FIELD_SOFT_FIXED_FEE]
-        ) {
-            return;
-        }
-
-        if ($softTreshold[AbstractMerchantRelationshipThresholdType::FIELD_STRATEGY] === MerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE
-            && !$softTreshold[static::FIELD_SOFT_FLEXIBLE_FEE]) {
-            return;
-        }
-
-        $this->addErrorMessage(static::MESSAGE_UPDATE_SOFT_STRATEGY_ERROR);
     }
 }

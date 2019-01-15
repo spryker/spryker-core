@@ -128,4 +128,16 @@ class GlobalSoftThresholdFixedFeeFormExpanderPlugin extends AbstractPlugin imple
 
         return $this;
     }
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getDependenceFields(): array
+    {
+        return [
+            static::FIELD_SOFT_FIXED_FEE,
+        ];
+    }
 }
