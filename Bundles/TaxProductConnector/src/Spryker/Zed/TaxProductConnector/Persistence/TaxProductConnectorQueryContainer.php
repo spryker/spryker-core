@@ -11,6 +11,7 @@ use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;

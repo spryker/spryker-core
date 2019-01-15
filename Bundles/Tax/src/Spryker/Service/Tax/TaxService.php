@@ -10,7 +10,7 @@ namespace Spryker\Service\Tax;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Service\Kernel\AbstractService;
-use Spryker\Service\Sales\Items\ItemHasOwnShipmentTransferCheckerInterface;
+use Spryker\Service\Tax\Items\ItemHasOwnShipmentTransferCheckerInterface;
 
 /**
  * @deprecated Remove service layer after multiple shipment will be released.

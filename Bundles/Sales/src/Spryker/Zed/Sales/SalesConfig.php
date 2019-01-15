@@ -138,9 +138,12 @@ class SalesConfig extends AbstractBundleConfig
     protected function isTestOrderWithMultiShippingAddress(QuoteTransfer $quoteTransfer): bool
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $shippingTransfer = $itemTransfer->getShipment()->getShippingAddress();
+            $shipmentTransfer = $itemTransfer->getShipment();
 
-            if ($shippingTransfer->getFirstName() !== static::TEST_CUSTOMER_FIRST_NAME) {
+            if ($$shipmentTransfer === null
+                || $shipmentTransfer->getShippingAddress() === null
+                || $shipmentTransfer->getShippingAddress()->getFirstName() !== static::TEST_CUSTOMER_FIRST_NAME
+            ) {
                 return false;
             }
         }
@@ -157,12 +160,12 @@ class SalesConfig extends AbstractBundleConfig
      */
     protected function hasItemOwnShipmentTransfer(?ArrayObject $items): bool
     {
-        if (empty($items)) {
+        if ($items->count() === 0) {
             return false;
         }
 
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-        $itemTransfer = current($items);
+        $itemTransfer = reset($items);
 
         return $itemTransfer->offsetExists(static::PROPERTY_NAME_SHIPMENT_TRANSFER);
     }

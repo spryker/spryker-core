@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Service\ShipmentCartConnectorToShipmentServiceInterface;
+use Closure;
 
 /**
  * @deprecated Remove strategy resolver after multiple shipment will be released.
@@ -48,10 +49,10 @@ class CartValidatorStrategyResolver implements CartValidatorStrategyResolverInte
     public function resolveByQuote(QuoteTransfer $quoteTransfer): ShipmentCartValidatorInterface
     {
         if ($this->service->checkQuoteItemHasOwnShipmentTransfer($quoteTransfer) === false) {
-            return $this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT];
+            return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
         }
 
-        return $this->strategyContainer[static::STRATEGY_KEY_WITH_MULTI_SHIPMENT];
+        return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITH_MULTI_SHIPMENT]);
     }
 
     /**
@@ -59,11 +60,15 @@ class CartValidatorStrategyResolver implements CartValidatorStrategyResolverInte
      */
     protected function assertRequiredStrategyContainerItems(): void
     {
-        if (!isset($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT])) {
+        if (!isset($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT])
+            || !($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] instanceof Closure)
+        ) {
             throw new ContainerKeyNotFoundException($this, static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT);
         }
 
-        if (!isset($this->strategyContainer[static::STRATEGY_KEY_WITH_MULTI_SHIPMENT])) {
+        if (!isset($this->strategyContainer[static::STRATEGY_KEY_WITH_MULTI_SHIPMENT])
+            || !($this->strategyContainer[static::STRATEGY_KEY_WITH_MULTI_SHIPMENT] instanceof Closure)
+        ) {
             throw new ContainerKeyNotFoundException($this, static::STRATEGY_KEY_WITH_MULTI_SHIPMENT);
         }
     }

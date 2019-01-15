@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
+use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
@@ -218,7 +219,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Service\Shipment\ShipmentServiceInterface
      */
-    public function getShipmentService(): ShipmentToSalesServiceInterface
+    public function getShipmentService(): ShipmentServiceInterface
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::SERVICE_SHIPMENT);
     }

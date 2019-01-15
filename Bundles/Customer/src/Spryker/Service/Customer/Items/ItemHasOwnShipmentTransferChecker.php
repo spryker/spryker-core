@@ -42,12 +42,12 @@ class ItemHasOwnShipmentTransferChecker implements ItemHasOwnShipmentTransferChe
      */
     protected function hasItemOwnShipmentTransfer(?ArrayObject $items): bool
     {
-        if (empty($items)) {
+        if ($items->count() === 0) {
             return false;
         }
 
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-        $itemTransfer = current($items);
+        $itemTransfer = reset($items);
 
         return $itemTransfer->offsetExists(static::PROPERTY_NAME_SHIPMENT_TRANSFER);
     }

@@ -9,19 +9,19 @@ namespace Spryker\Zed\Customer\Dependency\Service;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Service\Sales\SalesServiceInterface;
+use Spryker\Service\Customer\CustomerServiceInterface;
 
 class CustomerToCustomerServiceBridge implements CustomerToCustomerServiceInterface
 {
     /**
-     * @var \Spryker\Service\Sales\SalesServiceInterface
+     * @var \Spryker\Service\Customer\CustomerServiceInterface
      */
     private $service;
 
     /**
-     * @param \Spryker\Service\Sales\SalesServiceInterface $service
+     * @param \Spryker\Service\Customer\CustomerServiceInterface $service
      */
-    public function __construct(SalesServiceInterface $service)
+    public function __construct(CustomerServiceInterface $service)
     {
         $this->service = $service;
     }

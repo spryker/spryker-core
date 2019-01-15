@@ -12,6 +12,7 @@ use Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentCheckoutPreChec
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver\PreCheckStrategyResolver;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver\PreCheckStrategyResolverInterface;
+use Spryker\Zed\ShipmentCheckoutConnector\Dependency\Service\ShipmentCheckoutConnectorToShipmentServiceInterface;
 use Spryker\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorDependencyProvider;
 
 /**
@@ -46,7 +47,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ShipmentCheckoutConnector\Dependency\Service\ShipmentCheckoutConnectorToShipmentServiceInterface
      */
-    public function getShipmentService(): ShipmentCheckoutConnectorDependencyProvider
+    public function getShipmentService(): ShipmentCheckoutConnectorToShipmentServiceInterface
     {
         return $this->getProvidedDependency(ShipmentCheckoutConnectorDependencyProvider::SERVICE_SHIPMENT);
     }
