@@ -65,6 +65,10 @@ class AbstractAlternativeProductReader implements AbstractAlternativeProductRead
      */
     public function getAbstractAlternativeProductCollection(RestRequestInterface $restRequest): RestResponseInterface
     {
+        if ($restRequest->getResource()->getId()) {
+            return $this->alternativeProductsRestResponseBuilder->createResourceNotFoundError();
+        }
+
         $concreteProductResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS);
         if (!$concreteProductResource) {
             return $this->alternativeProductsRestResponseBuilder->createConcreteProductSkuMissingError();
