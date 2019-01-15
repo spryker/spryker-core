@@ -65,7 +65,7 @@ class AlternativeProductRestResponseBuilder implements AlternativeProductRestRes
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createResourceNotFoundError(): RestResponseInterface
+    public function createRouteNotFoundError(): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setStatus(Response::HTTP_NOT_FOUND)
