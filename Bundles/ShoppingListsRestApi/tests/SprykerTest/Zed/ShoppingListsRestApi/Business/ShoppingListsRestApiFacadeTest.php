@@ -42,17 +42,16 @@ class ShoppingListsRestApiFacadeTest extends Unit
     protected const COMPANY_USER_UUID = 'COMPANY_USER_UUID';
     protected const BAD_COMPANY_USER_UUID = 'BAD_COMPANY_USER_UUID';
     protected const OWNER_NAME = 'John Doe';
-    protected const SHOPPING_LIST_UUID = '123';
+    protected const SHOPPING_LIST_UUID = 'SHOPPING_LIST_UUID';
     protected const SHOPPING_LIST_ID = 123;
-    protected const SHOPPING_LIST_ITEM_UUID = '123';
-    protected const SHOPPING_LIST_ITEM_ID = '123';
-    protected const BAD_SHOPPING_LIST_ITEM_ID = 124;
+    protected const READ_ONLY_SHOPPING_LIST_ID = 456;
+    protected const SHOPPING_LIST_ITEM_UUID = 'SHOPPING_LIST_ITEM_UUID';
+    protected const SHOPPING_LIST_ITEM_ID = 123;
     protected const GOOD_CUSTOMER_REFERENCE = 'GOOD_CUSTOMER_REFERENCE';
     protected const BAD_CUSTOMER_REFERENCE = 'BAD_CUSTOMER_REFERENCE';
     protected const GOOD_SHOPPING_LIST_UUID = 'GOOD_SHOPPING_LIST_UUID';
     protected const BAD_SHOPPING_LIST_UUID = 'BAD_SHOPPING_LIST_UUID';
-    protected const FOREIGN_SHOPPING_LIST_UUID = 'FOREIGN_SHOPPING_LIST_UUID';
-    protected const NO_PERMISSION_SHOPPING_LIST_UUID = 'NO_PERMISSION_SHOPPING_LIST_UUID';
+    protected const READ_ONLY_SHOPPING_LIST_UUID = 'FOREIGN_SHOPPING_LIST_UUID';
     protected const GOOD_SHOPPING_LIST_NAME = 'GOOD_SHOPPING_LIST_NAME';
     protected const BAD_SHOPPING_LIST_NAME = 'BAD_SHOPPING_LIST_NAME';
     protected const GOOD_SKU = '123_123';
@@ -455,7 +454,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
             ->setCompanyUserUuid(static::COMPANY_USER_UUID)
             ->setShoppingList(
                 (new ShoppingListTransfer())
-                    ->setUuid(static::FOREIGN_SHOPPING_LIST_UUID)
+                    ->setUuid(static::READ_ONLY_SHOPPING_LIST_UUID)
             );
         $shoppingListResponseTransfer = $shoppingListsRestApiFacade->deleteShoppingList($restShoppingListRequestTransfer);
 
@@ -537,7 +536,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
             $shoppingListItemResponseTransfer->getShoppingListItem()->getQuantity()
         );
         $this->assertEquals(
-            static::SHOPPING_LIST_UUID,
+            static::SHOPPING_LIST_ITEM_UUID,
             $shoppingListItemResponseTransfer->getShoppingListItem()->getUuid()
         );
         $this->assertEquals(
@@ -569,7 +568,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
 
         $this->assertFalse($shoppingListItemResponseTransfer->getIsSuccess());
         $this->assertEquals([
-            SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_ADD_ITEM,
+            SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_WRONG_QUANTITY,
         ], $shoppingListItemResponseTransfer->getErrors());
     }
 
@@ -596,7 +595,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
 
         $this->assertFalse($shoppingListItemResponseTransfer->getIsSuccess());
         $this->assertEquals([
-            SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_ADD_ITEM,
+            SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_PRODUCT_NOT_FOUND,
         ], $shoppingListItemResponseTransfer->getErrors());
     }
 
@@ -879,7 +878,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testShoppingListsRestApiFacadeWillNotRemoveItemFromShoppingListWithBadShoppingListItemId(): void
+    public function testShoppingListsRestApiFacadeWillNotRemoveItemFromShoppingListWithoutWritePermission(): void
     {
         /** @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade $shoppingListsRestApiFacade */
         $shoppingListsRestApiFacade = $this->tester->getFacade();
@@ -887,10 +886,10 @@ class ShoppingListsRestApiFacadeTest extends Unit
 
         $restShoppingListRequestTransfer = (new RestShoppingListItemRequestTransfer())
             ->setCompanyUserUuid(static::COMPANY_USER_UUID)
-            ->setShoppingListUuid(static::SHOPPING_LIST_UUID)
+            ->setShoppingListUuid(static::READ_ONLY_SHOPPING_LIST_UUID)
             ->setShoppingListItem(
                 (new ShoppingListItemTransfer())
-                    ->setUuid(static::BAD_SHOPPING_LIST_ITEM_ID)
+                    ->setUuid(static::SHOPPING_LIST_ITEM_UUID)
                     ->setCustomerReference(static::GOOD_CUSTOMER_REFERENCE)
             );
 
@@ -933,8 +932,8 @@ class ShoppingListsRestApiFacadeTest extends Unit
                 'createShoppingList',
                 'updateShoppingList',
                 'removeShoppingList',
-                'addItem',
-                'updateShoppingListItem',
+                'addShoppingListItem',
+                'updateShoppingListItemById',
                 'removeItemById',
             ]
         );
@@ -954,14 +953,14 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $mockShoppingListFacade->method('removeShoppingList')
             ->willReturnCallback([$this, '_removeShoppingList']);
 
-        $mockShoppingListFacade->method('addItem')
-            ->willReturnCallback([$this, 'addItem']);
+        $mockShoppingListFacade->method('addShoppingListItem')
+            ->willReturnCallback([$this, '_addShoppingListItem']);
 
-        $mockShoppingListFacade->method('updateShoppingListItem')
-            ->willReturnCallback([$this, 'updateShoppingListItem']);
+        $mockShoppingListFacade->method('updateShoppingListItemById')
+            ->willReturnCallback([$this, '_updateShoppingListItemById']);
 
         $mockShoppingListFacade->method('removeItemById')
-            ->willReturnCallback([$this, 'removeItemById']);
+            ->willReturnCallback([$this, '_removeItemById']);
 
         return $mockShoppingListFacade;
     }
@@ -1056,6 +1055,11 @@ class ShoppingListsRestApiFacadeTest extends Unit
                 ->setName($this->lastShoppingListName)
                 // Owner is defined only in read methods
                 ->setOwner(static::OWNER_NAME)
+                ->setIdShoppingList(
+                    $shoppingListTransfer->getUuid() === static::READ_ONLY_SHOPPING_LIST_UUID
+                        ? static::READ_ONLY_SHOPPING_LIST_ID
+                        : static::SHOPPING_LIST_ID
+                )
                 ->addItem(
                     (new ShoppingListItemTransfer())
                         ->setQuantity(static::GOOD_QUANTITY)
@@ -1148,7 +1152,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
             return $shoppingListResponseTransfer;
         }
 
-        if ($shoppingListTransfer->getUuid() === static::FOREIGN_SHOPPING_LIST_UUID) {
+        if ($shoppingListTransfer->getUuid() === static::READ_ONLY_SHOPPING_LIST_UUID) {
             $shoppingListResponseTransfer->setIsSuccess(false)
                 ->addError(ShoppingListsRestApiConfig::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED);
 
@@ -1161,35 +1165,30 @@ class ShoppingListsRestApiFacadeTest extends Unit
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
-    {
+    public function _addShoppingListItem(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer {
         if ($shoppingListItemTransfer->getSku() === static::BAD_SKU) {
-            return $shoppingListItemTransfer;
+            return (new ShoppingListItemResponseTransfer())
+                ->addError(ShoppingListsRestApiConfig::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_FOUND)
+                ->setIsSuccess(false);
         }
 
         if ($shoppingListItemTransfer->getQuantity() <= static::BAD_QUANTITY) {
-            return $shoppingListItemTransfer;
+            return (new ShoppingListItemResponseTransfer())
+                ->addError(ShoppingListsRestApiConfig::ERROR_SHOPPING_LIST_ITEM_QUANTITY_NOT_VALID)
+                ->setIsSuccess(false);
         }
 
-        return $shoppingListItemTransfer
-            ->setIdShoppingListItem(static::SHOPPING_LIST_ITEM_ID)
-            ->setUuid(static::SHOPPING_LIST_ITEM_UUID);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
-     */
-    public function updateShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
-    {
-        if ($shoppingListItemTransfer->getIdShoppingListItem() === static::NO_PERMISSION_SHOPPING_LIST_UUID) {
-            return $shoppingListItemTransfer->setFkShoppingList(null);
-        }
-
-        return $shoppingListItemTransfer->setFkShoppingList(static::SHOPPING_LIST_ID);
+        return (new ShoppingListItemResponseTransfer())
+            ->setIsSuccess(true)
+            ->setShoppingListItem(
+                $shoppingListItemTransfer
+                    ->setIdShoppingListItem(static::SHOPPING_LIST_ITEM_ID)
+                    ->setUuid(static::SHOPPING_LIST_ITEM_UUID)
+            );
     }
 
     /**
@@ -1197,10 +1196,40 @@ class ShoppingListsRestApiFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
-    {
-        if ($shoppingListItemTransfer->getIdShoppingListItem() === static::BAD_SHOPPING_LIST_ITEM_ID) {
-            return (new ShoppingListItemResponseTransfer())->setIsSuccess(false);
+    public function _updateShoppingListItemById(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer {
+        if ($shoppingListItemTransfer->getFkShoppingList() === static::READ_ONLY_SHOPPING_LIST_ID) {
+            return (new ShoppingListItemResponseTransfer())
+                ->addError(ShoppingListsRestApiConfig::ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED)
+                ->setIsSuccess(false);
+        }
+
+        if ($shoppingListItemTransfer->getQuantity() <= static::BAD_QUANTITY) {
+            return (new ShoppingListItemResponseTransfer())
+                ->addError(ShoppingListsRestApiConfig::ERROR_SHOPPING_LIST_ITEM_QUANTITY_NOT_VALID)
+                ->setIsSuccess(false);
+        }
+
+        return (new ShoppingListItemResponseTransfer())
+            ->setIsSuccess(true)
+            ->setShoppingListItem(
+                $shoppingListItemTransfer->setFkShoppingList(static::SHOPPING_LIST_ID)
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function _removeItemById(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer {
+        if ($shoppingListItemTransfer->getFkShoppingList() === static::READ_ONLY_SHOPPING_LIST_ID) {
+            return (new ShoppingListItemResponseTransfer())
+                ->addError(ShoppingListsRestApiConfig::ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED)
+                ->setIsSuccess(false);
         }
 
         return (new ShoppingListItemResponseTransfer())->setIsSuccess(true);

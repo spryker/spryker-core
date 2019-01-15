@@ -10,7 +10,6 @@ namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\RestShoppingListRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
-use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig as SharedShoppingListsRestApiConfig;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListReaderInterface;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface;
 
@@ -51,7 +50,7 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function addItem(
+    public function addShoppingListItem(
         RestShoppingListItemRequestTransfer $restShoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
 
@@ -82,16 +81,14 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
             ->setIdCompanyUser($shoppingListResponseTransferByUuid->getShoppingList()->getIdCompanyUser())
             ->setFkShoppingList($shoppingListResponseTransferByUuid->getShoppingList()->getIdShoppingList());
 
-        $shoppingListItemTransfer = $this->shoppingListFacade->addItem($restShoppingListItemRequestTransfer->getShoppingListItem());
+        $shoppingListItemResponseTransfer = $this->shoppingListFacade->addShoppingListItem($restShoppingListItemRequestTransfer->getShoppingListItem());
 
-        if (!$shoppingListItemTransfer->getIdShoppingListItem()) {
-            return (new ShoppingListItemResponseTransfer())
-                ->setIsSuccess(false)
-                ->addError(SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_ADD_ITEM);
+        if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
+            return $this->shoppingListItemMapper->mapShoppingListResponseErrorsToRestCodes(
+                $shoppingListItemResponseTransfer
+            );
         }
 
-        return (new ShoppingListItemResponseTransfer())
-            ->setIsSuccess(true)
-            ->setShoppingListItem($shoppingListItemTransfer);
+        return $shoppingListItemResponseTransfer;
     }
 }

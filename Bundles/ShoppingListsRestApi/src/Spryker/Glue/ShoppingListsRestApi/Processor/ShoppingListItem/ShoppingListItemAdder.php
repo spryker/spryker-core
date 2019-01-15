@@ -81,7 +81,7 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
             $restShoppingListItemRequestTransfer
         );
 
-        $shoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->addItem($restShoppingListItemRequestTransfer);
+        $shoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->addShoppingListItem($restShoppingListItemRequestTransfer);
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
             return $this->restResponseWriter->writeErrorsFromErrorCodes(

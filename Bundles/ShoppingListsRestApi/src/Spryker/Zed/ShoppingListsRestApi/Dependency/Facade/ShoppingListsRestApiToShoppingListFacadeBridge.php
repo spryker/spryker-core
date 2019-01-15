@@ -83,11 +83,12 @@ class ShoppingListsRestApiToShoppingListFacadeBridge implements ShoppingListsRes
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
-    {
-        return $this->shoppingListFacade->addItem($shoppingListItemTransfer);
+    public function addShoppingListItem(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer {
+        return $this->shoppingListFacade->addShoppingListItem($shoppingListItemTransfer);
     }
 
     /**
@@ -95,18 +96,20 @@ class ShoppingListsRestApiToShoppingListFacadeBridge implements ShoppingListsRes
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
-    {
+    public function removeItemById(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer {
         return $this->shoppingListFacade->removeItemById($shoppingListItemTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function updateShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
-    {
-        return $this->shoppingListFacade->updateShoppingListItem($shoppingListItemTransfer);
+    public function updateShoppingListItemById(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer {
+        return $this->shoppingListFacade->updateShoppingListItemById($shoppingListItemTransfer);
     }
 }

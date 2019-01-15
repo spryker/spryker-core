@@ -35,4 +35,13 @@ interface ShoppingListItemMapperInterface
         ShoppingListResponseTransfer $shoppingListResponseTransfer,
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
     ): ShoppingListItemResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function mapShoppingListResponseErrorsToRestCodes(
+        ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
+    ): ShoppingListItemResponseTransfer;
 }

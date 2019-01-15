@@ -9,7 +9,6 @@ namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem;
 
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
-use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig as SharedShoppingListsRestApiConfig;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface;
 
 class ShoppingListItemUpdater implements ShoppingListItemUpdaterInterface
@@ -20,19 +19,27 @@ class ShoppingListItemUpdater implements ShoppingListItemUpdaterInterface
     protected $shoppingListFacade;
 
     /**
+     * @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemMapperInterface
+     */
+    protected $shoppingListItemMapper;
+
+    /**
      * @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemReaderInterface
      */
     protected $shoppingListItemReader;
 
     /**
      * @param \Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface $shoppingListFacade
+     * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemMapperInterface $shoppingListItemMapper
      * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemReaderInterface $shoppingListItemReader
      */
     public function __construct(
         ShoppingListsRestApiToShoppingListFacadeInterface $shoppingListFacade,
+        ShoppingListItemMapperInterface $shoppingListItemMapper,
         ShoppingListItemReaderInterface $shoppingListItemReader
     ) {
         $this->shoppingListFacade = $shoppingListFacade;
+        $this->shoppingListItemMapper = $shoppingListItemMapper;
         $this->shoppingListItemReader = $shoppingListItemReader;
     }
 
@@ -65,16 +72,14 @@ class ShoppingListItemUpdater implements ShoppingListItemUpdaterInterface
         $quantity = $restShoppingListItemRequestTransfer->getShoppingListItem()->getQuantity();
         $shoppingListItemResponseTransfer->getShoppingListItem()->setQuantity($quantity);
 
-        $shoppingListItemTransfer = $this->shoppingListFacade->updateShoppingListItem($shoppingListItemResponseTransfer->getShoppingListItem());
+        $shoppingListItemResponseTransfer = $this->shoppingListFacade->updateShoppingListItemById($shoppingListItemResponseTransfer->getShoppingListItem());
 
-        if ($shoppingListItemTransfer->getQuantity() !== $quantity) {
-            return (new ShoppingListItemResponseTransfer())
-                ->setIsSuccess(false)
-                ->addError(SharedShoppingListsRestApiConfig::RESPONSE_CODE_SHOPPING_LIST_CANNOT_UPDATE_ITEM);
+        if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
+            return $this->shoppingListItemMapper->mapShoppingListResponseErrorsToRestCodes(
+                $shoppingListItemResponseTransfer
+            );
         }
 
-        return (new ShoppingListItemResponseTransfer())
-            ->setIsSuccess(true)
-            ->setShoppingListItem($shoppingListItemTransfer);
+        return $shoppingListItemResponseTransfer;
     }
 }

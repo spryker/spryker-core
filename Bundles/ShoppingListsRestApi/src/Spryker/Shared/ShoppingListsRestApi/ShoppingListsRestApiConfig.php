@@ -30,12 +30,14 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED = 'Requested operation requires write access permission.';
     public const RESPONSE_CODE_SHOPPING_LIST_DUPLICATE_NAME = '1507';
     public const RESPONSE_DETAIL_SHOPPING_LIST_DUPLICATE_NAME = 'Shopping list with given name already exists.';
-    public const RESPONSE_CODE_SHOPPING_LIST_CANNOT_ADD_ITEM = '1508';
-    public const RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_ADD_ITEM = 'Cannot add an item to shopping list.';
-    public const RESPONSE_CODE_SHOPPING_LIST_CANNOT_UPDATE_ITEM = '1509';
-    public const RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_UPDATE_ITEM = 'Cannot update the shopping list item.';
-    public const RESPONSE_CODE_SHOPPING_LIST_CANNOT_DELETE_ITEM = '1510';
-    public const RESPONSE_DETAIL_SHOPPING_LIST_CANNOT_DELETE_ITEM = 'Cannot delete the shopping list item.';
+    public const RESPONSE_CODE_SHOPPING_LIST_WRONG_QUANTITY = '1508';
+    public const RESPONSE_DETAIL_SHOPPING_LIST_WRONG_QUANTITY = 'Cannot process quantity of the shopping list item.';
+    public const RESPONSE_CODE_SHOPPING_LIST_PRODUCT_NOT_FOUND = '1509';
+    public const RESPONSE_DETAIL_SHOPPING_LIST_PRODUCT_NOT_FOUND = 'Concrete product not found.';
+    public const RESPONSE_CODE_SHOPPING_LIST_PRODUCT_NOT_AVAILABLE = '1510';
+    public const RESPONSE_DETAIL_SHOPPING_LIST_PRODUCT_NOT_AVAILABLE = 'Concrete product is not available.';
+    public const RESPONSE_CODE_SHOPPING_LIST_PRODUCT_NOT_ACTIVE = '1511';
+    public const RESPONSE_DETAIL_SHOPPING_LIST_PRODUCT_NOT_ACTIVE = 'Concrete product is not active.';
 
     /**
      * Do not forget to add mapping:
