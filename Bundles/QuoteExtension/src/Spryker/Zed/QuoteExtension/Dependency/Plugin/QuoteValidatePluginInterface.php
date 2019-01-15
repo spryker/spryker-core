@@ -15,6 +15,7 @@ interface QuoteValidatePluginInterface
     /**
      * Specification:
      * - Validates quote before saving.
+     * - Returns with isSuccess false when validation failed.
      *
      * @api
      *
