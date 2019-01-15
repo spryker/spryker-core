@@ -1,18 +1,15 @@
 {
-  "name": "spryker/content-gui-extension",
+  "name": "spryker/content-storage-extension",
   "type": "library",
-  "description": "ContentGuiExtension module",
+  "description": "ContentStorageExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
-    "spryker/kernel": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/kernel": "If you want to use content plugin"
   },
   "autoload": {
     "psr-4": {

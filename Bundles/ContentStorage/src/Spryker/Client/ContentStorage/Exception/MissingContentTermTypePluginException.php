@@ -5,8 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ContentGuiExtension\Plugin;
+namespace Spryker\Client\ContentStorage\Exception;
 
-interface ContentTermExecutorPluginInterface
+use Exception;
+
+class MissingContentTermTypePluginException extends Exception
 {
 }
