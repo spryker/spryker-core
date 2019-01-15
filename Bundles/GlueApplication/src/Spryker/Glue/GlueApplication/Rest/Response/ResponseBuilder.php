@@ -156,7 +156,7 @@ class ResponseBuilder implements ResponseBuilderInterface
             );
         }
 
-        $data = $this->formatRelationships($restRequest, $data);
+        $data = $this->filterRelationships($restRequest, $data);
 
         if (isset($data[RestResourceInterface::RESOURCE_LINKS])) {
             $data[RestResourceInterface::RESOURCE_LINKS] = $this->formatLinks(
@@ -225,7 +225,7 @@ class ResponseBuilder implements ResponseBuilderInterface
      *
      * @return array
      */
-    protected function formatRelationships(RestRequestInterface $restRequest, array $data): array
+    protected function filterRelationships(RestRequestInterface $restRequest, array $data): array
     {
         if ($restRequest->getExcludeRelationship()) {
             unset($data[RestResourceInterface::RESOURCE_RELATIONSHIPS]);

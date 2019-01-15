@@ -62,7 +62,7 @@ class RequestFormatterTest extends Unit
     /**
      * @return void
      */
-    public function testFormatRequestWhenIncludeEmptyShouldExcludeRel(): void
+    public function testFormatRequestWhenIncludeEmptyShouldExcludeRelationships(): void
     {
         $requestFormatter = $this->createRequestFormatter(new RestResourceBuilder(), $this->createGlueApplicationConfigMock());
 
@@ -89,7 +89,7 @@ class RequestFormatterTest extends Unit
     /**
      * @return void
      */
-    public function testFormatRequestWhenEagerRelatedResourcesInclusionDisabledShouldExcludeRel(): void
+    public function testFormatRequestWhenEagerRelatedResourcesInclusionDisabledShouldExcludeRelationships(): void
     {
         $requestFormatter = $this->createRequestFormatter(new RestResourceBuilder(), $this->createGlueApplicationConfigMock(false));
 
@@ -114,7 +114,7 @@ class RequestFormatterTest extends Unit
     /**
      * @return void
      */
-    public function testFormatRequestWhenEagerRelatedResourcesInclusionEnabledShouldNotExcludeRel(): void
+    public function testFormatRequestWhenEagerRelatedResourcesInclusionEnabledShouldNotExcludeRelationships(): void
     {
         $requestFormatter = $this->createRequestFormatter(new RestResourceBuilder(), $this->createGlueApplicationConfigMock(true));
 
@@ -139,7 +139,7 @@ class RequestFormatterTest extends Unit
     /**
      * @return void
      */
-    public function testFormatRequestWhenEagerRelatedResourcesInclusionDisabledAndIncludeNotEmptyShouldNotExcludeRel(): void
+    public function testFormatRequestWhenEagerRelatedResourcesInclusionDisabledAndIncludeNotEmptyShouldNotExcludeRelationships(): void
     {
         $requestFormatter = $this->createRequestFormatter(new RestResourceBuilder(), $this->createGlueApplicationConfigMock(false));
 
