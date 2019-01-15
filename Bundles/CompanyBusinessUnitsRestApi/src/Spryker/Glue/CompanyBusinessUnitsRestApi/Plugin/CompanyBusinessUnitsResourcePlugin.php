@@ -31,7 +31,7 @@ class CompanyBusinessUnitsResourcePlugin extends AbstractPlugin implements Resou
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
-            ->addGet(CompanyBusinessUnitsRestApiConfig::ACTION_COMPANY_BUSINESS_UNITS);
+            ->addGet(CompanyBusinessUnitsRestApiConfig::ACTION_COMPANY_BUSINESS_UNITS_GET);
 
         return $resourceRouteCollection;
     }
