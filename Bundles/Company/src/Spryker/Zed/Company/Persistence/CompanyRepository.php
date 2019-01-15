@@ -85,4 +85,25 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
 
         return $companyTypeCollection;
     }
+
+    /**
+     * @param string $uuid
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer|null
+     */
+    public function findCompanyByUuid(string $uuid): ?CompanyTransfer
+    {
+        $spyCompany = $this->getFactory()
+            ->createCompanyQuery()
+            ->filterByUuid($uuid)
+            ->findOne();
+
+        if (!$spyCompany) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCompanyMapper()
+            ->mapEntityToCompanyTransfer($spyCompany, new CompanyTransfer());
+    }
 }

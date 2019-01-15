@@ -86,4 +86,22 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     {
         return $this->getRepository()->getCompanies();
     }
+
+    /**
+     * Specification:
+     * - Finds a company by uuid.
+     * - Requires uuid field to be set in CompanyTransfer taken as parameter.
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
+    public function findCompanyByUuid(CompanyTransfer $companyTransfer): CompanyResponseTransfer
+    {
+        return $this->getFactory()->createCompanyReader()->findCompanyByUuid($companyTransfer);
+    }
 }
