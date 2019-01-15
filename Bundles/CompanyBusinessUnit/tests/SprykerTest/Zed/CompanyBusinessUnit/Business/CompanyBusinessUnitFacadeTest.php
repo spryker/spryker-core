@@ -66,7 +66,7 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testFindCompanyBusinessUnitByUuidShouldReturnTransferObject()
+    public function testFindCompanyBusinessUnitByUuidShouldReturnTransferObject(): void
     {
         $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany([CompanyBusinessUnitTransfer::UUID => static::COMPANY_BUSINESS_UUID]);
 

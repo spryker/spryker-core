@@ -22,7 +22,7 @@ interface CompanyBusinessUnitReaderInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitResponseTransfer;
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer;
 }

@@ -134,9 +134,9 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ?CompanyBusinessUnitResponseTransfer
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer */
         $companyBusinessUnitResponseTransfer = $this->zedRequestClient->call(
