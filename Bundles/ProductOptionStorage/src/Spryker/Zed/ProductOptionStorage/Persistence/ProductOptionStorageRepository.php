@@ -37,6 +37,6 @@ class ProductOptionStorageRepository extends AbstractRepository implements Produ
 
         return $this->getFactory()
             ->createProductOptionStorageMapper()
-            ->mapProductOptionGroupStatusesToIndexedArray($productOptionGroupStatuses);
+            ->mapProductOptionGroupStatusesToIndexedProductOptionGroupStatusesArray($productOptionGroupStatuses, []);
     }
 }

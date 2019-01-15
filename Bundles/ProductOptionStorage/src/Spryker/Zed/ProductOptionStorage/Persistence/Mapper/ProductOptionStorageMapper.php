@@ -14,12 +14,12 @@ class ProductOptionStorageMapper implements ProductOptionStorageMapperInterface
 {
     /**
      * @param array $productOptionGroupStatuses
+     * @param array $indexedProductOptionGroupStatuses
      *
      * @return array [[fkProductAbstract => [productOptionGroupName => productOptionGroupStatus]]]
      */
-    public function mapProductOptionGroupStatusesToIndexedArray(array $productOptionGroupStatuses): array
+    public function mapProductOptionGroupStatusesToIndexedProductOptionGroupStatusesArray(array $productOptionGroupStatuses, array $indexedProductOptionGroupStatuses): array
     {
-        $indexedProductOptionGroupStatuses = [];
         foreach ($productOptionGroupStatuses as $productOptionGroupStatus) {
             $fkProductAbstract = $productOptionGroupStatus[SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT];
             $productOptionGroupName = $productOptionGroupStatus[SpyProductOptionGroupTableMap::COL_NAME];
