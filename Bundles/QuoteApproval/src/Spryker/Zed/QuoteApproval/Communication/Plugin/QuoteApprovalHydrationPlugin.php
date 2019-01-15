@@ -10,7 +10,7 @@ namespace Spryker\Zed\QuoteApproval\Communication\Plugin;
 use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Quote\Business\Model\QuoteHydrationPluginInterface;
+use Spryker\Zed\Quote\Communication\Plugin\QuoteHydrationPluginInterface;
 
 /**
  * @method \Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacadeInterface getFacade()

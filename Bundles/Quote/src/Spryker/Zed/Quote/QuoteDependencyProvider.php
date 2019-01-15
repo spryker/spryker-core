@@ -193,7 +193,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Quote\Business\Model\QuoteHydrationPluginInterface[]
+     * @return \Spryker\Zed\Quote\Communication\Plugin\QuoteHydrationPluginInterface[]
      */
     protected function getQuoteHydrationPlugins(): array
     {

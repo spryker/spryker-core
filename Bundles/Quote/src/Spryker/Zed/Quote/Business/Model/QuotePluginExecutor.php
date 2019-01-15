@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\QuoteTransfer;
 class QuotePluginExecutor implements QuotePluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\Quote\Business\Model\QuoteHydrationPluginInterface[]
+     * @var \Spryker\Zed\Quote\Communication\Plugin\QuoteHydrationPluginInterface[]
      */
     protected $quoteHydrationPlugins;
 
     /**
-     * @param \Spryker\Zed\Quote\Business\Model\QuoteHydrationPluginInterface[] $quoteHydrationPlugins
+     * @param \Spryker\Zed\Quote\Communication\Plugin\QuoteHydrationPluginInterface[] $quoteHydrationPlugins
      */
     public function __construct(array $quoteHydrationPlugins)
     {

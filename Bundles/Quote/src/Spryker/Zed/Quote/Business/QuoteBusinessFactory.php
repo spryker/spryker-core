@@ -118,7 +118,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Quote\Business\Model\QuoteHydrationPluginInterface[]
+     * @return \Spryker\Zed\Quote\Communication\Plugin\QuoteHydrationPluginInterface[]
      */
     public function getQuoteHydrationPlugins(): array
     {
