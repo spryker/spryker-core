@@ -25,7 +25,7 @@ class Factory extends AbstractFactory
         AbstractBundleDependencyProvider $dependencyProvider,
         Container $container
     ) {
-        $container[AbstractFactoryTest::CONTAINER_KEY] = AbstractFactoryTest::CONTAINER_VALUE;
+        $container->set(AbstractFactoryTest::CONTAINER_KEY, AbstractFactoryTest::CONTAINER_VALUE);
     }
 
     /**
