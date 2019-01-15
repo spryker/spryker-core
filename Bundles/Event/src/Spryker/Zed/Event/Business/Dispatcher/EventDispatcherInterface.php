@@ -29,6 +29,7 @@ interface EventDispatcherInterface
 
     /**
      * @param string $listenerName
+     * @param string $eventName
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
      *
      * @throws \Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException
@@ -36,5 +37,5 @@ interface EventDispatcherInterface
      *
      * @return void
      */
-    public function triggerByListenerName(string $listenerName, array $transfers): void;
+    public function triggerByListenerName(string $listenerName, string $eventName, array $transfers): void;
 }

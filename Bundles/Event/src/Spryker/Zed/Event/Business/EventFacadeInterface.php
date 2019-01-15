@@ -46,13 +46,14 @@ interface EventFacadeInterface
 
     /**
      * Specification:
-     * - Triggers event processing by listener name.
+     * - Triggers event processing by listener name with optional parameter event name.
      * - Listener name is a listener class name in short, qualified or a fully qualified form.
      * - Throws an exception if event listener is not found or ambiguous.
      *
      * @api
      *
      * @param string $listenerName
+     * @param string $eventName
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
      *
      * @throws \Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException
@@ -60,7 +61,7 @@ interface EventFacadeInterface
      *
      * @return void
      */
-    public function triggerByListenerName(string $listenerName, array $transfers): void;
+    public function triggerByListenerName(string $listenerName, string $eventName, array $transfers): void;
 
     /**
      * Specification:
