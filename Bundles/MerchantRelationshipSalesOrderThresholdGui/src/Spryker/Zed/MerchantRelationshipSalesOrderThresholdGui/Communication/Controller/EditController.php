@@ -30,7 +30,8 @@ class EditController extends AbstractController
     protected const PARAM_STORE_CURRENCY_REQUEST = 'store_currency';
     protected const REQUEST_ID_MERCHANT_RELATIONSHIP = 'id-merchant-relationship';
     protected const MESSAGE_UPDATE_SUCCESSFUL = 'The Merchant Relationship Thresholds is saved successfully.';
-    protected const MESSAGE_UPDATE_SOFT_STRATEGY_ERROR = 'To save Soft threshold - enter value that is higher that 0 in "threshold value" field, to delete threshold set all values equal to 0 or left them empty and save.';
+    protected const MESSAGE_UPDATE_SOFT_STRATEGY_ERROR = 'To save {{strategy_group}} threshold - enter value that is higher than 0 in "Threshold value" field. To delete threshold set all values equal to 0 or left them empty and save.';
+    protected const MESSAGE_KEY = '{{strategy_group}}';
 
     /**
      * @uses \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Plugin\FormExpander\MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin::FIELD_SOFT_FIXED_FEE
@@ -125,7 +126,14 @@ class EditController extends AbstractController
         CurrencyTransfer $currencyTransfer
     ): RedirectResponse {
         $data = $thresholdForm->getData();
-        $this->checkSoftStrategy($data);
+        $this->checkStrategy(
+            $data[MerchantRelationshipThresholdType::FIELD_HARD],
+            MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_HARD
+        );
+        $this->checkStrategy(
+            $data[MerchantRelationshipThresholdType::FIELD_SOFT],
+            MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_SOFT
+        );
 
         $this->handleThresholdData(
             $data[MerchantRelationshipThresholdType::FIELD_HARD],
@@ -293,34 +301,32 @@ class EditController extends AbstractController
 
     /**
      * @param array $data
+     * @param string $strategyGroup
      *
      * @return void
      */
-    protected function checkSoftStrategy(array $data): void
+    protected function checkStrategy(array $data, string $strategyGroup): void
     {
-        $strategiesToCheck = [
-            MerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FIXED,
-            MerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE,
-        ];
+        $plugins = $this->getFactory()->getSalesOrderThresholdFormExpanderPlugins();
 
-        $softTreshold = $data[MerchantRelationshipThresholdType::FIELD_SOFT];
+        foreach ($plugins as $plugin) {
+            if ($plugin->getThresholdGroup() !== $strategyGroup || !$plugin->getDependenceFields()) {
+                continue;
+            }
 
-        if (!in_array($softTreshold[AbstractMerchantRelationshipThresholdType::FIELD_STRATEGY], $strategiesToCheck)
-            || !empty($softTreshold[AbstractMerchantRelationshipThresholdType::FIELD_THRESHOLD])) {
-            return;
+            if ($plugin->getThresholdGroup() === $strategyGroup
+                && $plugin->getThresholdKey() !== $data[AbstractMerchantRelationshipThresholdType::FIELD_STRATEGY]
+            ) {
+                continue;
+            }
+
+            foreach ($plugin->getDependenceFields() as $field) {
+                if ($data[$field] && !$data[AbstractMerchantRelationshipThresholdType::FIELD_THRESHOLD]) {
+                    $message = strtr(static::MESSAGE_UPDATE_SOFT_STRATEGY_ERROR, [static::MESSAGE_KEY => $strategyGroup]);
+                    $this->addErrorMessage($message);
+                    return;
+                }
+            }
         }
-
-        if ($softTreshold[AbstractMerchantRelationshipThresholdType::FIELD_STRATEGY] === MerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FIXED
-            && !$softTreshold[static::FIELD_SOFT_FIXED_FEE]
-        ) {
-            return;
-        }
-
-        if ($softTreshold[AbstractMerchantRelationshipThresholdType::FIELD_STRATEGY] === MerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE
-            && !$softTreshold[static::FIELD_SOFT_FLEXIBLE_FEE]) {
-            return;
-        }
-
-        $this->addErrorMessage(static::MESSAGE_UPDATE_SOFT_STRATEGY_ERROR);
     }
 }

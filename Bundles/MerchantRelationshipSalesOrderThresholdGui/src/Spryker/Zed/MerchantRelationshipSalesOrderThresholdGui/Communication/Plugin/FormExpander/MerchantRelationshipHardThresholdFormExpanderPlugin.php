@@ -94,4 +94,14 @@ class MerchantRelationshipHardThresholdFormExpanderPlugin extends AbstractPlugin
 
         return $salesOrderThresholdValueTransfer;
     }
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getDependenceFields(): array
+    {
+        return [];
+    }
 }
