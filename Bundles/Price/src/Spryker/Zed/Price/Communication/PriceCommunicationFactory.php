@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Price\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Price\Business\Validator\QuoteValidator;
 
 /**
  * @method \Spryker\Zed\Price\PriceConfig getConfig()
@@ -15,4 +16,11 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class PriceCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\Price\Business\Validator\QuoteValidator
+     */
+    public function createQuoteValidator(): QuoteValidator
+    {
+        return new QuoteValidator($this->getFacade());
+    }
 }
