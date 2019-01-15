@@ -20,7 +20,7 @@ class CompanyBusinessUnitsResourcePlugin extends AbstractPlugin implements Resou
 {
     /**
      * {@inheritdoc}
-     * - Retrieves company business unit data.
+     * - Configures available actions for company-business-units resource.
      *
      * @api
      *

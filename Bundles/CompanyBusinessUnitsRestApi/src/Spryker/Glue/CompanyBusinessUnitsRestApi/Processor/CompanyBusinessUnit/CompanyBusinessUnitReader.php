@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\Dependency\Client\CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -57,7 +58,7 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
         }
 
         $companyBusinessUnitTransfer = $this->companyBusinessUnitClient->findCompanyBusinessUnitByUuid(
-            (new CompanyBusinessUnitTransfer())->setUuid($restRequest->getResource()->getId())
+            (new CompanyBusinessUnitTransfer())->setUuid($uuid)
         )->getCompanyBusinessUnitTransfer();
 
         if (!$companyBusinessUnitTransfer) {
@@ -66,7 +67,8 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
 
         $restCompanyBusinessUnitAttributesTransfer = $this->companyBusinessUnitMapperInterface
             ->mapCompanyBusinessUnitAttributesTransferToRestCompanyBusinessUnitAttributesTransfer(
-                $companyBusinessUnitTransfer
+                $companyBusinessUnitTransfer,
+                new RestCompanyBusinessUnitAttributesTransfer()
             );
 
         return $this->companyBusinessUnitRestResponseBuilder

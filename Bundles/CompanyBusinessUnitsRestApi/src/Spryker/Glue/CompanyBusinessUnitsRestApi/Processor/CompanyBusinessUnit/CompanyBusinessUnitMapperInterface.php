@@ -14,10 +14,12 @@ interface CompanyBusinessUnitMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer
      */
     public function mapCompanyBusinessUnitAttributesTransferToRestCompanyBusinessUnitAttributesTransfer(
-        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
+        RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
     ): RestCompanyBusinessUnitAttributesTransfer;
 }

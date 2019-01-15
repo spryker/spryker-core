@@ -18,8 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CompanyBusinessUnitRestResponseBuilder implements CompanyBusinessUnitRestResponseBuilderInterface
 {
-    protected const SELF_LINK_FORMAT = '%s/%s';
-
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
@@ -90,13 +88,10 @@ class CompanyBusinessUnitRestResponseBuilder implements CompanyBusinessUnitRestR
             $restCompanyBusinessUnitAttributesTransfer
         );
 
-        $selfLink = sprintf(
-            static::SELF_LINK_FORMAT,
-            CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS,
-            $uuid
+        $restResource->addLink(
+            RestLinkInterface::LINK_SELF,
+            CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS . '/' . $restResource->getId()
         );
-
-        $restResource->addLink(RestLinkInterface::LINK_SELF, $selfLink);
 
         return $restResource;
     }

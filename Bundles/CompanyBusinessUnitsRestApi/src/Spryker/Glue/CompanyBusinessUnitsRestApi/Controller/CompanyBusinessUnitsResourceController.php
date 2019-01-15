@@ -20,14 +20,14 @@ class CompanyBusinessUnitsResourceController extends AbstractController
      * @Glue({
      *     "getResourceById": {
      *          "summary": [
-     *              "Retrieves a company business unit id."
+     *              "Retrieves a company business unit by id."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Company business unit uuid is missing.",
+     *              "400": "Company business unit id is missing.",
      *              "404": "Company business unit not found."
      *          }
      *     }
