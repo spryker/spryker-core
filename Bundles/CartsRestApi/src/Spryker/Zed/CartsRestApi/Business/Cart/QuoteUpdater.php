@@ -66,7 +66,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
         }
 
         $originalQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        $this->processQuoteData($quoteTransfer, $originalQuoteTransfer);
+        $quoteTransfer = $this->processQuoteData($quoteTransfer, $originalQuoteTransfer);
 
         $quoteResponseTransfer = $this->validateQuoteResponse($originalQuoteTransfer, $quoteTransfer, $quoteResponseTransfer);
         if ($quoteResponseTransfer->getIsSuccessful()) {
@@ -121,9 +121,9 @@ class QuoteUpdater implements QuoteUpdaterInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $originalQuoteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function processQuoteData(QuoteTransfer $quoteTransfer, QuoteTransfer $originalQuoteTransfer): void
+    protected function processQuoteData(QuoteTransfer $quoteTransfer, QuoteTransfer $originalQuoteTransfer): QuoteTransfer
     {
         if (!$quoteTransfer->getCurrency()->getCode()) {
             $quoteTransfer->setCurrency($originalQuoteTransfer->getCurrency());
@@ -133,5 +133,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
         if (!$quoteTransfer->getStore()->getName()) {
             $quoteTransfer->setStore($originalQuoteTransfer->getStore());
         }
+
+        return $quoteTransfer;
     }
 }
