@@ -54,7 +54,7 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      */
     protected function setSubject(MailBuilderInterface $mailBuilder): self
     {
-        $mailBuilder->setSubject('mail.availability_notification.subscribed.subject');
+        $mailBuilder->setSubject('availability_subscription.mail.subscribed.subject');
 
         return $this;
     }
