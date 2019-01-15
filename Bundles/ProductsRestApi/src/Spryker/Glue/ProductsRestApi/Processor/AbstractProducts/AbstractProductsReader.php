@@ -96,17 +96,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             return $this->addAbstractProductNotFoundError($response);
         }
 
-        $restAbstractProductsAttributesTransfer = $this->abstractProductsResourceMapper
-            ->mapAbstractProductsDataToAbstractProductsRestAttributes($abstractProductData);
-
-        $restAbstractProductsAttributesTransfer = $this->abstractProductAttributeTranslationExpander
-            ->addProductAttributeTranslation($restAbstractProductsAttributesTransfer, $restRequest->getMetadata()->getLocale());
-
-        $restResource = $this->restResourceBuilder->createRestResource(
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            $restAbstractProductsAttributesTransfer->getSku(),
-            $restAbstractProductsAttributesTransfer
-        );
+        $restResource = $this->createRestResourceFromAbstractProductStorageData($abstractProductData, $restRequest);
         $restResource = $this->addConcreteProducts($restResource, $restRequest);
 
         return $response->addResource($restResource);
@@ -131,7 +121,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             return null;
         }
 
-        return $this->createRestResourceFromAbstractProductStorageData($abstractProductData);
+        return $this->createRestResourceFromAbstractProductStorageData($abstractProductData, $restRequest);
     }
 
     /**
@@ -149,18 +139,21 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             return null;
         }
 
-        return $this->createRestResourceFromAbstractProductStorageData($abstractProductData);
+        return $this->createRestResourceFromAbstractProductStorageData($abstractProductData, $restRequest);
     }
 
     /**
      * @param array $abstractProductData
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function createRestResourceFromAbstractProductStorageData(array $abstractProductData): RestResourceInterface
+    protected function createRestResourceFromAbstractProductStorageData(array $abstractProductData, RestRequestInterface $restRequest): RestResourceInterface
     {
         $restAbstractProductsAttributesTransfer = $this->abstractProductsResourceMapper
             ->mapAbstractProductsDataToAbstractProductsRestAttributes($abstractProductData);
+        $restAbstractProductsAttributesTransfer = $this->abstractProductAttributeTranslationExpander
+            ->addProductAttributeTranslation($restAbstractProductsAttributesTransfer, $restRequest->getMetadata()->getLocale());
 
         return $this->restResourceBuilder->createRestResource(
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,

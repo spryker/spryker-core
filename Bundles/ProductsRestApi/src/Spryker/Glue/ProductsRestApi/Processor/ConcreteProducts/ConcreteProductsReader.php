@@ -115,7 +115,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     }
 
     /**
-     * @deprecated Use findProductConcreteBySku instead
+     * @deprecated Use findProductConcreteBySku() instead
      *
      * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -180,8 +180,6 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     ): RestResourceInterface {
         $restConcreteProductsAttributesTransfer = $this->concreteProductsResourceMapper
             ->mapConcreteProductsDataToConcreteProductsRestAttributes($concreteProductData);
-        $restConcreteProductsAttributesTransfer = $this->concreteProductAttributeTranslationExpander
-            ->addProductAttributeTranslation($restConcreteProductsAttributesTransfer, $restRequest->getMetadata()->getLocale());
         $restConcreteProductsAttributesTransfer = $this->expandRestConcreteProductsAttributesTransfer(
             $restConcreteProductsAttributesTransfer,
             $concreteProductData[static::KEY_ID_PRODUCT_CONCRETE],
@@ -210,27 +208,6 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
         $concreteProductsRestAttributesTransfer = $this->concreteProductAttributeTranslationExpander
             ->addProductAttributeTranslation($concreteProductsRestAttributesTransfer, $restRequest->getMetadata()->getLocale());
 
-        $restConcreteProductsAttributesTransfer = $this->executeExpanderPlugins(
-            $concreteProductsRestAttributesTransfer,
-            $idProductConcrete,
-            $restRequest
-        );
-
-        return $restConcreteProductsAttributesTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer
-     * @param int $idProductConcrete
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer
-     */
-    protected function executeExpanderPlugins(
-        ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer,
-        int $idProductConcrete,
-        RestRequestInterface $restRequest
-    ): ConcreteProductsRestAttributesTransfer {
         foreach ($this->concreteProductsResourceExpanderPlugins as $concreteProductsResourceExpanderPlugin) {
             $concreteProductsRestAttributesTransfer = $concreteProductsResourceExpanderPlugin->expand(
                 $concreteProductsRestAttributesTransfer,

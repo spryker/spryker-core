@@ -10,6 +10,7 @@ namespace Spryker\Glue\ProductAlternativesRestApi;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductAlternativeStorageClientBridge;
+use Spryker\Glue\ProductAlternativesRestApi\Dependency\Client\ProductAlternativesRestApiToProductStorageClientBridge;
 use Spryker\Glue\ProductAlternativesRestApi\Dependency\Resource\ProductAlternativesRestApiToProductsRestApiResourceBridge;
 
 /**
@@ -18,6 +19,8 @@ use Spryker\Glue\ProductAlternativesRestApi\Dependency\Resource\ProductAlternati
 class ProductAlternativesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_PRODUCT_ALTERNATIVE_STORAGE = 'CLIENT_PRODUCT_ALTERNATIVE_STORAGE';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     public const RESOURCE_PRODUCTS_REST_API = 'RESOURCE_PRODUCTS_REST_API';
 
     /**
@@ -30,6 +33,7 @@ class ProductAlternativesRestApiDependencyProvider extends AbstractBundleDepende
         $container = parent::provideDependencies($container);
 
         $container = $this->addProductAlternativeStorageClient($container);
+        $container = $this->addProductStorageClient($container);
         $container = $this->addProductsRestApiResource($container);
 
         return $container;
@@ -61,6 +65,22 @@ class ProductAlternativesRestApiDependencyProvider extends AbstractBundleDepende
         $container[static::RESOURCE_PRODUCTS_REST_API] = function (Container $container) {
             return new ProductAlternativesRestApiToProductsRestApiResourceBridge(
                 $container->getLocator()->productsRestApi()->resource()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addProductStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+            return new ProductAlternativesRestApiToProductStorageClientBridge(
+                $container->getLocator()->productStorage()->client()
             );
         };
 

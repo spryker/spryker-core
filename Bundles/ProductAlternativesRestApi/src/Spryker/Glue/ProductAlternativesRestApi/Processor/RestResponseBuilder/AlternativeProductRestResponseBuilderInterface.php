@@ -9,7 +9,7 @@ namespace Spryker\Glue\ProductAlternativesRestApi\Processor\RestResponseBuilder;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-interface AlternativeProductsRestResponseBuilderInterface
+interface AlternativeProductRestResponseBuilderInterface
 {
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -24,5 +24,5 @@ interface AlternativeProductsRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createAlternativeProductsNotFoundError(): RestResponseInterface;
+    public function createConcreteProductNotFoundError(): RestResponseInterface;
 }

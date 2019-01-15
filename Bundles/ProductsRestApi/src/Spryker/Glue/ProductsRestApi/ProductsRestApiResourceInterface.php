@@ -40,7 +40,7 @@ interface ProductsRestApiResourceInterface
 
     /**
      * Specification:
-     * - Retrieves abstract product resource by id.
+     * - Retrieves abstract product resource by product abstract id.
      *
      * @api
      *
@@ -53,7 +53,7 @@ interface ProductsRestApiResourceInterface
 
     /**
      * Specification:
-     *  - Retrieves concrete product resource by id.
+     *  - Retrieves concrete product resource by product concrete id.
      *
      * @api
      *

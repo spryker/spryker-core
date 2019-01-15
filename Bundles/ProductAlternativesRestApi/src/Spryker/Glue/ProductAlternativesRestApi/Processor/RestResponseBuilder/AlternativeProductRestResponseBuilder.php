@@ -13,7 +13,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
-class AlternativeProductsRestResponseBuilder implements AlternativeProductsRestResponseBuilderInterface
+class AlternativeProductRestResponseBuilder implements AlternativeProductRestResponseBuilderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -52,7 +52,7 @@ class AlternativeProductsRestResponseBuilder implements AlternativeProductsRestR
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createAlternativeProductsNotFoundError(): RestResponseInterface
+    public function createConcreteProductNotFoundError(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_CONCRETE_PRODUCT)

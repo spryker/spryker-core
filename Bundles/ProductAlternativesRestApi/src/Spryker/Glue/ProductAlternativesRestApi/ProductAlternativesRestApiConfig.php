@@ -13,6 +13,7 @@ class ProductAlternativesRestApiConfig extends AbstractBundleConfig
 {
     public const CONTROLLER_ABSTRACT_ALTERNATIVE_PRODUCTS = 'abstract-alternative-products';
     public const CONTROLLER_CONCRETE_ALTERNATIVE_PRODUCTS = 'concrete-alternative-products';
+
     public const RELATIONSHIP_NAME_ABSTRACT_ALTERNATIVE_PRODUCTS = 'abstract-alternative-products';
     public const RELATIONSHIP_NAME_CONCRETE_ALTERNATIVE_PRODUCTS = 'concrete-alternative-products';
 
