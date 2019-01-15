@@ -1,0 +1,13 @@
+<div class="image-set-container" data-image-collection-prototype="{{ form_widget(categoryForm.imageSets[localeName].vars.prototype.children.categoryImages.vars.prototype) | e }}"
+     data-image-set-prototype="{{ form_widget(categoryForm.imageSets[localeName].vars.prototype) | e }}"
+>
+    {% for imageSet in categoryForm.imageSets[localeName] %}
+        {% if imageSet.vars.data.locale.localeName == localeName %}
+            {{ form_widget(imageSet) }}
+        {% endif %}
+    {% endfor %}
+
+    <a href="#" class="btn btn-outline btn-primary add-another-image-set m-t-md">
+        <i class="fa fa-files-o"></i> {{ 'Add image set' | trans }}
+    </a>
+</div>

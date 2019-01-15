@@ -10,11 +10,13 @@ namespace Spryker\Zed\Category\Business\Model;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
 use Spryker\Zed\Category\Business\Model\Category\CategoryInterface;
 use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface;
 use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface;
 use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface;
+use Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
@@ -67,6 +69,16 @@ class Category
     protected $eventFacade;
 
     /**
+     * @var \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface
+     */
+    protected $categoryPluginExecutor;
+
+    /**
+     * @var \Spryker\Zed\Category\Business\Model\CategoryReaderInterface
+     */
+    protected $categoryReader;
+
+    /**
      * @param \Spryker\Zed\Category\Business\Model\Category\CategoryInterface $category
      * @param \Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface $categoryNode
      * @param \Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface $categoryAttribute
@@ -75,6 +87,8 @@ class Category
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface[] $deletePlugins
      * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface[] $updatePlugins
+     * @param \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface $categoryPluginExecutor
+     * @param \Spryker\Zed\Category\Business\Model\CategoryReaderInterface $categoryReader
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface|null $eventFacade
      */
     public function __construct(
@@ -86,6 +100,8 @@ class Category
         CategoryQueryContainerInterface $queryContainer,
         array $deletePlugins,
         array $updatePlugins,
+        CategoryPluginExecutorInterface $categoryPluginExecutor,
+        CategoryReaderInterface $categoryReader,
         ?CategoryToEventInterface $eventFacade = null
     ) {
         $this->category = $category;
@@ -96,22 +112,26 @@ class Category
         $this->queryContainer = $queryContainer;
         $this->deletePlugins = $deletePlugins;
         $this->updatePlugins = $updatePlugins;
+        $this->categoryPluginExecutor = $categoryPluginExecutor;
         $this->eventFacade = $eventFacade;
+        $this->categoryReader = $categoryReader;
     }
 
     /**
+     * @deprecated Use \Spryker\Zed\Category\Business\Model\CategoryReaderInterface::findCategoryById() instead.
+     *
      * @param int $idCategory
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     public function read($idCategory)
     {
-        $categoryTransfer = new CategoryTransfer();
-
-        $categoryTransfer = $this->category->read($idCategory, $categoryTransfer);
-        $categoryTransfer = $this->categoryNode->read($idCategory, $categoryTransfer);
-        $categoryTransfer = $this->categoryAttribute->read($idCategory, $categoryTransfer);
-        $categoryTransfer = $this->categoryExtraParents->read($idCategory, $categoryTransfer);
+        $categoryTransfer = $this->categoryReader->findCategoryById($idCategory);
+        if (!$categoryTransfer) {
+            throw new MissingCategoryException(sprintf('Could not find category for id "%s"', $idCategory));
+        }
 
         return $categoryTransfer;
     }
@@ -136,6 +156,8 @@ class Category
 
         $this->triggerEvent(CategoryEvents::CATEGORY_AFTER_CREATE, $categoryTransfer);
 
+        $this->categoryPluginExecutor->executePostCreatePlugins($categoryTransfer);
+
         $this->queryContainer->getConnection()->commit();
     }
 
@@ -159,6 +181,8 @@ class Category
         $this->categoryExtraParents->update($categoryTransfer);
 
         $this->triggerEvent(CategoryEvents::CATEGORY_AFTER_UPDATE, $categoryTransfer);
+
+        $this->categoryPluginExecutor->executePostUpdatePlugins($categoryTransfer);
 
         $this->queryContainer->getConnection()->commit();
     }
