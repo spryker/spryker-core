@@ -27,6 +27,7 @@ class CompanyBusinessUnitsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
+     *              "400": "Company business unit uuid is missing.",
      *              "404": "Company business unit not found."
      *          }
      *     }

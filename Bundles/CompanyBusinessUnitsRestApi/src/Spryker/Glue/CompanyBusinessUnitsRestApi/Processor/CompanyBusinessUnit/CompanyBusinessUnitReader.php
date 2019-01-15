@@ -8,7 +8,7 @@
 namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
+use Spryker\Glue\CompanyBusinessUnitsRestApi\Dependency\Client\CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -20,13 +20,28 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
     protected $companyBusinessUnitMapperInterface;
 
     /**
+     * @var \Spryker\Glue\CompanyBusinessUnitsRestApi\Dependency\Client\CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientInterface
+     */
+    protected $companyBusinessUnitClient;
+
+    /**
+     * @var \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\CompanyBusinessUnitRestResponseBuilderInterface
+     */
+    protected $companyBusinessUnitRestResponseBuilder;
+
+    /**
      * @param \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\CompanyBusinessUnitMapperInterface $companyBusinessUnitMapperInterface
+     * @param \Spryker\Glue\CompanyBusinessUnitsRestApi\Dependency\Client\CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientInterface $companyBusinessUnitClient
+     * @param \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\CompanyBusinessUnitRestResponseBuilderInterface $companyBusinessUnitRestResponseBuilder
      */
     public function __construct(
-        CompanyBusinessUnitMapperInterface $companyBusinessUnitMapperInterface
-    )
-    {
+        CompanyBusinessUnitMapperInterface $companyBusinessUnitMapperInterface,
+        CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientInterface $companyBusinessUnitClient,
+        CompanyBusinessUnitRestResponseBuilderInterface $companyBusinessUnitRestResponseBuilder
+    ) {
         $this->companyBusinessUnitMapperInterface = $companyBusinessUnitMapperInterface;
+        $this->companyBusinessUnitClient = $companyBusinessUnitClient;
+        $this->companyBusinessUnitRestResponseBuilder = $companyBusinessUnitRestResponseBuilder;
     }
 
     /**
@@ -36,11 +51,25 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
      */
     public function getCompanyBusinessUnit(RestRequestInterface $restRequest): RestResponseInterface
     {
+        $uuid = $restRequest->getResource()->getId();
+        if (!$uuid) {
+            return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitUuidMissingError();
+        }
+
+        $companyBusinessUnitTransfer = $this->companyBusinessUnitClient->findCompanyBusinessUnitByUuid(
+            (new CompanyBusinessUnitTransfer())->setUuid($restRequest->getResource()->getId())
+        )->getCompanyBusinessUnitTransfer();
+
+        if (!$companyBusinessUnitTransfer) {
+            return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitNotFoundError();
+        }
+
         $restCompanyBusinessUnitAttributesTransfer = $this->companyBusinessUnitMapperInterface
             ->mapCompanyBusinessUnitAttributesTransferToRestCompanyBusinessUnitAttributesTransfer(
                 $companyBusinessUnitTransfer
             );
 
-        return $restCompanyBusinessUnitAttributesTransfer;
+        return $this->companyBusinessUnitRestResponseBuilder
+            ->createCompanyBusinessUnitRestResponse($uuid, $restCompanyBusinessUnitAttributesTransfer);
     }
 }
