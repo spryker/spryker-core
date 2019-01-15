@@ -21,9 +21,6 @@ use Spryker\Shared\Kernel\LocatorLocatorInterface;
  */
 class ContainerTest extends Unit
 {
-    public const TEST_VALUE = 'foo';
-    public const TEST_KEY = 'test.value';
-
     /**
      * @return void
      */
