@@ -64,7 +64,7 @@ class EventFacade extends AbstractFacade implements EventFacadeInterface
     {
         $this->getFactory()
             ->createEventDispatcher()
-            ->triggerByListenerName($listenerName, $transfers);
+            ->triggerByListenerName($listenerName, $eventName, $transfers);
     }
 
     /**
