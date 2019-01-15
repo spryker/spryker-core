@@ -71,7 +71,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
         $quoteResponseTransfer = $this->validateQuoteResponse($originalQuoteTransfer, $quoteTransfer, $quoteResponseTransfer);
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $quoteTransfer = $originalQuoteTransfer->fromArray($quoteTransfer->modifiedToArray());
-            $this->reloadItems($this->isReloadItems, $quoteTransfer);
+            $this->reloadItems($quoteTransfer);
             $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())->fromArray($quoteTransfer->modifiedToArray(), true);
             $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
                 ->fromArray($quoteTransfer->modifiedToArray(), true);
@@ -105,14 +105,13 @@ class QuoteUpdater implements QuoteUpdaterInterface
     }
 
     /**
-     * @param bool $isReloadItems
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    protected function reloadItems(bool $isReloadItems, $quoteTransfer): void
+    protected function reloadItems(QuoteTransfer $quoteTransfer): void
     {
-        if ($isReloadItems) {
+        if ($this->isReloadItems) {
             $this->cartFacade->reloadItems($quoteTransfer);
         }
     }
