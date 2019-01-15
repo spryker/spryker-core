@@ -44,6 +44,16 @@ class CompanyFacadeTest extends Test
     /**
      * @return void
      */
+    public function testFindCompanyByUuidShouldReturnTransfer()
+    {
+        $companyTransfer = $this->tester->haveCompany(['is_active' => false]);
+        $foundCompanyTransfer = $this->getFacade()->findCompanyByUuid($companyTransfer);
+        $this->assertNotNull($foundCompanyTransfer->getCompanyTransfer()->getIdCompany());
+    }
+
+    /**
+     * @return void
+     */
     public function testCreateShouldPersistCompany()
     {
         $companyTransfer = (new CompanyBuilder())->build();
