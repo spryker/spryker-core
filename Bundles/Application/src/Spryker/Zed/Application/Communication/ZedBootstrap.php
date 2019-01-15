@@ -32,11 +32,6 @@ class ZedBootstrap
     protected $application;
 
     /**
-     * @var \Spryker\Service\Container\ContainerInterface
-     */
-    protected $serviceContainer;
-
-    /**
      * @var \Spryker\Shared\Application\Application
      */
     protected $sprykerApplication;
@@ -48,11 +43,8 @@ class ZedBootstrap
 
     public function __construct()
     {
-        $this->serviceContainer
-            = $this->application
-            = $this->getBaseApplication();
-
-        $this->sprykerApplication = new SprykerApplication($this->serviceContainer);
+        $this->application = $this->getBaseApplication();
+        $this->sprykerApplication = new SprykerApplication($this->application);
         $this->config = new ApplicationConfig();
     }
 
@@ -61,11 +53,11 @@ class ZedBootstrap
      */
     public function boot()
     {
-        $this->serviceContainer->set('debug', function () {
+        $this->application->set('debug', function () {
             return Config::get(ApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
         });
 
-        $this->serviceContainer->set('locale', Store::getInstance()->getCurrentLocale());
+        $this->application->set('locale', Store::getInstance()->getCurrentLocale());
 
         $this->enableHttpMethodParameterOverride();
         $this->setUp();
@@ -227,9 +219,9 @@ class ZedBootstrap
     protected function optimizeApp()
     {
         $application = $this->application;
-        $application['resolver'] = $this->application->share(function () use ($application) {
+        $application['resolver'] = function () use ($application) {
             return new ZedFragmentControllerResolver($application);
-        });
+        };
     }
 
     /**

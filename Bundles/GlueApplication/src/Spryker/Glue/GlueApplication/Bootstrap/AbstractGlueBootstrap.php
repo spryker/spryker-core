@@ -28,11 +28,6 @@ abstract class AbstractGlueBootstrap
     protected $application;
 
     /**
-     * @var \Spryker\Service\Container\ContainerInterface
-     */
-    protected $serviceContainer;
-
-    /**
      * @var \Spryker\Shared\Application\Application
      */
     protected $sprykerApplication;
@@ -44,11 +39,9 @@ abstract class AbstractGlueBootstrap
 
     public function __construct()
     {
-        $this->serviceContainer
-            = $this->application
-            = new SilexApplication();
+        $this->application = new SilexApplication();
 
-        $this->sprykerApplication = new Application($this->serviceContainer);
+        $this->sprykerApplication = new Application($this->application);
         $this->config = new GlueApplicationConfig();
 
         $this->setUpSession();
