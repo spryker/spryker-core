@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\QuoteApproval\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer;
@@ -17,13 +16,13 @@ use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Generated\Shared\Transfer\QuoteApproveRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Client\CompanyRole\CompanyRoleDependencyProvider;
-use Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToCustomerClientInterface;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
+use Spryker\Zed\Quote\QuoteDependencyProvider;
+use Spryker\Zed\QuoteApproval\Communication\Plugin\UpdateApprovalsQuoteAfterSavePlugin;
 
 /**
  * Auto-generated group annotations
@@ -108,7 +107,7 @@ class QuoteApprovalFacadeTest extends Unit
 
         $quoteTransfer = $this->createQuoteWithGrandTodal(10);
         $quoteApproveRequestTransfer = $this->createQuoteApprovalRequest($quoteTransfer);
-        $this->approverCanApproveUpToAmount(9, $quoteTransfer->getCurrency()->getCode());
+        $this->approverCanApproveUpToAmount(9, $quoteTransfer);
 
         //Act
         $quoteRepsponseTransfer = $this->getFacade()->sendQuoteApproveRequest($quoteApproveRequestTransfer);
@@ -147,7 +146,7 @@ class QuoteApprovalFacadeTest extends Unit
 
         $quoteTransfer = $this->createQuoteWithGrandTodal(10);
         $quoteApproveRequestTransfer = $this->createQuoteApprovalRequest($quoteTransfer);
-        $this->approverCanApproveUpToAmount(11, $quoteTransfer->getCurrency()->getCode());
+        $this->approverCanApproveUpToAmount(11, $quoteTransfer);
         $quoteTransfer->setCustomer(
             $this->tester->haveCustomer()
         );
@@ -258,6 +257,10 @@ class QuoteApprovalFacadeTest extends Unit
      */
     protected function createValidCancelQuoteApprovalRequest(): QuoteApprovalCancelRequestTransfer
     {
+        $this->tester->setDependency(QuoteDependencyProvider::PLUGINS_QUOTE_UPDATE_AFTER, [
+            new UpdateApprovalsQuoteAfterSavePlugin(),
+        ]);
+
         $quoteApproveRepsponseTransfer = $this->getFacade()
             ->sendQuoteApproveRequest($this->createValidQuoteApproveRequest());
 
@@ -283,23 +286,26 @@ class QuoteApprovalFacadeTest extends Unit
         $quoteApproveRequestTransfer = $this->createQuoteApprovalRequest($quoteTransfer);
         $quoteApproveRequestTransfer->setCustomer($quoteTransfer->getCustomer());
 
-        $this->approverCanApproveUpToAmount(11, $quoteTransfer->getCurrency()->getCode());
+        $this->approverCanApproveUpToAmount(11, $quoteTransfer);
 
         return $quoteApproveRequestTransfer;
     }
 
     /**
      * @param int $amount
-     * @param string $currencyCode
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    protected function approverCanApproveUpToAmount(int $amount, string $currencyCode): void
+    protected function approverCanApproveUpToAmount(int $amount, QuoteTransfer $quoteTransfer): void
     {
         $this->addApproveQuotePermission([
-        ApproveQuotePermissionPlugin::FIELD_STORE_MULTI_CURRENCY => [
-            $currencyCode => $amount,
-        ]]);
+            ApproveQuotePermissionPlugin::FIELD_STORE_MULTI_CURRENCY => [
+                $quoteTransfer->getStore()->getName() => [
+                    $quoteTransfer->getCurrency()->getCode() => $amount,
+                ],
+            ],
+        ]);
     }
 
     /**
@@ -378,21 +384,6 @@ class QuoteApprovalFacadeTest extends Unit
         );
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return void
-     */
-    protected function setupCustomerDependency(CustomerTransfer $customerTransfer): void
-    {
-        $customerClient = $this->createMock(CompanyRoleToCustomerClientInterface::class);
-
-        $customerClient->method('getCustomer')
-            ->willReturn($customerTransfer);
-
-        $this->tester->setDependency(CompanyRoleDependencyProvider::CLIENT_CUSTOMER, $customerClient);
     }
 
     /**
