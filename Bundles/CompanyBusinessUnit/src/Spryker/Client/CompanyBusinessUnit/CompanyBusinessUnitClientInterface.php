@@ -102,7 +102,8 @@ interface CompanyBusinessUnitClientInterface
 
     /**
      * Specification:
-     * - Finds a company business unit by uuid in the transfer
+     * - Finds a company business unit by uuid.
+     * - Requires uuid field to be set in CompanyBusinessUnitTransfer taken as parameter.
      *
      * @api
      *
