@@ -14,7 +14,7 @@ interface QuoteValidatePluginInterface
 {
     /**
      * Specification:
-     * - Validate quote before saving.
+     * - Validates quote before saving.
      *
      * @api
      *
