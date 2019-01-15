@@ -39,6 +39,12 @@ class ConcreteAlternativeProductsController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
+        if ($restRequest->getResource()->getId()) {
+            return $this->getFactory()
+                ->createAlternativeProductRestResponseBuilder()
+                ->createRouteNotFoundError();
+        }
+
         return $this->getFactory()
             ->createConcreteAlternativeProductReader()
             ->getConcreteAlternativeProductCollection($restRequest);

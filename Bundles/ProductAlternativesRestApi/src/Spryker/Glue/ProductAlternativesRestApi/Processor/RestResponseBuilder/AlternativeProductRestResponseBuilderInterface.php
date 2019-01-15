@@ -25,4 +25,9 @@ interface AlternativeProductRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createConcreteProductNotFoundError(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createRouteNotFoundError(): RestResponseInterface;
 }

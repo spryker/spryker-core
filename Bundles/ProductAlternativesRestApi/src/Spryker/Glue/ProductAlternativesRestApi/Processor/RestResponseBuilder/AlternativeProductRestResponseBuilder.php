@@ -41,12 +41,12 @@ class AlternativeProductRestResponseBuilder implements AlternativeProductRestRes
      */
     public function createConcreteProductSkuMissingError(): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED);
 
-        return $this->createRestResponse()->addError($restErrorTransfer);
+        return $this->createRestResponse()->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -54,11 +54,23 @@ class AlternativeProductRestResponseBuilder implements AlternativeProductRestRes
      */
     public function createConcreteProductNotFoundError(): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_CONCRETE_PRODUCT)
             ->setStatus(Response::HTTP_NOT_FOUND)
             ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_CONCRETE_PRODUCT);
 
-        return $this->createRestResponse()->addError($restErrorTransfer);
+        return $this->createRestResponse()->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createRouteNotFoundError(): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(Response::$statusTexts[Response::HTTP_NOT_FOUND]);
+
+        return $this->createRestResponse()->addError($restErrorMessageTransfer);
     }
 }
