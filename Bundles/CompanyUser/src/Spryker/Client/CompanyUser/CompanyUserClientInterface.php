@@ -102,4 +102,14 @@ interface CompanyUserClientInterface
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns company user information from session.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUser(): ?CompanyUserTransfer;
 }
