@@ -24,7 +24,7 @@ interface ShipmentCheckoutConnectorToShipmentFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): array;
 

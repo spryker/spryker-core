@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Business\Model;
 
 use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
 interface MethodReaderInterface
@@ -24,7 +23,7 @@ interface MethodReaderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ArrayObject;
 

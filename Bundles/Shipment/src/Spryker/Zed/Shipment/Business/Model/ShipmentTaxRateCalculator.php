@@ -122,9 +122,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
      */
     protected function getCountryIso2Code(ItemTransfer $itemTransfer): string
     {
-        if ($itemTransfer->getShipment()->getShippingAddress()
-            && $itemTransfer->getShipment()->getShippingAddress()->getIso2Code()) {
-
+        if ($itemTransfer->getShipment()->getShippingAddress() && $itemTransfer->getShipment()->getShippingAddress()->getIso2Code()) {
             return $itemTransfer->getShipment()->getShippingAddress()->getIso2Code();
         }
 

@@ -126,7 +126,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ArrayObject
     {
@@ -137,7 +137,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
-     *{@inheritdoc}
+     * {@inheritdoc}
      *
      * @api
      *

@@ -14,7 +14,6 @@ use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCountryBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesBridge;
-use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreBridge;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
 use Spryker\Zed\Shipment\Exception\MissingMoneyCollectionFormTypePluginException;
@@ -189,7 +188,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return array|\Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface[]
+     * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface[]
      */
     protected function getAvailabilityPlugins(Container $container)
     {
@@ -199,7 +198,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return array|\Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodPricePluginInterface[]
+     * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodPricePluginInterface[]
      */
     protected function getPricePlugins(Container $container)
     {
@@ -209,7 +208,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return array|\Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface[]
+     * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface[]
      */
     protected function getDeliveryTimePlugins(Container $container)
     {

@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Shipment\Business\Transfer;
 
-use Spryker\Zed\Shipment\Business\Model\MethodReaderInterface;
-use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
+use Spryker\Zed\Shipment\Business\Model\MethodReaderInterface;
 
 class TransferBuilder
 {
