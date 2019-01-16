@@ -64,7 +64,7 @@ class GlueApplicationConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     *  - Indicates whether all related resources should be included in response by default.
+     *  - Indicates whether all relationships should be included in response by default.
      *
      * @return bool
      */
