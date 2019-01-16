@@ -54,7 +54,7 @@ class CompanyReader implements CompanyReaderInterface
     {
         $uuid = $restRequest->getResource()->getId();
         if (!$uuid) {
-            return $this->companyRestResponseBuilder->createCompanyUuidMissingError();
+            return $this->companyRestResponseBuilder->createCompanyIdMissingError();
         }
 
         $companyResponseTransfer = $this->companyClient->findCompanyByUuid(

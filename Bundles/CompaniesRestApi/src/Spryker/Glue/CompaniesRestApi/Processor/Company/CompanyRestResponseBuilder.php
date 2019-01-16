@@ -47,7 +47,7 @@ class CompanyRestResponseBuilder implements CompanyRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCompanyUuidMissingError(): RestResponseInterface
+    public function createCompanyIdMissingError(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CompaniesRestApiConfig::RESPONSE_CODE_COMPANY_ID_IS_MISSING)
