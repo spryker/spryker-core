@@ -68,7 +68,7 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
         $companyRoleTransfer = $companyRoleResponseTransfer->getCompanyRoleTransfer();
 
         $restCompanyRoleAttributesTransfer = $this->companyRoleMapperInterface
-            ->mapCompanyRoleAttributesTransferToRestCompanyRoleAttributesTransfer(
+            ->mapCompanyRoleTransferToRestCompanyRoleAttributesTransfer(
                 $companyRoleTransfer,
                 new RestCompanyRoleAttributesTransfer()
             );

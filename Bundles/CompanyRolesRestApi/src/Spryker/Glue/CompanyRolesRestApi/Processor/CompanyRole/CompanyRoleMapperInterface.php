@@ -18,7 +18,7 @@ interface CompanyRoleMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer
      */
-    public function mapCompanyRoleAttributesTransferToRestCompanyRoleAttributesTransfer(
+    public function mapCompanyRoleTransferToRestCompanyRoleAttributesTransfer(
         CompanyRoleTransfer $companyRoleTransfer,
         RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer
     ): RestCompanyRoleAttributesTransfer;

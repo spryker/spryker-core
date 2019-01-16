@@ -41,7 +41,7 @@ class CompanyRoleRestResponseBuilder implements CompanyRoleRestResponseBuilderIn
         RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer
     ): RestResponseInterface {
         return $this->restResourceBuilder->createRestResponse()
-            ->addResource($this->buildRestResource($restCompanyRoleAttributesTransfer, $uuid));
+            ->addResource($this->buildCompanyRoleRestResource($restCompanyRoleAttributesTransfer, $uuid));
     }
 
     /**
@@ -76,7 +76,7 @@ class CompanyRoleRestResponseBuilder implements CompanyRoleRestResponseBuilderIn
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function buildRestResource(
+    protected function buildCompanyRoleRestResource(
         RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer,
         string $uuid
     ): RestResourceInterface {
