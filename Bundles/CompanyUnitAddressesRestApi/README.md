@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/company-unit-addresses-rest-api.svg)](https://travis-ci.org/spryker/company-unit-addresses-rest-api)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/company-unit-addresses-rest-api/badge.svg)](https://coveralls.io/github/spryker/company-unit-addresses-rest-api)
 
-{{ADD DESCRIPTION HERE}}
+CompanyUnitAddressesRestApi module provides REST API endpoints for retrieving company unit addresses data.
 
 ## Installation
 
