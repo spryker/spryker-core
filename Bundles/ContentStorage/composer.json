@@ -11,7 +11,7 @@
     "spryker/locale": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/synchronization-extension": "^1.0.0",
-    "spryker/content-storage-extension": "*",
+    "spryker/content-storage-extension": "^0.1.0",
     "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^1.0.0"
   },

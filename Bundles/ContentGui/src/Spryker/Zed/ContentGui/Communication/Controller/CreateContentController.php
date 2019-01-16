@@ -39,7 +39,7 @@ class CreateContentController extends AbstractController
             ->handleRequest($request);
 
         if ($contentForm->isSubmitted() && $contentForm->isValid()) {
-            if ($this->createContent($contentForm)) {
+            if ($this->saveContent($contentForm)) {
                 return $this->redirectResponse(
                     $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_CONTENT_PAGE)
                 );
@@ -59,7 +59,7 @@ class CreateContentController extends AbstractController
      *
      * @return bool
      */
-    protected function createContent(FormInterface $contentForm): bool
+    protected function saveContent(FormInterface $contentForm): bool
     {
         /** @var \Generated\Shared\Transfer\ContentTransfer $data */
         $data = $contentForm->getData();

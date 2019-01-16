@@ -14,9 +14,9 @@ use Spryker\Zed\Content\Business\ContentWriter\ContentWriterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \Spryker\Zed\Content\Persistence\ContentRepositoryInterface getRepository()
- * @method \Spryker\Zed\Content\Persistence\ContentEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\Content\ContentConfig getConfig()
+ * @method \Spryker\Zed\Content\Persistence\ContentEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Content\Persistence\ContentRepositoryInterface getRepository()
  */
 class ContentBusinessFactory extends AbstractBusinessFactory
 {

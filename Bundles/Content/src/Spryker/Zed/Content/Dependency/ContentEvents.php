@@ -11,7 +11,7 @@ interface ContentEvents
 {
     /**
      * Specification
-     * - This events will be used for spy_availability_abstract publishing
+     * - This events will be used for spy_content publishing
      *
      * @api
      */
@@ -19,7 +19,7 @@ interface ContentEvents
 
     /**
      * Specification
-     * - This events will be used for spy_availability_abstract un-publishing
+     * - This events will be used for spy_content un-publishing
      *
      * @api
      */

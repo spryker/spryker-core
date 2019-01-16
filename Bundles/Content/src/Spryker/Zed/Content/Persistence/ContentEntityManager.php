@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Content\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\ContentTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -22,6 +23,8 @@ class ContentEntityManager extends AbstractEntityManager implements ContentEntit
      */
     public function saveContent(ContentTransfer $contentTransfer): ContentTransfer
     {
+        $isModified = false;
+
         $spyContentEntity = $this->getFactory()
             ->createContentQuery()
             ->filterByIdContent($contentTransfer->getIdContent())
@@ -37,11 +40,19 @@ class ContentEntityManager extends AbstractEntityManager implements ContentEntit
                 ->findOneOrCreate();
 
             if ($localizedContent->getParameters() == null) {
+                $isModified = true;
                 $spyContentEntity->removeSpyContentLocalized($contentLocalizedEntity);
+
                 continue;
             }
             $contentLocalizedEntity->fromArray($localizedContent->toArray());
+            if ($contentLocalizedEntity->isModified()) {
+                $isModified = true;
+            }
             $spyContentEntity->addSpyContentLocalized($contentLocalizedEntity);
+        }
+        if ($isModified) {
+            $spyContentEntity->setUpdatedAt(new DateTime());
         }
 
         $spyContentEntity->save();

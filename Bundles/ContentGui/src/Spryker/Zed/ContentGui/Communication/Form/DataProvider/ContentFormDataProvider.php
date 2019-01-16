@@ -91,7 +91,7 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
         }
 
         $contentItemPlugin = $this->contentResolver->getContentItemPlugin($termKey);
-        array_filter([]);
+
         return [
             'data_class' => ContentTransfer::class,
             ContentForm::OPTION_AVAILABLE_LOCALES => $this->getAvailableLocales(),

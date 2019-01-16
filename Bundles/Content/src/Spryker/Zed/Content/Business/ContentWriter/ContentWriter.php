@@ -32,6 +32,12 @@ class ContentWriter implements ContentWriterInterface
      */
     public function create(ContentTransfer $contentTransfer): ContentTransfer
     {
+        $contentTransfer
+            ->requireName()
+            ->requireContentTypeCandidateKey()
+            ->requireContentTermCandidateKey()
+            ->requireLocalizedContents();
+
         return $this->contentEntityManager->saveContent($contentTransfer);
     }
 
@@ -42,9 +48,7 @@ class ContentWriter implements ContentWriterInterface
      */
     public function update(ContentTransfer $contentTransfer): ContentTransfer
     {
-        $contentTransfer
-            ->requireIdContent()
-            ->requireName();
+        $contentTransfer->requireIdContent();
 
         return $this->contentEntityManager->saveContent($contentTransfer);
     }
