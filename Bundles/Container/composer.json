@@ -16,7 +16,7 @@
       "Spryker\\": "src/Spryker/"
     },
     "psr-0": {
-      "Pimple": "src/"
+      "Pimple": "src/Spryker"
     }
   },
   "autoload-dev": {

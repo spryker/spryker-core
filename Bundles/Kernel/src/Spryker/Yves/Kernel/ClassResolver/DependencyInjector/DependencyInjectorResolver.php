@@ -8,9 +8,9 @@
 namespace Spryker\Yves\Kernel\ClassResolver\DependencyInjector;
 
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollection;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver;
+use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollection;
 
 class DependencyInjectorResolver extends AbstractClassResolver
 {
@@ -25,7 +25,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
     /**
      * @param object|string $callerClass
      *
-     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
+     * @return \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
      */
     public function resolve($callerClass)
     {
@@ -50,11 +50,11 @@ class DependencyInjectorResolver extends AbstractClassResolver
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface
+     * @return \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface
      */
     protected function getResolvedClassInstance()
     {
-        /** @var \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface $dependencyInjector */
+        /** @var \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface $dependencyInjector */
         $dependencyInjector = parent::getResolvedClassInstance();
 
         return $dependencyInjector;
@@ -122,7 +122,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollection
+     * @return \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollection
      */
     protected function getDependencyInjectorCollection()
     {

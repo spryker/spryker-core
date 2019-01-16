@@ -9,10 +9,10 @@ namespace Spryker\Yves\Kernel;
 
 use Spryker\Shared\Kernel\ContainerGlobals;
 use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
 use Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjector;
+use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
 use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;
 
@@ -77,7 +77,7 @@ trait BundleDependencyProviderResolverAwareTrait
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection
+     * @param \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection
      *
      * @return \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface
      */
@@ -144,7 +144,7 @@ trait BundleDependencyProviderResolverAwareTrait
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
+     * @return \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
      */
     protected function resolveDependencyInjectorCollection(): DependencyInjectorCollectionInterface
     {

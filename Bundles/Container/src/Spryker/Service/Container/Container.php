@@ -150,12 +150,12 @@ class Container implements ContainerInterface, ArrayAccess
      * Do not set the returned callable to the Container, this is done automatically.
      *
      * @param string $id
-     * @param \Closure|object $service
+     * @param \Closure|object|mixed $service
      *
      * @throws \Spryker\Service\Container\Exception\ContainerException
      * @throws \Spryker\Service\Container\Exception\FrozenServiceException
      *
-     * @return \Closure|object
+     * @return \Closure|object|mixed
      */
     public function extend(string $id, $service)
     {
@@ -220,9 +220,9 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * @deprecated Do not use this method anymore. All services are shared by default now.
      *
-     * @param \Closure|object $service
+     * @param \Closure|object|mixed $service
      *
-     * @return \Closure|object
+     * @return \Closure|object|mixed
      */
     public function share($service)
     {

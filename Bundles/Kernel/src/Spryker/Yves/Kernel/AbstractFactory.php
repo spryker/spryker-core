@@ -10,10 +10,10 @@ namespace Spryker\Yves\Kernel;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Shared\Kernel\ContainerGlobals;
 use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector;
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
 use Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
+use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjector;
+use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
 use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;
 
 abstract class AbstractFactory implements FactoryInterface
@@ -121,7 +121,7 @@ abstract class AbstractFactory implements FactoryInterface
         $dependencyProvider = $this->resolveDependencyProvider();
 
         $container = $this->provideDependencies($dependencyProvider, $container);
-        $container = $dependencyInjector->inject($container);
+        $container = $dependencyInjector->injectDependencies($container);
 
         /** @var \Spryker\Yves\Kernel\Container $container */
         $container = $this->overwriteForTesting($container);
@@ -141,7 +141,7 @@ abstract class AbstractFactory implements FactoryInterface
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
+     * @return \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
      */
     protected function resolveDependencyInjectorCollection()
     {
@@ -149,9 +149,9 @@ abstract class AbstractFactory implements FactoryInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection
+     * @param \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection
      *
-     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector
+     * @return \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjector
      */
     protected function createDependencyInjector(DependencyInjectorCollectionInterface $dependencyInjectorCollection)
     {

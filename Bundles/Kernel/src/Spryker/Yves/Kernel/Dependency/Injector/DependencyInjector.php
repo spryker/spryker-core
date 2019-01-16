@@ -7,18 +7,17 @@
 
 namespace Spryker\Yves\Kernel\Dependency\Injector;
 
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
 use Spryker\Yves\Kernel\Container;
 
 class DependencyInjector implements DependencyInjectorInterface
 {
     /**
-     * @var \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
+     * @var \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
      */
     private $dependencyInjectorCollection;
 
     /**
-     * @param \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection
+     * @param \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection
      */
     public function __construct(DependencyInjectorCollectionInterface $dependencyInjectorCollection)
     {
@@ -33,7 +32,7 @@ class DependencyInjector implements DependencyInjectorInterface
     public function injectDependencies(Container $container): Container
     {
         foreach ($this->dependencyInjectorCollection->getDependencyInjector() as $dependencyInjector) {
-            $container = $dependencyInjector->inject($container);
+            $container = $dependencyInjector->injectDependencies($container);
         }
 
         return $container;
