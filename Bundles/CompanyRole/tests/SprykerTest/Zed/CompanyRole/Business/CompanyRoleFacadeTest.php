@@ -28,8 +28,6 @@ class CompanyRoleFacadeTest extends Test
      */
     protected $tester;
 
-    protected const COMPANY_ROLE_UUID = 'COMPANY_ROLE_UUID';
-
     /**
      * @return void
      */
@@ -46,28 +44,6 @@ class CompanyRoleFacadeTest extends Test
             (new CompanyRoleTransfer())
                 ->setIdCompanyRole($existingCompanyRole->getIdCompanyRole())
         );
-
-        // Assert
-        $this->assertEquals($existingCompanyRole->getName(), $resultCompanyRoleTransfer->getName());
-    }
-
-    /**
-     * @return void
-     */
-    public function testFindCompanyRoleByUuidShouldReturnCorrectData(): void
-    {
-        // Prepare
-        $companyTransfer = $this->tester->haveCompany();
-        $existingCompanyRole = $this->tester->haveCompanyRole([
-            CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            CompanyRoleTransfer::UUID => static::COMPANY_ROLE_UUID,
-        ]);
-
-        // Action
-        $resultCompanyRoleTransfer = $this->getFacade()->findCompanyRoleByUuid(
-            (new CompanyRoleTransfer())
-                ->setUuid($existingCompanyRole->getUuid())
-        )->getCompanyRoleTransfer();
 
         // Assert
         $this->assertEquals($existingCompanyRole->getName(), $resultCompanyRoleTransfer->getName());
