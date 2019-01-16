@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Price\Business;
 
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -78,17 +78,11 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteErrorTransfer
      */
-    public function validatePriceModeInQuote(
-        QuoteTransfer $quoteTransfer,
-        QuoteValidationResponseTransfer $quoteValidationResponseTransfer
-    ): QuoteValidationResponseTransfer {
-        return $this->getFactory()->createQuoteValidator()->validate(
-            $quoteTransfer,
-            $quoteValidationResponseTransfer
-        );
+    public function validatePriceModeInQuote(QuoteTransfer $quoteTransfer): QuoteErrorTransfer
+    {
+        return $this->getFactory()->createQuoteValidator()->validate($quoteTransfer);
     }
 }

@@ -126,7 +126,11 @@ class QuoteValidator implements QuoteValidatorInterface
         }
 
         foreach ($this->quoteValidatePlugins as $quoteValidatePlugin) {
-            $quoteValidationResponseTransfer = $quoteValidatePlugin->validate($quoteTransfer, $quoteValidationResponseTransfer);
+            $quoteErrorTransfer = $quoteValidatePlugin->validate($quoteTransfer);
+
+            if ($quoteErrorTransfer->getMessage()) {
+                $quoteValidationResponseTransfer->addErrors($quoteErrorTransfer)->setIsSuccess(false);
+            }
         }
 
         return $quoteValidationResponseTransfer;

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Price\Communication\Plugin\Quote;
 
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatePluginInterface;
 
@@ -26,14 +26,11 @@ class QuotePriceModeValidatePlugin extends AbstractPlugin implements QuoteValida
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteErrorTransfer
      */
-    public function validate(
-        QuoteTransfer $quoteTransfer,
-        QuoteValidationResponseTransfer $quoteValidationResponseTransfer
-    ): QuoteValidationResponseTransfer {
-        return $this->getFacade()->validatePriceModeInQuote($quoteTransfer, $quoteValidationResponseTransfer);
+    public function validate(QuoteTransfer $quoteTransfer): QuoteErrorTransfer
+    {
+        return $this->getFacade()->validatePriceModeInQuote($quoteTransfer);
     }
 }

@@ -7,19 +7,15 @@
 
 namespace Spryker\Zed\Price\Business\Validator;
 
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 
 interface QuoteValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteErrorTransfer
      */
-    public function validate(
-        QuoteTransfer $quoteTransfer,
-        QuoteValidationResponseTransfer $quoteValidationResponseTransfer
-    ): QuoteValidationResponseTransfer;
+    public function validate(QuoteTransfer $quoteTransfer): QuoteErrorTransfer;
 }

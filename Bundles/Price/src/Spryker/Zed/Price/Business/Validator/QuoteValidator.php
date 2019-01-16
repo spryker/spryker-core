@@ -9,7 +9,6 @@ namespace Spryker\Zed\Price\Business\Validator;
 
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Zed\Price\PriceConfig;
 
 class QuoteValidator implements QuoteValidatorInterface
@@ -33,53 +32,47 @@ class QuoteValidator implements QuoteValidatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteErrorTransfer
      */
-    public function validate(
-        QuoteTransfer $quoteTransfer,
-        QuoteValidationResponseTransfer $quoteValidationResponseTransfer
-    ): QuoteValidationResponseTransfer {
+    public function validate(QuoteTransfer $quoteTransfer): QuoteErrorTransfer
+    {
         $priceMode = $quoteTransfer->getPriceMode();
 
         if (!$priceMode) {
-            return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_PRICE_MODE_DATA_IS_MISSING);
+            return $this->setValidationError(static::MESSAGE_PRICE_MODE_DATA_IS_MISSING);
         }
 
         $availablePiceModes = $this->priceConfig->getPriceModes();
 
         if (!isset($availablePiceModes[$priceMode])) {
-            return $this->addValidationError(
-                $quoteValidationResponseTransfer,
+            return $this->setValidationError(
                 static::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT,
                 [static::GLOSSARY_KEY_PRICE_MODE => $priceMode]
             );
         }
 
-        return $quoteValidationResponseTransfer;
+        return $this->setValidationError();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
      * @param string $message
      * @param array $replacements
      *
-     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteErrorTransfer
      */
-    protected function addValidationError(
-        QuoteValidationResponseTransfer $quoteValidationResponseTransfer,
-        string $message,
-        array $replacements = []
-    ): QuoteValidationResponseTransfer {
+    protected function setValidationError(string $message = '', array $replacements = []): QuoteErrorTransfer
+    {
+        $quoteErrorTransfer = new QuoteErrorTransfer();
+
+        if (!$message) {
+            return $quoteErrorTransfer;
+        }
+
         if ($replacements) {
             $message = strtr($message, $replacements);
         }
 
-        $quoteErrorTransfer = (new QuoteErrorTransfer())->setMessage($message);
-
-        return $quoteValidationResponseTransfer
-            ->addErrors($quoteErrorTransfer)
-            ->setIsSuccess(false);
+        return $quoteErrorTransfer->setMessage($message);
     }
 }
