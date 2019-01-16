@@ -8,11 +8,6 @@
 namespace SprykerTest\Zed\AvailabilityNotification\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer;
-use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscription;
 use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationDependencyProvider;
 use Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationBusinessFactory;
 use Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacade;
@@ -34,27 +29,25 @@ class AvailabilityNotificationFacadeTest extends Unit
 {
     public const TESTER_SUBSCRIPTION_KEY = '112233445566778899';
 
-    public const INCORRECT_TESTER_SUBSCRIPTION_KEY = '992233445566778899';
+    public const TESTER_INCORRECT_SUBSCRIPTION_KEY = '992233445566778899';
 
     public const TESTER_PRODUCT_SKU = '001_25904006';
 
     public const TESTER_CUSTOMER_REFERENCE = 'DE--1';
 
-    public const TESTER_EMAIL = 'invalid<>example@spryker.com';
+    public const TESTER_EMAIL = 'example@spryker.com';
 
-    public const TESTER_STORE = 1;
+    public const TESTER_INVALID_EMAIL = 'invalid<>example@spryker.com';
 
-    public const TESTER_LOCALE = 66;
+    /**
+     * @var \SprykerTest\Zed\AvailabilityNotification\AvailabilityNotificationBusinessTester
+     */
+    protected $tester;
 
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacade
      */
     protected $availabilityNotificationFacade;
-
-    /**
-     * @var \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscription
-     */
-    protected $availabilitySubscription;
 
     /**
      * @return void
@@ -63,32 +56,32 @@ class AvailabilityNotificationFacadeTest extends Unit
     {
         parent::setUp();
 
-        $this->setAvailabilityNotificationFacade();
-        $this->setupAvailabilityNotification();
+        $this->getAvailabilityNotificationFacadeMock();
     }
 
     /**
      * @return void
      */
-    protected function setupAvailabilityNotification()
+    public function testGuestSubscribeShouldSucceed()
     {
-        $this->availabilitySubscription = (new SpyAvailabilitySubscription())
-            ->setCustomerReference(static::TESTER_CUSTOMER_REFERENCE)
-            ->setEmail(static::TESTER_EMAIL)
-            ->setSku(static::TESTER_PRODUCT_SKU)
-            ->setSubscriptionKey(static::TESTER_SUBSCRIPTION_KEY)
-            ->setFkStore(static::TESTER_STORE)
-            ->setFkLocale(static::TESTER_LOCALE);
+        $availabilityNotificationSubscription = $this->tester->haveAvailabilitySubscriptionTransfer([
+            'sku' => static::TESTER_PRODUCT_SKU,
+        ]);
 
-        $this->availabilitySubscription->save();
+        $response = $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
+
+        $this->assertTrue($response->getIsSuccess());
     }
 
     /**
      * @return void
      */
-    public function testSubscribeShouldSucceed()
+    public function testCustomerSubscribeShouldSucceed()
     {
-        $availabilityNotificationSubscription = $this->createSubscription();
+        $availabilityNotificationSubscription = $this->tester->haveAvailabilitySubscriptionTransfer([
+            'customer_reference' => static::TESTER_CUSTOMER_REFERENCE,
+            'sku' => static::TESTER_PRODUCT_SKU,
+        ]);
 
         $response = $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
 
@@ -100,7 +93,10 @@ class AvailabilityNotificationFacadeTest extends Unit
      */
     public function testSubscribeFailsWhenEmailIsInvalid()
     {
-        $availabilityNotificationSubscription = $this->createInvalidSubscription();
+        $availabilityNotificationSubscription = $this->tester->haveAvailabilitySubscriptionTransfer([
+            'email' => static::TESTER_INVALID_EMAIL,
+            'sku' => static::TESTER_PRODUCT_SKU,
+        ]);
 
         $response = $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
 
@@ -112,9 +108,9 @@ class AvailabilityNotificationFacadeTest extends Unit
      */
     public function testSubscribeForAlreadySubscribedTypeShouldSucceed()
     {
-        $availabilityNotificationSubscription = $this->createSubscription();
-
-        $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
+        $availabilityNotificationSubscription = $this->tester->haveAvailabilitySubscription([
+            'sku' => static::TESTER_PRODUCT_SKU,
+        ]);
 
         $response = $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
 
@@ -126,13 +122,13 @@ class AvailabilityNotificationFacadeTest extends Unit
      */
     public function testCheckSubscriptionForAlreadySubscribedShouldSucceed()
     {
-        $availabilityNotificationSubscription = $this->createUnsubscribeTransfer();
+        $availabilityNotificationSubscription = $this->tester->haveAvailabilitySubscription([
+            'sku' => static::TESTER_PRODUCT_SKU,
+        ]);
 
-        $availabilitySubscriptionExistenceRequest = $this->createAvailabilitySubscriptionExistenceRequestTransfer($availabilityNotificationSubscription);
+        $result = $this->availabilityNotificationFacade->findAvailabilitySubscription($availabilityNotificationSubscription);
 
-        $result = $this->availabilityNotificationFacade->checkExistence($availabilitySubscriptionExistenceRequest);
-
-        $this->assertNotNull($result->getAvailabilitySubscription());
+        $this->assertNotNull($result);
     }
 
     /**
@@ -140,23 +136,40 @@ class AvailabilityNotificationFacadeTest extends Unit
      */
     public function testCheckSubscriptionForNotSubscribedShouldFail()
     {
-        $availabilityNotificationSubscription = $this->createSubscription();
+        $availabilityNotificationSubscription = $this->tester->haveAvailabilitySubscriptionTransfer([
+            'sku' => static::TESTER_INCORRECT_SUBSCRIPTION_KEY,
+        ]);
 
-        $availabilitySubscriptionExistenceRequest = $this->createAvailabilitySubscriptionExistenceRequestTransfer($availabilityNotificationSubscription);
+        $result = $this->availabilityNotificationFacade->findAvailabilitySubscription($availabilityNotificationSubscription);
 
-        $result = $this->availabilityNotificationFacade->checkExistence($availabilitySubscriptionExistenceRequest);
-
-        $this->assertNull($result->getAvailabilitySubscription());
+        $this->assertNull($result);
     }
 
     /**
      * @return void
      */
-    public function testUnsubscribeShouldSucceed()
+    public function testGuestUnsubscribeShouldSucceed()
     {
-        $availabilityNotificationUnsubscribeTransfer = $this->createUnsubscribeTransfer();
+        $availabilityNotificationSubscription = $this->tester->haveAvailabilitySubscription([
+            'sku' => static::TESTER_PRODUCT_SKU,
+        ]);
 
-        $response = $this->availabilityNotificationFacade->unsubscribe($availabilityNotificationUnsubscribeTransfer);
+        $response = $this->availabilityNotificationFacade->unsubscribe($availabilityNotificationSubscription);
+
+        $this->assertTrue($response->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCustomerUnsubscribeShouldSucceed()
+    {
+        $availabilityNotificationSubscription = $this->tester->haveAvailabilitySubscription([
+            'sku' => static::TESTER_PRODUCT_SKU,
+            'customer_reference' => static::TESTER_CUSTOMER_REFERENCE,
+        ]);
+
+        $response = $this->availabilityNotificationFacade->unsubscribe($availabilityNotificationSubscription);
 
         $this->assertTrue($response->getIsSuccess());
     }
@@ -166,9 +179,11 @@ class AvailabilityNotificationFacadeTest extends Unit
      */
     public function testUnsubscribeWithIncorrectSubscriptionKeyShouldFail()
     {
-        $availabilityNotificationUnsubscribeTransfer = $this->createUnsubscribeTransferWithIncorrectSubscriptionKey();
+        $availabilityNotificationSubscription = $this->tester->haveAvailabilitySubscriptionTransfer([
+            'subscription_key' => static::TESTER_INCORRECT_SUBSCRIPTION_KEY,
+        ]);
 
-        $response = $this->availabilityNotificationFacade->unsubscribe($availabilityNotificationUnsubscribeTransfer);
+        $response = $this->availabilityNotificationFacade->unsubscribe($availabilityNotificationSubscription);
 
         $this->assertFalse($response->getIsSuccess());
     }
@@ -178,25 +193,26 @@ class AvailabilityNotificationFacadeTest extends Unit
      */
     public function testAnonymize()
     {
-        $availabilityNotificationSubscription = $this->createSubscription();
+        $availabilityNotificationSubscription = $this->tester->haveAvailabilitySubscription([
+            'customerReference' => static::TESTER_CUSTOMER_REFERENCE,
+            'sku' => static::TESTER_PRODUCT_SKU,
+        ]);
 
-        $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
-
-        $customerTransfer = $this->createCustomerTransfer();
+        $customerTransfer = $this->tester->haveCustomerTransfer([
+            'customerReference' => static::TESTER_CUSTOMER_REFERENCE,
+        ]);
 
         $this->availabilityNotificationFacade->anonymizeSubscription($customerTransfer);
 
-        $availabilitySubscriptionExistenceRequest = $this->createAvailabilitySubscriptionExistenceRequestTransfer($availabilityNotificationSubscription);
+        $result = $this->availabilityNotificationFacade->findAvailabilitySubscription($availabilityNotificationSubscription);
 
-        $result = $this->availabilityNotificationFacade->checkExistence($availabilitySubscriptionExistenceRequest);
-
-        $this->assertNull($result->getAvailabilitySubscription());
+        $this->assertNull($result);
     }
 
     /**
      * @return void
      */
-    protected function setAvailabilityNotificationFacade()
+    protected function getAvailabilityNotificationFacadeMock()
     {
         $this->availabilityNotificationFacade = new AvailabilityNotificationFacade();
         $container = new Container();
@@ -210,91 +226,5 @@ class AvailabilityNotificationFacadeTest extends Unit
         $availabilityNotificationBusinessFactory->setContainer($container);
 
         $this->availabilityNotificationFacade->setFactory($availabilityNotificationBusinessFactory);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
-     */
-    protected function createSubscription(): AvailabilitySubscriptionTransfer
-    {
-        $locale = new LocaleTransfer();
-        $locale->setIdLocale(static::TESTER_LOCALE);
-
-        $subscription = new AvailabilitySubscriptionTransfer();
-        $subscription->setEmail(static::TESTER_EMAIL);
-        $subscription->setSku(static::TESTER_PRODUCT_SKU);
-        $subscription->setLocale($locale);
-        $subscription->setSubscriptionKey(static::TESTER_SUBSCRIPTION_KEY);
-
-        return $subscription;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
-     */
-    protected function createInvalidSubscription(): AvailabilitySubscriptionTransfer
-    {
-        $locale = new LocaleTransfer();
-        $locale->setIdLocale(static::TESTER_LOCALE);
-
-        $subscription = new AvailabilitySubscriptionTransfer();
-        $subscription->setEmail(static::TESTER_EMAIL);
-        $subscription->setSku(static::TESTER_PRODUCT_SKU);
-        $subscription->setLocale($locale);
-        $subscription->setSubscriptionKey(static::TESTER_EMAIL);
-
-        return $subscription;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
-     */
-    protected function createUnsubscribeTransfer(): AvailabilitySubscriptionTransfer
-    {
-        $subscription = new AvailabilitySubscriptionTransfer();
-        $subscription->setSubscriptionKey(static::TESTER_SUBSCRIPTION_KEY);
-        $subscription->setEmail(static::TESTER_EMAIL);
-        $subscription->setSku(static::TESTER_PRODUCT_SKU);
-
-        return $subscription;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
-     */
-    protected function createUnsubscribeTransferWithIncorrectSubscriptionKey(): AvailabilitySubscriptionTransfer
-    {
-        $subscription = new AvailabilitySubscriptionTransfer();
-        $subscription->setSubscriptionKey(static::INCORRECT_TESTER_SUBSCRIPTION_KEY);
-        $subscription->setEmail(static::TESTER_EMAIL);
-        $subscription->setSku(static::TESTER_PRODUCT_SKU);
-
-        return $subscription;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function createCustomerTransfer(): CustomerTransfer
-    {
-        $customer = new CustomerTransfer();
-        $customer->setCustomerReference(static::TESTER_CUSTOMER_REFERENCE);
-
-        return $customer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscription
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer
-     */
-    protected function createAvailabilitySubscriptionExistenceRequestTransfer(AvailabilitySubscriptionTransfer $availabilitySubscription): AvailabilitySubscriptionExistenceRequestTransfer
-    {
-        $availabilitySubscriptionExistenceRequest = new AvailabilitySubscriptionExistenceRequestTransfer();
-        $availabilitySubscriptionExistenceRequest->setSku($availabilitySubscription->getEmail());
-        $availabilitySubscriptionExistenceRequest->setEmail($availabilitySubscription->getEmail());
-        $availabilitySubscriptionExistenceRequest->setSubscriptionKey($availabilitySubscription->getEmail());
-
-        return $availabilitySubscriptionExistenceRequest;
     }
 }
