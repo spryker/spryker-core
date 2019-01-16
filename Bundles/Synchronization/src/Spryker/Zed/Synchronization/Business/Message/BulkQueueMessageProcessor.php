@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Synchronization\Business\Message;
 
+use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Spryker\Zed\Synchronization\Business\Synchronization\SynchronizationInterface;
 use Throwable;
 
@@ -48,18 +49,18 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
         $writeMessagesByQueue = [];
         $deleteMessagesByQueue = [];
 
-        foreach ($queueMessageTransfers as $queueMessageTransfer) {
-            $messageBody = $this->queueMessageHelper->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
+        foreach ($queueMessageTransfers as $key => $queueMessageTransfer) {
+            $messageBody = $this->extractQuoteMessageBody($queueMessageTransfer);
             $queueName = $queueMessageTransfer->getQueueName();
 
             if (isset($messageBody[static::TYPE_WRITE])) {
-                $writeMessagesByQueue[$queueName][static::KEY_MESSAGE_BODY][] = $messageBody[static::TYPE_WRITE];
-                $writeMessagesByQueue[$queueName][static::KEY_TRANSFER][] = $queueMessageTransfer;
+                $writeMessagesByQueue[$queueName][static::KEY_MESSAGE_BODY][$key] = $messageBody[static::TYPE_WRITE];
+                $writeMessagesByQueue[$queueName][static::KEY_TRANSFER][$key] = $queueMessageTransfer;
             }
 
             if (isset($messageBody[static::TYPE_DELETE])) {
-                $deleteMessagesByQueue[$queueName][static::KEY_MESSAGE_BODY][] = $messageBody[static::TYPE_DELETE];
-                $deleteMessagesByQueue[$queueName][static::KEY_TRANSFER][] = $queueMessageTransfer;
+                $deleteMessagesByQueue[$queueName][static::KEY_MESSAGE_BODY][$key] = $messageBody[static::TYPE_DELETE];
+                $deleteMessagesByQueue[$queueName][static::KEY_TRANSFER][$key] = $queueMessageTransfer;
             }
         }
 
@@ -76,7 +77,7 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
      */
     protected function runBulkWrite(array $writeMessagesByQueue): array
     {
-        $processedQueueMessageTransfers = [];
+        $resultQueueMessageTransfers = [];
 
         foreach ($writeMessagesByQueue as $queueName => $writeMessages) {
             $messageBodies = $writeMessages[static::KEY_MESSAGE_BODY];
@@ -84,15 +85,15 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
 
             try {
                 $this->synchronization->writeBulk($messageBodies);
-                $markedMessageTransfers = $this->markEachMessageChunkAsAcknowledged($queueMessageTransfers);
+                $processedMessageTransfers = $this->markEachMessageChunkAsAcknowledged($queueMessageTransfers);
             } catch (Throwable $exception) {
-                $markedMessageTransfers = $this->markEachMessageChunkAsFailed($queueMessageTransfers, $exception->getMessage());
+                $processedMessageTransfers = $this->processFailedQueueMessages($queueMessageTransfers, $messageBodies, $exception->getMessage());
             }
 
-            $processedQueueMessageTransfers = array_merge($processedQueueMessageTransfers, $markedMessageTransfers);
+            $resultQueueMessageTransfers = array_merge($resultQueueMessageTransfers, $processedMessageTransfers);
         }
 
-        return $processedQueueMessageTransfers;
+        return $resultQueueMessageTransfers;
     }
 
     /**
@@ -102,7 +103,7 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
      */
     protected function runBulkDelete(array $deleteMessagesByQueue): array
     {
-        $processedQueueMessageTransfers = [];
+        $resultQueueMessageTransfers = [];
 
         foreach ($deleteMessagesByQueue as $queueName => $deleteMessages) {
             $messageBodies = $deleteMessages[static::KEY_MESSAGE_BODY];
@@ -110,15 +111,15 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
 
             try {
                 $this->synchronization->deleteBulk($messageBodies);
-                $markedMessageTransfers = $this->markEachMessageChunkAsAcknowledged($queueMessageTransfers);
+                $processedMessageTransfers = $this->markEachMessageChunkAsAcknowledged($queueMessageTransfers);
             } catch (Throwable $exception) {
-                $markedMessageTransfers = $this->markEachMessageChunkAsFailed($queueMessageTransfers, $exception->getMessage());
+                $processedMessageTransfers = $this->processFailedQueueMessages($queueMessageTransfers, $messageBodies, $exception->getMessage());
             }
 
-            $processedQueueMessageTransfers = array_merge($processedQueueMessageTransfers, $markedMessageTransfers);
+            $resultQueueMessageTransfers = array_merge($resultQueueMessageTransfers, $processedMessageTransfers);
         }
 
-        return $processedQueueMessageTransfers;
+        return $resultQueueMessageTransfers;
     }
 
     /**
@@ -152,5 +153,53 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
         }
 
         return $markedQueueMessageTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
+     *
+     * @return array
+     */
+    protected function extractQuoteMessageBody(QueueReceiveMessageTransfer $queueMessageTransfer): array
+    {
+        $queueMessage = $queueMessageTransfer->getQueueMessage();
+        $messageBody = $this->queueMessageHelper->decodeJson($queueMessage->getBody(), true);
+        $queueMessage->setBody(null);
+
+        return $messageBody;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array $messageBodies
+     * @param string $errorMessage
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    protected function processFailedQueueMessages(array $queueMessageTransfers, array $messageBodies, string $errorMessage): array
+    {
+        $processedMessageTransfers = $this->restoreQueueMessageBodies($queueMessageTransfers, $messageBodies);
+
+        return $this->markEachMessageChunkAsFailed($processedMessageTransfers, $errorMessage);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array $messageBodies
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    protected function restoreQueueMessageBodies(array $queueMessageTransfers, array &$messageBodies): array
+    {
+        $restoredQueueMessageTransfers = [];
+        foreach ($messageBodies as $key => $messageBody) {
+            if (isset($queueMessageTransfers[$key])) {
+                $messageBody = $this->queueMessageHelper->encodeJson($messageBody);
+                $queueMessageTransfers[$key]->getQueueMessage()->setBody($messageBody);
+                $restoredQueueMessageTransfers[] = $queueMessageTransfers[$key];
+            }
+        }
+
+        return $restoredQueueMessageTransfers;
     }
 }
