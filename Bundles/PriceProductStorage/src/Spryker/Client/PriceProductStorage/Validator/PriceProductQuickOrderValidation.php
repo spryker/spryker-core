@@ -7,13 +7,14 @@
 
 namespace Spryker\Client\PriceProductStorage\Validator;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolverInterface;
 
 class PriceProductQuickOrderValidation implements PriceProductQuickOrderValidationInterface
 {
-    protected const ERROR_MESSAGE_NO_PRICE_PRODUCT = 'quick-order.upload-order.errors.upload-order-no-price-product';
+    protected const ERROR_MESSAGE_NO_PRICE_PRODUCT = 'price_product.error.message';
 
     /**
      * @var \Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolverInterface
@@ -50,7 +51,7 @@ class PriceProductQuickOrderValidation implements PriceProductQuickOrderValidati
             ->resolveCurrentProductPriceTransfer($priceProductFilterTransfer);
 
         if (!$priceProductTransfer->getPrice()) {
-            $quickOrderItemTransfer->addErrorMessages(static::ERROR_MESSAGE_NO_PRICE_PRODUCT);
+            $quickOrderItemTransfer->addErrorMessage((new MessageTransfer())->setValue(static::ERROR_MESSAGE_NO_PRICE_PRODUCT));
         }
 
         return $quickOrderItemTransfer;

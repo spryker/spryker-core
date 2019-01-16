@@ -38,7 +38,8 @@ class ProductQuantityStorageFactory extends AbstractFactory
     public function createQuantityQuickOrderTransferValidator(): QuantityQuickOrderValidationInterface
     {
         return new QuantityQuickOrderValidation(
-            $this->createProductQuantityStorageReader()
+            $this->createProductQuantityStorageReader(),
+            $this->createProductQuantityResolver()
         );
     }
 

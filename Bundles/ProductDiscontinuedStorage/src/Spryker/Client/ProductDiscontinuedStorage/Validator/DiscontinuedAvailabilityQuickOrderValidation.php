@@ -7,13 +7,14 @@
 
 namespace Spryker\Client\ProductDiscontinuedStorage\Validator;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToLocaleClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface;
 
 class DiscontinuedAvailabilityQuickOrderValidation implements DiscontinuedAvailabilityQuickOrderValidationInterface
 {
-    protected const ERROR_MESSAGE_DISCONTINUED_PRODUCT = 'quick-order.upload-order.errors.upload-order-discontinued-product';
+    protected const ERROR_MESSAGE_DISCONTINUED_PRODUCT = 'product_discontinued.error.message';
 
     /**
      * @var \Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface
@@ -52,7 +53,7 @@ class DiscontinuedAvailabilityQuickOrderValidation implements DiscontinuedAvaila
             ->findProductDiscontinuedStorage($productConcreteTransfer->getSku(), $this->localeClient->getCurrentLocale());
 
         if ($productDiscontinuedTransfer) {
-            $quickOrderItemTransfer->addErrorMessages(static::ERROR_MESSAGE_DISCONTINUED_PRODUCT);
+            $quickOrderItemTransfer->addErrorMessage((new MessageTransfer())->setValue(static::ERROR_MESSAGE_DISCONTINUED_PRODUCT));
         }
 
         return $quickOrderItemTransfer;

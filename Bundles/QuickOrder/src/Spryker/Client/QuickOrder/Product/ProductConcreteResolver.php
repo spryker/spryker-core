@@ -8,6 +8,7 @@
 namespace Spryker\Client\QuickOrder\Product;
 
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
@@ -98,12 +99,12 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
 
             if ($productConcreteTransfer === null) {
                 $productConcreteTransfer = (new ProductConcreteTransfer())->setSku($quickOrderItemTransfer->getSku());
-                $quickOrderItemTransfer->addErrorMessages(static::ERROR_MESSAGE_INVALID_SKU);
+                $quickOrderItemTransfer->addErrorMessage((new MessageTransfer())->setValue(static::ERROR_MESSAGE_INVALID_SKU));
             }
 
             $quickOrderItemTransfer->setProductConcrete($productConcreteTransfer);
             $this->validateQuickOrderItem($quickOrderItemTransfer);
-            $this->expandQuickOrderItem($quickOrderItemTransfer);
+            $this->expandProductConcrete($quickOrderItemTransfer);
         }
 
         return $quickOrderTransfer;
@@ -148,14 +149,16 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
      *
      * @return void
      */
-    protected function expandQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): void
+    protected function expandProductConcrete(QuickOrderItemTransfer $quickOrderItemTransfer): void
     {
         if ($quickOrderItemTransfer->getProductConcrete()->getIdProductConcrete()) {
             foreach ($this->productConcreteExpanderPlugins as $productConcreteExpanderPlugin) {
                 $expandedProductConcrete = $productConcreteExpanderPlugin->expand([$quickOrderItemTransfer->getProductConcrete()]);
             }
 
-            $quickOrderItemTransfer->setProductConcrete($expandedProductConcrete[0]);
+            if (isset($expandedProductConcrete)) {
+                $quickOrderItemTransfer->setProductConcrete($expandedProductConcrete[0]);
+            }
         }
     }
 }
