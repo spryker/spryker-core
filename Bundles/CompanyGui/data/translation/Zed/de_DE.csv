@@ -1,8 +1,19 @@
 "Add Company","Firma hinzufügen"
+Approved,Bestätigt
 "Back to Companies","Zurück zu Firma"
+"Company has been activated.","Unternehmen wurde aktiviert."
+"Company has been approved.","Unternehmen wurde zugelassen."
+"Company has been created.","Unternehmen wurde erstellt."
+"Company has been deactivated.","Unternehmen wurde deaktiviert."
+"Company has been denied.","Unternehmen wurde abgelehnt."
+"Company has been updated.","Unternehmen wurde aktualisiert."
+"Company has not been created.","Unternehmen wurde nicht erstellt."
+"Company has not been updated.","Unternehmen wurde nicht aktualisiert."
+"Company Id","ID des Unternehmens"
+"Create Company","Unternehmen erstellen"
+Denied,Abgelehnt
+Deny,Ablehnen
+"Edit Company","Unternehmen bearbeiten"
 "List of Companies","Liste der Firmen"
 "Overview of Companies","Übersicht der Firmen"
 Save,Speichern
-Companies,Firmen
-Create Company,Firma Erstellen
-Edit Company,Firma Bearbeiten

@@ -1,45 +1,48 @@
 "Add attribute to search","Attribut zur Suche hinzufügen"
-"Add Attribute to Search","Attribut zur Suche hinzufügen"
-"Attribute key",Attribut-key
+"Attribute key",Attributschlüssel
+"Attribute key is already used","Attributschlüssel bereits vergeben"
+"Attribute to search was added successfully.","Gesuchtes Attribut erfolgreich hinzugefügt."
+"Attribute to search was successfully deactivated.","Gesuchtes Attribut erfolgreich deaktiviert."
+"Attribute to search was successfully updated.","Gesuchtes Attribut erfolgreich aktualisiert."
+"Attribute with id %s doesn't exist","Attribut mit der ID %s existiert nicht."
+"Attribute with id %s doesn't exist","Attribut mit der ID %s existiert nicht."
+"Category Filters",Kategoriefilter
+"Completion terms","Begriffe zur Suchvervollständigung"
 "Create filter","Filter erstellen"
-"Create Filter","Filter Erstellen"
 Delete,Löschen
 Edit,Bearbeiten
 "Edit filter order","Filteranordnung bearbeiten"
-"Edit Filter Order","Filteranordnung bearbeiten"
+"Edit search preferences","Suchpräferenzen bearbeiten"
+"Edit Search Preferences","Suchpräferenzen bearbeiten"
 "Filter name",Filtername
+"Filter position",Filterposition
+"Filter preference was created successfully.","Filterpräferenz wurde erfolgreich erstellt."
+"Filter preference was updated successfully.","Filterpräferenz wurde erfolgreich aktualisiert."
+"Filter preferences synchronization was successful.","Filterpräferenzen wurden erfolgreich synchronisiert."
+"Filter successfully deleted.","Filter erfolgreich gelöscht."
 "Filter type",Filtertyp
+"Full text",Volltext
+"Full text boosted","Volltext erweitert"
 "General Information","Allgemeine Informationen"
+"Include for completion","Einschließen für Suchvervollständigung"
+"Include for full text","Einschließen für Volltextsuche"
+"Include for full text boosted","Einschließen für erweiterte Volltextsuche"
+"Include for suggestion","Einschließen für Suchvorschläge"
 "List of filters","Liste der Filter"
 "List of search preferences","Liste der Suchpräferenzen"
+multi-select,Mehrfachauswahl
+range,Umfang
 Save,Speichern
 "Save Order","Bestellung speichern"
+"Search and Filters","Suche und Filter"
+"Search Preferences",Suchpräferenzen
+"Search preferences",Suchpräferenzen
+"Search preferences synchronization was successful.","Suchpräferenzen wurden erfolgreich synchronisiert."
+single-select,Einfachauswahl
+"Suggestion terms","Vorgeschlagene Begriffe"
 "Synchronize filter preferences","Filtereinstellungen synchronisieren"
 "Synchronize search preferences","Suchpräferenzen synchronisieren"
+"This field contains illegal characters. It should contain only lower case letters, digits, numbers, underscores (""_""), hyphens (""-"") and colons ("":"").","Dieses Feld enthält unzulässige Zeichen. Nur Kleinbuchstaben, Ziffern, Zahlen, Unterstriche (""_""), Bindestriche (""-"") und Doppelpunkte ("":"") sind erlaubt."
 Translations,Übersetzungen
-Deactivate all,Alle Deaktivieren
-Filter preferences,Filtereinstellungen
-Filter Preferences,Filtereinstellungen
-View filter,Filter Anzeigen
-Search Preferences,Suchpräferenzen
-Search preferences,Suchpräferenzen
-Edit Search Preferences,Suchpräferenzen Bearbeiten
-Edit search preferences,Suchpräferenzen Bearbeiten
-Edit Filter,Filter Bearbeiten
-Edit filter,Filter Bearbeiten
-
-"HERE IS Google Translation STARTED","HERE IS Google Translation STARTED"
-"Include for full text","Für Volltext einschließen"
-"Include for full text boosted","Include für Volltext angehoben"
-"Include for suggestion","Zum Vorschlag hinzufügen"
-"Include for completion","Zum Abschluss einschließen"
-"Full text","Voller Text"
-"Full text boosted","Volltext angehoben"
-"Suggestion terms","Vorschläge für Vorschläge"
-"Completion terms","Abschlussbedingungen"
-"Filter position","Filterposition"
-"Filter name *","Filtername *"
-"multi-select","Mehrfachauswahl"
-"single-select","Einzelauswahl"
-"range","Angebot"
-"View Filter","Filter anzeigen"
+"Type first three letters of an existing attribute key for suggestions.","Geben Sie die ersten drei Buchstaben eines bestehenden Attributschlüssels ein, um Vorschläge zu erhalten."
+"View Filter","Filter ansehen"

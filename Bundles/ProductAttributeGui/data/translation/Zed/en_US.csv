@@ -1,46 +1,50 @@
+"Product Abstract Attributes Management","Product Abstract Attributes Management"
 "1. General Information","1. General Information"
 "2. Translations","2. Translations"
 Add,Add
+"Add Attribute","Add Attribute"
 "Allow input any value other than predefined ones","Allow input any value other than predefined ones"
+"Attribute ID","Attribute ID"
+"Attribute key","Attribute Key"
 "Attribute Key","Attribute Key"
+"Attribute list","Attribute list"
 "Attribute name translation","Attribute name translation"
+"Attributes and their values are used by the backoffice application. They are unique and cannot contain special characters.","Attributes and their values are used by the backoffice application. They are unique and cannot contain special characters."
 Back,Back
 "Back to List","Back to list"
 "Back to Product Abstract","Back to Product Abstract"
 "Back to Product List","Back to Product List"
+"Create a Product Attribute","Create a Product Attribute"
 "Create Product Attribute","Create Product Attribute"
+date,date
+datetime,datetime
 Edit,Edit
 "Edit Product","Edit Product"
 "Edit Product Abstract","Edit Product Abstract"
+float,float
 "General Information","General Information"
 "Input type","Input type"
-"Predefined value translations","Predefined value translations"
-"Predefined Values","Predefined Values"
-Save,Save
-Superattribute,Superattribute
-Values,Values
-"You can add new values by pressing ""Enter"" after each element","You can add new values by pressing ""Enter"" after each element"
-"Attribute ID","Attribute ID"
-"Attribute Key","Attribute Key"
-"Attribute list","Attribute list"
-"View Attribute","View Attribute"
-"Product Attributes","Product Attributes"
-"Attributes and their values are used by the backoffice application. They are unique and cannot contain special characters.","Attributes and their values are used by the backoffice application. They are unique and cannot contain special characters."
-text,text
-textarea,textarea
-number,number
-float,float
-date,date
-time,time
-datetime,datetime
-select,select
 "Manage Attributes for Product","Manage Attributes for Product"
-"Create a Product Attribute","Create a Product Attribute"
 "Manage Attributes for Product Abstract","Manage Attributes for Product Abstract"
-"Translate predefined values","Translate predefined values"
+number,number
+"Predefined value translations","Predefined value translations"
+"Predefined values","Predefined values"
+"Product abstract attributes saved","Product abstract attributes saved"
 "Product attribute was created successfully.","Product attribute was created successfully."
 "Product attribute was not created.","Product attribute was not created."
 "Product attribute was updated successfully.","Product attribute was updated successfully."
-"Translation was updated successfully.","Translation was updated successfully."
-"Product abstract attributes saved","Product abstract attributes saved"
+"Product Attributes","Product Attributes"
+"Product Attributes Management","Product Attributes Management"
 "Product attributes saved","Product attributes saved"
+Save,Save
+select,select
+"Super attribute","Super attribute"
+text,text
+textarea,textarea
+time,time
+"Translate predefined values","Translate predefined values"
+"Translation was updated successfully.","Translation was updated successfully."
+"Type first three letters of an existing attribute key for suggestions.","Type first three letters of an existing attribute key for suggestions."
+Values,Values
+"View Attribute","View Attribute"
+"You can add new values by pressing ""Enter"" after each element","You can add new values by pressing ""Enter"" after each element"

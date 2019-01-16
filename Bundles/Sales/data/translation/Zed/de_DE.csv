@@ -1,18 +1,33 @@
+"Customer Full Name ","Vollständiger Name des Kunden"
 "<1d | 1d-7d | >7d","<1Tag| 1-7Tage | >7Tag"
+"Address successfully updated.","Adresse erfolgreich aktualisiert."
+Addresses,Adressen
+"All orders of the customer","Alle Bestellungen des Kunden"
 "Back to Orders","Zurück zu Bestellungen"
 "Canceled amount","Stornierter Betrag"
+"Cart Notes","Anmerkungen zum Einkaufswagen"
 Comments,Kommentare
+"Customer successfully updated.","Kunde wurde erfolgreich aktualisiert."
 Discount,Rabatt
 "GRAND TOTAL",Gesamtsumme
 "Hide history","Historie ausblenden"
 "Included tax amount","Enthaltener Steuerbetrag"
 "Item total","Artikel Gesamt"
 Legend,Legende
+"List of orders","Liste der Bestellungen"
+Matrix,Matrix
+"Number of Items","Anzahl der Artikel"
 Option,Option
+"Order Matrix",Bestellungsmatrix
+"Order Source","Quelle der Bestellung"
+"Order State",Bestellungsstatus
+Orders,Bestellungen
 "Overview of Order Matrix","Übersicht der Bestellmatrix"
 "Overview of Orders","Übersicht der Bestellungen"
+Payments,Zahlungen
 Product,Produkt
 Quantity,Menge
+Sales,Verkauf
 Save,Speichern
 "Send Message","Nachricht senden"
 Shipment,Versand
@@ -20,27 +35,13 @@ Shipment,Versand
 "Show less","Weniger anzeigen"
 "Show more","Mehr anzeigen"
 Sku,SKU
-State,Zustand
+State,Status
 "Sub total",Zwischensumme
+Totals,Gesamtsummen
+"Trigger all matching states","Alle passenden Status abrufen"
 "Trigger event","Trigger Event"
+"Unique Product Quantity","Einmalige Produktmenge"
 "Unit Price",Stückpreis
 "Variant Details",Variantendetails
 "View Order","Bestellung anzeigen"
 "View Order:","Bestellung anzeigen:"
-"Created", "Erstellt"
-"GrandTotal", "Gesamtsumme"
-"Order Reference", "Bestellnummer"
-"Order date", "Datum"
-"Status", "Status"
-"Message", "Nachricht"
-"Bundle Items Cart Notes", "Notizen zu Bündelprodukten im Warenkorb"
-"Name", "Name"
-"Refunds", "Rückerstattungen"
-"Edit", "Bearbeiten"
-Orders,Bestellungen
-Order Matrix,Bestellmatrix
-List of orders, Liste der Bestellungen
-Order Overview,Übersicht der Bestellungen
-
-"HERE IS Google Translation STARTED","HERE IS Google Translation STARTED"
-"Sales","Der Umsatz"

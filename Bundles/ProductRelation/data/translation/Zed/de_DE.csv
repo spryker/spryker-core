@@ -1,23 +1,36 @@
+"Abstract product name","Name des abstrakten Produktes"
 "Abstract product name:","Abstrakter Produktname:"
 Activate,Aktivieren
-"Assign related products","Verwandte Produkte zuordnen"
+"Add Product Relations","Produktrelationen hinzufügen"
+"Assign related products","Ähnliche Produkte zuweisen"
+"Assign related products","Ähnliche Produkte zuweisen"
 "Create relation","Beziehung erstellen"
 Deactivate,Deaktivieren
 Edit,Bearbeiten
+"Edit Product Relations","Produktrelationen bearbeiten"
+"Failed to delete relation.","Relation konnte nicht gelöscht werden."
 "Is active:","Ist aktiv:"
 "List Product relations","Liste der Produktbeziehungen"
+"Number of products","Anzahl der Produkte"
 "Please select product from the list below","Bitte wählen Sie ein Produkt aus der untenstehenden Liste aus"
+"Product relation successfully created","Produktrelation erfolgreich erstellt"
+"Product relation successfully modified","Produktrelation erfolgreich geändert"
+"Product relation with id ""%d"" not found.","Produktrelation mit der ID ""%d"" nicht gefunden"
+"Product relation with id ""%d"" not found.","Produktrelation mit der ID ""%d"" nicht gefunden"
+"Related products","Ähnliche Produkte"
+related-products,ähnliche-Produkte
+"Relation successfully activated.","Relation erfolgreich aktiviert."
+"Relation successfully deactivated.","Relation erfolgreich deaktiviert."
+"Relation successfully deleted.","Relation erfolgreich gelöscht."
+"Relation type",Relationsart
 "Relation type:",Relationsart:
 Save,Speichern
+Select,auswählen
 "Select product","Produkt auswählen"
 "Selected product","Ausgewähltes Produkt"
+"Selected product already has ""%s"" relation type.","Das ausgewählte Produkt hat bereits Relationsart ""%s""."
 Sku:,Sku:
-Product Relations,Produktbeziehungen
-Product relations,Produktbeziehungen
-"Relation type",Relationsart
-Add Product Relations,Produktbeziehungen Hinzufügen
-Create new Product Relation,Produktbeziehungen Hinzufügen
-View relations,Beziehungen anzeigen
-View Product Relation,Beziehung Anzeigen
-Edit Product Relations,Beziehungen Bearbeiten
-Edit Product Relation,Beziehung Bearbeiten
+up-selling,Upselling
+"Update regularly: When you have this selected, this product relation will be updated automatically on regular basis according to the relation's conditions.","Regelmäßig aktualisieren: Wenn dies eingestellt ist, wird diese Produktrelation gemäß der Relationsbedingungen regelmäßig automatisch aktualisiert."
+"View in Shop","Im Shop ansehen"
+"View relations","Relationen ansehen"

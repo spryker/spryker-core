@@ -6,31 +6,37 @@ Active,Aktiv
 Deactivate,Deaktivieren
 Default,Standard
 "Deselect All","Alle Markierungen aufheben"
+"Deselected products","Aus der Auswahl entfernte Produkte"
 Edit,Bearbeiten
 ID,ID
 "Image Set Name","Name des Bildersets"
 Inactive,Inaktiv
 Keywords,Schlüsselwörter
+"Large Image URL","URL des großen Bildes"
 "List of Sets","Liste der Sets"
 Name,Name
 Position,Position
 Preview,Vorschau
+Preview,Vorschau
 Price,Preis
+"Product details",Produktdetails
+"Product Sets",Produktsets
 "Products in this Set","Produkte in diesem Set"
 "Products to be assigned","Zuzuordnende Produkte"
 "Products to be deassigned","Zu entfernende Produkte"
-"Reorder Product Sets","Produktsets neu bestellen"
+"Reorder Product Sets","Produktesets neu ordnen"
+"Reorder Product Sets","Produktesets neu ordnen"
 "Select All","Alle auswählen"
-"Select products to assign","Produkte zur Zuordnung auswählen"
+"Select products to assign","Produkte zur Zuweisung auswählen"
 Selected,Ausgewählt
 "Selected products","Ausgewählte Produkte"
+SEO,SEO
 SKU,SKU
+"Small Image URL","URL des kleinen Bildes"
 Status,Status
 Submit,Absenden
 Title,Titel
 URL,URL
 View,Ansicht
-Product Sets,Produktsets
-Images,Bilden
-View Product Set,Produktset Anzeigen
-Edit Product Set,Produktset Bearbeiten
+Weight,Gewicht
+"Weight defines sorting order. Product Sets with higher numbers listed first.","Das Gewicht bestimmt die Anordnung. Produktsets mit höheren Nummern werden zuerst gelistet."

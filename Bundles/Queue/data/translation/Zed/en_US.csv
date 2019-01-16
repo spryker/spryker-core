@@ -1,12 +1,12 @@
-"Queue Processes","Queue Processes"
-"Running Queue Processes","Running Queue Processes"
-Server,Server
-"Worker PID","Worker PID"
-"Queue PID","Queue PID"
-"Queue Name","Queue Name"
-"Search overview","Search overview"
 "Drop timestamps","Drop timestamps"
 Index,Index
+"Queue Name","Queue Name"
+"Queue PID","Queue PID"
+"Queue Processes","Queue Processes"
+"Running Queue Processes","Running Queue Processes"
 Score,Score
-Type,Type
 "Search Key","Search Key"
+"Search overview","Search overview"
+Server,Server
+Type,Type
+"Worker PID","Worker PID"

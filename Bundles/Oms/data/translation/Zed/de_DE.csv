@@ -1,5 +1,8 @@
 "Add new order","Neue Bestellung hinzufügen"
 Customer,Kunde
-"Order ID",Bestell-ID
+Oms,OMS
+"Order ID",Bestellungs-ID
 "process display",Prozessanzeige
+Processes,Prozesse
+"Statemachine preview",Statusmaschinenvorschau
 "Total Price",Gesamtpreis

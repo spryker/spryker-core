@@ -1,25 +1,17 @@
 "Add Company Unit Address","Adresse der Unternehmenseinheit hinzufügen"
-"Back to Company Unit Addresses","Zurück zu Adressen der Geschäftseinheiten"
+"Addition to address",Adresszusatz
+"Back to Company Unit Addresses","Zurück zu den Adressen der Unternehmenseinheiten"
+"Back to Company Unit Addresses","Zurück zu den Adressen der Unternehmenseinheiten"
 "Company Unit Address","Adresse der Geschäftseinheit"
+"Company unit address create failed.","Erstellung der Adresse der Unternehmenseinheit fehlgeschlagen."
+"Company unit address has been successfully created.","Adresse der Unternehmenseinheit wurde erfolgreich erstellt."
+"Company unit address has been successfully updated.","Adresse der Unternehmenseinheit wurde erfolgreich aktualisiert."
+"Company Unit Address Id","ID der Adresse der Unternehmenseinheit"
+"Company unit address update failed.","Aktualisierung der Adresse der Unternehmenseinheit fehlgeschlagen."
+"Create Company Unit Address","Adresse der Unternehmenseinheit erstellen"
 "Edit Company Unit Address:","Adresse der Geschäftseinheit bearbeiten:"
 "List of Company Unit Addresses","Liste der Adressen der Geschäftseinheiten"
+Number,Anzahl
 "Overview of Company Unit Addresses","Übersicht der Adressen der Geschäftseinheiten"
 Save,Speichern
-Company Unit Addresses,Adressen der Geschäftseinheiten
-Create Company Unit Address,Adresse der Geschäftseinheit Erstellen
-"Edit Company Unit Address","Adresse der Geschäftseinheit Bearbeiten"
-
-"HERE IS Google Translation STARTED","HERE IS Google Translation STARTED"
-"Company Unit Address Id","Company Unit Address Id"
-"Number","Number"
-"Addition to address","Addition to address"
-"Create Company Unit Address","Create Company Unit Address"
-"Back to Company Unit Addresses","Back to Company Unit Addresses"
-"Company unit address has been successfully created.","Company unit address has been successfully created."
-"Company unit address create failed.","Company unit address create failed."
-"Company unit address has been successfully updated.","Company unit address has been successfully updated."
-"Company unit address update failed.","Company unit address update failed."
-"Addition to address","Addition to address"
-"Labels","Labels"
-"Zipcode","Zipcode"
-Street,Street
+Street,Straße

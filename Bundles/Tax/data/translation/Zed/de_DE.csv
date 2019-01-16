@@ -1,15 +1,16 @@
 "Back to Tax Rates","Zurück zu Steuerraten"
 "Back to Tax Sets","Zurück zu Steuersätzen"
+"Could not delete tax set. Is it assigned to product or shipping method?","Steuerklasse konnte nicht gelöscht werden. Ist sie dem Produkt oder der Versandart zugewiesen?"
 Country,Land
 "Create Tax Rate","Steuerrate erstellen"
 "Create Tax Set","Steuerset erstellen"
 "Created at","Erstellt am"
 Delete,Löschen
+"Delete Tax Rate","Steuersatz löschen"
+"Delete Tax Set","Steuerklasse löschen"
 Edit,Bearbeiten
 "Edit Tax Rate:","Steuerrate bearbeiten:"
-"Edit Tax Rate","Steuerrate bearbeiten"
 "Edit Tax Set:","Steuerset bearbeiten:"
-"Edit Tax Set","Steuerset bearbeiten"
 "List of tax rates","Liste der Steuerraten"
 "List of tax sets","Liste der Steuersätze"
 N/A,k.A.
@@ -18,17 +19,27 @@ Name,Name
 "Overview of Tax Sets","Übersicht der Steuersätze"
 Percentage,Prozentsatz
 Save,Speichern
+"Select country.","Land auswählen."
+"Tax rate %d was created successfully.","Steuersatz %d wurde erfolgreich erstellt."
+"Tax rate %d was deleted successfully.","Steuersatz %d wurde erfolgreich gelöscht."
+"Tax rate %d was updated successfully.","Steuersatz %d wurde erfolgreich aktualisiert."
+"Tax Rate deletion confirmation","Löschen des Steuersatzes bestätigt"
 "Tax rate details","Details zum Steuersatz"
 "Tax rate ID",Steuersatz-ID
-"Tax rates",Steuerraten
-"Tax Rates",Steuerraten
-Tax Sets,Steuersätze
-Tax sets,Steuersätze
+"Tax rate with id %s doesn't exist","Steuersatz mit der ID %s existiert nicht"
+"Tax rate with provided name, percentage and country already exists.","Steuersatz mit dem angegebenen Namen, Prozentsatz und Land existiert bereits."
+"Tax rates",Steuersätze
+"Tax set %d was created successfully.","Steuerklasse %d wurde erfolgreich erstellt."
+"Tax set %d was updated successfully.","Steuerklasse %d wurde erfolgreich aktualisiert."
+"Tax Set deletion confirmation","Löschen der Steuerklasse bestätigt"
 "Tax set details","Details zum Steuer-Set"
 "Tax set ID",Steuer-Set-ID
+"Tax set is not created. Please fill-in all required fields.","Steuerklasse wurde nicht erstellt. Bitte alle erforderlichen Felder ausfüllen."
+"Tax set with id %s doesn't exist","Steuerklasse mit der ID %s existiert nicht"
+"Tax Set with name ""%name%"" already exists.","Steuerklasse mit dem Namen ""%name%"" existiert bereits."
+Taxes,Steuern
+"The tax set has been deleted","Die Steuerklasse wurde entfernt"
 "Updated at","Aktualisiert am"
 "View Tax Rate:","Steuerrate anzeigen:"
 "View Tax Set:","Steuersatz anzeigen:"
-Taxes,Steueren
-"View Tax Rate","Steuerrate anzeigen"
-"View Tax Set","Steuersatz anzeigen"
+"You should choose one or more tax rates","Sie müssen mindestens einen Steuersatz auswählen"

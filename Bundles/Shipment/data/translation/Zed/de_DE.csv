@@ -1,17 +1,22 @@
 Add,Hinzufügen
 "Add new Carrier Company","Neue Spedition hinzufügen"
-"Add Carrier Company","Spedition hinzufügen"
 "Add new Shipment Method","Neue Versandmethode hinzufügen"
+"Availability plugin","Plug-in zur Verfügbarkeit"
 Carrier,Träger
+"Carrier was created successfully.","Lieferant erfolgreich erstellt."
+"Carrier with the same name already exists.","Es existiert bereits ein Lieferant mit diesem Namen."
+"Create new Shipment Carrier","Neuen Lieferanten für Versand erstellen"
+"Delivery time plugin","Plug-in zur Lieferzeit"
+"Edit Shipment Method","Versandart bearbeiten"
+Enabled?,Freigegeben?
 "List Shipment Methods","Liste der Versandmethoden"
 Method,Methode
 "New Shipment Method","Neue Versandmethode"
 Price,Preis
+"Price plugin","Plug-in zum Preis"
 Save,Speichern
+"Select one",Einfachauswahl
 "Shipment Method",Versandmethode
-Is active,Ist aktiv
-Create new Shipment Carrier,Neue Spedition hinzufügen
-Create new Shipment Method,Neue Versandmethode hinzufügen
-Add a shipment method,Versandmethode hinzufügen
-Edit Shipment Method,Versandmethode Bearbeiten
-Edit a shipment method,Versandmethode Bearbeiten
+"Shipment method ""%s"" was created successfully.","Versandart ""%s"" wurde erfolgreich erstellt."
+"Shipment method ""%s"" was updated successfully.","Versandart ""%s"" wurde erfolgreich aktualisiert."
+"Shipment Methods",Versandarten

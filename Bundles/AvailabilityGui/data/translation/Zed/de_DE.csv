@@ -1,3 +1,4 @@
+"Abstract product availability","Verfügbarkeit des abstrakten Produktes"
 Actions,Aktionen
 Availability,Verfügbarkeit
 "Availability information for selected product - store pair does not exist.","Informationen zur Verfügbarkeit des ausgewählten Produkts - Filialpaar nicht vorhanden."
@@ -10,14 +11,17 @@ Available,Verfügbar
 "List of product availability","Liste der Produktverfügbarkeit"
 n/a,k.A.
 Name,Name
+Name,Name
 No,Nein
 "Not available","Nicht verfügbar"
 "Product Availability",Produktverfügbarkeit
-"Product availability list",Produktverfügbarkeitsliste
+"Product availability list","Liste der Produktverfügbarkeit"
+"Product availability list","Liste der Produktverfügbarkeit"
 "Products Availability","Verfügbarkeit der Produkte"
 "Quantity in Bundle","Menge im Bündel"
 "Reserved Products","Reservierte Produkte"
 Save,Speichern
+SKU,SKU
 SKU,SKU
 "Variant availability",Variantenverfügbarkeit
 Yes,Ja

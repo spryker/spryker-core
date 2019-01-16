@@ -1,20 +1,57 @@
+Action,Aktion
 "Add Group","Gruppe hinzufügen"
 "Add new Role","Neue Rolle hinzufügen"
 "Add Rule","Regel hinzufügen"
+"Assigned groups","Zugewiesene Gruppen"
+"Assigned Roles","Zugewiesene Rollen"
 "Assigned Rules","Zugeordnete Regeln"
+Bundle,Paket
+Controller,Controller
+"Could not modify root role node!","Wurzelknoten der Rolle konnte nicht geändert werden!"
 Create,Erstellen
 "Create Group","Gruppe erstellen"
+"Create new Role","Neue Rolle erstellen"
 "Create Role","Rolle erstellen"
-"List Groups","Liste der Gruppen"
+"Current password","Aktuelles Passwort"
+"Edit Group","Gruppe bearbeiten"
+"Failed to add Rule.","Regel konnte nicht hinzugefügt werden."
+"Failed to remove rule","Regel konnte nicht entfernt werden"
+"Group couldn't be found","Gruppe wurde nicht gefunden"
+"Group name already in use","Gruppenname bereits vergeben"
+"Group was created successfully.","Gruppe wurde erfolgreich erstellt."
+"Group was updated successfully.","Gruppe wurde erfolgreich aktualisiert."
+"Interface language",Interface-Sprache
+"List Groups","Gruppen auflisten"
+"List Groups","Gruppen auflisten"
 "List Roles","Liste der Rollen"
+"Missing role id!","Fehlende Rollen-ID!"
+"Missing rule id!","Fehlende Regel-ID!"
+"No roles","Keine Rollen"
+Permission,Berechtigung
 Role,Rolle
-Rule,Regel
-Save,Speichern
-Role list,Liste der Rollen
+"Role ""%s"" successfully added.","Rolle ""%s"" erfolgreich hinzugefügt."
+"Role ""%s"" successfully updated.","Rolle ""%s"" erfolgreich aktualisiert."
+"Role couldn't be found","Rolle wurde nicht gefunden"
+"Role list",Rollenliste
+"Role name",Rollenname
+"Role was successfully removed.","Rolle wurde erfolgreich entfernt."
 Roles,Rollen
-Edit Role,Rolle Bearbeiten
-Groups,Gruppen
-Edit Group, Gruppen Bearbeiten
-"Create new Group","Neuen Gruppe erstellen"
-
-"Users Control","Benutzersteuerung"
+roles,Rollen
+"Root group",Wurzelgruppe
+Rule,Regel
+"Rule successfully added.","Regel erfolgreich hinzugefügt."
+Save,Speichern
+"Select value","Wert auswählen"
+"The password fields must match.","Die Passwort-Felder müssen übereinstimmen."
+"The User was removed from the group.","Der Nutzer wurde aus der Gruppe entfernt."
+"This action requires a DELETE request.","Diese Aktion erfordert eine LÖSCHEN-Anfrage."
+"This user is an agent","Dieser Nutzer ist ein Vermittler"
+"Unable to delete because role has groups assigned.","Kann nicht gelöscht werden, da der Rolle Gruppen zugewiesen sind."
+"Update ""%s"" Role","""%s"" Rolle aktualisieren"
+"User and group are not found.","Nutzer und Gruppe wurden nicht gefunden."
+"User was activated successfully.","Nutzer wurde erfolgreich aktiviert."
+"User was deactivated successfully.","Nutzer wurde erfolgreich deaktiviert."
+"User was deleted successfully.","Nutzer wurde erfolgreich gelöscht."
+"User was updated successfully.","Nutzer wurde erfolgreich aktualisiert."
+Users,Nutzer
+"Users Control",Nutzerkontrolle

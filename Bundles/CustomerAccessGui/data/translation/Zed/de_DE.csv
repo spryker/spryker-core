@@ -1,8 +1,6 @@
+"Customer Access",Kundenzugang
 "Hide the following information from not logged in users:","Folgenden Informationen für nicht angemeldete Benutzer verbergen:"
+"Not logged in customer accessible content has been successfully updated.","Der für nicht eingeloggte Kunden zugängliche Inhalt wurde erfolgreich aktualisiert."
+order-place-submit,"Bestellung aufgeben-absenden"
 Save,Speichern
-price,preis
-add-to-cart,in-den-warenkorb
-wishlist,wunschliste
-Content Types,Inhaltstypen
-
-"Customer Access","Kundenzugang"
+shopping-list,Einkaufsliste

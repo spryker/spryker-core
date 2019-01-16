@@ -1,8 +1,13 @@
-"Edit Global threshold","Globalen Schwellenwert bearbeiten"
+"Edit Global threshold","Allgemeinen Grenzwert bearbeiten"
+"Edit Global threshold","Allgemeinen Grenzwert bearbeiten"
 "Edit Threshold Settings","Schwellwerteinstellungen bearbeiten"
-"Hard Threshold","Hard Threshold"
+"Global threshold","Allgemeiner Grenzwert"
+"Hard Threshold","Harter Grenzwert"
+"Hard Threshold","Harter Grenzwert"
+"Minimum Order Value settings saved.","Einstellungen für Mindestbestellwert gespeichert."
 Save,Speichern
-"Soft Threshold",Mindesbestellwert
+"Soft Threshold","Weicher Grenzwert"
+"Soft Threshold","Weicher Grenzwert"
+"The Global Threshold is saved successfully.","Der allgemeine Grenzwert wurde erfolgreich gespeichert."
 Threshold,Schwellenwert
-Global threshold,Globalen Schwellenwert
-Threshold settings,Schwellwerteinstellungen
+"You can use the the placeholders <b>{{threshold}}</b> <b>{{fee}}</b>","Sie können die Platzhalter <b>{{threshold}}</b> <b>{{fee}}</b> benutzen"

@@ -1,5 +1,4 @@
-Maintenance,Instandhaltung
-"System Info","Systeminformationen"
+"Error levels to log only:","Fehlerstufen, die nur dokumentiert werden:"
+"Error levels to report:","Fehlerstufen, die gemeldet werden:"
 "PHP Info","PHP Info"
-"OMS","OMS"
-"Sync permissions","Berechtigungen synchronisieren"
+"System Info",System-Info

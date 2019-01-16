@@ -11,13 +11,18 @@ Deactivate,Deactivate
 "Delete CMS Page","Delete CMS Page"
 "Edit a Cms Block","Edit a Cms Block"
 "Edit a Cms page","Edit a Cms page"
+"From Url","From Url"
+"ID redirect URL is not set.","ID redirect URL is not set."
 Loading...,Loading...
 "New template(s) detected and added to the template list.","New template(s) detected and added to the template list."
+"Redirect status code","Redirect status code"
+"Redirect was created successfully.","Redirect was created successfully."
+"Redirect was deleted successfully.","Redirect was deleted successfully."
+"Redirect was updated successfully.","Redirect was updated successfully."
+Redirects,Redirects
+Redirects,Redirects
 Save,Save
 "Save All","Save All"
-Add a CMS Redirect,Add CMS Redirect
-"From Url","From Url"
 "To Url","To Url"
-Redirects,Redirects
-"Redirect status code","Redirect status code"
-"Please select","Please select"
+"URL is already used.","URL is already used."
+"URL must start with a slash","URL must start with a slash"

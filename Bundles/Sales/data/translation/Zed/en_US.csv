@@ -1,18 +1,33 @@
+" Customer Full Name ",#N/A
 "<1d | 1d-7d | >7d","<1d | 1d-7d | >7d"
+"Address successfully updated.","Address successfully updated."
+Addresses,Addresses
+"All orders of the customer","All orders of the customer"
 "Back to Orders","Back to Orders"
 "Canceled amount","Canceled amount"
+"Cart Notes","Cart Notes"
 Comments,Comments
+"Customer successfully updated.","Customer successfully updated."
 Discount,Discount
 "GRAND TOTAL","Grand Total"
 "Hide history","Hide history"
 "Included tax amount","Included tax amount"
 "Item total","Item Total"
 Legend,Legend
+"List of orders","List of orders"
+Matrix,Matrix
+"Number of Items","Number of Items"
 Option,Option
+"Order Matrix","Order Matrix"
+"Order Source","Order Source"
+"Order State","Order State"
+Orders,Orders
 "Overview of Order Matrix","Overview of Order Matrix"
 "Overview of Orders","Overview of Orders"
+Payments,Payments
 Product,Product
 Quantity,Quantity
+Sales,Sales
 Save,Save
 "Send Message","Send Message"
 Shipment,Shipment
@@ -22,36 +37,11 @@ Shipment,Shipment
 Sku,SKU
 State,State
 "Sub total","Sub Total"
+Totals,Totals
+"Trigger all matching states","Trigger all matching states"
 "Trigger event","Trigger event"
+"Unique Product Quantity","Unique Product Quantity"
 "Unit Price","Unit Price"
 "Variant Details","Variant Details"
 "View Order","View Order"
 "View Order:","View Order:"
-"List of orders", "List of orders"
-"Order Reference", "Order Reference"
-"Created", "Created"
-"Customer Full Name", "Customer Full Name"
-"Order State", "Order State"
-"GrandTotal", "GrandTotal"
-"Number of Items", "Number of Items"
-"Order date", "Order date"
-"Unique Product Quantity"
-"Status", "Status"
-"All orders of the customer","All orders of the customer"
-"Message", "Message"
-"Trigger all matching states", "Trigger all matching states"
-"Totals", "Totals"
-"Cart Notes", "Cart Notes"
-"Bundle Items Cart Notes", "Bundle Item Cart Notes"
-"Payments", "Payments"
-"Name", "Name"
-"Refunds", "Refunds"
-"Order Source", "Order Source"
-"Addresses", "Addresses"
-"Edit", "Edit"
-"Address successfully updated.", "Address successfully updated."
-"Customer successfully updated.", "Customer successfully updated."
-"Orders", "Orders"
-"Matrix", "Matrix"
-"Order Matrix", "Order Matrix"
-"Sales","Sales"

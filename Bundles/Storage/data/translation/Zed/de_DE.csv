@@ -1,6 +1,7 @@
 "All Keys","Alle Keys"
-"Drop timestamps","Drop timestamps"
+"Drop timestamps","Zeitstempel entfernen"
+Key,Schlüssel
 "Number of entries:","Anzahl der Einträge:"
-
-Maintenance,Instandhaltung
-"Storage","Lager"
+Storage,Speicher
+"Storage keys",Speicherschlüssel
+"Storage overview",Speicherübersicht

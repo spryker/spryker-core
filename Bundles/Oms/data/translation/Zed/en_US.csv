@@ -1,8 +1,8 @@
 "Add new order","Add new order"
 Customer,Customer
-"Order ID","Order ID"
-"process display","process display"
-"Total Price","Total Price"
-Processes,Processes
 Oms,Oms
+"Order ID","Order id"
+"process display","process display"
+Processes,Processes
 "Statemachine preview","Statemachine preview"
+"Total Price","Total Price"
