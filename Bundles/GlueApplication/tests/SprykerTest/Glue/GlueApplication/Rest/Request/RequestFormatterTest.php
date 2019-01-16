@@ -211,9 +211,9 @@ class RequestFormatterTest extends Unit
     protected function createGlueApplicationConfigMock(bool $isEagerRelatedResourcesInclusionEnabled = true): MockObject
     {
         $glueApplicationConfigMock = $this->getMockBuilder(GlueApplicationConfig::class)
-            ->setMethods(['getIsEagerRelatedResourcesInclusionEnabled'])
+            ->setMethods(['isEagerRelationshipsLoadingEnabled'])
             ->getMock();
-        $glueApplicationConfigMock->method('getIsEagerRelatedResourcesInclusionEnabled')
+        $glueApplicationConfigMock->method('isEagerRelationshipsLoadingEnabled')
             ->willReturn($isEagerRelatedResourcesInclusionEnabled);
 
         return $glueApplicationConfigMock;
