@@ -74,5 +74,5 @@ interface CompanyUnitAddressStubInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function findCompanyUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
+    public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
 }

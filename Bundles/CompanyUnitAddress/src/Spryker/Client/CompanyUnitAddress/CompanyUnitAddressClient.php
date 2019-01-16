@@ -132,10 +132,10 @@ class CompanyUnitAddressClient extends AbstractClient implements CompanyUnitAddr
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function findCompanyUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
+    public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
     {
         return $this->getFactory()
             ->createZedCompanyUnitAddressStub()
-            ->findCompanyUnitAddressByUuid($companyUnitAddressTransfer);
+            ->findCompanyBusinessUnitAddressByUuid($companyUnitAddressTransfer);
     }
 }

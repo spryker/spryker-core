@@ -125,10 +125,10 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function findCompanyUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
+    public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
     {
         return $this->getFactory()
             ->createCompanyBusinessUnitAddressReader()
-            ->findCompanyUnitAddressByUuid($companyUnitAddressTransfer);
+            ->findCompanyBusinessUnitAddressByUuid($companyUnitAddressTransfer);
     }
 }

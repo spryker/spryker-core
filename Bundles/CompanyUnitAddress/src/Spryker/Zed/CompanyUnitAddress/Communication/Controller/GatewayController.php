@@ -97,8 +97,8 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function findCompanyUnitAddressByUuidAction(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
+    public function findCompanyBusinessUnitAddressByUuidAction(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
     {
-        return $this->getFacade()->findCompanyUnitAddressByUuid($companyUnitAddressTransfer);
+        return $this->getFacade()->findCompanyBusinessUnitAddressByUuid($companyUnitAddressTransfer);
     }
 }

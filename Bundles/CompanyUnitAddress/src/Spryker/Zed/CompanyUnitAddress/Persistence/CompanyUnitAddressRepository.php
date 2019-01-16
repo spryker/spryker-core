@@ -106,7 +106,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
      */
-    public function findCompanyUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): ?CompanyUnitAddressTransfer
+    public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): ?CompanyUnitAddressTransfer
     {
         $query = $this->getFactory()
             ->createCompanyUnitAddressQuery()
@@ -118,6 +118,10 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
             ->endUse();
 
         $entityTransfer = $this->buildQueryFromCriteria($query)->find();
+
+        if (!$entityTransfer) {
+            return null;
+        }
 
         return $this->getFactory()
             ->createCompanyUniAddressMapper()
