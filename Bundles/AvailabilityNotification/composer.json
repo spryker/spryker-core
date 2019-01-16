@@ -18,7 +18,7 @@
     "spryker/util-text": "^1.2.0",
     "spryker/util-validate": "^1.0.0",
     "spryker/zed-request": "^3.0.0",
-    "spryker/propel-orm": "^1.8.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/money": "^2.0.0"
   },
   "require-dev": {
