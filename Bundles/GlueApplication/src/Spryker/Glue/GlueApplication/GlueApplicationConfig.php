@@ -61,4 +61,15 @@ class GlueApplicationConfig extends AbstractBundleConfig
             RequestConstantsInterface::HEADER_AUTHORIZATION,
         ];
     }
+
+    /**
+     * Specification:
+     *  - Indicates whether all relationships should be included in response by default.
+     *
+     * @return bool
+     */
+    public function isEagerRelationshipsLoadingEnabled(): bool
+    {
+        return true;
+    }
 }
