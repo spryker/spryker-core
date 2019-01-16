@@ -18,7 +18,7 @@ class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer
      */
-    public function mapCompanyBusinessUnitAttributesTransferToRestCompanyBusinessUnitAttributesTransfer(
+    public function mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
         RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
     ): RestCompanyBusinessUnitAttributesTransfer {

@@ -13,6 +13,7 @@ class CompanyBusinessUnitsRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_COMPANY_BUSINESS_UNITS = 'company-business-units';
     public const CONTROLLER_RESOURCE_COMPANY_BUSINESS_UNITS = 'company-business-units-resource';
+
     public const ACTION_COMPANY_BUSINESS_UNITS_GET = 'get';
 
     public const RESPONSE_CODE_COMPANY_BUSINESS_UNIT_NOT_FOUND = '1901';

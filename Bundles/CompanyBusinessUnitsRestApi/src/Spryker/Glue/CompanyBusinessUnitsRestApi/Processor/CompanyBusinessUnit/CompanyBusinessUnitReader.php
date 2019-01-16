@@ -66,7 +66,7 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
         }
 
         $restCompanyBusinessUnitAttributesTransfer = $this->companyBusinessUnitMapperInterface
-            ->mapCompanyBusinessUnitAttributesTransferToRestCompanyBusinessUnitAttributesTransfer(
+            ->mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
                 $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer(),
                 new RestCompanyBusinessUnitAttributesTransfer()
             );
