@@ -9,7 +9,7 @@ namespace Spryker\Glue\NavigationsRestApi\Processor\Navigation;
 
 use Generated\Shared\Transfer\NavigationStorageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\RestNavigationTreeAttributesTransfer;
+use Generated\Shared\Transfer\RestNavigationAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -56,17 +56,17 @@ class NavigationReader implements NavigationReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getNavigationTreeByKey(RestRequestInterface $restRequest): RestResponseInterface
+    public function getNavigationByKey(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
         $navigationTreeKey = $restRequest->getResource()->getId();
         if (!$navigationTreeKey) {
-            return $restResponse->addError($this->createNavigationTreeIdMissingError());
+            return $restResponse->addError($this->createNavigationIdMissingError());
         }
 
         $restResource = $this->findNavigationTreeByKey($restRequest);
         if (!$restResource) {
-            return $restResponse->addError($this->createNavigationTreeNotFoundError());
+            return $restResponse->addError($this->createNavigationNotFoundError());
         }
 
         return $restResponse->addResource($restResource);
@@ -88,7 +88,7 @@ class NavigationReader implements NavigationReaderInterface
             return null;
         }
 
-        return $this->buildNavigationTreeResource($navigationStorageTransfer);
+        return $this->buildNavigationResource($navigationStorageTransfer);
     }
 
     /**
@@ -96,31 +96,31 @@ class NavigationReader implements NavigationReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function buildNavigationTreeResource(
+    protected function buildNavigationResource(
         NavigationStorageTransfer $navigationStorageTransfer
     ): RestResourceInterface {
-        $restNavigationTreeAttributesTransfer = $this->navigationMapper
-            ->mapNavigationStorageTransferToRestNavigationTreeAttributesTransfer(
+        $restNavigationAttributesTransfer = $this->navigationMapper
+            ->mapNavigationStorageTransferToRestNavigationAttributesTransfer(
                 $navigationStorageTransfer,
-                new RestNavigationTreeAttributesTransfer()
+                new RestNavigationAttributesTransfer()
             );
 
         return $this->restResourceBuilder->createRestResource(
-            NavigationsRestApiConfig::RESOURCE_NAVIGATION_TREES,
+            NavigationsRestApiConfig::RESOURCE_NAVIGATIONS,
             $navigationStorageTransfer->getKey(),
-            $restNavigationTreeAttributesTransfer
+            $restNavigationAttributesTransfer
         );
     }
 
     /**
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
-    protected function createNavigationTreeIdMissingError(): RestErrorMessageTransfer
+    protected function createNavigationIdMissingError(): RestErrorMessageTransfer
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(NavigationsRestApiConfig::RESPONSE_CODE_NAVIGATION_TREE_ID_IS_NOT_SPECIFIED)
+            ->setCode(NavigationsRestApiConfig::RESPONSE_CODE_NAVIGATION_ID_IS_NOT_SPECIFIED)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(NavigationsRestApiConfig::RESPONSE_DETAILS_NAVIGATION_TREE_ID_IS_NOT_SPECIFIED);
+            ->setDetail(NavigationsRestApiConfig::RESPONSE_DETAILS_NAVIGATION_ID_IS_NOT_SPECIFIED);
 
         return $restErrorTransfer;
     }
@@ -128,12 +128,12 @@ class NavigationReader implements NavigationReaderInterface
     /**
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
-    protected function createNavigationTreeNotFoundError(): RestErrorMessageTransfer
+    protected function createNavigationNotFoundError(): RestErrorMessageTransfer
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(NavigationsRestApiConfig::RESPONSE_CODE_NAVIGATION_TREE_NOT_FOUND)
+            ->setCode(NavigationsRestApiConfig::RESPONSE_CODE_NAVIGATION_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(NavigationsRestApiConfig::RESPONSE_DETAILS_NAVIGATION_TREE_NOT_FOUND);
+            ->setDetail(NavigationsRestApiConfig::RESPONSE_DETAILS_NAVIGATION_NOT_FOUND);
 
         return $restErrorTransfer;
     }

@@ -14,21 +14,21 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\NavigationsRestApi\NavigationsRestApiFactory getFactory()
  */
-class NavigationTreesResourceController extends AbstractController
+class NavigationsResourceController extends AbstractController
 {
     /**
      * @Glue({
      *     "getResourceById": {
      *          "summary": [
-     *              "Retrieves a navigation tree by id."
+     *              "Retrieves a navigation by id."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Navigation tree id not specified.",
-     *              "404": "Navigation tree not found."
+     *              "400": "Navigation id not specified.",
+     *              "404": "Navigation not found."
      *          }
      *     }
      * })
@@ -39,6 +39,6 @@ class NavigationTreesResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createNavigationReader()->getNavigationTreeByKey($restRequest);
+        return $this->getFactory()->createNavigationReader()->getNavigationByKey($restRequest);
     }
 }
