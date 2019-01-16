@@ -161,6 +161,10 @@ class TaxSetForm extends AbstractType
     {
         return new Callback([
             'callback' => function ($name, ExecutionContextInterface $context) {
+                if (empty($name)) {
+                    return;
+                }
+
                 /** @var \Symfony\Component\Form\Form $form */
                 $form = $context->getObject();
                 $idTaxSet = $form->getParent()->getData()->getIdTaxSet();

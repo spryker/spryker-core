@@ -10,10 +10,10 @@ namespace Spryker\Shared\Testify\Container;
 interface TestifyContainerInterface
 {
     /**
-     * @param string $key
+     * @param string $id
      * @param mixed $value
      *
-     * @return $this
+     * @return void
      */
-    public function set($key, $value);
+    public function set(string $id, $value): void;
 }

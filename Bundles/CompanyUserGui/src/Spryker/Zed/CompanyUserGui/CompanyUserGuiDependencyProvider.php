@@ -11,6 +11,7 @@ use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeBridge;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeBridge;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCustomerFacadeBridge;
+use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableDeleteActionPluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -29,6 +30,8 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER = 'PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER';
     public const PLUGINS_COMPANY_USER_FORM_EXPANDER = 'PLUGINS_COMPANY_USER_FORM_EXPANDER';
     public const PLUGINS_COMPANY_USER_ATTACH_CUSTOMER_FORM_EXPANDER = 'PLUGINS_COMPANY_USER_ATTACH_CUSTOMER_FORM_EXPANDER';
+    public const PLUGINS_COMPANY_USER_TABLE_ACTION_EXPANDER = 'PLUGINS_COMPANY_USER_TABLE_ACTION_EXPANDER';
+    public const PLUGIN_COMPANY_USER_TABLE_DELETE_ACTION = 'PLUGIN_COMPANY_USER_TABLE_DELETE_ACTION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -47,6 +50,8 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyUserTablePrepareDataExpanderPlugins($container);
         $container = $this->addCompanyUserFormExpanderPlugins($container);
         $container = $this->addCompanyUserAttachCustomerFormExpanderPlugins($container);
+        $container = $this->addCompanyUserTableActionExpanderPlugins($container);
+        $container = $this->addCompanyUserTableDeleteActionPlugin($container);
 
         return $container;
     }
@@ -170,6 +175,34 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserTableActionExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_COMPANY_USER_TABLE_ACTION_EXPANDER] = function (Container $container) {
+            return $this->getCompanyUserTableActionExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserTableDeleteActionPlugin(Container $container): Container
+    {
+        $container[static::PLUGIN_COMPANY_USER_TABLE_DELETE_ACTION] = function (Container $container) {
+            return $this->getCompanyUserTableDeleteActionPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableConfigExpanderPluginInterface[]
      */
     protected function getCompanyUserTableConfigExpanderPlugins(): array
@@ -199,5 +232,21 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCompanyUserAttachCustomerFormExpanderPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionExpanderPluginInterface[]
+     */
+    protected function getCompanyUserTableActionExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableDeleteActionPluginInterface|null
+     */
+    protected function getCompanyUserTableDeleteActionPlugin(): ?CompanyUserTableDeleteActionPluginInterface
+    {
+        return null;
     }
 }
