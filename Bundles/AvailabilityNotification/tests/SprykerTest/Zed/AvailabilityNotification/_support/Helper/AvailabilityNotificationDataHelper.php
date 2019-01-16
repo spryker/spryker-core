@@ -9,7 +9,8 @@ namespace SprykerTest\Zed\AvailabilityNotification\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\AvailabilitySubscriptionBuilder;
-use Generated\Shared\DataBuilder\CustomerBuilder;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacade;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -19,37 +20,39 @@ class AvailabilityNotificationDataHelper extends Module
     use LocatorHelperTrait;
 
     /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      * @param array $seedData
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function haveAvailabilitySubscriptionTransfer(array $seedData = []): AbstractTransfer
+    public function haveAvailabilitySubscriptionTransfer(ProductConcreteTransfer $productConcreteTransfer, ?CustomerTransfer $customerTransfer = null, array $seedData = []): AbstractTransfer
     {
-        return (new AvailabilitySubscriptionBuilder($seedData))->build();
+        $availabilitySubscriptionTransfer = (new AvailabilitySubscriptionBuilder($seedData))
+            ->build()
+            ->setSku($productConcreteTransfer->getSKU());
+
+        if ($customerTransfer) {
+            $availabilitySubscriptionTransfer->setCustomerReference($customerTransfer->getCustomerReference());
+        }
+
+        return $availabilitySubscriptionTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      * @param array $seedData
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function haveAvailabilitySubscription(array $seedData = []): AbstractTransfer
+    public function haveAvailabilitySubscription(ProductConcreteTransfer $productConcreteTransfer, ?CustomerTransfer $customerTransfer = null, array $seedData = []): AbstractTransfer
     {
-        $availabilitySubscription = (new AvailabilitySubscriptionBuilder($seedData))->build();
+        $availabilitySubscription = $this->haveAvailabilitySubscriptionTransfer($productConcreteTransfer, $customerTransfer, $seedData);
 
         $result = $this->getAvailabilitySubscriptionFacade()->subscribe($availabilitySubscription);
 
         return $result->getAvailabilitySubscription();
-    }
-
-    /**
-     * @param array $seedData
-     *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
-     */
-    public function haveCustomerTransfer(array $seedData = []): AbstractTransfer
-    {
-        return (new CustomerBuilder($seedData))->build();
     }
 
     /**
