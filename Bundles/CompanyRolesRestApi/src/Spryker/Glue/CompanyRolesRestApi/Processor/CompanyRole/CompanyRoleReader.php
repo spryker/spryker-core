@@ -54,7 +54,7 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
     {
         $uuid = $restRequest->getResource()->getId();
         if (!$uuid) {
-            return $this->companyRoleRestResponseBuilder->createCompanyRoleUuidMissingError();
+            return $this->companyRoleRestResponseBuilder->createCompanyRoleIdMissingError();
         }
 
         $companyRoleResponseTransfer = $this->companyRoleClient->findCompanyRoleByUuid(

@@ -25,9 +25,8 @@ class CompanyRoleRestResponseBuilder implements CompanyRoleRestResponseBuilderIn
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
-    public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder
-    ) {
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
+    {
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
@@ -48,12 +47,12 @@ class CompanyRoleRestResponseBuilder implements CompanyRoleRestResponseBuilderIn
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCompanyRoleUuidMissingError(): RestResponseInterface
+    public function createCompanyRoleIdMissingError(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CompanyRolesRestApiConfig::RESPONSE_CODE_COMPANY_ROLE_UUID_IS_MISSING)
+            ->setCode(CompanyRolesRestApiConfig::RESPONSE_CODE_COMPANY_ROLE_ID_IS_MISSING)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CompanyRolesRestApiConfig::RESPONSE_DETAIL_COMPANY_ROLE_UUID_IS_MISSING);
+            ->setDetail(CompanyRolesRestApiConfig::RESPONSE_DETAIL_COMPANY_ROLE_ID_IS_MISSING);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
