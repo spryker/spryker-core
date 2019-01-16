@@ -25,9 +25,8 @@ class CompanyRestResponseBuilder implements CompanyRestResponseBuilderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
-    public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder
-    ) {
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
+    {
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
@@ -51,9 +50,9 @@ class CompanyRestResponseBuilder implements CompanyRestResponseBuilderInterface
     public function createCompanyUuidMissingError(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CompaniesRestApiConfig::RESPONSE_CODE_COMPANY_UUID_IS_MISSING)
+            ->setCode(CompaniesRestApiConfig::RESPONSE_CODE_COMPANY_ID_IS_MISSING)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CompaniesRestApiConfig::RESPONSE_DETAIL_COMPANY_UUID_IS_MISSING);
+            ->setDetail(CompaniesRestApiConfig::RESPONSE_DETAIL_COMPANY_ID_IS_MISSING);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
