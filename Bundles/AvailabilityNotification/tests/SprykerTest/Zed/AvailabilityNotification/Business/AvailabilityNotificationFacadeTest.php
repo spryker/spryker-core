@@ -35,8 +35,6 @@ class AvailabilityNotificationFacadeTest extends Unit
 
     public const TESTER_CUSTOMER_REFERENCE = 'DE--1';
 
-    public const TESTER_EMAIL = 'example@spryker.com';
-
     public const TESTER_INVALID_EMAIL = 'invalid<>example@spryker.com';
 
     /**
@@ -122,7 +120,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     public function testCheckSubscriptionForNotSubscribedShouldFail()
     {
         $availabilityNotificationSubscription = $this->tester->haveAvailabilitySubscriptionTransfer([
-            'sku' => static::TESTER_INCORRECT_SUBSCRIPTION_KEY,
+            'sku' => static::TESTER_PRODUCT_SKU,
         ]);
 
         $result = $this->getAvailabilityNotificationFacadeMock()->findAvailabilitySubscription($availabilityNotificationSubscription);
