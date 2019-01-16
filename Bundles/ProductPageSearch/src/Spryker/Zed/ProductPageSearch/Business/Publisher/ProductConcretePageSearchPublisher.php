@@ -98,15 +98,16 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
 
     /**
      * @param int[] $productIds
+     * @param array $storesPerProducts
      *
      * @return void
      */
-    public function unpublish(array $productIds): void
+    public function unpublish(array $productIds, array $storesPerProducts = []): void
     {
-        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale($productIds);
+        $productConcretePageSearchTransfersGroupedByStoreAndLocale = $this->productConcretePageSearchReader->getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale($productIds, $storesPerProducts);
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($productConcretePageSearchTransfers) {
-            $this->executeUnpublishTransaction($productConcretePageSearchTransfers);
+        $this->getTransactionHandler()->handleTransaction(function () use ($productConcretePageSearchTransfersGroupedByStoreAndLocale) {
+            $this->executeUnpublishTransaction($productConcretePageSearchTransfersGroupedByStoreAndLocale);
         });
     }
 
@@ -130,14 +131,18 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[] $productConcretePageSearchTransfers
+     * @param array $productConcretePageSearchTransfersGroupedByStoreAndLocale
      *
      * @return void
      */
-    protected function executeUnpublishTransaction(array $productConcretePageSearchTransfers): void
+    protected function executeUnpublishTransaction(array $productConcretePageSearchTransfersGroupedByStoreAndLocale): void
     {
-        foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
-            $this->deleteProductConcretePageSearch($productConcretePageSearchTransfer);
+        foreach ($productConcretePageSearchTransfersGroupedByStoreAndLocale as $productConcretePageSearchTransfersStores) {
+            foreach ($productConcretePageSearchTransfersStores as $productConcretePageSearchTransfersLocales) {
+                foreach ($productConcretePageSearchTransfersLocales as $productConcretePageSearchTransfer) {
+                    $this->deleteProductConcretePageSearch($productConcretePageSearchTransfer);
+                }
+            }
         }
     }
 

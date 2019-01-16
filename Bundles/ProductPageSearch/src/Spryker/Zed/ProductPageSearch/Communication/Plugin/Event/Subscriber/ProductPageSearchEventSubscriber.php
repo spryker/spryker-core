@@ -15,6 +15,7 @@ use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\ProductCategory\Dependency\ProductCategoryEvents;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductConcretePageSearchProductAbstractStoreListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageCategoryNodeSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageCategorySearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageImageSetProductImageSearchListener;
@@ -71,6 +72,9 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
         $this->addProductPageProductAbstractStoreCreateSearchListener($eventCollection);
         $this->addProductPageProductAbstractStoreUpdateSearchListener($eventCollection);
         $this->addProductPageProductAbstractStoreDeleteSearchListener($eventCollection);
+        $this->addProductConcretePageSearchCreateProductAbstractStoreListener($eventCollection);
+        $this->addProductConcretePageSearchCreateUpdateProductAbstractStoreListener($eventCollection);
+        $this->addProductConcretePageSearchDeleteProductAbstractStoreListener($eventCollection);
 
         $this->addPriceProductEvents($eventCollection);
         $this->addProductImageEvents($eventCollection);
@@ -582,5 +586,35 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
             ->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_CREATE, new ProductSearchListener())
             ->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_UPDATE, new ProductSearchListener())
             ->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_DELETE, new ProductSearchListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductConcretePageSearchCreateProductAbstractStoreListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_CREATE, new ProductConcretePageSearchProductAbstractStoreListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductConcretePageSearchCreateUpdateProductAbstractStoreListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_UPDATE, new ProductConcretePageSearchProductAbstractStoreListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductConcretePageSearchDeleteProductAbstractStoreListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE, new ProductConcretePageSearchProductAbstractStoreListener());
     }
 }

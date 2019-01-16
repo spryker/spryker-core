@@ -36,14 +36,20 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
 
     /**
      * @param int[] $productConcreteIds
+     * @param array $storesPerProducts
      *
      * @return array
      */
-    public function getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale(array $productConcreteIds): array
+    public function getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale(array $productConcreteIds, array $storesPerProducts = []): array
     {
         $productConcreteSearchPageTransfers = $this->repository->getProductConcretePageSearchTransfers($productConcreteIds);
 
-        return $this->getTransfersGroupedByStoreAndLocale($productConcreteSearchPageTransfers);
+        $transfersGroupedByStoreAndLocale = $this->getTransfersGroupedByStoreAndLocale($productConcreteSearchPageTransfers);
+        if (empty($storesPerProducts)) {
+            return $transfersGroupedByStoreAndLocale;
+        }
+
+        return $this->filterOutTransfersGroupedByStoreAndLocaleByStores($transfersGroupedByStoreAndLocale, $storesPerProducts);
     }
 
     /**
@@ -64,5 +70,26 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
         }
 
         return $groupedProductConcretePageSearchTransfers;
+    }
+
+    /**
+     * @param array $transfersGroupedByStoreAndLocale
+     * @param array $storesPerProducts
+     *
+     * @return array
+     */
+    protected function filterOutTransfersGroupedByStoreAndLocaleByStores(array $transfersGroupedByStoreAndLocale, array $storesPerProducts): array
+    {
+        $cleanedProductConcretePageSearchTransfers = [];
+
+        foreach ($storesPerProducts as $productConcreteId => $storesPerProduct) {
+            foreach ($storesPerProduct as $storeName) {
+                if (isset($transfersGroupedByStoreAndLocale[$productConcreteId][$storeName])) {
+                    $cleanedProductConcretePageSearchTransfers[$productConcreteId][$storeName] = $transfersGroupedByStoreAndLocale[$productConcreteId][$storeName];
+                }
+            }
+        }
+
+        return $cleanedProductConcretePageSearchTransfers;
     }
 }
