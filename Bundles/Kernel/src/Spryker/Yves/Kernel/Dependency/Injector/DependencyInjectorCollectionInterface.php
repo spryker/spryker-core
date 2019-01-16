@@ -16,7 +16,7 @@ interface DependencyInjectorCollectionInterface extends Countable
      *
      * @return \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
      */
-    public function addDependencyInjector(DependencyInjectorInterface $dependencyInjector): DependencyInjectorCollectionInterface;
+    public function addDependencyInjector(DependencyInjectorInterface $dependencyInjector);
 
     /**
      * @return \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface[]

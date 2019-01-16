@@ -19,7 +19,7 @@ class DependencyInjectorCollection implements DependencyInjectorCollectionInterf
      *
      * @return \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
      */
-    public function addDependencyInjector(DependencyInjectorInterface $dependencyInjector): DependencyInjectorCollectionInterface
+    public function addDependencyInjector(DependencyInjectorInterface $dependencyInjector)
     {
         $this->dependencyInjector[] = $dependencyInjector;
 
