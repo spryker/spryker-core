@@ -24,7 +24,7 @@ trait WidgetContainerAwareTrait
      *
      * @return $this
      */
-    protected function addWidgets(array $widgetClassNames): self
+    protected function addWidgets(array $widgetClassNames)
     {
         foreach ($widgetClassNames as $widgetClassName) {
             $this->addWidget($widgetClassName);
@@ -38,7 +38,7 @@ trait WidgetContainerAwareTrait
      *
      * @return $this
      */
-    protected function addWidget(string $widgetClassName): self
+    protected function addWidget(string $widgetClassName)
     {
         $this->assertClassIsWidget($widgetClassName);
 
