@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeInterface;
@@ -41,24 +40,29 @@ class AvailabilitySubscriptionMailProcessor implements AvailabilitySubscriptionM
     protected $priceProductFacade;
 
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig
+     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGeneratorInterface
      */
-    protected $config;
+    protected $urlGenerator;
 
     /**
      * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface $mailFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeInterface $priceProductFacade
-     * @param \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig $config
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGeneratorInterface $urlGenerator
      */
-    public function __construct(AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository, AvailabilityNotificationToMailFacadeInterface $mailFacade, AvailabilityNotificationToProductFacadeInterface $productFacade, AvailabilityNotificationToPriceProductFacadeInterface $priceProductFacade, AvailabilityNotificationConfig $config)
-    {
+    public function __construct(
+        AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository,
+        AvailabilityNotificationToMailFacadeInterface $mailFacade,
+        AvailabilityNotificationToProductFacadeInterface $productFacade,
+        AvailabilityNotificationToPriceProductFacadeInterface $priceProductFacade,
+        UrlGeneratorInterface $urlGenerator
+    ) {
         $this->availabilityNotificationRepository = $availabilityNotificationRepository;
         $this->mailFacade = $mailFacade;
         $this->productFacade = $productFacade;
         $this->priceProductFacade = $priceProductFacade;
-        $this->config = $config;
+        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -82,6 +86,8 @@ class AvailabilitySubscriptionMailProcessor implements AvailabilitySubscriptionM
             $mailTransfer = $this->setProductUrl($mailTransfer, $productConcreteTransfer->getFkProductAbstract(), $availabilitySubscription);
             $mailTransfer = $this->setLocalizedAttributes($mailTransfer, $productConcreteTransfer, $availabilitySubscription);
             $mailTransfer->setType(AvailabilityNotificationMailTypePlugin::MAIL_TYPE);
+            $unsubscriptionLink = $this->urlGenerator->createUnsubscriptionLink($availabilitySubscription);
+            $mailTransfer->setAvailabilityUnsubscriptionLink($unsubscriptionLink);
 
             $this->mailFacade->handleMail($mailTransfer);
         }
@@ -117,9 +123,7 @@ class AvailabilitySubscriptionMailProcessor implements AvailabilitySubscriptionM
             $productUrlTransfer = $this->productFacade->getProductUrl($productAbstractTransfer);
             foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
                 if ($availabilitySubscriptionTransfer->getLocale()->getIdLocale() === $localizedUrlTransfer->getLocale()->getIdLocale()) {
-                    $yvesBaseUrl = $this->config->getBaseUrlYves();
-                    $productFullUrl = $yvesBaseUrl . $localizedUrlTransfer->getUrl();
-                    $mailTransfer->setProductUrl($productFullUrl);
+                    $mailTransfer->setProductUrl($this->urlGenerator->generateProductUrl($localizedUrlTransfer));
 
                     return $mailTransfer;
                 }
