@@ -52,10 +52,10 @@ class ProductConcretePageSearchEventResourceRepositoryPlugin extends AbstractPlu
             $productIds = $this->getAllProductIds();
         }
 
-        /** @var \Generated\Shared\Transfer\SpyProductEntityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[] $productConcreteTransfers */
-        $productEntityTransfers = $this->getFactory()->getProductFacade()->findProductEntityTransfersByProductIds($productIds);
+        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[] $productConcreteTransfers */
+        $productConcreteTransfers = $this->getFactory()->getProductFacade()->getProductConcreteTransfersByProductIds($productIds);
 
-        return $productEntityTransfers;
+        return $productConcreteTransfers;
     }
 
     /**
