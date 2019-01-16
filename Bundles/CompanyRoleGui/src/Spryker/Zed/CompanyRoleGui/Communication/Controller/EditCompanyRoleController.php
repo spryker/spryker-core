@@ -38,7 +38,6 @@ class EditCompanyRoleController extends AbstractController
             ->handleRequest($request);
 
         if ($companyRoleForm->isSubmitted() && $companyRoleForm->isValid()) {
-            /** @var \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleFormData */
             $companyRoleFormData = $companyRoleForm->getData();
 
             $this->getFactory()
