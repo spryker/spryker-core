@@ -37,6 +37,16 @@ class MultiCartToPersistentCartClientBridge implements MultiCartToPersistentCart
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createQuoteWithReloadedItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->persistentCartClient->createQuoteWithReloadedItems($quoteTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
