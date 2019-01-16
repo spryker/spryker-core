@@ -52,7 +52,7 @@ class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin 
      *
      * @return $this
      */
-    protected function setSubject(MailBuilderInterface $mailBuilder): self
+    protected function setSubject(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $mailBuilder->setSubject('mail.availability_notification.unsubscribed.subject');
 
@@ -64,7 +64,7 @@ class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin 
      *
      * @return $this
      */
-    protected function setHtmlTemplate(MailBuilderInterface $mailBuilder): self
+    protected function setHtmlTemplate(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $mailBuilder->setHtmlTemplate('AvailabilityNotification/mail/unsubscribed.html.twig');
 
@@ -76,7 +76,7 @@ class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin 
      *
      * @return $this
      */
-    protected function setTextTemplate(MailBuilderInterface $mailBuilder): self
+    protected function setTextTemplate(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $mailBuilder->setTextTemplate('AvailabilityNotification/mail/unsubscribed.text.twig');
 
@@ -88,7 +88,7 @@ class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin 
      *
      * @return $this
      */
-    protected function setRecipient(MailBuilderInterface $mailBuilder): self
+    protected function setRecipient(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $availabilitySubscriptionTransfer = $mailBuilder->getMailTransfer()->requireAvailabilitySubscription()->getAvailabilitySubscription();
 
@@ -102,7 +102,7 @@ class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin 
      *
      * @return $this
      */
-    protected function setSender(MailBuilderInterface $mailBuilder): self
+    protected function setSender(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
 

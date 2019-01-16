@@ -54,9 +54,11 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
      *
      * @return $this
      */
-    protected function setSubject(MailBuilderInterface $mailBuilder): self
+    protected function setSubject(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
-        $mailBuilder->setSubject($mailBuilder->getMailTransfer()->getLocalizedAttributes()->getName());
+        $productLocalizedName = $mailBuilder->getMailTransfer()->getLocalizedAttributes()->getName();
+        $subject = sprintf('%s is available again!', $productLocalizedName);
+        $mailBuilder->setSubject($subject);
 
         return $this;
     }
@@ -66,7 +68,7 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
      *
      * @return $this
      */
-    protected function setHtmlTemplate(MailBuilderInterface $mailBuilder): self
+    protected function setHtmlTemplate(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $mailBuilder->setHtmlTemplate('AvailabilityNotification/mail/notification.html.twig');
 
@@ -78,7 +80,7 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
      *
      * @return $this
      */
-    protected function setTextTemplate(MailBuilderInterface $mailBuilder): self
+    protected function setTextTemplate(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $mailBuilder->setTextTemplate('AvailabilityNotification/mail/notification.text.twig');
 
@@ -90,7 +92,7 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
      *
      * @return $this
      */
-    protected function setRecipient(MailBuilderInterface $mailBuilder): self
+    protected function setRecipient(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $customerTransfer = $mailBuilder->getMailTransfer()->requireAvailabilitySubscription()->getAvailabilitySubscription();
 
@@ -104,7 +106,7 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
      *
      * @return $this
      */
-    protected function setSender(MailBuilderInterface $mailBuilder): self
+    protected function setSender(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
 
