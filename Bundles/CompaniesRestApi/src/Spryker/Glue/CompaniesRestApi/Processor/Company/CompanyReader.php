@@ -68,7 +68,7 @@ class CompanyReader implements CompanyReaderInterface
         $companyTransfer = $companyResponseTransfer->getCompanyTransfer();
 
         $restCompanyAttributesTransfer = $this->companyMapperInterface
-            ->mapCompanyAttributesTransferToRestCompanyAttributesTransfer(
+            ->mapCompanyTransferToRestCompanyAttributesTransfer(
                 $companyTransfer,
                 new RestCompanyAttributesTransfer()
             );

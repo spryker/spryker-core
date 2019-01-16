@@ -18,7 +18,7 @@ class CompanyMapper implements CompanyMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCompanyAttributesTransfer
      */
-    public function mapCompanyAttributesTransferToRestCompanyAttributesTransfer(
+    public function mapCompanyTransferToRestCompanyAttributesTransfer(
         CompanyTransfer $companyTransfer,
         RestCompanyAttributesTransfer $restCompanyAttributesTransfer
     ): RestCompanyAttributesTransfer {
