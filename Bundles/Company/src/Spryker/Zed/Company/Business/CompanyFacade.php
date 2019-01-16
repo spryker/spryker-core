@@ -88,9 +88,7 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Finds a company by uuid.
-     * - Requires uuid field to be set in CompanyTransfer taken as parameter.
+     * {@inheritdoc}
      *
      * @api
      *

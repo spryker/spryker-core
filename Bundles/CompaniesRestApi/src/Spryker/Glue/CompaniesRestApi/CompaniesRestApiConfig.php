@@ -19,5 +19,5 @@ class CompaniesRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_COMPANY_NOT_FOUND = 'Company not found.';
 
     public const RESPONSE_CODE_COMPANY_UUID_IS_MISSING = '1802';
-    public const RESPONSE_DETAIL_COMPANY_UUID_IS_MISSING = 'Company uuid is missing.';
+    public const RESPONSE_DETAIL_COMPANY_UUID_IS_MISSING = 'Company id is missing.';
 }

@@ -10,7 +10,6 @@ namespace Spryker\Glue\CompaniesRestApi\Processor\Company;
 use Generated\Shared\Transfer\RestCompanyAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -86,11 +85,6 @@ class CompanyRestResponseBuilder implements CompanyRestResponseBuilderInterface
             CompaniesRestApiConfig::RESOURCE_COMPANIES,
             $uuid,
             $restCompanyAttributesTransfer
-        );
-
-        $restResource->addLink(
-            RestLinkInterface::LINK_SELF,
-            CompaniesRestApiConfig::RESOURCE_COMPANIES . '/' . $restResource->getId()
         );
 
         return $restResource;
