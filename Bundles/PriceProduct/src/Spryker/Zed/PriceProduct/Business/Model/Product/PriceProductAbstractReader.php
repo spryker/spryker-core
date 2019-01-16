@@ -280,6 +280,25 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
     }
 
     /**
+     * @param int[] $productAbstractIds
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria(array $productAbstractIds, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array
+    {
+        if (!$priceProductCriteriaTransfer) {
+            $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
+        }
+
+        $priceProductEntities = $this->priceProductRepository->findProductAbstractPricesByIdInAndCriteria($productAbstractIds, $priceProductCriteriaTransfer);
+        $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductEntities);
+        $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
+
+        return $priceProductTransfers;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return int|null
