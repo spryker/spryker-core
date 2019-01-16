@@ -26,7 +26,7 @@ interface CompanyBusinessUnitRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCompanyBusinessUnitUuidMissingError(): RestResponseInterface;
+    public function createCompanyBusinessUnitIdMissingError(): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

@@ -54,7 +54,7 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
     {
         $uuid = $restRequest->getResource()->getId();
         if (!$uuid) {
-            return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitUuidMissingError();
+            return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitIdMissingError();
         }
 
         $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitClient->findCompanyBusinessUnitByUuid(
