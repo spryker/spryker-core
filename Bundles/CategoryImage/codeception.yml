@@ -1,4 +1,8 @@
-namespace: CategoryImage
+namespace: SprykerTest
+
+include:
+    - tests/SprykerTest/Zed/CategoryImage
+
 actor: Tester
 paths:
     tests: tests

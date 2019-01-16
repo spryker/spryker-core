@@ -1,4 +1,8 @@
-namespace: CategoryImageStorage
+namespace: SprykerTest
+
+include:
+    - tests/SprykerTest/Zed/CategoryImageStorage
+
 actor: Tester
 paths:
     tests: tests
