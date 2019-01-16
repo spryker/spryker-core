@@ -68,7 +68,7 @@ class GlueApplicationConfig extends AbstractBundleConfig
      *
      * @return bool
      */
-    public function getIsEagerRelationshipsLoadingEnabled(): bool
+    public function isEagerRelationshipsLoadingEnabled(): bool
     {
         return true;
     }
