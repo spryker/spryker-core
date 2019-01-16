@@ -10,7 +10,7 @@ namespace Spryker\Zed\Price\Business\Validator;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
-use Spryker\Zed\Price\Business\PriceFacadeInterface;
+use Spryker\Zed\Price\PriceConfig;
 
 class QuoteValidator implements QuoteValidatorInterface
 {
@@ -19,16 +19,16 @@ class QuoteValidator implements QuoteValidatorInterface
     protected const GLOSSARY_KEY_PRICE_MODE = '{{price_mode}}';
 
     /**
-     * @var \Spryker\Zed\Price\Business\PriceFacadeInterface
+     * @var \Spryker\Zed\Price\PriceConfig
      */
-    protected $priceFacade;
+    protected $priceConfig;
 
     /**
-     * @param \Spryker\Zed\Price\Business\PriceFacadeInterface $priceFacade
+     * @param \Spryker\Zed\Price\PriceConfig $priceConfig
      */
-    public function __construct(PriceFacadeInterface $priceFacade)
+    public function __construct(PriceConfig $priceConfig)
     {
-        $this->priceFacade = $priceFacade;
+        $this->priceConfig = $priceConfig;
     }
 
     /**
@@ -47,7 +47,7 @@ class QuoteValidator implements QuoteValidatorInterface
             return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_PRICE_MODE_DATA_IS_MISSING);
         }
 
-        $availablePiceModes = $this->priceFacade->getPriceModes();
+        $availablePiceModes = $this->priceConfig->getPriceModes();
 
         if (!isset($availablePiceModes[$priceMode])) {
             return $this->addValidationError(

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Price\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Price\Business\Validator\QuoteValidator;
 
 /**
  * @method \Spryker\Zed\Price\PriceConfig getConfig()
@@ -23,5 +24,13 @@ class PriceBusinessFactory extends AbstractBusinessFactory
         $config = parent::getConfig();
 
         return $config;
+    }
+
+    /**
+     * @return \Spryker\Zed\Price\Business\Validator\QuoteValidator
+     */
+    public function createQuoteValidator(): QuoteValidator
+    {
+        return new QuoteValidator($this->getModuleConfig());
     }
 }

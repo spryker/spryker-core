@@ -34,6 +34,6 @@ class QuotePriceModeValidatePlugin extends AbstractPlugin implements QuoteValida
         QuoteTransfer $quoteTransfer,
         QuoteValidationResponseTransfer $quoteValidationResponseTransfer
     ): QuoteValidationResponseTransfer {
-        return $this->getFactory()->createQuoteValidator()->validate($quoteTransfer, $quoteValidationResponseTransfer);
+        return $this->getFacade()->validatePriceModeInQuote($quoteTransfer, $quoteValidationResponseTransfer);
     }
 }
