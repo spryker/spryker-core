@@ -42,7 +42,7 @@ class CompanyBusinessUnitAddressRestResponseBuilder implements CompanyBusinessUn
         RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
     ): RestResponseInterface {
         return $this->restResourceBuilder->createRestResponse()
-            ->addResource($this->buildRestResource($restCompanyBusinessUnitAddressAttributesTransfer, $uuid));
+            ->addResource($this->buildCompanyBusinessUnitAddressRestResource($restCompanyBusinessUnitAddressAttributesTransfer, $uuid));
     }
 
     /**
@@ -77,7 +77,7 @@ class CompanyBusinessUnitAddressRestResponseBuilder implements CompanyBusinessUn
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function buildRestResource(
+    protected function buildCompanyBusinessUnitAddressRestResource(
         RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer,
         string $uuid
     ): RestResourceInterface {

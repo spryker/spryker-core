@@ -19,5 +19,5 @@ class CompanyBusinessUnitAddressesRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_COMPANY_BUSINESS_UNIT_ADDRESS_NOT_FOUND = 'Company business unit address not found.';
 
     public const RESPONSE_CODE_COMPANY_BUSINESS_UNIT_ADDRESS_ID_IS_MISSING = '2002';
-    public const RESPONSE_DETAIL_COMPANY_BUSINESS_UNIT_ADDRESS_ID_IS_MISSING = 'Company business unit address uuid is missing.';
+    public const RESPONSE_DETAIL_COMPANY_BUSINESS_UNIT_ADDRESS_ID_IS_MISSING = 'Company business unit address id is missing.';
 }

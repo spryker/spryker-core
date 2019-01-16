@@ -18,7 +18,7 @@ interface CompanyBusinessUnitAddressMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer
      */
-    public function mapCompanyBusinessUnitAddressAttributesTransferToRestCompanyBusinessUnitAddressAttributesTransfer(
+    public function mapCompanyBusinessUnitAddressTransferToRestCompanyBusinessUnitAddressAttributesTransfer(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
     ): RestCompanyBusinessUnitAddressAttributesTransfer;
