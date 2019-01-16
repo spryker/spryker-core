@@ -61,15 +61,11 @@ class CompanyReader implements CompanyReaderInterface
             (new CompanyTransfer())->setUuid($uuid)
         );
 
-        $companyTransfer = null;
-
-        if ($companyResponseTransfer->getIsSuccessful()) {
-            $companyTransfer = $companyResponseTransfer->getCompanyTransfer();
-        }
-
-        if (!$companyTransfer) {
+        if (!$companyResponseTransfer->getIsSuccessful()) {
             return $this->companyRestResponseBuilder->createCompanyNotFoundError();
         }
+
+        $companyTransfer = $companyResponseTransfer->getCompanyTransfer();
 
         $restCompanyAttributesTransfer = $this->companyMapperInterface
             ->mapCompanyAttributesTransferToRestCompanyAttributesTransfer(

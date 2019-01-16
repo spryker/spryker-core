@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Company\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\CompanyBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Spryker\Zed\Company\Persistence\CompanyRepository;
 
@@ -31,6 +32,8 @@ class CompanyFacadeTest extends Test
      */
     protected $tester;
 
+    protected const COMPANY_UUID = 'COMPANY_UUID';
+
     /**
      * @return void
      */
@@ -46,9 +49,9 @@ class CompanyFacadeTest extends Test
      */
     public function testFindCompanyByUuidShouldReturnTransfer()
     {
-        $companyTransfer = $this->tester->haveCompany(['is_active' => false]);
-        $foundCompanyTransfer = $this->getFacade()->findCompanyByUuid($companyTransfer);
-        $this->assertNotNull($foundCompanyTransfer->getCompanyTransfer()->getIdCompany());
+        $companyTransfer = $this->tester->haveCompany([CompanyTransfer::IS_ACTIVE => false, CompanyTransfer::UUID => static::COMPANY_UUID]);
+        $foundCompanyTransfer = $this->getFacade()->findCompanyByUuid($companyTransfer)->getCompanyTransfer();
+        $this->assertNotNull($foundCompanyTransfer->getIdCompany());
     }
 
     /**
