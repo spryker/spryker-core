@@ -88,7 +88,7 @@ class ImageSetForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSetIdField(FormBuilderInterface $builder): self
+    protected function addSetIdField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID, HiddenType::class, []);
 
@@ -100,7 +100,7 @@ class ImageSetForm extends AbstractType
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder): self
+    protected function addNameField(FormBuilderInterface $builder)
     {
         $builder
             ->add(static::FIELD_NAME, TextType::class, [
@@ -116,7 +116,7 @@ class ImageSetForm extends AbstractType
      *
      * @return $this
      */
-    protected function addLocaleHiddenField(FormBuilderInterface $builder): self
+    protected function addLocaleHiddenField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_LOCALE, HiddenType::class);
         $builder->get(static::FIELD_LOCALE)
@@ -132,7 +132,7 @@ class ImageSetForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCategoryHiddenField(FormBuilderInterface $builder): self
+    protected function addCategoryHiddenField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_CATEGORY, HiddenType::class);
 
@@ -144,7 +144,7 @@ class ImageSetForm extends AbstractType
      *
      * @return $this
      */
-    protected function addImageCollectionForm(FormBuilderInterface $builder): self
+    protected function addImageCollectionForm(FormBuilderInterface $builder)
     {
         $builder
             ->add(static::CATEGORY_IMAGES, CollectionType::class, [

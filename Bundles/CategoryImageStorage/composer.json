@@ -17,10 +17,10 @@
     "spryker/category": "*",
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
+    "spryker/locale": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",
-    "spryker/testify": "*",
-    "spryker/locale": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
