@@ -8,7 +8,8 @@
 
     {% embed '@Gui/Partials/localized-ibox.twig' with {
         localeName: localeName,
-        collapsed: collapsed
+        collapsed: collapsed,
+        id: 'localizedAttributes-ibox-' ~ localeName
     } %}
         {% block content %}
             {{ form_widget(localizedAttributes) }}
