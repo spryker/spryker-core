@@ -97,4 +97,19 @@ interface CompanyUnitAddressFacadeInterface
     public function saveCompanyBusinessUnitAddresses(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): void;
+
+    /**
+     * Specification:
+     * - Retrieves a company unit address by uuid.
+     * - Requires uuid field to be set in CompanyUnitAddressTransfer taken as parameter.
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function findCompanyUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
 }

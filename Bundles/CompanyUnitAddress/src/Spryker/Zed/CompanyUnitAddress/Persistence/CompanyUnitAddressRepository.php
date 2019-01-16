@@ -102,6 +102,29 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    public function findCompanyUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): ?CompanyUnitAddressTransfer
+    {
+        $query = $this->getFactory()
+            ->createCompanyUnitAddressQuery()
+            ->filterByUuid($companyUnitAddressTransfer->getUuid())
+            ->innerJoinWithCountry()
+            ->leftJoinWithSpyCompanyUnitAddressToCompanyBusinessUnit()
+            ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
+            ->leftJoinWithCompanyBusinessUnit()
+            ->endUse();
+
+        $entityTransfer = $this->buildQueryFromCriteria($query)->find();
+
+        return $this->getFactory()
+            ->createCompanyUniAddressMapper()
+            ->mapEntityTransferToCompanyUnitAddressTransfer($entityTransfer[0], $companyUnitAddressTransfer);
+    }
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
