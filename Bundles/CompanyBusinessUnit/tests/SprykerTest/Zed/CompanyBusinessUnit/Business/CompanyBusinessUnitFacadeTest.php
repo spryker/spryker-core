@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\CompanyBusinessUnit\Business;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
@@ -31,8 +30,6 @@ class CompanyBusinessUnitFacadeTest extends Test
      * @var \SprykerTest\Zed\CompanyBusinessUnit\CompanyBusinessUnitTester
      */
     protected $tester;
-
-    protected const COMPANY_BUSINESS_UUID = 'COMPANY_BUSINESS_UUID';
 
     /**
      * @return void
@@ -61,17 +58,6 @@ class CompanyBusinessUnitFacadeTest extends Test
 
         $foundBusinessUnitTransfer = $this->getFacade()->getCompanyBusinessUnitById($createdBusinessUnitTransfer);
         $this->assertSame($createdBusinessUnitTransfer->getName(), $foundBusinessUnitTransfer->getName());
-    }
-
-    /**
-     * @return void
-     */
-    public function testFindCompanyBusinessUnitByUuidShouldReturnTransferObject(): void
-    {
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany([CompanyBusinessUnitTransfer::UUID => static::COMPANY_BUSINESS_UUID]);
-
-        $foundBusinessUnitTransfer = $this->getFacade()->findCompanyBusinessUnitByUuid($businessUnitTransfer);
-        $this->assertSame($businessUnitTransfer->getName(), $foundBusinessUnitTransfer->getCompanyBusinessUnitTransfer()->getName());
     }
 
     /**
