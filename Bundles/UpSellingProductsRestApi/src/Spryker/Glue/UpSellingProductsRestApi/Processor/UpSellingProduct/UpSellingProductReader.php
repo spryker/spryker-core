@@ -58,7 +58,7 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
             return $this->upSellingProductRestResponseBuilder->createCartIdMissingError();
         }
 
-        $quoteTransfer = $this->quoteReader->findQuoteByUuid($restRequest, $parentResource->getId());
+        $quoteTransfer = $this->quoteReader->findQuoteByUuid($parentResource->getId(), $restRequest);
         if (!$quoteTransfer) {
             return $this->upSellingProductRestResponseBuilder->createCartNotFoundError();
         }
@@ -67,7 +67,7 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
             ->findUpSellingProducts($quoteTransfer, $restRequest->getMetadata()->getLocale());
 
         return $this->upSellingProductRestResponseBuilder
-            ->createAbstractProductsRestResponse($restRequest, $upSellingProducts);
+            ->createUpSellingProductsRestResponse($restRequest, $upSellingProducts);
     }
 
     /**

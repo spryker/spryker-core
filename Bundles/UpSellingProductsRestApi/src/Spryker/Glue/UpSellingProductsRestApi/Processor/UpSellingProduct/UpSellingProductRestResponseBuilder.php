@@ -45,7 +45,7 @@ class UpSellingProductRestResponseBuilder implements UpSellingProductRestRespons
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createAbstractProductsRestResponse(RestRequestInterface $restRequest, array $productViewTransfers): RestResponseInterface
+    public function createUpSellingProductsRestResponse(RestRequestInterface $restRequest, array $productViewTransfers): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 

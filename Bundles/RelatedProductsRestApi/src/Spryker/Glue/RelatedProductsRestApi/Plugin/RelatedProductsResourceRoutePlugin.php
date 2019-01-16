@@ -5,21 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\UpSellingProductsRestApi\Plugin;
+namespace Spryker\Glue\RelatedProductsRestApi\Plugin;
 
 use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
-use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
-use Spryker\Glue\UpSellingProductsRestApi\UpSellingProductsRestApiConfig;
+use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
+use Spryker\Glue\RelatedProductsRestApi\RelatedProductsRestApiConfig;
 
-class UpSellingProductsForGuestCartRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
+class RelatedProductsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
      * {@inheritdoc}
-     *  - Configures action to retrieve up-selling products collection for guest cart.
+     *  - Configures action to retrieve related products collection.
      *
      * @api
      *
@@ -29,7 +29,7 @@ class UpSellingProductsForGuestCartRoutePlugin extends AbstractPlugin implements
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection->addGet(UpSellingProductsRestApiConfig::ACTION_UP_SELLING_PRODUCTS_GET, false);
+        $resourceRouteCollection->addGet(RelatedProductsRestApiConfig::ACTION_RELATED_PRODUCTS_GET, false);
 
         return $resourceRouteCollection;
     }
@@ -43,7 +43,7 @@ class UpSellingProductsForGuestCartRoutePlugin extends AbstractPlugin implements
      */
     public function getResourceType(): string
     {
-        return UpSellingProductsRestApiConfig::RELATIONSHIP_NAME_UP_SELLING_PRODUCTS;
+        return RelatedProductsRestApiConfig::RELATIONSHIP_NAME_RELATED_PRODUCTS;
     }
 
     /**
@@ -55,7 +55,7 @@ class UpSellingProductsForGuestCartRoutePlugin extends AbstractPlugin implements
      */
     public function getController(): string
     {
-        return UpSellingProductsRestApiConfig::CONTROLLER_GUEST_CART_UP_SELLING_PRODUCTS;
+        return RelatedProductsRestApiConfig::CONTROLLER_RELATED_PRODUCTS;
     }
 
     /**
@@ -79,6 +79,6 @@ class UpSellingProductsForGuestCartRoutePlugin extends AbstractPlugin implements
      */
     public function getParentResourceType(): string
     {
-        return CartsRestApiConfig::RESOURCE_GUEST_CARTS;
+        return ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS;
     }
 }

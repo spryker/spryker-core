@@ -28,7 +28,7 @@ class RelatedProductsController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Abstract product sku is not specified.",
-     *              "404": "Abstract product is not found."
+     *              "404": "Abstract product not found."
      *          }
      *     }
      * })

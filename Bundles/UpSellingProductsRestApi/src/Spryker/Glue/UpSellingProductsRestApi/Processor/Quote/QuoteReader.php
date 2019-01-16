@@ -27,14 +27,14 @@ class QuoteReader implements QuoteReaderInterface
     }
 
     /**
+     * @param string $uuid
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param string $resourceId
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteByUuid(RestRequestInterface $restRequest, string $resourceId): ?QuoteTransfer
+    public function findQuoteByUuid(string $uuid, RestRequestInterface $restRequest): ?QuoteTransfer
     {
-        $quoteTransfer = (new QuoteTransfer())->setUuid($resourceId);
+        $quoteTransfer = (new QuoteTransfer())->setUuid($uuid);
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {

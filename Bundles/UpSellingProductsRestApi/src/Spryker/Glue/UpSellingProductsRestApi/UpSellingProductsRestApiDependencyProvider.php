@@ -22,6 +22,7 @@ class UpSellingProductsRestApiDependencyProvider extends AbstractBundleDependenc
     public const CLIENT_PRODUCT_RELATION_STORAGE = 'CLIENT_PRODUCT_RELATION_STORAGE';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_CARTS_REST_API = 'CLIENT_CARTS_REST_API';
+
     public const RESOURCE_PRODUCTS_REST_API = 'RESOURCE_PRODUCTS_REST_API';
 
     /**
