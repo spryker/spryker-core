@@ -42,9 +42,10 @@ class CmsDataPageMapBuilder implements NamedPageMapInterface
     public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $cmsPageData, LocaleTransfer $localeTransfer)
     {
         $isActive = $cmsPageData['is_active'] && $cmsPageData['is_searchable'];
+        $storeName = $cmsPageData['store_name'] ?? Store::getInstance()->getStoreName();
 
         $pageMapTransfer = (new PageMapTransfer())
-            ->setStore(Store::getInstance()->getStoreName())
+            ->setStore($storeName)
             ->setLocale($localeTransfer->getLocaleName())
             ->setType(static::TYPE_CMS_PAGE)
             ->setIsActive($isActive);
