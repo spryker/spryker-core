@@ -163,7 +163,7 @@ class RequestFormatter implements RequestFormatterInterface
 
         if (!isset($queryParameters[RequestConstantsInterface::QUERY_INCLUDE])) {
             $requestBuilder->setExcludeRelationship(
-                !$this->glueApplicationConfig->getIsEagerRelatedResourcesInclusionEnabled()
+                !$this->glueApplicationConfig->getIsEagerRelationshipsLoadingEnabled()
             );
 
             return;
