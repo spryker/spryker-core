@@ -45,21 +45,6 @@ class AvailabilityNotificationFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacade
-     */
-    protected $availabilityNotificationFacade;
-
-    /**
-     * @return void
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->getAvailabilityNotificationFacadeMock();
-    }
-
-    /**
      * @return void
      */
     public function testGuestSubscribeShouldSucceed()
@@ -68,7 +53,7 @@ class AvailabilityNotificationFacadeTest extends Unit
             'sku' => static::TESTER_PRODUCT_SKU,
         ]);
 
-        $response = $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
+        $response = $this->getAvailabilityNotificationFacadeMock()->subscribe($availabilityNotificationSubscription);
 
         $this->assertTrue($response->getIsSuccess());
     }
@@ -83,7 +68,7 @@ class AvailabilityNotificationFacadeTest extends Unit
             'sku' => static::TESTER_PRODUCT_SKU,
         ]);
 
-        $response = $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
+        $response = $this->getAvailabilityNotificationFacadeMock()->subscribe($availabilityNotificationSubscription);
 
         $this->assertTrue($response->getIsSuccess());
     }
@@ -98,7 +83,7 @@ class AvailabilityNotificationFacadeTest extends Unit
             'sku' => static::TESTER_PRODUCT_SKU,
         ]);
 
-        $response = $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
+        $response = $this->getAvailabilityNotificationFacadeMock()->subscribe($availabilityNotificationSubscription);
 
         $this->assertFalse($response->getIsSuccess());
     }
@@ -112,7 +97,7 @@ class AvailabilityNotificationFacadeTest extends Unit
             'sku' => static::TESTER_PRODUCT_SKU,
         ]);
 
-        $response = $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
+        $response = $this->getAvailabilityNotificationFacadeMock()->subscribe($availabilityNotificationSubscription);
 
         $this->assertTrue($response->getIsSuccess());
     }
@@ -126,7 +111,7 @@ class AvailabilityNotificationFacadeTest extends Unit
             'sku' => static::TESTER_PRODUCT_SKU,
         ]);
 
-        $result = $this->availabilityNotificationFacade->findAvailabilitySubscription($availabilityNotificationSubscription);
+        $result = $this->getAvailabilityNotificationFacadeMock()->findAvailabilitySubscription($availabilityNotificationSubscription);
 
         $this->assertNotNull($result);
     }
@@ -140,7 +125,7 @@ class AvailabilityNotificationFacadeTest extends Unit
             'sku' => static::TESTER_INCORRECT_SUBSCRIPTION_KEY,
         ]);
 
-        $result = $this->availabilityNotificationFacade->findAvailabilitySubscription($availabilityNotificationSubscription);
+        $result = $this->getAvailabilityNotificationFacadeMock()->findAvailabilitySubscription($availabilityNotificationSubscription);
 
         $this->assertNull($result);
     }
@@ -154,7 +139,7 @@ class AvailabilityNotificationFacadeTest extends Unit
             'sku' => static::TESTER_PRODUCT_SKU,
         ]);
 
-        $response = $this->availabilityNotificationFacade->unsubscribe($availabilityNotificationSubscription);
+        $response = $this->getAvailabilityNotificationFacadeMock()->unsubscribe($availabilityNotificationSubscription);
 
         $this->assertTrue($response->getIsSuccess());
     }
@@ -169,7 +154,7 @@ class AvailabilityNotificationFacadeTest extends Unit
             'customer_reference' => static::TESTER_CUSTOMER_REFERENCE,
         ]);
 
-        $response = $this->availabilityNotificationFacade->unsubscribe($availabilityNotificationSubscription);
+        $response = $this->getAvailabilityNotificationFacadeMock()->unsubscribe($availabilityNotificationSubscription);
 
         $this->assertTrue($response->getIsSuccess());
     }
@@ -183,7 +168,7 @@ class AvailabilityNotificationFacadeTest extends Unit
             'subscription_key' => static::TESTER_INCORRECT_SUBSCRIPTION_KEY,
         ]);
 
-        $response = $this->availabilityNotificationFacade->unsubscribe($availabilityNotificationSubscription);
+        $response = $this->getAvailabilityNotificationFacadeMock()->unsubscribe($availabilityNotificationSubscription);
 
         $this->assertFalse($response->getIsSuccess());
     }
@@ -202,19 +187,19 @@ class AvailabilityNotificationFacadeTest extends Unit
             'customerReference' => static::TESTER_CUSTOMER_REFERENCE,
         ]);
 
-        $this->availabilityNotificationFacade->anonymizeSubscription($customerTransfer);
+        $this->getAvailabilityNotificationFacadeMock()->anonymizeSubscription($customerTransfer);
 
-        $result = $this->availabilityNotificationFacade->findAvailabilitySubscription($availabilityNotificationSubscription);
+        $result = $this->getAvailabilityNotificationFacadeMock()->findAvailabilitySubscription($availabilityNotificationSubscription);
 
         $this->assertNull($result);
     }
 
     /**
-     * @return void
+     * @return \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacade
      */
-    protected function getAvailabilityNotificationFacadeMock()
+    protected function getAvailabilityNotificationFacadeMock(): AvailabilityNotificationFacade
     {
-        $this->availabilityNotificationFacade = new AvailabilityNotificationFacade();
+        $availabilityNotificationFacade = new AvailabilityNotificationFacade();
         $container = new Container();
         $availabilityNotificationDependencyProvider = new AvailabilityNotificationDependencyProvider();
         $availabilityNotificationDependencyProvider->provideBusinessLayerDependencies($container);
@@ -225,6 +210,8 @@ class AvailabilityNotificationFacadeTest extends Unit
         $availabilityNotificationBusinessFactory = new AvailabilityNotificationBusinessFactory();
         $availabilityNotificationBusinessFactory->setContainer($container);
 
-        $this->availabilityNotificationFacade->setFactory($availabilityNotificationBusinessFactory);
+        $availabilityNotificationFacade->setFactory($availabilityNotificationBusinessFactory);
+
+        return $availabilityNotificationFacade;
     }
 }
