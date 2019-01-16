@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -78,12 +79,15 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
-    public function anonymizeSubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
+    public function anonymizeSubscription(CustomerTransfer $customerTransfer): void
     {
+        $this->getFactory()
+            ->createSubscriptionAnonymizer()
+            ->anonymizeSubscription($customerTransfer);
     }
 
     /**

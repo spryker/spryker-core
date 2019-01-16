@@ -8,6 +8,8 @@
 namespace Spryker\Zed\AvailabilityNotification\Business;
 
 use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationDependencyProvider;
+use Spryker\Zed\AvailabilityNotification\Business\Anonymizer\AvailabilitySubscriptionAnonymizer;
+use Spryker\Zed\AvailabilityNotification\Business\Anonymizer\AvailabilitySubscriptionAnonymizerInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSender;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionChecker;
@@ -95,6 +97,16 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getLocaleFacade(),
             $this->createAvailabilitySubscriptionChecker()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Anonymizer\AvailabilitySubscriptionAnonymizerInterface
+     */
+    public function createSubscriptionAnonymizer(): AvailabilitySubscriptionAnonymizerInterface
+    {
+        return new AvailabilitySubscriptionAnonymizer(
+            $this->getEntityManager()
         );
     }
 
