@@ -6,8 +6,7 @@
 
 namespace Spryker\Zed\Shipment\Business\StrategyResolver;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Service\Shipment\ShipmentServiceInterface;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface;
 use Closure;
@@ -18,27 +17,18 @@ use Closure;
 class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
 {
     /**
-     * @var \Spryker\Zed\Shipment\Dependency\Service\ShipmentToSalesServiceInterface
-     */
-    protected $service;
-
-    /**
-     * @var \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface[]
+     * @var array|Closure[]
      */
     protected $strategyContainer;
 
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @param \Spryker\Service\Shipment\ShipmentServiceInterface $service
-     * @param array|\Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface[] $strategyContainer
+     * @param array|Closure[] $strategyContainer
      */
-    public function __construct(ShipmentServiceInterface $service, array $strategyContainer)
+    public function __construct(array $strategyContainer)
     {
-        $this->service = $service;
         $this->strategyContainer = $strategyContainer;
-
-        $this->assertRequiredStrategyContainerItems();
     }
 
     /**
@@ -46,11 +36,15 @@ class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
      *
      * @return \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface
      */
-    public function resolveByQuote(QuoteTransfer $quoteTransfer): ShipmentOrderSaverInterface
+    public function resolve(): ShipmentOrderSaverInterface
     {
-        if ($this->service->checkQuoteItemHasOwnShipmentTransfer($quoteTransfer) === false) {
+        if (!defined(ItemTransfer::SHIPMENT)) {
+            $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
+
             return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
         }
+
+        $this->assertRequiredStrategyWithMultiShipmentContainerItems();
 
         return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITH_MULTI_SHIPMENT]);
     }
@@ -58,14 +52,20 @@ class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    protected function assertRequiredStrategyContainerItems(): void
+    protected function assertRequiredStrategyWithoutMultiShipmentContainerItems(): void
     {
         if (!isset($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT])
             || !($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] instanceof Closure)
         ) {
             throw new ContainerKeyNotFoundException($this, static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT);
         }
+    }
 
+    /**
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    protected function assertRequiredStrategyWithMultiShipmentContainerItems(): void
+    {
         if (!isset($this->strategyContainer[static::STRATEGY_KEY_WITH_MULTI_SHIPMENT])
             || !($this->strategyContainer[static::STRATEGY_KEY_WITH_MULTI_SHIPMENT] instanceof Closure)
         ) {

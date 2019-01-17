@@ -473,7 +473,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     {
         $this->getFactory()
             ->createCustomerOrderSaverStrategyResolver()
-            ->resolveByQuote($quoteTransfer)
+            ->resolve()
             ->saveOrderCustomer($quoteTransfer, $saveOrderTransfer);
     }
 

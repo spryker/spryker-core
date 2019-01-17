@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\ProductOption\Business\StrategyResolver;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface;
 
 /**
@@ -18,9 +17,7 @@ interface TaxRateCalculatorStrategyResolverInterface
     public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface
      */
-    public function resolveByQuote(QuoteTransfer $quoteTransfer): CalculatorInterface;
+    public function resolve(): CalculatorInterface;
 }

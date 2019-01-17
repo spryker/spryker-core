@@ -12,7 +12,6 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberBridge;
-use Spryker\Zed\Customer\Dependency\Service\CustomerToCustomerServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceBridge;
@@ -37,8 +36,6 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
-
-    public const SERVICE_CUSTOMER = 'SERVICE_CUSTOMER';
 
     public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
 
@@ -68,7 +65,6 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleFacade($container);
         $container = $this->addCustomerTransferExpanderPlugins($container);
         $container = $this->addPostCustomerRegistrationPlugins($container);
-        $container = $this->addCustomerService($container);
 
         return $container;
     }
@@ -285,20 +281,6 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SERVICE_UTIL_DATE_TIME] = function (Container $container) {
             return new CustomerToUtilDateTimeServiceBridge($container->getLocator()->utilDateTime()->service());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCustomerService(Container $container)
-    {
-        $container[static::SERVICE_CUSTOMER] = function (Container $container) {
-            return new CustomerToCustomerServiceBridge($container->getLocator()->customer()->service());
         };
 
         return $container;

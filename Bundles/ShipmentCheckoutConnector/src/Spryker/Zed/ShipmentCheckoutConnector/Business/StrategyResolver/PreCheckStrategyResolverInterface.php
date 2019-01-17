@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface;
 
 /**
@@ -18,9 +17,7 @@ interface PreCheckStrategyResolverInterface
     public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface
      */
-    public function resolveByQuote(QuoteTransfer $quoteTransfer): ShipmentCheckoutPreCheckInterface;
+    public function resolve(): ShipmentCheckoutPreCheckInterface;
 }

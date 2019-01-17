@@ -17,7 +17,6 @@ use Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxSetMapper
 use Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxWriter;
 use Spryker\Zed\TaxProductConnector\Business\StrategyResolver\ProductItemTaxRateCalculatorStrategyResolver;
 use Spryker\Zed\TaxProductConnector\Business\StrategyResolver\ProductItemTaxRateCalculatorStrategyResolverInterface;
-use Spryker\Zed\TaxProductConnector\Dependency\Service\TaxProductConnectorToTaxServiceInterface;
 use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
 
 /**
@@ -78,14 +77,8 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\TaxProductConnector\Dependency\Service\TaxProductConnectorToTaxServiceInterface
-     */
-    protected function getTaxService(): TaxProductConnectorToTaxServiceInterface
-    {
-        return $this->getProvidedDependency(TaxProductConnectorDependencyProvider::SERVICE_TAX);
-    }
-
-    /**
+     * @deprecated Remove after multiple shipment will be released. Use $this->createProductItemTaxRateCalculatorWithMultipleShipmentTaxRate() instead.
+     *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return \Spryker\Zed\TaxProductConnector\Business\StrategyResolver\ProductItemTaxRateCalculatorStrategyResolver
@@ -97,10 +90,12 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
         $strategyContainer = $this->addStrategyProductItemTaxRateCalculatorWithoutMultipleShipmentTaxRate($strategyContainer);
         $strategyContainer = $this->addStrategyProductItemTaxRateCalculatorWithMultipleShipmentTaxRate($strategyContainer);
 
-        return new ProductItemTaxRateCalculatorStrategyResolver($this->getTaxService(), $strategyContainer);
+        return new ProductItemTaxRateCalculatorStrategyResolver($strategyContainer);
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array|\Spryker\Zed\Tax\Business\Model\CalculatorInterface[] $strategyContainer
      *
      * @return array|\Spryker\Zed\Tax\Business\Model\CalculatorInterface[]
@@ -115,6 +110,8 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array|\Spryker\Zed\Tax\Business\Model\CalculatorInterface[] $strategyContainer
      *
      * @return array|\Spryker\Zed\Tax\Business\Model\CalculatorInterface[]

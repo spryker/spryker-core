@@ -18,7 +18,6 @@ use Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartExpanderStra
 use Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartExpanderStrategyResolverInterface;
 use Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartValidatorStrategyResolver;
 use Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartValidatorStrategyResolverInterface;
-use Spryker\Zed\ShipmentCartConnector\Dependency\Service\ShipmentCartConnectorToShipmentServiceInterface;
 use Spryker\Zed\ShipmentCartConnector\ShipmentCartConnectorDependencyProvider;
 
 /**
@@ -79,14 +78,8 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentCartConnector\Dependency\Service\ShipmentCartConnectorToShipmentServiceInterface
-     */
-    public function getShipmentService(): ShipmentCartConnectorToShipmentServiceInterface
-    {
-        return $this->getProvidedDependency(ShipmentCartConnectorDependencyProvider::SERVICE_SHIPMENT);
-    }
-
-    /**
+     * @deprecated Remove after multiple shipment will be released. Use $this->createShipmentCartExpanderWithMultiShippingAddress() instead.
+     *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return \Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartExpanderStrategyResolverInterface
@@ -98,10 +91,12 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
         $strategyContainer = $this->addShipmentCartExpanderWithoutMultipleShippingAddress($strategyContainer);
         $strategyContainer = $this->addShipmentCartExpanderWithMultipleShippingAddress($strategyContainer);
 
-        return new CartExpanderStrategyResolver($this->getShipmentService(), $strategyContainer);
+        return new CartExpanderStrategyResolver($strategyContainer);
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array $strategyContainer
      *
      * @return array
@@ -116,6 +111,8 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array $strategyContainer
      *
      * @return array
@@ -130,6 +127,8 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released. Use $this->createShipmentCartValidatorWithMultiShippingAddress() instead.
+     *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return \Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartValidatorStrategyResolverInterface
@@ -141,10 +140,12 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
         $strategyContainer = $this->addShipmentCartValidatorWithoutMultipleShippingAddress($strategyContainer);
         $strategyContainer = $this->addShipmentCartValidatorWithMultipleShippingAddress($strategyContainer);
 
-        return new CartValidatorStrategyResolver($this->getShipmentService(), $strategyContainer);
+        return new CartValidatorStrategyResolver($strategyContainer);
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array $strategyContainer
      *
      * @return array
@@ -159,6 +160,8 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array $strategyContainer
      *
      * @return array

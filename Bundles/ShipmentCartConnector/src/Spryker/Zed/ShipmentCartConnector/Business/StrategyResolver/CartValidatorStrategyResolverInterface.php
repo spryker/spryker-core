@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface;
 
 /**
@@ -18,9 +17,7 @@ interface CartValidatorStrategyResolverInterface
     public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface
      */
-    public function resolveByQuote(QuoteTransfer $quoteTransfer): ShipmentCartValidatorInterface;
+    public function resolve(): ShipmentCartValidatorInterface;
 }

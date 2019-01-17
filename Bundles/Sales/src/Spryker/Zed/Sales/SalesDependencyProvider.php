@@ -17,7 +17,6 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
-use Spryker\Zed\Sales\Dependency\Service\SalesToSalesServiceBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
 
 /**
@@ -34,7 +33,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    public const SERVICE_SALES = 'SERVICE_SALES';
     public const STORE = 'STORE';
 
     public const ORDER_EXPANDER_PRE_SAVE_PLUGINS = 'ORDER_EXPANDER_PRE_SAVE_PLUGINS';
@@ -67,7 +65,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerFacade($container);
         $container = $this->addOrderItemExpanderPreSavePlugins($container);
         $container = $this->addItemTransformerStrategyPlugins($container);
-        $container = $this->addSalesService($container);
 
         return $container;
     }
@@ -87,7 +84,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addSalesTablePlugins($container);
-        $container = $this->addSalesService($container);
 
         return $container;
     }
@@ -297,20 +293,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
             return new SalesToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addSalesService(Container $container)
-    {
-        $container[static::SERVICE_SALES] = function (Container $container) {
-            return new SalesToSalesServiceBridge($container->getLocator()->sales()->service());
         };
 
         return $container;

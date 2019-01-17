@@ -27,7 +27,6 @@ use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolverInt
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
-use Spryker\Zed\Shipment\Dependency\Service\ShipmentToSalesServiceInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
@@ -207,16 +206,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @todo: check for usages and remove if not.
-     *
-     * @return \Spryker\Zed\Shipment\Dependency\Service\ShipmentToSalesServiceInterface
-     */
-    public function getSalesService(): ShipmentToSalesServiceInterface
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::SERVICE_SALES);
-    }
-
-    /**
      * @return \Spryker\Service\Shipment\ShipmentServiceInterface
      */
     public function getShipmentService(): ShipmentServiceInterface
@@ -225,6 +214,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released. Use $this->createShipmentTaxCalculatorWithItemShipmentTaxRate() instead.
+     *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return \Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface
@@ -236,10 +227,12 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         $strategyContainer = $this->addStrategySalesOrderSaverWithoutMultipleShippingAddress($strategyContainer);
         $strategyContainer = $this->addStrategySalesOrderSaverWithMultipleShippingAddress($strategyContainer);
 
-        return new TaxRateCalculatorStrategyResolver($this->getShipmentService(), $strategyContainer);
+        return new TaxRateCalculatorStrategyResolver($strategyContainer);
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array $strategyContainer
      *
      * @return array
@@ -254,6 +247,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array $strategyContainer
      *
      * @return array
@@ -268,6 +263,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released. Use $this->createCheckoutShipmentOrderSaverWithMultiShippingAddress() instead.
+     *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return \Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolverInterface
@@ -279,10 +276,12 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         $strategyContainer = $this->addCheckoutShipmentOrderSaverWithoutMultipleShippingAddress($strategyContainer);
         $strategyContainer = $this->addCheckoutShipmentOrderSaverWithMultipleShippingAddress($strategyContainer);
 
-        return new OrderSaverStrategyResolver($this->getShipmentService(), $strategyContainer);
+        return new OrderSaverStrategyResolver($strategyContainer);
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array $strategyContainer
      *
      * @return array
@@ -297,6 +296,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array $strategyContainer
      *
      * @return array

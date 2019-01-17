@@ -11,8 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToProductBridge;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxBridge;
-use Spryker\Zed\TaxProductConnector\Dependency\Service\TaxProductConnectorToTaxServiceBridge;
-use Spryker\Zed\TaxProductConnector\Dependency\Service\TaxProductConnectorToTaxServiceInterface;
 
 /**
  * @method \Spryker\Zed\TaxProductConnector\TaxProductConnectorConfig getConfig()
@@ -21,7 +19,6 @@ class TaxProductConnectorDependencyProvider extends AbstractBundleDependencyProv
 {
     public const FACADE_PRODUCT = 'facade product';
     public const FACADE_TAX = 'facade tax';
-    public const SERVICE_TAX = 'SERVICE_TAX';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,7 +29,6 @@ class TaxProductConnectorDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = $this->addProductFacade($container);
         $container = $this->addTaxFacade($container);
-        $container = $this->addTaxService($container);
 
         return $container;
     }
@@ -60,20 +56,6 @@ class TaxProductConnectorDependencyProvider extends AbstractBundleDependencyProv
     {
         $container[static::FACADE_TAX] = function (Container $container) {
             return new TaxProductConnectorToTaxBridge($container->getLocator()->tax()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addTaxService(Container $container)
-    {
-        $container[static::SERVICE_TAX] = function (Container $container) {
-            return new TaxProductConnectorToTaxServiceBridge($container->getLocator()->tax()->service());
         };
 
         return $container;

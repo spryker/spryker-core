@@ -13,7 +13,6 @@ use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreC
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver\PreCheckStrategyResolver;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver\PreCheckStrategyResolverInterface;
-use Spryker\Zed\ShipmentCheckoutConnector\Dependency\Service\ShipmentCheckoutConnectorToShipmentServiceInterface;
 use Spryker\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorDependencyProvider;
 
 /**
@@ -46,14 +45,8 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentCheckoutConnector\Dependency\Service\ShipmentCheckoutConnectorToShipmentServiceInterface
-     */
-    public function getShipmentService(): ShipmentCheckoutConnectorToShipmentServiceInterface
-    {
-        return $this->getProvidedDependency(ShipmentCheckoutConnectorDependencyProvider::SERVICE_SHIPMENT);
-    }
-
-    /**
+     * @deprecated Remove after multiple shipment will be released. Use $this->createShipmentCheckoutPreCheckWithMultipleShippingAddress() instead.
+     *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver\PreCheckStrategyResolverInterface
@@ -65,10 +58,12 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
         $strategyContainer = $this->addShipmentCheckoutPreCheckWithoutMultipleShippingAddress($strategyContainer);
         $strategyContainer = $this->addShipmentCheckoutPreCheckWithMultipleShippingAddress($strategyContainer);
 
-        return new PreCheckStrategyResolver($this->getShipmentService(), $strategyContainer);
+        return new PreCheckStrategyResolver($strategyContainer);
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array $strategyContainer
      *
      * @return array
@@ -83,6 +78,8 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array $strategyContainer
      *
      * @return array

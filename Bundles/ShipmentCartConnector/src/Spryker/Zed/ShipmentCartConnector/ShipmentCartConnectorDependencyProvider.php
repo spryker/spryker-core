@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeBridge;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeBridge;
-use Spryker\Zed\ShipmentCartConnector\Dependency\Service\ShipmentCartConnectorToShipmentServiceBridge;
 
 /**
  * @method \Spryker\Zed\ShipmentCartConnector\ShipmentCartConnectorConfig getConfig()
@@ -20,8 +19,6 @@ class ShipmentCartConnectorDependencyProvider extends AbstractBundleDependencyPr
 {
     public const FACADE_SHIPMENT = 'shipment facade';
     public const FACADE_PRICE = 'price facade';
-
-    public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,7 +29,6 @@ class ShipmentCartConnectorDependencyProvider extends AbstractBundleDependencyPr
     {
         $container = $this->addShipmentFacade($container);
         $container = $this->addPriceFacade($container);
-        $container = $this->addShipmentService($container);
 
         return $container;
     }
@@ -60,20 +56,6 @@ class ShipmentCartConnectorDependencyProvider extends AbstractBundleDependencyPr
     {
         $container[static::FACADE_PRICE] = function (Container $container) {
             return new ShipmentCartConnectorToPriceFacadeBridge($container->getLocator()->price()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addShipmentService(Container $container)
-    {
-        $container[static::SERVICE_SHIPMENT] = function (Container $container) {
-            return new ShipmentCartConnectorToShipmentServiceBridge($container->getLocator()->shipment()->service());
         };
 
         return $container;

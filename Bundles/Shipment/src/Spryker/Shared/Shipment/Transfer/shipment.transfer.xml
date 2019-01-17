@@ -32,10 +32,10 @@
     </transfer>
 
     <transfer name="Order">
-        <property name="idShipmentMethod" type="int" />
-        <property name="shipmentDeliveryTime" type="int" />
+        <property name="idShipmentMethod" type="int" deprecated="Use item level shipment method (item.shipment.method.shippingAddress) instead." />
+        <property name="shipmentDeliveryTime" type="int" deprecated="Use item level shipment method delivery time (item.shipment.method.deliveryTime) instead." />
         <property name="expenses" type="Expense[]" singular="expense" />
-        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod" />
+        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod" deprecated="@TODO: Use item level shipment methods? (item.shipment.methods?) instead." />
         <property name="currencyIsoCode" type="string" />
     </transfer>
 
@@ -78,7 +78,7 @@
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="expenses" type="Expense[]" singular="expense"/>
     </transfer>
-    
+
     <transfer name="Item">
         <property name="shipment" type="Shipment" />
     </transfer>

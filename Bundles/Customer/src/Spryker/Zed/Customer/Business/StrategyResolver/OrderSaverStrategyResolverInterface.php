@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Customer\Business\StrategyResolver;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface;
 
 /**
@@ -18,9 +17,7 @@ interface OrderSaverStrategyResolverInterface
     public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface
      */
-    public function resolveByQuote(QuoteTransfer $quoteTransfer): CustomerOrderSaverInterface;
+    public function resolve(): CustomerOrderSaverInterface;
 }

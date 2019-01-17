@@ -231,57 +231,6 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Dependency\Service\CustomerToCustomerServiceInterface
-     */
-    public function getCustomerService(): CustomerToCustomerServiceInterface
-    {
-        return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_CUSTOMER);
-    }
-
-    /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
-     * @return \Spryker\Zed\Customer\Business\StrategyResolver\OrderSaverStrategyResolverInterface
-     */
-    public function createCustomerOrderSaverStrategyResolver(): OrderSaverStrategyResolverInterface
-    {
-        $strategyContainer = [];
-
-        $strategyContainer = $this->addStrategyCustomerOrderSaverWithoutMultipleShippingAddress($strategyContainer);
-        $strategyContainer = $this->addStrategyCustomerOrderSaverWithMultipleShippingAddress($strategyContainer);
-
-        return new OrderSaverStrategyResolver($this->getCustomerService(), $strategyContainer);
-    }
-
-    /**
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addStrategyCustomerOrderSaverWithoutMultipleShippingAddress(array $strategyContainer): array
-    {
-        $strategyContainer[OrderSaverStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
-            return $this->createCustomerOrderSaver();
-        };
-
-        return $strategyContainer;
-    }
-
-    /**
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addStrategyCustomerOrderSaverWithMultipleShippingAddress(array $strategyContainer): array
-    {
-        $strategyContainer[OrderSaverStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
-            return $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress();
-        };
-
-        return $strategyContainer;
-    }
-
-    /**
      * @return \Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface[]
      */
     protected function getCustomerTransferExpanderPlugins()
@@ -305,5 +254,54 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         return new CustomerExpander(
             $this->getCustomerTransferExpanderPlugins()
         );
+    }
+
+    /**
+     * @deprecated Remove after multiple shipment will be released. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return \Spryker\Zed\Customer\Business\StrategyResolver\OrderSaverStrategyResolverInterface
+     */
+    public function createCustomerOrderSaverStrategyResolver(): OrderSaverStrategyResolverInterface
+    {
+        $strategyContainer = [];
+
+        $strategyContainer = $this->addStrategyCustomerOrderSaverWithoutMultipleShippingAddress($strategyContainer);
+        $strategyContainer = $this->addStrategyCustomerOrderSaverWithMultipleShippingAddress($strategyContainer);
+
+        return new OrderSaverStrategyResolver($strategyContainer);
+    }
+
+    /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
+     * @param array $strategyContainer
+     *
+     * @return array
+     */
+    protected function addStrategyCustomerOrderSaverWithoutMultipleShippingAddress(array $strategyContainer): array
+    {
+        $strategyContainer[OrderSaverStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+            return $this->createCustomerOrderSaver();
+        };
+
+        return $strategyContainer;
+    }
+
+    /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
+     * @param array $strategyContainer
+     *
+     * @return array
+     */
+    protected function addStrategyCustomerOrderSaverWithMultipleShippingAddress(array $strategyContainer): array
+    {
+        $strategyContainer[OrderSaverStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+            return $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress();
+        };
+
+        return $strategyContainer;
     }
 }
