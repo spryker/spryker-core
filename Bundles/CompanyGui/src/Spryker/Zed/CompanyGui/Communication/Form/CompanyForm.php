@@ -50,7 +50,7 @@ class CompanyForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdCompanyField(FormBuilderInterface $builder): self
+    protected function addIdCompanyField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_COMPANY, HiddenType::class);
 
@@ -62,7 +62,7 @@ class CompanyForm extends AbstractType
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder): self
+    protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name',

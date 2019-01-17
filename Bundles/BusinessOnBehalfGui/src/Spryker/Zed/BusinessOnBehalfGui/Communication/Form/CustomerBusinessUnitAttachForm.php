@@ -64,7 +64,7 @@ class CustomerBusinessUnitAttachForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyBusinessUnitCollectionField(FormBuilderInterface $builder, array $options): self
+    protected function addCompanyBusinessUnitCollectionField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_FK_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
             'label' => 'Business Unit',
@@ -82,7 +82,7 @@ class CustomerBusinessUnitAttachForm extends AbstractType
      *
      * @return $this
      */
-    protected function executeCustomerBusinessUnitAttachFormExpanderPlugins(FormBuilderInterface $builder): self
+    protected function executeCustomerBusinessUnitAttachFormExpanderPlugins(FormBuilderInterface $builder)
     {
         foreach ($this->getFactory()->getCustomerBusinessUnitAttachFormExpanderPlugins() as $customerBusinessUnitAttachFormExpanderPlugin) {
             $builder = $customerBusinessUnitAttachFormExpanderPlugin->expand($builder);

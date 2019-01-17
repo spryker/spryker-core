@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CategoryTransfer;
 interface CategoryAttributeInterface
 {
     /**
+     * @deprecated Use \Spryker\Zed\Category\Business\Model\CategoryReaderInterface::findCategoryById() instead.
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
