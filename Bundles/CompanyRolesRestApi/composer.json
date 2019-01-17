@@ -4,6 +4,7 @@
   "description": "CompanyRolesRestApi module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/company-role": "^1.2.1",
     "spryker/glue-application": "^1.9.2",
     "spryker/glue-application-extension": "^1.1.1",
@@ -21,11 +22,6 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
