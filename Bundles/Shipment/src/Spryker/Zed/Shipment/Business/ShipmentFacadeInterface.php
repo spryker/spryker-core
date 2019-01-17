@@ -268,4 +268,13 @@ interface ShipmentFacadeInterface
      * @return bool
      */
     public function isShipmentMethodActive($idShipmentMethod);
+
+    /**
+     * Specification:
+     * - Creates sales shipment.
+     *
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @return void
+     */
+    public function saveShipment(ShipmentTransfer $shipmentTransfer);
 }

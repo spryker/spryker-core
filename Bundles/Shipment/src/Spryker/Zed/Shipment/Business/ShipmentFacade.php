@@ -314,4 +314,18 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     {
         return ShipmentConstants::SHIPMENT_EXPENSE_TYPE;
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param ShipmentTransfer $shipmentTransfer
+     *
+     * @return void
+     */
+    public function saveShipment(ShipmentTransfer $shipmentTransfer)
+    {
+        return $this->getFactory()
+            ->createShipmentSaver()
+            ->saveShipment($shipmentTransfer);
+    }
 }

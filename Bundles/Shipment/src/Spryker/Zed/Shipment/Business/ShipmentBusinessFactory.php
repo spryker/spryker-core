@@ -19,6 +19,7 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentCarrierReader;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaverInterface as ModelShipmentOrderSaverInterface;
+use Spryker\Zed\Shipment\Business\Model\ShipmentSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentTransformer;
@@ -223,5 +224,12 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function getCountryFacade(): ShipmentToCountryInterface
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_COUNTRY);
+    }
+
+    public function createShipmentSaver()
+    {
+        return new ShipmentSaver(
+            $this->getEntityManager()
+        );
     }
 }

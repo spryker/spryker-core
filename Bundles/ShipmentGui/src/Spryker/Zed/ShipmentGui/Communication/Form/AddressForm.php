@@ -84,7 +84,7 @@ class AddressForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addSalutationField($builder, $options[self::OPTION_SALUTATION_CHOICES])
+            ->addSalutationField($builder, $builder->getOption(self::OPTION_SALUTATION_CHOICES))
             ->addFirstNameField($builder)
             ->addMiddleNameField($builder)
             ->addLastNameField($builder)
