@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Communication\Plugin\Event\Listener;
 
+use Generated\Shared\Transfer\AvailabilityNotificationTransfer;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -31,12 +32,13 @@ class AvailabilityNotificationListener extends AbstractPlugin implements EventBu
      */
     public function handleBulk(array $transfers, $eventName)
     {
-        foreach ($transfers as $transfer) {
+        foreach ($transfers as $availabilityNotificationTransfer) {
+            if (!$availabilityNotificationTransfer instanceof AvailabilityNotificationTransfer) {
+                continue;
+            }
+
             $this->getFacade()
-                ->processAvailabilityNotificationSubscription(
-                    $transfer->getSku(),
-                    $transfer->getStore()
-                );
+                ->sendAvailabilitySubscriptionNotification($availabilityNotificationTransfer);
         }
     }
 }

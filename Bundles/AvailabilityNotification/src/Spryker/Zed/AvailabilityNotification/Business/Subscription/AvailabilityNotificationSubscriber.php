@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Spryker\Shared\Customer\Code\Messages;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface;
 
-class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProcessorInterface
+class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubscriberInterface
 {
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaverInterface
@@ -49,7 +49,7 @@ class AvailabilitySubscriptionProcessor implements AvailabilitySubscriptionProce
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function process(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    public function subscribe(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         $availabilitySubscriptionTransfer->requireEmail();
         $availabilitySubscriptionTransfer->requireSku();

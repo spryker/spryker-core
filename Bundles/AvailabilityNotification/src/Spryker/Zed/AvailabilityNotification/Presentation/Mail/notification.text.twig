@@ -1,12 +1,14 @@
-{{ mail.localizedAttributes.name }}
-{{ 'You can now add' | trans ~ ' ' ~ mail.localizedAttributes.name ~ ' to your cart again, do not miss this opportunity!' | trans }}
+{{ mail.productAttributes.name }}
+{{ 'You can now add' | trans ~ ' ' ~ mail.productAttributes.name ~ ' to your cart again, do not miss this opportunity!' | trans }}
 
-{{ mail.localizedAttributes.name }}
+{{ mail.productAttributes.name }}
 {{ 'Attributes:' | trans }}
-{% for attribute in mail.localizedAttributes.attributes %}
-    {{ attribute }}
+
+{% for name, value in mail.product.attributes if name %}
+    {{ ('product.attribute.' ~ name) | trans }}: {{ value }}
 {% endfor %}
-{{ 'Price:' | trans }} {{ mail.productPrice | money(true, mail.currencyIsoCode) }}
+
+{{ 'Price:' | trans }} {{ mail.productAttributes.price }}
 
 {{ 'Copyright © current year company name, All rights reserved.' | trans }}
 

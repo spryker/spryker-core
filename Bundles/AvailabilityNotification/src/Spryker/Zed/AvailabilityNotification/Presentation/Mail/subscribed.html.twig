@@ -659,11 +659,11 @@
                                                 <td class="mcnTextContent" valign="top" style="padding: 9px 18px;font-family: Helvetica;font-size: 14px;font-weight: normal;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #202020;line-height: 150%;" width="546">
                                                     <div style="text-align: left;">{{ mail.productAttributes.name }}<br>
                                                         {{ mail.productAttributes.price }}<br>
-                                                        {% for name, value in mail.product.attributes if name %}
-                                                        <p class="col col--sm-12 col--md-6 col--lg-4 col--xl-3">
-                                                            <strong>{{ ('product.attribute.' ~ name) | trans }}</strong><br/>
-                                                            <span>{{ value }}</span>
-                                                        </p>
+                                                        {% for name, value in mail.product.attributes %}
+                                                            <p class="col col--sm-12 col--md-6 col--lg-4 col--xl-3">
+                                                                <strong>{{ ('product.attribute.' ~ name) | trans }}</strong><br/>
+                                                                <span>{{ value }}</span>
+                                                            </p>
                                                         {% endfor %}
                                                         <br>
                                                         &nbsp;</div>

@@ -34,18 +34,25 @@ class AvailabilitySubscriptionReader implements AvailabilitySubscriptionReaderIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param string $email
+     * @param string $sku
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findSubscriptionByEmailAndSku(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer
+    public function findOneByEmailAndSku(string $email, string $sku): ?AvailabilitySubscriptionTransfer
     {
-        $storeTransfer = $this->storeFacade->getCurrentStore();
+        return $this->availabilityNotificationRepository
+            ->findOneBy($email, $sku, $this->storeFacade->getCurrentStore());
+    }
 
-        return $this->availabilityNotificationRepository->findOneBy(
-            $availabilitySubscriptionTransfer->getEmail(),
-            $availabilitySubscriptionTransfer->getSku(),
-            $storeTransfer
-        );
+    /**
+     * @param string $subscriptionKey
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
+     */
+    public function findOneBySubscriptionKey(string $subscriptionKey): ?AvailabilitySubscriptionTransfer
+    {
+        return $this->availabilityNotificationRepository
+            ->findOneBySubscriptionKey($subscriptionKey);
     }
 }

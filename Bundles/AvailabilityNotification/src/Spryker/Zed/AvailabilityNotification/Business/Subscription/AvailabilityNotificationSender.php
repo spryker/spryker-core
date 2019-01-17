@@ -7,16 +7,19 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
+use Generated\Shared\Transfer\AvailabilityNotificationTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationSubscribedMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationUnsubscribedMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMoneyFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface;
+use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface;
 
 class AvailabilityNotificationSender implements AvailabilityNotificationSenderInterface
 {
@@ -50,24 +53,32 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
     protected $urlGenerator;
 
     /**
+     * @var \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface
+     */
+    protected $availabilityNotificationRepository;
+
+    /**
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface $mailFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMoneyFacadeInterface $moneyFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGeneratorInterface $urlGenerator
+     * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository
      */
     public function __construct(
         AvailabilityNotificationToMailFacadeInterface $mailFacade,
         AvailabilityNotificationToProductFacadeInterface $productFacade,
         AvailabilityNotificationToMoneyFacadeInterface $moneyFacade,
         AvailabilityNotificationToPriceProductFacadeInterface $priceProductFacade,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository
     ) {
         $this->mailFacade = $mailFacade;
         $this->productFacade = $productFacade;
         $this->moneyFacade = $moneyFacade;
         $this->priceProductFacade = $priceProductFacade;
         $this->urlGenerator = $urlGenerator;
+        $this->availabilityNotificationRepository = $availabilityNotificationRepository;
     }
 
     /**
@@ -102,29 +113,84 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
      */
     public function sendUnsubscriptionMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
     {
+        $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilitySubscriptionTransfer->getSku());
+        $productAttributes = $this->getProductAttributes(
+            $productConcreteTransfer,
+            $availabilitySubscriptionTransfer->getLocale()
+        );
+
         $mailTransfer = (new MailTransfer())
             ->setType(AvailabilityNotificationUnsubscribedMailTypePlugin::MAIL_TYPE)
             ->setAvailabilitySubscription($availabilitySubscriptionTransfer)
-            ->setLocale($availabilitySubscriptionTransfer->getLocale());
-
-        $mailTransfer = $this->setLocalizedAttributes($mailTransfer, $availabilitySubscriptionTransfer);
+            ->setLocale($availabilitySubscriptionTransfer->getLocale())
+            ->setProductAttributes($productAttributes);
 
         $this->mailFacade->handleMail($mailTransfer);
     }
 
     /**
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationTransfer $availabilityNotificationTransfer
+     *
+     * @return void
+     */
+    public function sendProductBecomeAvailableMail(AvailabilityNotificationTransfer $availabilityNotificationTransfer): void
+    {
+        $availabilitySubscriptionCollectionTransfer = $this->availabilityNotificationRepository
+            ->findBySkuAndStore(
+                $availabilityNotificationTransfer->getSku(),
+                $availabilityNotificationTransfer->getStore()->getIdStore()
+            );
+
+        foreach ($availabilitySubscriptionCollectionTransfer->getAvailabilitySubscriptions() as $availabilitySubscription) {
+            $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilitySubscription->getSku());
+            $productAttributes = $this->getProductAttributes(
+                $productConcreteTransfer,
+                $availabilitySubscription->getLocale()
+            );
+
+            $mailTransfer = (new MailTransfer())
+                ->setType(AvailabilityNotificationMailTypePlugin::MAIL_TYPE)
+                ->setLocale($availabilitySubscription->getLocale())
+                ->setAvailabilitySubscription($availabilitySubscription)
+                ->setProductConcrete($productConcreteTransfer)
+                ->setProductAttributes($productAttributes);
+
+            $mailTransfer = $this->setProductUrl(
+                $mailTransfer,
+                $productConcreteTransfer->getFkProductAbstract(),
+                $availabilitySubscription
+            );
+
+            $unsubscriptionLink = $this->urlGenerator->createUnsubscriptionLink($availabilitySubscription);
+            $mailTransfer->setAvailabilityUnsubscriptionLink($unsubscriptionLink);
+
+            $this->mailFacade->handleMail($mailTransfer);
+        }
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     * @param int $fkProductAbstract
      * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\MailTransfer
      */
-    protected function setLocalizedAttributes(MailTransfer $mailTransfer, AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): MailTransfer
-    {
-        $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilitySubscriptionTransfer->getSku());
+    protected function setProductUrl(
+        MailTransfer $mailTransfer,
+        int $fkProductAbstract,
+        AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+    ): MailTransfer {
+        $productAbstractTransfer = $this->productFacade->findProductAbstractById($fkProductAbstract);
 
-        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
-            if ($availabilitySubscriptionTransfer->getLocale()->getIdLocale() === $localizedAttributesTransfer->getLocale()->getIdLocale()) {
-                $mailTransfer->setLocalizedAttributes($localizedAttributesTransfer);
+        if ($productAbstractTransfer === null) {
+            return $mailTransfer;
+        }
+
+        $productUrlTransfer = $this->productFacade->getProductUrl($productAbstractTransfer);
+
+        foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
+            if ($availabilitySubscriptionTransfer->getLocale()->getIdLocale() === $localizedUrlTransfer->getLocale()->getIdLocale()) {
+                $mailTransfer->setProductUrl($this->urlGenerator->generateProductUrl($localizedUrlTransfer));
 
                 return $mailTransfer;
             }

@@ -12,20 +12,18 @@ use Spryker\Zed\AvailabilityNotification\Business\Anonymizer\AvailabilitySubscri
 use Spryker\Zed\AvailabilityNotification\Business\Anonymizer\AvailabilitySubscriptionAnonymizerInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSender;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSenderInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriber;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriberInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationUnsubscriber;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationUnsubscriberInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionChecker;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGenerator;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface;
-use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionMailProcessor;
-use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionMailProcessorInterface;
-use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionProcessor;
-use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionProcessorInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReader;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaver;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaverInterface;
-use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityUnsubscriptionProcessor;
-use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityUnsubscriptionProcessorInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGenerator;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGeneratorInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface;
@@ -46,11 +44,11 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionProcessorInterface
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriberInterface
      */
-    public function createAvailabilitySubscriptionProcessor(): AvailabilitySubscriptionProcessorInterface
+    public function createAvailabilityNotificationSubscriber(): AvailabilityNotificationSubscriberInterface
     {
-        return new AvailabilitySubscriptionProcessor(
+        return new AvailabilityNotificationSubscriber(
             $this->createAvailabilitySubscriptionSaver(),
             $this->createAvailabilityNotificationSender(),
             $this->getUtilValidateService()
@@ -58,11 +56,11 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityUnsubscriptionProcessorInterface
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationUnsubscriberInterface
      */
-    public function createAvailabilityUnsubscriptionProcessor(): AvailabilityUnsubscriptionProcessorInterface
+    public function createAvailabilityNotificationUnsubscriber(): AvailabilityNotificationUnsubscriberInterface
     {
-        return new AvailabilityUnsubscriptionProcessor(
+        return new AvailabilityNotificationUnsubscriber(
             $this->getEntityManager(),
             $this->createAvailabilityNotificationSender(),
             $this->getRepository(),
@@ -75,7 +73,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
      */
     public function createAvailabilitySubscriptionChecker(): AvailabilitySubscriptionCheckerInterface
     {
-        return new AvailabilitySubscriptionChecker($this->getStoreFacade(), $this->getRepository());
+        return new AvailabilitySubscriptionChecker($this->createAvailabilityNotificationReader());
     }
 
     /**
@@ -96,7 +94,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
             $this->createSubscriptionKeyGenerator(),
             $this->getStoreFacade(),
             $this->getLocaleFacade(),
-            $this->createAvailabilitySubscriptionChecker()
+            $this->createAvailabilityNotificationReader()
         );
     }
 
@@ -120,7 +118,8 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->getMoneyFacade(),
             $this->getPriceProductFacade(),
-            $this->createUrlGenerator()
+            $this->createUrlGenerator(),
+            $this->getRepository()
         );
     }
 
@@ -132,20 +131,6 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
         return new AvailabilitySubscriptionReader(
             $this->getStoreFacade(),
             $this->getRepository()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionMailProcessorInterface
-     */
-    public function createAvailabilityNotificationMailProcessor(): AvailabilitySubscriptionMailProcessorInterface
-    {
-        return new AvailabilitySubscriptionMailProcessor(
-            $this->getRepository(),
-            $this->getMailFacade(),
-            $this->getProductFacade(),
-            $this->getPriceProductFacade(),
-            $this->createUrlGenerator()
         );
     }
 

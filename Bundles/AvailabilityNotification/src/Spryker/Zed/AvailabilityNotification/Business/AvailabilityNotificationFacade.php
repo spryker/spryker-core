@@ -7,18 +7,18 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business;
 
+use Generated\Shared\Transfer\AvailabilityNotificationTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationBusinessFactory getFactory()
  * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface getRepository()
- * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface getEntityManager()()
+ * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface getEntityManager()
  */
 class AvailabilityNotificationFacade extends AbstractFacade implements AvailabilityNotificationFacadeInterface
 {
@@ -34,8 +34,8 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
     public function subscribe(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         $subscriptionResponse = $this->getFactory()
-            ->createAvailabilitySubscriptionProcessor()
-            ->process($availabilitySubscriptionTransfer);
+            ->createAvailabilityNotificationSubscriber()
+            ->subscribe($availabilitySubscriptionTransfer);
 
         return $subscriptionResponse;
     }
@@ -68,8 +68,8 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
     public function unsubscribe(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         $subscriptionResponse = $this->getFactory()
-            ->createAvailabilityUnsubscriptionProcessor()
-            ->process($availabilitySubscriptionTransfer);
+            ->createAvailabilityNotificationUnsubscriber()
+            ->unsubscribe($availabilitySubscriptionTransfer);
 
         return $subscriptionResponse;
     }
@@ -95,31 +95,14 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
-     */
-    public function findAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer
-    {
-        return $this->getFactory()
-            ->createAvailabilityNotificationReader()
-            ->findSubscriptionByEmailAndSku($availabilitySubscriptionTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationTransfer $availabilityNotificationTransfer
      *
      * @return void
      */
-    public function processAvailabilityNotificationSubscription(string $sku, StoreTransfer $storeTransfer): void
+    public function sendAvailabilitySubscriptionNotification(AvailabilityNotificationTransfer $availabilityNotificationTransfer): void
     {
         $this->getFactory()
-            ->createAvailabilityNotificationMailProcessor()
-            ->processProductBecomeAvailableSubscription($sku, $storeTransfer);
+            ->createAvailabilityNotificationSender()
+            ->sendProductBecomeAvailableMail($availabilityNotificationTransfer);
     }
 }
