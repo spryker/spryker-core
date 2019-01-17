@@ -20,7 +20,7 @@ class CompanyBusinessUnitAddressesResourcePlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritdoc}
-     * - Configures available actions for company-unit-addresses resource.
+     * - Configures available actions for company-business-unit-addresses resource.
      *
      * @api
      *

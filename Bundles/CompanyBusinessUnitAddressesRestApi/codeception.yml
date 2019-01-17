@@ -1,4 +1,4 @@
-namespace: CompanyUnitAddressesRestApi
+namespace: CompanyBusinessUnitAddressesRestApi
 actor: Tester
 paths:
     tests: tests

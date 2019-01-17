@@ -1,7 +1,7 @@
 {
   "name": "spryker/company-business-unit-addresses-rest-api",
   "type": "library",
-  "description": "CompanyUnitAddressesRestApi module",
+  "description": "CompanyBusinessUnitAddressesRestApi module",
   "license": "proprietary",
   "require": {
     "spryker/company-unit-address": "^1.6.0",
