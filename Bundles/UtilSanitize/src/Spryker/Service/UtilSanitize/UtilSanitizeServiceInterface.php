@@ -27,7 +27,7 @@ interface UtilSanitizeServiceInterface
      * Specification:
      *  - Filters elements of an array recursively.
      *  - Filters all null values, empty strings, empty arrays and countables without elements.
-     *  - Does not filters boolean, numeric values and any other not empty values.
+     *  - Does not filter boolean, numeric and any other not empty values.
      *
      * @api
      *
