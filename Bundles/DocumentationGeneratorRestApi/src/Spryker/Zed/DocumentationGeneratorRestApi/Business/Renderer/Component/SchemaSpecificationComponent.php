@@ -8,7 +8,6 @@
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
 use Generated\Shared\Transfer\SchemaComponentTransfer;
-use stdClass;
 
 /**
  * Specification:
@@ -41,9 +40,9 @@ class SchemaSpecificationComponent implements SchemaSpecificationComponentInterf
             return [];
         }
 
-        if (!$this->schemaComponentTransfer->getProperties()) {
+        if (count($this->schemaComponentTransfer->getProperties()) === 0) {
             return [
-                $this->schemaComponentTransfer->getName() => new stdClass(),
+                $this->schemaComponentTransfer->getName() => (object)[],
             ];
         }
 
