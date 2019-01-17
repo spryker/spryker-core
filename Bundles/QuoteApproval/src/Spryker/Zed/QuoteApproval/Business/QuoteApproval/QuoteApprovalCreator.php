@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShareDetailTransfer;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface;
@@ -103,7 +101,11 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
         $quoteTransfer = $this->cartFacade->lockQuote($quoteTransfer);
         $this->quoteFacade->updateQuote($quoteTransfer);
 
-        $quoteTransfer = $this->updateQuoteShareDetails($quoteTransfer, $quoteApprovalCreateRequestTransfer->getIdCompanyUser());
+        $this->sharedCartFacade->deleteShareForQuote($quoteTransfer);
+        $this->sharedCartFacade->createReadOnlyShareRelationForQuoteAndCompanyUser(
+            $quoteTransfer->getIdQuote(),
+            $quoteApprovalCreateRequestTransfer->getIdCompanyUser()
+        );
 
         $quoteApprovalTransfer = $this->createQuoteApprovalTransfer(
             $quoteTransfer->getIdQuote(),
@@ -183,21 +185,6 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
         $messageTransfer->setParameters($parameters);
 
         return $messageTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int $idCompanyUser
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function updateQuoteShareDetails(QuoteTransfer $quoteTransfer, int $idCompanyUser): QuoteTransfer
-    {
-        $shareDetailTransfer = new ShareDetailTransfer();
-        $shareDetailTransfer->setIdCompanyUser($idCompanyUser);
-        $quoteTransfer->setShareDetails(new ArrayObject([$shareDetailTransfer]));
-
-        return $this->sharedCartFacade->updateQuoteShareDetails($quoteTransfer);
     }
 
     /**

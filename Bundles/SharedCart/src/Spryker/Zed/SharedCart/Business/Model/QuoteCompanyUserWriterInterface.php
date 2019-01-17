@@ -24,4 +24,12 @@ interface QuoteCompanyUserWriterInterface
      * @return void
      */
     public function deleteShareRelationsForCompanyUserId(int $idCompanyUser): void;
+
+    /**
+     * @param int $idQuote
+     * @param int $idCompanyUser
+     *
+     * @return void
+     */
+    public function createReadOnlyShareRelationForQuoteAndCompanyUser(int $idQuote, int $idCompanyUser): void;
 }

@@ -27,20 +27,21 @@ class QuoteApprovalToSharedCartFacadeBridge implements QuoteApprovalToSharedCart
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function updateQuoteShareDetails(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        return $this->sharedCartFacade->updateQuoteShareDetails($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return void
      */
     public function deleteShareForQuote(QuoteTransfer $quoteTransfer): void
     {
         $this->sharedCartFacade->deleteShareForQuote($quoteTransfer);
+    }
+
+    /**
+     * @param int $idQuote
+     * @param int $idCompanyUser
+     *
+     * @return void
+     */
+    public function createReadOnlyShareRelationForQuoteAndCompanyUser(int $idQuote, int $idCompanyUser): void
+    {
+        $this->sharedCartFacade->createReadOnlyShareRelationForQuoteAndCompanyUser($idCompanyUser, $idCompanyUser);
     }
 }
