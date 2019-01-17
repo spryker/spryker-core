@@ -61,7 +61,7 @@ class ContentStorage implements ContentStorageInterface
         }
 
         $contentItemExtractorPlugin = $this->contentResolver->getContentItemPlugin($contentItem[ContentStorageConstants::TERM_KEY]);
-        $oarameters = json_decode($contentItem[ContentStorageConstants::CONTENT_KEY], true);
+        $oarameters = $contentItem[ContentStorageConstants::CONTENT_KEY];
 
         return $contentItemExtractorPlugin->execute($oarameters);
     }

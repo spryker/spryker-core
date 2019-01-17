@@ -9,6 +9,7 @@ namespace Spryker\Zed\Content\Persistence;
 
 use DateTime;
 use Generated\Shared\Transfer\ContentTransfer;
+use Orm\Zed\Content\Persistence\SpyContent;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -23,14 +24,29 @@ class ContentEntityManager extends AbstractEntityManager implements ContentEntit
      */
     public function saveContent(ContentTransfer $contentTransfer): ContentTransfer
     {
-        $isModified = false;
-
         $spyContentEntity = $this->getFactory()
             ->createContentQuery()
             ->filterByIdContent($contentTransfer->getIdContent())
             ->findOneOrCreate();
 
         $spyContentEntity->fromArray($contentTransfer->toArray());
+
+        $this->extractLocalizedContents($contentTransfer, $spyContentEntity);
+
+        $spyContentEntity->save();
+
+        return $this->getFactory()->createContentMapper()->mapContentEntityToTransfer($spyContentEntity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
+     * @param \Orm\Zed\Content\Persistence\SpyContent $spyContentEntity
+     *
+     * @return \Orm\Zed\Content\Persistence\SpyContent
+     */
+    protected function extractLocalizedContents(ContentTransfer $contentTransfer, SpyContent $spyContentEntity)
+    {
+        $isModified = false;
 
         foreach ($contentTransfer->getLocalizedContents() as $localizedContent) {
             $contentLocalizedEntity = $this->getFactory()
@@ -39,7 +55,7 @@ class ContentEntityManager extends AbstractEntityManager implements ContentEntit
                 ->filterByFkLocale($localizedContent->getFkLocale())
                 ->findOneOrCreate();
 
-            if ($localizedContent->getParameters() == null) {
+            if (empty($localizedContent->getParameters())) {
                 $isModified = true;
                 $spyContentEntity->removeSpyContentLocalized($contentLocalizedEntity);
 
@@ -51,12 +67,11 @@ class ContentEntityManager extends AbstractEntityManager implements ContentEntit
             }
             $spyContentEntity->addSpyContentLocalized($contentLocalizedEntity);
         }
+
         if ($isModified) {
             $spyContentEntity->setUpdatedAt(new DateTime());
         }
 
-        $spyContentEntity->save();
-
-        return $this->getFactory()->createContentMapper()->mapContentEntityToTransfer($spyContentEntity);
+        return $spyContentEntity;
     }
 }

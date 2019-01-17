@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ContentGui\Communication\Form;
 
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -32,9 +33,7 @@ class LocalizedContentForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(ContentForm::OPTION_CONTENT_ITEM_TERM_FORM);
-        $resolver->setRequired(ContentForm::OPTION_CONTENT_ITEM_TRANSFORM);
-        $resolver->setRequired(ContentForm::OPTION_CONTENT_ITEM_REVERS_TRANSFORM);
+        $resolver->setRequired(ContentForm::OPTION_CONTENT_ITEM_FORM_PLUGIN);
 
         $resolver->setDefaults([
             'required' => true,
@@ -95,9 +94,14 @@ class LocalizedContentForm extends AbstractType
      */
     protected function addParameterCollection(FormBuilderInterface $builder, array $options)
     {
+        /**
+         * @var \Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface $contentPlugin
+         */
+        $contentPlugin = $options[ContentForm::OPTION_CONTENT_ITEM_FORM_PLUGIN];
+
         $builder->add(
             static::FIELD_PARAMETERS,
-            $options[ContentForm::OPTION_CONTENT_ITEM_TERM_FORM],
+            $contentPlugin->getForm(),
             [
                 'label' => false,
             ]
@@ -105,19 +109,34 @@ class LocalizedContentForm extends AbstractType
 
         $builder->get(static::FIELD_PARAMETERS)
             ->addModelTransformer(new CallbackTransformer(
-                $options[ContentForm::OPTION_CONTENT_ITEM_TRANSFORM],
-                $options[ContentForm::OPTION_CONTENT_ITEM_REVERS_TRANSFORM]
+                function (?string $params = null) use ($contentPlugin) {
+                    $params = json_decode((string)$params, true);
+
+                    return $contentPlugin->getTransferObject($params);
+                },
+                function (AbstractTransfer $abstractTransfer) {
+                    $arrayFilter = function ($input) use (&$arrayFilter) {
+                        foreach ($input as &$value) {
+                            if (is_array($value)) {
+                                $value = $arrayFilter($value);
+                            }
+                        }
+
+                        return array_filter($input);
+                    };
+                    $parameters = $arrayFilter($abstractTransfer->toArray());
+
+                    return (!empty($parameters)) ? json_encode($abstractTransfer->toArray()) : null;
+                }
             ));
 
         return $this;
     }
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
-     *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'localized-content';
     }

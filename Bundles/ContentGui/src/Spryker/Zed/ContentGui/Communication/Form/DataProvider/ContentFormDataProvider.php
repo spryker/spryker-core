@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\ContentTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedContentTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ContentGui\Communication\Form\ContentForm;
 use Spryker\Zed\ContentGui\Communication\Resolver\ContentResolverInterface;
 use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToContentFacadeBridgeInterface;
@@ -62,7 +61,7 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
             $contentTransfer->setContentTypeCandidateKey($contentItemPlugin->getTypeKey());
             $contentTransfer->setContentTermCandidateKey($contentItemPlugin->getTermKey());
         }
-        $localizedContents = $this->getIndexLocalizedContent($contentTransfer->getLocalizedContents());
+        $localizedContents = $this->getLocalizedContentList($contentTransfer->getLocalizedContents());
         $contentTransfer->setLocalizedContents((new ArrayObject()));
         foreach ($this->getAvailableLocales() as $locale) {
             $localizedContentTransfer = new LocalizedContentTransfer();
@@ -95,26 +94,7 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
         return [
             'data_class' => ContentTransfer::class,
             ContentForm::OPTION_AVAILABLE_LOCALES => $this->getAvailableLocales(),
-            ContentForm::OPTION_CONTENT_ITEM_REVERS_TRANSFORM => function (AbstractTransfer $abstractTransfer) {
-                $arrayFilter = function ($input) use (&$arrayFilter) {
-                    foreach ($input as &$value) {
-                        if (is_array($value)) {
-                            $value = $arrayFilter($value);
-                        }
-                    }
-
-                    return array_filter($input);
-                };
-                $parameters = $arrayFilter($abstractTransfer->toArray());
-
-                return (!empty($parameters)) ? json_encode($abstractTransfer->toArray()) : null;
-            },
-            ContentForm::OPTION_CONTENT_ITEM_TERM_FORM => $contentItemPlugin->getForm(),
-            ContentForm::OPTION_CONTENT_ITEM_TRANSFORM => function (?string $params = null) use ($contentItemPlugin) {
-                $params = json_decode((string)$params, true);
-
-                return $contentItemPlugin->getTransferObject($params);
-            },
+            ContentForm::OPTION_CONTENT_ITEM_FORM_PLUGIN => $contentItemPlugin,
         ];
     }
 
@@ -123,7 +103,7 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\LocalizedContentTransfer[]
      */
-    protected function getIndexLocalizedContent(ArrayObject $localizedContents): array
+    protected function getLocalizedContentList(ArrayObject $localizedContents): array
     {
         $indexLocalizedContents = [];
         foreach ($localizedContents as $localizedContent) {

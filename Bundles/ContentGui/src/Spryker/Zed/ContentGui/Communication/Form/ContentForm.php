@@ -28,9 +28,7 @@ class ContentForm extends AbstractType
     public const FIELD_LOCALES = 'localizedContents';
 
     public const OPTION_AVAILABLE_LOCALES = 'OPTION_AVAILABLE_LOCALES';
-    public const OPTION_CONTENT_ITEM_TERM_FORM = 'OPTION_CONTENT_ITEM_TERM_FORM';
-    public const OPTION_CONTENT_ITEM_TRANSFORM = 'OPTION_CONTENT_ITEM_TRANSFORM';
-    public const OPTION_CONTENT_ITEM_REVERS_TRANSFORM = 'OPTION_CONTENT_ITEM_REVERS_TRANSFORM';
+    public const OPTION_CONTENT_ITEM_FORM_PLUGIN = 'OPTION_CONTENT_ITEM_FORM_PLUGIN';
 
     public const TYPE_DATA = 'data';
 
@@ -42,9 +40,7 @@ class ContentForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(static::OPTION_AVAILABLE_LOCALES);
-        $resolver->setRequired(static::OPTION_CONTENT_ITEM_TERM_FORM);
-        $resolver->setRequired(static::OPTION_CONTENT_ITEM_TRANSFORM);
-        $resolver->setRequired(static::OPTION_CONTENT_ITEM_REVERS_TRANSFORM);
+        $resolver->setRequired(static::OPTION_CONTENT_ITEM_FORM_PLUGIN);
     }
 
     /**
@@ -141,12 +137,7 @@ class ContentForm extends AbstractType
             'entry_type' => LocalizedContentForm::class,
             'entry_options' => [
                 'label' => false,
-                'attr' => [
-                    'rows' => 10,
-                ],
-                static::OPTION_CONTENT_ITEM_TERM_FORM => $options[static::OPTION_CONTENT_ITEM_TERM_FORM],
-                static::OPTION_CONTENT_ITEM_TRANSFORM => $options[static::OPTION_CONTENT_ITEM_TRANSFORM],
-                static::OPTION_CONTENT_ITEM_REVERS_TRANSFORM => $options[static::OPTION_CONTENT_ITEM_REVERS_TRANSFORM],
+                static::OPTION_CONTENT_ITEM_FORM_PLUGIN => $options[static::OPTION_CONTENT_ITEM_FORM_PLUGIN],
             ],
         ]);
 
@@ -170,15 +161,5 @@ class ContentForm extends AbstractType
     public function getBlockPrefix()
     {
         return 'content';
-    }
-
-    /**
-     * @deprecated Use `getBlockPrefix()` instead.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 }
