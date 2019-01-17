@@ -10,9 +10,9 @@ namespace SprykerTest\Zed\Synchronization\Business\Message;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Generated\Shared\Transfer\QueueSendMessageTransfer;
+use Spryker\Shared\Synchronization\SynchronizationConfig;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageHelper;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
-use Spryker\Zed\Synchronization\SynchronizationConfig;
 
 /**
  * Auto-generated group annotations
@@ -49,7 +49,7 @@ class QueueMessageHelperTest extends Unit
         $this->assertEquals($resultQueueReceiveMessageTransfer->getAcknowledge(), false);
         $this->assertEquals($resultQueueReceiveMessageTransfer->getReject(), true);
         $this->assertEquals($resultQueueReceiveMessageTransfer->getHasError(), true);
-        $this->assertEquals($resultQueueReceiveMessageTransfer->getRoutingKey(), SynchronizationConfig::ROUTING_KEY_ERROR);
+        $this->assertEquals($resultQueueReceiveMessageTransfer->getRoutingKey(), SynchronizationConfig::MESSAGE_ROUTING_KEY_ERROR);
 
         $queueMessageBody = json_decode($resultQueueReceiveMessageTransfer->getQueueMessage()->getBody(), true);
         $this->assertEquals($queueMessageBody['errorMessage'], static::TEST_ERROR_MESSAGE);
