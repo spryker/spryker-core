@@ -219,9 +219,9 @@ class ZedBootstrap
     protected function optimizeApp()
     {
         $application = $this->application;
-        $application['resolver'] = function () use ($application) {
+        $application->set('resolver', function () use ($application) {
             return new ZedFragmentControllerResolver($application);
-        };
+        });
     }
 
     /**
