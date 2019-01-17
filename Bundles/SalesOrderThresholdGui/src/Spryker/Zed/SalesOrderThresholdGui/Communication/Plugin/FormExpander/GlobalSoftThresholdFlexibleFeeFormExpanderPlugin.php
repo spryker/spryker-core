@@ -111,7 +111,7 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
      *
      * @return $this
      */
-    protected function addSoftFlexibleFeeField(FormBuilderInterface $builder, array $options): self
+    protected function addSoftFlexibleFeeField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_SOFT_FLEXIBLE_FEE, PercentType::class, [
             'label' => 'Enter flexible fee',
