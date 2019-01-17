@@ -37,7 +37,7 @@ class ControllerServiceBuilder
             return $controller;
         };
 
-        $application[$serviceName] = $application->share($service);
+        $application->extend($serviceName, $service);
 
         return $serviceName . ':' . $bundleControllerAction->getAction() . 'Action';
     }
