@@ -15,7 +15,7 @@ use Spryker\Zed\Customer\Business\Customer\AddressInterface;
 use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
 
 /**
- * @deprecated Use CustomerOrderSaverWithMultiShippingAddress instead.
+ * @deprecated Use \Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverWithMultiShippingAddress instead.
  */
 class CustomerOrderSaver implements CustomerOrderSaverInterface
 {

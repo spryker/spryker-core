@@ -140,7 +140,7 @@ class SalesConfig extends AbstractBundleConfig
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $shipmentTransfer = $itemTransfer->getShipment();
 
-            if ($$shipmentTransfer === null
+            if ($shipmentTransfer === null
                 || $shipmentTransfer->getShippingAddress() === null
                 || $shipmentTransfer->getShippingAddress()->getFirstName() !== static::TEST_CUSTOMER_FIRST_NAME
             ) {

@@ -61,6 +61,34 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer
+    {
+        $addressEntity = $this->getFactory()
+            ->createSpyCustomerAddressQuery()
+            ->filterByFkCustomer($addressTransfer->getFkCustomer())
+            ->filterByFirstName($addressTransfer->getFirstName())
+            ->filterByLastName($addressTransfer->getLastName())
+            ->filterByAddress1($addressTransfer->getAddress1())
+            ->filterByAddress2($addressTransfer->getAddress2())
+            ->filterByAddress3($addressTransfer->getAddress3())
+            ->filterByZipCode($addressTransfer->getZipCode())
+            ->filterByCity($addressTransfer->getCity())
+            ->filterByFkCountry($addressTransfer->getFkCountry())
+            ->filterByPhone($addressTransfer->getPhone())
+            ->findOne();
+
+        if ($addressEntity === null) {
+            return null;
+        }
+
+        return $addressTransfer->fromArray($addressEntity->toArray(), true);
+    }
+
+    /**
      * @param \Orm\Zed\Customer\Persistence\SpyCustomerQuery $spyCustomerQuery
      * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
      *

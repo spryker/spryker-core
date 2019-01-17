@@ -24,6 +24,9 @@ use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
+/**
+ * @deprecated Use \Spryker\Zed\Sales\Business\Order\OrderHydrator instead.
+ */
 class OrderHydrator implements OrderHydratorInterface
 {
     /**
@@ -225,7 +228,7 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function hydrateOrderItemTransfer(SpySalesOrderItem $orderItemEntity)
+    public function hydrateOrderItemTransfer(SpySalesOrderItem $orderItemEntity): ItemTransfer
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->fromArray($orderItemEntity->toArray(), true);
@@ -281,7 +284,7 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return void
      */
-    protected function hydrateBillingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
+    protected function hydrateBillingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): void
     {
         $countryEntity = $orderEntity->getBillingAddress()->getCountry();
 
@@ -298,7 +301,7 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return void
      */
-    protected function hydrateShippingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
+    protected function hydrateShippingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): void
     {
         $countryEntity = $orderEntity->getShippingAddress()->getCountry();
 
@@ -330,7 +333,7 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return void
      */
-    protected function hydrateExpensesToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
+    protected function hydrateExpensesToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): void
     {
         foreach ($orderEntity->getExpenses() as $expenseEntity) {
             $expenseTransfer = new ExpenseTransfer();

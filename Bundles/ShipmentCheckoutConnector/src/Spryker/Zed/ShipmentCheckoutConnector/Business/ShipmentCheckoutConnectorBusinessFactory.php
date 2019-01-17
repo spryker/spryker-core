@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShipmentCheckoutConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentCheckoutPreCheck;
+use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheck as ShipmentCheckoutPreCheckWithMultipleShippingAddress;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver\PreCheckStrategyResolver;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver\PreCheckStrategyResolverInterface;
@@ -33,7 +34,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentCheckoutPreCheckWithMultipleShippingAddress(): ShipmentCheckoutPreCheckInterface
     {
-        return new ShipmentCheckoutPreCheck($this->getShipmentFacade());
+        return new ShipmentCheckoutPreCheckWithMultipleShippingAddress($this->getShipmentFacade());
     }
 
     /**
