@@ -78,4 +78,11 @@ interface CompanyRoleRepositoryInterface
      * @return bool
      */
     public function hasUsers(int $idCompanyRole): bool;
+
+    /**
+     * @param string $uuid
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findCompanyRoleByUuid(string $uuid): ?CompanyRoleTransfer;
 }

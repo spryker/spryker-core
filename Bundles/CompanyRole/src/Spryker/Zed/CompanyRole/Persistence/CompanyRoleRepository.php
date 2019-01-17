@@ -363,4 +363,24 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
 
         return ($spyCompanyRoleToCompanyUser !== null);
     }
+
+    /**
+     * @param string $uuid
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findCompanyRoleByUuid(string $uuid): ?CompanyRoleTransfer
+    {
+        $query = $this->getFactory()
+            ->createCompanyRoleQuery()
+            ->filterByUuid($uuid);
+
+        $spyCompanyRole = $this->buildQueryFromCriteria($query)->findOne();
+
+        if (!$spyCompanyRole) {
+            return null;
+        }
+
+        return $this->prepareCompanyRoleTransfer($spyCompanyRole);
+    }
 }

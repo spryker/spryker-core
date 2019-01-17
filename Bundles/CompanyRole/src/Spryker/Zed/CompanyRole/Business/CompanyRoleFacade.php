@@ -252,4 +252,20 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
         return $this->getRepository()
             ->findDefaultCompanyRoleByIdCompany($idCompany);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function findCompanyRoleByUuid(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
+    {
+        return $this->getFactory()->createCompanyRoleReader()->findCompanyRoleByUuid($companyRoleTransfer);
+    }
 }
