@@ -114,7 +114,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
             ->innerJoinWithCountry()
             ->leftJoinWithSpyCompanyUnitAddressToCompanyBusinessUnit()
             ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
-            ->leftJoinWithCompanyBusinessUnit()
+                ->leftJoinWithCompanyBusinessUnit()
             ->endUse();
 
         $entityTransfer = $this->buildQueryFromCriteria($query)->find();
