@@ -68,8 +68,7 @@ class ContentTabs extends AbstractTabs
      */
     protected function setFooter(TabsViewTransfer $tabsViewTransfer)
     {
-        $tabsViewTransfer->setFooterTemplate('@ContentGui/_template/_form-submit.twig')
-            ->setIsNavigable(true);
+        $tabsViewTransfer->setFooterTemplate('@ContentGui/_template/_form-submit.twig');
 
         return $this;
     }
