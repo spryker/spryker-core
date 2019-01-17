@@ -86,6 +86,17 @@ interface ProductStorageClientInterface
     public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array;
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
+     */
+    public function getProductConcreteStorageTransfers(array $productIds): array;
+
+    /**
      * Specification:
      * - Retrieves a current Store specific ProductConcrete resource from Storage using specified mapping.
      *
@@ -140,4 +151,16 @@ interface ProductStorageClientInterface
      * @return bool
      */
     public function isProductConcreteRestricted(int $idProductConcrete): bool;
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string $identifier
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array;
 }

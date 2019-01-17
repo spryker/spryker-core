@@ -8,9 +8,12 @@
     </transfer>
 
     <transfer name="Shipment">
+        <property name="idSalesShipment" type="string"/>
         <property name="shippingAddress" type="Address"/>
         <property name="requestedDeliveryDate" type="string"/>
         <property name="expense" type="Expense"/>
+        <property name="order" type="Order"/>
+        <property name="shipmentItems" type="Item[]" singular="shipmentItem"/>
     </transfer>
 
     <transfer name="ShipmentGroup">

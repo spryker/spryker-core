@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOption\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
+use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
@@ -23,7 +24,6 @@ use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Spryker\Zed\ProductOption\Business\Model\Country\ProductOptionCountryTableMapInterface;
 
 /**
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionPersistenceFactory getFactory()
@@ -460,7 +460,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryTaxSetByIdProductOptionValueAndCountryIso2Codes(array $idProductOptionValues, array $countryIso2Codes): SpyProductOptionValueQuery
     {
         $idCountryList = $this->queryCountryListByIso2Codes($countryIso2Codes)
-        ->select([ProductOptionCountryTableMapInterface::COL_ID_COUNTRY])
+        ->select([SpyCountryTableMap::COL_ID_COUNTRY])
         ->find()
         ->toArray();
 
@@ -473,7 +473,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                     ->useSpyTaxSetTaxQuery()
                         ->useSpyTaxRateQuery()
                             ->useCountryQuery()
-                                ->withColumn(ProductOptionCountryTableMapInterface::COL_ISO2_CODE)
+                                ->withColumn(SpyCountryTableMap::COL_ISO2_CODE)
                             ->endUse()
                             ->filterByFkCountry($idCountryList, Criteria::IN)
                             ->_or()
@@ -485,6 +485,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                 ->endUse()
                 ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', static::COL_MAX_TAX_RATE)
             ->endUse()
-            ->select([ProductOptionCountryTableMapInterface::COL_ISO2_CODE, static::COL_MAX_TAX_RATE, SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE]);
+            ->select([SpyCountryTableMap::COL_ISO2_CODE, static::COL_MAX_TAX_RATE, SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE]);
     }
 }

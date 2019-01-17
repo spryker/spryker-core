@@ -1,0 +1,88 @@
+{% extends '@ShipmentGui/Layout/layout.twig' %}
+
+{% block action %}
+    {{ backActionButton('/sales/detail/?id-sales-order=' ~ idSalesOrder, 'Back to Order' | trans) }}
+{% endblock %}
+
+{% block section_title %}
+    {{ 'Edit Shipment:' | trans }} {#{{ order.idSalesOrder }}#}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Shipment Details' } %}
+        {% block widget_content %}
+            {{ form_start(shipmentForm) }}
+            {{ form_widget(shipmentForm.idSalesShipment) }}
+            {{ form_widget(shipmentForm.idShippingAddress) }}
+            {{ form_widget(shipmentForm.shippingAddress) }}
+
+            <div id="items">
+                <table class="footable table toggle-arrow-tiny" data-qa="order-item-list">
+                    <thead>
+                         <tr class="text-left">
+                             <th>{{ 'Assign' | trans }}</th>
+                             <th>{{ 'Image' | trans }}</th>
+                             <th>{{ 'Product' | trans }}</th>
+                             <th>{{ 'Quantity' | trans }}</th>
+                             <th>{{ 'State' | trans }}</th>
+                             <th>{{ 'Current shipment' | trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for orderItem in orderItems %}
+                        {% set orderItemData = orderItem %}
+                        <tr>
+
+                            <td class="item-checker">
+                            </td>
+                            <td>
+                                <img class="product-image" src="{{ orderItemData.metadata.image }}" width="100"/>
+                            </td>
+                            <td>
+                                <div>
+                                    <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': orderItemData.idProductAbstract, 'id-product': orderItemData.id, 'type': 'regular'}) }}">
+                                        {{ orderItemData.name }}
+                                    </a>
+                                </div>
+                                <div class="sku">
+                                    {{ 'Sku' | trans }}: <span>{{ orderItemData.sku }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                {{ orderItemData.quantity }}
+                            </td>
+                            <td class="state-history">
+                                <div>
+                                    <a href="{{ url('/oms/index/draw', {'process': orderItemData.process, 'state': orderItemData.state.name}) }}" target="_blank">{{ (orderItemData.stateHistory | first).name }}</a> ({{ orderItemData.process }})
+                                </div>
+                                {% if orderItemData.stateHistory | length > 1 %}
+                                    <div id="history_details_{{ orderItemData.idSalesOrderItem }}" class="hidden">
+                                        {% for stateHistory in orderItemData.stateHistory | slice(1) %}
+                                            <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
+                                        {% endfor %}
+                                    </div>
+                                    <a id="history-btn-{{ orderItemData.idSalesOrderItem }}"
+                                       class="btn btn-sm more-history is-hidden"
+                                       data-id="{{ orderItemData.idSalesOrderItem }}">
+                                        <span class="show-more">{{ 'Show history' | trans }}</span>
+                                        <span class="show-less">{{ 'Hide history' | trans }}</span>
+                                    </a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ orderItemData.shipment.method.name }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {{ form_widget(shipmentForm.method) }}
+            {{ form_row(shipmentForm.requestedDeliveryDate) }}
+
+            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}"/>
+            {{ form_end(shipmentForm) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

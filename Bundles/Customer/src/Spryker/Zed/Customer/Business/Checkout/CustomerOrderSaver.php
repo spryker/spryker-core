@@ -86,6 +86,10 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
      */
     protected function persistAddresses(QuoteTransfer $quoteTransfer, CustomerTransfer $customer)
     {
+        if ($quoteTransfer->getIsAddressSavingSkipped()) {
+            return;
+        }
+
         $this->processCustomerAddress($quoteTransfer->getBillingAddress(), $customer);
 
         $this->existingAddresses = [];
@@ -109,12 +113,12 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     {
         $addressTransfer = $shipmentTransfer->getShippingAddress();
 
-        $hash = $this->createAddressTransferHash($addressTransfer);
-        if (!isset($existingAddresses[$hash])) {
-            $existingAddresses[$hash] = $this->customerRepository->findAddressByAddressData($addressTransfer);
+        $key = $this->getAddressTransferKey($addressTransfer);
+        if (!isset($existingAddresses[$key])) {
+            $existingAddresses[$key] = $this->customerRepository->findAddressByAddressData($addressTransfer);
         }
-        if ($existingAddresses[$hash] !== null) {
-            return $existingAddresses[$hash];
+        if ($existingAddresses[$key] !== null) {
+            return $existingAddresses[$key];
         }
 
         return $addressTransfer;
@@ -189,7 +193,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
      *
      * @return string
      */
-    protected function createAddressTransferHash(AddressTransfer $addressTransfer): string
+    protected function getAddressTransferKey(AddressTransfer $addressTransfer): string
     {
         return sprintf(
             '%s %s %s %s %s %s %s %s %s %s',

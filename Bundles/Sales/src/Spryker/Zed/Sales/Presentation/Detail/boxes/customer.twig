@@ -1,0 +1,19 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Customer' | trans } %}
+    {% block widget_content %}
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <p><b>{{ 'Reference' | trans }}:</b></p><p><a href="{{ url('/customer/view', {'id-customer': order.fkCustomer}) }}" target="_blank">{{ order.customerReference }}</a></p>
+                <p><b>{{ 'Name' | trans }}:</b></p><p>{{ order.firstName ~ ' ' ~ order.lastName }}</p>
+                <p><b>{{ 'Email' | trans }}:</b></p><p>{{ order.email }}</p>
+                <p><b>{{ 'Previous orders count' | trans }}:</b></p><p>{{ order.totalOrderCount }}</p>
+                <p><b>{{ 'Billing address' | trans }}:</b></p><p>{{ order.billingAddress.firstName ~ ' '
+                    ~ order.billingAddress.lastName ~ ', '
+                    ~ order.billingAddress.address1 ~ ' '
+                    ~ order.billingAddress.address2 ~ ', '
+                    ~ order.billingAddress.zipCode ~ ' '
+                    ~ order.billingAddress.city ~ ', '
+                    ~ order.billingAddress.country.name }}<a href="#" class="btn btn-default edit_billing_address">Edit</a></p>
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}

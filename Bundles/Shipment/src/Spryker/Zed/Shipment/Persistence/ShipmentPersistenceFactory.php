@@ -12,6 +12,8 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentMapper;
+use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentMapperInterface;
 
 /**
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
@@ -49,5 +51,13 @@ class ShipmentPersistenceFactory extends AbstractPersistenceFactory
     public function createShipmentMethodPriceQuery()
     {
         return SpyShipmentMethodPriceQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentMapperInterface
+     */
+    public function createShipmentMapper(): ShipmentMapperInterface
+    {
+        return new ShipmentMapper();
     }
 }

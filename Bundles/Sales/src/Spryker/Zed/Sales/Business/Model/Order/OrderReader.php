@@ -68,6 +68,12 @@ class OrderReader implements OrderReaderInterface
             return null;
         }
 
+        $orderEntity->setItems(
+            $this->queryContainer
+                ->querySalesOrderItemsWithShippingAddresses($idSalesOrder)
+                ->find()
+        );
+
         return $this->orderHydrator->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
     }
 

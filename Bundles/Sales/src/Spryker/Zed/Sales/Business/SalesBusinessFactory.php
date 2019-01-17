@@ -10,7 +10,7 @@ namespace Spryker\Zed\Sales\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriter;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface;
-use Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdater;
+use Spryker\Zed\Sales\Business\Model\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderOverviewInterface;
@@ -30,6 +30,8 @@ use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
+use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemGrouper;
+use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemGrouperInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
@@ -195,11 +197,15 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdaterInterface
+     * @return \Spryker\Zed\Sales\Business\Model\Address\OrderAddressWriterInterface
      */
-    public function createOrderAddressUpdater()
+    public function createOrderAddressWriter()
     {
-        return new OrderAddressUpdater($this->getQueryContainer());
+        return new OrderAddressWriter(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->getCountryFacade()
+        );
     }
 
     /**
@@ -328,5 +334,13 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new ExpenseWriter(
             $this->getEntityManager()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemGrouperInterface
+     */
+    public function createSalesOrderItemGrouper(): SalesOrderItemGrouperInterface
+    {
+        return new SalesOrderItemGrouper();
     }
 }

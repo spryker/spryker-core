@@ -13,9 +13,9 @@
   },
   "require-dev": {
     "spryker/calculation": "*",
+    "spryker/country": "*",
     "spryker/propel": "*",
-    "spryker/testify": "*",
-    "spryker/country": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/calculation": "If you want to use Calculation plugins."

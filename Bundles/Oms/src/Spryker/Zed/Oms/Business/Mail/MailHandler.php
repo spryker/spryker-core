@@ -81,7 +81,7 @@ class MailHandler
     {
         $orderTransfer = $this->saleFacade->getOrderByIdSalesOrder($salesOrderEntity->getIdSalesOrder());
 
-        $shippingAddressTransfer = $this->findShippingAddressTransfer($salesOrderEntity);
+        $shippingAddressTransfer = $this->mapShippingAddressEntityToShippingAddressTransfer($salesOrderEntity);
         $orderTransfer->setShippingAddress($shippingAddressTransfer);
 
         $billingAddressTransfer = $this->getBillingAddressTransfer($salesOrderEntity);
@@ -100,7 +100,7 @@ class MailHandler
      *
      * @return null|\Generated\Shared\Transfer\AddressTransfer
      */
-    protected function findShippingAddressTransfer(SpySalesOrder $salesOrderEntity): ?AddressTransfer
+    protected function mapShippingAddressEntityToShippingAddressTransfer(SpySalesOrder $salesOrderEntity): ?AddressTransfer
     {
         $shippingAddressEntity = $salesOrderEntity->getShippingAddress();
 

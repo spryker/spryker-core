@@ -29,8 +29,27 @@
         <property name="paymentMethod" type="string" />
     </transfer>
 
+    <transfer name="SalesPaymentMethodType">
+        <property name="idSalesPaymentMethodType" type="int" />
+        <property name="paymentProvider" type="PaymentProvider" />
+        <property name="paymentMethod" type="PaymentMethod" />
+    </transfer>
+
+    <transfer name="SalesPaymentMethodTypeCollection">
+        <property name="salesPaymentMethodTypes" singular="salesPaymentMethodType" type="SalesPaymentMethodType[]" />
+    </transfer>
+
     <transfer name="PaymentMethods">
         <property name="methods" singular="method" type="PaymentMethod[]" />
+    </transfer>
+
+    <transfer name="PaymentProviderCollection">
+        <property name="paymentProviders" singular="paymentProvider" type="PaymentProvider[]" />
+    </transfer>
+
+    <transfer name="PaymentProvider">
+        <property name="name" type="string"/>
+        <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]" />
     </transfer>
 
     <transfer name="PaymentMethod">

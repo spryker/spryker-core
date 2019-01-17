@@ -16,6 +16,7 @@ use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 abstract class AbstractFactory
 {
     use BundleConfigResolverAwareTrait;
+    use ClientResolverAwareTrait;
     use ContainerMocker;
 
     /**
