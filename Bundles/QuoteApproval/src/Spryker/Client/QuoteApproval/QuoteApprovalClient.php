@@ -45,9 +45,8 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function createQuoteApproval(
-        QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
-    ): QuoteApprovalResponseTransfer {
+    public function createQuoteApproval(QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer): QuoteApprovalResponseTransfer
+    {
         return $this->getFactory()->createZedStub()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
     }
 
@@ -60,9 +59,8 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function removeQuoteApproval(
-        QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
-    ): QuoteApprovalResponseTransfer {
+    public function removeQuoteApproval(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): QuoteApprovalResponseTransfer
+    {
         return $this->getFactory()->createZedStub()->removeQuoteApproval($quoteApprovalRemoveRequestTransfer);
     }
 

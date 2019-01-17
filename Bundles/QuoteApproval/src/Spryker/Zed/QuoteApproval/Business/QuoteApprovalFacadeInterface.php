@@ -28,9 +28,7 @@ interface QuoteApprovalFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function createQuoteApproval(
-        QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
-    ): QuoteApprovalResponseTransfer;
+    public function createQuoteApproval(QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer): QuoteApprovalResponseTransfer;
 
     /**
      * Specification:
@@ -44,9 +42,7 @@ interface QuoteApprovalFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function removeQuoteApproval(
-        QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
-    ): QuoteApprovalResponseTransfer;
+    public function removeQuoteApproval(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): QuoteApprovalResponseTransfer;
 
     /**
      * Specification:

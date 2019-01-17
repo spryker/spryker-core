@@ -34,9 +34,8 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function createQuoteApproval(
-        QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
-    ): QuoteApprovalResponseTransfer {
+    public function createQuoteApproval(QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer): QuoteApprovalResponseTransfer
+    {
         /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedRequestClient->call(
             '/quote-approval/gateway/create-quote-approval',
@@ -51,9 +50,8 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function removeQuoteApproval(
-        QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
-    ): QuoteApprovalResponseTransfer {
+    public function removeQuoteApproval(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): QuoteApprovalResponseTransfer
+    {
         /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer */
         $quoteApprovalResponseTransfer = $this->zedRequestClient->call(
             '/quote-approval/gateway/remove-quote-approval',

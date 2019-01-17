@@ -18,9 +18,7 @@ interface QuoteApprovalToCompanyUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getCompanyUserCollection(
-        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
-    ): CompanyUserCollectionTransfer;
+    public function getCompanyUserCollection(CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer): CompanyUserCollectionTransfer;
 
     /**
      * @param int $idCompanyUser

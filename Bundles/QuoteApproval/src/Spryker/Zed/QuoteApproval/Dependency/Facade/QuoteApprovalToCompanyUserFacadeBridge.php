@@ -31,9 +31,8 @@ class QuoteApprovalToCompanyUserFacadeBridge implements QuoteApprovalToCompanyUs
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getCompanyUserCollection(
-        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
-    ): CompanyUserCollectionTransfer {
+    public function getCompanyUserCollection(CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer): CompanyUserCollectionTransfer
+    {
         return $this->companyUserFacade->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
     }
 

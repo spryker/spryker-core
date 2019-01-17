@@ -12,8 +12,6 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyRoleFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeBridge;
-use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCustomerFacadeBridge;
-use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToMessengerFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToSharedCartFacadeBridge;
 
@@ -22,14 +20,11 @@ use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToSharedCartFacadeB
  */
 class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const FACADE_SHARED_CART = 'FACADE_SHARED_CART';
-    public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
     public const FACADE_CART = 'FACADE_CART';
     public const FACADE_QUOTE = 'FACADE_QUOTE';
-    public const FACADE_PERMISSION = 'FACADE_PERMISSION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -43,9 +38,7 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteFacade($container);
         $container = $this->addCompanyRoleFacade($container);
         $container = $this->addCompanyUserFacade($container);
-        $container = $this->addMessengerFacade($container);
         $container = $this->addSharedCartFacade($container);
-        $container = $this->addCustomerFacade($container);
 
         return $container;
     }
@@ -115,43 +108,11 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMessengerFacade(Container $container): Container
-    {
-        $container[static::FACADE_MESSENGER] = function (Container $container) {
-            return new QuoteApprovalToMessengerFacadeBridge(
-                $container->getLocator()->messenger()->facade()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addSharedCartFacade(Container $container): Container
     {
         $container[static::FACADE_SHARED_CART] = function (Container $container) {
             return new QuoteApprovalToSharedCartFacadeBridge(
                 $container->getLocator()->sharedCart()->facade()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCustomerFacade(Container $container): Container
-    {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
-            return new QuoteApprovalToCustomerFacadeBridge(
-                $container->getLocator()->customer()->facade()
             );
         };
 

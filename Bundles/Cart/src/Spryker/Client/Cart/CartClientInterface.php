@@ -43,6 +43,7 @@ interface CartClientInterface
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Adds items to cart using quote storage strategy.
      *  - Invalid items will be skipped.
+     *  - Does nothing if cart is locked.
      *
      * @api
      *
@@ -58,6 +59,7 @@ interface CartClientInterface
      *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Adds item to cart using quote storage strategy.
+     *  - Does nothing if cart is locked.
      *
      * @api
      *
@@ -73,6 +75,7 @@ interface CartClientInterface
      *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Adds items to cart using quote storage strategy.
+     *  - Does nothing if cart is locked.
      *
      * @api
      *
@@ -88,6 +91,7 @@ interface CartClientInterface
      *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Remove item from cart using quote storage strategy.
+     *  - Does nothing if cart is locked.
      *
      * @api
      *
@@ -113,6 +117,7 @@ interface CartClientInterface
      *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Remove items from cart using quote storage strategy.
+     *  - Does nothing if cart is locked.
      *
      * @api
      *
@@ -143,6 +148,7 @@ interface CartClientInterface
      *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Decrease item quantity using quote storage strategy.
+     *  - Does nothing if cart is locked.
      *
      * @api
      *
@@ -159,6 +165,7 @@ interface CartClientInterface
      *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Increase item quantity using quote storage strategy.
+     *  - Does nothing if cart is locked.
      *
      * @api
      *
@@ -189,6 +196,7 @@ interface CartClientInterface
      *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles using quote storage strategy.
+     *  - Does nothing if cart is locked.
      *
      * @api
      *
@@ -202,6 +210,7 @@ interface CartClientInterface
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles using quote storage strategy.
      *  - Observe quote changes after reloading.
+     *  - If cart is locked returns expanded quote only.
      *
      * @api
      *
@@ -215,6 +224,7 @@ interface CartClientInterface
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Update quote currency using quote storage strategy.
      *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Does nothing if cart is locked.
      *
      * @api
      *

@@ -90,10 +90,8 @@ class QuoteApproverListProvider implements QuoteApproverListProviderInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    protected function filterByBusinessUnit(
-        CompanyUserCollectionTransfer $companyUserCollectionTransfer,
-        int $idBusinessUnit
-    ): CompanyUserCollectionTransfer {
+    protected function filterByBusinessUnit(CompanyUserCollectionTransfer $companyUserCollectionTransfer, int $idBusinessUnit): CompanyUserCollectionTransfer
+    {
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $key => $companyUser) {
             if ($companyUser->getFkCompanyBusinessUnit() !== $idBusinessUnit) {
                 $companyUserCollectionTransfer->getCompanyUsers()->offsetUnset($key);
