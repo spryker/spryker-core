@@ -15,6 +15,8 @@ use Spryker\Zed\Company\Business\Model\CompanyStoreRelationReader;
 use Spryker\Zed\Company\Business\Model\CompanyStoreRelationReaderInterface;
 use Spryker\Zed\Company\Business\Model\CompanyStoreRelationWriter;
 use Spryker\Zed\Company\Business\Model\CompanyStoreRelationWriterInterface;
+use Spryker\Zed\Company\Business\Reader\CompanyReader;
+use Spryker\Zed\Company\Business\Reader\CompanyReaderInterface;
 use Spryker\Zed\Company\CompanyDependencyProvider;
 use Spryker\Zed\Company\Dependency\Facade\CompanyToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -45,6 +47,14 @@ class CompanyBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): CompanyToStoreFacadeInterface
     {
         return $this->getProvidedDependency(CompanyDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Company\Business\Reader\CompanyReaderInterface
+     */
+    public function createCompanyReader(): CompanyReaderInterface
+    {
+        return new CompanyReader($this->getRepository());
     }
 
     /**

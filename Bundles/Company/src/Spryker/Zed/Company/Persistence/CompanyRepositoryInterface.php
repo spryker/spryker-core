@@ -45,4 +45,11 @@ interface CompanyRepositoryInterface
      * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
      */
     public function getCompanies(): CompanyCollectionTransfer;
+
+    /**
+     * @param string $uuid
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer|null
+     */
+    public function findCompanyByUuid(string $uuid): ?CompanyTransfer;
 }

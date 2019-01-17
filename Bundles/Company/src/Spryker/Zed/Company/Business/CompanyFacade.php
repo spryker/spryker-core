@@ -86,4 +86,20 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     {
         return $this->getRepository()->getCompanies();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
+    public function findCompanyByUuid(CompanyTransfer $companyTransfer): CompanyResponseTransfer
+    {
+        return $this->getFactory()->createCompanyReader()->findCompanyByUuid($companyTransfer);
+    }
 }
