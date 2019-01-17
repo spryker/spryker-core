@@ -13,7 +13,7 @@ interface TwigExtensionPluginInterface
 {
     /**
      * Specification:
-     * - Allows to extend Twig with additional functionality (e.g. functions, global variables, etc.)
+     * - Allows to extend Twig with additional functionality (e.g. functions, global variables, etc.).
      *
      * @api
      *
