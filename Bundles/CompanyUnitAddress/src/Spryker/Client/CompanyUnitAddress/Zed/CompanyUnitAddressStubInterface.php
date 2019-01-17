@@ -68,4 +68,11 @@ interface CompanyUnitAddressStubInterface
     public function saveCompanyBusinessUnitAddresses(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
 }
