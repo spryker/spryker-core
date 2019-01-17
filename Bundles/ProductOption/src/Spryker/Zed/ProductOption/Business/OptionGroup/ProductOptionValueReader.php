@@ -37,7 +37,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
     }
 
     /**
-     * @param int $idProductOptionValue
+     * @param mixed $idProductOptionValue
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionNotFoundException
      *
@@ -45,7 +45,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      */
     public function getProductOption($idProductOptionValue)
     {
-        $productOptionValueEntity = $this->findOptionValueById($idProductOptionValue);
+        $productOptionValueEntity = $this->findOptionValueById((int)$idProductOptionValue);
 
         if ($productOptionValueEntity) {
             return $this->hydrateProductOptionTransfer($productOptionValueEntity);

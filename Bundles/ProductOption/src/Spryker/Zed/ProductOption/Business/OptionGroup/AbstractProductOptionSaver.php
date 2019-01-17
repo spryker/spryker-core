@@ -102,13 +102,13 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
 
     /**
      * @param string $abstractSku
-     * @param int $idProductOptionGroup
+     * @param mixed $idProductOptionGroup
      *
      * @return bool
      */
     public function addProductAbstractToProductOptionGroup($abstractSku, $idProductOptionGroup)
     {
-        $productOptionGroupEntity = $this->getOptionGroupById($idProductOptionGroup);
+        $productOptionGroupEntity = $this->getOptionGroupById((int)$idProductOptionGroup);
         $productAbstractEntity = $this->getProductAbstractBySku($abstractSku);
 
         $productOptionGroupEntity->addSpyProductAbstract($productAbstractEntity);
