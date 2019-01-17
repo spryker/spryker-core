@@ -8,11 +8,11 @@
 namespace Spryker\Yves\DummyPayment\Dependency\Injector;
 
 use Spryker\Shared\DummyPayment\DummyPaymentConfig;
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\DummyPayment\Plugin\DummyPaymentCreditCardSubFormPlugin;
 use Spryker\Yves\DummyPayment\Plugin\DummyPaymentHandlerPlugin;
 use Spryker\Yves\DummyPayment\Plugin\DummyPaymentInvoiceSubFormPlugin;
-use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
@@ -20,11 +20,11 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollectio
 class CheckoutDependencyInjector implements DependencyInjectorInterface
 {
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
+     * @param \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Yves\Kernel\Container
+     * @return \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Yves\Kernel\Container
      */
-    public function inject(Container $container): Container
+    public function inject(ContainerInterface $container)
     {
         $container = $this->injectPaymentSubForms($container);
         $container = $this->injectPaymentMethodHandler($container);
@@ -33,11 +33,11 @@ class CheckoutDependencyInjector implements DependencyInjectorInterface
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
+     * @param \Spryker\Shared\Kernel\ContainerInterface $container
      *
-     * @return \Spryker\Yves\Kernel\Container
+     * @return \Spryker\Shared\Kernel\ContainerInterface
      */
-    protected function injectPaymentSubForms(Container $container): Container
+    protected function injectPaymentSubForms(ContainerInterface $container)
     {
         $container->extend(CheckoutDependencyProvider::PAYMENT_SUB_FORMS, function (SubFormPluginCollection $paymentSubForms) {
             $paymentSubForms->add(new DummyPaymentCreditCardSubFormPlugin());
@@ -50,11 +50,11 @@ class CheckoutDependencyInjector implements DependencyInjectorInterface
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
+     * @param \Spryker\Shared\Kernel\ContainerInterface $container
      *
-     * @return \Spryker\Yves\Kernel\Container
+     * @return \Spryker\Shared\Kernel\ContainerInterface
      */
-    protected function injectPaymentMethodHandler(Container $container): Container
+    protected function injectPaymentMethodHandler(ContainerInterface $container)
     {
         $container->extend(CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER, function (StepHandlerPluginCollection $paymentMethodHandler) {
             $dummyPaymentHandlerPlugin = new DummyPaymentHandlerPlugin();

@@ -10,7 +10,6 @@ namespace Spryker\Yves\Ratepay\Dependency\Injector;
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Ratepay\RatepayConstants;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
-use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Spryker\Yves\Ratepay\Plugin\RatepayElvSubFormPlugin;
 use Spryker\Yves\Ratepay\Plugin\RatepayHandlerPlugin;
@@ -27,7 +26,7 @@ class CheckoutDependencyInjector implements DependencyInjectorInterface
      *
      * @return \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Yves\Kernel\Container
      */
-    public function inject(Container $container): Container
+    public function inject(ContainerInterface $container)
     {
         $container = $this->injectPaymentSubForms($container);
         $container = $this->injectPaymentMethodHandler($container);

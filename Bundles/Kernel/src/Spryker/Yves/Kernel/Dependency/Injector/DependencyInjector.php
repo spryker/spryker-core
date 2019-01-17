@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\Kernel\Dependency\Injector;
 
-use Spryker\Yves\Kernel\Container;
+use Spryker\Shared\Kernel\ContainerInterface;
 
 class DependencyInjector implements DependencyInjectorInterface
 {
@@ -25,11 +25,11 @@ class DependencyInjector implements DependencyInjectorInterface
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
+     * @param \Spryker\Shared\Kernel\ContainerInterface $container
      *
-     * @return \Spryker\Yves\Kernel\Container
+     * @return \Spryker\Shared\Kernel\ContainerInterface
      */
-    public function inject(Container $container): Container
+    public function inject(ContainerInterface $container)
     {
         foreach ($this->dependencyInjectorCollection->getDependencyInjector() as $dependencyInjector) {
             $container = $dependencyInjector->inject($container);
