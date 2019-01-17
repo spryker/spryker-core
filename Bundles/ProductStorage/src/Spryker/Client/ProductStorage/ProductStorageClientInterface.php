@@ -130,6 +130,21 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
+     * - Maps raw product data from Storage to ProductViewTransfer for the provided locale.
+     * - Executes a stack of ProductViewExpanderPluginInterface plugins on ProductViewTransfer but excludes ProductConcreteViewExpanderExcluderPluginInterface.
+     *
+     * @api
+     *
+     * @param array $data
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function mapProductAbstractStorageData(array $data, $localeName, array $selectedAttributes = []);
+
+    /**
+     * Specification:
      * - Checks if products abstract is restricted.
      *
      * @api
