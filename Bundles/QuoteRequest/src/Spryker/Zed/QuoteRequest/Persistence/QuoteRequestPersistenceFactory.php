@@ -44,7 +44,9 @@ class QuoteRequestPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createQuoteRequestMapper(): QuoteRequestMapperInterface
     {
-        return new QuoteRequestMapper();
+        return new QuoteRequestMapper(
+            $this->getUtilEncodingService()
+        );
     }
 
     /**

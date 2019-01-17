@@ -8,11 +8,14 @@
 namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToSequenceNumberInterface;
 
 class QuoteRequestReferenceGenerator implements QuoteRequestReferenceGeneratorInterface
 {
+    protected const QUOTE_REQUEST_VERSION_REFERENCE_FORMAT = '%s-%s';
+
     /**
      * @var \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToSequenceNumberInterface
      */
@@ -43,5 +46,22 @@ class QuoteRequestReferenceGenerator implements QuoteRequestReferenceGeneratorIn
     public function generateQuoteRequestReference(QuoteRequestTransfer $quoteRequestTransfer): string
     {
         return $this->facadeSequenceNumber->generate($this->sequenceNumberSettings);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer
+     *
+     * @return string
+     */
+    public function generateQuoteRequestVersionReference(
+        QuoteRequestTransfer $quoteRequestTransfer,
+        QuoteRequestVersionTransfer $quoteRequestVersionTransfer
+    ): string {
+        return sprintf(
+            static::QUOTE_REQUEST_VERSION_REFERENCE_FORMAT,
+            $quoteRequestTransfer->getQuoteRequestReference(),
+            $quoteRequestVersionTransfer->getVersion()
+        );
     }
 }

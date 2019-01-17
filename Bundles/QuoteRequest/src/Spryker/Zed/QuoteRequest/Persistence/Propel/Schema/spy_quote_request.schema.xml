@@ -11,8 +11,14 @@
 
         <column name="quote_request_reference" type="VARCHAR" size="255" required="true"/>
         <column name="metadata" type="LONGVARCHAR" required="false"/>
+
         <column name="valid_until" type="DATE" required="false"/>
-        <column name="is_canceled" type="BOOLEAN" required="true" />
+        <column name="status" type="VARCHAR" size="255"/>
+        <column name="is_hidden" type="BOOLEAN" default="false"/>
+
+        <unique name="spy_quote_request-reference">
+            <unique-column name="quote_request_reference"/>
+        </unique>
 
         <foreign-key name="spy_quote_request-fk_company_user" foreignTable="spy_company_user" phpName="CompanyUser">
             <reference local="fk_company_user" foreign="id_company_user"/>
@@ -26,23 +32,15 @@
     <table name="spy_quote_request_version" phpName="SpyQuoteRequestVersion">
         <column name="id_quote_request_version" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
 
-        <column name="fk_user" type="INTEGER" required="false"/>
-
         <column name="fk_quote_request" type="INTEGER" required="true"/>
+
         <column name="version" type="INTEGER" required="true"/>
-        <column name="version_name" type="VARCHAR" size="255"/>
+        <column name="version_reference" type="VARCHAR" size="255"/>
 
-        <column name="status" type="VARCHAR" size="255"/>
-
-        <column name="original_quote" type="LONGVARCHAR"/>
         <column name="quote" type="LONGVARCHAR"/>
 
         <foreign-key name="spy_quote_request_version-fk_quote_request" foreignTable="spy_quote_request" onDelete="CASCADE">
             <reference foreign="id_quote_request" local="fk_quote_request"/>
-        </foreign-key>
-
-        <foreign-key name="spy_quote_request_version-fk_user" foreignTable="spy_user" phpName="User">
-            <reference local="fk_user" foreign="id_user"/>
         </foreign-key>
 
         <unique name="spy_quote_request_version-version">

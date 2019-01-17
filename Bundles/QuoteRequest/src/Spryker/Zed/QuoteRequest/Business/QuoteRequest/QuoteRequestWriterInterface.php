@@ -7,15 +7,16 @@
 
 namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
 
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteRequestWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function createQuoteRequestFromQuote(QuoteTransfer $quoteTransfer): QuoteRequestTransfer;
+    public function create(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
 }

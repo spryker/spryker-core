@@ -33,8 +33,6 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
         return new QuoteRequestWriter(
             $this->getConfig(),
             $this->getEntityManager(),
-            $this->getRepository(),
-            $this->getCustomerFacade(),
             $this->createQuoteRequestReferenceGenerator()
         );
     }

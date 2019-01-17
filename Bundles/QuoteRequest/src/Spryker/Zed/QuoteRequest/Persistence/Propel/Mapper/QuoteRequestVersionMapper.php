@@ -67,15 +67,11 @@ class QuoteRequestVersionMapper implements QuoteRequestVersionMapperInterface
     ): SpyQuoteRequestVersion {
         $data = $quoteRequestVersionTransfer->modifiedToArray();
         unset($data['quote']);
-        unset($data['original_quote']);
 
         $quoteRequestVersionEntity->fromArray($data);
 
         $quoteRequestVersionEntity->setQuote(
             $this->encodeQuoteData($quoteRequestVersionTransfer->getQuote())
-        );
-        $quoteRequestVersionEntity->setOriginalQuote(
-            $this->encodeQuoteData($quoteRequestVersionTransfer->getOriginalQuote())
         );
 
         return $quoteRequestVersionEntity;

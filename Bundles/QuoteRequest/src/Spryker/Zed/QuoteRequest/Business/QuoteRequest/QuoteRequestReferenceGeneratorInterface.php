@@ -8,6 +8,7 @@
 namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 
 interface QuoteRequestReferenceGeneratorInterface
 {
@@ -17,4 +18,15 @@ interface QuoteRequestReferenceGeneratorInterface
      * @return string
      */
     public function generateQuoteRequestReference(QuoteRequestTransfer $quoteRequestTransfer): string;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer
+     *
+     * @return string
+     */
+    public function generateQuoteRequestVersionReference(
+        QuoteRequestTransfer $quoteRequestTransfer,
+        QuoteRequestVersionTransfer $quoteRequestVersionTransfer
+    ): string;
 }

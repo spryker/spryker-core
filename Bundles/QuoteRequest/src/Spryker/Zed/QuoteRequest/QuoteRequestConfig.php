@@ -21,7 +21,7 @@ class QuoteRequestConfig extends AbstractBundleConfig
      */
     public function getInitialStatus(): string
     {
-        return SharedQuoteRequestConfig::STATUS_DRAFT;
+        return SharedQuoteRequestConfig::STATUS_WAITING;
     }
 
     /**

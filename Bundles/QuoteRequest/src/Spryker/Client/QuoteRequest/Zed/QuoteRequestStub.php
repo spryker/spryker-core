@@ -9,8 +9,8 @@ namespace Spryker\Client\QuoteRequest\Zed;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientInterface;
 
 class QuoteRequestStub implements QuoteRequestStubInterface
@@ -29,19 +29,19 @@ class QuoteRequestStub implements QuoteRequestStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function createQuoteRequestFromQuote(QuoteTransfer $quoteTransfer): QuoteRequestTransfer
+    public function create(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
-        $quoteRequestTransfer = $this->zedRequestClient->call(
-            '/quote-request/gateway/create-quote-request-from-quote',
-            $quoteTransfer
+        /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
+        $quoteRequestResponseTransfer = $this->zedRequestClient->call(
+            '/quote-request/gateway/create',
+            $quoteRequestTransfer
         );
 
-        return $quoteRequestTransfer;
+        return $quoteRequestResponseTransfer;
     }
 
     /**
