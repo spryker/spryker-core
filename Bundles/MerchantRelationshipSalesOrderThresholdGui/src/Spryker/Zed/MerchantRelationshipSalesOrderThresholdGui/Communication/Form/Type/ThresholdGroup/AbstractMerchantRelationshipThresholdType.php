@@ -124,7 +124,6 @@ abstract class AbstractMerchantRelationshipThresholdType extends AbstractType
         return new Callback(function ($value, ExecutionContextInterface $context) {
             /** @var \Symfony\Component\Form\Form $form */
             $form = $context->getObject();
-            $parentThresholdGroupForm = $form->getParent()->getParent();
             $data = $form->getParent()->getData();
 
             $this->checkStrategy($data, $context);
