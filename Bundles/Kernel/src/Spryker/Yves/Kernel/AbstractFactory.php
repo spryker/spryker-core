@@ -121,7 +121,7 @@ abstract class AbstractFactory implements FactoryInterface
         $dependencyProvider = $this->resolveDependencyProvider();
 
         $container = $this->provideDependencies($dependencyProvider, $container);
-        $container = $dependencyInjector->injectDependencies($container);
+        $container = $dependencyInjector->inject($container);
 
         /** @var \Spryker\Yves\Kernel\Container $container */
         $container = $this->overwriteForTesting($container);

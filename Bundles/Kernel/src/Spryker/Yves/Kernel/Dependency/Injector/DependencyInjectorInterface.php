@@ -16,5 +16,5 @@ interface DependencyInjectorInterface
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function injectDependencies(Container $container): Container;
+    public function inject(Container $container): Container;
 }

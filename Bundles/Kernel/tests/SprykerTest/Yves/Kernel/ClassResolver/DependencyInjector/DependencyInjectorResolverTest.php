@@ -11,9 +11,9 @@ use Codeception\Test\Unit;
 use ReflectionClass;
 use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Shared\Kernel\ContainerInterface;
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
+use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
+use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**

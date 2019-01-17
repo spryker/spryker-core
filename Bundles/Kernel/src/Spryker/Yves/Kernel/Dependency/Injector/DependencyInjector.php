@@ -29,10 +29,10 @@ class DependencyInjector implements DependencyInjectorInterface
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function injectDependencies(Container $container): Container
+    public function inject(Container $container): Container
     {
         foreach ($this->dependencyInjectorCollection->getDependencyInjector() as $dependencyInjector) {
-            $container = $dependencyInjector->injectDependencies($container);
+            $container = $dependencyInjector->inject($container);
         }
 
         return $container;
