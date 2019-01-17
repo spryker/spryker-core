@@ -12,9 +12,6 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryNodeStorageQuery;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\CategoryStorage\Business\CategoryStorageBusinessFactory;
 use Spryker\Zed\CategoryStorage\Business\CategoryStorageFacade;
@@ -39,19 +36,6 @@ use SprykerTest\Zed\CategoryStorage\CategoryStorageConfigMock;
  */
 class CategoryStorageListenerTest extends Unit
 {
-    /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
-    }
-
     /**
      * @return void
      */

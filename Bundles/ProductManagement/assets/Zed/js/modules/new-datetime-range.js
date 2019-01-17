@@ -25,8 +25,8 @@ $(document).ready(function() {
         return datetext + " " + h + ":" + m + ":" + s;
     }
 
-    var $fromDateTime = $('#product_concrete_form_edit_valid_from');
-    var $toDateTime = $('#product_concrete_form_edit_valid_to');
+    var $fromDateTime = $('.js-from-datetime');
+    var $toDateTime = $('.js-to-datetime');
 
     $fromDateTime.datepicker({
         dateFormat: 'yy-mm-dd',

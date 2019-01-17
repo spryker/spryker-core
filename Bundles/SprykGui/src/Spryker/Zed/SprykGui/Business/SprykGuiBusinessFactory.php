@@ -149,7 +149,10 @@ class SprykGuiBusinessFactory extends AbstractBusinessFactory
      */
     public function createOutputOptionBuilder(): OptionBuilderInterface
     {
-        return new ModuleOutputOptionBuilder();
+        return new ModuleOutputOptionBuilder(
+            $this->createAccessibleTransferFinder(),
+            $this->createPhpInternalTypes()
+        );
     }
 
     /**

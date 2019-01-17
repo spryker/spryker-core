@@ -49,7 +49,7 @@ class VersionPageController extends AbstractController
         } catch (CannotActivatePageException $exception) {
             $this->addErrorMessage('Cannot publish the CMS page. Please fill in all placeholders for this page.');
 
-            return $this->redirectResponse($request->headers->get('referer'));
+            return $this->redirectResponseExternal($request->headers->get('referer'));
         }
 
         return $this->redirectResponse($redirectUrl);

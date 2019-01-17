@@ -13,11 +13,8 @@ use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\GlossaryStorage\Business\GlossaryStorageBusinessFactory;
 use Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacade;
@@ -46,16 +43,10 @@ class GlossaryStorageListenerTest extends Unit
     protected $tester;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     protected function setUp()
     {
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
         parent::setUp();
 
         $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
@@ -251,7 +242,7 @@ class GlossaryStorageListenerTest extends Unit
     }
 
     /**
-     * @return \Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     protected function createGlossaryTranslationQuery(): SpyGlossaryTranslationQuery
     {

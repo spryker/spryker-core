@@ -12,9 +12,6 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\Navigation\Persistence\Map\SpyNavigationNodeLocalizedAttributesTableMap;
 use Orm\Zed\Navigation\Persistence\Map\SpyNavigationNodeTableMap;
 use Orm\Zed\NavigationStorage\Persistence\SpyNavigationStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\Navigation\Dependency\NavigationEvents;
 use Spryker\Zed\NavigationStorage\Business\NavigationStorageBusinessFactory;
 use Spryker\Zed\NavigationStorage\Business\NavigationStorageFacade;
@@ -39,19 +36,6 @@ use SprykerTest\Zed\NavigationStorage\NavigationStorageConfigMock;
  */
 class NavigationStorageListenerTest extends Unit
 {
-    /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
-    }
-
     /**
      * @return void
      */

@@ -26,10 +26,7 @@ use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
-use PHPUnit\Framework\SkippedTestError;
 use ReflectionClass;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
@@ -109,18 +106,11 @@ class ProductPageSearchListenerTest extends Unit
     protected $priceProductTransfer;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     protected function setUp()
     {
         parent::setUp();
-
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
 
         $this->productConcreteTransfer = $this->tester->haveProduct();
         $this->productAbstractTransfer = $this->tester->getProductFacade()->findProductAbstractById(

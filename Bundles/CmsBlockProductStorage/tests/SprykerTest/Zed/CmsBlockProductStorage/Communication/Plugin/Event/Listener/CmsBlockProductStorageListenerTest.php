@@ -11,9 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\CmsBlockProductConnector\Persistence\Map\SpyCmsBlockProductConnectorTableMap;
 use Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\CmsBlockProductConnectorEvents;
 use Spryker\Zed\CmsBlockProductStorage\Business\CmsBlockProductStorageBusinessFactory;
 use Spryker\Zed\CmsBlockProductStorage\Business\CmsBlockProductStorageFacade;
@@ -47,18 +44,11 @@ class CmsBlockProductStorageListenerTest extends Unit
     protected $productAbstractTransfer;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     protected function setUp()
     {
         parent::setUp();
-
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
 
         $this->productAbstractTransfer = $this->tester->haveProductAbstract();
 

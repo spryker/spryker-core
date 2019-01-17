@@ -12,9 +12,6 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
 use Orm\Zed\ProductCategoryFilter\Persistence\Map\SpyProductCategoryFilterTableMap;
 use Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\ProductCategoryFilter\Business\ProductCategoryFilterFacade;
 use Spryker\Zed\ProductCategoryFilter\Dependency\ProductCategoryFilterEvents;
 use Spryker\Zed\ProductCategoryFilterStorage\Business\ProductCategoryFilterStorageBusinessFactory;
@@ -36,19 +33,6 @@ use SprykerTest\Zed\ProductCategoryFilterStorage\ProductCategoryFilterStorageCon
  */
 class ProductCategoryFilterStorageListenerTest extends Unit
 {
-    /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
-    }
-
     /**
      * @return void
      */

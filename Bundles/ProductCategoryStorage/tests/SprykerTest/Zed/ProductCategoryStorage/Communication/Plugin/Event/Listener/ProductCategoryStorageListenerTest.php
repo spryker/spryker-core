@@ -15,9 +15,6 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorageQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\ProductCategory\Dependency\ProductCategoryEvents;
 use Spryker\Zed\ProductCategoryStorage\Business\ProductCategoryStorageBusinessFactory;
@@ -46,19 +43,6 @@ use SprykerTest\Zed\ProductCategoryStorage\ProductCategoryStorageConfigMock;
  */
 class ProductCategoryStorageListenerTest extends Unit
 {
-    /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
-    }
-
     /**
      * @return void
      */

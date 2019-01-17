@@ -18,4 +18,9 @@ interface CustomerAccessStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function getUnauthenticatedCustomerAccess(): CustomerAccessTransfer;
+
+    /**
+     * @return array
+     */
+    public function findAllCustomerAccessStorageEntities(): array;
 }

@@ -77,7 +77,7 @@ class ConditionsForm extends AbstractType
      *
      * @return $this
      */
-    protected function addMinimumItemAmount(FormBuilderInterface $builder): self
+    protected function addMinimumItemAmount(FormBuilderInterface $builder)
     {
         $label = 'The discount can be applied if the query applies for at least X item(s).';
 

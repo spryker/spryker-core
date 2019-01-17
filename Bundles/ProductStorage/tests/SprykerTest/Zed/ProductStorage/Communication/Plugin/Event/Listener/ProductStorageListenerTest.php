@@ -21,8 +21,6 @@ use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use PHPUnit\Framework\SkippedTestError;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\ProductStorage\Business\ProductStorageBusinessFactory;
 use Spryker\Zed\ProductStorage\Business\ProductStorageFacade;
@@ -82,11 +80,6 @@ class ProductStorageListenerTest extends Unit
 
         if (!$this->tester->isSuiteProject()) {
             throw new SkippedTestError('Warning: not in suite environment');
-        }
-
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
 
         $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
