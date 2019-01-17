@@ -59,7 +59,7 @@ class QuickOrderClient extends AbstractClient implements QuickOrderClientInterfa
     public function buildQuickOrderTransfer(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
     {
         return $this->getFactory()
-                    ->createQuickOrderTransferBuilder()
-                    ->build($quickOrderTransfer);
+            ->createQuickOrderTransferBuilder()
+            ->build($quickOrderTransfer);
     }
 }
