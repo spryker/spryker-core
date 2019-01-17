@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductImageAbstract;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;

@@ -9,9 +9,12 @@ namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
+ * @deprecated Use `\Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductImageAbstract\ProductImageAbstractPublishStorageListener` and `\\Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductImageAbstract\ProductImageAbstractUnpublishStorageListener` instead.
+ *
  * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductImageStorage\Communication\ProductImageStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductImageStorage\Business\ProductImageStorageFacadeInterface getFacade()
@@ -36,6 +39,12 @@ class ProductImageAbstractPublishStorageListener extends AbstractPlugin implemen
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        $this->getFacade()->publishProductAbstractImages($productAbstractIds);
+        if ($eventName === ProductImageEvents::PRODUCT_IMAGE_PRODUCT_ABSTRACT_UNPUBLISH) {
+            $this->getFacade()->unpublishProductAbstractImages($productAbstractIds);
+        }
+
+        if ($eventName === ProductImageEvents::PRODUCT_IMAGE_PRODUCT_ABSTRACT_PUBLISH) {
+            $this->getFacade()->publishProductAbstractImages($productAbstractIds);
+        }
     }
 }

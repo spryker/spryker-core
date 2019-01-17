@@ -5,11 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductImageAbstract;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
@@ -37,12 +36,6 @@ class ProductImageAbstractPublishStorageListener extends AbstractPlugin implemen
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === ProductImageEvents::PRODUCT_IMAGE_PRODUCT_ABSTRACT_UNPUBLISH) {
-            $this->getFacade()->unpublishProductAbstractImages($productAbstractIds);
-        }
-
-        if ($eventName === ProductImageEvents::PRODUCT_IMAGE_PRODUCT_ABSTRACT_PUBLISH) {
-            $this->getFacade()->publishProductAbstractImages($productAbstractIds);
-        }
+        $this->getFacade()->publishProductAbstractImages($productAbstractIds);
     }
 }
