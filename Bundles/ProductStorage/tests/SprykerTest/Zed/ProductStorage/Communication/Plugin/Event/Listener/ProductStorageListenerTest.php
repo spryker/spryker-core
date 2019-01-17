@@ -136,15 +136,15 @@ class ProductStorageListenerTest extends Unit
         SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractStorageQuery::create()->count();
 
-        $productAbstractStorageListener = new ProductAbstractStoragePublishListener();
-        $productAbstractStorageListener->setFacade($this->getProductStorageFacade());
+        $productAbstractStoragePublishListener = new ProductAbstractStoragePublishListener();
+        $productAbstractStoragePublishListener->setFacade($this->getProductStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
         ];
 
         // Act
-        $productAbstractStorageListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_ABSTRACT_PUBLISH);
+        $productAbstractStoragePublishListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_ABSTRACT_PUBLISH);
 
         // Assert
         $this->assertProductAbstractStorage($beforeCount);
@@ -156,15 +156,15 @@ class ProductStorageListenerTest extends Unit
     public function testProductAbstractStorageUnpublishListener(): void
     {
         // Prepare
-        $productAbstractStorageListener = new ProductAbstractStorageUnpublishListener();
-        $productAbstractStorageListener->setFacade($this->getProductStorageFacade());
+        $productAbstractStorageUnpublishListener = new ProductAbstractStorageUnpublishListener();
+        $productAbstractStorageUnpublishListener->setFacade($this->getProductStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
         ];
 
         // Act
-        $productAbstractStorageListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH);
+        $productAbstractStorageUnpublishListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH);
 
         // Assert
         $this->assertSame(0, SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->count());
@@ -278,15 +278,15 @@ class ProductStorageListenerTest extends Unit
         SpyProductConcreteStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
         $beforeCount = SpyProductConcreteStorageQuery::create()->count();
 
-        $productConcreteStorageListener = new ProductConcreteStoragePublishListener();
-        $productConcreteStorageListener->setFacade($this->getProductStorageFacade());
+        $productConcreteStoragePublishListener = new ProductConcreteStoragePublishListener();
+        $productConcreteStoragePublishListener->setFacade($this->getProductStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productConcreteTransfer->getIdProductConcrete()),
         ];
 
         // Act
-        $productConcreteStorageListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_CONCRETE_PUBLISH);
+        $productConcreteStoragePublishListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_CONCRETE_PUBLISH);
 
         // Assert
         $this->assertProductConcreteStorage($beforeCount);
@@ -298,15 +298,15 @@ class ProductStorageListenerTest extends Unit
     public function testProductConcreteStorageUnpublishListener(): void
     {
         // Prepare
-        $productConcreteStorageListener = new ProductConcreteStorageUnpublishListener();
-        $productConcreteStorageListener->setFacade($this->getProductStorageFacade());
+        $productConcreteStorageUnpublishListener = new ProductConcreteStorageUnpublishListener();
+        $productConcreteStorageUnpublishListener->setFacade($this->getProductStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productConcreteTransfer->getIdProductConcrete()),
         ];
 
         // Act
-        $productConcreteStorageListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_CONCRETE_UNPUBLISH);
+        $productConcreteStorageUnpublishListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_CONCRETE_UNPUBLISH);
 
         // Assert
         $this->assertSame(0, SpyProductConcreteStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->count());

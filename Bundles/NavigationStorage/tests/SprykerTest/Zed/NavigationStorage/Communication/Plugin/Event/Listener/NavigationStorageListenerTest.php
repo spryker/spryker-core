@@ -66,13 +66,13 @@ class NavigationStorageListenerTest extends Unit
         SpyNavigationStorageQuery::create()->filterByFkNavigation(1)->delete();
         $beforeCount = SpyNavigationStorageQuery::create()->count();
 
-        $navigationStorageListener = new NavigationStoragePublishListener();
-        $navigationStorageListener->setFacade($this->getNavigationStorageFacade());
+        $navigationStoragePublishListener = new NavigationStoragePublishListener();
+        $navigationStoragePublishListener->setFacade($this->getNavigationStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
         ];
-        $navigationStorageListener->handleBulk($eventTransfers, NavigationEvents::NAVIGATION_KEY_PUBLISH);
+        $navigationStoragePublishListener->handleBulk($eventTransfers, NavigationEvents::NAVIGATION_KEY_PUBLISH);
 
         // Assert
         $this->assertNavigationStorage($beforeCount);
@@ -83,13 +83,13 @@ class NavigationStorageListenerTest extends Unit
      */
     public function testNavigationStorageUnpublishListener(): void
     {
-        $navigationStorageListener = new NavigationStorageUnpublishListener();
-        $navigationStorageListener->setFacade($this->getNavigationStorageFacade());
+        $navigationStorageUnpublishListener = new NavigationStorageUnpublishListener();
+        $navigationStorageUnpublishListener->setFacade($this->getNavigationStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
         ];
-        $navigationStorageListener->handleBulk($eventTransfers, NavigationEvents::NAVIGATION_KEY_UNPUBLISH);
+        $navigationStorageUnpublishListener->handleBulk($eventTransfers, NavigationEvents::NAVIGATION_KEY_UNPUBLISH);
 
         // Assert
         $this->assertSame(0, SpyNavigationStorageQuery::create()->filterByFkNavigation(1)->count());

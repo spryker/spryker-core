@@ -190,13 +190,13 @@ class ProductPageSearchListenerTest extends Unit
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
 
         // Act
-        $productPageProductAbstractListener = new ProductPageProductAbstractPublishListener();
-        $productPageProductAbstractListener->setFacade($this->getProductPageSearchFacade());
+        $productPageProductAbstractPublishListener = new ProductPageProductAbstractPublishListener();
+        $productPageProductAbstractPublishListener->setFacade($this->getProductPageSearchFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
         ];
-        $productPageProductAbstractListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_ABSTRACT_PUBLISH);
+        $productPageProductAbstractPublishListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_ABSTRACT_PUBLISH);
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();

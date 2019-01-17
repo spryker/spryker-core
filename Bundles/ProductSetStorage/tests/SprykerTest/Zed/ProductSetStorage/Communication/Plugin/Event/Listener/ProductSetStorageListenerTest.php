@@ -97,15 +97,15 @@ class ProductSetStorageListenerTest extends Unit
         SpyProductSetStorageQuery::create()->filterByFkProductSet(1)->delete();
         $productSetStorageCount = SpyProductSetStorageQuery::create()->count();
 
-        $productSetStorageListener = new ProductSetStoragePublishListener();
-        $productSetStorageListener->setFacade($this->getProductSetStorageFacade());
+        $productSetStoragePublishListener = new ProductSetStoragePublishListener();
+        $productSetStoragePublishListener->setFacade($this->getProductSetStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
         ];
 
         // Act
-        $productSetStorageListener->handleBulk($eventTransfers, ProductSetEvents::PRODUCT_SET_PUBLISH);
+        $productSetStoragePublishListener->handleBulk($eventTransfers, ProductSetEvents::PRODUCT_SET_PUBLISH);
 
         // Assert
         $this->assertProductSetStorage($productSetStorageCount);
@@ -117,15 +117,15 @@ class ProductSetStorageListenerTest extends Unit
     public function testProductSetStorageUnpublishListener(): void
     {
         // Prepare
-        $productSetStorageListener = new ProductSetStorageUnpublishListener();
-        $productSetStorageListener->setFacade($this->getProductSetStorageFacade());
+        $productSetStorageUnpublishListener = new ProductSetStorageUnpublishListener();
+        $productSetStorageUnpublishListener->setFacade($this->getProductSetStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
         ];
 
         // Act
-        $productSetStorageListener->handleBulk($eventTransfers, ProductSetEvents::PRODUCT_SET_UNPUBLISH);
+        $productSetStorageUnpublishListener->handleBulk($eventTransfers, ProductSetEvents::PRODUCT_SET_UNPUBLISH);
 
         // Assert
         $this->assertSame(0, SpyProductSetStorageQuery::create()->filterByFkProductSet(1)->count());

@@ -165,15 +165,15 @@ class ProductLabelStorageListenerTest extends Unit
     {
         // Prepare
         SpyProductLabelDictionaryStorageQuery::create()->deleteAll();
-        $productLabelDictionaryStorageListener = new ProductLabelDictionaryStoragePublishListener();
-        $productLabelDictionaryStorageListener->setFacade($this->getProductLabelStorageFacade());
+        $productLabelDictionaryStoragePublishListener = new ProductLabelDictionaryStoragePublishListener();
+        $productLabelDictionaryStoragePublishListener->setFacade($this->getProductLabelStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer()),
         ];
 
         // Act
-        $productLabelDictionaryStorageListener->handleBulk($eventTransfers, ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_CREATE);
+        $productLabelDictionaryStoragePublishListener->handleBulk($eventTransfers, ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_CREATE);
 
         // Assert
         $nowDate = (new DateTime())->format('Y-m-d H:i:s');
@@ -197,15 +197,15 @@ class ProductLabelStorageListenerTest extends Unit
     public function testProductLabelDictionaryStorageUnpublishListener(): void
     {
         // Prepare
-        $productLabelDictionaryStorageListener = new ProductLabelDictionaryStorageUnpublishListener();
-        $productLabelDictionaryStorageListener->setFacade($this->getProductLabelStorageFacade());
+        $productLabelDictionaryStorageUnpublishListener = new ProductLabelDictionaryStorageUnpublishListener();
+        $productLabelDictionaryStorageUnpublishListener->setFacade($this->getProductLabelStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer()),
         ];
 
         // Act
-        $productLabelDictionaryStorageListener->handleBulk($eventTransfers, ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE);
+        $productLabelDictionaryStorageUnpublishListener->handleBulk($eventTransfers, ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE);
 
         // Assert
         $nowDate = (new DateTime())->format('Y-m-d H:i:s');

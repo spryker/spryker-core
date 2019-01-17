@@ -89,13 +89,13 @@ class CmsStorageListenerTest extends Unit
         SpyCmsPageStorageQuery::create()->filterByFkCmsPage(1)->delete();
         $beforeCount = SpyCmsPageStorageQuery::create()->count();
 
-        $cmsPageStorageListener = new CmsPageStoragePublishListener();
-        $cmsPageStorageListener->setFacade($this->getCmsStorageFacade());
+        $cmsPageStoragePublishListener = new CmsPageStoragePublishListener();
+        $cmsPageStoragePublishListener->setFacade($this->getCmsStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
         ];
-        $cmsPageStorageListener->handleBulk($eventTransfers, CmsEvents::CMS_VERSION_PUBLISH);
+        $cmsPageStoragePublishListener->handleBulk($eventTransfers, CmsEvents::CMS_VERSION_PUBLISH);
 
         // Assert
         $this->assertCmsPageStorage($beforeCount);
@@ -106,13 +106,13 @@ class CmsStorageListenerTest extends Unit
      */
     public function testCmsPageStorageUnpublishListener(): void
     {
-        $cmsPageStorageListener = new CmsPageStorageUnpublishListener();
-        $cmsPageStorageListener->setFacade($this->getCmsStorageFacade());
+        $cmsPageStorageUnpublishListener = new CmsPageStorageUnpublishListener();
+        $cmsPageStorageUnpublishListener->setFacade($this->getCmsStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
         ];
-        $cmsPageStorageListener->handleBulk($eventTransfers, CmsEvents::CMS_VERSION_UNPUBLISH);
+        $cmsPageStorageUnpublishListener->handleBulk($eventTransfers, CmsEvents::CMS_VERSION_UNPUBLISH);
 
         // Assert
         $this->assertSame(0, SpyCmsPageStorageQuery::create()->filterByFkCmsPage(1)->count());
@@ -148,15 +148,15 @@ class CmsStorageListenerTest extends Unit
         SpyCmsPageStorageQuery::create()->filterByFkCmsPage(1)->delete();
         $beforeCount = SpyCmsPageStorageQuery::create()->count();
 
-        $cmsPageUrlStorageListener = new CmsPageUrlStoragePublishListener();
-        $cmsPageUrlStorageListener->setFacade($this->getCmsStorageFacade());
+        $cmsPageUrlStoragePublishListener = new CmsPageUrlStoragePublishListener();
+        $cmsPageUrlStoragePublishListener->setFacade($this->getCmsStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
                 SpyUrlTableMap::COL_FK_RESOURCE_PAGE => 1,
             ]),
         ];
-        $cmsPageUrlStorageListener->handleBulk($eventTransfers, UrlEvents::ENTITY_SPY_URL_UPDATE);
+        $cmsPageUrlStoragePublishListener->handleBulk($eventTransfers, UrlEvents::ENTITY_SPY_URL_UPDATE);
 
         // Assert
         $this->assertCmsPageStorage($beforeCount);

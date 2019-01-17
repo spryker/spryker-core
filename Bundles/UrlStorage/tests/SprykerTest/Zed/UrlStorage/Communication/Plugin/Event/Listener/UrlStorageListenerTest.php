@@ -93,15 +93,15 @@ class UrlStorageListenerTest extends Unit
         $this->createSpyUrlStorageQuery()->filterByUrl($this->urlTransfer->getUrl())->delete();
         $beforeCount = SpyUrlStorageQuery::create()->count();
 
-        $urlStorageListener = new UrlStoragePublishListener();
-        $urlStorageListener->setFacade($this->getUrlStorageFacade());
+        $urlStoragePublishListener = new UrlStoragePublishListener();
+        $urlStoragePublishListener->setFacade($this->getUrlStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->urlTransfer->getIdUrl()),
         ];
 
         // Act
-        $urlStorageListener->handleBulk($eventTransfers, UrlEvents::URL_PUBLISH);
+        $urlStoragePublishListener->handleBulk($eventTransfers, UrlEvents::URL_PUBLISH);
 
         // Assert
         $this->assertUrlStorage($beforeCount);
@@ -113,15 +113,15 @@ class UrlStorageListenerTest extends Unit
     public function testUrlStorageUnpublishListener(): void
     {
         // Prepare
-        $urlStorageListener = new UrlStorageUnpublishListener();
-        $urlStorageListener->setFacade($this->getUrlStorageFacade());
+        $urlStorageUnpublishListener = new UrlStorageUnpublishListener();
+        $urlStorageUnpublishListener->setFacade($this->getUrlStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->urlTransfer->getIdUrl()),
         ];
 
         // Act
-        $urlStorageListener->handleBulk($eventTransfers, UrlEvents::URL_UNPUBLISH);
+        $urlStorageUnpublishListener->handleBulk($eventTransfers, UrlEvents::URL_UNPUBLISH);
 
         // Assert
         $this->assertSame(0, SpyUrlStorageQuery::create()->filterByFkUrl($this->urlTransfer->getIdUrl())->count());
@@ -159,15 +159,15 @@ class UrlStorageListenerTest extends Unit
         $idRedirect = $this->prepareUrlRedirectMockData();
         $beforeCount = SpyUrlRedirectStorageQuery::create()->count();
 
-        $redirectStorageListener = new RedirectStoragePublishListener();
-        $redirectStorageListener->setFacade($this->getUrlStorageFacade());
+        $redirectStoragePublishListener = new RedirectStoragePublishListener();
+        $redirectStoragePublishListener->setFacade($this->getUrlStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($idRedirect),
         ];
 
         // Act
-        $redirectStorageListener->handleBulk($eventTransfers, UrlEvents::ENTITY_SPY_URL_REDIRECT_CREATE);
+        $redirectStoragePublishListener->handleBulk($eventTransfers, UrlEvents::ENTITY_SPY_URL_REDIRECT_CREATE);
 
         // Assert
         $this->assertRedirectStorage($idRedirect, $beforeCount);
@@ -180,15 +180,15 @@ class UrlStorageListenerTest extends Unit
     {
         // Prepare
         $idUrlRedirect = $this->prepareUrlRedirectMockData();
-        $redirectStorageListener = new RedirectStorageUnpublishListener();
-        $redirectStorageListener->setFacade($this->getUrlStorageFacade());
+        $redirectStorageUnpublishListener = new RedirectStorageUnpublishListener();
+        $redirectStorageUnpublishListener->setFacade($this->getUrlStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($idUrlRedirect),
         ];
 
         // Act
-        $redirectStorageListener->handleBulk($eventTransfers, UrlEvents::ENTITY_SPY_URL_REDIRECT_DELETE);
+        $redirectStorageUnpublishListener->handleBulk($eventTransfers, UrlEvents::ENTITY_SPY_URL_REDIRECT_DELETE);
 
         // Assert
         $this->assertSame(0, SpyUrlRedirectStorageQuery::create()->filterByFkUrlRedirect($idUrlRedirect)->count());

@@ -77,13 +77,14 @@ class CategoryNodePageSearchListenerTest extends Unit
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
 
         // Act
-        $categoryPageSearchListener = new CategoryNodeSearchPublishListener();
-        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryNodeSearchPublishListener = new CategoryNodeSearchPublishListener();
+        $categoryNodeSearchPublishListener->setFacade($this->getCategoryPageSearchFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
         ];
-        $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::CATEGORY_NODE_PUBLISH);
+
+        $categoryNodeSearchPublishListener->handleBulk($eventTransfers, CategoryEvents::CATEGORY_NODE_PUBLISH);
 
         // Assert
         $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
@@ -98,15 +99,15 @@ class CategoryNodePageSearchListenerTest extends Unit
     {
         // Prepare
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
-        $categoryPageSearchListener = new CategoryNodeSearchUnpublishListener();
-        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryNodeSearchUnpublishListener = new CategoryNodeSearchUnpublishListener();
+        $categoryNodeSearchUnpublishListener->setFacade($this->getCategoryPageSearchFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
         ];
 
         // Act
-        $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::CATEGORY_NODE_UNPUBLISH);
+        $categoryNodeSearchUnpublishListener->handleBulk($eventTransfers, CategoryEvents::CATEGORY_NODE_UNPUBLISH);
 
         // Assert
         $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
@@ -147,15 +148,15 @@ class CategoryNodePageSearchListenerTest extends Unit
         SpyCategoryNodePageSearchQuery::create()->filterByFkCategoryNode(1)->delete();
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
 
-        $categoryPageSearchListener = new CategoryNodeCategoryTemplateSearchPublishListener();
-        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryNodeCategoryTemplateSearchPublishListener = new CategoryNodeCategoryTemplateSearchPublishListener();
+        $categoryNodeCategoryTemplateSearchPublishListener->setFacade($this->getCategoryPageSearchFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
         ];
 
         // Act
-        $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_CREATE);
+        $categoryNodeCategoryTemplateSearchPublishListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_CREATE);
 
         // Assert
         $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
@@ -219,15 +220,15 @@ class CategoryNodePageSearchListenerTest extends Unit
         SpyCategoryNodePageSearchQuery::create()->filterByFkCategoryNode(1)->delete();
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
 
-        $categoryPageSearchListener = new CategoryNodeCategoryPageSearchPublishListener();
-        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryNodeCategoryPageSearchPublishListener = new CategoryNodeCategoryPageSearchPublishListener();
+        $categoryNodeCategoryPageSearchPublishListener->setFacade($this->getCategoryPageSearchFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
         ];
 
         // Act
-        $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_CREATE);
+        $categoryNodeCategoryPageSearchPublishListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_CREATE);
 
         // Assert
         $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
@@ -243,15 +244,15 @@ class CategoryNodePageSearchListenerTest extends Unit
         // Prepare
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
 
-        $categoryPageSearchListener = new CategoryNodeCategoryPageSearchUnpublishListener();
-        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryNodeCategoryPageSearchUnpublishListener = new CategoryNodeCategoryPageSearchUnpublishListener();
+        $categoryNodeCategoryPageSearchUnpublishListener->setFacade($this->getCategoryPageSearchFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
         ];
 
         // Act
-        $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_DELETE);
+        $categoryNodeCategoryPageSearchUnpublishListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_DELETE);
 
         // Assert
         $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
@@ -294,8 +295,8 @@ class CategoryNodePageSearchListenerTest extends Unit
         SpyCategoryNodePageSearchQuery::create()->filterByFkCategoryNode(1)->delete();
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
 
-        $categoryPageSearchListener = new CategoryNodeCategoryAttributeSearchPublishListener();
-        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryNodeCategoryAttributeSearchPublishListener = new CategoryNodeCategoryAttributeSearchPublishListener();
+        $categoryNodeCategoryAttributeSearchPublishListener->setFacade($this->getCategoryPageSearchFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -304,7 +305,7 @@ class CategoryNodePageSearchListenerTest extends Unit
         ];
 
         // Act
-        $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE);
+        $categoryNodeCategoryAttributeSearchPublishListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE);
 
         // Assert
         $afterCount = SpyCategoryNodePageSearchQuery::create()->count();

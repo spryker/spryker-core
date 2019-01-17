@@ -86,14 +86,14 @@ class CmsBlockCategoryStorageListenerTest extends Unit
      */
     public function testCmsBlockCategoryConnectorStorageUnpublishListener(): void
     {
-        $cmsBlockCategoryConnectorPublishStorageListener = new CmsBlockCategoryConnectorStorageUnpublishListener();
-        $cmsBlockCategoryConnectorPublishStorageListener->setFacade($this->getCmsBlockCategoryStorageFacade());
+        $cmsBlockCategoryConnectorStorageUnpublishListener = new CmsBlockCategoryConnectorStorageUnpublishListener();
+        $cmsBlockCategoryConnectorStorageUnpublishListener->setFacade($this->getCmsBlockCategoryStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(static::FK_CATEGORY),
         ];
 
-        $cmsBlockCategoryConnectorPublishStorageListener->handleBulk($eventTransfers, CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_UNPUBLISH);
+        $cmsBlockCategoryConnectorStorageUnpublishListener->handleBulk($eventTransfers, CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_UNPUBLISH);
 
         // Assert
         $this->assertSame(1, SpyCmsBlockCategoryStorageQuery::create()->filterByFkCategory(static::FK_CATEGORY)->count());
@@ -129,15 +129,15 @@ class CmsBlockCategoryStorageListenerTest extends Unit
         SpyCmsBlockCategoryStorageQuery::create()->filterByFkCategory(static::FK_CATEGORY)->delete();
         $beforeCount = SpyCmsBlockCategoryStorageQuery::create()->count();
 
-        $cmsBlockCategoryConnectorStorageListener = new CmsBlockCategoryConnectorEntityStoragePublishListener();
-        $cmsBlockCategoryConnectorStorageListener->setFacade($this->getCmsBlockCategoryStorageFacade());
+        $cmsBlockCategoryConnectorEntityStoragePublishListener = new CmsBlockCategoryConnectorEntityStoragePublishListener();
+        $cmsBlockCategoryConnectorEntityStoragePublishListener->setFacade($this->getCmsBlockCategoryStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
                 SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY => static::FK_CATEGORY,
             ]),
         ];
-        $cmsBlockCategoryConnectorStorageListener->handleBulk($eventTransfers, CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_CREATE);
+        $cmsBlockCategoryConnectorEntityStoragePublishListener->handleBulk($eventTransfers, CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_CREATE);
 
         // Assert
         $this->assertCmsBlockCategoryStorage($beforeCount);
@@ -148,15 +148,15 @@ class CmsBlockCategoryStorageListenerTest extends Unit
      */
     public function testCmsBlockCategoryConnectorEntityStorageUnpublishListener(): void
     {
-        $cmsBlockCategoryConnectorStorageListener = new CmsBlockCategoryConnectorEntityStorageUnpublishListener();
-        $cmsBlockCategoryConnectorStorageListener->setFacade($this->getCmsBlockCategoryStorageFacade());
+        $cmsBlockCategoryConnectorEntityStorageUnpublishListener = new CmsBlockCategoryConnectorEntityStorageUnpublishListener();
+        $cmsBlockCategoryConnectorEntityStorageUnpublishListener->setFacade($this->getCmsBlockCategoryStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
                 SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY => static::FK_CATEGORY,
             ]),
         ];
-        $cmsBlockCategoryConnectorStorageListener->handleBulk($eventTransfers, CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_DELETE);
+        $cmsBlockCategoryConnectorEntityStorageUnpublishListener->handleBulk($eventTransfers, CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_DELETE);
 
         // Assert
         $this->assertSame(1, SpyCmsBlockCategoryStorageQuery::create()->filterByFkCategory(static::FK_CATEGORY)->count());

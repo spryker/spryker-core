@@ -93,13 +93,13 @@ class CmsBlockProductStorageListenerTest extends Unit
         SpyCmsBlockProductStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyCmsBlockProductStorageQuery::create()->count();
 
-        $cmsBlockProductConnectorPublishStorageListener = new CmsBlockProductConnectorStoragePublishListener();
-        $cmsBlockProductConnectorPublishStorageListener->setFacade($this->getCmsBlockProductStorageFacade());
+        $cmsBlockProductConnectorStoragePublishListener = new CmsBlockProductConnectorStoragePublishListener();
+        $cmsBlockProductConnectorStoragePublishListener->setFacade($this->getCmsBlockProductStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
         ];
-        $cmsBlockProductConnectorPublishStorageListener->handleBulk($eventTransfers, CmsBlockProductConnectorEvents::CMS_BLOCK_PRODUCT_CONNECTOR_PUBLISH);
+        $cmsBlockProductConnectorStoragePublishListener->handleBulk($eventTransfers, CmsBlockProductConnectorEvents::CMS_BLOCK_PRODUCT_CONNECTOR_PUBLISH);
 
         // Assert
         $this->assertCmsBlockProductStorage($beforeCount);
@@ -110,14 +110,14 @@ class CmsBlockProductStorageListenerTest extends Unit
      */
     public function testCmsBlockProductConnectorStorageUnpublishListener(): void
     {
-        $cmsBlockProductConnectorUnpublishStorageListener = new CmsBlockProductConnectorStorageUnpublishListener();
-        $cmsBlockProductConnectorUnpublishStorageListener->setFacade($this->getCmsBlockProductStorageFacade());
+        $cmsBlockProductConnectorStorageUnpublishListener = new CmsBlockProductConnectorStorageUnpublishListener();
+        $cmsBlockProductConnectorStorageUnpublishListener->setFacade($this->getCmsBlockProductStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
         ];
 
-        $cmsBlockProductConnectorUnpublishStorageListener->handleBulk($eventTransfers, CmsBlockProductConnectorEvents::CMS_BLOCK_PRODUCT_CONNECTOR_UNPUBLISH);
+        $cmsBlockProductConnectorStorageUnpublishListener->handleBulk($eventTransfers, CmsBlockProductConnectorEvents::CMS_BLOCK_PRODUCT_CONNECTOR_UNPUBLISH);
 
         // Assert
         $this->assertSame(0, SpyCmsBlockProductStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->count());
@@ -153,15 +153,15 @@ class CmsBlockProductStorageListenerTest extends Unit
         SpyCmsBlockProductStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyCmsBlockProductStorageQuery::create()->count();
 
-        $cmsBlockProductConnectorStorageListener = new CmsBlockProductConnectorEntityStoragePublishListener();
-        $cmsBlockProductConnectorStorageListener->setFacade($this->getCmsBlockProductStorageFacade());
+        $cmsBlockProductConnectorEntityStoragePublishListener = new CmsBlockProductConnectorEntityStoragePublishListener();
+        $cmsBlockProductConnectorEntityStoragePublishListener->setFacade($this->getCmsBlockProductStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
                 SpyCmsBlockProductConnectorTableMap::COL_FK_PRODUCT_ABSTRACT => $this->productAbstractTransfer->getIdProductAbstract(),
             ]),
         ];
-        $cmsBlockProductConnectorStorageListener->handleBulk($eventTransfers, CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_CREATE);
+        $cmsBlockProductConnectorEntityStoragePublishListener->handleBulk($eventTransfers, CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_CREATE);
 
         // Assert
         $this->assertCmsBlockProductStorage($beforeCount);

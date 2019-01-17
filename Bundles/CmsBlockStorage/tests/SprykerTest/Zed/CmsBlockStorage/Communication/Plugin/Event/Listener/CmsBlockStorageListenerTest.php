@@ -66,13 +66,13 @@ class CmsBlockStorageListenerTest extends Unit
         SpyCmsBlockStorageQuery::create()->filterByFkCmsBlock(1)->delete();
         $beforeCount = SpyCmsBlockStorageQuery::create()->count();
 
-        $cmsBlockStorageListener = new CmsBlockStoragePublishListener();
-        $cmsBlockStorageListener->setFacade($this->getCmsBlockStorageFacade());
+        $cmsBlockStoragePublishListener = new CmsBlockStoragePublishListener();
+        $cmsBlockStoragePublishListener->setFacade($this->getCmsBlockStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
         ];
-        $cmsBlockStorageListener->handleBulk($eventTransfers, CmsBlockEvents::CMS_BLOCK_PUBLISH);
+        $cmsBlockStoragePublishListener->handleBulk($eventTransfers, CmsBlockEvents::CMS_BLOCK_PUBLISH);
 
         // Assert
         $this->assertCmsBlockCategoryStorage($beforeCount);
@@ -83,13 +83,13 @@ class CmsBlockStorageListenerTest extends Unit
      */
     public function testCmsBlockStorageUnpublishListener(): void
     {
-        $cmsBlockStorageListener = new CmsBlockStorageUnpublishListener();
-        $cmsBlockStorageListener->setFacade($this->getCmsBlockStorageFacade());
+        $cmsBlockStorageUnpublishListener = new CmsBlockStorageUnpublishListener();
+        $cmsBlockStorageUnpublishListener->setFacade($this->getCmsBlockStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
         ];
-        $cmsBlockStorageListener->handleBulk($eventTransfers, CmsBlockEvents::CMS_BLOCK_UNPUBLISH);
+        $cmsBlockStorageUnpublishListener->handleBulk($eventTransfers, CmsBlockEvents::CMS_BLOCK_UNPUBLISH);
 
         // Assert
         $this->assertSame(0, SpyCmsBlockStorageQuery::create()->filterByFkCmsBlock(1)->count());
@@ -125,15 +125,15 @@ class CmsBlockStorageListenerTest extends Unit
         SpyCmsBlockStorageQuery::create()->filterByFkCmsBlock(1)->delete();
         $beforeCount = SpyCmsBlockStorageQuery::create()->count();
 
-        $cmsBlockGlossaryKeyMappingBlockStorageListener = new CmsBlockGlossaryKeyMappingBlockStoragePublishListener();
-        $cmsBlockGlossaryKeyMappingBlockStorageListener->setFacade($this->getCmsBlockStorageFacade());
+        $cmsBlockGlossaryKeyMappingBlockStoragePublishListener = new CmsBlockGlossaryKeyMappingBlockStoragePublishListener();
+        $cmsBlockGlossaryKeyMappingBlockStoragePublishListener->setFacade($this->getCmsBlockStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
                 SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_CMS_BLOCK => 1,
             ]),
         ];
-        $cmsBlockGlossaryKeyMappingBlockStorageListener->handleBulk($eventTransfers, CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_CREATE);
+        $cmsBlockGlossaryKeyMappingBlockStoragePublishListener->handleBulk($eventTransfers, CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_CREATE);
 
         // Assert
         $this->assertCmsBlockCategoryStorage($beforeCount);
@@ -144,15 +144,15 @@ class CmsBlockStorageListenerTest extends Unit
      */
     public function testCmsBlockGlossaryKeyMappingBlockStorageUnpublishListener(): void
     {
-        $cmsBlockGlossaryKeyMappingBlockStorageListener = new CmsBlockGlossaryKeyMappingBlockStoragePublishListener();
-        $cmsBlockGlossaryKeyMappingBlockStorageListener->setFacade($this->getCmsBlockStorageFacade());
+        $cmsBlockGlossaryKeyMappingBlockStoragePublishListener = new CmsBlockGlossaryKeyMappingBlockStoragePublishListener();
+        $cmsBlockGlossaryKeyMappingBlockStoragePublishListener->setFacade($this->getCmsBlockStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
                 SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_CMS_BLOCK => 1,
             ]),
         ];
-        $cmsBlockGlossaryKeyMappingBlockStorageListener->handleBulk($eventTransfers, CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_DELETE);
+        $cmsBlockGlossaryKeyMappingBlockStoragePublishListener->handleBulk($eventTransfers, CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_DELETE);
 
         // Assert
         $this->assertGreaterThan(1, SpyCmsBlockStorageQuery::create()->filterByFkCmsBlock(1)->count());

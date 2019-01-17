@@ -61,15 +61,15 @@ class ProductSearchConfigStorageListenerTest extends Unit
     {
         // Prepare
         SpyProductSearchConfigStorageQuery::create()->deleteAll();
-        $productSearchConfigStorageListener = new ProductSearchConfigStoragePublishListener();
-        $productSearchConfigStorageListener->setFacade($this->getProductSearchConfigStorageFacade());
+        $productSearchConfigStoragePublishListener = new ProductSearchConfigStoragePublishListener();
+        $productSearchConfigStoragePublishListener->setFacade($this->getProductSearchConfigStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer()),
         ];
 
         // Act
-        $productSearchConfigStorageListener->handleBulk($eventTransfers, ProductSearchEvents::PRODUCT_SEARCH_CONFIG_PUBLISH);
+        $productSearchConfigStoragePublishListener->handleBulk($eventTransfers, ProductSearchEvents::PRODUCT_SEARCH_CONFIG_PUBLISH);
 
         // Assert
         $this->assertProductSearchConfigStorage();
@@ -81,15 +81,15 @@ class ProductSearchConfigStorageListenerTest extends Unit
     public function testProductSearchConfigStorageUnpublishListener(): void
     {
         // Prepare
-        $productSearchConfigStorageListener = new ProductSearchConfigStorageUnpublishListener();
-        $productSearchConfigStorageListener->setFacade($this->getProductSearchConfigStorageFacade());
+        $productSearchConfigStorageUnpublishListener = new ProductSearchConfigStorageUnpublishListener();
+        $productSearchConfigStorageUnpublishListener->setFacade($this->getProductSearchConfigStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer()),
         ];
 
         // Act
-        $productSearchConfigStorageListener->handleBulk($eventTransfers, ProductSearchEvents::PRODUCT_SEARCH_CONFIG_UNPUBLISH);
+        $productSearchConfigStorageUnpublishListener->handleBulk($eventTransfers, ProductSearchEvents::PRODUCT_SEARCH_CONFIG_UNPUBLISH);
 
         // Assert
         if (SpyProductSearchAttributeQuery::create()->count() === 0) {

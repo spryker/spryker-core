@@ -109,15 +109,15 @@ class PriceProductAbstractStorageListenerTest extends Unit
         SpyPriceProductAbstractStorageQuery::create()->filterByFkProductAbstract($this->priceProductTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyPriceProductAbstractStorageQuery::create()->count();
 
-        $priceProductAbstractPublishStorageListener = new PriceProductAbstractStoragePublishListener();
-        $priceProductAbstractPublishStorageListener->setFacade($this->getPriceProductStorageFacade());
+        $priceProductAbstractStoragePublishListener = new PriceProductAbstractStoragePublishListener();
+        $priceProductAbstractStoragePublishListener->setFacade($this->getPriceProductStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->priceProductTransfer->getIdProductAbstract()),
         ];
 
         // Action
-        $priceProductAbstractPublishStorageListener->handleBulk($eventTransfers, PriceProductEvents::PRICE_ABSTRACT_PUBLISH);
+        $priceProductAbstractStoragePublishListener->handleBulk($eventTransfers, PriceProductEvents::PRICE_ABSTRACT_PUBLISH);
 
         // Assert
         $this->assertPriceProductAbstractStorage($beforeCount);
@@ -129,15 +129,15 @@ class PriceProductAbstractStorageListenerTest extends Unit
     public function testPriceProductAbstractStorageUnpublishListener(): void
     {
         // Prepare
-        $priceProductAbstractPublishStorageListener = new PriceProductAbstractStorageUnpublishListener();
-        $priceProductAbstractPublishStorageListener->setFacade($this->getPriceProductStorageFacade());
+        $priceProductAbstractStorageUnpublishListener = new PriceProductAbstractStorageUnpublishListener();
+        $priceProductAbstractStorageUnpublishListener->setFacade($this->getPriceProductStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->priceProductTransfer->getIdProductAbstract()),
         ];
 
         // Action
-        $priceProductAbstractPublishStorageListener->handleBulk($eventTransfers, PriceProductEvents::PRICE_ABSTRACT_UNPUBLISH);
+        $priceProductAbstractStorageUnpublishListener->handleBulk($eventTransfers, PriceProductEvents::PRICE_ABSTRACT_UNPUBLISH);
 
         // Assert
         $this->assertSame(0, SpyPriceProductAbstractStorageQuery::create()->filterByFkProductAbstract($this->priceProductTransfer->getIdProductAbstract())->count());
@@ -177,8 +177,8 @@ class PriceProductAbstractStorageListenerTest extends Unit
         SpyPriceProductAbstractStorageQuery::create()->filterByFkProductAbstract($this->priceProductTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyPriceProductAbstractStorageQuery::create()->count();
 
-        $priceProductAbstractStorageListener = new PriceProductAbstractEntityStoragePublishListener();
-        $priceProductAbstractStorageListener->setFacade($this->getPriceProductStorageFacade());
+        $priceProductAbstractEntityStoragePublishListener = new PriceProductAbstractEntityStoragePublishListener();
+        $priceProductAbstractEntityStoragePublishListener->setFacade($this->getPriceProductStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -187,7 +187,7 @@ class PriceProductAbstractStorageListenerTest extends Unit
         ];
 
         // Action
-        $priceProductAbstractStorageListener->handleBulk($eventTransfers, PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_CREATE);
+        $priceProductAbstractEntityStoragePublishListener->handleBulk($eventTransfers, PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_CREATE);
 
         // Assert
         $this->assertPriceProductAbstractStorage($beforeCount);
@@ -269,15 +269,15 @@ class PriceProductAbstractStorageListenerTest extends Unit
         SpyPriceProductAbstractStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->delete();
         $beforeCount = SpyPriceProductAbstractStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->count();
 
-        $priceTypeProductAbstractStorageListener = new PriceTypeProductAbstractStoragePublishListener();
-        $priceTypeProductAbstractStorageListener->setFacade($this->getPriceProductStorageFacade());
+        $priceTypeProductAbstractStoragePublishListener = new PriceTypeProductAbstractStoragePublishListener();
+        $priceTypeProductAbstractStoragePublishListener->setFacade($this->getPriceProductStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->priceProductTransfer->getFkPriceType()),
         ];
 
         // Action
-        $priceTypeProductAbstractStorageListener->handleBulk($eventTransfers, PriceProductEvents::ENTITY_SPY_PRICE_TYPE_UPDATE);
+        $priceTypeProductAbstractStoragePublishListener->handleBulk($eventTransfers, PriceProductEvents::ENTITY_SPY_PRICE_TYPE_UPDATE);
 
         // Assert
         $priceProductAbstractStorageCount = SpyPriceProductAbstractStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->count();
