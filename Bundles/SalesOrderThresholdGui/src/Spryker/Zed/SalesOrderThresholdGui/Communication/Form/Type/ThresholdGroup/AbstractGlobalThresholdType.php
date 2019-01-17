@@ -138,21 +138,23 @@ abstract class AbstractGlobalThresholdType extends AbstractType
      */
     protected function checkStrategy(array $data, ExecutionContextInterface $context): void
     {
-        $plugins = $this->getFactory()->getSalesOrderThresholdFormExpanderPlugins();
+        $salesOrderThresholdFormExpanderPlugins = $this->getFactory()->getSalesOrderThresholdFormExpanderPlugins();
 
-        foreach ($plugins as $plugin) {
-            if (!$plugin instanceof  SalesOrderThresholdFormFieldDependenciesPluginInterface) {
+        foreach ($salesOrderThresholdFormExpanderPlugins as $salesOrderThresholdFormExpanderPlugin) {
+            if (!$salesOrderThresholdFormExpanderPlugin instanceof  SalesOrderThresholdFormFieldDependenciesPluginInterface
+                || $salesOrderThresholdFormExpanderPlugin->getThresholdKey() !== $data[static::FIELD_STRATEGY]
+            ) {
                 continue;
             }
 
-            /** @var Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormFieldDependenciesPluginInterface $plugin */
-            if ($plugin->getThresholdKey() !== $data[static::FIELD_STRATEGY] || !$plugin->getThresholdFieldDependentFieldNames()) {
+            /** @var Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormFieldDependenciesPluginInterface $salesOrderThresholdFormExpanderPlugin */
+            if (!$salesOrderThresholdFormExpanderPlugin->getThresholdFieldDependentFieldNames()) {
                 continue;
             }
 
-            foreach ($plugin->getThresholdFieldDependentFieldNames() as $field) {
+            foreach ($salesOrderThresholdFormExpanderPlugin->getThresholdFieldDependentFieldNames() as $field) {
                 if ($data[$field] && !$data[static::FIELD_THRESHOLD]) {
-                    $message = strtr(static::MESSAGE_UPDATE_SOFT_STRATEGY_ERROR, [static::MESSAGE_KEY => $plugin->getThresholdGroup()]);
+                    $message = strtr(static::MESSAGE_UPDATE_SOFT_STRATEGY_ERROR, [static::MESSAGE_KEY => $salesOrderThresholdFormExpanderPlugin->getThresholdGroup()]);
                     $context->addViolation($message);
                     return;
                 }

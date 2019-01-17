@@ -131,6 +131,8 @@ class GlobalSoftThresholdFixedFeeFormExpanderPlugin extends AbstractPlugin imple
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return array

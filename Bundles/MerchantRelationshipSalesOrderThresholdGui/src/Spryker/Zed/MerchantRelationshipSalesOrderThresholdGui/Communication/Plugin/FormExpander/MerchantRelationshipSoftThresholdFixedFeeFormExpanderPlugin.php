@@ -131,6 +131,8 @@ class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends Abstra
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return array

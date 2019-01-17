@@ -130,6 +130,8 @@ class MerchantRelationshipSoftThresholdFlexibleFeeFormExpanderPlugin extends Abs
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return array

@@ -130,6 +130,8 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return array
