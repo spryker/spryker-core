@@ -1,0 +1,22 @@
+{% block category_image_set_widget %}
+    <div class="image-set sep_down m-t-sm">
+        <div class="row">
+            <div class="col-lg-11">{{ form_row(form.name) }}</div>
+            <div class="col-lg-1">
+                {{ removeActionButton('#', '', {'class': 'remove-image-set'}) }}
+            </div>
+        </div>
+
+        <div class="image-collection-container">
+            {% for categoryImage in form.categoryImages %}
+                {{ form_widget(categoryImage) }}
+            {% endfor %}
+        </div>
+
+        {{ form_rest(form) }}
+
+        <a href="#" class="btn btn-outline btn-primary add-another-image-collection m-b-sm">
+            <i class="fa fa-file-image-o"></i> {{ 'Add image' | trans }}
+        </a>
+    </div>
+{% endblock %}

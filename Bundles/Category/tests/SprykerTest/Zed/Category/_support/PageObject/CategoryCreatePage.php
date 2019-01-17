@@ -11,8 +11,11 @@ class CategoryCreatePage extends Category
 {
     public const URL = '/category/create';
 
-    public const FORM_SUBMIT_BUTTON = 'Create';
+    public const FORM_SUBMIT_BUTTON = 'Save';
     public const SUCCESS_MESSAGE = 'The category was added successfully.';
+    public const CLOSED_IBOX_SELECTORS = [
+        '#localizedAttributes-ibox-de_DE .ibox-tools',
+    ];
 
     /**
      * @param string $categoryKey
