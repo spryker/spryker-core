@@ -65,7 +65,7 @@ class Shipment implements ShipmentInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $shipmentEntity
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     protected function transformShipment(SpySalesShipment $shipmentEntity)
     {
