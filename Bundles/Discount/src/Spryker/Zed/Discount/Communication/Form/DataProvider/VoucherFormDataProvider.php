@@ -20,6 +20,7 @@ class VoucherFormDataProvider extends BaseDiscountFormDataProvider
     {
         $discountVoucherTransfer = new DiscountVoucherTransfer();
         $discountVoucherTransfer->setIdDiscount($idDiscount);
+        $discountVoucherTransfer->setNumberOfUses(0);
 
         if ($discountVoucherTransfer->getMaxNumberOfUses() === null) {
             $discountVoucherTransfer->setMaxNumberOfUses(0);

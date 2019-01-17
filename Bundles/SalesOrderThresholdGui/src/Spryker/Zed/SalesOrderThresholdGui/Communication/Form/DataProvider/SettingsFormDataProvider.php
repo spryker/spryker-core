@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider;
 
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\SettingsForm;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\SettingsType;
 use Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToSalesOrderThresholdFacadeInterface;
 use Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToTaxFacadeInterface;
 
@@ -42,7 +42,7 @@ class SettingsFormDataProvider
     {
         $options = [];
 
-        $options[SettingsForm::OPTION_TAX_SETS] = $this->createTaxSetsList();
+        $options[SettingsType::OPTION_TAX_SETS] = $this->createTaxSetsList();
 
         return $options;
     }
@@ -52,7 +52,7 @@ class SettingsFormDataProvider
      */
     public function getData(): array
     {
-        return [SettingsForm::FIELD_TAX_SET => $this->salesOrderThresholdFacade->findSalesOrderThresholdTaxSetId()];
+        return [SettingsType::FIELD_TAX_SET => $this->salesOrderThresholdFacade->findSalesOrderThresholdTaxSetId()];
     }
 
     /**
