@@ -17,7 +17,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ProductImageStorage\Business\ProductImageStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductImageStorage\ProductImageStorageConfig getConfig()
  */
-class ProductImageConcreteUnpublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductImageConcreteStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductImageConcrete;
+namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductImageAbstract;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -17,7 +17,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ProductImageStorage\Business\ProductImageStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductImageStorage\ProductImageStorageConfig getConfig()
  */
-class ProductImageConcretePublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductImageAbstractStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -34,8 +34,8 @@ class ProductImageConcretePublishStorageListener extends AbstractPlugin implemen
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $productIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        $this->getFacade()->publishProductConcreteImages($productIds);
+        $this->getFacade()->publishProductAbstractImages($productAbstractIds);
     }
 }
