@@ -94,14 +94,4 @@ class MerchantRelationshipSoftThresholdWithMessageFormExpanderPlugin extends Abs
 
         return $salesOrderThresholdValueTransfer;
     }
-
-    /**
-     * @api
-     *
-     * @return array
-     */
-    public function getDependenceFields(): array
-    {
-        return [];
-    }
 }

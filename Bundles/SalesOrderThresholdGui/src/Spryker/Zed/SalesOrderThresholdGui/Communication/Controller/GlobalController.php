@@ -26,8 +26,6 @@ class GlobalController extends AbstractController
 {
     protected const PARAM_STORE_CURRENCY_REQUEST = 'store_currency';
     protected const MESSAGE_UPDATE_SUCCESSFUL = 'The Global Thresholds is saved successfully.';
-    protected const MESSAGE_UPDATE_SOFT_STRATEGY_ERROR = 'To save {{strategy_group}} threshold - enter value that is higher than 0 in "Threshold value" field. To delete threshold set all values equal to 0 or left them empty and save.';
-    protected const MESSAGE_KEY = '{{strategy_group}}';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -73,14 +71,6 @@ class GlobalController extends AbstractController
         CurrencyTransfer $currencyTransfer
     ): RedirectResponse {
         $data = $globalThresholdForm->getData();
-        $this->checkStrategy(
-            $data[GlobalThresholdType::FIELD_HARD],
-            SalesOrderThresholdGuiConfig::GROUP_HARD
-        );
-        $this->checkStrategy(
-            $data[GlobalThresholdType::FIELD_SOFT],
-            SalesOrderThresholdGuiConfig::GROUP_SOFT
-        );
 
         $this->handleThresholdData(
             $data[GlobalThresholdType::FIELD_HARD],
@@ -213,36 +203,5 @@ class GlobalController extends AbstractController
             ->setStore($storeTransfer)
             ->setCurrency($currencyTransfer)
             ->setSalesOrderThresholdValue(new SalesOrderThresholdValueTransfer());
-    }
-
-    /**
-     * @param array $data
-     * @param string $strategyGroup
-     *
-     * @return void
-     */
-    protected function checkStrategy(array $data, string $strategyGroup): void
-    {
-        $plugins = $this->getFactory()->getSalesOrderThresholdFormExpanderPlugins();
-
-        foreach ($plugins as $plugin) {
-            if ($plugin->getThresholdGroup() !== $strategyGroup || !$plugin->getDependenceFields()) {
-                continue;
-            }
-
-            if ($plugin->getThresholdGroup() === $strategyGroup
-                && $plugin->getThresholdKey() !== $data[AbstractGlobalThresholdType::FIELD_STRATEGY]
-            ) {
-                continue;
-            }
-
-            foreach ($plugin->getDependenceFields() as $field) {
-                if ($data[$field] && !$data[AbstractGlobalThresholdType::FIELD_THRESHOLD]) {
-                    $message = strtr(static::MESSAGE_UPDATE_SOFT_STRATEGY_ERROR, [static::MESSAGE_KEY => $strategyGroup]);
-                    $this->addErrorMessage($message);
-                    return;
-                }
-            }
-        }
     }
 }

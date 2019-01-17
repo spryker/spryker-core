@@ -94,14 +94,4 @@ class GlobalSoftThresholdWithMessageFormExpanderPlugin extends AbstractPlugin im
 
         return $salesOrderThresholdValueTransfer;
     }
-
-    /**
-     * @api
-     *
-     * @return array
-     */
-    public function getDependenceFields(): array
-    {
-        return [];
-    }
 }

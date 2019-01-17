@@ -30,8 +30,6 @@ class EditController extends AbstractController
     protected const PARAM_STORE_CURRENCY_REQUEST = 'store_currency';
     protected const REQUEST_ID_MERCHANT_RELATIONSHIP = 'id-merchant-relationship';
     protected const MESSAGE_UPDATE_SUCCESSFUL = 'The Merchant Relationship Thresholds is saved successfully.';
-    protected const MESSAGE_UPDATE_SOFT_STRATEGY_ERROR = 'To save {{strategy_group}} threshold - enter value that is higher than 0 in "Threshold value" field. To delete threshold set all values equal to 0 or left them empty and save.';
-    protected const MESSAGE_KEY = '{{strategy_group}}';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -116,14 +114,6 @@ class EditController extends AbstractController
         CurrencyTransfer $currencyTransfer
     ): RedirectResponse {
         $data = $thresholdForm->getData();
-        $this->checkStrategy(
-            $data[MerchantRelationshipThresholdType::FIELD_HARD],
-            MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_HARD
-        );
-        $this->checkStrategy(
-            $data[MerchantRelationshipThresholdType::FIELD_SOFT],
-            MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_SOFT
-        );
 
         $this->handleThresholdData(
             $data[MerchantRelationshipThresholdType::FIELD_HARD],
@@ -287,36 +277,5 @@ class EditController extends AbstractController
     protected function createCompanyTransfer(int $idCompany): CompanyTransfer
     {
         return (new CompanyTransfer())->setIdCompany($idCompany);
-    }
-
-    /**
-     * @param array $data
-     * @param string $strategyGroup
-     *
-     * @return void
-     */
-    protected function checkStrategy(array $data, string $strategyGroup): void
-    {
-        $plugins = $this->getFactory()->getSalesOrderThresholdFormExpanderPlugins();
-
-        foreach ($plugins as $plugin) {
-            if ($plugin->getThresholdGroup() !== $strategyGroup || !$plugin->getDependenceFields()) {
-                continue;
-            }
-
-            if ($plugin->getThresholdGroup() === $strategyGroup
-                && $plugin->getThresholdKey() !== $data[AbstractMerchantRelationshipThresholdType::FIELD_STRATEGY]
-            ) {
-                continue;
-            }
-
-            foreach ($plugin->getDependenceFields() as $field) {
-                if ($data[$field] && !$data[AbstractMerchantRelationshipThresholdType::FIELD_THRESHOLD]) {
-                    $message = strtr(static::MESSAGE_UPDATE_SOFT_STRATEGY_ERROR, [static::MESSAGE_KEY => $strategyGroup]);
-                    $this->addErrorMessage($message);
-                    return;
-                }
-            }
-        }
     }
 }

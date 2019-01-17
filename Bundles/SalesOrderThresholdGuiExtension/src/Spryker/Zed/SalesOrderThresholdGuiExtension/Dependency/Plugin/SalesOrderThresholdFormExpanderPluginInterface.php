@@ -80,14 +80,4 @@ interface SalesOrderThresholdFormExpanderPluginInterface
      * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer
      */
     public function mapFormDataToTransfer(array $data, SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer): SalesOrderThresholdValueTransfer;
-
-    /**
-     * Specification:
-     *  - Get fields using for create form.
-     *
-     * @api
-     *
-     * @return array
-     */
-    public function getDependenceFields(): array;
 }
