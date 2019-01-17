@@ -130,4 +130,20 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
 
         return $companyBusinessUnitTreeNodeCollection;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     */
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer */
+        $companyBusinessUnitResponseTransfer = $this->zedRequestClient->call(
+            '/company-business-unit/gateway/find-company-business-unit-by-uuid',
+            $companyBusinessUnitTransfer
+        );
+
+        return $companyBusinessUnitResponseTransfer;
+    }
 }

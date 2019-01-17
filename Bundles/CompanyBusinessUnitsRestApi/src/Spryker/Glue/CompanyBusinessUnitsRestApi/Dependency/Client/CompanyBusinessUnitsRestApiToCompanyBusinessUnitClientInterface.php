@@ -5,20 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFinder;
+namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
-interface CompanyBusinessUnitReaderInterface
+interface CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientInterface
 {
-    /**
-     * @param int $idCompanyBusinessUnit
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
-     */
-    public function getCompanyBusinessUnitById(int $idCompanyBusinessUnit): CompanyBusinessUnitTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *

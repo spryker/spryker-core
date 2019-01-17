@@ -51,4 +51,11 @@ interface CompanyBusinessUnitRepositoryInterface
      * @return string[]
      */
     public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
+
+    /**
+     * @param string $uuid
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
+     */
+    public function findCompanyBusinessUnitByUuid(string $uuid): ?CompanyBusinessUnitTransfer;
 }
