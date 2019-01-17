@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ContentGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,7 +19,6 @@ class EditContentController extends AbstractController
     protected const PARAM_TERM_KEY = 'term-key';
     protected const PARAM_REDIRECT_URL = 'redirect-url';
     protected const URL_REDIRECT_CONTENT_PAGE = '/content-gui/list-content';
-    protected const MESSAGE_ERROR_CONTENT_CREATE = 'Content item update failed.';
     protected const MESSAGE_SUCCESS_CONTENT_CREATE = 'Content item has been successfully updated.';
 
     /**
@@ -41,11 +39,17 @@ class EditContentController extends AbstractController
             ->handleRequest($request);
 
         if ($contentForm->isSubmitted() && $contentForm->isValid()) {
-            if ($this->saveContent($contentForm)) {
-                return $this->redirectResponse(
-                    $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_CONTENT_PAGE)
-                );
-            }
+            /** @var \Generated\Shared\Transfer\ContentTransfer $data */
+            $data = $contentForm->getData();
+            $contentTransfer = $this->getFactory()
+                ->getContentFacade()
+                ->create($data);
+
+            $this->addSuccessMessage(static::MESSAGE_SUCCESS_CONTENT_CREATE);
+
+            return $this->redirectResponse(
+                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_CONTENT_PAGE)
+            );
         }
         $contentTabs = $this->getFactory()->createContentTabs();
 
@@ -53,30 +57,7 @@ class EditContentController extends AbstractController
             'contentTabs' => $contentTabs->createView(),
             'contentForm' => $contentForm->createView(),
             'backButton' => static::URL_REDIRECT_CONTENT_PAGE,
+            'contentItemName' => $this->getFactory()->createContentResolver()->getContentItemPlugin($termKey)->getTermKey(),
         ]);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $contentForm
-     *
-     * @return bool
-     */
-    protected function saveContent(FormInterface $contentForm): bool
-    {
-        /** @var \Generated\Shared\Transfer\ContentTransfer $data */
-        $data = $contentForm->getData();
-        $contentTransfer = $this->getFactory()
-            ->getContentFacade()
-            ->create($data);
-
-        if (!$contentTransfer->getIdContent()) {
-            $this->addErrorMessage(static::MESSAGE_ERROR_CONTENT_CREATE);
-
-            return false;
-        }
-
-        $this->addSuccessMessage(static::MESSAGE_SUCCESS_CONTENT_CREATE);
-
-        return true;
     }
 }

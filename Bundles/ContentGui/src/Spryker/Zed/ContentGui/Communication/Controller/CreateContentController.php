@@ -18,7 +18,6 @@ class CreateContentController extends AbstractController
     protected const PARAM_TERM_KEY = 'term-key';
     protected const PARAM_REDIRECT_URL = 'redirect-url';
     protected const URL_REDIRECT_CONTENT_PAGE = '/content-gui/edit-content?term-key=%s&id-content=%s';
-    protected const MESSAGE_ERROR_CONTENT_CREATE = 'Content item create failed.';
     protected const MESSAGE_SUCCESS_CONTENT_CREATE = 'Content item has been successfully created.';
 
     /**
@@ -62,6 +61,7 @@ class CreateContentController extends AbstractController
             'contentTabs' => $contentTabs->createView(),
             'contentForm' => $contentForm->createView(),
             'backButton' => static::URL_REDIRECT_CONTENT_PAGE,
+            'contentItemName' => $this->getFactory()->createContentResolver()->getContentItemPlugin($termKey)->getTermKey(),
         ]);
     }
 }
