@@ -16,8 +16,8 @@ use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounder;
 use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounderInterface;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReader;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
-use Spryker\Client\ProductQuantityStorage\Validator\QuantityQuickOrderValidation;
-use Spryker\Client\ProductQuantityStorage\Validator\QuantityQuickOrderValidationInterface;
+use Spryker\Client\ProductQuantityStorage\Validator\QuantityQuickOrderValidator;
+use Spryker\Client\ProductQuantityStorage\Validator\QuantityQuickOrderValidatorInterface;
 
 class ProductQuantityStorageFactory extends AbstractFactory
 {
@@ -33,11 +33,11 @@ class ProductQuantityStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductQuantityStorage\Validator\QuantityQuickOrderValidationInterface
+     * @return \Spryker\Client\ProductQuantityStorage\Validator\QuantityQuickOrderValidatorInterface
      */
-    public function createQuantityQuickOrderTransferValidator(): QuantityQuickOrderValidationInterface
+    public function createQuantityQuickOrderTransferValidator(): QuantityQuickOrderValidatorInterface
     {
-        return new QuantityQuickOrderValidation(
+        return new QuantityQuickOrderValidator(
             $this->createProductQuantityStorageReader(),
             $this->createProductQuantityResolver()
         );

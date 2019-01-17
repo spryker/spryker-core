@@ -9,10 +9,11 @@ namespace Spryker\Client\ProductQuantityStorage\Validator;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
+use Generated\Shared\Transfer\QuickOrderValidationResponseTransfer;
 use Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolverInterface;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
 
-class QuantityQuickOrderValidation implements QuantityQuickOrderValidationInterface
+class QuantityQuickOrderValidator implements QuantityQuickOrderValidatorInterface
 {
     protected const WARNING_MESSAGE_QUANTITY_MIN_NOT_FULFILLED = 'product-quantity.warning.quantity.min.failed';
     protected const WARNING_MESSAGE_QUANTITY_MAX_NOT_FULFILLED = 'product-quantity.warning.quantity.max.failed';
@@ -20,6 +21,7 @@ class QuantityQuickOrderValidation implements QuantityQuickOrderValidationInterf
     protected const WARNING_MESSAGE_PARAM_MIN = '%min%';
     protected const WARNING_MESSAGE_PARAM_MAX = '%max%';
     protected const WARNING_MESSAGE_PARAM_STEP = '%step%';
+    protected const FIELD_QUANTITY = 'quantity';
 
     /**
      * @var \Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface
@@ -46,21 +48,22 @@ class QuantityQuickOrderValidation implements QuantityQuickOrderValidationInterf
     /**
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
+     * @return \Generated\Shared\Transfer\QuickOrderValidationResponseTransfer
      */
-    public function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
+    public function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderValidationResponseTransfer
     {
+        $quickOrderValidationResponseTransfer = new QuickOrderValidationResponseTransfer();
         $productConcreteTransfer = $quickOrderItemTransfer->getProductConcrete();
 
         if (!$productConcreteTransfer || !$productConcreteTransfer->getIdProductConcrete()) {
-            return $quickOrderItemTransfer;
+            return $quickOrderValidationResponseTransfer;
         }
 
         $productQuantityTransfer = $this->productQuantityStorageReader
             ->findProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
 
         if (!$productQuantityTransfer) {
-            return $quickOrderItemTransfer;
+            return $quickOrderValidationResponseTransfer;
         }
 
         $min = $productQuantityTransfer->getQuantityMin();
@@ -70,40 +73,40 @@ class QuantityQuickOrderValidation implements QuantityQuickOrderValidationInterf
 
         if ($quantity !== 0 && $quantity < $min) {
             $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($productConcreteTransfer->getIdProductConcrete(), $quantity);
-            $quickOrderItemTransfer->setQuantity($nearestQuantity);
-            $quickOrderItemTransfer->addWarningMessage((new MessageTransfer())
-                ->setValue(static::WARNING_MESSAGE_QUANTITY_MIN_NOT_FULFILLED)
-                ->setParameters([
-                    static::WARNING_MESSAGE_PARAM_MIN => $nearestQuantity,
-                ]));
 
-            return $quickOrderItemTransfer;
+            $quickOrderValidationResponseTransfer->addWarningMessage((new MessageTransfer())
+                ->setValue(static::WARNING_MESSAGE_QUANTITY_MIN_NOT_FULFILLED)
+                ->setParameters([static::WARNING_MESSAGE_PARAM_MIN => $nearestQuantity]));
+
+            $quickOrderValidationResponseTransfer->addCorrectValue([static::FIELD_QUANTITY => $nearestQuantity]);
+
+            return $quickOrderValidationResponseTransfer;
         }
 
         if ($quantity !== 0 && ($quantity - $min) % $interval !== 0) {
             $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($productConcreteTransfer->getIdProductConcrete(), $quantity);
-            $quickOrderItemTransfer->setQuantity($nearestQuantity);
-            $quickOrderItemTransfer->addWarningMessage((new MessageTransfer())
-                ->setValue(static::WARNING_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED)
-                ->setParameters([
-                    static::WARNING_MESSAGE_PARAM_STEP => $interval,
-                ]));
 
-            return $quickOrderItemTransfer;
+            $quickOrderValidationResponseTransfer->addWarningMessage((new MessageTransfer())
+                ->setValue(static::WARNING_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED)
+                ->setParameters([static::WARNING_MESSAGE_PARAM_STEP => $interval]));
+
+            $quickOrderValidationResponseTransfer->addCorrectValue([static::FIELD_QUANTITY => $nearestQuantity]);
+
+            return $quickOrderValidationResponseTransfer;
         }
 
         if ($max !== null && $quantity > $max) {
             $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($productConcreteTransfer->getIdProductConcrete(), $quantity);
-            $quickOrderItemTransfer->setQuantity($nearestQuantity);
-            $quickOrderItemTransfer->addWarningMessage((new MessageTransfer())
-                ->setValue(static::WARNING_MESSAGE_QUANTITY_MAX_NOT_FULFILLED)
-                ->setParameters([
-                    static::WARNING_MESSAGE_PARAM_MAX => $nearestQuantity,
-                ]));
 
-            return $quickOrderItemTransfer;
+            $quickOrderValidationResponseTransfer->addWarningMessage((new MessageTransfer())
+                ->setValue(static::WARNING_MESSAGE_QUANTITY_MAX_NOT_FULFILLED)
+                ->setParameters([static::WARNING_MESSAGE_PARAM_MAX => $nearestQuantity]));
+
+            $quickOrderValidationResponseTransfer->addCorrectValue([static::FIELD_QUANTITY => $nearestQuantity]);
+
+            return $quickOrderValidationResponseTransfer;
         }
 
-        return $quickOrderItemTransfer;
+        return $quickOrderValidationResponseTransfer;
     }
 }

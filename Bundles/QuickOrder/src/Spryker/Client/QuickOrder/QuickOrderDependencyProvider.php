@@ -68,7 +68,7 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidationPluginInterface[]
+     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidatorPluginInterface[]
      */
     protected function getQuickOrderValidationPlugins(): array
     {

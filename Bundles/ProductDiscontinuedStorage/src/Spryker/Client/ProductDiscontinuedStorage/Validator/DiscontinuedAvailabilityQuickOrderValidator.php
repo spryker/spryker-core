@@ -9,12 +9,13 @@ namespace Spryker\Client\ProductDiscontinuedStorage\Validator;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
+use Generated\Shared\Transfer\QuickOrderValidationResponseTransfer;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToLocaleClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface;
 
-class DiscontinuedAvailabilityQuickOrderValidation implements DiscontinuedAvailabilityQuickOrderValidationInterface
+class DiscontinuedAvailabilityQuickOrderValidator implements DiscontinuedAvailabilityQuickOrderValidatorInterface
 {
-    protected const ERROR_MESSAGE_DISCONTINUED_PRODUCT = 'product_discontinued.error.message';
+    protected const ERROR_MESSAGE_DISCONTINUED_PRODUCT = 'product_discontinued.message.product_discontinued';
 
     /**
      * @var \Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface
@@ -39,23 +40,25 @@ class DiscontinuedAvailabilityQuickOrderValidation implements DiscontinuedAvaila
     /**
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
+     * @return \Generated\Shared\Transfer\QuickOrderValidationResponseTransfer
      */
-    public function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
+    public function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderValidationResponseTransfer
     {
         $productConcreteTransfer = $quickOrderItemTransfer->getProductConcrete();
+        $quickOrderValidationResponseTransfer = new QuickOrderValidationResponseTransfer();
 
         if (!$productConcreteTransfer) {
-            return $quickOrderItemTransfer;
+            return $quickOrderValidationResponseTransfer;
         }
 
         $productDiscontinuedTransfer = $this->productDiscontinuedStorageReader
             ->findProductDiscontinuedStorage($productConcreteTransfer->getSku(), $this->localeClient->getCurrentLocale());
 
         if ($productDiscontinuedTransfer) {
-            $quickOrderItemTransfer->addErrorMessage((new MessageTransfer())->setValue(static::ERROR_MESSAGE_DISCONTINUED_PRODUCT));
+            $quickOrderValidationResponseTransfer->addErrorMessage((new MessageTransfer())
+                ->setValue(static::ERROR_MESSAGE_DISCONTINUED_PRODUCT));
         }
 
-        return $quickOrderItemTransfer;
+        return $quickOrderValidationResponseTransfer;
     }
 }

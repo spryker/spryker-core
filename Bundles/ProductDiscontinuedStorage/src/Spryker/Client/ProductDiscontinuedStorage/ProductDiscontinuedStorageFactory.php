@@ -20,8 +20,8 @@ use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedSu
 use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedSuperAttributesProductViewExpanderInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReader;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface;
-use Spryker\Client\ProductDiscontinuedStorage\Validator\DiscontinuedAvailabilityQuickOrderValidation;
-use Spryker\Client\ProductDiscontinuedStorage\Validator\DiscontinuedAvailabilityQuickOrderValidationInterface;
+use Spryker\Client\ProductDiscontinuedStorage\Validator\DiscontinuedAvailabilityQuickOrderValidator;
+use Spryker\Client\ProductDiscontinuedStorage\Validator\DiscontinuedAvailabilityQuickOrderValidatorInterface;
 
 class ProductDiscontinuedStorageFactory extends AbstractFactory
 {
@@ -68,11 +68,11 @@ class ProductDiscontinuedStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductDiscontinuedStorage\Validator\DiscontinuedAvailabilityQuickOrderValidationInterface
+     * @return \Spryker\Client\ProductDiscontinuedStorage\Validator\DiscontinuedAvailabilityQuickOrderValidatorInterface
      */
-    public function createProductDiscontinuedQuickOrderValidator(): DiscontinuedAvailabilityQuickOrderValidationInterface
+    public function createProductDiscontinuedQuickOrderValidator(): DiscontinuedAvailabilityQuickOrderValidatorInterface
     {
-        return new DiscontinuedAvailabilityQuickOrderValidation(
+        return new DiscontinuedAvailabilityQuickOrderValidator(
             $this->createProductDiscontinuedStorageReader(),
             $this->getLocaleClient()
         );

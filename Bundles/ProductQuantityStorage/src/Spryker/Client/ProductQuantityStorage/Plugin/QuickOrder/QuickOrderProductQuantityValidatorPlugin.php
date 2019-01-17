@@ -8,27 +8,27 @@
 namespace Spryker\Client\ProductQuantityStorage\Plugin\QuickOrder;
 
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
+use Generated\Shared\Transfer\QuickOrderValidationResponseTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidationPluginInterface;
+use Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidatorPluginInterface;
 
 /**
  * @method \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageClientInterface getClient()
  * @method \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageFactory getFactory()
  */
-class QuickOrderProductQuantityValidationPlugin extends AbstractPlugin implements QuickOrderValidationPluginInterface
+class QuickOrderProductQuantityValidatorPlugin extends AbstractPlugin implements QuickOrderValidatorPluginInterface
 {
     /**
      * {@inheritdoc}
      * - Validate provided QuickOrderItemTransfer with quantity validation.
-     * - Returns the unchanged provided QuickOrderItemTransfer when no validation errors.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
+     * @return \Generated\Shared\Transfer\QuickOrderValidationResponseTransfer
      */
-    public function validateQuickOrderItemProduct(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
+    public function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderValidationResponseTransfer
     {
         return $this->getFactory()
             ->createQuantityQuickOrderTransferValidator()

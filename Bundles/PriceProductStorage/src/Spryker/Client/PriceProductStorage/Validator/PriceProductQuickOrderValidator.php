@@ -10,11 +10,12 @@ namespace Spryker\Client\PriceProductStorage\Validator;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
+use Generated\Shared\Transfer\QuickOrderValidationResponseTransfer;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolverInterface;
 
-class PriceProductQuickOrderValidation implements PriceProductQuickOrderValidationInterface
+class PriceProductQuickOrderValidator implements PriceProductQuickOrderValidatorInterface
 {
-    protected const ERROR_MESSAGE_NO_PRICE_PRODUCT = 'price_product.error.message';
+    protected const ERROR_MESSAGE_NO_PRICE_PRODUCT = 'price_product.error.price_not_found';
 
     /**
      * @var \Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolverInterface
@@ -32,14 +33,15 @@ class PriceProductQuickOrderValidation implements PriceProductQuickOrderValidati
     /**
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
+     * @return \Generated\Shared\Transfer\QuickOrderValidationResponseTransfer
      */
-    public function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
+    public function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderValidationResponseTransfer
     {
         $productConcreteTransfer = $quickOrderItemTransfer->getProductConcrete();
+        $quickOrderValidationResponseTransfer = new QuickOrderValidationResponseTransfer();
 
         if (!$productConcreteTransfer || !$productConcreteTransfer->getIdProductConcrete()) {
-            return $quickOrderItemTransfer;
+            return $quickOrderValidationResponseTransfer;
         }
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
@@ -51,9 +53,10 @@ class PriceProductQuickOrderValidation implements PriceProductQuickOrderValidati
             ->resolveCurrentProductPriceTransfer($priceProductFilterTransfer);
 
         if (!$priceProductTransfer->getPrice()) {
-            $quickOrderItemTransfer->addErrorMessage((new MessageTransfer())->setValue(static::ERROR_MESSAGE_NO_PRICE_PRODUCT));
+            $quickOrderValidationResponseTransfer->addErrorMessage((new MessageTransfer())
+                ->setValue(static::ERROR_MESSAGE_NO_PRICE_PRODUCT));
         }
 
-        return $quickOrderItemTransfer;
+        return $quickOrderValidationResponseTransfer;
     }
 }

@@ -8,11 +8,15 @@
 namespace Spryker\Client\QuickOrder;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\QuickOrder\Builder\QuickOrderTransferBuilder;
+use Spryker\Client\QuickOrder\Builder\QuickOrderTransferBuilderInterface;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface;
 use Spryker\Client\QuickOrder\Expander\ProductConcreteExpander;
 use Spryker\Client\QuickOrder\Expander\ProductConcreteExpanderInterface;
 use Spryker\Client\QuickOrder\Product\ProductConcreteResolver;
 use Spryker\Client\QuickOrder\Product\ProductConcreteResolverInterface;
+use Spryker\Client\QuickOrder\Validator\ProductConcreteValidator;
+use Spryker\Client\QuickOrder\Validator\ProductConcreteValidatorInterface;
 
 class QuickOrderFactory extends AbstractFactory
 {
@@ -30,8 +34,28 @@ class QuickOrderFactory extends AbstractFactory
     public function createProductConcreteResolver(): ProductConcreteResolverInterface
     {
         return new ProductConcreteResolver(
-            $this->getProductStorageClient(),
-            $this->getQuickOrderValidationPlugins(),
+            $this->getProductStorageClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\QuickOrder\Validator\ProductConcreteValidatorInterface
+     */
+    public function createProductConcreteValidator(): ProductConcreteValidatorInterface
+    {
+        return new ProductConcreteValidator(
+            $this->getQuickOrderValidationPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\QuickOrder\Builder\QuickOrderTransferBuilderInterface
+     */
+    public function createQuickOrderTransferBuilder(): QuickOrderTransferBuilderInterface
+    {
+        return new QuickOrderTransferBuilder(
+            $this->createProductConcreteResolver(),
+            $this->createProductConcreteValidator(),
             $this->getProductConcreteExpanderPlugins()
         );
     }
@@ -45,7 +69,7 @@ class QuickOrderFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidationPluginInterface[]
+     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidatorPluginInterface[]
      */
     public function getQuickOrderValidationPlugins(): array
     {

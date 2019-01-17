@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\QuickOrder\Product;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 
 interface ProductConcreteResolverInterface
@@ -19,9 +20,9 @@ interface ProductConcreteResolverInterface
     public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array;
 
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\QuickOrderTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function addProductsToQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
+    public function findProductConcreteBySku(string $sku): ?ProductConcreteTransfer;
 }
