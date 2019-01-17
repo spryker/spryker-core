@@ -10,6 +10,7 @@ namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList;
 use Generated\Shared\Transfer\RestShoppingListRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
+use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\Mapper\ShoppingListMapperInterface;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface;
 
 class ShoppingListUpdater implements ShoppingListUpdaterInterface
@@ -20,7 +21,7 @@ class ShoppingListUpdater implements ShoppingListUpdaterInterface
     protected $shoppingListFacade;
 
     /**
-     * @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListMapperInterface
+     * @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\Mapper\ShoppingListMapperInterface
      */
     protected $shoppingListMapper;
 
@@ -31,7 +32,7 @@ class ShoppingListUpdater implements ShoppingListUpdaterInterface
 
     /**
      * @param \Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface $shoppingListFacade
-     * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListMapperInterface $shoppingListMapper
+     * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\Mapper\ShoppingListMapperInterface $shoppingListMapper
      * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListReaderInterface $shoppingListReader
      */
     public function __construct(

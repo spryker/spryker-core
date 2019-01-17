@@ -43,7 +43,9 @@ class ShoppingListsRestApiDependencyProvider extends AbstractBundleDependencyPro
     public function addShoppingListFacade(Container $container): Container
     {
         $container[static::FACADE_SHOPPING_LIST] = function (Container $container) {
-            return new ShoppingListsRestApiToShoppingListFacadeBridge($container->getLocator()->shoppingList()->facade());
+            return new ShoppingListsRestApiToShoppingListFacadeBridge(
+                $container->getLocator()->shoppingList()->facade()
+            );
         };
 
         return $container;

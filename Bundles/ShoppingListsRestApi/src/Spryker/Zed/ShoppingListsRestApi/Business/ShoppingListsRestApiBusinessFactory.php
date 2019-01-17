@@ -12,22 +12,22 @@ use Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser\CompanyUserReader;
 use Spryker\Zed\ShoppingListsRestApi\Business\CompanyUser\CompanyUserReaderInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\Customer\CustomerReader;
 use Spryker\Zed\ShoppingListsRestApi\Business\Customer\CustomerReaderInterface;
+use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\Mapper\ShoppingListMapper;
+use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\Mapper\ShoppingListMapperInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListCreator;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListCreatorInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListDeleter;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListDeleterInterface;
-use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListMapper;
-use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListMapperInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListReader;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListReaderInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListUpdater;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListUpdaterInterface;
+use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\Mapper\ShoppingListItemMapper;
+use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\Mapper\ShoppingListItemMapperInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemAdder;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemAdderInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemDeleter;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemDeleterInterface;
-use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemMapper;
-use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemMapperInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemReader;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemReaderInterface;
 use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemUpdater;
@@ -137,7 +137,7 @@ class ShoppingListsRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemMapperInterface
+     * @return \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\Mapper\ShoppingListItemMapperInterface
      */
     public function createShoppingListItemMapper(): ShoppingListItemMapperInterface
     {
@@ -145,7 +145,7 @@ class ShoppingListsRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListMapperInterface
+     * @return \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\Mapper\ShoppingListMapperInterface
      */
     public function createShoppingListMapper(): ShoppingListMapperInterface
     {

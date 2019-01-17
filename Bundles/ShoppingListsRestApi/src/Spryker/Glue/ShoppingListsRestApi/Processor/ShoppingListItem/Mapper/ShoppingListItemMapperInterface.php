@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem;
+namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Mapper;
 
 use Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer;
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
-class ShoppingListItemMapper implements ShoppingListItemMapperInterface
+interface ShoppingListItemMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
@@ -22,12 +22,7 @@ class ShoppingListItemMapper implements ShoppingListItemMapperInterface
     public function mapShoppingListItemTransferToRestShoppingListItemAttributesTransfer(
         ShoppingListItemTransfer $shoppingListItemTransfer,
         RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
-    ): RestShoppingListItemAttributesTransfer {
-        return $restShoppingListItemAttributesTransfer->fromArray(
-            $shoppingListItemTransfer->toArray(),
-            true
-        );
-    }
+    ): RestShoppingListItemAttributesTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer
@@ -38,12 +33,5 @@ class ShoppingListItemMapper implements ShoppingListItemMapperInterface
     public function mapRestShoppingListItemAttributesTransferToRestShoppingListItemRequestTransfer(
         RestShoppingListItemAttributesTransfer $restShoppingListItemAttributesTransfer,
         RestShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
-    ): RestShoppingListItemRequestTransfer {
-        $shoppingListItemRequestTransfer->getShoppingListItem()->fromArray(
-            $restShoppingListItemAttributesTransfer->toArray(),
-            true
-        );
-
-        return $shoppingListItemRequestTransfer;
-    }
+    ): RestShoppingListItemRequestTransfer;
 }

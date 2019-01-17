@@ -18,8 +18,9 @@ interface ShoppingListsRestApiClientInterface
 {
     /**
      * Specification:
-     *  - Gets company user id by the uuid.
-     *  - Gets shopping list collection by the customer reference and the company user id.
+     *  - Retrieves company user by uuid.
+     *  - Checks that company user belongs to current customer.
+     *  - Gets shopping list collection by the customer reference.
      *
      * @api
      *
@@ -33,8 +34,9 @@ interface ShoppingListsRestApiClientInterface
 
     /**
      * Specification:
-     *  - Gets company user id by the uuid.
-     *  - Finds shopping list by the uuid, the customer reference and the company user id.
+     *  - Retrieves company user by uuid.
+     *  - Checks that company user belongs to current customer.
+     *  - Finds shopping list by the uuid and the customer reference.
      *
      * @api
      *
@@ -48,6 +50,8 @@ interface ShoppingListsRestApiClientInterface
 
     /**
      * Specification:
+     *  - Retrieves company user by uuid.
+     *  - Checks that company user belongs to current customer.
      *  - Creates new shopping list if shopping list with given name does not already exist.
      *
      * @api
@@ -62,6 +66,8 @@ interface ShoppingListsRestApiClientInterface
 
     /**
      * Specification:
+     *  - Retrieves company user by uuid.
+     *  - Checks that company user belongs to current customer.
      *  - Updates the shopping list's name if shopping list with given name does not already exist.
      *
      * @api
@@ -76,6 +82,9 @@ interface ShoppingListsRestApiClientInterface
 
     /**
      * Specification:
+     *  - Retrieves company user by uuid.
+     *  - Checks that company user belongs to current customer.
+     *  - Checks that shopping list exists and belongs to the customer.
      *  - Deletes the shopping list.
      *
      * @api
@@ -92,7 +101,7 @@ interface ShoppingListsRestApiClientInterface
      * Specification:
      *  - Retrieves company user by uuid.
      *  - Checks that company user belongs to current customer.
-     *  - Retrieves shopping list by uuid.
+     *  - Checks that shopping list exists and belongs to the customer.
      *  - Adds item to shopping list.
      *
      * @api
@@ -111,7 +120,7 @@ interface ShoppingListsRestApiClientInterface
      *  - Checks that company user belongs to current customer.
      *  - Retrieves shopping list by uuid.
      *  - Retrieves shopping list item by uuid.
-     *  - Removes item from shopping list.
+     *  - Removes item from shopping.
      *
      * @api
      *

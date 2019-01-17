@@ -11,8 +11,9 @@ use Generated\Shared\Transfer\RestShoppingListAttributesTransfer;
 use Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\Request\RestRequestReaderInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\Response\RestResponseWriterInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Builder\ShoppingListRestResponseBuilderInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Mapper\ShoppingListMapperInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Reader\ShoppingListRestRequestReaderInterface;
 
 class ShoppingListUpdater implements ShoppingListUpdaterInterface
 {
@@ -22,36 +23,36 @@ class ShoppingListUpdater implements ShoppingListUpdaterInterface
     protected $shoppingListsRestApiClient;
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListMapperInterface
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Mapper\ShoppingListMapperInterface
      */
-    protected $shoppingListsResourceMapper;
+    protected $shoppingListMapper;
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\Request\RestRequestReaderInterface
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Reader\ShoppingListRestRequestReaderInterface
      */
-    protected $restRequestReader;
+    protected $shoppingListRestRequestReader;
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\Response\RestResponseWriterInterface
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Builder\ShoppingListRestResponseBuilderInterface
      */
-    protected $restResponseWriter;
+    protected $shoppingListRestResponseBuilder;
 
     /**
      * @param \Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface $shoppingListsRestApiClient
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\ShoppingListMapperInterface $shoppingListsResourceMapper
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Request\RestRequestReaderInterface $restRequestReader
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Response\RestResponseWriterInterface $restResponseWriter
+     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Mapper\ShoppingListMapperInterface $shoppingListMapper
+     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Reader\ShoppingListRestRequestReaderInterface $shoppingListRestRequestReaderInterface
+     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList\Builder\ShoppingListRestResponseBuilderInterface $shoppingListRestResponseBuilderInterface
      */
     public function __construct(
         ShoppingListsRestApiClientInterface $shoppingListsRestApiClient,
-        ShoppingListMapperInterface $shoppingListsResourceMapper,
-        RestRequestReaderInterface $restRequestReader,
-        RestResponseWriterInterface $restResponseWriter
+        ShoppingListMapperInterface $shoppingListMapper,
+        ShoppingListRestRequestReaderInterface $shoppingListRestRequestReaderInterface,
+        ShoppingListRestResponseBuilderInterface $shoppingListRestResponseBuilderInterface
     ) {
         $this->shoppingListsRestApiClient = $shoppingListsRestApiClient;
-        $this->shoppingListsResourceMapper = $shoppingListsResourceMapper;
-        $this->restRequestReader = $restRequestReader;
-        $this->restResponseWriter = $restResponseWriter;
+        $this->shoppingListMapper = $shoppingListMapper;
+        $this->shoppingListRestRequestReader = $shoppingListRestRequestReaderInterface;
+        $this->shoppingListRestResponseBuilder = $shoppingListRestResponseBuilderInterface;
     }
 
     /**
@@ -64,22 +65,20 @@ class ShoppingListUpdater implements ShoppingListUpdaterInterface
         RestRequestInterface $restRequest,
         RestShoppingListAttributesTransfer $restShoppingListAttributesTransfer
     ): RestResponseInterface {
-        $restResponse = $this->restResponseWriter->createRestResponse();
-        $uuidShoppingList = $this->restRequestReader->readUuidShoppingList($restRequest);
+        $uuidShoppingList = $this->shoppingListRestRequestReader->readUuidShoppingList($restRequest);
 
-        $restShoppingListRequestTransfer = $this->restRequestReader->readRestShoppingListRequestTransferWithUuidFromRequest(
+        $restShoppingListRequestTransfer = $this->shoppingListRestRequestReader->readRestShoppingListRequestTransferByUuid(
             $uuidShoppingList,
             $restRequest
         );
 
         if (count($restShoppingListRequestTransfer->getErrorCodes()) > 0) {
-            return $this->restResponseWriter->writeErrorsFromErrorCodes(
-                $restShoppingListRequestTransfer->getErrorCodes(),
-                $restResponse
+            return $this->shoppingListRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
+                $restShoppingListRequestTransfer->getErrorCodes()
             );
         }
 
-        $restShoppingListRequestTransfer = $this->shoppingListsResourceMapper->mapRestShoppingListAttributesTransferToRestShoppingListRequestTransfer(
+        $restShoppingListRequestTransfer = $this->shoppingListMapper->mapRestShoppingListAttributesTransferToRestShoppingListRequestTransfer(
             $restShoppingListAttributesTransfer,
             $restShoppingListRequestTransfer
         );
@@ -87,16 +86,13 @@ class ShoppingListUpdater implements ShoppingListUpdaterInterface
         $shoppingListResponseTransfer = $this->shoppingListsRestApiClient->updateShoppingList($restShoppingListRequestTransfer);
 
         if ($shoppingListResponseTransfer->getIsSuccess() === false) {
-            return $this->restResponseWriter->writeErrorsFromErrorCodes(
-                $shoppingListResponseTransfer->getErrors(),
-                $restResponse
+            return $this->shoppingListRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
+                $shoppingListResponseTransfer->getErrors()
             );
         }
 
-        $shoppingListResource = $this->restResponseWriter->createRestResourceFromShoppingListTransfer(
+        return $this->shoppingListRestResponseBuilder->buildShoppingListRestResponse(
             $shoppingListResponseTransfer->getShoppingList()
         );
-
-        return $restResponse->addResource($shoppingListResource);
     }
 }

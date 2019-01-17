@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList;
+namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\Mapper;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;

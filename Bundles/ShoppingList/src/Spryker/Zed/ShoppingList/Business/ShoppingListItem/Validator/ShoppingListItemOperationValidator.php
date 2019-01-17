@@ -22,8 +22,8 @@ abstract class ShoppingListItemOperationValidator implements ShoppingListItemOpe
     protected const MAX_QUANTITY = 2147483647; // 32 bit integer
     protected const GLOSSARY_PARAM_SKU = '%sku%';
 
-    protected const ERROR_SHOPPING_LIST_NOT_FOUND = 'customer.account.shopping_list_item.error.not_found';
-    protected const ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED = 'customer.account.shopping_list_item.error.write_permission_required';
+    protected const ERROR_SHOPPING_LIST_NOT_FOUND = 'customer.account.shopping_list.error.not_found';
+    protected const ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED = 'customer.account.shopping_list.error.write_permission_required';
     protected const ERROR_SHOPPING_LIST_ITEM_QUANTITY_NOT_VALID = 'customer.account.shopping_list_item.error.quantity_not_valid';
 
     /**

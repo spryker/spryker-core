@@ -21,7 +21,7 @@ class ShoppingListItemsResourceController extends AbstractController
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Adds shopping list item."
+     *              "Adds a shopping list item."
      *          ],
      *          "parameters": [
      *              {
@@ -39,7 +39,7 @@ class ShoppingListItemsResourceController extends AbstractController
      *              "400": "Shopping list id not specified.",
      *              "403": "Unauthorized request.",
      *              "404": "Shopping list not found.",
-     *              "422": "Can't add an item to shopping list"
+     *              "422": "Cannot add an item to shopping list"
      *          },
      *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShoppingListItemAttributesTransfer"
      *     }
@@ -63,7 +63,7 @@ class ShoppingListItemsResourceController extends AbstractController
      * @Glue({
      *     "patch": {
      *          "summary": [
-     *              "Updates shopping list item."
+     *              "Updates the shopping list item."
      *          ],
      *          "parameters": [
      *              {
@@ -78,7 +78,7 @@ class ShoppingListItemsResourceController extends AbstractController
      *              }
      *          ],
      *          "responses": {
-     *              "400": "Shopping list id or list item id not specified.",
+     *              "400": "Shopping list id or shopping list item id not specified.",
      *              "403": "Unauthorized request.",
      *              "404": "Shopping list or list item not found.",
      *              "422": "Cannot update the shopping list item"
@@ -105,7 +105,7 @@ class ShoppingListItemsResourceController extends AbstractController
      * @Glue({
      *     "delete": {
      *          "summary": [
-     *              "Deletes item from a shopping list."
+     *              "Deletes the shopping list item."
      *          ],
      *          "parameters": [
      *              {
@@ -120,7 +120,7 @@ class ShoppingListItemsResourceController extends AbstractController
      *              }
      *          ],
      *          "responses": {
-     *              "400": "Shopping list id or list item id not specified.",
+     *              "400": "Shopping list id or shopping list item id not specified.",
      *              "403": "Unauthorized request.",
      *              "404": "Not Found",
      *              "422": "Cannot delete the shopping list item"

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem;
 
 use Generated\Shared\Transfer\RestShoppingListItemRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
+use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\Mapper\ShoppingListItemMapperInterface;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface;
 
 class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
@@ -19,7 +20,7 @@ class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
     protected $shoppingListFacade;
 
     /**
-     * @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemMapperInterface
+     * @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\Mapper\ShoppingListItemMapperInterface
      */
     protected $shoppingListItemMapper;
 
@@ -30,7 +31,7 @@ class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
 
     /**
      * @param \Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface $shoppingListFacade
-     * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemMapperInterface $shoppingListItemMapper
+     * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\Mapper\ShoppingListItemMapperInterface $shoppingListItemMapper
      * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemReaderInterface $shoppingListItemReader
      */
     public function __construct(

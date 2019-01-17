@@ -17,6 +17,7 @@ class ShoppingListsResourcePlugin extends AbstractPlugin implements ResourceRout
 {
     /**
      * {@inheritdoc}
+     * - Configures available actions for shopping-lists resource.
      *
      * @api
      *

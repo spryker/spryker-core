@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\RestShoppingListRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\ShoppingListsRestApi\Business\Customer\CustomerReaderInterface;
+use Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\Mapper\ShoppingListMapperInterface;
 use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface;
 
 class ShoppingListCreator implements ShoppingListCreatorInterface
@@ -21,7 +22,7 @@ class ShoppingListCreator implements ShoppingListCreatorInterface
     protected $shoppingListFacade;
 
     /**
-     * @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListMapperInterface
+     * @var \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\Mapper\ShoppingListMapperInterface
      */
     protected $shoppingListMapper;
 
@@ -32,7 +33,7 @@ class ShoppingListCreator implements ShoppingListCreatorInterface
 
     /**
      * @param \Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToShoppingListFacadeInterface $shoppingListFacade
-     * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\ShoppingListMapperInterface $shoppingListMapper
+     * @param \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingList\Mapper\ShoppingListMapperInterface $shoppingListMapper
      * @param \Spryker\Zed\ShoppingListsRestApi\Business\Customer\CustomerReaderInterface $customerReader
      */
     public function __construct(

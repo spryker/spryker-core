@@ -10,8 +10,8 @@ namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem;
 use Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\Request\RestRequestReaderInterface;
-use Spryker\Glue\ShoppingListsRestApi\Processor\Response\RestResponseWriterInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Builder\ShoppingListItemRestResponseBuilderInterface;
+use Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Reader\ShoppingListItemRestRequestReaderInterface;
 
 class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
 {
@@ -21,36 +21,28 @@ class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
     protected $shoppingListsRestApiClient;
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemMapperInterface
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Reader\ShoppingListItemRestRequestReaderInterface
      */
-    protected $shoppingListItemsResourceMapper;
+    protected $shoppingListItemRestRequestReader;
 
     /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\Request\RestRequestReaderInterface
+     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Builder\ShoppingListItemRestResponseBuilderInterface
      */
-    protected $restRequestReader;
-
-    /**
-     * @var \Spryker\Glue\ShoppingListsRestApi\Processor\Response\RestResponseWriterInterface
-     */
-    protected $restResponseWriter;
+    protected $shoppingListItemRestResponseBuilder;
 
     /**
      * @param \Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface $shoppingListsRestApiClient
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\ShoppingListItemMapperInterface $shoppingListItemsResourceMapper
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Request\RestRequestReaderInterface $restRequestReader
-     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\Response\RestResponseWriterInterface $restResponseWriter
+     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Reader\ShoppingListItemRestRequestReaderInterface $shoppingListItemRestRequestReader
+     * @param \Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingListItem\Builder\ShoppingListItemRestResponseBuilderInterface $shoppingListItemRestResponseBuilder
      */
     public function __construct(
         ShoppingListsRestApiClientInterface $shoppingListsRestApiClient,
-        ShoppingListItemMapperInterface $shoppingListItemsResourceMapper,
-        RestRequestReaderInterface $restRequestReader,
-        RestResponseWriterInterface $restResponseWriter
+        ShoppingListItemRestRequestReaderInterface $shoppingListItemRestRequestReader,
+        ShoppingListItemRestResponseBuilderInterface $shoppingListItemRestResponseBuilder
     ) {
         $this->shoppingListsRestApiClient = $shoppingListsRestApiClient;
-        $this->shoppingListItemsResourceMapper = $shoppingListItemsResourceMapper;
-        $this->restRequestReader = $restRequestReader;
-        $this->restResponseWriter = $restResponseWriter;
+        $this->shoppingListItemRestRequestReader = $shoppingListItemRestRequestReader;
+        $this->shoppingListItemRestResponseBuilder = $shoppingListItemRestResponseBuilder;
     }
 
     /**
@@ -61,27 +53,24 @@ class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
     public function deleteShoppingListItem(
         RestRequestInterface $restRequest
     ): RestResponseInterface {
-        $restResponse = $this->restResponseWriter->createRestResponse();
-        $restShoppingListItemRequestTransfer = $this->restRequestReader->readRestShoppingListItemRequestTransferWithUuidFromRequest(
+        $restShoppingListItemRequestTransfer = $this->shoppingListItemRestRequestReader->readRestShoppingListItemRequestTransferByUuid(
             $restRequest
         );
 
         if (count($restShoppingListItemRequestTransfer->getErrorCodes()) > 0) {
-            return $this->restResponseWriter->writeErrorsFromErrorCodes(
-                $restShoppingListItemRequestTransfer->getErrorCodes(),
-                $restResponse
+            return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
+                $restShoppingListItemRequestTransfer->getErrorCodes()
             );
         }
 
         $shoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->deleteShoppingListItem($restShoppingListItemRequestTransfer);
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
-            return $this->restResponseWriter->writeErrorsFromErrorCodes(
-                $shoppingListItemResponseTransfer->getErrors(),
-                $restResponse
+            return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
+                $shoppingListItemResponseTransfer->getErrors()
             );
         }
 
-        return $restResponse;
+        return $this->shoppingListItemRestResponseBuilder->createRestResponse();
     }
 }
