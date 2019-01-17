@@ -10,8 +10,8 @@ namespace Spryker\Zed\ProductOptionStorage\Persistence;
 use Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery;
 use Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductOptionStorage\Persistence\Mapper\ProductOptionStorageMapper;
-use Spryker\Zed\ProductOptionStorage\Persistence\Mapper\ProductOptionStorageMapperInterface;
+use Spryker\Zed\ProductOptionStorage\Persistence\Propel\Mapper\ProductOptionStorageMapper;
+use Spryker\Zed\ProductOptionStorage\Persistence\Propel\Mapper\ProductOptionStorageMapperInterface;
 use Spryker\Zed\ProductOptionStorage\ProductOptionStorageDependencyProvider;
 
 /**
@@ -46,7 +46,7 @@ class ProductOptionStoragePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionStorage\Persistence\Mapper\ProductOptionStorageMapperInterface
+     * @return \Spryker\Zed\ProductOptionStorage\Persistence\Propel\Mapper\ProductOptionStorageMapperInterface
      */
     public function createProductOptionStorageMapper(): ProductOptionStorageMapperInterface
     {

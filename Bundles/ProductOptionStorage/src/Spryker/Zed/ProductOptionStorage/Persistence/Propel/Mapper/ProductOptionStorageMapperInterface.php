@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOptionStorage\Persistence\Mapper;
+namespace Spryker\Zed\ProductOptionStorage\Persistence\Propel\Mapper;
 
 interface ProductOptionStorageMapperInterface
 {
