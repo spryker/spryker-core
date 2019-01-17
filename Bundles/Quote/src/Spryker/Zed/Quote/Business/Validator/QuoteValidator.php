@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\Quote\Business\Validator;
 
-use ArrayObject;
-use Generated\Shared\Transfer\QuoteErrorTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -49,7 +48,8 @@ class QuoteValidator implements QuoteValidatorInterface
      */
     public function validate(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
-        $quoteValidationResponseTransfer = $this->initQuoteValidationResponseTransfer();
+        $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
+            ->setIsSuccess(true);
         $quoteValidationResponseTransfer = $this->validateStoreAndCurrency($quoteTransfer, $quoteValidationResponseTransfer);
         $quoteValidationResponseTransfer = $this->executeQuoteValidationPlugins($quoteTransfer, $quoteValidationResponseTransfer);
 
@@ -121,15 +121,12 @@ class QuoteValidator implements QuoteValidatorInterface
         QuoteTransfer $quoteTransfer,
         QuoteValidationResponseTransfer $quoteValidationResponseTransfer
     ): QuoteValidationResponseTransfer {
-        if (!$this->quoteValidatePlugins) {
-            return $quoteValidationResponseTransfer;
-        }
-
         foreach ($this->quoteValidatePlugins as $quoteValidatePlugin) {
-            $quoteErrorTransfer = $quoteValidatePlugin->validate($quoteTransfer);
+            $messageTransfer = $quoteValidatePlugin->validate($quoteTransfer);
 
-            if ($quoteErrorTransfer->getMessage()) {
-                $quoteValidationResponseTransfer->addErrors($quoteErrorTransfer)->setIsSuccess(false);
+            if ($messageTransfer->getValue()) {
+                $quoteValidationResponseTransfer->addErrors($messageTransfer)
+                    ->setIsSuccess(false);
             }
         }
 
@@ -137,35 +134,22 @@ class QuoteValidator implements QuoteValidatorInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
-     */
-    protected function initQuoteValidationResponseTransfer(): QuoteValidationResponseTransfer
-    {
-        return (new QuoteValidationResponseTransfer())
-            ->setIsSuccess(true)
-            ->setErrors(new ArrayObject());
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
      * @param string $message
-     * @param array $replacements
+     * @param array $parameters
      *
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
     protected function addValidationError(
         QuoteValidationResponseTransfer $quoteValidationResponseTransfer,
         string $message,
-        array $replacements = []
+        array $parameters = []
     ): QuoteValidationResponseTransfer {
-        if ($replacements) {
-            $message = strtr($message, $replacements);
-        }
-
-        $quoteErrorTransfer = (new QuoteErrorTransfer())->setMessage($message);
+        $messageTransfer = (new MessageTransfer())->setValue($message)
+            ->setParameters($parameters);
 
         return $quoteValidationResponseTransfer
-            ->addErrors($quoteErrorTransfer)
+            ->addErrors($messageTransfer)
             ->setIsSuccess(false);
     }
 }

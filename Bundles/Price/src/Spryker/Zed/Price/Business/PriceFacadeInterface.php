@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Price\Business;
 
-use Generated\Shared\Transfer\QuoteErrorTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface PriceFacadeInterface
@@ -54,14 +54,14 @@ interface PriceFacadeInterface
 
     /**
      * Specification:
-     *  - Verifies before saving if provided price mode is available.
+     *  - Verifies if provided quote price mode is available.
      *  - Returns error message if price mode not valid.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteErrorTransfer
+     * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    public function validatePriceModeInQuote(QuoteTransfer $quoteTransfer): QuoteErrorTransfer;
+    public function validatePriceModeInQuote(QuoteTransfer $quoteTransfer): MessageTransfer;
 }

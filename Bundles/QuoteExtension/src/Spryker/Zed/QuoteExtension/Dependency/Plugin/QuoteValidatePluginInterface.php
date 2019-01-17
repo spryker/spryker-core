@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\QuoteExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\QuoteErrorTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteValidatePluginInterface
@@ -21,7 +21,7 @@ interface QuoteValidatePluginInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteErrorTransfer
+     * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    public function validate(QuoteTransfer $quoteTransfer): QuoteErrorTransfer;
+    public function validate(QuoteTransfer $quoteTransfer): MessageTransfer;
 }

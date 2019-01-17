@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Price\Business\Validator;
 
-use Generated\Shared\Transfer\QuoteErrorTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Price\PriceConfig;
 
@@ -33,46 +33,37 @@ class QuoteValidator implements QuoteValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteErrorTransfer
+     * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    public function validate(QuoteTransfer $quoteTransfer): QuoteErrorTransfer
+    public function validate(QuoteTransfer $quoteTransfer): MessageTransfer
     {
         $priceMode = $quoteTransfer->getPriceMode();
 
         if (!$priceMode) {
-            return $this->setValidationError(static::MESSAGE_PRICE_MODE_DATA_IS_MISSING);
+            return $this->createValidationError(static::MESSAGE_PRICE_MODE_DATA_IS_MISSING);
         }
 
         $availablePiceModes = $this->priceConfig->getPriceModes();
 
         if (!isset($availablePiceModes[$priceMode])) {
-            return $this->setValidationError(
+            return $this->createValidationError(
                 static::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT,
                 [static::GLOSSARY_KEY_PRICE_MODE => $priceMode]
             );
         }
 
-        return $this->setValidationError();
+        return $this->createValidationError();
     }
 
     /**
      * @param string $message
-     * @param array $replacements
+     * @param array $parameters
      *
-     * @return \Generated\Shared\Transfer\QuoteErrorTransfer
+     * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function setValidationError(string $message = '', array $replacements = []): QuoteErrorTransfer
+    protected function createValidationError(string $message = '', array $parameters = []): MessageTransfer
     {
-        $quoteErrorTransfer = new QuoteErrorTransfer();
-
-        if (!$message) {
-            return $quoteErrorTransfer;
-        }
-
-        if ($replacements) {
-            $message = strtr($message, $replacements);
-        }
-
-        return $quoteErrorTransfer->setMessage($message);
+        return (new MessageTransfer())->setValue($message)
+            ->setParameters($parameters);
     }
 }

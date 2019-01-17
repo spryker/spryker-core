@@ -87,13 +87,13 @@ class QuoteWriter implements QuoteWriterInterface
     public function create(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         if ($quoteTransfer->getIdQuote()) {
-            return $this->createQuoteResponseTransfer($quoteTransfer, false);
+            return $this->createQuoteResponseTransfer($quoteTransfer);
         }
 
         $quoteValidationResponseTransfer = $this->quoteValidator->validate($quoteTransfer);
 
         if (!$quoteValidationResponseTransfer->getIsSuccess()) {
-            return $this->createQuoteResponseTransfer($quoteTransfer, false)
+            return $this->createQuoteResponseTransfer($quoteTransfer)
                 ->setErrors($quoteValidationResponseTransfer->getErrors());
         }
 
@@ -113,13 +113,13 @@ class QuoteWriter implements QuoteWriterInterface
     {
         $quoteByIdTransfer = $this->quoteRepository->findQuoteById($quoteTransfer->getIdQuote());
         if (!$quoteByIdTransfer) {
-            return $this->createQuoteResponseTransfer($quoteTransfer, false);
+            return $this->createQuoteResponseTransfer($quoteTransfer);
         }
 
         $quoteValidationResponseTransfer = $this->quoteValidator->validate($quoteTransfer);
 
         if (!$quoteValidationResponseTransfer->getIsSuccess()) {
-            return $this->createQuoteResponseTransfer($quoteTransfer, false)
+            return $this->createQuoteResponseTransfer($quoteTransfer)
                 ->setErrors($quoteValidationResponseTransfer->getErrors());
         }
 
@@ -141,7 +141,9 @@ class QuoteWriter implements QuoteWriterInterface
         $quoteTransfer = $this->quoteEntityManager->saveQuote($quoteTransfer);
         $quoteTransfer = $this->quoteWriterPluginExecutor->executeCreateAfterPlugins($quoteTransfer);
 
-        return $this->createQuoteResponseTransfer($quoteTransfer, true);
+        return $this->createQuoteResponseTransfer($quoteTransfer)
+            ->setIsSuccessful(true)
+            ->setQuoteTransfer($quoteTransfer);
     }
 
     /**
@@ -155,9 +157,9 @@ class QuoteWriter implements QuoteWriterInterface
         $quoteTransfer = $this->quoteEntityManager->saveQuote($quoteTransfer);
         $quoteTransfer = $this->quoteWriterPluginExecutor->executeUpdateAfterPlugins($quoteTransfer);
 
-        $quoteResponseTransfer = $this->createQuoteResponseTransfer($quoteTransfer, true);
-
-        return $quoteResponseTransfer;
+        return $this->createQuoteResponseTransfer($quoteTransfer)
+            ->setIsSuccessful(true)
+            ->setQuoteTransfer($quoteTransfer);
     }
 
     /**
@@ -185,20 +187,13 @@ class QuoteWriter implements QuoteWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param bool $isSuccessfull
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function createQuoteResponseTransfer(QuoteTransfer $quoteTransfer, bool $isSuccessfull): QuoteResponseTransfer
+    protected function createQuoteResponseTransfer(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteResponseTransfer = (new QuoteResponseTransfer())
+        return (new QuoteResponseTransfer())
             ->setCustomer($quoteTransfer->getCustomer())
-            ->setIsSuccessful($isSuccessfull);
-
-        if ($isSuccessfull) {
-            $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        }
-
-        return $quoteResponseTransfer;
+            ->setIsSuccessful(false);
     }
 }

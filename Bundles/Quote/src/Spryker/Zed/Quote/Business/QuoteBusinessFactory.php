@@ -169,7 +169,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatePluginInterface[]
      */
-    protected function getQuoteValidatePlugins(): array
+    public function getQuoteValidatePlugins(): array
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_VALIDATE);
     }
