@@ -273,7 +273,10 @@ interface ShipmentFacadeInterface
      * Specification:
      * - Creates sales shipment.
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
      * @return void
      */
     public function saveShipment(ShipmentTransfer $shipmentTransfer);

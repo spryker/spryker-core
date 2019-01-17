@@ -7,14 +7,10 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ShipmentGui\Business\Exception\ShipmentException;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentForm;
 use Spryker\Zed\ShipmentGui\ShipmentGuiConfig;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -24,6 +20,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function indexAction(Request $request)
     {
         $idSalesOrder = $this->castId($request->get(ShipmentGuiConfig::PARAM_ID_SALES_ORDER));
@@ -53,7 +54,7 @@ class EditController extends AbstractController
                 $idShipment
             )));
 
-            return $this->redirectResponse('/sales/detail', [ShipmentGuiConfig::PARAM_ID_SALES_ORDER => $idSalesOrder]);
+            return $this->redirectResponse('/sales');
         }
 
         $orderItems = [];
@@ -74,7 +75,12 @@ class EditController extends AbstractController
             try {
                 $data = $form->getData();
                 $shipmentTransfer = $this->createShipmentTransfer($data);
-                $this->getFacade()->saveShipment($shipmentTransfer);
+                $this->getFactory()
+                    ->getShipmentFacade()
+                    ->saveShipment($shipmentTransfer);
+                $this->addInfoMessage(sprintf(
+                    'Shipment was saved succesfully.'
+                ));
             } catch (ShipmentException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }

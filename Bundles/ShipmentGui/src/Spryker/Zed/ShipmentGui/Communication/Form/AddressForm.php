@@ -10,15 +10,18 @@ namespace Spryker\Zed\ShipmentGui\Communication\Form;
 use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\ShipmentGui\Business\ShipmentGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ShipmentGui\ShipmentGuiConfig getConfig()
+ */
 class AddressForm extends AbstractType
 {
     public const FIELD_SALUTATION = 'salutation';
@@ -69,10 +72,10 @@ class AddressForm extends AbstractType
         $resolver->setRequired(self::OPTION_SALUTATION_CHOICES);
         $resolver->setRequired(self::OPTION_COUNTRY_CHOICES);
 
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => AddressTransfer::class,
             'empty_data' => new AddressTransfer(),
-        ));
+        ]);
     }
 
     /**

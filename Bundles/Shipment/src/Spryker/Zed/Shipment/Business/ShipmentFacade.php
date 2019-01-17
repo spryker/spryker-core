@@ -20,6 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Shipment\Business\ShipmentBusinessFactory getFactory()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentEntityManager getEntityManager()
  */
 class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
 {
@@ -318,13 +319,15 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     /**
      * {@inheritdoc}
      *
-     * @param ShipmentTransfer $shipmentTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return void
      */
     public function saveShipment(ShipmentTransfer $shipmentTransfer)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createShipmentSaver()
             ->saveShipment($shipmentTransfer);
     }

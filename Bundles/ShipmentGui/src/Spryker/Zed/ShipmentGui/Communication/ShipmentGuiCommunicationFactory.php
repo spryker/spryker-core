@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication;
 
-use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\AddressFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider;
@@ -30,8 +29,9 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCountryFacade()
         );
     }
+
     /**
-     * @return \Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\AddressFormDataProvider
      */
     public function createAddressFormDataProvider()
     {
@@ -65,8 +65,8 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $formData
-     * @param array $formOptions
+     * @param array $data
+     * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

@@ -7,24 +7,19 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form;
 
-use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraints\Blank;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\ShipmentGui\Business\ShipmentGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ShipmentGui\ShipmentGuiConfig getConfig()
+ */
 class ShipmentForm extends AbstractType
 {
     public const FIELD_ID_SALES_SHIPMENT = 'idSalesShipment';
@@ -67,8 +62,7 @@ class ShipmentForm extends AbstractType
             ->addDeliveryAddressField($builder)
             ->addAddressForm($builder)
             ->addShipmentMethodField($builder)
-            ->addDeliveryDateField($builder)
-        ;
+            ->addDeliveryDateField($builder);
     }
 
     /**
@@ -85,7 +79,6 @@ class ShipmentForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
      *
      * @return $this
      */
@@ -97,29 +90,6 @@ class ShipmentForm extends AbstractType
             [
                 'choices' => array_flip($builder->getOption(self::OPTION_SHIPMENT_ADDRESS)),
                 'label' => 'Delivery Address',
-            ]
-        );
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
-     *
-     * @return $this
-     */
-    protected function addOrderItemsForm(FormBuilderInterface $builder)
-    {
-        $builder->add(
-            self::FIELD_ORDER_ITEMS,
-            CollectionType::class,
-            [
-                'entry_type' => OrderItemType::class,
-                'entry_options' => [
-                    'label' => false,
-                    OrderItemType::ASSIGNED_ID_COLLECTION => $builder->getOption(self::SELECTED_ORDER_ITEMS),
-                ],
             ]
         );
 
@@ -144,7 +114,6 @@ class ShipmentForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
      *
      * @return $this
      */
@@ -155,7 +124,7 @@ class ShipmentForm extends AbstractType
             AddressForm::class,
             [
                 AddressForm::OPTION_SALUTATION_CHOICES => $builder->getOption(AddressForm::OPTION_SALUTATION_CHOICES),
-                AddressForm::OPTION_COUNTRY_CHOICES=> $builder->getOption(AddressForm::OPTION_COUNTRY_CHOICES),
+                AddressForm::OPTION_COUNTRY_CHOICES => $builder->getOption(AddressForm::OPTION_COUNTRY_CHOICES),
             ]
         );
 

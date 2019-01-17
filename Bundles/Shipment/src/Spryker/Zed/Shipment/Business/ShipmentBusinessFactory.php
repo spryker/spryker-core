@@ -226,6 +226,9 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_COUNTRY);
     }
 
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentSaver
+     */
     public function createShipmentSaver()
     {
         return new ShipmentSaver(

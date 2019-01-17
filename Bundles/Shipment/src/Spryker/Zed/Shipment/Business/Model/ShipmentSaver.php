@@ -25,8 +25,11 @@ class ShipmentSaver implements ShipmentSaverInterface
     ) {
         $this->entityManager = $entityManager;
     }
+
     /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return void
      */
     public function saveShipment(ShipmentTransfer $shipmentTransfer)
     {
@@ -41,8 +44,7 @@ class ShipmentSaver implements ShipmentSaverInterface
      */
     protected function updateShipmentItems(ShipmentTransfer $shipmentTransfer)
     {
-        foreach ($shipmentTransfer->getShipmentItems() as $itemTransfer)
-        {
+        foreach ($shipmentTransfer->getShipmentItems() as $itemTransfer) {
             $this->entityManager->updateSalesOrderItemFkShipment($itemTransfer, $shipmentTransfer->getIdSalesShipment());
         }
     }

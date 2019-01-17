@@ -8,24 +8,12 @@
 namespace Spryker\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentMethodsTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Generated\Shared\Transfer\SpySalesShipmentEntityTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
-use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
-use Propel\Runtime\Map\TableMap;
-use Spryker\Shared\Shipment\ShipmentConstants;
-use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface;
-use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentTransformerInterface;
-use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
-use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
-use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
-use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 use Propel\Runtime\ActiveQuery\Criteria;
-
+use Propel\Runtime\Map\TableMap;
+use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentTransformerInterface;
+use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
 class Shipment implements ShipmentInterface
 {
@@ -54,7 +42,7 @@ class Shipment implements ShipmentInterface
     /**
      * @param int $idShipment
      *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     public function getShipmentTransferById(int $idShipment): ShipmentTransfer
     {
@@ -75,7 +63,7 @@ class Shipment implements ShipmentInterface
     }
 
     /**
-     * @param \Orm\Zed\Shipment\Persistence\SpyShipment $shipmentEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $shipmentEntity
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
@@ -87,8 +75,8 @@ class Shipment implements ShipmentInterface
     }
 
     /**
-     * @param \Orm\Zed\Shipment\Persistence\Spy`s $shipmentEntity
-     * @param \Generated\Shared\Transfer\SpySalesShipmentEntityTransfer $shipmentMethodTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $shipmentEntity
+     * @param \Generated\Shared\Transfer\SpySalesShipmentEntityTransfer $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
