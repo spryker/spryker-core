@@ -7,25 +7,13 @@
 
 namespace Spryker\Zed\QuoteApproval\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Orm\Zed\QuoteApproval\Persistence\SpyQuoteApproval;
-use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface;
 
 class QuoteApprovalMapper
 {
-    /**
-     * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface
-     */
-    protected $companyUserFacade;
-
-    /**
-     * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface $companyUserFacade
-     */
-    public function __construct(QuoteApprovalToCompanyUserFacadeInterface $companyUserFacade)
-    {
-        $this->companyUserFacade = $companyUserFacade;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\QuoteApprovalTransfer $quoteApprovalTransfer
      * @param \Orm\Zed\QuoteApproval\Persistence\SpyQuoteApproval $quoteApprovalEntity
@@ -54,8 +42,20 @@ class QuoteApprovalMapper
         QuoteApprovalTransfer $quoteApprovalTransfer
     ): QuoteApprovalTransfer {
         $quoteApprovalTransfer->fromArray($quoteApprovalEntity->toArray(), true);
-        $approver = $this->companyUserFacade->getCompanyUserById($quoteApprovalEntity->getFkCompanyUser());
-        $quoteApprovalTransfer->setApprover($approver);
+        $companyUserEntity = $quoteApprovalEntity->getSpyCompanyUser();
+
+        $companyUserTransfer = (new CompanyUserTransfer())->fromArray(
+            $companyUserEntity->toArray(),
+            true
+        );
+
+        $customerTransfer = (new CustomerTransfer())->fromArray(
+            $companyUserEntity->getCustomer()->toArray(),
+            true
+        );
+
+        $companyUserTransfer->setCustomer($customerTransfer);
+        $quoteApprovalTransfer->setApprover($companyUserTransfer);
 
         return $quoteApprovalTransfer;
     }

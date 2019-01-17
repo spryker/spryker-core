@@ -55,10 +55,10 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
             return false;
         }
 
-        $quoteApprovalStatus = $this->quoteStatusCalculator
+        $quoteStatus = $this->quoteStatusCalculator
             ->calculateQuoteStatus($quoteTransfer);
 
-        return $quoteApprovalStatus !== QuoteApprovalConfig::STATUS_APPROVED;
+        return $quoteStatus !== QuoteApprovalConfig::STATUS_APPROVED;
     }
 
     /**
@@ -68,9 +68,9 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
      */
     public function isQuoteWaitingForApproval(QuoteTransfer $quoteTransfer): bool
     {
-        $quoteApprovalStatus = $this->quoteStatusCalculator
+        $quoteStatus = $this->quoteStatusCalculator
             ->calculateQuoteStatus($quoteTransfer);
 
-        return $quoteApprovalStatus === QuoteApprovalConfig::STATUS_WAITING;
+        return $quoteStatus === QuoteApprovalConfig::STATUS_WAITING;
     }
 }

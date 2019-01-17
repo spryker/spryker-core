@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToSharedCartFacadeInterface;
@@ -19,6 +20,8 @@ use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface;
 
 class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
 {
+    use TransactionTrait;
+
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
 
     /**
@@ -72,9 +75,20 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function removeQuoteApproval(
-        QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
-    ): QuoteApprovalResponseTransfer {
+    public function removeQuoteApproval(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteApprovalRemoveRequestTransfer) {
+            return $this->executeRemoveQuoteApprovalTransaction($quoteApprovalRemoveRequestTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    protected function executeRemoveQuoteApprovalTransaction(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): QuoteApprovalResponseTransfer
+    {
         $quoteApprovalResponseTransfer = new QuoteApprovalResponseTransfer();
 
         $quoteTransfer = $this->findQuoteByIdQuoteApproval($quoteApprovalRemoveRequestTransfer->getIdQuoteApproval());

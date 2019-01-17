@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToSharedCartFacadeInterface;
@@ -23,6 +24,8 @@ use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface;
 
 class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
 {
+    use TransactionTrait;
+
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
     protected const GLOSSARY_KEY_APPROVAL_REQUEST_SENT = 'quote_approval.approval_request.sent';
 
@@ -79,7 +82,18 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
      */
     public function createQuoteApproval(QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer): QuoteApprovalResponseTransfer
     {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteApprovalCreateRequestTransfer) {
+            return $this->executeCreateQuoteApprovalTransaction($quoteApprovalCreateRequestTransfer);
+        });
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    protected function executeCreateQuoteApprovalTransaction(QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer): QuoteApprovalResponseTransfer
+    {
         if (!$this->quoteApprovalRequestValidator->isCreateQuoteApprovalRequestValid($quoteApprovalCreateRequestTransfer)) {
             return $this->createNotSuccessfulQuoteApprovalResponseTransfer();
         }
