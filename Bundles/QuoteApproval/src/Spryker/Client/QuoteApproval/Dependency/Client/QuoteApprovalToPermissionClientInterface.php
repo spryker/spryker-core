@@ -17,12 +17,4 @@ interface QuoteApprovalToPermissionClientInterface
      * @return \Generated\Shared\Transfer\PermissionTransfer|null
      */
     public function findCustomerPermissionByKey(string $permissionKey): ?PermissionTransfer;
-
-    /**
-     * @param string $permissionKey
-     * @param string|int|array|null $context
-     *
-     * @return bool
-     */
-    public function can($permissionKey, $context = null): bool;
 }

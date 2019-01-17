@@ -11,18 +11,17 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer;
-use Generated\Shared\Transfer\QuoteApprovalTransfer;
-use Generated\Shared\Transfer\QuoteApproveRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
-use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
-use Spryker\Zed\QuoteApproval\Communication\Plugin\UpdateApprovalsQuoteAfterSavePlugin;
+use Spryker\Zed\QuoteApproval\Communication\Plugin\Quote\QuoteApprovalExpanderPlugin;
 
 /**
  * Auto-generated group annotations
@@ -44,251 +43,225 @@ class QuoteApprovalFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSendQuoteApprovalRequestShouldLockQuote(): void
+    public function testCreateQuoteApprovalQuoteShouldBeSharedWithApproverOnly(): void
     {
         //Assign
-        $this->prepareEnvForApprovalRequestSending();
-
-        $quoteApproveRequestTransfer = $this->createValidQuoteApproveRequest();
+        $this->prepareEnvForQuoteApprovalCreation();
+        $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
 
         //Act
-        $quoteRepsponseTransfer = $this->getFacade()->sendQuoteApproveRequest($quoteApproveRequestTransfer);
+        $quoteApprovalRepsponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
         //Assert
-        $this->assertEquals(true, $quoteRepsponseTransfer->getQuoteTransfer()->getIsLocked());
+        $shareDeatailCollectionTransfer = $this->getShareDetailsByIdQuote(
+            $quoteApprovalCreateRequestTransfer->getIdQuote()
+        );
+
+        $this->assertEquals(true, $quoteApprovalRepsponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $shareDeatailCollectionTransfer->getShareDetails());
+        $this->assertEquals(
+            $shareDeatailCollectionTransfer->getShareDetails()->offsetGet(0)->getIdCompanyUser(),
+            $quoteApprovalCreateRequestTransfer->getIdCompanyUser()
+        );
     }
 
     /**
      * @return void
      */
-    public function testSendQuoteApprovalRequestQuoteShouldBeSharedWithApproverOnly()
+    public function testCreateQuoteApprovalApprovalShouldBeCreated(): void
     {
         //Assign
-        $this->prepareEnvForApprovalRequestSending();
+        $this->prepareEnvForQuoteApprovalCreation();
 
-        $quoteApproveRequestTransfer = $this->createValidQuoteApproveRequest();
+        $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
 
         //Act
-        $quoteRepsponseTransfer = $this->getFacade()->sendQuoteApproveRequest($quoteApproveRequestTransfer);
+        $quoteApprovalRepsponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
         //Assert
-        $sharedDetails = $quoteRepsponseTransfer->getQuoteTransfer()->getShareDetails();
+        $this->assertEquals(true, $quoteApprovalRepsponseTransfer->getIsSuccessful());
 
-        $this->assertEquals(true, $quoteRepsponseTransfer->getIsSuccessful());
-        $this->assertCount(1, $sharedDetails);
-        $this->assertEquals($sharedDetails[0]->getIdCompanyUser(), $quoteApproveRequestTransfer->getIdApprover());
+        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
+
+        $this->assertCount(1, $quoteTransfer->getApprovals());
     }
 
     /**
      * @return void
      */
-    public function testSendQuoteApprovalRequestApprovalShouldBeCreated()
+    public function testCreateQuoteApprovalNotSuccessfullWithApproverLimitLessThatQuoteGrantTotal(): void
     {
         //Assign
-        $this->prepareEnvForApprovalRequestSending();
-
-        $quoteApproveRequestTransfer = $this->createValidQuoteApproveRequest();
-
-        //Act
-        $quoteRepsponseTransfer = $this->getFacade()->sendQuoteApproveRequest($quoteApproveRequestTransfer);
-
-        //Assert
-        $this->assertEquals(true, $quoteRepsponseTransfer->getIsSuccessful());
-        $this->assertCount(1, $quoteRepsponseTransfer->getQuoteTransfer()->getApprovals());
-    }
-
-    /**
-     * @return void
-     */
-    public function testSendQuoteApprovalRequestNotSuccessfullWithApproverLimitLessThatQuoteGrantTotal(): void
-    {
-        //Assign
-        $this->prepareEnvForApprovalRequestSending();
+        $this->prepareEnvForQuoteApprovalCreation();
 
         $quoteTransfer = $this->createQuoteWithGrandTodal(10);
-        $quoteApproveRequestTransfer = $this->createQuoteApprovalRequest($quoteTransfer);
+        $quoteApprovalCreateRequestTransfer = $this->createQuoteApprovalCreateRequestTransfer($quoteTransfer);
         $this->approverCanApproveUpToAmount(9, $quoteTransfer);
 
         //Act
-        $quoteRepsponseTransfer = $this->getFacade()->sendQuoteApproveRequest($quoteApproveRequestTransfer);
+        $quoteApprovalRepsponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
         //Assert
-        $this->assertEquals(false, $quoteRepsponseTransfer->getIsSuccessful());
-        $this->assertEmpty($quoteRepsponseTransfer->getQuoteTransfer()->getApprovals());
+        $this->assertEquals(false, $quoteApprovalRepsponseTransfer->getIsSuccessful());
     }
 
     /**
      * @return void
      */
-    public function testSendQuoteApprovalRequestNotSuccessfulIfApproverDoesNotHavePermission(): void
+    public function testCreateQuoteApprovalNotSuccessfulIfApproverDoesNotHavePermission(): void
     {
         //Assign
-        $this->prepareEnvForApprovalRequestSending();
+        $this->prepareEnvForQuoteApprovalCreation();
 
         $quoteTransfer = $this->createQuoteWithGrandTodal(10);
-        $quoteApproveRequestTransfer = $this->createQuoteApprovalRequest($quoteTransfer);
+        $quoteApprovalCreateRequestTransfer = $this->createQuoteApprovalCreateRequestTransfer($quoteTransfer);
 
         //Act
-        $quoteRepsponseTransfer = $this->getFacade()->sendQuoteApproveRequest($quoteApproveRequestTransfer);
+        $quoteApprovalRepsponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
         //Assert
-        $this->assertEquals(false, $quoteRepsponseTransfer->getIsSuccessful());
-        $this->assertEmpty($quoteRepsponseTransfer->getQuoteTransfer()->getApprovals());
+        $this->assertEquals(false, $quoteApprovalRepsponseTransfer->getIsSuccessful());
     }
 
     /**
      * @return void
      */
-    public function testSendQuoteApprovalRequestNotSuccessfulIfSentNotByQuoteOwner(): void
+    public function testCreateQuoteApprovalNotSuccessfulIfSentNotByQuoteOwner(): void
     {
         //Assign
-        $this->prepareEnvForApprovalRequestSending();
+        $this->prepareEnvForQuoteApprovalCreation();
 
         $quoteTransfer = $this->createQuoteWithGrandTodal(10);
-        $quoteApproveRequestTransfer = $this->createQuoteApprovalRequest($quoteTransfer);
+        $quoteApprovalCreateRequestTransfer = $this->createQuoteApprovalCreateRequestTransfer($quoteTransfer);
+
         $this->approverCanApproveUpToAmount(11, $quoteTransfer);
-        $quoteTransfer->setCustomer(
-            $this->tester->haveCustomer()
+
+        $notQuoteOwnerCustomerTransfer = $this->tester->haveCustomer();
+        $quoteApprovalCreateRequestTransfer->setCustomerReference($notQuoteOwnerCustomerTransfer->getCustomerReference());
+
+        //Act
+        $quoteApprovalRepsponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+
+        //Assert
+        $this->assertEquals(false, $quoteApprovalRepsponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateQuoteApprovalNotSuccessfulIfSentTwice(): void
+    {
+        //Assign
+        $this->prepareEnvForQuoteApprovalCreation();
+
+        $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
+        $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+
+        //Act
+        $quoteApprovalRepsponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+
+        //Assert
+        $this->assertEquals(false, $quoteApprovalRepsponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveQuoteApprovalRemovesCartSharings(): void
+    {
+        //Assign
+        $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
+        $quoteApprovalRemoveRequestTransfer = $this->createValidQuoteApprovalRemoveRequestTransfer($quoteApprovalCreateRequestTransfer);
+
+        //Act
+        $quoteApprovalResponseTransfer = $this->getFacade()->removeQuoteApproval($quoteApprovalRemoveRequestTransfer);
+
+        //Assert
+        $shareDeatailCollectionTransfer = $this->getShareDetailsByIdQuote(
+            $quoteApprovalCreateRequestTransfer->getIdQuote()
+        );
+
+        $this->assertTrue($quoteApprovalResponseTransfer->getIsSuccessful());
+        $this->assertCount(0, $shareDeatailCollectionTransfer->getShareDetails());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveQuoteApprovalRemovesApprovalRequest(): void
+    {
+        //Assign
+        $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
+
+        $quoteApprovalRemoveRequestTransfer = $this->createValidQuoteApprovalRemoveRequestTransfer(
+            $quoteApprovalCreateRequestTransfer
         );
 
         //Act
-        $quoteRepsponseTransfer = $this->getFacade()->sendQuoteApproveRequest($quoteApproveRequestTransfer);
+        $quoteApprovalResponseTransfer = $this->getFacade()->removeQuoteApproval($quoteApprovalRemoveRequestTransfer);
 
         //Assert
-        $this->assertEquals(false, $quoteRepsponseTransfer->getIsSuccessful());
-        $this->assertEmpty($quoteRepsponseTransfer->getQuoteTransfer()->getApprovals());
+        $this->assertTrue($quoteApprovalResponseTransfer->getIsSuccessful());
+
+        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
+
+        $this->assertCount(0, $quoteApprovalTransfers);
     }
 
     /**
      * @return void
      */
-    public function testSendQuoteApprovalRequestNotSuccessfulIfQuoteNotInCorrectStatus(): void
+    public function testRemoveQuoteApprovalNotSuccessfulIfSentNotByQuoteOwner(): void
     {
         //Assign
-        $this->prepareEnvForApprovalRequestSending();
+        $quoteApprovalRemoveRequestTransfer = $this->createValidQuoteApprovalRemoveRequestTransfer(
+            $this->createValidQuoteApprovalCreateRequestTransfer()
+        );
 
-        $validRequest = $this->createValidQuoteApproveRequest();
+        $notQuoteOwnerCustomerTransfer = $this->tester->haveCustomer();
 
-        $quoteTransfer = $validRequest->getQuote();
-        $quoteTransfer->addApproval((new QuoteApprovalTransfer())->setStatus(QuoteApprovalConfig::STATUS_WAITING));
-
-        $notValidRequest = $validRequest->setQuote($quoteTransfer);
+        $quoteApprovalRemoveRequestTransfer->setCustomerReference($notQuoteOwnerCustomerTransfer->getCustomerReference());
 
         //Act
-        $quoteRepsponseTransfer = $this->getFacade()->sendQuoteApproveRequest($notValidRequest);
+        $quoteApprovalResponseTransfer = $this->getFacade()->removeQuoteApproval($quoteApprovalRemoveRequestTransfer);
 
         //Assert
-        $this->assertEquals(false, $quoteRepsponseTransfer->getIsSuccessful());
+        $this->assertFalse($quoteApprovalResponseTransfer->getIsSuccessful());
     }
 
     /**
-     * @return void
+     * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer
      */
-    public function testCancelQuoteApprovalRequestUnlocksQuote(): void
-    {
-        //Assign
-        $quoteApprovalCancelRequestTransfer = $this->createValidCancelQuoteApprovalRequest();
-
-        //Act
-        $quoteResponseTransfer = $this->getFacade()->cancelQuoteApprovalRequest($quoteApprovalCancelRequestTransfer);
-
-        //Assert
-        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
-        $this->assertFalse($quoteResponseTransfer->getQuoteTransfer()->getIsLocked());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCancelQuoteApprovalRequestRemovesCartSharings(): void
-    {
-        //Assign
-        $quoteApprovalCancelRequestTransfer = $this->createValidCancelQuoteApprovalRequest();
-
-        //Act
-        $quoteResponseTransfer = $this->getFacade()->cancelQuoteApprovalRequest($quoteApprovalCancelRequestTransfer);
-
-        //Assert
-        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
-        $this->assertCount(0, $quoteResponseTransfer->getQuoteTransfer()->getShareDetails());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCancelQuoteApprovalRequestRemovesApprovalRequest(): void
-    {
-        //Assign
-        $quoteApprovalCancelRequestTransfer = $this->createValidCancelQuoteApprovalRequest();
-
-        //Act
-        $quoteResponseTransfer = $this->getFacade()->cancelQuoteApprovalRequest($quoteApprovalCancelRequestTransfer);
-
-        //Assert
-        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
-
-        $approvalIdsLeft = [];
-
-        foreach ($quoteResponseTransfer->getQuoteTransfer()->getApprovals() as $approval) {
-            $approvalIdsLeft = $approval->getIdQuoteApproval();
-        }
-
-        $this->assertNotContains($quoteApprovalCancelRequestTransfer->getIdQuoteApproval(), $approvalIdsLeft);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCancelQuoteApprovalRequestNotSuccessfulIfSentNotByQuoteOwner(): void
-    {
-        //Assign
-        $validCancelRequest = $this->createValidCancelQuoteApprovalRequest();
-        $invalidCancelRequest = $validCancelRequest->setCustomer($this->tester->haveCustomer());
-
-        //Act
-        $quoteResponseTransfer = $this->getFacade()->cancelQuoteApprovalRequest($invalidCancelRequest);
-
-        //Assert
-        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer
-     */
-    protected function createValidCancelQuoteApprovalRequest(): QuoteApprovalCancelRequestTransfer
-    {
-        $this->tester->setDependency(QuoteDependencyProvider::PLUGINS_QUOTE_UPDATE_AFTER, [
-            new UpdateApprovalsQuoteAfterSavePlugin(),
-        ]);
-
+    protected function createValidQuoteApprovalRemoveRequestTransfer(
+        QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
+    ): QuoteApprovalRemoveRequestTransfer {
         $quoteApproveRepsponseTransfer = $this->getFacade()
-            ->sendQuoteApproveRequest($this->createValidQuoteApproveRequest());
+            ->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
-        $quoteTransfer = $quoteApproveRepsponseTransfer->getQuoteTransfer();
-        $approvals = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteTransfer->getIdQuote());
-        $idQuoteApproval = $approvals[0]->getIdQuoteApproval();
+        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
 
-        $quoteApprovalCancelRequestTransfer = new QuoteApprovalCancelRequestTransfer();
-        $quoteApprovalCancelRequestTransfer->setQuote($quoteTransfer);
-        $quoteApprovalCancelRequestTransfer->setCustomer($quoteTransfer->getCustomer());
-        $quoteApprovalCancelRequestTransfer->setIdQuoteApproval($idQuoteApproval);
+        $quoteApprovalRemoveRequestTransfer = new QuoteApprovalRemoveRequestTransfer();
+        $quoteApprovalRemoveRequestTransfer->setCustomerReference($quoteApprovalCreateRequestTransfer->getCustomerReference());
+        $quoteApprovalRemoveRequestTransfer->setIdQuoteApproval($quoteApprovalTransfers[0]->getIdQuoteApproval());
 
-        return $quoteApprovalCancelRequestTransfer;
+        return $quoteApprovalRemoveRequestTransfer;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteApproveRequestTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer
      */
-    protected function createValidQuoteApproveRequest(): QuoteApproveRequestTransfer
+    protected function createValidQuoteApprovalCreateRequestTransfer(): QuoteApprovalCreateRequestTransfer
     {
         $quoteTransfer = $this->createQuoteWithGrandTodal(10);
 
-        $quoteApproveRequestTransfer = $this->createQuoteApprovalRequest($quoteTransfer);
-        $quoteApproveRequestTransfer->setCustomer($quoteTransfer->getCustomer());
+        $quoteApprovalCreateRequestTransfer = $this->createQuoteApprovalCreateRequestTransfer($quoteTransfer);
+        $quoteApprovalCreateRequestTransfer->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
 
         $this->approverCanApproveUpToAmount(11, $quoteTransfer);
 
-        return $quoteApproveRequestTransfer;
+        return $quoteApprovalCreateRequestTransfer;
     }
 
     /**
@@ -311,24 +284,23 @@ class QuoteApprovalFacadeTest extends Unit
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteApproveRequestTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer
      */
-    protected function createQuoteApprovalRequest(QuoteTransfer $quoteTransfer): QuoteApproveRequestTransfer
+    protected function createQuoteApprovalCreateRequestTransfer(QuoteTransfer $quoteTransfer): QuoteApprovalCreateRequestTransfer
     {
         $customerTransfer = $this->tester->haveCustomer();
         $companyTransfer = $this->tester->haveCompany();
 
-        $approverCompanyUser = $this->tester->haveCompanyUser([
+        $companyUserTransfer = $this->tester->haveCompanyUser([
             CompanyUserTransfer::CUSTOMER => $customerTransfer,
             CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
 
-        $quoteApproveRequestTransfer = new QuoteApproveRequestTransfer();
-        $quoteApproveRequestTransfer->setQuote($quoteTransfer);
-        $quoteApproveRequestTransfer->setIdApprover($approverCompanyUser->getIdCompanyUser());
-        $quoteApproveRequestTransfer->setCustomer($quoteTransfer->getCustomer());
+        $quoteApprovalCreateRequestTransfer = new QuoteApprovalCreateRequestTransfer();
+        $quoteApprovalCreateRequestTransfer->setIdQuote($quoteTransfer->getIdQuote());
+        $quoteApprovalCreateRequestTransfer->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
 
-        return $quoteApproveRequestTransfer;
+        return $quoteApprovalCreateRequestTransfer;
     }
 
     /**
@@ -389,7 +361,7 @@ class QuoteApprovalFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function prepareEnvForApprovalRequestSending(): void
+    protected function prepareEnvForQuoteApprovalCreation(): void
     {
         $this->setApproverPermissions(new PermissionCollectionTransfer());
 
@@ -397,6 +369,42 @@ class QuoteApprovalFacadeTest extends Unit
             new PlaceOrderPermissionPlugin(),
             new ApproveQuotePermissionPlugin(),
         ]);
+
+        $this->tester->setDependency(
+            QuoteDependencyProvider::PLUGINS_QUOTE_EXPANDER,
+            [
+                new QuoteApprovalExpanderPlugin(),
+            ]
+        );
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    protected function findQuoteById(int $idQuote): ?QuoteTransfer
+    {
+        return $this->tester->getLocator()
+            ->quote()
+            ->facade()
+            ->findQuoteById($idQuote)
+            ->getQuoteTransfer();
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
+     */
+    protected function getShareDetailsByIdQuote(int $idQuote): ShareDetailCollectionTransfer
+    {
+        return $this->tester->getLocator()
+            ->sharedCart()
+            ->facade()
+            ->getShareDetailsByIdQuote(
+                (new QuoteTransfer())->setIdQuote($idQuote)
+            );
     }
 
     /**

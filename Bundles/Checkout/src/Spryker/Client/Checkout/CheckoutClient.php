@@ -40,7 +40,9 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
      */
     public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->getFactory()->createProccedCheckoutPluginExecutor()->execute($quoteTransfer);
+        return $this->getFactory()
+            ->createQuoteProceedCheckoutChecker()
+            ->isQuoteApplicableForCheckout($quoteTransfer);
     }
 
     /**

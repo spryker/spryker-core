@@ -12,15 +12,18 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyRoleFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeBridge;
+use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCustomerFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToMessengerFacadeBridge;
-use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToPermissionFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeBridge;
+use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToSharedCartFacadeBridge;
 
 /**
  * @method \Spryker\Zed\QuoteApproval\QuoteApprovalConfig getConfig()
  */
 class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    public const FACADE_SHARED_CART = 'FACADE_SHARED_CART';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
@@ -35,12 +38,14 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addCartFacade($container);
         $container = $this->addQuoteFacade($container);
         $container = $this->addCompanyRoleFacade($container);
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addMessengerFacade($container);
-        $container = $this->addPermissionFacade($container);
+        $container = $this->addSharedCartFacade($container);
+        $container = $this->addCustomerFacade($container);
 
         return $container;
     }
@@ -138,11 +143,27 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPermissionFacade(Container $container): Container
+    protected function addSharedCartFacade(Container $container): Container
     {
-        $container[static::FACADE_PERMISSION] = function (Container $container) {
-            return new QuoteApprovalToPermissionFacadeBridge(
-                $container->getLocator()->permission()->facade()
+        $container[static::FACADE_SHARED_CART] = function (Container $container) {
+            return new QuoteApprovalToSharedCartFacadeBridge(
+                $container->getLocator()->sharedCart()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerFacade(Container $container): Container
+    {
+        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+            return new QuoteApprovalToCustomerFacadeBridge(
+                $container->getLocator()->customer()->facade()
             );
         };
 

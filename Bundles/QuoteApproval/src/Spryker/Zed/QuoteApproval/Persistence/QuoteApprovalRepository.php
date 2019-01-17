@@ -8,7 +8,6 @@
 namespace Spryker\Zed\QuoteApproval\Persistence;
 
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
-use Orm\Zed\QuoteApproval\Persistence\Map\SpyQuoteApprovalTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -16,21 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class QuoteApprovalRepository extends AbstractRepository implements QuoteApprovalRepositoryInterface
 {
-    /**
-     * @param int $idQuote
-     *
-     * @return int[]
-     */
-    public function findQuoteApprovalIdCollectionByIdQuote(int $idQuote): array
-    {
-        return $this->getFactory()
-            ->createQuoteApprovalQuery()
-            ->filterByFkQuote($idQuote)
-            ->select([SpyQuoteApprovalTableMap::COL_ID_QUOTE_APPROVAL])
-            ->find()
-            ->toArray();
-    }
-
     /**
      * @param int $idQuote
      *
@@ -55,5 +39,21 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
         }
 
         return $quoteApprovalTransfers;
+    }
+
+    /**
+     * @param int $idQuoteApproval
+     *
+     * @return int|null
+     */
+    public function findIdQuoteByIdQuoteApproval(int $idQuoteApproval): ?int
+    {
+        $quoteApprovalEntity = $this->getFactory()
+            ->createQuoteApprovalQuery()
+            ->filterByIdQuoteApproval($idQuoteApproval)
+            ->find()
+            ->getFirst();
+
+        return $quoteApprovalEntity ? $quoteApprovalEntity->getFkQuote() : null;
     }
 }

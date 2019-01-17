@@ -13,19 +13,17 @@ interface QuoteApprovalEntityManagerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteApprovalTransfer $quoteApprovalTransfer
-     * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer
      */
     public function saveQuoteApproval(
-        QuoteApprovalTransfer $quoteApprovalTransfer,
-        int $idQuote
+        QuoteApprovalTransfer $quoteApprovalTransfer
     ): QuoteApprovalTransfer;
 
     /**
-     * @param array $quoteApprovalIds
+     * @param int $idQuoteApproval
      *
      * @return void
      */
-    public function deleteQuoteApprovalByIds(array $quoteApprovalIds): void;
+    public function deleteQuoteApprovalById(int $idQuoteApproval): void;
 }

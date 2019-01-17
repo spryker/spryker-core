@@ -21,20 +21,20 @@ class QuoteReader implements QuoteReaderInterface
     protected $quoteRepository;
 
     /**
-     * @var \Spryker\Zed\Quote\Business\Model\QuotePluginExecutorInterface
+     * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface[]
      */
-    protected $quotePluginExecutor;
+    protected $quoteExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
-     * @param \Spryker\Zed\Quote\Business\Model\QuotePluginExecutorInterface $quotePluginExecutor
+     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface[] $quoteExpanderPlugins
      */
     public function __construct(
         QuoteRepositoryInterface $quoteRepository,
-        QuotePluginExecutorInterface $quotePluginExecutor
+        array $quoteExpanderPlugins
     ) {
         $this->quoteRepository = $quoteRepository;
-        $this->quotePluginExecutor = $quotePluginExecutor;
+        $this->quoteExpanderPlugins = $quoteExpanderPlugins;
     }
 
     /**
@@ -52,7 +52,7 @@ class QuoteReader implements QuoteReaderInterface
         $quoteTransfer = $this->quoteRepository
             ->findQuoteByCustomer($customerTransfer->getCustomerReference());
 
-        $quoteTransfer = $this->executePlugins($quoteTransfer);
+        $quoteTransfer = $this->expandQuote($quoteTransfer);
 
         $quoteResponseTransfer = $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
         if ($quoteTransfer) {
@@ -80,7 +80,7 @@ class QuoteReader implements QuoteReaderInterface
                 $storeTransfer->getIdStore()
             );
 
-        $quoteTransfer = $this->executePlugins($quoteTransfer);
+        $quoteTransfer = $this->expandQuote($quoteTransfer);
 
         $quoteResponseTransfer = $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
         if ($quoteTransfer) {
@@ -102,7 +102,7 @@ class QuoteReader implements QuoteReaderInterface
         $quoteTransfer = $this->quoteRepository
             ->findQuoteById($idQuote);
 
-        $quoteTransfer = $this->executePlugins($quoteTransfer);
+        $quoteTransfer = $this->expandQuote($quoteTransfer);
 
         return $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
     }
@@ -143,7 +143,7 @@ class QuoteReader implements QuoteReaderInterface
             return $quoteResponseTransfer;
         }
 
-        $quoteTransfer = $this->executePlugins($quoteTransfer);
+        $quoteTransfer = $this->expandQuote($quoteTransfer);
 
         return $quoteResponseTransfer
             ->setQuoteTransfer($quoteTransfer)
@@ -155,12 +155,16 @@ class QuoteReader implements QuoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    protected function executePlugins(?QuoteTransfer $quoteTransfer): ?QuoteTransfer
+    protected function expandQuote(?QuoteTransfer $quoteTransfer): ?QuoteTransfer
     {
         if (!$quoteTransfer) {
             return null;
         }
 
-        return $this->quotePluginExecutor->executeHydrationPlugins($quoteTransfer);
+        foreach ($this->quoteExpanderPlugins as $quoteExpanderPlugin) {
+            $quoteTransfer = $quoteExpanderPlugin->expand($quoteTransfer);
+        }
+
+        return $quoteTransfer;
     }
 }

@@ -46,7 +46,7 @@ class CheckoutDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Checkout\Plugin\QuoteProceedCheckoutCheckPluginInterface[]
+     * @return \Spryker\Client\CheckoutExtension\Dependency\Plugin\QuoteProceedCheckoutCheckPluginInterface[]
      */
     protected function getQuoteProceedCheckoutCheckPlugins(): array
     {

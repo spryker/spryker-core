@@ -7,27 +7,24 @@
 
 namespace Spryker\Zed\QuoteApproval\Business;
 
-use Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculator;
-use Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface;
+use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculator;
+use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\QuoteApproval\Business\QuoteApprovalReader\QuoteApprovalReader;
-use Spryker\Zed\QuoteApproval\Business\QuoteApprovalReader\QuoteApprovalReaderInterface;
-use Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestCanceller;
-use Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestCancellerInterface;
-use Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestSender;
-use Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestSenderInterface;
-use Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestValidator;
-use Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestValidatorInterface;
-use Spryker\Zed\QuoteApproval\Business\QuoteApprovalWriter\QuoteApprovalWriter;
-use Spryker\Zed\QuoteApproval\Business\QuoteApprovalWriter\QuoteApprovalWriterInterface;
-use Spryker\Zed\QuoteApproval\Business\QuoteApproversProvider\PotentialQuoteApproversListProvider;
-use Spryker\Zed\QuoteApproval\Business\QuoteApproversProvider\PotentialQuoteApproversListProviderInterface;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreator;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreatorInterface;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRemover;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRemoverInterface;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRequestValidator;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRequestValidatorInterface;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApproverListProvider;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApproverListProviderInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyRoleFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToMessengerFacadeInterface;
-use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToPermissionFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface;
+use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToSharedCartFacadeInterface;
+use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface;
 use Spryker\Zed\QuoteApproval\QuoteApprovalDependencyProvider;
 
 /**
@@ -38,81 +35,69 @@ use Spryker\Zed\QuoteApproval\QuoteApprovalDependencyProvider;
 class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestSenderInterface
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreatorInterface
      */
-    public function createQuoteApprovalRequestSender(): QuoteApprovalRequestSenderInterface
+    public function createQuoteApprovalCreator(): QuoteApprovalCreatorInterface
     {
-        return new QuoteApprovalRequestSender(
-            $this->getCartFacade(),
+        return new QuoteApprovalCreator(
             $this->getQuoteFacade(),
-            $this->getMessengerFacade(),
-            $this->getCompanyUserFacade(),
-            $this->createQuoteApprovalRequestValidator()
+            $this->getCartFacade(),
+            $this->getSharedCartFacade(),
+            $this->createQuoteApprovalRequestValidator(),
+            $this->getEntityManager()
         );
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestValidatorInterface
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRequestValidatorInterface
      */
     public function createQuoteApprovalRequestValidator(): QuoteApprovalRequestValidatorInterface
     {
         return new QuoteApprovalRequestValidator(
-            $this->getPermissionFacade(),
-            $this->createQuoteApprovalStatusCalculator()
+            $this->getQuoteFacade(),
+            $this->createQuoteStatusCalculator()
         );
     }
 
     /**
-     * @return \Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface
+     * @return \Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface
      */
-    public function createQuoteApprovalStatusCalculator(): QuoteApprovalStatusCalculatorInterface
+    public function createQuoteStatusCalculator(): QuoteStatusCalculatorInterface
     {
-        return new QuoteApprovalStatusCalculator();
+        return new QuoteStatusCalculator();
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApprovalRequest\QuoteApprovalRequestCancellerInterface
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRemoverInterface
      */
-    public function createQuoteApprovalRequestCanceller(): QuoteApprovalRequestCancellerInterface
+    public function createQuoteApprovalRemover(): QuoteApprovalRemoverInterface
     {
-        return new QuoteApprovalRequestCanceller(
+        return new QuoteApprovalRemover(
             $this->getCartFacade(),
             $this->getQuoteFacade(),
-            $this->getMessengerFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApproversProvider\PotentialQuoteApproversListProviderInterface
-     */
-    public function createPotentialQuoteApproversProvider(): PotentialQuoteApproversListProviderInterface
-    {
-        return new PotentialQuoteApproversListProvider(
-            $this->getCompanyRoleFacade(),
-            $this->getCompanyUserFacade(),
-            $this->getPermissionFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApprovalReader\QuoteApprovalReaderInterface
-     */
-    public function createQuoteApprovalReader(): QuoteApprovalReaderInterface
-    {
-        return new QuoteApprovalReader(
-            $this->getRepository()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApprovalWriter\QuoteApprovalWriterInterface
-     */
-    public function createQuoteApprovalWriter(): QuoteApprovalWriterInterface
-    {
-        return new QuoteApprovalWriter(
+            $this->getSharedCartFacade(),
             $this->getEntityManager(),
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApproverListProviderInterface
+     */
+    public function createQuoteApproversProvider(): QuoteApproverListProviderInterface
+    {
+        return new QuoteApproverListProvider(
+            $this->getCompanyRoleFacade(),
+            $this->getCompanyUserFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface
+     */
+    public function getQuoteApprovalRepository(): QuoteApprovalRepositoryInterface
+    {
+        return $this->getRepository();
     }
 
     /**
@@ -156,10 +141,10 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToPermissionFacadeInterface
+     * @return \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToSharedCartFacadeInterface
      */
-    public function getPermissionFacade(): QuoteApprovalToPermissionFacadeInterface
+    public function getSharedCartFacade(): QuoteApprovalToSharedCartFacadeInterface
     {
-        return $this->getProvidedDependency(QuoteApprovalDependencyProvider::FACADE_PERMISSION);
+        return $this->getProvidedDependency(QuoteApprovalDependencyProvider::FACADE_SHARED_CART);
     }
 }

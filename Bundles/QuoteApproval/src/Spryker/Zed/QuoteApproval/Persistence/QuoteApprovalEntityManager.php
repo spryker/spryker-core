@@ -17,18 +17,14 @@ class QuoteApprovalEntityManager extends AbstractEntityManager implements QuoteA
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteApprovalTransfer $quoteApprovalTransfer
-     * @param int $idQutoe
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer
      */
-    public function saveQuoteApproval(
-        QuoteApprovalTransfer $quoteApprovalTransfer,
-        int $idQutoe
-    ): QuoteApprovalTransfer {
+    public function saveQuoteApproval(QuoteApprovalTransfer $quoteApprovalTransfer): QuoteApprovalTransfer
+    {
         $quoteApprovalEntity = $this->getFactory()
             ->createQuoteApprovalQuery()
             ->filterByIdQuoteApproval($quoteApprovalTransfer->getIdQuoteApproval())
-            ->filterByFkQuote($idQutoe)
             ->findOneOrCreate();
 
         $quoteApprovalEntity = $this->getFactory()
@@ -46,15 +42,15 @@ class QuoteApprovalEntityManager extends AbstractEntityManager implements QuoteA
     }
 
     /**
-     * @param array $quoteApprovalIds
+     * @param int $idQuoteApproval
      *
      * @return void
      */
-    public function deleteQuoteApprovalByIds(array $quoteApprovalIds): void
+    public function deleteQuoteApprovalById(int $idQuoteApproval): void
     {
         $this->getFactory()
             ->createQuoteApprovalQuery()
-            ->filterByIdQuoteApproval_In($quoteApprovalIds)
+            ->filterByIdQuoteApproval($idQuoteApproval)
             ->find()
             ->delete();
     }

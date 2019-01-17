@@ -8,9 +8,10 @@
 namespace Spryker\Client\QuoteApproval;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
-use Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer;
-use Generated\Shared\Transfer\QuoteApproveRequestTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteApprovalClientInterface
@@ -28,41 +29,47 @@ interface QuoteApprovalClientInterface
      *
      * @return string|null
      */
-    public function findQuoteStatus(QuoteTransfer $quoteTransfer): ?string;
+    public function calculateQuoteStatus(QuoteTransfer $quoteTransfer): ?string;
 
     /**
      * Specification:
+     * - Makes zed request.
+     * - Clears current cart sharing.
      * - Shares quote to approver with read only access.
      * - Locks quote.
      * - Creates QuoteApproval with `Waiting` status.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteApproveRequestTransfer $quoteApproveRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function sendApproveRequest(QuoteApproveRequestTransfer $quoteApproveRequestTransfer): QuoteResponseTransfer;
+    public function createQuoteApproval(
+        QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
+    ): QuoteApprovalResponseTransfer;
 
     /**
      * Specification:
+     * - Makes zed request.
      * - Unlocks quote.
      * - Removes cart sharing with approver.
      * - Removes quote approval request.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function cancelApprovalRequest(
-        QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
-    ): QuoteResponseTransfer;
+    public function removeQuoteApproval(
+        QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
+    ): QuoteApprovalResponseTransfer;
 
     /**
      * Specification:
-     * - Returns collection of company users which can approve particular quote.
+     * - Makes zed request.
+     * - Returns collection of company users that can approve quote.
      *
      * @api
      *
@@ -70,5 +77,54 @@ interface QuoteApprovalClientInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getPotentialQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer;
+    public function getQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer;
+
+    /**
+     * - Returns false if customer does't have PlaceOrderPermissionPlugin permission assigned.
+     * - Returns false if excecuting of PlaceOrderPermissionPlugin permission returns true.
+     * - Returns false if quote approval status is `approved`.
+     * - Returns true othervise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequireApproval(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Returns true if quote status is `waiting`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteWaitingForApproval(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Returns highest limit calculated from all ApproveQuotePermissionPlugin permissions assigned to company user.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return int|null
+     */
+    public function calculateApproveQuotePermissionLimit(QuoteTransfer $quoteTransfer, CompanyUserTransfer $companyUserTransfer): ?int;
+
+    /**
+     * Returns highest limit calculated from all PlaceOrderPermissionPlugin permissions assigned to company user.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return int|null
+     */
+    public function calculatePlaceOrderPermissionLimit(QuoteTransfer $quoteTransfer, CompanyUserTransfer $companyUserTransfer): ?int;
 }

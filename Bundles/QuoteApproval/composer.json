@@ -14,18 +14,19 @@
     "spryker/permission-extension": "^1.0.0",
     "spryker/quote": "^2.0.0",
     "spryker/quote-extension": "^1.0.0",
-    "spryker/zed-request": "^3.0.0"
+    "spryker/zed-request": "^3.0.0",
+    "spryker/checkout-extension": "^1.0.0",
+    "spryker/customer": "^7.0.0",
+    "spryker/shared-cart": "^1.0.0"
   },
   "require-dev": {
-    "spryker/checkout": "^4.0.0",
     "spryker/code-sniffer": "*",
-    "spryker/company": "^1.0.0",
-    "spryker/customer": "^7.0.0",
+    "spryker/company": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/checkout": "^4.0.0"
+    "spryker/checkout": "If you want to use QuoteApprovalProceedCheckoutCheckPlugin."
   },
   "autoload": {
     "psr-4": {

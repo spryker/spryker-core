@@ -161,7 +161,7 @@ interface CompanyRoleFacadeInterface
 
     /**
      * Specification:
-     * - Finds list of company user ids by permission key.
+     * - Returns ids of company users that have the assigned permission.
      *
      * @api
      *

@@ -8,33 +8,35 @@
 namespace Spryker\Client\QuoteApproval\Zed;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
-use Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer;
-use Generated\Shared\Transfer\QuoteApproveRequestTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteApprovalStubInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteApproveRequestTransfer $quoteApproveRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function sendApproveRequest(QuoteApproveRequestTransfer $quoteApproveRequestTransfer): QuoteResponseTransfer;
+    public function createQuoteApproval(
+        QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
+    ): QuoteApprovalResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function cancelApprovalRequest(
-        QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
-    ): QuoteResponseTransfer;
+    public function removeQuoteApproval(
+        QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
+    ): QuoteApprovalResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getPotentialQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer;
+    public function getQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer;
 }

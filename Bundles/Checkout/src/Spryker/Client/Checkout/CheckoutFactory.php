@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\Checkout;
 
-use Spryker\Client\Checkout\PluginExecutor\QuoteProceedCheckoutCheckPluginExecutor;
-use Spryker\Client\Checkout\PluginExecutor\QuoteProceedCheckoutCheckPluginExecutorInterface;
+use Spryker\Client\Checkout\Quote\QuoteProceedCheckoutChecker;
+use Spryker\Client\Checkout\Quote\QuoteProceedCheckoutCheckerInterface;
 use Spryker\Client\Checkout\Zed\CheckoutStub;
 use Spryker\Client\Kernel\AbstractFactory;
 
@@ -23,17 +23,17 @@ class CheckoutFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Checkout\PluginExecutor\QuoteProceedCheckoutCheckPluginExecutorInterface
+     * @return \Spryker\Client\Checkout\Quote\QuoteProceedCheckoutCheckerInterface
      */
-    public function createProccedCheckoutPluginExecutor(): QuoteProceedCheckoutCheckPluginExecutorInterface
+    public function createQuoteProceedCheckoutChecker(): QuoteProceedCheckoutCheckerInterface
     {
-        return new QuoteProceedCheckoutCheckPluginExecutor($this->getQuoteProceedCheckoutCheckPlugins());
+        return new QuoteProceedCheckoutChecker($this->getQuoteProceedCheckoutCheckPlugins());
     }
 
     /**
-     * @return \Spryker\Client\Checkout\Plugin\QuoteProceedCheckoutCheckPluginInterface[]
+     * @return \Spryker\Client\CheckoutExtension\Dependency\Plugin\QuoteProceedCheckoutCheckPluginInterface[]
      */
-    protected function getQuoteProceedCheckoutCheckPlugins(): array
+    public function getQuoteProceedCheckoutCheckPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutDependencyProvider::PLUGINS_QUOTE_PROCEED_CHECKOUT_CHECK);
     }

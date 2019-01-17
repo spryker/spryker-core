@@ -100,9 +100,9 @@ class PermissionFinder implements PermissionFinderInterface
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 
         foreach ($this->permissionStoragePlugins as $permissionStoragePlugin) {
-            foreach ($permissionStoragePlugin->getPermissionCollection()->getPermissions() as $permission) {
-                if ($permission->getKey() === $permissionKey) {
-                    $permissionCollectionTransfer->addPermission($permission);
+            foreach ($permissionStoragePlugin->getPermissionCollection()->getPermissions() as $permissionTransfer) {
+                if ($permissionTransfer->getKey() === $permissionKey) {
+                    $permissionCollectionTransfer->addPermission($permissionTransfer);
                 }
             }
         }
@@ -118,9 +118,9 @@ class PermissionFinder implements PermissionFinderInterface
     public function findCustomerPermissionByKey(string $permissionKey): ?PermissionTransfer
     {
         foreach ($this->permissionStoragePlugins as $permissionStoragePlugin) {
-            foreach ($permissionStoragePlugin->getPermissionCollection()->getPermissions() as $permission) {
-                if ($permission->getKey() === $permissionKey) {
-                    return $permission;
+            foreach ($permissionStoragePlugin->getPermissionCollection()->getPermissions() as $permissionTransfer) {
+                if ($permissionTransfer->getKey() === $permissionKey) {
+                    return $permissionTransfer;
                 }
             }
         }

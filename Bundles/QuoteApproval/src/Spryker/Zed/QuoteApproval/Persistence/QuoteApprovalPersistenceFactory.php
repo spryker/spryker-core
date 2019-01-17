@@ -11,7 +11,6 @@ use Orm\Zed\QuoteApproval\Persistence\SpyQuoteApprovalQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface;
 use Spryker\Zed\QuoteApproval\Persistence\Propel\Mapper\QuoteApprovalMapper;
-use Spryker\Zed\QuoteApproval\Persistence\Propel\Mapper\QuoteApprovalMapperInterface;
 use Spryker\Zed\QuoteApproval\QuoteApprovalDependencyProvider;
 
 /**
@@ -30,9 +29,9 @@ class QuoteApprovalPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApproval\Persistence\Propel\Mapper\QuoteApprovalMapperInterface
+     * @return \Spryker\Zed\QuoteApproval\Persistence\Propel\Mapper\QuoteApprovalMapper
      */
-    public function createQuoteApprovalMapper(): QuoteApprovalMapperInterface
+    public function createQuoteApprovalMapper(): QuoteApprovalMapper
     {
         return new QuoteApprovalMapper(
             $this->getCompanyUserFacade()

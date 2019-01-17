@@ -10,19 +10,42 @@ namespace Spryker\Client\QuoteApproval;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToPermissionClientInterface;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface;
+use Spryker\Client\QuoteApproval\Permission\PermissionLimitCalculator;
+use Spryker\Client\QuoteApproval\Permission\PermissionLimitCalculatorInterface;
+use Spryker\Client\QuoteApproval\Quote\QuoteStatusChecker;
+use Spryker\Client\QuoteApproval\Quote\QuoteStatusCheckerInterface;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStub;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface;
-use Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculator;
-use Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface;
+use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculator;
+use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
 
 class QuoteApprovalFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface
+     * @return \Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface
      */
-    public function createQuoteApprovalStatusCalculator(): QuoteApprovalStatusCalculatorInterface
+    public function createQuoteStatusCalculator(): QuoteStatusCalculatorInterface
     {
-        return new QuoteApprovalStatusCalculator();
+        return new QuoteStatusCalculator();
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteApproval\Quote\QuoteStatusCheckerInterface
+     */
+    public function createQuoteStatusChecker(): QuoteStatusCheckerInterface
+    {
+        return new QuoteStatusChecker(
+            $this->getPermissionClient(),
+            $this->createQuoteStatusCalculator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteApproval\Permission\PermissionLimitCalculatorInterface
+     */
+    public function createPermissionLimitCalculator(): PermissionLimitCalculatorInterface
+    {
+        return new PermissionLimitCalculator($this->getPermissionClient());
     }
 
     /**
@@ -38,7 +61,7 @@ class QuoteApprovalFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface
      */
-    protected function getZedRequestClient(): QuoteApprovalToZedRequestClientInterface
+    public function getZedRequestClient(): QuoteApprovalToZedRequestClientInterface
     {
         return $this->getProvidedDependency(QuoteApprovalDependencyProvider::CLIENT_ZED_REQUEST);
     }

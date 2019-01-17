@@ -43,8 +43,7 @@ interface PermissionClientInterface
 
     /**
      * Specification:
-     * - Finds a permission key in a user session.
-     * - Finds a related to the permission key plugin.
+     * - Finds permission by key for current customer.
      *
      * @api
      *

@@ -188,6 +188,9 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     }
 
     /**
+     * @module Permission
+     * @module CompanyUser
+     *
      * @param string $permissionKey
      *
      * @return int[]
@@ -196,7 +199,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     {
         return $this->getFactory()
             ->createCompanyRoleQuery()
-            ->joinWithSpyCompanyRoleToCompanyUser()
+            ->joinSpyCompanyRoleToCompanyUser()
             ->useSpyCompanyRoleToPermissionQuery()
                 ->usePermissionQuery()
                    ->filterByKey($permissionKey)

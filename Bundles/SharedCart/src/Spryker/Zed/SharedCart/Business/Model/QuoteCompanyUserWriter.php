@@ -71,9 +71,9 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
     protected function executeUpdateQuoteCompanyUsersTransaction(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $currentQuoteCompanyUserIdCollection = $this->sharedCartRepository->findQuoteCompanyUserIdCollection($quoteTransfer->getIdQuote());
-        $this->removeQuoteCompanyUsers((array)$quoteTransfer->getShareDetails(), $currentQuoteCompanyUserIdCollection);
         $this->addNewQuoteCompanyUsers($quoteTransfer);
         $this->updateExistingQuoteCompanyUsers($quoteTransfer, $currentQuoteCompanyUserIdCollection);
+        $this->removeQuoteCompanyUsers((array)$quoteTransfer->getShareDetails(), $currentQuoteCompanyUserIdCollection);
 
         return $quoteTransfer;
     }

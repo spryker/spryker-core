@@ -8,9 +8,9 @@
 namespace Spryker\Client\QuoteApproval\Zed;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
-use Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer;
-use Generated\Shared\Transfer\QuoteApproveRequestTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface;
 
@@ -30,41 +30,39 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteApproveRequestTransfer $quoteApproveRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function sendApproveRequest(
-        QuoteApproveRequestTransfer $quoteApproveRequestTransfer
-    ): QuoteResponseTransfer {
-        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+    public function createQuoteApproval(
+        QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
+    ): QuoteApprovalResponseTransfer {
+        /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedRequestClient->call(
-            '/quote-approval/gateway/send-quote-approve-request',
-            $quoteApproveRequestTransfer
+            '/quote-approval/gateway/create-quote-approval',
+            $quoteApprovalCreateRequestTransfer
         );
-
-        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
 
         return $quoteResponseTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function cancelApprovalRequest(
-        QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
-    ): QuoteResponseTransfer {
-        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
-        $quoteResponseTransfer = $this->zedRequestClient->call(
-            '/quote-approval/gateway/cancel-quote-approval-request',
-            $quoteApprovalCancelRequestTransfer
+    public function removeQuoteApproval(
+        QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
+    ): QuoteApprovalResponseTransfer {
+        /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer */
+        $quoteApprovalResponseTransfer = $this->zedRequestClient->call(
+            '/quote-approval/gateway/remove-quote-approval',
+            $quoteApprovalRemoveRequestTransfer
         );
 
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
 
-        return $quoteResponseTransfer;
+        return $quoteApprovalResponseTransfer;
     }
 
     /**
@@ -72,11 +70,11 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getPotentialQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
+    public function getQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
     {
         /** @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer $potentialQuoteApproversCollection */
         $potentialQuoteApproversCollection = $this->zedRequestClient->call(
-            '/quote-approval/gateway/get-potential-quote-approvers-list',
+            '/quote-approval/gateway/get-quote-approvers-list',
             $quoteTransfer
         );
 

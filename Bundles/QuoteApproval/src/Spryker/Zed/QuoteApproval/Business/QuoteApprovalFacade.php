@@ -8,9 +8,9 @@
 namespace Spryker\Zed\QuoteApproval\Business;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
-use Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer;
-use Generated\Shared\Transfer\QuoteApproveRequestTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -26,13 +26,14 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteApproveRequestTransfer $quoteApproveRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function sendQuoteApproveRequest(QuoteApproveRequestTransfer $quoteApproveRequestTransfer): QuoteResponseTransfer
-    {
-        return $this->getFactory()->createQuoteApprovalRequestSender()->sendQuoteApproveRequest($quoteApproveRequestTransfer);
+    public function createQuoteApproval(
+        QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
+    ): QuoteApprovalResponseTransfer {
+        return $this->getFactory()->createQuoteApprovalCreator()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
     }
 
     /**
@@ -40,16 +41,16 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function cancelQuoteApprovalRequest(
-        QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
-    ): QuoteResponseTransfer {
+    public function removeQuoteApproval(
+        QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
+    ): QuoteApprovalResponseTransfer {
         return $this->getFactory()
-            ->createQuoteApprovalRequestCanceller()
-            ->cancelQuoteApprovalRequest($quoteApprovalCancelRequestTransfer);
+            ->createQuoteApprovalRemover()
+            ->removeQuoteApproval($quoteApprovalRemoveRequestTransfer);
     }
 
     /**
@@ -61,23 +62,9 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getPotentialQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
+    public function getQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
     {
-        return $this->getFactory()->createPotentialQuoteApproversProvider()->getApproversList($quoteTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function updateApprovals(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        return $this->getFactory()->createQuoteApprovalWriter()->updateApprovals($quoteTransfer);
+        return $this->getFactory()->createQuoteApproversProvider()->getApproversList($quoteTransfer);
     }
 
     /**
@@ -91,6 +78,6 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      */
     public function getQuoteApprovalsByIdQuote(int $idQuote): array
     {
-        return $this->getFactory()->createQuoteApprovalReader()->getQuoteApprovalsByIdQuote($idQuote);
+        return $this->getFactory()->getQuoteApprovalRepository()->findQuoteApprovalCollectionByIdQuote($idQuote);
     }
 }

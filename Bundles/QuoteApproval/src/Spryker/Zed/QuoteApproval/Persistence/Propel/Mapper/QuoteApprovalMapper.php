@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Orm\Zed\QuoteApproval\Persistence\SpyQuoteApproval;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface;
 
-class QuoteApprovalMapper implements QuoteApprovalMapperInterface
+class QuoteApprovalMapper
 {
     /**
      * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface
@@ -36,7 +36,8 @@ class QuoteApprovalMapper implements QuoteApprovalMapperInterface
         QuoteApprovalTransfer $quoteApprovalTransfer,
         SpyQuoteApproval $quoteApprovalEntity
     ): SpyQuoteApproval {
-        $quoteApprovalEntity->setFkCompanyUser($quoteApprovalTransfer->getApprover()->getIdCompanyUser());
+        $quoteApprovalEntity->setFkCompanyUser($quoteApprovalTransfer->getFkCompanyUser());
+        $quoteApprovalEntity->setFkQuote($quoteApprovalTransfer->getFkQuote());
         $quoteApprovalEntity->setStatus($quoteApprovalTransfer->getStatus());
 
         return $quoteApprovalEntity;

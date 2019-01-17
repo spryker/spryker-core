@@ -24,6 +24,7 @@ class QuoteApprovalDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
+        $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addPermissionClient($container);
 

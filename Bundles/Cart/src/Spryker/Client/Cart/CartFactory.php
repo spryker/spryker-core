@@ -58,6 +58,14 @@ class CartFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface
+     */
+    public function getQuoteStorageStrategy()
+    {
+        return $this->createQuoteStorageStrategyProvider()->provideStorage();
+    }
+
+    /**
      * @return \Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProxyInterface
      */
     public function createQuoteStorageStrategy(): QuoteStorageStrategyProxyInterface
@@ -65,7 +73,7 @@ class CartFactory extends AbstractFactory
         return new QuoteStorageStrategyProxy(
             $this->getMessengerClient(),
             $this->getQuoteClient(),
-            $this->createQuoteStorageStrategyProvider()->provideStorage()
+            $this->getQuoteStorageStrategy()
         );
     }
 

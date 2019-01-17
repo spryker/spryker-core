@@ -158,6 +158,7 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
+     *  - If quote is locked - only expands quote.
      *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      *  - Check changes and add notes to messenger (-> Messenger)
      *
