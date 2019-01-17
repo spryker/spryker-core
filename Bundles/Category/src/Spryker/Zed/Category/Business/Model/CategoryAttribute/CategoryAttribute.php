@@ -29,6 +29,8 @@ class CategoryAttribute implements CategoryAttributeInterface
     }
 
     /**
+     * @deprecated Use \Spryker\Zed\Category\Business\Model\CategoryReaderInterface::findCategoryById() instead.
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
