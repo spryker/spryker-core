@@ -38,12 +38,17 @@ class QuoteValidator implements QuoteValidatorInterface
     public function validate(QuoteTransfer $quoteTransfer): MessageTransfer
     {
         $currencyTransfer = $quoteTransfer->getCurrency();
-        $storeTransfer = $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName());
         $currencyCode = $currencyTransfer->getCode();
 
         if (!$currencyTransfer || !$currencyCode) {
             return $this->createValidationError(static::MESSAGE_CURRENCY_DATA_IS_MISSING);
         }
+
+        if (!$quoteTransfer->getStore()) {
+            return $this->createValidationError();
+        }
+
+        $storeTransfer = $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName());
 
         if ($storeTransfer && array_search($currencyCode, $storeTransfer->getAvailableCurrencyIsoCodes()) === false) {
             return $this->createValidationError(
