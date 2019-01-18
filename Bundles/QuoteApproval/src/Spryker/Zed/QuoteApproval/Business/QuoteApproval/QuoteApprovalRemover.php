@@ -8,6 +8,7 @@
 namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -23,6 +24,7 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
     use TransactionTrait;
 
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+    protected const GLOSSARY_KEY_APPROVAL_REMOVED = 'quote_approval.removed';
 
     /**
      * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface
@@ -96,7 +98,8 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
         if (!$quoteTransfer
             || $quoteTransfer->getCustomerReference() !== $quoteApprovalRemoveRequestTransfer->getCustomerReference()
         ) {
-            $quoteApprovalResponseTransfer->setIsSuccessful(false);
+            $quoteApprovalResponseTransfer->setIsSuccessful(false)
+                ->setMessage($this->createMessageTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED));
 
             return $quoteApprovalResponseTransfer;
         }
@@ -108,6 +111,9 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
         $this->quoteApprovalEntityManager->deleteQuoteApprovalById(
             $quoteApprovalRemoveRequestTransfer->getIdQuoteApproval()
         );
+
+        $quoteApprovalResponseTransfer->setIsSuccessful(false)
+            ->setMessage($this->createMessageTransfer(static::GLOSSARY_KEY_APPROVAL_REMOVED));
 
         $quoteApprovalResponseTransfer->setIsSuccessful(true);
 
@@ -134,5 +140,20 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
         );
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param string $message
+     * @param array $parameters
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createMessageTransfer(string $message, array $parameters = []): MessageTransfer
+    {
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue($message);
+        $messageTransfer->setParameters($parameters);
+
+        return $messageTransfer;
     }
 }

@@ -25,7 +25,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
     use TransactionTrait;
 
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
-    protected const GLOSSARY_KEY_APPROVAL_REQUEST_SENT = 'quote_approval.approval_request.sent';
+    protected const GLOSSARY_KEY_APPROVAL_CREATED = 'quote_approval.created';
 
     /**
      * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface
@@ -161,7 +161,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
         $quoteApprovalResponseTransfer->setIsSuccessful(true);
         $quoteApprovalResponseTransfer->setMessage(
             $this->createMessageTransfer(
-                static::GLOSSARY_KEY_APPROVAL_REQUEST_SENT,
+                static::GLOSSARY_KEY_APPROVAL_CREATED,
                 [
                     '%first_name%' => $approverCustomerTransfer->getFirstName(),
                     '%last_name%' => $approverCustomerTransfer->getLastName(),
