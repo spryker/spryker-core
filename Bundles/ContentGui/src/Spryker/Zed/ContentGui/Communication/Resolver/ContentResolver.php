@@ -15,14 +15,14 @@ class ContentResolver implements ContentResolverInterface
     /**
      * @var array|\Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface[]
      */
-    protected $contentItemPlugins;
+    protected $contentPlugins;
 
     /**
-     * @param \Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface[] $contentItemPlugins
+     * @param \Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface[] $contentPlugins
      */
-    public function __construct(array $contentItemPlugins)
+    public function __construct(array $contentPlugins)
     {
-        $this->contentItemPlugins = $contentItemPlugins;
+        $this->contentPlugins = $contentPlugins;
     }
 
     /**
@@ -31,8 +31,8 @@ class ContentResolver implements ContentResolverInterface
     public function getTermKeys(): array
     {
         $termKeys = [];
-        foreach ($this->contentItemPlugins as $contentItemPlugin) {
-            $termKeys[] = $contentItemPlugin->getTermKey();
+        foreach ($this->contentPlugins as $contentPlugin) {
+            $termKeys[] = $contentPlugin->getTermKey();
         }
 
         return $termKeys;
@@ -45,11 +45,11 @@ class ContentResolver implements ContentResolverInterface
      *
      * @return \Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface
      */
-    public function getContentItemPlugin(string $termKey): ContentPluginInterface
+    public function getContentPlugin(string $termKey): ContentPluginInterface
     {
-        foreach ($this->contentItemPlugins as $contentItemPlugin) {
-            if ($contentItemPlugin->getTermKey() === $termKey) {
-                return $contentItemPlugin;
+        foreach ($this->contentPlugins as $contentPlugin) {
+            if ($contentPlugin->getTermKey() === $termKey) {
+                return $contentPlugin;
             }
         }
 

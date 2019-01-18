@@ -13,7 +13,7 @@ interface ContentEntityManagerInterface
 {
     /**
      * Specification:
-     * - Creates or update content
+     * - Creates or updates content.
      *
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
      *

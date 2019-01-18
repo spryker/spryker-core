@@ -35,7 +35,7 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addLocaleFacadeService($container);
         $container = $this->addContentFacade($container);
-        $container = $this->addContentItemPlugins($container);
+        $container = $this->addContentPlugins($container);
 
         return $container;
     }
@@ -45,10 +45,10 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addContentItemPlugins(Container $container)
+    protected function addContentPlugins(Container $container)
     {
         $container[static::PLUGIN_CONTENT_ITEM_PLUGINS] = function () {
-            return $this->getContentItemPlugins();
+            return $this->getContentPlugins();
         };
 
         return $container;
@@ -57,7 +57,7 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface[]
      */
-    protected function getContentItemPlugins(): array
+    protected function getContentPlugins(): array
     {
         return [];
     }

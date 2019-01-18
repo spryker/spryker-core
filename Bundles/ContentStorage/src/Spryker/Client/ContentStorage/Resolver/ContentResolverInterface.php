@@ -23,5 +23,5 @@ interface ContentResolverInterface
      *
      * @return \Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface
      */
-    public function getContentItemPlugin(string $termKey): ContentTermExecutorPluginInterface;
+    public function getContentPlugin(string $termKey): ContentTermExecutorPluginInterface;
 }

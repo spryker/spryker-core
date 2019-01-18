@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ContentStorage\Communication;
 
 use Spryker\Zed\ContentStorage\ContentStorageDependencyProvider;
+use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToEventBehaviorInterface;
+use Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -21,7 +23,7 @@ class ContentStorageCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToEventBehaviorInterface
      */
-    public function getEventBehaviorFacade()
+    public function getEventBehaviorFacade(): ContentStorageToEventBehaviorInterface
     {
         return $this->getProvidedDependency(ContentStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
@@ -29,7 +31,7 @@ class ContentStorageCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface
      */
-    public function getContentStorageRepository()
+    public function getContentStorageRepository(): ContentStorageRepositoryInterface
     {
         return $this->getRepository();
     }

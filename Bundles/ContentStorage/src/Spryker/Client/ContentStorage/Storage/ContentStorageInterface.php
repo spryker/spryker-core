@@ -13,7 +13,7 @@ interface ContentStorageInterface
      * @param int $idContent
      * @param string $localeName
      *
-     * @return array|\Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
+     * @return array|null
      */
-    public function findContentById(int $idContent, string $localeName);
+    public function findContentById(int $idContent, string $localeName): ?array;
 }

@@ -37,7 +37,7 @@ class ContentForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_AVAILABLE_LOCALES);
         $resolver->setRequired(static::OPTION_CONTENT_ITEM_FORM_PLUGIN);
@@ -49,7 +49,7 @@ class ContentForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addNameField($builder)
@@ -147,7 +147,7 @@ class ContentForm extends AbstractType
     /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    protected function getFieldDefaultConstraints()
+    protected function getFieldDefaultConstraints(): array
     {
         return [
             new NotBlank(),
@@ -158,7 +158,7 @@ class ContentForm extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'content';
     }

@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ContentStorage\Business;
 
 use Spryker\Zed\ContentStorage\Business\ContentStorage\ContentStorage;
+use Spryker\Zed\ContentStorage\Business\ContentStorage\ContentStorageInterface;
 use Spryker\Zed\ContentStorage\ContentStorageDependencyProvider;
+use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -21,7 +23,7 @@ class ContentStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ContentStorage\Business\ContentStorage\ContentStorageInterface
      */
-    public function createContentStorage()
+    public function createContentStorage(): ContentStorageInterface
     {
         return new ContentStorage(
             $this->getRepository(),
@@ -33,7 +35,7 @@ class ContentStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeInterface
      */
-    public function getLocaleFacade()
+    public function getLocaleFacade(): ContentStorageToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(ContentStorageDependencyProvider::FACADE_LOCALE);
     }

@@ -14,7 +14,7 @@ class ContentStorageConstants
 {
     /**
      * Specification:
-     * - Term key as used for storage value structure
+     * - Term key as used for storage value structure.
      *
      * @api
      */
@@ -22,7 +22,7 @@ class ContentStorageConstants
 
     /**
      * Specification:
-     * - Content key as used for storage value structure
+     * - Content key as used for storage value structure.
      *
      * @api
      */
@@ -30,7 +30,7 @@ class ContentStorageConstants
 
     /**
      * Specification:
-     * - Queue name as used for processing content messages
+     * - Queue name as used for processing content messages.
      *
      * @api
      */
@@ -38,7 +38,7 @@ class ContentStorageConstants
 
     /**
      * Specification:
-     * - Queue name as used for error content messages
+     * - Queue name as used for error content messages.
      *
      * @api
      */
@@ -46,7 +46,7 @@ class ContentStorageConstants
 
     /**
      * Specification:
-     * - Resource name, this will use for key generating
+     * - Resource name, this will use for key generating.
      *
      * @api
      */

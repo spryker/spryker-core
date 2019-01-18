@@ -15,14 +15,14 @@ class ContentResolver implements ContentResolverInterface
     /**
      * @var array|\Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface[]
      */
-    protected $contentItemTermPlugins;
+    protected $contentTermPlugins;
 
     /**
-     * @param \Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface[] $contentItemTermPlugins
+     * @param \Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface[] $contentTermPlugins
      */
-    public function __construct(array $contentItemTermPlugins)
+    public function __construct(array $contentTermPlugins)
     {
-        $this->contentItemTermPlugins = $contentItemTermPlugins;
+        $this->contentTermPlugins = $contentTermPlugins;
     }
 
     /**
@@ -31,8 +31,8 @@ class ContentResolver implements ContentResolverInterface
     public function getTermKeys(): array
     {
         $termKeys = [];
-        foreach ($this->contentItemTermPlugins as $contentItemPlugin) {
-            $termKeys[] = $contentItemPlugin->getTermKey();
+        foreach ($this->contentTermPlugins as $contentPlugin) {
+            $termKeys[] = $contentPlugin->getTermKey();
         }
 
         return $termKeys;
@@ -45,11 +45,11 @@ class ContentResolver implements ContentResolverInterface
      *
      * @return \Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface
      */
-    public function getContentItemPlugin(string $termKey): ContentTermExecutorPluginInterface
+    public function getContentPlugin(string $termKey): ContentTermExecutorPluginInterface
     {
-        foreach ($this->contentItemTermPlugins as $contentItemPlugin) {
-            if ($contentItemPlugin->getTermKey() === $termKey) {
-                return $contentItemPlugin;
+        foreach ($this->contentTermPlugins as $contentPlugin) {
+            if ($contentPlugin->getTermKey() === $termKey) {
+                return $contentPlugin;
             }
         }
 

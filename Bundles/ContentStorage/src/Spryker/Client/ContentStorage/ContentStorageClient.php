@@ -22,9 +22,9 @@ class ContentStorageClient extends AbstractClient implements ContentStorageClien
      * @param int $idContent
      * @param string $localeName
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
+     * @return array|null
      */
-    public function findContentById(int $idContent, string $localeName)
+    public function findContentById(int $idContent, string $localeName): ?array
     {
         return $this->getFactory()
             ->createContentStorage()

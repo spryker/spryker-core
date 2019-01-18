@@ -18,7 +18,7 @@ interface ContentResolverInterface
      *
      * @return \Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface
      */
-    public function getContentItemPlugin(string $termKey): ContentPluginInterface;
+    public function getContentPlugin(string $termKey): ContentPluginInterface;
 
     /**
      * @return string[]

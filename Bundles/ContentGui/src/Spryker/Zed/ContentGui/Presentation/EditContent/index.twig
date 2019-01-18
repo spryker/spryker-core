@@ -5,7 +5,7 @@
 {% endif %}
 
 {% block head_title widget_title %}
-{% block section_title 'Edit Content Item: ' | trans ~ contentItemName %}
+{% block section_title 'Edit Content Item: ' | trans ~ contentName %}
 
 {% block action %}
     {{ backActionButton('/content-gui/list-content', 'Back to Content Items' | trans) }}
@@ -14,7 +14,7 @@
 {% block content %}
     <div class="col-xs-12 col-md-6">
         <div class="col-xs-12 col-md-12">
-            <h2>Update {{ contentItemName }}</h2>
+            <h2>Update {{ contentName }}</h2>
         </div>
         {{ form_start(contentForm, {attr: {novalidate: 'novalidate'}}) }}
         <div class="col-xs-12 col-md-6">

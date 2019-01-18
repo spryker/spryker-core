@@ -7,8 +7,12 @@
 
 namespace Spryker\Client\ContentStorage;
 
+use Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface;
+use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchronizationServiceInterface;
 use Spryker\Client\ContentStorage\Resolver\ContentResolver;
+use Spryker\Client\ContentStorage\Resolver\ContentResolverInterface;
 use Spryker\Client\ContentStorage\Storage\ContentStorage;
+use Spryker\Client\ContentStorage\Storage\ContentStorageInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class ContentStorageFactory extends AbstractFactory
@@ -16,7 +20,7 @@ class ContentStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ContentStorage\Storage\ContentStorageInterface
      */
-    public function createContentStorage()
+    public function createContentStorage(): ContentStorageInterface
     {
         return new ContentStorage(
             $this->getStorageClient(),
@@ -28,23 +32,23 @@ class ContentStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ContentStorage\Resolver\ContentResolverInterface
      */
-    public function createContentResolver()
+    public function createContentResolver(): ContentResolverInterface
     {
-        return new ContentResolver($this->getContentItemPlugins());
+        return new ContentResolver($this->getContentPlugins());
     }
 
     /**
      * @return \Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface
      */
-    protected function getStorageClient()
+    protected function getStorageClient(): ContentStorageToStorageClientInterface
     {
         return $this->getProvidedDependency(ContentStorageDependencyProvider::CLIENT_STORAGE);
     }
 
     /**
-     * @return \Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchronizationServiceBridge
+     * @return \Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchronizationServiceInterface
      */
-    protected function getSynchronizationService()
+    protected function getSynchronizationService(): ContentStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ContentStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
@@ -52,7 +56,7 @@ class ContentStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface[]
      */
-    protected function getContentItemPlugins()
+    protected function getContentPlugins(): array
     {
         return $this->getProvidedDependency(ContentStorageDependencyProvider::PLUGIN_CONTENT_ITEM_PLUGINS);
     }

@@ -11,7 +11,7 @@ interface ContentEvents
 {
     /**
      * Specification
-     * - This events will be used for spy_content publishing
+     * - This events will be used for spy_content publishing.
      *
      * @api
      */
@@ -19,7 +19,7 @@ interface ContentEvents
 
     /**
      * Specification
-     * - This events will be used for spy_content un-publishing
+     * - This events will be used for spy_content un-publishing.
      *
      * @api
      */
@@ -27,7 +27,7 @@ interface ContentEvents
 
     /**
      * Specification
-     * - This event will be used for spy_content entity changes
+     * - This event will be used for spy_content entity changes.
      *
      * @api
      */
@@ -35,7 +35,7 @@ interface ContentEvents
 
     /**
      * Specification
-     * - This event will be used for spy_content entity created
+     * - This event will be used for spy_content entity creation.
      *
      * @api
      */

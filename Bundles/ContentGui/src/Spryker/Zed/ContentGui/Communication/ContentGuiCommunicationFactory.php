@@ -104,13 +104,13 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createContentResolver(): ContentResolverInterface
     {
-        return new ContentResolver($this->getContentItemPlugins());
+        return new ContentResolver($this->getContentPlugins());
     }
 
     /**
      * @return \Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface[]
      */
-    public function getContentItemPlugins(): array
+    public function getContentPlugins(): array
     {
         return $this->getProvidedDependency(ContentGuiDependencyProvider::PLUGIN_CONTENT_ITEM_PLUGINS);
     }

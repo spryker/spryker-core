@@ -52,7 +52,7 @@ class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements 
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(array $ids = [])
+    public function getData(array $ids = []): array
     {
         $synchronizationDataTransfers = [];
 

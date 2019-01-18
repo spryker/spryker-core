@@ -49,21 +49,21 @@ class ContentStorage implements ContentStorageInterface
      * @param int $idContent
      * @param string $localeName
      *
-     * @return array|\Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
+     * @return array|null
      */
-    public function findContentById(int $idContent, string $localeName)
+    public function findContentById(int $idContent, string $localeName): ?array
     {
         $storageKey = $this->generateKey((string)$idContent, $localeName);
-        $contentItem = $this->storageClient->get($storageKey);
+        $content = $this->storageClient->get($storageKey);
 
-        if (empty($contentItem)) {
+        if (empty($content)) {
             return null;
         }
 
-        $contentItemExtractorPlugin = $this->contentResolver->getContentItemPlugin($contentItem[ContentStorageConstants::TERM_KEY]);
-        $oarameters = $contentItem[ContentStorageConstants::CONTENT_KEY];
+        $contentExtractorPlugin = $this->contentResolver->getContentPlugin($content[ContentStorageConstants::TERM_KEY]);
+        $oarameters = $content[ContentStorageConstants::CONTENT_KEY];
 
-        return $contentItemExtractorPlugin->execute($oarameters);
+        return $contentExtractorPlugin->execute($oarameters);
     }
 
     /**
@@ -72,7 +72,7 @@ class ContentStorage implements ContentStorageInterface
      *
      * @return string
      */
-    protected function generateKey($keyName, $localeName)
+    protected function generateKey($keyName, $localeName): string
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setReference($keyName);

@@ -31,7 +31,7 @@ class LocalizedContentForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(ContentForm::OPTION_CONTENT_ITEM_FORM_PLUGIN);
 
@@ -55,7 +55,7 @@ class LocalizedContentForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addFkLocale($builder);
         $this->addLocaleName($builder);
@@ -136,7 +136,7 @@ class LocalizedContentForm extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'localized-content';
     }

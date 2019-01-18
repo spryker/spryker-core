@@ -13,7 +13,7 @@ interface ContentFacadeInterface
 {
     /**
      * Specification:
-     * - Find content by id
+     * - Finds content by id.
      * - Returns ContentTransfer if found, otherwise it returns NULL.
      *
      * @api
@@ -26,7 +26,7 @@ interface ContentFacadeInterface
 
     /**
      * Specification:
-     * - Find content by uuid
+     * - Finds content by uuid.
      * - Returns ContentTransfer if found, otherwise it returns NULL.
      *
      * @api
@@ -39,10 +39,10 @@ interface ContentFacadeInterface
 
     /**
      * Specification:
-     * - Creates a new content entity
-     * - Uses incoming transfer to set entity fields
-     * - Persists the entity to DB
-     * - Sets ID to the returning transfer
+     * - Creates a new content entity.
+     * - Uses incoming transfer to set entity fields.
+     * - Persists the entity to DB.
+     * - Sets ID to the returning transfer.
      *
      * @api
      *
@@ -54,11 +54,11 @@ interface ContentFacadeInterface
 
     /**
      * Specification:
-     * - Finds a content record by ID in DB
-     * - Throws exception if not found
-     * - Uses incoming transfer to set entity fields
-     * - Persists the entity to DB
-     * - Sets ID to the returning transfer
+     * - Finds a content record by ID in DB.
+     * - Throws exception if not found.
+     * - Uses incoming transfer to set entity fields.
+     * - Persists the entity to DB.
+     * - Sets ID to the returning transfer.
      *
      * @api
      *

@@ -12,14 +12,14 @@ interface ContentStorageClientInterface
     /**
      * Specification:
      * - Finds content item in the key-value storage.
-     * - Executes data
+     * - Executes data.
      *
      * @api
      *
      * @param int $idContent
      * @param string $localeName
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
+     * @return array|null
      */
-    public function findContentById(int $idContent, string $localeName);
+    public function findContentById(int $idContent, string $localeName): ?array;
 }

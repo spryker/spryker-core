@@ -113,7 +113,7 @@ class ContentStorage implements ContentStorageInterface
      *
      * @return array
      */
-    protected function getExtractLocalizedContents(ContentTransfer $contentTransfer)
+    protected function getExtractLocalizedContents(ContentTransfer $contentTransfer): array
     {
         $localizedContents = [];
 
@@ -133,7 +133,7 @@ class ContentStorage implements ContentStorageInterface
      *
      * @return array
      */
-    protected function structureContentStorage(ArrayObject $contentStorageTransfers)
+    protected function structureContentStorage(ArrayObject $contentStorageTransfers): array
     {
         $contentStorageList = [];
 

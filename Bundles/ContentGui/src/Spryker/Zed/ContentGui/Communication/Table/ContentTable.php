@@ -96,17 +96,17 @@ class ContentTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        $contentItems = $this->runQuery($this->contentQuery, $config);
+        $contents = $this->runQuery($this->contentQuery, $config);
         $results = [];
 
-        foreach ($contentItems as $key => $contentItem) {
+        foreach ($contents as $key => $content) {
             $results[] = [
-                ContentTableConstants::COL_ID_CONTENT => $contentItem[SpyContentTableMap::COL_ID_CONTENT],
-                ContentTableConstants::COL_NAME => $contentItem[SpyContentTableMap::COL_NAME],
-                ContentTableConstants::COL_DESCRIPTION => $contentItem[SpyContentTableMap::COL_DESCRIPTION],
-                ContentTableConstants::COL_CONTENT_TYPE_CANDIDATE_KEY => $this->buildContentTypeLabel($contentItem[SpyContentTableMap::COL_CONTENT_TYPE_CANDIDATE_KEY]),
-                ContentTableConstants::COL_UPDATED_AT => $this->utilDateTimeService->formatDateTime($contentItem[SpyContentTableMap::COL_UPDATED_AT]),
-                ContentTableConstants::COL_ACTIONS => $this->buildLinks($contentItem),
+                ContentTableConstants::COL_ID_CONTENT => $content[SpyContentTableMap::COL_ID_CONTENT],
+                ContentTableConstants::COL_NAME => $content[SpyContentTableMap::COL_NAME],
+                ContentTableConstants::COL_DESCRIPTION => $content[SpyContentTableMap::COL_DESCRIPTION],
+                ContentTableConstants::COL_CONTENT_TYPE_CANDIDATE_KEY => $this->buildContentTypeLabel($content[SpyContentTableMap::COL_CONTENT_TYPE_CANDIDATE_KEY]),
+                ContentTableConstants::COL_UPDATED_AT => $this->utilDateTimeService->formatDateTime($content[SpyContentTableMap::COL_UPDATED_AT]),
+                ContentTableConstants::COL_ACTIONS => $this->buildLinks($content),
             ];
         }
 
@@ -114,17 +114,17 @@ class ContentTable extends AbstractTable
     }
 
     /**
-     * @param array $contentItem
+     * @param array $content
      *
      * @return string
      */
-    protected function buildLinks(array $contentItem): string
+    protected function buildLinks(array $content): string
     {
         $buttons = [];
 
         $urlParams = [
-            ContentTableConstants::REQUEST_TERM_KEY => $contentItem[ContentTableConstants::COL_TERM_KEY],
-            ContentTableConstants::REQUEST_ID_CONTENT => $contentItem[ContentTableConstants::COL_ID_CONTENT],
+            ContentTableConstants::REQUEST_TERM_KEY => $content[ContentTableConstants::COL_TERM_KEY],
+            ContentTableConstants::REQUEST_ID_CONTENT => $content[ContentTableConstants::COL_ID_CONTENT],
         ];
 
         $buttons[] = $this->generateEditButton(

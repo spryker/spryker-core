@@ -57,9 +57,9 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
             $contentTransfer = $this->contentFacade->findContentById($contentId);
         } else {
             $contentTransfer = new ContentTransfer();
-            $contentItemPlugin = $this->contentResolver->getContentItemPlugin($termKey);
-            $contentTransfer->setContentTypeCandidateKey($contentItemPlugin->getTypeKey());
-            $contentTransfer->setContentTermCandidateKey($contentItemPlugin->getTermKey());
+            $contentPlugin = $this->contentResolver->getContentPlugin($termKey);
+            $contentTransfer->setContentTypeCandidateKey($contentPlugin->getTypeKey());
+            $contentTransfer->setContentTermCandidateKey($contentPlugin->getTermKey());
         }
         $localizedContents = $this->getLocalizedContentList($contentTransfer->getLocalizedContents());
         $contentTransfer->setLocalizedContents((new ArrayObject()));
@@ -89,12 +89,12 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
             $termKey = $this->contentFacade->findContentById($contentId)->getContentTermCandidateKey();
         }
 
-        $contentItemPlugin = $this->contentResolver->getContentItemPlugin($termKey);
+        $contentPlugin = $this->contentResolver->getContentPlugin($termKey);
 
         return [
             'data_class' => ContentTransfer::class,
             ContentForm::OPTION_AVAILABLE_LOCALES => $this->getAvailableLocales(),
-            ContentForm::OPTION_CONTENT_ITEM_FORM_PLUGIN => $contentItemPlugin,
+            ContentForm::OPTION_CONTENT_ITEM_FORM_PLUGIN => $contentPlugin,
         ];
     }
 
@@ -116,7 +116,7 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    protected function getAvailableLocales()
+    protected function getAvailableLocales(): array
     {
         $defaultLocale = new LocaleTransfer();
         $defaultLocale->setLocaleName('Default locale');

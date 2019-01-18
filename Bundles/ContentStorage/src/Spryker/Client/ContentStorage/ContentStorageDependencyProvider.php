@@ -23,11 +23,11 @@ class ContentStorageDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addClientStorage($container);
         $container = $this->addServiceSynchronization($container);
-        $container = $this->addContentItemPlugins($container);
+        $container = $this->addContentPlugins($container);
 
         return $container;
     }
@@ -37,10 +37,10 @@ class ContentStorageDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addContentItemPlugins(Container $container)
+    protected function addContentPlugins(Container $container): Container
     {
         $container[static::PLUGIN_CONTENT_ITEM_PLUGINS] = function () {
-            return $this->getContentItemPlugins();
+            return $this->getContentPlugins();
         };
 
         return $container;
@@ -49,7 +49,7 @@ class ContentStorageDependencyProvider extends AbstractDependencyProvider
     /**
      * @return \Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface[]
      */
-    protected function getContentItemPlugins(): array
+    protected function getContentPlugins(): array
     {
         return [];
     }
@@ -59,7 +59,7 @@ class ContentStorageDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addClientStorage(Container $container)
+    protected function addClientStorage(Container $container): Container
     {
         $container[static::CLIENT_STORAGE] = function (Container $container) {
             return new ContentStorageToStorageClientBridge(
@@ -75,7 +75,7 @@ class ContentStorageDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addServiceSynchronization(Container $container)
+    protected function addServiceSynchronization(Container $container): Container
     {
         $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
             return new ContentStorageToSynchronizationServiceBridge(

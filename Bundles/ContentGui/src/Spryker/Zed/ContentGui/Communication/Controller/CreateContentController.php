@@ -61,7 +61,7 @@ class CreateContentController extends AbstractController
             'contentTabs' => $contentTabs->createView(),
             'contentForm' => $contentForm->createView(),
             'backButton' => static::URL_REDIRECT_CONTENT_PAGE,
-            'contentItemName' => $this->getFactory()->createContentResolver()->getContentItemPlugin($termKey)->getTermKey(),
+            'contentName' => $this->getFactory()->createContentResolver()->getContentPlugin($termKey)->getTermKey(),
         ]);
     }
 }

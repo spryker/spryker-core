@@ -44,7 +44,7 @@ class ContentEntityManager extends AbstractEntityManager implements ContentEntit
      *
      * @return \Orm\Zed\Content\Persistence\SpyContent
      */
-    protected function extractLocalizedContents(ContentTransfer $contentTransfer, SpyContent $spyContentEntity)
+    protected function extractLocalizedContents(ContentTransfer $contentTransfer, SpyContent $spyContentEntity): SpyContent
     {
         $isModified = false;
 
