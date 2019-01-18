@@ -202,6 +202,36 @@ class EditController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function confirmDeleteAction(Request $request)
+    {
+        $idUser = $this->castId($request->query->get(static::PARAM_ID_USER));
+
+        if (empty($idUser)) {
+            $this->addErrorMessage(static::MESSAGE_ID_USER_EXTRACT_ERROR);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
+
+        if ($this->isCurrentUser($idUser)) {
+            $this->addErrorMessage(static::MESSAGE_USER_DELETE_ERROR);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
+
+        $deleteUserForm = $this->getFactory()->getDeleteUserForm();
+
+        return $this->viewResponse([
+            'idUser' => $idUser,
+            'idUserFieldName' => static::PARAM_ID_USER,
+            'deleteUserForm' => $deleteUserForm->createView(),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse

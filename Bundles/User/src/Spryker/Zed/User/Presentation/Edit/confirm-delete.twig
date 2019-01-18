@@ -1,0 +1,33 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Delete user' %}
+
+{% block action %}
+    {{ backActionButton('/user', 'List Users' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <span>{{ 'Are you sure to delete this user account?' | trans }}</span>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'No' | trans }}</a>
+                    {{ form_start(deleteUserForm) }}
+                    <input type="hidden" name="{{ idUserFieldName }}" value="{{ idUser }}" />
+                    <input type="submit" class="btn btn-danger safe-submit" value="{{ 'Yes' | trans }}" />
+                    {{ form_end(deleteUserForm) }}
+                </div>
+            </div>
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
