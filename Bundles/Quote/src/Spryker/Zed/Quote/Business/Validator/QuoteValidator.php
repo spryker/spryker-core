@@ -88,10 +88,12 @@ class QuoteValidator implements QuoteValidatorInterface
         QuoteValidationResponseTransfer $quoteValidationResponseTransfer
     ): QuoteValidationResponseTransfer {
         foreach ($this->quoteValidatorPlugins as $quoteValidatorPlugin) {
-            $messageTransfer = $quoteValidatorPlugin->validate($quoteTransfer);
+            $quoteValidationResponseTransferFromPlugin = $quoteValidatorPlugin->validate($quoteTransfer);
 
-            if ($messageTransfer->getValue()) {
-                $quoteValidationResponseTransfer->addErrors($messageTransfer)
+            if (!$quoteValidationResponseTransferFromPlugin->getIsSuccess()) {
+                $errors = array_merge($quoteValidationResponseTransfer->getErrors(), $quoteValidationResponseTransferFromPlugin->getErrors());
+
+                $quoteValidationResponseTransfer->setErrors($errors)
                     ->setIsSuccess(false);
             }
         }

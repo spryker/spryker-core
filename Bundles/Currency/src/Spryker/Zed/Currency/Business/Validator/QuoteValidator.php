@@ -9,6 +9,7 @@ namespace Spryker\Zed\Currency\Business\Validator;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Zed\Store\Business\StoreFacade;
 
 class QuoteValidator implements QuoteValidatorInterface
@@ -33,9 +34,9 @@ class QuoteValidator implements QuoteValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    public function validate(QuoteTransfer $quoteTransfer): MessageTransfer
+    public function validate(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
         $currencyTransfer = $quoteTransfer->getCurrency();
         $currencyCode = $currencyTransfer->getCode();
@@ -64,11 +65,21 @@ class QuoteValidator implements QuoteValidatorInterface
      * @param string $message
      * @param array $parameters
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    protected function createValidationError(string $message = '', array $parameters = []): MessageTransfer
+    protected function createValidationError(string $message = '', array $parameters = []): QuoteValidationResponseTransfer
     {
-        return (new MessageTransfer())->setValue($message)
+        $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
+            ->setIsSuccess(true);
+
+        if (!$message) {
+            return $quoteValidationResponseTransfer;
+        }
+
+        $error = (new MessageTransfer())->setValue($message)
             ->setParameters($parameters);
+
+        return $quoteValidationResponseTransfer->setIsSuccess(false)
+            ->addErrors($error);
     }
 }

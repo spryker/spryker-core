@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Price\Business;
 
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 
 interface PriceFacadeInterface
 {
@@ -61,7 +61,7 @@ interface PriceFacadeInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    public function validatePriceModeInQuote(QuoteTransfer $quoteTransfer): MessageTransfer;
+    public function validatePriceModeInQuote(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer;
 }

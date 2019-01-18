@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Currency\Communication\Plugin\Quote;
 
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface;
 
@@ -28,9 +28,9 @@ class QuoteCurrencyValidatorPlugin extends AbstractPlugin implements QuoteValida
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    public function validate(QuoteTransfer $quoteTransfer): MessageTransfer
+    public function validate(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
         return $this->getFacade()->validateCurrencyInQuote($quoteTransfer);
     }
