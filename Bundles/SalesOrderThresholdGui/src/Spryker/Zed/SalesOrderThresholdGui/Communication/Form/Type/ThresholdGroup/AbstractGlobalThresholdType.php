@@ -68,7 +68,7 @@ abstract class AbstractGlobalThresholdType extends AbstractType
             'divisor' => 100,
             'constraints' => [
                 new Range(['min' => 0]),
-                $this->getFactory()->createStrategyConastraint(),
+                $this->getFactory()->createThresholdStrategyConstraint(),
             ],
             'required' => false,
         ]);

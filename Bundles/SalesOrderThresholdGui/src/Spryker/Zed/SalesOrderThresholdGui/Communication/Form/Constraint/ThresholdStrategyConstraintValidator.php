@@ -13,14 +13,14 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class StrategyValidator extends ConstraintValidator
+class ThresholdStrategyConstraintValidator extends ConstraintValidator
 {
     protected const MESSAGE_UPDATE_SOFT_STRATEGY_ERROR = 'To save {{strategy_group}} threshold - enter value that is higher than 0 in this field. To delete threshold set all fields equal to 0 or left them empty and save.';
     protected const MESSAGE_KEY = '{{strategy_group}}';
 
     /**
      * @param string $value
-     * @param \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Constraint\Strategy $constraint
+     * @param \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Constraint\ThresholdStrategyConstraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
@@ -28,7 +28,7 @@ class StrategyValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof Strategy) {
+        if (!$constraint instanceof ThresholdStrategyConstraint) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\StrategyConstraint');
         }
 

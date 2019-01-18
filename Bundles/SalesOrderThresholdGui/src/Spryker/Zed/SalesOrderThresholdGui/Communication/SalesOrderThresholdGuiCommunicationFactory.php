@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesOrderThresholdGui\Communication;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Constraint\Strategy;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Constraint\ThresholdStrategyConstraint;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\GlobalThresholdDataProvider;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\SettingsFormDataProvider;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\GlobalThresholdDataProviderResolver;
@@ -127,12 +127,12 @@ class SalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Constraint\Strategy
+     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Constraint\ThresholdStrategyConstraint
      */
-    public function createStrategyConastraint()
+    public function createThresholdStrategyConstraint()
     {
-        return new Strategy([
-            Strategy::OPTION_SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS => $this->getSalesOrderThresholdFormExpanderPlugins(),
+        return new ThresholdStrategyConstraint([
+            ThresholdStrategyConstraint::OPTION_SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS => $this->getSalesOrderThresholdFormExpanderPlugins(),
         ]);
     }
 

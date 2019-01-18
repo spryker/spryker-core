@@ -9,7 +9,7 @@ namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Constraint;
 
 use Symfony\Component\Validator\Constraint;
 
-class Strategy extends Constraint
+class ThresholdStrategyConstraint extends Constraint
 {
     public const OPTION_SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS = 'salesOrderThresholdFormExpanderPlugins';
 
