@@ -10,14 +10,11 @@ namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGr
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalThresholdType;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\LocalizedMessagesType;
-use Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormFieldDependenciesPluginInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Range;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\SalesOrderThresholdGui\Communication\SalesOrderThresholdGuiCommunicationFactory getFactory()
@@ -28,9 +25,6 @@ abstract class AbstractGlobalThresholdType extends AbstractType
     public const FIELD_ID_THRESHOLD = 'idThreshold';
     public const FIELD_STRATEGY = 'strategy';
     public const FIELD_THRESHOLD = 'threshold';
-
-    protected const MESSAGE_UPDATE_SOFT_STRATEGY_ERROR = 'To save {{strategy_group}} threshold - enter value that is higher than 0 in this field. To delete threshold set all fields equal to 0 or left them empty and save.';
-    protected const MESSAGE_KEY = '{{strategy_group}}';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -74,7 +68,7 @@ abstract class AbstractGlobalThresholdType extends AbstractType
             'divisor' => 100,
             'constraints' => [
                 new Range(['min' => 0]),
-                $this->createDepenedentFieldsConstraint(),
+                $this->getFactory()->createStrategyConastraint(),
             ],
             'required' => false,
         ]);
@@ -114,51 +108,5 @@ abstract class AbstractGlobalThresholdType extends AbstractType
         ]);
 
         return $this;
-    }
-
-    /**
-     * @return \Symfony\Component\Validator\Constraints\Callback
-     */
-    protected function createDepenedentFieldsConstraint()
-    {
-        return new Callback(function ($value, ExecutionContextInterface $context) {
-            /** @var \Symfony\Component\Form\Form $form */
-            $form = $context->getObject();
-            $data = $form->getParent()->getData();
-
-            $this->checkStrategy($data, $context);
-        });
-    }
-
-    /**
-     * @param array $data
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     *
-     * @return void
-     */
-    protected function checkStrategy(array $data, ExecutionContextInterface $context): void
-    {
-        $salesOrderThresholdFormExpanderPlugins = $this->getFactory()->getSalesOrderThresholdFormExpanderPlugins();
-
-        foreach ($salesOrderThresholdFormExpanderPlugins as $salesOrderThresholdFormExpanderPlugin) {
-            if (!$salesOrderThresholdFormExpanderPlugin instanceof  SalesOrderThresholdFormFieldDependenciesPluginInterface
-                || $salesOrderThresholdFormExpanderPlugin->getThresholdKey() !== $data[static::FIELD_STRATEGY]
-            ) {
-                continue;
-            }
-
-            /** @var Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormFieldDependenciesPluginInterface $salesOrderThresholdFormExpanderPlugin */
-            if (!$salesOrderThresholdFormExpanderPlugin->getThresholdFieldDependentFieldNames()) {
-                continue;
-            }
-
-            foreach ($salesOrderThresholdFormExpanderPlugin->getThresholdFieldDependentFieldNames() as $field) {
-                if ($data[$field] && !$data[static::FIELD_THRESHOLD]) {
-                    $message = strtr(static::MESSAGE_UPDATE_SOFT_STRATEGY_ERROR, [static::MESSAGE_KEY => $salesOrderThresholdFormExpanderPlugin->getThresholdGroup()]);
-                    $context->addViolation($message);
-                    return;
-                }
-            }
-        }
     }
 }
