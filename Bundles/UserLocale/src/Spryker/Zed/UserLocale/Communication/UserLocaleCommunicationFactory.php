@@ -8,8 +8,8 @@
 namespace Spryker\Zed\UserLocale\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleBridgeInterface;
-use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserBridgeInterface;
+use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleFacadeBridgeInterface;
+use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserFacadeBridgeInterface;
 use Spryker\Zed\UserLocale\UserLocaleDependencyProvider;
 
 /**
@@ -19,17 +19,17 @@ use Spryker\Zed\UserLocale\UserLocaleDependencyProvider;
 class UserLocaleCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleBridgeInterface
+     * @return \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleFacadeBridgeInterface
      */
-    public function getLocaleFacade(): UserLocaleToLocaleBridgeInterface
+    public function getLocaleFacade(): UserLocaleToLocaleFacadeBridgeInterface
     {
         return $this->getProvidedDependency(UserLocaleDependencyProvider::FACADE_LOCALE);
     }
 
     /**
-     * @return \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserBridgeInterface
+     * @return \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserFacadeBridgeInterface
      */
-    public function getUserFacade(): UserLocaleToUserBridgeInterface
+    public function getUserFacade(): UserLocaleToUserFacadeBridgeInterface
     {
         return $this->getProvidedDependency(UserLocaleDependencyProvider::FACADE_USER);
     }

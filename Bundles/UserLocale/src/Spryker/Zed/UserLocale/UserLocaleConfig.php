@@ -11,29 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class UserLocaleConfig extends AbstractBundleConfig
 {
-    protected const DEFAULT_LOCALE = 'en_US';
+    public const DEFAULT_USER_LOCALE_NAME = 'en_US';
 
     /**
      * @return string
      */
-    public function getDefaultLocale(): string
+    public function getDefaultLocaleName(): string
     {
-        return static::DEFAULT_LOCALE;
-    }
-
-    /**
-     * @return array
-     */
-    public function getInstallerUsers(): array
-    {
-        return [
-            [
-                'firstName' => 'Admin',
-                'lastName' => 'German',
-                'password' => 'change123',
-                'userName' => 'admin_de@spryker.com',
-                'locale' => 'de_DE',
-            ],
-        ];
+        return static::DEFAULT_USER_LOCALE_NAME;
     }
 }

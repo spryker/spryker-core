@@ -22,9 +22,9 @@ class TranslatorInstallerPlugin extends AbstractPlugin implements InstallerPlugi
      *
      * @return void
      */
-    public function install()
+    public function install(): void
     {
-        $this->getFacade()->clearTranslationCache();
+        $this->getFacade()->cleanTranslationCache();
         $this->getFacade()->generateTranslationCache();
     }
 }

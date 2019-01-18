@@ -29,7 +29,7 @@ interface TranslatorFacadeInterface
      *
      * @return void
      */
-    public function clearTranslationCache(): void;
+    public function cleanTranslationCache(): void;
 
     /**
      * Specification:
@@ -41,7 +41,7 @@ interface TranslatorFacadeInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName);
+    public function hasTranslation($keyName): bool;
 
     /**
      * Specification:
@@ -57,5 +57,5 @@ interface TranslatorFacadeInterface
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null);
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null): string;
 }

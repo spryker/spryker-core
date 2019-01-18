@@ -5,7 +5,7 @@
 
     <transfer name="User">
         <property name="fkLocale" type="int"/>
-        <property name="localeCode" type="string"/>
+        <property name="localeName" type="string"/>
     </transfer>
 
 </transfers>

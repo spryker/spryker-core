@@ -4,7 +4,6 @@
   "description": "UserLocale module",
   "license": "proprietary",
   "require": {
-    "spryker/acl": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/user": "^3.0.0",
@@ -12,9 +11,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/installer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies, minimum required version: 2.0.1"
   },
   "autoload": {
     "psr-4": {
@@ -35,9 +36,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/installer": "If you want to use Installer plugin, minimum required version: 4.0.1",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies, minimum required version: 2.0.1"
   }
 }

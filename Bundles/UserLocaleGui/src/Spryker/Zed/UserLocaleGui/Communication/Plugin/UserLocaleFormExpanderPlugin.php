@@ -18,6 +18,7 @@ class UserLocaleFormExpanderPlugin extends AbstractPlugin implements UserFormExp
 {
     /**
      * {@inheritdoc}
+     * - Expand User form with Locale field.
      *
      * @api
      *

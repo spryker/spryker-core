@@ -9,8 +9,8 @@ namespace Spryker\Zed\UserLocaleGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\UserLocaleGui\Dependency\Facade\UserLocaleGuiToLocaleBridge;
-use Spryker\Zed\UserLocaleGui\Dependency\Facade\UserLocaleGuiToLocaleBridgeInterface;
+use Spryker\Zed\UserLocaleGui\Dependency\Facade\UserLocaleGuiToLocaleFacadeBridge;
+use Spryker\Zed\UserLocaleGui\Dependency\Facade\UserLocaleGuiToLocaleFacadeBridgeInterface;
 
 class UserLocaleGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -37,8 +37,8 @@ class UserLocaleGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container): UserLocaleGuiToLocaleBridgeInterface {
-            return new UserLocaleGuiToLocaleBridge($container->getLocator()->locale()->facade());
+        $container[static::FACADE_LOCALE] = function (Container $container): UserLocaleGuiToLocaleFacadeBridgeInterface {
+            return new UserLocaleGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
         };
 
         return $container;

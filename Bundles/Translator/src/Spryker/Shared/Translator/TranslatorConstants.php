@@ -12,11 +12,14 @@ namespace Spryker\Shared\Translator;
  */
 interface TranslatorConstants
 {
+    public const TRANSLATION_FILE_PATH_PATTERNS = 'TRANSLATOR:TRANSLATION_FILE_PATH_PATTERN';
+    public const TRANSLATION_CACHE_DIRECTORY = 'TRANSLATOR:TRANSLATION_CACHE_DIRECTORY';
+
     /**
      * Specification:
      * - Fallback locales that will be used if there is no translation for selected locale.
      *
      * @api
      */
-    public const FALLBACK_LOCALES = 'TRANSLATOR:FALLBACK_LOCALES';
+    public const TRANSLATION_FALLBACK_LOCALES = 'TRANSLATOR:FALLBACK_LOCALES';
 }

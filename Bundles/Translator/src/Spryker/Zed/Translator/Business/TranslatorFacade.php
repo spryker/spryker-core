@@ -24,12 +24,7 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
      */
     public function generateTranslationCache(): void
     {
-        $factory = $this->getFactory();
-
-        $translator = $factory->createTranslator();
-        $locales = $factory->getStore()->getLocales();
-
-        $translator->generateCache($locales);
+        $this->getFactory()->getTranslatorService()->generateTranslationCache();
     }
 
     /**
@@ -39,9 +34,9 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
      *
      * @return void
      */
-    public function clearTranslationCache(): void
+    public function cleanTranslationCache(): void
     {
-        $this->getFactory()->createCacheClearer()->clearCache();
+        $this->getFactory()->getTranslatorService()->cleanTranslationCache();
     }
 
     /**
@@ -51,9 +46,9 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
      *
      * @return bool
      */
-    public function hasTranslation($keyName)
+    public function hasTranslation($keyName): bool
     {
-        return $this->getFactory()->createKeyManager()->hasKey($keyName);
+        return $this->getFactory()->getTranslatorService()->hasTranslation($keyName);
     }
 
     /**
@@ -65,11 +60,8 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null)
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null): string
     {
-         $translator = $this->getFactory()->createTranslator();
-         $locale = $localeTransfer ? $localeTransfer->getLocaleName() : null;
-
-         return $translator->trans($keyName, $data, $locale);
+         return $this->getFactory()->getTranslatorService()->translate($keyName, $data, $localeTransfer);
     }
 }

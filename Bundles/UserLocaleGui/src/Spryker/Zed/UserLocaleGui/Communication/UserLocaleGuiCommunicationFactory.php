@@ -10,16 +10,16 @@ namespace Spryker\Zed\UserLocaleGui\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\UserLocaleGui\Communication\FormExpander\DataProvider\LocaleChoiceFormDataProvider;
 use Spryker\Zed\UserLocaleGui\Communication\FormExpander\UserLocaleFormExpander;
-use Spryker\Zed\UserLocaleGui\Dependency\Facade\UserLocaleGuiToLocaleBridgeInterface;
+use Spryker\Zed\UserLocaleGui\Dependency\Facade\UserLocaleGuiToLocaleFacadeBridgeInterface;
 use Spryker\Zed\UserLocaleGui\UserLocaleGuiDependencyProvider;
 use Symfony\Component\Form\FormTypeInterface;
 
 class UserLocaleGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\UserLocaleGui\Dependency\Facade\UserLocaleGuiToLocaleBridgeInterface
+     * @return \Spryker\Zed\UserLocaleGui\Dependency\Facade\UserLocaleGuiToLocaleFacadeBridgeInterface
      */
-    public function getLocaleFacade(): UserLocaleGuiToLocaleBridgeInterface
+    public function getLocaleFacade(): UserLocaleGuiToLocaleFacadeBridgeInterface
     {
         return $this->getProvidedDependency(UserLocaleGuiDependencyProvider::FACADE_LOCALE);
     }

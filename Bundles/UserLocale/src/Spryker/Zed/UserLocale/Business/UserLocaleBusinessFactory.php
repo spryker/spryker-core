@@ -8,11 +8,12 @@
 namespace Spryker\Zed\UserLocale\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\UserLocale\Business\Installer\Installer;
-use Spryker\Zed\UserLocale\Business\Installer\InstallerInterface;
-use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToAclBridgeInterface;
-use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleBridgeInterface;
-use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserBridgeInterface;
+use Spryker\Zed\UserLocale\Business\UserExpander\UserExpander;
+use Spryker\Zed\UserLocale\Business\UserExpander\UserExpanderInterface;
+use Spryker\Zed\UserLocale\Business\UserLocale\UserLocaleReader;
+use Spryker\Zed\UserLocale\Business\UserLocale\UserLocaleReaderInterface;
+use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleFacadeBridgeInterface;
+use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserFacadeBridgeInterface;
 use Spryker\Zed\UserLocale\UserLocaleDependencyProvider;
 
 /**
@@ -21,39 +22,40 @@ use Spryker\Zed\UserLocale\UserLocaleDependencyProvider;
 class UserLocaleBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleBridgeInterface
+     * @return \Spryker\Zed\UserLocale\Business\UserLocale\UserLocaleReaderInterface
      */
-    public function getLocaleFacade(): UserLocaleToLocaleBridgeInterface
+    public function createUserLocaleReader(): UserLocaleReaderInterface
     {
-        return $this->getProvidedDependency(UserLocaleDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\UserLocale\Business\Installer\InstallerInterface
-     */
-    public function createInstaller(): InstallerInterface
-    {
-        return new Installer(
-            $this->getUserFacade(),
+        return new UserLocaleReader(
             $this->getLocaleFacade(),
-            $this->getAclFacade(),
             $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserBridgeInterface
+     * @return \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleFacadeBridgeInterface
      */
-    public function getUserFacade(): UserLocaleToUserBridgeInterface
+    public function getLocaleFacade(): UserLocaleToLocaleFacadeBridgeInterface
+    {
+        return $this->getProvidedDependency(UserLocaleDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserFacadeBridgeInterface
+     */
+    public function getUserFacade(): UserLocaleToUserFacadeBridgeInterface
     {
         return $this->getProvidedDependency(UserLocaleDependencyProvider::FACADE_USER);
     }
 
     /**
-     * @return \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToAclBridgeInterface
+     * @return \Spryker\Zed\UserLocale\Business\UserExpander\UserExpanderInterface
      */
-    public function getAclFacade(): UserLocaleToAclBridgeInterface
+    public function createUserExpander(): UserExpanderInterface
     {
-        return $this->getProvidedDependency(UserLocaleDependencyProvider::FACADE_ACL);
+        return new UserExpander(
+            $this->getLocaleFacade(),
+            $this->createUserLocaleReader()
+        );
     }
 }

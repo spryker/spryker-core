@@ -10,10 +10,7 @@ namespace Spryker\Zed\Translator\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Translator\Business\Finder\TranslationFinder;
-use Spryker\Zed\Translator\Business\Translator\Translator;
-use Symfony\Component\Translation\Loader\CsvFileLoader;
-use Symfony\Component\Translation\Loader\XliffFileLoader;
+use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Twig_Environment;
 
 /**
@@ -30,28 +27,11 @@ class ZedTranslationServiceProvider extends AbstractPlugin implements ServicePro
      */
     public function boot(Application $app)
     {
-        $csvFileLoader = new CsvFileLoader();
-        $csvFileLoader->setCsvControl($this->getConfig()->getDelimiter());
-        $xlfFileLoader = new XliffFileLoader();
-        $translator = new Translator(
-            $app['locale'],
-            null,
-            $this->getConfig()->getCacheDir()
-        );
-        $translationFinder = new TranslationFinder($this->getConfig());
-        $translator->setLazyLoadResources($translationFinder);
-        $translator->addLoader($translationFinder->getFileFormat(), $csvFileLoader);
-        $translator->setFallbackLocales($this->getConfig()->getFallbackLocales($app['locale']));
-        $translator->addLoader('xlf', $xlfFileLoader);
-        $locales = $this->getFactory()
-            ->getStore()
-            ->getLocales();
-        foreach ($locales as $country => $locale) {
-            $translator->addResource('xlf', $this->getConfig()->getValidatorsTranslationPath($country), $locale, 'validators');
-        }
+        $translator = $this->getFactory()->getTranslatorService()->getTranslator();
+
         $app['twig'] = $app->share(
             $app->extend('twig', function (Twig_Environment $twig) use ($translator) {
-                $translator->addAsTwigExtension($twig);
+                $twig->addExtension(new TranslationExtension($translator));
 
                 return $twig;
             })

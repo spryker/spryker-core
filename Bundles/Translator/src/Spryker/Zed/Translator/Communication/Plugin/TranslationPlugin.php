@@ -24,7 +24,7 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
      *
      * @return bool
      */
-    public function hasKey($keyName)
+    public function hasKey($keyName): bool
     {
         return $this->getFacade()->hasTranslation($keyName);
     }
@@ -37,7 +37,7 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
      *
      * @return string
      */
-    public function translate($keyName, array $data = [])
+    public function translate($keyName, array $data = []): string
     {
         return $this->getFacade()->translate($keyName, $data);
     }

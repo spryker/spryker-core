@@ -97,7 +97,7 @@ class TranslatorFacadeTest extends Unit
     public function testClearTranslationCache(): void
     {
         // Act
-        $this->translatorFacade->clearTranslationCache();
+        $this->translatorFacade->cleanTranslationCache();
 
         // Assert
         $finder = clone $this->finder;

@@ -12,11 +12,10 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TranslatorConfig extends AbstractBundleConfig
 {
-    protected const DELIMITER = ',';
-    protected const DEFAULT_FALLBACK_LOCALES = ['en_US'];
+    public const CSV_DELIMITER = ',';
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getTranslationFilePathPatterns(): array
     {
@@ -24,60 +23,43 @@ class TranslatorConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param string $country
-     *
-     * @return string
-     */
-    public function getValidatorsTranslationPath(string $country): string
-    {
-        return sprintf(
-            APPLICATION_VENDOR_DIR . '/symfony/validator/Resources/translations/validators.%s.xlf',
-            $country
-        );
-    }
-
-    /**
-     * @return array
+     * @return string[]
      */
     public function getCoreTranslationFilePathPatterns(): array
     {
         return [
-            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/*/Zed/*/Translation/',
-            APPLICATION_VENDOR_DIR . '/spryker/*/src/*/Zed/*/Translation/',
-            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/data/translation/Zed/',
-            APPLICATION_VENDOR_DIR . '/spryker/*/data/translation/Zed/',
+            APPLICATION_VENDOR_DIR . '/spryker/*/data/translation/Zed/[a-z][a-z]_[A-Z][A-Z].csv',
         ];
     }
 
     /**
-     * @return array
+     * @return string[]
+     */
+    public function getValidatorTranslationFilePatterns(): array
+    {
+        return [
+            APPLICATION_VENDOR_DIR . '/symfony/validator/Resources/translations/validators.[a-z][a-z].xlf',
+        ];
+    }
+
+    /**
+     * @return string[]
      */
     public function getProjectTranslationFilePathPatterns(): array
     {
-        return [
-            APPLICATION_ROOT_DIR . '/data/import/translation/Zed/*/',
-            APPLICATION_ROOT_DIR . '/data/translation/Zed/*/',
-        ];
+        return $this->get(TranslatorConstants::TRANSLATION_FILE_PATH_PATTERNS, []);
     }
 
     /**
      * @param string $localeCode
      *
-     * @return array
+     * @return string[]
      */
     public function getFallbackLocales(string $localeCode): array
     {
-        $fallbackLocales = $this->get(TranslatorConstants::FALLBACK_LOCALES, []);
+        $fallbackLocales = $this->get(TranslatorConstants::TRANSLATION_FALLBACK_LOCALES, []);
 
-        return $fallbackLocales[$localeCode] ?? $this->getDefaultFallbackLocales();
-    }
-
-    /**
-     * @return array
-     */
-    public function getDefaultFallbackLocales(): array
-    {
-        return static::DEFAULT_FALLBACK_LOCALES;
+        return $fallbackLocales[$localeCode] ?? [];
     }
 
     /**
@@ -85,14 +67,14 @@ class TranslatorConfig extends AbstractBundleConfig
      */
     public function getCacheDir(): string
     {
-        return APPLICATION_ROOT_DIR . '/data/translations/Zed/';
+        return $this->get(TranslatorConstants::TRANSLATION_CACHE_DIRECTORY);
     }
 
     /**
      * @return string
      */
-    public function getDelimiter(): string
+    public function getCsvDelimiter(): string
     {
-        return static::DELIMITER;
+        return static::CSV_DELIMITER;
     }
 }

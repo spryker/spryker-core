@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Translator\Communication;
 
-use Spryker\Shared\Kernel\Store;
+use Spryker\Service\Translator\TranslatorServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Translator\TranslatorDependencyProvider;
 
@@ -18,10 +18,10 @@ use Spryker\Zed\Translator\TranslatorDependencyProvider;
 class TranslatorCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Service\Translator\TranslatorServiceInterface
      */
-    public function getStore(): Store
+    public function getTranslatorService(): TranslatorServiceInterface
     {
-        return $this->getProvidedDependency(TranslatorDependencyProvider::STORE);
+        return $this->getProvidedDependency(TranslatorDependencyProvider::SERVICE_TRANSLATOR);
     }
 }

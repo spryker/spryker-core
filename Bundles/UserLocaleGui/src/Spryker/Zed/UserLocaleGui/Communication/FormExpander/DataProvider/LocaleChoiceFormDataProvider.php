@@ -8,19 +8,19 @@
 namespace Spryker\Zed\UserLocaleGui\Communication\FormExpander\DataProvider;
 
 use Spryker\Zed\UserLocaleGui\Communication\FormExpander\UserLocaleFormExpander;
-use Spryker\Zed\UserLocaleGui\Dependency\Facade\UserLocaleGuiToLocaleBridgeInterface;
+use Spryker\Zed\UserLocaleGui\Dependency\Facade\UserLocaleGuiToLocaleFacadeBridgeInterface;
 
 class LocaleChoiceFormDataProvider
 {
     /**
-     * @var \Spryker\Zed\UserLocaleGui\Dependency\Facade\UserLocaleGuiToLocaleBridgeInterface
+     * @var \Spryker\Zed\UserLocaleGui\Dependency\Facade\UserLocaleGuiToLocaleFacadeBridgeInterface
      */
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\UserLocaleGui\Dependency\Facade\UserLocaleGuiToLocaleBridgeInterface $localeFacade
+     * @param \Spryker\Zed\UserLocaleGui\Dependency\Facade\UserLocaleGuiToLocaleFacadeBridgeInterface $localeFacade
      */
-    public function __construct(UserLocaleGuiToLocaleBridgeInterface $localeFacade)
+    public function __construct(UserLocaleGuiToLocaleFacadeBridgeInterface $localeFacade)
     {
         $this->localeFacade = $localeFacade;
     }
