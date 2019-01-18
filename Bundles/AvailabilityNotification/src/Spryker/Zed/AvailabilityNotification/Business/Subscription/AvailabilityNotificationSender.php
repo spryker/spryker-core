@@ -23,10 +23,6 @@ use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRep
 
 class AvailabilityNotificationSender implements AvailabilityNotificationSenderInterface
 {
-    public const ROUTE_UNSUBSCRIBE = '/availability-notification/unsubscribe';
-
-    public const PARAM_SUBSCRIPTION_KEY = 'subscriptionKey';
-
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface
      */

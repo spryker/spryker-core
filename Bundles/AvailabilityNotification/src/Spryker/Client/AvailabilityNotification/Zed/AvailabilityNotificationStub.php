@@ -66,22 +66,4 @@ class AvailabilityNotificationStub implements AvailabilityNotificationStubInterf
 
         return $availabilitySubscriptionExistenceTransfer;
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
-     */
-    public function findAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer
-    {
-        /**
-         * @var \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
-         */
-        $availabilitySubscriptionTransfer = $this->zedRequestClient->call(
-            '/availability-notification/gateway/find',
-            $availabilitySubscriptionTransfer
-        );
-
-        return $availabilitySubscriptionTransfer;
-    }
 }

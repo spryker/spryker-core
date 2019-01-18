@@ -49,16 +49,4 @@ interface AvailabilityNotificationClientInterface
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer
      */
     public function checkExistence(AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer): AvailabilitySubscriptionExistenceResponseTransfer;
-
-    /**
-     * Specification:
-     * - Finds availability subscription by sku and email for current store.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
-     */
-    public function findAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer;
 }
