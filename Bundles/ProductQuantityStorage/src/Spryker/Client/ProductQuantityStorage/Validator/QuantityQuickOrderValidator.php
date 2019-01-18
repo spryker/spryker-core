@@ -74,7 +74,7 @@ class QuantityQuickOrderValidator implements QuantityQuickOrderValidatorInterfac
         if ($quantity !== 0 && $quantity < $min) {
             $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($productConcreteTransfer->getIdProductConcrete(), $quantity);
 
-            $this->addWarningMessage(
+            $quickOrderValidationResponseTransfer = $this->addWarningMessage(
                 $quickOrderValidationResponseTransfer,
                 static::WARNING_MESSAGE_QUANTITY_MIN_NOT_FULFILLED,
                 [static::WARNING_MESSAGE_PARAM_MIN => $nearestQuantity],
@@ -87,7 +87,7 @@ class QuantityQuickOrderValidator implements QuantityQuickOrderValidatorInterfac
         if ($quantity !== 0 && ($quantity - $min) % $interval !== 0) {
             $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($productConcreteTransfer->getIdProductConcrete(), $quantity);
 
-            $this->addWarningMessage(
+            $quickOrderValidationResponseTransfer = $this->addWarningMessage(
                 $quickOrderValidationResponseTransfer,
                 static::WARNING_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED,
                 [static::WARNING_MESSAGE_PARAM_STEP => $interval],
@@ -100,7 +100,7 @@ class QuantityQuickOrderValidator implements QuantityQuickOrderValidatorInterfac
         if ($max !== null && $quantity > $max) {
             $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($productConcreteTransfer->getIdProductConcrete(), $quantity);
 
-            $this->addWarningMessage(
+            $quickOrderValidationResponseTransfer = $this->addWarningMessage(
                 $quickOrderValidationResponseTransfer,
                 static::WARNING_MESSAGE_QUANTITY_MAX_NOT_FULFILLED,
                 [static::WARNING_MESSAGE_PARAM_MAX => $nearestQuantity],
@@ -119,18 +119,20 @@ class QuantityQuickOrderValidator implements QuantityQuickOrderValidatorInterfac
      * @param array $messageTransferParameters
      * @param array $messageTransferCorrectValues
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuickOrderValidationResponseTransfer
      */
     protected function addWarningMessage(
         QuickOrderValidationResponseTransfer $quickOrderValidationResponseTransfer,
         string $messageTransferValue,
         array $messageTransferParameters,
         array $messageTransferCorrectValues
-    ): void {
+    ): QuickOrderValidationResponseTransfer {
         $quickOrderValidationResponseTransfer->addWarningMessage((new MessageTransfer())
             ->setValue($messageTransferValue)
             ->setParameters($messageTransferParameters));
 
         $quickOrderValidationResponseTransfer->addCorrectValue($messageTransferCorrectValues);
+
+        return $quickOrderValidationResponseTransfer;
     }
 }
