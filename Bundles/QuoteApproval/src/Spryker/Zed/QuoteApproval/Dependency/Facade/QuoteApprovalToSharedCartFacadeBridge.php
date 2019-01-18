@@ -42,6 +42,6 @@ class QuoteApprovalToSharedCartFacadeBridge implements QuoteApprovalToSharedCart
      */
     public function createReadOnlyShareRelationForQuoteAndCompanyUser(int $idQuote, int $idCompanyUser): void
     {
-        $this->sharedCartFacade->createReadOnlyShareRelationForQuoteAndCompanyUser($idCompanyUser, $idCompanyUser);
+        $this->sharedCartFacade->createReadOnlyShareRelationForQuoteAndCompanyUser($idQuote, $idCompanyUser);
     }
 }

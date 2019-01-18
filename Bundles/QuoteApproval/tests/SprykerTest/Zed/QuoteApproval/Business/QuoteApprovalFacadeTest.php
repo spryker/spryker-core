@@ -95,7 +95,7 @@ class QuoteApprovalFacadeTest extends Unit
         $this->prepareEnvForQuoteApprovalCreation();
 
         $quoteTransfer = $this->createQuoteWithGrandTodal(10);
-        $quoteApprovalCreateRequestTransfer = $this->createQuoteApprovalCreateRequestTransfer($quoteTransfer);
+        $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
         $this->approverCanApproveUpToAmount(9, $quoteTransfer);
 
         //Act
@@ -115,6 +115,7 @@ class QuoteApprovalFacadeTest extends Unit
 
         $quoteTransfer = $this->createQuoteWithGrandTodal(10);
         $quoteApprovalCreateRequestTransfer = $this->createQuoteApprovalCreateRequestTransfer($quoteTransfer);
+        $quoteApprovalCreateRequestTransfer->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
 
         //Act
         $quoteApprovalRepsponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
