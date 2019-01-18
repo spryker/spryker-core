@@ -26,19 +26,6 @@ interface ContentFacadeInterface
 
     /**
      * Specification:
-     * - Finds content by uuid.
-     * - Returns ContentTransfer if found, otherwise it returns NULL.
-     *
-     * @api
-     *
-     * @param string $uuid
-     *
-     * @return \Generated\Shared\Transfer\ContentTransfer|null
-     */
-    public function findContentByUUID(string $uuid): ?ContentTransfer;
-
-    /**
-     * Specification:
      * - Creates a new content entity.
      * - Uses incoming transfer to set entity fields.
      * - Persists the entity to DB.

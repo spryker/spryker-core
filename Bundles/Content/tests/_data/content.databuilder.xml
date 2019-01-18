@@ -7,11 +7,9 @@
         <property name="idContent" type="int" />
         <property name="name" type="string" dataBuilderRule="unique()->sentence(5)"/>
         <property name="description" type="string" dataBuilderRule="unique()->sentence(5)"/>
-        <property name="contentTermCandidateKey" type="string" dataBuilderRule="unique()->sentence(5)"/>
-        <property name="contentTypeCandidateKey" type="string" dataBuilderRule="unique()->sentence(5)"/>
-        <property name="contentCategoryCandidateKey" type="string" dataBuilderRule="unique()->sentence(5)"/>
+        <property name="contentTermKey" type="string" dataBuilderRule="unique()->sentence(5)"/>
+        <property name="contentTypeKey" type="string" dataBuilderRule="unique()->sentence(5)"/>
         <property name="localizedContents" type="LocalizedContent[]" singular="localizedContent" />
-        <property name="uuid" type="string" />
     </transfer>
 
     <transfer name="LocalizedContent">

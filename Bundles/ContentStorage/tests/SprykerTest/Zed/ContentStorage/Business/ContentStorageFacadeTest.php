@@ -53,7 +53,7 @@ class ContentStorageFacadeTest extends Unit
     public function testPublishStoresEntityData(): void
     {
         $data = [
-            ContentTransfer::CONTENT_TERM_CANDIDATE_KEY => 'test-term',
+            ContentTransfer::CONTENT_TERM_KEY => 'test-term',
             ContentTransfer::LOCALIZED_CONTENTS => [
                 [
                     LocalizedContentTransfer::PARAMETERS => '{"M23222"}',
@@ -65,7 +65,7 @@ class ContentStorageFacadeTest extends Unit
         $this->tester->getFacade()->publish([$contentTransfer->getIdContent()]);
         $contentStorageEntity = $this->getContentStorageEntity();
         $storageData = [
-            ContentStorageConstants::TERM_KEY => $data[ContentTransfer::CONTENT_TERM_CANDIDATE_KEY],
+            ContentStorageConstants::TERM_KEY => $data[ContentTransfer::CONTENT_TERM_KEY],
             ContentStorageConstants::CONTENT_KEY => $data[ContentTransfer::LOCALIZED_CONTENTS][0][LocalizedContentTransfer::PARAMETERS],
         ];
 

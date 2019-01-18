@@ -23,8 +23,8 @@ class ContentForm extends AbstractType
 {
     public const FIELD_NAME = 'name';
     public const FIELD_DESCRIPTION = 'description';
-    public const FIELD_CONTENT_TERM_CANDIDATE_KEY = 'content_term_candidate_key';
-    public const FIELD_CONTENT_TYPE_CANDIDATE_KEY = 'content_type_candidate_key';
+    public const FIELD_CONTENT_TERM_KEY = 'content_term_key';
+    public const FIELD_CONTENT_TYPE_KEY = 'content_type_key';
     public const FIELD_LOCALES = 'localizedContents';
 
     public const OPTION_AVAILABLE_LOCALES = 'OPTION_AVAILABLE_LOCALES';
@@ -54,8 +54,8 @@ class ContentForm extends AbstractType
         $this
             ->addNameField($builder)
             ->addDescriptionField($builder)
-            ->addContentTermCandidateKey($builder)
-            ->addContentTypeCandidateKey($builder)
+            ->addContentTermKey($builder)
+            ->addContentTypeKey($builder)
             ->addLocaleCollection($builder, $options);
     }
 
@@ -100,10 +100,10 @@ class ContentForm extends AbstractType
      *
      * @return $this
      */
-    protected function addContentTermCandidateKey(FormBuilderInterface $builder)
+    protected function addContentTermKey(FormBuilderInterface $builder)
     {
         $builder->add(
-            static::FIELD_CONTENT_TERM_CANDIDATE_KEY,
+            static::FIELD_CONTENT_TERM_KEY,
             HiddenType::class
         );
 
@@ -115,10 +115,10 @@ class ContentForm extends AbstractType
      *
      * @return $this
      */
-    protected function addContentTypeCandidateKey(FormBuilderInterface $builder)
+    protected function addContentTypeKey(FormBuilderInterface $builder)
     {
         $builder->add(
-            static::FIELD_CONTENT_TYPE_CANDIDATE_KEY,
+            static::FIELD_CONTENT_TYPE_KEY,
             HiddenType::class
         );
 

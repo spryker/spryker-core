@@ -97,7 +97,7 @@ class ContentStorage implements ContentStorageInterface
                 $contentStorageTransfer->setFkContent($contentTransfer->getIdContent());
                 $contentStorageTransfer->setLocale($availableLocale->getLocaleName());
                 $contentStorageTransfer->setData([
-                    ContentStorageConstants::TERM_KEY => $contentTransfer->getContentTermCandidateKey(),
+                    ContentStorageConstants::TERM_KEY => $contentTransfer->getContentTermKey(),
                     ContentStorageConstants::CONTENT_KEY => json_decode($localizedContent->getParameters(), true),
                 ]);
 

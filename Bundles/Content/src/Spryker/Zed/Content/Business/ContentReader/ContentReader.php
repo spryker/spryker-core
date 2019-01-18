@@ -34,14 +34,4 @@ class ContentReader implements ContentReaderInterface
     {
         return $this->contentRepository->findContentById($id);
     }
-
-    /**
-     * @param string $uuid
-     *
-     * @return \Generated\Shared\Transfer\ContentTransfer|null
-     */
-    public function findContentByUUID(string $uuid): ?ContentTransfer
-    {
-        return $this->contentRepository->findContentByUUID($uuid);
-    }
 }

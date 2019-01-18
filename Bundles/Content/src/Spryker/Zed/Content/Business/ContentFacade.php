@@ -36,20 +36,6 @@ class ContentFacade extends AbstractFacade implements ContentFacadeInterface
      *
      * @api
      *
-     * @param string $uuid
-     *
-     * @return null|\Generated\Shared\Transfer\ContentTransfer
-     */
-    public function findContentByUUID(string $uuid): ?ContentTransfer
-    {
-        return $this->getFactory()->createContentReader()->findContentByUUID($uuid);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
      *
      * @return \Generated\Shared\Transfer\ContentTransfer

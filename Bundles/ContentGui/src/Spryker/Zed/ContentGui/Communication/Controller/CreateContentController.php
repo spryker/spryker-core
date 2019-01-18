@@ -49,7 +49,7 @@ class CreateContentController extends AbstractController
                     static::PARAM_REDIRECT_URL,
                     sprintf(
                         static::URL_REDIRECT_CONTENT_PAGE,
-                        $contentTransfer->getContentTermCandidateKey(),
+                        $contentTransfer->getContentTermKey(),
                         $contentTransfer->getIdContent()
                     )
                 )

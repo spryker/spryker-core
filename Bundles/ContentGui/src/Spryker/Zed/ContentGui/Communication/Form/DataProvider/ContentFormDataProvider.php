@@ -58,8 +58,8 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
         } else {
             $contentTransfer = new ContentTransfer();
             $contentPlugin = $this->contentResolver->getContentPlugin($termKey);
-            $contentTransfer->setContentTypeCandidateKey($contentPlugin->getTypeKey());
-            $contentTransfer->setContentTermCandidateKey($contentPlugin->getTermKey());
+            $contentTransfer->setContentTypeKey($contentPlugin->getTypeKey());
+            $contentTransfer->setContentTermKey($contentPlugin->getTermKey());
         }
         $localizedContents = $this->getLocalizedContentList($contentTransfer->getLocalizedContents());
         $contentTransfer->setLocalizedContents((new ArrayObject()));
@@ -86,7 +86,7 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
     public function getOptions(string $termKey, ?int $contentId = null): array
     {
         if ($contentId !== null) {
-            $termKey = $this->contentFacade->findContentById($contentId)->getContentTermCandidateKey();
+            $termKey = $this->contentFacade->findContentById($contentId)->getContentTermKey();
         }
 
         $contentPlugin = $this->contentResolver->getContentPlugin($termKey);

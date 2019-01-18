@@ -34,8 +34,8 @@ class ContentWriter implements ContentWriterInterface
     {
         $contentTransfer
             ->requireName()
-            ->requireContentTypeCandidateKey()
-            ->requireContentTermCandidateKey()
+            ->requireContentTypeKey()
+            ->requireContentTermKey()
             ->requireLocalizedContents();
 
         return $this->contentEntityManager->saveContent($contentTransfer);

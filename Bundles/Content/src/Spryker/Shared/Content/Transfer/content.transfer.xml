@@ -7,10 +7,9 @@
         <property name="idContent" type="int" />
         <property name="name" type="string" />
         <property name="description" type="string" />
-        <property name="contentTermCandidateKey" type="string" />
-        <property name="contentTypeCandidateKey" type="string" />
+        <property name="contentTermKey" type="string" />
+        <property name="contentTypeKey" type="string" />
         <property name="localizedContents" type="LocalizedContent[]" singular="localizedContent" />
-        <property name="uuid" type="string" />
     </transfer>
 
     <transfer name="LocalizedContent">

@@ -19,13 +19,6 @@ interface ContentGuiToContentFacadeBridgeInterface
     public function findContentById(int $id): ContentTransfer;
 
     /**
-     * @param string $uuid
-     *
-     * @return \Generated\Shared\Transfer\ContentTransfer
-     */
-    public function findContentByUUID(string $uuid): ContentTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
      *
      * @return \Generated\Shared\Transfer\ContentTransfer

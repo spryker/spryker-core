@@ -20,14 +20,4 @@ interface ContentRepositoryInterface
      * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
     public function findContentById(int $id): ?ContentTransfer;
-
-    /**
-     * Specification:
-     * - Finds a content by content UUID.
-     *
-     * @param string $uuid
-     *
-     * @return \Generated\Shared\Transfer\ContentTransfer|null
-     */
-    public function findContentByUUID(string $uuid): ?ContentTransfer;
 }

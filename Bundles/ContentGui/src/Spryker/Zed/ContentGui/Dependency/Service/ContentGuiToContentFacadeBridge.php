@@ -35,16 +35,6 @@ class ContentGuiToContentFacadeBridge implements ContentGuiToContentFacadeBridge
     }
 
     /**
-     * @param string $uuid
-     *
-     * @return \Generated\Shared\Transfer\ContentTransfer
-     */
-    public function findContentByUUID(string $uuid): ContentTransfer
-    {
-        return $this->contentFacade->findContentByUUID($uuid);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
      *
      * @return \Generated\Shared\Transfer\ContentTransfer

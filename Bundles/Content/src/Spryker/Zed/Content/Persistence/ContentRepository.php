@@ -34,25 +34,4 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
         return $this->getFactory()->createContentMapper()->mapContentEntityToTransfer($contentEntity);
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param string $uuid
-     *
-     * @return null|\Generated\Shared\Transfer\ContentTransfer
-     */
-    public function findContentByUUID(string $uuid): ?ContentTransfer
-    {
-        $contentEntity = $this
-            ->getFactory()
-            ->createContentQuery()
-            ->findOneByUuid($uuid);
-
-        if ($contentEntity === null) {
-            return null;
-        }
-
-        return $this->getFactory()->createContentMapper()->mapContentEntityToTransfer($contentEntity);
-    }
 }
