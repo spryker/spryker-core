@@ -63,6 +63,16 @@ class CategoryTable extends AbstractTable
 
         $config->setDefaultSortField(static::COL_CATEGORY_KEY);
 
+        $config->setSortable([
+            static::COL_CATEGORY_KEY,
+            static::COL_NAME,
+            static::COL_PARENT,
+            static::COL_ACTIVE,
+            static::COL_VISIBLE,
+            static::COL_SEARCHABLE,
+            static::COL_TEMPLATE,
+        ]);
+
         $config->setSearchable([
             'attr.name',
         ]);
