@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Currency\Business;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 
 /**
  * @method \Spryker\Zed\Currency\Business\CurrencyBusinessFactory getFactory()
@@ -95,4 +96,17 @@ interface CurrencyFacadeInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getDefaultCurrencyForCurrentStore();
+
+    /**
+     * Specification:
+     *  - Verifies if provided currency in quote is available.
+     *  - Returns error message if price mode not valid.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    public function validateCurrencyInQuote($quoteTransfer): MessageTransfer;
 }

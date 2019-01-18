@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Price\Communication\Plugin\Quote;
+namespace Spryker\Zed\Currency\Communication\Plugin\Quote;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -13,15 +13,16 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatePluginInterface;
 
 /**
- * @method \Spryker\Zed\Price\Business\PriceFacade getFacade()
- * @method \Spryker\Zed\Price\Communication\PriceCommunicationFactory getFactory()
- * @method \Spryker\Zed\Price\PriceConfig getConfig()
+ * @method \Spryker\Zed\Currency\Business\CurrencyFacade getFacade()
+ * @method \Spryker\Zed\Currency\Communication\CurrencyCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Currency\CurrencyConfig getConfig()
+ * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainer getQueryContainer()()
  */
-class QuotePriceModeValidatePlugin extends AbstractPlugin implements QuoteValidatePluginInterface
+class QuoteCurrencyValidatePlugin extends AbstractPlugin implements QuoteValidatePluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Validates if provided price mode in quote is available.
+     * - Validates if provided currency in quote is available.
      *
      * @api
      *
@@ -31,6 +32,6 @@ class QuotePriceModeValidatePlugin extends AbstractPlugin implements QuoteValida
      */
     public function validate(QuoteTransfer $quoteTransfer): MessageTransfer
     {
-        return $this->getFacade()->validatePriceModeInQuote($quoteTransfer);
+        return $this->getFacade()->validateCurrencyInQuote($quoteTransfer);
     }
 }

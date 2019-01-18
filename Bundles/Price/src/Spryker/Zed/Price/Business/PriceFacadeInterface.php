@@ -54,7 +54,7 @@ interface PriceFacadeInterface
 
     /**
      * Specification:
-     *  - Verifies if provided quote price mode is available.
+     *  - Verifies if provided price mode in quote is available.
      *  - Returns error message if price mode not valid.
      *
      * @api
