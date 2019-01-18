@@ -20,7 +20,7 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
- * @deprecated Use MethodReader instead.
+ * @deprecated Use \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReader instead.
  */
 class Method implements MethodInterface
 {

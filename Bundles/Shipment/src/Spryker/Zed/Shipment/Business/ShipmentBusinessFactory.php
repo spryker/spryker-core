@@ -14,13 +14,13 @@ use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
-use Spryker\Zed\Shipment\Business\Model\MethodReader;
 use Spryker\Zed\Shipment\Business\Model\ShipmentCarrierReader;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaverInterface as ModelShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReader;
 use Spryker\Zed\Shipment\Business\Transfer\TransferBuilder;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCountryInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesInterface;
@@ -59,7 +59,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createMethod()
     {
-        /** @ToDo Replace with MethodReader*/
         return new Method(
             $this->getQueryContainer(),
             $this->createMethodPrice(),
@@ -72,7 +71,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\Model\MethodReader
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReader
      */
     public function createMethodReader()
     {

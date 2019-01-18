@@ -8,9 +8,11 @@
 namespace Spryker\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
+/**
+ * @deprecated Use \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface instead.
+ */
 interface MethodInterface
 {
     /**
