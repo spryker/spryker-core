@@ -35,7 +35,7 @@ class DevelopmentConfig extends AbstractBundleConfig
         'Glue',
     ];
 
-    protected const INTERNAL_NAMESPACES = [
+    protected const INTERNAL_NAMESPACES_LIST = [
         self::NAMESPACE_SPRYKER,
         self::NAMESPACE_SPRYKER_SHOP,
         self::NAMESPACE_SPRYKER_MERCHANT_PORTAL,
@@ -481,9 +481,9 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getInternalNamespace(): array
+    public function getInternalNamespacesList(): array
     {
-        return static::INTERNAL_NAMESPACES;
+        return static::INTERNAL_NAMESPACES_LIST;
     }
 
     /**
