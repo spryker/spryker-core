@@ -10,7 +10,7 @@ namespace Spryker\Client\QuickOrder\Validator;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderValidationResponseTransfer;
 
-class ProductConcreteValidator implements ProductConcreteValidatorInterface
+class QuickOrderItemValidator implements QuickOrderItemValidatorInterface
 {
     /**
      * @var \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidatorPluginInterface[]

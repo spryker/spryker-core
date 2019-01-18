@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use Spryker\Client\QuickOrder\Product\ProductConcreteResolverInterface;
-use Spryker\Client\QuickOrder\Validator\ProductConcreteValidatorInterface;
+use Spryker\Client\QuickOrder\Validator\QuickOrderItemValidatorInterface;
 
 class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
 {
@@ -24,9 +24,9 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
     protected $productConcreteResolver;
 
     /**
-     * @var \Spryker\Client\QuickOrder\Validator\ProductConcreteValidatorInterface
+     * @var \Spryker\Client\QuickOrder\Validator\QuickOrderItemValidatorInterface
      */
-    protected $productConcreteValidator;
+    protected $quickOrderItemValidator;
 
     /**
      * @var \Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface[]
@@ -35,16 +35,16 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
 
     /**
      * @param \Spryker\Client\QuickOrder\Product\ProductConcreteResolverInterface $productConcreteResolver
-     * @param \Spryker\Client\QuickOrder\Validator\ProductConcreteValidatorInterface $productConcreteValidator
+     * @param \Spryker\Client\QuickOrder\Validator\QuickOrderItemValidatorInterface $quickOrderItemValidator
      * @param \Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface[] $productConcreteExpanderPlugins
      */
     public function __construct(
         ProductConcreteResolverInterface $productConcreteResolver,
-        ProductConcreteValidatorInterface $productConcreteValidator,
+        QuickOrderItemValidatorInterface $quickOrderItemValidator,
         array $productConcreteExpanderPlugins
     ) {
         $this->productConcreteResolver = $productConcreteResolver;
-        $this->productConcreteValidator = $productConcreteValidator;
+        $this->quickOrderItemValidator = $quickOrderItemValidator;
         $this->productConcreteExpanderPlugins = $productConcreteExpanderPlugins;
     }
 
@@ -60,9 +60,9 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
                 continue;
             }
 
-            $this->resolveProductConcrete($quickOrderItemTransfer);
-            $this->validateQuickOrderItem($quickOrderItemTransfer);
-            $this->expandProductConcrete($quickOrderItemTransfer);
+            $quickOrderItemTransfer = $this->resolveProductConcrete($quickOrderItemTransfer);
+            $quickOrderItemTransfer = $this->validateQuickOrderItem($quickOrderItemTransfer);
+            $quickOrderItemTransfer = $this->expandProductConcrete($quickOrderItemTransfer);
         }
 
         return $quickOrderTransfer;
@@ -71,9 +71,9 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
-    protected function resolveProductConcrete(QuickOrderItemTransfer $quickOrderItemTransfer): void
+    protected function resolveProductConcrete(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
         $productConcreteTransfer = $this->productConcreteResolver->findProductConcreteBySku($quickOrderItemTransfer->getSku());
 
@@ -83,16 +83,18 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
         }
 
         $quickOrderItemTransfer->setProductConcrete($productConcreteTransfer);
+
+        return $quickOrderItemTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
-    protected function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): void
+    protected function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
-        $quickOrderValidationResponseTransfer = $this->productConcreteValidator->validate($quickOrderItemTransfer);
+        $quickOrderValidationResponseTransfer = $this->quickOrderItemValidator->validate($quickOrderItemTransfer);
         $quickOrderItemTransfer->fromArray($quickOrderValidationResponseTransfer->modifiedToArray(), true);
 
         if (count($quickOrderValidationResponseTransfer->getCorrectValues())) {
@@ -100,14 +102,16 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
                 $quickOrderItemTransfer->fromArray($correctValue, true);
             }
         }
+
+        return $quickOrderItemTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
-    protected function expandProductConcrete(QuickOrderItemTransfer $quickOrderItemTransfer): void
+    protected function expandProductConcrete(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
         if ($quickOrderItemTransfer->getProductConcrete()->getIdProductConcrete()) {
             foreach ($this->productConcreteExpanderPlugins as $productConcreteExpanderPlugin) {
@@ -118,5 +122,7 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
                 $quickOrderItemTransfer->setProductConcrete($expandedProductConcrete[0]);
             }
         }
+
+        return $quickOrderItemTransfer;
     }
 }

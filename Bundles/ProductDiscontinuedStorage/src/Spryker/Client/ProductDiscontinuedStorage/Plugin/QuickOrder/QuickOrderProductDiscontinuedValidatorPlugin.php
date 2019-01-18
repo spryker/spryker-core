@@ -20,7 +20,7 @@ class QuickOrderProductDiscontinuedValidatorPlugin extends AbstractPlugin implem
 {
     /**
      * {@inheritdoc}
-     * - Validate provided QuickOrderItemTransfer with discontinued validation.
+     * - Validates whether the product in provided QuickOrderItemTransfer is discontinued or not.
      *
      * @api
      *

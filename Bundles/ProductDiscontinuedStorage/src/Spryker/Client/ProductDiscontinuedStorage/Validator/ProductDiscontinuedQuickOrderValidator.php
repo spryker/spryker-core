@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuickOrderValidationResponseTransfer;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToLocaleClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface;
 
-class DiscontinuedAvailabilityQuickOrderValidator implements DiscontinuedAvailabilityQuickOrderValidatorInterface
+class ProductDiscontinuedQuickOrderValidator implements ProductDiscontinuedQuickOrderValidatorInterface
 {
     protected const ERROR_MESSAGE_DISCONTINUED_PRODUCT = 'product_discontinued.message.product_discontinued';
 

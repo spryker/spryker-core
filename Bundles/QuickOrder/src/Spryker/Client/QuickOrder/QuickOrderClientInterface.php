@@ -37,7 +37,9 @@ interface QuickOrderClientInterface
 
     /**
      * Specification:
-     * - Expands array of ProductConcreteTransfers with additional data using pre-configured plugins.
+     * - Expands QuickOrderItemTransfers with validation messages.
+     * - Expands ProductConcreteTransfers in QuickOrderItemTransfers with additional data.
+     * - Adjusts QuickOrderItemTransfers accordingly to corresponding values.
      *
      * @api
      *

@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductDiscontinuedStorage\Validator;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderValidationResponseTransfer;
 
-interface DiscontinuedAvailabilityQuickOrderValidatorInterface
+interface ProductDiscontinuedQuickOrderValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer

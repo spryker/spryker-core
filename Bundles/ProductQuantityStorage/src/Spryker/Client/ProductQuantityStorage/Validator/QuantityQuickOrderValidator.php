@@ -74,11 +74,12 @@ class QuantityQuickOrderValidator implements QuantityQuickOrderValidatorInterfac
         if ($quantity !== 0 && $quantity < $min) {
             $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($productConcreteTransfer->getIdProductConcrete(), $quantity);
 
-            $quickOrderValidationResponseTransfer->addWarningMessage((new MessageTransfer())
-                ->setValue(static::WARNING_MESSAGE_QUANTITY_MIN_NOT_FULFILLED)
-                ->setParameters([static::WARNING_MESSAGE_PARAM_MIN => $nearestQuantity]));
-
-            $quickOrderValidationResponseTransfer->addCorrectValue([static::FIELD_QUANTITY => $nearestQuantity]);
+            $this->addWarningMessage(
+                $quickOrderValidationResponseTransfer,
+                static::WARNING_MESSAGE_QUANTITY_MIN_NOT_FULFILLED,
+                [static::WARNING_MESSAGE_PARAM_MIN => $nearestQuantity],
+                [static::FIELD_QUANTITY => $nearestQuantity]
+            );
 
             return $quickOrderValidationResponseTransfer;
         }
@@ -86,11 +87,12 @@ class QuantityQuickOrderValidator implements QuantityQuickOrderValidatorInterfac
         if ($quantity !== 0 && ($quantity - $min) % $interval !== 0) {
             $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($productConcreteTransfer->getIdProductConcrete(), $quantity);
 
-            $quickOrderValidationResponseTransfer->addWarningMessage((new MessageTransfer())
-                ->setValue(static::WARNING_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED)
-                ->setParameters([static::WARNING_MESSAGE_PARAM_STEP => $interval]));
-
-            $quickOrderValidationResponseTransfer->addCorrectValue([static::FIELD_QUANTITY => $nearestQuantity]);
+            $this->addWarningMessage(
+                $quickOrderValidationResponseTransfer,
+                static::WARNING_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED,
+                [static::WARNING_MESSAGE_PARAM_STEP => $interval],
+                [static::FIELD_QUANTITY => $nearestQuantity]
+            );
 
             return $quickOrderValidationResponseTransfer;
         }
@@ -98,15 +100,37 @@ class QuantityQuickOrderValidator implements QuantityQuickOrderValidatorInterfac
         if ($max !== null && $quantity > $max) {
             $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($productConcreteTransfer->getIdProductConcrete(), $quantity);
 
-            $quickOrderValidationResponseTransfer->addWarningMessage((new MessageTransfer())
-                ->setValue(static::WARNING_MESSAGE_QUANTITY_MAX_NOT_FULFILLED)
-                ->setParameters([static::WARNING_MESSAGE_PARAM_MAX => $nearestQuantity]));
-
-            $quickOrderValidationResponseTransfer->addCorrectValue([static::FIELD_QUANTITY => $nearestQuantity]);
+            $this->addWarningMessage(
+                $quickOrderValidationResponseTransfer,
+                static::WARNING_MESSAGE_QUANTITY_MAX_NOT_FULFILLED,
+                [static::WARNING_MESSAGE_PARAM_MAX => $nearestQuantity],
+                [static::FIELD_QUANTITY => $nearestQuantity]
+            );
 
             return $quickOrderValidationResponseTransfer;
         }
 
         return $quickOrderValidationResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderValidationResponseTransfer $quickOrderValidationResponseTransfer
+     * @param string $messageTransferValue
+     * @param array $messageTransferParameters
+     * @param array $messageTransferCorrectValues
+     *
+     * @return void
+     */
+    protected function addWarningMessage(
+        QuickOrderValidationResponseTransfer $quickOrderValidationResponseTransfer,
+        string $messageTransferValue,
+        array $messageTransferParameters,
+        array $messageTransferCorrectValues
+    ): void {
+        $quickOrderValidationResponseTransfer->addWarningMessage((new MessageTransfer())
+            ->setValue($messageTransferValue)
+            ->setParameters($messageTransferParameters));
+
+        $quickOrderValidationResponseTransfer->addCorrectValue($messageTransferCorrectValues);
     }
 }
