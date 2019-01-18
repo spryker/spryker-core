@@ -47,7 +47,7 @@ function CompanyFieldHandler() {
     }
 
     function cloneOptions() {
-        $('<div id="' + parentAllOptionsFieldId + '" class="hidden"></div>').html($parentField.html()).appendTo($parentField.parents());
+        $('<div id="' + parentAllOptionsFieldId + '" class="hidden"></div>').html($parentField.html()).insertAfter($parentField);
     }
 
     /**
@@ -68,14 +68,17 @@ function CompanyFieldHandler() {
         const companyId = getCompanyId();
         const $parentOption = $(this);
 
-        if (!companyId || !$parentOption.val()) {
+        if (!$parentOption.val()) {
+            $parentField.attr('disabled', true);
+
             return;
         }
 
-        if ($parentOption.data(attributeIdCompany) == companyId) {
+        if (!companyId || $parentOption.data(attributeIdCompany) == companyId) {
             return;
         }
 
+        $parentField.attr('disabled', false);
         $parentOption.remove();
     }
 
@@ -87,7 +90,7 @@ function CompanyFieldHandler() {
     }
 
     function restoreAllParentOptions() {
-        const $parentAllOptionsField = $('div#' + parentAllOptionsFieldId);
+        const $parentAllOptionsField = $('#' + parentAllOptionsFieldId);
 
         $parentField.html($parentAllOptionsField.html());
     }
