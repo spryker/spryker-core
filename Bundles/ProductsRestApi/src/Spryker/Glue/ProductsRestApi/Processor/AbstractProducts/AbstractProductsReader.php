@@ -85,18 +85,12 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             return $this->addAbstractSkuNotSpecifiedError($response);
         }
 
-        $abstractProductData = $this->productStorageClient
-            ->findProductAbstractStorageDataByMapping(
-                static::PRODUCT_ABSTRACT_MAPPING_TYPE,
-                $resourceIdentifier,
-                $restRequest->getMetadata()->getLocale()
-            );
+        $restResource = $this->findProductAbstractBySku($resourceIdentifier, $restRequest);
 
-        if (!$abstractProductData) {
+        if (!$restResource) {
             return $this->addAbstractProductNotFoundError($response);
         }
 
-        $restResource = $this->createRestResourceFromAbstractProductStorageData($abstractProductData, $restRequest);
         $restResource = $this->addConcreteProducts($restResource, $restRequest);
 
         return $response->addResource($restResource);

@@ -120,9 +120,9 @@ class AlternativeProductRestResponseBuilder implements AlternativeProductRestRes
         $restResponse = $this->createRestResponse();
 
         foreach ($concreteProductIds as $idProductConcrete) {
-            $abstractProductResource = $this->productsRestApiResource->findProductConcreteById($idProductConcrete, $restRequest);
-            if ($abstractProductResource) {
-                $restResponse->addResource($abstractProductResource);
+            $concreteProductResource = $this->productsRestApiResource->findProductConcreteById($idProductConcrete, $restRequest);
+            if ($concreteProductResource) {
+                $restResponse->addResource($concreteProductResource);
             }
         }
 
