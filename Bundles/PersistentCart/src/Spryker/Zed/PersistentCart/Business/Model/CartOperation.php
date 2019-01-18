@@ -265,6 +265,11 @@ class CartOperation implements CartOperationInterface
             return $quoteResponseTransfer;
         }
         $customerQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+
+        if ($customerQuoteTransfer->getIsLocked()) {
+            return $quoteResponseTransfer;
+        }
+
         $quoteTransfer->fromArray($customerQuoteTransfer->modifiedToArray(), true);
 
         return $this->quoteItemOperation->validate($quoteTransfer);

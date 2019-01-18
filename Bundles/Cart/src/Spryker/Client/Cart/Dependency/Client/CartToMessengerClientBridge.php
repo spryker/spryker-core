@@ -23,10 +23,6 @@ class CartToMessengerClientBridge implements CartToMessengerClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $message
      *
      * @return void

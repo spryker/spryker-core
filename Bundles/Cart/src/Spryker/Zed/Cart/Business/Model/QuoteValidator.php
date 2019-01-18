@@ -55,6 +55,12 @@ class QuoteValidator implements QuoteValidatorInterface
             ->setQuoteTransfer($quoteTransfer)
             ->setIsSuccessful(false);
 
+        if ($quoteTransfer->getIsLocked()) {
+            $quoteValidationResponseTransfer->setIsSuccessful(true);
+
+            return $quoteValidationResponseTransfer;
+        }
+
         if (!count($quoteTransfer->getItems())) {
             return $quoteValidationResponseTransfer;
         }

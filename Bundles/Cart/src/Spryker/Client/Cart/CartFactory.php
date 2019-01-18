@@ -11,6 +11,7 @@ use Spryker\Client\Cart\CartChangeRequestExpander\CartChangeRequestExpander;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProvider;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProxy;
+use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProxyInterface;
 use Spryker\Client\Cart\Zed\CartStub;
 use Spryker\Client\Kernel\AbstractFactory;
 
@@ -65,9 +66,9 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProxy
+     * @return \Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProxyInterface
      */
-    public function createQuoteStorageStrategy(): QuoteStorageStrategyProxy
+    public function createQuoteStorageStrategy(): QuoteStorageStrategyProxyInterface
     {
         return new QuoteStorageStrategyProxy(
             $this->getMessengerClient(),

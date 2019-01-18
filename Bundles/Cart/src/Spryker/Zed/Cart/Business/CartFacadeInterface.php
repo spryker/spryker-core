@@ -88,6 +88,7 @@ interface CartFacadeInterface
      * Specification:
      *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      *  - Check changes and add notes to messenger (-> Messenger)
+     *  - Does nothing if cart is locked.
      *
      * @api
      *

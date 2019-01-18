@@ -1,0 +1,17 @@
+namespace: SprykerTest\Shared\QuoteApproval
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Shared:
+        path: .
+        class_name: QuoteApprovalSharedTester
