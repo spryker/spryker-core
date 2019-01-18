@@ -189,7 +189,7 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
-    protected function restoreQueueMessageBodies(array $queueMessageTransfers, array &$messageBodies): array
+    protected function restoreQueueMessageBodies(array $queueMessageTransfers, array $messageBodies): array
     {
         $restoredQueueMessageTransfers = [];
         foreach ($messageBodies as $key => $messageBody) {
