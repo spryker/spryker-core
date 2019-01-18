@@ -146,6 +146,7 @@ use Spryker\Zed\Development\Business\Module\ModuleOverviewInterface;
 use Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderComposite;
 use Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface;
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerEcoModulePathBuilder;
+use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerMerchantPortalModulePathBuilder;
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerModulePathBuilder;
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerShopModulePathBuilder;
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerStandaloneModulePathBuilder;
@@ -300,6 +301,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createSprykerModuleFilePathBuilder(),
             $this->createSprykerShopModuleFilePathBuilder(),
             $this->createSprykerEcoModuleFilePathBuilder(),
+            $this->createSprykerMerchantPortalModuleFilePathBuilder(),
         ]);
     }
 
@@ -339,6 +341,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new SprykerEcoModulePathBuilder(
             $this->getConfig()->getPathToEco()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface
+     */
+    public function createSprykerMerchantPortalModuleFilePathBuilder(): PathBuilderInterface
+    {
+        return new SprykerMerchantPortalModulePathBuilder($this->getConfig());
     }
 
     /**

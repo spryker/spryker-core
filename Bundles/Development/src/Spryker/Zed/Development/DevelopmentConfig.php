@@ -479,13 +479,11 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param string $namespace
-     *
-     * @return bool
+     * @return string[]
      */
-    public function isInternalNamespace(string $namespace): bool
+    public function getInternalNamespace(): array
     {
-        return in_array($namespace, static::INTERNAL_NAMESPACES);
+        return static::INTERNAL_NAMESPACES;
     }
 
     /**
@@ -504,5 +502,13 @@ class DevelopmentConfig extends AbstractBundleConfig
         }
 
         return null;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getPathsToInternalNamespace(): array
+    {
+        return static::INTERNAL_NAMESPACES_TO_PATH_MAPPING + [static::NAMESPACE_SPRYKER => $this->getPathToCore()];
     }
 }

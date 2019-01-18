@@ -244,7 +244,7 @@ class ModuleBuilder
      */
     protected function getModuleName($module, $namespace)
     {
-        if ($this->config->isInternalNamespace($namespace)) {
+        if (in_array($namespace, $this->config->getInternalNamespace())) {
             return $module;
         }
 

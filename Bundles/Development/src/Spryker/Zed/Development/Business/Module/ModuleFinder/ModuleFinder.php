@@ -81,7 +81,7 @@ class ModuleFinder implements ModuleFinderInterface
     protected function addStandaloneModulesToCollection(array $moduleTransferCollection, ?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
         foreach ($this->getStandaloneModuleFinder() as $directoryInfo) {
-            if (in_array($directoryInfo->getFilename(), ['spryker', 'spryker-shop'])) {
+            if (in_array($this->camelCase($directoryInfo->getFilename()), $this->config->getInternalNamespace())) {
                 continue;
             }
             $moduleTransfer = $this->getModuleTransfer($directoryInfo);
@@ -173,11 +173,11 @@ class ModuleFinder implements ModuleFinderInterface
      */
     protected function getModuleDirectories(): array
     {
-        return array_filter([
-            $this->config->getPathToCore(),
-            $this->config->getPathToShop(),
+        $pathToInternalNamespace = $this->config->getPathsToInternalNamespace();
+
+        return array_values(array_filter([
             $this->config->getPathToEco(),
-        ], 'is_dir');
+        ] + $pathToInternalNamespace, 'is_dir'));
     }
 
     /**
