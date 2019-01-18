@@ -22,15 +22,15 @@ class QuoteApprovalEntityManager extends AbstractEntityManager implements QuoteA
      */
     public function updateQuoteApproval(QuoteApprovalTransfer $quoteApprovalTransfer): QuoteApprovalTransfer
     {
-        $spyQuoteApproval = $this->getFactory()
-            ->createSpyQuoteApprovalQuery()
+        $quoteApprovalEntity = $this->getFactory()
+            ->createQuoteApprovalQuery()
             ->findOneByIdQuoteApproval($quoteApprovalTransfer->getIdQuoteApproval());
 
-        $spyQuoteApproval = $this->getFactory()
+        $quoteApprovalEntity = $this->getFactory()
             ->createQuoteApprovalMapper()
             ->mapQuoteApprovalTransferToEntity($quoteApprovalTransfer, $spyQuoteApproval);
 
-        $spyQuoteApproval->save();
+        $quoteApprovalEntity->save();
 
         return $quoteApprovalTransfer;
     }
@@ -43,7 +43,7 @@ class QuoteApprovalEntityManager extends AbstractEntityManager implements QuoteA
     public function deleteQuoteApprovalById(int $idQuoteApproval): void
     {
         $this->getFactory()
-            ->createSpyQuoteApprovalQuery()
+            ->createQuoteApprovalQuery()
             ->filterByIdQuoteApproval($idQuoteApproval)
             ->delete();
     }
