@@ -26,7 +26,7 @@ class IndexController extends AbstractController
 
     /**
      * @deprecated Use CategoryGui/Commun ication/Controller/ListController
-     * 
+     *
      * @return array
      */
     public function indexAction()
