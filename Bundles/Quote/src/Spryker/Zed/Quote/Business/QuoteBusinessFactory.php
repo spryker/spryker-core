@@ -98,7 +98,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteValidator(
             $this->getStoreFacade(),
-            $this->getQuoteValidatePlugins()
+            $this->getQuoteValidatorPlugins()
         );
     }
 
@@ -167,10 +167,10 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatePluginInterface[]
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface[]
      */
-    public function getQuoteValidatePlugins(): array
+    public function getQuoteValidatorPlugins(): array
     {
-        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_VALIDATE);
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_VALIDATOR);
     }
 }

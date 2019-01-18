@@ -10,7 +10,7 @@ namespace Spryker\Zed\Currency\Communication\Plugin\Quote;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatePluginInterface;
+use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface;
 
 /**
  * @method \Spryker\Zed\Currency\Business\CurrencyFacade getFacade()
@@ -18,7 +18,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatePluginInterface;
  * @method \Spryker\Zed\Currency\CurrencyConfig getConfig()
  * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainer getQueryContainer()()
  */
-class QuoteCurrencyValidatePlugin extends AbstractPlugin implements QuoteValidatePluginInterface
+class QuoteCurrencyValidatorPlugin extends AbstractPlugin implements QuoteValidatorPluginInterface
 {
     /**
      * {@inheritdoc}

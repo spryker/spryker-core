@@ -10,14 +10,14 @@ namespace Spryker\Zed\Price\Communication\Plugin\Quote;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatePluginInterface;
+use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface;
 
 /**
  * @method \Spryker\Zed\Price\Business\PriceFacade getFacade()
  * @method \Spryker\Zed\Price\Communication\PriceCommunicationFactory getFactory()
  * @method \Spryker\Zed\Price\PriceConfig getConfig()
  */
-class QuotePriceModeValidatePlugin extends AbstractPlugin implements QuoteValidatePluginInterface
+class QuotePriceModeValidatorPlugin extends AbstractPlugin implements QuoteValidatorPluginInterface
 {
     /**
      * {@inheritdoc}

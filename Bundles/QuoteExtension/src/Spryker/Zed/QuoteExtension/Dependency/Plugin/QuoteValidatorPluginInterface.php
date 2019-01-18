@@ -10,12 +10,13 @@ namespace Spryker\Zed\QuoteExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteValidatePluginInterface
+interface QuoteValidatorPluginInterface
 {
     /**
      * Specification:
      * - Validates quote before saving.
      * - Returns error message when validation failed.
+     * - Returns empty transfer if validation success.
      *
      * @api
      *

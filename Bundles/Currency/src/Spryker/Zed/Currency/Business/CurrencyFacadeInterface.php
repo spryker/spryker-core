@@ -100,7 +100,7 @@ interface CurrencyFacadeInterface
     /**
      * Specification:
      *  - Verifies if provided currency in quote is available.
-     *  - Returns error message if price mode not valid.
+     *  - Returns error message if currency not valid.
      *
      * @api
      *

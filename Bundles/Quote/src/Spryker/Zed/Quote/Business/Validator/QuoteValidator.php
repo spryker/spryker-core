@@ -23,18 +23,18 @@ class QuoteValidator implements QuoteValidatorInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatePluginInterface[]
+     * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface[]
      */
-    protected $quoteValidatePlugins;
+    protected $quoteValidatorPlugins;
 
     /**
      * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatePluginInterface[] $quoteValidatePlugins
+     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface[] $quoteValidatorPlugins
      */
-    public function __construct(QuoteToStoreFacadeInterface $storeFacade, array $quoteValidatePlugins)
+    public function __construct(QuoteToStoreFacadeInterface $storeFacade, array $quoteValidatorPlugins)
     {
         $this->storeFacade = $storeFacade;
-        $this->quoteValidatePlugins = $quoteValidatePlugins;
+        $this->quoteValidatorPlugins = $quoteValidatorPlugins;
     }
 
     /**
@@ -47,7 +47,7 @@ class QuoteValidator implements QuoteValidatorInterface
         $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
             ->setIsSuccess(true);
         $quoteValidationResponseTransfer = $this->validateStore($quoteTransfer, $quoteValidationResponseTransfer);
-        $quoteValidationResponseTransfer = $this->executeQuoteValidationPlugins($quoteTransfer, $quoteValidationResponseTransfer);
+        $quoteValidationResponseTransfer = $this->executeQuoteValidatiorPlugins($quoteTransfer, $quoteValidationResponseTransfer);
 
         return $quoteValidationResponseTransfer;
     }
@@ -83,12 +83,12 @@ class QuoteValidator implements QuoteValidatorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    protected function executeQuoteValidationPlugins(
+    protected function executeQuoteValidatiorPlugins(
         QuoteTransfer $quoteTransfer,
         QuoteValidationResponseTransfer $quoteValidationResponseTransfer
     ): QuoteValidationResponseTransfer {
-        foreach ($this->quoteValidatePlugins as $quoteValidatePlugin) {
-            $messageTransfer = $quoteValidatePlugin->validate($quoteTransfer);
+        foreach ($this->quoteValidatorPlugins as $quoteValidatorPlugin) {
+            $messageTransfer = $quoteValidatorPlugin->validate($quoteTransfer);
 
             if ($messageTransfer->getValue()) {
                 $quoteValidationResponseTransfer->addErrors($messageTransfer)
