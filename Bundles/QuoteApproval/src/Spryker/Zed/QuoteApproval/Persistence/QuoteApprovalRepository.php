@@ -23,7 +23,7 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
     public function findQuoteApprovalCollectionByIdQuote(int $idQuote): array
     {
         $quoteApprovalEntities = $this->getFactory()
-            ->createQuoteApprovalQuery()
+            ->createQuoteApprovalPropelQuery()
             ->filterByFkQuote($idQuote)
             ->find();
 
@@ -49,7 +49,7 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
     public function findIdQuoteByIdQuoteApproval(int $idQuoteApproval): ?int
     {
         $quoteApprovalEntity = $this->getFactory()
-            ->createQuoteApprovalQuery()
+            ->createQuoteApprovalPropelQuery()
             ->filterByIdQuoteApproval($idQuoteApproval)
             ->find()
             ->getFirst();

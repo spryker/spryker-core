@@ -21,7 +21,7 @@ class QuoteApprovalPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\QuoteApproval\Persistence\SpyQuoteApprovalQuery
      */
-    public function createQuoteApprovalQuery(): SpyQuoteApprovalQuery
+    public function createQuoteApprovalPropelQuery(): SpyQuoteApprovalQuery
     {
         return new SpyQuoteApprovalQuery();
     }
