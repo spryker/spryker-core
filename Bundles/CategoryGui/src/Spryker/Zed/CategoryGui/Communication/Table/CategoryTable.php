@@ -145,7 +145,7 @@ class CategoryTable extends AbstractTable
                 on in_node.fk_parent_category_node = in_parent_node.id_category_node
        left join spy_category_attribute in_parent_attr on in_parent_node.fk_category = in_parent_attr.fk_category
        where
-           in_node.is_main = true and in_parent_attr.fk_locale = 66
+           in_node.is_main = true and in_parent_attr.fk_locale = ' . $fkLocale . '
          and in_node.fk_category = node.fk_category
        )', static::COL_PARENT)
             ->withColumn('group_concat(distinct add_parent_attr.name)', static::COL_ADDITIONAL_PARENTS);
