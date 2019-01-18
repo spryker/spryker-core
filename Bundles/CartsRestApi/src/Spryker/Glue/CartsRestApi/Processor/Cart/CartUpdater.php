@@ -30,19 +30,19 @@ class CartUpdater implements CartUpdaterInterface
     protected $cartsResourceMapper;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Cart\CartRestResponseBuilder
+     * @var \Spryker\Glue\CartsRestApi\Processor\Cart\CartRestResponseBuilderInterface
      */
     protected $cartRestResponseBuilder;
 
     /**
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
-     * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartRestResponseBuilder $cartRestResponseBuilder
+     * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartRestResponseBuilderInterface $cartRestResponseBuilder
      */
     public function __construct(
         CartsRestApiClientInterface $cartsRestApiClient,
         CartsResourceMapperInterface $cartsResourceMapper,
-        CartRestResponseBuilder $cartRestResponseBuilder
+        CartRestResponseBuilderInterface $cartRestResponseBuilder
     ) {
         $this->cartsRestApiClient = $cartsRestApiClient;
         $this->cartsResourceMapper = $cartsResourceMapper;
