@@ -128,7 +128,6 @@
         <property name="validTo" type="string" />
         <property name="isActive" type="bool" />
         <property name="isSearchable" type="bool" />
-        <property name="storeName" type="string" />
     </transfer>
 
     <transfer name="FlattenedLocaleCmsPageDataRequest">
