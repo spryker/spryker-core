@@ -7,11 +7,10 @@
 
 namespace Spryker\Client\ProductStorage\Finder;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface;
 use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface;
 
-class ProductConcreteViewTransferFinder implements ProductViewTransferFinderInterface
+class ProductConcreteViewTransferFinder extends ProductViewTransferFinderAbstract
 {
     /**
      * @var \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface
@@ -19,34 +18,23 @@ class ProductConcreteViewTransferFinder implements ProductViewTransferFinderInte
     protected $productConcreteStorage;
 
     /**
-     * @var \Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface
-     */
-    protected $productStorageDataMapper;
-
-    /**
      * @param \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface $productConcreteStorage
      * @param \Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface $productStorageDataMapper
      */
     public function __construct(ProductConcreteStorageReaderInterface $productConcreteStorage, ProductStorageDataMapperInterface $productStorageDataMapper)
     {
+        parent::__construct($productStorageDataMapper);
         $this->productConcreteStorage = $productConcreteStorage;
-        $this->productStorageDataMapper = $productStorageDataMapper;
     }
 
     /**
      * @param int $idProductConcrete
      * @param string $localeName
-     * @param array $selectedAttributes
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     * @return array|null
      */
-    public function findProductViewTransfer(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
+    protected function findProductStorageData(int $idProductConcrete, string $localeName): ?array
     {
-        $data = $this->productConcreteStorage->findProductConcreteStorageData($idProductConcrete, $localeName);
-        if ($data === null) {
-            return null;
-        }
-
-        return $this->productStorageDataMapper->mapProductStorageData($localeName, $data, $selectedAttributes);
+        return $this->productConcreteStorage->findProductConcreteStorageData($idProductConcrete, $localeName);
     }
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductAlternativeStorage\ProductAlternativeMapper;
 
-use Generated\Shared\Transfer\AttributeMapStorageTransfer;
 use Generated\Shared\Transfer\ProductAlternativeStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductAlternativeStorage\Dependency\Client\ProductAlternativeStorageToProductStorageClientInterface;
@@ -176,7 +175,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     protected function findConcreteProductViewTransfer(int $idProduct, string $localeName): ?ProductViewTransfer
     {
         $productViewTransfer = $this->productStorageClient
-            ->findProductConcreteViewTransfer($idProduct, $localeName, (new AttributeMapStorageTransfer())->toArray());
+            ->findProductConcreteViewTransfer($idProduct, $localeName);
 
         if ($productViewTransfer && $productViewTransfer->getAvailable()) {
             return $productViewTransfer;
