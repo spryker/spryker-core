@@ -23,7 +23,7 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
     public function findQuoteApprovalById(int $idQuoteApproval): ?QuoteApprovalTransfer
     {
         $quoteApprovalEntity = $this->getFactory()
-            ->createQuoteApprovalQuery()
+            ->createQuoteApprovalPropelQuery()
             ->findOneByIdQuoteApproval($idQuoteApproval);
 
         if ($quoteApprovalEntity === null) {
