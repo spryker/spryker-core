@@ -4,6 +4,13 @@
   "description": "CategoryGui module",
   "license": "proprietary",
   "require": {
+    "spryker/category": "*",
+    "spryker/gui": "*",
+    "spryker/kernel": "*",
+    "spryker/locale": "*",
+    "spryker/propel-orm": "*",
+    "spryker/symfony": "*",
+    "spryker/util-text": "*"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
