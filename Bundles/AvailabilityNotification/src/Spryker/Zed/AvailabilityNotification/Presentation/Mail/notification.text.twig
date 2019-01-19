@@ -1,16 +1,12 @@
-{{ mail.productAttributes.name }}
-{{ 'You can now add' | trans ~ ' ' ~ mail.productAttributes.name ~ ' to your cart again, do not miss this opportunity!' | trans }}
+{{ 'availability_subscription.mail.notification.head'|trans({'%name%': mail.productAttributes.name}) }}
+{{ 'availability_subscription.mail.notification.body'|trans({'%name%': mail.productAttributes.name}) }}
 
 {{ mail.productAttributes.name }}
-{{ 'Attributes:' | trans }}
 
 {% for name, value in mail.product.attributes if name %}
     {{ ('product.attribute.' ~ name) | trans }}: {{ value }}
 {% endfor %}
 
-{{ 'Price:' | trans }} {{ mail.productAttributes.price }}
+{{ mail.productAttributes.price }}
 
-{{ 'Copyright © current year company name, All rights reserved.' | trans }}
-
-{{ 'Want to change how you receive these emails?
-You can unsubscribe from this list.' | trans }}
+{{ 'availability_subscription.mail.footer'|trans({'%link%': mail.availabilityUnsubscriptionLink})|raw }}

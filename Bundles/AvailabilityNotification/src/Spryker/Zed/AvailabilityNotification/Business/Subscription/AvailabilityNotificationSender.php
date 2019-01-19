@@ -151,48 +151,11 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
                 ->setProductConcrete($productConcreteTransfer)
                 ->setProductAttributes($productAttributes);
 
-            $mailTransfer = $this->setProductUrl(
-                $mailTransfer,
-                $productConcreteTransfer->getFkProductAbstract(),
-                $availabilitySubscription
-            );
-
             $unsubscriptionLink = $this->urlGenerator->createUnsubscriptionLink($availabilitySubscription);
             $mailTransfer->setAvailabilityUnsubscriptionLink($unsubscriptionLink);
 
             $this->mailFacade->handleMail($mailTransfer);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
-     * @param int $fkProductAbstract
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
-     *
-     * @return \Generated\Shared\Transfer\MailTransfer
-     */
-    protected function setProductUrl(
-        MailTransfer $mailTransfer,
-        int $fkProductAbstract,
-        AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
-    ): MailTransfer {
-        $productAbstractTransfer = $this->productFacade->findProductAbstractById($fkProductAbstract);
-
-        if ($productAbstractTransfer === null) {
-            return $mailTransfer;
-        }
-
-        $productUrlTransfer = $this->productFacade->getProductUrl($productAbstractTransfer);
-
-        foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
-            if ($availabilitySubscriptionTransfer->getLocale()->getIdLocale() === $localizedUrlTransfer->getLocale()->getIdLocale()) {
-                $mailTransfer->setProductUrl($this->urlGenerator->generateProductUrl($localizedUrlTransfer));
-
-                return $mailTransfer;
-            }
-        }
-
-        return $mailTransfer;
     }
 
     /**
@@ -205,23 +168,99 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
         ProductConcreteTransfer $productConcreteTransfer,
         LocaleTransfer $localeTransfer
     ): array {
-        /** @var \Generated\Shared\Transfer\ProductImageSetTransfer $imageSetTransfer */
-        $imageSetTransfer = current($productConcreteTransfer->getImageSets());
-        /** @var \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer */
-        $productImageTransfer = current($imageSetTransfer->getProductImages());
-        $attributes = ['image' => $productImageTransfer->getExternalUrlLarge()];
-
-        $amount = $this->priceProductFacade->findPriceBySku($productConcreteTransfer->getSku());
-        $priceTransfer = $this->moneyFacade->fromInteger($amount);
-        $price = $this->moneyFacade->formatWithSymbol($priceTransfer);
-        $attributes['price'] = $price;
+        $attributes = [];
 
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
             if ($localizedAttributes->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {
-                return array_merge($attributes, $localizedAttributes->toArray());
+                $attributes = array_merge($attributes, $localizedAttributes->toArray());
             }
         }
 
+        $image = $this->findProductImage($productConcreteTransfer);
+
+        if ($image !== null) {
+            $attributes['image'] = $image;
+        }
+
+        $price = $this->findProductPrice($productConcreteTransfer);
+
+        if ($price !== null) {
+            $attributes['price'] = $price;
+        }
+
+        $url = $this->findProductUrl($productConcreteTransfer, $localeTransfer);
+
+        if ($url !== null) {
+            $attributes['url'] = $url;
+        }
+
         return $attributes;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return string|null
+     */
+    protected function findProductPrice(ProductConcreteTransfer $productConcreteTransfer): ?string
+    {
+        $amount = $this->priceProductFacade->findPriceBySku($productConcreteTransfer->getSku());
+
+        if ($amount === null) {
+            return null;
+        }
+
+        $priceTransfer = $this->moneyFacade->fromInteger($amount);
+
+        return $this->moneyFacade->formatWithSymbol($priceTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string|null
+     */
+    protected function findProductUrl(
+        ProductConcreteTransfer $productConcreteTransfer,
+        LocaleTransfer $localeTransfer
+    ): ?string {
+        $productAbstractTransfer = $this->productFacade->findProductAbstractById($productConcreteTransfer->getFkProductAbstract());
+
+        if ($productAbstractTransfer === null) {
+            return null;
+        }
+
+        $productUrlTransfer = $this->productFacade->getProductUrl($productAbstractTransfer);
+
+        foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
+            if ($localeTransfer->getIdLocale() === $localizedUrlTransfer->getLocale()->getIdLocale()) {
+                return $this->urlGenerator->generateProductUrl($localizedUrlTransfer);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return string|null
+     */
+    protected function findProductImage(ProductConcreteTransfer $productConcreteTransfer): ?string
+    {
+        $imageSetTransfer = current($productConcreteTransfer->getImageSets());
+
+        if ($imageSetTransfer === false) {
+            return null;
+        }
+
+        $productImageTransfer = current($imageSetTransfer->getProductImages());
+
+        if ($productImageTransfer === false) {
+            return null;
+        }
+
+        return $productImageTransfer->getExternalUrlLarge();
     }
 }
