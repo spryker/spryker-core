@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\CompanyUser;
 
+use Spryker\Client\CompanyUser\Dependency\Client\CompanyUserToCustomerClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\CompanyUser\Dependency\Client\CompanyUserToCustomerClientBridge;
 
 class CompanyUserDependencyProvider extends AbstractDependencyProvider
 {

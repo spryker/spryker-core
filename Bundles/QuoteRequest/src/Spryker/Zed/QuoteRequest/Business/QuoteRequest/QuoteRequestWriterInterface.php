@@ -9,7 +9,6 @@ namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
 
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteRequestWriterInterface
 {

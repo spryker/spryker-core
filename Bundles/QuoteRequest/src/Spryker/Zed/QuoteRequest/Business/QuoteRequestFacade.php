@@ -9,9 +9,8 @@ namespace Spryker\Zed\QuoteRequest\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
-use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

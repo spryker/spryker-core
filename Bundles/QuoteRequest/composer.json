@@ -5,10 +5,11 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/company-business-unit": "*",
     "spryker/company-user": "*",
     "spryker/kernel": "*",
-    "spryker/user": "*",
+    "spryker/propel-orm": "*",
+    "spryker/sequence-number": "*",
+    "spryker/util-encoding": "*",
     "spryker/zed-request": "*"
   },
   "require-dev": {

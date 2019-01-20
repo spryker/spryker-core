@@ -42,8 +42,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         QuoteRequestConfig $config,
         QuoteRequestEntityManagerInterface $entityManager,
         QuoteRequestReferenceGeneratorInterface $referenceGenerator
-    )
-    {
+    ) {
         $this->config = $config;
         $this->entityManager = $entityManager;
         $this->referenceGenerator = $referenceGenerator;
@@ -70,8 +69,8 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      */
     protected function executeCreateTransaction(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestTransfer = $this->saveQuoteRequest($quoteRequestTransfer);
-        $quoteRequestVersionTransfer = $this->saveQuoteRequestVersion($quoteRequestTransfer);
+        $quoteRequestTransfer = $this->createQuoteRequest($quoteRequestTransfer);
+        $quoteRequestVersionTransfer = $this->createQuoteRequestVersion($quoteRequestTransfer);
 
         $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
 
@@ -85,7 +84,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
-    protected function saveQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer
+    protected function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer
     {
         $quoteRequestTransfer->requireCompanyUser();
 
@@ -102,7 +101,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
      */
-    protected function saveQuoteRequestVersion(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestVersionTransfer
+    protected function createQuoteRequestVersion(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestVersionTransfer
     {
         $quoteRequestTransfer->requireLatestVersion()
             ->getLatestVersion()
