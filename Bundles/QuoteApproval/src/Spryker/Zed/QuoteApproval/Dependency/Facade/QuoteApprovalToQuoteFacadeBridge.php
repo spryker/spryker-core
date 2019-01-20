@@ -8,6 +8,7 @@
 namespace Spryker\Zed\QuoteApproval\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class QuoteApprovalToQuoteFacadeBridge implements QuoteApprovalToQuoteFacadeInterface
 {
@@ -32,5 +33,15 @@ class QuoteApprovalToQuoteFacadeBridge implements QuoteApprovalToQuoteFacadeInte
     public function findQuoteById($idQuote): QuoteResponseTransfer
     {
         return $this->quoteFacade->findQuoteById($idQuote);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->quoteFacade->updateQuote($quoteTransfer);
     }
 }

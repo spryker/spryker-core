@@ -12,6 +12,20 @@ use Generated\Shared\Transfer\QuoteApprovalTransfer;
 interface QuoteApprovalRepositoryInterface
 {
     /**
+     * @param int $idQuote
+     *
+     * @return array
+     */
+    public function findQuoteApprovalCollectionByIdQuote(int $idQuote): array;
+
+    /**
+     * @param int $idQuoteApproval
+     *
+     * @return int|null
+     */
+    public function findIdQuoteByIdQuoteApproval(int $idQuoteApproval): ?int;
+
+    /**
      * @param int $idQuoteApproval
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer|null

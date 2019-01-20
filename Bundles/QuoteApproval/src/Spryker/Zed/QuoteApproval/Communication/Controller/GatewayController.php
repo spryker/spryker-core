@@ -7,8 +7,12 @@
 
 namespace Spryker\Zed\QuoteApproval\Communication\Controller;
 
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -17,10 +21,40 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
+    public function createQuoteApprovalAction(QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        return $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function removeQuoteApprovalAction(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        return $this->getFacade()->removeQuoteApproval($quoteApprovalRemoveRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getQuoteApproversListAction(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
+    {
+        return $this->getFacade()->getQuoteApproversList($quoteTransfer);
+    }
+
+        /**
+         * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+         *
+         * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+         */
     public function approveQuoteApprovalAction(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         return $this->getFacade()->approveQuoteApproval($quoteApprovalRequestTransfer);
@@ -34,15 +68,5 @@ class GatewayController extends AbstractGatewayController
     public function declineQuoteApprovalAction(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         return $this->getFacade()->declineQuoteApproval($quoteApprovalRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
-     */
-    public function cancelQuoteApprovalAction(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
-    {
-        return $this->getFacade()->cancelQuoteApproval($quoteApprovalRequestTransfer);
     }
 }

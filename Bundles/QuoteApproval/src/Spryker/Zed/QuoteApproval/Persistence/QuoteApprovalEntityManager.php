@@ -20,19 +20,25 @@ class QuoteApprovalEntityManager extends AbstractEntityManager implements QuoteA
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer
      */
-    public function updateQuoteApproval(QuoteApprovalTransfer $quoteApprovalTransfer): QuoteApprovalTransfer
+    public function saveQuoteApproval(QuoteApprovalTransfer $quoteApprovalTransfer): QuoteApprovalTransfer
     {
         $quoteApprovalEntity = $this->getFactory()
             ->createQuoteApprovalPropelQuery()
-            ->findOneByIdQuoteApproval($quoteApprovalTransfer->getIdQuoteApproval());
+            ->filterByIdQuoteApproval($quoteApprovalTransfer->getIdQuoteApproval())
+            ->findOneOrCreate();
 
         $quoteApprovalEntity = $this->getFactory()
             ->createQuoteApprovalMapper()
-            ->mapQuoteApprovalTransferToEntity($quoteApprovalTransfer, $quoteApprovalEntity);
+            ->mapQuoteApprovalTransferToEntity(
+                $quoteApprovalTransfer,
+                $quoteApprovalEntity
+            );
 
         $quoteApprovalEntity->save();
 
-        return $quoteApprovalTransfer;
+        return $this->getFactory()
+            ->createQuoteApprovalMapper()
+            ->mapQuoteApprovalEntityToTransfer($quoteApprovalEntity, $quoteApprovalTransfer);
     }
 
     /**
@@ -45,6 +51,19 @@ class QuoteApprovalEntityManager extends AbstractEntityManager implements QuoteA
         $this->getFactory()
             ->createQuoteApprovalPropelQuery()
             ->filterByIdQuoteApproval($idQuoteApproval)
+            ->delete();
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return void
+     */
+    public function deleteApprovalRequestsByIdQuote(int $idQuote): void
+    {
+        $this->getFactory()
+            ->createQuoteApprovalPropelQuery()
+            ->filterByFkQuote($idQuote)
             ->delete();
     }
 }

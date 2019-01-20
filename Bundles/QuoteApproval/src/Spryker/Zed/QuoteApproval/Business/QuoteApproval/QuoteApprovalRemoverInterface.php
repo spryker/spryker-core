@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
-use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 
 interface QuoteApprovalRemoverInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function cancelQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer;
+    public function removeQuoteApproval(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): QuoteApprovalResponseTransfer;
 }

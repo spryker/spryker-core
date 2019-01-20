@@ -11,6 +11,7 @@
 
     <transfer name="QuoteApproval">
         <property name="idQuoteApproval" type="int"/>
+        <property name="approver" type="CompanyUser"/>
         <property name="fkQuote" type="int"/>
         <property name="fkCompanyUser" type="int"/>
         <property name="status" type="string"/>
@@ -18,9 +19,24 @@
         <property name="updatedAt" type="string"/>
     </transfer>
 
+    <transfer name="QuoteApprovalCreateRequest">
+        <property name="customerReference" type="string"/>
+        <property name="idQuote" type="int"/>
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
     <transfer name="QuoteApprovalRequest">
         <property name="idQuoteApproval" type="int"/>
         <property name="fkCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="QuoteApprovalRemoveRequest">
+        <property name="customerReference" type="string"/>
+        <property name="idQuoteApproval" type="int"/>
+    </transfer>
+
+    <transfer name="QuoteUpdateRequestAttributes">
+        <property name="isLocked" type="bool"/>
     </transfer>
 
     <transfer name="QuoteApprovalResponse">
@@ -29,13 +45,13 @@
         <property name="message" type="Message" />
     </transfer>
 
+    <transfer name="QuoteApprovalCollection">
+        <property name="quoteApprovals" type="QuoteApproval[]" singular="quoteApproval"/>
+    </transfer>
+
     <transfer name="Message">
         <property name="value" type="string"/>
         <property name="parameters" type="array"/>
-    </transfer>
-
-    <transfer name="QuoteApprovalCollection">
-        <property name="quoteApprovals" type="QuoteApproval[]" singular="quoteApproval"/>
     </transfer>
 
     <transfer name="Customer">

@@ -13,5 +13,5 @@ coverage:
 
 suites:
     Shared:
-        path: .
+        path: Business
         class_name: QuoteApprovalTester
