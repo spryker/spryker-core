@@ -15,7 +15,7 @@
         <property name="idCompanyUser" type="int" />
         <property name="sharedCompanyUsers" type="ShoppingListCompanyUser[]" />
         <property name="sharedCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]" />
-        <property name="items" type="ShoppingListItem[]" />
+        <property name="items" type="ShoppingListItem[]" singular="item"/>
     </transfer>
 
     <transfer name="ShoppingListCollection">

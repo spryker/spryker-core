@@ -11,6 +11,7 @@ use Monolog\Logger as MonologLogger;
 use Spryker\Shared\Log\Config\LoggerConfigInterface;
 use Spryker\Shared\Log\LoggerConfig\LoggerConfigLoader;
 use Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderDefault;
+use Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderGlue;
 use Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderYves;
 use Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderZed;
 
@@ -70,6 +71,7 @@ class LoggerFactory
         $loggerConfigLoader = new LoggerConfigLoader([
             static::createLoggerConfigLoaderYves(),
             static::createLoggerConfigLoaderZed(),
+            static::createLoggerConfigLoaderGlue(),
             static::createLoggerConfigLoaderDefault(),
         ]);
 
@@ -90,6 +92,14 @@ class LoggerFactory
     protected static function createLoggerConfigLoaderZed()
     {
         return new LoggerConfigLoaderZed();
+    }
+
+    /**
+     * @return \Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderInterface|\Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderGlue
+     */
+    protected static function createLoggerConfigLoaderGlue()
+    {
+        return new LoggerConfigLoaderGlue();
     }
 
     /**
