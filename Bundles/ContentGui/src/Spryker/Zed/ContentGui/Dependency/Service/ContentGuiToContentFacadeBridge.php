@@ -9,7 +9,7 @@ namespace Spryker\Zed\ContentGui\Dependency\Service;
 
 use Generated\Shared\Transfer\ContentTransfer;
 
-class ContentGuiToContentFacadeBridge implements ContentGuiToContentFacadeBridgeInterface
+class ContentGuiToContentFacadeBridge implements ContentGuiToContentFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Content\Business\ContentFacadeInterface

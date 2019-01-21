@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedContentTransfer;
 use Spryker\Zed\ContentGui\Communication\Form\ContentForm;
 use Spryker\Zed\ContentGui\Communication\Resolver\ContentResolverInterface;
-use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToContentFacadeBridgeInterface;
-use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToLocaleFacadeBridgeInterface;
+use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToContentFacadeInterface;
+use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToLocaleFacadeInterface;
 
 class ContentFormDataProvider implements ContentFormDataProviderInterface
 {
@@ -24,21 +24,21 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
     protected $contentResolver;
 
     /**
-     * @var \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToContentFacadeBridgeInterface
+     * @var \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToContentFacadeInterface
      */
     protected $contentFacade;
 
     /**
-     * @var \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToLocaleFacadeBridgeInterface
+     * @var \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToLocaleFacadeInterface
      */
     protected $localFacade;
 
     /**
      * @param \Spryker\Zed\ContentGui\Communication\Resolver\ContentResolverInterface $contentResolver
-     * @param \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToContentFacadeBridgeInterface $contentFacade
-     * @param \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToLocaleFacadeBridgeInterface $localFacade
+     * @param \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToContentFacadeInterface $contentFacade
+     * @param \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToLocaleFacadeInterface $localFacade
      */
-    public function __construct(ContentResolverInterface $contentResolver, ContentGuiToContentFacadeBridgeInterface $contentFacade, ContentGuiToLocaleFacadeBridgeInterface $localFacade)
+    public function __construct(ContentResolverInterface $contentResolver, ContentGuiToContentFacadeInterface $contentFacade, ContentGuiToLocaleFacadeInterface $localFacade)
     {
         $this->contentResolver = $contentResolver;
         $this->contentFacade = $contentFacade;

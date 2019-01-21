@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ContentGui\Dependency\Service;
 
-interface ContentGuiToLocaleFacadeBridgeInterface
+interface ContentGuiToLocaleFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer

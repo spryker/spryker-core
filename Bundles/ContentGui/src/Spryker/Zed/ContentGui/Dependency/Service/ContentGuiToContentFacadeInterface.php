@@ -9,7 +9,7 @@ namespace Spryker\Zed\ContentGui\Dependency\Service;
 
 use Generated\Shared\Transfer\ContentTransfer;
 
-interface ContentGuiToContentFacadeBridgeInterface
+interface ContentGuiToContentFacadeInterface
 {
     /**
      * @param int $id
