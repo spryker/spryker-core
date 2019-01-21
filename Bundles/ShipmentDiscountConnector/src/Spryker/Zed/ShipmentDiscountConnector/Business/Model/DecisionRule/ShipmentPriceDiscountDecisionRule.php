@@ -15,6 +15,9 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisio
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToMoneyInterface;
 
+/**
+ * @deprecated Use \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentPriceDiscountDecisionRule instead.
+ */
 class ShipmentPriceDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterface
 {
     /**
@@ -67,6 +70,33 @@ class ShipmentPriceDiscountDecisionRule implements ShipmentDiscountDecisionRuleI
     public function isExpenseSatisfiedBy(QuoteTransfer $quoteTransfer, ExpenseTransfer $expenseTransfer, ClauseTransfer $clauseTransfer)
     {
         return $this->isSatisfiedPrice($expenseTransfer, $clauseTransfer);
+    }
+
+    /**
+     * @deprecated Use \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentPriceDiscountDecisionRule::isItemShipmentSatisfiedBy() instead.
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isItemShipmentSatisfiedBy(ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer): bool
+    {
+        return true;
+    }
+
+    /**
+     * @deprecated Use \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentPriceDiscountDecisionRule::isItemShipmentExpenseSatisfiedBy() instead.
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isItemShipmentExpenseSatisfiedBy(ItemTransfer $itemTransfer, ExpenseTransfer $expenseTransfer, ClauseTransfer $clauseTransfer): bool
+    {
+        return true;
     }
 
     /**
