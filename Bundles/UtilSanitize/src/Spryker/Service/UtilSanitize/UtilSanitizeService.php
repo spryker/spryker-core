@@ -39,6 +39,8 @@ class UtilSanitizeService extends AbstractService implements UtilSanitizeService
      *
      * @api
      *
+     * @deprecated Use UtilSanitizeService::filterOutEmptyValuesRecursively() instead.
+     *
      * @param array $array
      *
      * @return array
@@ -46,5 +48,21 @@ class UtilSanitizeService extends AbstractService implements UtilSanitizeService
     public function arrayFilterRecursive(array $array)
     {
         return $this->getFactory()->createArrayFilter()->arrayFilterRecursive($array);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $array
+     *
+     * @return array
+     */
+    public function filterOutEmptyValuesRecursively(array $array): array
+    {
+        return $this->getFactory()
+            ->createArrayFilter()
+            ->filterOutEmptyValuesRecursively($array);
     }
 }

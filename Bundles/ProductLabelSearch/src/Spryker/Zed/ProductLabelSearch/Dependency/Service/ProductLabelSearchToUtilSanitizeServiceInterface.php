@@ -10,9 +10,18 @@ namespace Spryker\Zed\ProductLabelSearch\Dependency\Service;
 interface ProductLabelSearchToUtilSanitizeServiceInterface
 {
     /**
+     * @deprecated Use filterOutEmptyValuesRecursively() instead.
+     *
      * @param array $array
      *
      * @return array
      */
     public function arrayFilterRecursive(array $array);
+
+    /**
+     * @param array $array
+     *
+     * @return array
+     */
+    public function filterOutEmptyValuesRecursively(array $array): array;
 }

@@ -7,10 +7,8 @@
 
 namespace SprykerTest\Service\UtilSanitize\Model;
 
-use ArrayObject;
 use Codeception\Test\Unit;
 use Spryker\Service\UtilSanitize\Model\ArrayFilter;
-use stdClass;
 
 /**
  * Auto-generated group annotations
@@ -24,49 +22,34 @@ use stdClass;
 class ArrayFilterTest extends Unit
 {
     /**
+     * @var \SprykerTest\Service\UtilSanitize\UtilSanitizeServiceTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
-    public function testArrayFilterRecursive()
+    public function testArrayFilterRecursive(): void
     {
         $arrayFilter = $this->createArrayFilterModel();
+        $array = $this->tester->getArrayToFilter();
+        $expected = $this->tester->getArrayFilterRecursiveExpectedArray($array);
 
-        $array = [
-            'emptyArray' => [],
-            'false' => false,
-            'true' => true,
-            'zero' => 0,
-            'stringZero' => '0',
-            'emptyString' => '',
-            'someObject' => new stdClass(),
-            'emptyCountable' => new ArrayObject(),
-            'countable' => new ArrayObject(['test']),
-            'nested' => [
-                'foo' => [
-                    'bar' => [
-                        'emptyString' => '',
-                        'null' => null,
-                        'string' => 'String',
-                    ],
-                ],
-            ],
-        ];
         $result = $arrayFilter->arrayFilterRecursive($array);
 
-        $expected = [
-            'false' => $array['false'],
-            'true' => $array['true'],
-            'zero' => $array['zero'],
-            'stringZero' => '0',
-            'someObject' => $array['someObject'],
-            'countable' => $array['countable'],
-            'nested' => [
-                'foo' => [
-                    'bar' => [
-                        'string' => 'String',
-                    ],
-                ],
-            ],
-        ];
+        $this->assertSame($expected, $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testfilterOutEmptyValuesRecursively(): void
+    {
+        $arrayFilter = $this->createArrayFilterModel();
+        $array = $this->tester->getArrayToFilter();
+        $expected = $this->tester->getfilterOutEmptyValuesRecursivelyExpectedArray($array);
+
+        $result = $arrayFilter->filterOutEmptyValuesRecursively($array);
 
         $this->assertSame($expected, $result);
     }
