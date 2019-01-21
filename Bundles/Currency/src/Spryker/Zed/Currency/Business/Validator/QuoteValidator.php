@@ -40,42 +40,42 @@ class QuoteValidator implements QuoteValidatorInterface
     {
         $currencyTransfer = $quoteTransfer->getCurrency();
         $currencyCode = $currencyTransfer->getCode();
+        $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
+            ->setIsSuccess(true);
 
         if (!$currencyTransfer || !$currencyCode) {
-            return $this->createValidationError(static::MESSAGE_CURRENCY_DATA_IS_MISSING);
+            return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_CURRENCY_DATA_IS_MISSING);
         }
 
         if (!$quoteTransfer->getStore()) {
-            return $this->createValidationError();
+            return $quoteValidationResponseTransfer->setIsSuccess(false);
         }
 
         $storeTransfer = $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName());
 
         if ($storeTransfer && array_search($currencyCode, $storeTransfer->getAvailableCurrencyIsoCodes()) === false) {
-            return $this->createValidationError(
+            return $this->addValidationError(
+                $quoteValidationResponseTransfer,
                 static::MESSAGE_CURRENCY_DATA_IS_INCORRECT,
                 [static::GLOSSARY_KEY_ISO_CODE => $currencyCode]
             );
         }
 
-        return $this->createValidationError();
+        return $quoteValidationResponseTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
      * @param string $message
      * @param array $parameters
      *
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    protected function createValidationError(string $message = '', array $parameters = []): QuoteValidationResponseTransfer
-    {
-        $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
-            ->setIsSuccess(true);
-
-        if (!$message) {
-            return $quoteValidationResponseTransfer;
-        }
-
+    protected function addValidationError(
+        QuoteValidationResponseTransfer $quoteValidationResponseTransfer,
+        string $message,
+        array $parameters = []
+    ): QuoteValidationResponseTransfer {
         $error = (new MessageTransfer())->setValue($message)
             ->setParameters($parameters);
 

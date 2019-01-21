@@ -39,38 +39,38 @@ class QuoteValidator implements QuoteValidatorInterface
     public function validate(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
         $priceMode = $quoteTransfer->getPriceMode();
+        $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
+            ->setIsSuccess(true);
 
         if (!$priceMode) {
-            return $this->createValidationError(static::MESSAGE_PRICE_MODE_DATA_IS_MISSING);
+            return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_PRICE_MODE_DATA_IS_MISSING);
         }
 
         $availablePiceModes = $this->priceConfig->getPriceModes();
 
         if (!isset($availablePiceModes[$priceMode])) {
-            return $this->createValidationError(
+            return $this->addValidationError(
+                $quoteValidationResponseTransfer,
                 static::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT,
                 [static::GLOSSARY_KEY_PRICE_MODE => $priceMode]
             );
         }
 
-        return $this->createValidationError();
+        return $quoteValidationResponseTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
      * @param string $message
      * @param array $parameters
      *
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    protected function createValidationError(string $message = '', array $parameters = []): QuoteValidationResponseTransfer
-    {
-        $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
-            ->setIsSuccess(true);
-
-        if (!$message) {
-            return $quoteValidationResponseTransfer;
-        }
-
+    protected function addValidationError(
+        $quoteValidationResponseTransfer,
+        string $message,
+        array $parameters = []
+    ): QuoteValidationResponseTransfer {
         $error = (new MessageTransfer())->setValue($message)
             ->setParameters($parameters);
 
