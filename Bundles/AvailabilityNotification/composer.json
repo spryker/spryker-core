@@ -18,14 +18,15 @@
     "spryker/util-text": "^1.2.0",
     "spryker/util-validate": "^1.0.0",
     "spryker/zed-request": "^3.0.0",
-    "spryker/locale": "^3.0.0",
-    "spryker/store": "^1.5.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/money": "^2.0.0"
   },
   "require-dev": {
+    "spryker/availability": "*",
     "spryker/code-sniffer": "*",
+    "spryker/testify": "*",
     "spryker/propel": "*",
-    "spryker/testify": "*"
+    "spryker/event": "*"
   },
   "autoload": {
     "psr-4": {
