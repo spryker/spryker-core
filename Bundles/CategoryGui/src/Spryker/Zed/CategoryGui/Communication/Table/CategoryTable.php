@@ -122,12 +122,11 @@ class CategoryTable extends AbstractTable
                 ->groupByFkCategory()
                 ->leftJoinParentCategoryNode('parent_node')
                 ->useParentCategoryNodeQuery('add_parent_node')
-
                     ->useCategoryQuery('add_parent_cat', Criteria::LEFT_JOIN)
                         ->leftJoinAttribute('add_parent_attr')
                     ->endUse()
                 ->endUse()
-            ->addJoinCondition('add_parent_node', 'node.is_main = ?', false)
+                ->addJoinCondition('add_parent_node', 'node.is_main = ?', false)
             ->endUse();
         $parentLocaleCriterion = $query->getNewCriterion('add_parent_attr.fk_locale', $fkLocale);
         $parentNodeCriterion = $query->getNewCriterion('add_parent_node.id_category_node', null, Criteria::ISNULL);
