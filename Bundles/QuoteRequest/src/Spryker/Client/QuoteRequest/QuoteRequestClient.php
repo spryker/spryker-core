@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\QuoteRequest;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -33,23 +31,6 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
         $quoteRequestResponseTransfer = $this->getZedStub()->create($quoteRequestTransfer);
 
         return $quoteRequestResponseTransfer;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
-     */
-    public function getCustomerQuoteRequestCollection(
-        CustomerTransfer $customerTransfer
-    ): QuoteRequestCollectionTransfer {
-        $quoteRequestCollectionTransfer = $this->getZedStub()->getCustomerQuoteRequestCollection($customerTransfer);
-
-        return $quoteRequestCollectionTransfer;
     }
 
     /**

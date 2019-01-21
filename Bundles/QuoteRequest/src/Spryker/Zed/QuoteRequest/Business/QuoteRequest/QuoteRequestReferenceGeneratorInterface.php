@@ -17,7 +17,7 @@ interface QuoteRequestReferenceGeneratorInterface
      *
      * @return string
      */
-    public function generateQuoteRequestReference(QuoteRequestTransfer $quoteRequestTransfer): string;
+    public function generateQuoteRequestReference(QuoteRequestTransfer $quoteRequestTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer

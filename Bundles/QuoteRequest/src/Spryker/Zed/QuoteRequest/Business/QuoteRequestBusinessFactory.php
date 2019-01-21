@@ -8,8 +8,6 @@
 namespace Spryker\Zed\QuoteRequest\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReader;
-use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGenerator;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriter;
@@ -33,16 +31,6 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getEntityManager(),
             $this->createQuoteRequestReferenceGenerator()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface
-     */
-    public function createQuoteRequestReader(): QuoteRequestReaderInterface
-    {
-        return new QuoteRequestReader(
-            $this->getRepository()
         );
     }
 

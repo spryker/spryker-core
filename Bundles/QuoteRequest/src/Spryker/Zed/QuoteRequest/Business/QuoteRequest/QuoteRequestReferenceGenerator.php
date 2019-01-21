@@ -43,7 +43,7 @@ class QuoteRequestReferenceGenerator implements QuoteRequestReferenceGeneratorIn
      *
      * @return string
      */
-    public function generateQuoteRequestReference(QuoteRequestTransfer $quoteRequestTransfer): string
+    public function generateQuoteRequestReference(QuoteRequestTransfer $quoteRequestTransfer)
     {
         return $this->facadeSequenceNumber->generate($this->sequenceNumberSettings);
     }

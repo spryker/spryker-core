@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\CompanyUser\Dependency\Client;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-
 class CompanyUserToCustomerClientBridge implements CompanyUserToCustomerClientInterface
 {
     /**
@@ -27,7 +25,7 @@ class CompanyUserToCustomerClientBridge implements CompanyUserToCustomerClientIn
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer(): ?CustomerTransfer
+    public function getCustomer()
     {
         return $this->customerClient->getCustomer();
     }

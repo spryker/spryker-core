@@ -7,14 +7,6 @@
 
 namespace Spryker\Zed\QuoteRequest\Persistence;
 
-use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
-
 interface QuoteRequestRepositoryInterface
 {
-    /**
-     * @param int $idCompanyUser
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
-     */
-    public function getQuoteRequestCollectionByIdCompanyUser(int $idCompanyUser): QuoteRequestCollectionTransfer;
 }

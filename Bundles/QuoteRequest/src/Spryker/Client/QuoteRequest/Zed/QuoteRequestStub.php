@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\QuoteRequest\Zed;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientInterface;
@@ -42,22 +40,5 @@ class QuoteRequestStub implements QuoteRequestStubInterface
         );
 
         return $quoteRequestResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
-     */
-    public function getCustomerQuoteRequestCollection(
-        CustomerTransfer $customerTransfer
-    ): QuoteRequestCollectionTransfer {
-        /** @var \Generated\Shared\Transfer\QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer */
-        $quoteRequestCollectionTransfer = $this->zedRequestClient->call(
-            '/quote-request/gateway/get-customer-quote-request-collection',
-            $customerTransfer
-        );
-
-        return $quoteRequestCollectionTransfer;
     }
 }
