@@ -101,9 +101,11 @@ class ProductConcretePageSearchProductAbstractStoreListener extends AbstractProd
     {
         $storeNameByIdMap = $this->getStoreNameByIdMap();
 
-        foreach ($storesPerAbstractProducts as &$storesPerAbstractProducts) {
-            foreach ($storesPerAbstractProducts as &$store) {
-                $store = $storeNameByIdMap[$store];
+        foreach ($storesPerAbstractProducts as &$storesPerAbstractProduct) {
+            foreach ($storesPerAbstractProduct as &$store) {
+                if(array_key_exists($store, $storeNameByIdMap)) {
+                    $store = $storeNameByIdMap[$store];
+                }
             }
         }
 
