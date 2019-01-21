@@ -88,6 +88,7 @@ interface QuoteApprovalFacadeInterface
      * - Checks that Approver can approve request.
      * - Checks that status is "Waiting".
      * - Sets quote approval request status "Declined" if checks are true.
+     * - Unlocks quote.
      *
      * @api
      *

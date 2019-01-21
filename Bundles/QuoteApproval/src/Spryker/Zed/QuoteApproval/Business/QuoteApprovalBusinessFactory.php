@@ -10,6 +10,8 @@ namespace Spryker\Zed\QuoteApproval\Business;
 use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculator;
 use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLocker;
+use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreator;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreatorInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalMessageBuilder;
@@ -18,8 +20,6 @@ use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRemover;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRemoverInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRequestValidator;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRequestValidatorInterface;
-use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalValidator;
-use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalValidatorInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalWriter;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalWriterInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApproverListProvider;
@@ -46,11 +46,21 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     public function createQuoteApprovalCreator(): QuoteApprovalCreatorInterface
     {
         return new QuoteApprovalCreator(
-            $this->getQuoteFacade(),
-            $this->getCartFacade(),
+            $this->createQuoteLocker(),
             $this->getSharedCartFacade(),
             $this->createQuoteApprovalRequestValidator(),
             $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface
+     */
+    public function createQuoteLocker(): QuoteLockerInterface
+    {
+        return new QuoteLocker(
+            $this->getCartFacade(),
+            $this->getQuoteFacade()
         );
     }
 
@@ -61,7 +71,9 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteApprovalRequestValidator(
             $this->getQuoteFacade(),
-            $this->createQuoteStatusCalculator()
+            $this->createQuoteStatusCalculator(),
+            $this->getRepository(),
+            $this->getCustomerFacade()
         );
     }
 
@@ -71,10 +83,10 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     public function createQuoteApprovalWriter(): QuoteApprovalWriterInterface
     {
         return new QuoteApprovalWriter(
-            $this->createQuoteApprovalValidator(),
+            $this->createQuoteApprovalRequestValidator(),
             $this->createQuoteApprovalMessageBuilder(),
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->createQuoteLocker()
         );
     }
 
@@ -92,21 +104,10 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     public function createQuoteApprovalRemover(): QuoteApprovalRemoverInterface
     {
         return new QuoteApprovalRemover(
-            $this->getCartFacade(),
-            $this->getQuoteFacade(),
+            $this->createQuoteLocker(),
+            $this->createQuoteApprovalRequestValidator(),
             $this->getSharedCartFacade(),
-            $this->getEntityManager(),
-            $this->getRepository()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalValidatorInterface
-     */
-    public function createQuoteApprovalValidator(): QuoteApprovalValidatorInterface
-    {
-        return new QuoteApprovalValidator(
-            $this->getQuoteFacade()
+            $this->getEntityManager()
         );
     }
 

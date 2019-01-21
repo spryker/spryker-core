@@ -19,6 +19,12 @@
         <property name="updatedAt" type="string"/>
     </transfer>
 
+    <transfer name="QuoteApprovalRequestValidationResponse">
+        <property name="quote" type="Quote"/>
+        <property name="quoteApproval" type="QuoteApproval"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
     <transfer name="QuoteApprovalCreateRequest">
         <property name="customerReference" type="string"/>
         <property name="idQuote" type="int"/>

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -92,11 +93,15 @@ class QuoteApproverListProvider implements QuoteApproverListProviderInterface
      */
     protected function filterByBusinessUnit(CompanyUserCollectionTransfer $companyUserCollectionTransfer, int $idBusinessUnit): CompanyUserCollectionTransfer
     {
-        foreach ($companyUserCollectionTransfer->getCompanyUsers() as $key => $companyUser) {
+        $companyUsers = $companyUserCollectionTransfer->getCompanyUsers()->getArrayCopy();
+
+        foreach ($companyUsers as $key => $companyUser) {
             if ($companyUser->getFkCompanyBusinessUnit() !== $idBusinessUnit) {
-                $companyUserCollectionTransfer->getCompanyUsers()->offsetUnset($key);
+                unset($companyUsers[$key]);
             }
         }
+
+        $companyUserCollectionTransfer->setCompanyUsers(new ArrayObject($companyUsers));
 
         return $companyUserCollectionTransfer;
     }
@@ -111,11 +116,15 @@ class QuoteApproverListProvider implements QuoteApproverListProviderInterface
         CompanyUserCollectionTransfer $companyUserCollectionTransfer,
         QuoteTransfer $quoteTransfer
     ): CompanyUserCollectionTransfer {
-        foreach ($companyUserCollectionTransfer->getCompanyUsers() as $key => $companyUser) {
+        $companyUsers = $companyUserCollectionTransfer->getCompanyUsers()->getArrayCopy();
+
+        foreach ($companyUsers as $key => $companyUser) {
             if (!$this->can(ApproveQuotePermissionPlugin::KEY, $companyUser->getIdCompanyUser(), $quoteTransfer)) {
-                $companyUserCollectionTransfer->getCompanyUsers()->offsetUnset($key);
+                unset($companyUsers[$key]);
             }
         }
+
+        $companyUserCollectionTransfer->setCompanyUsers(new ArrayObject($companyUsers));
 
         return $companyUserCollectionTransfer;
     }
