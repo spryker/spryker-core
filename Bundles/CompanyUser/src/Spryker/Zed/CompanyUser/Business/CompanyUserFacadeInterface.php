@@ -93,7 +93,22 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Get user companies which can filtered by company ID, user ID and/or active flag.
+     * - Retrieves active company users collection by customer reference.
+     * - Checks activity flag in a related company and company user.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getActiveCompanyUsersByCustomerReference(
+        CustomerTransfer $customerTransfer
+    ): CompanyUserCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves user companies which can filtered by company ID, user ID and/or active flag.
      * - Ignores company users with anonymised customers.
      *
      * @api
