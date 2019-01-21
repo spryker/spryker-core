@@ -132,6 +132,7 @@ interface QuoteApprovalClientInterface
     /**
      * Specification:
      * - Returns highest limit calculated from all ApproveQuotePermissionPlugin permissions assigned to company user.
+     * - Returns null if no permissions found.
      *
      * @api
      *
@@ -145,6 +146,7 @@ interface QuoteApprovalClientInterface
     /**
      * Specification:
      * - Returns highest limit calculated from all PlaceOrderPermissionPlugin permissions assigned to company user.
+     * - Returns null if no permissions found.
      *
      * @api
      *
