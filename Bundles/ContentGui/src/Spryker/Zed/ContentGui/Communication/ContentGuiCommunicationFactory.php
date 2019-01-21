@@ -17,8 +17,8 @@ use Spryker\Zed\ContentGui\Communication\Resolver\ContentResolverInterface;
 use Spryker\Zed\ContentGui\Communication\Table\ContentTable;
 use Spryker\Zed\ContentGui\Communication\Tabs\ContentTabs;
 use Spryker\Zed\ContentGui\ContentGuiDependencyProvider;
-use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToContentFacadeInterface;
-use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToLocaleFacadeInterface;
+use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface;
+use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface;
 use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
@@ -84,7 +84,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToLocaleFacadeInterface
+     * @return \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface
      */
     public function getLocaleFacade(): ContentGuiToLocaleFacadeInterface
     {
@@ -92,7 +92,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToContentFacadeInterface
+     * @return \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface
      */
     public function getContentFacade(): ContentGuiToContentFacadeInterface
     {

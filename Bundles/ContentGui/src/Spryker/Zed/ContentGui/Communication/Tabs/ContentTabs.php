@@ -10,18 +10,18 @@ namespace Spryker\Zed\ContentGui\Communication\Tabs;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
-use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToLocaleFacadeInterface;
+use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface;
 use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class ContentTabs extends AbstractTabs
 {
     /**
-     * @var \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToLocaleFacadeInterface
+     * @var \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface
      */
     protected $localFacade;
 
     /**
-     * @param \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToLocaleFacadeInterface $localFacade
+     * @param \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface $localFacade
      */
     public function __construct(ContentGuiToLocaleFacadeInterface $localFacade)
     {

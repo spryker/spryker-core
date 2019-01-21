@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ContentGui;
 
 use Orm\Zed\Content\Persistence\Base\SpyContentQuery;
-use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToContentFacadeBridge;
-use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToLocaleFacadeBridge;
+use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeBridge;
+use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeBridge;
 use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilDateTimeServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
