@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Quote\Business\QuoteFacade;
-use Spryker\Zed\Quote\Business\Validator\QuoteValidator;
 
 /**
  * Auto-generated group annotations
@@ -31,6 +30,9 @@ use Spryker\Zed\Quote\Business\Validator\QuoteValidator;
  */
 class PersistQuoteTest extends Unit
 {
+    protected const MESSAGE_STORE_DATA_IS_MISSING = 'quote.validation.error.store_is_missing';
+    protected const WRONG_STORE_NAME = 'WRONGSTORENAME';
+
     /**
      * @var \SprykerTest\Zed\Quote\QuoteBusinessTester
      */
@@ -101,25 +103,18 @@ class PersistQuoteTest extends Unit
     /**
      * @return void
      */
-    public function testValidationEmptyStoreInQuote()
+    public function testPersistQuoteWithValidationEmptyStore()
     {
         $quoteTransfer = new QuoteTransfer();
 
-        // Act
-        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
-
-        $errors = array_map(function ($messageTransfer) {
-            return $messageTransfer->getValue();
-        }, (array)$quoteResponseTransfer->getErrors());
-
-        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-        $this->assertContains(QuoteValidator::MESSAGE_STORE_DATA_IS_MISSING, $errors);
+        //Act
+        $this->validateStoreInQuote($quoteTransfer, static::MESSAGE_STORE_DATA_IS_MISSING);
     }
 
     /**
      * @return void
      */
-    public function testValidationEmptyStoreNameInQuote()
+    public function testPersistQuoteWithValidationEmptyStoreName()
     {
         $quoteTransfer = new QuoteTransfer();
         $storeTransfer = new StoreTransfer();
@@ -127,33 +122,24 @@ class PersistQuoteTest extends Unit
         $quoteTransfer
             ->setStore($storeTransfer);
 
-        // Act
-        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
-
-        $errors = array_map(function ($messageTransfer) {
-            return $messageTransfer->getValue();
-        }, (array)$quoteResponseTransfer->getErrors());
-
-        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-        $this->assertContains(QuoteValidator::MESSAGE_STORE_DATA_IS_MISSING, $errors);
+        //Act
+        $this->validateStoreInQuote($quoteTransfer, static::MESSAGE_STORE_DATA_IS_MISSING);
     }
 
     /**
      * @return void
      */
-    public function testValidationWrongStoreNameInQuote()
+    public function testPersistQuoteWithValidationWrongStoreName()
     {
         $quoteTransfer = new QuoteTransfer();
         $storeTransfer = (new StoreTransfer())
-            ->setName('WRONGNAME');
+            ->setName(static::WRONG_STORE_NAME);
 
         $quoteTransfer
             ->setStore($storeTransfer);
 
-        // Act
-        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
-
-        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+        //Act
+        $this->validateStoreInQuote($quoteTransfer);
     }
 
     /**
@@ -212,5 +198,27 @@ class PersistQuoteTest extends Unit
             ->setPriceMode('foo');
 
         return [$quoteTransfer, $expectedQuoteTransfer];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $message
+     *
+     * @return void
+     */
+    protected function validateStoreInQuote(QuoteTransfer $quoteTransfer, string $message = ''): void
+    {
+        // Act
+        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
+
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+
+        if ($message) {
+            $errors = array_map(function ($messageTransfer) {
+                return $messageTransfer->getValue();
+            }, (array)$quoteResponseTransfer->getErrors());
+
+            $this->assertContains($message, $errors);
+        }
     }
 }

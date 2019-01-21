@@ -12,7 +12,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\Quote\Business\Validator\QuoteValidator;
 
 /**
  * Auto-generated group annotations
@@ -26,6 +25,9 @@ use Spryker\Zed\Quote\Business\Validator\QuoteValidator;
  */
 class UpdateQuoteTest extends Unit
 {
+    protected const MESSAGE_STORE_DATA_IS_MISSING = 'quote.validation.error.store_is_missing';
+    protected const WRONG_STORE_NAME = 'WRONGSTORENAME';
+
     /**
      * @var \SprykerTest\Zed\Quote\QuoteBusinessTester
      */
@@ -66,7 +68,7 @@ class UpdateQuoteTest extends Unit
     /**
      * @return void
      */
-    public function testValidationEmptyStoreInQuote()
+    public function testUpdateQuoteWithValidationEmptyStore()
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
@@ -77,22 +79,14 @@ class UpdateQuoteTest extends Unit
         $quoteTransfer->setStore(null);
 
         // Act
-        /** @var \Spryker\Zed\Quote\Business\QuoteFacade $quoteFacade */
-        $quoteFacade = $this->tester->getFacade();
-        $quoteResponseTransfer = $quoteFacade->updateQuote($quoteTransfer);
-
-        $errors = array_map(function ($messageTransfer) {
-            return $messageTransfer->getValue();
-        }, (array)$quoteResponseTransfer->getErrors());
-
-        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-        $this->assertContains(QuoteValidator::MESSAGE_STORE_DATA_IS_MISSING, $errors);
+        // Act
+        $this->validateStoreInQuote($quoteTransfer, static::MESSAGE_STORE_DATA_IS_MISSING);
     }
 
     /**
      * @return void
      */
-    public function testValidationEmptyStoreNameInQuote()
+    public function testUpdateQuoteWithValidationEmptyStoreName()
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
@@ -106,22 +100,13 @@ class UpdateQuoteTest extends Unit
             ->setStore($storeTransfer);
 
         // Act
-        /** @var \Spryker\Zed\Quote\Business\QuoteFacade $quoteFacade */
-        $quoteFacade = $this->tester->getFacade();
-        $quoteResponseTransfer = $quoteFacade->updateQuote($quoteTransfer);
-
-        $errors = array_map(function ($messageTransfer) {
-            return $messageTransfer->getValue();
-        }, (array)$quoteResponseTransfer->getErrors());
-
-        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-        $this->assertContains(QuoteValidator::MESSAGE_STORE_DATA_IS_MISSING, $errors);
+        $this->validateStoreInQuote($quoteTransfer, static::MESSAGE_STORE_DATA_IS_MISSING);
     }
 
     /**
      * @return void
      */
-    public function testValidationWrongStoreNameInQuote()
+    public function testUpdateQuoteWithValidationWrongStoreName()
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
@@ -130,16 +115,35 @@ class UpdateQuoteTest extends Unit
             QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
         $storeTransfer = (new StoreTransfer())
-            ->setName('WRONGNAME');
+            ->setName(static::WRONG_STORE_NAME);
 
         $quoteTransfer
             ->setStore($storeTransfer);
 
+        $this->validateStoreInQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $message
+     *
+     * @return void
+     */
+    protected function validateStoreInQuote(QuoteTransfer $quoteTransfer, string $message = ''): void
+    {
         // Act
         /** @var \Spryker\Zed\Quote\Business\QuoteFacade $quoteFacade */
         $quoteFacade = $this->tester->getFacade();
         $quoteResponseTransfer = $quoteFacade->updateQuote($quoteTransfer);
 
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+
+        if ($message) {
+            $errors = array_map(function ($messageTransfer) {
+                return $messageTransfer->getValue();
+            }, (array)$quoteResponseTransfer->getErrors());
+
+            $this->assertContains($message, $errors);
+        }
     }
 }

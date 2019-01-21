@@ -14,8 +14,8 @@ use Spryker\Zed\Price\PriceConfig;
 
 class QuoteValidator implements QuoteValidatorInterface
 {
-    public const MESSAGE_PRICE_MODE_DATA_IS_MISSING = 'quote.validation.error.price_mode_is_missing';
-    public const MESSAGE_PRICE_MODE_DATA_IS_INCORRECT = 'quote.validation.error.price_mode_is_incorrect';
+    protected const MESSAGE_PRICE_MODE_DATA_IS_MISSING = 'quote.validation.error.price_mode_is_missing';
+    protected const MESSAGE_PRICE_MODE_DATA_IS_INCORRECT = 'quote.validation.error.price_mode_is_incorrect';
     protected const GLOSSARY_KEY_PRICE_MODE = '{{price_mode}}';
 
     /**
@@ -71,10 +71,10 @@ class QuoteValidator implements QuoteValidatorInterface
         string $message,
         array $parameters = []
     ): QuoteValidationResponseTransfer {
-        $error = (new MessageTransfer())->setValue($message)
+        $errorTransfer = (new MessageTransfer())->setValue($message)
             ->setParameters($parameters);
 
         return $quoteValidationResponseTransfer->setIsSuccess(false)
-            ->addErrors($error);
+            ->addErrors($errorTransfer);
     }
 }
