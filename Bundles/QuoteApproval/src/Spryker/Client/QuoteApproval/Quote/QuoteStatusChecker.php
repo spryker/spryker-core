@@ -73,4 +73,17 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
 
         return $quoteStatus === QuoteApprovalConfig::STATUS_WAITING;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApproved(QuoteTransfer $quoteTransfer): bool
+    {
+        $quoteTransfer = $this->quoteStatusCalculator
+            ->calculateQuoteStatus($quoteTransfer);
+
+        return $quoteTransfer === QuoteApprovalConfig::STATUS_APPROVED;
+    }
 }

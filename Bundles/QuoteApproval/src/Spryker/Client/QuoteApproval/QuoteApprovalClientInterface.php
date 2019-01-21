@@ -81,6 +81,7 @@ interface QuoteApprovalClientInterface
     public function getQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer;
 
     /**
+     * Specification:
      * - Returns false if customer does't have PlaceOrderPermissionPlugin permission assigned.
      * - Returns false if excecuting of PlaceOrderPermissionPlugin permission returns true.
      * - Returns false if quote approval status is `approved`.
@@ -95,7 +96,18 @@ interface QuoteApprovalClientInterface
     public function isQuoteRequireApproval(QuoteTransfer $quoteTransfer): bool;
 
     /**
-     * Returns true if quote status is `waiting`.
+     * Specification:
+     * - Returns true if customer has PlaceOrderPermissionPlugin permission.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isCustomerHasPlaceOrderPermission(): bool;
+
+    /**
+     * Specification:
+     * - Returns true if quote status is `waiting`.
      *
      * @api
      *
@@ -106,7 +118,20 @@ interface QuoteApprovalClientInterface
     public function isQuoteWaitingForApproval(QuoteTransfer $quoteTransfer): bool;
 
     /**
-     * Returns highest limit calculated from all ApproveQuotePermissionPlugin permissions assigned to company user.
+     * Specification:
+     * - Returns true if quote status is `approved`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApproved(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
+     * - Returns highest limit calculated from all ApproveQuotePermissionPlugin permissions assigned to company user.
      *
      * @api
      *
@@ -118,7 +143,8 @@ interface QuoteApprovalClientInterface
     public function calculateApproveQuotePermissionLimit(QuoteTransfer $quoteTransfer, CompanyUserTransfer $companyUserTransfer): ?int;
 
     /**
-     * Returns highest limit calculated from all PlaceOrderPermissionPlugin permissions assigned to company user.
+     * Specification:
+     * - Returns highest limit calculated from all PlaceOrderPermissionPlugin permissions assigned to company user.
      *
      * @api
      *
