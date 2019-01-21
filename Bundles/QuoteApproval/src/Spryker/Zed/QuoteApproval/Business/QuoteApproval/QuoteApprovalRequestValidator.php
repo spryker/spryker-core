@@ -17,7 +17,7 @@ use Spryker\Shared\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
-use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCustomerFacadeInterface;
+use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface;
 use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface;
 
@@ -41,26 +41,26 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     protected $quoteApprovalRepository;
 
     /**
-     * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCustomerFacadeInterface
+     * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface
      */
-    protected $customerFacade;
+    protected $companyUserFacade;
 
     /**
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface $quoteStatusCalculator
      * @param \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface $quoteApprovalRepository
-     * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCustomerFacadeInterface $customerFacade
+     * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface $companyUserFacade
      */
     public function __construct(
         QuoteApprovalToQuoteFacadeInterface $quoteFacade,
         QuoteStatusCalculatorInterface $quoteStatusCalculator,
         QuoteApprovalRepositoryInterface $quoteApprovalRepository,
-        QuoteApprovalToCustomerFacadeInterface $customerFacade
+        QuoteApprovalToCompanyUserFacadeInterface $companyUserFacade
     ) {
         $this->quoteFacade = $quoteFacade;
         $this->quoteStatusCalculator = $quoteStatusCalculator;
         $this->quoteApprovalRepository = $quoteApprovalRepository;
-        $this->customerFacade = $customerFacade;
+        $this->companyUserFacade = $companyUserFacade;
     }
 
     /**
@@ -193,20 +193,15 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
      */
     protected function isRemoveRequestSentByApprover(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): bool
     {
-        $customerReponseTransfer = $this->customerFacade->findCustomerByReference(
+        $companyUserTransfer = $this->companyUserFacade->findActiveCompanyUserByCustomerReference(
             $quoteApprovalRemoveRequestTransfer->getCustomerReference()
         );
-
-        $customerReponseTransfer->requireCustomerTransfer();
 
         $quoteApprovalTransfer = $this->quoteApprovalRepository->findQuoteApprovalById(
             $quoteApprovalRemoveRequestTransfer->getIdQuoteApproval()
         );
 
-        $companyUserId = $customerReponseTransfer->getCustomerTransfer()
-            ->getFkUser();
-
-        return $quoteApprovalTransfer->getFkCompanyUser() === $companyUserId;
+        return $quoteApprovalTransfer->getFkCompanyUser() === $companyUserTransfer->getIdCompanyUser();
     }
 
     /**

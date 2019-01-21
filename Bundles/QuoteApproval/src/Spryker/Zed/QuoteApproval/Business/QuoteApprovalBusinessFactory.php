@@ -73,7 +73,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteFacade(),
             $this->createQuoteStatusCalculator(),
             $this->getRepository(),
-            $this->getCustomerFacade()
+            $this->getCompanyUserFacade()
         );
     }
 

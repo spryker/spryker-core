@@ -45,4 +45,14 @@ class QuoteApprovalToCompanyUserFacadeBridge implements QuoteApprovalToCompanyUs
     {
         return $this->companyUserFacade->getCompanyUserById($idCompanyUser);
     }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findActiveCompanyUserByCustomerReference(string $customerReference): ?CompanyUserTransfer
+    {
+        return $this->companyUserFacade->findActiveCompanyUserByCustomerReference($customerReference);
+    }
 }
