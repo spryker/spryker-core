@@ -67,7 +67,7 @@ class QuoteValidator implements QuoteValidatorInterface
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
     protected function addValidationError(
-        $quoteValidationResponseTransfer,
+        QuoteValidationResponseTransfer $quoteValidationResponseTransfer,
         string $message,
         array $parameters = []
     ): QuoteValidationResponseTransfer {
