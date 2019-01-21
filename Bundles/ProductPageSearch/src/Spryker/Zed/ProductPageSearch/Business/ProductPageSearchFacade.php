@@ -94,7 +94,7 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
     {
         $this->getFactory()
             ->createProductConcretePageSearchPublisher()
-            ->unpublish($productIds, $storesPerProducts);
+            ->unpublish($productIds);
     }
 
     /**

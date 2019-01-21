@@ -30,7 +30,6 @@ abstract class AbstractProductConcretePageSearchListener extends AbstractPlugin 
 
     /**
      * @param int[] $productIds
-     * @param array $storesPerProducts
      *
      * @return void
      */
