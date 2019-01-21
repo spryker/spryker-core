@@ -12,7 +12,7 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  */
 class ProductConcretePageSearchProductAbstractStoreListener extends AbstractProductConcretePageSearchListener
 {
@@ -51,7 +51,7 @@ class ProductConcretePageSearchProductAbstractStoreListener extends AbstractProd
             SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT,
             SpyProductAbstractStoreTableMap::COL_FK_STORE
         );
-        $this->convertStoresPerAbstractProductsToStoreNames($storesPerAbstractProducts);
+        $storesPerAbstractProducts = $this->convertStoresPerAbstractProductsToStoreNames($storesPerAbstractProducts);
 
         $this->getFacade()->unpublishProductConcretesByAbstractProductsAndStores($storesPerAbstractProducts);
     }
@@ -97,38 +97,7 @@ class ProductConcretePageSearchProductAbstractStoreListener extends AbstractProd
      *
      * @return array
      */
-    protected function getStoresPerConcreteProducts(array $storesPerAbstractProducts): array
-    {
-        $storesPerConcreteProducts = [];
-        foreach ($storesPerAbstractProducts as $idProductAbstract => $stores) {
-            $productConcreteIds = $this->getFactory()
-                ->getProductFacade()
-                ->findProductConcreteIdsByAbstractProductId($idProductAbstract);
-
-            foreach ($productConcreteIds as $productConcreteId) {
-                $storesPerConcreteProducts[$productConcreteId] = $stores;
-            }
-        }
-
-        return $storesPerConcreteProducts;
-    }
-
-    /**
-     * @param array $storesPerConcreteProducts
-     *
-     * @return int[]
-     */
-    protected function getProductIdsFromStoresPerConcreteProducts(array $storesPerConcreteProducts): array
-    {
-        return array_keys($storesPerConcreteProducts);
-    }
-
-    /**
-     * @param array $storesPerAbstractProducts
-     *
-     * @return void
-     */
-    protected function convertStoresPerAbstractProductsToStoreNames(array &$storesPerAbstractProducts): void
+    protected function convertStoresPerAbstractProductsToStoreNames(array $storesPerAbstractProducts): array
     {
         $storeNameByIdMap = $this->getStoreNameByIdMap();
 
@@ -137,6 +106,8 @@ class ProductConcretePageSearchProductAbstractStoreListener extends AbstractProd
                 $store = $storeNameByIdMap[$store];
             }
         }
+
+        return $storesPerAbstractProducts;
     }
 
     /**
