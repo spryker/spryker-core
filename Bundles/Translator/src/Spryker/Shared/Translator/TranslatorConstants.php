@@ -12,7 +12,16 @@ namespace Spryker\Shared\Translator;
  */
 interface TranslatorConstants
 {
+    /**
+     * Specification:
+     * - Defines paths to Project level translations. Glob pattern can be used.
+     */
     public const TRANSLATION_FILE_PATH_PATTERNS = 'TRANSLATOR:TRANSLATION_FILE_PATH_PATTERN';
+
+    /**
+     * Specification:
+     * - Absolute path to the translation cache directory. E.g. /var/www/data/DE/cache/Zed/translation.
+     */
     public const TRANSLATION_CACHE_DIRECTORY = 'TRANSLATOR:TRANSLATION_CACHE_DIRECTORY';
 
     /**

@@ -36,7 +36,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
      */
     public function createInMemoryMessageTray()
     {
-        return new InMemoryMessageTray($this->getTranslationPlugin(), $this->getFallbackTranslationPlugin());
+        return new InMemoryMessageTray($this->getTranslationPlugins());
     }
 
     /**
@@ -44,7 +44,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
      */
     public function createSessionMessageTray()
     {
-        return new SessionMessageTray($this->getSession(), $this->getTranslationPlugin(), $this->getFallbackTranslationPlugin());
+        return new SessionMessageTray($this->getSession(), $this->getTranslationPlugins());
     }
 
     /**
@@ -56,18 +56,10 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface
+     * @return \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[]
      */
-    public function getTranslationPlugin()
+    public function getTranslationPlugins(): array
     {
-        return $this->getProvidedDependency(MessengerDependencyProvider::PLUGIN_TRANSLATION);
-    }
-
-    /**
-     * @return \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface
-     */
-    public function getFallbackTranslationPlugin()
-    {
-        return $this->getProvidedDependency(MessengerDependencyProvider::PLUGIN_FALLBACK_TRANSLATION);
+        return $this->getProvidedDependency(MessengerDependencyProvider::PLUGINS_TRANSLATION);
     }
 }

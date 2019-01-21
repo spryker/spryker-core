@@ -9,7 +9,7 @@ namespace Spryker\Service\Translator;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Service\Kernel\AbstractService;
-use Spryker\Service\Translator\Translator\TranslatorInterface;
+use Spryker\Service\Translator\Translator\TranslatorCacheGeneratorInterface;
 
 /**
  * @method \Spryker\Service\Translator\TranslatorServiceFactory getFactory()
@@ -21,9 +21,9 @@ class TranslatorService extends AbstractService implements TranslatorServiceInte
      *
      * @api
      *
-     * @return \Spryker\Service\Translator\Translator\TranslatorInterface
+     * @return \Spryker\Service\Translator\Translator\TranslatorCacheGeneratorInterface
      */
-    public function getTranslator(): TranslatorInterface
+    public function getTranslator(): TranslatorCacheGeneratorInterface
     {
         return $this->getFactory()->createTranslator();
     }
@@ -75,12 +75,10 @@ class TranslatorService extends AbstractService implements TranslatorServiceInte
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
-     *
      * @return string
      */
     public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null): string
     {
-        // TODO: Implement translate() method.
+        return $this->getFactory()->createTranslator()->trans($keyName, $data, null, $localeTransfer->getLocaleName());
     }
 }

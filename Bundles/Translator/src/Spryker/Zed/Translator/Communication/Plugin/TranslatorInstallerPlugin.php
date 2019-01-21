@@ -11,7 +11,6 @@ use Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Translator\Business\TranslatorFacade getFacade()
  * @method \Spryker\Zed\Translator\TranslatorConfig getConfig()
  * @method \Spryker\Zed\Translator\Communication\TranslatorCommunicationFactory getFactory()
  */
@@ -24,7 +23,7 @@ class TranslatorInstallerPlugin extends AbstractPlugin implements InstallerPlugi
      */
     public function install(): void
     {
-        $this->getFacade()->cleanTranslationCache();
-        $this->getFacade()->generateTranslationCache();
+        $this->getFactory()->getTranslatorService()->cleanTranslationCache();
+        $this->getFactory()->getTranslatorService()->generateTranslationCache();
     }
 }

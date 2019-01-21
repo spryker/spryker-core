@@ -18,7 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class UserLocaleFormExpander extends AbstractType
 {
     protected const FIELD_FK_LOCALE = 'fk_locale';
-    protected const FIELD_FK_LOCALE_LABEL = 'Interface language';
 
     public const OPTIONS_LOCALE = 'OPTIONS_LOCALE';
 
@@ -53,7 +52,7 @@ class UserLocaleFormExpander extends AbstractType
     protected function addLocaleField(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(static::FIELD_FK_LOCALE, SelectType::class, [
-            'label' => static::FIELD_FK_LOCALE_LABEL,
+            'label' => 'Interface language',
             'choices' => $options[static::OPTIONS_LOCALE],
             'required' => true,
         ]);

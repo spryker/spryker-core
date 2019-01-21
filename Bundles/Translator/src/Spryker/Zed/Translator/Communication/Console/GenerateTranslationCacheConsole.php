@@ -12,7 +12,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Translator\Business\TranslatorFacadeInterface getFacade()
  * @method \Spryker\Zed\Translator\Communication\TranslatorCommunicationFactory getFactory()
  */
 class GenerateTranslationCacheConsole extends Console
@@ -37,7 +36,7 @@ class GenerateTranslationCacheConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $this->getFacade()->cleanTranslationCache();
-        $this->getFacade()->generateTranslationCache();
+        $this->getFactory()->getTranslatorService()->cleanTranslationCache();
+        $this->getFactory()->getTranslatorService()->generateTranslationCache();
     }
 }

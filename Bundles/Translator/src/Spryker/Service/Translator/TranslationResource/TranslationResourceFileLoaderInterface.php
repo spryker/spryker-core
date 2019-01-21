@@ -21,7 +21,7 @@ interface TranslationResourceFileLoaderInterface
      *
      * @return string|null
      */
-    public function getLocaleFromFilename(string $filename): ?string;
+    public function findLocaleFromFilename(string $filename): ?string;
 
     /**
      * @return \Spryker\Service\Translator\TranslationLoader\TranslationLoaderInterface

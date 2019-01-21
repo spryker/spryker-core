@@ -13,7 +13,7 @@ interface UserTransferExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands user transfer with required data.
+     * - Expands user transfer with required data during fetching user data from storage.
      *
      * @api
      *

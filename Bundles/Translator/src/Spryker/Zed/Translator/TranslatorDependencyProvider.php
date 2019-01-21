@@ -22,22 +22,9 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container): Container
-    {
-        $container = parent::provideBusinessLayerDependencies($container);
-        $container = $this->addTranslatorService($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        $container = parent::provideBusinessLayerDependencies($container);
+        $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addTranslatorService($container);
 
         return $container;

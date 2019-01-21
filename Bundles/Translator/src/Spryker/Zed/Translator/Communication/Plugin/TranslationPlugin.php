@@ -8,10 +8,9 @@
 namespace Spryker\Zed\Translator\Communication\Plugin;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface;
+use Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface;
 
 /**
- * @method \Spryker\Zed\Translator\Business\TranslatorFacadeInterface getFacade()
  * @method \Spryker\Zed\Translator\Communication\TranslatorCommunicationFactory getFactory()
  * @method \Spryker\Zed\Translator\TranslatorConfig getConfig()
  */
@@ -26,7 +25,7 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
      */
     public function hasKey($keyName): bool
     {
-        return $this->getFacade()->hasTranslation($keyName);
+        return $this->getFactory()->getTranslatorService()->hasTranslation($keyName);
     }
 
     /**
@@ -39,6 +38,6 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
      */
     public function translate($keyName, array $data = []): string
     {
-        return $this->getFacade()->translate($keyName, $data);
+        return $this->getFactory()->getTranslatorService()->translate($keyName, $data);
     }
 }

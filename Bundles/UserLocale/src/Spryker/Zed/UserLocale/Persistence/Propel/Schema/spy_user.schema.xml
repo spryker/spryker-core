@@ -6,10 +6,10 @@
         namespace="Orm\Zed\User\Persistence"
         package="src.Orm.Zed.User.Persistence">
 
-    <table name="spy_user" idMethod="native" phpName="SpyUser">
-        <column name="fk_locale" type="INTEGER"/>
+    <table name="spy_user">
+        <column name="fk_locale" type="INTEGER" required="false"/>
 
-        <foreign-key name="spy_user-fk_locale" foreignTable="spy_locale" phpName="SpyLocale" refPhpName="Locale">
+        <foreign-key name="spy_user-fk_locale" foreignTable="spy_locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
     </table>

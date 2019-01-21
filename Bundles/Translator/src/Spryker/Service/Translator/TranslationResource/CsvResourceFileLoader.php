@@ -56,7 +56,7 @@ class CsvResourceFileLoader implements TranslationResourceFileLoaderInterface
      *
      * @return string|null
      */
-    public function getLocaleFromFilename(string $filename): ?string
+    public function findLocaleFromFilename(string $filename): ?string
     {
         $pathInfo = pathinfo($filename);
 

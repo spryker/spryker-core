@@ -18,8 +18,7 @@ use Spryker\Zed\Messenger\Communication\Plugin\TranslationPlugin;
 class MessengerDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SESSION = 'session';
-    public const PLUGIN_TRANSLATION = 'translation plugin';
-    public const PLUGIN_FALLBACK_TRANSLATION = 'fallback translation plugin';
+    public const PLUGINS_TRANSLATION = 'PLUGINS_TRANSLATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,8 +28,7 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addSession($container);
-        $container = $this->addTranslationPlugin($container);
-        $container = $this->addFallbackTranslationPlugin($container);
+        $container = $this->addTranslationPlugins($container);
 
         return $container;
     }
@@ -54,26 +52,20 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addTranslationPlugin(Container $container)
+    protected function addTranslationPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_TRANSLATION] = function (Container $container) {
-            return new TranslationPlugin();
+        $container[static::PLUGINS_TRANSLATION] = function () {
+            return $this->getTranslationPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[]
      */
-    protected function addFallbackTranslationPlugin(Container $container)
+    protected function getTranslationPlugins(): array
     {
-        $container[static::PLUGIN_FALLBACK_TRANSLATION] = function (Container $container) {
-            return new TranslationPlugin();
-        };
-
-        return $container;
+        return [];
     }
 }

@@ -66,7 +66,7 @@ class ValidatorResourceFileLoader implements TranslationResourceFileLoaderInterf
      *
      * @return string|null
      */
-    public function getLocaleFromFilename(string $filename): ?string
+    public function findLocaleFromFilename(string $filename): ?string
     {
         $pathInfo = pathinfo($filename);
         $filenameParts = explode('.', $pathInfo['filename']);

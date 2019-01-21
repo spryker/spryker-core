@@ -14,28 +14,6 @@ interface UserLocaleFacadeInterface
 {
     /**
      * Specification:
-     * - Returns User's Locale.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer|null
-     */
-    public function findUserLocale(UserTransfer $userTransfer): ?LocaleTransfer;
-
-    /**
-     * Specification:
-     * - Returns default User's Locale.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getDefaultUserLocale(): LocaleTransfer;
-
-    /**
-     * Specification:
      * - Expands UserTransfer with Locale Id and Locale Name.
      *
      * @api

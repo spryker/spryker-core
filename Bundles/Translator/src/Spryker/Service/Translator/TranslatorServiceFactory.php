@@ -15,7 +15,7 @@ use Spryker\Service\Translator\TranslationCache\CacheGeneratorInterface;
 use Spryker\Service\Translator\TranslationFinder\TranslationFileFinder;
 use Spryker\Service\Translator\TranslationFinder\TranslationFileFinderInterface;
 use Spryker\Service\Translator\TranslationKeyManager\TranslationKeyManagerInterface;
-use Spryker\Service\Translator\TranslationKeyManager\TranslationTranslationKeyManager;
+use Spryker\Service\Translator\TranslationKeyManager\TranslationKeyManager;
 use Spryker\Service\Translator\TranslationLoader\CsvFileLoader;
 use Spryker\Service\Translator\TranslationLoader\TranslationLoaderInterface;
 use Spryker\Service\Translator\TranslationLoader\XliffLoader;
@@ -23,7 +23,7 @@ use Spryker\Service\Translator\TranslationResource\CsvResourceFileLoader;
 use Spryker\Service\Translator\TranslationResource\TranslationResourceFileLoaderInterface;
 use Spryker\Service\Translator\TranslationResource\ValidatorResourceFileLoader;
 use Spryker\Service\Translator\Translator\Translator;
-use Spryker\Service\Translator\Translator\TranslatorInterface;
+use Spryker\Service\Translator\Translator\TranslatorCacheGeneratorInterface;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Kernel\Store;
 
@@ -96,9 +96,9 @@ class TranslatorServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\Translator\Translator\TranslatorInterface
+     * @return \Spryker\Service\Translator\Translator\TranslatorCacheGeneratorInterface
      */
-    public function createTranslator(): TranslatorInterface
+    public function createTranslator(): TranslatorCacheGeneratorInterface
     {
         $locale = $this->getApplication()['locale'];
         $translator = new Translator($locale, null, $this->getConfig()->getCacheDir());
@@ -109,7 +109,7 @@ class TranslatorServiceFactory extends AbstractServiceFactory
             $translator->addLoader($loaderFormat, $translationResourceFileLoader->getLoader());
 
             foreach ($translationResourceFileLoader->getFilePaths() as $filePath) {
-                $translationResourceLocale = $translationResourceFileLoader->getLocaleFromFilename($filePath);
+                $translationResourceLocale = $translationResourceFileLoader->findLocaleFromFilename($filePath);
                 if (!$translationResourceLocale) {
                     continue;
                 }
@@ -126,7 +126,7 @@ class TranslatorServiceFactory extends AbstractServiceFactory
      */
     public function createTranslationKeyManager(): TranslationKeyManagerInterface
     {
-        return new TranslationTranslationKeyManager($this->createTranslator());
+        return new TranslationKeyManager($this->createTranslator());
     }
 
     /**

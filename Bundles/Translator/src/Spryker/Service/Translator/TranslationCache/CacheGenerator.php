@@ -7,13 +7,13 @@
 
 namespace Spryker\Service\Translator\TranslationCache;
 
-use Spryker\Service\Translator\Translator\TranslatorInterface;
+use Spryker\Service\Translator\Translator\TranslatorCacheGeneratorInterface;
 use Spryker\Shared\Kernel\Store;
 
 class CacheGenerator implements CacheGeneratorInterface
 {
     /**
-     * @var \Spryker\Service\Translator\Translator\TranslatorInterface
+     * @var \Spryker\Service\Translator\Translator\TranslatorCacheGeneratorInterface
      */
     protected $translator;
 
@@ -23,10 +23,10 @@ class CacheGenerator implements CacheGeneratorInterface
     protected $store;
 
     /**
-     * @param \Spryker\Service\Translator\Translator\TranslatorInterface $translator
+     * @param \Spryker\Service\Translator\Translator\TranslatorCacheGeneratorInterface $translator
      * @param \Spryker\Shared\Kernel\Store $store
      */
-    public function __construct(TranslatorInterface $translator, Store $store)
+    public function __construct(TranslatorCacheGeneratorInterface $translator, Store $store)
     {
         $this->translator = $translator;
         $this->store = $store;

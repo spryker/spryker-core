@@ -14,7 +14,6 @@ use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Twig_Environment;
 
 /**
- * @method \Spryker\Zed\Translator\Business\TranslatorFacadeInterface getFacade()
  * @method \Spryker\Zed\Translator\Communication\TranslatorCommunicationFactory getFactory()
  * @method \Spryker\Zed\Translator\TranslatorConfig getConfig()
  */

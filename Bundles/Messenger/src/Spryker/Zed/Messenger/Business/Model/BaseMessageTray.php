@@ -7,28 +7,19 @@
 
 namespace Spryker\Zed\Messenger\Business\Model;
 
-use Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface;
-
 class BaseMessageTray
 {
     /**
-     * @var \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface
+     * @var \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[]
      */
-    protected $translationPlugin;
+    protected $translationPlugins;
 
     /**
-     * @var \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface
+     * @param \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[] $translationPlugins
      */
-    protected $fallbackTranslationPlugin;
-
-    /**
-     * @param \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface $translationPlugin
-     * @param \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface $fallbackTranslationPlugin
-     */
-    public function __construct(TranslationPluginInterface $translationPlugin, TranslationPluginInterface $fallbackTranslationPlugin)
+    public function __construct(array $translationPlugins)
     {
-        $this->translationPlugin = $translationPlugin;
-        $this->fallbackTranslationPlugin = $fallbackTranslationPlugin;
+        $this->translationPlugins = $translationPlugins;
     }
 
     /**
@@ -37,17 +28,14 @@ class BaseMessageTray
      *
      * @return string
      */
-    protected function translate($keyName, array $data = [])
+    protected function translate($keyName, array $data = []): string
     {
-        $translation = $keyName;
-        if ($this->translationPlugin->hasKey($keyName)) {
-            return $this->translationPlugin->translate($keyName, $data);
+        foreach ($this->translationPlugins as $translationPlugin) {
+            if ($translationPlugin->hasKey($keyName)) {
+                return $translationPlugin->translate($keyName, $data);
+            }
         }
 
-        if ($this->fallbackTranslationPlugin->hasKey($keyName)) {
-            return $this->fallbackTranslationPlugin->translate($keyName, $data);
-        }
-
-        return $translation;
+        return $keyName;
     }
 }

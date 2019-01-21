@@ -8,7 +8,7 @@
 namespace Spryker\Service\Translator;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Service\Translator\Translator\TranslatorInterface;
+use Spryker\Service\Translator\Translator\TranslatorCacheGeneratorInterface;
 
 interface TranslatorServiceInterface
 {
@@ -18,9 +18,9 @@ interface TranslatorServiceInterface
      *
      * @api
      *
-     * @return \Spryker\Service\Translator\Translator\TranslatorInterface
+     * @return \Spryker\Service\Translator\Translator\TranslatorCacheGeneratorInterface
      */
-    public function getTranslator(): TranslatorInterface;
+    public function getTranslator(): TranslatorCacheGeneratorInterface;
 
     /**
      * Specification:
@@ -63,8 +63,6 @@ interface TranslatorServiceInterface
      * @param string $keyName
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return string
      */
