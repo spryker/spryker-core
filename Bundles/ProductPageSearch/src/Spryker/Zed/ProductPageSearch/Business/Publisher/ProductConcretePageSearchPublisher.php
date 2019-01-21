@@ -112,6 +112,21 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     }
 
     /**
+     * @param array $storesPerAbstractProducts
+     *
+     * @return void
+     */
+    public function unpublishByAbstractProductsAndStores(array $storesPerAbstractProducts): void
+    {
+        $productConcretePageSearchTransfersGroupedByStoreAndLocale = $this->productConcretePageSearchReader
+            ->getProductConcretePageSearchTransfersByAbstractProductsAndStores($storesPerAbstractProducts);
+
+        $this->getTransactionHandler()->handleTransaction(function () use ($productConcretePageSearchTransfersGroupedByStoreAndLocale) {
+            $this->executeUnpublishTransaction($productConcretePageSearchTransfersGroupedByStoreAndLocale);
+        });
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[] $productConcretePageSearchTransfers
      *

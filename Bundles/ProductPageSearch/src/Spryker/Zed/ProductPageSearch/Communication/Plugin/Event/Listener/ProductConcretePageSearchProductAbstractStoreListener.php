@@ -12,6 +12,7 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFacade()
  */
 class ProductConcretePageSearchProductAbstractStoreListener extends AbstractProductConcretePageSearchListener
 {
@@ -26,31 +27,49 @@ class ProductConcretePageSearchProductAbstractStoreListener extends AbstractProd
     public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->preventTransaction();
+
+        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE) {
+            $this->processProductAbstractStoreDeleteEvent($eventTransfers);
+        }
+
+        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_CREATE
+            || $eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_UPDATE
+        ) {
+            $this->processProductAbstractStoreUpdateAndCreateEvent($eventTransfers);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    protected function processProductAbstractStoreDeleteEvent(array $eventTransfers): void
+    {
+        $storesPerAbstractProducts = $this->getFactory()->getEventBehaviorFacade()->getGroupedEventTransferRelatedForeignKeys(
+            $eventTransfers,
+            SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT,
+            SpyProductAbstractStoreTableMap::COL_FK_STORE
+        );
+        $this->convertStoresPerAbstractProductsToStoreNames($storesPerAbstractProducts);
+
+        $this->getFacade()->unpublishProductConcretesByAbstractProductsAndStores($storesPerAbstractProducts);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    protected function processProductAbstractStoreUpdateAndCreateEvent(array $eventTransfers): void
+    {
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventTransfers,
             SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT
         );
+        $productIds = $this->getProductIds($productAbstractIds);
 
-        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE) {
-            $storesPerAbstractProducts = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeysRelated(
-                $eventTransfers,
-                SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT,
-                SpyProductAbstractStoreTableMap::COL_FK_STORE
-            );
-
-            $storeNameByIdMap = $this->getStoreNameByIdMap();
-            $this->convertStoresPerAbstractProductsToStoreNames($storesPerAbstractProducts, $storeNameByIdMap);
-            $storesPerConcreteProducts = $this->getStoresPerConcreteProducts($storesPerAbstractProducts);
-            $productIds = $this->getProductIdsFromStoresPerConcreteProducts($storesPerConcreteProducts);
-
-            $this->unpublish($productIds, $storesPerConcreteProducts);
-        }
-
-        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_CREATE || $eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_UPDATE) {
-            $productIds = $this->getProductIds($productAbstractIds);
-
-            $this->publish($productIds);
-        }
+        $this->publish($productIds);
     }
 
     /**
@@ -106,12 +125,13 @@ class ProductConcretePageSearchProductAbstractStoreListener extends AbstractProd
 
     /**
      * @param array $storesPerAbstractProducts
-     * @param array $storeNameByIdMap
      *
      * @return void
      */
-    protected function convertStoresPerAbstractProductsToStoreNames(array &$storesPerAbstractProducts, array $storeNameByIdMap): void
+    protected function convertStoresPerAbstractProductsToStoreNames(array &$storesPerAbstractProducts): void
     {
+        $storeNameByIdMap = $this->getStoreNameByIdMap();
+
         foreach ($storesPerAbstractProducts as &$storesPerAbstractProducts) {
             foreach ($storesPerAbstractProducts as &$store) {
                 $store = $storeNameByIdMap[$store];

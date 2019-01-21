@@ -103,6 +103,22 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @api
      *
+     * @param array $storesPerAbstractProducts
+     *
+     * @return void
+     */
+    public function unpublishProductConcretesByAbstractProductsAndStores(array $storesPerAbstractProducts): void
+    {
+        $this->getFactory()
+            ->createProductConcretePageSearchPublisher()
+            ->unpublishByAbstractProductsAndStores($storesPerAbstractProducts);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]

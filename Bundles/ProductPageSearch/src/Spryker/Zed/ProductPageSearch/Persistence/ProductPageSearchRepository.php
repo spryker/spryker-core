@@ -8,6 +8,11 @@
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductPageSearch\Persistence\Map\SpyProductConcretePageSearchTableMap;
+use PDO;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -27,6 +32,32 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             ->filterByFkProduct_In($productIds)
             ->find();
 
+        return $this->mapProductConcretePageSearchEntitiesToProductConcretePageSearchTransfer(
+            $productConcretePageSearchEntities
+        );
+    }
+
+    /**
+     * @param array $storesPerAbstractProducts
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function getProductConcretePageSearchTransfersByAbstractProductsAndStores(array $storesPerAbstractProducts): array
+    {
+        $productConcretePageSearchEntities = $this->getProductConcretePageSearchEntitiesByAbstractProductsAndStores($storesPerAbstractProducts);
+
+        return $this->mapProductConcretePageSearchEntitiesToProductConcretePageSearchTransfer(
+            $productConcretePageSearchEntities
+        );
+    }
+
+    /**
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch[]|\Propel\Runtime\Collection\ObjectCollection $productConcretePageSearchEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    protected function mapProductConcretePageSearchEntitiesToProductConcretePageSearchTransfer($productConcretePageSearchEntities): array
+    {
         $mapper = $this->getFactory()->createProductPageSearchMapper();
         $productConcretePageSearchTransfers = [];
         foreach ($productConcretePageSearchEntities as $productConcretePageSearchEntity) {
@@ -37,5 +68,57 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
         }
 
         return $productConcretePageSearchTransfers;
+    }
+
+    /**
+     * @param array $storesPerAbstractProducts
+     *
+     * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function getProductConcretePageSearchEntitiesByAbstractProductsAndStores(array $storesPerAbstractProducts)
+    {
+        $productConcretePageSearchQuery = $this->getFactory()
+            ->createProductConcretePageSearchQuery()
+            ->addJoin(
+                SpyProductConcretePageSearchTableMap::COL_FK_PRODUCT,
+                SpyProductTableMap::COL_ID_PRODUCT,
+                Criteria::INNER_JOIN
+            )->addJoin(
+                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+                Criteria::INNER_JOIN
+            );
+
+        $andConditions = [];
+        $conditionIndex = 1;
+        foreach ($storesPerAbstractProducts as $abstractId => $stores) {
+            foreach ($stores as $store) {
+                $productConcretePageSearchQuery->condition(
+                    $conditionIndex,
+                    SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT . ' = ?',
+                    $abstractId,
+                    PDO::PARAM_INT
+                );
+                $conditionIndex++;
+                $productConcretePageSearchQuery->condition(
+                    $conditionIndex,
+                    SpyProductConcretePageSearchTableMap::COL_STORE . ' = ?',
+                    $store,
+                    PDO::PARAM_STR
+                );
+                $conditionIndex++;
+                $productConcretePageSearchQuery->combine(
+                    [$conditionIndex - 2, $conditionIndex - 1],
+                    Criteria::LOGICAL_AND,
+                    $conditionIndex
+                );
+                $andConditions[] = $conditionIndex;
+                $conditionIndex++;
+            }
+        }
+
+        return $productConcretePageSearchQuery->where($andConditions, Criteria::LOGICAL_OR)
+            ->distinct()
+            ->find();
     }
 }

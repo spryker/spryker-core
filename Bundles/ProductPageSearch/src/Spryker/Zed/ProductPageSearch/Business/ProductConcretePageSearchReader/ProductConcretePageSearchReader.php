@@ -36,20 +36,14 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
 
     /**
      * @param int[] $productConcreteIds
-     * @param array $storesPerProducts
      *
      * @return array
      */
-    public function getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale(array $productConcreteIds, array $storesPerProducts = []): array
+    public function getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale(array $productConcreteIds): array
     {
         $productConcreteSearchPageTransfers = $this->repository->getProductConcretePageSearchTransfers($productConcreteIds);
 
-        $transfersGroupedByStoreAndLocale = $this->getTransfersGroupedByStoreAndLocale($productConcreteSearchPageTransfers);
-        if (empty($storesPerProducts)) {
-            return $transfersGroupedByStoreAndLocale;
-        }
-
-        return $this->filterOutTransfersGroupedByStoreAndLocaleByStores($transfersGroupedByStoreAndLocale, $storesPerProducts);
+        return $this->getTransfersGroupedByStoreAndLocale($productConcreteSearchPageTransfers);
     }
 
     /**
@@ -73,23 +67,14 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
     }
 
     /**
-     * @param array $transfersGroupedByStoreAndLocale
-     * @param array $storesPerProducts
+     * @param array $storesPerAbstractProducts
      *
      * @return array
      */
-    protected function filterOutTransfersGroupedByStoreAndLocaleByStores(array $transfersGroupedByStoreAndLocale, array $storesPerProducts): array
+    public function getProductConcretePageSearchTransfersByAbstractProductsAndStores(array $storesPerAbstractProducts): array
     {
-        $cleanedProductConcretePageSearchTransfers = [];
+        $productConcreteSearchPageTransfers = $this->repository->getProductConcretePageSearchTransfersByAbstractProductsAndStores($storesPerAbstractProducts);
 
-        foreach ($storesPerProducts as $productConcreteId => $storesPerProduct) {
-            foreach ($storesPerProduct as $storeName) {
-                if (isset($transfersGroupedByStoreAndLocale[$productConcreteId][$storeName])) {
-                    $cleanedProductConcretePageSearchTransfers[$productConcreteId][$storeName] = $transfersGroupedByStoreAndLocale[$productConcreteId][$storeName];
-                }
-            }
-        }
-
-        return $cleanedProductConcretePageSearchTransfers;
+        return $this->getTransfersGroupedByStoreAndLocale($productConcreteSearchPageTransfers);
     }
 }

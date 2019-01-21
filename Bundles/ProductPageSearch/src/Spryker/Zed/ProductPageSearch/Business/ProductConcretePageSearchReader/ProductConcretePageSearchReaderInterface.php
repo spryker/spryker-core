@@ -27,9 +27,15 @@ interface ProductConcretePageSearchReaderInterface
      *   ]
      *
      * @param int[] $productConcreteIds
-     * @param array $storesPerProducts
      *
      * @return array
      */
-    public function getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale(array $productConcreteIds, array $storesPerProducts = []): array;
+    public function getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale(array $productConcreteIds): array;
+
+    /**
+     * @param array $storesPerAbstractProducts
+     *
+     * @return array
+     */
+    public function getProductConcretePageSearchTransfersByAbstractProductsAndStores(array $storesPerAbstractProducts): array;
 }

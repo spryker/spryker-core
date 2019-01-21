@@ -15,4 +15,11 @@ interface ProductPageSearchRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
     public function getProductConcretePageSearchTransfers(array $productIds): array;
+
+    /**
+     * @param array $storesPerAbstractProducts
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function getProductConcretePageSearchTransfersByAbstractProductsAndStores(array $storesPerAbstractProducts): array;
 }
