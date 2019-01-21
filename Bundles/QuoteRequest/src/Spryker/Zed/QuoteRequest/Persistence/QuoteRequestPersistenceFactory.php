@@ -10,6 +10,7 @@ namespace Spryker\Zed\QuoteRequest\Persistence;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServiceInterface;
 use Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestMapper;
 use Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestMapperInterface;
 use Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestVersionMapper;
@@ -63,7 +64,7 @@ class QuoteRequestPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServiceInterface
      */
-    protected function getUtilEncodingService()
+    protected function getUtilEncodingService(): QuoteRequestToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(QuoteRequestDependencyProvider::SERVICE_UTIL_ENCODING);
     }
