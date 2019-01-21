@@ -98,19 +98,17 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
 
     /**
      * @param int[] $productIds
-     * @param array $storesPerProducts
      *
      * @return void
      */
-    public function unpublish(array $productIds, array $storesPerProducts = []): void
+    public function unpublish(array $productIds): void
     {
-        $productConcretePageSearchTransfersGroupedByStoreAndLocale = $this->productConcretePageSearchReader->getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale($productIds, $storesPerProducts);
+        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale($productIds);
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($productConcretePageSearchTransfersGroupedByStoreAndLocale) {
-            $this->executeUnpublishTransaction($productConcretePageSearchTransfersGroupedByStoreAndLocale);
+        $this->getTransactionHandler()->handleTransaction(function () use ($productConcretePageSearchTransfers) {
+            $this->executeUnpublishTransaction($productConcretePageSearchTransfers);
         });
     }
-
     /**
      * @param array $storesPerAbstractProducts
      *

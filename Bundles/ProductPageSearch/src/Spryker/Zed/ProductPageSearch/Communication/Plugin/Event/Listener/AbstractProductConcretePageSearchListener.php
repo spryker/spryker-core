@@ -34,8 +34,8 @@ abstract class AbstractProductConcretePageSearchListener extends AbstractPlugin 
      *
      * @return void
      */
-    protected function unpublish(array $productIds, array $storesPerProducts = []): void
+    protected function unpublish(array $productIds): void
     {
-        $this->getFacade()->unpublishProductConcretes($productIds, $storesPerProducts);
+        $this->getFacade()->unpublishProductConcretes($productIds);
     }
 }

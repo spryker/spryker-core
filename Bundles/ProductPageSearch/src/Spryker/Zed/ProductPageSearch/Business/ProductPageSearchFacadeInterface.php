@@ -73,11 +73,10 @@ interface ProductPageSearchFacadeInterface
      * @api
      *
      * @param int[] $productIds
-     * @param array $storesPerProducts
      *
      * @return void
      */
-    public function unpublishProductConcretes(array $productIds, array $storesPerProducts = []): void;
+    public function unpublishProductConcretes(array $productIds): void;
 
     /**
      * Specification:
