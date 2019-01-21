@@ -93,7 +93,7 @@ class Application implements HttpKernelInterface, TerminableInterface
     /**
      * @return void
      */
-    private function flush()
+    public function flush()
     {
         $this->container->get('routes')
             ->addCollection($this->container->get('controllers')->flush());
