@@ -10,7 +10,7 @@ namespace Spryker\Zed\Currency\Business\Validator;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
-use Spryker\Zed\Store\Business\StoreFacade;
+use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface;
 
 class QuoteValidator implements QuoteValidatorInterface
 {
@@ -19,14 +19,14 @@ class QuoteValidator implements QuoteValidatorInterface
     protected const GLOSSARY_KEY_ISO_CODE = '{{iso_code}}';
 
     /**
-     * @var \Spryker\Zed\Store\Business\StoreFacade
+     * @var \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface
      */
     protected $storeFacade;
 
     /**
-     * @param \Spryker\Zed\Store\Business\StoreFacade $storeFacade
+     * @param \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface $storeFacade
      */
-    public function __construct(StoreFacade $storeFacade)
+    public function __construct(CurrencyToStoreInterface $storeFacade)
     {
         $this->storeFacade = $storeFacade;
     }
