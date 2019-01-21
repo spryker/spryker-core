@@ -67,7 +67,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
             if ($isActive) {
                 $rendered .= $twig->render($templatePath, [
                     'placeholders' => $this->getPlaceholders($blockData->getSpyCmsBlockGlossaryKeyMappings()),
-                    'cmsContent' => $blockData,
+                    'cmsContent' => $block,
                 ]);
             }
         }
