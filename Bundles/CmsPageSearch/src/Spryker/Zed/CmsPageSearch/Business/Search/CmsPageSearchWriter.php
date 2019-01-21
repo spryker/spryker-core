@@ -178,7 +178,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
             return;
         }
 
-        $localeCmsPageDataTransfer = $this->getLocaleCmsPageDataTransfer($cmsPageEntity, $localeName);
+        $localeCmsPageDataTransfer = $this->getLocaleCmsPageDataTransfer($cmsPageEntity, $localeName, $storeName);
         $data = $this->mapToSearchData($localeCmsPageDataTransfer, $localeName);
 
         $cmsPageSearchEntity->setStructuredData($this->utilEncodingService->encodeJson($localeCmsPageDataTransfer->toArray()));
@@ -252,12 +252,14 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */
     protected function getLocaleCmsPageDataTransfer(
         SpyCmsPage $cmsPageEntity,
-        string $localeName
+        string $localeName,
+        ?string $storeName = null
     ): LocaleCmsPageDataTransfer {
         $url = $this->extractUrlByLocales(
             $cmsPageEntity->getSpyUrls()->getData(),
@@ -273,6 +275,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
             (new LocaleTransfer())->setLocaleName($localeName)
         );
 
+        $localeCmsPageDataTransfer->setStoreName($storeName);
         $localeCmsPageDataTransfer->setIsActive($cmsPageEntity->getIsActive());
         $localeCmsPageDataTransfer->setIsSearchable($cmsPageEntity->getIsSearchable());
         $localeCmsPageDataTransfer->setIdCmsPage($cmsPageEntity->getIdCmsPage());
