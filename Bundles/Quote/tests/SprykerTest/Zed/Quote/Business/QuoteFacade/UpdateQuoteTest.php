@@ -11,6 +11,8 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\Quote\Business\Validator\QuoteValidator;
 
 /**
  * Auto-generated group annotations
@@ -50,12 +52,92 @@ class UpdateQuoteTest extends Unit
         $quoteTransfer->setItems($itemCollection);
 
         // Act
-        $persistQuoteResponseTransfer = $this->tester->getFacade()->updateQuote($quoteTransfer);
+        /** @var \Spryker\Zed\Quote\Business\QuoteFacade $quoteFacade */
+        $quoteFacade = $this->tester->getFacade();
+        $persistQuoteResponseTransfer = $quoteFacade->updateQuote($quoteTransfer);
 
         // Assert
         $this->assertTrue($persistQuoteResponseTransfer->getIsSuccessful(), 'Persist quote response transfer should have ben successful.');
-        $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
+        $findQuoteResponseTransfer = $quoteFacade->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
         $this->assertTrue($findQuoteResponseTransfer->getIsSuccessful(), 'Find quote response transfer should have ben successful.');
         $this->assertEquals($itemCollection, $findQuoteResponseTransfer->getQuoteTransfer()->getItems(), 'Quote response should have expected data from database.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidationEmptyStoreInQuote()
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $customerTransfer,
+        ]);
+        $quoteTransfer->setStore(null);
+
+        // Act
+        /** @var \Spryker\Zed\Quote\Business\QuoteFacade $quoteFacade */
+        $quoteFacade = $this->tester->getFacade();
+        $quoteResponseTransfer = $quoteFacade->updateQuote($quoteTransfer);
+
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+        $errors = array_map(function ($messageTransfer) {
+            return $messageTransfer->getValue();
+        }, (array)$quoteResponseTransfer->getErrors());
+        $this->assertContains(QuoteValidator::MESSAGE_STORE_DATA_IS_MISSING, $errors);
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidationEmptyStoreNameInQuote()
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $customerTransfer,
+        ]);
+        $storeTransfer = new StoreTransfer();
+
+        $quoteTransfer
+            ->setStore($storeTransfer);
+
+        // Act
+        /** @var \Spryker\Zed\Quote\Business\QuoteFacade $quoteFacade */
+        $quoteFacade = $this->tester->getFacade();
+        $quoteResponseTransfer = $quoteFacade->updateQuote($quoteTransfer);
+
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+        $errors = array_map(function ($messageTransfer) {
+            return $messageTransfer->getValue();
+        }, (array)$quoteResponseTransfer->getErrors());
+        $this->assertContains(QuoteValidator::MESSAGE_STORE_DATA_IS_MISSING, $errors);
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidationWrongStoreNameInQuote()
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $customerTransfer,
+        ]);
+        $storeTransfer = (new StoreTransfer())
+            ->setName('WRONGNAME');
+
+        $quoteTransfer
+            ->setStore($storeTransfer);
+
+        // Act
+        /** @var \Spryker\Zed\Quote\Business\QuoteFacade $quoteFacade */
+        $quoteFacade = $this->tester->getFacade();
+        $quoteResponseTransfer = $quoteFacade->updateQuote($quoteTransfer);
+
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
     }
 }

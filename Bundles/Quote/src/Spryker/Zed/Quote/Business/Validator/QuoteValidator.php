@@ -15,7 +15,7 @@ use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 
 class QuoteValidator implements QuoteValidatorInterface
 {
-    protected const MESSAGE_STORE_DATA_IS_MISSING = 'quote.validation.error.store_is_missing';
+    public const MESSAGE_STORE_DATA_IS_MISSING = 'quote.validation.error.store_is_missing';
 
     /**
      * @var \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface

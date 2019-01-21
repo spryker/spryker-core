@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Quote\Business\QuoteFacade;
+use Spryker\Zed\Quote\Business\Validator\QuoteValidator;
 
 /**
  * Auto-generated group annotations
@@ -98,6 +99,62 @@ class PersistQuoteTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testValidationEmptyStoreInQuote()
+    {
+        $quoteTransfer = new QuoteTransfer();
+
+        // Act
+        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
+
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+        $errors = array_map(function ($messageTransfer) {
+            return $messageTransfer->getValue();
+        }, (array)$quoteResponseTransfer->getErrors());
+        $this->assertContains(QuoteValidator::MESSAGE_STORE_DATA_IS_MISSING, $errors);
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidationEmptyStoreNameInQuote()
+    {
+        $quoteTransfer = new QuoteTransfer();
+        $storeTransfer = new StoreTransfer();
+
+        $quoteTransfer
+            ->setStore($storeTransfer);
+
+        // Act
+        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
+
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+        $errors = array_map(function ($messageTransfer) {
+            return $messageTransfer->getValue();
+        }, (array)$quoteResponseTransfer->getErrors());
+        $this->assertContains(QuoteValidator::MESSAGE_STORE_DATA_IS_MISSING, $errors);
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidationWrongStoreNameInQuote()
+    {
+        $quoteTransfer = new QuoteTransfer();
+        $storeTransfer = (new StoreTransfer())
+            ->setName('WRONGNAME');
+
+        $quoteTransfer
+            ->setStore($storeTransfer);
+
+        // Act
+        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
+
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+    }
+
+    /**
      * @return array
      */
     public function persistQuoteDataProvider()
@@ -124,6 +181,7 @@ class PersistQuoteTest extends Unit
      */
     protected function providePersistFilteredQuoteData()
     {
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = (new QuoteBuilder())->build();
         $expectedQuoteTransfer = clone $quoteTransfer;
 
