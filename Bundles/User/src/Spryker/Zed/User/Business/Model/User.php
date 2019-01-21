@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CollectionTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Orm\Zed\User\Persistence\SpyUser;
+use Spryker\Shared\User\UserConfig as SharedUserConfig;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\User\Business\Exception\UsernameExistsException;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
@@ -19,7 +20,7 @@ use Spryker\Zed\User\UserConfig;
 
 class User implements UserInterface
 {
-    public const USER_BUNDLE_SESSION_KEY = 'user';
+    public const USER_BUNDLE_SESSION_KEY = SharedUserConfig::USER_SESSION_KEY;
 
     /**
      * @var \Spryker\Zed\User\Persistence\UserQueryContainerInterface

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\User\Business\Model;
+namespace Spryker\Zed\User\Business\UserSession;
 
 use Generated\Shared\Transfer\UserTransfer;
 
@@ -26,7 +26,7 @@ interface UserSessionInterface
     /**
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return \Generated\Shared\Transfer\UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer|null
      */
     public function getCurrentUser(): ?UserTransfer;
 

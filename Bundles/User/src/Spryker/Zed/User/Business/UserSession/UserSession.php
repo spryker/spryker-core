@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\User\Business\Model;
+namespace Spryker\Zed\User\Business\UserSession;
 
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Shared\User\UserConfig;
@@ -80,7 +80,7 @@ class UserSession implements UserSessionInterface
      */
     protected function createUserKey(): string
     {
-        return sprintf('%s:currentUser', UserConfig::USER_BUNDLE_SESSION_KEY);
+        return sprintf('%s:currentUser', UserConfig::USER_SESSION_KEY);
     }
 
     /**

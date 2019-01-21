@@ -11,5 +11,5 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class UserConfig extends AbstractSharedConfig
 {
-    public const USER_BUNDLE_SESSION_KEY = 'user';
+    public const USER_SESSION_KEY = 'user';
 }
