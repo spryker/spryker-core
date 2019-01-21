@@ -10,6 +10,7 @@ namespace Spryker\Zed\QuoteApproval\Business;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -77,5 +78,51 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
     public function getQuoteApprovalsByIdQuote(int $idQuote): array
     {
         return $this->getFactory()->getQuoteApprovalRepository()->findQuoteApprovalCollectionByIdQuote($idQuote);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function approveQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteApprovalWriter()
+            ->approveQuoteApproval($quoteApprovalRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function declineQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteApprovalWriter()
+            ->declineQuoteApproval($quoteApprovalRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idQuote
+     *
+     * @return void
+     */
+    public function deleteApprovalRequestsByIdQuote(int $idQuote): void
+    {
+        $this->getEntityManager()->deleteApprovalRequestsByIdQuote($idQuote);
     }
 }

@@ -24,4 +24,11 @@ interface QuoteApprovalEntityManagerInterface
      * @return void
      */
     public function deleteQuoteApprovalById(int $idQuoteApproval): void;
+
+    /**
+     * @param int $idQuote
+     *
+     * @return void
+     */
+    public function deleteApprovalRequestsByIdQuote(int $idQuote): void;
 }

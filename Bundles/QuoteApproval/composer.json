@@ -8,6 +8,7 @@
     "spryker/cart": "^5.0.0",
     "spryker/company-role": "^1.0.0",
     "spryker/company-user": "^2.0.0",
+    "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.17.0",
     "spryker/permission": "^1.0.0",
     "spryker/permission-extension": "^1.0.0",
@@ -20,8 +21,8 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/company": "*",
-    "spryker/customer": "*",
     "spryker/propel": "*",
+    "spryker/store": "*",
     "spryker/testify": "*"
   },
   "suggest": {

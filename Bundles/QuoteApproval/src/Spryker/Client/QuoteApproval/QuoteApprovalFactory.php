@@ -51,7 +51,7 @@ class QuoteApprovalFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface
      */
-    public function createZedStub(): QuoteApprovalStubInterface
+    public function createQuoteApprovalStub(): QuoteApprovalStubInterface
     {
         return new QuoteApprovalStub(
             $this->getZedRequestClient()

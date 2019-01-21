@@ -11,7 +11,7 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class QuoteApprovalConfig extends AbstractSharedConfig
 {
-    public const STATUS_WAITING = 'Waiting';
-    public const STATUS_APPROVED = 'Approved';
-    public const STATUS_DECLINED = 'Declined';
+    public const STATUS_WAITING = 'waiting';
+    public const STATUS_APPROVED = 'approved';
+    public const STATUS_DECLINED = 'declined';
 }

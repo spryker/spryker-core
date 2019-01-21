@@ -24,9 +24,9 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class QuoteApprovalSharedTester extends Actor
+class QuoteApprovalTester extends Actor
 {
-    use _generated\QuoteApprovalSharedTesterActions;
+    use _generated\QuoteApprovalTesterActions;
 
    /**
     * Define custom actions here

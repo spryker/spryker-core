@@ -23,7 +23,7 @@ class QuoteApprovalPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createQuoteApprovalPropelQuery(): SpyQuoteApprovalQuery
     {
-        return new SpyQuoteApprovalQuery();
+        return SpyQuoteApprovalQuery::create();
     }
 
     /**

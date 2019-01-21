@@ -24,7 +24,7 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
      * @api
      *
      * @param array $configuration
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     * @param int|string|array|null $quoteTransfer
      *
      * @return bool
      */

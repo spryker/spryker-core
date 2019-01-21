@@ -10,6 +10,7 @@ namespace Spryker\Client\QuoteApproval\Zed;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface;
@@ -77,5 +78,37 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
         );
 
         return $potentialQuoteApproversCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function approveQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer */
+        $quoteApprovalResponseTransfer = $this->zedRequestClient->call(
+            '/quote-approval/gateway/approve-quote-approval',
+            $quoteApprovalRequestTransfer
+        );
+
+        return $quoteApprovalResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function declineQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer */
+        $quoteApprovalResponseTransfer = $this->zedRequestClient->call(
+            '/quote-approval/gateway/decline-quote-approval',
+            $quoteApprovalRequestTransfer
+        );
+
+        return $quoteApprovalResponseTransfer;
     }
 }

@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyRoleFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeBridge;
+use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCustomerFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToSharedCartFacadeBridge;
 
@@ -25,6 +26,7 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
     public const FACADE_CART = 'FACADE_CART';
     public const FACADE_QUOTE = 'FACADE_QUOTE';
+    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -34,6 +36,7 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addCustomerFacade($container);
         $container = $this->addCartFacade($container);
         $container = $this->addQuoteFacade($container);
         $container = $this->addCompanyRoleFacade($container);
@@ -114,6 +117,20 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
             return new QuoteApprovalToSharedCartFacadeBridge(
                 $container->getLocator()->sharedCart()->facade()
             );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerFacade(Container $container): Container
+    {
+        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+            return new QuoteApprovalToCustomerFacadeBridge($container->getLocator()->customer()->facade());
         };
 
         return $container;

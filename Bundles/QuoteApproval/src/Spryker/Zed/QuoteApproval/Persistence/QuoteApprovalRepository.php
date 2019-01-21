@@ -56,4 +56,26 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
 
         return $quoteApprovalEntity ? $quoteApprovalEntity->getFkQuote() : null;
     }
+
+    /**
+     * @param int $idQuoteApproval
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer|null
+     */
+    public function findQuoteApprovalById(int $idQuoteApproval): ?QuoteApprovalTransfer
+    {
+        $quoteApprovalEntity = $this->getFactory()
+            ->createQuoteApprovalPropelQuery()
+            ->findOneByIdQuoteApproval($idQuoteApproval);
+
+        if ($quoteApprovalEntity === null) {
+            return null;
+        }
+
+        $quoteApprovalTransfer = $this->getFactory()
+            ->createQuoteApprovalMapper()
+            ->mapQuoteApprovalEntityToTransfer($quoteApprovalEntity, new QuoteApprovalTransfer());
+
+        return $quoteApprovalTransfer;
+    }
 }

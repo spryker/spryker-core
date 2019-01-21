@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -47,7 +48,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      */
     public function createQuoteApproval(QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer): QuoteApprovalResponseTransfer
     {
-        return $this->getFactory()->createZedStub()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+        return $this->getFactory()->createQuoteApprovalStub()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
     }
 
     /**
@@ -61,7 +62,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      */
     public function removeQuoteApproval(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): QuoteApprovalResponseTransfer
     {
-        return $this->getFactory()->createZedStub()->removeQuoteApproval($quoteApprovalRemoveRequestTransfer);
+        return $this->getFactory()->createQuoteApprovalStub()->removeQuoteApproval($quoteApprovalRemoveRequestTransfer);
     }
 
     /**
@@ -75,7 +76,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      */
     public function getQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
     {
-        return $this->getFactory()->createZedStub()->getQuoteApproversList($quoteTransfer);
+        return $this->getFactory()->createQuoteApprovalStub()->getQuoteApproversList($quoteTransfer);
     }
 
     /**
@@ -137,5 +138,37 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
         return $this->getFactory()
             ->createPermissionLimitCalculator()
             ->calculatePlaceOrderPermissionLimit($quoteTransfer, $companyUserTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function approveQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteApprovalStub()
+            ->approveQuoteApproval($quoteApprovalRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function declineQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteApprovalStub()
+            ->declineQuoteApproval($quoteApprovalRequestTransfer);
     }
 }

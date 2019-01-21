@@ -10,6 +10,7 @@ namespace Spryker\Zed\QuoteApproval\Communication\Controller;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -47,5 +48,25 @@ class GatewayController extends AbstractGatewayController
     public function getQuoteApproversListAction(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
     {
         return $this->getFacade()->getQuoteApproversList($quoteTransfer);
+    }
+
+        /**
+         * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+         *
+         * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+         */
+    public function approveQuoteApprovalAction(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        return $this->getFacade()->approveQuoteApproval($quoteApprovalRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function declineQuoteApprovalAction(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        return $this->getFacade()->declineQuoteApproval($quoteApprovalRequestTransfer);
     }
 }
