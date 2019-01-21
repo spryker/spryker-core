@@ -7,10 +7,10 @@
 
 namespace Spryker\Service\Kernel;
 
-use Pimple;
+use Spryker\Service\Container\Container as SprykerContainer;
 use Spryker\Shared\Kernel\ContainerInterface;
 
-class Container extends Pimple implements ContainerInterface
+class Container extends SprykerContainer implements ContainerInterface
 {
     /**
      * @return \Generated\Service\Ide\AutoCompletion|\Spryker\Shared\Kernel\LocatorLocatorInterface
