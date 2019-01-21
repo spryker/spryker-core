@@ -14,8 +14,8 @@ use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface;
 
 class QuoteValidator implements QuoteValidatorInterface
 {
-    protected const MESSAGE_CURRENCY_DATA_IS_MISSING = 'quote.validation.error.currency_mode_is_missing';
-    protected const MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'quote.validation.error.currency_mode_is_incorrect';
+    public const MESSAGE_CURRENCY_DATA_IS_MISSING = 'quote.validation.error.currency_mode_is_missing';
+    public const MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'quote.validation.error.currency_mode_is_incorrect';
     protected const GLOSSARY_KEY_ISO_CODE = '{{iso_code}}';
 
     /**
@@ -39,11 +39,10 @@ class QuoteValidator implements QuoteValidatorInterface
     public function validate(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
         $currencyTransfer = $quoteTransfer->getCurrency();
-        $currencyCode = $currencyTransfer->getCode();
         $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
             ->setIsSuccess(true);
 
-        if (!$currencyTransfer || !$currencyCode) {
+        if (!$currencyTransfer || !$currencyTransfer->getCode()) {
             return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_CURRENCY_DATA_IS_MISSING);
         }
 
@@ -51,6 +50,7 @@ class QuoteValidator implements QuoteValidatorInterface
             return $quoteValidationResponseTransfer->setIsSuccess(false);
         }
 
+        $currencyCode = $currencyTransfer->getCode();
         $storeTransfer = $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName());
 
         if ($storeTransfer && array_search($currencyCode, $storeTransfer->getAvailableCurrencyIsoCodes()) === false) {
