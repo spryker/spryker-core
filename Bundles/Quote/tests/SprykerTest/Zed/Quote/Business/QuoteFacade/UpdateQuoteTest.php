@@ -81,10 +81,11 @@ class UpdateQuoteTest extends Unit
         $quoteFacade = $this->tester->getFacade();
         $quoteResponseTransfer = $quoteFacade->updateQuote($quoteTransfer);
 
-        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $errors = array_map(function ($messageTransfer) {
             return $messageTransfer->getValue();
         }, (array)$quoteResponseTransfer->getErrors());
+
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertContains(QuoteValidator::MESSAGE_STORE_DATA_IS_MISSING, $errors);
     }
 
@@ -109,10 +110,11 @@ class UpdateQuoteTest extends Unit
         $quoteFacade = $this->tester->getFacade();
         $quoteResponseTransfer = $quoteFacade->updateQuote($quoteTransfer);
 
-        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $errors = array_map(function ($messageTransfer) {
             return $messageTransfer->getValue();
         }, (array)$quoteResponseTransfer->getErrors());
+
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertContains(QuoteValidator::MESSAGE_STORE_DATA_IS_MISSING, $errors);
     }
 
