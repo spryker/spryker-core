@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Client\CustomerAccessPermission\CustomerAccessPermissionConfig;
 use Spryker\Client\CustomerAccessPermission\Dependency\Client\CustomerAccessPermissionToCustomerAccessStorageClientInterface;
+use Spryker\Client\CustomerAccessPermission\Plugin\SeePricePermissionPlugin;
 
 class CustomerAccess implements CustomerAccessInterface
 {
@@ -104,5 +105,21 @@ class CustomerAccess implements CustomerAccessInterface
         }
 
         return $customerSecuredPattern;
+    }
+
+    /**
+     * @return bool
+     */
+    public function canLoggedOutCustomerSeeProductPrice(): bool
+    {
+        $permissionCollection = $this->getLoggedOutCustomerPermissions();
+
+        foreach ($permissionCollection->getPermissions() as $permission) {
+            if ($permission->getKey() === SeePricePermissionPlugin::KEY) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

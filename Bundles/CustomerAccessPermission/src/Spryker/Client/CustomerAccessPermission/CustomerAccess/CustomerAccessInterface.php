@@ -25,4 +25,9 @@ interface CustomerAccessInterface
      * @return string
      */
     public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string;
+
+    /**
+     * @return bool
+     */
+    public function canLoggedOutCustomerSeeProductPrice(): bool;
 }

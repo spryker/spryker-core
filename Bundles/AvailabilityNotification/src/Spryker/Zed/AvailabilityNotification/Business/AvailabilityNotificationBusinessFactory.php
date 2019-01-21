@@ -26,6 +26,7 @@ use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubsc
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaverInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGenerator;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGeneratorInterface;
+use Spryker\Zed\AvailabilityNotification\Dependency\Client\AvailabilityNotificationToCustomerAccessPermissionClientInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMoneyFacadeInterface;
@@ -119,7 +120,8 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
             $this->getMoneyFacade(),
             $this->getPriceProductFacade(),
             $this->createUrlGenerator(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getCustomerAccessPermissionClient()
         );
     }
 
@@ -196,6 +198,14 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     public function getPriceProductFacade(): AvailabilityNotificationToPriceProductFacadeInterface
     {
         return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::FACADE_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Dependency\Client\AvailabilityNotificationToCustomerAccessPermissionClientInterface
+     */
+    public function getCustomerAccessPermissionClient(): AvailabilityNotificationToCustomerAccessPermissionClientInterface
+    {
+        return $this->getProvidedDependency(AvailabilityNotificationDependencyProvider::CLIENT_CUSTOMER_ACCESS_PERMISSION);
     }
 
     /**

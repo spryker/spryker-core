@@ -18,4 +18,14 @@ interface CustomerAccessPermissionClientInterface
      * @return string
      */
     public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string;
+
+    /**
+     * Specification
+     * - Return if not logined user can see product price
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function canLoggedOutCustomerSeeProductPrice(): bool;
 }

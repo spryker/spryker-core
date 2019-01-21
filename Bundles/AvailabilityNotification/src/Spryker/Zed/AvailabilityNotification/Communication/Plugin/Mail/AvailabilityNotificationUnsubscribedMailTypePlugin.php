@@ -54,7 +54,11 @@ class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin 
      */
     protected function setSubject(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
-        $mailBuilder->setSubject('mail.availability_notification.unsubscribed.subject');
+        $productAttributes = $mailBuilder->getMailTransfer()->getProductAttributes();
+        $mailBuilder->setSubject(
+            'availability_subscription.mail.unsubscribed.subject',
+            ['%name%' => $productAttributes['name'] ?? '']
+        );
 
         return $this;
     }

@@ -2,7 +2,7 @@
 
 {{ mail.productAttributes.name }}
 
-{{ mail.productAttributes.price }}
+{{ mail.productAttributes.price ?? '' }}
 
 {% for name, value in mail.product.attributes if name %}
     {{ ('product.attribute.' ~ name) | trans }}: {{ value }}

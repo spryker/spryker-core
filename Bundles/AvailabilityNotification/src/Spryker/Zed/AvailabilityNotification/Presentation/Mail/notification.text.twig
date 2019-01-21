@@ -7,6 +7,6 @@
     {{ ('product.attribute.' ~ name) | trans }}: {{ value }}
 {% endfor %}
 
-{{ mail.productAttributes.price }}
+{{ mail.productAttributes.price ?? '' }}
 
 {{ 'availability_subscription.mail.footer'|trans({'%link%': mail.availabilityUnsubscriptionLink})|raw }}

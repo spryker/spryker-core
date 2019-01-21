@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationSubscribedMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationUnsubscribedMailTypePlugin;
+use Spryker\Zed\AvailabilityNotification\Dependency\Client\AvailabilityNotificationToCustomerAccessPermissionClientInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMoneyFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeInterface;
@@ -54,12 +55,18 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
     protected $availabilityNotificationRepository;
 
     /**
+     * @var \Spryker\Zed\AvailabilityNotification\Dependency\Client\AvailabilityNotificationToCustomerAccessPermissionClientInterface
+     */
+    protected $customerAccessPermissionClient;
+
+    /**
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface $mailFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMoneyFacadeInterface $moneyFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGeneratorInterface $urlGenerator
      * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository
+     * @param \Spryker\Zed\AvailabilityNotification\Dependency\Client\AvailabilityNotificationToCustomerAccessPermissionClientInterface $customerAccessPermissionClient
      */
     public function __construct(
         AvailabilityNotificationToMailFacadeInterface $mailFacade,
@@ -67,7 +74,8 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
         AvailabilityNotificationToMoneyFacadeInterface $moneyFacade,
         AvailabilityNotificationToPriceProductFacadeInterface $priceProductFacade,
         UrlGeneratorInterface $urlGenerator,
-        AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository
+        AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository,
+        AvailabilityNotificationToCustomerAccessPermissionClientInterface $customerAccessPermissionClient
     ) {
         $this->mailFacade = $mailFacade;
         $this->productFacade = $productFacade;
@@ -75,6 +83,7 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
         $this->priceProductFacade = $priceProductFacade;
         $this->urlGenerator = $urlGenerator;
         $this->availabilityNotificationRepository = $availabilityNotificationRepository;
+        $this->customerAccessPermissionClient = $customerAccessPermissionClient;
     }
 
     /**
@@ -184,7 +193,7 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
 
         $price = $this->findProductPrice($productConcreteTransfer);
 
-        if ($price !== null) {
+        if ($price !== null && $this->customerAccessPermissionClient->canLoggedOutCustomerSeeProductPrice()) {
             $attributes['price'] = $price;
         }
 

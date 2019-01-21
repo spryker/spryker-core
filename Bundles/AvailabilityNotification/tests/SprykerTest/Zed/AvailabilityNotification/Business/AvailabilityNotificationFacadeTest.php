@@ -100,34 +100,6 @@ class AvailabilityNotificationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckSubscriptionForAlreadySubscribedShouldSucceed()
-    {
-        $availabilityNotificationSubscription = $this->tester->haveAvailabilitySubscription(
-            $this->tester->haveProduct()
-        );
-
-        $result = $this->getAvailabilityNotificationFacadeMock()->findAvailabilitySubscription($availabilityNotificationSubscription);
-
-        $this->assertNotNull($result);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCheckSubscriptionForNotSubscribedShouldFail()
-    {
-        $availabilityNotificationSubscription = $this->tester->haveAvailabilitySubscriptionTransfer(
-            $this->tester->haveProduct()
-        );
-
-        $result = $this->getAvailabilityNotificationFacadeMock()->findAvailabilitySubscription($availabilityNotificationSubscription);
-
-        $this->assertNull($result);
-    }
-
-    /**
-     * @return void
-     */
     public function testGuestUnsubscribeShouldSucceed()
     {
         $availabilityNotificationSubscription = $this->tester->haveAvailabilitySubscription(
