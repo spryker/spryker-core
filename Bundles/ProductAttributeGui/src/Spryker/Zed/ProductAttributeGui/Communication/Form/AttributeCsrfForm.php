@@ -47,14 +47,4 @@ class AttributeCsrfForm extends AbstractType
     {
         return '';
     }
-
-    /**
-     * @deprecated Use `getBlockPrefix()` instead.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
-    }
 }
