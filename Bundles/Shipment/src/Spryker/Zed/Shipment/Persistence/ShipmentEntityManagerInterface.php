@@ -24,9 +24,9 @@ interface ShipmentEntityManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int $idSalesOrder
+     * @param int $idSalesShipment
      *
      * @return void
      */
-    public function updateSalesOrderItemFkShipment(ItemTransfer $itemTransfer, int $idSalesOrder): void;
+    public function updateSalesOrderItemFkShipment(ItemTransfer $itemTransfer, int $idSalesShipment): void;
 }

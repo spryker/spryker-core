@@ -21,12 +21,4 @@ interface ShipmentMapperInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
      */
     public function mapShipmentTransferToSalesOrderAddressEntity(ShipmentTransfer $shipmentTransfer, int $idSalesOrder): SpySalesShipment;
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int $idSalesShipment
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
-     */
-    public function mapItemTransferToSalesOrderItemEntity(ItemTransfer $itemTransfer, int $idSalesShipment): SpySalesOrderItem;
 }

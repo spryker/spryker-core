@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -183,6 +184,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @deprecated Use querySalesOrderDetailsWithoutShippingAddress() instead.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -198,6 +201,26 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
          ->innerJoinWith('billingAddress.Country billingCountry')
          ->innerJoinWith('order.ShippingAddress shippingAddress')
          ->innerJoinWith('shippingAddress.Country shippingCountry');
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    public function querySalesOrderDetailsWithoutShippingAddress($idSalesOrder): SpySalesOrderQuery
+    {
+        $query = $this->getFactory()->createSalesOrderQuery()
+            ->setModelAlias('order')
+            ->filterByIdSalesOrder($idSalesOrder)
+            ->innerJoinWith('order.BillingAddress billingAddress')
+            ->innerJoinWith('billingAddress.Country billingCountry')
+            ->leftJoinWith('order.ShippingAddress shippingAddress')
+            ->leftJoinWith('shippingAddress.Country shippingCountry');
 
         return $query;
     }

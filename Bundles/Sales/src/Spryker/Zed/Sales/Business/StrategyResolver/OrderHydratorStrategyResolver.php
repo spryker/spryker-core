@@ -6,9 +6,8 @@
 
 namespace Spryker\Zed\Sales\Business\StrategyResolver;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface;
+use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
 use Closure;
 
 /**
@@ -32,11 +31,11 @@ class OrderHydratorStrategyResolver implements OrderHydratorStrategyResolverInte
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface
+     * @return \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface
      */
-    public function resolve(): SalesOrderSaverInterface
+    public function resolve(): OrderHydratorInterface
     {
-        if (!defined(ItemTransfer::SHIPMENT)) {
+        if (!defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT')) {
             $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
 
             return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);

@@ -76,11 +76,9 @@ class ShipmentOrderSaverWithMultiShippingAddress implements ShipmentOrderSaverIn
     {
         $salesOrderTransfer = $this->salesFacade->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
-        $quoteTransfer->setShipmentGroups(
-            $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems())
-        );
+        $shipmentGroups = $this->shipmentService->groupItemsByShipment($saveOrderTransfer->getOrderItems());
 
-        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
+        foreach ($shipmentGroups as $shipmentGroupTransfer) {
             $this->saveShipmentAddressTransfer($shipmentGroupTransfer);
             $this->addExpensesToOrder($shipmentGroupTransfer, $salesOrderTransfer, $saveOrderTransfer);
             $idSalesShipment = $this->entityManager->createSalesShipment(

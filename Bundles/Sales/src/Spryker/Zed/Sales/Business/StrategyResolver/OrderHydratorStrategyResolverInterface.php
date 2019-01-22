@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Sales\Business\StrategyResolver;
 
-use Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface;
+use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
 
 /**
  * @deprecated Remove strategy resolver after multiple shipment will be released.
@@ -17,7 +17,7 @@ interface OrderHydratorStrategyResolverInterface
     public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface
+     * @return \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface
      */
-    public function resolve(): SalesOrderSaverInterface;
+    public function resolve(): OrderHydratorInterface;
 }

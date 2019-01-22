@@ -19,10 +19,36 @@ use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator as OrderHydratorWithoutMultiShipping;
 
 class OrderHydrator extends OrderHydratorWithoutMultiShipping
 {
+    /**
+     * @param int $idSalesOrder
+     *
+     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder)
+    {
+        $orderEntity = $this->queryContainer
+            ->querySalesOrderDetailsWithoutShippingAddress($idSalesOrder)
+            ->findOne();
+
+        if ($orderEntity === null) {
+            throw new InvalidSalesOrderException(
+                sprintf(
+                    'Order could not be found for ID %s',
+                    $idSalesOrder
+                )
+            );
+        }
+
+        return $this->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
+    }
+
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
      *

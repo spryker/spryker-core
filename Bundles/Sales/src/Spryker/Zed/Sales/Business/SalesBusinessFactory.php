@@ -446,8 +446,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         $strategyContainer = [];
 
-        $strategyContainer = $this->addStrategySalesOrderSaverWithoutMultipleShippingAddress($strategyContainer);
-        $strategyContainer = $this->addStrategySalesOrderSaverWithMultipleShippingAddress($strategyContainer);
+        $strategyContainer = $this->addStrategyOrderHydratorWithoutMultipleShippingAddress($strategyContainer);
+        $strategyContainer = $this->addStrategyOrderHydratorWithMultipleShippingAddress($strategyContainer);
 
         return new OrderHydratorStrategyResolver($strategyContainer);
     }

@@ -22,7 +22,7 @@ class MethodDiscountDecisionRule extends MethodDiscountDecisionRuleWithMultiShip
      */
     public function isItemShipmentSatisfiedBy(ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer): bool
     {
-        return $this->isSatisfiedItemShipmentCarrierBy($itemTransfer, $clauseTransfer);
+        return $this->isSatisfiedItemShipmentMethod($itemTransfer, $clauseTransfer);
     }
 
     /**
@@ -34,7 +34,7 @@ class MethodDiscountDecisionRule extends MethodDiscountDecisionRuleWithMultiShip
      */
     public function isItemShipmentExpenseSatisfiedBy(ItemTransfer $itemTransfer, ExpenseTransfer $expenseTransfer, ClauseTransfer $clauseTransfer): bool
     {
-        return $this->isSatisfiedItemShipmentCarrierBy($itemTransfer, $clauseTransfer);
+        return $this->isSatisfiedItemShipmentMethod($itemTransfer, $clauseTransfer);
     }
 
     /**

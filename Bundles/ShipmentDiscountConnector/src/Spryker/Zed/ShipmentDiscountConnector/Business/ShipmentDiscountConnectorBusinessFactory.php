@@ -148,7 +148,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createShipmentPriceDiscountCollectorWithMultiShipment(): ShipmentDiscountCollectorInterface
     {
         return new ShipmentDiscountCollectorWithMultiShipment(
-            $this->createShipmentPriceDiscountDecisionRule()
+            $this->createShipmentPriceDiscountDecisionRuleWithMultiShipment()
         );
     }
 

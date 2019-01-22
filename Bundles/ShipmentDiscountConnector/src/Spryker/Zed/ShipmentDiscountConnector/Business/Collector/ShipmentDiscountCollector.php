@@ -24,9 +24,13 @@ class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentColl
         $discountableItems = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getExpense() === null) {
+                continue;
+            }
+
             $expenseTransfer = $itemTransfer->getShipment()->getExpense();
 
-            $isSatisfied = $this->shipmentDiscountDecisionRule->isExpenseSatisfiedBy($itemTransfer, $expenseTransfer, $clauseTransfer);
+            $isSatisfied = $this->shipmentDiscountDecisionRule->isItemShipmentExpenseSatisfiedBy($itemTransfer, $expenseTransfer, $clauseTransfer);
 
             if ($isSatisfied) {
                 $discountableItems[] = $this->createDiscountableItemTransfer($expenseTransfer, $quoteTransfer->getPriceMode());

@@ -31,22 +31,4 @@ class ShipmentMapper implements ShipmentMapperInterface
 
         return $salesShipmentEntity;
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int $idSalesShipment
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
-     */
-    public function mapItemTransferToSalesOrderItemEntity(ItemTransfer $itemTransfer, int $idSalesShipment): SpySalesOrderItem
-    {
-        $orderItemEntity = new SpySalesOrderItem();
-
-        $orderItemEntity->fromArray($itemTransfer->toArray());
-        $orderItemEntity->setFkSalesShipment($idSalesShipment);
-        // @todo: remove this hack
-        $orderItemEntity->setNew(false);
-
-        return $orderItemEntity;
-    }
 }

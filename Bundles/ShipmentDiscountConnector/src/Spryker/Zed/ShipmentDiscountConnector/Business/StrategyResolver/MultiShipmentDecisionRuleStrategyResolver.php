@@ -38,7 +38,7 @@ class MultiShipmentDecisionRuleStrategyResolver implements MultiShipmentDecision
      */
     public function resolveByType(string $type): ShipmentDiscountDecisionRuleInterface
     {
-        if (!defined(ItemTransfer::SHIPMENT)) {
+        if (!defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT')) {
             $this->assertRequiredStrategyWithoutMultiShipmentContainerItems($type);
 
             return call_user_func($this->strategyContainer[$type][static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
