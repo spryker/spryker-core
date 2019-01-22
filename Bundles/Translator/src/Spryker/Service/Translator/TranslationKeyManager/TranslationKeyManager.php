@@ -7,19 +7,19 @@
 
 namespace Spryker\Service\Translator\TranslationKeyManager;
 
-use Spryker\Service\Translator\Translator\TranslatorCacheGeneratorInterface;
+use Spryker\Service\Translator\Translator\TranslatorInterface;
 
 class TranslationKeyManager implements TranslationKeyManagerInterface
 {
     /**
-     * @var \Spryker\Service\Translator\Translator\TranslatorCacheGeneratorInterface
+     * @var \Spryker\Service\Translator\Translator\TranslatorInterface
      */
     protected $translator;
 
     /**
-     * @param \Spryker\Service\Translator\Translator\TranslatorCacheGeneratorInterface $translator
+     * @param \Spryker\Service\Translator\Translator\TranslatorInterface $translator
      */
-    public function __construct(TranslatorCacheGeneratorInterface $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }

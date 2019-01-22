@@ -9,7 +9,7 @@ namespace Spryker\Service\Translator\Translator;
 
 use Symfony\Component\Translation\Translator as SymfonyTranslator;
 
-class Translator extends SymfonyTranslator implements TranslatorCacheGeneratorInterface
+class Translator extends SymfonyTranslator implements TranslatorInterface
 {
     /**
      * @param string $localeName

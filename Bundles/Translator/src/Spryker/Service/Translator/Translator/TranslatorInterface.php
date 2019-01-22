@@ -7,7 +7,10 @@
 
 namespace Spryker\Service\Translator\Translator;
 
-interface TranslatorCacheGeneratorInterface
+use Symfony\Component\Translation\TranslatorBagInterface as SymfonyTranslatorBagInterface;
+use Symfony\Component\Translation\TranslatorInterface as SymfonyTranslatorInterface;
+
+interface TranslatorInterface extends SymfonyTranslatorInterface, SymfonyTranslatorBagInterface
 {
     /**
      * @param string $localeName
