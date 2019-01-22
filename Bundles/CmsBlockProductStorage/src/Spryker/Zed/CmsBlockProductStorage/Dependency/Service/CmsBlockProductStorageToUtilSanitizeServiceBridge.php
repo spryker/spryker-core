@@ -23,24 +23,12 @@ class CmsBlockProductStorageToUtilSanitizeServiceBridge implements CmsBlockProdu
     }
 
     /**
-     * @deprecated Use filterOutEmptyValuesRecursively() instead.
-     *
      * @param array $array
      *
      * @return array
      */
-    public function arrayFilterRecursive(array $array): array
+    public function arrayFilterRecursive(array $array)
     {
         return $this->utilSanitizeService->arrayFilterRecursive($array);
-    }
-
-    /**
-     * @param array $array
-     *
-     * @return array
-     */
-    public function filterOutEmptyValuesRecursively(array $array): array
-    {
-        return $this->utilSanitizeService->filterOutEmptyValuesRecursively($array);
     }
 }

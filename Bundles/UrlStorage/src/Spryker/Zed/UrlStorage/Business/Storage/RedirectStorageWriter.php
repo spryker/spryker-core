@@ -102,7 +102,7 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
         }
 
         $spyUrlRedirectStorage->setFkUrlRedirect($spyRedirectEntity[static::ID_URL_REDIRECT]);
-        $spyUrlRedirectStorage->setData($this->utilSanitize->filterOutEmptyValuesRecursively($spyRedirectEntity));
+        $spyUrlRedirectStorage->setData($this->utilSanitize->arrayFilterRecursive($spyRedirectEntity));
         $spyUrlRedirectStorage->setIsSendingToQueue($this->isSendingToQueue);
         $spyUrlRedirectStorage->save();
     }

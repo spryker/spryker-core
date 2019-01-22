@@ -113,7 +113,7 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
             $categoryTreeStorageTransfer->addCategoryNodeStorage($categoryNodeStorageTransfer);
         }
 
-        $data = $this->utilSanitize->filterOutEmptyValuesRecursively($categoryTreeStorageTransfer->toArray());
+        $data = $this->utilSanitize->arrayFilterRecursive($categoryTreeStorageTransfer->toArray());
         $spyCategoryTreeStorage->setLocale($localeName);
         $spyCategoryTreeStorage->setData($data);
         $spyCategoryTreeStorage->setIsSendingToQueue($this->isSendingToQueue);

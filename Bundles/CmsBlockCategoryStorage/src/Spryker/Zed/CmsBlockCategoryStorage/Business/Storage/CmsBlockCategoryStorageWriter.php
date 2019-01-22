@@ -106,7 +106,7 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
             $spyCmsBlockCategoryStorage = new SpyCmsBlockCategoryStorage();
         }
 
-        $data = $this->utilSanitizeService->filterOutEmptyValuesRecursively($cmsBlockCategoriesTransfer->toArray());
+        $data = $this->utilSanitizeService->arrayFilterRecursive($cmsBlockCategoriesTransfer->toArray());
         $spyCmsBlockCategoryStorage->setFkCategory($cmsBlockCategoriesTransfer->getIdCategory());
         $spyCmsBlockCategoryStorage->setData($data);
         $spyCmsBlockCategoryStorage->setIsSendingToQueue($this->isSendingToQueue);

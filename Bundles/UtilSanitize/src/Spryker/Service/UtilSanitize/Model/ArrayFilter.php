@@ -12,8 +12,6 @@ use Countable;
 class ArrayFilter implements ArrayFilterInterface
 {
     /**
-     * @deprecated
-     *
      * @param array $array
      *
      * @return array
@@ -56,12 +54,12 @@ class ArrayFilter implements ArrayFilterInterface
      *
      * @return array
      */
-    public function filterOutEmptyValuesRecursively(array $array): array
+    public function filterOutBlankValuesRecursively(array $array): array
     {
         $filteredArray = [];
         foreach ($array as $key => $value) {
             if (is_array($value)) {
-                $value = $this->filterOutEmptyValuesRecursively($value);
+                $value = $this->arrayFilterRecursive($value);
             }
 
             if ($this->isEmptyValue($value)) {

@@ -10,8 +10,6 @@ namespace Spryker\Service\UtilSanitize\Model;
 interface ArrayFilterInterface
 {
     /**
-     * @deprecated
-     *
      * @param array $array
      *
      * @return array
@@ -23,5 +21,5 @@ interface ArrayFilterInterface
      *
      * @return array
      */
-    public function filterOutEmptyValuesRecursively(array $array): array;
+    public function filterOutBlankValuesRecursively(array $array): array;
 }

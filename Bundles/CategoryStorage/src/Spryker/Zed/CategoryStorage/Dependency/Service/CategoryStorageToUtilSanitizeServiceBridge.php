@@ -23,8 +23,6 @@ class CategoryStorageToUtilSanitizeServiceBridge implements CategoryStorageToUti
     }
 
     /**
-     * @deprecated Use filterOutEmptyValuesRecursively() instead.
-     *
      * @param array $array
      *
      * @return array
@@ -32,15 +30,5 @@ class CategoryStorageToUtilSanitizeServiceBridge implements CategoryStorageToUti
     public function arrayFilterRecursive(array $array)
     {
         return $this->utilSanitizeService->arrayFilterRecursive($array);
-    }
-
-    /**
-     * @param array $array
-     *
-     * @return array
-     */
-    public function filterOutEmptyValuesRecursively(array $array): array
-    {
-        return $this->utilSanitizeService->filterOutEmptyValuesRecursively($array);
     }
 }

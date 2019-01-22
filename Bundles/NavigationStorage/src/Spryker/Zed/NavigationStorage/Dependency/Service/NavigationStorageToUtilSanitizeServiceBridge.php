@@ -23,8 +23,6 @@ class NavigationStorageToUtilSanitizeServiceBridge implements NavigationStorageT
     }
 
     /**
-     * @deprecated Use filterOutEmptyValuesRecursively() instead.
-     *
      * @param array $array
      *
      * @return array
@@ -39,8 +37,8 @@ class NavigationStorageToUtilSanitizeServiceBridge implements NavigationStorageT
      *
      * @return array
      */
-    public function filterOutEmptyValuesRecursively(array $array): array
+    public function filterOutBlankValuesRecursively(array $array): array
     {
-        return $this->utilSanitizeService->filterOutEmptyValuesRecursively($array);
+        return $this->utilSanitizeService->filterOutBlankValuesRecursively($array);
     }
 }

@@ -105,7 +105,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
             $spyCmsBlockProductStorage = new SpyCmsBlockProductStorage();
         }
 
-        $data = $this->utilSanitizeService->filterOutEmptyValuesRecursively($cmsBlockProductsTransfer->toArray());
+        $data = $this->utilSanitizeService->arrayFilterRecursive($cmsBlockProductsTransfer->toArray());
         $spyCmsBlockProductStorage->setFkProductAbstract($cmsBlockProductsTransfer->getIdProductAbstract());
         $spyCmsBlockProductStorage->setData($data);
         $spyCmsBlockProductStorage->setIsSendingToQueue($this->isSendingToQueue);

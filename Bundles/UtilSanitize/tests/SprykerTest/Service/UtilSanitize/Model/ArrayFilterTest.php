@@ -46,15 +46,15 @@ class ArrayFilterTest extends Unit
     /**
      * @return void
      */
-    public function testFilterOutEmptyValuesRecursively(): void
+    public function testFilterOutBlankValuesRecursively(): void
     {
         //Arrange
         $arrayFilter = $this->createArrayFilterModel();
         $array = $this->tester->getArrayToFilter();
-        $expected = $this->tester->getFilterOutEmptyValuesRecursivelyExpectedArray($array);
+        $expected = $this->tester->getFilterOutBlankValuesRecursivelyExpectedArray($array);
 
         //Act
-        $result = $arrayFilter->filterOutEmptyValuesRecursively($array);
+        $result = $arrayFilter->filterOutBlankValuesRecursively($array);
 
         //Assert
         $this->assertSame($expected, $result);

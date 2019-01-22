@@ -10,8 +10,6 @@ namespace Spryker\Zed\NavigationStorage\Dependency\Service;
 interface NavigationStorageToUtilSanitizeServiceInterface
 {
     /**
-     * @deprecated Use filterOutEmptyValuesRecursively() instead.
-     *
      * @param array $array
      *
      * @return array
@@ -23,5 +21,5 @@ interface NavigationStorageToUtilSanitizeServiceInterface
      *
      * @return array
      */
-    public function filterOutEmptyValuesRecursively(array $array): array;
+    public function filterOutBlankValuesRecursively(array $array): array;
 }

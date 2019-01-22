@@ -10,18 +10,9 @@ namespace Spryker\Zed\CategoryStorage\Dependency\Service;
 interface CategoryStorageToUtilSanitizeServiceInterface
 {
     /**
-     * @deprecated Use filterOutEmptyValuesRecursively() instead.
-     *
      * @param array $array
      *
      * @return array
      */
     public function arrayFilterRecursive(array $array);
-
-    /**
-     * @param array $array
-     *
-     * @return array
-     */
-    public function filterOutEmptyValuesRecursively(array $array): array;
 }
