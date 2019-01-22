@@ -10,6 +10,7 @@ namespace Spryker\Zed\User\Business\UserSession;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Shared\User\UserConfig;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Storage\MetadataBag;
 
 class UserSession implements UserSessionInterface
 {
@@ -63,16 +64,11 @@ class UserSession implements UserSessionInterface
     }
 
     /**
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\Session\Storage\MetadataBag
      */
-    public function getArraySessionMetadata(): array
+    public function getUserSessionMetadata(): MetadataBag
     {
-        $metadata = $this->session->getMetadataBag();
-
-        return [
-            'created' => $metadata->getCreated(),
-            'lifetime' => $metadata->getLifetime(),
-        ];
+        return $this->session->getMetadataBag();
     }
 
     /**

@@ -29,7 +29,7 @@ class SessionController extends AbstractController
             ->getSessionMetadata();
 
         return $this->jsonResponse([
-            'created' => $metadata['created'],
+            'created' => $metadata->getCreated(),
             'lifetime' => (int)Config::get(SessionConstants::ZED_SESSION_TIME_TO_LIVE),
         ]);
     }

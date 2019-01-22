@@ -9,6 +9,7 @@ namespace Spryker\Zed\User\Business;
 
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\HttpFoundation\Session\Storage\MetadataBag;
 
 /**
  * @method \Spryker\Zed\User\Business\UserBusinessFactory getFactory()
@@ -278,13 +279,13 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     /**
      * @api
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\Session\Storage\MetadataBag
      */
-    public function getSessionMetadata(): array
+    public function getSessionMetadata(): MetadataBag
     {
         return $this->getFactory()
             ->createUserSession()
-            ->getArraySessionMetadata();
+            ->getUserSessionMetadata();
     }
 
     /**

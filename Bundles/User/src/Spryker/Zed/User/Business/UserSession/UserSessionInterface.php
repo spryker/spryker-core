@@ -8,6 +8,7 @@
 namespace Spryker\Zed\User\Business\UserSession;
 
 use Generated\Shared\Transfer\UserTransfer;
+use Symfony\Component\HttpFoundation\Session\Storage\MetadataBag;
 
 interface UserSessionInterface
 {
@@ -31,7 +32,7 @@ interface UserSessionInterface
     public function getCurrentUser(): ?UserTransfer;
 
     /**
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\Session\Storage\MetadataBag
      */
-    public function getArraySessionMetadata(): array;
+    public function getUserSessionMetadata(): MetadataBag;
 }
