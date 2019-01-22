@@ -21,7 +21,7 @@ interface CustomerAccessPermissionClientInterface
 
     /**
      * Specification
-     * - Return if not logined user can see product price
+     * - Return if logged out customer has access to permission
      *
      * @api
      *
