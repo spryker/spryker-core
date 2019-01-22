@@ -98,23 +98,14 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     {
         $quoteTransfer = $this->findQuoteByIdQuoteApproval($quoteApprovalRemoveRequestTransfer->getIdQuoteApproval());
 
-        $quoteApprovalRequestValidationResponseTransfer = new QuoteApprovalRequestValidationResponseTransfer();
-        $quoteApprovalRequestValidationResponseTransfer->setIsSuccessful(false)
-            ->setQuote($quoteTransfer);
-
-        if (!$quoteTransfer) {
-            return $quoteApprovalRequestValidationResponseTransfer;
-        }
-
         if (!$this->isQuoteOwner($quoteTransfer, $quoteApprovalRemoveRequestTransfer->getCustomerReference())
             && !$this->isRemoveRequestSentByApprover($quoteApprovalRemoveRequestTransfer)
         ) {
-            return $quoteApprovalRequestValidationResponseTransfer;
+            return $this->createNotSuccessfullValidationResponseTransfer();
         }
 
-        $quoteApprovalRequestValidationResponseTransfer->setIsSuccessful(true);
-
-        return $quoteApprovalRequestValidationResponseTransfer;
+        return $this->createSuccessfullValidationResponseTransfer()
+            ->setQuote($quoteTransfer);
     }
 
     /**
@@ -125,9 +116,9 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     public function validateQuoteApprovalRequest(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalRequestValidationResponseTransfer
     {
         $this->assertQuoteApprovalRequestValid($quoteApprovalRequestTransfer);
-        $quoteTransfer = $this->findQuoteByIdQuoteApproval($quoteApprovalTransfer->getIdQuoteApproval());
         $quoteApprovalTransfer = $this->quoteApprovalRepository
             ->findQuoteApprovalById($quoteApprovalRequestTransfer->getIdQuoteApproval());
+        $quoteTransfer = $this->findQuoteByIdQuoteApproval($quoteApprovalTransfer->getIdQuoteApproval());
 
         if ($quoteApprovalTransfer->getStatus() !== QuoteApprovalConfig::STATUS_WAITING) {
             return $this->createNotSuccessfullValidationResponseTransfer();
