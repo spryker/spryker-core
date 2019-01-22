@@ -90,12 +90,12 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
                 Criteria::INNER_JOIN
             );
 
-            $andConditions = $this->buildStoresAndProductsConditions(
+        $storesAndProductsConditions = $this->buildStoresAndProductsConditions(
                 $productConcretePageSearchQuery,
                 $storesPerAbstractProducts
             );
 
-        return $productConcretePageSearchQuery->where($andConditions, Criteria::LOGICAL_OR)
+        return $productConcretePageSearchQuery->where($storesAndProductsConditions, Criteria::LOGICAL_OR)
             ->distinct()
             ->find();
     }
@@ -110,7 +110,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
         SpyProductConcretePageSearchQuery $productConcretePageSearchQuery,
         array $storesPerAbstractProducts
     ): array {
-        $andConditions = [];
+        $storesAndProductsConditions = [];
         $conditionIndex = 1;
         foreach ($storesPerAbstractProducts as $abstractId => $stores) {
             foreach ($stores as $store) {
@@ -133,11 +133,11 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
                     Criteria::LOGICAL_AND,
                     $conditionIndex
                 );
-                $andConditions[] = $conditionIndex;
+                $storesAndProductsConditions[] = $conditionIndex;
                 $conditionIndex++;
             }
         }
 
-        return $andConditions;
+        return $storesAndProductsConditions;
     }
 }
