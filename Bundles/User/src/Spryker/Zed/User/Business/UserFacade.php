@@ -9,6 +9,7 @@ namespace Spryker\Zed\User\Business;
 
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\HttpFoundation\Session\Storage\MetadataBag;
 
 /**
  * @method \Spryker\Zed\User\Business\UserBusinessFactory getFactory()
@@ -168,7 +169,7 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     public function setCurrentUser(UserTransfer $user)
     {
         return $this->getFactory()
-            ->createUserModel()
+            ->createUserSession()
             ->setCurrentUser($user);
     }
 
@@ -180,7 +181,7 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     public function getCurrentUser()
     {
         return $this->getFactory()
-            ->createUserModel()
+            ->createUserSession()
             ->getCurrentUser();
     }
 
@@ -192,7 +193,7 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     public function hasCurrentUser()
     {
         return $this->getFactory()
-            ->createUserModel()
+            ->createUserSession()
             ->hasCurrentUser();
     }
 
@@ -273,5 +274,29 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     public function deactivateUser($idUser)
     {
         return $this->getFactory()->createUserModel()->deactivateUser($idUser);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Symfony\Component\HttpFoundation\Session\Storage\MetadataBag
+     */
+    public function getSessionMetadata(): MetadataBag
+    {
+        return $this->getFactory()
+            ->createUserSession()
+            ->getUserSessionMetadata();
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function updateSessionTtl(): void
+    {
+        $this->getFactory()
+            ->getSessionClient()
+            ->save();
     }
 }
