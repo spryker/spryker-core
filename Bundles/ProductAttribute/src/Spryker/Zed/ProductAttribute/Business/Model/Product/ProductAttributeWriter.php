@@ -136,7 +136,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
         foreach ($attributes as $attribute) {
             $key = $attribute[ProductAttributeKeyTransfer::KEY];
             $localeCode = $attribute['locale_code'];
-            $value = trim($attribute['value']);
+            $value = $this->sanitazeString($attribute['value']);
 
             if ($value === '') {
                 $keysToRemove[$localeCode][$key] = $key;
@@ -147,6 +147,17 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
         }
 
         return $attributeData;
+    }
+
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
+    protected function sanitazeString(string $string)
+    {
+        $result = trim($string);
+        return filter_var($result, FILTER_SANITIZE_STRING);
     }
 
     /**
