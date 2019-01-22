@@ -21,8 +21,8 @@
                 <div class="col-sm-12">
                     <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'No' | trans }}</a>
                     {{ form_start(deleteUserForm) }}
-                    <input type="hidden" name="{{ idUserFieldName }}" value="{{ idUser }}" />
-                    <input type="submit" class="btn btn-danger safe-submit" value="{{ 'Yes' | trans }}" />
+                        <input type="hidden" name="{{ idUserFieldName }}" value="{{ idUser }}" />
+                        <input type="submit" class="btn btn-danger safe-submit" value="{{ 'Yes' | trans }}" />
                     {{ form_end(deleteUserForm) }}
                 </div>
             </div>

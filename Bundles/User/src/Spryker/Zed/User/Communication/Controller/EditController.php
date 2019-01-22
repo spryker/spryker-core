@@ -208,7 +208,7 @@ class EditController extends AbstractController
     {
         $idUser = $this->castId($request->query->get(static::PARAM_ID_USER));
 
-        if (empty($idUser)) {
+        if (!$idUser) {
             $this->addErrorMessage(static::MESSAGE_ID_USER_EXTRACT_ERROR);
 
             return $this->redirectResponse(static::USER_LISTING_URL);

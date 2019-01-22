@@ -155,7 +155,7 @@ class UsersTable extends AbstractTable
 
         $urls[] = $this->createStatusButton($user);
 
-        $deleteUrl = Url::generate(self::CONFIRM_DELETE_USER_URL, [
+        $deleteUrl = Url::generate(static::CONFIRM_DELETE_USER_URL, [
             self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
         ]);
 
