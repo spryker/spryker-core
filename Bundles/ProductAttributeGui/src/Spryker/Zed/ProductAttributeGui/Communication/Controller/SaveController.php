@@ -29,7 +29,7 @@ class SaveController extends AbstractController
     public function productAbstractAction(Request $request)
     {
         if (!$this->validateCsrfToken($request)) {
-            return $this->sendJsonResponse(static::MESSAGE_INVALID_CSRF_TOKEN, false, 403);
+            return $this->createJsonResponse(static::MESSAGE_INVALID_CSRF_TOKEN, false, 403);
         }
 
         $idProductAbstract = $this->castId($request->get(
@@ -43,7 +43,7 @@ class SaveController extends AbstractController
             ->getProductAttributeFacade()
             ->saveAbstractAttributes($idProductAbstract, $data);
 
-        return $this->sendJsonResponse('Product abstract attributes saved');
+        return $this->createJsonResponse('Product abstract attributes saved');
     }
 
     /**
@@ -54,7 +54,7 @@ class SaveController extends AbstractController
     public function productAction(Request $request)
     {
         if (!$this->validateCsrfToken($request)) {
-            return $this->sendJsonResponse(static::MESSAGE_INVALID_CSRF_TOKEN, false);
+            return $this->createJsonResponse(static::MESSAGE_INVALID_CSRF_TOKEN, false);
         }
 
         $idProduct = $this->castId($request->get(
@@ -68,7 +68,7 @@ class SaveController extends AbstractController
             ->getProductAttributeFacade()
             ->saveConcreteAttributes($idProduct, $data);
 
-        return $this->sendJsonResponse('Product attributes saved');
+        return $this->createJsonResponse('Product attributes saved');
     }
 
     /**
@@ -101,7 +101,7 @@ class SaveController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    protected function sendJsonResponse(string $message, bool $isSuccess = true, int $statusCode = 200): JsonResponse
+    protected function createJsonResponse(string $message, bool $isSuccess = true, int $statusCode = 200): JsonResponse
     {
         return $this->jsonResponse([
             'success' => $isSuccess,

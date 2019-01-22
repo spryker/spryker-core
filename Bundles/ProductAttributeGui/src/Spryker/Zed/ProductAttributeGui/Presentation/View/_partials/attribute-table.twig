@@ -1,10 +1,8 @@
 <table class="table table-striped table-bordered table-hover gui-table-data" id="productAttributesTable" data-paging="false">
-    {{ form_start(csrfForm) }}
-    {{ form_widget(csrfForm) }}
-    {{ form_end(csrfForm) }}
     <form id="attribute_values_form" method="post" class="kv_autocomplete_form" action="{{ formActionUrl }}">
         <input type="hidden" name="attribute_values_form[hidden_product_abstract_id]" id="attribute_values_form_hidden_product_abstract_id" value="{{ idProductAbstract }}" />
         <input type="hidden" name="attribute_values_form[hidden_product_id]" id="attribute_values_form_hidden_product_id" value="{{ idProductConcrete }}" />
+        {{ form_widget(csrfForm) }}
         <thead>
         <tr>
             <th>Key</th>
