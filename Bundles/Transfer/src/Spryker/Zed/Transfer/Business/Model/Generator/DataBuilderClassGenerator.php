@@ -36,13 +36,12 @@ class DataBuilderClassGenerator implements GeneratorInterface
     }
 
     /**
-     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface $definition
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinitionInterface $definition
      *
      * @return string
      */
     public function generate(DefinitionInterface $definition)
     {
-        /** @var \Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinition $definition */
         $twigData = $this->getTwigData($definition);
         $fileName = $definition->getName() . '.php';
         $fileContent = $this->twig->render('builder.php.twig', $twigData);
@@ -57,7 +56,7 @@ class DataBuilderClassGenerator implements GeneratorInterface
     }
 
     /**
-     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinition $dataBuilderDefinition
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinitionInterface $dataBuilderDefinition
      *
      * @return array
      */
