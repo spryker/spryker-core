@@ -37,7 +37,7 @@ class ProductListAggregationTabs extends AbstractTabs
             ->addProductListProductConcreteRelationTab($tabsViewTransfer)
             ->setFooter($tabsViewTransfer);
 
-        $tabsViewTransfer->setIsNavigable(false);
+        $tabsViewTransfer->setIsNavigable(true);
 
         return $tabsViewTransfer;
     }
