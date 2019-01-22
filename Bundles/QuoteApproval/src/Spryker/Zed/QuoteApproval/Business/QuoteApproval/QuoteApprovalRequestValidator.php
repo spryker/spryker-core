@@ -70,35 +70,23 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
      */
     public function validateQuoteApprovalCreateRequest(QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer): QuoteApprovalRequestValidationResponseTransfer
     {
-        $quoteApprovalCreateRequestTransfer->requireCustomerReference()
-            ->requireIdCompanyUser()
-            ->requireIdQuote();
-
+        $this->assertQuoteApprovalCreateRequestValid($quoteApprovalCreateRequestTransfer);
         $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
 
-        $quoteApprovalRequestValidationResponseTransfer = new QuoteApprovalRequestValidationResponseTransfer();
-        $quoteApprovalRequestValidationResponseTransfer->setIsSuccessful(false)
-             ->setQuote($quoteTransfer);
-
-        if (!$quoteTransfer) {
-            return $quoteApprovalRequestValidationResponseTransfer;
-        }
-
         if (!$this->isQuoteOwner($quoteTransfer, $quoteApprovalCreateRequestTransfer->getCustomerReference())) {
-            return $quoteApprovalRequestValidationResponseTransfer;
+            return $this->createNotSuccessfullValidationResponseTransfer();
         }
 
         if (!$this->isApproverCanApproveQuote($quoteTransfer, $quoteApprovalCreateRequestTransfer->getIdCompanyUser())) {
-            return $quoteApprovalRequestValidationResponseTransfer;
+            return $this->createNotSuccessfullValidationResponseTransfer();
         }
 
         if (!$this->isQuoteInCorrectStatus($quoteTransfer)) {
-            return $quoteApprovalRequestValidationResponseTransfer;
+            return $this->createNotSuccessfullValidationResponseTransfer();
         }
 
-        $quoteApprovalRequestValidationResponseTransfer->setIsSuccessful(true);
-
-        return $quoteApprovalRequestValidationResponseTransfer;
+        return $this->createSuccessfullValidationResponseTransfer()
+            ->setQuote($quoteTransfer);
     }
 
     /**
@@ -136,32 +124,69 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
      */
     public function validateQuoteApprovalRequest(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalRequestValidationResponseTransfer
     {
-        $quoteApprovalRequestTransfer->requireFkCompanyUser()
-            ->requireIdQuoteApproval();
-
+        $this->assertQuoteApprovalRequestValid($quoteApprovalRequestTransfer);
+        $quoteTransfer = $this->findQuoteByIdQuoteApproval($quoteApprovalTransfer->getIdQuoteApproval());
         $quoteApprovalTransfer = $this->quoteApprovalRepository
             ->findQuoteApprovalById($quoteApprovalRequestTransfer->getIdQuoteApproval());
 
-        $quoteApprovalRequestValidationResponseTransfer = new QuoteApprovalRequestValidationResponseTransfer();
-        $quoteApprovalRequestValidationResponseTransfer->setIsSuccessful(false);
-
         if ($quoteApprovalTransfer->getStatus() !== QuoteApprovalConfig::STATUS_WAITING) {
-            return $quoteApprovalRequestValidationResponseTransfer;
+            return $this->createNotSuccessfullValidationResponseTransfer();
         }
 
         if ($quoteApprovalTransfer->getFkCompanyUser() !== $quoteApprovalRequestTransfer->getFkCompanyUser()) {
-            return $quoteApprovalRequestValidationResponseTransfer;
+            return $this->createNotSuccessfullValidationResponseTransfer();
         }
-
-        $quoteTransfer = $this->findQuoteByIdQuoteApproval($quoteApprovalTransfer->getIdQuoteApproval());
 
         if (!$this->isApproverCanApproveQuote($quoteTransfer, $quoteApprovalRequestTransfer->getFkCompanyUser())) {
-            return $quoteApprovalRequestValidationResponseTransfer;
+            return $this->createNotSuccessfullValidationResponseTransfer();
         }
 
-        $quoteApprovalRequestValidationResponseTransfer->setQuote($quoteTransfer)
-            ->setQuoteApproval($quoteApprovalTransfer)
-            ->setIsSuccessful(true);
+        return $this->createSuccessfullValidationResponseTransfer()
+            ->setQuote($quoteTransfer)
+            ->setQuoteApproval($quoteApprovalTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return void
+     */
+    protected function assertQuoteApprovalRequestValid(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): void
+    {
+        $quoteApprovalRequestTransfer->requireFkCompanyUser()
+            ->requireIdQuoteApproval();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
+     *
+     * @return void
+     */
+    protected function assertQuoteApprovalCreateRequestValid(QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer): void
+    {
+        $quoteApprovalCreateRequestTransfer->requireCustomerReference()
+            ->requireIdCompanyUser()
+            ->requireIdQuote();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer
+     */
+    protected function createNotSuccessfullValidationResponseTransfer(): QuoteApprovalRequestValidationResponseTransfer
+    {
+        $quoteApprovalRequestValidationResponseTransfer = new QuoteApprovalRequestValidationResponseTransfer();
+        $quoteApprovalRequestValidationResponseTransfer->setIsSuccessful(false);
+
+        return $quoteApprovalRequestValidationResponseTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer
+     */
+    protected function createSuccessfullValidationResponseTransfer(): QuoteApprovalRequestValidationResponseTransfer
+    {
+        $quoteApprovalRequestValidationResponseTransfer = new QuoteApprovalRequestValidationResponseTransfer();
+        $quoteApprovalRequestValidationResponseTransfer->setIsSuccessful(true);
 
         return $quoteApprovalRequestValidationResponseTransfer;
     }
@@ -173,12 +198,9 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
      */
     protected function findQuoteById(int $idQuote): ?QuoteTransfer
     {
-        $quoteTransfer = $this->quoteFacade->findQuoteById($idQuote)->getQuoteTransfer();
-
-        if (!$quoteTransfer) {
-            return null;
-        }
-
+        $quoteResponseTransfer = $this->quoteFacade->findQuoteById($idQuote);
+        $quoteResponseTransfer->requireQuoteTransfer();
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteTransfer->setCustomer(
             (new CustomerTransfer())->setCustomerReference($quoteTransfer->getCustomerReference())
         );
