@@ -60,20 +60,37 @@ class QuoteEntityManager extends AbstractEntityManager implements QuoteEntityMan
      */
     public function deleteExpiredGuestQuotes(DateTime $lifetimeLimitDate): void
     {
+        /** @var \Orm\Zed\Quote\Persistence\SpyQuoteQuery $query */
         $query = $this->getFactory()
-            ->createQuoteQuery();
-        $query->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN);
-
-        $query->filterByUpdatedAt(['max' => $lifetimeLimitDate], Criteria::LESS_EQUAL)
-            ->where(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE . Criteria::ISNULL)
-            ->limit(static::BATCH_SIZE_LIMIT);
+            ->createQuoteQuery()
+            ->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
+            ->add(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, null, Criteria::ISNULL);
 
         do {
-            $quoteEntities = $query->find();
+            $quoteIds = $query->filterByUpdatedAt(['max' => $lifetimeLimitDate], Criteria::LESS_EQUAL)
+                ->select(SpyQuoteTableMap::COL_ID_QUOTE)
+                ->limit(static::BATCH_SIZE_LIMIT)
+                ->find()
+                ->toArray();
 
-            foreach ($quoteEntities as $quoteEntity) {
-                $quoteEntity->delete();
-            }
-        } while ($quoteEntities->count());
+            $this->deleteQuotesByIds($quoteIds);
+        } while (!empty($quoteIds));
+    }
+
+    /**
+     * @param int[] $quoteIds
+     *
+     * @return void
+     */
+    protected function deleteQuotesByIds(array $quoteIds): void
+    {
+        if (empty($quoteIds)) {
+            return;
+        }
+
+        $this->getFactory()
+            ->createQuoteQuery()
+            ->filterByPrimaryKeys($quoteIds)
+            ->deleteAll();
     }
 }

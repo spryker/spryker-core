@@ -13,8 +13,7 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPlu
 class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
 {
     public const KEY = 'PlaceOrderPermissionPlugin';
-
-    protected const FIELD_MULTI_CURRENCY = 'multi_currency';
+    public const FIELD_STORE_MULTI_CURRENCY = 'store_multi_currency';
 
     /**
      * {@inheritdoc}
@@ -25,7 +24,7 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
      * @api
      *
      * @param array $configuration
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     * @param int|string|array|null $quoteTransfer
      *
      * @return bool
      */
@@ -37,12 +36,13 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
 
         $centAmount = $quoteTransfer->getTotals()->getGrandTotal();
         $currencyCode = $quoteTransfer->getCurrency()->getCode();
+        $storeName = $quoteTransfer->getStore()->getName();
 
-        if (!isset($configuration[static::FIELD_MULTI_CURRENCY][$currencyCode])) {
+        if (!isset($configuration[static::FIELD_STORE_MULTI_CURRENCY][$storeName][$currencyCode])) {
             return true;
         }
 
-        if ($configuration[static::FIELD_MULTI_CURRENCY][$currencyCode] < (int)$centAmount) {
+        if ($configuration[static::FIELD_STORE_MULTI_CURRENCY][$storeName][$currencyCode] < (int)$centAmount) {
             return false;
         }
 
@@ -59,7 +59,7 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
     public function getConfigurationSignature(): array
     {
         return [
-            static::FIELD_MULTI_CURRENCY => static::CONFIG_FIELD_TYPE_MULTI_CURRENCY,
+            static::FIELD_STORE_MULTI_CURRENCY => static::CONFIG_FIELD_TYPE_STORE_MULTI_CURRENCY,
         ];
     }
 

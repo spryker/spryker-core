@@ -60,7 +60,8 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     public function createQuoteReader(): QuoteReaderInterface
     {
         return new QuoteReader(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getQuoteExpanderPlugins()
         );
     }
 
@@ -102,6 +103,14 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade()
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface[]
+     */
+    public function getQuoteExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_EXPANDER);
     }
 
     /**

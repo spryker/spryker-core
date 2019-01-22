@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Checkout;
 
+use Spryker\Client\Checkout\Quote\QuoteProceedCheckoutChecker;
+use Spryker\Client\Checkout\Quote\QuoteProceedCheckoutCheckerInterface;
 use Spryker\Client\Checkout\Zed\CheckoutStub;
 use Spryker\Client\Kernel\AbstractFactory;
 
@@ -18,5 +20,21 @@ class CheckoutFactory extends AbstractFactory
     public function createZedStub()
     {
         return new CheckoutStub($this->getProvidedDependency(CheckoutDependencyProvider::SERVICE_ZED));
+    }
+
+    /**
+     * @return \Spryker\Client\Checkout\Quote\QuoteProceedCheckoutCheckerInterface
+     */
+    public function createQuoteProceedCheckoutChecker(): QuoteProceedCheckoutCheckerInterface
+    {
+        return new QuoteProceedCheckoutChecker($this->getQuoteProceedCheckoutCheckPlugins());
+    }
+
+    /**
+     * @return \Spryker\Client\CheckoutExtension\Dependency\Plugin\QuoteProceedCheckoutCheckPluginInterface[]
+     */
+    public function getQuoteProceedCheckoutCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutDependencyProvider::PLUGINS_QUOTE_PROCEED_CHECKOUT_CHECK);
     }
 }

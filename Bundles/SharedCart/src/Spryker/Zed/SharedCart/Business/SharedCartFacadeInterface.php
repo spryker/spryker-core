@@ -159,4 +159,17 @@ interface SharedCartFacadeInterface
      * @return void
      */
     public function deleteShareRelationsForCompanyUserId(int $idCompanyUser): void;
+
+    /**
+     * Specification:
+     *  - Shares cart to company user with read only access.
+     *
+     * @api
+     *
+     * @param int $idQuote
+     * @param int $idCompanyUser
+     *
+     * @return void
+     */
+    public function createReadOnlyShareRelationForQuoteAndCompanyUser(int $idQuote, int $idCompanyUser): void;
 }

@@ -105,6 +105,7 @@ interface QuoteFacadeInterface
     /**
      * Specification:
      * - Gets quote collection filtered by criteria.
+     * - Executes quote expander plugins.
      *
      * @api
      *

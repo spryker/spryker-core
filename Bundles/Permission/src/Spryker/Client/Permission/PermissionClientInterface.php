@@ -8,6 +8,7 @@
 namespace Spryker\Client\Permission;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 
 interface PermissionClientInterface
 {
@@ -39,6 +40,18 @@ interface PermissionClientInterface
      * @return bool
      */
     public function can($permissionKey, $context = null): bool;
+
+    /**
+     * Specification:
+     * - Finds permission by key for current customer.
+     *
+     * @api
+     *
+     * @param string $permissionKey
+     *
+     * @return \Generated\Shared\Transfer\PermissionTransfer|null
+     */
+    public function findCustomerPermissionByKey(string $permissionKey): ?PermissionTransfer;
 
     /**
      * Specification:

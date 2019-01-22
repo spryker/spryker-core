@@ -7,11 +7,19 @@
 
 namespace Spryker\Client\QuoteApproval;
 
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
+use Spryker\Shared\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
 
-
+/**
+ * @method \Spryker\Client\QuoteApproval\QuoteApprovalFactory getFactory()
+ */
 class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientInterface
 {
     /**
@@ -23,8 +31,171 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      *
      * @return string|null
      */
-    public function getQuoteStatus(QuoteTransfer $quoteTransfer): ?string
+    public function calculateQuoteStatus(QuoteTransfer $quoteTransfer): ?string
     {
-        return QuoteApprovalConfig::STATUS_APPROVED;//Has to be implemented in story PS-4362.
+        return $this->getFactory()
+            ->createQuoteStatusCalculator()
+            ->calculateQuoteStatus($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function createQuoteApproval(QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        return $this->getFactory()->createQuoteApprovalStub()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function removeQuoteApproval(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        return $this->getFactory()->createQuoteApprovalStub()->removeQuoteApproval($quoteApprovalRemoveRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
+    {
+        return $this->getFactory()->createQuoteApprovalStub()->getQuoteApproversList($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequireApproval(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()->createQuoteStatusChecker()->isQuoteRequireApproval($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isCustomerHasPlaceOrderPermission(): bool
+    {
+        return (bool)$this->getFactory()->getPermissionClient()->findCustomerPermissionByKey(PlaceOrderPermissionPlugin::KEY);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteWaitingForApproval(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()->createQuoteStatusChecker()->isQuoteWaitingForApproval($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApproved(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()->createQuoteStatusChecker()->isQuoteApproved($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return int|null
+     */
+    public function calculateApproveQuotePermissionLimit(QuoteTransfer $quoteTransfer, CompanyUserTransfer $companyUserTransfer): ?int
+    {
+        return $this->getFactory()
+            ->createPermissionLimitCalculator()
+            ->calculateApproveQuotePermissionLimit($quoteTransfer, $companyUserTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int|null
+     */
+    public function calculatePlaceOrderPermissionLimit(QuoteTransfer $quoteTransfer, CompanyUserTransfer $companyUserTransfer): ?int
+    {
+        return $this->getFactory()
+            ->createPermissionLimitCalculator()
+            ->calculatePlaceOrderPermissionLimit($quoteTransfer, $companyUserTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function approveQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteApprovalStub()
+            ->approveQuoteApproval($quoteApprovalRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function declineQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteApprovalStub()
+            ->declineQuoteApproval($quoteApprovalRequestTransfer);
     }
 }

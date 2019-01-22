@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface CheckoutClientInterface
 {
     /**
+     * Specification:
+     * - Places the order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -19,4 +22,16 @@ interface CheckoutClientInterface
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function placeOrder(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     * - Returns true if quote is applicable for checkout, false - otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): bool;
 }

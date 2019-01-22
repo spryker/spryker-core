@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\Transfer;
 
 use Codeception\Actor;
+use Codeception\Util\Stub;
+use Spryker\Zed\Transfer\Business\TransferBusinessFactory;
+use Spryker\Zed\Transfer\TransferConfig;
 
 /**
  * Inherited Methods
@@ -26,9 +29,61 @@ use Codeception\Actor;
  */
 class TransferBusinessTester extends Actor
 {
-    use _generated\TransferBusinessTesterActions;
+    use _generated\TransferBusinessTesterActions {
+        getFacade as getTransferFacade;
+    }
 
-   /**
-    * Define custom actions here
-    */
+    protected const TRANSFER_DESTINATION_DIR = 'Transfers';
+
+    /**
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Transfer\Business\TransferFacade
+     */
+    public function getFacade()
+    {
+        $facade = $this->getTransferFacade();
+        $facade->setFactory($this->getTransferBusinessFactory());
+
+        return $facade;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTransferDestinationDir(): string
+    {
+        return static::TRANSFER_DESTINATION_DIR;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTransferDestinationUrl(): string
+    {
+        return $this->getVirtualDirectory() . $this->getTransferDestinationDir() . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * @return object|\Spryker\Zed\Transfer\TransferConfig
+     */
+    protected function getConfigMock()
+    {
+        $configMock = Stub::make(TransferConfig::class, [
+            'getClassTargetDirectory' => function () {
+                return $this->getTransferDestinationUrl();
+            },
+        ]);
+
+        return $configMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Business\TransferBusinessFactory
+     */
+    protected function getTransferBusinessFactory(): TransferBusinessFactory
+    {
+        $factory = new TransferBusinessFactory();
+        $factory->setConfig($this->getConfigMock());
+
+        return $factory;
+    }
 }
