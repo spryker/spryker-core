@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\CartsRestApi\Business;
 
-use Spryker\Zed\CartsRestApi\Business\Cart\QuoteReader;
-use Spryker\Zed\CartsRestApi\Business\Cart\QuoteReaderInterface;
-use Spryker\Zed\CartsRestApi\Business\Cart\QuoteUpdater;
-use Spryker\Zed\CartsRestApi\Business\Cart\QuoteUpdaterInterface;
+use Spryker\Zed\CartsRestApi\Business\Cart\CartCreator;
+use Spryker\Zed\CartsRestApi\Business\Cart\CartCreatorInterface;
+use Spryker\Zed\CartsRestApi\Business\Cart\CartDeleter;
+use Spryker\Zed\CartsRestApi\Business\Cart\CartDeleterInterface;
+use Spryker\Zed\CartsRestApi\Business\Cart\CartReader;
+use Spryker\Zed\CartsRestApi\Business\Cart\CartReaderInterface;
+use Spryker\Zed\CartsRestApi\Business\Cart\CartUpdater;
+use Spryker\Zed\CartsRestApi\Business\Cart\CartUpdaterInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUuidWriter;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUuidWriterInterface;
 use Spryker\Zed\CartsRestApi\CartsRestApiDependencyProvider;
@@ -36,22 +40,38 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CartsRestApi\Business\Cart\QuoteReaderInterface
+     * @return \Spryker\Zed\CartsRestApi\Business\Cart\CartReaderInterface
      */
-    public function createQuoteReader(): QuoteReaderInterface
+    public function createCartReader(): CartReaderInterface
     {
-        return new QuoteReader($this->getQuoteFacade());
+        return new CartReader($this->getQuoteFacade());
     }
 
     /**
-     * @return \Spryker\Zed\CartsRestApi\Business\Cart\QuoteUpdaterInterface
+     * @return \Spryker\Zed\CartsRestApi\Business\Cart\CartCreatorInterface
      */
-    public function createQuoteUpdater(): QuoteUpdaterInterface
+    public function createCartCreator(): CartCreatorInterface
     {
-        return new QuoteUpdater(
+        return new CartCreator($this->getPersistentCartFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApi\Business\Cart\CartDeleterInterface
+     */
+    public function createCartDeleter(): CartDeleterInterface
+    {
+        return new CartDeleter($this->getPersistentCartFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApi\Business\Cart\CartUpdaterInterface
+     */
+    public function createQuoteUpdater(): CartUpdaterInterface
+    {
+        return new CartUpdater(
             $this->getPersistentCartFacade(),
             $this->getCartFacade(),
-            $this->createQuoteReader()
+            $this->createCartReader()
         );
     }
 

@@ -76,6 +76,13 @@
         <property name="customerReference" type="string"/>
     </transfer>
 
+    <transfer name="RestQuoteRequest">
+        <property name="quote" type="Quote" />
+        <property name="quoteUuid" type="string" />
+        <property name="customerReference" type="string" />
+        <property name="errorCodes" type="string[]" singular="errorCode" />
+    </transfer>
+
     <transfer name="QuoteError">
         <property name="message" type="string"/>
     </transfer>
@@ -85,3 +92,5 @@
     </transfer>
 
 </transfers>
+
+

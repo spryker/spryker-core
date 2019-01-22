@@ -11,9 +11,11 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
+use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -30,14 +32,14 @@ class CartUpdater implements CartUpdaterInterface
     protected $cartsResourceMapper;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Cart\CartRestResponseBuilderInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface
      */
     protected $cartRestResponseBuilder;
 
     /**
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
-     * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartRestResponseBuilderInterface $cartRestResponseBuilder
+     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      */
     public function __construct(
         CartsRestApiClientInterface $cartsRestApiClient,
@@ -75,10 +77,12 @@ class CartUpdater implements CartUpdaterInterface
             ->setCustomer($customerTransfer)
             ->setStore($storeTransfer);
 
-        $quoteResponseTransfer = $this->cartsRestApiClient->updateQuoteByUuid($quoteTransfer);
-        if (!$quoteResponseTransfer->getQuoteTransfer()) {
-            return $this->cartRestResponseBuilder->createCartNotFoundError();
-        }
+        $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
+            ->setQuote($quoteTransfer)
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
+            ->setQuoteUuid($idCart);
+
+        $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($restQuoteRequestTransfer);
 
         if ($quoteResponseTransfer->getErrors()->count()) {
             return $this->cartRestResponseBuilder->createQuoteErrorResponse($quoteResponseTransfer);

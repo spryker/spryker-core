@@ -12,11 +12,12 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
+use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
 
-class QuoteUpdater implements QuoteUpdaterInterface
+class CartUpdater implements CartUpdaterInterface
 {
     /**
      * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface
@@ -29,33 +30,39 @@ class QuoteUpdater implements QuoteUpdaterInterface
     protected $cartFacade;
 
     /**
-     * @var \Spryker\Zed\CartsRestApi\Business\Cart\QuoteReaderInterface
+     * @var \Spryker\Zed\CartsRestApi\Business\Cart\CartReaderInterface
      */
-    protected $quoteReader;
+    protected $cartReader;
 
     /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface $cartFacade
-     * @param \Spryker\Zed\CartsRestApi\Business\Cart\QuoteReaderInterface $quoteReader
+     * @param \Spryker\Zed\CartsRestApi\Business\Cart\CartReaderInterface $cartReader
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
         CartsRestApiToCartFacadeInterface $cartFacade,
-        QuoteReaderInterface $quoteReader
+        CartReaderInterface $cartReader
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->cartFacade = $cartFacade;
-        $this->quoteReader = $quoteReader;
+        $this->cartReader = $cartReader;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function updateQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
     {
-        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
+        $restQuoteRequestTransfer
+            ->requireQuote()
+            ->requireCustomerReference()
+            ->requireQuoteUuid();
+
+        $quoteTransfer = $restQuoteRequestTransfer->getQuote();
+        $quoteResponseTransfer = $this->cartReader->findQuoteByUuid($quoteTransfer);
         if (!$quoteResponseTransfer->getQuoteTransfer()) {
             return $quoteResponseTransfer;
         }

@@ -8,8 +8,10 @@
 namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\RestQuoteRequestTransfer;
+use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -23,27 +25,27 @@ class CartDeleter implements CartDeleterInterface
     protected $cartReader;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface
+     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
      */
-    protected $persistentCartClient;
+    protected $cartsRestApiClient;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface
      */
-    protected $restResourceBuilder;
+    protected $cartRestResponseBuilder;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface $persistentCartClient
+     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
+     * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface $cartReader
      */
     public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
-        CartsRestApiToPersistentCartClientInterface $persistentCartClient,
+        CartRestResponseBuilderInterface $cartRestResponseBuilder,
+        CartsRestApiClientInterface $cartsRestApiClient,
         CartReaderInterface $cartReader
     ) {
-        $this->restResourceBuilder = $restResourceBuilder;
-        $this->persistentCartClient = $persistentCartClient;
+        $this->cartRestResponseBuilder = $cartRestResponseBuilder;
+        $this->cartsRestApiClient = $cartsRestApiClient;
         $this->cartReader = $cartReader;
     }
 
@@ -54,71 +56,28 @@ class CartDeleter implements CartDeleterInterface
      */
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
         $idCart = $restRequest->getResource()->getId();
         if ($idCart === null) {
-            return $this->createCartIdMissingError($restResponse);
+            return $this->cartRestResponseBuilder->createCartIdMissingError();
         }
 
         $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idCart, $restRequest);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createCartNotFoundError($restResponse);
+            return $this->cartRestResponseBuilder->createCartNotFoundError();
         }
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        $quoteTransfer->setCustomer($quoteResponseTransfer->getCustomer());
+        $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
+            ->setQuoteUuid($idCart)
+            ->setQuote($quoteTransfer)
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
 
-        $quoteResponseTransfer = $this->persistentCartClient->deleteQuote($quoteTransfer);
+        $quoteResponseTransfer = $this->cartsRestApiClient->deleteQuote($restQuoteRequestTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createFailedDeletingCartError($restResponse);
+            return $this->cartRestResponseBuilder->createFailedDeletingCartError();
         }
 
-        return $restResponse;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createCartIdMissingError(RestResponseInterface $response): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING);
-
-        return $response->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createCartNotFoundError(RestResponseInterface $response): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND);
-
-        return $response->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createFailedDeletingCartError(RestResponseInterface $response): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART)
-            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART);
-
-        return $response->addError($restErrorTransfer);
+        return $this->cartRestResponseBuilder->createCartRestResponse();
     }
 }

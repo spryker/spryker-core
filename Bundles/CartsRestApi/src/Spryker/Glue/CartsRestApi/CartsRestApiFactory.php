@@ -17,8 +17,6 @@ use Spryker\Glue\CartsRestApi\Processor\Cart\CartDeleter;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartDeleterInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReader;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
-use Spryker\Glue\CartsRestApi\Processor\Cart\CartRestResponseBuilder;
-use Spryker\Glue\CartsRestApi\Processor\Cart\CartRestResponseBuilderInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdater;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemAdder;
@@ -51,6 +49,8 @@ use Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreator;
 use Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestRequest\RestRequestUpdater;
 use Spryker\Glue\CartsRestApi\Processor\RestRequest\RestRequestUpdaterInterface;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilder;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilder;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
@@ -84,8 +84,8 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new CartCreator(
             $this->createCartsResourceMapper(),
-            $this->getQuoteCreatorPlugin(),
-            $this->getResourceBuilder()
+            $this->getClient(),
+            $this->createCartRestResponseBuilder()
         );
     }
 
@@ -95,8 +95,8 @@ class CartsRestApiFactory extends AbstractFactory
     public function createCartDeleter(): CartDeleterInterface
     {
         return new CartDeleter(
-            $this->getResourceBuilder(),
-            $this->getPersistentCartClient(),
+            $this->createCartRestResponseBuilder(),
+            $this->getClient(),
             $this->createCartReader()
         );
     }
@@ -114,7 +114,7 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\Cart\CartRestResponseBuilderInterface
+     * @return \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface
      */
     public function createCartRestResponseBuilder(): CartRestResponseBuilderInterface
     {

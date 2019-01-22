@@ -44,6 +44,7 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
      */
     public function updateGuestCartCustomerReferenceOnRegistration(CustomerTransfer $customerTransfer): CustomerTransfer
     {
+        //TODO check anonym
         $quoteTransfer = $this->quoteClient->getQuote();
         if (!$quoteTransfer->getIdQuote()) {
             return $customerTransfer;

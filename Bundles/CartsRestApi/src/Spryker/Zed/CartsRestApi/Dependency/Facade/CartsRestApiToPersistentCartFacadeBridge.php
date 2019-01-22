@@ -8,7 +8,9 @@
 namespace Spryker\Zed\CartsRestApi\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
+use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 
 class CartsRestApiToPersistentCartFacadeBridge implements CartsRestApiToPersistentCartFacadeInterface
 {
@@ -33,5 +35,25 @@ class CartsRestApiToPersistentCartFacadeBridge implements CartsRestApiToPersiste
     public function updateQuote(QuoteUpdateRequestTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->persistentCartFacade->updateQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->persistentCartFacade->createQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function delete(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->persistentCartFacade->deleteQuote($quoteTransfer);
     }
 }
