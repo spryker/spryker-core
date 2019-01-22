@@ -138,7 +138,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
             $localeCode = $attribute['locale_code'];
             $value = $this->sanitizeString($attribute['value']);
 
-            if ($value === '') {
+            if ($value === '' || $value === false) {
                 $keysToRemove[$localeCode][$key] = $key;
                 continue;
             }
@@ -152,7 +152,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     /**
      * @param string $string
      *
-     * @return string
+     * @return string|bool
      */
     protected function sanitizeString(string $string)
     {
