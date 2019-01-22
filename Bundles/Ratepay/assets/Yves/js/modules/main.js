@@ -5,8 +5,6 @@
 
 'use strict';
 
-var $ = require('jquery');
-
 $(document).ready(function() {
     $('#paymentForm_ratepayInstallment_debit_pay_type').on('change', function(event) {
         var sectionPattern = '.ratepay-installment-pay-type-' + $(event.target).val().toLowerCase();

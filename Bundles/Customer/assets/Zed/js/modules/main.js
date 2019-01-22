@@ -5,8 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
-
 $(document).ready(function () {
 
     var dateOfBirth = $('#customer_date_of_birth');

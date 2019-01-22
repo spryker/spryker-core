@@ -5,8 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
-
 var $collectionHolder;
 
 var $addLink = $('<a href="#" class="add_tag_link">Add more...</a>');
