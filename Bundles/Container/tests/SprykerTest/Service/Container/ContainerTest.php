@@ -28,6 +28,11 @@ class ContainerTest extends Unit
     protected const SERVICE_PROPERTY_2 = 'SERVICE_PROPERTY_2';
 
     /**
+     * @var bool
+     */
+    protected $errorIsTriggered = false;
+
+    /**
      * @return void
      */
     public function testSetAddsServiceOnConstruction(): void
@@ -382,32 +387,40 @@ class ContainerTest extends Unit
     /**
      * @return void
      */
-    public function testDeprecatedMessageShouldBeShown(): void
+    public function testTriggerErrorIsNotExecuted(): void
     {
         $container = new Container();
-        $service = function () {
-        };
-        $container->set(Container::TRIGGER_ERROR, true);
+        $container->set(Container::TRIGGER_ERROR, false);
 
-        $container[static::SERVICE] = $service;
-        $error = error_get_last();
-
-        $this->assertNotEmpty($error, 'Deprecated message should be shown');
+        $previousErrorHandler = set_error_handler([$this, 'setErrorTriggered']);
+        $container[static::SERVICE] = 'foo';
+        $this->assertFalse($this->errorIsTriggered, 'Deprecation message should not be shown');
+        set_error_handler($previousErrorHandler);
+        $this->errorIsTriggered = false;
     }
 
     /**
      * @return void
      */
-    public function testDeprecatedMessageShouldNotBeShown(): void
+    public function testTriggerErrorIsExecutedWhenEnabled(): void
     {
         $container = new Container();
-        $service = function () {
-        };
-        $container->set(Container::TRIGGER_ERROR, false);
+        $container->set(Container::TRIGGER_ERROR, true);
 
-        $container[static::SERVICE] = $service;
-        $error = error_get_last();
+        $previousErrorHandler = set_error_handler([$this, 'setErrorTriggered']);
+        $container[static::SERVICE] = 'foo';
 
-        $this->assertEmpty($error, 'Deprecated message should not be shown');
+        $this->assertTrue($this->errorIsTriggered, 'Deprecation message should not be shown');
+
+        set_error_handler($previousErrorHandler);
+        $this->errorIsTriggered = false;
+    }
+
+    /**
+     * @return void
+     */
+    public function setErrorTriggered(): void
+    {
+        $this->errorIsTriggered = true;
     }
 }
