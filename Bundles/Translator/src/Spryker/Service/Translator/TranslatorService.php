@@ -65,20 +65,4 @@ class TranslatorService extends AbstractService implements TranslatorServiceInte
     {
         return $this->getFactory()->createTranslationKeyManager()->hasKey($keyName);
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $keyName
-     * @param array $data
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
-     * @return string
-     */
-    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null): string
-    {
-        return $this->getFactory()->createTranslator()->trans();
-    }
 }

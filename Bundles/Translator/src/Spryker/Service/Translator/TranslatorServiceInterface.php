@@ -53,18 +53,4 @@ interface TranslatorServiceInterface
      * @return bool
      */
     public function hasTranslation($keyName): bool;
-
-    /**
-     * Specification:
-     *  - Finds a translation for the specified key for the particular locale.
-     *
-     * @api
-     *
-     * @param string $keyName
-     * @param array $data
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
-     * @return string
-     */
-    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null): string;
 }

@@ -24,7 +24,7 @@ class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
      */
     public function __construct(SessionInterface $session, array $translationPlugins)
     {
-        parent::__construct($$translationPlugins);
+        parent::__construct($translationPlugins);
         $this->session = $session;
     }
 
