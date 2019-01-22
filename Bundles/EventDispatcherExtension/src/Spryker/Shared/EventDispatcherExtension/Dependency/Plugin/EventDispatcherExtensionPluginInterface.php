@@ -13,7 +13,7 @@ interface EventDispatcherExtensionPluginInterface
 {
     /**
      * Specification:
-     * - Returns Event Subscriber, that will be added for Event Dispatcher.
+     * - Returns Event Subscriber that will be added for Event Dispatcher.
      *
      * @api
      *
