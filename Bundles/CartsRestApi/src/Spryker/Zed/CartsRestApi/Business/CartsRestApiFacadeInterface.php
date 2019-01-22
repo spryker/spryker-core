@@ -9,6 +9,8 @@ namespace Spryker\Zed\CartsRestApi\Business;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 
 interface CartsRestApiFacadeInterface
@@ -36,6 +38,21 @@ interface CartsRestApiFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds customer quote collection.
+     * - customerReference must be set in the RestQuoteCollectionRequestTransfer taken as parameter.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer
+     */
+    public function findCustomerQuoteCollection(
+        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+    ): RestQuoteCollectionResponseTransfer;
 
     /**
      * Specification:

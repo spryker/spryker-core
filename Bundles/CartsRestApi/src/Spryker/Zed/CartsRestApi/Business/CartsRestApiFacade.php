@@ -9,6 +9,8 @@ namespace Spryker\Zed\CartsRestApi\Business;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -46,6 +48,23 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
         return $this->getFactory()
             ->createCartReader()
             ->findQuoteByUuid($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer
+     */
+    public function findCustomerQuoteCollection(
+        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+    ): RestQuoteCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createCartReader()
+            ->findCustomerQuoteCollection($restQuoteCollectionRequestTransfer);
     }
 
     /**

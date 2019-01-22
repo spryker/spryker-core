@@ -9,6 +9,8 @@ namespace Spryker\Client\CartsRestApi\Zed;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Client\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
 
@@ -38,6 +40,20 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
         $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/find-quote-by-uuid', $quoteTransfer);
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer
+     */
+    public function findCustomerQuoteCollection(
+        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+    ): RestQuoteCollectionResponseTransfer {
+        /** @var \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer $restQuoteCollectionResponseTransfer */
+        $restQuoteCollectionResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/find-customer-quote-collection', $restQuoteCollectionRequestTransfer);
+
+        return $restQuoteCollectionResponseTransfer;
     }
 
     /**

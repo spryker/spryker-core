@@ -9,6 +9,8 @@ namespace Spryker\Zed\CartsRestApi\Business\Cart;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer;
 
 interface CartReaderInterface
 {
@@ -18,4 +20,13 @@ interface CartReaderInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer
+     */
+    public function findCustomerQuoteCollection(
+        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+    ): RestQuoteCollectionResponseTransfer;
 }

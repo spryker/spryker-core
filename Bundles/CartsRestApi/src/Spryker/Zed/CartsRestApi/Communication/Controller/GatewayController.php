@@ -9,6 +9,8 @@ namespace Spryker\Zed\CartsRestApi\Communication\Controller;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -25,6 +27,18 @@ class GatewayController extends AbstractGatewayController
     public function findQuoteByUuidAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->findQuoteByUuid($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer
+     */
+    public function findCustomerQuoteCollectionAction(
+        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+    ): RestQuoteCollectionResponseTransfer
+    {
+        return $this->getFacade()->findCustomerQuoteCollection($restQuoteCollectionRequestTransfer);
     }
 
     /**
