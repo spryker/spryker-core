@@ -3,6 +3,7 @@ actor: Tester
 
 include:
     - tests/SprykerTest/Zed/Customer
+    - tests/SprykerTest/Client/Customer
 
 paths:
     tests: tests

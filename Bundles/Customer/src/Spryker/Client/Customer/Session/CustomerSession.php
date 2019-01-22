@@ -9,10 +9,11 @@ namespace Spryker\Client\Customer\Session;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Session\SessionClientInterface;
+use Spryker\Shared\Customer\CustomerConfig;
 
 class CustomerSession implements CustomerSessionInterface
 {
-    public const SESSION_KEY = 'customer data';
+    public const SESSION_KEY = CustomerConfig::CUSTOMER_SESSION_KEY;
 
     /**
      * @var \Spryker\Client\Session\SessionClientInterface
@@ -49,7 +50,7 @@ class CustomerSession implements CustomerSessionInterface
      */
     public function logout()
     {
-        $this->sessionClient->remove(self::SESSION_KEY);
+        $this->sessionClient->remove(static::SESSION_KEY);
     }
 
     /**
@@ -57,7 +58,7 @@ class CustomerSession implements CustomerSessionInterface
      */
     public function hasCustomer()
     {
-        return $this->sessionClient->has(self::SESSION_KEY);
+        return $this->sessionClient->has(static::SESSION_KEY);
     }
 
     /**
@@ -65,7 +66,7 @@ class CustomerSession implements CustomerSessionInterface
      */
     public function getCustomer()
     {
-        $customerTransfer = $this->sessionClient->get(self::SESSION_KEY);
+        $customerTransfer = $this->sessionClient->get(static::SESSION_KEY);
 
         if ($customerTransfer === null) {
             return null;
@@ -86,7 +87,7 @@ class CustomerSession implements CustomerSessionInterface
     public function setCustomer(CustomerTransfer $customerTransfer)
     {
         $this->sessionClient->set(
-            self::SESSION_KEY,
+            static::SESSION_KEY,
             $customerTransfer
         );
 
