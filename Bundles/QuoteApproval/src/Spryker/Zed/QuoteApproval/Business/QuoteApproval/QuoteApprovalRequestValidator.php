@@ -73,11 +73,11 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         $this->assertQuoteApprovalCreateRequestValid($quoteApprovalCreateRequestTransfer);
         $quoteTransfer = $this->getQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
 
-        if (!$this->isQuoteOwner($quoteTransfer, $quoteApprovalCreateRequestTransfer->getCustomerReference())) {
+        if (!$this->isQuoteOwner($quoteTransfer, $quoteApprovalCreateRequestTransfer->getRequestSenderCompanyUserId())) {
             return $this->createNotSuccessfullValidationResponseTransfer();
         }
 
-        if (!$this->isApproverCanApproveQuote($quoteTransfer, $quoteApprovalCreateRequestTransfer->getIdCompanyUser())) {
+        if (!$this->isApproverCanApproveQuote($quoteTransfer, $quoteApprovalCreateRequestTransfer->getApproverCompanyUserId())) {
             return $this->createNotSuccessfullValidationResponseTransfer();
         }
 
@@ -98,7 +98,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     {
         $quoteTransfer = $this->findQuoteByIdQuoteApproval($quoteApprovalRemoveRequestTransfer->getIdQuoteApproval());
 
-        if (!$this->isQuoteOwner($quoteTransfer, $quoteApprovalRemoveRequestTransfer->getCustomerReference())
+        if (!$this->isQuoteOwner($quoteTransfer, $quoteApprovalRemoveRequestTransfer->getIdCompanyUser())
             && !$this->isRemoveRequestSentByApprover($quoteApprovalRemoveRequestTransfer)
         ) {
             return $this->createNotSuccessfullValidationResponseTransfer();
@@ -155,8 +155,8 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
      */
     protected function assertQuoteApprovalCreateRequestValid(QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer): void
     {
-        $quoteApprovalCreateRequestTransfer->requireCustomerReference()
-            ->requireIdCompanyUser()
+        $quoteApprovalCreateRequestTransfer->requireApproverCompanyUserId()
+            ->requireRequestSenderCompanyUserId()
             ->requireIdQuote();
     }
 
@@ -206,26 +206,24 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
      */
     protected function isRemoveRequestSentByApprover(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): bool
     {
-        $companyUserTransfer = $this->companyUserFacade->findActiveCompanyUserByCustomerReference(
-            $quoteApprovalRemoveRequestTransfer->getCustomerReference()
-        );
-
         $quoteApprovalTransfer = $this->quoteApprovalRepository->findQuoteApprovalById(
             $quoteApprovalRemoveRequestTransfer->getIdQuoteApproval()
         );
 
-        return $quoteApprovalTransfer->getFkCompanyUser() === $companyUserTransfer->getIdCompanyUser();
+        return $quoteApprovalTransfer->getFkCompanyUser() === $quoteApprovalRemoveRequestTransfer->getIdCompanyUser();
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $customerReference
+     * @param int $idCompanyUser
      *
      * @return bool
      */
-    protected function isQuoteOwner(QuoteTransfer $quoteTransfer, string $customerReference): bool
+    protected function isQuoteOwner(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool
     {
-        return $quoteTransfer->getCustomerReference() === $customerReference;
+        $companyUserTransfer = $this->companyUserFacade->getCompanyUserById($idCompanyUser);
+
+        return $quoteTransfer->getCustomerReference() === $companyUserTransfer->getCustomer()->getCustomerReference();
     }
 
     /**

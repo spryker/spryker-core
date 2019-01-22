@@ -93,20 +93,6 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves company user information by customer reference.
-     * - Checks activity flag in a related company.
-     * - Returns NULL when an activity flag is false.
-     *
-     * @api
-     *
-     * @param string $customerReference
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
-     */
-    public function findActiveCompanyUserByCustomerReference(string $customerReference): ?CompanyUserTransfer;
-
-    /**
-     * Specification:
      * - Retrieves company user collection according provided filter.
      * - Ignores company users with anonymised customers.
      *

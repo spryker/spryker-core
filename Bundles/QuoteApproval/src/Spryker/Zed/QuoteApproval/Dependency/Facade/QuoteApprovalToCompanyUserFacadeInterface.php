@@ -26,11 +26,4 @@ interface QuoteApprovalToCompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
     public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer;
-
-    /**
-     * @param string $customerReference
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
-     */
-    public function findActiveCompanyUserByCustomerReference(string $customerReference): ?CompanyUserTransfer;
 }

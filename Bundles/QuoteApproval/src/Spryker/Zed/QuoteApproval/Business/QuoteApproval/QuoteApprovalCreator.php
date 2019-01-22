@@ -94,12 +94,12 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
         $this->sharedCartFacade->deleteShareForQuote($quoteTransfer);
         $this->sharedCartFacade->createReadOnlyShareRelationForQuoteAndCompanyUser(
             $quoteTransfer->getIdQuote(),
-            $quoteApprovalCreateRequestTransfer->getIdCompanyUser()
+            $quoteApprovalCreateRequestTransfer->getApproverCompanyUserId()
         );
 
         $quoteApprovalTransfer = $this->createQuoteApprovalTransfer(
             $quoteTransfer->getIdQuote(),
-            $quoteApprovalCreateRequestTransfer->getIdCompanyUser()
+            $quoteApprovalCreateRequestTransfer->getApproverCompanyUserId()
         );
 
         return $this->createSuccessfullQuoteApprovalResponseTransfer($quoteApprovalTransfer);

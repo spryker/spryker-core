@@ -161,16 +161,6 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
-     * @param string $customerReference
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
-     */
-    public function findActiveCompanyUserByCustomerReference(string $customerReference): ?CompanyUserTransfer
-    {
-        return $this->companyUserRepository->findActiveCompanyUserByCustomerReference($customerReference);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
