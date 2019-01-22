@@ -108,23 +108,13 @@
     </div>
 </div>
 
-{% block plugins_js %}
-    <script src="/assets/js/vendors/jquery.min.js"></script>
-    <script src="/assets/js/vendors/jquery-migrate.min.js"></script>
-    <script src="/assets/js/vendors/jquery-ui.min.js"></script>
-    <script src="/assets/js/vendors/jquery.dataTables.min.js"></script>
-    <script src="/assets/js/vendors/dataTables.bootstrap.min.js"></script>
-    <script src="/assets/js/vendors/dataTables.buttons.js"></script>
-    <script src="/assets/js/vendors/buttons.print.js"></script>
-    <script src="/assets/js/vendors/buttons.html5.js"></script>
-    <script src="/assets/js/vendors/buttons.flash.js"></script>
-    <script src="/assets/js/vendors/buttons.colVis.js"></script>
-    <script src="/assets/js/vendors/buttons.bootstrap.js"></script>
-    <script src="/assets/js/vendors/dataTables.responsive.js"></script>
-    <script src="/assets/js/vendors/dataTables.select.js"></script>
-{% endblock %}
 
 {% block footer_js %}
+
+    {% block vendor_js %}
+        <script src="/assets/js/vendors/spryker-zed-gui-vendors.js"></script>
+    {% endblock %}
+
     <script src="/assets/js/spryker-zed-gui-commons.js"></script>
 {% endblock %}
 
