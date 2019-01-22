@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Queue\Business;
 
+use Generated\Shared\Transfer\QueueDumpRequestTransfer;
+use Generated\Shared\Transfer\QueueDumpResponseTransfer;
 use Symfony\Component\Console\Output\OutputInterface;
 
 interface QueueFacadeInterface
@@ -36,4 +38,19 @@ interface QueueFacadeInterface
      * @return void
      */
     public function startWorker($command, OutputInterface $output);
+
+    /**
+     * Specification:
+     * - Reads messages from the specific queue.
+     * - Gets queue name, limit, acknowledge and format from the transfer object.
+     * - Throws an exception if event doesn't exist.
+     * - Returns transfer object with dumped amount of messages in the defined output format.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueDumpRequestTransfer $queueNameRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueueDumpResponseTransfer
+     */
+    public function queueDump(QueueDumpRequestTransfer $queueNameRequestTransfer): QueueDumpResponseTransfer;
 }
