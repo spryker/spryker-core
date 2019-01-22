@@ -60,6 +60,10 @@ class ViewController extends AbstractController
 
         $localesData = $this->getLocaleData();
 
+        $csrfForm = $this
+            ->getFactory()
+            ->getAttributeCsrfForm();
+
         return $this->viewResponse([
             'idProductAbstract' => $idProductAbstract,
             'attributeKeyForm' => $form->createView(),
@@ -71,7 +75,7 @@ class ViewController extends AbstractController
             'productAttributesJson' => json_encode($productAttributes),
             'metaAttributesJson' => json_encode($metaAttributes),
             'productAbstract' => $productAbstractTransfer,
-            'csrfTokenId' => $this->getFactory()->getConfig()->getAttributeValuesFormCsrfTokenId(),
+            'csrfForm' => $csrfForm->createView(),
         ]);
     }
 
@@ -117,6 +121,10 @@ class ViewController extends AbstractController
 
         $localesData = $this->getLocaleData();
 
+        $csrfForm = $this
+            ->getFactory()
+            ->getAttributeCsrfForm();
+
         return $this->viewResponse([
             'attributeKeyForm' => $form->createView(),
             'locales' => $localesData,
@@ -128,7 +136,7 @@ class ViewController extends AbstractController
             'metaAttributesJson' => json_encode($metaAttributes),
             'productAbstract' => $productAbstractTransfer,
             'product' => $productTransfer,
-            'csrfTokenId' => $this->getFactory()->getConfig()->getAttributeValuesFormCsrfTokenId(),
+            'csrfForm' => $csrfForm->createView(),
         ]);
     }
 

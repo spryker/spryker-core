@@ -21,21 +21,11 @@ class ProductAttributeGuiConfig extends AbstractBundleConfig
     public const ID_PRODUCT_ATTRIBUTE_KEY = 'id_product_attribute_key';
     public const LOCALE_CODE = 'locale_code';
 
-    public const FORM_ATTRIBUTE_VALUES_CSRF_TOKEN_ID = 'attribute_values_form';
-
     /**
      * @return string
      */
     public function getDefaultLocaleCode()
     {
         return static::DEFAULT_LOCALE;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAttributeValuesFormCsrfTokenId(): string
-    {
-        return static::FORM_ATTRIBUTE_VALUES_CSRF_TOKEN_ID;
     }
 }

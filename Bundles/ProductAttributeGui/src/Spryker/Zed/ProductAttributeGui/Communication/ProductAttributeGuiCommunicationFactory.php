@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Communication;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeCsrfForm;
 use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeForm;
 use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeKeyForm;
 use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeKeyFormDataProvider;
@@ -19,7 +19,6 @@ use Spryker\Zed\ProductAttributeGui\Communication\Table\AttributeTable;
 use Spryker\Zed\ProductAttributeGui\Communication\Transfer\AttributeFormTransferMapper;
 use Spryker\Zed\ProductAttributeGui\Communication\Transfer\AttributeTranslationFormTransferMapper;
 use Spryker\Zed\ProductAttributeGui\ProductAttributeGuiDependencyProvider;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @method \Spryker\Zed\ProductAttributeGui\ProductAttributeGuiConfig getConfig()
@@ -96,6 +95,17 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getAttributeForm(array $data = [], array $options = [])
     {
         return $this->getFormFactory()->create(AttributeForm::class, $data, $options);
+    }
+
+    /**
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getAttributeCsrfForm(array $data = [], array $options = [])
+    {
+        return $this->getFormFactory()->create(AttributeCsrfForm::class, $data, $options);
     }
 
     /**
@@ -192,18 +202,20 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
+     */
+    protected function createAttributeCsrfType()
+    {
+        return AttributeCsrfForm::class;
+    }
+
+    /**
      * @return \Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface
      */
     public function getProductAttributeQueryContainer()
     {
         return $this->getProvidedDependency(ProductAttributeGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_ATTRIBUTE);
-    }
-
-    /**
-     * @return \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
-     */
-    public function getCsrfTokenManager(): CsrfTokenManagerInterface
-    {
-        return $this->getProvidedDependency(ApplicationConstants::CSRF_TOKEN_MANAGER);
     }
 }

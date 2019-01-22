@@ -81,11 +81,15 @@ class SaveController extends AbstractController
     protected function validateCsrfToken(Request $request): bool
     {
         $csrfTokenValue = $request->request->get(static::PARAM_CSRF_TOKEN, '');
-        $csrfTokenId = $this->getFactory()->getConfig()->getAttributeValuesFormCsrfTokenId();
-        $csrfTokenManager = $this->getFactory()->getCsrfTokenManager();
-        $csrfToken = $csrfTokenManager->getToken($csrfTokenId);
 
-        return $csrfToken->getValue() === $csrfTokenValue;
+        $csrfForm = $this
+            ->getFactory()
+            ->getAttributeCsrfForm()
+            ->submit([
+                static::PARAM_CSRF_TOKEN => $csrfTokenValue,
+            ]);
+
+        return $csrfForm->isValid();
     }
 
     /**

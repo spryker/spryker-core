@@ -171,7 +171,7 @@ function AttributeManager() {
         var form = $('form#attribute_values_form');
         var idProductAbstract = $('#attribute_values_form_hidden_product_abstract_id').val();
         var idProduct = $('#attribute_values_form_hidden_product_id').val();
-        const csrfToken = $('#attribute_values_form_hidden_csrf_token').val();
+        var csrfToken = $('#csrf-token').val();
         var formData = [];
 
         $('[data-is_attribute_input]').each(function(index, value) {
