@@ -94,7 +94,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer
      */
-    public function validateQuoteApprovalRemoveReqeust(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): QuoteApprovalRequestValidationResponseTransfer
+    public function validateQuoteApprovalRemoveRequest(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): QuoteApprovalRequestValidationResponseTransfer
     {
         $quoteTransfer = $this->findQuoteByIdQuoteApproval($quoteApprovalRemoveRequestTransfer->getIdQuoteApproval());
 
@@ -185,9 +185,9 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     /**
      * @param int $idQuote
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function findQuoteById(int $idQuote): ?QuoteTransfer
+    protected function findQuoteById(int $idQuote): QuoteTransfer
     {
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById($idQuote);
         $quoteResponseTransfer->requireQuoteTransfer();

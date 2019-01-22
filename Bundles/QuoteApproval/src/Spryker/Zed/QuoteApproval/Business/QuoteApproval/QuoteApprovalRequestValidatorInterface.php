@@ -26,7 +26,7 @@ interface QuoteApprovalRequestValidatorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer
      */
-    public function validateQuoteApprovalRemoveReqeust(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): QuoteApprovalRequestValidationResponseTransfer;
+    public function validateQuoteApprovalRemoveRequest(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): QuoteApprovalRequestValidationResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer

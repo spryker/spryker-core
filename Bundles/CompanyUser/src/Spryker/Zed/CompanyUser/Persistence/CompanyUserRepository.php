@@ -86,7 +86,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      */
     public function findActiveCompanyUserByCustomerReference(string $customerReference): ?CompanyUserTransfer
     {
-        $entityTransfer = $this->getFactory()
+        $companyUserEntity = $this->getFactory()
             ->createCompanyUserQuery()
             ->filterByIsActive(true)
             ->joinCompany()
@@ -98,10 +98,10 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->endUse()
             ->findOne();
 
-        if ($entityTransfer !== null) {
+        if ($companyUserEntity !== null) {
             return $this->getFactory()
                 ->createCompanyUserMapper()
-                ->mapEntityTransferToCompanyUserTransfer($entityTransfer);
+                ->mapEntityTransferToCompanyUserTransfer($companyUserEntity);
         }
 
         return null;

@@ -82,7 +82,7 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
         $quoteApprovalResponseTransfer = new QuoteApprovalResponseTransfer();
 
         $quoteApprovalRequestValidationReponse = $this->quoteApprovalRequestValidator
-            ->validateQuoteApprovalRemoveReqeust($quoteApprovalRemoveRequestTransfer);
+            ->validateQuoteApprovalRemoveRequest($quoteApprovalRemoveRequestTransfer);
 
         if (!$quoteApprovalRequestValidationReponse->getIsSuccessful()) {
             $quoteApprovalResponseTransfer->setIsSuccessful(false)
