@@ -27,7 +27,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addCountryFacade($container);
         $container = $this->addShipmentFacade($container);
@@ -40,7 +40,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addCountryFacade($container);
         $container = $this->addShipmentFacade($container);
@@ -54,7 +54,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCountryFacade(Container $container)
+    protected function addCountryFacade(Container $container): Container
     {
         $container[static::FACADE_COUNTRY] = function (Container $container) {
             return new ShipmentGuiToCountryBridge($container->getLocator()->country()->facade());
@@ -68,7 +68,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addShipmentFacade(Container $container)
+    protected function addShipmentFacade(Container $container): Container
     {
         $container[static::FACADE_SHIPMENT] = function (Container $container) {
             return new ShipmentGuiToShipmentBridge($container->getLocator()->shipment()->facade());
@@ -82,7 +82,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSalesFacade(Container $container)
+    protected function addSalesFacade(Container $container): Container
     {
         $container[static::FACADE_SALES] = function (Container $container) {
             return new ShipmentGuiToSalesBridge($container->getLocator()->sales()->facade());

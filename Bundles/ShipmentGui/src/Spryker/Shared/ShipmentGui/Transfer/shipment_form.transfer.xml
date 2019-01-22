@@ -5,7 +5,7 @@
 
     <transfer name="ShipmentForm">
         <property name="idShippingAddress" type="string"/>
-        <property name="method" type="ShipmentMethod"/>
+        <property name="method" type="string"/>
         <property name="shippingAddress" type="Address"/>
         <property name="requestedDeliveryDate" type="string"/>
         <property name="orderItems" type="Item[]" singular="orderItem"/>

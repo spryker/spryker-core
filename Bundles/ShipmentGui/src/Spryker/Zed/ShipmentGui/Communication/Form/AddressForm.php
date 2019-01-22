@@ -10,6 +10,7 @@ namespace Spryker\Zed\ShipmentGui\Communication\Form;
 use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -42,7 +43,6 @@ class AddressForm extends AbstractType
     public const FIELD_FK_COUNTRY = 'fkCountry';
 
     public const OPTION_SALUTATION_CHOICES = 'salutation_choices';
-    public const OPTION_COUNTRY_CHOICES = 'country';
 
     /**
      * @return string
@@ -70,7 +70,6 @@ class AddressForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(self::OPTION_SALUTATION_CHOICES);
-        $resolver->setRequired(self::OPTION_COUNTRY_CHOICES);
 
         $resolver->setDefaults([
             'data_class' => AddressTransfer::class,
@@ -92,7 +91,7 @@ class AddressForm extends AbstractType
             ->addMiddleNameField($builder)
             ->addLastNameField($builder)
             ->addEmailField($builder)
-            ->addCountryField($builder, $options[self::OPTION_COUNTRY_CHOICES])
+            ->addCountryField($builder)
             ->addAddress1Field($builder)
             ->addAddress2Field($builder)
             ->addCompanyField($builder)
@@ -195,12 +194,11 @@ class AddressForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCountryField(FormBuilderInterface $builder, array $choices)
+    protected function addCountryField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FK_COUNTRY, ChoiceType::class, [
+        $builder->add(self::FIELD_FK_COUNTRY, CountryType::class, [
             'label' => 'Country',
             'placeholder' => '-select-',
-            'choices' => array_flip($choices),
             'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),

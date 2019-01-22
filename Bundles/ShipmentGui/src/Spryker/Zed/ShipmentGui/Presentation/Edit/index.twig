@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block section_title %}
-    {{ 'Edit Shipment:' | trans }} {#{{ order.idSalesOrder }}#}
+    {{ 'Edit Shipment: ' | trans }}
 {% endblock %}
 
 {% block content %}
@@ -18,22 +18,12 @@
 
             <div id="items">
                 <table class="footable table toggle-arrow-tiny" data-qa="order-item-list">
-                    <thead>
-                         <tr class="text-left">
-                             <th>{{ 'Assign' | trans }}</th>
-                             <th>{{ 'Image' | trans }}</th>
-                             <th>{{ 'Product' | trans }}</th>
-                             <th>{{ 'Quantity' | trans }}</th>
-                             <th>{{ 'State' | trans }}</th>
-                             <th>{{ 'Current shipment' | trans }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for orderItem in orderItems %}
-                        {% set orderItemData = orderItem %}
+                    {% for orderItem in shipmentForm.orderItems %}
+                        {% set orderItemData = orderItem.vars %}
                         <tr>
 
                             <td class="item-checker">
+                                {{ form_widget(orderItemData.assigned) }}
                             </td>
                             <td>
                                 <img class="product-image" src="{{ orderItemData.metadata.image }}" width="100"/>

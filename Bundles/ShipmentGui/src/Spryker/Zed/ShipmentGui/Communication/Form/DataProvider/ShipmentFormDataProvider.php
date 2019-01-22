@@ -8,11 +8,14 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ShipmentGui\Communication\Form\AddressForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentForm;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCountryInterface;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface;
 
 /**
@@ -26,38 +29,39 @@ class ShipmentFormDataProvider
     protected $shipmentFacade;
 
     /**
-     * @var \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCountryInterface
+     * @var \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesInterface
      */
-    protected $countryFacade;
+    protected $salesFacade;
 
     /**
      * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface $shipmentFacade
-     * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCountryInterface $countryFacade
+     * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesInterface $salesFacade
      */
     public function __construct(
         ShipmentGuiToShipmentInterface $shipmentFacade,
-        ShipmentGuiToCountryInterface $countryFacade
+        ShipmentGuiToSalesInterface $salesFacade
     ) {
         $this->shipmentFacade = $shipmentFacade;
-        $this->countryFacade = $countryFacade;
+        $this->salesFacade = $salesFacade;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return array
      */
-    public function getData(ShipmentTransfer $shipmentTransfer)
+    public function getData(ShipmentTransfer $shipmentTransfer, OrderTransfer $orderTransfer): array
     {
-        $data = [
+        return [
             ShipmentForm::FIELD_ID_SALES_SHIPMENT => $shipmentTransfer->getIdSalesShipment(),
             ShipmentForm::FIELD_SHIPMENT_ADDRESS_ID => $shipmentTransfer->getShippingAddress()->getIdSalesOrderAddress(),
-            ShipmentForm::FIELD_SHIPMENT_METHOD => $shipmentTransfer->getMethod(),
+            ShipmentForm::FIELD_ADDRESS => $shipmentTransfer->getShippingAddress(),
+            ShipmentForm::FIELD_ORDER_ITEMS => $this->getSalesOrderItems($orderTransfer),
+            ShipmentForm::FIELD_SHIPMENT_METHOD => $shipmentTransfer->getMethodName(),
             ShipmentForm::FIELD_SHIPMENT_DATE => $shipmentTransfer->getRequestedDeliveryDate(),
-            ShipmentForm::FIELD_ORDER_ITEMS => $shipmentTransfer->getShipmentItems(),
-        ];
 
-        return $data;
+        ];
     }
 
     /**
@@ -65,28 +69,26 @@ class ShipmentFormDataProvider
      *
      * @return array
      */
-    public function getOptions(ShipmentTransfer $shipmentTransfer)
+    public function getOptions(ShipmentTransfer $shipmentTransfer): array
     {
         return [
             ShipmentForm::OPTION_SHIPMENT_METHOD => $this->getAvailableShipmentMethods(),
             ShipmentForm::OPTION_SHIPMENT_ADDRESS => $this->getAvailableAddresses($shipmentTransfer->getShippingAddress()),
-            ShipmentForm::SELECTED_ORDER_ITEMS => $this->getSelectedOrderItems(),
-            AddressForm::OPTION_COUNTRY_CHOICES => $this->getCountryOptionList(),
-            AddressForm::OPTION_SALUTATION_CHOICES => $this->getSalutationOptionList(),
+            ShipmentForm::OPTION_SELECTED_ORDER_ITEMS => $this->getSelectedOrderItems($shipmentTransfer->getIdSalesShipment()),
+            AddressForm::OPTION_SALUTATION_CHOICES => $this->getSalutationOptions(),
         ];
     }
 
     /**
      * @return array
      */
-    protected function getAvailableShipmentMethods()
+    protected function getAvailableShipmentMethods(): array
     {
         $methods = $this->shipmentFacade->getMethods();
 
         $result = [];
-
         foreach ($methods as $method) {
-            $result[$method->getName()] = $method->getName();
+            $result[$method->getName()] = $method->getCarrierName() . ' - ' . $method->getName();
         }
 
         return $result;
@@ -97,7 +99,7 @@ class ShipmentFormDataProvider
      *
      * @return array
      */
-    protected function getAvailableAddresses(AddressTransfer $addressTransfer)
+    protected function getAvailableAddresses(AddressTransfer $addressTransfer): array
     {
         return [
             $addressTransfer->getIdSalesOrderAddress() => implode(', ', [
@@ -110,33 +112,44 @@ class ShipmentFormDataProvider
     }
 
     /**
+     * @param int $idSalesShipment
+     *
      * @return array
      */
-    protected function getCountryOptionList()
+    protected function getSelectedOrderItems(int $idSalesShipment): array
     {
-        $availableCountryCollectionTransfer = $this->countryFacade->getAvailableCountries();
+        $shipmentItems = $this->shipmentFacade->findShipmentItemsByIsSalesShipment($idSalesShipment);
 
-        $countryList = [];
-        foreach ($availableCountryCollectionTransfer->getCountries() as $countryTransfer) {
-            $countryList[$countryTransfer->getIdCountry()] = $countryTransfer->getName();
+        $result = [];
+        foreach ($shipmentItems as $item) {
+            $result[] = $item->getIdSalesOrderItem();
         }
 
-        return $countryList;
+        return $result;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return array
+     */
+    protected function getSalesOrderItems(OrderTransfer $orderTransfer): array
+    {
+        $orderItems = [];
+        foreach ($orderTransfer->getItems() as $item) {
+            $orderItems[$item->getIdSalesOrderItem()] = $item;
+        }
+
+        return $orderItems;
     }
 
     /**
      * @return array
      */
-    protected function getSalutationOptionList()
+    protected function getSalutationOptions(): array
     {
-        return SpyCustomerTableMap::getValueSet(SpyCustomerTableMap::COL_SALUTATION);
-    }
+        $salutation = SpyCustomerTableMap::getValueSet(SpyCustomerTableMap::COL_SALUTATION);
 
-    /**
-     * @return array
-     */
-    protected function getSelectedOrderItems()
-    {
-        return [];
+        return array_combine($salutation, $salutation);
     }
 }

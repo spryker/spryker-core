@@ -10,6 +10,7 @@ namespace Spryker\Zed\Shipment\Business\Model;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 
 interface ShipmentInterface
 {
@@ -19,4 +20,11 @@ interface ShipmentInterface
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     public function getShipmentTransferById(int $idShipment): ShipmentTransfer;
+
+    /**
+     * @param int $idSalesShipment
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     */
+    public function findShipmentItemsByIdSalesShipment(int $idSalesShipment): ObjectCollection;
 }

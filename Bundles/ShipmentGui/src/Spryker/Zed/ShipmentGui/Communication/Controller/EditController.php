@@ -7,9 +7,14 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
+use \ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ShipmentGui\Business\Exception\ShipmentException;
+use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentForm;
 use Spryker\Zed\ShipmentGui\ShipmentGuiConfig;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,34 +30,20 @@ class EditController extends AbstractController
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): RedirectResponse
     {
-        $idSalesOrder = $this->castId($request->get(ShipmentGuiConfig::PARAM_ID_SALES_ORDER));
-        $orderTransfer = $this
-            ->getFactory()
-            ->getSalesFacade()
-            ->findOrderByIdSalesOrder($idSalesOrder);
+        $orderTransfer = $this->getSalesOrderTransfer($request->get(ShipmentGuiConfig::PARAM_ID_SALES_ORDER));
 
         if (!$orderTransfer) {
-            $this->addErrorMessage((sprintf(
-                'Order with #%d not found.',
-                $idSalesOrder
-            )));
+            $this->addErrorMessage('Order with #%d not found.', ['%d' => $idSalesOrder]);
 
             return $this->redirectResponse('/sales');
         }
 
-        $idShipment = $this->castId($request->get(ShipmentGuiConfig::PARAM_ID_SHIPMENT));
-        $shipmentTransfer = $this
-            ->getFactory()
-            ->getShipmentFacade()
-            ->findShipmentById($idShipment);
+        $shipmentTransfer = $this->getSalesShipmentTransfer($request->get(ShipmentGuiConfig::PARAM_ID_SHIPMENT));
 
         if (!$shipmentTransfer) {
-            $this->addErrorMessage((sprintf(
-                'Shipment with #%d not found.',
-                $idShipment
-            )));
+            $this->addErrorMessage('Shipment with #%d not found.', ['%d' => $idShipment]);
 
             return $this->redirectResponse('/sales');
         }
@@ -63,10 +54,9 @@ class EditController extends AbstractController
         }
 
         $dataProvider = $this->getFactory()->createShipmentFormDataProvider();
-
         $form = $this->getFactory()
             ->getShipmentForm(
-                $dataProvider->getData($shipmentTransfer),
+                $dataProvider->getData($shipmentTransfer, $orderTransfer),
                 $dataProvider->getOptions($shipmentTransfer)
             )
             ->handleRequest($request);
@@ -74,32 +64,70 @@ class EditController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $data = $form->getData();
-                $shipmentTransfer = $this->createShipmentTransfer($data);
+                $shipmentTransfer = $this->createShipmentGroupTransfer($data);
+
                 $this->getFactory()
                     ->getShipmentFacade()
-                    ->saveShipment($shipmentTransfer);
-                $this->addInfoMessage(sprintf(
-                    'Shipment was saved succesfully.'
-                ));
+                    ->updateShipmentTransaction($shipmentTransfer);
+                
+                $this->addInfoMessage('Shipment was saved succesfully.');
             } catch (ShipmentException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
         }
 
         return $this->viewResponse([
-            'idSalesOrder' => $idSalesOrder,
+            'idSalesOrder' => $orderTransfer->getIdSalesOrder(),
             'shipmentForm' => $form->createView(),
-            'orderItems' => $orderItems,
         ]);
+    }
+
+    /**
+     * @param mixed $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    protected function getSalesOrderTransfer($idSalesOrder): OrderTransfer
+    {
+        return $orderTransfer = $this
+            ->getFactory()
+            ->getSalesFacade()
+            ->findOrderByIdSalesOrder($this->castId($idSalesOrder));
+    }
+
+    /**
+     * @param mixed $idSalesShipment
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
+     */
+    protected function getSalesShipmentTransfer($idSalesShipment): ShipmentTransfer
+    {
+        return $this
+            ->getFactory()
+            ->getShipmentFacade()
+            ->findShipmentById($this->castId($idSalesShipment));
     }
 
     /**
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    protected function createShipmentTransfer(array $data): ShipmentTransfer
+    protected function createShipmentGroupTransfer(array $data): ShipmentGroupTransfer
     {
-        return (new ShipmentTransfer())->fromArray($data, true);
+        $shipmentGroupTransfer = new ShipmentGroupTransfer();
+        $shipmentGroupTransfer->setShipment(
+            (new ShipmentTransfer)->fromArray($data, true)
+        );
+
+        if (!array_key_exists(ShipmentForm::FIELD_ORDER_ITEMS, $data)) {
+            return $shipmentGroupTransfer;
+        }
+
+        foreach ($data[ShipmentForm::FIELD_ORDER_ITEMS] as $item) {
+            $shipmentGroupTransfer->addItem($item);
+        }
+
+        return $shipmentGroupTransfer;
     }
 }

@@ -30,7 +30,7 @@
         {% for keys, shipmentOrderItems in groupedOrderItemsByShipment %}
             <div>
                 <h3>Shipment {{ loop.index }} of {{ loop.length }}</h3>
-                <div class="pull-right"><a class="btn btn-default" href="#">{{ 'Edit Shipment' | trans }}</a></div>
+                <div class="pull-right"><a class="btn btn-default" href="{{ url('shipment-gui/edit', {'id-sales-order': order.idSalesOrder, 'id-shipment': shipmentOrderItems.shipment.idSalesShipment}) }}">{{ 'Edit Shipment' | trans }}</a></div>
             </div>
             <div class="row">
                 <div class="col-xs-12">

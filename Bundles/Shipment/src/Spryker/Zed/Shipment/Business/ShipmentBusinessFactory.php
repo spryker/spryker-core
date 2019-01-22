@@ -227,11 +227,11 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentSaver
+     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentGroupSaver
      */
-    public function createShipmentSaver()
+    public function createShipmentGroupSaver()
     {
-        return new ShipmentSaver(
+        return new ShipmentGroupSaver(
             $this->getEntityManager()
         );
     }

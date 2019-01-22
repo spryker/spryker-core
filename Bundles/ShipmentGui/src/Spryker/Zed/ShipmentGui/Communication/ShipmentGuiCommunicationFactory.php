@@ -26,7 +26,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ShipmentFormDataProvider(
             $this->getShipmentFacade(),
-            $this->getCountryFacade()
+            $this->getSalesFacade()
         );
     }
 

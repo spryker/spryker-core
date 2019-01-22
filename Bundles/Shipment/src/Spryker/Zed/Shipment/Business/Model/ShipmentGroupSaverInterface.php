@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Shipment\Business\Model;
 
-use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
-interface ShipmentSaverInterface
+interface ShipmentGroupSaverInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      *
      * @return void
      */
-    public function saveShipment(ShipmentTransfer $shipmentTransfer);
+    public function updateShipmentTransaction(ShipmentGroupTransfer $shipmentGroupTransfer): void;
 }

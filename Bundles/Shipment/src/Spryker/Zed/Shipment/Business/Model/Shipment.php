@@ -9,8 +9,10 @@ namespace Spryker\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentTransformerInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
@@ -48,13 +50,7 @@ class Shipment implements ShipmentInterface
     {
         $shipmentTransfer = new ShipmentTransfer();
 
-        $shipmentQuery = $this->queryContainer->querySalesShipmentById($idShipment)
-            ->leftJoinWithOrder()
-            ->leftJoinSpySalesOrderItem('shipmentItems')
-            ->useSpySalesOrderItemQuery(null, Criteria::LEFT_JOIN)
-                ->filterByFkSalesShipment($idShipment)
-            ->endUse()
-            ->leftJoinWithSpySalesOrderAddress();
+        $shipmentQuery = $this->queryContainer->querySalesShipmentById($idShipment);
         $shipmentTransferEntity = $shipmentQuery->findOne();
 
         $shipmentTransfer = $this->mapEntityToTransfer($shipmentTransferEntity, $shipmentTransfer);
@@ -94,6 +90,21 @@ class Shipment implements ShipmentInterface
             )
         );
 
+        $shipmentTransfer->setMethodName($shipmentEntity->getName());
+
         return $shipmentTransfer;
+    }
+
+    /**
+     * @param int $idSalesShipment
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     */
+    public function findShipmentItemsByIdSalesShipment(int $idSalesShipment): ObjectCollection
+    {
+        $query = $this->queryContainer->querySalesOrderItemsByIdSalesShipment($idSalesShipment);
+        $shipmentItems = $query->find();
+
+        return $shipmentItems;
     }
 }

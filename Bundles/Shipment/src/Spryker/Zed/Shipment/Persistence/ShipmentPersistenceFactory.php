@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
@@ -59,5 +60,13 @@ class ShipmentPersistenceFactory extends AbstractPersistenceFactory
     public function createShipmentMapper(): ShipmentMapperInterface
     {
         return new ShipmentMapper();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function createSalesOrderItemQuery()
+    {
+        return new SpySalesOrderItemQuery();
     }
 }

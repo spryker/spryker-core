@@ -35,7 +35,7 @@ class AddressFormDataProvider
      *
      * @return array
      */
-    public function getData($idOrderAddress, AddressTransfer $addressTransfer)
+    public function getData($idOrderAddress, AddressTransfer $addressTransfer): array
     {
         return [
             AddressForm::FIELD_FIRST_NAME => $addressTransfer->getFirstName(),
@@ -60,7 +60,7 @@ class AddressFormDataProvider
     /**
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return [
             CustomerForm::OPTION_SALUTATION_CHOICES => $this->getSalutationOptions(),
@@ -71,7 +71,7 @@ class AddressFormDataProvider
     /**
      * @return array
      */
-    protected function createCountryOptionList()
+    protected function createCountryOptionList(): array
     {
         $availableCountryCollectionTransfer = $this->countryFacade->getAvailableCountries();
 
@@ -86,7 +86,7 @@ class AddressFormDataProvider
     /**
      * @return array
      */
-    protected function getSalutationOptions()
+    protected function getSalutationOptions(): array
     {
         $salutationSet = SpyCustomerTableMap::getValueSet(SpyCustomerTableMap::COL_SALUTATION);
 
