@@ -389,25 +389,25 @@ class ContainerTest extends Unit
         };
         $container->set(Container::TRIGGER_ERROR, true);
 
-        ob_start();
-        $container->set(static::SERVICE, $service);
-        $message = ob_get_contents();
+        $container[static::SERVICE] = $service;
+        $error = error_get_last();
 
-        $this->assertIsString($message, 'Deprecated message should be shown');
+        $this->assertNotEmpty($error, 'Deprecated message should be shown');
     }
 
     /**
      * @return void
      */
-    public function testDeprecatedMessageShouldntBeShown(): void
+    public function testDeprecatedMessageShouldNotBeShown(): void
     {
         $container = new Container();
         $service = function () {
         };
-        ob_start();
-        $container->set(static::SERVICE, $service);
-        $message = ob_get_contents();
+        $container->set(Container::TRIGGER_ERROR, false);
 
-        $this->assertEmpty($message, 'Deprecated message shouldn\'t be shown');
+        $container[static::SERVICE] = $service;
+        $error = error_get_last();
+
+        $this->assertEmpty($error, 'Deprecated message should not be shown');
     }
 }
