@@ -83,6 +83,16 @@
         <property name="errorCodes" type="string[]" singular="errorCode" />
     </transfer>
 
+    <transfer name="RestQuoteCollectionRequest">
+        <property name="customerReference" type="string" />
+        <property name="errorCodes" type="string[]" singular="errorCode" />
+    </transfer>
+
+    <transfer name="RestQuoteCollectionResponse">
+        <property name="quoteCollection" type="QuoteCollection" />
+        <property name="errorCodes" type="string[]" singular="errorCode" />
+    </transfer>
+
     <transfer name="QuoteError">
         <property name="message" type="string"/>
     </transfer>

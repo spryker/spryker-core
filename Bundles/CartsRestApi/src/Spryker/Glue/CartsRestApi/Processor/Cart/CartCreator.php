@@ -9,19 +9,14 @@ namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
-use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class CartCreator implements CartCreatorInterface
 {
@@ -31,9 +26,9 @@ class CartCreator implements CartCreatorInterface
     protected $cartsResourceMapper;
 
     /**
-     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreatorInterface
      */
-    protected $cartsRestApiClient;
+    protected $singleQuoteCreator;
 
     /**
      * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface
@@ -42,16 +37,16 @@ class CartCreator implements CartCreatorInterface
 
     /**
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
-     * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
+     * @param \Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreatorInterface $singleQuoteCreator
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      */
     public function __construct(
         CartsResourceMapperInterface $cartsResourceMapper,
-        CartsRestApiClientInterface $cartsRestApiClient,
+        SingleQuoteCreatorInterface $singleQuoteCreator,
         CartRestResponseBuilderInterface $cartRestResponseBuilder
     ) {
         $this->cartsResourceMapper = $cartsResourceMapper;
-        $this->cartsRestApiClient = $cartsRestApiClient;
+        $this->singleQuoteCreator = $singleQuoteCreator;
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
     }
 
@@ -66,12 +61,7 @@ class CartCreator implements CartCreatorInterface
         RestCartsAttributesTransfer $restCartsAttributesTransfer
     ): RestResponseInterface {
         $quoteTransfer = $this->createQuoteTransfer($restCartsAttributesTransfer, $restRequest);
-        $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
-            ->setQuote($quoteTransfer)
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
-
-        $quoteResponseTransfer = $this->cartsRestApiClient->createQuote($restQuoteRequestTransfer);
-
+        $quoteResponseTransfer = $this->singleQuoteCreator->createQuote($restRequest, $quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->cartRestResponseBuilder->createFailedCreatingCartError($quoteResponseTransfer);
         }

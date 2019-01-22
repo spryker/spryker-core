@@ -9,8 +9,8 @@ namespace Spryker\Glue\MultiCartsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
+use Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToCartsRestApiClientBridge;
 use Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToMultiCartClientBridge;
-use Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToPersistentCartClientBridge;
 
 /**
  * @method \Spryker\Glue\MultiCartsRestApi\MultiCartsRestApiConfig getConfig()
@@ -18,7 +18,7 @@ use Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToPersiste
 class MultiCartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
-    public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
+    public const CLIENT_CARTS_REST_API = 'CLIENT_CARTS_REST_API';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -29,7 +29,7 @@ class MultiCartsRestApiDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container = parent::provideDependencies($container);
         $container = $this->addMultiCartClient($container);
-        $container = $this->addPersistentCartClient($container);
+        $container = $this->addCartsRestApiClient($container);
 
         return $container;
     }
@@ -53,10 +53,10 @@ class MultiCartsRestApiDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addPersistentCartClient(Container $container): Container
+    protected function addCartsRestApiClient(Container $container): Container
     {
-        $container[static::CLIENT_PERSISTENT_CART] = function (Container $container) {
-            return new MultiCartsRestApiToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());
+        $container[static::CLIENT_CARTS_REST_API] = function (Container $container) {
+            return new MultiCartsRestApiToCartsRestApiClientBridge($container->getLocator()->cartsRestApi()->client());
         };
 
         return $container;

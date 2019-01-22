@@ -84,7 +84,7 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new CartCreator(
             $this->createCartsResourceMapper(),
-            $this->getClient(),
+            $this->createSingleQuoteCreator(),
             $this->createCartRestResponseBuilder()
         );
     }
@@ -277,7 +277,7 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new SingleQuoteCreator(
             $this->createCartReader(),
-            $this->getPersistentCartClient()
+            $this->getClient()
         );
     }
 

@@ -9,22 +9,23 @@ namespace Spryker\Glue\MultiCartsRestApi\Processor\Quote;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToPersistentCartClientInterface;
+use Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToCartsRestApiClientInterface;
 
 class MultipleQuoteCreator implements MultipleQuoteCreatorInterface
 {
     /**
-     * @var \Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToPersistentCartClientInterface
+     * @var \Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToCartsRestApiClientInterface
      */
-    protected $persistentCartClient;
+    protected $cartsRestApiClient;
 
     /**
-     * @param \Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToPersistentCartClientInterface $persistentCartClient
+     * @param \Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToCartsRestApiClientInterface $cartsRestApiClient
      */
-    public function __construct(MultiCartsRestApiToPersistentCartClientInterface $persistentCartClient)
+    public function __construct(MultiCartsRestApiToCartsRestApiClientInterface $cartsRestApiClient)
     {
-        $this->persistentCartClient = $persistentCartClient;
+        $this->cartsRestApiClient = $cartsRestApiClient;
     }
 
     /**
@@ -35,6 +36,10 @@ class MultipleQuoteCreator implements MultipleQuoteCreatorInterface
      */
     public function createQuote(RestRequestInterface $restRequest, QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->persistentCartClient->createQuote($quoteTransfer);
+        $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
+            ->setQuote($quoteTransfer)
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+
+        return $this->cartsRestApiClient->createQuote($restQuoteRequestTransfer);
     }
 }

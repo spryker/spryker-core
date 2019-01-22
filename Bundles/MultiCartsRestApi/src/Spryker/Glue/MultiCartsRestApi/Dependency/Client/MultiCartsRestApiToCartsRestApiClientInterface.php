@@ -8,14 +8,14 @@
 namespace Spryker\Glue\MultiCartsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 
-interface MultiCartsRestApiToPersistentCartClientInterface
+interface MultiCartsRestApiToCartsRestApiClientInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function createQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer;
 }

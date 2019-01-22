@@ -10,8 +10,9 @@ namespace Spryker\Glue\CartsRestApi\Processor\Quote;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestQuoteRequestTransfer;
+use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -23,18 +24,18 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
     protected $cartReader;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface
+     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
      */
-    protected $persistentCartClient;
+    protected $cartsRestApiClient;
 
     /**
      * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface $cartReader
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface $persistentCartClient
+     * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      */
-    public function __construct(CartReaderInterface $cartReader, CartsRestApiToPersistentCartClientInterface $persistentCartClient)
+    public function __construct(CartReaderInterface $cartReader, CartsRestApiClientInterface $cartsRestApiClient)
     {
         $this->cartReader = $cartReader;
-        $this->persistentCartClient = $persistentCartClient;
+        $this->cartsRestApiClient = $cartsRestApiClient;
     }
 
     /**
@@ -56,6 +57,10 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
                 ->setIsSuccessful(false);
         }
 
-        return $this->persistentCartClient->createQuote($quoteTransfer);
+        $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
+            ->setQuote($quoteTransfer)
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+
+        return $this->cartsRestApiClient->createQuote($restQuoteRequestTransfer);
     }
 }

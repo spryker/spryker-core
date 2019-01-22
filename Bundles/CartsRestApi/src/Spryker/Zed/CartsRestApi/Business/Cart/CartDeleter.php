@@ -19,11 +19,20 @@ class CartDeleter implements CartDeleterInterface
     protected $persistentCartFacade;
 
     /**
-     * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
+     * @var \Spryker\Zed\CartsRestApi\Business\Cart\CartReaderInterface
      */
-    public function __construct(CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade)
-    {
+    protected $cartReader;
+
+    /**
+     * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
+     * @param \Spryker\Zed\CartsRestApi\Business\Cart\CartReaderInterface $cartReader
+     */
+    public function __construct(
+        CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
+        CartReaderInterface $cartReader
+    ) {
         $this->persistentCartFacade = $persistentCartFacade;
+        $this->cartReader = $cartReader;
     }
 
     /**
@@ -36,8 +45,12 @@ class CartDeleter implements CartDeleterInterface
         $restQuoteRequestTransfer
             ->requireQuoteUuid()
             ->requireCustomerReference();
-        $quoteTransfer = $restQuoteRequestTransfer->getQuote();
 
-        return $this->persistentCartFacade->delete($quoteTransfer);
+        $quoteResponseTransfer = $this->cartReader->findQuoteByUuid($restQuoteRequestTransfer->getQuote());
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
+        }
+
+        return $this->persistentCartFacade->delete($quoteResponseTransfer->getQuoteTransfer());
     }
 }

@@ -8,8 +8,8 @@
 namespace Spryker\Glue\MultiCartsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToCartsRestApiClientInterface;
 use Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToMultiCartClientInterface;
-use Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToPersistentCartClientInterface;
 use Spryker\Glue\MultiCartsRestApi\Processor\Quote\MultipleQuoteCollectionReader;
 use Spryker\Glue\MultiCartsRestApi\Processor\Quote\MultipleQuoteCollectionReaderInterface;
 use Spryker\Glue\MultiCartsRestApi\Processor\Quote\MultipleQuoteCreator;
@@ -34,7 +34,7 @@ class MultiCartsRestApiFactory extends AbstractFactory
      */
     public function createMultipleQuoteCreator(): MultipleQuoteCreatorInterface
     {
-        return new MultipleQuoteCreator($this->getPersistentCartClient());
+        return new MultipleQuoteCreator($this->getCartsRestApiClient());
     }
 
     /**
@@ -46,10 +46,10 @@ class MultiCartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToPersistentCartClientInterface
+     * @return \Spryker\Glue\MultiCartsRestApi\Dependency\Client\MultiCartsRestApiToCartsRestApiClientInterface
      */
-    public function getPersistentCartClient(): MultiCartsRestApiToPersistentCartClientInterface
+    public function getCartsRestApiClient(): MultiCartsRestApiToCartsRestApiClientInterface
     {
-        return $this->getProvidedDependency(MultiCartsRestApiDependencyProvider::CLIENT_PERSISTENT_CART);
+        return $this->getProvidedDependency(MultiCartsRestApiDependencyProvider::CLIENT_CARTS_REST_API);
     }
 }

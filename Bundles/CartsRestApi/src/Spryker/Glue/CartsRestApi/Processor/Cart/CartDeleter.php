@@ -7,15 +7,11 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
-use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class CartDeleter implements CartDeleterInterface
 {
@@ -78,6 +74,6 @@ class CartDeleter implements CartDeleterInterface
             return $this->cartRestResponseBuilder->createFailedDeletingCartError();
         }
 
-        return $this->cartRestResponseBuilder->createCartRestResponse();
+        return $this->cartRestResponseBuilder->createCartRestResponse(null);
     }
 }

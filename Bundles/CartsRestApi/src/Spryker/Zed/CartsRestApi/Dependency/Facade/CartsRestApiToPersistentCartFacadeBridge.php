@@ -10,7 +10,6 @@ namespace Spryker\Zed\CartsRestApi\Dependency\Facade;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 
 class CartsRestApiToPersistentCartFacadeBridge implements CartsRestApiToPersistentCartFacadeInterface
 {

@@ -52,7 +52,10 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createCartCreator(): CartCreatorInterface
     {
-        return new CartCreator($this->getPersistentCartFacade());
+        return new CartCreator(
+            $this->getPersistentCartFacade(),
+            $this->createCartReader()
+        );
     }
 
     /**
@@ -60,7 +63,10 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createCartDeleter(): CartDeleterInterface
     {
-        return new CartDeleter($this->getPersistentCartFacade());
+        return new CartDeleter(
+            $this->getPersistentCartFacade(),
+            $this->createCartReader()
+        );
     }
 
     /**

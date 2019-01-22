@@ -36,7 +36,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCartRestResponse(?RestResourceInterface $cartRestResource = null): RestResponseInterface
+    public function createCartRestResponse(?RestResourceInterface $cartRestResource): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 

@@ -63,7 +63,7 @@ class CartUpdater implements CartUpdaterInterface
 
         $quoteTransfer = $restQuoteRequestTransfer->getQuote();
         $quoteResponseTransfer = $this->cartReader->findQuoteByUuid($quoteTransfer);
-        if (!$quoteResponseTransfer->getQuoteTransfer()) {
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
 
