@@ -105,11 +105,11 @@ interface CompanyUserClientInterface
 
     /**
      * Specification:
-     * - Returns company user information from session.
+     * - Returns company user information from session for current customer if exists.
      *
      * @api
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
-    public function findCompanyUser(): ?CompanyUserTransfer;
+    public function findCompanyUser();
 }

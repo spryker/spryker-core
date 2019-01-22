@@ -28,9 +28,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      */
     public function create(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestResponseTransfer = $this->getZedStub()->create($quoteRequestTransfer);
-
-        return $quoteRequestResponseTransfer;
+        return $this->getZedStub()->create($quoteRequestTransfer);
     }
 
     /**

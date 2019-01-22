@@ -17,5 +17,5 @@ class QuoteRequestConfig extends AbstractSharedConfig
     public const STATUS_CLOSED = 'Closed';
     public const STATUS_CANCELED = 'Canceled';
 
-    public const DEFAULT_VERSION = 1;
+    public const INITIAL_VERSION_NUMBER = 1;
 }

@@ -7,11 +7,9 @@
 
 namespace Spryker\Zed\QuoteRequest;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Shared\QuoteRequest\QuoteRequestConstants;
-use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class QuoteRequestConfig extends AbstractBundleConfig
@@ -29,7 +27,7 @@ class QuoteRequestConfig extends AbstractBundleConfig
      */
     public function getInitialVersion(): int
     {
-        return SharedQuoteRequestConfig::DEFAULT_VERSION;
+        return SharedQuoteRequestConfig::INITIAL_VERSION_NUMBER;
     }
 
     /**
@@ -37,12 +35,7 @@ class QuoteRequestConfig extends AbstractBundleConfig
      */
     public function getQuoteFieldsAllowedForSaving(): array
     {
-        return [
-            QuoteTransfer::ITEMS,
-            QuoteTransfer::TOTALS,
-            QuoteTransfer::CURRENCY,
-            QuoteTransfer::PRICE_MODE,
-        ];
+        return [];
     }
 
     /**
@@ -54,8 +47,7 @@ class QuoteRequestConfig extends AbstractBundleConfig
             ->setName(QuoteRequestConstants::NAME_QUOTE_REQUEST_REFERENCE);
 
         $sequenceNumberPrefixParts = [];
-        $sequenceNumberPrefixParts[] = 'RfQ'; // TODO: ask Karoly about it;
-        $sequenceNumberPrefixParts[] = $this->get(SequenceNumberConstants::ENVIRONMENT_PREFIX);
+        $sequenceNumberPrefixParts[] = $this->get(QuoteRequestConstants::ENVIRONMENT_PREFIX);
 
         $prefix = implode($this->getUniqueIdentifierSeparator(), $sequenceNumberPrefixParts) . $this->getUniqueIdentifierSeparator();
         $sequenceNumberSettingsTransfer->setPrefix($prefix);

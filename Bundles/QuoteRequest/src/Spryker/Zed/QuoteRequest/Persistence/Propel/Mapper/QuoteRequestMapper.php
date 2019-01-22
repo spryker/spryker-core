@@ -8,13 +8,11 @@
 namespace Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
-use Generated\Shared\Transfer\SpyQuoteRequestEntityTransfer;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequest;
 use Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServiceInterface;
 
-class QuoteRequestMapper implements QuoteRequestMapperInterface
+class QuoteRequestMapper
 {
     /**
      * @var \Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServiceInterface
@@ -30,41 +28,20 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyQuoteRequestEntityTransfer[] $quoteRequestEntityTransferCollection
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
-     */
-    public function mapEntityCollectionToTransferCollection(
-        array $quoteRequestEntityTransferCollection
-    ): QuoteRequestCollectionTransfer {
-        $quoteRequestItemCollectionTransfer = new QuoteRequestCollectionTransfer();
-
-        foreach ($quoteRequestEntityTransferCollection as $itemEntityTransfer) {
-            $quoteRequestItemTransfer = $this->mapQuoteRequestEntityToQuoteRequestTransfer(
-                $itemEntityTransfer,
-                new QuoteRequestTransfer()
-            );
-            $quoteRequestItemCollectionTransfer->addQuoteRequest($quoteRequestItemTransfer);
-        }
-
-        return $quoteRequestItemCollectionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyQuoteRequestEntityTransfer $quoteRequestEntityTransfer
+     * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequest $quoteRequestEntity
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
     public function mapQuoteRequestEntityToQuoteRequestTransfer(
-        SpyQuoteRequestEntityTransfer $quoteRequestEntityTransfer,
+        SpyQuoteRequest $quoteRequestEntity,
         QuoteRequestTransfer $quoteRequestTransfer
     ): QuoteRequestTransfer {
-        $quoteRequestTransfer = $quoteRequestTransfer->fromArray($quoteRequestEntityTransfer->modifiedToArray(), true);
+        $quoteRequestTransfer = $quoteRequestTransfer->fromArray($quoteRequestEntity->toArray(), true);
 
-        $quoteRequestTransfer->setMetadata($this->decodeMetadata($quoteRequestEntityTransfer));
+        $quoteRequestTransfer->setMetadata($this->decodeMetadata($quoteRequestEntity));
         $quoteRequestTransfer->setCompanyUser(
-            (new CompanyUserTransfer())->fromArray($quoteRequestEntityTransfer->getCompanyUser()->toArray(), true)
+            (new CompanyUserTransfer())->fromArray($quoteRequestEntity->getCompanyUser()->toArray(), true)
         );
 
         return $quoteRequestTransfer;
@@ -92,13 +69,13 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyQuoteRequestEntityTransfer $quoteRequestEntityTransfer
+     * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequest $quoteRequestEntity
      *
      * @return array
      */
-    protected function decodeMetadata(SpyQuoteRequestEntityTransfer $quoteRequestEntityTransfer): array
+    protected function decodeMetadata(SpyQuoteRequest $quoteRequestEntity): array
     {
-        return $this->encodingService->decodeJson($quoteRequestEntityTransfer->getMetadata(), true);
+        return $this->encodingService->decodeJson($quoteRequestEntity->getMetadata(), true);
     }
 
     /**

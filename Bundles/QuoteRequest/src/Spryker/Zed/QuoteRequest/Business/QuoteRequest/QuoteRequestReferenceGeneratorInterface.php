@@ -14,10 +14,11 @@ interface QuoteRequestReferenceGeneratorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param string $customerReference
      *
      * @return string
      */
-    public function generateQuoteRequestReference(QuoteRequestTransfer $quoteRequestTransfer);
+    public function generateQuoteRequestReference(QuoteRequestTransfer $quoteRequestTransfer, string $customerReference);
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer

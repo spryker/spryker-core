@@ -90,6 +90,6 @@ class QuoteRequestFacadeTest extends Unit
 
         // Assert
         $this->assertEquals(QuoteRequestConfig::STATUS_WAITING, $storedQuoteRequestTransfer->getStatus());
-        $this->assertEquals(QuoteRequestConfig::DEFAULT_VERSION, $storedQuoteRequestTransfer->getLatestVersion()->getVersion());
+        $this->assertEquals(QuoteRequestConfig::INITIAL_VERSION_NUMBER, $storedQuoteRequestTransfer->getLatestVersion()->getVersion());
     }
 }

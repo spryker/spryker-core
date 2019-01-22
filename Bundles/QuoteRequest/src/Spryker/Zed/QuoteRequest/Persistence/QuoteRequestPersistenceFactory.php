@@ -12,9 +12,7 @@ use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServiceInterface;
 use Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestMapper;
-use Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestMapperInterface;
 use Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestVersionMapper;
-use Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestVersionMapperInterface;
 use Spryker\Zed\QuoteRequest\QuoteRequestDependencyProvider;
 
 /**
@@ -29,7 +27,7 @@ class QuoteRequestPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createQuoteRequestQuery(): SpyQuoteRequestQuery
     {
-        return SpyQuoteRequestQuery::create();
+        return $this->getProvidedDependency(QuoteRequestDependencyProvider::PROPEL_QUERY_QUOTE_REQUEST);
     }
 
     /**
@@ -37,13 +35,13 @@ class QuoteRequestPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createQuoteRequestVersionQuery(): SpyQuoteRequestVersionQuery
     {
-        return SpyQuoteRequestVersionQuery::create();
+        return $this->getProvidedDependency(QuoteRequestDependencyProvider::PROPEL_QUERY_QUOTE_REQUEST_VERSION);
     }
 
     /**
-     * @return \Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestMapperInterface
+     * @return \Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestMapper
      */
-    public function createQuoteRequestMapper(): QuoteRequestMapperInterface
+    public function createQuoteRequestMapper(): QuoteRequestMapper
     {
         return new QuoteRequestMapper(
             $this->getUtilEncodingService()
@@ -51,9 +49,9 @@ class QuoteRequestPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestVersionMapperInterface
+     * @return \Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestVersionMapper
      */
-    public function createQuoteRequestVersionMapper(): QuoteRequestVersionMapperInterface
+    public function createQuoteRequestVersionMapper(): QuoteRequestVersionMapper
     {
         return new QuoteRequestVersionMapper(
             $this->getConfig(),

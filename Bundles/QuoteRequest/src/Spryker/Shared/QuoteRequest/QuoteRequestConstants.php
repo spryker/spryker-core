@@ -13,4 +13,5 @@ namespace Spryker\Shared\QuoteRequest;
 interface QuoteRequestConstants
 {
     public const NAME_QUOTE_REQUEST_REFERENCE = 'QuoteRequestReference';
+    public const ENVIRONMENT_PREFIX = 'ENVIRONMENT_PREFIX';
 }
