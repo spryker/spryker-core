@@ -31,33 +31,39 @@ class ArrayFilterTest extends Unit
      */
     public function testArrayFilterRecursive(): void
     {
+        //Arrange
         $arrayFilter = $this->createArrayFilterModel();
         $array = $this->tester->getArrayToFilter();
         $expected = $this->tester->getArrayFilterRecursiveExpectedArray($array);
 
+        //Act
         $result = $arrayFilter->arrayFilterRecursive($array);
 
+        //Assert
         $this->assertSame($expected, $result);
     }
 
     /**
      * @return void
      */
-    public function testfilterOutEmptyValuesRecursively(): void
+    public function testFilterOutEmptyValuesRecursively(): void
     {
+        //Arrange
         $arrayFilter = $this->createArrayFilterModel();
         $array = $this->tester->getArrayToFilter();
-        $expected = $this->tester->getfilterOutEmptyValuesRecursivelyExpectedArray($array);
+        $expected = $this->tester->getFilterOutEmptyValuesRecursivelyExpectedArray($array);
 
+        //Act
         $result = $arrayFilter->filterOutEmptyValuesRecursively($array);
 
+        //Assert
         $this->assertSame($expected, $result);
     }
 
     /**
      * @return \Spryker\Service\UtilSanitize\Model\ArrayFilter
      */
-    protected function createArrayFilterModel()
+    protected function createArrayFilterModel(): ArrayFilter
     {
         return new ArrayFilter();
     }

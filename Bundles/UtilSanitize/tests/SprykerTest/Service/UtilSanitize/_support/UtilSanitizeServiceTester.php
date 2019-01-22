@@ -88,7 +88,7 @@ class UtilSanitizeServiceTester extends Actor
      *
      * @return array
      */
-    public function getfilterOutEmptyValuesRecursivelyExpectedArray(array $array): array
+    public function getFilterOutEmptyValuesRecursivelyExpectedArray(array $array): array
     {
         return [
             'false' => $array['false'],
