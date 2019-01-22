@@ -33,8 +33,8 @@ class CustomerAccessPermissionClient extends AbstractClient implements CustomerA
      *
      * @return bool
      */
-    public function canLoggedOutCustomerSeeProductPrice(): bool
+    public function loggedOutCustomerCan(string $key): bool
     {
-        return $this->getFactory()->createCustomerAccess()->canLoggedOutCustomerSeeProductPrice();
+        return $this->getFactory()->createCustomerAccess()->loggedOutCustomerCan($key);
     }
 }

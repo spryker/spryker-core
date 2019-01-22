@@ -23,10 +23,12 @@ class AvailabilityNotificationToCustomerAccessPermissionClientBridge implements 
     }
 
     /**
+     * @param string $key
+     *
      * @return bool
      */
-    public function canLoggedOutCustomerSeeProductPrice(): bool
+    public function loggedOutCustomerCan(string $key): bool
     {
-        return $this->customerAccessPermissionClient->canLoggedOutCustomerSeeProductPrice();
+        return $this->customerAccessPermissionClient->loggedOutCustomerCan($key);
     }
 }

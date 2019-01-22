@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Client\CustomerAccessPermission\Plugin\SeePricePermissionPlugin;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationSubscribedMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationUnsubscribedMailTypePlugin;
@@ -193,7 +194,7 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
 
         $price = $this->findProductPrice($productConcreteTransfer);
 
-        if ($price !== null && $this->customerAccessPermissionClient->canLoggedOutCustomerSeeProductPrice()) {
+        if ($price !== null && $this->customerAccessPermissionClient->loggedOutCustomerCan(SeePricePermissionPlugin::KEY)) {
             $attributes['price'] = $price;
         }
 
