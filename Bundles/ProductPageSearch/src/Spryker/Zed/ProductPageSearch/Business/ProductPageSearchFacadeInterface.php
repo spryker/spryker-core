@@ -80,7 +80,7 @@ interface ProductPageSearchFacadeInterface
 
     /**
      * Specification:
-     * - Unpublishes concrete products by given abstract products and stores.
+     * - Unpublishes concrete products by given abstract product ids and store names.
      *
      * @api
      *

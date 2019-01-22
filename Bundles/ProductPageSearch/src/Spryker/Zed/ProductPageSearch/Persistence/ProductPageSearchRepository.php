@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\Map\SpyProductConcretePageSearchTableMap;
+use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
 use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -89,6 +90,26 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
                 Criteria::INNER_JOIN
             );
 
+            $andConditions = $this->buildStoresAndProductsConditions(
+                $productConcretePageSearchQuery,
+                $storesPerAbstractProducts
+            );
+
+        return $productConcretePageSearchQuery->where($andConditions, Criteria::LOGICAL_OR)
+            ->distinct()
+            ->find();
+    }
+
+    /**
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery $productConcretePageSearchQuery
+     * @param array $storesPerAbstractProducts
+     *
+     * @return array
+     */
+    protected function buildStoresAndProductsConditions(
+        SpyProductConcretePageSearchQuery $productConcretePageSearchQuery,
+        array $storesPerAbstractProducts
+    ): array {
         $andConditions = [];
         $conditionIndex = 1;
         foreach ($storesPerAbstractProducts as $abstractId => $stores) {
@@ -117,8 +138,6 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             }
         }
 
-        return $productConcretePageSearchQuery->where($andConditions, Criteria::LOGICAL_OR)
-            ->distinct()
-            ->find();
+        return $andConditions;
     }
 }
