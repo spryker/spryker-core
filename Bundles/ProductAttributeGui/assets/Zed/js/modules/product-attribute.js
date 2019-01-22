@@ -207,11 +207,18 @@ function AttributeManager() {
         var formDataJson = JSON.stringify(formData);
         var actionUrl = form.attr('action');
 
+        var actionData = {
+            'json': formDataJson,
+            'id-product-abstract': idProductAbstract,
+            'id-product': idProduct,
+            'csrf-token': csrfToken
+        };
+
         $.ajax({
             url: actionUrl,
             type: 'POST',
             dataType: 'application/json',
-            data: 'json=' + formDataJson + '&id-product-abstract=' + idProductAbstract + '&id-product=' + idProduct + '&csrf-token=' + csrfToken,
+            data: $.param(actionData),
             complete: function(jqXHR) {
                 if(jqXHR.readyState === 4) {
                     _attributeManager.resetRemovedKeysCache();

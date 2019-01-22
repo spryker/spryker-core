@@ -24,9 +24,11 @@ class AttributeCsrfForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $csrfTokenName = $this->getConfig()->getCrsfTokenName();
+
         $resolver->setDefaults([
             'csrf_protection' => true,
-            'csrf_field_name' => 'csrf-token',
+            'csrf_field_name' => $csrfTokenName,
         ]);
     }
 

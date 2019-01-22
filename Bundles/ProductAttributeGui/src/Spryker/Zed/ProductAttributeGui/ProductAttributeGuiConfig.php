@@ -21,11 +21,21 @@ class ProductAttributeGuiConfig extends AbstractBundleConfig
     public const ID_PRODUCT_ATTRIBUTE_KEY = 'id_product_attribute_key';
     public const LOCALE_CODE = 'locale_code';
 
+    public const CSRF_TOKEN_NAME = 'csrf-token';
+
     /**
      * @return string
      */
     public function getDefaultLocaleCode()
     {
         return static::DEFAULT_LOCALE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCrsfTokenName()
+    {
+        return static::CSRF_TOKEN_NAME;
     }
 }

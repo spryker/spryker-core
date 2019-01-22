@@ -19,8 +19,6 @@ class SaveController extends AbstractController
     public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     public const PARAM_ID_PRODUCT = 'id-product';
     public const PARAM_JSON = 'json';
-    public const PARAM_CSRF_TOKEN = 'csrf-token';
-
     public const MESSAGE_INVALID_CSRF_TOKEN = 'Invalid or missing CSRF token';
 
     /**
@@ -31,7 +29,7 @@ class SaveController extends AbstractController
     public function productAbstractAction(Request $request)
     {
         if (!$this->validateCsrfToken($request)) {
-            return $this->getResponse(static::MESSAGE_INVALID_CSRF_TOKEN, false, 403);
+            return $this->sendJsonResponse(static::MESSAGE_INVALID_CSRF_TOKEN, false, 403);
         }
 
         $idProductAbstract = $this->castId($request->get(
@@ -45,7 +43,7 @@ class SaveController extends AbstractController
             ->getProductAttributeFacade()
             ->saveAbstractAttributes($idProductAbstract, $data);
 
-        return $this->getResponse('Product abstract attributes saved');
+        return $this->sendJsonResponse('Product abstract attributes saved');
     }
 
     /**
@@ -56,7 +54,7 @@ class SaveController extends AbstractController
     public function productAction(Request $request)
     {
         if (!$this->validateCsrfToken($request)) {
-            return $this->getResponse(static::MESSAGE_INVALID_CSRF_TOKEN, false);
+            return $this->sendJsonResponse(static::MESSAGE_INVALID_CSRF_TOKEN, false);
         }
 
         $idProduct = $this->castId($request->get(
@@ -70,7 +68,7 @@ class SaveController extends AbstractController
             ->getProductAttributeFacade()
             ->saveConcreteAttributes($idProduct, $data);
 
-        return $this->getResponse('Product attributes saved');
+        return $this->sendJsonResponse('Product attributes saved');
     }
 
     /**
@@ -80,13 +78,17 @@ class SaveController extends AbstractController
      */
     protected function validateCsrfToken(Request $request): bool
     {
-        $csrfTokenValue = $request->request->get(static::PARAM_CSRF_TOKEN, '');
+        $csrfTokenName = $this->getFactory()
+            ->getConfig()
+            ->getCrsfTokenName();
+
+        $csrfTokenValue = $request->request->get($csrfTokenName, '');
 
         $csrfForm = $this
             ->getFactory()
             ->getAttributeCsrfForm()
             ->submit([
-                static::PARAM_CSRF_TOKEN => $csrfTokenValue,
+                $csrfTokenName => $csrfTokenValue,
             ]);
 
         return $csrfForm->isValid();
@@ -99,7 +101,7 @@ class SaveController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    protected function getResponse(string $message, bool $isSuccess = true, int $statusCode = 200): JsonResponse
+    protected function sendJsonResponse(string $message, bool $isSuccess = true, int $statusCode = 200): JsonResponse
     {
         return $this->jsonResponse([
             'success' => $isSuccess,
