@@ -50,4 +50,42 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
             ->createJsonEncoder()
             ->decode($jsonValue, $assoc, $depth, $options);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $data
+     * @param string $format
+     *
+     * @return string|null
+     *
+     * @throws \Spryker\Service\UtilEncoding\Exception\FormatNotSupportedException
+     */
+    public function encodeToFormat(array $data, string $format): ?string
+    {
+        return $this->getFactory()
+            ->createEncoder()
+            ->encodeToFormat($data, $format);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $data
+     * @param string $format
+     *
+     * @return array|null
+     *
+     * @throws \Spryker\Service\UtilEncoding\Exception\FormatNotSupportedException
+     */
+    public function decodeFromFormat(string $data, string $format): ?array
+    {
+        return $this->getFactory()
+            ->createDecoder()
+            ->decodeFromFormat($data, $format);
+    }
 }

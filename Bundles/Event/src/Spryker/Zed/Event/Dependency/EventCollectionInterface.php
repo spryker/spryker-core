@@ -45,7 +45,7 @@ interface EventCollectionInterface extends ArrayAccess, IteratorAggregate
      *
      * @throws \Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException
      *
-     * @return \Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface[]|\SplPriorityQueue
+     * @return \SplPriorityQueue|\Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface[]
      */
     public function get($eventName);
 }
