@@ -106,7 +106,7 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated There is no logic any more which requires this method. This functionality moved to Customer module.
+     * @deprecated Functionality was moved to Customer module. Method will be removed without replacement.
      *
      * @return string
      */
