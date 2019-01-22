@@ -378,4 +378,36 @@ class ContainerTest extends Unit
 
         $this->assertSame($service, $container->share($service));
     }
+
+    /**
+     * @return void
+     */
+    public function testDeprecatedMessageShouldBeShown(): void
+    {
+        $container = new Container();
+        $service = function () {
+        };
+        $container->set(Container::TRIGGER_ERROR, true);
+
+        ob_start();
+        $container->set(static::SERVICE, $service);
+        $message = ob_get_contents();
+
+        $this->assertIsString($message, 'Deprecated message should be shown');
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeprecatedMessageShouldntBeShown(): void
+    {
+        $container = new Container();
+        $service = function () {
+        };
+        ob_start();
+        $container->set(static::SERVICE, $service);
+        $message = ob_get_contents();
+
+        $this->assertEmpty($message, 'Deprecated message shouldn\'t be shown');
+    }
 }

@@ -15,6 +15,13 @@ use Spryker\Service\Container\Exception\NotFoundException;
 
 class Container implements ContainerInterface, ArrayAccess
 {
+    public const TRIGGER_ERROR = 'container_trigger_error';
+
+    /**
+     * @var bool
+     */
+    protected $isTriggerErrorEnabled;
+
     /**
      * @var mixed[]
      */
@@ -280,9 +287,7 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function offsetExists($offset): bool
     {
-        // @codingStandardsIgnoreStart
-        @trigger_error(sprintf('ArrayAccess the container in Spryker (e.g. isset($container[\'%s\'])) is no longer supported! Please use "ContainerInterface:has()" instead.', $offset), E_USER_DEPRECATED);
-        // @codingStandardsIgnoreEnd
+        $this->triggerError(sprintf('ArrayAccess the container in Spryker (e.g. isset($container[\'%s\'])) is no longer supported! Please use "ContainerInterface:has()" instead.', $offset));
 
         return $this->has($offset);
     }
@@ -296,9 +301,7 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function offsetGet($offset)
     {
-        // @codingStandardsIgnoreStart
-        @trigger_error(sprintf('ArrayAccess the container in Spryker (e.g. $foo = $container[\'%s\']) is no longer supported! Please use "ContainerInterface:get()" instead.', $offset), E_USER_DEPRECATED);
-        // @codingStandardsIgnoreEnd
+        $this->triggerError(sprintf('ArrayAccess the container in Spryker (e.g. $foo = $container[\'%s\']) is no longer supported! Please use "ContainerInterface:get()" instead.', $offset));
 
         return $this->get($offset);
     }
@@ -313,9 +316,7 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function offsetSet($offset, $value): void
     {
-        // @codingStandardsIgnoreStart
-        @trigger_error(sprintf('ArrayAccess the container in Spryker (e.g. $container[\'%s\'] = $foo) is no longer supported! Please use "ContainerInterface:set()" instead.', $offset), E_USER_DEPRECATED);
-        // @codingStandardsIgnoreEnd
+        $this->triggerError(sprintf('ArrayAccess the container in Spryker (e.g. $container[\'%s\'] = $foo) is no longer supported! Please use "ContainerInterface:set()" instead.', $offset));
 
         // When extend is called for a service which is not registered so far, we store the extension and wait for the service to be added.
         // For BC reasons code like `$container['service'] = $container->extend('service', callable)` is valid and still needs to be supported
@@ -341,11 +342,36 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function offsetUnset($offset): void
     {
-        // @codingStandardsIgnoreStart
-        @trigger_error(sprintf('ArrayAccess the container in Spryker (e.g. unset($container[\'%s\'])) is no longer supported! Please use "ContainerInterface:remove()" instead.', $offset), E_USER_DEPRECATED);
-        // @codingStandardsIgnoreEnd
+        $this->triggerError(sprintf('ArrayAccess the container in Spryker (e.g. unset($container[\'%s\'])) is no longer supported! Please use "ContainerInterface:remove()" instead.', $offset));
 
         $this->remove($offset);
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return void
+     */
+    protected function triggerError(string $message): void
+    {
+        if ($this->isTriggerErrorEnabled()) {
+            // phpcs:ignore
+            @trigger_error($message, E_USER_DEPRECATED);
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isTriggerErrorEnabled(): bool
+    {
+        if ($this->isTriggerErrorEnabled === null) {
+            $this->isTriggerErrorEnabled = $this->has(static::TRIGGER_ERROR)
+                ? $this->get(static::TRIGGER_ERROR)
+                : false;
+        }
+
+        return $this->isTriggerErrorEnabled;
     }
 
     /**
