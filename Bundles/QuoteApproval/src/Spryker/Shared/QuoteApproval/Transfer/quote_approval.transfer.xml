@@ -19,10 +19,16 @@
         <property name="updatedAt" type="string"/>
     </transfer>
 
+    <transfer name="QuoteApprovalRequestValidationResponse">
+        <property name="quote" type="Quote"/>
+        <property name="quoteApproval" type="QuoteApproval"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
     <transfer name="QuoteApprovalCreateRequest">
-        <property name="customerReference" type="string"/>
+        <property name="requesterCompanyUserId" type="int"/>
         <property name="idQuote" type="int"/>
-        <property name="idCompanyUser" type="int"/>
+        <property name="approverCompanyUserId" type="int"/>
     </transfer>
 
     <transfer name="QuoteApprovalRequest">
@@ -31,7 +37,7 @@
     </transfer>
 
     <transfer name="QuoteApprovalRemoveRequest">
-        <property name="customerReference" type="string"/>
+        <property name="idCompanyUser" type="int"/>
         <property name="idQuoteApproval" type="int"/>
     </transfer>
 

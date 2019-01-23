@@ -7,17 +7,13 @@
 
 namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface;
-use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface;
+use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToSharedCartFacadeInterface;
 use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface;
-use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface;
 
 class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
 {
@@ -27,14 +23,9 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
     protected const GLOSSARY_KEY_APPROVAL_REMOVED = 'quote_approval.removed';
 
     /**
-     * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface
+     * @var \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRequestValidatorInterface
      */
-    protected $cartFacade;
-
-    /**
-     * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface
-     */
-    protected $quoteFacade;
+    protected $quoteApprovalRequestValidator;
 
     /**
      * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToSharedCartFacadeInterface
@@ -47,29 +38,26 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
     protected $quoteApprovalEntityManager;
 
     /**
-     * @var \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface
+     * @var \Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface
      */
-    protected $quoteApprovalRepository;
+    protected $quoteLocker;
 
     /**
-     * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface $cartFacade
-     * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface $quoteFacade
+     * @param \Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface $quoteLocker
+     * @param \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRequestValidatorInterface $quoteApprovalRequestValidator
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToSharedCartFacadeInterface $sharedCartFacade
      * @param \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface $quoteApprovalEntityManager
-     * @param \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface $quoteApprovalRepository
      */
     public function __construct(
-        QuoteApprovalToCartFacadeInterface $cartFacade,
-        QuoteApprovalToQuoteFacadeInterface $quoteFacade,
+        QuoteLockerInterface $quoteLocker,
+        QuoteApprovalRequestValidatorInterface $quoteApprovalRequestValidator,
         QuoteApprovalToSharedCartFacadeInterface $sharedCartFacade,
-        QuoteApprovalEntityManagerInterface $quoteApprovalEntityManager,
-        QuoteApprovalRepositoryInterface $quoteApprovalRepository
+        QuoteApprovalEntityManagerInterface $quoteApprovalEntityManager
     ) {
-        $this->cartFacade = $cartFacade;
-        $this->quoteFacade = $quoteFacade;
+        $this->quoteLocker = $quoteLocker;
+        $this->quoteApprovalRequestValidator = $quoteApprovalRequestValidator;
         $this->sharedCartFacade = $sharedCartFacade;
         $this->quoteApprovalEntityManager = $quoteApprovalEntityManager;
-        $this->quoteApprovalRepository = $quoteApprovalRepository;
     }
 
     /**
@@ -93,19 +81,19 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
     {
         $quoteApprovalResponseTransfer = new QuoteApprovalResponseTransfer();
 
-        $quoteTransfer = $this->findQuoteByIdQuoteApproval($quoteApprovalRemoveRequestTransfer->getIdQuoteApproval());
+        $quoteApprovalRequestValidationReponse = $this->quoteApprovalRequestValidator
+            ->validateQuoteApprovalRemoveRequest($quoteApprovalRemoveRequestTransfer);
 
-        if (!$quoteTransfer
-            || $quoteTransfer->getCustomerReference() !== $quoteApprovalRemoveRequestTransfer->getCustomerReference()
-        ) {
+        if (!$quoteApprovalRequestValidationReponse->getIsSuccessful()) {
             $quoteApprovalResponseTransfer->setIsSuccessful(false)
                 ->setMessage($this->createMessageTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED));
 
             return $quoteApprovalResponseTransfer;
         }
 
-        $quoteTransfer = $this->cartFacade->unlockQuote($quoteTransfer);
-        $this->quoteFacade->updateQuote($quoteTransfer);
+        $quoteTransfer = $quoteApprovalRequestValidationReponse->getQuote();
+
+        $this->quoteLocker->unlockQuote($quoteTransfer);
 
         $this->sharedCartFacade->deleteShareForQuote($quoteTransfer);
         $this->quoteApprovalEntityManager->deleteQuoteApprovalById(
@@ -118,28 +106,6 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
         $quoteApprovalResponseTransfer->setIsSuccessful(true);
 
         return $quoteApprovalResponseTransfer;
-    }
-
-    /**
-     * @param int $idQuoteApproval
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|null
-     */
-    protected function findQuoteByIdQuoteApproval(int $idQuoteApproval): ?QuoteTransfer
-    {
-        $idQuote = $this->quoteApprovalRepository->findIdQuoteByIdQuoteApproval($idQuoteApproval);
-
-        if ($idQuote === null) {
-            return null;
-        }
-
-        $quoteTransfer = $this->quoteFacade->findQuoteById($idQuote)->getQuoteTransfer();
-
-        $quoteTransfer->setCustomer(
-            (new CustomerTransfer())->setCustomerReference($quoteTransfer->getCustomerReference())
-        );
-
-        return $quoteTransfer;
     }
 
     /**

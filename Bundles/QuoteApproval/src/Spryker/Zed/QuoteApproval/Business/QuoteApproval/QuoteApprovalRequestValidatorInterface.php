@@ -8,13 +8,30 @@
 namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
 use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer;
 
 interface QuoteApprovalRequestValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer
      */
-    public function isCreateQuoteApprovalRequestValid(QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer): bool;
+    public function validateQuoteApprovalCreateRequest(QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer): QuoteApprovalRequestValidationResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer
+     */
+    public function validateQuoteApprovalRemoveRequest(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): QuoteApprovalRequestValidationResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer
+     */
+    public function validateQuoteApprovalRequest(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalRequestValidationResponseTransfer;
 }
