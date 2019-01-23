@@ -15,7 +15,8 @@ interface PersistentCartClientInterface
 {
     /**
      * Specification:
-     * - Deletes existing quote in database
+     * - Deletes existing quote in database.
+     * - Response contains Store-aware list of quotes.
      *
      * @api
      *
@@ -27,7 +28,7 @@ interface PersistentCartClientInterface
 
     /**
      * Specification:
-     * - Create quote in database
+     * - Create quote in database.
      *
      * @api
      *
@@ -39,7 +40,7 @@ interface PersistentCartClientInterface
 
     /**
      * Specification:
-     * - Updates quote in database
+     * - Updates quote in database.
      *
      * @api
      *

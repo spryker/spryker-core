@@ -19,7 +19,6 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
 {
     /**
      * {@inheritdoc}
-     * - response contains Store-aware list of quotes
      *
      * @api
      *

@@ -149,7 +149,6 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
 
     /**
      * {@inheritdoc}
-     * - response contains Store-aware list of quotes
      *
      * @api
      *
