@@ -102,7 +102,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
 
     /**
      * Builds related stores and products conditions in the following relation:
-     * (store1 AND product1) OR (store2 AND product1) OR (store2 AND product2)
+     * "(store1 AND product1) OR (store2 AND product1) OR (store2 AND product2)"
      *
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery $productConcretePageSearchQuery
      * @param array $storesPerAbstractProducts
