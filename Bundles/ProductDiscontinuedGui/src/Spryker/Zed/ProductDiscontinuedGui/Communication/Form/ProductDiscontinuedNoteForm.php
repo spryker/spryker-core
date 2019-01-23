@@ -41,7 +41,7 @@ class ProductDiscontinuedNoteForm extends AbstractType
      *
      * @return $this
      */
-    protected function addNoteField(FormBuilderInterface $builder): self
+    protected function addNoteField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_NOTE, TextType::class, [
             'label' => false,
@@ -56,7 +56,7 @@ class ProductDiscontinuedNoteForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFkLocaleField(FormBuilderInterface $builder): self
+    protected function addFkLocaleField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FK_LOCALE, HiddenType::class, [
             'label' => false,
@@ -71,7 +71,7 @@ class ProductDiscontinuedNoteForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFkProductDiscontinuedField(FormBuilderInterface $builder): self
+    protected function addFkProductDiscontinuedField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FK_PRODUCT_DISCONTINUED, HiddenType::class, [
             'label' => false,
@@ -86,7 +86,7 @@ class ProductDiscontinuedNoteForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdProductDiscontinuedNoteField(FormBuilderInterface $builder): self
+    protected function addIdProductDiscontinuedNoteField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_PRODUCT_DISCONTINUED_NOTE, HiddenType::class, [
             'label' => false,

@@ -69,7 +69,7 @@ class ResourceRouter implements ResourceRouterInterface
 
         $resourceType = $this->getMainResource($resources);
         if ($httpRequest->getMethod() === Request::METHOD_OPTIONS) {
-            return $this->createOptionsRoute($resourceType);
+            return $this->createOptionsRoute($resourceType, $resources);
         }
 
         $route = $this->resourceRouteLoader->load(
@@ -197,13 +197,15 @@ class ResourceRouter implements ResourceRouterInterface
 
     /**
      * @param array $resourceType
+     * @param array $resources
      *
      * @return array
      */
-    protected function createOptionsRoute(array $resourceType): array
+    protected function createOptionsRoute(array $resourceType, array $resources): array
     {
         $route = $this->createRoute('GlueApplication', 'Options', 'resource-options');
         $route[RequestConstantsInterface::ATTRIBUTE_TYPE] = $resourceType[RequestConstantsInterface::ATTRIBUTE_TYPE];
+        $route[RequestConstantsInterface::ATTRIBUTE_ALL_RESOURCES] = $resources;
 
         return $route;
     }

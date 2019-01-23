@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
@@ -266,4 +267,16 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     public function createSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer;
+
+    /**
+     * Specification:
+     * - Creates array of unique order items.
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return array
+     */
+    public function getUniqueOrderItems(ArrayObject $itemTransfers): array;
 }
