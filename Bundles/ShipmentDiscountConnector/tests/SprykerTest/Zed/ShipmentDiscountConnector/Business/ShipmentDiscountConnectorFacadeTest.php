@@ -45,19 +45,19 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         $shipmentCarrierTransfer = (new ShipmentCarrierTransfer())
             ->setIdShipmentCarrier(1);
 
-        $shipmentTransfer = (new ShipmentTransfer())
-            ->setCarrier($shipmentCarrierTransfer);
-
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->fromArray([
             'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
         ]);
 
-        $itemTransfer = new ItemTransfer();
+        $shipmentTransfer = (new ShipmentTransfer())
+            ->setCarrier($shipmentCarrierTransfer)
+            ->setExpense($expenseTransfer);
+
+        $itemTransfer = (new ItemTransfer())
+            ->setShipment($shipmentTransfer);
         $quoteTransfer = (new QuoteTransfer())
-            ->setShipment($shipmentTransfer)
-            ->setItems(new ArrayObject([$itemTransfer]))
-            ->setExpenses(new ArrayObject([$expenseTransfer]));
+            ->addItem($itemTransfer);
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
@@ -81,19 +81,19 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         $shipmentMethodTransfer = (new ShipmentMethodTransfer())
             ->setIdShipmentMethod(1);
 
-        $shipmentTransfer = (new ShipmentTransfer())
-            ->setMethod($shipmentMethodTransfer);
-
         $expenseTransfer = (new ExpenseTransfer())
             ->fromArray([
                 'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
             ]);
 
-        $itemTransfer = new ItemTransfer();
+        $shipmentTransfer = (new ShipmentTransfer())
+            ->setExpense($expenseTransfer)
+            ->setMethod($shipmentMethodTransfer);
+
+        $itemTransfer = (new ItemTransfer())
+            ->setShipment($shipmentTransfer);
         $quoteTransfer = (new QuoteTransfer())
-            ->setShipment($shipmentTransfer)
-            ->setItems(new ArrayObject([$itemTransfer]))
-            ->setExpenses(new ArrayObject([$expenseTransfer]));
+            ->addItem($itemTransfer);
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
@@ -124,7 +124,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         ]);
 
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setItems(new ArrayObject([$itemTransfer]));
+        $quoteTransfer->addItem($itemTransfer);
         $quoteTransfer->setExpenses(new ArrayObject([$expenseTransfer]));
 
         $clauseTransfer = new ClauseTransfer();
@@ -149,18 +149,19 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         $shipmentCarrierTransfer = (new ShipmentCarrierTransfer())
             ->setIdShipmentCarrier(1);
 
-        $shipmentTransfer = (new ShipmentTransfer())
-            ->setCarrier($shipmentCarrierTransfer);
-
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->fromArray([
             'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
         ]);
 
+        $shipmentTransfer = (new ShipmentTransfer())
+            ->setCarrier($shipmentCarrierTransfer)
+            ->setExpense($expenseTransfer);
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setShipment($shipmentTransfer);
+
         $quoteTransfer = (new QuoteTransfer())
-            ->setShipment($shipmentTransfer)
-            ->setItems(new ArrayObject([new ItemTransfer()]))
-            ->setExpenses(new ArrayObject([$expenseTransfer]));
+            ->addItem($itemTransfer);
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
@@ -185,18 +186,20 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         $shipmentMethodTransfer = (new ShipmentMethodTransfer())
             ->setIdShipmentMethod(1);
 
-        $shipmentTransfer = (new ShipmentTransfer())
-            ->setMethod($shipmentMethodTransfer);
-
         $expenseTransfer = (new ExpenseTransfer())
             ->fromArray([
                 'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
             ]);
 
+        $shipmentTransfer = (new ShipmentTransfer())
+            ->setMethod($shipmentMethodTransfer)
+            ->setExpense($expenseTransfer);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setShipment($shipmentTransfer);
+
         $quoteTransfer = (new QuoteTransfer())
-            ->setShipment($shipmentTransfer)
-            ->setItems(new ArrayObject([new ItemTransfer()]))
-            ->setExpenses(new ArrayObject([$expenseTransfer]));
+            ->addItem($itemTransfer);
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
@@ -217,16 +220,19 @@ class ShipmentDiscountConnectorFacadeTest extends Test
      */
     public function testCollectDiscountByShipmentPrice()
     {
-        $itemTransfer = new ItemTransfer();
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->fromArray([
             'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
             'unitGrossPrice' => 2500,
         ]);
 
+        $shipmentTransfer = new ShipmentTransfer();
+        $shipmentTransfer->setExpense($expenseTransfer);
+        $itemTransfer = (new ItemTransfer())
+            ->setShipment($shipmentTransfer);
+
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setItems(new ArrayObject([$itemTransfer]));
-        $quoteTransfer->setExpenses(new ArrayObject([$expenseTransfer]));
+        $quoteTransfer->addItem($itemTransfer);
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
@@ -250,18 +256,19 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         $shipmentCarrierTransfer = (new ShipmentCarrierTransfer())
             ->setIdShipmentCarrier(1);
 
-        $shipmentTransfer = (new ShipmentTransfer())
-            ->setCarrier($shipmentCarrierTransfer);
-
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->fromArray([
             'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
         ]);
+        $shipmentTransfer = (new ShipmentTransfer())
+            ->setCarrier($shipmentCarrierTransfer)
+            ->setExpense($expenseTransfer);
+
+        $itemTransfer = (new ItemTransfer())
+            ->setShipment($shipmentTransfer);
 
         $quoteTransfer = (new QuoteTransfer())
-            ->setShipment($shipmentTransfer)
-            ->setItems(new ArrayObject([new ItemTransfer()]))
-            ->setExpenses(new ArrayObject([$expenseTransfer]));
+            ->addItem($itemTransfer);
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
@@ -286,18 +293,18 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         $shipmentMethodTransfer = (new ShipmentMethodTransfer())
             ->setIdShipmentMethod(1);
 
-        $shipmentTransfer = (new ShipmentTransfer())
-            ->setMethod($shipmentMethodTransfer);
-
         $expenseTransfer = (new ExpenseTransfer())
             ->fromArray([
                 'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
             ]);
+        $shipmentTransfer = (new ShipmentTransfer())
+            ->setMethod($shipmentMethodTransfer)
+            ->setExpense($expenseTransfer);
+        $itemTransfer = (new ItemTransfer())
+            ->setShipment($shipmentTransfer);
 
         $quoteTransfer = (new QuoteTransfer())
-            ->setShipment($shipmentTransfer)
-            ->setItems(new ArrayObject([new ItemTransfer()]))
-            ->setExpenses(new ArrayObject([$expenseTransfer]));
+            ->addItem($itemTransfer);
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
@@ -324,10 +331,12 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
             'unitGrossPrice' => 2500,
         ]);
+        $shipmentTransfer = (new ShipmentTransfer())
+            ->setExpense($expenseTransfer);
+        $itemTransfer->setShipment($shipmentTransfer);
 
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setItems(new ArrayObject([$itemTransfer]));
-        $quoteTransfer->setExpenses(new ArrayObject([$expenseTransfer]));
+        $quoteTransfer->addItem($itemTransfer);
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([

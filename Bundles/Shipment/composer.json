@@ -27,7 +27,8 @@
     "spryker/country": "*",
     "spryker/propel": "*",
     "spryker/testify": "*",
-    "spryker/zed-navigation": "*"
+    "spryker/zed-navigation": "*",
+    "spryker/oms": "*"
   },
   "suggest": {
     "spryker/calculation": "If you want to use Calculation plugins.",

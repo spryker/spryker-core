@@ -85,6 +85,8 @@ interface ProductOptionQueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Use queryTaxSetByIdProductOptionValueAndCountryIso2Code() instead.
+     *
      * @param int[] $allIdOptionValueUsages
      * @param string $countryIso2Code
      *

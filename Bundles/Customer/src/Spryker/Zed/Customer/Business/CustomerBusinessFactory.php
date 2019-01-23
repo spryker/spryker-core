@@ -24,7 +24,6 @@ use Spryker\Zed\Customer\Business\Sales\CustomerOrderHydrator;
 use Spryker\Zed\Customer\Business\StrategyResolver\OrderSaverStrategyResolver;
 use Spryker\Zed\Customer\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
-use Spryker\Zed\Customer\Dependency\Service\CustomerToCustomerServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -131,7 +130,11 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerOrderSaver()
     {
-        return new ObsoleteCustomerOrderSaver($this->createCustomer(), $this->createAddress());
+        return new ObsoleteCustomerOrderSaver(
+            $this->createCustomer(),
+            $this->createAddress(),
+            $this->getRepository()
+        );
     }
 
     /**
@@ -141,7 +144,11 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createCheckoutCustomerOrderSaver()
     {
-        return new CustomerOrderSaver($this->createCustomer(), $this->createAddress());
+        return new CustomerOrderSaver(
+            $this->createCustomer(),
+            $this->createAddress(),
+            $this->getRepository()
+        );
     }
 
     /**

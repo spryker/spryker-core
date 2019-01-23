@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Checkout\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
@@ -286,7 +287,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function getBaseQuoteTransfer()
+    protected function getBaseQuoteTransfer(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
 
@@ -343,6 +344,16 @@ class CheckoutFacadeTest extends Unit
             ->setSpyProduct($productConcrete2)
             ->save();
 
+        $shippingAddress = $this->createAddressTransfer();
+        $shippingAddress
+            ->setAddress2('84')
+            ->setZipCode('12346')
+            ->setCity('Entenhausen2');
+
+        $shipmentTransfer = new ShipmentTransfer();
+        $shipmentTransfer->setMethod(new ShipmentMethodTransfer());
+        $shipmentTransfer->setShippingAddress($shippingAddress);
+
         $item1 = new ItemTransfer();
         $item1
             ->setUnitPrice(4000)
@@ -350,6 +361,7 @@ class CheckoutFacadeTest extends Unit
             ->setQuantity(1)
             ->setUnitGrossPrice(3000)
             ->setSumGrossPrice(3000)
+            ->setShipment($shipmentTransfer)
             ->setName('Product1');
 
         $item2 = new ItemTransfer();
@@ -359,6 +371,7 @@ class CheckoutFacadeTest extends Unit
             ->setQuantity(1)
             ->setUnitGrossPrice(4000)
             ->setSumGrossPrice(4000)
+            ->setShipment($shipmentTransfer)
             ->setName('Product2');
 
         $quoteTransfer->addItem($item1);
@@ -371,43 +384,15 @@ class CheckoutFacadeTest extends Unit
 
         $quoteTransfer->setTotals($totals);
 
-        $billingAddress = new AddressTransfer();
-        $shippingAddress = new AddressTransfer();
-
-        $billingAddress
-            ->setIso2Code('xi')
-            ->setEmail('max@mustermann.de')
-            ->setFirstName('Max')
-            ->setLastName('Mustermann')
-            ->setAddress1('Straße')
-            ->setAddress2('82')
-            ->setZipCode('12345')
-            ->setCity('Entenhausen');
-        $shippingAddress
-            ->setIso2Code('xi')
-            ->setFirstName('Max')
-            ->setLastName('Mustermann')
-            ->setEmail('max@mustermann.de')
-            ->setAddress1('Straße')
-            ->setAddress2('84')
-            ->setZipCode('12346')
-            ->setCity('Entenhausen2');
-
+        $billingAddress = $this->createAddressTransfer();
         $quoteTransfer->setBillingAddress($billingAddress);
-        $quoteTransfer->setShippingAddress($shippingAddress);
 
         $customerTransfer = new CustomerTransfer();
-
         $customerTransfer
             ->setIsGuest(false)
             ->setEmail('max@mustermann.de');
 
         $quoteTransfer->setCustomer($customerTransfer);
-
-        $shipment = new ShipmentTransfer();
-        $shipment->setMethod(new ShipmentMethodTransfer());
-
-        $quoteTransfer->setShipment($shipment);
 
         $paymentTransfer = new PaymentTransfer();
         $paymentTransfer->setPaymentSelection('no_payment');
@@ -551,5 +536,13 @@ class CheckoutFacadeTest extends Unit
         $salesBusinessFactoryMock->setContainer($container);
 
         return $salesBusinessFactoryMock;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function createAddressTransfer(): AddressTransfer
+    {
+        return (new AddressBuilder())->build();
     }
 }

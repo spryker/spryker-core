@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 
 interface ShipmentMapperInterface

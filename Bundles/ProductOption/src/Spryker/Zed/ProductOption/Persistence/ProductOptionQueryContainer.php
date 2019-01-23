@@ -390,6 +390,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @api
      *
+     * @deprecated Use queryTaxSetByIdProductOptionValueAndCountryIso2Codes() instead.
+     *
      * @param int[] $allIdOptionValueUsages
      * @param string $countryIso2Code
      *

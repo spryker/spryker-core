@@ -44,6 +44,7 @@ class CustomerMapper extends BaseMapper
      */
     public function map()
     {
+        // todo: Split Delivery. Refactor shipment to new way and refactor RatepayRequestTransfer
         $billingAddress = $this->ratepayPaymentRequestTransfer->requireBillingAddress()->getBillingAddress();
         $shippingAddress = $this->ratepayPaymentRequestTransfer->requireBillingAddress()->getShippingAddress();
 

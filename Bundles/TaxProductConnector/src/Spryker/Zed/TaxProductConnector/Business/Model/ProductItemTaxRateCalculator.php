@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\TaxProductConnector\Business\Model;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
@@ -29,6 +32,11 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected $taxFacade;
 
     /**
+     * @var string
+     */
+    protected $defaultTaxCountryIso2Code;
+
+    /**
      * @param \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface $taxQueryContainer
      * @param \Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface $taxFacade
      */
@@ -45,86 +53,145 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $countryIso2Code = $this->getShippingCountryIso2Code($quoteTransfer);
-        $allIdProductAbstracts = $this->getAllIdAbstractProducts($quoteTransfer);
+        $countryIso2CodesByIdProductAbstracts = $this->getCountryIso2CodesByIdProductAbstracts($quoteTransfer->getItems());
 
-        if (!$countryIso2Code) {
-            $countryIso2Code = $this->taxFacade->getDefaultTaxCountryIso2Code();
+        $taxRates = $this->findTaxRatesByAllIdProductAbstractsAndCountryIso2Codes($countryIso2CodesByIdProductAbstracts);
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $taxRate = $this->getEffectiveTaxRate(
+                $taxRates,
+                $itemTransfer->getIdProductAbstract(),
+                $countryIso2CodesByIdProductAbstracts[$itemTransfer->getIdProductAbstract()]
+            );
+            $itemTransfer->setTaxRate($taxRate);
         }
-
-        $taxRates = $this->findTaxRatesByAllIdProductAbstractsAndCountryIso2Code($allIdProductAbstracts, $countryIso2Code);
-        $this->setItemsTax($quoteTransfer, $taxRates);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return string[]
+     */
+    protected function getCountryIso2CodesByIdProductAbstracts(ArrayObject $itemTransfers): array
+    {
+        $countryIso2CodesByIdProductAbstracts = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $countryIso2CodesByIdProductAbstracts[$itemTransfer->getIdProductAbstract()] = $this->getShippingCountryIso2CodeByItem($itemTransfer);
+        }
+
+        return $countryIso2CodesByIdProductAbstracts;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultTaxCountryIso2Code(): string
+    {
+        if ($this->defaultTaxCountryIso2Code === null) {
+            $this->defaultTaxCountryIso2Code = $this->taxFacade->getDefaultTaxCountryIso2Code();
+        }
+
+        return $this->defaultTaxCountryIso2Code;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return string
      */
-    protected function getShippingCountryIso2Code(QuoteTransfer $quoteTransfer)
+    protected function getShippingCountryIso2CodeByItem(ItemTransfer $itemTransfer): string
     {
-        if ($quoteTransfer->getShippingAddress() === null) {
-            return $this->taxFacade->getDefaultTaxCountryIso2Code();
+        if ($this->hasItemShippingAddressDefaultTaxCountryIso2Code($itemTransfer)) {
+            return $itemTransfer->getShipment()->getShippingAddress()->getIso2Code();
         }
 
-        return $quoteTransfer->getShippingAddress()->getIso2Code();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    protected function getAllIdAbstractProducts(QuoteTransfer $quoteTransfer)
-    {
-        $allIdProductAbstracts = [];
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $allIdProductAbstracts[] = $itemTransfer->getIdProductAbstract();
-        }
-
-        return $allIdProductAbstracts;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $taxRates
-     *
-     * @return void
-     */
-    protected function setItemsTax(QuoteTransfer $quoteTransfer, array $taxRates)
-    {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->setTaxRate($this->getEffectiveTaxRate($taxRates, $itemTransfer->getIdProductAbstract()));
-        }
+        return $this->getDefaultTaxCountryIso2Code();
     }
 
     /**
      * @param array $taxRates
      * @param int $idProductAbstract
+     * @param string $countryIso2Code
      *
      * @return float
      */
-    protected function getEffectiveTaxRate(array $taxRates, $idProductAbstract)
+    protected function getEffectiveTaxRate(array $taxRates, int $idProductAbstract, string $countryIso2Code): float
     {
-        foreach ($taxRates as $taxRate) {
-            if ((int)$taxRate[TaxProductConnectorQueryContainer::COL_ID_ABSTRACT_PRODUCT] === (int)$idProductAbstract) {
-                return (float)$taxRate[TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE];
-            }
+        $key = $this->getTaxGroupedKey($idProductAbstract, $countryIso2Code);
+
+        if (isset($taxRates[$key])) {
+            return (float)$taxRates[$key];
         }
 
         return $this->taxFacade->getDefaultTaxRate();
     }
 
     /**
-     * @param array $allIdProductAbstracts
-     * @param string $countryIso2Code
+     * @param string[] $countryIso2CodesByIdProductAbstracts
      *
      * @return array
      */
-    protected function findTaxRatesByAllIdProductAbstractsAndCountryIso2Code(array $allIdProductAbstracts, $countryIso2Code)
+    protected function findTaxRatesByAllIdProductAbstractsAndCountryIso2Codes(array $countryIso2CodesByIdProductAbstracts): array
     {
-        return $this->taxQueryContainer->queryTaxSetByIdProductAbstractAndCountryIso2Code($allIdProductAbstracts, $countryIso2Code)
-            ->find()
-            ->toArray();
+        $groupedResults = [];
+        $foundResults = $this->taxQueryContainer
+            ->queryTaxSetByIdProductAbstractAndCountryIso2Codes(
+                $this->getIdProductAbstracts($countryIso2CodesByIdProductAbstracts),
+                $this->getUniqueCountryIso2Codes($countryIso2CodesByIdProductAbstracts)
+            )
+            ->find();
+
+        foreach ($foundResults as $data) {
+            $key = $this->getTaxGroupedKey($data[TaxProductConnectorQueryContainer::COL_ID_ABSTRACT_PRODUCT], $data[SpyCountryTableMap::COL_ISO2_CODE]);
+            $groupedResults[$key] = $data[TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE];
+        }
+
+        return $groupedResults;
+    }
+
+    /**
+     * @param string[] $countryIso2CodesByIdProductAbstracts
+     *
+     * @return int[]
+     */
+    protected function getIdProductAbstracts(array $countryIso2CodesByIdProductAbstracts): array
+    {
+        return array_keys($countryIso2CodesByIdProductAbstracts);
+    }
+
+    /**
+     * @param string[] $countryIso2Codes
+     *
+     * @return string[]
+     */
+    protected function getUniqueCountryIso2Codes(array $countryIso2Codes): array
+    {
+        return array_unique($countryIso2Codes);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $countryIso2Code
+     *
+     * @return string
+     */
+    protected function getTaxGroupedKey(int $idProductAbstract, string $countryIso2Code): string
+    {
+        return $countryIso2Code . $idProductAbstract;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function hasItemShippingAddressDefaultTaxCountryIso2Code(ItemTransfer $itemTransfer): bool
+    {
+        $shipmentTransfer = $itemTransfer->getShipment();
+
+        return $shipmentTransfer !== null &&
+            $shipmentTransfer->getShippingAddress() !== null &&
+            $shipmentTransfer->getShippingAddress()->getIso2Code() !== null;
     }
 }

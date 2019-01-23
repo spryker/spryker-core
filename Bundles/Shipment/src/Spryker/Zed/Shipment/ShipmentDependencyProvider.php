@@ -55,6 +55,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container = $this->addMoneyFacade($container);
+        $container = $this->addSalesFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addCurrencyFacade($container);
         $container = $this->addMoneyCollectionFormTypePlugin($container);

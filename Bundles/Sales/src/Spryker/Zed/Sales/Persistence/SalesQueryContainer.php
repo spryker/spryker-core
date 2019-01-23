@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -314,5 +315,23 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
             ->select(['Count'])
             ->groupBySku()
             ->orderByCount();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
+     */
+    public function queryShipmentByTransfer(ShipmentTransfer $shipmentTransfer): SpySalesShipmentQuery
+    {
+        return $this
+            ->getFactory()
+            ->createSpySalesShipmentQuery()
+            ->filterByRequestedDeliveryDate($shipmentTransfer->getRequestedDeliveryDate())
+            ->filterByFkSalesOrderAddress($shipmentTransfer->getShippingAddress()->getIdSalesOrderAddress());
     }
 }

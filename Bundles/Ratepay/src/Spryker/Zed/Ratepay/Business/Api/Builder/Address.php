@@ -35,6 +35,7 @@ class Address extends AbstractBuilder implements BuilderInterface
      */
     public function buildData()
     {
+        // todo: Split Delivery. Refactor shipment to new way and refactor RatepayRequestTransfer
         $addressTransfer = ($this->addressType == Constants::REQUEST_MODEL_ADDRESS_TYPE_BILLING)
             ? $this->requestTransfer->getBillingAddress()
             : $this->requestTransfer->getShippingAddress();

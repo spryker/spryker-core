@@ -120,6 +120,7 @@ class OrderPaymentRequestMapper extends BaseMapper
      */
     protected function mapAddresses()
     {
+        // todo: Split Delivery. Refactor shipment to new way and refactor RatepayRequestTransfer
         $billingAddress = $this->getAddressTransfer($this->orderEntity->getBillingAddress());
         $shippingAddress = $this->getAddressTransfer($this->orderEntity->getShippingAddress());
 

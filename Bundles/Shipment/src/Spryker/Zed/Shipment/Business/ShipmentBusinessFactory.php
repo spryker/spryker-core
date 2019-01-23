@@ -30,8 +30,9 @@ use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
- * @method \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
  */
 class ShipmentBusinessFactory extends AbstractBusinessFactory
@@ -114,7 +115,11 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentOrderSaver()
     {
-        return new ShipmentOrderSaver($this->getSalesQueryContainer());
+        return new ShipmentOrderSaver(
+            $this->getSalesQueryContainer(),
+            $this->getSalesFacade(),
+            $this->getShipmentService()
+        );
     }
 
     /**
@@ -124,7 +129,11 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createCheckoutShipmentOrderSaver()
     {
-        return new CheckoutShipmentOrderSaver($this->getSalesQueryContainer());
+        return new CheckoutShipmentOrderSaver(
+            $this->getEntityManager(),
+            $this->getSalesFacade(),
+            $this->getShipmentService()
+        );
     }
 
     /**
@@ -198,6 +207,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use getSalesFacade() instead.
+     *
      * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected function getSalesQueryContainer()
