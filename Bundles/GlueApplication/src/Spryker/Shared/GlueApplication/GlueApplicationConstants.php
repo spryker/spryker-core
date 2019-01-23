@@ -27,4 +27,13 @@ interface GlueApplicationConstants
      * @api
      */
     public const GLUE_APPLICATION_REST_DEBUG = 'GLUE_APPLICATION_REST_DEBUG';
+
+    /**
+     * Specification:
+     *  - The domain name returned as allowed in 'access-control-allow-origin' CORS headers.
+     *  - Ether '*' or single domain should be passed, due to CORS policy.
+     *
+     * @api
+     */
+    public const GLUE_APPLICATION_CORS_ALLOW_ORIGIN = 'GLUE_APPLICATION_CORS_ALLOW_ORIGIN';
 }
