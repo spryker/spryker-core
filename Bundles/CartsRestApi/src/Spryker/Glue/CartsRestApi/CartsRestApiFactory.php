@@ -135,7 +135,7 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new CartItemDeleter(
             $this->getCartClient(),
-            $this->getResourceBuilder(),
+            $this->createCartRestResponseBuilder(),
             $this->getQuoteClient(),
             $this->createCartReader()
         );

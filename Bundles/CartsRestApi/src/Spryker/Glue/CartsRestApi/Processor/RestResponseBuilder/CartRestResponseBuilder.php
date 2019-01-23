@@ -72,9 +72,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
      */
     public function createCartIdMissingErrorResponse(): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        return $restResponse->addError($this->createRestErrorMessageTransfer(
+        return $this->restResourceBuilder->createRestResponse()->addError($this->createRestErrorMessageTransfer(
             CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING,
             Response::HTTP_BAD_REQUEST,
             CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
@@ -86,9 +84,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
      */
     public function createCartNotFoundErrorResponse(): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        return $restResponse->addError($this->createRestErrorMessageTransfer(
+        return $this->restResourceBuilder->createRestResponse()->addError($this->createRestErrorMessageTransfer(
             CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND,
             Response::HTTP_NOT_FOUND,
             CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND
@@ -138,9 +134,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
      */
     public function createFailedDeletingCartErrorResponse(): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        return $restResponse->addError($this->createRestErrorMessageTransfer(
+        return $this->restResourceBuilder->createRestResponse()->addError($this->createRestErrorMessageTransfer(
             CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART,
             Response::HTTP_UNPROCESSABLE_ENTITY,
             CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART
@@ -166,6 +160,42 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
         }
 
         return $restResponse;
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createFailedDeletingCartItemErrorResponse(): RestResponseInterface
+    {
+        return $this->restResourceBuilder->createRestResponse()->addError($this->createRestErrorMessageTransfer(
+            CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART_ITEM,
+            Response::HTTP_UNPROCESSABLE_ENTITY,
+            CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART_ITEM
+        ));
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCartItemNotFoundErrorResponse(): RestResponseInterface
+    {
+        return $this->restResourceBuilder->createRestResponse()->addError($this->createRestErrorMessageTransfer(
+            CartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND,
+            Response::HTTP_NOT_FOUND,
+            CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND
+        ));
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createMissingRequiredParameterErrorResponse(): RestResponseInterface
+    {
+        return $this->restResourceBuilder->createRestResponse()->addError($this->createRestErrorMessageTransfer(
+            CartsRestApiConfig::RESPONSE_CODE_MISSING_REQUIRED_PARAMETER,
+            Response::HTTP_BAD_REQUEST,
+            CartsRestApiConfig::EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER
+        ));
     }
 
     /**
