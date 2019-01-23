@@ -21,29 +21,9 @@ use Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface;
 class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
 {
     /**
-     * @var \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface
-     */
-    protected $customerRepository;
-
-    /**
      * @var \Generated\Shared\Transfer\AddressTransfer[]
      */
     protected $existingAddresses = [];
-
-    /**
-     * @param \Spryker\Zed\Customer\Business\Customer\CustomerInterface $customer
-     * @param \Spryker\Zed\Customer\Business\Customer\AddressInterface $address
-     * @param \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface $customerRepository
-     */
-    public function __construct(
-        CustomerInterface $customer,
-        AddressInterface $address,
-        CustomerRepositoryInterface $customerRepository
-    ) {
-        parent::__construct($customer, $address);
-
-        $this->customerRepository = $customerRepository;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

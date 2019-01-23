@@ -10,7 +10,7 @@ namespace Spryker\Zed\Sales\Business\Model\Address;
 use Generated\Shared\Transfer\AddressTransfer;
 
 /**
- * @deprecated Use \Spryker\Zed\Sales\Business\Model\Address\OrderAddressWriterInterface interface instead.
+ * @deprecated Use \Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface interface instead.
  */
 interface OrderAddressUpdaterInterface
 {

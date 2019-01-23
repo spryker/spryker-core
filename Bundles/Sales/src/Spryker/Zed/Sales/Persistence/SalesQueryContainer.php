@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Persistence;
 
+use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;

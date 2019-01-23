@@ -9,9 +9,9 @@ namespace Spryker\Zed\Sales\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriter;
+use Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriter;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface;
-use Spryker\Zed\Sales\Business\Model\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderOverviewInterface;
@@ -288,21 +288,9 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\Address\OrderAddressWriterInterface
-     */
-    public function createOrderAddressWriter()
-    {
-        return new OrderAddressWriter(
-            $this->getEntityManager(),
-            $this->getRepository(),
-            $this->getCountryFacade()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface
      */
-    public function createOrderAddressWriter()
+    public function createOrderAddressWriter(): OrderAddressWriterInterface
     {
         return new OrderAddressWriter(
             $this->getEntityManager(),
