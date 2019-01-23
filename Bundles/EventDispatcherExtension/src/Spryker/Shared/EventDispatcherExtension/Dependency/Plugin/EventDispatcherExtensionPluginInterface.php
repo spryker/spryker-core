@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\EventDispatcherExtension\Dependency\Plugin;
 
+use Spryker\Service\Container\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 interface EventDispatcherExtensionPluginInterface
@@ -17,7 +18,9 @@ interface EventDispatcherExtensionPluginInterface
      *
      * @api
      *
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
      * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
      */
-    public function getSubscriber(): EventSubscriberInterface;
+    public function getSubscriber(ContainerInterface $container): EventSubscriberInterface;
 }

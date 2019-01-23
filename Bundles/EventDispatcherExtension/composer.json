@@ -8,10 +8,12 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/container": "*",
     "spryker/symfony": "^3.0.0",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/container": "If you want to use EventDispatcherExtensionPlugin",
     "spryker/symfony": "If you want to use EventDispatcherExtensionPlugin"
   },
   "autoload": {
