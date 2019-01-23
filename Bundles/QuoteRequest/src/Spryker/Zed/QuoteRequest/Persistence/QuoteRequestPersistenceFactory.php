@@ -25,17 +25,17 @@ class QuoteRequestPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery
      */
-    public function createQuoteRequestQuery(): SpyQuoteRequestQuery
+    public function getQuoteRequestPropelQuery(): SpyQuoteRequestQuery
     {
-        return $this->getProvidedDependency(QuoteRequestDependencyProvider::PROPEL_QUERY_QUOTE_REQUEST);
+        return SpyQuoteRequestQuery::create();
     }
 
     /**
      * @return \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersionQuery
      */
-    public function createQuoteRequestVersionQuery(): SpyQuoteRequestVersionQuery
+    public function getQuoteRequestVersionPropelQuery(): SpyQuoteRequestVersionQuery
     {
-        return $this->getProvidedDependency(QuoteRequestDependencyProvider::PROPEL_QUERY_QUOTE_REQUEST_VERSION);
+        return SpyQuoteRequestVersionQuery::create();
     }
 
     /**
