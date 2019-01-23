@@ -247,4 +247,17 @@ interface CartClientInterface
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
     public function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer;
+
+    /**
+     * Specification:
+     * - Expands ItemTransfer with validation messages.
+     * - Adjusts ItemTransfer according to validation results.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function buildCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

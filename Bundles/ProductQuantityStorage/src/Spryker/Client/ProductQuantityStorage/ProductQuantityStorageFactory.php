@@ -16,6 +16,8 @@ use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounder;
 use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounderInterface;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReader;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
+use Spryker\Client\ProductQuantityStorage\Validator\QuantityCartChangeItemValidator;
+use Spryker\Client\ProductQuantityStorage\Validator\QuantityCartChangeItemValidatorInterface;
 
 class ProductQuantityStorageFactory extends AbstractFactory
 {
@@ -63,5 +65,16 @@ class ProductQuantityStorageFactory extends AbstractFactory
     public function createProductQuantityRounder(): ProductQuantityRounderInterface
     {
         return new ProductQuantityRounder();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductQuantityStorage\Validator\QuantityCartChangeItemValidatorInterface
+     */
+    public function createQuantityCartChangeItemValidator(): QuantityCartChangeItemValidatorInterface
+    {
+        return new QuantityCartChangeItemValidator(
+            $this->createProductQuantityStorageReader(),
+            $this->createProductQuantityResolver()
+        );
     }
 }

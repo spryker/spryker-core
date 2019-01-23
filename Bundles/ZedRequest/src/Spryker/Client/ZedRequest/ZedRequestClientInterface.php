@@ -70,4 +70,14 @@ interface ZedRequestClientInterface
      * @return void
      */
     public function addFlashMessagesFromLastZedRequest();
+
+    /**
+     * Specification:
+     *  - Get last response transfer from Zed request.
+     *
+     * @api
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
+     */
+    public function getLastResponseTransfer(): ?TransferInterface;
 }

@@ -7,8 +7,12 @@
 
 namespace Spryker\Client\Cart;
 
+use Spryker\Client\Cart\Builder\CartChangeTransferBuilder;
+use Spryker\Client\Cart\Builder\CartChangeTransferBuilderInterface;
 use Spryker\Client\Cart\CartChangeRequestExpander\CartChangeRequestExpander;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProvider;
+use Spryker\Client\Cart\Validator\CartChangeItemValidator;
+use Spryker\Client\Cart\Validator\CartChangeItemValidatorInterface;
 use Spryker\Client\Cart\Zed\CartStub;
 use Spryker\Client\Kernel\AbstractFactory;
 
@@ -106,5 +110,33 @@ class CartFactory extends AbstractFactory
     protected function getRemoveItemsRequestExpanderPlugins()
     {
         return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\Validator\CartChangeItemValidatorInterface
+     */
+    public function createCartChangeItemValidator(): CartChangeItemValidatorInterface
+    {
+        return new CartChangeItemValidator(
+            $this->getCartChangeItemValidationPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\CartExtension\Dependency\Plugin\CartChangeItemValidatorPluginInterface[]
+     */
+    public function getCartChangeItemValidationPlugins(): array
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_CART_CHANGE_ITEM_VALIDATOR);
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\Builder\CartChangeTransferBuilderInterface
+     */
+    public function createCartChangeTransferBuilder(): CartChangeTransferBuilderInterface
+    {
+        return new CartChangeTransferBuilder(
+            $this->createCartChangeItemValidator()
+        );
     }
 }

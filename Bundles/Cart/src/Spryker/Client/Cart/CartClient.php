@@ -292,4 +292,22 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         return $this->getFactory()->getQuoteItemFinderPlugin()->findItem($quoteTransfer, $sku, $groupKey);
     }
+
+    /**
+     * Specification:
+     * - Expands ItemTransfer with validation messages.
+     * - Adjusts ItemTransfer according to validation results.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function buildCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createCartChangeTransferBuilder()
+            ->build($cartChangeTransfer);
+    }
 }
