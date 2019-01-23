@@ -105,7 +105,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             $this->referenceGenerator->generateQuoteRequestReference($quoteRequestTransfer, $customerReference)
         );
 
-        return $this->entityManager->saveQuoteRequest($quoteRequestTransfer);
+        return $this->entityManager->createQuoteRequest($quoteRequestTransfer);
     }
 
     /**
@@ -127,7 +127,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             $this->referenceGenerator->generateQuoteRequestVersionReference($quoteRequestTransfer, $quoteRequestVersionTransfer)
         );
 
-        return $this->entityManager->saveQuoteRequestVersion($quoteRequestVersionTransfer);
+        return $this->entityManager->createQuoteRequestVersion($quoteRequestVersionTransfer);
     }
 
     /**
