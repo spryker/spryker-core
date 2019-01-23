@@ -130,11 +130,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerOrderSaver()
     {
-        return new ObsoleteCustomerOrderSaver(
-            $this->createCustomer(),
-            $this->createAddress(),
-            $this->getRepository()
-        );
+        return new ObsoleteCustomerOrderSaver($this->createCustomer(), $this->createAddress());
     }
 
     /**
@@ -144,11 +140,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createCheckoutCustomerOrderSaver()
     {
-        return new CustomerOrderSaver(
-            $this->createCustomer(),
-            $this->createAddress(),
-            $this->getRepository()
-        );
+        return new CustomerOrderSaver($this->createCustomer(), $this->createAddress());
     }
 
     /**
