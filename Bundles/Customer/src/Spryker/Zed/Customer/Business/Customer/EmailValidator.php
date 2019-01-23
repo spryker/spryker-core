@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Customer\Business\Customer;
 
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 

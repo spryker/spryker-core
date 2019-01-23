@@ -75,7 +75,7 @@ class RestApiError implements RestApiErrorInterface
     public function addCustomerEmailLengthExceededError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $detailMessage = strtr(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED, [
-            static::COL_EMAIL_MAX_ALLOWED_LENGHT_KEY => static::COL_EMAIL_MAX_ALLOWED_LENGHT
+            static::COL_EMAIL_MAX_ALLOWED_LENGHT_KEY => static::COL_EMAIL_MAX_ALLOWED_LENGHT,
         ]);
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_EMAIL_LENGTH_EXCEEDED)
