@@ -7,12 +7,12 @@
     "php": ">=7.1",
     "spryker/application-extension": "^1.0.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
-    "spryker/kernel": "^3.30.0"
+    "spryker/kernel": "^3.30.0",
+    "spryker/symfony": "*"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
-    "spryker/symfony": "*",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -31,7 +31,6 @@
     "sort-packages": true
   },
   "suggest": {
-    "spryker/container": "If you want to use EventDispatcherApplicationPlugin",
-    "spryker/symfony": "If you want to use EventDispatcherApplicationPlugin"
+    "spryker/container": "If you want to use EventDispatcherApplicationPlugin"
   }
 }

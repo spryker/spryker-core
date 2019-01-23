@@ -7,6 +7,8 @@
 
 namespace Spryker\Yves\EventDispatcher;
 
+use Spryker\Shared\EventDispatcher\EventDispatcher;
+use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class EventDispatcherFactory extends AbstractFactory
@@ -17,5 +19,13 @@ class EventDispatcherFactory extends AbstractFactory
     public function getEventDispatcherExtensionPlugins(): array
     {
         return $this->getProvidedDependency(EventDispatcherDependencyProvider::PLUGINS_EVENT_DISPATCHER_EXTENSIONS);
+    }
+
+    /**
+     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
+     */
+    public function createEventDispatcher(): EventDispatcherInterface
+    {
+        return new EventDispatcher();
     }
 }

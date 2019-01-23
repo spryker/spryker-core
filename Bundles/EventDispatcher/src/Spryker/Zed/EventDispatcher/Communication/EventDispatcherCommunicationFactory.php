@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\EventDispatcher\Communication;
 
+use Spryker\Shared\EventDispatcher\EventDispatcher;
+use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Zed\EventDispatcher\EventDispatcherDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -21,5 +23,13 @@ class EventDispatcherCommunicationFactory extends AbstractCommunicationFactory
     public function getEventDispatcherExtensionPlugins(): array
     {
         return $this->getProvidedDependency(EventDispatcherDependencyProvider::PLUGINS_EVENT_DISPATCHER_EXTENSIONS);
+    }
+
+    /**
+     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
+     */
+    public function createEventDispatcher(): EventDispatcherInterface
+    {
+        return new EventDispatcher();
     }
 }

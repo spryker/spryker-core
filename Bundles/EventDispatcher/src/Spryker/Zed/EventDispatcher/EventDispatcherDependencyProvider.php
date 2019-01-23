@@ -24,7 +24,6 @@ class EventDispatcherDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventDispatcherExtensionPlugins($container);
 
         return $container;
