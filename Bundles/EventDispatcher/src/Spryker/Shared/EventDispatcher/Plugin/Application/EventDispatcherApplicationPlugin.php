@@ -39,6 +39,8 @@ class EventDispatcherApplicationPlugin implements ApplicationPluginInterface
 
             return $dispatcher;
         });
+
+        return $container;
     }
 
     /**

@@ -39,5 +39,7 @@ class EventDispatcherApplicationPlugin extends AbstractPlugin implements Applica
 
             return $dispatcher;
         });
+
+        return $container;
     }
 }
