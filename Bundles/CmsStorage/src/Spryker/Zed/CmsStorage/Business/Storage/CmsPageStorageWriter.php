@@ -253,6 +253,9 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     protected function deleteStorageEntities($cmsPageStorageEntities): void
     {
         foreach ($cmsPageStorageEntities as $cmsPageStorageEntity) {
+            foreach ($cmsPageStorageEntity as $cmsPageStorageLocaleEntity) {
+                $cmsPageStorageLocaleEntity->delete();
+            }
             $cmsPageStorageEntity->delete();
         }
     }
