@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business\Unpublisher;
 
-use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\ProductPageSearch\Business\Exception\ProductConcretePageSearchNotFoundException;
 use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReaderInterface;
 use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\ProductConcretePageSearchWriterInterface;
 
@@ -64,30 +62,9 @@ class ProductConcretePageSearchUnpublisher implements ProductConcretePageSearchU
         foreach ($productConcretePageSearchTransfersGroupedByStoreAndLocale as $productConcretePageSearchTransfersStores) {
             foreach ($productConcretePageSearchTransfersStores as $productConcretePageSearchTransfersLocales) {
                 foreach ($productConcretePageSearchTransfersLocales as $productConcretePageSearchTransfer) {
-                    $this->deleteProductConcretePageSearch($productConcretePageSearchTransfer);
+                    $this->productConcretePageSearchWriter->deleteProductConcretePageSearch($productConcretePageSearchTransfer);
                 }
             }
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
-     *
-     * @throws \Spryker\Zed\ProductPageSearch\Business\Exception\ProductConcretePageSearchNotFoundException
-     *
-     * @return void
-     */
-    protected function deleteProductConcretePageSearch(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): void
-    {
-        if (!$this->productConcretePageSearchWriter->deleteProductConcretePageSearch(
-            $productConcretePageSearchTransfer
-        )) {
-            throw new ProductConcretePageSearchNotFoundException(
-                sprintf(
-                    'Target storage entry for product with id %s not found',
-                    $productConcretePageSearchTransfer->getFkProduct()
-                )
-            );
         }
     }
 }

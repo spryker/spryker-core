@@ -8,13 +8,12 @@
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractStoreTableMap;
-use Spryker\Zed\Product\Dependency\ProductEvents;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  */
-class ProductConcretePageSearchProductAbstractStoreListener extends AbstractProductConcretePageSearchListener
+class ProductConcretePageSearchProductAbstractStoreUnpublishListener extends AbstractProductConcretePageSearchListener
 {
     /**
      * @api
@@ -25,26 +24,6 @@ class ProductConcretePageSearchProductAbstractStoreListener extends AbstractProd
      * @return void
      */
     public function handleBulk(array $eventTransfers, $eventName): void
-    {
-        $this->preventTransaction();
-
-        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE) {
-            $this->processProductAbstractStoreDeleteEvent($eventTransfers);
-        }
-
-        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_CREATE
-            || $eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_UPDATE
-        ) {
-            $this->processProductAbstractStoreUpdateAndCreateEvent($eventTransfers);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return void
-     */
-    protected function processProductAbstractStoreDeleteEvent(array $eventTransfers): void
     {
         $foreignKeysPerAbstractProducts = $this->getFactory()->getEventBehaviorFacade()->getGroupedEventTransferRelatedForeignKeys(
             $eventTransfers,
@@ -57,42 +36,6 @@ class ProductConcretePageSearchProductAbstractStoreListener extends AbstractProd
         $storesPerAbstractProducts = $this->convertStoresPerAbstractProductsToStoreNames($storesPerAbstractProducts);
 
         $this->getFacade()->unpublishProductConcretesByAbstractProductsAndStores($storesPerAbstractProducts);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return void
-     */
-    protected function processProductAbstractStoreUpdateAndCreateEvent(array $eventTransfers): void
-    {
-        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
-            $eventTransfers,
-            SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT
-        );
-        $productIds = $this->getProductIds($productAbstractIds);
-
-        $this->publish($productIds);
-    }
-
-    /**
-     * @param int[] $productAbstractIds
-     *
-     * @return int[]
-     */
-    protected function getProductIds(array $productAbstractIds): array
-    {
-        $productIds = [];
-        foreach ($productAbstractIds as $idProductAbstract) {
-            $productIds = array_merge(
-                $productIds,
-                $this->getFactory()
-                    ->getProductFacade()
-                    ->findProductConcreteIdsByAbstractProductId($idProductAbstract)
-            );
-        }
-
-        return $productIds;
     }
 
     /**
