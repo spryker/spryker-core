@@ -22,6 +22,8 @@ class AbstractProductListContentTermForm extends AbstractType
 {
     public const FIELD_SKUS = 'skus';
 
+    protected const TEMPLATE_PATH = '@ContentProductConnector/ContentProductConnector/abstract_product_list.twig';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -47,6 +49,9 @@ class AbstractProductListContentTermForm extends AbstractType
 
                 return [];
             },
+            'attr' => [
+                'template_path' => static::TEMPLATE_PATH,
+            ],
         ]);
     }
 
@@ -80,6 +85,8 @@ class AbstractProductListContentTermForm extends AbstractType
             'entry_type' => TextType::class,
             'label' => false,
             'prototype' => true,
+            'allow_add' => true,
+            'allow_delete' => true,
             'entry_options' => [
                 'label' => false,
                 'attr' => [
