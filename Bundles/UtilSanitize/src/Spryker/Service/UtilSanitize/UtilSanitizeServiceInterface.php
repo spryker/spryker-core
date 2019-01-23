@@ -25,9 +25,7 @@ interface UtilSanitizeServiceInterface
 
     /**
      * Specification:
-     *  - Filters elements of an array recursively.
-     *  - Filters all null values, empty strings, empty arrays and countables without elements.
-     *  - Does not filters boolean, numeric values and any other not empty values.
+     *  - Filters null elements of an array recursively.
      *
      * @api
      *
@@ -36,4 +34,18 @@ interface UtilSanitizeServiceInterface
      * @return array
      */
     public function arrayFilterRecursive(array $array);
+
+    /**
+     * Specification:
+     *  - Filters out elements of an array recursively.
+     *  - Filters out all null values, empty strings, empty arrays and countables without elements.
+     *  - Does not filters out boolean, numeric values and any other not blank values.
+     *
+     * @api
+     *
+     * @param array $array
+     *
+     * @return array
+     */
+    public function filterOutBlankValuesRecursively(array $array): array;
 }
