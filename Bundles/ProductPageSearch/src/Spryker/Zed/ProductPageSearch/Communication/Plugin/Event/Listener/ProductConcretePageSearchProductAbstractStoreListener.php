@@ -46,9 +46,12 @@ class ProductConcretePageSearchProductAbstractStoreListener extends AbstractProd
      */
     protected function processProductAbstractStoreDeleteEvent(array $eventTransfers): void
     {
-        $storesPerAbstractProducts = $this->getFactory()->getEventBehaviorFacade()->getGroupedEventTransferRelatedForeignKeys(
+        $foreignKeysPerAbstractProducts = $this->getFactory()->getEventBehaviorFacade()->getGroupedEventTransferRelatedForeignKeys(
             $eventTransfers,
-            SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT,
+            SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT
+        );
+        $storesPerAbstractProducts = $this->filterGroupedForeignKeysByKey(
+            $foreignKeysPerAbstractProducts,
             SpyProductAbstractStoreTableMap::COL_FK_STORE
         );
         $storesPerAbstractProducts = $this->convertStoresPerAbstractProductsToStoreNames($storesPerAbstractProducts);
@@ -103,7 +106,7 @@ class ProductConcretePageSearchProductAbstractStoreListener extends AbstractProd
 
         foreach ($storesPerAbstractProducts as &$storesPerAbstractProduct) {
             foreach ($storesPerAbstractProduct as &$store) {
-                if(array_key_exists($store, $storeNameByIdMap)) {
+                if (array_key_exists($store, $storeNameByIdMap)) {
                     $store = $storeNameByIdMap[$store];
                 }
             }
@@ -125,5 +128,23 @@ class ProductConcretePageSearchProductAbstractStoreListener extends AbstractProd
         }
 
         return $idStoreMap;
+    }
+
+    /**
+     * @param array $foreignKeys
+     * @param string $filterKey
+     *
+     * @return array ['foreignKey' => ['filterKeyValue1', 'filterKeyValue2', ...]]
+     */
+    protected function filterGroupedForeignKeysByKey(array $foreignKeys, string $filterKey): array
+    {
+        $resultForeignKeys = [];
+        foreach ($foreignKeys as $foreignKey => $relatedForeignKeys) {
+            foreach ($relatedForeignKeys as $relatedForeignKey) {
+                $resultForeignKeys[$foreignKey][] = $relatedForeignKey[$filterKey];
+            }
+        }
+
+        return $resultForeignKeys;
     }
 }
