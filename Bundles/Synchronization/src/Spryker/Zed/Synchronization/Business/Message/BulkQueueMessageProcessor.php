@@ -49,18 +49,19 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
         $writeMessagesByQueue = [];
         $deleteMessagesByQueue = [];
 
-        foreach ($queueMessageTransfers as $key => $queueMessageTransfer) {
+        foreach ($queueMessageTransfers as $queueMessageTransfer) {
+            $deliveryTag = $queueMessageTransfer->getDeliveryTag();
             $messageBody = $this->extractQuoteMessageBody($queueMessageTransfer);
             $queueName = $queueMessageTransfer->getQueueName();
 
             if (isset($messageBody[static::TYPE_WRITE])) {
-                $writeMessagesByQueue[$queueName][static::KEY_MESSAGE_BODY][$key] = $messageBody[static::TYPE_WRITE];
-                $writeMessagesByQueue[$queueName][static::KEY_TRANSFER][$key] = $queueMessageTransfer;
+                $writeMessagesByQueue[$queueName][static::KEY_MESSAGE_BODY][$deliveryTag] = $messageBody[static::TYPE_WRITE];
+                $writeMessagesByQueue[$queueName][static::KEY_TRANSFER][$deliveryTag] = $queueMessageTransfer;
             }
 
             if (isset($messageBody[static::TYPE_DELETE])) {
-                $deleteMessagesByQueue[$queueName][static::KEY_MESSAGE_BODY][$key] = $messageBody[static::TYPE_DELETE];
-                $deleteMessagesByQueue[$queueName][static::KEY_TRANSFER][$key] = $queueMessageTransfer;
+                $deleteMessagesByQueue[$queueName][static::KEY_MESSAGE_BODY][$deliveryTag] = $messageBody[static::TYPE_DELETE];
+                $deleteMessagesByQueue[$queueName][static::KEY_TRANSFER][$deliveryTag] = $queueMessageTransfer;
             }
         }
 
@@ -87,7 +88,8 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
                 $this->synchronization->writeBulk($messageBodies);
                 $processedMessageTransfers = $this->markEachMessageChunkAsAcknowledged($queueMessageTransfers);
             } catch (Throwable $exception) {
-                $processedMessageTransfers = $this->processFailedQueueMessages($queueMessageTransfers, $messageBodies, $exception->getMessage());
+                $processedMessageTransfers = $this->restoreQueueMessageBodies($queueMessageTransfers, $messageBodies);
+                $processedMessageTransfers = $this->markEachMessageChunkAsFailed($processedMessageTransfers, $exception->getMessage());
             }
 
             $resultQueueMessageTransfers = array_merge($resultQueueMessageTransfers, $processedMessageTransfers);
@@ -113,7 +115,8 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
                 $this->synchronization->deleteBulk($messageBodies);
                 $processedMessageTransfers = $this->markEachMessageChunkAsAcknowledged($queueMessageTransfers);
             } catch (Throwable $exception) {
-                $processedMessageTransfers = $this->processFailedQueueMessages($queueMessageTransfers, $messageBodies, $exception->getMessage());
+                $processedMessageTransfers = $this->restoreQueueMessageBodies($queueMessageTransfers, $messageBodies, static::TYPE_DELETE);
+                $processedMessageTransfers = $this->markEachMessageChunkAsFailed($processedMessageTransfers, $exception->getMessage());
             }
 
             $resultQueueMessageTransfers = array_merge($resultQueueMessageTransfers, $processedMessageTransfers);
@@ -172,32 +175,24 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
     /**
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
      * @param array $messageBodies
-     * @param string $errorMessage
+     * @param string $type
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
-    protected function processFailedQueueMessages(array $queueMessageTransfers, array $messageBodies, string $errorMessage): array
-    {
-        $processedMessageTransfers = $this->restoreQueueMessageBodies($queueMessageTransfers, $messageBodies);
-
-        return $this->markEachMessageChunkAsFailed($processedMessageTransfers, $errorMessage);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
-     * @param array $messageBodies
-     *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
-     */
-    protected function restoreQueueMessageBodies(array $queueMessageTransfers, array $messageBodies): array
+    protected function restoreQueueMessageBodies(array $queueMessageTransfers, array $messageBodies, string $type = self::TYPE_WRITE): array
     {
         $restoredQueueMessageTransfers = [];
-        foreach ($messageBodies as $key => $messageBody) {
-            if (isset($queueMessageTransfers[$key])) {
-                $messageBody = $this->queueMessageHelper->encodeJson($messageBody);
-                $queueMessageTransfers[$key]->getQueueMessage()->setBody($messageBody);
-                $restoredQueueMessageTransfers[] = $queueMessageTransfers[$key];
+
+        foreach ($messageBodies as $deliveryTag => $messageBody) {
+            $queueMessageTransfer = $queueMessageTransfers[$deliveryTag] ?? null;
+
+            if (!$queueMessageTransfer || (int)$queueMessageTransfer->getDeliveryTag() !== $deliveryTag) {
+                continue;
             }
+
+            $messageBody = $this->queueMessageHelper->encodeJson([$type => $messageBody]);
+            $queueMessageTransfer->getQueueMessage()->setBody($messageBody);
+            $restoredQueueMessageTransfers[] = $queueMessageTransfer;
         }
 
         return $restoredQueueMessageTransfers;
