@@ -22,7 +22,7 @@ class EventDispatcherApplicationPlugin extends AbstractPlugin implements Applica
 
     /**
      * {@inheritdoc}
-     * - Extends EventDispatcher with EventDispatcherExtensionPlugins
+     * - Extends EventDispatcher with EventDispatcherExtensionPlugins.
      *
      * @api
      *

@@ -18,7 +18,7 @@ class EventDispatcherApplicationPlugin implements ApplicationPluginInterface
 
     /**
      * {@inheritdoc}
-     * - Adds EventDispatcher to the application
+     * - Adds EventDispatcher to the application.
      *
      * @api
      *
@@ -33,13 +33,7 @@ class EventDispatcherApplicationPlugin implements ApplicationPluginInterface
 
             if ($container->has(static::SERVICE_DISPATCHER)) {
                 $existingEventDispatcher = $this->getExistingEventDispatcher($container);
-                foreach ($existingEventDispatcher->getListeners() as $eventName => $listener) {
-                    $dispatcher->addListener(
-                        $eventName,
-                        $listener,
-                        $existingEventDispatcher->getListenerPriority($eventName, $listener)
-                    );
-                }
+                $dispatcher = $this->addListenersFromExistingEventDispatcher($dispatcher, $existingEventDispatcher);
             }
             $container->remove(static::SERVICE_DISPATCHER);
 
@@ -63,5 +57,30 @@ class EventDispatcherApplicationPlugin implements ApplicationPluginInterface
     protected function createEventDispatcher(): EventDispatcherInterface
     {
         return new EventDispatcher();
+    }
+
+    /**
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $existingEventDispatcher
+     *
+     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    protected function addListenersFromExistingEventDispatcher(
+        EventDispatcherInterface $eventDispatcher,
+        EventDispatcherInterface $existingEventDispatcher
+    ): EventDispatcherInterface {
+        $existingListeners = $existingEventDispatcher->getListeners();
+
+        foreach ($existingListeners as $eventName => $eventListeners) {
+            foreach ($eventListeners as $listener) {
+                $eventDispatcher->addListener(
+                    $eventName,
+                    $listener,
+                    $existingEventDispatcher->getListenerPriority($eventName, $listener)
+                );
+            }
+        }
+
+        return $eventDispatcher;
     }
 }
