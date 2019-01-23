@@ -26,6 +26,7 @@ use Spryker\Zed\CmsGui\Communication\Table\CmsPageTable;
 use Spryker\Zed\CmsGui\Communication\Tabs\GlossaryTabs;
 use Spryker\Zed\CmsGui\Communication\Tabs\PageTabs;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -66,6 +67,8 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated use instead getCmsVersionForm
+     *
      * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider $cmsVersionDataProvider
      * @param int|null $idCmsPage
      * @param int|null $version
@@ -73,6 +76,18 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createCmsVersionForm(CmsVersionDataProvider $cmsVersionDataProvider, $idCmsPage = null, $version = null)
+    {
+        return $this->getCmsVersionForm($cmsVersionDataProvider, $idCmsPage, $version);
+    }
+
+    /**
+     * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider $cmsVersionDataProvider
+     * @param int|null $idCmsPage
+     * @param int|null $version
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCmsVersionForm(CmsVersionDataProvider $cmsVersionDataProvider, ?int $idCmsPage = null, ?int $version = null): FormInterface
     {
         return $this->getFormFactory()->create(
             CmsVersionFormType::class,
@@ -82,6 +97,8 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated use instead getCmsPageForm
+     *
      * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider $cmsPageFormTypeDataProvider
      * @param int|null $idCmsPage
      * @param \Generated\Shared\Transfer\CmsPageTransfer|null $cmsPageTransfer
@@ -103,15 +120,26 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated use instead getCmsGlossaryForm
+     *
      * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider $cmsGlossaryFormTypeDataProvider
      * @param int $idCmsPage
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsGlossaryForm(
-        CmsGlossaryFormTypeDataProvider $cmsGlossaryFormTypeDataProvider,
-        $idCmsPage
-    ) {
+    public function createCmsGlossaryForm(CmsGlossaryFormTypeDataProvider $cmsGlossaryFormTypeDataProvider, $idCmsPage)
+    {
+        return $this->getCmsGlossaryForm($cmsGlossaryFormTypeDataProvider, $idCmsPage);
+    }
+
+    /**
+     * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider $cmsGlossaryFormTypeDataProvider
+     * @param int $idCmsPage
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCmsGlossaryForm(CmsGlossaryFormTypeDataProvider $cmsGlossaryFormTypeDataProvider, int $idCmsPage): FormInterface
+    {
         return $this->getFormFactory()->create(
             CmsGlossaryFormType::class,
             $cmsGlossaryFormTypeDataProvider->getData($idCmsPage),
@@ -279,5 +307,13 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCreateGlossaryExpanderPlugins()
     {
         return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGINS_CREATE_GLOSSARY_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getStoreRelationFormTypePlugin(): FormTypeInterface
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
     }
 }
