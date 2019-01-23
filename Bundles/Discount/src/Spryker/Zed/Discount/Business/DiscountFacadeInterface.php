@@ -6,6 +6,7 @@
  */
 namespace Spryker\Zed\Discount\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
@@ -330,7 +331,6 @@ interface DiscountFacadeInterface
     public function updateDiscount(DiscountConfiguratorTransfer $discountConfigurator);
 
     /**
-     *
      * Specification:
      * - Read idDiscount from persistence
      * - Hydrate data from entities to DiscountConfiguratorTransfer
@@ -551,4 +551,19 @@ interface DiscountFacadeInterface
      * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null
      */
     public function findHydratedDiscountConfiguratorByIdDiscount(int $idDiscount): ?DiscountConfiguratorTransfer;
+
+    /**
+     * Specification:
+     * - Validates voucher discounts on Max Usage in Quote.
+     * - Returns `true` if all used vouchers are under the usage limit.
+     * - Otherwise it returns `false` and adds messages to `$checkoutResponseTransfer`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function validateVoucherDiscountsMaxUsage(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }

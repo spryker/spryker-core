@@ -2,20 +2,74 @@
 
     {% block widget_content %}
         <div class="row">
-            <div class="col-xs-12 col-md-4">
-                <p><b>{{ 'Order Reference' | trans }}:</b> {{ order.orderReference }}</p>
-                <p><b>{{ 'Order date' | trans }}:</b> {{ order.createdAt | formatDateTime }}</p>
-                <p><b>{{ 'Grand total' | trans }}:</b> {{ order.totals.grandTotal | money(true, order.currencyIsoCode) }}</p>
-                <p><b>{{ 'Discount' | trans }}:</b> {{ order.totals.discountTotal | money(true, order.currencyIsoCode) }}</p>
-                <p><b>{{ 'Unique Product Quantity' | trans }}:</b> {{ order.uniqueProductQuantity }}</p>
+            <div class="col-xs-12 col-md-6">
+                <p><b>{{ 'Reference' | trans }}</b></p><p>{{ order.orderReference }}</p>
+                <p><b>{{ 'Date' | trans }}:</b></p><p>{{ order.createdAt | formatDateTime }}</p>
+                <p><b>{{ 'Unique Product Quantity' | trans }}:</b></p><p>{{ order.uniqueProductQuantity }}</p>
             </div>
-            <div class="col-xs-12 col-md-4">
-                <p><b>{{ 'Status' | trans }}:</b>
-                    {% for state in distinctOrderStates %}
-                      <span class="label label-info">{{ state }}</span>
+            <div class="col-xs-12 col-md-6">
+                <p><b>{{ 'Totals' | trans }}</b></p>
+                {% for orderItem in groupedOrderItems %}
+                    <div class="col-sm-12 row">
+                        <div class="col-sm-11"><p><b>{{ orderItem.name }} x {{ orderItem.quantity }}</b></p></div>
+                        <div class="col-sm-1">{{ orderItem.price | money(true, order.currencyIsoCode)  }}</div>
+                    </div>
+                    {% for orderItemOption in orderItem.productOptions %}
+                        <div class="col-sm-12 row">
+                            <div class="col-sm-11 pull-left"><p>+ <span class="label">{{ 'Option' | trans }}</span> {{ orderItemOption.value }}</p></div>
+                            <div class="col-sm-1">{{ orderItemOption.sumPrice | money(true, order.currencyIsoCode) }}</div>
+                        </div>
                     {% endfor %}
-                </p>
+                {% endfor %}
+                <div class="col-sm-12 row subtotal-row">
+                    <div class="col-sm-11"><p><b>{{ 'Sub total' | trans }}</b></p></div>
+                    <div class="col-sm-1"><p><b>{{ order.totals.subtotal | money(true, order.currencyIsoCode) }}</b></p></div>
+                </div>
+
+                {% for shipmentGroup in groupedOrderItemsByShipment%}
+                    <div class="col-sm-12 row">
+                        <div class="col-sm-11"><p>{{ 'Shipment' | trans }} - {{ shipmentGroup.shipment.expense.name }}</p></div>
+                        <div class="col-sm-1"><p>{{ shipmentGroup.shipment.expense.sumPrice | money(true, order.currencyIsoCode) }}</p></div>
+                    </div>
+                {% endfor %}
+                {% for expense in order.expenses %}
+                    <div class="col-sm-12 row">
+                        <div class="col-sm-11"><p>
+                             {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' %}
+                                {{ 'Shipment' | trans }} - {{ expense.name }}
+                             {% endif %}
+                             {% if expense.type == 'THRESHOLD_EXPENSE_TYPE' %}
+                                {{ 'Surcharge' | trans }}
+                             {% endif %}</p>
+                        </div>
+                        <div class="col-sm-1"><p>{{ expense.sumPrice | money(true, order.currencyIsoCode) }}</p></div>
+                    </div>
+                {% endfor %}
+                <div class="col-sm-12 row">
+                    <div class="col-sm-11"><p>{{ 'Discount' | trans }}</p></div>
+                    <div class="col-sm-1"><p>{{ order.totals.discountTotal | default(0) | money(true, order.currencyIsoCode) }}</p></div>
+                </div>
+                <div class="col-sm-12 row">
+                    <div class="col-sm-11"><p>{{ 'Cancelled amount' | trans }}</p></div>
+                    <div class="col-sm-1">{{ order.totals.canceledTotal | default(0) | money(true, order.currencyIsoCode) }}</div>
+                </div>
+                <div class="col-sm-12 row grandTotal-row">
+                    <div class="col-sm-11"><p><b>{{ 'GRAND TOTAL' | trans }}</b></p></div>
+                    <div class="col-sm-1"><p><b>{{ order.totals.grandTotal | money(true, order.currencyIsoCode) }}</b></p></div>
+                </div>
+                <div class="col-sm-12 row">
+                    <div class="col-sm-11"><p>{{ 'Total taxes' | trans }}</p></div>
+                    <div class="col-sm-1">{{ order.totals.taxTotal.amount | money(true, order.currencyIsoCode) }}</div>
+                </div>
+                <div>
+                    <p><b>{{ 'Status' | trans }}:</b>
+                        {% for state in distinctOrderStates %}
+                            <span class="label label-info">{{ state }}</span>
+                        {% endfor %}
+                    </p>
+                </div>
             </div>
+
         </div>
 
     {% endblock %}

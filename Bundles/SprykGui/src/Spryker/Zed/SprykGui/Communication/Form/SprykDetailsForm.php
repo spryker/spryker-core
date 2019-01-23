@@ -223,7 +223,7 @@ class SprykDetailsForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCreateTemplateButton(FormBuilderInterface $builder): self
+    protected function addCreateTemplateButton(FormBuilderInterface $builder)
     {
         $builder->add('create', SubmitType::class, [
             'label' => 'Create Template',
@@ -240,7 +240,7 @@ class SprykDetailsForm extends AbstractType
      *
      * @return $this
      */
-    protected function addRunSprykButton(FormBuilderInterface $builder): self
+    protected function addRunSprykButton(FormBuilderInterface $builder)
     {
         $builder->add('run', SubmitType::class, [
             'label' => 'Run Spryk',

@@ -35,6 +35,8 @@ use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
+use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemGrouper;
+use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemGrouperInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
@@ -474,5 +476,13 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         };
 
         return $strategyContainer;
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemGrouperInterface
+     */
+    public function createSalesOrderItemGrouper(): SalesOrderItemGrouperInterface
+    {
+        return new SalesOrderItemGrouper();
     }
 }
