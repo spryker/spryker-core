@@ -25,7 +25,7 @@ class ProductConcretePageSearchProductAbstractStoreUnpublishListener extends Abs
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $foreignKeysPerAbstractProducts = $this->getFactory()->getEventBehaviorFacade()->getGroupedEventTransferRelatedForeignKeys(
+        $foreignKeysPerAbstractProducts = $this->getFactory()->getEventBehaviorFacade()->getGroupedEventTransferForeignKeysByColumn(
             $eventTransfers,
             SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT
         );
