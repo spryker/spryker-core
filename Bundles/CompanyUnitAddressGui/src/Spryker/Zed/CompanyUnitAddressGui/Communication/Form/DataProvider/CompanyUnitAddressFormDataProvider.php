@@ -64,7 +64,7 @@ class CompanyUnitAddressFormDataProvider
      */
     public function getData(?int $idCompanyUnitAddress = null)
     {
-        $companyUnitAddressTransfer = $this->createCompanyUnitAddressTransfer();
+        $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
 
         if (!$idCompanyUnitAddress) {
             return $companyUnitAddressTransfer;
@@ -99,13 +99,5 @@ class CompanyUnitAddressFormDataProvider
         }
 
         return $result;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
-    protected function createCompanyUnitAddressTransfer(): CompanyUnitAddressTransfer
-    {
-        return new CompanyUnitAddressTransfer();
     }
 }

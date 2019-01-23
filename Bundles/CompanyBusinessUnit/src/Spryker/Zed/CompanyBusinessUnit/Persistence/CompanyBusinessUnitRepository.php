@@ -152,10 +152,10 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
      */
     public function findCompanyBusinessUnitById(int $idCompanyBusinessUnit): ?CompanyBusinessUnitTransfer
     {
-        $query = $this->getSpyCompanyBusinessUnitQuery()
+        $companyBusinessUnitQuery = $this->getSpyCompanyBusinessUnitQuery()
             ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit);
 
-        $companyBusinessUnitEntity = $query->findOne();
+        $companyBusinessUnitEntity = $companyBusinessUnitQuery->findOne();
 
         if (!$companyBusinessUnitEntity) {
             return null;
