@@ -26,7 +26,7 @@
     </transfer>
 
     <transfer name="QuoteApprovalCreateRequest">
-        <property name="requestSenderCompanyUserId" type="int"/>
+        <property name="requesterCompanyUserId" type="int"/>
         <property name="idQuote" type="int"/>
         <property name="approverCompanyUserId" type="int"/>
     </transfer>

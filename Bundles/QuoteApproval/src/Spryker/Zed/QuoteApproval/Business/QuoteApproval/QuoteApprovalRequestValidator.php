@@ -73,7 +73,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         $this->assertQuoteApprovalCreateRequestValid($quoteApprovalCreateRequestTransfer);
         $quoteTransfer = $this->getQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
 
-        if (!$this->isQuoteOwner($quoteTransfer, $quoteApprovalCreateRequestTransfer->getRequestSenderCompanyUserId())) {
+        if (!$this->isQuoteOwner($quoteTransfer, $quoteApprovalCreateRequestTransfer->getRequesterCompanyUserId())) {
             return $this->createNotSuccessfullValidationResponseTransfer();
         }
 
@@ -156,7 +156,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     protected function assertQuoteApprovalCreateRequestValid(QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer): void
     {
         $quoteApprovalCreateRequestTransfer->requireApproverCompanyUserId()
-            ->requireRequestSenderCompanyUserId()
+            ->requireRequesterCompanyUserId()
             ->requireIdQuote();
     }
 
