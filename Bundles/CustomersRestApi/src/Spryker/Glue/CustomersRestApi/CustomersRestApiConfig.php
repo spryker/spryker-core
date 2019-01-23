@@ -72,7 +72,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_MESSAGE_CUSTOMER_EMAIL_INVALID = 'Invalid Email address format.';
 
     public const RESPONSE_CODE_CUSTOMER_EMAIL_LENGTH_EXCEEDED = '417';
-    public const RESPONSE_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED = 'Too long Email address value.';
+    public const RESPONSE_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED = 'email => This value is too long. It should have {{max_lenght}} characters or less.';
 
     public const FORMAT_SELF_LINK_ADDRESS_RESOURCE = '%s/%s/%s/%s';
 }

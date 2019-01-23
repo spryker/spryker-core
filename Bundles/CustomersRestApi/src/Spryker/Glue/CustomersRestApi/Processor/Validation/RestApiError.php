@@ -16,6 +16,12 @@ use Symfony\Component\HttpFoundation\Response;
 class RestApiError implements RestApiErrorInterface
 {
     /**
+     * @uses \Spryker\Zed\Customer\Business\Customer\EmailValidator::COL_EMAIL_MAX_ALLOWED_LENGHT
+     */
+    protected const COL_EMAIL_MAX_ALLOWED_LENGHT = 100;
+    protected const COL_EMAIL_MAX_ALLOWED_LENGHT_KEY = '{{max_lenght}}';
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -68,10 +74,13 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addCustomerEmailLengthExceededError(RestResponseInterface $restResponse): RestResponseInterface
     {
+        $detailMessage = strtr(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED, [
+            static::COL_EMAIL_MAX_ALLOWED_LENGHT_KEY => static::COL_EMAIL_MAX_ALLOWED_LENGHT
+        ]);
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_EMAIL_LENGTH_EXCEEDED)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED);
+            ->setDetail($detailMessage);
 
         return $restResponse->addError($restErrorMessageTransfer);
     }
@@ -286,15 +295,22 @@ class RestApiError implements RestApiErrorInterface
         foreach ($customerResponseTransfer->getErrors() as $customerErrorTransfer) {
             if ($customerErrorTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED) {
                 $restResponse = $this->addCustomerAlreadyExistsError($restResponse);
+                continue;
             }
+
             if ($customerErrorTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_INVALID) {
                 $restResponse = $this->addCustomerEmailInvalidError($restResponse);
+                continue;
             }
+
             if ($customerErrorTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED) {
                 $restResponse = $this->addCustomerEmailLengthExceededError($restResponse);
+                continue;
             }
+
             if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_INVALID) {
                 $restResponse = $this->addPasswordNotValidError($restResponse);
+                continue;
             }
         }
 

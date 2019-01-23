@@ -13,6 +13,8 @@ use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
 class EmailValidator implements EmailValidatorInterface
 {
+    protected const COL_EMAIL_MAX_ALLOWED_LENGHT = 100;
+
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
@@ -65,8 +67,6 @@ class EmailValidator implements EmailValidatorInterface
      */
     public function isEmailLengthValid(string $email): bool
     {
-        $maxAllowedLength = SpyCustomerTableMap::getTableMap()->getColumn(SpyCustomerTableMap::COL_EMAIL)->getSize();
-
-        return mb_strlen($email) <= $maxAllowedLength;
+        return mb_strlen($email) <= static::COL_EMAIL_MAX_ALLOWED_LENGHT;
     }
 }
