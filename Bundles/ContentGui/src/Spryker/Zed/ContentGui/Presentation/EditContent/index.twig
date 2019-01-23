@@ -12,20 +12,22 @@
 {% endblock %}
 
 {% block content %}
-    <div class="col-xs-12 col-md-6">
-        <div class="col-xs-12 col-md-12">
-            <h2>Update {{ contentName }}</h2>
-        </div>
-        {{ form_start(contentForm, {attr: {novalidate: 'novalidate'}}) }}
+    {% block widget_content %}
         <div class="col-xs-12 col-md-6">
-            {{ form_row(contentForm.name) }}
+            <div class="col-xs-12 col-md-12">
+                <h2>Update {{ contentName }}</h2>
+            </div>
+            {{ form_start(contentForm, {attr: {novalidate: 'novalidate'}}) }}
+            <div class="col-xs-12 col-md-6">
+                {{ form_row(contentForm.name) }}
+            </div>
+            <div class="col-xs-12 col-md-6">
+                {{ form_row(contentForm.description) }}
+            </div>
+            <div class="col-xs-12 col-md-12">
+            {{ tabs(contentTabs, {'contentForm' : contentForm} ) }}
+            </div>
+            {{ form_end(contentForm) }}
         </div>
-        <div class="col-xs-12 col-md-6">
-            {{ form_row(contentForm.description) }}
-        </div>
-        <div class="col-xs-12 col-md-12">
-        {{ tabs(contentTabs, {'contentForm' : contentForm} ) }}
-        </div>
-        {{ form_end(contentForm) }}
-    </div>
+    {% endblock %}
 {% endblock %}

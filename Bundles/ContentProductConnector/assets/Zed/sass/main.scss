@@ -1,0 +1,17 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+/* Remove selected file button */
+.sku-fields .form-group {
+    position: relative;
+    padding-right: 25px;
+
+}
+.sku-fields .remove-abstract-product-sku {
+    position: absolute;
+    right: 0;
+    top: 10px;
+    color: #108548;
+}
