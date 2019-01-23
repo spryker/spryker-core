@@ -101,7 +101,7 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
         $matchQuery = (new MultiMatch())
             ->setFields($fields)
             ->setQuery($this->searchString)
-            ->setType(MultiMatch::TYPE_PHRASE_PREFIX);
+            ->setType(MultiMatch::TYPE_CROSS_FIELDS);
 
         return $matchQuery;
     }
