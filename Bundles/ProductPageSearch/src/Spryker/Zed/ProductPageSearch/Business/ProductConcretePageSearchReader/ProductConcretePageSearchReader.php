@@ -67,9 +67,9 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
     }
 
     /**
-     * @param array $storesPerAbstractProducts
+     * @param array $storesPerAbstractProducts - ['abstractProductId' => ['storeName1', 'storeName2']]
      *
-     * @return array - ['abstractProductId' => ['storeName1', 'storeName2']]
+     * @return array
      */
     public function getProductConcretePageSearchTransfersByAbstractProductsAndStores(array $storesPerAbstractProducts): array
     {
