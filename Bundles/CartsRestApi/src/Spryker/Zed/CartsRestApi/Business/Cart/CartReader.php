@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Cart;
 
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
@@ -45,8 +47,27 @@ class CartReader implements CartReaderInterface
      */
     public function findCustomerQuoteCollection(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-    ): RestQuoteCollectionResponseTransfer
-    {
+    ): RestQuoteCollectionResponseTransfer {
+        $restQuoteCollectionResponseTransfer = new RestQuoteCollectionResponseTransfer();
+        $quoteCollectionTransfer = $this->getCustomerQuotes($restQuoteCollectionRequestTransfer);
+        if (count($quoteCollectionTransfer->getQuotes()) === 0) {
+            return $restQuoteCollectionResponseTransfer;
+        }
 
+        return $restQuoteCollectionResponseTransfer->setQuoteCollection($quoteCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    protected function getCustomerQuotes(RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer): QuoteCollectionTransfer
+    {
+        $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
+        $quoteCriteriaFilterTransfer->setCustomerReference($restQuoteCollectionRequestTransfer->getCustomerReference());
+        $quoteCollectionTransfer = $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
+
+        return $quoteCollectionTransfer;
     }
 }

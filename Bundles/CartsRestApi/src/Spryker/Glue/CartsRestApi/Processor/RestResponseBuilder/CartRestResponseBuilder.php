@@ -70,7 +70,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCartIdMissingError(): RestResponseInterface
+    public function createCartIdMissingErrorResponse(): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
@@ -84,7 +84,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCartNotFoundError(): RestResponseInterface
+    public function createCartNotFoundErrorResponse(): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
@@ -100,7 +100,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createFailedCreatingCartError(QuoteResponseTransfer $quoteResponseTransfer): RestResponseInterface
+    public function createFailedCreatingCartErrorResponse(QuoteResponseTransfer $quoteResponseTransfer): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
@@ -136,7 +136,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createFailedDeletingCartError(): RestResponseInterface
+    public function createFailedDeletingCartErrorResponse(): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 

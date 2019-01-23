@@ -8,11 +8,9 @@
 namespace Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-/**
- * @deprecated use CustomerPostCreatePluginInterface
- */
-interface CustomerPostRegisterPluginInterface
+interface CustomerPostCreatePluginInterface
 {
     /**
      * Specification:
@@ -20,9 +18,10 @@ interface CustomerPostRegisterPluginInterface
      *
      * @api
      *
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function postRegister(CustomerTransfer $customerTransfer): CustomerTransfer;
+    public function postRegister(RestRequestInterface $restRequest, CustomerTransfer $customerTransfer): CustomerTransfer;
 }

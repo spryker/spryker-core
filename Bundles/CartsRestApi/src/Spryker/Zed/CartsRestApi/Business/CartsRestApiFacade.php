@@ -124,38 +124,6 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateGuestQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
-    {
-        return $this->getFactory()
-            ->createQuoteUpdater()
-            ->updateQuote($restQuoteRequestTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function createGuestQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
-    {
-        return $this->getFactory()
-            ->createQuoteUpdater()
-            ->updateQuote($restQuoteRequestTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
     public function updateItemQuantity(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()

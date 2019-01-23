@@ -95,32 +95,6 @@ interface CartsRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Updates guest cart.
-     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function updateGuestQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer;
-
-    /**
-     * Specification:
-     * - Creates guest cart.
-     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function createGuestQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer;
-
-    /**
-     * Specification:
      * - Updates cart item quantity.
      * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
      *

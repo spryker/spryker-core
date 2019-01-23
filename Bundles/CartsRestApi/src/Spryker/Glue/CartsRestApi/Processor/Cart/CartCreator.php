@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
-use Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
+use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -26,9 +26,9 @@ class CartCreator implements CartCreatorInterface
     protected $cartsResourceMapper;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreatorInterface
+     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface
      */
-    protected $singleQuoteCreator;
+    protected $quoteCreatorPlugin;
 
     /**
      * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface
@@ -37,16 +37,16 @@ class CartCreator implements CartCreatorInterface
 
     /**
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
-     * @param \Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreatorInterface $singleQuoteCreator
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface $quoteCreatorPlugin
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      */
     public function __construct(
         CartsResourceMapperInterface $cartsResourceMapper,
-        SingleQuoteCreatorInterface $singleQuoteCreator,
+        QuoteCreatorPluginInterface $quoteCreatorPlugin,
         CartRestResponseBuilderInterface $cartRestResponseBuilder
     ) {
         $this->cartsResourceMapper = $cartsResourceMapper;
-        $this->singleQuoteCreator = $singleQuoteCreator;
+        $this->quoteCreatorPlugin = $quoteCreatorPlugin;
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
     }
 
@@ -61,9 +61,9 @@ class CartCreator implements CartCreatorInterface
         RestCartsAttributesTransfer $restCartsAttributesTransfer
     ): RestResponseInterface {
         $quoteTransfer = $this->createQuoteTransfer($restCartsAttributesTransfer, $restRequest);
-        $quoteResponseTransfer = $this->singleQuoteCreator->createQuote($restRequest, $quoteTransfer);
+        $quoteResponseTransfer = $this->quoteCreatorPlugin->createQuote($restRequest, $quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->cartRestResponseBuilder->createFailedCreatingCartError($quoteResponseTransfer);
+            return $this->cartRestResponseBuilder->createFailedCreatingCartErrorResponse($quoteResponseTransfer);
         }
 
         $restResource = $this->cartsResourceMapper->mapCartsResource(

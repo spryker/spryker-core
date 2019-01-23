@@ -36,8 +36,7 @@ class GatewayController extends AbstractGatewayController
      */
     public function findCustomerQuoteCollectionAction(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-    ): RestQuoteCollectionResponseTransfer
-    {
+    ): RestQuoteCollectionResponseTransfer {
         return $this->getFacade()->findCustomerQuoteCollection($restQuoteCollectionRequestTransfer);
     }
 
@@ -69,26 +68,6 @@ class GatewayController extends AbstractGatewayController
     public function deleteQuoteAction(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->deleteQuote($restQuoteRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function createGuestQuoteAction(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
-    {
-        return $this->getFacade()->createGuestQuote($restQuoteRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function updateGuestQuoteAction(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
-    {
-        return $this->getFacade()->updateGuestQuote($restQuoteRequestTransfer);
     }
 
     /**

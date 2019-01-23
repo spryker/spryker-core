@@ -33,7 +33,6 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
         return $this->getFactory()
             ->createCartsRestApiZedStub()
             ->findQuoteByUuid($quoteTransfer);
-
     }
 
     /**
@@ -99,38 +98,6 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
         return $this->getFactory()
             ->createCartsRestApiZedStub()
             ->deleteQuote($restQuoteRequestTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function updateGuestQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
-    {
-        return $this->getFactory()
-            ->createCartsRestApiZedStub()
-            ->updateGuestQuote($restQuoteRequestTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function createGuestQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
-    {
-        return $this->getFactory()
-            ->createCartsRestApiZedStub()
-            ->createGuestQuote($restQuoteRequestTransfer);
     }
 
     /**

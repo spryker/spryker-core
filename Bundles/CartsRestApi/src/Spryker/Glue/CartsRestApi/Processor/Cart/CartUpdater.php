@@ -63,7 +63,7 @@ class CartUpdater implements CartUpdaterInterface
     ): RestResponseInterface {
         $idCart = $restRequest->getResource()->getId();
         if ($idCart === null) {
-            return $this->cartRestResponseBuilder->createCartIdMissingError();
+            return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
         }
 
         $currencyTransfer = $this->getCurrencyTransfer($restCartsAttributesTransfer);

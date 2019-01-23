@@ -54,13 +54,13 @@ class CartDeleter implements CartDeleterInterface
     {
         $idCart = $restRequest->getResource()->getId();
         if ($idCart === null) {
-            return $this->cartRestResponseBuilder->createCartIdMissingError();
+            return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
         }
 
         $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idCart, $restRequest);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->cartRestResponseBuilder->createCartNotFoundError();
+            return $this->cartRestResponseBuilder->createCartNotFoundErrorResponse();
         }
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
@@ -71,7 +71,7 @@ class CartDeleter implements CartDeleterInterface
 
         $quoteResponseTransfer = $this->cartsRestApiClient->deleteQuote($restQuoteRequestTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->cartRestResponseBuilder->createFailedDeletingCartError();
+            return $this->cartRestResponseBuilder->createFailedDeletingCartErrorResponse();
         }
 
         return $this->cartRestResponseBuilder->createCartRestResponse(null);

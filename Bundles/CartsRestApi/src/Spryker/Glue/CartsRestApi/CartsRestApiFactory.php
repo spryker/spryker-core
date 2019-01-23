@@ -71,9 +71,10 @@ class CartsRestApiFactory extends AbstractFactory
     public function createCartReader(): CartReaderInterface
     {
         return new CartReader(
-            $this->getResourceBuilder(),
+            $this->createCartRestResponseBuilder(),
             $this->createCartsResourceMapper(),
-            $this->getQuoteCollectionReaderPlugin()
+            $this->getQuoteCollectionReaderPlugin(),
+            $this->getClient()
         );
     }
 
@@ -84,7 +85,7 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new CartCreator(
             $this->createCartsResourceMapper(),
-            $this->createSingleQuoteCreator(),
+            $this->getQuoteCreatorPlugin(),
             $this->createCartRestResponseBuilder()
         );
     }
@@ -114,21 +115,13 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface
-     */
-    public function createCartRestResponseBuilder(): CartRestResponseBuilderInterface
-    {
-        return new CartRestResponseBuilder($this->getResourceBuilder());
-    }
-
-    /**
      * @return \Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemAdderInterface
      */
     public function createCartItemAdder(): CartItemAdderInterface
     {
         return new CartItemAdder(
             $this->getCartClient(),
-            $this->getResourceBuilder(),
+            $this->createCartRestResponseBuilder(),
             $this->getZedRequestClient(),
             $this->getQuoteClient(),
             $this->createCartReader(),
@@ -169,9 +162,10 @@ class CartsRestApiFactory extends AbstractFactory
     public function createGuestCartReader(): GuestCartReaderInterface
     {
         return new GuestCartReader(
-            $this->getResourceBuilder(),
+            $this->createCartRestResponseBuilder(),
             $this->createCartsResourceMapper(),
             $this->getQuoteCollectionReaderPlugin(),
+            $this->getClient(),
             $this->createGuestCartRestResponseBuilder()
         );
     }
@@ -182,9 +176,9 @@ class CartsRestApiFactory extends AbstractFactory
     public function createGuestCartCreator(): GuestCartCreatorInterface
     {
         return new GuestCartCreator(
-            $this->getResourceBuilder(),
+            $this->createGuestCartRestResponseBuilder(),
             $this->createCartsResourceMapper(),
-            $this->getPersistentCartClient()
+            $this->getQuoteCreatorPlugin()
         );
     }
 
@@ -195,7 +189,9 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new GuestCartUpdater(
             $this->getQuoteClient(),
-            $this->getPersistentCartClient()
+            $this->getPersistentCartClient(),
+            $this->createGuestCartReader(),
+            $this->getClient()
         );
     }
 
@@ -243,6 +239,14 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface
+     */
+    public function createCartRestResponseBuilder(): CartRestResponseBuilderInterface
+    {
+        return new CartRestResponseBuilder($this->getResourceBuilder());
+    }
+
+    /**
      * @return \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface
      */
     public function createGuestCartRestResponseBuilder(): GuestCartRestResponseBuilderInterface
@@ -267,7 +271,7 @@ class CartsRestApiFactory extends AbstractFactory
      */
     public function createQuoteCollectionReader(): QuoteCollectionReaderInterface
     {
-        return new QuoteCollectionReader($this->getCartClient());
+        return new QuoteCollectionReader($this->getClient());
     }
 
     /**

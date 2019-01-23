@@ -45,4 +45,9 @@ interface GuestCartRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createAnonymousCustomerUniqueIdEmptyErrorRestResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createFailedCreatingCartErrorResponse(): RestResponseInterface;
 }

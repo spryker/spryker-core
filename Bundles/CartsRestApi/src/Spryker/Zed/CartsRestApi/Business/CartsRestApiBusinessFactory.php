@@ -53,8 +53,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createCartCreator(): CartCreatorInterface
     {
         return new CartCreator(
-            $this->getPersistentCartFacade(),
-            $this->createCartReader()
+            $this->getPersistentCartFacade()
         );
     }
 

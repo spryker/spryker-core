@@ -142,6 +142,19 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
     }
 
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createFailedCreatingCartErrorResponse(): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_CART)
+            ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART);
+
+        return $this->createEmptyGuestCartRestResponse()->addError($restErrorTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string $cartResourceId
      *
