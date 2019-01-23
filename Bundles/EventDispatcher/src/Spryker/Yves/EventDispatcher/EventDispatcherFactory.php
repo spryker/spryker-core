@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 class EventDispatcherFactory extends AbstractFactory
 {
     /**
-     * @return array
+     * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherExtensionPluginInterface[]
      */
     public function getEventDispatcherExtensionPlugins(): array
     {

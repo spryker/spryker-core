@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class EventDispatcherCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return array
+     * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherExtensionPluginInterface[]
      */
     public function getEventDispatcherExtensionPlugins(): array
     {
