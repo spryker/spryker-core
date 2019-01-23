@@ -54,7 +54,7 @@ class QuoteReader implements QuoteReaderInterface
         $quoteTransfer = $this->quoteRepository
             ->findQuoteByCustomer($customerTransfer->getCustomerReference());
 
-        $quoteTransfer = $this->expandQuote($quoteTransfer);
+        $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
 
         $quoteResponseTransfer = $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
         if ($quoteTransfer) {
@@ -82,7 +82,7 @@ class QuoteReader implements QuoteReaderInterface
                 $storeTransfer->getIdStore()
             );
 
-        $quoteTransfer = $this->expandQuote($quoteTransfer);
+        $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
 
         $quoteResponseTransfer = $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
         if ($quoteTransfer) {
@@ -104,7 +104,7 @@ class QuoteReader implements QuoteReaderInterface
         $quoteTransfer = $this->quoteRepository
             ->findQuoteById($idQuote);
 
-        $quoteTransfer = $this->expandQuote($quoteTransfer);
+        $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
 
         return $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
     }
@@ -145,7 +145,7 @@ class QuoteReader implements QuoteReaderInterface
             return $quoteResponseTransfer;
         }
 
-        $quoteTransfer = $this->expandQuote($quoteTransfer);
+        $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
 
         return $quoteResponseTransfer
             ->setQuoteTransfer($quoteTransfer)
@@ -157,16 +157,24 @@ class QuoteReader implements QuoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function filterQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    public function getFilteredQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
         $quoteCollectionTransfer = $this->quoteRepository->filterQuoteCollection($quoteCriteriaFilterTransfer);
-        $quoteTransfers = $quoteCollectionTransfer->getQuotes();
+        $quoteCollectionTransfer = $this->executeExpandQuotePluginsForQuoteCollection($quoteCollectionTransfer);
 
-        foreach ($quoteTransfers as &$quoteTransfer) {
-            $quoteTransfer = $this->expandQuote($quoteTransfer);
+        return $quoteCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    protected function executeExpandQuotePluginsForQuoteCollection(QuoteCollectionTransfer $quoteCollectionTransfer): QuoteCollectionTransfer
+    {
+        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
+            $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
         }
-
-        $quoteCollectionTransfer->setQuotes($quoteTransfers);
 
         return $quoteCollectionTransfer;
     }
@@ -176,7 +184,7 @@ class QuoteReader implements QuoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    protected function expandQuote(?QuoteTransfer $quoteTransfer): ?QuoteTransfer
+    protected function executeExpandQuotePlugins(?QuoteTransfer $quoteTransfer): ?QuoteTransfer
     {
         if (!$quoteTransfer) {
             return null;

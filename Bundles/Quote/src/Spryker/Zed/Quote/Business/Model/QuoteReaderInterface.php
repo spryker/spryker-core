@@ -52,5 +52,5 @@ interface QuoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function filterQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
+    public function getFilteredQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
 }
