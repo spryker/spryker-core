@@ -222,7 +222,6 @@
     "spryker/queue": "*",
     "spryker/quote": "*",
     "spryker/ramsey-uuid": "*",
-    "spryker/ratepay": "*",
     "spryker/redis": "*",
     "spryker/refund": "*",
     "spryker/sales": "*",
