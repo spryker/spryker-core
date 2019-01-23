@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\QuoteRequest;
 
+use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 
@@ -29,4 +31,19 @@ interface QuoteRequestClientInterface
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
     public function create(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves "Request for Quote" entities filtered by company user.
+     * - Filters by quote request reference when provided.
+     * - Excludes hidden "Request for Quote" entities.
+     * - Selects latestVersion based on latest version createdAt.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
+     */
+    public function findQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer;
 }

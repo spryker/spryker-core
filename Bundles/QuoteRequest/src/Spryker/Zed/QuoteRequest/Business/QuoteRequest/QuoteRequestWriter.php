@@ -8,6 +8,7 @@
 namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
@@ -68,6 +69,16 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         return $this->getTransactionHandler()->handleTransaction(function () use ($quoteRequestTransfer) {
             return $this->executeCreateTransaction($quoteRequestTransfer);
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function cancel(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        // TODO: Implement cancel() method.
     }
 
     /**

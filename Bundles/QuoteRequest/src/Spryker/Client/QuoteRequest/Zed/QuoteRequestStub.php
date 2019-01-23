@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\QuoteRequest\Zed;
 
+use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientInterface;
@@ -40,5 +42,21 @@ class QuoteRequestStub implements QuoteRequestStubInterface
         );
 
         return $quoteRequestResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
+     */
+    public function findQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer */
+        $quoteRequestCollectionTransfer = $this->zedRequestClient->call(
+            '/quote-request/gateway/find-quote-request-collection-by-filter',
+            $quoteRequestFilterTransfer
+        );
+
+        return $quoteRequestCollectionTransfer;
     }
 }

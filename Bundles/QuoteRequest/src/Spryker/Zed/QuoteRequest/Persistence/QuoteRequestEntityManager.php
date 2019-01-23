@@ -26,7 +26,7 @@ class QuoteRequestEntityManager extends AbstractEntityManager implements QuoteRe
     public function saveQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer
     {
         $quoteRequestEntity = $this->getFactory()
-            ->createQuoteRequestQuery()
+            ->getQuoteRequestPropelQuery()
             ->filterByIdQuoteRequest($quoteRequestTransfer->getIdQuoteRequest())
             ->findOne();
 
@@ -46,7 +46,7 @@ class QuoteRequestEntityManager extends AbstractEntityManager implements QuoteRe
         QuoteRequestVersionTransfer $quoteRequestVersionTransfer
     ): QuoteRequestVersionTransfer {
         $quoteRequestVersionEntity = $this->getFactory()
-            ->createQuoteRequestVersionQuery()
+            ->getQuoteRequestVersionPropelQuery()
             ->filterByIdQuoteRequestVersion($quoteRequestVersionTransfer->getIdQuoteRequestVersion())
             ->findOne();
 
