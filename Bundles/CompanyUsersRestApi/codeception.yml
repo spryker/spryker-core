@@ -1,6 +1,9 @@
 namespace: SprykerTest
 actor: Tester
 
+include:
+    - tests/SprykerTest/Zed/CompanyUsersRestApi
+
 paths:
     tests: tests
     log: tests/_output

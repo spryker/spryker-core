@@ -7,15 +7,37 @@
 
 namespace Spryker\Glue\CompanyUsersRestApi;
 
+use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface;
+use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReader;
+use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReaderInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Header\CompanyUserHeaderValidator;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Header\CompanyUserHeaderValidatorInterface;
+use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapper;
+use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
-/**
- * @method \Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig getConfig()
- */
 class CompanyUsersRestApiFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReaderInterface
+     */
+    public function createCompanyUserReader(): CompanyUserReaderInterface
+    {
+        return new CompanyUserReader(
+            $this->getCompanyUserClient(),
+            $this->createCompanyUserMapper(),
+            $this->getResourceBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface
+     */
+    public function createCompanyUserMapper(): CompanyUserMapperInterface
+    {
+        return new CompanyUserMapper();
+    }
+
     /**
      * @return \Spryker\Glue\CompanyUsersRestApi\Processor\Header\CompanyUserHeaderValidatorInterface
      */
@@ -24,5 +46,13 @@ class CompanyUsersRestApiFactory extends AbstractFactory
         return new CompanyUserHeaderValidator(
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface
+     */
+    public function getCompanyUserClient(): CompanyUsersRestApiToCompanyUserClientInterface
+    {
+        return $this->getProvidedDependency(CompanyUsersRestApiDependencyProvider::CLIENT_COMPANY_USER);
     }
 }
