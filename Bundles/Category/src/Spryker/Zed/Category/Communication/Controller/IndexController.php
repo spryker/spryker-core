@@ -25,7 +25,7 @@ class IndexController extends AbstractController
     public const PARAM_ID_CATEGORY_NODE = 'id-category-node';
 
     /**
-     * @deprecated Use CategoryGui/Commun ication/Controller/ListController
+     * @deprecated Use CategoryGui/Communication/Controller/ListController
      *
      * @return array
      */
