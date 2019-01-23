@@ -107,7 +107,7 @@ interface ProductPackagingUnitRepositoryInterface
      * @param string $sku
      * @param string[] $reservedStateNames
      *
-     * @return int
+     * @return float
      */
-    public function sumLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): int;
+    public function sumLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): float;
 }

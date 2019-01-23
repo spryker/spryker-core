@@ -6,7 +6,7 @@
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
 
-        <column name="quantity" type="INTEGER" required="false"/>
+        <column name="quantity" type="FLOAT" required="false"/>
         <column name="locked" type="BOOLEAN" required="false"/>
         <column name="fk_oms_order_process" type="INTEGER" required="false"/>
         <column name="event" required="false" size="100" type="VARCHAR"/>
@@ -132,7 +132,7 @@
     <table name="spy_oms_product_reservation" phpName="SpyOmsProductReservation" identifierQuoting="true">
         <column name="id_oms_product_reservation" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
-        <column name="reservation_quantity" type="INTEGER" required="true" default="0"/>
+        <column name="reservation_quantity" type="FLOAT" required="true" default="0"/>
         <column name="fk_store" required="false" type="INTEGER"/>
 
         <unique name="spy_oms_product_reservation-sku">
@@ -151,7 +151,7 @@
         <column name="id_oms_product_reservation_store" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="store" type="VARCHAR" size="255" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
-        <column name="reservation_quantity" type="INTEGER" required="true"/>
+        <column name="reservation_quantity" type="FLOAT" required="true"/>
         <column name="version" type="BIGINT" required="true"/>
 
         <index name="spy_oms_product_reservation_store-version">

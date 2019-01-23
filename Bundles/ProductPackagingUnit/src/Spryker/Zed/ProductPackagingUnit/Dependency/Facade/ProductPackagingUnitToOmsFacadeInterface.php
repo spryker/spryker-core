@@ -15,18 +15,18 @@ interface ProductPackagingUnitToOmsFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
-    public function sumReservedProductQuantitiesForSku(string $sku, StoreTransfer $storeTransfer): int;
+    public function sumReservedProductQuantitiesForSku(string $sku, StoreTransfer $storeTransfer): float;
 
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param int $reservationQuantity
+     * @param float $reservationQuantity
      *
      * @return void
      */
-    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void;
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, float $reservationQuantity): void;
 
     /**
      * @return string[]

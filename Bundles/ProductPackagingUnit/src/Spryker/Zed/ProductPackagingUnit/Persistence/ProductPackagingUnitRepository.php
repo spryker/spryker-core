@@ -290,9 +290,9 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      * @param string $sku
      * @param string[] $reservedStateNames
      *
-     * @return int
+     * @return float
      */
-    public function sumLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): int
+    public function sumLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): float
     {
         $salesOrderItemQuery = $this->getFactory()
             ->createSalesOrderItemQuery()
@@ -303,7 +303,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_AMOUNT . ')', static::COL_SUM_AMOUNT)
             ->select([static::COL_SUM_AMOUNT]);
 
-        return (int)$salesOrderItemQuery->findOne();
+        return (float)$salesOrderItemQuery->findOne();
     }
 
     /**

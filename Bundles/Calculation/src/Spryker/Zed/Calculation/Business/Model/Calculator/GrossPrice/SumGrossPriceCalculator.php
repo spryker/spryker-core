@@ -57,7 +57,7 @@ class SumGrossPriceCalculator implements CalculatorInterface
             return;
         }
 
-        $itemTransfer->setSumGrossPrice($itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity());
+        $itemTransfer->setSumGrossPrice((int)($itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity()));
     }
 
     /**

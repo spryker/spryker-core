@@ -40,7 +40,7 @@ class Calculator implements CalculatorInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
     public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer)
     {
@@ -52,7 +52,7 @@ class Calculator implements CalculatorInterface
     /**
      * @param \Traversable|\Orm\Zed\Stock\Persistence\SpyStockProduct[] $productEntities
      *
-     * @return int
+     * @return float
      */
     protected function calculateTotalQuantity(Traversable $productEntities)
     {

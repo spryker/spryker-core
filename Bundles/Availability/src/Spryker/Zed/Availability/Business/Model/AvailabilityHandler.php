@@ -137,7 +137,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailability
@@ -186,8 +186,8 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     }
 
     /**
-     * @param int|null $currentQuantity
-     * @param int|null $quantityWithReservedItems
+     * @param float|null $currentQuantity
+     * @param float|null $quantityWithReservedItems
      *
      * @return bool
      */
@@ -230,9 +230,9 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     }
 
     /**
-     * @param int $quantity
+     * @param float $quantity
      *
-     * @return int
+     * @return float
      */
     protected function getQuantity($quantity)
     {
@@ -243,7 +243,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int|null
+     * @return float|null
      */
     protected function findCurrentPhysicalQuantity($sku, StoreTransfer $storeTransfer)
     {
