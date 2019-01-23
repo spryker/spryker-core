@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\MultiCartDataImport;
 
 use Codeception\Actor;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 
 /**
@@ -40,6 +41,22 @@ class MultiCartDataImportCommunicationTester extends Actor
         $customerTransfer = $this->haveCustomer()
             ->fromArray($seeds, true);
         return $this->getCustomerFacade()->updateCustomer($customerTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureQuoteDatabaseTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getQuoteQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\Quote\Persistence\SpyQuoteQuery
+     */
+    protected function getQuoteQuery(): SpyQuoteQuery
+    {
+        return SpyQuoteQuery::create();
     }
 
     /**
