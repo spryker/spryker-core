@@ -55,24 +55,18 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
     {
         if ($contentId !== null) {
             $contentTransfer = $this->contentFacade->findContentById($contentId);
-        } else {
-            $contentTransfer = new ContentTransfer();
-            $contentPlugin = $this->contentResolver->getContentPlugin($termKey);
-            $contentTransfer->setContentTypeKey($contentPlugin->getTypeKey());
-            $contentTransfer->setContentTermKey($contentPlugin->getTermKey());
-        }
-        $localizedContents = $this->getLocalizedContentList($contentTransfer->getLocalizedContents());
-        $contentTransfer->setLocalizedContents((new ArrayObject()));
-        foreach ($this->getAvailableLocales() as $locale) {
-            $localizedContentTransfer = new LocalizedContentTransfer();
-            if (!empty($localizedContents[$locale->getIdLocale()])) {
-                $localizedContentTransfer->fromArray($localizedContents[$locale->getIdLocale()]->toArray());
-            }
-            $localizedContentTransfer->setLocaleName($locale->getLocaleName());
-            $localizedContentTransfer->setFkLocale($locale->getIdLocale());
 
-            $contentTransfer->addLocalizedContent($localizedContentTransfer);
+            $this->setAvailableLocales($contentTransfer);
+
+            return $contentTransfer;
         }
+
+        $contentTransfer = new ContentTransfer();
+        $contentPlugin = $this->contentResolver->getContentPlugin($termKey);
+        $contentTransfer->setContentTypeKey($contentPlugin->getTypeKey());
+        $contentTransfer->setContentTermKey($contentPlugin->getTermKey());
+
+        $contentTransfer = $this->setAvailableLocales($contentTransfer);
 
         return $contentTransfer;
     }
@@ -99,10 +93,33 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedContentTransfer[] $localizedContents
+     * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
      *
-     * @return \Generated\Shared\Transfer\LocalizedContentTransfer[]
+     * @return \Generated\Shared\Transfer\ContentTransfer
      */
+    protected function setAvailableLocales(ContentTransfer $contentTransfer): ContentTransfer
+    {
+        $localizedContents = $this->getLocalizedContentList($contentTransfer->getLocalizedContents());
+        $contentTransfer->setLocalizedContents((new ArrayObject()));
+        foreach ($this->getAvailableLocales() as $locale) {
+            $localizedContentTransfer = new LocalizedContentTransfer();
+            if (!empty($localizedContents[$locale->getIdLocale()])) {
+                $localizedContentTransfer->fromArray($localizedContents[$locale->getIdLocale()]->toArray());
+            }
+            $localizedContentTransfer->setLocaleName($locale->getLocaleName());
+            $localizedContentTransfer->setFkLocale($locale->getIdLocale());
+
+            $contentTransfer->addLocalizedContent($localizedContentTransfer);
+        }
+
+        return $contentTransfer;
+    }
+
+        /**
+         * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedContentTransfer[] $localizedContents
+         *
+         * @return \Generated\Shared\Transfer\LocalizedContentTransfer[]
+         */
     protected function getLocalizedContentList(ArrayObject $localizedContents): array
     {
         $indexLocalizedContents = [];

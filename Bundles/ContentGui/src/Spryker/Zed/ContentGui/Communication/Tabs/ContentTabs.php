@@ -18,14 +18,14 @@ class ContentTabs extends AbstractTabs
     /**
      * @var \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface
      */
-    protected $localFacade;
+    protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface $localFacade
+     * @param \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface $localeFacade
      */
-    public function __construct(ContentGuiToLocaleFacadeInterface $localFacade)
+    public function __construct(ContentGuiToLocaleFacadeInterface $localeFacade)
     {
-        $this->localFacade = $localFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -33,7 +33,7 @@ class ContentTabs extends AbstractTabs
      *
      * @return \Generated\Shared\Transfer\TabsViewTransfer
      */
-    protected function build(TabsViewTransfer $tabsViewTransfer)
+    protected function build(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
         $this->addLocaleTab($tabsViewTransfer);
         $this->setFooter($tabsViewTransfer);
@@ -81,7 +81,7 @@ class ContentTabs extends AbstractTabs
         $defaultLocale = new LocaleTransfer();
         $defaultLocale->setLocaleName('Default locale');
 
-        $locales = $this->localFacade
+        $locales = $this->localeFacade
             ->getLocaleCollection();
 
         array_unshift($locales, $defaultLocale);

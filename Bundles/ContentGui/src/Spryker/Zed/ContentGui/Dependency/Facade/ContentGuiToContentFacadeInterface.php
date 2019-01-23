@@ -12,11 +12,11 @@ use Generated\Shared\Transfer\ContentTransfer;
 interface ContentGuiToContentFacadeInterface
 {
     /**
-     * @param int $id
+     * @param int $idContent
      *
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
-    public function findContentById(int $id): ContentTransfer;
+    public function findContentById(int $idContent): ContentTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer

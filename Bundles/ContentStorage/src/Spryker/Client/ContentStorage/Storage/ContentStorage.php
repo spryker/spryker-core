@@ -61,9 +61,8 @@ class ContentStorage implements ContentStorageInterface
         }
 
         $contentExtractorPlugin = $this->contentResolver->getContentPlugin($content[ContentStorageConstants::TERM_KEY]);
-        $oarameters = $content[ContentStorageConstants::CONTENT_KEY];
 
-        return $contentExtractorPlugin->execute($oarameters);
+        return $contentExtractorPlugin->execute($content[ContentStorageConstants::CONTENT_KEY]);
     }
 
     /**
@@ -72,7 +71,7 @@ class ContentStorage implements ContentStorageInterface
      *
      * @return string
      */
-    protected function generateKey($keyName, $localeName): string
+    protected function generateKey(string $keyName, string $localeName): string
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setReference($keyName);

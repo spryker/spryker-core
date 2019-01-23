@@ -101,7 +101,7 @@ class ContentStorageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addContentQuery(Container $container): Container
     {
         $container[static::PROPEL_QUERY_CONTENT] = function () {
-            return new SpyContentQuery();
+            return SpyContentQuery::create();
         };
 
         return $container;

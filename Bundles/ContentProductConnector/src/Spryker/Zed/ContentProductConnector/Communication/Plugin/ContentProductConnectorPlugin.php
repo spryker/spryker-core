@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ContentProductConnectorPlugin extends AbstractPlugin implements ContentPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -27,6 +29,8 @@ class ContentProductConnectorPlugin extends AbstractPlugin implements ContentPlu
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -37,6 +41,8 @@ class ContentProductConnectorPlugin extends AbstractPlugin implements ContentPlu
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -47,6 +53,8 @@ class ContentProductConnectorPlugin extends AbstractPlugin implements ContentPlu
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array|null $params
@@ -59,9 +67,11 @@ class ContentProductConnectorPlugin extends AbstractPlugin implements ContentPlu
 
         if (empty($params) || empty($params['skus'])) {
             $contentAbstractProductListTransfer->setSkus(['']);
-        } else {
-            $contentAbstractProductListTransfer->fromArray($params);
+
+            return $contentAbstractProductListTransfer;
         }
+
+        $contentAbstractProductListTransfer->fromArray($params);
 
         return $contentAbstractProductListTransfer;
     }

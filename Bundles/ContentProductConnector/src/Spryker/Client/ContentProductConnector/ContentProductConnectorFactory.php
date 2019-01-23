@@ -7,12 +7,13 @@
 
 namespace Spryker\Client\ContentProductConnector;
 
+use Spryker\Client\ContentProductConnector\Executor\AbstractProductListTermExecutor;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class ContentProductConnectorFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\ContentProductConnector\AbstractProductListTermExecutor
+     * @return \Spryker\Client\ContentProductConnector\Executor\ContentTermExecutorInterface
      */
     public function createAbstractProductListTermExecutor()
     {

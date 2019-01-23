@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Container;
 
 class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PLUGIN_CONTENT_ITEM_PLUGINS = 'PLUGIN_CONTENT_ITEM_PLUGINS';
+    public const PLUGINS_CONTENT_ITEM = 'PLUGINS_CONTENT_ITEM';
     public const PROPEL_QUERY_CONTENT = 'PROPEL_QUERY_CONTENT';
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
@@ -45,9 +45,9 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addContentPlugins(Container $container)
+    protected function addContentPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CONTENT_ITEM_PLUGINS] = function () {
+        $container[static::PLUGINS_CONTENT_ITEM] = function () {
             return $this->getContentPlugins();
         };
 

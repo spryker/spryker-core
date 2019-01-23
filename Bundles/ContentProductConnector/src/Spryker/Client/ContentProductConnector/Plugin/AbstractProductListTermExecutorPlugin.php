@@ -15,9 +15,11 @@ use Spryker\Shared\ContentProductConnector\ContentProductConnectorConfig;
 /**
  * @method \Spryker\Client\ContentProductConnector\ContentProductConnectorFactory getFactory()
  */
-class AbstractProductListTermPlugin extends AbstractPlugin implements ContentTermExecutorPluginInterface
+class AbstractProductListTermExecutorPlugin extends AbstractPlugin implements ContentTermExecutorPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $parameters
@@ -34,6 +36,8 @@ class AbstractProductListTermPlugin extends AbstractPlugin implements ContentTer
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -44,6 +48,8 @@ class AbstractProductListTermPlugin extends AbstractPlugin implements ContentTer
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -54,13 +60,15 @@ class AbstractProductListTermPlugin extends AbstractPlugin implements ContentTer
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $parameters
      *
      * @return \Generated\Shared\Transfer\ContentAbstractProductListTransfer
      */
-    public function mapParametersToTransferObject(array $parameters): ContentAbstractProductListTransfer
+    protected function mapParametersToTransferObject(array $parameters): ContentAbstractProductListTransfer
     {
         $contentAbstractProductListTransfer = new ContentAbstractProductListTransfer();
         $contentAbstractProductListTransfer->fromArray($parameters, true);

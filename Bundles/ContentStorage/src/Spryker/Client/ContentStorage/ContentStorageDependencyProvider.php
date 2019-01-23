@@ -16,7 +16,7 @@ class ContentStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
-    public const PLUGIN_CONTENT_ITEM_PLUGINS = 'PLUGIN_CONTENT_ITEM_PLUGINS';
+    public const PLUGINS_CONTENT_ITEM = 'PLUGINS_CONTENT_ITEM';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -25,6 +25,8 @@ class ContentStorageDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
+        $container = parent::provideServiceLayerDependencies($container);
+
         $container = $this->addClientStorage($container);
         $container = $this->addServiceSynchronization($container);
         $container = $this->addContentPlugins($container);
@@ -39,7 +41,7 @@ class ContentStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addContentPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CONTENT_ITEM_PLUGINS] = function () {
+        $container[static::PLUGINS_CONTENT_ITEM] = function () {
             return $this->getContentPlugins();
         };
 

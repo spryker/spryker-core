@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class ContentStorage implements ContentStorageInterface
 {
+    use TransactionTrait;
+
     protected const DEFAULT_LOCALE = 'DEFAULT_LOCALE';
 
     /**
@@ -35,9 +37,6 @@ class ContentStorage implements ContentStorageInterface
      */
     protected $localeFacade;
 
-    use TransactionTrait;
-    use \Spryker\Shared\Log\LoggerTrait;
-
     /**
      * @param \Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface $contentStorageRepository
      * @param \Spryker\Zed\ContentStorage\Persistence\ContentStorageEntityManagerInterface $contentStorageEntityManager
@@ -54,7 +53,7 @@ class ContentStorage implements ContentStorageInterface
     }
 
     /**
-     * @param array $contentIds
+     * @param int[] $contentIds
      *
      * @return void
      */
@@ -79,33 +78,41 @@ class ContentStorage implements ContentStorageInterface
         $availableLocales = $this->localeFacade->getLocaleCollection();
         $contentStorageTransfers = $this->structureContentStorage($contentStorageTransfers);
         foreach ($contentTransfers as $contentTransfer) {
-            $localizedContents = $this->getExtractLocalizedContents($contentTransfer);
-
-            foreach ($availableLocales as $availableLocale) {
-                $localizedContent = (!empty($localizedContents[$availableLocale->getLocaleName()])) ?
-                    $localizedContents[$availableLocale->getLocaleName()] :
-                    $localizedContents[static::DEFAULT_LOCALE];
-                $this->getLogger()->info(serialize($localizedContent));
-                $contentStorageTransfer = new ContentStorageTransfer();
-
-                if (!empty($contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale->getLocaleName()])) {
-                    $contentStorageTransfer->fromArray(
-                        $contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale->getLocaleName()]->toArray()
-                    );
-                }
-
-                $contentStorageTransfer->setFkContent($contentTransfer->getIdContent());
-                $contentStorageTransfer->setLocale($availableLocale->getLocaleName());
-                $contentStorageTransfer->setData([
-                    ContentStorageConstants::TERM_KEY => $contentTransfer->getContentTermKey(),
-                    ContentStorageConstants::CONTENT_KEY => json_decode($localizedContent->getParameters(), true),
-                ]);
-
-                $this->contentStorageEntityManager->saveContentStorageEntity($contentStorageTransfer);
-            }
+            $this->saveContentStorageEntity($contentTransfer, $contentStorageTransfers, $availableLocales);
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
+     * @param array $contentStorageTransfers
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
+     *
+     * @return void
+     */
+    protected function saveContentStorageEntity($contentTransfer, $contentStorageTransfers, $availableLocales): void
+    {
+        $localizedContents = $this->getExtractLocalizedContents($contentTransfer);
+
+        foreach ($availableLocales as $availableLocale) {
+            $localizedContent = (!empty($localizedContents[$availableLocale->getLocaleName()])) ?
+                $localizedContents[$availableLocale->getLocaleName()] :
+                $localizedContents[static::DEFAULT_LOCALE];
+
+            $contentStorageTransfer = new ContentStorageTransfer();
+            if (!empty($contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale->getLocaleName()])) {
+                $contentStorageTransfer->fromArray($contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale->getLocaleName()]->toArray());
+            }
+            $contentStorageTransfer->setFkContent($contentTransfer->getIdContent());
+            $contentStorageTransfer->setLocale($availableLocale->getLocaleName());
+            $contentStorageTransfer->setData([
+                ContentStorageConstants::TERM_KEY => $contentTransfer->getContentTermKey(),
+                ContentStorageConstants::CONTENT_KEY => json_decode($localizedContent->getParameters(), true),
+            ]);
+
+            $this->contentStorageEntityManager->saveContentStorageEntity($contentStorageTransfer);
+        }
     }
 
     /**

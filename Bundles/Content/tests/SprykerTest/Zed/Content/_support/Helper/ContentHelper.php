@@ -22,7 +22,7 @@ class ContentHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
-    public function haveContent(array $override = [])
+    public function haveContent(array $override = []): ContentTransfer
     {
         $data = [
             ContentTransfer::CONTENT_TERM_KEY => 'test-term',

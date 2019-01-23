@@ -5,9 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ContentProductConnector;
+namespace Spryker\Client\ContentProductConnector\Executor;
 
-use Spryker\Client\ContentStorageExtension\ContentTermExecutorInterface;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class AbstractProductListTermExecutor implements ContentTermExecutorInterface

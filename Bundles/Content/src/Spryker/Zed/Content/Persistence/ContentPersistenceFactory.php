@@ -9,8 +9,8 @@ namespace Spryker\Zed\Content\Persistence;
 
 use Orm\Zed\Content\Persistence\SpyContentLocalizedQuery;
 use Orm\Zed\Content\Persistence\SpyContentQuery;
-use Spryker\Zed\Content\Persistence\Mapper\ContentMapper;
-use Spryker\Zed\Content\Persistence\Mapper\ContentMapperInterface;
+use Spryker\Zed\Content\Persistence\Propel\Mapper\ContentMapper;
+use Spryker\Zed\Content\Persistence\Propel\Mapper\ContentMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -37,7 +37,7 @@ class ContentPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Content\Persistence\Mapper\ContentMapperInterface
+     * @return \Spryker\Zed\Content\Persistence\Propel\Mapper\ContentMapperInterface
      */
     public function createContentMapper(): ContentMapperInterface
     {

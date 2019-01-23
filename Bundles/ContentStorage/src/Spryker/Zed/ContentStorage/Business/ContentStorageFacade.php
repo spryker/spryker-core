@@ -21,7 +21,7 @@ class ContentStorageFacade extends AbstractFacade implements ContentStorageFacad
      *
      * @api
      *
-     * @param array $contentIds
+     * @param int[] $contentIds
      *
      * @return void
      */

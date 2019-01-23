@@ -15,6 +15,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 /**
  * @method \Spryker\Zed\ContentStorage\Business\ContentStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ContentStorage\Communication\ContentStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ContentStorage\ContentStorageConfig getConfig()
  */
 class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
@@ -57,9 +58,9 @@ class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements 
         $synchronizationDataTransfers = [];
 
         if (!empty($ids)) {
-            $contentStorageTransfers = $this->getFactory()->getContentStorageRepository()->findContentStorageByContentIds($ids);
+            $contentStorageTransfers = $this->getFactory()->getRepository()->findContentStorageByContentIds($ids);
         } else {
-            $contentStorageTransfers = $this->getFactory()->getContentStorageRepository()->findAllContentStorage();
+            $contentStorageTransfers = $this->getFactory()->getRepository()->findAllContentStorage();
         }
 
         foreach ($contentStorageTransfers as $contentStorageTransfer) {

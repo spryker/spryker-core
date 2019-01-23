@@ -10,7 +10,7 @@ namespace Spryker\Zed\ContentStorage\Business\ContentStorage;
 interface ContentStorageInterface
 {
     /**
-     * @param array $contentIds
+     * @param int[] $contentIds
      *
      * @return void
      */

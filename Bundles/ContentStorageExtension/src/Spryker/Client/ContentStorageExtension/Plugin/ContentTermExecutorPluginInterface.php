@@ -7,11 +7,12 @@
 
 namespace Spryker\Client\ContentStorageExtension\Plugin;
 
-use Generated\Shared\Transfer\ContentAbstractProductListTransfer;
-
 interface ContentTermExecutorPluginInterface
 {
     /**
+     * Specification:
+     * - executes parameters and returns the modified array.
+     *
      * @api
      *
      * @param array $parameters
@@ -21,6 +22,9 @@ interface ContentTermExecutorPluginInterface
     public function execute(array $parameters): array;
 
     /**
+     * Specification:
+     * - Returns term key.
+     *
      * @api
      *
      * @return string
@@ -28,18 +32,12 @@ interface ContentTermExecutorPluginInterface
     public function getTermKey(): string;
 
     /**
+     * Specification:
+     * - Returns type key.
+     *
      * @api
      *
      * @return string
      */
     public function getTypeKey(): string;
-
-    /**
-     * @api
-     *
-     * @param array $parameters
-     *
-     * @return \Generated\Shared\Transfer\ContentAbstractProductListTransfer
-     */
-    public function mapParametersToTransferObject(array $parameters): ContentAbstractProductListTransfer;
 }

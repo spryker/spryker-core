@@ -19,7 +19,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class ContentStorageRepository extends AbstractRepository implements ContentStorageRepositoryInterface
 {
     /**
-     * @param array $contentIds
+     * @param int[] $contentIds
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ContentStorageTransfer[]
      */

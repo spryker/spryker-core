@@ -40,7 +40,7 @@ class ContentStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface
      */
-    protected function getStorageClient(): ContentStorageToStorageClientInterface
+    public function getStorageClient(): ContentStorageToStorageClientInterface
     {
         return $this->getProvidedDependency(ContentStorageDependencyProvider::CLIENT_STORAGE);
     }
@@ -48,7 +48,7 @@ class ContentStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchronizationServiceInterface
      */
-    protected function getSynchronizationService(): ContentStorageToSynchronizationServiceInterface
+    public function getSynchronizationService(): ContentStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ContentStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
@@ -56,8 +56,8 @@ class ContentStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface[]
      */
-    protected function getContentPlugins(): array
+    public function getContentPlugins(): array
     {
-        return $this->getProvidedDependency(ContentStorageDependencyProvider::PLUGIN_CONTENT_ITEM_PLUGINS);
+        return $this->getProvidedDependency(ContentStorageDependencyProvider::PLUGINS_CONTENT_ITEM);
     }
 }

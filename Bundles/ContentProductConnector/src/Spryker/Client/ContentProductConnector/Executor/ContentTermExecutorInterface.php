@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ContentStorageExtension;
+namespace Spryker\Client\ContentProductConnector\Executor;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
