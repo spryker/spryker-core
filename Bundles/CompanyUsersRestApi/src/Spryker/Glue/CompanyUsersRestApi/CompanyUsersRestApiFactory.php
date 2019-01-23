@@ -16,6 +16,9 @@ use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapper;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
+/**
+ * @method \Pyz\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig getConfig()
+ */
 class CompanyUsersRestApiFactory extends AbstractFactory
 {
     /**
