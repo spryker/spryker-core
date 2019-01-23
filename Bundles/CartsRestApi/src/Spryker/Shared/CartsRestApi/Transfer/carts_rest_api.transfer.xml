@@ -93,6 +93,13 @@
         <property name="errorCodes" type="string[]" singular="errorCode" />
     </transfer>
 
+    <transfer name="RestCartItemRequest">
+        <property name="cartItem" type="Item" />
+        <property name="cartUuid" type="string" />
+        <property name="customerReference" type="string" />
+        <property name="errorCodes" type="string[]" singular="errorCode" />
+    </transfer>
+
     <transfer name="QuoteError">
         <property name="message" type="string"/>
     </transfer>

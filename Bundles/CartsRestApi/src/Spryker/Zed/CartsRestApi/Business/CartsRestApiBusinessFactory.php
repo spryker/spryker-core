@@ -15,6 +15,12 @@ use Spryker\Zed\CartsRestApi\Business\Cart\CartReader;
 use Spryker\Zed\CartsRestApi\Business\Cart\CartReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\Cart\CartUpdater;
 use Spryker\Zed\CartsRestApi\Business\Cart\CartUpdaterInterface;
+use Spryker\Zed\CartsRestApi\Business\CartItem\CartItemAdder;
+use Spryker\Zed\CartsRestApi\Business\CartItem\CartItemAdderInterface;
+use Spryker\Zed\CartsRestApi\Business\CartItem\CartItemDeleter;
+use Spryker\Zed\CartsRestApi\Business\CartItem\CartItemDeleterInterface;
+use Spryker\Zed\CartsRestApi\Business\CartItem\CartItemUpdater;
+use Spryker\Zed\CartsRestApi\Business\CartItem\CartItemUpdaterInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUuidWriter;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUuidWriterInterface;
 use Spryker\Zed\CartsRestApi\CartsRestApiDependencyProvider;
@@ -76,6 +82,39 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
         return new CartUpdater(
             $this->getPersistentCartFacade(),
             $this->getCartFacade(),
+            $this->createCartReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApi\Business\CartItem\CartItemAdderInterface
+     */
+    public function createCartItemAdder(): CartItemAdderInterface
+    {
+        return new CartItemAdder(
+            $this->getPersistentCartFacade(),
+            $this->createCartReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApi\Business\CartItem\CartItemDeleterInterface
+     */
+    public function createCartItemDeleter(): CartItemDeleterInterface
+    {
+        return new CartItemDeleter(
+            $this->getPersistentCartFacade(),
+            $this->createCartReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApi\Business\CartItem\CartItemUpdaterInterface
+     */
+    public function createCartItemUpdater(): CartItemUpdaterInterface
+    {
+        return new CartItemUpdater(
+            $this->getPersistentCartFacade(),
             $this->createCartReader()
         );
     }

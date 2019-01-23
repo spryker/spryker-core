@@ -120,10 +120,9 @@ class CartsRestApiFactory extends AbstractFactory
     public function createCartItemAdder(): CartItemAdderInterface
     {
         return new CartItemAdder(
-            $this->getCartClient(),
+            $this->getClient(),
             $this->createCartRestResponseBuilder(),
             $this->getZedRequestClient(),
-            $this->getQuoteClient(),
             $this->createCartReader(),
             $this->createCartItemsResourceMapper()
         );

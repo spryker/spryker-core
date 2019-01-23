@@ -9,6 +9,7 @@ namespace Spryker\Zed\CartsRestApi\Communication\Controller;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
@@ -71,32 +72,32 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateItemQuantityAction(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function updateItemQuantityAction(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->updateItemQuantity($restQuoteRequestTransfer);
+        return $this->getFacade()->updateItemQuantity($restCartItemRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addItemAction(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function addItemAction(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->addItem($restQuoteRequestTransfer);
+        return $this->getFacade()->addItem($restCartItemRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function deleteItemAction(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function deleteItemAction(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->deleteItem($restQuoteRequestTransfer);
+        return $this->getFacade()->deleteItem($restCartItemRequestTransfer);
     }
 }

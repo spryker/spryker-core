@@ -50,6 +50,8 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
         GuestCartReaderInterface $guestCartReader,
         CartsRestApiClientInterface $cartsRestApiClient
     ) {
+        $this->quoteClient = $quoteClient;
+        $this->persistentCartClient = $persistentCartClient;
         $this->guestCartReader = $guestCartReader;
         $this->cartsRestApiClient = $cartsRestApiClient;
     }

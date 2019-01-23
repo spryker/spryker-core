@@ -48,4 +48,11 @@ interface CartRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createFailedDeletingCartErrorResponse(): RestResponseInterface;
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer[] $errors
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function returnWithErrorResponse(array $errors): RestResponseInterface;
 }

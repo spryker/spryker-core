@@ -140,12 +140,32 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART)
-            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART);
+        return $restResponse->addError($this->createRestErrorMessageTransfer(
+            CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART,
+            Response::HTTP_UNPROCESSABLE_ENTITY,
+            CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART
+        ));
+    }
 
-        return $restResponse->addError($restErrorTransfer);
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer[] $errors
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function returnWithErrorResponse(array $errors): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        foreach ($errors as $messageTransfer) {
+            $restErrorMessageTransfer = $this->createRestErrorMessageTransfer(
+                CartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION,
+                Response::HTTP_UNPROCESSABLE_ENTITY,
+                $messageTransfer->getValue()
+            );
+            $restResponse->addError($restErrorMessageTransfer);
+        }
+
+        return $restResponse;
     }
 
     /**

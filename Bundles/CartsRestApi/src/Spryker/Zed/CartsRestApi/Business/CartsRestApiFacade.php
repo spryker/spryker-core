@@ -9,6 +9,7 @@ namespace Spryker\Zed\CartsRestApi\Business;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
@@ -120,15 +121,15 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateItemQuantity(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function updateItemQuantity(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteUpdater()
-            ->updateQuote($restQuoteRequestTransfer);
+            ->createCartItemUpdater()
+            ->changeItemQuantity($restCartItemRequestTransfer);
     }
 
     /**
@@ -136,15 +137,15 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addItem(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function addItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteUpdater()
-            ->updateQuote($restQuoteRequestTransfer);
+            ->createCartItemAdder()
+            ->add($restCartItemRequestTransfer);
     }
 
     /**
@@ -152,14 +153,14 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function deleteItem(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function deleteItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteUpdater()
-            ->updateQuote($restQuoteRequestTransfer);
+            ->createCartItemDeleter()
+            ->delete($restCartItemRequestTransfer);
     }
 }

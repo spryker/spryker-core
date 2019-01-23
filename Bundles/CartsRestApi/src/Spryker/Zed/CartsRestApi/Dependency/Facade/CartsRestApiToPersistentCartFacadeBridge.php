@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CartsRestApi\Dependency\Facade;
 
+use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
+use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
@@ -54,5 +56,35 @@ class CartsRestApiToPersistentCartFacadeBridge implements CartsRestApiToPersiste
     public function delete(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->persistentCartFacade->deleteQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function add(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->persistentCartFacade->add($persistentCartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function remove(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->persistentCartFacade->remove($persistentCartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function changeItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
+    {
+        return $this->persistentCartFacade->changeItemQuantity($persistentCartChangeQuantityTransfer);
     }
 }

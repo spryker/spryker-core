@@ -14,7 +14,7 @@ interface CustomerPostCreatePluginInterface
 {
     /**
      * Specification:
-     *  - Executes after customer registers via REST API.
+     *  - Executes after customer is created via REST API.
      *
      * @api
      *
@@ -23,5 +23,5 @@ interface CustomerPostCreatePluginInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function postRegister(RestRequestInterface $restRequest, CustomerTransfer $customerTransfer): CustomerTransfer;
+    public function postCreate(RestRequestInterface $restRequest, CustomerTransfer $customerTransfer): CustomerTransfer;
 }

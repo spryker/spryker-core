@@ -22,7 +22,13 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      * @deprecated Will be removed in the next major.
      */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
+
+    /**
+     * @deprecated Will be removed in the next major.
+     */
     public const PLUGINS_CUSTOMER_POST_REGISTER = 'PLUGINS_CUSTOMER_POST_REGISTER';
+
+    public const PLUGINS_CUSTOMER_POST_CREATE = 'PLUGINS_CUSTOMER_POST_CREATE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -34,6 +40,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addCustomerClient($container);
         $container = $this->addSessionClient($container);
         $container = $this->addCustomerPostRegisterPlugins($container);
+        $container = $this->addCustomerPostCreatePlugins($container);
 
         return $container;
     }
@@ -69,6 +76,8 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
+     * @deprecated use addCustomerPostCreatePlugins()
+     *
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -83,9 +92,31 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addCustomerPostCreatePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CUSTOMER_POST_CREATE] = function () {
+            return $this->getCustomerPostCreatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface[]
      */
     protected function getCustomerPostRegisterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface[]
+     */
+    protected function getCustomerPostCreatePlugins(): array
     {
         return [];
     }

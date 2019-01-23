@@ -7,40 +7,33 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
 
+use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class CartItemAdder implements CartItemAdderInterface
 {
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface
+     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
      */
-    protected $cartClient;
+    protected $cartsRestApiClient;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface
      */
-    protected $restResourceBuilder;
+    protected $cartRestResponseBuilder;
 
     /**
      * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface
      */
     protected $zedRequestClient;
-
-    /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface
-     */
-    protected $quoteClient;
 
     /**
      * @var \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface
@@ -53,25 +46,22 @@ class CartItemAdder implements CartItemAdderInterface
     protected $cartItemsResourceMapper;
 
     /**
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface $cartClient
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
+     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface $zedRequestClient
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface $quoteClient
      * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface $cartReader
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface $cartItemsResourceMapper
      */
     public function __construct(
-        CartsRestApiToCartClientInterface $cartClient,
-        RestResourceBuilderInterface $restResourceBuilder,
+        CartsRestApiClientInterface $cartsRestApiClient,
+        CartRestResponseBuilderInterface $cartRestResponseBuilder,
         CartsRestApiToZedRequestClientInterface $zedRequestClient,
-        CartsRestApiToQuoteClientInterface $quoteClient,
         CartReaderInterface $cartReader,
         CartItemsResourceMapperInterface $cartItemsResourceMapper
     ) {
-        $this->cartClient = $cartClient;
-        $this->restResourceBuilder = $restResourceBuilder;
+        $this->cartsRestApiClient = $cartsRestApiClient;
+        $this->cartRestResponseBuilder = $cartRestResponseBuilder;
         $this->zedRequestClient = $zedRequestClient;
-        $this->quoteClient = $quoteClient;
         $this->cartReader = $cartReader;
         $this->cartItemsResourceMapper = $cartItemsResourceMapper;
     }
@@ -86,48 +76,28 @@ class CartItemAdder implements CartItemAdderInterface
         RestRequestInterface $restRequest,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): RestResponseInterface {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
         $idCart = $this->findCartIdentifier($restRequest);
         if ($idCart === null) {
-            return $this->createCartIdMissingError();
+            return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
         }
         $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idCart, $restRequest);
         if (!$quoteResponseTransfer->getIsSuccessful() || $quoteResponseTransfer->getQuoteTransfer() === null) {
-            return $this->createCartNotFoundError();
+            return $this->cartRestResponseBuilder->createCartNotFoundErrorResponse();
         }
 
-        $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
-        $quoteTransfer = $this->cartClient->addItem(
-            $this->cartItemsResourceMapper->mapItemAttributesToItemTransfer($restCartItemsAttributesTransfer)
-        );
+        $restCartItemRequestTransfer = (new RestCartItemRequestTransfer())
+            ->setCartItem($this->cartItemsResourceMapper->mapItemAttributesToItemTransfer($restCartItemsAttributesTransfer))
+            ->setCartUuid($idCart)
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+
+        $quoteResponseTransfer = $this->cartsRestApiClient->addItem($restCartItemRequestTransfer);
 
         $errors = $this->zedRequestClient->getLastResponseErrorMessages();
         if (count($errors) > 0) {
-            return $this->returnWithError($errors, $restResponse);
+            return $this->cartRestResponseBuilder->returnWithErrorResponse($errors);
         }
 
-        return $this->cartReader->readByIdentifier($quoteTransfer->getUuid(), $restRequest);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $errors
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function returnWithError(array $errors, RestResponseInterface $restResponse): RestResponseInterface
-    {
-        foreach ($errors as $messageTransfer) {
-            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION)
-                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                ->setDetail($messageTransfer->getValue());
-
-            $restResponse->addError($restErrorMessageTransfer);
-        }
-
-        return $restResponse;
+        return $this->cartReader->readByIdentifier($quoteResponseTransfer->getQuoteTransfer()->getUuid(), $restRequest);
     }
 
     /**
@@ -143,31 +113,5 @@ class CartItemAdder implements CartItemAdderInterface
         }
 
         return null;
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createCartIdMissingError(): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING);
-
-        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createCartNotFoundError(): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND);
-
-        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
 }
