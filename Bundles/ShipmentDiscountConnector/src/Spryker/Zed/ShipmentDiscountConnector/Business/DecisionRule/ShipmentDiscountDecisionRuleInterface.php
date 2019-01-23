@@ -15,8 +15,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface ShipmentDiscountDecisionRuleInterface
 {
     /**
-     * @deprecated Use isItemShipmentSatisfiedBy() instead.
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
@@ -26,16 +24,6 @@ interface ShipmentDiscountDecisionRuleInterface
      * @return bool
      */
     public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
-     * @return bool
-     */
-    public function isItemShipmentSatisfiedBy(ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer): bool;
 
     /**
      * @deprecated Use isItemShipmentExpenseSatisfiedBy() instead.

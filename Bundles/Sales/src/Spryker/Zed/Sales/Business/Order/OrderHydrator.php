@@ -15,10 +15,13 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\SpySalesShipmentEntityTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesShipment;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator as OrderHydratorWithoutMultiShipping;
 
@@ -37,6 +40,11 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
             ->querySalesOrderDetailsWithoutShippingAddress($idSalesOrder)
             ->findOne();
 
+        /**
+         * @deprecated Remove after multiple shipment will be released.
+         */
+        $orderEntity = $this->adaptOrderDataBCForMultiShipment($orderEntity);
+
         if ($orderEntity === null) {
             throw new InvalidSalesOrderException(
                 sprintf(
@@ -47,6 +55,66 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
         }
 
         return $this->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
+    }
+
+    /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    protected function adaptOrderDataBCForMultiShipment(SpySalesOrder $orderEntity): SpySalesOrder
+    {
+        foreach ($orderEntity->getItems() as $orderItemEntity) {
+            if ($orderItemEntity->getSpySalesShipment() !== null) {
+                return $orderEntity;
+            }
+            break;
+        }
+
+        $shippingAddress = $orderEntity->getShippingAddress();
+        if ($shippingAddress === null) {
+            return $orderEntity;
+        }
+
+        $shipmentExpenseEntity = null;
+        foreach ($orderEntity->getExpenses() as $key => $expenseEntity) {
+            if ($expenseEntity->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+                continue;
+            }
+
+            $shipmentExpenseEntity = $expenseEntity;
+            break;
+        }
+
+        if ($shipmentExpenseEntity === null) {
+            return $orderEntity;
+        }
+
+        foreach ($orderEntity->getItems() as $orderItemEntity) {
+            if ($orderItemEntity->getShipment() !== null
+                && $orderItemEntity->getShipment()->getExpense() !== null
+                && $orderItemEntity->getShipment()->getShippingAddress() !== null
+            ) {
+                continue;
+            }
+
+            $shipmentTransfer = $orderItemEntity->getSpySalesShipment();
+            if ($shipmentTransfer === null) {
+                $shipmentTransfer = (new SpySalesShipment());
+            }
+
+            if ($shipmentExpenseEntity === null && $orderItemEntity->getSpySalesShipment() !== null) {
+                $shipmentExpenseEntity = $orderItemEntity->getSpySalesShipment()->getExpense();
+            }
+
+            $shipmentTransfer->setExpense($shipmentExpenseEntity)
+                ->setShippingAddress($shippingAddress);
+            $orderItemEntity->setShipment($shipmentTransfer);
+        }
+
+        return $orderEntity;
     }
 
     /**

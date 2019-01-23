@@ -49,7 +49,7 @@ class CarrierDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterfa
      *
      * @return bool
      */
-    public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer): bool
+    public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer)
     {
         return $this->isSatisfiedCarrier($quoteTransfer, $clauseTransfer);
     }
@@ -64,19 +64,6 @@ class CarrierDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterfa
     public function isExpenseSatisfiedBy(QuoteTransfer $quoteTransfer, ExpenseTransfer $expenseTransfer, ClauseTransfer $clauseTransfer): bool
     {
         return $this->isSatisfiedCarrier($quoteTransfer, $clauseTransfer);
-    }
-
-    /**
-     * @deprecated Use \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\MethodDiscountDecisionRule::isItemShipmentSatisfiedBy() instead.
-     *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     *
-     * @return bool
-     */
-    public function isItemShipmentSatisfiedBy(ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer): bool
-    {
-        return true;
     }
 
     /**

@@ -73,19 +73,6 @@ class ShipmentPriceDiscountDecisionRule implements ShipmentDiscountDecisionRuleI
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentPriceDiscountDecisionRule::isItemShipmentSatisfiedBy() instead.
-     *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     *
-     * @return bool
-     */
-    public function isItemShipmentSatisfiedBy(ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer): bool
-    {
-        return true;
-    }
-
-    /**
      * @deprecated Use \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentPriceDiscountDecisionRule::isItemShipmentExpenseSatisfiedBy() instead.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
