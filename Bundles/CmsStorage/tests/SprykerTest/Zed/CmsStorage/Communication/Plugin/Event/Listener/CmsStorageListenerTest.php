@@ -206,7 +206,9 @@ class CmsStorageListenerTest extends Unit
     protected function assertCmsPageStorage(int $beforeCount): void
     {
         $count = SpyCmsPageStorageQuery::create()->count();
+
         $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $count);
+
         $cmsPage = SpyCmsPageStorageQuery::create()->filterByLocale('en_US')
             ->orderByIdCmsPageStorage()
             ->findOneByFkCmsPage(1);

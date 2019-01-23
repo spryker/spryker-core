@@ -60,7 +60,9 @@ class CmsPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyCmsPageSearchQuery::create()->count();
+
         $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $afterCount);
+
         $this->assertCmsPageSearch();
     }
 
@@ -85,7 +87,9 @@ class CmsPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyCmsPageSearchQuery::create()->count();
+
         $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $afterCount);
+
         $this->assertCmsPageSearch();
     }
 
@@ -108,7 +112,9 @@ class CmsPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyCmsPageSearchQuery::create()->count();
+
         $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $afterCount);
+
         $this->assertCmsPageSearch();
     }
 
