@@ -45,7 +45,7 @@ class EventDispatcherDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array
+     * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherExtensionPluginInterface[]
      */
     protected function getEventDispatcherExtensionPlugins(): array
     {

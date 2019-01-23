@@ -6,6 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/application-extension": "^1.0.0",
+    "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
@@ -30,7 +31,7 @@
     "sort-packages": true
   },
   "suggest": {
-    "spryker/container": "ADD SUGGEST DESCRIPTION",
-    "spryker/symfony": "ADD SUGGEST DESCRIPTION"
+    "spryker/container": "If you want to use EventDispatcherApplicationPlugin",
+    "spryker/symfony": "If you want to use EventDispatcherApplicationPlugin"
   }
 }
