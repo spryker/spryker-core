@@ -296,7 +296,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     /**
      * Specification:
      * - Expands ItemTransfer with validation messages.
-     * - Adjusts ItemTransfer according to validation results.
+     * - Adjusts ItemTransfer data according to validation results.
      *
      * @api
      *

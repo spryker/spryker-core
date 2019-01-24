@@ -10,14 +10,14 @@ namespace Spryker\Client\ProductQuantityStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageClientInterface;
 use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductQuantityStorage\Expander\QuantityCartChangeItemExpander;
+use Spryker\Client\ProductQuantityStorage\Expander\QuantityCartChangeItemExpanderInterface;
 use Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolver;
 use Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolverInterface;
 use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounder;
 use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounderInterface;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReader;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
-use Spryker\Client\ProductQuantityStorage\Validator\QuantityCartChangeItemValidator;
-use Spryker\Client\ProductQuantityStorage\Validator\QuantityCartChangeItemValidatorInterface;
 
 class ProductQuantityStorageFactory extends AbstractFactory
 {
@@ -68,11 +68,11 @@ class ProductQuantityStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductQuantityStorage\Validator\QuantityCartChangeItemValidatorInterface
+     * @return \Spryker\Client\ProductQuantityStorage\Expander\QuantityCartChangeItemExpanderInterface
      */
-    public function createQuantityCartChangeItemValidator(): QuantityCartChangeItemValidatorInterface
+    public function createQuantityCartChangeItemExpander(): QuantityCartChangeItemExpanderInterface
     {
-        return new QuantityCartChangeItemValidator(
+        return new QuantityCartChangeItemExpander(
             $this->createProductQuantityStorageReader(),
             $this->createProductQuantityResolver()
         );

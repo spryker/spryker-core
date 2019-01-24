@@ -10,9 +10,9 @@ namespace Spryker\Client\Cart;
 use Spryker\Client\Cart\Builder\CartChangeTransferBuilder;
 use Spryker\Client\Cart\Builder\CartChangeTransferBuilderInterface;
 use Spryker\Client\Cart\CartChangeRequestExpander\CartChangeRequestExpander;
+use Spryker\Client\Cart\Expander\CartChangeItemExpander;
+use Spryker\Client\Cart\Expander\CartChangeItemExpanderInterface;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProvider;
-use Spryker\Client\Cart\Validator\CartChangeItemValidator;
-use Spryker\Client\Cart\Validator\CartChangeItemValidatorInterface;
 use Spryker\Client\Cart\Zed\CartStub;
 use Spryker\Client\Kernel\AbstractFactory;
 
@@ -113,21 +113,21 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Cart\Validator\CartChangeItemValidatorInterface
+     * @return \Spryker\Client\Cart\Expander\CartChangeItemExpanderInterface
      */
-    public function createCartChangeItemValidator(): CartChangeItemValidatorInterface
+    public function createCartChangeItemExpander(): CartChangeItemExpanderInterface
     {
-        return new CartChangeItemValidator(
-            $this->getCartChangeItemValidationPlugins()
+        return new CartChangeItemExpander(
+            $this->getCartChangeItemExpanderPlugins()
         );
     }
 
     /**
-     * @return \Spryker\Client\CartExtension\Dependency\Plugin\CartChangeItemValidatorPluginInterface[]
+     * @return \Spryker\Client\CartExtension\Dependency\Plugin\CartChangeItemExpanderPluginInterface[]
      */
-    public function getCartChangeItemValidationPlugins(): array
+    public function getCartChangeItemExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_CART_CHANGE_ITEM_VALIDATOR);
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_CART_CHANGE_TRANSFER_ITEM_EXPANDER);
     }
 
     /**
@@ -136,7 +136,7 @@ class CartFactory extends AbstractFactory
     public function createCartChangeTransferBuilder(): CartChangeTransferBuilderInterface
     {
         return new CartChangeTransferBuilder(
-            $this->createCartChangeItemValidator()
+            $this->createCartChangeItemExpander()
         );
     }
 }

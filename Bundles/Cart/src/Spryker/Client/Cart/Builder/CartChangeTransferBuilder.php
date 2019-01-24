@@ -7,25 +7,23 @@
 
 namespace Spryker\Client\Cart\Builder;
 
-use Generated\Shared\Transfer\CartChangeItemValidationResponseTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Client\Cart\Validator\CartChangeItemValidatorInterface;
+use Spryker\Client\Cart\Expander\CartChangeItemExpanderInterface;
 
 class CartChangeTransferBuilder implements CartChangeTransferBuilderInterface
 {
     /**
-     * @var \Spryker\Client\Cart\Validator\CartChangeItemValidatorInterface
+     * @var \Spryker\Client\Cart\Expander\CartChangeItemExpanderInterface
      */
-    protected $cartChangeItemValidator;
+    protected $cartChangeItemExpander;
 
     /**
-     * @param \Spryker\Client\Cart\Validator\CartChangeItemValidatorInterface $cartChangeItemValidator
+     * @param \Spryker\Client\Cart\Expander\CartChangeItemExpanderInterface $cartChangeItemExpander
      */
     public function __construct(
-        CartChangeItemValidatorInterface $cartChangeItemValidator
+        CartChangeItemExpanderInterface $cartChangeItemExpander
     ) {
-        $this->cartChangeItemValidator = $cartChangeItemValidator;
+        $this->cartChangeItemExpander = $cartChangeItemExpander;
     }
 
     /**
@@ -40,42 +38,9 @@ class CartChangeTransferBuilder implements CartChangeTransferBuilderInterface
                 continue;
             }
 
-            $cartChangeItemTransfer = $this->buildCartChangeItemTransfer($cartChangeItemTransfer);
+            $this->cartChangeItemExpander->expand($cartChangeItemTransfer);
         }
 
         return $cartChangeTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $cartChangeItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeItemValidationResponseTransfer
-     */
-    protected function validateCartChangeItemTransfer(ItemTransfer $cartChangeItemTransfer): CartChangeItemValidationResponseTransfer
-    {
-        return $this->cartChangeItemValidator->validate($cartChangeItemTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $cartChangeItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function buildCartChangeItemTransfer(ItemTransfer $cartChangeItemTransfer): ItemTransfer
-    {
-        $cartChangeItemValidationResponseTransfer = $this->cartChangeItemValidator->validate($cartChangeItemTransfer);
-
-        $cartChangeItemTransfer->fromArray(
-            $cartChangeItemValidationResponseTransfer->modifiedToArray(),
-            true
-        );
-
-        if (count($cartChangeItemValidationResponseTransfer->getCorrectValues())) {
-            foreach ($cartChangeItemValidationResponseTransfer->getCorrectValues() as $correctValue) {
-                $cartChangeItemTransfer->fromArray($correctValue, true);
-            }
-        }
-
-        return $cartChangeItemTransfer;
     }
 }

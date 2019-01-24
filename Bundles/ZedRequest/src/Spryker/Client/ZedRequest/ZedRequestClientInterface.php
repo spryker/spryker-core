@@ -73,11 +73,11 @@ interface ZedRequestClientInterface
 
     /**
      * Specification:
-     *  - Get last response transfer from Zed request.
+     *  - Gets last response transfer from Zed request.
      *
      * @api
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
      */
-    public function getLastResponseTransfer(): ?TransferInterface;
+    public function findLastResponseTransfer(): ?TransferInterface;
 }

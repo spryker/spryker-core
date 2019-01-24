@@ -124,7 +124,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
      */
-    public function getLastResponseTransfer(): ?TransferInterface
+    public function findLastResponseTransfer(): ?TransferInterface
     {
         $zedClient = $this->getFactory()
             ->getCashedClient();
