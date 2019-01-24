@@ -422,6 +422,10 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
+     * @module Category
+     * @module Product
+     * @module ProductCategory
+     *
      * @param int $idProduct
      * @param string|null $listType
      *
@@ -496,8 +500,6 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
-     * @module Product
-     *
      * @param int[] $productListIds
      *
      * @return int[]
@@ -513,7 +515,9 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
+     * @module Category
      * @module Product
+     * @module ProductCategory
      *
      * @param int[] $productListIds
      *
