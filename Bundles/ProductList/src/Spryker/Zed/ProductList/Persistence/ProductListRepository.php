@@ -148,7 +148,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->endUse()
             ->groupByFkProductList(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST)
             ->find()
-            ->toKeyIndex(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST);
+            ->toArray();
     }
 
     /**
@@ -378,7 +378,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->endUse()
             ->select(SpyProductListTableMap::COL_ID_PRODUCT_LIST)
             ->find()
-            ->toKeyIndex(SpyProductListTableMap::COL_ID_PRODUCT_LIST);
+            ->toArray();
     }
 
     /**
@@ -400,7 +400,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->endUse()
             ->select(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->find()
-            ->toKeyIndex(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
+            ->toArray();
     }
 
     /**
@@ -420,7 +420,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->endUse()
             ->select(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->find()
-            ->toKeyIndex(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT);
+            ->toArray();
     }
 
     /**
@@ -435,7 +435,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->filterByFkProductList_In($productListIds)
             ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT)
             ->find()
-            ->toKeyIndex(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT);
+            ->toArray();
     }
 
     /**
@@ -465,6 +465,6 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->endUse()
             ->select(SpyProductTableMap::COL_ID_PRODUCT)
             ->find()
-            ->toKeyIndex(SpyProductTableMap::COL_ID_PRODUCT);
+            ->toArray();
     }
 }
