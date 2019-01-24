@@ -9,9 +9,6 @@ namespace SprykerTest\Zed\Transfer\Business\Model;
 
 use Codeception\Test\Unit;
 use Psr\Log\LoggerInterface;
-use Spryker\Zed\Transfer\Business\TransferFacade;
-use Spryker\Zed\Transfer\TransferConfig;
-use Symfony\Component\Finder\Finder;
 
 /**
  * Auto-generated group annotations
@@ -27,15 +24,12 @@ use Symfony\Component\Finder\Finder;
 class TransferFacadeTest extends Unit
 {
     /**
-     * @return \Spryker\Zed\Transfer\Business\TransferFacade
+     * @var \SprykerTest\Zed\Transfer\TransferBusinessTester
      */
-    private function getFacade()
-    {
-        return new TransferFacade();
-    }
+    protected $tester;
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
      */
     private function getMessenger()
     {
@@ -47,12 +41,9 @@ class TransferFacadeTest extends Unit
      */
     public function testDeleteGeneratedTransferObjectsShouldDeleteAllGeneratedTransferObjects()
     {
-        $this->getFacade()->deleteGeneratedTransferObjects();
-
-        $finder = new Finder();
-        $finder->in($this->getConfig()->getClassTargetDirectory())->name('*Transfer.php')->files();
-
-        $this->assertCount(0, $finder, 'Directory containing generated transfer object files is not empty');
+        $this->generateTransfers();
+        $this->tester->getFacade()->deleteGeneratedTransferObjects();
+        $this->tester->assertVirtualDirectoryIsEmpty($this->tester->getTransferDestinationDir(), 'Directory containing generated transfer object files is not empty');
     }
 
     /**
@@ -62,12 +53,8 @@ class TransferFacadeTest extends Unit
      */
     public function testGenerateTransferObjectsShouldGenerateTransferObjects()
     {
-        $this->getFacade()->generateTransferObjects($this->getMessenger());
-
-        $finder = new Finder();
-        $finder->in($this->getConfig()->getClassTargetDirectory())->name('*Transfer.php');
-
-        $this->assertTrue($finder->count() > 0);
+        $this->generateTransfers();
+        $this->tester->assertVirtualDirectoryNotEmpty($this->tester->getTransferDestinationDir(), 'Transfers weren\'t generated successfully');
     }
 
     /**
@@ -77,16 +64,16 @@ class TransferFacadeTest extends Unit
      */
     public function testValidateTransferObjectsShouldValidateTransferObjects()
     {
-        $result = $this->getFacade()->validateTransferObjects($this->getMessenger(), ['bundle' => false, 'verbose' => false]);
-
+        $result = $this->tester->getFacade()->validateTransferObjects($this->getMessenger(), ['bundle' => false, 'verbose' => false]);
         $this->assertTrue($result);
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\TransferConfig
+     * @return void
      */
-    private function getConfig()
+    protected function generateTransfers(): void
     {
-        return new TransferConfig();
+        $this->tester->getFacade()->generateTransferObjects($this->getMessenger());
+        $this->tester->getFacade()->generateEntityTransferObjects($this->getMessenger());
     }
 }

@@ -39,7 +39,7 @@ interface ResourceRouteCollectionInterface
      *
      * @return $this
      */
-    public function addDelete(string $actionName, bool $isProtected = true, array $context = []): self;
+    public function addDelete(string $actionName, bool $isProtected = true, array $context = []);
 
     /**
      * @api
@@ -50,7 +50,7 @@ interface ResourceRouteCollectionInterface
      *
      * @return $this
      */
-    public function addPatch(string $actionName, bool $isProtected = true, array $context = []): self;
+    public function addPatch(string $actionName, bool $isProtected = true, array $context = []);
 
     /**
      * @api

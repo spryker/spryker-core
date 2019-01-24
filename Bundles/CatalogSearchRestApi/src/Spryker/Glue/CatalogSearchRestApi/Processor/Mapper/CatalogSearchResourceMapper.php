@@ -6,6 +6,7 @@
 
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\PriceModeConfigurationTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
@@ -13,6 +14,7 @@ use Generated\Shared\Transfer\RestCatalogSearchAbstractProductsTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchSortTransfer;
 use Generated\Shared\Transfer\RestCurrencyTransfer;
+use Generated\Shared\Transfer\RestFacetConfigTransfer;
 use Generated\Shared\Transfer\RestFacetSearchResultTransfer;
 use Generated\Shared\Transfer\RestPriceProductTransfer;
 use Generated\Shared\Transfer\RestRangeSearchResultTransfer;
@@ -106,19 +108,32 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
     {
         foreach ($facets as $facet) {
             if ($facet instanceof FacetSearchResultTransfer) {
-                $restSearchAttributesTransfer->addValueFacet(
-                    (new RestFacetSearchResultTransfer())->fromArray($facet->toArray(), true)
-                );
+                $valueFacet = (new RestFacetSearchResultTransfer())->fromArray($facet->toArray(), true);
+                $valueFacet->setConfig($this->mapFacetConfigTransferToRestFacetConfigTransfer($facet->getConfig()));
+                $restSearchAttributesTransfer->addValueFacet($valueFacet);
                 continue;
             }
             if ($facet instanceof RangeSearchResultTransfer) {
-                $restSearchAttributesTransfer->addRangeFacet(
-                    (new RestRangeSearchResultTransfer())->fromArray($facet->toArray(), true)
-                );
+                $rangeFacet = (new RestRangeSearchResultTransfer())->fromArray($facet->toArray(), true);
+                $rangeFacet->setConfig($this->mapFacetConfigTransferToRestFacetConfigTransfer($facet->getConfig()));
+                $restSearchAttributesTransfer->addRangeFacet($rangeFacet);
             }
         }
 
         return $restSearchAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestFacetConfigTransfer
+     */
+    protected function mapFacetConfigTransferToRestFacetConfigTransfer(FacetConfigTransfer $facetConfigTransfer): RestFacetConfigTransfer
+    {
+        $restFacetConfigTransfer = (new RestFacetConfigTransfer())->fromArray($facetConfigTransfer->toArray(), true);
+        $restFacetConfigTransfer->setIsMultiValued((bool)$restFacetConfigTransfer->getIsMultiValued());
+
+        return $restFacetConfigTransfer;
     }
 
     /**

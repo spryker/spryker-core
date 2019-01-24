@@ -69,7 +69,8 @@ class PriceProductStorageFactory extends AbstractFactory
         return new PriceConcreteResolver(
             $this->createPriceAbstractStorageReader(),
             $this->createPriceConcreteStorageReader(),
-            $this->getPriceProductService()
+            $this->getPriceProductService(),
+            $this->getPriceProductClient()
         );
     }
 
@@ -82,7 +83,7 @@ class PriceProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface
+     * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductClientInterface
      */
     public function getPriceProductClient()
     {

@@ -1,6 +1,6 @@
 {% extends '@ProductListGui/Create/index.twig' %}
 
-{% set widget_title = 'Edit List' | trans %}
+{% set widget_title = 'Edit List' | trans ~ ' "' ~ aggregateForm.productList.title.vars.value ~ '"' %}
 
 {% block action %}
     {{ parent() }}
