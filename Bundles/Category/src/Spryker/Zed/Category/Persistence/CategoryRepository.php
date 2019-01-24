@@ -60,29 +60,61 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     public function getNodePath(int $idCategoryNode, LocaleTransfer $localeTransfer)
     {
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryPathQuery */
-        $categoryPathQuery = $this->queryNodePath($idCategoryNode, $localeTransfer->getIdLocale())
+        $nodePathQuery = $this->queryNodePathWithRootNode(
+            $idCategoryNode,
+            $localeTransfer->getIdLocale(),
+            static::NODE_PATH_ZERO_DEPTH
+        );
+        return $this->generateNodePathString($nodePathQuery);
+    }
+
+    /**
+     * @param int $idNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getCategoryNodePath(int $idNode, LocaleTransfer $localeTransfer): string
+    {
+        $nodePathQuery = $this->queryNodePathWithoutRootNode(
+            $idNode,
+            $localeTransfer->getIdLocale(),
+            static::NODE_PATH_NULL_DEPTH
+        );
+        return $this->generateNodePathString($nodePathQuery, static::CATEGORY_NODE_PATH_GLUE);
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $nodePathQuery
+     * @param string $glue
+     *
+     * @return string
+     */
+    protected function generateNodePathString(SpyCategoryNodeQuery $nodePathQuery, string $glue = self::NODE_PATH_GLUE): string
+    {
+        $nodePathQuery = $nodePathQuery
             ->clearSelectColumns()
             ->addSelectColumn(static::COL_CATEGORY_NAME);
 
         /** @var string[] $pathTokens */
-        $pathTokens = $categoryPathQuery->find();
+        $pathTokens = $nodePathQuery->find();
 
-        return implode('/', $pathTokens);
+        return implode($glue, $pathTokens);
     }
 
     /**
      * @param int $idNode
      * @param int $idLocale
+     * @param int|null $depth
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    protected function queryNodePath(
-        $idNode,
-        $idLocale
+    protected function queryNodePathWithRootNode(
+        int $idNode,
+        int $idLocale,
+        ?int $depth = self::NODE_PATH_NULL_DEPTH
     ): SpyCategoryNodeQuery {
-        $depth = 0;
-        $nodeQuery = SpyCategoryNodeQuery::create();
+        $nodeQuery = $this->getFactory()->createCategoryNodeQuery();
 
         $nodeQuery
             ->useClosureTableQuery()
@@ -98,7 +130,23 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->endUse();
 
         $nodeQuery->setFormatter(new PropelArraySetFormatter());
+        return $nodeQuery;
+    }
 
+    /**
+     * @param int $idNode
+     * @param int $idLocale
+     * @param int|null $depth
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    protected function queryNodePathWithoutRootNode(
+        int $idNode,
+        int $idLocale,
+        ?int $depth = self::NODE_PATH_NULL_DEPTH
+    ): SpyCategoryNodeQuery {
+        $nodeQuery = $this->queryNodePathWithRootNode($idNode, $idLocale, $depth);
+        $nodeQuery->filterByIsRoot(static::IS_NOT_ROOT_NODE);
         return $nodeQuery;
     }
 

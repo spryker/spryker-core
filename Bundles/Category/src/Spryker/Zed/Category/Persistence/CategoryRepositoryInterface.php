@@ -13,6 +13,13 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CategoryRepositoryInterface
 {
+    public const NODE_PATH_GLUE = '/';
+    public const CATEGORY_NODE_PATH_GLUE = ' / ';
+    public const EXCLUDE_NODE_PATH_ROOT = true;
+    public const NODE_PATH_NULL_DEPTH = null;
+    public const NODE_PATH_ZERO_DEPTH = 0;
+    public const IS_NOT_ROOT_NODE = 0;
+
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -27,6 +34,14 @@ interface CategoryRepositoryInterface
      * @return string
      */
     public function getNodePath(int $idCategoryNode, LocaleTransfer $localeTransfer);
+
+    /**
+     * @param int $idNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getCategoryNodePath(int $idNode, LocaleTransfer $localeTransfer): string;
 
     /**
      * @param string $nodeName

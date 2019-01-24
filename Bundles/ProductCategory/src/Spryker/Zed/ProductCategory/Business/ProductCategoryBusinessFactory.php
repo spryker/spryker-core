@@ -34,6 +34,14 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface
+     */
+    public function getCategoryFacade()
+    {
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_CATEGORY);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface
      */
     protected function getProductFacade()
@@ -47,14 +55,6 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     protected function getEventFacade()
     {
         return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_EVENT);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface
-     */
-    protected function getCategoryFacade()
-    {
-        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_CATEGORY);
     }
 
     /**

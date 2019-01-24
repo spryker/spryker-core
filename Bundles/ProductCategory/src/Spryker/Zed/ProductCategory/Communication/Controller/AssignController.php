@@ -91,18 +91,6 @@ class AssignController extends AbstractController
 
     /**
      * @param int $idCategory
-     * @param int $idLocale
-     *
-     * @return string
-     */
-    protected function getCategoryPath($idCategory, $idLocale): string
-    {
-        $categoryPath = $this->getFactory()->getCategoryQueryContainer()->queryPath($idCategory, $idLocale)->find();
-        return implode(' / ', array_column($categoryPath, 'name'));
-    }
-
-    /**
-     * @param int $idCategory
      *
      * @return \Symfony\Component\Form\FormInterface
      */

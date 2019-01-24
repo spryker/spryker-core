@@ -21,6 +21,7 @@ class ProductCategoryTable extends AbstractTable
     public const TABLE_IDENTIFIER = 'product-category-table';
     public const COL_CHECKBOX = 'checkbox';
     public const PARAM_ID_CATEGORY = 'id-category';
+    public const PARAM_ID_NODE = 'id-node';
 
     /**
      * @var \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface
