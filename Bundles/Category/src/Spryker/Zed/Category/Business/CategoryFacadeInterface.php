@@ -519,7 +519,8 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     * - Returns an string of parent nodes
+     * - Returns category name, and name of parent categories
+     * - Example: Computer/Tablets
      *
      * @api
      *
