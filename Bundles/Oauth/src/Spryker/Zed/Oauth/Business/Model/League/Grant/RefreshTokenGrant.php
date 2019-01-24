@@ -83,7 +83,7 @@ class RefreshTokenGrant implements GrantInterface
             $data = (string)$response->getBody();
 
             return $oauthResponseTransfer
-                ->fromArray(json_decode($data, true))
+                ->fromArray(json_decode($data, true), true)
                 ->setIsValid(true);
         } catch (OAuthServerException $exception) {
                 $oauthErrorTransfer = new OauthErrorTransfer();
