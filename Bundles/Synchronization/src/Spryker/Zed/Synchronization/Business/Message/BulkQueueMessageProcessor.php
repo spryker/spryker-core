@@ -88,7 +88,7 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
                 $this->synchronization->writeBulk($messageBodies);
                 $processedMessageTransfers = $this->markEachMessageChunkAsAcknowledged($queueMessageTransfers);
             } catch (Throwable $exception) {
-                $processedMessageTransfers = $this->restoreQueueMessageBodies($queueMessageTransfers, $messageBodies);
+                $processedMessageTransfers = $this->restoreQueueMessageBodies($queueMessageTransfers, $messageBodies, static::TYPE_WRITE);
                 $processedMessageTransfers = $this->markEachMessageChunkAsFailed($processedMessageTransfers, $exception->getMessage());
             }
 
@@ -179,7 +179,7 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
-    protected function restoreQueueMessageBodies(array $queueMessageTransfers, array $messageBodies, string $type = self::TYPE_WRITE): array
+    protected function restoreQueueMessageBodies(array $queueMessageTransfers, array $messageBodies, string $type): array
     {
         $restoredQueueMessageTransfers = [];
 
