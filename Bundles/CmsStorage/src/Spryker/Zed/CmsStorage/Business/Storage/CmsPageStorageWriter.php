@@ -95,7 +95,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
 
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage[] $cmsPageEntities
-     * @param \Orm\Zed\CmsStorage\Persistence\SpyCmsPageStorage[] $cmsPageStorageEntities
+     * @param array $cmsPageStorageEntities
      *
      * @return void
      */
@@ -246,7 +246,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\CmsStorage\Persistence\SpyCmsPageStorage[] $cmsPageStorageEntities
+     * @param array $cmsPageStorageEntities
      *
      * @return void
      */
@@ -254,9 +254,10 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     {
         foreach ($cmsPageStorageEntities as $cmsPageStorageEntity) {
             foreach ($cmsPageStorageEntity as $cmsPageStorageLocaleEntity) {
-                $cmsPageStorageLocaleEntity->delete();
+                foreach ($cmsPageStorageLocaleEntity as $cmsPageStorageLocaleStoreEntity) {
+                    $cmsPageStorageLocaleStoreEntity->delete();
+                }
             }
-            $cmsPageStorageEntity->delete();
         }
     }
 
