@@ -9,7 +9,7 @@
         <property name="imageUrl" type="string" />
         <property name="title" type="string" />
         <property name="subtitle" type="string" />
-        <property name="link" type="string" />
+        <property name="clickUrl" type="string" />
         <property name="altText" type="string" />
     </transfer>
 </transfers>

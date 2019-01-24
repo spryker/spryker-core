@@ -10,10 +10,10 @@ namespace Spryker\Glue\ContentBannersRestApi\Dependency\Client;
 interface ContentBannersRestApiToContentStorageClientInterface
 {
     /**
-     * @param int $id
+     * @param int $idContent
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
-    public function findContentStorageData($id, $localeName);
+    public function findContentStorageData($idContent, $localeName);
 }
