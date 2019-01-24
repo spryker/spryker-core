@@ -152,19 +152,4 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
             ->createCategoryReader()
             ->getCategoryTransferCollectionByIdProductAbstract($idProductAbstract, $localeTransfer);
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string
-     */
-    public function getNodePath(int $idNode, LocaleTransfer $localeTransfer): string
-    {
-        return $this->getFactory()->getCategoryFacade()->getNodePath($idNode, $localeTransfer);
-    }
 }
