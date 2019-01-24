@@ -13,7 +13,7 @@ interface CartChangeItemExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands ItemTransfer
+     * - Expands ItemTransfer.
      *
      * @api
      *
