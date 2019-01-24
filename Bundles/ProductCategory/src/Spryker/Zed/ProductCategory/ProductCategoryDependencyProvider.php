@@ -75,6 +75,10 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductCategoryToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
+        $container[self::FACADE_CATEGORY] = function (Container $container) {
+            return new ProductCategoryToCategoryBridge($container->getLocator()->category()->facade());
+        };
+
         return $container;
     }
 }

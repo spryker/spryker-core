@@ -31,7 +31,7 @@ class AssignController extends AbstractController
     public function indexAction(Request $request)
     {
         $idCategory = $this->castId($request->get(ProductCategoryTable::PARAM_ID_CATEGORY));
-        $idNode = $this->castId($request->get(static::PARAM_ID_NODE));
+        $idNode = $request->get(static::PARAM_ID_NODE);
         $categoryEntity = $this->getCategoryEntity($idCategory);
 
         if (!$categoryEntity) {
@@ -56,7 +56,12 @@ class AssignController extends AbstractController
         $localeTransfer = $this->getFactory()->getCurrentLocale();
         $categoryProductsTable = $this->getCategoryProductsTable($idCategory, $localeTransfer);
         $productsTable = $this->getProductsTable($idCategory, $localeTransfer);
-        $categoryFacade = $this->getFactory()->getCategoryFacade();
+
+        if ($idNode !== null) {
+            $idNode = $this->castId($idNode);
+            $categoryFacade = $this->getFactory()->getCategoryFacade();
+            $categoryPath = $categoryFacade->getNodePath($idNode, $localeTransfer);
+        }
 
         return $this->viewResponse([
             'idCategory' => $idCategory,
@@ -64,7 +69,7 @@ class AssignController extends AbstractController
             'productCategoriesTable' => $categoryProductsTable->render(),
             'productsTable' => $productsTable->render(),
             'currentCategory' => $categoryEntity->toArray(),
-            'categoryPath' => $categoryFacade->getNodePath($idNode, $localeTransfer),
+            'categoryPath' => $categoryPath ?? null,
             'currentLocale' => $localeTransfer->getLocaleName(),
         ]);
     }
