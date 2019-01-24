@@ -8,20 +8,20 @@
 namespace Spryker\Glue\NavigationsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\NavigationStorageTransfer;
-use Generated\Shared\Transfer\RestNavigationTreeAttributesTransfer;
+use Generated\Shared\Transfer\RestNavigationAttributesTransfer;
 
 class NavigationMapper implements NavigationMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\NavigationStorageTransfer $navigationStorageTransfer
-     * @param \Generated\Shared\Transfer\RestNavigationTreeAttributesTransfer $restNavigationTreeAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestNavigationAttributesTransfer $restNavigationAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\RestNavigationTreeAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestNavigationAttributesTransfer
      */
-    public function mapNavigationStorageTransferToRestNavigationTreeAttributesTransfer(
+    public function mapNavigationStorageTransferToRestNavigationAttributesTransfer(
         NavigationStorageTransfer $navigationStorageTransfer,
-        RestNavigationTreeAttributesTransfer $restNavigationTreeAttributesTransfer
-    ): RestNavigationTreeAttributesTransfer {
-        return $restNavigationTreeAttributesTransfer->fromArray($navigationStorageTransfer->toArray(), true);
+        RestNavigationAttributesTransfer $restNavigationAttributesTransfer
+    ): RestNavigationAttributesTransfer {
+        return $restNavigationAttributesTransfer->fromArray($navigationStorageTransfer->toArray(), true);
     }
 }

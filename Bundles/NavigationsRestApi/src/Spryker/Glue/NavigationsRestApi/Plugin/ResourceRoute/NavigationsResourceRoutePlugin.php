@@ -7,17 +7,17 @@
 
 namespace Spryker\Glue\NavigationsRestApi\Plugin\ResourceRoute;
 
-use Generated\Shared\Transfer\RestNavigationTreeAttributesTransfer;
+use Generated\Shared\Transfer\RestNavigationAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\NavigationsRestApi\NavigationsRestApiConfig;
 
-class NavigationTreesResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
+class NavigationsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
      * {@inheritdoc}
-     *  - Configures available actions for navigation-trees resource.
+     *  - Configures available actions for navigations resource.
      *
      * @api
      *
@@ -28,7 +28,7 @@ class NavigationTreesResourceRoutePlugin extends AbstractPlugin implements Resou
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         return $resourceRouteCollection
-            ->addGet(NavigationsRestApiConfig::ACTION_NAVIGATION_TREES_GET, false);
+            ->addGet(NavigationsRestApiConfig::ACTION_NAVIGATIONS_GET, false);
     }
 
     /**
@@ -40,7 +40,7 @@ class NavigationTreesResourceRoutePlugin extends AbstractPlugin implements Resou
      */
     public function getResourceType(): string
     {
-        return NavigationsRestApiConfig::RESOURCE_NAVIGATION_TREES;
+        return NavigationsRestApiConfig::RESOURCE_NAVIGATIONS;
     }
 
     /**
@@ -52,7 +52,7 @@ class NavigationTreesResourceRoutePlugin extends AbstractPlugin implements Resou
      */
     public function getController(): string
     {
-        return NavigationsRestApiConfig::CONTROLLER_NAVIGATION_TREES;
+        return NavigationsRestApiConfig::CONTROLLER_NAVIGATIONS;
     }
 
     /**
@@ -64,6 +64,6 @@ class NavigationTreesResourceRoutePlugin extends AbstractPlugin implements Resou
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestNavigationTreeAttributesTransfer::class;
+        return RestNavigationAttributesTransfer::class;
     }
 }

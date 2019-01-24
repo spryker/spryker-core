@@ -17,5 +17,5 @@ interface NavigationReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getNavigationTreeByKey(RestRequestInterface $restRequest): RestResponseInterface;
+    public function getNavigationByKey(RestRequestInterface $restRequest): RestResponseInterface;
 }
