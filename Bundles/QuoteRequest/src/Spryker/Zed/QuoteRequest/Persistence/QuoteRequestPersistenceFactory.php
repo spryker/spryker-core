@@ -7,7 +7,13 @@
 
 namespace Spryker\Zed\QuoteRequest\Persistence;
 
+use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery;
+use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServiceInterface;
+use Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestMapper;
+use Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestVersionMapper;
+use Spryker\Zed\QuoteRequest\QuoteRequestDependencyProvider;
 
 /**
  * @method \Spryker\Zed\QuoteRequest\QuoteRequestConfig getConfig()
@@ -16,4 +22,48 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class QuoteRequestPersistenceFactory extends AbstractPersistenceFactory
 {
+    /**
+     * @return \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery
+     */
+    public function getQuoteRequestPropelQuery(): SpyQuoteRequestQuery
+    {
+        return SpyQuoteRequestQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersionQuery
+     */
+    public function getQuoteRequestVersionPropelQuery(): SpyQuoteRequestVersionQuery
+    {
+        return SpyQuoteRequestVersionQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestMapper
+     */
+    public function createQuoteRequestMapper(): QuoteRequestMapper
+    {
+        return new QuoteRequestMapper(
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper\QuoteRequestVersionMapper
+     */
+    public function createQuoteRequestVersionMapper(): QuoteRequestVersionMapper
+    {
+        return new QuoteRequestVersionMapper(
+            $this->getConfig(),
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServiceInterface
+     */
+    protected function getUtilEncodingService(): QuoteRequestToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
 }

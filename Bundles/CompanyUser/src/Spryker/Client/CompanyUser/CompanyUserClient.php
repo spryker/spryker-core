@@ -149,4 +149,20 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
             ->setCompanyUser($companyUserTransfer)
             ->setIsSuccessful(false);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUser()
+    {
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        return $customerTransfer ? $customerTransfer->getCompanyUserTransfer() : null;
+    }
 }

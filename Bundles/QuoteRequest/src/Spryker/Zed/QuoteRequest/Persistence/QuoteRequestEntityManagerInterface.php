@@ -7,6 +7,36 @@
 
 namespace Spryker\Zed\QuoteRequest\Persistence;
 
+use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
+
 interface QuoteRequestEntityManagerInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     */
+    public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
+     */
+    public function createQuoteRequestVersion(QuoteRequestVersionTransfer $quoteRequestTransfer): QuoteRequestVersionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
+     */
+    public function updateQuoteRequestVersion(QuoteRequestVersionTransfer $quoteRequestTransfer): QuoteRequestVersionTransfer;
 }
