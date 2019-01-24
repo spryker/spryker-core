@@ -47,12 +47,26 @@ class ExporterPluginResolver
     }
 
     /**
+     * @deprecated Use ExporterPluginResolver::executeResolvedPluginsBySourcesWithIds() instead.
+     *
+     * @param string[] $resources
+     *
+     * @return void
+     */
+    public function executeResolvedPluginsBySources(array $resources): void
+    {
+        $pluginsPerExporter = $this->getResolvedPluginsByResources($resources);
+        $this->queryContainerExporter->exportSynchronizedData($pluginsPerExporter[ExporterPluginResolver::QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS]);
+        $this->repositoryExporter->exportSynchronizedData($pluginsPerExporter[ExporterPluginResolver::REPOSITORY_SYNCHRONIZATION_PLUGINS]);
+    }
+
+    /**
      * @param string[] $resources
      * @param int[] $ids
      *
      * @return void
      */
-    public function executeResolvedPluginsBySources(array $resources, array $ids): void
+    public function executeResolvedPluginsBySourcesWithIds(array $resources, array $ids): void
     {
         $pluginsPerExporter = $this->getResolvedPluginsByResources($resources);
         $this->queryContainerExporter->exportSynchronizedData($pluginsPerExporter[ExporterPluginResolver::QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS]);

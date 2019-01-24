@@ -53,7 +53,7 @@ interface ProductQuantityStorageFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
      */
     public function findFilteredProductQuantityTransfers(FilterTransfer $filterTransfer): array;
 }

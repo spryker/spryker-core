@@ -63,7 +63,7 @@ class ExportSynchronizedDataConsole extends Console
             }, $ids);
         }
 
-        $this->getFacade()->executeResolvedPluginsBySources($resources, $ids);
+        $this->getFacade()->executeResolvedPluginsBySourcesWithIds($resources, $ids);
     }
 
     /**

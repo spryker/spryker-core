@@ -42,7 +42,7 @@ class ProductQuantityEventResourceBulkRepositoryPlugin extends AbstractPlugin im
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
      */
     public function getData(int $offset, int $limit): array
     {

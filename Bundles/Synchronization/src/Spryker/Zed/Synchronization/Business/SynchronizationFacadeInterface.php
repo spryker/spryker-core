@@ -102,12 +102,23 @@ interface SynchronizationFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use SynchronizationFacadeInterface::executeResolvedPluginsBySourcesWithIds() instead.
+     *
+     * @param string[] $resources
+     *
+     * @return void
+     */
+    public function executeResolvedPluginsBySources(array $resources);
+
+    /**
+     * @api
+     *
      * @param string[] $resources
      * @param int[] $ids
      *
      * @return void
      */
-    public function executeResolvedPluginsBySources(array $resources, array $ids);
+    public function executeResolvedPluginsBySourcesWithIds(array $resources, array $ids);
 
     /**
      * Specification:

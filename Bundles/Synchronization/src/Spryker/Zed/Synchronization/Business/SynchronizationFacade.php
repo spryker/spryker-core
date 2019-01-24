@@ -111,14 +111,30 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
      *
      * @api
      *
+     * @deprecated Use SynchronizationFacade::executeResolvedPluginsBySourcesWithIds() instead.
+     *
+     * @param string[] $resources
+     *
+     * @return void
+     */
+    public function executeResolvedPluginsBySources(array $resources)
+    {
+        $this->getFactory()->createExporterPluginResolver()->executeResolvedPluginsBySources($resources);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string[] $resources
      * @param int[] $ids
      *
      * @return void
      */
-    public function executeResolvedPluginsBySources(array $resources, array $ids)
+    public function executeResolvedPluginsBySourcesWithIds(array $resources, array $ids)
     {
-        $this->getFactory()->createExporterPluginResolver()->executeResolvedPluginsBySources($resources, $ids);
+        $this->getFactory()->createExporterPluginResolver()->executeResolvedPluginsBySourcesWithIds($resources, $ids);
     }
 
     /**
