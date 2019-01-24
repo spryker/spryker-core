@@ -139,27 +139,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param int[] $productAbstractIds
-     *
-     * @return int[]
-     */
-    public function getProductConcreteCountByProductAbstractIds(array $productAbstractIds): array
-    {
-        return $this->getFactory()
-            ->createProductQuery()
-            ->addAsColumn('count', sprintf('COUNT(%s)', SpyProductTableMap::COL_ID_PRODUCT))
-            ->select([
-                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-            ])
-            ->filterByFkProductAbstract_In($productAbstractIds)
-            ->groupBy([
-                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-            ])
-            ->find()
-            ->toKeyValue(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, 'count');
-    }
-
-    /**
      * @param int $idProductAbstract
      *
      * @return int[]

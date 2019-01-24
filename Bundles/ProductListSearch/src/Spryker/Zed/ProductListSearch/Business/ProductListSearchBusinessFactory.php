@@ -10,6 +10,10 @@ namespace Spryker\Zed\ProductListSearch\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductListSearch\Business\ProductAbstract\ProductAbstractReader;
 use Spryker\Zed\ProductListSearch\Business\ProductAbstract\ProductAbstractReaderInterface;
+use Spryker\Zed\ProductListSearch\Business\ProductPage\ProductPageDataExpander;
+use Spryker\Zed\ProductListSearch\Business\ProductPage\ProductPageDataExpanderInterface;
+use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductListFacadeInterface;
+use Spryker\Zed\ProductListSearch\ProductListSearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductListSearch\Persistence\ProductListSearchRepositoryInterface getRepository()
@@ -25,5 +29,23 @@ class ProductListSearchBusinessFactory extends AbstractBusinessFactory
         return new ProductAbstractReader(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListSearch\Business\ProductPage\ProductPageDataExpanderInterface
+     */
+    public function createProductPageDataExpander(): ProductPageDataExpanderInterface
+    {
+        return new ProductPageDataExpander(
+            $this->getProductListFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductListFacadeInterface
+     */
+    public function getProductListFacade(): ProductListSearchToProductListFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductListSearchDependencyProvider::FACADE_PRODUCT_LIST);
     }
 }

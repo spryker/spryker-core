@@ -30,7 +30,7 @@ interface ProductListReaderInterface
      *
      * @return array
      */
-    public function getProductAbstractListsByProductAbstractIds(array $productAbstractIds): array;
+    public function getProductAbstractListByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * @param int $idProductAbstract

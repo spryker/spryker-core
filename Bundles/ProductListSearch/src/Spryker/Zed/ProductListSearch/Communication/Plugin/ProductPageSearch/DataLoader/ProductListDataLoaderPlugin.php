@@ -26,36 +26,8 @@ class ProductListDataLoaderPlugin extends AbstractPlugin implements ProductPageD
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
+    public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer): ProductPageLoadTransfer
     {
-        $productList = $this->getFactory()
-            ->getProductListFacade()
-            ->getProductAbstractListsIdsByProductAbstractIds($loadTransfer->getProductAbstractIds());
-
-        $updatedPayloadTransfers = $this->updatePayloadTransfers(
-            $loadTransfer->getPayloadTransfers(),
-            $productList
-        );
-
-        $loadTransfer->setPayloadTransfers($updatedPayloadTransfers);
-
-        return $loadTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $payloadTransfers
-     * @param array $mappedProductListIds
-     *
-     * @return array
-     */
-    protected function updatePayloadTransfers(array $payloadTransfers, array $mappedProductListIds): array
-    {
-        foreach ($payloadTransfers as $payloadTransfer) {
-            $lists = $mappedProductListIds[$payloadTransfer->getIdProductAbstract()] ?? null;
-
-            $payloadTransfer->setProductLists($lists);
-        }
-
-        return $payloadTransfers;
+        return $this->getFacade()->expandProductPageData($loadTransfer);
     }
 }

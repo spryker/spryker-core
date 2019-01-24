@@ -791,19 +791,6 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns product concrete count for each product abstract id.
-     * - Keys are product abstract ids. Values are related products counts.
-     *
-     * @api
-     *
-     * @param int[] $productAbstractIds
-     *
-     * @return int[]
-     */
-    public function getProductConcreteCountByProductAbstractIds(array $productAbstractIds): array;
-
-    /**
-     * Specification:
      * - Returns the abstract product ID of the given concrete product ID if it exists.
      * - Throws exception if no abstract product is found.
      *

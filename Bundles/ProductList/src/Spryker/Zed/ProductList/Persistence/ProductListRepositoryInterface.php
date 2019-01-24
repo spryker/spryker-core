@@ -109,7 +109,14 @@ interface ProductListRepositoryInterface
      *
      * @return array
      */
-    public function getProductListsByProductAbstractIds(array $productAbstractIds): array;
+    public function getProductBlacklistsByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    public function getProductWhiteListsByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * @param int[] $productListIds

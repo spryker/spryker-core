@@ -14,6 +14,7 @@ use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListCategoryTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
+use Propel\Runtime\ActiveQuery\Join;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\ProductList\Persistence\Mapper\ProductListMapperInterface;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -464,22 +465,58 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      *
      * @return array
      */
-    public function getProductListsByProductAbstractIds(array $productAbstractIds): array
+    public function getProductBlacklistsByProductAbstractIds(array $productAbstractIds): array
     {
+        $spyProductTableAlias = 'spyProductTableAlias';
+        $join = new Join(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, Criteria::INNER_JOIN);
+        $join->setRightTableAlias($spyProductTableAlias);
+
         return $this->getFactory()
             ->createProductListProductConcreteQuery()
-            ->addAsColumn(static::COL_CONCRETE_PRODUCT_COUNT, sprintf('COUNT(%s)', SpyProductListProductConcreteTableMap::COL_FK_PRODUCT))
             ->addAsColumn(static::COL_ID_PRODUCT_LIST, SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST)
             ->addAsColumn(static::COL_ID_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->addAsColumn(static::COL_TYPE, SpyProductListTableMap::COL_TYPE)
             ->select([
                 SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST,
             ])
-            ->innerJoinWithSpyProduct()
             ->useSpyProductQuery()
                 ->filterByFkProductAbstract_In($productAbstractIds)
             ->endUse()
-            ->innerJoinWithSpyProductList()
+            ->addJoinObject($join)
+            ->useSpyProductListQuery(null, Criteria::LEFT_JOIN)
+                ->filterByType(SpyProductListTableMap::COL_TYPE_BLACKLIST)
+            ->endUse()
+            ->groupBy([
+                SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST,
+                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
+                SpyProductListTableMap::COL_TYPE,
+            ])
+            ->having(sprintf('COUNT(DISTINCT %s) = COUNT(%s)', SpyProductListProductConcreteTableMap::COL_FK_PRODUCT, $spyProductTableAlias))
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    public function getProductWhiteListsByProductAbstractIds(array $productAbstractIds): array
+    {
+        return $this->getFactory()
+            ->createProductListProductConcreteQuery()
+            ->addAsColumn(static::COL_ID_PRODUCT_LIST, SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST)
+            ->addAsColumn(static::COL_ID_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->addAsColumn(static::COL_TYPE, SpyProductListTableMap::COL_TYPE)
+            ->select([
+                SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST,
+            ])
+            ->useSpyProductQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->endUse()
+            ->useSpyProductListQuery(null, Criteria::INNER_JOIN)
+                ->filterByType(SpyProductListTableMap::COL_TYPE_WHITELIST)
+            ->endUse()
             ->groupBy([
                 SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST,
                 SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,

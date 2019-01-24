@@ -14,12 +14,5 @@ interface ProductListToProductFacadeInterface
      *
      * @return int[]
      */
-    public function getProductConcreteCountByProductAbstractIds(array $productAbstractIds): array;
-
-    /**
-     * @param int[] $productAbstractIds
-     *
-     * @return int[]
-     */
     public function getProductConcreteIdsByAbstractProductIds(array $productAbstractIds): array;
 }

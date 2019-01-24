@@ -27,16 +27,6 @@ class ProductListToProductFacadeBridge implements ProductListToProductFacadeInte
      *
      * @return int[]
      */
-    public function getProductConcreteCountByProductAbstractIds(array $productAbstractIds): array
-    {
-        return $this->productFacade->getProductConcreteCountByProductAbstractIds($productAbstractIds);
-    }
-
-    /**
-     * @param int[] $productAbstractIds
-     *
-     * @return int[]
-     */
     public function getProductConcreteIdsByAbstractProductIds(array $productAbstractIds): array
     {
         return $this->productFacade->getProductConcreteIdsByAbstractProductIds($productAbstractIds);

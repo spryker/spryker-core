@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListSearch\Business;
 
+use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -45,5 +46,19 @@ class ProductListSearchFacade extends AbstractFacade implements ProductListSearc
         return $this->getFactory()
             ->createProductAbstractReader()
             ->getProductAbstractIdsByCategoryIds($categoryIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
+     */
+    public function expandProductPageData(ProductPageLoadTransfer $loadTransfer): ProductPageLoadTransfer
+    {
+        return $this->getFactory()->createProductPageDataExpander()->expandProductPageData($loadTransfer);
     }
 }

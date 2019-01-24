@@ -72,7 +72,7 @@ interface ProductListFacadeInterface
      *
      * @return array
      */
-    public function getProductAbstractListsIdsByProductAbstractIds(array $productAbstractIds): array;
+    public function getProductAbstractListIdsByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * Specification:
