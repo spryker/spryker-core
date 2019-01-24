@@ -67,7 +67,16 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
      */
     protected function setHtmlTemplate(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setHtmlTemplate('oms/mail/order_confirmation.html.twig');
+        /**
+         * @deprecated Remove after multiple shipment will be released.
+         */
+        if (!defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT')) {
+            $mailBuilder->setHtmlTemplate('oms/mail/order_confirmation.html.twig');
+
+            return $this;
+        }
+
+        $mailBuilder->setHtmlTemplate('oms/mail/order_confirmation_with_multi_shipment_address.html.twig');
 
         return $this;
     }
@@ -79,7 +88,16 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
      */
     protected function setTextTemplate(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setTextTemplate('oms/mail/order_confirmation.text.twig');
+        /**
+         * @deprecated Remove after multiple shipment will be released.
+         */
+        if (!defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT')) {
+            $mailBuilder->setTextTemplate('oms/mail/order_confirmation.text.twig');
+
+            return $this;
+        }
+
+        $mailBuilder->setTextTemplate('oms/mail/order_confirmation_with_multi_shipment_address.text.twig');
 
         return $this;
     }
