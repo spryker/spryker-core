@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShipmentCartConnector\Business\Model;
 
-use \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderInterface as ShipmentCartExpanderInterfaceWithMultiShippingAddress;
+use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderInterface as ShipmentCartExpanderInterfaceWithMultiShippingAddress;
 
 /**
  * @deprecated Use \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderInterface instead.

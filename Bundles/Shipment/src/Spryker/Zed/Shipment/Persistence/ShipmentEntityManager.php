@@ -18,6 +18,7 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
 {
     /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param int $idSalesOrder
      *
      * @return int
      */

@@ -14,7 +14,7 @@ use Spryker\Service\Shipment\Items\ItemsGrouperInterface;
 class ShipmentServiceFactory extends AbstractServiceFactory
 {
     /**
-     * @return ItemsGrouperInterface
+     * @return \Spryker\Service\Shipment\Items\ItemsGrouperInterface
      */
     public function createItemsGrouper(): ItemsGrouperInterface
     {

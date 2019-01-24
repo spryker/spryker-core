@@ -7,8 +7,8 @@
 
 namespace Spryker\Service\Shipment;
 
-use Spryker\Service\Kernel\AbstractService;
 use ArrayObject;
+use Spryker\Service\Kernel\AbstractService;
 use Spryker\Service\Shipment\Items\ItemsGrouperInterface;
 
 /**

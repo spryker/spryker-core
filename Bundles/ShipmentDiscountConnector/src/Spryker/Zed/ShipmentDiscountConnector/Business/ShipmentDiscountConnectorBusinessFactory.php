@@ -8,16 +8,16 @@
 namespace Spryker\Zed\ShipmentDiscountConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollectorInterface;
-use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\CarrierDiscountDecisionRule;
-use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\CarrierDiscountDecisionRule as CarrierDiscountDecisionRuleWithMultiShipment;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\MethodDiscountDecisionRule;
-use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\MethodDiscountDecisionRule as MethodDiscountDecisionRuleWithMultiShipment;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\ShipmentPriceDiscountDecisionRule;
-use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentPriceDiscountDecisionRule as ShipmentPriceDiscountDecisionRuleWithMultiShipment;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollector;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollector as ShipmentDiscountCollectorWithMultiShipment;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollectorInterface;
+use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\CarrierDiscountDecisionRule as CarrierDiscountDecisionRuleWithMultiShipment;
+use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\MethodDiscountDecisionRule as MethodDiscountDecisionRuleWithMultiShipment;
+use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface;
+use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentPriceDiscountDecisionRule as ShipmentPriceDiscountDecisionRuleWithMultiShipment;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\CarrierDiscountDecisionRule;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\MethodDiscountDecisionRule;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\ShipmentPriceDiscountDecisionRule;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollector;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountReader;
 use Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentCollectorStrategyResolver;
 use Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentCollectorStrategyResolverInterface;
@@ -204,8 +204,6 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
      * @deprecated Remove after multiple shipment will be released. Use $this->createCarrierDiscountCollectorWithMultiShipment(),
      * createMethodDiscountCollectorWithMultiShipment() or createShipmentPriceDiscountCollectorWithMultiShipment() instead.
      *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentCollectorStrategyResolver
      */
     public function createShipmentDiscountCollectorStrategyResolver(): MultiShipmentCollectorStrategyResolverInterface
@@ -279,8 +277,6 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Remove after multiple shipment will be released. Use $this->createCarrierDiscountDecisionRuleWithMultiShipment(),
      * createCarrierDiscountDecisionRuleWithMultiShipment() or createCarrierDiscountDecisionRuleWithMultiShipment() instead.
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentCollectorStrategyResolver
      */

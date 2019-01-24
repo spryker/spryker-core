@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Sales\Persistence;
 
-use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -186,9 +186,9 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
-     * @deprecated Use querySalesOrderDetailsWithoutShippingAddress() instead.
-     *
      * @api
+     *
+     * @deprecated Use querySalesOrderDetailsWithoutShippingAddress() instead.
      *
      * @param int $idSalesOrder
      *

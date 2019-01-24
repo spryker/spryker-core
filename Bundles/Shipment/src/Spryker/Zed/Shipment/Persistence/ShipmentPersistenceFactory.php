@@ -19,6 +19,7 @@ use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentMapperInterface;
 /**
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface getEntityManager()
  */
 class ShipmentPersistenceFactory extends AbstractPersistenceFactory
 {

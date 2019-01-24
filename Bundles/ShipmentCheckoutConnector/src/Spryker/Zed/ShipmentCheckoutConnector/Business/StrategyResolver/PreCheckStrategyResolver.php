@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,10 +7,9 @@
 
 namespace Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver;
 
-use Generated\Shared\Transfer\ItemTransfer;
+use Closure;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface;
-use Closure;
 
 /**
  * @deprecated Remove strategy resolver after multiple shipment will be released.
@@ -17,14 +17,13 @@ use Closure;
 class PreCheckStrategyResolver implements PreCheckStrategyResolverInterface
 {
     /**
-     * @var array|Closure[]
+     * @var array|\Closure[]
      */
     protected $strategyContainer;
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @param array|Closure[] $strategyContainer
+     * @param \Closure[] $strategyContainer
      */
     public function __construct(array $strategyContainer)
     {
@@ -49,6 +48,8 @@ class PreCheckStrategyResolver implements PreCheckStrategyResolverInterface
 
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return void
      */
     protected function assertRequiredStrategyWithoutMultiShipmentContainerItems(): void
     {
@@ -61,6 +62,8 @@ class PreCheckStrategyResolver implements PreCheckStrategyResolverInterface
 
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return void
      */
     protected function assertRequiredStrategyWithMultiShipmentContainerItems(): void
     {

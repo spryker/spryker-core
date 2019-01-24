@@ -47,8 +47,6 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Remove after multiple shipment will be released. Use $this->createShipmentCheckoutPreCheckWithMultipleShippingAddress() instead.
      *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver\PreCheckStrategyResolverInterface
      */
     public function createShipmentCheckoutPreCheckStrategyResolver(): PreCheckStrategyResolverInterface

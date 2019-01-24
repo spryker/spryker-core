@@ -22,27 +22,27 @@ use Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydrator;
 use Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface;
 use Spryker\Zed\Sales\Business\Model\Order\OrderExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
-use Spryker\Zed\Sales\Business\Order\OrderHydrator as OrderHydratorWithMultiShippingAddress;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
-use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface;
-use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
-use Spryker\Zed\Sales\Business\Order\SalesOrderSaver as SalesOrderSaverMultipleShippingAddress;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
+use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemGrouper;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemGrouperInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper;
+use Spryker\Zed\Sales\Business\Order\OrderHydrator as OrderHydratorWithMultiShippingAddress;
+use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
+use Spryker\Zed\Sales\Business\Order\SalesOrderSaver as SalesOrderSaverMultipleShippingAddress;
+use Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface as SalesOrderSaverMultipleShippingAddressInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderSaverStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
-use Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface as SalesOrderSaverMultipleShippingAddressInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
@@ -157,8 +157,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @deprecated Remove after multiple shipment will be released. Use $this->createSalesOrderSaverMultipleShippingAddress() instead.
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return \Spryker\Zed\Sales\Business\StrategyResolver\OrderSaverStrategyResolverInterface
      */
@@ -431,8 +429,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @deprecated Remove after multiple shipment will be released. Use $this->createOrderHydratorWithMultiShippingAddress() instead.
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return \Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface
      */

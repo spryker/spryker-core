@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,9 +7,8 @@
 
 namespace Spryker\Zed\Shipment\Business\StrategyResolver;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Closure;
+use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface;
 
 /**
@@ -17,14 +17,12 @@ use Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface;
 class TaxRateCalculatorStrategyResolver implements TaxRateCalculatorStrategyResolverInterface
 {
     /**
-     * @var array|Closure[]
+     * @var array|\Closure[]
      */
     protected $strategyContainer;
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
-     * @param array|Closure[] $strategyContainer
+     * @param \Closure[] $strategyContainer
      */
     public function __construct(array $strategyContainer)
     {
@@ -49,6 +47,8 @@ class TaxRateCalculatorStrategyResolver implements TaxRateCalculatorStrategyReso
 
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return void
      */
     protected function assertRequiredStrategyWithoutMultiShipmentContainerItems(): void
     {
@@ -61,6 +61,8 @@ class TaxRateCalculatorStrategyResolver implements TaxRateCalculatorStrategyReso
 
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return void
      */
     protected function assertRequiredStrategyWithMultiShipmentContainerItems(): void
     {

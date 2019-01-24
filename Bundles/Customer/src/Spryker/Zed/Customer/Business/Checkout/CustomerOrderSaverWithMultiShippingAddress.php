@@ -82,18 +82,8 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
             return $quoteTransfer;
         }
 
-        $shipmentExpenseTransfer = null;
-        foreach ($quoteTransfer->getExpenses() as $key => $expenseTransfer) {
-            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                continue;
-            }
-
-            $shipmentExpenseTransfer = $expenseTransfer;
-            break;
-        }
-
         $quoteShipment = $quoteTransfer->getShipment();
-        if ($quoteShipment === null && $shipmentExpenseTransfer === null) {
+        if ($quoteShipment === null) {
             return $quoteTransfer;
         }
 
@@ -107,16 +97,10 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
 
             $shipmentTransfer = $itemTransfer->getShipment() ?: $quoteShipment;
             if ($shipmentTransfer === null) {
-                $shipmentTransfer = (new ShipmentTransfer())
-                    ->setMethod(new ShipmentMethodTransfer());
+                $shipmentTransfer = new ShipmentTransfer();
             }
 
-            if ($shipmentExpenseTransfer === null && $itemTransfer->getShipment() !== null) {
-                $shipmentExpenseTransfer = $itemTransfer->getShipment()->getExpense();
-            }
-
-            $shipmentTransfer->setExpense($shipmentExpenseTransfer)
-                ->setShippingAddress($shippingAddress);
+            $shipmentTransfer->setShippingAddress($shippingAddress);
             $itemTransfer->setShipment($shipmentTransfer);
         }
 
@@ -154,16 +138,16 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function getCustomerAddress(ShipmentTransfer $shipmentTransfer)
+    protected function getCustomerAddress(ShipmentTransfer $shipmentTransfer): AddressTransfer
     {
         $addressTransfer = $shipmentTransfer->getShippingAddress();
 
         $key = $this->getAddressTransferKey($addressTransfer);
-        if (!isset($existingAddresses[$key])) {
-            $existingAddresses[$key] = $this->customerRepository->findAddressByAddressData($addressTransfer);
+        if (!isset($this->existingAddresses[$key])) {
+            $this->existingAddresses[$key] = $this->customerRepository->findAddressByAddressData($addressTransfer);
         }
-        if ($existingAddresses[$key] !== null) {
-            return $existingAddresses[$key];
+        if ($this->existingAddresses[$key] !== null) {
+            return $this->existingAddresses[$key];
         }
 
         return $addressTransfer;
@@ -176,18 +160,6 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
      */
     protected function getAddressTransferKey(AddressTransfer $addressTransfer): string
     {
-        return sprintf(
-            '%s %s %s %s %s %s %s %s %s %s',
-            $addressTransfer->getFkCustomer(),
-            $addressTransfer->getFirstName(),
-            $addressTransfer->getLastName(),
-            $addressTransfer->getAddress1(),
-            $addressTransfer->getAddress2(),
-            $addressTransfer->getAddress3(),
-            $addressTransfer->getZipCode(),
-            $addressTransfer->getCity(),
-            $addressTransfer->getFkCountry(),
-            $addressTransfer->getPhone()
-        );
+        return implode(' ', $addressTransfer->toArray());
     }
 }

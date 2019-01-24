@@ -247,10 +247,11 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
     }
 
     /**
+     * @todo fix return type
+     *
      * @param int[] $idProductOptionValues
      * @param string[] $countryIso2CodesByIdProductAbstracts
      *
-     * @todo fix return type
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]
      */
     protected function findTaxRatesByIdOptionValuesAndCountryIso2Codes(array $idProductOptionValues, array $countryIso2CodesByIdProductAbstracts): array

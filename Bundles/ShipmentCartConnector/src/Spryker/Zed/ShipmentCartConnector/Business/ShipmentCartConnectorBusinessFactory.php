@@ -8,12 +8,12 @@
 namespace Spryker\Zed\ShipmentCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpander as ShipmentCartExpanderWithMultiShippingAddress;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderInterface;
+use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidator as ShipmentCartValidatorWithMultiShippingAddress;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface;
 use Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartExpander;
-use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpander as ShipmentCartExpanderWithMultiShippingAddress;
 use Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartValidator;
-use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidator as ShipmentCartValidatorWithMultiShippingAddress;
 use Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartExpanderStrategyResolver;
 use Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartExpanderStrategyResolverInterface;
 use Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartValidatorStrategyResolver;
@@ -80,8 +80,6 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Remove after multiple shipment will be released. Use $this->createShipmentCartExpanderWithMultiShippingAddress() instead.
      *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartExpanderStrategyResolverInterface
      */
     public function createShipmentCartExpanderStrategyResolver(): CartExpanderStrategyResolverInterface
@@ -128,8 +126,6 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @deprecated Remove after multiple shipment will be released. Use $this->createShipmentCartValidatorWithMultiShippingAddress() instead.
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return \Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartValidatorStrategyResolverInterface
      */

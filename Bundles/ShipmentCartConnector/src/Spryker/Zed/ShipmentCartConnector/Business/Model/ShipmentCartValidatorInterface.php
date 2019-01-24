@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShipmentCartConnector\Business\Model;
 
-use \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface as ShipmentCartValidatorWithMultiShippingAddressInterface;
+use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface as ShipmentCartValidatorWithMultiShippingAddressInterface;
 
 /**
  * @deprecated Use \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface instead.

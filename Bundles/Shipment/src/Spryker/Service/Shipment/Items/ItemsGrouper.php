@@ -77,19 +77,7 @@ class ItemsGrouper implements ItemsGrouperInterface
      */
     protected function getAddressTransferKey(AddressTransfer $addressTransfer): string
     {
-        return sprintf(
-            static::ADDRESS_TRANSFER_KEY_PATTERN,
-            $addressTransfer->getFkCustomer(),
-            $addressTransfer->getFirstName(),
-            $addressTransfer->getLastName(),
-            $addressTransfer->getAddress1(),
-            $addressTransfer->getAddress2(),
-            $addressTransfer->getAddress3(),
-            $addressTransfer->getZipCode(),
-            $addressTransfer->getCity(),
-            $addressTransfer->getFkCountry(),
-            $addressTransfer->getPhone()
-        );
+        return implode(' ', $addressTransfer->toArray());
     }
 
     /**

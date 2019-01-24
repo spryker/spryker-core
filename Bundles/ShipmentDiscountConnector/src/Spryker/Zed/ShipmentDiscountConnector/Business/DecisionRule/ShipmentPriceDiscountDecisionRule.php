@@ -23,8 +23,6 @@ class ShipmentPriceDiscountDecisionRule extends ShipmentPriceDiscountDecisionRul
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return bool
      */
     public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer)

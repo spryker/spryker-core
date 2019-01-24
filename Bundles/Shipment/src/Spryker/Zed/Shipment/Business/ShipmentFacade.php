@@ -19,6 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Shipment\Business\ShipmentBusinessFactory getFactory()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface getEntityManager()
  */
 class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
 {

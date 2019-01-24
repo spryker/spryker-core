@@ -134,7 +134,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated  Use createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
+     * @deprecated Use createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
      *
      * @return \Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface
      */
@@ -257,8 +257,6 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @deprecated Remove after multiple shipment will be released. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return \Spryker\Zed\Customer\Business\StrategyResolver\OrderSaverStrategyResolverInterface
      */

@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
-use \Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentCheckoutPreCheck as ShipmentCheckoutPreCheckWithoutMultiShipment;
+use Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentCheckoutPreCheck as ShipmentCheckoutPreCheckWithoutMultiShipment;
 
 class ShipmentCheckoutPreCheck extends ShipmentCheckoutPreCheckWithoutMultiShipment
 {

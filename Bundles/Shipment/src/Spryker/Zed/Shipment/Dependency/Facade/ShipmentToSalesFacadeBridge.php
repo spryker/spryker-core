@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Dependency\Facade;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
-use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 
 class ShipmentToSalesFacadeBridge implements ShipmentToSalesFacadeInterface
 {
@@ -21,7 +20,7 @@ class ShipmentToSalesFacadeBridge implements ShipmentToSalesFacadeInterface
     /**
      * @param \Spryker\Zed\Sales\Business\SalesFacadeInterface $salesFacade
      */
-    public function __construct(SalesFacadeInterface$salesFacade)
+    public function __construct($salesFacade)
     {
         $this->salesFacade = $salesFacade;
     }

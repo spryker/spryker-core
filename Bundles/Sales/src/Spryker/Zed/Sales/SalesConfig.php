@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales;
 
+use ArrayObject;
 use BadMethodCallException;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -14,7 +15,6 @@ use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Sales\SalesConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
-use ArrayObject;
 
 class SalesConfig extends AbstractBundleConfig
 {
@@ -74,7 +74,7 @@ class SalesConfig extends AbstractBundleConfig
         /**
          * @deprecated Remove this code after multiple shipment will be released.
          */
-        if ($this->hasItemOwnShipmentTransfer($quoteTransfer->getItems()) === false){
+        if ($this->hasItemOwnShipmentTransfer($quoteTransfer->getItems()) === false) {
             return $this->isTestOrderWithoutMultiShippingAddress($quoteTransfer);
         }
 
@@ -154,7 +154,7 @@ class SalesConfig extends AbstractBundleConfig
     /**
      * @deprecated Remove this code after multiple shipment will be released.
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]|null $items
      *
      * @return bool
      */
