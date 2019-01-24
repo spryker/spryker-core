@@ -27,8 +27,4 @@ use Codeception\Actor;
 class EventDispatcherCommunicationTester extends Actor
 {
     use _generated\EventDispatcherCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

@@ -27,8 +27,4 @@ use Codeception\Actor;
 class EventDispatcherYvesTester extends Actor
 {
     use _generated\EventDispatcherYvesTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }
