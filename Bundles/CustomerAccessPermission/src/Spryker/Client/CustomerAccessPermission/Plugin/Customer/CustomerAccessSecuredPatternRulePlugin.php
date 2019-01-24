@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CustomerAccessPermission\Plugin;
+namespace Spryker\Client\CustomerAccessPermission\Plugin\Customer;
 
 use Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternRulePluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;

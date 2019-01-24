@@ -17,6 +17,6 @@ class CustomerConfig extends AbstractBundleConfig
      */
     public function getCustomerSecuredPattern(): string
     {
-        return $this->get(CustomerConstants::CUSTOMER_SECURED_PATTERN);
+        return $this->get(CustomerConstants::CUSTOMER_SECURED_PATTERN, '');
     }
 }
