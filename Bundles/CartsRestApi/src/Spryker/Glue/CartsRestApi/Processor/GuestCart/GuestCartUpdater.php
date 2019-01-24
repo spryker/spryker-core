@@ -57,8 +57,6 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
     }
 
     /**
-     * @deprecated use updateGuestCartCustomerReferenceOnCreate()
-     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer

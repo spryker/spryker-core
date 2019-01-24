@@ -14,11 +14,16 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 interface CartRestResponseBuilderInterface
 {
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null $cartRestResource
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $cartRestResource
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCartRestResponse(?RestResourceInterface $cartRestResource): RestResponseInterface;
+    public function createCartRestResponse(RestResourceInterface $cartRestResource): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createRestResponse(): RestResponseInterface;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer

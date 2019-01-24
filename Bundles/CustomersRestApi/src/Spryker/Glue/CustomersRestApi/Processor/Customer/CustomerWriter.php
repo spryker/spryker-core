@@ -97,8 +97,6 @@ class CustomerWriter implements CustomerWriterInterface
     }
 
     /**
-     * @deprecated use createCustomer()
-     *
      * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomersAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

@@ -83,7 +83,7 @@ class CartItemDeleter implements CartItemDeleterInterface
             return $this->cartRestResponseBuilder->createFailedDeletingCartItemErrorResponse();
         }
 
-        return $this->cartRestResponseBuilder->createCartRestResponse(null);
+        return $this->cartRestResponseBuilder->createRestResponse();
     }
 
     /**

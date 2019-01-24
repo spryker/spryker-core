@@ -94,7 +94,7 @@ class CartReader implements CartReaderInterface
         $quoteCollectionTransfer = $this->getCustomerQuotes($restRequest);
 
         if (count($quoteCollectionTransfer->getQuotes()) === 0) {
-            return $this->cartRestResponseBuilder->createCartRestResponse(null);
+            return $this->cartRestResponseBuilder->createRestResponse();
         }
 
         return $this->getRestQuoteCollectionResponse($restRequest, $quoteCollectionTransfer);
@@ -157,7 +157,7 @@ class CartReader implements CartReaderInterface
         RestRequestInterface $restRequest,
         QuoteCollectionTransfer $quoteCollectionTransfer
     ): RestResponseInterface {
-        $restResponse = $this->cartRestResponseBuilder->createCartRestResponse(null);
+        $restResponse = $this->cartRestResponseBuilder->createRestResponse();
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             $cartResource = $this->cartsResourceMapper->mapCartsResource($quoteTransfer, $restRequest);
             $restResponse->addResource($cartResource);
