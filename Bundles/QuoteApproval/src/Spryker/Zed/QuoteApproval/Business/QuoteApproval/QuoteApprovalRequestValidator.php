@@ -165,7 +165,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     }
 
     /**
-     * @param null|string $message
+     * @param string|null $message
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer
      */
@@ -176,25 +176,10 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         $quoteApprovalRequestValidationResponseTransfer = new QuoteApprovalRequestValidationResponseTransfer();
         $quoteApprovalRequestValidationResponseTransfer->setIsSuccessful(false);
         $quoteApprovalRequestValidationResponseTransfer->setMessage(
-            $this->createMessageTransfer($message)
+            (new MessageTransfer())->setValue($message)
         );
 
         return $quoteApprovalRequestValidationResponseTransfer;
-    }
-
-    /**
-     * @param string $message
-     * @param array $parameters
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer
-     */
-    protected function createMessageTransfer(string $message, array $parameters = []): MessageTransfer
-    {
-        $messageTransfer = new MessageTransfer();
-        $messageTransfer->setValue($message);
-        $messageTransfer->setParameters($parameters);
-
-        return $messageTransfer;
     }
 
     /**
