@@ -136,6 +136,17 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string[]
+     */
+    public function getOrganizationPathMap(): array
+    {
+        return [
+            'Spryker' => $this->getPathToCore(),
+            'SprykerEco' => $this->getPathToEco(),
+        ];
+    }
+
+    /**
      * Either a relative or full path to the ruleset.xml or a name of an installed
      * standard (see `phpcs -i` for a list of available ones).
      *
@@ -440,5 +451,15 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getPhpstanLevel()
     {
         return 3;
+    }
+
+    /**
+     * Gets CodeSniffer default level. The higher, the better.
+     *
+     * @return int
+     */
+    public function getCodeSnifferLevel(): int
+    {
+        return 1;
     }
 }
