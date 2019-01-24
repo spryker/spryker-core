@@ -7,13 +7,11 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\CartItem;
 
-use Generated\Shared\Transfer\QuoteErrorTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
-use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
-use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Zed\CartsRestApi\Business\Cart\CartReaderInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
 
@@ -48,78 +46,24 @@ class CartItemUpdater implements CartItemUpdaterInterface
      */
     public function changeItemQuantity(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
     {
-        $restQuoteRequestTransfer
-            ->requireQuote()
+        $restCartItemRequestTransfer
+            ->requireCartUuid()
             ->requireCustomerReference()
-            ->requireQuoteUuid();
+            ->requireCartItem();
 
-        $quoteTransfer = $restQuoteRequestTransfer->getQuote();
-        $quoteResponseTransfer = $this->cartReader->findQuoteByUuid($quoteTransfer);
+        $quoteResponseTransfer = $this->cartReader->findQuoteByUuid(
+            (new QuoteTransfer())->setUuid($restCartItemRequestTransfer->getCartUuid())
+        );
+
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
 
-        $originalQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        $quoteTransfer = $this->processQuoteData($quoteTransfer, $originalQuoteTransfer);
+        $persistentCartChangeQuantityTransfer = (new PersistentCartChangeQuantityTransfer())
+            ->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote())
+            ->setCustomer($restCartItemRequestTransfer->getCartItem())
+            ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemRequestTransfer->getCustomerReference()));
 
-        $quoteResponseTransfer = $this->validateQuoteResponse(
-            $originalQuoteTransfer,
-            $quoteTransfer,
-            $quoteResponseTransfer
-        );
-
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-            $quoteTransfer = $this->cartFacade->reloadItems($originalQuoteTransfer
-                ->fromArray($quoteTransfer->modifiedToArray()));
-            $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())
-                ->fromArray($quoteTransfer->modifiedToArray(), true);
-            $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
-                ->fromArray($quoteTransfer->modifiedToArray(), true);
-            $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
-            $quoteResponseTransfer = $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
-        }
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $originalQuoteTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function validateQuoteResponse(
-        QuoteTransfer $originalQuoteTransfer,
-        QuoteTransfer $quoteTransfer,
-        QuoteResponseTransfer $quoteResponseTransfer
-    ): QuoteResponseTransfer {
-        if (count($originalQuoteTransfer->getItems()) > 0 && $quoteTransfer->getPriceMode()) {
-            $quoteResponseTransfer
-                ->setIsSuccessful(false)
-                ->addError((new QuoteErrorTransfer())
-                    ->setMessage(CartsRestApiConfig::RESPONSE_MESSAGE_PRICE_MODE_CANT_BE_CHANGED));
-        }
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $originalQuoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function processQuoteData(QuoteTransfer $quoteTransfer, QuoteTransfer $originalQuoteTransfer): QuoteTransfer
-    {
-        if (!$quoteTransfer->getCurrency()->getCode()) {
-            $quoteTransfer->setCurrency($originalQuoteTransfer->getCurrency());
-        }
-
-        if (!$quoteTransfer->getStore()->getName()) {
-            $quoteTransfer->setStore($originalQuoteTransfer->getStore());
-        }
-
-        return $quoteTransfer;
+        return $this->persistentCartFacade->changeItemQuantity($persistentCartChangeQuantityTransfer);
     }
 }

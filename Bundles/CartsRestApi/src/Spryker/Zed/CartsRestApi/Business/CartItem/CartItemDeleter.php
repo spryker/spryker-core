@@ -60,7 +60,7 @@ class CartItemDeleter implements CartItemDeleterInterface
         }
 
         $persistentCartChangeTransfer = (new PersistentCartChangeTransfer())
-            ->setIdQuote($restCartItemRequestTransfer->getCartUuid())
+            ->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote())
             ->addItem($restCartItemRequestTransfer->getCartItem())
             ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemRequestTransfer->getCustomerReference()));
 

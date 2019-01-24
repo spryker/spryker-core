@@ -146,10 +146,9 @@ class CartsRestApiFactory extends AbstractFactory
     public function createCartItemUpdater(): CartItemUpdaterInterface
     {
         return new CartItemUpdater(
-            $this->getCartClient(),
-            $this->getResourceBuilder(),
+            $this->getClient(),
+            $this->createCartRestResponseBuilder(),
             $this->getZedRequestClient(),
-            $this->getQuoteClient(),
             $this->createCartReader()
         );
     }
@@ -215,10 +214,9 @@ class CartsRestApiFactory extends AbstractFactory
     public function createGuestCartItemUpdater(): GuestCartItemUpdaterInterface
     {
         return new GuestCartItemUpdater(
-            $this->getCartClient(),
-            $this->getResourceBuilder(),
+            $this->getClient(),
+            $this->createCartRestResponseBuilder(),
             $this->getZedRequestClient(),
-            $this->getQuoteClient(),
             $this->createGuestCartReader()
         );
     }
@@ -229,9 +227,8 @@ class CartsRestApiFactory extends AbstractFactory
     public function createGuestCartItemDeleter(): GuestCartItemDeleterInterface
     {
         return new GuestCartItemDeleter(
-            $this->getCartClient(),
-            $this->getResourceBuilder(),
-            $this->getQuoteClient(),
+            $this->getClient(),
+            $this->createCartRestResponseBuilder(),
             $this->createGuestCartReader()
         );
     }
