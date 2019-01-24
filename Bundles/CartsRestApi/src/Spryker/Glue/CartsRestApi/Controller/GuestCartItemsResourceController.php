@@ -77,7 +77,7 @@ class GuestCartItemsResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createGuestCartItemUpdater()
-            ->updateItemQuantity($request, $restCartItemsAttributesTransfer);
+            ->updateItem($request, $restCartItemsAttributesTransfer);
     }
 
     /**

@@ -96,7 +96,7 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
         }
 
         $quoteTransfer = $this->guestCartReader->getCustomerQuote($restRequest);
-        if (!$quoteTransfer->getIdQuote()) {
+        if (!$quoteTransfer) {
             return $customerTransfer;
         }
 

@@ -45,7 +45,7 @@ class CartReader implements CartReaderInterface
      *
      * @return \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer
      */
-    public function findCustomerQuoteCollection(
+    public function getCustomerQuoteCollection(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
     ): RestQuoteCollectionResponseTransfer {
         $restQuoteCollectionResponseTransfer = new RestQuoteCollectionResponseTransfer();

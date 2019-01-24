@@ -19,7 +19,7 @@ interface CartItemUpdaterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function updateItemQuantity(
+    public function updateItem(
         RestRequestInterface $restRequest,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): RestResponseInterface;

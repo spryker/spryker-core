@@ -34,7 +34,7 @@ class QuoteCollectionReader implements QuoteCollectionReaderInterface
      */
     public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
-        $restQuoteCollectionResponseTransfer = $this->cartsRestApiClient->findCustomerQuoteCollection(
+        $restQuoteCollectionResponseTransfer = $this->cartsRestApiClient->getCustomerQuoteCollection(
             (new RestQuoteCollectionRequestTransfer())->setCustomerReference($quoteCriteriaFilterTransfer->getCustomerReference())
         );
 

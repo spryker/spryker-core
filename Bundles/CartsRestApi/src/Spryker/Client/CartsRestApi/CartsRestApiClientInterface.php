@@ -40,7 +40,7 @@ interface CartsRestApiClientInterface
      *
      * @return \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer
      */
-    public function findCustomerQuoteCollection(
+    public function getCustomerQuoteCollection(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
     ): RestQuoteCollectionResponseTransfer;
 
@@ -94,7 +94,7 @@ interface CartsRestApiClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateItemQuantity(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer;
+    public function updateItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:

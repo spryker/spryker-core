@@ -64,7 +64,7 @@ class CartItemUpdater implements CartItemUpdaterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function updateItemQuantity(
+    public function updateItem(
         RestRequestInterface $restRequest,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): RestResponseInterface {
@@ -92,7 +92,7 @@ class CartItemUpdater implements CartItemUpdaterInterface
             ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
             ->setCartItem($itemTransfer);
 
-        $quoteTransfer = $this->cartsRestApiClient->updateItemQuantity($restCartItemRequestTransfer)->getQuoteTransfer();
+        $quoteTransfer = $this->cartsRestApiClient->updateItem($restCartItemRequestTransfer)->getQuoteTransfer();
 
         $errors = $this->zedRequestClient->getLastResponseErrorMessages();
         if (count($errors) > 0) {

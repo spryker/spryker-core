@@ -35,10 +35,10 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer
      */
-    public function findCustomerQuoteCollectionAction(
+    public function getCustomerQuoteCollectionAction(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
     ): RestQuoteCollectionResponseTransfer {
-        return $this->getFacade()->findCustomerQuoteCollection($restQuoteCollectionRequestTransfer);
+        return $this->getFacade()->getCustomerQuoteCollection($restQuoteCollectionRequestTransfer);
     }
 
     /**
@@ -76,9 +76,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateItemQuantityAction(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    public function updateItemAction(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->updateItemQuantity($restCartItemRequestTransfer);
+        return $this->getFacade()->updateItem($restCartItemRequestTransfer);
     }
 
     /**
