@@ -179,6 +179,9 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
     }
 
     /**
+     * @module Product
+     * @module ProductCategory
+     *
      * @param int[] $categoryIds
      *
      * @return int[]
@@ -187,7 +190,8 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
     {
         return $this->getFactory()
             ->getProductCategoryPropelQuery()
-            ->select(SpyProductTableMap::COL_ID_PRODUCT)->filterByFkCategory_In($categoryIds)
+            ->select(SpyProductTableMap::COL_ID_PRODUCT)
+            ->filterByFkCategory_In($categoryIds)
             ->useSpyProductAbstractQuery()
                 ->innerJoinSpyProduct()
             ->endUse()
