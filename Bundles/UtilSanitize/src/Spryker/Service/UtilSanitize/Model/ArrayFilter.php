@@ -59,7 +59,7 @@ class ArrayFilter implements ArrayFilterInterface
         $filteredArray = [];
         foreach ($array as $key => $value) {
             if (is_array($value)) {
-                $value = $this->arrayFilterRecursive($value);
+                $value = $this->filterOutBlankValuesRecursively($value);
             }
 
             if ($this->isBlankValue($value)) {
