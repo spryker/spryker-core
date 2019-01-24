@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCategory\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductCategory\Communication\Form\AssignForm;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
@@ -85,5 +86,13 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     public function createAssignForm(array $data)
     {
         return $this->getFormFactory()->create(AssignForm::class, $data, []);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge
+     */
+    public function getCategoryFacade(): ProductCategoryToCategoryBridge
+    {
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_CATEGORY);
     }
 }

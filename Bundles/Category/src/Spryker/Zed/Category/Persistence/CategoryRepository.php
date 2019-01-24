@@ -22,6 +22,12 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class CategoryRepository extends AbstractRepository implements CategoryRepositoryInterface
 {
+    public const NODE_PATH_GLUE = '/';
+    public const CATEGORY_NODE_PATH_GLUE = ' / ';
+    public const EXCLUDE_NODE_PATH_ROOT = true;
+    public const NODE_PATH_NULL_DEPTH = null;
+    public const NODE_PATH_ZERO_DEPTH = 0;
+    public const IS_NOT_ROOT_NODE = 0;
     protected const COL_CATEGORY_NAME = 'name';
 
     /**
