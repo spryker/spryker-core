@@ -22,7 +22,6 @@ class MultiShipmentDecisionRuleStrategyResolver implements MultiShipmentDecision
     protected $strategyContainer;
 
     /**
-     *
      * @param \Closure[] $strategyContainer
      */
     public function __construct(array $strategyContainer)

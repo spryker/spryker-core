@@ -35,7 +35,7 @@
         <property name="idShipmentMethod" type="int" deprecated="Use item level shipment method (item.shipment.method.shippingAddress) instead." />
         <property name="shipmentDeliveryTime" type="int" deprecated="Use item level shipment method delivery time (item.shipment.method.deliveryTime) instead." />
         <property name="expenses" type="Expense[]" singular="expense" />
-        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod" deprecated="@TODO: Use item level shipment methods? (item.shipment.methods?) instead." />
+        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod" deprecated="Obsolete. Not used." />
         <property name="currencyIsoCode" type="string" />
     </transfer>
 

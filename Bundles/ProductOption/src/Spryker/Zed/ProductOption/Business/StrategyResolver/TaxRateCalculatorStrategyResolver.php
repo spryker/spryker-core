@@ -22,7 +22,6 @@ class TaxRateCalculatorStrategyResolver implements TaxRateCalculatorStrategyReso
     protected $strategyContainer;
 
     /**
-     *
      * @param \Closure[] $strategyContainer
      */
     public function __construct(array $strategyContainer)

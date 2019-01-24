@@ -22,7 +22,6 @@ class CartValidatorStrategyResolver implements CartValidatorStrategyResolverInte
     protected $strategyContainer;
 
     /**
-     *
      * @param \Closure[] $strategyContainer
      */
     public function __construct(array $strategyContainer)

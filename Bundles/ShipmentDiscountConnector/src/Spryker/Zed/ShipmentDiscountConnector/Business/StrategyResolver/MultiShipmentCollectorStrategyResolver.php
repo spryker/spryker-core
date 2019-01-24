@@ -22,7 +22,6 @@ class MultiShipmentCollectorStrategyResolver implements MultiShipmentCollectorSt
     protected $strategyContainer;
 
     /**
-     *
      * @param \Closure[] $strategyContainer
      */
     public function __construct(array $strategyContainer)
