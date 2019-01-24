@@ -70,7 +70,7 @@ class ContentProductFormPlugin extends AbstractPlugin implements ContentPluginIn
 
             return $contentAbstractProductListTransfer;
         }
-
+        $params['skus'] = array_values($params['skus']);
         $contentAbstractProductListTransfer->fromArray($params);
 
         return $contentAbstractProductListTransfer;

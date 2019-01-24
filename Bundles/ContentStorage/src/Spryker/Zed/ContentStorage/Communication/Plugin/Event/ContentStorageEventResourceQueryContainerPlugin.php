@@ -45,10 +45,10 @@ class ContentStorageEventResourceQueryContainerPlugin extends AbstractPlugin imp
     public function getData(array $ids = []): array
     {
         if (!empty($ids)) {
-            return $contentEntities = $this->getFactory()->getRepository()->findContentByIds($ids)->getArrayCopy();
+            return $contentEntities = $this->getRepository()->findContentByIds($ids)->getArrayCopy();
         }
 
-        return $contentEntities = $this->getFactory()->getRepository()->findAllContent()->getArrayCopy();
+        return $contentEntities = $this->getRepository()->findAllContent()->getArrayCopy();
     }
 
     /**

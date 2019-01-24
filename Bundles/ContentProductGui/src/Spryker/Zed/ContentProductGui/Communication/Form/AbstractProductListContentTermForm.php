@@ -93,7 +93,6 @@ class AbstractProductListContentTermForm extends AbstractType
                     'placeholder' => 'sku',
                 ],
                 'constraints' => $this->getTextFieldConstraints(),
-
             ],
         ]);
 
