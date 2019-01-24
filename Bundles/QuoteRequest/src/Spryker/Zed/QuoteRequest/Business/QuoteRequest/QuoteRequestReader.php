@@ -49,9 +49,12 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
             ->getIdCompanyUser();
 
         $companyUserTransfer = $this->companyUserFacade->getCompanyUserById($idCompanyUser);
+        $quoteRequestCollectionTransfer = $this->repository->findQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
 
-        // TODO: continue
+        foreach ($quoteRequestCollectionTransfer->getQuoteRequests() as $quoteRequestTransfer) {
+            $quoteRequestTransfer->setCompanyUser($companyUserTransfer);
+        }
 
-        return new QuoteRequestCollectionTransfer();
+        return $quoteRequestCollectionTransfer;
     }
 }

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\QuoteRequest\Persistence;
 
+use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -14,4 +17,25 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class QuoteRequestRepository extends AbstractRepository implements QuoteRequestRepositoryInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
+     */
+    public function findQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
+    {
+        $quoteRequestQuery = $this->getFactory()
+            ->getQuoteRequestPropelQuery()
+            ->orderByIdQuoteRequest(Criteria::DESC)
+            ->filterByFkCompanyUser($quoteRequestFilterTransfer->getCompanyUser()->getIdCompanyUser())
+            ->leftJoinWithSpyQuoteRequestVersion();
+
+        if ($quoteRequestFilterTransfer->getQuoteRequestReference()) {
+            $quoteRequestQuery->filterByQuoteRequestReference($quoteRequestFilterTransfer->getQuoteRequestReference());
+        }
+
+        return $this->getFactory()
+            ->createQuoteRequestMapper()
+            ->mapEntityCollectionToTransferCollection($quoteRequestQuery->find());
+    }
 }
