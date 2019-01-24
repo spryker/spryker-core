@@ -23,6 +23,7 @@
         <property name="quote" type="Quote"/>
         <property name="quoteApproval" type="QuoteApproval"/>
         <property name="isSuccessful" type="bool"/>
+        <property name="message" type="Message" />
     </transfer>
 
     <transfer name="QuoteApprovalCreateRequest">

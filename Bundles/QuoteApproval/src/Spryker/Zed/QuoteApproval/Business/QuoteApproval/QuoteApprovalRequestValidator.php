@@ -8,6 +8,7 @@
 namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
@@ -24,6 +25,9 @@ use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface;
 class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInterface
 {
     use PermissionAwareTrait;
+
+    protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+    protected const GLOSSARY_KEY_APPROVER_CANT_APPROVE_QUOTE = 'quote_approval.create.approver_cant_approve_quote';
 
     /**
      * @var \Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface
@@ -78,7 +82,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         }
 
         if (!$this->isApproverCanApproveQuote($quoteTransfer, $quoteApprovalCreateRequestTransfer->getApproverCompanyUserId())) {
-            return $this->createNotSuccessfullValidationResponseTransfer();
+            return $this->createNotSuccessfullValidationResponseTransfer(static::GLOSSARY_KEY_APPROVER_CANT_APPROVE_QUOTE);
         }
 
         if (!$this->isQuoteInCorrectStatus($quoteTransfer)) {
@@ -161,14 +165,36 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     }
 
     /**
+     * @param null|string $message
+     *
      * @return \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer
      */
-    protected function createNotSuccessfullValidationResponseTransfer(): QuoteApprovalRequestValidationResponseTransfer
+    protected function createNotSuccessfullValidationResponseTransfer(?string $message = null): QuoteApprovalRequestValidationResponseTransfer
     {
+        $message = $message ?? static::GLOSSARY_KEY_PERMISSION_FAILED;
+
         $quoteApprovalRequestValidationResponseTransfer = new QuoteApprovalRequestValidationResponseTransfer();
         $quoteApprovalRequestValidationResponseTransfer->setIsSuccessful(false);
+        $quoteApprovalRequestValidationResponseTransfer->setMessage(
+            $this->createMessageTransfer($message)
+        );
 
         return $quoteApprovalRequestValidationResponseTransfer;
+    }
+
+    /**
+     * @param string $message
+     * @param array $parameters
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createMessageTransfer(string $message, array $parameters = []): MessageTransfer
+    {
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue($message);
+        $messageTransfer->setParameters($parameters);
+
+        return $messageTransfer;
     }
 
     /**

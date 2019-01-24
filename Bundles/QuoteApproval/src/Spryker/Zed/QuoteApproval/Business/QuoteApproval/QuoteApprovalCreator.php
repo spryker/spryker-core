@@ -16,12 +16,12 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToSharedCartFacadeInterface;
 use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface;
+use Zend\Stdlib\Message;
 
 class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
 {
     use TransactionTrait;
 
-    protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
     protected const GLOSSARY_KEY_APPROVAL_CREATED = 'quote_approval.created';
 
     /**
@@ -85,7 +85,9 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
             ->validateQuoteApprovalCreateRequest($quoteApprovalCreateRequestTransfer);
 
         if (!$quoteApprovalRequestValidationReponseTransfer->getIsSuccessful()) {
-            return $this->createNotSuccessfulQuoteApprovalResponseTransfer();
+            return $this->createNotSuccessfulQuoteApprovalResponseTransfer(
+                $quoteApprovalRequestValidationReponseTransfer->getMessage()
+            );
         }
 
         $quoteTransfer = $quoteApprovalRequestValidationReponseTransfer->getQuote();
@@ -106,16 +108,16 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    protected function createNotSuccessfulQuoteApprovalResponseTransfer(): QuoteApprovalResponseTransfer
+    protected function createNotSuccessfulQuoteApprovalResponseTransfer(MessageTransfer $messageTransfer): QuoteApprovalResponseTransfer
     {
         $quoteApprovalResponseTransfer = new QuoteApprovalResponseTransfer();
 
         $quoteApprovalResponseTransfer->setIsSuccessful(false);
-        $quoteApprovalResponseTransfer->setMessage(
-            $this->createMessageTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED)
-        );
+        $quoteApprovalResponseTransfer->setMessage($messageTransfer);
 
         return $quoteApprovalResponseTransfer;
     }
