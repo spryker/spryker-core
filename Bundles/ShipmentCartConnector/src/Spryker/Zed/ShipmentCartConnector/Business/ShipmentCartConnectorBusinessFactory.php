@@ -78,7 +78,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released. Use $this->createShipmentCartExpanderWithMultiShippingAddress() instead.
+     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createShipmentCartExpanderWithMultiShippingAddress() instead.
      *
      * @return \Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartExpanderStrategyResolverInterface
      */
@@ -93,7 +93,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *
@@ -109,7 +109,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *
@@ -125,7 +125,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released. Use $this->createShipmentCartValidatorWithMultiShippingAddress() instead.
+     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createShipmentCartValidatorWithMultiShippingAddress() instead.
      *
      * @return \Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartValidatorStrategyResolverInterface
      */
@@ -140,7 +140,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *
@@ -156,7 +156,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *

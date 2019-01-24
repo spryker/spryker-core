@@ -45,7 +45,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released. Use $this->createShipmentCheckoutPreCheckWithMultipleShippingAddress() instead.
+     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createShipmentCheckoutPreCheckWithMultipleShippingAddress() instead.
      *
      * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver\PreCheckStrategyResolverInterface
      */
@@ -60,7 +60,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *
@@ -76,7 +76,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *

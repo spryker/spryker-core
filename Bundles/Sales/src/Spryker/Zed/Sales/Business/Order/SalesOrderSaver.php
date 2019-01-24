@@ -26,7 +26,7 @@ class SalesOrderSaver extends SalesOrderSaverWithoutItemShipmentAddress
     public function saveOrderSales(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         /**
-         * @deprecated Remove after multiple shipment will be released.
+         * @deprecated Will be removed in next major version after multiple shipment release.
          */
         $quoteTransfer = $this->adaptQuoteDataBCForMultiShipment($quoteTransfer);
 
@@ -34,7 +34,7 @@ class SalesOrderSaver extends SalesOrderSaverWithoutItemShipmentAddress
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

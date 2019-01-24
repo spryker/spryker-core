@@ -256,7 +256,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
+     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
      *
      * @return \Spryker\Zed\Customer\Business\StrategyResolver\OrderSaverStrategyResolverInterface
      */
@@ -271,7 +271,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *
@@ -287,7 +287,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *

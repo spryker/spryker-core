@@ -156,7 +156,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released. Use $this->createSalesOrderSaverMultipleShippingAddress() instead.
+     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createSalesOrderSaverMultipleShippingAddress() instead.
      *
      * @return \Spryker\Zed\Sales\Business\StrategyResolver\OrderSaverStrategyResolverInterface
      */
@@ -171,7 +171,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *
@@ -187,7 +187,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *
@@ -428,7 +428,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released. Use $this->createOrderHydratorWithMultiShippingAddress() instead.
+     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createOrderHydratorWithMultiShippingAddress() instead.
      *
      * @return \Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface
      */
@@ -443,7 +443,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *
@@ -459,7 +459,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *

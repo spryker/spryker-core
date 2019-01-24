@@ -28,7 +28,7 @@ class MethodDiscountDecisionRule extends MethodDiscountDecisionRuleWithMultiShip
     public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer)
     {
         /**
-         * @deprecated Remove after multiple shipment will be released.
+         * @deprecated Will be removed in next major version after multiple shipment release.
          */
         $quoteTransfer = $this->adaptQuoteDataBCForMultiShipment($quoteTransfer);
 
@@ -75,7 +75,7 @@ class MethodDiscountDecisionRule extends MethodDiscountDecisionRuleWithMultiShip
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

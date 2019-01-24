@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface;
 
 /**
- * @deprecated Remove strategy resolver after multiple shipment will be released.
+ * @deprecated Will be removed in next major version after multiple shipment release.
  */
 interface PreCheckStrategyResolverInterface
 {

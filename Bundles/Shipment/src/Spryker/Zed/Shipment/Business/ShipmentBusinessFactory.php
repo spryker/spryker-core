@@ -225,7 +225,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released. Use $this->createShipmentTaxCalculatorWithItemShipmentTaxRate() instead.
+     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createShipmentTaxCalculatorWithItemShipmentTaxRate() instead.
      *
      * @return \Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface
      */
@@ -240,7 +240,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *
@@ -256,7 +256,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *
@@ -272,7 +272,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released. Use $this->createCheckoutShipmentOrderSaverWithMultiShippingAddress() instead.
+     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createCheckoutShipmentOrderSaverWithMultiShippingAddress() instead.
      *
      * @return \Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolverInterface
      */
@@ -287,7 +287,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *
@@ -303,7 +303,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *

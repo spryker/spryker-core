@@ -55,7 +55,7 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
         /**
-         * @deprecated Remove after multiple shipment will be released.
+         * @deprecated Will be removed in next major version after multiple shipment release.
          */
         $quoteTransfer = $this->adaptQuoteDataBCForMultiShipment($quoteTransfer);
 
@@ -74,7 +74,7 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

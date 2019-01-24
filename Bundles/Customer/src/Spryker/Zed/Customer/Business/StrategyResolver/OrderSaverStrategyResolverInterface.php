@@ -10,7 +10,7 @@ namespace Spryker\Zed\Customer\Business\StrategyResolver;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface;
 
 /**
- * @deprecated Remove strategy resolver after multiple shipment will be released.
+ * @deprecated Will be removed in next major version after multiple shipment release.
  */
 interface OrderSaverStrategyResolverInterface
 {

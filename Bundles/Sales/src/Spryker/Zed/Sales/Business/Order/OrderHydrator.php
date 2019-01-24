@@ -40,7 +40,7 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
             ->findOne();
 
         /**
-         * @deprecated Remove after multiple shipment will be released.
+         * @deprecated Will be removed in next major version after multiple shipment release.
          */
         $orderEntity = $this->adaptOrderDataBCForMultiShipment($orderEntity);
 
@@ -57,7 +57,7 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *

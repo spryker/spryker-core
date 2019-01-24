@@ -77,7 +77,7 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released. Use $this->createProductItemTaxRateCalculatorWithMultipleShipmentTaxRate() instead.
+     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createProductItemTaxRateCalculatorWithMultipleShipmentTaxRate() instead.
      *
      * @return \Spryker\Zed\TaxProductConnector\Business\StrategyResolver\ProductItemTaxRateCalculatorStrategyResolver
      */
@@ -92,7 +92,7 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param \Spryker\Zed\Tax\Business\Model\CalculatorInterface[] $strategyContainer
      *
@@ -108,7 +108,7 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param \Spryker\Zed\Tax\Business\Model\CalculatorInterface[] $strategyContainer
      *

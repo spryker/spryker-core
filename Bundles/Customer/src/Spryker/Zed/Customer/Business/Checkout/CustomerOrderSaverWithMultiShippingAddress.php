@@ -9,6 +9,7 @@ namespace Spryker\Zed\Customer\Business\Checkout;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -52,7 +53,7 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
     public function saveOrderCustomer(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         /**
-         * @deprecated Remove after multiple shipment will be released.
+         * @deprecated Will be removed in next major version after multiple shipment release.
          */
         $quoteTransfer = $this->adaptQuoteDataBCForMultiShipment($quoteTransfer);
 
@@ -60,7 +61,7 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -68,41 +69,135 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
      */
     protected function adaptQuoteDataBCForMultiShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() !== null) {
-                return $quoteTransfer;
-            }
-            break;
-        }
-
-        $shippingAddress = $quoteTransfer->getShippingAddress();
-        if ($shippingAddress === null) {
+        if (!$this->assertThatItemTransfersHasShipment($quoteTransfer)) {
             return $quoteTransfer;
         }
 
-        $quoteShipment = $quoteTransfer->getShipment();
-        if ($quoteShipment === null) {
+        if (!$this->assertThatQuoteHasAddressTransfer($quoteTransfer)) {
+            return $quoteTransfer;
+        }
+
+        if (!$this->assertThatQuoteHasShipment($quoteTransfer)) {
             return $quoteTransfer;
         }
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() !== null
-                && $itemTransfer->getShipment()->getExpense() !== null
-                && $itemTransfer->getShipment()->getShippingAddress() !== null
-            ) {
+            if ($this->assertThatItemTransferHasShipmentWithShippingAddress($itemTransfer)) {
                 continue;
             }
 
-            $shipmentTransfer = $itemTransfer->getShipment() ?: $quoteShipment;
-            if ($shipmentTransfer === null) {
-                $shipmentTransfer = new ShipmentTransfer();
-            }
-
-            $shipmentTransfer->setShippingAddress($shippingAddress);
-            $itemTransfer->setShipment($shipmentTransfer);
+            $this->setItemTransferShipmentAndShipmentAddressForBC($itemTransfer, $quoteTransfer);
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @deprecated Will be removed in next major version after multiple shipment release.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function assertThatItemTransfersHasShipment(QuoteTransfer $quoteTransfer): bool
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() !== null) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @deprecated Will be removed in next major version after multiple shipment release.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function assertThatQuoteHasAddressTransfer(QuoteTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->getShippingAddress() !== null;
+    }
+
+    /**
+     * @deprecated Will be removed in next major version after multiple shipment release.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function assertThatQuoteHasShipment(QuoteTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->getShipment() !== null;
+    }
+
+    /**
+     * @deprecated Will be removed in next major version after multiple shipment release.
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function assertThatItemTransferHasShipmentWithShippingAddress(ItemTransfer $itemTransfer): bool
+    {
+        return ($itemTransfer->getShipment() !== null && $itemTransfer->getShipment()->getShippingAddress() !== null);
+    }
+
+    /**
+     * @deprecated Will be removed in next major version after multiple shipment release.
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    protected function getShipmentTransferForBC(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): ShipmentTransfer
+    {
+        if ($itemTransfer->getShipment() !== null) {
+            return $itemTransfer->getShipment();
+        }
+
+        if ($quoteTransfer->getShipment() !== null) {
+            return $quoteTransfer->getShipment();
+        }
+
+        return new ShipmentTransfer();
+    }
+
+    /**
+     * @deprecated Will be removed in next major version after multiple shipment release.
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function getShipmentAddressTransferForBC(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): AddressTransfer
+    {
+        if ($itemTransfer->getShipment()->getShippingAddress() !== null) {
+            return $itemTransfer->getShipment()->getShippingAddress();
+        }
+
+        return $quoteTransfer->getShipment()->getShippingAddress();
+    }
+
+    /**
+     * @deprecated Will be removed in next major version after multiple shipment release.
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function setItemTransferShipmentAndShipmentAddressForBC(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void
+    {
+        $shippingAddressTransfer = $this->getShipmentAddressTransferForBC($itemTransfer, $quoteTransfer);
+        $shipmentTransfer = $this->getShipmentTransferForBC($itemTransfer, $quoteTransfer);
+        $shipmentTransfer->setShippingAddress($shippingAddressTransfer);
+        $itemTransfer->setShipment($shipmentTransfer);
     }
 
     /**

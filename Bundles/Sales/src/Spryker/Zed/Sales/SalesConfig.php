@@ -72,7 +72,7 @@ class SalesConfig extends AbstractBundleConfig
     public function isTestOrder(QuoteTransfer $quoteTransfer)
     {
         /**
-         * @deprecated Remove this code after multiple shipment will be released.
+         * @deprecated Will be removed in next major version after multiple shipment release.
          */
         if ($this->hasItemOwnShipmentTransfer($quoteTransfer->getItems()) === false) {
             return $this->isTestOrderWithoutMultiShippingAddress($quoteTransfer);
@@ -114,7 +114,7 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Remove this code after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -152,7 +152,7 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Remove this code after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]|null $items
      *

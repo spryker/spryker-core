@@ -201,7 +201,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released. Use $this->createCarrierDiscountCollectorWithMultiShipment(),
+     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createCarrierDiscountCollectorWithMultiShipment(),
      * createMethodDiscountCollectorWithMultiShipment() or createShipmentPriceDiscountCollectorWithMultiShipment() instead.
      *
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentCollectorStrategyResolver
@@ -218,7 +218,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *
@@ -237,7 +237,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *
@@ -256,7 +256,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *
@@ -275,7 +275,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released. Use $this->createCarrierDiscountDecisionRuleWithMultiShipment(),
+     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createCarrierDiscountDecisionRuleWithMultiShipment(),
      * createCarrierDiscountDecisionRuleWithMultiShipment() or createCarrierDiscountDecisionRuleWithMultiShipment() instead.
      *
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentCollectorStrategyResolver
@@ -292,7 +292,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *
@@ -311,7 +311,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *
@@ -330,7 +330,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Remove after multiple shipment will be released.
+     * @deprecated Will be removed in next major version after multiple shipment release.
      *
      * @param array $strategyContainer
      *

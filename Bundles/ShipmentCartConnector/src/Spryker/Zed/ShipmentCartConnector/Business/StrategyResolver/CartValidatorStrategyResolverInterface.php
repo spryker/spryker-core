@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface;
 
 /**
- * @deprecated Remove strategy resolver after multiple shipment will be released.
+ * @deprecated Will be removed in next major version after multiple shipment release.
  */
 interface CartValidatorStrategyResolverInterface
 {
