@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Communication\Plugin\Application;
+namespace SprykerTest\Yves\EventDispatcher\Plugin\Application;
 
 use Codeception\Test\Unit;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
-use Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin;
-use Spryker\Zed\Kernel\Container;
+use Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin;
+use Spryker\Yves\Kernel\Container;
 use Symfony\Component\EventDispatcher\EventDispatcher as SymfonyEventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
- * @group Zed
- * @group Communication
+ * @group Yves
+ * @group EventDispatcher
  * @group Plugin
  * @group Application
  * @group EventDispatcherApplicationPluginTest
