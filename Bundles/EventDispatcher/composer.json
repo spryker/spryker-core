@@ -31,6 +31,6 @@
     "sort-packages": true
   },
   "suggest": {
-    "spryker/container": "If you want to use EventDispatcherApplicationPlugin"
+    "spryker/container": "If you want to use the EventDispatcherApplicationPlugin"
   }
 }
