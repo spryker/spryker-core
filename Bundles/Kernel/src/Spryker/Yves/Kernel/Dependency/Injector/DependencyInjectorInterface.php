@@ -7,14 +7,14 @@
 
 namespace Spryker\Yves\Kernel\Dependency\Injector;
 
-use Spryker\Shared\Kernel\ContainerInterface;
+use Spryker\Yves\Kernel\Container;
 
 interface DependencyInjectorInterface
 {
     /**
-     * @param \Spryker\Shared\Kernel\ContainerInterface $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Shared\Kernel\ContainerInterface
+     * @return \Spryker\Yves\Kernel\Container
      */
-    public function inject(ContainerInterface $container);
+    public function inject(Container $container);
 }
