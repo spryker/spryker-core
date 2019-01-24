@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/content-product.svg)](https://travis-ci.org/spryker/content-product)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/content-product/badge.svg)](https://coveralls.io/github/spryker/content-product)
 
-{{ADD DESCRIPTION HERE}}
+ContentProduct provides plugins for abstract product list
 
 ## Installation
 

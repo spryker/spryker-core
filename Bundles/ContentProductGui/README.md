@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/content-product-gui.svg)](https://travis-ci.org/spryker/content-product-gui)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/content-product-gui/badge.svg)](https://coveralls.io/github/spryker/content-product-gui)
 
-{{ADD DESCRIPTION HERE}}
+ContentProductGui provides plugins for basic operations for abstract product list
 
 ## Installation
 
