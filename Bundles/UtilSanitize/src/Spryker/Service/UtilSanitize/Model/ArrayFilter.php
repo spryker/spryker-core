@@ -62,7 +62,7 @@ class ArrayFilter implements ArrayFilterInterface
                 $value = $this->arrayFilterRecursive($value);
             }
 
-            if ($this->isEmptyValue($value)) {
+            if ($this->isBlankValue($value)) {
                 continue;
             }
 
@@ -77,13 +77,13 @@ class ArrayFilter implements ArrayFilterInterface
      *
      * @return bool
      */
-    protected function isEmptyValue($value): bool
+    protected function isBlankValue($value): bool
     {
         if (is_string($value)) {
             return $value === '';
         }
 
-        if ($value instanceof Countable || is_array($value)) {
+        if (is_array($value) || $value instanceof Countable) {
             return count($value) === 0;
         }
 
