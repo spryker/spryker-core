@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductList\Business;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
+use Generated\Shared\Transfer\ProductListMapTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -130,7 +131,7 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product list IDs with type "blacklist" for the given product concrete ID.
+     *  - Retrieves unique product list IDs with type "blacklist" for the given product concrete ID.
      *
      * @api
      *
@@ -156,7 +157,7 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product list IDs with type "whitelist" for the given product concrete ID.
+     *  - Retrieves unique product list IDs with type "whitelist" for the given product concrete ID.
      *
      * @api
      *
@@ -241,4 +242,17 @@ interface ProductListFacadeInterface
      * @return int[]
      */
     public function findProductConcreteIdsByProductListIds(array $productListIds): array;
+
+    /**
+     *  Specification:
+     *  - Maps ProductList data to ProductListMapTransfer.
+     *
+     * @api
+     *
+     * @param array $productData
+     * @param \Generated\Shared\Transfer\ProductListMapTransfer $productListMapTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListMapTransfer
+     */
+    public function mapProductDataToProductListMapTransfer(array $productData, ProductListMapTransfer $productListMapTransfer): ProductListMapTransfer;
 }

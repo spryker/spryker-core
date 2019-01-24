@@ -58,8 +58,7 @@ class ProductListSearchFacade extends AbstractFacade implements ProductListSearc
      */
     public function findProductConcreteIdsByCategoryIds(array $categoryIds): array
     {
-        return $this->getFactory()
-            ->createProductConcreteReader()
+        return $this->getRepository()
             ->findProductConcreteIdsByCategoryIds($categoryIds);
     }
 }

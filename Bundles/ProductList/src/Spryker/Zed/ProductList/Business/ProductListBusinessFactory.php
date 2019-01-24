@@ -12,6 +12,8 @@ use Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGenerator;
 use Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface;
 use Spryker\Zed\ProductList\Business\ProductConcretePageSearchExpander\ProductConcretePageSearchExpander;
 use Spryker\Zed\ProductList\Business\ProductConcretePageSearchExpander\ProductConcretePageSearchExpanderInterface;
+use Spryker\Zed\ProductList\Business\ProductList\ProductDataToProductListMapTransferMapper;
+use Spryker\Zed\ProductList\Business\ProductList\ProductDataToProductListMapTransferMapperInterface;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListReader;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface;
@@ -197,5 +199,13 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     public function getMessengerFacade(): ProductListToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(ProductListDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductList\Business\ProductList\ProductDataToProductListMapTransferMapperInterface
+     */
+    public function createProductDataToProductListMapTransferMapper(): ProductDataToProductListMapTransferMapperInterface
+    {
+        return new ProductDataToProductListMapTransferMapper();
     }
 }
