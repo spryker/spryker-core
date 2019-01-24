@@ -161,6 +161,6 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     {
         return $this->getFactory()
             ->createCartItemDeleter()
-            ->delete($restCartItemRequestTransfer);
+            ->remove($restCartItemRequestTransfer);
     }
 }

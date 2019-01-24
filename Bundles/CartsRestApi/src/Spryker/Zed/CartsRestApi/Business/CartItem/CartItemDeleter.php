@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\CartItem;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Spryker\Zed\CartsRestApi\Business\Cart\CartReaderInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
@@ -41,17 +44,26 @@ class CartItemDeleter implements CartItemDeleterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function delete(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    public function remove(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
     {
-        $restQuoteRequestTransfer
-            ->requireQuoteUuid()
-            ->requireCustomerReference();
+        $restCartItemRequestTransfer
+            ->requireCartUuid()
+            ->requireCustomerReference()
+            ->requireCartItem();
 
-        $quoteResponseTransfer = $this->cartReader->findQuoteByUuid($restQuoteRequestTransfer->getQuote());
+        $quoteResponseTransfer = $this->cartReader->findQuoteByUuid(
+            (new QuoteTransfer())->setUuid($restCartItemRequestTransfer->getCartUuid())
+        );
+
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
 
-        return $this->persistentCartFacade->delete($quoteResponseTransfer->getQuoteTransfer());
+        $persistentCartChangeTransfer = (new PersistentCartChangeTransfer())
+            ->setIdQuote($restCartItemRequestTransfer->getCartUuid())
+            ->addItem($restCartItemRequestTransfer->getCartItem())
+            ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemRequestTransfer->getCustomerReference()));
+
+        return $this->persistentCartFacade->remove($persistentCartChangeTransfer);
     }
 }

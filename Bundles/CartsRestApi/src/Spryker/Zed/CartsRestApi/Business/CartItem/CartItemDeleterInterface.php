@@ -17,5 +17,5 @@ interface CartItemDeleterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function delete(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer;
+    public function remove(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer;
 }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\CartsRestApi\Business\CartItem;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Spryker\Zed\CartsRestApi\Business\Cart\CartReaderInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
@@ -52,6 +53,14 @@ class CartItemAdder implements CartItemAdderInterface
 
         $restCartItemRequestTransfer->getCartItem()
             ->requireSku();
+
+        $quoteResponseTransfer = $this->cartReader->findQuoteByUuid(
+            (new QuoteTransfer())->setUuid($restCartItemRequestTransfer->getCartUuid())
+        );
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
+        }
 
         $persistentCartChangeTransfer = (new PersistentCartChangeTransfer())
             ->setIdQuote($restCartItemRequestTransfer->getCartUuid())
