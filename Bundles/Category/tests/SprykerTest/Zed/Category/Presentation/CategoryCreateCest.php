@@ -35,6 +35,11 @@ class CategoryCreateCest
         $i->selectOption(CategoryCreatePage::FORM_FIELD_CATEGORY_PARENT, $category[CategoryCreatePage::FORM_FIELD_CATEGORY_PARENT]);
         $i->selectOption(CategoryCreatePage::FORM_FIELD_CATEGORY_TEMPLATE, $category[CategoryCreatePage::FORM_FIELD_CATEGORY_TEMPLATE]);
         $localizedAttributes = $category['attributes'];
+
+        foreach (CategoryCreatePage::CLOSED_IBOX_SELECTORS as $closedIboxSelector) {
+            $i->click($closedIboxSelector);
+        }
+
         foreach ($localizedAttributes as $locale => $attributes) {
             foreach ($attributes as $selector => $value) {
                 $i->fillField(['name' => $selector], $value);

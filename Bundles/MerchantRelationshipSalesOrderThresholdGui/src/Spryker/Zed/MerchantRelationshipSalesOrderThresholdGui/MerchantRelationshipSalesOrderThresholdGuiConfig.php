@@ -7,37 +7,75 @@
 
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui;
 
-use Spryker\Shared\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipSalesOrderThresholdGuiConfig as SharedMerchantRelationshipSalesOrderThresholdGuiConfig;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategy\HardThresholdDataProvider;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategy\SoftThresholdDataProvider;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategy\SoftThresholdFixedFeeDataProvider;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategy\SoftThresholdFlexibleFeeDataProvider;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\HardThresholdFormMapper;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\SoftThresholdFixedFeeFormMapper;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\SoftThresholdFlexibleFeeFormMapper;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\SoftThresholdFormMapper;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\MerchantRelationshipHardThresholdDataProvider;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\MerchantRelationshipSoftThresholdDataProvider;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\MerchantRelationshipHardThresholdFormMapper;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\MerchantRelationshipSoftThresholdFormMapper;
 
 class MerchantRelationshipSalesOrderThresholdGuiConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\MerchantRelationshipThresholdType::OPTION_CURRENCY_CODE
+     */
+    public const OPTION_CURRENCY_CODE = 'option-currency-code';
+
+    /**
+     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::GROUP_HARD
+     */
+    public const GROUP_HARD = 'Hard';
+
+    /**
+     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::GROUP_SOFT
+     */
+    public const GROUP_SOFT = 'Soft';
+
+    /**
+     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::STRATEGY_KEY
+     */
+    public const HARD_TYPE_STRATEGY = 'hard-minimum-threshold';
+
+    /**
+     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::STRATEGY_KEY
+     */
+    public const SOFT_TYPE_STRATEGY_MESSAGE = 'soft-minimum-threshold';
+
+    /**
+     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::STRATEGY_KEY
+     */
+    public const SOFT_TYPE_STRATEGY_FIXED = 'soft-minimum-threshold-fixed-fee';
+
+    /**
+     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::STRATEGY_KEY
+     */
+    public const SOFT_TYPE_STRATEGY_FLEXIBLE = 'soft-minimum-threshold-flexible-fee';
+
     public const STORE_CURRENCY_DELIMITER = ';';
 
-    protected const STRATEGY_TYPE_TO_FORM_TYPE_MAP = [
-        SharedMerchantRelationshipSalesOrderThresholdGuiConfig::HARD_TYPE_STRATEGY => HardThresholdFormMapper::class,
-        SharedMerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_MESSAGE => SoftThresholdFormMapper::class,
-        SharedMerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE => SoftThresholdFlexibleFeeFormMapper::class,
-        SharedMerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FIXED => SoftThresholdFixedFeeFormMapper::class,
-    ];
+    /**
+     * @deprecated Will be removed in the next major.
+     */
+    protected const STRATEGY_TYPE_TO_FORM_TYPE_MAP = [];
 
-    protected const STRATEGY_TYPE_TO_DATA_PROVIDER_MAP = [
-        SharedMerchantRelationshipSalesOrderThresholdGuiConfig::HARD_TYPE_STRATEGY => HardThresholdDataProvider::class,
-        SharedMerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_MESSAGE => SoftThresholdDataProvider::class,
-        SharedMerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE => SoftThresholdFlexibleFeeDataProvider::class,
-        SharedMerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FIXED => SoftThresholdFixedFeeDataProvider::class,
+    protected const STRATEGY_GROUP_TO_FORM_TYPE_MAP = [
+        self::GROUP_HARD => MerchantRelationshipHardThresholdFormMapper::class,
+        self::GROUP_SOFT => MerchantRelationshipSoftThresholdFormMapper::class,
     ];
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdFormMapperInterface[]
+     * @deprecated Will be removed in the next major.
+     */
+    protected const STRATEGY_TYPE_TO_DATA_PROVIDER_MAP = [];
+
+    protected const STRATEGY_GROUP_TO_DATA_PROVIDER_MAP = [
+        self::GROUP_HARD => MerchantRelationshipHardThresholdDataProvider::class,
+        self::GROUP_SOFT => MerchantRelationshipSoftThresholdDataProvider::class,
+    ];
+
+    /**
+     * @deprecated Will be removed in the next major.
+     *
+     * @return array
      */
     public function getStrategyTypeToFormTypeMap(): array
     {
@@ -45,10 +83,28 @@ class MerchantRelationshipSalesOrderThresholdGuiConfig extends AbstractBundleCon
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdFormMapperInterface[]
+     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\MerchantRelationshipThresholdFormMapperInterface[]
+     */
+    public function getStrategyGroupToFormTypeMap(): array
+    {
+        return static::STRATEGY_GROUP_TO_FORM_TYPE_MAP;
+    }
+
+    /**
+     * @deprecated Will be removed in the next major.
+     *
+     * @return array
      */
     public function getStrategyTypeToDataProviderMap(): array
     {
         return static::STRATEGY_TYPE_TO_DATA_PROVIDER_MAP;
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyGroupDataProviderInterface[]
+     */
+    public function getStrategyGroupToDataProviderMap(): array
+    {
+        return static::STRATEGY_GROUP_TO_DATA_PROVIDER_MAP;
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch;
 
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -45,6 +46,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     public const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
     public const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
     public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+    public const QUERY_CONTAINER_CATEGORY_NODE = 'QUERY_CONTAINER_CATEGORY_NODE';
     public const QUERY_CONTAINER_PRICE = 'QUERY_CONTAINER_PRICE';
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
     public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
@@ -61,6 +63,11 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     public const PLUGIN_PRODUCT_PAGE_DATA_EXPANDER = 'PLUGIN_PRODUCT_PAGE_DATA_EXPANDER';
     public const PLUGIN_PRODUCT_PAGE_DATA_LOADER = 'PLUGIN_PRODUCT_PAGE_DATA_LOADER';
     public const PLUGIN_PRODUCT_PAGE_MAP_EXPANDER = 'PLUGIN_PRODUCT_PAGE_MAP_EXPANDER';
+    public const PLUGIN_PRODUCT_PRICE_PAGE_DATA = 'PLUGIN_PRODUCT_PRICE_PAGE_DATA';
+    public const PLUGIN_PRODUCT_CATEGORY_PAGE_DATA = 'PLUGIN_PRODUCT_CATEGORY_PAGE_DATA';
+    public const PLUGIN_PRODUCT_IMAGE_PAGE_DATA = 'PLUGIN_PRODUCT_IMAGE_PAGE_DATA';
+    public const PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER';
+    public const PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -109,8 +116,20 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductPageSearchToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
         };
 
-        $container[static::PLUGIN_PRODUCT_PAGE_MAP_EXPANDER] = function (Container $container) {
+        $container[static::PLUGIN_PRODUCT_PAGE_MAP_EXPANDER] = function () {
             return $this->getMapExpanderPlugins();
+        };
+
+        $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER] = function () {
+            return $this->getProductConcretePageMapExpanderPlugins();
+        };
+
+        $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER] = function () {
+            return $this->getProductConcretePageDataExpanderPlugins();
+        };
+
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
+            return new ProductPageSearchToProductBridge($container->getLocator()->product()->facade());
         };
 
         $container = $this->addPriceProductService($container);
@@ -138,11 +157,15 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductPageSearchToSearchBridge($container->getLocator()->search()->facade());
         };
 
-        $container[static::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER] = function (Container $container) {
+        $container[static::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER] = function () {
             return $this->getDataExpanderPlugins();
         };
 
-        $container[static::PLUGIN_PRODUCT_PAGE_DATA_LOADER] = function (Container $container) {
+        $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER] = function () {
+            return $this->getProductConcretePageDataExpanderPlugins();
+        };
+
+        $container[static::PLUGIN_PRODUCT_PAGE_DATA_LOADER] = function () {
             return $this->getDataLoaderPlugins();
         };
 
@@ -174,6 +197,10 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
             return new ProductPageSearchToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
+        };
+
+        $container[static::QUERY_CONTAINER_CATEGORY_NODE] = function (Container $container) {
+            return SpyCategoryNodeQuery::create();
         };
 
         return $container;
@@ -239,6 +266,22 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface[]
      */
     protected function getDataLoaderPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[]
+     */
+    protected function getProductConcretePageMapExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageDataExpanderPluginInterface[]
+     */
+    protected function getProductConcretePageDataExpanderPlugins(): array
     {
         return [];
     }
