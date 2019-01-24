@@ -5,9 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListProductConcrete;
+namespace Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -17,7 +16,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
  */
-class ProductConcretePageSearchPublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductListProductCategoryPublishSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -34,10 +33,10 @@ class ProductConcretePageSearchPublishListener extends AbstractPlugin implements
     public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->preventTransaction();
-        $productConcreteIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventTransfers, SpyProductListProductConcreteTableMap::COL_FK_PRODUCT);
+        $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        $this->getFactory()->getProductPageSearchFacade()->publishProductConcretes($productConcreteIds);
+        $this->getFactory()->getProductPageSearchFacade()->publish(
+            $this->getFacade()->getProductAbstractIdsByCategoryIds($categoryIds)
+        );
     }
 }
