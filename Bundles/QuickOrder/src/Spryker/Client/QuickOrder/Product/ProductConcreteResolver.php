@@ -69,7 +69,7 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    protected function findProductConcreteBySku(string $sku): ?ProductConcreteTransfer
+    public function findProductConcreteBySku(string $sku): ?ProductConcreteTransfer
     {
         $productConcreteStorageData = $this->productStorageClient
             ->findProductConcreteStorageDataByMappingForCurrentLocale(static::MAPPING_TYPE_SKU, $sku);

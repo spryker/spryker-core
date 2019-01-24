@@ -34,4 +34,18 @@ interface QuickOrderClientInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function expandProductConcreteTransfers(array $productConcreteTransfers): array;
+
+    /**
+     * Specification:
+     * - Expands QuickOrderItemTransfers with validation messages.
+     * - Expands ProductConcreteTransfers in QuickOrderItemTransfers with additional data.
+     * - Adjusts QuickOrderItemTransfers accordingly to corresponding values.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderTransfer
+     */
+    public function buildQuickOrderTransfer(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
 }
