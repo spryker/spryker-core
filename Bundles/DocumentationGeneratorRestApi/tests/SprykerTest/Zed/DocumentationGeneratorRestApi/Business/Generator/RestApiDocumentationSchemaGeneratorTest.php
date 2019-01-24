@@ -218,7 +218,7 @@ class RestApiDocumentationSchemaGeneratorTest extends Unit
     {
         $this->schemaGenerator->addResponseResourceSchemaForPlugin(
             new TestResourceRouteWithNullableIdPlugin(),
-            (new AnnotationTransfer())->setIsNullableId(true)
+            (new AnnotationTransfer())->setIsIdNullable(true)
         );
 
         $schemas = $this->schemaGenerator->getSchemas();

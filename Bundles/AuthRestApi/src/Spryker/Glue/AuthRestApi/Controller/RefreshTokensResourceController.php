@@ -30,7 +30,7 @@ class RefreshTokensResourceController extends AbstractController
      *          "responses": {
      *              "401": "Failed to authenticate user."
      *          },
-     *          "isNullableId": true
+     *          "isIdNullable": true
      *     }
      * })
      *

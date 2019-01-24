@@ -125,7 +125,7 @@
         <property name="responseAttributesClassName" type="string" />
         <property name="isEmptyResponse" type="bool" />
         <property name="responses" singular="response" type="array" />
-        <property name="isNullableId" type="bool" />
+        <property name="isIdNullable" type="bool" />
     </transfer>
 
 </transfers>

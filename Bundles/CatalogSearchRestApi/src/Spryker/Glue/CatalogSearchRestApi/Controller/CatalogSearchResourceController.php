@@ -33,7 +33,7 @@ class CatalogSearchResourceController extends AbstractController
      *                  "required": true
      *              }
      *          ],
-     *          "isNullableId": true
+     *          "isIdNullable": true
      *     }
      * })
      *

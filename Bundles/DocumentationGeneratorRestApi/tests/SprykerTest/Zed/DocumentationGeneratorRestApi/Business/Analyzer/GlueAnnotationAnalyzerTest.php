@@ -153,7 +153,7 @@ class GlueAnnotationAnalyzerTest extends Unit
 
         $parameters = $glueAnnotationAnalyzer->getResourceParametersFromPlugin(new TestResourceRoutePlugin());
         $this->assertNotEmpty($parameters->getGetCollection());
-        $this->assertTrue($parameters->getGetCollection()->getIsNullableId());
+        $this->assertTrue($parameters->getGetCollection()->getIsIdNullable());
     }
 
     /**

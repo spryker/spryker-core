@@ -32,7 +32,7 @@ class AccessTokensResourceController extends AbstractController
      *              "401": "Failed to authenticate user.",
      *              "403": "Unauthorized request."
      *          },
-     *          "isNullableId": true
+     *          "isIdNullable": true
      *     }
      * })
      *

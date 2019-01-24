@@ -12,7 +12,7 @@ class TestResourceWithNullableIdController
     /**
      * @Glue({
      *     "getCollection": {
-     *          "isNullableId": true
+     *          "isIdNullable": true
      *     }
      * })
      *

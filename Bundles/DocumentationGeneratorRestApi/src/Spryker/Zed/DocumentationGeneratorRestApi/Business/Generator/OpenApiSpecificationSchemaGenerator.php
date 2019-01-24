@@ -134,9 +134,9 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseResourceDataSchemaNameFromTransferClassName($transferClassName);
         $responseAttributesSchemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($transferClassName);
 
-        $isNullableId = $annotationTransfer ? (bool)$annotationTransfer->getIsNullableId() : false;
+        $isIdNullable = $annotationTransfer ? (bool)$annotationTransfer->getIsIdNullable() : false;
         $this->addSchemaData($this->schemaBuilder->createResponseBaseSchema($responseSchemaName, $responseDataSchemaName));
-        $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, $isNullableId));
+        $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, $isIdNullable));
         $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
         if ($resourceRelationships) {
             $this->addRelationshipSchemas($responseDataSchemaName, $resourceRelationships, $transferClassName);
@@ -160,9 +160,9 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseCollectionDataSchemaNameFromTransferClassName($transferClassName);
         $responseAttributesSchemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($transferClassName);
 
-        $isNullableId = $annotationTransfer ? (bool)$annotationTransfer->getIsNullableId() : false;
+        $isIdNullable = $annotationTransfer ? (bool)$annotationTransfer->getIsIdNullable() : false;
         $this->addSchemaData($this->schemaBuilder->createCollectionResponseBaseSchema($responseSchemaName, $responseDataSchemaName));
-        $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, $isNullableId));
+        $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, $isIdNullable));
         $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
         if ($resourceRelationships) {
             $this->addRelationshipSchemas($responseDataSchemaName, $resourceRelationships, $transferClassName);
