@@ -17,6 +17,7 @@ class CreateContentController extends AbstractController
 {
     protected const PARAM_TERM_KEY = 'term-key';
     protected const PARAM_REDIRECT_URL = 'redirect-url';
+    protected const URL_REDIRECT_CONTENT_LIST_PAGE = '/content-gui/list-content';
     protected const URL_REDIRECT_CONTENT_PAGE = '/content-gui/edit-content?term-key=%s&id-content=%s';
     protected const MESSAGE_SUCCESS_CONTENT_CREATE = 'Content item has been successfully created.';
 
@@ -27,7 +28,10 @@ class CreateContentController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $termKey = $request->query->get(static::PARAM_TERM_KEY, '');
+        $termKey = $request->query->get(static::PARAM_TERM_KEY);
+        if (empty($termKey)) {
+            return $this->redirectResponse(static::URL_REDIRECT_CONTENT_LIST_PAGE);
+        }
         $dataProvider = $this->getFactory()->createContentFormDataProvider();
         $contentForm = $this->getFactory()
             ->getContentForm(

@@ -58,9 +58,9 @@ class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements 
         $synchronizationDataTransfers = [];
 
         if (!empty($ids)) {
-            $contentStorageTransfers = $this->getFactory()->getRepository()->findContentStorageByContentIds($ids);
+            $contentStorageTransfers = $this->getRepository()->findContentStorageByContentIds($ids);
         } else {
-            $contentStorageTransfers = $this->getFactory()->getRepository()->findAllContentStorage();
+            $contentStorageTransfers = $this->getRepository()->findAllContentStorage();
         }
 
         foreach ($contentStorageTransfers as $contentStorageTransfer) {
