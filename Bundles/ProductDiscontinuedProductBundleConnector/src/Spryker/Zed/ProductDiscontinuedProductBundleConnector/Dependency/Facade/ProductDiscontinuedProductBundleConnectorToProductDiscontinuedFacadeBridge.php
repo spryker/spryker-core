@@ -34,4 +34,14 @@ class ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeBridge
     {
         return $this->productDiscontinuedFacade->markProductAsDiscontinued($productDiscontinueRequestTransfer);
     }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
+     */
+    public function findProductDiscontinuedByProductId(int $idProduct): ProductDiscontinuedResponseTransfer
+    {
+        return $this->productDiscontinuedFacade->findProductDiscontinuedByProductId($idProduct);
+    }
 }

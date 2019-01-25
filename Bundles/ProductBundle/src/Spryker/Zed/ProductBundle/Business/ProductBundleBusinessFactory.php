@@ -52,7 +52,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleWriter(
             $this->getProductFacade(),
             $this->getQueryContainer(),
-            $this->createProductBundleStockWriter()
+            $this->createProductBundleStockWriter(),
+            $this->getPostSaveBundledProductsPlugins()
         );
     }
 
@@ -264,6 +265,14 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createQuoteItemsGrouper(): QuoteItemsGrouperInterface
     {
         return new QuoteItemsGrouper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveBundledProductsPluginInterface[]
+     */
+    public function getPostSaveBundledProductsPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductBundleDependencyProvider::PLUGINS_POS_SAVE_BUNDLED_PRODUCTS);
     }
 
     /**

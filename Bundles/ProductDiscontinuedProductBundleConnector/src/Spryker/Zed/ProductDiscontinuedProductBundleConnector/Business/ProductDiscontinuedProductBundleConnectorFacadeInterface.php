@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 
 interface ProductDiscontinuedProductBundleConnectorFacadeInterface
@@ -23,4 +24,16 @@ interface ProductDiscontinuedProductBundleConnectorFacadeInterface
      * @return void
      */
     public function markRelatedBundleAsDiscontinued(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void;
+
+    /**
+     * Specification:
+     * - Marks bundle as discontinued if one of bundled products is discontinued.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function markBundleAsDiscontinuedAfterSaveBundledProducts(ProductConcreteTransfer $productConcreteTransfer): void;
 }

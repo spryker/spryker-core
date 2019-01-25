@@ -34,18 +34,26 @@ class ProductBundleWriter implements ProductBundleWriterInterface
     protected $productBundleStockWriter;
 
     /**
+     * @var \Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveBundledProductsPluginInterface[]
+     */
+    protected $postSaveBundledProductsPlugins;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface $productFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface $productBundleStockWriter
+     * @param \Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveBundledProductsPluginInterface[] $postSaveBundledProductsPlugins
      */
     public function __construct(
         ProductBundleToProductInterface $productFacade,
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
-        ProductBundleStockWriterInterface $productBundleStockWriter
+        ProductBundleStockWriterInterface $productBundleStockWriter,
+        array $postSaveBundledProductsPlugins
     ) {
         $this->productFacade = $productFacade;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->productBundleStockWriter = $productBundleStockWriter;
+        $this->postSaveBundledProductsPlugins = $postSaveBundledProductsPlugins;
     }
 
     /**
@@ -75,6 +83,7 @@ class ProductBundleWriter implements ProductBundleWriterInterface
             $this->productBundleQueryContainer->getConnection()->beginTransaction();
 
             $this->createBundledProducts($productConcreteTransfer, $bundledProducts);
+            $this->executePostSaveBundledProductsPlugins($productConcreteTransfer);
             $this->removeBundledProducts($productBundleTransfer->getBundlesToRemove(), $productConcreteTransfer->getIdProductConcrete());
 
             $this->productBundleQueryContainer->getConnection()->commit();
@@ -167,5 +176,17 @@ class ProductBundleWriter implements ProductBundleWriterInterface
             ->queryBundledProductByIdProduct($idBundledProduct)
             ->filterByFkProduct($idProductBundle)
             ->findOne();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function executePostSaveBundledProductsPlugins(ProductConcreteTransfer $productConcreteTransfer): void
+    {
+        foreach ($this->postSaveBundledProductsPlugins as $postSaveBundledProductsPlugin) {
+            $postSaveBundledProductsPlugin->execute($productConcreteTransfer);
+        }
     }
 }

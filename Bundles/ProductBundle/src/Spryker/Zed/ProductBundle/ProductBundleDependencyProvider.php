@@ -40,6 +40,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     public const QUERY_CONTAINER_STOCK = 'stock query container';
     public const QUERY_CONTAINER_PRODUCT = 'product query container';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    public const PLUGINS_POS_SAVE_BUNDLED_PRODUCTS = 'PLUGINS_POS_SAVE_BUNDLED_PRODUCTS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -56,6 +57,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addFacadePrice($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMessengerFacade($container);
+        $container = $this->addPostSaveBundledProductsPlugins($container);
 
         $container = $this->addQueryContainerAvailability($container);
         $container = $this->addQueryContainerSales($container);
@@ -239,5 +241,26 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductBundleToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
         };
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPostSaveBundledProductsPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_POS_SAVE_BUNDLED_PRODUCTS] = function (Container $container) {
+            return $this->getPostSaveBundledProductsPlugins();
+        };
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveBundledProductsPluginInterface[]
+     */
+    protected function getPostSaveBundledProductsPlugins(): array
+    {
+        return [];
     }
 }
