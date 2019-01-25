@@ -49,14 +49,30 @@ class QuoteRequestStub implements QuoteRequestStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
      */
-    public function findQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
+    public function getQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer */
         $quoteRequestCollectionTransfer = $this->zedRequestClient->call(
-            '/quote-request/gateway/find-quote-request-collection-by-filter',
+            '/quote-request/gateway/get-quote-request-collection-by-filter',
             $quoteRequestFilterTransfer
         );
 
         return $quoteRequestCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
+        $quoteRequestResponseTransfer = $this->zedRequestClient->call(
+            '/quote-request/gateway/cancel-by-reference',
+            $quoteRequestFilterTransfer
+        );
+
+        return $quoteRequestResponseTransfer;
     }
 }

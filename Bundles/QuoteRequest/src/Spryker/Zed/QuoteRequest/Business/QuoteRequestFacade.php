@@ -45,7 +45,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
      */
-    public function findQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
+    public function getQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
     {
         return $this->getFactory()
             ->createQuoteRequestReader()
@@ -65,6 +65,6 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     {
         return $this->getFactory()
             ->createQuoteRequestWriter()
-            ->cancel($quoteRequestFilterTransfer);
+            ->cancelByReference($quoteRequestFilterTransfer);
     }
 }

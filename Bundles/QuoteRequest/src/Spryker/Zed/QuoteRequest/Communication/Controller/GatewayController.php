@@ -33,8 +33,18 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
      */
-    public function findQuoteRequestCollectionByFilterAction(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
+    public function getQuoteRequestCollectionByFilterAction(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
     {
-        return $this->getFacade()->findQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
+        return $this->getFacade()->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getFacade()->cancelByReference($quoteRequestFilterTransfer);
     }
 }

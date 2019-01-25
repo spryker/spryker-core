@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
+use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 use Spryker\Zed\QuoteRequest\QuoteRequestConfig;
 
 class QuoteRequestWriter implements QuoteRequestWriterInterface
@@ -32,6 +33,11 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     protected $entityManager;
 
     /**
+     * @var \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface
+     */
+    protected $repository;
+
+    /**
      * @var \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface
      */
     protected $referenceGenerator;
@@ -44,17 +50,20 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     /**
      * @param \Spryker\Zed\QuoteRequest\QuoteRequestConfig $config
      * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface $repository
      * @param \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface $referenceGenerator
      * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface $companyUserFacade
      */
     public function __construct(
         QuoteRequestConfig $config,
         QuoteRequestEntityManagerInterface $entityManager,
+        QuoteRequestRepositoryInterface $repository,
         QuoteRequestReferenceGeneratorInterface $referenceGenerator,
         QuoteRequestToCompanyUserInterface $companyUserFacade
     ) {
         $this->config = $config;
         $this->entityManager = $entityManager;
+        $this->repository = $repository;
         $this->referenceGenerator = $referenceGenerator;
         $this->companyUserFacade = $companyUserFacade;
     }
@@ -76,9 +85,27 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function cancel(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
-        // TODO: Implement cancel() method.
+        $quoteRequestFilterTransfer->requireQuoteRequestReference()
+            ->requireCompanyUser()
+            ->getCompanyUser()
+            ->requireIdCompanyUser();
+
+        $quoteRequestResponseTransfer = new QuoteRequestResponseTransfer();
+        $quoteRequestTransfer = $this->repository->findQuoteRequest($quoteRequestFilterTransfer);
+
+        if (!$quoteRequestTransfer) {
+            return $quoteRequestResponseTransfer->setIsSuccess(false);
+        }
+
+        $quoteRequestTransfer->setStatus($this->config->getCancelStatus());
+
+        // TODO: update in entity manager
+
+        return $quoteRequestResponseTransfer
+            ->setQuoteRequest($quoteRequestTransfer)
+            ->setIsSuccess(true);
     }
 
     /**

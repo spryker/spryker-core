@@ -34,6 +34,7 @@ interface QuoteRequestClientInterface
 
     /**
      * Specification:
+     * - Makes Zed request.
      * - Retrieves "Request for Quote" entities filtered by company user.
      * - Filters by quote request reference when provided.
      * - Excludes hidden "Request for Quote" entities.
@@ -45,5 +46,21 @@ interface QuoteRequestClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
      */
-    public function findQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer;
+    public function getQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Looks up one "Request for Quote" by provided quote request reference.
+     * - Expects the related company user to be provided.
+     * - Expects "Request for Quote" status to be "waiting".
+     * - Sets status to "Cancelled".
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
 }

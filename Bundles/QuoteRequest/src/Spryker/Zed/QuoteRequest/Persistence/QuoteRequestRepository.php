@@ -9,6 +9,7 @@ namespace Spryker\Zed\QuoteRequest\Persistence;
 
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -22,7 +23,7 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
      */
-    public function findQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
+    public function getQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
     {
         $quoteRequestQuery = $this->getFactory()
             ->getQuoteRequestPropelQuery()
@@ -37,5 +38,28 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
         return $this->getFactory()
             ->createQuoteRequestMapper()
             ->mapEntityCollectionToTransferCollection($quoteRequestQuery->find());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): ?QuoteRequestTransfer
+    {
+        $quoteRequestEntity = $this->getFactory()
+            ->getQuoteRequestPropelQuery()
+            ->filterByFkCompanyUser($quoteRequestFilterTransfer->getCompanyUser()->getIdCompanyUser())
+            ->filterByQuoteRequestReference($quoteRequestFilterTransfer->getQuoteRequestReference())
+            ->leftJoinWithSpyQuoteRequestVersion()
+            ->findOne();
+
+        if (!$quoteRequestEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createQuoteRequestMapper()
+            ->mapQuoteRequestEntityToQuoteRequestTransfer($quoteRequestEntity, new QuoteRequestTransfer());
     }
 }
