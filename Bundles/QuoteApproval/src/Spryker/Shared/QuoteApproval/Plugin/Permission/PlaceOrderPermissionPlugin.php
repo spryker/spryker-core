@@ -34,8 +34,8 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
             return false;
         }
 
-        $shipment = $quoteTransfer->getShipment();
-        $shipmentPrice = $shipment ? $shipment->getMethod()->getStoreCurrencyPrice() : 0;
+        $shipmentTransfer = $quoteTransfer->getShipment();
+        $shipmentPrice = $shipmentTransfer ? $shipmentTransfer->getMethod()->getStoreCurrencyPrice() : 0;
         $centAmount = $quoteTransfer->getTotals()->getGrandTotal() - $shipmentPrice;
         $currencyCode = $quoteTransfer->getCurrency()->getCode();
         $storeName = $quoteTransfer->getStore()->getName();

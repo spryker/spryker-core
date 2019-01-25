@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
@@ -85,7 +86,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
 
         if (!$quoteApprovalRequestValidationReponseTransfer->getIsSuccessful()) {
             return $this->createNotSuccessfulQuoteApprovalResponseTransfer(
-                $quoteApprovalRequestValidationReponseTransfer->getMessage()
+                $quoteApprovalRequestValidationReponseTransfer->getMessages()
             );
         }
 
@@ -107,16 +108,16 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    protected function createNotSuccessfulQuoteApprovalResponseTransfer(MessageTransfer $messageTransfer): QuoteApprovalResponseTransfer
+    protected function createNotSuccessfulQuoteApprovalResponseTransfer(ArrayObject $messageTransfers): QuoteApprovalResponseTransfer
     {
         $quoteApprovalResponseTransfer = new QuoteApprovalResponseTransfer();
 
         $quoteApprovalResponseTransfer->setIsSuccessful(false);
-        $quoteApprovalResponseTransfer->setMessage($messageTransfer);
+        $quoteApprovalResponseTransfer->setMessages($messageTransfers);
 
         return $quoteApprovalResponseTransfer;
     }
@@ -132,7 +133,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
 
         $quoteApprovalResponseTransfer = new QuoteApprovalResponseTransfer();
         $quoteApprovalResponseTransfer->setIsSuccessful(true);
-        $quoteApprovalResponseTransfer->setMessage(
+        $quoteApprovalResponseTransfer->addMessage(
             $this->createMessageTransfer(
                 static::GLOSSARY_KEY_APPROVAL_CREATED,
                 [

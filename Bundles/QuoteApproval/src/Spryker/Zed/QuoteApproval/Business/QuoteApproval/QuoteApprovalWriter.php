@@ -118,6 +118,6 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
         return (new QuoteApprovalResponseTransfer())
             ->setQuoteApproval($quoteApprovalTransfer)
             ->setIsSuccessful(true)
-            ->setMessage($this->quoteApprovalMessageBuilder->getSuccessMessage($quoteApprovalTransfer, $status));
+            ->addMessage($this->quoteApprovalMessageBuilder->getSuccessMessage($quoteApprovalTransfer, $status));
     }
 }

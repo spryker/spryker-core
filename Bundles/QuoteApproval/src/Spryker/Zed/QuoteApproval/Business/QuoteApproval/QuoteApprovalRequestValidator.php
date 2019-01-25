@@ -78,15 +78,15 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         $quoteTransfer = $this->getQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
 
         if (!$this->isQuoteOwner($quoteTransfer, $quoteApprovalCreateRequestTransfer->getRequesterCompanyUserId())) {
-            return $this->createNotSuccessfullValidationResponseTransfer();
+            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED);
         }
 
         if (!$this->isApproverCanApproveQuote($quoteTransfer, $quoteApprovalCreateRequestTransfer->getApproverCompanyUserId())) {
-            return $this->createNotSuccessfullValidationResponseTransfer(static::GLOSSARY_KEY_APPROVER_CANT_APPROVE_QUOTE);
+            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_APPROVER_CANT_APPROVE_QUOTE);
         }
 
         if (!$this->isQuoteInCorrectStatus($quoteTransfer)) {
-            return $this->createNotSuccessfullValidationResponseTransfer();
+            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED);
         }
 
         return $this->createSuccessfullValidationResponseTransfer()
@@ -105,7 +105,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         if (!$this->isQuoteOwner($quoteTransfer, $quoteApprovalRemoveRequestTransfer->getIdCompanyUser())
             && !$this->isRemoveRequestSentByApprover($quoteApprovalRemoveRequestTransfer)
         ) {
-            return $this->createNotSuccessfullValidationResponseTransfer();
+            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED);
         }
 
         return $this->createSuccessfullValidationResponseTransfer()
@@ -125,15 +125,15 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         $quoteTransfer = $this->findQuoteByIdQuoteApproval($quoteApprovalTransfer->getIdQuoteApproval());
 
         if ($quoteApprovalTransfer->getStatus() !== QuoteApprovalConfig::STATUS_WAITING) {
-            return $this->createNotSuccessfullValidationResponseTransfer();
+            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED);
         }
 
         if ($quoteApprovalTransfer->getFkCompanyUser() !== $quoteApprovalRequestTransfer->getFkCompanyUser()) {
-            return $this->createNotSuccessfullValidationResponseTransfer();
+            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED);
         }
 
         if (!$this->isApproverCanApproveQuote($quoteTransfer, $quoteApprovalRequestTransfer->getFkCompanyUser())) {
-            return $this->createNotSuccessfullValidationResponseTransfer();
+            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED);
         }
 
         return $this->createSuccessfullValidationResponseTransfer()
@@ -165,17 +165,15 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     }
 
     /**
-     * @param string|null $message
+     * @param string $message
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer
      */
-    protected function createNotSuccessfullValidationResponseTransfer(?string $message = null): QuoteApprovalRequestValidationResponseTransfer
+    protected function createUnsuccessfulValidationResponseTransfer(string $message): QuoteApprovalRequestValidationResponseTransfer
     {
-        $message = $message ?? static::GLOSSARY_KEY_PERMISSION_FAILED;
-
         $quoteApprovalRequestValidationResponseTransfer = new QuoteApprovalRequestValidationResponseTransfer();
         $quoteApprovalRequestValidationResponseTransfer->setIsSuccessful(false);
-        $quoteApprovalRequestValidationResponseTransfer->setMessage(
+        $quoteApprovalRequestValidationResponseTransfer->addMessage(
             (new MessageTransfer())->setValue($message)
         );
 
