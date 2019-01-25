@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
@@ -38,6 +39,10 @@ class QuoteCreator implements QuoteCreatorInterface
             ->requireQuote()
             ->requireCustomerReference();
 
-        return $this->persistentCartFacade->createQuote($restQuoteRequestTransfer->getQuote());
+        return $this->persistentCartFacade->createQuote($restQuoteRequestTransfer->getQuote()
+            ->setCustomer(
+                (new CustomerTransfer())->setCustomerReference($restQuoteRequestTransfer->getCustomerReference())
+            )
+        );
     }
 }

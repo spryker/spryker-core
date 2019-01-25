@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
@@ -51,6 +52,11 @@ class QuoteDeleter implements QuoteDeleterInterface
             return $quoteResponseTransfer;
         }
 
-        return $this->persistentCartFacade->delete($quoteResponseTransfer->getQuoteTransfer());
+        return $this->persistentCartFacade
+            ->delete($quoteResponseTransfer->getQuoteTransfer()
+                ->setCustomer(
+                    (new CustomerTransfer())->setCustomerReference($restQuoteRequestTransfer->getCustomerReference())
+                )
+            );
     }
 }
