@@ -25,7 +25,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
     /**
      * @uses SharedCartConfig::PERMISSION_GROUP_READ_ONLY
      */
-    protected const PERMISSION_GROUP_READ_ONLY = 'PERMISSION_GROUP_READ_ONLY';
+    protected const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
     protected const GLOSSARY_KEY_APPROVAL_CREATED = 'quote_approval.created';
 
     /**
