@@ -92,16 +92,21 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->getCompanyUser()
             ->requireIdCompanyUser();
 
-        $quoteRequestResponseTransfer = new QuoteRequestResponseTransfer();
-        $quoteRequestTransfer = $this->repository->findQuoteRequest($quoteRequestFilterTransfer);
+        $quoteRequests = $this->repository
+            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
+            ->getQuoteRequests()
+            ->getArrayCopy();
 
-        if (!$quoteRequestTransfer) {
+        $quoteRequestTransfer = array_shift($quoteRequests);
+        $quoteRequestResponseTransfer = new QuoteRequestResponseTransfer();
+
+        if (!$quoteRequestTransfer || $quoteRequestTransfer->getStatus() !== $this->config->getWaitingStatus()) {
             return $quoteRequestResponseTransfer->setIsSuccess(false);
         }
 
         $quoteRequestTransfer->setStatus($this->config->getCancelStatus());
-
-        // TODO: update in entity manager
+        $quoteRequestTransfer = $this->entityManager
+            ->updateQuoteRequest($quoteRequestTransfer);
 
         return $quoteRequestResponseTransfer
             ->setQuoteRequest($quoteRequestTransfer)

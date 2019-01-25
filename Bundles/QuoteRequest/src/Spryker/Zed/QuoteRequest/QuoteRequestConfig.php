@@ -25,6 +25,14 @@ class QuoteRequestConfig extends AbstractBundleConfig
     /**
      * @return string
      */
+    public function getWaitingStatus(): string
+    {
+        return SharedQuoteRequestConfig::STATUS_WAITING;
+    }
+
+    /**
+     * @return string
+     */
     public function getCancelStatus(): string
     {
         return SharedQuoteRequestConfig::STATUS_CANCELED;
