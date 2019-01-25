@@ -17,12 +17,26 @@ interface QuoteRequestEntityManagerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
-    public function saveQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer;
+    public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
      */
-    public function saveQuoteRequestVersion(QuoteRequestVersionTransfer $quoteRequestTransfer): QuoteRequestVersionTransfer;
+    public function createQuoteRequestVersion(QuoteRequestVersionTransfer $quoteRequestTransfer): QuoteRequestVersionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
+     */
+    public function updateQuoteRequestVersion(QuoteRequestVersionTransfer $quoteRequestTransfer): QuoteRequestVersionTransfer;
 }
