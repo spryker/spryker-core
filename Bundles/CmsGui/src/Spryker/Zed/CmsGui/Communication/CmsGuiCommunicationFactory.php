@@ -93,7 +93,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
         $idCmsPage = null,
         ?CmsPageTransfer $cmsPageTransfer = null
     ): FormInterface {
-        $cmsPageTransfer = $cmsPageTransfer?: $cmsPageFormTypeDataProvider->getData($idCmsPage);
+        $cmsPageTransfer = $cmsPageTransfer ?: $cmsPageFormTypeDataProvider->getData($idCmsPage);
 
         return $this->getFormFactory()->create(
             CmsPageFormType::class,

@@ -1,3 +1,2 @@
 parameters:
-    ignoreErrors:
-    - '#Method .+Container::set\(\) should return \$this\(.+Container\) but returns .+Container.#'
+    bootstrap: %rootDir%/../../../phpstan-bootstrap.php
