@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
 
-class QuoteDeleter implements CartDeleterInterface
+class QuoteDeleter implements QuoteDeleterInterface
 {
     /**
      * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface
@@ -29,7 +29,7 @@ class QuoteDeleter implements CartDeleterInterface
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
-        CartReaderInterface $cartReader
+        QuoteReaderInterface $cartReader
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->cartReader = $cartReader;

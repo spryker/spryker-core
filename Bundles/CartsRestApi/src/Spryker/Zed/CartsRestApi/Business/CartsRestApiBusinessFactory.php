@@ -48,17 +48,17 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface
      */
-    public function createCartReader(): CartReaderInterface
+    public function createQuoteReader(): QuoteReaderInterface
     {
-        return new CartReader($this->getQuoteFacade());
+        return new QuoteReader($this->getQuoteFacade());
     }
 
     /**
      * @return \Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface
      */
-    public function createCartCreator(): CartCreatorInterface
+    public function createQuoteCreator(): QuoteCreatorInterface
     {
-        return new CartCreator(
+        return new QuoteCreator(
             $this->getPersistentCartFacade()
         );
     }
@@ -66,56 +66,56 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApi\Business\Quote\QuoteDeleterInterface
      */
-    public function createCartDeleter(): CartDeleterInterface
+    public function createQuoteDeleter(): QuoteDeleterInterface
     {
-        return new CartDeleter(
+        return new QuoteDeleter(
             $this->getPersistentCartFacade(),
-            $this->createCartReader()
+            $this->createQuoteReader()
         );
     }
 
     /**
      * @return \Spryker\Zed\CartsRestApi\Business\Quote\QuoteUpdaterInterface
      */
-    public function createQuoteUpdater(): CartUpdaterInterface
+    public function createQuoteUpdater(): QuoteUpdaterInterface
     {
-        return new CartUpdater(
+        return new QuoteUpdater(
             $this->getPersistentCartFacade(),
             $this->getCartFacade(),
-            $this->createCartReader()
+            $this->createQuoteReader()
         );
     }
 
     /**
      * @return \Spryker\Zed\CartsRestApi\Business\CartItem\CartItemAdderInterface
      */
-    public function createCartItemAdder(): CartItemAdderInterface
+    public function createQuoteItemAdder(): CartItemAdderInterface
     {
         return new CartItemAdder(
             $this->getPersistentCartFacade(),
-            $this->createCartReader()
+            $this->createQuoteReader()
         );
     }
 
     /**
      * @return \Spryker\Zed\CartsRestApi\Business\CartItem\CartItemDeleterInterface
      */
-    public function createCartItemDeleter(): CartItemDeleterInterface
+    public function createQuoteItemDeleter(): CartItemDeleterInterface
     {
         return new CartItemDeleter(
             $this->getPersistentCartFacade(),
-            $this->createCartReader()
+            $this->createQuoteReader()
         );
     }
 
     /**
      * @return \Spryker\Zed\CartsRestApi\Business\CartItem\CartItemUpdaterInterface
      */
-    public function createCartItemUpdater(): CartItemUpdaterInterface
+    public function createQuoteItemUpdater(): CartItemUpdaterInterface
     {
         return new CartItemUpdater(
             $this->getPersistentCartFacade(),
-            $this->createCartReader()
+            $this->createQuoteReader()
         );
     }
 

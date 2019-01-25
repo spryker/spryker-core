@@ -17,7 +17,7 @@ use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
 
-class QuoteUpdater implements CartUpdaterInterface
+class QuoteUpdater implements QuoteUpdaterInterface
 {
     /**
      * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface
@@ -42,7 +42,7 @@ class QuoteUpdater implements CartUpdaterInterface
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
         CartsRestApiToCartFacadeInterface $cartFacade,
-        CartReaderInterface $cartReader
+        QuoteReaderInterface $cartReader
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->cartFacade = $cartFacade;
