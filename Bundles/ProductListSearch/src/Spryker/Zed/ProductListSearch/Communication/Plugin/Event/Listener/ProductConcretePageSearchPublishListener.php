@@ -34,12 +34,12 @@ class ProductConcretePageSearchPublishListener extends AbstractPlugin implements
     public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->preventTransaction();
-        $categoryIds = $this->getFactory()
+        $productListCategoryIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyProductListCategoryTableMap::COL_FK_CATEGORY);
 
         $this->getFactory()->getProductPageSearchFacade()->publishProductConcretes(
-            $this->getFacade()->findProductConcreteIdsByCategoryIds($categoryIds)
+            $this->getFacade()->findProductConcreteIdsByCategoryIds($productListCategoryIds)
         );
     }
 }
