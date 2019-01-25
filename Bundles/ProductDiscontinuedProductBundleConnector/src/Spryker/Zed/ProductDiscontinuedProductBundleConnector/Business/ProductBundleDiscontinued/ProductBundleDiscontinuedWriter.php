@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductBundleDiscontinued;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface;
@@ -71,8 +70,6 @@ class ProductBundleDiscontinuedWriter implements ProductBundleDiscontinuedWriter
         if ($bundledProducts->count() == 0) {
             return;
         }
-
-        $productDiscontinuedCriteriaFilterTransfer = new ProductDiscontinuedCriteriaFilterTransfer();
 
         foreach ($bundledProducts as $bundledProduct) {
             $productDiscontinuedResponseTransfer = $this->productDiscontinuedFacade
