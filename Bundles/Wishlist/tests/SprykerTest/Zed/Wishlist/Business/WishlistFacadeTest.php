@@ -627,7 +627,7 @@ class WishlistFacadeTest extends Unit
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return void
      */
