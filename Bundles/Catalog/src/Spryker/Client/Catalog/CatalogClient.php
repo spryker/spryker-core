@@ -137,7 +137,6 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
 
     /**
      * {@inheritdoc}
-     * Score is built based on multi_match query type cross_fields.
      *
      * @api
      *
