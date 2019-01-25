@@ -56,7 +56,6 @@ class QuoteDeleter implements QuoteDeleterInterface
             ->delete($quoteResponseTransfer->getQuoteTransfer()
                 ->setCustomer(
                     (new CustomerTransfer())->setCustomerReference($restQuoteRequestTransfer->getCustomerReference())
-                )
-            );
+                ));
     }
 }

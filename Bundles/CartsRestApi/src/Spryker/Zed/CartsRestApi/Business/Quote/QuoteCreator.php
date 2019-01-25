@@ -42,7 +42,6 @@ class QuoteCreator implements QuoteCreatorInterface
         return $this->persistentCartFacade->createQuote($restQuoteRequestTransfer->getQuote()
             ->setCustomer(
                 (new CustomerTransfer())->setCustomerReference($restQuoteRequestTransfer->getCustomerReference())
-            )
-        );
+            ));
     }
 }

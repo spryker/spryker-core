@@ -68,8 +68,7 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
         CartUpdaterInterface $cartUpdater,
         GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder,
         CartsRestApiClientInterface $cartsRestApiClient
-    )
-    {
+    ) {
         $this->quoteClient = $quoteClient;
         $this->persistentCartClient = $persistentCartClient;
         $this->guestCartReader = $guestCartReader;
@@ -81,8 +80,7 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
     public function updateQuote(
         RestRequestInterface $restRequest,
         RestCartsAttributesTransfer $restCartsAttributesTransfer
-    ): RestResponseInterface
-    {
+    ): RestResponseInterface {
         if (!$restRequest->getUser()) {
             return $this->guestCartRestResponseBuilder
                 ->createAnonymousCustomerUniqueIdEmptyErrorRestResponse();
