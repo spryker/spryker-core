@@ -30,6 +30,7 @@ class CmsDataPageMapBuilder implements NamedPageMapInterface
     public const TYPE = 'type';
     public const ID_CMS_PAGE = 'id_cms_page';
     public const NAME = 'name';
+    protected const COL_NAME = 'name';
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
@@ -63,6 +64,8 @@ class CmsDataPageMapBuilder implements NamedPageMapInterface
             ->addSuggestionTerms($pageMapTransfer, $cmsPageData['name'])
             ->addCompletionTerms($pageMapTransfer, $cmsPageData['name']);
 
+        $pageMapTransfer = $this->addSort($pageMapBuilder, $pageMapTransfer, $cmsPageData);
+
         return $pageMapTransfer;
     }
 
@@ -93,5 +96,19 @@ class CmsDataPageMapBuilder implements NamedPageMapInterface
     public function getName()
     {
         return CmsPageSearchConstants::CMS_PAGE_RESOURCE_NAME;
+    }
+
+    /**
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param array $cmsPageData
+     *
+     * @return \Generated\Shared\Transfer\PageMapTransfer
+     */
+    protected function addSort(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $cmsPageData): PageMapTransfer
+    {
+        $pageMapBuilder->addStringSort($pageMapTransfer, static::COL_NAME, $cmsPageData['name']);
+
+        return $pageMapTransfer;
     }
 }

@@ -10,10 +10,14 @@ namespace Spryker\Zed\Payment\Persistence;
 use Orm\Zed\Payment\Persistence\SpySalesPaymentMethodTypeQuery;
 use Orm\Zed\Payment\Persistence\SpySalesPaymentQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Payment\Persistence\Propel\Mapper\PaymentMapper;
+use Spryker\Zed\Payment\Persistence\Propel\Mapper\PaymentMapperInterface;
 
 /**
  * @method \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Payment\PaymentConfig getConfig()
+ * @method \Spryker\Zed\Payment\Persistence\PaymentEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Payment\Persistence\PaymentRepositoryInterface getRepository()
  */
 class PaymentPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -31,5 +35,13 @@ class PaymentPersistenceFactory extends AbstractPersistenceFactory
     public function createSalesPaymentMethodTypeQuery()
     {
         return SpySalesPaymentMethodTypeQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Persistence\Propel\Mapper\PaymentMapperInterface
+     */
+    public function createPaymentMapper(): PaymentMapperInterface
+    {
+        return new PaymentMapper();
     }
 }

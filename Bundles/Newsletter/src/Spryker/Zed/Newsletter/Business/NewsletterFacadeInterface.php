@@ -14,7 +14,7 @@ interface NewsletterFacadeInterface
 {
     /**
      * Specification:
-     * - Identifies subscriber by provided subscriber email.
+     * - Identifies subscriber by provided subscriber email in a case insensitive way.
      * - Adds subscriber to each provided newsletter type:
      *      - Validates email.
      *      - Registers subscription if subscriber is not registered already.
@@ -31,7 +31,7 @@ interface NewsletterFacadeInterface
 
     /**
      * Specification:
-     * - Identifies subscriber by provided subscriber email.
+     * - Identifies subscriber by provided subscriber email in a case insensitive way.
      * - Adds subscriber to each provided newsletter type:
      *      - Validates email.
      *      - Registers subscription if subscriber is not registered already.
@@ -59,7 +59,7 @@ interface NewsletterFacadeInterface
 
     /**
      * Specification:
-     * - Checks if the provided subscriber is subscribed to any of the provided newsletter type.
+     * - Checks if the provided subscriber is subscribed to any of the provided newsletter type using case insensitive email matching.
      * - Returns with a list, each element contains the result for a newsletter type.
      *
      * @api
@@ -72,7 +72,7 @@ interface NewsletterFacadeInterface
 
     /**
      * Specification:
-     * - Unsubscribes provided subscriber from provided newsletter type list.
+     * - Unsubscribes provided subscriber from provided newsletter type list using case insensitive email matching.
      * - Sends unsubscribed mail for each newsletter type.
      *
      * @api

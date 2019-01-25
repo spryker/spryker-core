@@ -46,6 +46,10 @@ class RestRequestValidatorPluginsTest extends Unit
         'emailField' => 'tester@test.com',
         'stringField' => 'xxxxxxxx',
         'integerField' => 111111111111111,
+        'nested' => [
+            'test' => 222222222222222,
+            'test_email' => 'tester@test.com',
+        ],
     ];
     protected const INCORRECT_ENDPOINT_DATA = [
         'stringField' => 'xxxx',
@@ -247,7 +251,7 @@ class RestRequestValidatorPluginsTest extends Unit
         $mockRestRequest = $mockRestRequestObject->createRestRequest(
             Request::METHOD_POST,
             'endpoint',
-            (new EndpointTransfer())->fromArray($endpointAttributes)
+            (new EndpointTransfer())->fromArray($endpointAttributes, true)
         );
 
         return $mockRestRequest;
