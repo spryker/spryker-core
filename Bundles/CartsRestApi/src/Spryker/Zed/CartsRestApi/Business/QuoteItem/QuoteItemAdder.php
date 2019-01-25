@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartsRestApi\Business\CartItem;
+namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
+use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
 
-class CartItemUpdater implements CartItemUpdaterInterface
+class QuoteItemAdder implements QuoteItemAdderInterface
 {
     /**
      * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface
@@ -44,12 +44,15 @@ class CartItemUpdater implements CartItemUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function changeItemQuantity(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    public function add(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
     {
         $restCartItemRequestTransfer
+            ->requireCartItem()
             ->requireCartUuid()
-            ->requireCustomerReference()
-            ->requireCartItem();
+            ->requireCustomerReference();
+
+        $restCartItemRequestTransfer->getCartItem()
+            ->requireSku();
 
         $quoteResponseTransfer = $this->cartReader->findQuoteByUuid(
             (new QuoteTransfer())->setUuid($restCartItemRequestTransfer->getCartUuid())
@@ -59,11 +62,11 @@ class CartItemUpdater implements CartItemUpdaterInterface
             return $quoteResponseTransfer;
         }
 
-        $persistentCartChangeQuantityTransfer = (new PersistentCartChangeQuantityTransfer())
+        $persistentCartChangeTransfer = (new PersistentCartChangeTransfer())
             ->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote())
-            ->setItem($restCartItemRequestTransfer->getCartItem())
+            ->addItem($restCartItemRequestTransfer->getCartItem())
             ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemRequestTransfer->getCustomerReference()));
 
-        return $this->persistentCartFacade->changeItemQuantity($persistentCartChangeQuantityTransfer);
+        return $this->persistentCartFacade->add($persistentCartChangeTransfer);
     }
 }

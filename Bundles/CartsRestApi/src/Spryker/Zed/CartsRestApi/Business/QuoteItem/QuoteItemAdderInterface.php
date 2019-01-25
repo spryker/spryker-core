@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartsRestApi\Business\CartItem;
+namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 
-interface CartItemUpdaterInterface
+interface QuoteItemAdderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function changeItemQuantity(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer;
+    public function add(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer;
 }

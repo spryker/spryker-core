@@ -128,7 +128,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     public function updateItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
-            ->createCartItemUpdater()
+            ->createQuoteItemUpdater()
             ->changeItemQuantity($restCartItemRequestTransfer);
     }
 
@@ -144,7 +144,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     public function addItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
-            ->createCartItemAdder()
+            ->createQuoteItemAdder()
             ->add($restCartItemRequestTransfer);
     }
 
@@ -160,7 +160,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     public function deleteItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
-            ->createCartItemDeleter()
+            ->createQuoteItemDeleter()
             ->remove($restCartItemRequestTransfer);
     }
 }
