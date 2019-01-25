@@ -61,26 +61,19 @@ class RelatedProductReader implements RelatedProductReaderInterface
             return $this->relatedProductRestResponseBuilder->createProductAbstractSkuMissingError();
         }
 
-        $sku = $parentResource->getId();
-        $localeName = $restRequest->getMetadata()->getLocale();
-
         $abstractProductData = $this->productStorageClient
             ->findProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
-                $sku,
-                $localeName
+                $parentResource->getId(),
+                $restRequest->getMetadata()->getLocale()
             );
 
         if (!$abstractProductData) {
             return $this->relatedProductRestResponseBuilder->createProductAbstractNotFoundError();
         }
 
-        $relatedProductsCollection = $this->productRelationStorageClient
-            ->findRelatedProducts($abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT], $localeName);
-        $productAbstractIds = [];
-        foreach ($relatedProductsCollection as $productViewTransfer) {
-            $productAbstractIds[] = $productViewTransfer->getIdProductAbstract();
-        }
+        $productAbstractIds = $this->productRelationStorageClient
+            ->findRelatedAbstractProductIds($abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT]);
 
         return $this->relatedProductRestResponseBuilder
             ->buildAbstractRelatedProductsCollectionResponse($restRequest, $productAbstractIds);

@@ -53,9 +53,7 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
      */
     public function findUpSellingProducts(QuoteTransfer $quoteTransfer, $localeName)
     {
-        $productAbstractIds = $this->findSubjectProductAbstractIds($quoteTransfer);
-        $relationIds = $this->findRelationIds($productAbstractIds);
-        $productAbstractIds = $this->getSortedProductAbstractIds($relationIds);
+        $productAbstractIds = $this->findUpSellingAbstractProductIds($quoteTransfer);
 
         $relatedProducts = [];
         foreach ($productAbstractIds as $idProductAbstract) {
@@ -67,6 +65,19 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
         }
 
         return $relatedProducts;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int[]
+     */
+    public function findUpSellingAbstractProductIds(QuoteTransfer $quoteTransfer): array
+    {
+        $productAbstractIds = $this->findSubjectProductAbstractIds($quoteTransfer);
+        $relationIds = $this->findRelationIds($productAbstractIds);
+
+        return $this->getSortedProductAbstractIds($relationIds);
     }
 
     /**

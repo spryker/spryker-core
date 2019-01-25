@@ -64,12 +64,8 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
             return $this->upSellingProductRestResponseBuilder->createCartNotFoundError();
         }
 
-        $upSellingProducts = $this->productRelationStorageClient
-            ->findUpSellingProducts($quoteTransfer, $restRequest->getMetadata()->getLocale());
-        $productAbstractIds = [];
-        foreach ($upSellingProducts as $productViewTransfer) {
-            $productAbstractIds[] = $productViewTransfer->getIdProductAbstract();
-        }
+        $productAbstractIds = $this->productRelationStorageClient
+            ->findUpSellingAbstractProductIds($quoteTransfer);
 
         return $this->upSellingProductRestResponseBuilder
             ->buildUpSellingProductsRestResponse($restRequest, $productAbstractIds);

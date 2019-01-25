@@ -11,9 +11,8 @@ interface RelatedProductsRestApiToProductRelationStorageClientInterface
 {
     /**
      * @param int $idProductAbstract
-     * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array
      */
-    public function findRelatedProducts($idProductAbstract, $localeName);
+    public function findRelatedAbstractProductIds(int $idProductAbstract): array;
 }

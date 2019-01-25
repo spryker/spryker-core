@@ -52,8 +52,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
      */
     public function findRelatedProducts($idProductAbstract, $localeName)
     {
-        $relationIds = $this->getRelationIds($idProductAbstract);
-        $productAbstractIds = $this->getSortedProductAbstractIds($relationIds);
+        $productAbstractIds = $this->findRelatedAbstractProductIds($idProductAbstract);
 
         $relatedProducts = [];
         foreach ($productAbstractIds as $idProductAbstract) {
@@ -65,6 +64,18 @@ class RelatedProductReader implements RelatedProductReaderInterface
         }
 
         return $relatedProducts;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findRelatedAbstractProductIds(int $idProductAbstract): array
+    {
+        $relationIds = $this->getRelationIds($idProductAbstract);
+
+        return $this->getSortedProductAbstractIds($relationIds);
     }
 
     /**

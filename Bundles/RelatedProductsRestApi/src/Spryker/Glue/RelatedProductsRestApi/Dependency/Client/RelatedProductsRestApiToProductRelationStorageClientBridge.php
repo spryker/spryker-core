@@ -24,12 +24,11 @@ class RelatedProductsRestApiToProductRelationStorageClientBridge implements Rela
 
     /**
      * @param int $idProductAbstract
-     * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array
      */
-    public function findRelatedProducts($idProductAbstract, $localeName)
+    public function findRelatedAbstractProductIds(int $idProductAbstract): array
     {
-        return $this->productRelationStorageClient->findRelatedProducts($idProductAbstract, $localeName);
+        return $this->productRelationStorageClient->findRelatedAbstractProductIds($idProductAbstract);
     }
 }
