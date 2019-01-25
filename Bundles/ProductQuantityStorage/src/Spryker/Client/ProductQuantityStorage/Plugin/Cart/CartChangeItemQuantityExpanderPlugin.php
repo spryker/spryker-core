@@ -18,7 +18,7 @@ class CartChangeItemQuantityExpanderPlugin extends AbstractPlugin implements Car
 {
     /**
      * {@inheritdoc}
-     * - Adjusts ItemTransfer quantity according to restrictions.
+     * - Adjusts ItemTransfer quantity according to product quantity restrictions.
      * - Adds quantity adjustment info messages.
      *
      * @api
