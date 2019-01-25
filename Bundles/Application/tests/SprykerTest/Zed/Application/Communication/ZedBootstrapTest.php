@@ -23,6 +23,7 @@ class ZedBootstrapTest extends Unit
 {
     public const HTTP_X_INTERNAL_REQUEST = 'HTTP_X_INTERNAL_REQUEST';
 
+    public const SETUP_APPLICATION = 'setupApplication';
     public const REGISTER_SERVICE_PROVIDER = 'registerServiceProvider';
     public const REGISTER_SERVICE_PROVIDER_FOR_INTERNAL_REQUEST = 'registerServiceProviderForInternalRequest';
     public const REGISTER_SERVICE_PROVIDER_FOR_INTERNAL_REQUEST_WITH_AUTHENTICATION = 'registerServiceProviderForInternalRequestWithAuthentication';
@@ -37,6 +38,7 @@ class ZedBootstrapTest extends Unit
         $zedBootstrapMock = $this->createZedBootstrapMock();
         $zedBootstrapMock->method(self::IS_AUTHENTICATION_ENABLED)->willReturn(true);
 
+        $zedBootstrapMock->expects($this->once())->method(self::SETUP_APPLICATION);
         $zedBootstrapMock->expects($this->once())->method(self::REGISTER_SERVICE_PROVIDER);
         $zedBootstrapMock->expects($this->never())->method(self::REGISTER_SERVICE_PROVIDER_FOR_INTERNAL_REQUEST);
         $zedBootstrapMock->expects($this->never())->method(self::REGISTER_SERVICE_PROVIDER_FOR_INTERNAL_REQUEST_WITH_AUTHENTICATION);
@@ -79,6 +81,7 @@ class ZedBootstrapTest extends Unit
     protected function createZedBootstrapMock()
     {
         return $this->getMockBuilder(ZedBootstrap::class)->setMethods([
+            self::SETUP_APPLICATION,
             self::REGISTER_SERVICE_PROVIDER,
             self::REGISTER_SERVICE_PROVIDER_FOR_INTERNAL_REQUEST,
             self::REGISTER_SERVICE_PROVIDER_FOR_INTERNAL_REQUEST_WITH_AUTHENTICATION,
