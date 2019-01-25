@@ -24,11 +24,6 @@
       "SprykerTest\\": "tests/SprykerTest/"
     }
   },
-  "conflict": {
-    "spryker/pimple": "*",
-    "pimple/pimple": "*",
-    "silex/silex": "*"
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -38,5 +33,10 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "conflict": {
+    "spryker/pimple": "*",
+    "pimple/pimple": "*",
+    "silex/silex": "*"
   }
 }
