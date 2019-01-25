@@ -55,13 +55,13 @@ class CartItemDeleter implements CartItemDeleterInterface
      */
     public function deleteItem(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $idCart = $this->findCartIdentifier($restRequest);
+        $uuidQuote = $this->findCartIdentifier($restRequest);
         $itemIdentifier = $restRequest->getResource()->getId();
-        if ($this->isRequestInvalid($idCart, $itemIdentifier)) {
+        if ($this->isRequestInvalid($uuidQuote, $itemIdentifier)) {
             return $this->cartRestResponseBuilder->createMissingRequiredParameterErrorResponse();
         }
 
-        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idCart, $restRequest);
+        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($uuidQuote, $restRequest);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->cartRestResponseBuilder->createCartNotFoundErrorResponse();
@@ -74,7 +74,7 @@ class CartItemDeleter implements CartItemDeleterInterface
         }
 
         $restCartItemRequestTransfer = (new RestCartItemRequestTransfer())
-            ->setCartUuid($idCart)
+            ->setCartUuid($uuidQuote)
             ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
             ->setCartItem($itemTransfer);
 
@@ -119,13 +119,13 @@ class CartItemDeleter implements CartItemDeleterInterface
     }
 
     /**
-     * @param string|null $idCart
+     * @param string|null $uuidQuote
      * @param string|null $itemIdentifier
      *
      * @return bool
      */
-    protected function isRequestInvalid(?string $idCart, ?string $itemIdentifier): bool
+    protected function isRequestInvalid(?string $uuidQuote, ?string $itemIdentifier): bool
     {
-        return ($idCart === null || $itemIdentifier === null);
+        return ($uuidQuote === null || $itemIdentifier === null);
     }
 }

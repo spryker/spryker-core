@@ -68,15 +68,13 @@ class CartItemUpdater implements CartItemUpdaterInterface
         RestRequestInterface $restRequest,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): RestResponseInterface {
-        $sku = '';
-
-        $idCart = $this->findCartIdentifier($restRequest);
+        $uuidQuote = $this->findCartIdentifier($restRequest);
         $itemIdentifier = $restRequest->getResource()->getId();
-        if ($this->isRequestInvalid($idCart, $itemIdentifier)) {
+        if ($this->isRequestInvalid($uuidQuote, $itemIdentifier)) {
             return $this->cartRestResponseBuilder->createMissingRequiredParameterErrorResponse();
         }
 
-        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idCart, $restRequest);
+        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($uuidQuote, $restRequest);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->cartRestResponseBuilder->createCartNotFoundErrorResponse();
         }
@@ -88,7 +86,7 @@ class CartItemUpdater implements CartItemUpdaterInterface
         }
 
         $restCartItemRequestTransfer = (new RestCartItemRequestTransfer())
-            ->setCartUuid($idCart)
+            ->setCartUuid($uuidQuote)
             ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
             ->setCartItem($itemTransfer);
 
@@ -135,13 +133,13 @@ class CartItemUpdater implements CartItemUpdaterInterface
     }
 
     /**
-     * @param string|null $idCart
+     * @param string|null $uuidQuote
      * @param string|null $itemIdentifier
      *
      * @return bool
      */
-    protected function isRequestInvalid(?string $idCart, ?string $itemIdentifier): bool
+    protected function isRequestInvalid(?string $uuidQuote, ?string $itemIdentifier): bool
     {
-        return ($idCart === null || $itemIdentifier === null);
+        return ($uuidQuote === null || $itemIdentifier === null);
     }
 }
