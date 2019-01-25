@@ -24,6 +24,10 @@
       "SprykerTest\\": "tests/SprykerTest/"
     }
   },
+  "conflict": {
+    "spryker/pimple": "Please remove spryker/pimple it is no longer needed and not supported anymore. This module is a replacement for Pimple",
+    "pimple/pimple": "Please remove pimple/pimple it is no longer supported. This module is a replacement for Pimple"
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
