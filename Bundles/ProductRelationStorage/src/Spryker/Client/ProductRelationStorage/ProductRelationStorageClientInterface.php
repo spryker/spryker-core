@@ -47,7 +47,7 @@ interface ProductRelationStorageClientInterface
      *
      * @param int $idProductAbstract
      *
-     * @return array
+     * @return int[]
      */
     public function findRelatedAbstractProductIds(int $idProductAbstract): array;
 

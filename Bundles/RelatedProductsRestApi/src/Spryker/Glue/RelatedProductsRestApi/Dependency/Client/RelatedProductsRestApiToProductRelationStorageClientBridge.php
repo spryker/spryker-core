@@ -25,7 +25,7 @@ class RelatedProductsRestApiToProductRelationStorageClientBridge implements Rela
     /**
      * @param int $idProductAbstract
      *
-     * @return array
+     * @return int[]
      */
     public function findRelatedAbstractProductIds(int $idProductAbstract): array
     {

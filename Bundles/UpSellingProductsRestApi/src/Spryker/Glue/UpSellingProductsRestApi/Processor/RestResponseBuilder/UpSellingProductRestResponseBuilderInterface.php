@@ -18,7 +18,7 @@ interface UpSellingProductRestResponseBuilderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildUpSellingProductsRestResponse(RestRequestInterface $restRequest, array $productAbstractIds): RestResponseInterface;
+    public function buildUpSellingProductCollectionRestResponse(RestRequestInterface $restRequest, array $productAbstractIds): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

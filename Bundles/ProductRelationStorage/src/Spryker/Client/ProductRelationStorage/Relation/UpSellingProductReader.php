@@ -53,11 +53,11 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
      */
     public function findUpSellingProducts(QuoteTransfer $quoteTransfer, $localeName)
     {
-        $productAbstractIds = $this->findUpSellingAbstractProductIds($quoteTransfer);
+        $upSellingProductAbstractIds = $this->findUpSellingAbstractProductIds($quoteTransfer);
 
         $relatedProducts = [];
-        foreach ($productAbstractIds as $idProductAbstract) {
-            $productStorageData = $this->productStorageClient->getProductAbstractStorageData($idProductAbstract, $localeName);
+        foreach ($upSellingProductAbstractIds as $idUpSellingProductAbstract) {
+            $productStorageData = $this->productStorageClient->getProductAbstractStorageData($idUpSellingProductAbstract, $localeName);
 
             if ($productStorageData !== null) {
                 $relatedProducts[] = $this->createProductView($localeName, $productStorageData);

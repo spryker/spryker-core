@@ -56,7 +56,7 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
      *
      * @param int $idProductAbstract
      *
-     * @return array
+     * @return int[]
      */
     public function findRelatedAbstractProductIds(int $idProductAbstract): array
     {
