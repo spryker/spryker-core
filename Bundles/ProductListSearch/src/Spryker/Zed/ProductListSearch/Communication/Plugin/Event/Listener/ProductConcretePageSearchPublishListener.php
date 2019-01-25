@@ -23,6 +23,7 @@ class ProductConcretePageSearchPublishListener extends AbstractPlugin implements
 
     /**
      * {@inheritdoc}
+     * - Handles product list category create, update and delete events.
      *
      * @api
      *
