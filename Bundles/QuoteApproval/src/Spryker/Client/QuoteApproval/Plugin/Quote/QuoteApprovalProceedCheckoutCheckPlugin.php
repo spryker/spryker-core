@@ -22,7 +22,6 @@ class QuoteApprovalProceedCheckoutCheckPlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritdoc}
-     * - Returns CanProceedCheckoutResponseTransfer with array of Messages and isSuccessfull flag.
      * - Successfull if customer does't have PlaceOrderPermissionPlugin permission assigned.
      * - Successfull if excecuting of PlaceOrderPermissionPlugin permission returns true.
      * - Successfull if quote approval status is `approved`.

@@ -26,9 +26,10 @@ interface CheckoutClientInterface
 
     /**
      * Specification:
-     * - Returns CanProceedCheckoutResponseTransfer.
-     * - If CanProceedCheckoutResponseTransfer property `isSuccessful` than quote is applicable for checkout otherwise it is't.
-     * - May return array of messages in `messages` propery of CanProceedCheckoutResponseTransfer transfer.
+     * - Executes QuoteProceedCheckoutCheckPluginInterface plugins, if at least one plugin returns not successfull response that `isSuccess` property will be false.
+     * - Successfull if no `QuoteProceedCheckoutCheckPluginInterface` plugins registered.
+     * - Quote is applicable for checkout if response successful.
+     * - May return array of messages in response is not successful.
      *
      * @api
      *
