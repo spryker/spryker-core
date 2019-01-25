@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ContentProductGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\ContentAbstractProductListTransfer;
-use Spryker\Shared\ContentProduct\ContentProductConfig;
+use Spryker\Shared\ContentProductGui\ContentProductGuiConfig;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface;
 use Spryker\Zed\ContentProductGui\Communication\Form\AbstractProductListContentTermForm;
@@ -25,7 +25,7 @@ class ContentProductFormPlugin extends AbstractPlugin implements ContentPluginIn
      */
     public function getTermKey(): string
     {
-        return ContentProductConfig::CONTENT_TERM_ABSTRACT_PRODUCT_LIST;
+        return ContentProductGuiConfig::CONTENT_TERM_ABSTRACT_PRODUCT_LIST;
     }
 
     /**
@@ -37,7 +37,7 @@ class ContentProductFormPlugin extends AbstractPlugin implements ContentPluginIn
      */
     public function getTypeKey(): string
     {
-        return ContentProductConfig::CONTENT_TYPE_PRODUCT_LIST;
+        return ContentProductGuiConfig::CONTENT_TYPE_PRODUCT_LIST;
     }
 
     /**

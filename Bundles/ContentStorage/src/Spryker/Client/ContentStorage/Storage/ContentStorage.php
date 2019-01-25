@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface;
 use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchronizationServiceInterface;
 use Spryker\Client\ContentStorage\Resolver\ContentResolverInterface;
-use Spryker\Shared\ContentStorage\ContentStorageConstants;
+use Spryker\Shared\ContentStorage\ContentStorageConfig;
 
 class ContentStorage implements ContentStorageInterface
 {
@@ -60,9 +60,9 @@ class ContentStorage implements ContentStorageInterface
             return null;
         }
 
-        $contentExtractorPlugin = $this->contentResolver->getContentPlugin($content[ContentStorageConstants::TERM_KEY]);
+        $contentExtractorPlugin = $this->contentResolver->getContentPlugin($content[ContentStorageConfig::TERM_KEY]);
 
-        return $contentExtractorPlugin->execute($content[ContentStorageConstants::CONTENT_KEY]);
+        return $contentExtractorPlugin->execute($content[ContentStorageConfig::CONTENT_KEY]);
     }
 
     /**
@@ -77,6 +77,6 @@ class ContentStorage implements ContentStorageInterface
         $synchronizationDataTransfer->setReference($keyName);
         $synchronizationDataTransfer->setLocale($localeName);
 
-        return $this->synchronizationService->getStorageKeyBuilder(ContentStorageConstants::CONTENT_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
+        return $this->synchronizationService->getStorageKeyBuilder(ContentStorageConfig::CONTENT_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
     }
 }

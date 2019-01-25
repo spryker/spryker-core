@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ContentStorage\Communication\Plugin\Event;
 
 use Orm\Zed\Content\Persistence\Map\SpyContentTableMap;
-use Spryker\Shared\ContentStorage\ContentStorageConstants;
+use Spryker\Shared\ContentStorage\ContentStorageConfig;
 use Spryker\Zed\Content\Dependency\ContentEvents;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceRepositoryPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -30,7 +30,7 @@ class ContentStorageEventResourceQueryContainerPlugin extends AbstractPlugin imp
      */
     public function getResourceName(): string
     {
-        return ContentStorageConstants::CONTENT_RESOURCE_NAME;
+        return ContentStorageConfig::CONTENT_RESOURCE_NAME;
     }
 
     /**

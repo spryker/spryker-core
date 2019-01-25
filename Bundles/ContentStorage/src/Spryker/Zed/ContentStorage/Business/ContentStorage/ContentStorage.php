@@ -10,7 +10,7 @@ namespace Spryker\Zed\ContentStorage\Business\ContentStorage;
 use ArrayObject;
 use Generated\Shared\Transfer\ContentStorageTransfer;
 use Generated\Shared\Transfer\ContentTransfer;
-use Spryker\Shared\ContentStorage\ContentStorageConstants;
+use Spryker\Shared\ContentStorage\ContentStorageConfig;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeInterface;
 use Spryker\Zed\ContentStorage\Persistence\ContentStorageEntityManagerInterface;
 use Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface;
@@ -91,7 +91,7 @@ class ContentStorage implements ContentStorageInterface
      *
      * @return void
      */
-    protected function saveContentStorageEntity($contentTransfer, $contentStorageTransfers, $availableLocales): void
+    protected function saveContentStorageEntity(ContentTransfer $contentTransfer, array $contentStorageTransfers, array $availableLocales): void
     {
         $localizedContents = $this->getExtractLocalizedContents($contentTransfer);
 
@@ -107,8 +107,8 @@ class ContentStorage implements ContentStorageInterface
             $contentStorageTransfer->setFkContent($contentTransfer->getIdContent());
             $contentStorageTransfer->setLocale($availableLocale->getLocaleName());
             $contentStorageTransfer->setData([
-                ContentStorageConstants::TERM_KEY => $contentTransfer->getContentTermKey(),
-                ContentStorageConstants::CONTENT_KEY => json_decode($localizedContent->getParameters(), true),
+                ContentStorageConfig::TERM_KEY => $contentTransfer->getContentTermKey(),
+                ContentStorageConfig::CONTENT_KEY => json_decode($localizedContent->getParameters(), true),
             ]);
 
             $this->contentStorageEntityManager->saveContentStorageEntity($contentStorageTransfer);

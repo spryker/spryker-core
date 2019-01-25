@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ContentStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Spryker\Shared\ContentStorage\ContentStorageConstants;
+use Spryker\Shared\ContentStorage\ContentStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
@@ -29,7 +29,7 @@ class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements 
      */
     public function getResourceName(): string
     {
-        return ContentStorageConstants::CONTENT_RESOURCE_NAME;
+        return ContentStorageConfig::CONTENT_RESOURCE_NAME;
     }
 
     /**
@@ -98,7 +98,7 @@ class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements 
      */
     public function getQueueName(): string
     {
-        return ContentStorageConstants::CONTENT_SYNC_STORAGE_QUEUE;
+        return ContentStorageConfig::CONTENT_SYNC_STORAGE_QUEUE;
     }
 
     /**

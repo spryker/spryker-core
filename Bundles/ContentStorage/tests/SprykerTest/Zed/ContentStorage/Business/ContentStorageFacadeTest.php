@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\LocalizedContentTransfer;
 use Orm\Zed\ContentStorage\Persistence\SpyContentStorage;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
-use Spryker\Shared\ContentStorage\ContentStorageConstants;
+use Spryker\Shared\ContentStorage\ContentStorageConfig;
 use Spryker\Zed\ContentStorage\Persistence\ContentStoragePersistenceFactory;
 
 /**
@@ -65,8 +65,8 @@ class ContentStorageFacadeTest extends Unit
         $this->tester->getFacade()->publish([$contentTransfer->getIdContent()]);
         $contentStorageEntity = $this->getContentStorageEntity();
         $storageData = [
-            ContentStorageConstants::TERM_KEY => $data[ContentTransfer::CONTENT_TERM_KEY],
-            ContentStorageConstants::CONTENT_KEY => $data[ContentTransfer::LOCALIZED_CONTENTS][0][LocalizedContentTransfer::PARAMETERS],
+            ContentStorageConfig::TERM_KEY => $data[ContentTransfer::CONTENT_TERM_KEY],
+            ContentStorageConfig::CONTENT_KEY => $data[ContentTransfer::LOCALIZED_CONTENTS][0][LocalizedContentTransfer::PARAMETERS],
         ];
 
         $this->assertContains(json_encode($storageData), json_encode($contentStorageEntity->getData()));

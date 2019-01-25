@@ -11,7 +11,7 @@ interface ContentTermExecutorPluginInterface
 {
     /**
      * Specification:
-     * - executes parameters and returns the modified array.
+     * - Executes parameters and returns the modified array.
      *
      * @api
      *

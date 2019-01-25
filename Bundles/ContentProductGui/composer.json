@@ -10,7 +10,6 @@
     "spryker/symfony": "^3.1.5"
   },
   "require-dev": {
-    "spryker/content-product": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },

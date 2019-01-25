@@ -31,18 +31,18 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
     /**
      * @var \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface
      */
-    protected $localFacade;
+    protected $localeFacade;
 
     /**
      * @param \Spryker\Zed\ContentGui\Communication\Resolver\ContentResolverInterface $contentResolver
      * @param \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface $contentFacade
-     * @param \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface $localFacade
+     * @param \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface $localeFacade
      */
-    public function __construct(ContentResolverInterface $contentResolver, ContentGuiToContentFacadeInterface $contentFacade, ContentGuiToLocaleFacadeInterface $localFacade)
+    public function __construct(ContentResolverInterface $contentResolver, ContentGuiToContentFacadeInterface $contentFacade, ContentGuiToLocaleFacadeInterface $localeFacade)
     {
         $this->contentResolver = $contentResolver;
         $this->contentFacade = $contentFacade;
-        $this->localFacade = $localFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -138,7 +138,7 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
         $defaultLocale = new LocaleTransfer();
         $defaultLocale->setLocaleName('Default locale');
 
-        $locales = $this->localFacade
+        $locales = $this->localeFacade
             ->getLocaleCollection();
 
         $locales[$defaultLocale->getLocaleName()] = $defaultLocale;
