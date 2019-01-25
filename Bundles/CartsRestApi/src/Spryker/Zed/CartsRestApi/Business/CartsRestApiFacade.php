@@ -47,7 +47,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
-            ->createCartReader()
+            ->createQuoteReader()
             ->findQuoteByUuid($quoteTransfer);
     }
 
@@ -64,7 +64,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
     ): RestQuoteCollectionResponseTransfer {
         return $this->getFactory()
-            ->createCartReader()
+            ->createQuoteReader()
             ->getCustomerQuoteCollection($restQuoteCollectionRequestTransfer);
     }
 
@@ -96,7 +96,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     public function createQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
-            ->createCartCreator()
+            ->createQuoteCreator()
             ->createQuote($restQuoteRequestTransfer);
     }
 
@@ -112,7 +112,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     public function deleteQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
-            ->createCartDeleter()
+            ->createQuoteDeleter()
             ->deleteQuote($restQuoteRequestTransfer);
     }
 

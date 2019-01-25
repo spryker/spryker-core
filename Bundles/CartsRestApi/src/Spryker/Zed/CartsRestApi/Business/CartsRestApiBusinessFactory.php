@@ -89,7 +89,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApi\Business\CartItem\CartItemAdderInterface
      */
-    public function createQuoteItemAdder(): CartItemAdderInterface
+    public function createCartItemAdder(): CartItemAdderInterface
     {
         return new CartItemAdder(
             $this->getPersistentCartFacade(),
@@ -100,7 +100,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApi\Business\CartItem\CartItemDeleterInterface
      */
-    public function createQuoteItemDeleter(): CartItemDeleterInterface
+    public function createCartItemDeleter(): CartItemDeleterInterface
     {
         return new CartItemDeleter(
             $this->getPersistentCartFacade(),
@@ -111,7 +111,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApi\Business\CartItem\CartItemUpdaterInterface
      */
-    public function createQuoteItemUpdater(): CartItemUpdaterInterface
+    public function createCartItemUpdater(): CartItemUpdaterInterface
     {
         return new CartItemUpdater(
             $this->getPersistentCartFacade(),

@@ -33,7 +33,7 @@ class CartItemAdder implements CartItemAdderInterface
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
-        CartReaderInterface $cartReader
+        QuoteReaderInterface $cartReader
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->cartReader = $cartReader;
@@ -63,7 +63,7 @@ class CartItemAdder implements CartItemAdderInterface
         }
 
         $persistentCartChangeTransfer = (new PersistentCartChangeTransfer())
-            ->setIdQuote($restCartItemRequestTransfer->getCartUuid())
+            ->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote())
             ->addItem($restCartItemRequestTransfer->getCartItem())
             ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemRequestTransfer->getCustomerReference()));
 

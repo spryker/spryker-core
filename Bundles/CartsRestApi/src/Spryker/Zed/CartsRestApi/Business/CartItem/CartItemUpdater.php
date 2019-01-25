@@ -33,7 +33,7 @@ class CartItemUpdater implements CartItemUpdaterInterface
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
-        CartReaderInterface $cartReader
+        QuoteReaderInterface $cartReader
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->cartReader = $cartReader;
