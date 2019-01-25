@@ -14,9 +14,12 @@ use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
+use Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdater;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class GuestCartUpdater implements GuestCartUpdaterInterface
+class GuestCartUpdater extends CartUpdater implements GuestCartUpdaterInterface
 {
     /**
      * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface
@@ -34,22 +37,23 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
     protected $guestCartReader;
 
     /**
-     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
-     */
-    protected $cartsRestApiClient;
-
-    /**
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface $quoteClient
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface $persistentCartClient
      * @param \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface $guestCartReader
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
+     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      */
     public function __construct(
         CartsRestApiToQuoteClientInterface $quoteClient,
         CartsRestApiToPersistentCartClientInterface $persistentCartClient,
         GuestCartReaderInterface $guestCartReader,
-        CartsRestApiClientInterface $cartsRestApiClient
+        CartsRestApiClientInterface $cartsRestApiClient,
+        CartsResourceMapperInterface $cartsResourceMapper,
+        CartRestResponseBuilderInterface $cartRestResponseBuilder
     ) {
+        parent::__construct($cartsRestApiClient, $cartsResourceMapper, $cartRestResponseBuilder);
+
         $this->quoteClient = $quoteClient;
         $this->persistentCartClient = $persistentCartClient;
         $this->guestCartReader = $guestCartReader;

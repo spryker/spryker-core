@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartsRestApi\Business\Cart;
+namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
 
-class CartDeleter implements CartDeleterInterface
+class QuoteCreator implements CartCreatorInterface
 {
     /**
      * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface
@@ -19,20 +19,12 @@ class CartDeleter implements CartDeleterInterface
     protected $persistentCartFacade;
 
     /**
-     * @var \Spryker\Zed\CartsRestApi\Business\Cart\CartReaderInterface
-     */
-    protected $cartReader;
-
-    /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
-     * @param \Spryker\Zed\CartsRestApi\Business\Cart\CartReaderInterface $cartReader
      */
     public function __construct(
-        CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
-        CartReaderInterface $cartReader
+        CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
-        $this->cartReader = $cartReader;
     }
 
     /**
@@ -40,17 +32,12 @@ class CartDeleter implements CartDeleterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function deleteQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function createQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
     {
         $restQuoteRequestTransfer
-            ->requireQuoteUuid()
+            ->requireQuote()
             ->requireCustomerReference();
 
-        $quoteResponseTransfer = $this->cartReader->findQuoteByUuid($restQuoteRequestTransfer->getQuote());
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $quoteResponseTransfer;
-        }
-
-        return $this->persistentCartFacade->delete($quoteResponseTransfer->getQuoteTransfer());
+        return $this->persistentCartFacade->createQuote($restQuoteRequestTransfer->getQuote());
     }
 }

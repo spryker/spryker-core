@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartsRestApi\Business\Cart;
+namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -17,7 +17,7 @@ use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
 
-class CartUpdater implements CartUpdaterInterface
+class QuoteUpdater implements CartUpdaterInterface
 {
     /**
      * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface
@@ -30,14 +30,14 @@ class CartUpdater implements CartUpdaterInterface
     protected $cartFacade;
 
     /**
-     * @var \Spryker\Zed\CartsRestApi\Business\Cart\CartReaderInterface
+     * @var \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface
      */
     protected $cartReader;
 
     /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface $cartFacade
-     * @param \Spryker\Zed\CartsRestApi\Business\Cart\CartReaderInterface $cartReader
+     * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $cartReader
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,

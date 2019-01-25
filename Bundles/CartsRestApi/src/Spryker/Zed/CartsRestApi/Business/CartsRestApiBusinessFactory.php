@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\CartsRestApi\Business;
 
-use Spryker\Zed\CartsRestApi\Business\Cart\CartCreator;
-use Spryker\Zed\CartsRestApi\Business\Cart\CartCreatorInterface;
-use Spryker\Zed\CartsRestApi\Business\Cart\CartDeleter;
-use Spryker\Zed\CartsRestApi\Business\Cart\CartDeleterInterface;
-use Spryker\Zed\CartsRestApi\Business\Cart\CartReader;
-use Spryker\Zed\CartsRestApi\Business\Cart\CartReaderInterface;
-use Spryker\Zed\CartsRestApi\Business\Cart\CartUpdater;
-use Spryker\Zed\CartsRestApi\Business\Cart\CartUpdaterInterface;
+use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreator;
+use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface;
+use Spryker\Zed\CartsRestApi\Business\Quote\QuoteDeleter;
+use Spryker\Zed\CartsRestApi\Business\Quote\QuoteDeleterInterface;
+use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReader;
+use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
+use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUpdater;
+use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUpdaterInterface;
 use Spryker\Zed\CartsRestApi\Business\CartItem\CartItemAdder;
 use Spryker\Zed\CartsRestApi\Business\CartItem\CartItemAdderInterface;
 use Spryker\Zed\CartsRestApi\Business\CartItem\CartItemDeleter;
@@ -46,7 +46,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CartsRestApi\Business\Cart\CartReaderInterface
+     * @return \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface
      */
     public function createCartReader(): CartReaderInterface
     {
@@ -54,7 +54,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CartsRestApi\Business\Cart\CartCreatorInterface
+     * @return \Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface
      */
     public function createCartCreator(): CartCreatorInterface
     {
@@ -64,7 +64,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CartsRestApi\Business\Cart\CartDeleterInterface
+     * @return \Spryker\Zed\CartsRestApi\Business\Quote\QuoteDeleterInterface
      */
     public function createCartDeleter(): CartDeleterInterface
     {
@@ -75,7 +75,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CartsRestApi\Business\Cart\CartUpdaterInterface
+     * @return \Spryker\Zed\CartsRestApi\Business\Quote\QuoteUpdaterInterface
      */
     public function createQuoteUpdater(): CartUpdaterInterface
     {
