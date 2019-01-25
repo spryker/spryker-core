@@ -58,7 +58,7 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
@@ -74,7 +74,7 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
@@ -90,7 +90,7 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
@@ -146,6 +146,6 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
     {
         return $this->getFactory()
             ->createCartsRestApiZedStub()
-            ->addItem($restCartItemRequestTransfer);
+            ->deleteItem($restCartItemRequestTransfer);
     }
 }
