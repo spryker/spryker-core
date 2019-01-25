@@ -19,6 +19,6 @@ use Orm\Zed\ContentStorage\Persistence\Base\SpyContentStorage as BaseSpyContentS
  * long as it does not already exist in the output directory.
  *
  */
-class AbstractSpyContentStorage extends BaseSpyContentStorage
+abstract class AbstractSpyContentStorage extends BaseSpyContentStorage
 {
 }

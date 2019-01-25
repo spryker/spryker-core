@@ -19,6 +19,6 @@ use Orm\Zed\ContentStorage\Persistence\Base\SpyContentStorageQuery as BaseSpyCon
  * long as it does not already exist in the output directory.
  *
  */
-class AbstractSpyContentStorageQuery extends BaseSpyContentStorageQuery
+abstract class AbstractSpyContentStorageQuery extends BaseSpyContentStorageQuery
 {
 }
