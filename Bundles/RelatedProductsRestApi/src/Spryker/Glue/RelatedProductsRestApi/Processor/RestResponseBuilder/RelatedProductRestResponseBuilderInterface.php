@@ -14,11 +14,11 @@ interface RelatedProductRestResponseBuilderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     * @param int[] $productAbstractIds
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildAbstractProductsRestResponse(RestRequestInterface $restRequest, array $productViewTransfers): RestResponseInterface;
+    public function buildAbstractRelatedProductsCollectionResponse(RestRequestInterface $restRequest, array $productAbstractIds): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

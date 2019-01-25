@@ -41,19 +41,16 @@ class RelatedProductRestResponseBuilder implements RelatedProductRestResponseBui
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     * @param int[] $productAbstractIds
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildAbstractProductsRestResponse(RestRequestInterface $restRequest, array $productViewTransfers): RestResponseInterface
+    public function buildAbstractRelatedProductsCollectionResponse(RestRequestInterface $restRequest, array $productAbstractIds): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        foreach ($productViewTransfers as $productViewTransfer) {
-            $abstractProductResource = $this->productsRestApiResource->findProductAbstractById(
-                $productViewTransfer->getIdProductAbstract(),
-                $restRequest
-            );
+        foreach ($productAbstractIds as $idProductAbstract) {
+            $abstractProductResource = $this->productsRestApiResource->findProductAbstractById($idProductAbstract, $restRequest);
 
             if ($abstractProductResource) {
                 $restResponse->addResource($abstractProductResource);

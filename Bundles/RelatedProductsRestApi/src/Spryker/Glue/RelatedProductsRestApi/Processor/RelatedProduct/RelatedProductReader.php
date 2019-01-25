@@ -75,10 +75,14 @@ class RelatedProductReader implements RelatedProductReaderInterface
             return $this->relatedProductRestResponseBuilder->createProductAbstractNotFoundError();
         }
 
-        $relatedProductsEntityTransfer = $this->productRelationStorageClient
+        $relatedProductsCollection = $this->productRelationStorageClient
             ->findRelatedProducts($abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT], $localeName);
+        $productAbstractIds = [];
+        foreach ($relatedProductsCollection as $productViewTransfer) {
+            $productAbstractIds[] = $productViewTransfer->getIdProductAbstract();
+        }
 
         return $this->relatedProductRestResponseBuilder
-            ->buildAbstractProductsRestResponse($restRequest, $relatedProductsEntityTransfer);
+            ->buildAbstractRelatedProductsCollectionResponse($restRequest, $productAbstractIds);
     }
 }

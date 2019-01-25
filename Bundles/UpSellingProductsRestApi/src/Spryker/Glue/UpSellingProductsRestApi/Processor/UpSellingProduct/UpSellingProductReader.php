@@ -66,9 +66,13 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
 
         $upSellingProducts = $this->productRelationStorageClient
             ->findUpSellingProducts($quoteTransfer, $restRequest->getMetadata()->getLocale());
+        $productAbstractIds = [];
+        foreach ($upSellingProducts as $productViewTransfer) {
+            $productAbstractIds[] = $productViewTransfer->getIdProductAbstract();
+        }
 
         return $this->upSellingProductRestResponseBuilder
-            ->buildUpSellingProductsRestResponse($restRequest, $upSellingProducts);
+            ->buildUpSellingProductsRestResponse($restRequest, $productAbstractIds);
     }
 
     /**
