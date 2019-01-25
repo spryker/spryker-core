@@ -21,7 +21,6 @@ class CategoryTable extends AbstractTable
     public const COL_CATEGORY_KEY = 'category_key';
     public const COL_NAME = 'name';
     public const COL_PARENT = 'parent_name';
-    public const COL_ADDITIONAL_PARENTS = 'add_parent_name';
     public const COL_ACTIVE = 'is_active';
     public const COL_VISIBLE = 'is_in_menu';
     public const COL_SEARCHABLE = 'is_searchable';
@@ -53,7 +52,6 @@ class CategoryTable extends AbstractTable
             static::COL_CATEGORY_KEY => 'Category Key',
             static::COL_NAME => 'Name',
             static::COL_PARENT => 'Parent',
-            static::COL_ADDITIONAL_PARENTS => 'Additional Parents',
             static::COL_ACTIVE => 'Active',
             static::COL_VISIBLE => 'Visible',
             static::COL_SEARCHABLE => 'Searchable',
@@ -118,36 +116,24 @@ class CategoryTable extends AbstractTable
                 ->filterByFkLocale($fkLocale)
             ->endUse()
             ->leftJoinCategoryTemplate('tpl')
+            ->leftJoinNode('node')
             ->useNodeQuery('node', Criteria::LEFT_JOIN)
                 ->groupByFkCategory()
-                ->leftJoinParentCategoryNode('parent_node')
-                ->useParentCategoryNodeQuery('add_parent_node')
-                    ->useCategoryQuery('add_parent_cat', Criteria::LEFT_JOIN)
-                        ->leftJoinAttribute('add_parent_attr')
+                ->groupByIsMain()
+                ->useParentCategoryNodeQuery('parent_node')
+                    ->useCategoryQuery('sc_parent', Criteria::LEFT_JOIN)
+                        ->useAttributeQuery('parent_attr', Criteria::LEFT_JOIN)
+                            ->filterByFkLocale($fkLocale)
+                        ->endUse()
                     ->endUse()
                 ->endUse()
-                ->addJoinCondition('add_parent_node', 'node.is_main = ?', false)
-            ->endUse();
-        $parentLocaleCriterion = $query->getNewCriterion('add_parent_attr.fk_locale', $fkLocale);
-        $parentNodeCriterion = $query->getNewCriterion('add_parent_node.id_category_node', null, Criteria::ISNULL);
-        $parentLocaleCriterion->addOr($parentNodeCriterion);
-        $query->addAnd($parentLocaleCriterion);
-        $query->withColumn('count(node.fk_category)', 'count')
+            ->endUse()
+            ->addOr('parent_node.id_category_node');
+        $query->having('node.is_main = ?', true)
+            ->withColumn('count(node.fk_category)', 'count')
             ->withColumn('attr.name', static::COL_NAME)
             ->withColumn('tpl.name', static::COL_TEMPLATE)
-            ->withColumn('(
-       SELECT
-              in_parent_attr.name
-       from spy_category_node as in_node
-       left join
-                spy_category_node in_parent_node
-                on in_node.fk_parent_category_node = in_parent_node.id_category_node
-       left join spy_category_attribute in_parent_attr on in_parent_node.fk_category = in_parent_attr.fk_category
-       where
-           in_node.is_main = true and in_parent_attr.fk_locale = ' . $fkLocale . '
-         and in_node.fk_category = node.fk_category
-       )', static::COL_PARENT)
-            ->withColumn('group_concat(distinct add_parent_attr.name)', static::COL_ADDITIONAL_PARENTS);
+            ->withColumn('parent_attr.name', static::COL_PARENT);
 
         return $query;
     }
@@ -163,7 +149,6 @@ class CategoryTable extends AbstractTable
             static::COL_CATEGORY_KEY => $categoryEntity->getCategoryKey(),
             static::COL_NAME => $categoryEntity->getVirtualColumn(static::COL_NAME),
             static::COL_PARENT => $categoryEntity->getVirtualColumn(static::COL_PARENT),
-            static::COL_ADDITIONAL_PARENTS => $categoryEntity->getVirtualColumn(static::COL_ADDITIONAL_PARENTS),
             static::COL_ACTIVE => $this->yesNoOutput($categoryEntity->getIsActive()),
             static::COL_VISIBLE => $this->yesNoOutput($categoryEntity->getIsInMenu()),
             static::COL_SEARCHABLE => $this->yesNoOutput($categoryEntity->getIsSearchable()),
