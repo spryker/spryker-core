@@ -25,8 +25,9 @@
     }
   },
   "conflict": {
-    "spryker/pimple": "Please remove spryker/pimple it is no longer needed and not supported anymore. This module is a replacement for Pimple",
-    "pimple/pimple": "Please remove pimple/pimple it is no longer supported. This module is a replacement for Pimple"
+    "spryker/pimple": "Please remove spryker/pimple it is no longer needed and not supported anymore. This module is a replacement for Pimple.",
+    "pimple/pimple": "Please remove pimple/pimple it is no longer supported. This module is a replacement for Pimple.",
+    "silex/silex": "Please remove silex/silex it is no longer supported. Please use spryker/silex in the latest version."
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
