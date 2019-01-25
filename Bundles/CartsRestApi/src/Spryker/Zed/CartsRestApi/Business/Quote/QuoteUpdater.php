@@ -63,7 +63,6 @@ class QuoteUpdater implements QuoteUpdaterInterface
 
         $quoteTransfer = $restQuoteRequestTransfer->getQuote();
         $quoteResponseTransfer = $this->cartReader->findQuoteByUuid($quoteTransfer);
-        file_put_contents('vcv.txt', print_r($quoteResponseTransfer->toArray(), 1));
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
@@ -85,7 +84,6 @@ class QuoteUpdater implements QuoteUpdaterInterface
                 ->fromArray($quoteTransfer->modifiedToArray(), true);
             $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
             $quoteResponseTransfer = $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
-            file_put_contents('vcv.txt', "\n\n\n\n\n\n\n\n" . print_r($quoteResponseTransfer->toArray(), 1), FILE_APPEND);
         }
 
         return $quoteResponseTransfer;
