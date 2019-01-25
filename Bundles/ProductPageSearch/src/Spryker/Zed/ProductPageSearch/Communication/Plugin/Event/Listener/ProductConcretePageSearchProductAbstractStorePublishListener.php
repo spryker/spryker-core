@@ -11,6 +11,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractStoreTableMap;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade getFacade()()
  */
 class ProductConcretePageSearchProductAbstractStorePublishListener extends AbstractProductConcretePageSearchListener
 {
@@ -30,28 +31,7 @@ class ProductConcretePageSearchProductAbstractStorePublishListener extends Abstr
             $eventTransfers,
             SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT
         );
-        $productIds = $this->getProductIds($productAbstractIds);
 
-        $this->publish($productIds);
-    }
-
-    /**
-     * @param int[] $productAbstractIds
-     *
-     * @return int[]
-     */
-    protected function getProductIds(array $productAbstractIds): array
-    {
-        $productIds = [];
-        foreach ($productAbstractIds as $idProductAbstract) {
-            $productIds = array_merge(
-                $productIds,
-                $this->getFactory()
-                    ->getProductFacade()
-                    ->findProductConcreteIdsByAbstractProductId($idProductAbstract)
-            );
-        }
-
-        return $productIds;
+        $this->getFacade()->publishProductConcretesByProductAbstractIds($productAbstractIds);
     }
 }

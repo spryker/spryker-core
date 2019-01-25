@@ -128,4 +128,18 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
             ->createProductConcretePageSearchReader()
             ->getProductConcretePageSearchTransfersByProductIds($productIds);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function publishProductConcretesByProductAbstractIds(array $productAbstractIds): void
+    {
+        $this->getFactory()
+            ->createProductConcretePageSearchPublisher()
+            ->publishProductConcretesByProductAbstractIds($productAbstractIds);
+    }
 }

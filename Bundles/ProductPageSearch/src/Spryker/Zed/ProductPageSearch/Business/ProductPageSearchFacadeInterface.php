@@ -102,4 +102,16 @@ interface ProductPageSearchFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
     public function getProductConcretePageSearchTransfersByProductIds(array $productIds): array;
+
+    /**
+     * Specification:
+     * - Publishes concrete products by given abstract product ids.
+     *
+     * @api
+     *
+     * @param array $productAbstractIds
+     *
+     * @return void
+     */
+    public function publishProductConcretesByProductAbstractIds(array $productAbstractIds): void;
 }
