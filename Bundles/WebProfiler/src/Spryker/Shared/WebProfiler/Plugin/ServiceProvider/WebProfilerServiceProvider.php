@@ -169,7 +169,9 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
         });
 
         $app['web_profiler.toolbar.listener'] = $app->share(function ($app) {
-            return new WebDebugToolbarListener($app['twig'], $app['web_profiler.debug_toolbar.intercept_redirects'], $app['web_profiler.debug_toolbar.position'], $app['url_generator']);
+            $mode = $app['web_profiler.debug_toolbar.enable'] ? WebDebugToolbarListener::ENABLED : WebDebugToolbarListener::DISABLED;
+
+            return new WebDebugToolbarListener($app['twig'], $app['web_profiler.debug_toolbar.intercept_redirects'], $mode);
         });
 
         $app['profiler'] = $app->share(function ($app) {
@@ -277,11 +279,12 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
 
         $dispatcher->addSubscriber($app['profiler.listener']);
 
+        $app->mount($app['profiler.mount_prefix'], $this->connect($app));
+
         if ($app['web_profiler.debug_toolbar.enable']) {
             $dispatcher->addSubscriber($app['web_profiler.toolbar.listener']);
         }
 
         $dispatcher->addSubscriber($app['profiler']->get('request'));
-        $app->mount($app['profiler.mount_prefix'], $this->connect($app));
     }
 }

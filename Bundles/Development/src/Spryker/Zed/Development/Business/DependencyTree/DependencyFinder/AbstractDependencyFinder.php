@@ -9,7 +9,6 @@ namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFinder;
 
 use Spryker\Zed\Development\Business\DependencyTree\AbstractDependencyTree;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
-use Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor;
 use Symfony\Component\Finder\SplFileInfo;
 
 abstract class AbstractDependencyFinder
@@ -23,11 +22,6 @@ abstract class AbstractDependencyFinder
      * @var \Spryker\Zed\Development\Business\DependencyTree\AbstractDependencyTree
      */
     private $dependencyTree;
-
-    /**
-     * @var \Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor
-     */
-    private $fileInfoExtractor;
 
     /**
      * @param \Spryker\Zed\Development\Business\DependencyTree\AbstractDependencyTree $dependencyTree
@@ -47,18 +41,6 @@ abstract class AbstractDependencyFinder
     public function getDependencyTree()
     {
         return $this->dependencyTree;
-    }
-
-    /**
-     * @param \Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor $fileInfoExtractor
-     *
-     * @return $this
-     */
-    public function setFileInfoExtractor(FileInfoExtractor $fileInfoExtractor)
-    {
-        $this->fileInfoExtractor = $fileInfoExtractor;
-
-        return $this;
     }
 
     /**
