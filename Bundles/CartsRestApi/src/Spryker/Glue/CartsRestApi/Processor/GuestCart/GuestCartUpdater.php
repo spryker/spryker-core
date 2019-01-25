@@ -8,18 +8,20 @@
 namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
+use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
-use Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdater;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
-use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class GuestCartUpdater extends CartUpdater implements GuestCartUpdaterInterface
+class GuestCartUpdater implements GuestCartUpdaterInterface
 {
     /**
      * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface
@@ -37,27 +39,56 @@ class GuestCartUpdater extends CartUpdater implements GuestCartUpdaterInterface
     protected $guestCartReader;
 
     /**
+     * @var \Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface
+     */
+    protected $cartUpdater;
+
+    /**
+     * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface
+     */
+    protected $guestCartRestResponseBuilder;
+
+    /**
+     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
+     */
+    protected $cartsRestApiClient;
+
+    /**
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface $quoteClient
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface $persistentCartClient
      * @param \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface $guestCartReader
+     * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface $cartUpdater
+     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
-     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      */
     public function __construct(
         CartsRestApiToQuoteClientInterface $quoteClient,
         CartsRestApiToPersistentCartClientInterface $persistentCartClient,
         GuestCartReaderInterface $guestCartReader,
-        CartsRestApiClientInterface $cartsRestApiClient,
-        CartsResourceMapperInterface $cartsResourceMapper,
-        CartRestResponseBuilderInterface $cartRestResponseBuilder
-    ) {
-        parent::__construct($cartsRestApiClient, $cartsResourceMapper, $cartRestResponseBuilder);
-
+        CartUpdaterInterface $cartUpdater,
+        GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder,
+        CartsRestApiClientInterface $cartsRestApiClient
+    )
+    {
         $this->quoteClient = $quoteClient;
         $this->persistentCartClient = $persistentCartClient;
         $this->guestCartReader = $guestCartReader;
+        $this->cartUpdater = $cartUpdater;
+        $this->guestCartRestResponseBuilder = $guestCartRestResponseBuilder;
         $this->cartsRestApiClient = $cartsRestApiClient;
+    }
+
+    public function updateQuote(
+        RestRequestInterface $restRequest,
+        RestCartsAttributesTransfer $restCartsAttributesTransfer
+    ): RestResponseInterface
+    {
+        if (!$restRequest->getUser()) {
+            return $this->guestCartRestResponseBuilder
+                ->createAnonymousCustomerUniqueIdEmptyErrorRestResponse();
+        }
+
+        return $this->cartUpdater->updateQuote($restRequest, $restCartsAttributesTransfer);
     }
 
     /**
@@ -103,9 +134,14 @@ class GuestCartUpdater extends CartUpdater implements GuestCartUpdaterInterface
         }
 
         $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
-            ->setCustomerReference($customerTransfer->getCustomerReference())
-            ->setQuote($quoteTransfer)
-            ->setQuoteUuid($restRequest->getResource()->getId());
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
+            ->setQuote(
+                (new QuoteTransfer())->setCustomerReference(
+                    $customerTransfer->getCustomerReference()
+                )->setUuid($quoteTransfer->getUuid())
+                ->setCustomer($customerTransfer)
+            )
+            ->setQuoteUuid($quoteTransfer->getUuid());
 
         $this->cartsRestApiClient->updateQuote($restQuoteRequestTransfer);
 

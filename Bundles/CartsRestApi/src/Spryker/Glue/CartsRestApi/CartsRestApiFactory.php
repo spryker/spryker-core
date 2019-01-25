@@ -188,9 +188,9 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getQuoteClient(),
             $this->getPersistentCartClient(),
             $this->createGuestCartReader(),
-            $this->getClient(),
-            $this->createCartsResourceMapper(),
-            $this->createCartRestResponseBuilder()
+            $this->createCartUpdater(),
+            $this->createGuestCartRestResponseBuilder(),
+            $this->getClient()
         );
     }
 

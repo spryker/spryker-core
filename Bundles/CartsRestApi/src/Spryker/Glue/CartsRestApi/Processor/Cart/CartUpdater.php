@@ -61,8 +61,8 @@ class CartUpdater implements CartUpdaterInterface
         RestRequestInterface $restRequest,
         RestCartsAttributesTransfer $restCartsAttributesTransfer
     ): RestResponseInterface {
-        $idCart = $restRequest->getResource()->getId();
-        if ($idCart === null) {
+        $uuidQuote = $restRequest->getResource()->getId();
+        if ($uuidQuote === null) {
             return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
         }
 
@@ -72,7 +72,7 @@ class CartUpdater implements CartUpdaterInterface
 
         $quoteTransfer = (new QuoteTransfer())
             ->fromArray($restCartsAttributesTransfer->modifiedToArray(), true)
-            ->setUuid($idCart)
+            ->setUuid($uuidQuote)
             ->setCurrency($currencyTransfer)
             ->setCustomer($customerTransfer)
             ->setStore($storeTransfer);
@@ -80,7 +80,7 @@ class CartUpdater implements CartUpdaterInterface
         $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
             ->setQuote($quoteTransfer)
             ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
-            ->setQuoteUuid($idCart);
+            ->setQuoteUuid($uuidQuote);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($restQuoteRequestTransfer);
 

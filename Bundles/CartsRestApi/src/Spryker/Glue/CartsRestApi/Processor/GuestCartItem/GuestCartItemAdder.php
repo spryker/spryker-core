@@ -89,7 +89,7 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
         $parentResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_GUEST_CARTS);
         if (!$parentResource) {
             $quoteTransfer = $this->guestCartReader->getCustomerQuote($restRequest)
-                ?? $this->guestCartCreator->createQuote($restRequest);
+                ?? $this->guestCartCreator->createQuote($restRequest)->getQuoteTransfer();
 
             return $this->addItemToQuote(
                 $restRequest->getUser()->getNaturalIdentifier(),
