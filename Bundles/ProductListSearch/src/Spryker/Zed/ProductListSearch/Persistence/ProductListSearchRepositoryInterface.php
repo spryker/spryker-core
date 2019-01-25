@@ -53,11 +53,4 @@ interface ProductListSearchRepositoryInterface
      * @return array
      */
     public function getProductList(array $productAbstractIds): array;
-
-    /**
-     * @param int[] $categoryIds
-     *
-     * @return int[]
-     */
-    public function findProductConcreteIdsByCategoryIds(array $categoryIds): array;
 }

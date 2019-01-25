@@ -177,25 +177,4 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
             ->find()
             ->toArray();
     }
-
-    /**
-     * @module Product
-     * @module ProductCategory
-     *
-     * @param int[] $categoryIds
-     *
-     * @return int[]
-     */
-    public function findProductConcreteIdsByCategoryIds(array $categoryIds): array
-    {
-        return $this->getFactory()
-            ->getProductCategoryPropelQuery()
-            ->select(SpyProductTableMap::COL_ID_PRODUCT)
-            ->filterByFkCategory_In($categoryIds)
-            ->useSpyProductAbstractQuery()
-                ->innerJoinSpyProduct()
-            ->endUse()
-            ->find()
-            ->toArray();
-    }
 }

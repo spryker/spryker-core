@@ -116,4 +116,16 @@ interface ProductCategoryFacadeInterface
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
     public function getCategoryTransferCollectionByIdProductAbstract(int $idProductAbstract, LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
+
+    /**
+     * Specification:
+     *  - Finds list of concrete product ids by category ids.
+     *
+     * @api
+     *
+     * @param int[] $categoryIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByCategoryIds(array $categoryIds): array;
 }

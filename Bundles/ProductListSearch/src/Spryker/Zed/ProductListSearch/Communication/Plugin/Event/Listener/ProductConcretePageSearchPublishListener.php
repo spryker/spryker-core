@@ -40,7 +40,7 @@ class ProductConcretePageSearchPublishListener extends AbstractPlugin implements
             ->getEventTransferForeignKeys($eventTransfers, SpyProductListCategoryTableMap::COL_FK_CATEGORY);
 
         $this->getFactory()->getProductPageSearchFacade()->publishProductConcretes(
-            $this->getFacade()->findProductConcreteIdsByCategoryIds($productListCategoryIds)
+            $this->getFactory()->getProductCategoryFacade()->getProductConcreteIdsByCategoryIds($productListCategoryIds)
         );
     }
 }
