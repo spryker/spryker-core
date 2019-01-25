@@ -19,7 +19,7 @@ class UpSellingProductsForCartResourceRoutePlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritdoc}
-     *  - Configures available actions for up-selling-products for cart resource.
+     *  - Configures action to retrieve up-selling products collection for cart.
      *
      * @api
      *

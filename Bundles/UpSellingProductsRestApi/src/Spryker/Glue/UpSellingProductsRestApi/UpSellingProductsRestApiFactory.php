@@ -11,15 +11,18 @@ use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToCartsRestApiClientInterface;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToProductRelationStorageClientInterface;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToProductStorageClientInterface;
-use Spryker\Glue\UpSellingProductsRestApi\Processor\Reader\QuoteReader;
-use Spryker\Glue\UpSellingProductsRestApi\Processor\Reader\QuoteReaderInterface;
-use Spryker\Glue\UpSellingProductsRestApi\Processor\Reader\UpSellingProductReader;
-use Spryker\Glue\UpSellingProductsRestApi\Processor\Reader\UpSellingProductReaderInterface;
+use Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceInterface;
+use Spryker\Glue\UpSellingProductsRestApi\Processor\Quote\QuoteReader;
+use Spryker\Glue\UpSellingProductsRestApi\Processor\Quote\QuoteReaderInterface;
+use Spryker\Glue\UpSellingProductsRestApi\Processor\UpSellingProduct\UpSellingProductReader;
+use Spryker\Glue\UpSellingProductsRestApi\Processor\UpSellingProduct\UpSellingProductReaderInterface;
+use Spryker\Glue\UpSellingProductsRestApi\Processor\UpSellingProduct\UpSellingProductRestResponseBuilder;
+use Spryker\Glue\UpSellingProductsRestApi\Processor\UpSellingProduct\UpSellingProductRestResponseBuilderInterface;
 
 class UpSellingProductsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\UpSellingProductsRestApi\Processor\Reader\QuoteReaderInterface
+     * @return \Spryker\Glue\UpSellingProductsRestApi\Processor\Quote\QuoteReaderInterface
      */
     public function createQuoteReader(): QuoteReaderInterface
     {
@@ -27,13 +30,24 @@ class UpSellingProductsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\UpSellingProductsRestApi\Processor\Reader\UpSellingProductReaderInterface
+     * @return \Spryker\Glue\UpSellingProductsRestApi\Processor\UpSellingProduct\UpSellingProductReaderInterface
      */
     public function createUpSellingProductReader(): UpSellingProductReaderInterface
     {
         return new UpSellingProductReader(
             $this->createQuoteReader(),
             $this->getProductRelationStorageClient(),
+            $this->createUpSellingProductRestResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\UpSellingProductsRestApi\Processor\UpSellingProduct\UpSellingProductRestResponseBuilderInterface
+     */
+    public function createUpSellingProductRestResponseBuilder(): UpSellingProductRestResponseBuilderInterface
+    {
+        return new UpSellingProductRestResponseBuilder(
+            $this->getProductsRestApiResource(),
             $this->getResourceBuilder()
         );
     }
@@ -60,5 +74,13 @@ class UpSellingProductsRestApiFactory extends AbstractFactory
     public function getCartsRestApiClient(): UpSellingProductsRestApiToCartsRestApiClientInterface
     {
         return $this->getProvidedDependency(UpSellingProductsRestApiDependencyProvider::CLIENT_CARTS_REST_API);
+    }
+
+    /**
+     * @return \Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceInterface
+     */
+    public function getProductsRestApiResource(): UpSellingProductsRestApiToProductsRestApiResourceInterface
+    {
+        return $this->getProvidedDependency(UpSellingProductsRestApiDependencyProvider::RESOURCE_PRODUCTS_REST_API);
     }
 }

@@ -12,6 +12,7 @@ use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToCartsRestApiClientBridge;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToProductRelationStorageClientBridge;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToProductStorageClientBridge;
+use Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceBridge;
 
 /**
  * @method \Spryker\Glue\UpSellingProductsRestApi\UpSellingProductsRestApiConfig getConfig()
@@ -21,6 +22,8 @@ class UpSellingProductsRestApiDependencyProvider extends AbstractBundleDependenc
     public const CLIENT_PRODUCT_RELATION_STORAGE = 'CLIENT_PRODUCT_RELATION_STORAGE';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_CARTS_REST_API = 'CLIENT_CARTS_REST_API';
+
+    public const RESOURCE_PRODUCTS_REST_API = 'RESOURCE_PRODUCTS_REST_API';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -34,6 +37,7 @@ class UpSellingProductsRestApiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addProductRelationStorageClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addCartsRestApiClient($container);
+        $container = $this->addProductsRestApiResource($container);
 
         return $container;
     }
@@ -83,6 +87,21 @@ class UpSellingProductsRestApiDependencyProvider extends AbstractBundleDependenc
             );
         };
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addProductsRestApiResource(Container $container): Container
+    {
+        $container[static::RESOURCE_PRODUCTS_REST_API] = function (Container $container) {
+            return new UpSellingProductsRestApiToProductsRestApiResourceBridge(
+                $container->getLocator()->productsRestApi()->resource()
+            );
+        };
         return $container;
     }
 }

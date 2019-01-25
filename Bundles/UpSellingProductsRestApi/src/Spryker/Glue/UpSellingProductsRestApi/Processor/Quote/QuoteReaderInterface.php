@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\UpSellingProductsRestApi\Processor\Reader;
+namespace Spryker\Glue\UpSellingProductsRestApi\Processor\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -13,10 +13,10 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 interface QuoteReaderInterface
 {
     /**
+     * @param string $uuid
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param string $resourceId
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteByUuid(RestRequestInterface $restRequest, string $resourceId): ?QuoteTransfer;
+    public function findQuoteByUuid(string $uuid, RestRequestInterface $restRequest): ?QuoteTransfer;
 }

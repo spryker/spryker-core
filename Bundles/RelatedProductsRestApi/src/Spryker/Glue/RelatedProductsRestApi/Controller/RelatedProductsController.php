@@ -5,28 +5,31 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\UpSellingProductsRestApi\Controller;
+namespace Spryker\Glue\RelatedProductsRestApi\Controller;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
 
 /**
- * @method \Spryker\Glue\UpSellingProductsRestApi\UpSellingProductsRestApiFactory getFactory()
+ * @method \Spryker\Glue\RelatedProductsRestApi\RelatedProductsRestApiFactory getFactory()
  */
-class UpSellingProductsForGuestCartResourceController extends AbstractController
+class RelatedProductsController extends AbstractController
 {
     /**
      * @Glue({
      *     "getCollection": {
      *          "summary": [
-     *              "Retrieves list of all up-selling products of items in guest cart."
+     *              "Retrieves list of all related products of abstract product."
      *          ],
      *          "parameters": [{
-     *              "name": "X-Anonymous-Customer-Unique-Id",
-     *              "in": "header",
-     *              "required": true
-     *          }]
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "400": "Abstract product sku is not specified.",
+     *              "404": "Abstract product not found."
+     *          }
      *     }
      * })
      *
@@ -37,7 +40,7 @@ class UpSellingProductsForGuestCartResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createUpSellingProductReader()
-            ->readUpSellingProducts($restRequest);
+            ->createRelatedProductReader()
+            ->readRelatedProducts($restRequest);
     }
 }

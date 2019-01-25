@@ -19,7 +19,7 @@ class UpSellingProductsForGuestCartResourceRoutePlugin extends AbstractPlugin im
 {
     /**
      * {@inheritdoc}
-     *  - Configures available actions for up-selling-products for guest cart resource.
+     *  - Configures action to retrieve up-selling products collection for guest cart.
      *
      * @api
      *
@@ -55,7 +55,7 @@ class UpSellingProductsForGuestCartResourceRoutePlugin extends AbstractPlugin im
      */
     public function getController(): string
     {
-        return UpSellingProductsRestApiConfig::CONTROLLER_CART_UP_SELLING_PRODUCTS;
+        return UpSellingProductsRestApiConfig::CONTROLLER_GUEST_CART_UP_SELLING_PRODUCTS;
     }
 
     /**
