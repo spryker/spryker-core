@@ -16,7 +16,7 @@ interface SortConfigBuilderInterface
      *
      * @return $this
      */
-    public function addSort(SortConfigTransfer $sortConfigTransfer): self;
+    public function addSort(SortConfigTransfer $sortConfigTransfer);
 
     /**
      * @param string|null $parameterName

@@ -49,7 +49,7 @@ class NoteForm extends AbstractType
      *
      * @return $this
      */
-    protected function addNoteField(FormBuilderInterface $builder): self
+    protected function addNoteField(FormBuilderInterface $builder)
     {
         $builder->add(SpyCustomerNoteEntityTransfer::MESSAGE, TextareaType::class, [
             'constraints' => [
@@ -67,7 +67,7 @@ class NoteForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFkCustomerField(FormBuilderInterface $builder): self
+    protected function addFkCustomerField(FormBuilderInterface $builder)
     {
         $builder->add(SpyCustomerNoteEntityTransfer::FK_CUSTOMER, HiddenType::class);
 
