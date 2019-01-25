@@ -95,5 +95,5 @@ interface RestResourceInterface
     /**
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
      */
-    public function getPayload();
+    public function getPayload(): ?AbstractTransfer;
 }

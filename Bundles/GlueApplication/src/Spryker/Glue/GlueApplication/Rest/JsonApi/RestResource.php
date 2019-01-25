@@ -263,7 +263,7 @@ class RestResource implements RestResourceInterface
     /**
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
      */
-    public function getPayload()
+    public function getPayload(): ?AbstractTransfer
     {
         return $this->payload;
     }
