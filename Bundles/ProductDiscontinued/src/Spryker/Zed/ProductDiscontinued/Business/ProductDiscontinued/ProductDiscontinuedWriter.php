@@ -40,21 +40,29 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
     protected $productDiscontinuedPluginExecutor;
 
     /**
+     * @var \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PreUnmarkProductDiscontinuedPluginInterface[]
+     */
+    protected $preUnmarkProductDiscontinuedPlugins;
+
+    /**
      * @param \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManagerInterface $productDiscontinuedEntityManager
      * @param \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface $productDiscontinuedRepository
      * @param \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutorInterface $productDiscontinuedPluginExecutor
      * @param \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig $productDiscontinuedConfig
+     * @param \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PreUnmarkProductDiscontinuedPluginInterface[] $preUnmarkProductDiscontinuedPlugins
      */
     public function __construct(
         ProductDiscontinuedEntityManagerInterface $productDiscontinuedEntityManager,
         ProductDiscontinuedRepositoryInterface $productDiscontinuedRepository,
         ProductDiscontinuedPluginExecutorInterface $productDiscontinuedPluginExecutor,
-        ProductDiscontinuedConfig $productDiscontinuedConfig
+        ProductDiscontinuedConfig $productDiscontinuedConfig,
+        array $preUnmarkProductDiscontinuedPlugins
     ) {
         $this->productDiscontinuedEntityManager = $productDiscontinuedEntityManager;
         $this->productDiscontinuedConfig = $productDiscontinuedConfig;
         $this->productDiscontinuedRepository = $productDiscontinuedRepository;
         $this->productDiscontinuedPluginExecutor = $productDiscontinuedPluginExecutor;
+        $this->preUnmarkProductDiscontinuedPlugins = $preUnmarkProductDiscontinuedPlugins;
     }
 
     /**
@@ -87,6 +95,12 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
         $productDiscontinuedTransfer = $this->productDiscontinuedRepository->findProductDiscontinuedByProductId($productDiscontinuedTransfer);
         if (!$productDiscontinuedTransfer) {
             return (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(false);
+        }
+
+        $productDiscontinueResponseTransfer = $this->executePreUnmarkProductDiscontinuedPlugins($productDiscontinuedTransfer);
+
+        if (!$productDiscontinueResponseTransfer->getIsSuccessful()) {
+            return $productDiscontinueResponseTransfer;
         }
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($productDiscontinuedTransfer) {
@@ -139,5 +153,22 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
             'Y-m-d',
             strtotime(sprintf('+%s Days', $this->productDiscontinuedConfig->getDaysAmountBeforeProductDeactivate()))
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
+     */
+    protected function executePreUnmarkProductDiscontinuedPlugins(
+        ProductDiscontinuedTransfer $productDiscontinuedTransfer
+    ): ProductDiscontinuedResponseTransfer {
+        $productDiscontinuedResponseTransfer = (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(true);
+
+        foreach ($this->preUnmarkProductDiscontinuedPlugins as $preUnmarkProductDiscontinuedPlugin) {
+            $productDiscontinuedResponseTransfer = $preUnmarkProductDiscontinuedPlugin->execute($productDiscontinuedTransfer);
+        }
+
+        return $productDiscontinuedResponseTransfer;
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -47,5 +48,21 @@ class ProductDiscontinuedProductBundleConnectorFacade extends AbstractFacade imp
         $this->getFactory()
             ->createProductBundleDiscontinuedWriter()
             ->discontinueBundleByProducts($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
+     */
+    public function checkBundledProducts(ProductDiscontinuedTransfer $productDiscontinuedTransfer): ProductDiscontinuedResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductBundleDiscontinuedReader()
+            ->checkBundledProducts($productDiscontinuedTransfer);
     }
 }

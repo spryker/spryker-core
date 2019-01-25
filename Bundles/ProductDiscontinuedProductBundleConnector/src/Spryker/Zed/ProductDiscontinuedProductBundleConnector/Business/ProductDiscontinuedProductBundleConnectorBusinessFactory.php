@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductBundleDiscontinued\ProductBundleDiscontinuedReader;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductBundleDiscontinued\ProductBundleDiscontinuedWriter;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductBundleDiscontinued\ProductBundleDiscontinuedWriterInterface;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface;
@@ -26,6 +27,17 @@ class ProductDiscontinuedProductBundleConnectorBusinessFactory extends AbstractB
     public function createProductBundleDiscontinuedWriter(): ProductBundleDiscontinuedWriterInterface
     {
         return new ProductBundleDiscontinuedWriter(
+            $this->getRepository(),
+            $this->getProductDiscontinuedFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductBundleDiscontinued\ProductBundleDiscontinuedReader
+     */
+    public function createProductBundleDiscontinuedReader(): ProductBundleDiscontinuedReader
+    {
+        return new ProductBundleDiscontinuedReader(
             $this->getRepository(),
             $this->getProductDiscontinuedFacade()
         );

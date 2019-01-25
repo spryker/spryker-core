@@ -16,4 +16,14 @@
             <property name="idProductConcrete" type="int" />
         </transfer>
 
+        <transfer name="ProductDiscontinued">
+            <property name="idProductDiscontinued" type="int"/>
+            <property name="fkProduct" type="int"/>
+        </transfer>
+
+        <transfer name="ProductDiscontinuedResponse">
+            <property name="productDiscontinued" type="ProductDiscontinued"/>
+            <property name="isSuccessful" type="bool"/>
+        </transfer>
+
 </transfers>
