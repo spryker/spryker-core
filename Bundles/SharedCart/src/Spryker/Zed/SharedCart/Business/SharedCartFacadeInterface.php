@@ -168,8 +168,9 @@ interface SharedCartFacadeInterface
      *
      * @param int $idQuote
      * @param int $idCompanyUser
+     * @param string $permissionGroupName
      *
      * @return void
      */
-    public function createReadOnlyShareRelationForQuoteAndCompanyUser(int $idQuote, int $idCompanyUser): void;
+    public function shareQuoteWithCompanyUser(int $idQuote, int $idCompanyUser, string $permissionGroupName): void;
 }

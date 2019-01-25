@@ -28,7 +28,13 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
 
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
     protected const GLOSSARY_KEY_APPROVER_CANT_APPROVE_QUOTE = 'quote_approval.create.approver_cant_approve_quote';
-
+    protected const GLOSSARY_KEY_YOU_CANT_APPROVE_QUOTE = 'quote_approval.create.you_cant_approve_quote';
+    protected const GLOSSARY_KEY_QUOTE_ALREADY_APPROVED = 'quote_approval.create.quote_already_approved';
+    protected const GLOSSARY_KEY_QUOTE_ALREADY_DECLINED = 'quote_approval.create.quote_already_declined';
+    protected const GLOSSARY_KEY_QUOTE_ALREADY_CANCELLED = 'quote_approval.create.quote_already_cancelled';
+    protected const GLOSSARY_KEY_QUOTE_ALREADY_WAITING_FOR_APPROVAL = 'quote_approval.create.quote_already_waiting_for_approval';
+    protected const GLOSSARY_KEY_ONLY_QUOTE_OWNER_CAN_SEND_APPROVAL_REQUEST = 'quote_approval.create.only_quote_owner_can_send_request';
+    protected const GLOSSARY_KEY_DO_NOT_HAVE_PERMISSION_TO_CANCEL_APPROVAL_REQUEST = 'quote_approval.cancel.do_not_have_permission';
     /**
      * @var \Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface
      */
@@ -78,15 +84,19 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         $quoteTransfer = $this->getQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
 
         if (!$this->isQuoteOwner($quoteTransfer, $quoteApprovalCreateRequestTransfer->getRequesterCompanyUserId())) {
-            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED);
+            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_ONLY_QUOTE_OWNER_CAN_SEND_APPROVAL_REQUEST);
         }
 
         if (!$this->isApproverCanApproveQuote($quoteTransfer, $quoteApprovalCreateRequestTransfer->getApproverCompanyUserId())) {
             return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_APPROVER_CANT_APPROVE_QUOTE);
         }
 
-        if (!$this->isQuoteInCorrectStatus($quoteTransfer)) {
-            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED);
+        if ($this->isQuoteWaitingForApproval($quoteTransfer)) {
+            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_QUOTE_ALREADY_WAITING_FOR_APPROVAL);
+        }
+
+        if ($this->isQuoteApproved($quoteTransfer)) {
+            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_QUOTE_ALREADY_APPROVED);
         }
 
         return $this->createSuccessfullValidationResponseTransfer()
@@ -105,7 +115,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         if (!$this->isQuoteOwner($quoteTransfer, $quoteApprovalRemoveRequestTransfer->getIdCompanyUser())
             && !$this->isRemoveRequestSentByApprover($quoteApprovalRemoveRequestTransfer)
         ) {
-            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED);
+            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_DO_NOT_HAVE_PERMISSION_TO_CANCEL_APPROVAL_REQUEST);
         }
 
         return $this->createSuccessfullValidationResponseTransfer()
@@ -124,16 +134,20 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
             ->findQuoteApprovalById($quoteApprovalRequestTransfer->getIdQuoteApproval());
         $quoteTransfer = $this->findQuoteByIdQuoteApproval($quoteApprovalTransfer->getIdQuoteApproval());
 
-        if ($quoteApprovalTransfer->getStatus() !== QuoteApprovalConfig::STATUS_WAITING) {
-            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED);
+        if ($this->isQuoteApprovalReququestCanceled($quoteTransfer)) {
+            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_QUOTE_ALREADY_CANCELLED);
         }
 
-        if ($quoteApprovalTransfer->getFkCompanyUser() !== $quoteApprovalRequestTransfer->getFkCompanyUser()) {
-            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED);
+        if ($this->isQuoteApproved($quoteTransfer)) {
+            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_QUOTE_ALREADY_APPROVED);
+        }
+
+        if ($this->isQuoteDeclined($quoteTransfer)) {
+            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_QUOTE_ALREADY_DECLINED);
         }
 
         if (!$this->isApproverCanApproveQuote($quoteTransfer, $quoteApprovalRequestTransfer->getFkCompanyUser())) {
-            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED);
+            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_YOU_CANT_APPROVE_QUOTE);
         }
 
         return $this->createSuccessfullValidationResponseTransfer()
@@ -255,12 +269,39 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
      *
      * @return bool
      */
-    protected function isQuoteInCorrectStatus(QuoteTransfer $quoteTransfer): bool
+    protected function isQuoteApproved(QuoteTransfer $quoteTransfer): bool
     {
-        return in_array(
-            $this->quoteStatusCalculator->calculateQuoteStatus($quoteTransfer),
-            [null, QuoteApprovalConfig::STATUS_DECLINED]
-        );
+        return $this->quoteStatusCalculator->calculateQuoteStatus($quoteTransfer) === QuoteApprovalConfig::STATUS_APPROVED;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteWaitingForApproval(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteStatusCalculator->calculateQuoteStatus($quoteTransfer) === QuoteApprovalConfig::STATUS_WAITING;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteApprovalReququestCanceled(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteStatusCalculator->calculateQuoteStatus($quoteTransfer) === null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteDeclined(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteStatusCalculator->calculateQuoteStatus($quoteTransfer) === QuoteApprovalConfig::STATUS_DECLINED;
     }
 
     /**

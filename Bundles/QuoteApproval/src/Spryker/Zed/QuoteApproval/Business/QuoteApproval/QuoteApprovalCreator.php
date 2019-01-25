@@ -22,6 +22,10 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
 {
     use TransactionTrait;
 
+    /**
+     * @uses SharedCartConfig::PERMISSION_GROUP_READ_ONLY
+     */
+    protected const PERMISSION_GROUP_READ_ONLY = 'PERMISSION_GROUP_READ_ONLY';
     protected const GLOSSARY_KEY_APPROVAL_CREATED = 'quote_approval.created';
 
     /**
@@ -94,9 +98,10 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
 
         $this->quoteLocker->lockQuote($quoteTransfer);
         $this->sharedCartFacade->deleteShareForQuote($quoteTransfer);
-        $this->sharedCartFacade->createReadOnlyShareRelationForQuoteAndCompanyUser(
+        $this->sharedCartFacade->shareQuoteWithCompanyUser(
             $quoteTransfer->getIdQuote(),
-            $quoteApprovalCreateRequestTransfer->getApproverCompanyUserId()
+            $quoteApprovalCreateRequestTransfer->getApproverCompanyUserId(),
+            static::PERMISSION_GROUP_READ_ONLY
         );
 
         $quoteApprovalTransfer = $this->createQuoteApprovalTransfer(

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
@@ -65,7 +66,9 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
             ->validateQuoteApprovalRequest($quoteApprovalRequestTransfer);
 
         if (!$quoteApprovalRequestValidationResponseTransfer->getIsSuccessful()) {
-            return $this->createNotSuccessfullQuoteApprovalResponseTransfer();
+            return $this->createNotSuccessfullQuoteApprovalResponseTransfer(
+                $quoteApprovalRequestValidationResponseTransfer->getMessages()
+            );
         }
 
         return $this->updateQuoteApprovalWithStatus(
@@ -85,7 +88,9 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
             ->validateQuoteApprovalRequest($quoteApprovalRequestTransfer);
 
         if (!$quoteApprovalRequestValidationResponseTransfer->getIsSuccessful()) {
-            return $this->createNotSuccessfullQuoteApprovalResponseTransfer();
+            return $this->createNotSuccessfullQuoteApprovalResponseTransfer(
+                $quoteApprovalRequestValidationResponseTransfer->getMessages()
+            );
         }
 
         $this->quoteLocker->unlockQuote($quoteApprovalRequestValidationResponseTransfer->getQuote());
@@ -97,11 +102,15 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MessageTransfer[]|\ArrayObject $messageTransfers
+     *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    protected function createNotSuccessfullQuoteApprovalResponseTransfer(): QuoteApprovalResponseTransfer
+    protected function createNotSuccessfullQuoteApprovalResponseTransfer(ArrayObject $messageTransfers): QuoteApprovalResponseTransfer
     {
-        return (new QuoteApprovalResponseTransfer())->setIsSuccessful(false);
+        return (new QuoteApprovalResponseTransfer())
+            ->setMessages($messageTransfers)
+            ->setIsSuccessful(false);
     }
 
     /**
