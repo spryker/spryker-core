@@ -14,10 +14,10 @@ use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRes
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceInterface;
 use Spryker\Glue\UpSellingProductsRestApi\Processor\Quote\QuoteReader;
 use Spryker\Glue\UpSellingProductsRestApi\Processor\Quote\QuoteReaderInterface;
+use Spryker\Glue\UpSellingProductsRestApi\Processor\RestResponseBuilder\UpSellingProductRestResponseBuilder;
+use Spryker\Glue\UpSellingProductsRestApi\Processor\RestResponseBuilder\UpSellingProductRestResponseBuilderInterface;
 use Spryker\Glue\UpSellingProductsRestApi\Processor\UpSellingProduct\UpSellingProductReader;
 use Spryker\Glue\UpSellingProductsRestApi\Processor\UpSellingProduct\UpSellingProductReaderInterface;
-use Spryker\Glue\UpSellingProductsRestApi\Processor\UpSellingProduct\UpSellingProductRestResponseBuilder;
-use Spryker\Glue\UpSellingProductsRestApi\Processor\UpSellingProduct\UpSellingProductRestResponseBuilderInterface;
 
 class UpSellingProductsRestApiFactory extends AbstractFactory
 {
@@ -42,7 +42,7 @@ class UpSellingProductsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\UpSellingProductsRestApi\Processor\UpSellingProduct\UpSellingProductRestResponseBuilderInterface
+     * @return \Spryker\Glue\UpSellingProductsRestApi\Processor\RestResponseBuilder\UpSellingProductRestResponseBuilderInterface
      */
     public function createUpSellingProductRestResponseBuilder(): UpSellingProductRestResponseBuilderInterface
     {

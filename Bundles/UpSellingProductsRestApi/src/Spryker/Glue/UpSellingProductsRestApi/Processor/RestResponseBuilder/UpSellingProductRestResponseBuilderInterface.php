@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\UpSellingProductsRestApi\Processor\UpSellingProduct;
+namespace Spryker\Glue\UpSellingProductsRestApi\Processor\RestResponseBuilder;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -18,7 +18,7 @@ interface UpSellingProductRestResponseBuilderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createUpSellingProductsRestResponse(RestRequestInterface $restRequest, array $productViewTransfers): RestResponseInterface;
+    public function buildUpSellingProductsRestResponse(RestRequestInterface $restRequest, array $productViewTransfers): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

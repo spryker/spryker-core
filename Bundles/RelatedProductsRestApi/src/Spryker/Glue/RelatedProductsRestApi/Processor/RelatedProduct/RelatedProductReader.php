@@ -12,6 +12,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductRelationStorageClientInterface;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductStorageClientInterface;
+use Spryker\Glue\RelatedProductsRestApi\Processor\RestResponseBuilder\RelatedProductRestResponseBuilderInterface;
 
 class RelatedProductReader implements RelatedProductReaderInterface
 {
@@ -29,14 +30,14 @@ class RelatedProductReader implements RelatedProductReaderInterface
     protected $productRelationStorageClient;
 
     /**
-     * @var \Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct\RelatedProductRestResponseBuilderInterface
+     * @var \Spryker\Glue\RelatedProductsRestApi\Processor\RestResponseBuilder\RelatedProductRestResponseBuilderInterface
      */
     protected $relatedProductRestResponseBuilder;
 
     /**
      * @param \Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductRelationStorageClientInterface $productRelationStorageClient
-     * @param \Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct\RelatedProductRestResponseBuilderInterface $relatedProductRestResponseBuilder
+     * @param \Spryker\Glue\RelatedProductsRestApi\Processor\RestResponseBuilder\RelatedProductRestResponseBuilderInterface $relatedProductRestResponseBuilder
      */
     public function __construct(
         RelatedProductsRestApiToProductStorageClientInterface $productStorageClient,
@@ -78,6 +79,6 @@ class RelatedProductReader implements RelatedProductReaderInterface
             ->findRelatedProducts($abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT], $localeName);
 
         return $this->relatedProductRestResponseBuilder
-            ->createAbstractProductsRestResponse($restRequest, $relatedProductsEntityTransfer);
+            ->buildAbstractProductsRestResponse($restRequest, $relatedProductsEntityTransfer);
     }
 }

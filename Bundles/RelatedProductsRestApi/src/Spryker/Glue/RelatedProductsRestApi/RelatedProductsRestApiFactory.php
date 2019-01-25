@@ -13,8 +13,8 @@ use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApi
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Resource\RelatedProductsRestApiToProductsRestApiResourceInterface;
 use Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct\RelatedProductReader;
 use Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct\RelatedProductReaderInterface;
-use Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct\RelatedProductRestResponseBuilder;
-use Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct\RelatedProductRestResponseBuilderInterface;
+use Spryker\Glue\RelatedProductsRestApi\Processor\RestResponseBuilder\RelatedProductRestResponseBuilder;
+use Spryker\Glue\RelatedProductsRestApi\Processor\RestResponseBuilder\RelatedProductRestResponseBuilderInterface;
 
 class RelatedProductsRestApiFactory extends AbstractFactory
 {
@@ -31,7 +31,7 @@ class RelatedProductsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct\RelatedProductRestResponseBuilderInterface
+     * @return \Spryker\Glue\RelatedProductsRestApi\Processor\RestResponseBuilder\RelatedProductRestResponseBuilderInterface
      */
     public function createRelatedProductRestResponseBuilder(): RelatedProductRestResponseBuilderInterface
     {

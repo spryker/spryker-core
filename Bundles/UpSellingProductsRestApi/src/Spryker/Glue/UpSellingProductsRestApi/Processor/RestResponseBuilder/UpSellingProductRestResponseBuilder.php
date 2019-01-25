@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct;
+namespace Spryker\Glue\UpSellingProductsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
-use Spryker\Glue\RelatedProductsRestApi\Dependency\Resource\RelatedProductsRestApiToProductsRestApiResourceInterface;
+use Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class RelatedProductRestResponseBuilder implements RelatedProductRestResponseBuilderInterface
+class UpSellingProductRestResponseBuilder implements UpSellingProductRestResponseBuilderInterface
 {
     /**
-     * @var \Spryker\Glue\RelatedProductsRestApi\Dependency\Resource\RelatedProductsRestApiToProductsRestApiResourceInterface
+     * @var \Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceInterface
      */
     protected $productsRestApiResource;
 
@@ -28,11 +28,11 @@ class RelatedProductRestResponseBuilder implements RelatedProductRestResponseBui
     protected $restResourceBuilder;
 
     /**
-     * @param \Spryker\Glue\RelatedProductsRestApi\Dependency\Resource\RelatedProductsRestApiToProductsRestApiResourceInterface $productsRestApiResource
+     * @param \Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceInterface $productsRestApiResource
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(
-        RelatedProductsRestApiToProductsRestApiResourceInterface $productsRestApiResource,
+        UpSellingProductsRestApiToProductsRestApiResourceInterface $productsRestApiResource,
         RestResourceBuilderInterface $restResourceBuilder
     ) {
         $this->productsRestApiResource = $productsRestApiResource;
@@ -45,13 +45,13 @@ class RelatedProductRestResponseBuilder implements RelatedProductRestResponseBui
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createAbstractProductsRestResponse(RestRequestInterface $restRequest, array $productViewTransfers): RestResponseInterface
+    public function buildUpSellingProductsRestResponse(RestRequestInterface $restRequest, array $productViewTransfers): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         foreach ($productViewTransfers as $productViewTransfer) {
-            $abstractProductResource = $this->productsRestApiResource->findProductAbstractBySku(
-                $productViewTransfer->getSku(),
+            $abstractProductResource = $this->productsRestApiResource->findProductAbstractById(
+                $productViewTransfer->getIdProductAbstract(),
                 $restRequest
             );
 
@@ -66,12 +66,12 @@ class RelatedProductRestResponseBuilder implements RelatedProductRestResponseBui
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductAbstractSkuMissingError(): RestResponseInterface
+    public function createCartNotFoundError(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED);
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
@@ -79,12 +79,12 @@ class RelatedProductRestResponseBuilder implements RelatedProductRestResponseBui
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductAbstractNotFoundError(): RestResponseInterface
+    public function createCartIdMissingError(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_ABSTRACT_PRODUCT)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ABSTRACT_PRODUCT);
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }

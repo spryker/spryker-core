@@ -13,6 +13,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToProductRelationStorageClientInterface;
 use Spryker\Glue\UpSellingProductsRestApi\Processor\Quote\QuoteReaderInterface;
+use Spryker\Glue\UpSellingProductsRestApi\Processor\RestResponseBuilder\UpSellingProductRestResponseBuilderInterface;
 
 class UpSellingProductReader implements UpSellingProductReaderInterface
 {
@@ -27,14 +28,14 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     protected $productRelationStorageClient;
 
     /**
-     * @var \Spryker\Glue\UpSellingProductsRestApi\Processor\UpSellingProduct\UpSellingProductRestResponseBuilderInterface
+     * @var \Spryker\Glue\UpSellingProductsRestApi\Processor\RestResponseBuilder\UpSellingProductRestResponseBuilderInterface
      */
     protected $upSellingProductRestResponseBuilder;
 
     /**
      * @param \Spryker\Glue\UpSellingProductsRestApi\Processor\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToProductRelationStorageClientInterface $productRelationStorageClient
-     * @param \Spryker\Glue\UpSellingProductsRestApi\Processor\UpSellingProduct\UpSellingProductRestResponseBuilderInterface $upSellingProductRestResponseBuilder
+     * @param \Spryker\Glue\UpSellingProductsRestApi\Processor\RestResponseBuilder\UpSellingProductRestResponseBuilderInterface $upSellingProductRestResponseBuilder
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
@@ -67,7 +68,7 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
             ->findUpSellingProducts($quoteTransfer, $restRequest->getMetadata()->getLocale());
 
         return $this->upSellingProductRestResponseBuilder
-            ->createUpSellingProductsRestResponse($restRequest, $upSellingProducts);
+            ->buildUpSellingProductsRestResponse($restRequest, $upSellingProducts);
     }
 
     /**
