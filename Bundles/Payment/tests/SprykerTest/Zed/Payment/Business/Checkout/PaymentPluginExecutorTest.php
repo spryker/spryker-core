@@ -82,20 +82,15 @@ class PaymentPluginExecutorTest extends Unit
      * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface|null $preCheckPluginMock
      * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterface|null $orderSavePluginMock
      * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface|null $postCheckPluginMock
-     * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Ratepay\Business\Payment\PaymentSaverInterface|null $salesSaverMock
      *
      * @return \Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor
      */
     protected function createPaymentPluginExecutor(
         $preCheckPluginMock = null,
         $orderSavePluginMock = null,
-        $postCheckPluginMock = null,
-        $salesSaverMock = null
+        $postCheckPluginMock = null
     ) {
-
-        if ($salesSaverMock === null) {
-            $salesSaverMock = $this->createSalesSaverMock();
-        }
+        $salesSaverMock = $this->createSalesSaverMock();
 
         $paymentPluginExecutor = new PaymentPluginExecutor(
             $this->createCheckoutPlugins(
