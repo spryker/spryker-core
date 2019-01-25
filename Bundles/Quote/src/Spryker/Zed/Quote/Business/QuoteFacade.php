@@ -133,7 +133,9 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
      */
     public function getQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
-        return $this->getRepository()->filterQuoteCollection($quoteCriteriaFilterTransfer);
+        return $this->getFactory()
+            ->createQuoteReader()
+            ->getFilteredQuoteCollection($quoteCriteriaFilterTransfer);
     }
 
     /**
