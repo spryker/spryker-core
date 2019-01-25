@@ -9,9 +9,12 @@ namespace Spryker\Zed\Queue\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Queue\Business\Process\ProcessManager;
+use Spryker\Zed\Queue\Business\QueueDumper\QueueDumper;
+use Spryker\Zed\Queue\Business\QueueDumper\QueueDumperInterface;
 use Spryker\Zed\Queue\Business\Task\TaskManager;
 use Spryker\Zed\Queue\Business\Worker\Worker;
 use Spryker\Zed\Queue\Business\Worker\WorkerProgressBar;
+use Spryker\Zed\Queue\Dependency\Service\QueueToUtilEncodingServiceInterface;
 use Spryker\Zed\Queue\QueueDependencyProvider;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -109,5 +112,26 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     public function getProcessorMessagePlugins()
     {
         return $this->getProvidedDependency(QueueDependencyProvider::QUEUE_MESSAGE_PROCESSOR_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Queue\Business\QueueDumper\QueueDumperInterface
+     */
+    public function createQueueDumper(): QueueDumperInterface
+    {
+        return new QueueDumper(
+            $this->getQueueClient(),
+            $this->getConfig(),
+            $this->getUtilEncodingService(),
+            $this->getProcessorMessagePlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Queue\Dependency\Service\QueueToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): QueueToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(QueueDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }
