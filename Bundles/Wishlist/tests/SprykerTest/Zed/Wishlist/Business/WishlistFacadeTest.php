@@ -139,7 +139,7 @@ class WishlistFacadeTest extends Unit
     /**
      * @param string $sku
      * @param int $idProductAbstract
-     * @param int|null $quantity
+     * @param float|null $quantity
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct
      */
@@ -224,16 +224,16 @@ class WishlistFacadeTest extends Unit
      */
     public function testAddItemShouldAddItem()
     {
-        $WishlistItemTransfer = (new WishlistItemTransfer())
+        $wishlistItemTransfer = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setSku($this->product_3->getSku());
 
-        $WishlistItemTransfer = $this->wishlistFacade->addItem($WishlistItemTransfer);
+        $wishlistItemTransfer = $this->wishlistFacade->addItem($wishlistItemTransfer);
 
-        $this->assertInstanceOf(WishlistItemTransfer::class, $WishlistItemTransfer);
+        $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemTransfer);
         $this->assertWishlistItemCount(3);
-        $this->assertNotEmpty($WishlistItemTransfer->getIdWishlistItem());
+        $this->assertNotEmpty($wishlistItemTransfer->getIdWishlistItem());
     }
 
     /**
@@ -241,15 +241,15 @@ class WishlistFacadeTest extends Unit
      */
     public function testAddNonExistingItemShouldSkipItem()
     {
-        $WishlistItemTransfer = (new WishlistItemTransfer())
+        $wishlistItemTransfer = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setSku('non-existing-sku');
 
-        $WishlistItemTransfer = $this->wishlistFacade->addItem($WishlistItemTransfer);
+        $wishlistItemTransfer = $this->wishlistFacade->addItem($wishlistItemTransfer);
 
-        $this->assertInstanceOf(WishlistItemTransfer::class, $WishlistItemTransfer);
-        $this->assertEmpty($WishlistItemTransfer->getIdWishlistItem());
+        $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemTransfer);
+        $this->assertEmpty($wishlistItemTransfer->getIdWishlistItem());
     }
 
     /**
