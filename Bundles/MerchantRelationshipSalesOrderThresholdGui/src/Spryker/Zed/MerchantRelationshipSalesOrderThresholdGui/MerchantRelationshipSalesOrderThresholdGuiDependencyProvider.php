@@ -35,6 +35,8 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
     public const PROPEL_QUERY_MERCHANT_RELATIONSHIP = 'PROPEL_QUERY_MERCHANT_RELATIONSHIP';
     public const PROPEL_QUERY_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD = 'PROPEL_QUERY_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD';
 
+    public const SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS = 'SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -51,6 +53,8 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
         $container = $this->addMerchantRelationshipSalesOrderThresholdFacade($container);
         $container = $this->addMerchantRelationshipFacade($container);
         $container = $this->addCompanyFacade($container);
+
+        $container = $this->addSalesOrderThresholdFormExpanderPlugins($container);
 
         return $container;
     }
@@ -200,5 +204,27 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesOrderThresholdFormExpanderPlugins(Container $container): Container
+    {
+        $container[static::SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->getSalesOrderThresholdFormExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[]
+     */
+    protected function getSalesOrderThresholdFormExpanderPlugins(): array
+    {
+        return [];
     }
 }

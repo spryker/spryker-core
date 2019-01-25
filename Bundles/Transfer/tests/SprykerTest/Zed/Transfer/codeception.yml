@@ -1,4 +1,5 @@
 namespace: SprykerTest\Zed\Transfer
+actor: Tester
 
 paths:
     tests: .
@@ -22,4 +23,5 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper

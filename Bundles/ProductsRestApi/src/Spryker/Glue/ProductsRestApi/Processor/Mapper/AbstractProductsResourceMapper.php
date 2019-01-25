@@ -14,6 +14,7 @@ class AbstractProductsResourceMapper implements AbstractProductsResourceMapperIn
     protected const KEY_PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
     protected const KEY_ATTRIBUTE_VARIANTS = 'attribute_variants';
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    protected const KEY_SUPER_ATTRIBUTES = 'super_attributes';
 
     /**
      * @param array $abstractProductData
@@ -23,6 +24,7 @@ class AbstractProductsResourceMapper implements AbstractProductsResourceMapperIn
     public function mapAbstractProductsDataToAbstractProductsRestAttributes(array $abstractProductData): AbstractProductsRestAttributesTransfer
     {
         $restAbstractProductsAttributesTransfer = (new AbstractProductsRestAttributesTransfer())->fromArray($abstractProductData, true);
+        $restAbstractProductsAttributesTransfer->setSuperAttributes($restAbstractProductsAttributesTransfer->getAttributeMap()[static::KEY_SUPER_ATTRIBUTES]);
 
         return $this->changeIdsToSkus($restAbstractProductsAttributesTransfer);
     }

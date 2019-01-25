@@ -113,7 +113,7 @@ class ControllerFilter implements ControllerFilterInterface
             }
 
             $restRequest = $this->requestFormatter->formatRequest($httpRequest);
-            $restErrorCollectionTransfer = $this->validatedRequest($controller, $httpRequest, $restRequest);
+            $restErrorCollectionTransfer = $this->validateRequest($controller, $httpRequest, $restRequest);
 
             if (!$restErrorCollectionTransfer || !$restErrorCollectionTransfer->getRestErrors()->count()) {
                 $restResponse = $this->executeAction($controller, $action, $restRequest);
@@ -212,7 +212,7 @@ class ControllerFilter implements ControllerFilterInterface
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
-    protected function validatedRequest(AbstractController $controller, Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
+    protected function validateRequest(AbstractController $controller, Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $restErrorCollectionTransfer = null;
         if (!$controller instanceof ErrorControllerInterface) {
