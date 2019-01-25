@@ -313,6 +313,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     {
         $data = $productConcretePageSearchTransfer->toArray();
         unset($data[static::IDENTIFIER_PRODUCT_CONCRETE_PAGE_SEARCH]);
+        // Avoiding data recursion when transfer was populated from DB already
         unset($data[static::IDENTIFIER_STRUCTURED_DATA]);
 
         return $this->utilEncoding->encodeJson($data);
