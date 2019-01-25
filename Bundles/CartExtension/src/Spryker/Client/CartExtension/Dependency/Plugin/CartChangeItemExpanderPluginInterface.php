@@ -13,13 +13,13 @@ interface CartChangeItemExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands ItemTransfer.
+     * - Expands ItemTransfer with additional data.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $quickOrderItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function expandItemTransfer(ItemTransfer $quickOrderItemTransfer): ItemTransfer;
+    public function expandItemTransfer(ItemTransfer $itemTransfer): ItemTransfer;
 }

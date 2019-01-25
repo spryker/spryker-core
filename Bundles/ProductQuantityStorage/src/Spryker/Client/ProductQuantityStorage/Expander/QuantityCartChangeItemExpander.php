@@ -96,8 +96,9 @@ class QuantityCartChangeItemExpander implements QuantityCartChangeItemExpanderIn
         );
         $itemTransfer->setQuantity($nearestQuantity);
 
-        $warningMessage = $this->getWarningMessage($quantity, $nearestQuantity, $productQuantityStorageTransfer);
-        $itemTransfer->addWarningMessage($warningMessage);
+        $itemTransfer->addWarningMessage(
+            $this->getWarningMessageBasedOnQuantityRestriction($quantity, $nearestQuantity, $productQuantityStorageTransfer)
+        );
 
         return $itemTransfer;
     }
@@ -109,7 +110,7 @@ class QuantityCartChangeItemExpander implements QuantityCartChangeItemExpanderIn
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function getWarningMessage(
+    protected function getWarningMessageBasedOnQuantityRestriction(
         int $quantity,
         int $nearestQuantity,
         ProductQuantityStorageTransfer $productQuantityStorageTransfer

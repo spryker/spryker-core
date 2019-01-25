@@ -135,8 +135,6 @@ class CartFactory extends AbstractFactory
      */
     public function createCartChangeTransferBuilder(): CartChangeTransferBuilderInterface
     {
-        return new CartChangeTransferBuilder(
-            $this->createCartChangeItemExpander()
-        );
+        return new CartChangeTransferBuilder($this->createCartChangeItemExpander());
     }
 }
