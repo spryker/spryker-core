@@ -79,8 +79,6 @@ interface ProductListFacadeInterface
      * - Retrieves product lists for product ids and its abstract products.
      * - Returns product list where keys are product concrete IDs, values are arrays with product list ids by type.
      *
-     * Example [1 => [0 => [3]].
-     *
      * @api
      *
      * @param int[] $productIds

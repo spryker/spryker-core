@@ -102,7 +102,7 @@ interface ProductListRepositoryInterface
      *
      * @return array
      */
-    public function getProductListCategory(array $productAbstractIds): array;
+    public function getProductListByProductAbstractIdsThroughCategory(array $productAbstractIds): array;
 
     /**
      * @param int[] $productAbstractIds

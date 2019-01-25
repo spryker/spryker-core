@@ -433,7 +433,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      *
      * @return array
      */
-    public function getProductListCategory(array $productAbstractIds): array
+    public function getProductListByProductAbstractIdsThroughCategory(array $productAbstractIds): array
     {
         return $this->getFactory()
             ->createProductListCategoryQuery()
@@ -467,9 +467,9 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      */
     public function getProductBlacklistsByProductAbstractIds(array $productAbstractIds): array
     {
-        $spyProductTableAlias = 'spyProductTableAlias';
-        $join = new Join(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, Criteria::INNER_JOIN);
-        $join->setRightTableAlias($spyProductTableAlias);
+        $spyProductTableAlias = 'spy_product_alias';
+        $productFilterJoin = new Join(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, Criteria::INNER_JOIN);
+        $productFilterJoin->setRightTableAlias($spyProductTableAlias);
 
         return $this->getFactory()
             ->createProductListProductConcreteQuery()
@@ -482,7 +482,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->useSpyProductQuery()
                 ->filterByFkProductAbstract_In($productAbstractIds)
             ->endUse()
-            ->addJoinObject($join)
+            ->addJoinObject($productFilterJoin)
             ->useSpyProductListQuery(null, Criteria::LEFT_JOIN)
                 ->filterByType(SpyProductListTableMap::COL_TYPE_BLACKLIST)
             ->endUse()
@@ -491,7 +491,11 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
                 SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
                 SpyProductListTableMap::COL_TYPE,
             ])
-            ->having(sprintf('COUNT(DISTINCT %s) = COUNT(%s)', SpyProductListProductConcreteTableMap::COL_FK_PRODUCT, $spyProductTableAlias))
+            ->having(sprintf(
+                'COUNT(DISTINCT %s) = COUNT(%s)',
+                SpyProductListProductConcreteTableMap::COL_FK_PRODUCT,
+                SpyProductTableMap::alias($spyProductTableAlias, SpyProductTableMap::COL_ID_PRODUCT)
+            ))
             ->find()
             ->toArray();
     }
