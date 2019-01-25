@@ -66,7 +66,6 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
             ->groupBy(SpyCategoryAttributeTableMap::COL_NAME);
     }
 
-
     /**
      * @module Product
      * @module ProductCategory
