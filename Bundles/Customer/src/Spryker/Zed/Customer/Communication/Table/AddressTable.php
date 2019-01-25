@@ -24,7 +24,6 @@ class AddressTable extends AbstractTable
 
     public const COL_COMPANY = 'Company';
 
-    public const TABLE_IDENTIFIER = 'table-customer-address';
     protected const URL_EDIT_CUSTOMER_ADDRESS = '/customer/address/edit';
 
     /**
@@ -101,8 +100,6 @@ class AddressTable extends AbstractTable
         ]);
 
         $config->setUrl(sprintf('address-table?id-customer=%d', $this->idCustomer));
-
-        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;
     }

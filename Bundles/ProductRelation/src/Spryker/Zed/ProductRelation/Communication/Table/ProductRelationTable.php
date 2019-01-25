@@ -33,8 +33,6 @@ class ProductRelationTable extends AbstractTable
     public const URL_RELATION_ACTIVATE = '/product-relation/edit/activate';
     public const URL_PRODUCT_RELATION_LIST = '/product-relation/list';
 
-    protected const TABLE_IDENTIFIER = 'table-product-relation-product-relation';
-
     /**
      * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface
      */
@@ -86,7 +84,6 @@ class ProductRelationTable extends AbstractTable
         $this->setSortableFields($config);
         $this->setSearchableFields($config);
         $this->setDefaultSortField($config);
-        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;
     }

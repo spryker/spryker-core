@@ -18,7 +18,6 @@ use Spryker\Zed\Sales\SalesConfig;
 
 class CustomerOrdersTable extends OrdersTable
 {
-    protected const TABLE_IDENTIFIER = 'table-sales-customer-orders';
     /**
      * @var string
      */
@@ -69,6 +68,7 @@ class CustomerOrdersTable extends OrdersTable
     protected function configure(TableConfiguration $config)
     {
         $config->setUrl(sprintf('orders-table?%s=%s', SalesConfig::PARAM_CUSTOMER_REFERENCE, $this->customerReference));
+
         return parent::configure($config);
     }
 

@@ -32,8 +32,6 @@ class CmsBlockTable extends AbstractTable
     public const URL_CMS_BLOCK_DEACTIVATE = '/cms-block-gui/edit-block/deactivate';
     public const URL_CMS_BLOCK_ACTIVATE = '/cms-block-gui/edit-block/activate';
 
-    protected const TABLE_IDENTIFIER = 'table-cms-block-gui-cms-block';
-
     /**
      * @var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
@@ -89,8 +87,6 @@ class CmsBlockTable extends AbstractTable
             static::COL_NAME,
             static::COL_NAME,
         ]);
-
-        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;
     }

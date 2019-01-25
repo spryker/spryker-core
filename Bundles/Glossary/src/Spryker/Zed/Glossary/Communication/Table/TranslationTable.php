@@ -25,8 +25,6 @@ class TranslationTable extends AbstractTable
     public const URL_GLOSSARY_EDIT = '/glossary/edit';
     public const GENERATED_KEY_MASK = 'generated.%';
 
-    protected const TABLE_IDENTIFIER = 'table-glossary-translation';
-
     /**
      * @var \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
@@ -85,8 +83,6 @@ class TranslationTable extends AbstractTable
         $config->setSortable([
             SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY,
         ]);
-
-        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;
     }

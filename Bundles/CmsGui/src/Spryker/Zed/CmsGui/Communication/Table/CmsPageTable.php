@@ -18,7 +18,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsPageTable extends AbstractTable
 {
-    protected const TABLE_IDENTIFIER = 'table-cms-gui-cms-page';
     /**
      * @var \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface
      */
@@ -77,7 +76,6 @@ class CmsPageTable extends AbstractTable
         $this->setSortableFields($config);
         $this->setSearchableFields($config);
         $this->setDefaultSortField($config);
-        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;
     }
