@@ -4,6 +4,7 @@
 
 Container module includes new service container class that is used instead of Pimple container in `spryker/kernel` module.
 
+
 ## Installation
 
 ```
@@ -17,6 +18,9 @@ composer require spryker/container
 - `silex/silex` Please remove silex/silex it is no longer supported. Please use spryker/silex in the latest version.
 
 When those modules aren't defined dependencies in your composer.json run on console `composer why vendor/package` to get information about which package requires those.
+
+Please make sure that none of the mentioned modules exists in your project.
+
 
 ## Documentation
 
