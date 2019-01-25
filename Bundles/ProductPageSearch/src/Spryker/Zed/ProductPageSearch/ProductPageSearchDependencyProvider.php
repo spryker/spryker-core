@@ -297,7 +297,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * @deprecated Use getConcreteProductPageMapExpanderPlugins()
      *
-     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[]
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface[]
      */
     protected function getProductConcretePageMapExpanderPlugins(): array
     {
