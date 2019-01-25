@@ -5,35 +5,33 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyUsersRestApi\Controller;
+namespace Spryker\Glue\CompaniesRestApi\Controller;
 
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method \Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiFactory getFactory()
+ * @method \Spryker\Glue\CompaniesRestApi\CompaniesRestApiFactory getFactory()
  */
-class CompanyUsersResourceController extends AbstractController
+class CompaniesResourceController extends AbstractController
 {
     /**
      * @Glue({
      *     "getResourceById": {
      *          "summary": [
-     *              "Retrieves a company user by id."
-     *          ],
-     *          "responses": {
-     *              "501": "Not implemented.",
-     *          }
-     *     },
-     *     "getCollection": {
-     *          "summary": [
-     *              "Retrieves list of company users."
+     *              "Retrieves a company by id."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
+     *          "responses": {
+     *             "501": "Not implemented."
+     *          }
      *     }
      * })
      *
@@ -43,6 +41,11 @@ class CompanyUsersResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createCompanyUserReader()->getCompanyUsersByCustomerReference($restRequest);
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_NOT_IMPLEMENTED)
+            ->setCode(CompaniesRestApiConfig::RESPONSE_CODE_ENDPOINT_NOT_IMPLEMENTED)
+            ->setDetail(CompaniesRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED);
+
+        return $this->getFactory()->getResourceBuilder()->createRestResponse()->addError($restErrorMessageTransfer);
     }
 }
