@@ -201,10 +201,11 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new GuestCartItemAdder(
             $this->getClient(),
-            $this->createCartRestResponseBuilder(),
             $this->getZedRequestClient(),
-            $this->createCartReader(),
-            $this->createCartItemsResourceMapper()
+            $this->createGuestCartReader(),
+            $this->createGuestCartCreator(),
+            $this->createCartItemsResourceMapper(),
+            $this->createGuestCartRestResponseBuilder()
         );
     }
 

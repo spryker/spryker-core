@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
@@ -54,8 +55,7 @@ class GuestCartCreator implements GuestCartCreatorInterface
      */
     public function create(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $quoteTransfer = $this->createQuoteTransfer($restRequest);
-        $quoteResponseTransfer = $this->quoteCreatorPlugin->createQuote($restRequest, $quoteTransfer);
+        $quoteResponseTransfer = $this->createQuote($restRequest);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->guestCartRestResponseBuilder->createFailedCreatingCartErrorResponse();
@@ -67,9 +67,19 @@ class GuestCartCreator implements GuestCartCreatorInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createQuote(RestRequestInterface $restRequest): QuoteResponseTransfer
+    {
+        return $this->quoteCreatorPlugin->createQuote($restRequest, $this->createQuoteTransfer($restRequest));
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function createQuoteTransfer(RestRequestInterface $restRequest): QuoteTransfer
+    protected function createQuoteTransfer(RestRequestInterface $restRequest): QuoteTransfer
     {
         $customerTransfer = $this->getCustomerTransfer($restRequest);
 
