@@ -120,7 +120,9 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
             $cmsPageEntity = $pair[static::CMS_PAGE_ENTITY];
             $cmsPageSearchEntity = $pair[static::CMS_PAGE_SEARCH_ENTITY];
 
-            if ($cmsPageEntity === null || !$cmsPageEntity->getIsActive() || !$cmsPageEntity->getIsSearchable()) {
+            if (!$cmsPageSearchEntity->isNew() && ($cmsPageEntity === null
+                    || !$cmsPageEntity->getIsActive() || !$cmsPageEntity->getIsSearchable())
+            ) {
                 $this->deleteSearchEntity($cmsPageSearchEntity);
 
                 continue;
