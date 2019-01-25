@@ -104,7 +104,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     public function updateItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
-        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/item-quantity', $restCartItemRequestTransfer);
+        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/update-item', $restCartItemRequestTransfer);
 
         return $quoteResponseTransfer;
     }

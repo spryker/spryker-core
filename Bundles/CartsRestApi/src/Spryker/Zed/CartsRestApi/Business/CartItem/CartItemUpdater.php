@@ -61,7 +61,7 @@ class CartItemUpdater implements CartItemUpdaterInterface
 
         $persistentCartChangeQuantityTransfer = (new PersistentCartChangeQuantityTransfer())
             ->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote())
-            ->setCustomer($restCartItemRequestTransfer->getCartItem())
+            ->setItem($restCartItemRequestTransfer->getCartItem())
             ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemRequestTransfer->getCustomerReference()));
 
         return $this->persistentCartFacade->changeItemQuantity($persistentCartChangeQuantityTransfer);
