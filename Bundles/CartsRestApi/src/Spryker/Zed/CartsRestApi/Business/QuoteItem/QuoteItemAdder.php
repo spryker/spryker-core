@@ -55,7 +55,9 @@ class QuoteItemAdder implements QuoteItemAdderInterface
             ->requireSku();
 
         $quoteResponseTransfer = $this->cartReader->findQuoteByUuid(
-            (new QuoteTransfer())->setUuid($restCartItemRequestTransfer->getCartUuid())
+            (new QuoteTransfer())
+                ->setUuid($restCartItemRequestTransfer->getCartUuid())
+                ->setCustomerReference($restCartItemRequestTransfer->getCustomerReference())
         );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
