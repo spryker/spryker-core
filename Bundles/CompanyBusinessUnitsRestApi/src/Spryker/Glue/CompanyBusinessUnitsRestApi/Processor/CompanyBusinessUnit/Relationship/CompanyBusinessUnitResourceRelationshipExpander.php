@@ -11,21 +11,30 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\CompanyBusinessUnitsRestApiConfig;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Mapper\CompanyBusinessUnitMapperInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResource;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyBusinessUnitResourceRelationshipExpander implements CompanyBusinessUnitResourceRelationshipExpanderInterface
 {
+    /**
+     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     */
+    protected $restResourceBuilder;
+
     /**
      * @var \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Mapper\CompanyBusinessUnitMapperInterface
      */
     protected $companyBusinessUnitMapper;
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Mapper\CompanyBusinessUnitMapperInterface $companyBusinessUnitMapper
      */
-    public function __construct(CompanyBusinessUnitMapperInterface $companyBusinessUnitMapper)
-    {
+    public function __construct(
+        RestResourceBuilderInterface $restResourceBuilder,
+        CompanyBusinessUnitMapperInterface $companyBusinessUnitMapper
+    ) {
+        $this->restResourceBuilder = $restResourceBuilder;
         $this->companyBusinessUnitMapper = $companyBusinessUnitMapper;
     }
 
@@ -54,7 +63,7 @@ class CompanyBusinessUnitResourceRelationshipExpander implements CompanyBusiness
                     new RestCompanyBusinessUnitAttributesTransfer()
                 );
 
-            $companyBusinessUnitResource = new RestResource(
+            $companyBusinessUnitResource = $this->restResourceBuilder->createRestResource(
                 CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS,
                 $companyBusinessUnitTransfer->getUuid(),
                 $restCompanyBusinessUnitAttributesTransfer

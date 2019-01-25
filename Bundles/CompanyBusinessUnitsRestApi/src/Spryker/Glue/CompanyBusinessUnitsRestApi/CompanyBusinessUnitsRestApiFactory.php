@@ -20,7 +20,10 @@ class CompanyBusinessUnitsRestApiFactory extends AbstractFactory
      */
     public function createCompanyBusinessUnitResourceRelationshipExpander(): CompanyBusinessUnitResourceRelationshipExpanderInterface
     {
-        return new CompanyBusinessUnitResourceRelationshipExpander($this->createCompanyBusinessUnitMapper());
+        return new CompanyBusinessUnitResourceRelationshipExpander(
+            $this->getResourceBuilder(),
+            $this->createCompanyBusinessUnitMapper()
+        );
     }
 
     /**
