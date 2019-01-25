@@ -70,7 +70,9 @@ class CartReader implements CartReaderInterface
             return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
         }
 
-        $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid((new QuoteTransfer())->setUuid($uuidCart));
+        $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid((new QuoteTransfer())
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
+            ->setUuid($uuidCart));
 
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
             return $this->cartRestResponseBuilder->createCartNotFoundErrorResponse();
