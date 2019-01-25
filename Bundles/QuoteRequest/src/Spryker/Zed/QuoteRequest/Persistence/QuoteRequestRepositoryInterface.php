@@ -17,5 +17,7 @@ interface QuoteRequestRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
      */
-    public function getQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer;
+    public function getQuoteRequestCollectionByFilter(
+        QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+    ): QuoteRequestCollectionTransfer;
 }

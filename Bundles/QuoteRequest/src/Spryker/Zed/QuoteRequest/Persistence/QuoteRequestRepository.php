@@ -9,6 +9,9 @@ namespace Spryker\Zed\QuoteRequest\Persistence;
 
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\QuoteRequest\Persistence\Map\SpyQuoteRequestTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -18,17 +21,26 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class QuoteRequestRepository extends AbstractRepository implements QuoteRequestRepositoryInterface
 {
     /**
+     * @module Customer
+     * @module CompanyUser
+     *
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
      */
-    public function getQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
-    {
+    public function getQuoteRequestCollectionByFilter(
+        QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+    ): QuoteRequestCollectionTransfer {
         $quoteRequestQuery = $this->getFactory()
             ->getQuoteRequestPropelQuery()
-            ->orderByIdQuoteRequest(Criteria::DESC)
-            ->filterByFkCompanyUser($quoteRequestFilterTransfer->getCompanyUser()->getIdCompanyUser())
-            ->leftJoinWithSpyQuoteRequestVersion();
+            ->addJoin(SpyQuoteRequestTableMap::COL_FK_COMPANY_USER, SpyCompanyUserTableMap::COL_ID_COMPANY_USER, Criteria::LEFT_JOIN)
+            ->addJoin(SpyCompanyUserTableMap::COL_FK_CUSTOMER, SpyCustomerTableMap::COL_ID_CUSTOMER, Criteria::LEFT_JOIN)
+            ->leftJoinWithSpyQuoteRequestVersion()
+            ->orderByIdQuoteRequest(Criteria::DESC);
+
+        if ($quoteRequestFilterTransfer->getCompanyUser() && $quoteRequestFilterTransfer->getCompanyUser()->getIdCompanyUser()) {
+            $quoteRequestQuery->filterByFkCompanyUser($quoteRequestFilterTransfer->getCompanyUser()->getIdCompanyUser());
+        }
 
         if ($quoteRequestFilterTransfer->getQuoteRequestReference()) {
             $quoteRequestQuery->filterByQuoteRequestReference($quoteRequestFilterTransfer->getQuoteRequestReference());

@@ -31,8 +31,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     public function createQuoteRequestReader(): QuoteRequestReaderInterface
     {
         return new QuoteRequestReader(
-            $this->getRepository(),
-            $this->getCompanyUserFacade()
+            $this->getRepository()
         );
     }
 

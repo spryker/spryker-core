@@ -49,7 +49,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     {
         return $this->getFactory()
             ->createQuoteRequestReader()
-            ->findQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
+            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
     }
 
     /**

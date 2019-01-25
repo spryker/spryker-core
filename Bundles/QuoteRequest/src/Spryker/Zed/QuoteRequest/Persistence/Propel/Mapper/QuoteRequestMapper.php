@@ -8,6 +8,7 @@
 namespace Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
@@ -33,12 +34,12 @@ class QuoteRequestMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\Collection|null $quoteRequestEntities
+     * @param \Propel\Runtime\Collection\Collection $quoteRequestEntities
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
      */
     public function mapEntityCollectionToTransferCollection(
-        ?Collection $quoteRequestEntities
+        Collection $quoteRequestEntities
     ): QuoteRequestCollectionTransfer {
         $quoteRequestItemCollectionTransfer = new QuoteRequestCollectionTransfer();
 
@@ -65,19 +66,9 @@ class QuoteRequestMapper
     ): QuoteRequestTransfer {
         $quoteRequestTransfer = $quoteRequestTransfer->fromArray($quoteRequestEntity->toArray(), true);
 
+        $quoteRequestTransfer->setCompanyUser($this->getCompanyUserTransfer($quoteRequestEntity));
+        $quoteRequestTransfer->setLatestVersion($this->getLatestQuoteRequestVersionTransfer($quoteRequestEntity));
         $quoteRequestTransfer->setMetadata($this->decodeMetadata($quoteRequestEntity));
-        $quoteRequestTransfer->setCompanyUser(
-            (new CompanyUserTransfer())->fromArray($quoteRequestEntity->getCompanyUser()->toArray(), true)
-        );
-
-        $quoteRequestVersionEntity = $quoteRequestEntity->getSpyQuoteRequestVersions()->getLast();
-
-        $latestQuoteRequestVersionTransfer = (new QuoteRequestVersionTransfer())->fromArray($quoteRequestVersionEntity->toArray(), true);
-        $latestQuoteRequestVersionTransfer->setQuote(
-            (new QuoteTransfer())->fromArray($this->decodeQuoteData($quoteRequestVersionEntity), true)
-        );
-
-        $quoteRequestTransfer->setLatestVersion($latestQuoteRequestVersionTransfer);
 
         return $quoteRequestTransfer;
     }
@@ -101,6 +92,39 @@ class QuoteRequestMapper
         $quoteRequestEntity->setMetadata($this->encodeMetadata($quoteRequestTransfer));
 
         return $quoteRequestEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequest $quoteRequestEntity
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
+     */
+    protected function getLatestQuoteRequestVersionTransfer(SpyQuoteRequest $quoteRequestEntity): QuoteRequestVersionTransfer
+    {
+        $quoteRequestVersionEntity = $quoteRequestEntity->getSpyQuoteRequestVersions()->getLast();
+        $latestQuoteRequestVersionTransfer = (new QuoteRequestVersionTransfer())
+            ->fromArray($quoteRequestVersionEntity->toArray(), true);
+
+        $latestQuoteRequestVersionTransfer->setQuote(
+            (new QuoteTransfer())->fromArray($this->decodeQuoteData($quoteRequestVersionEntity), true)
+        );
+
+        return $latestQuoteRequestVersionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequest $quoteRequestEntity
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    protected function getCompanyUserTransfer(SpyQuoteRequest $quoteRequestEntity): CompanyUserTransfer
+    {
+        $customerTransfer = (new CustomerTransfer())
+            ->fromArray($quoteRequestEntity->getCompanyUser()->getCustomer()->toArray(), true);
+
+        return (new CompanyUserTransfer())
+            ->fromArray($quoteRequestEntity->getCompanyUser()->toArray(), true)
+            ->setCustomer($customerTransfer);
     }
 
     /**

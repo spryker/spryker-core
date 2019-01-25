@@ -9,7 +9,6 @@ namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
 
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
-use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 
 class QuoteRequestReader implements QuoteRequestReaderInterface
@@ -17,23 +16,14 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
     /**
      * @var \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface
      */
-    protected $repository;
+    protected $quoteRequestRepository;
 
     /**
-     * @var \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface
+     * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface $quoteRequestRepository
      */
-    protected $companyUserFacade;
-
-    /**
-     * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface $repository
-     * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface $companyUserFacade
-     */
-    public function __construct(
-        QuoteRequestRepositoryInterface $repository,
-        QuoteRequestToCompanyUserInterface $companyUserFacade
-    ) {
-        $this->repository = $repository;
-        $this->companyUserFacade = $companyUserFacade;
+    public function __construct(QuoteRequestRepositoryInterface $quoteRequestRepository)
+    {
+        $this->quoteRequestRepository = $quoteRequestRepository;
     }
 
     /**
@@ -41,19 +31,11 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
      */
-    public function findQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
-    {
-        $idCompanyUser = $quoteRequestFilterTransfer->requireCompanyUser()
-            ->getCompanyUser()
-            ->requireIdCompanyUser()
-            ->getIdCompanyUser();
-
-        $companyUserTransfer = $this->companyUserFacade->getCompanyUserById($idCompanyUser);
-        $quoteRequestCollectionTransfer = $this->repository->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
-
-        foreach ($quoteRequestCollectionTransfer->getQuoteRequests() as $quoteRequestTransfer) {
-            $quoteRequestTransfer->setCompanyUser($companyUserTransfer);
-        }
+    public function getQuoteRequestCollectionByFilter(
+        QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+    ): QuoteRequestCollectionTransfer {
+        $quoteRequestCollectionTransfer = $this->quoteRequestRepository
+            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
 
         return $quoteRequestCollectionTransfer;
     }

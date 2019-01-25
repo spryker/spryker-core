@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\QuoteRequest\Dependency\Facade;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
-
 interface QuoteRequestToCompanyUserInterface
 {
     /**
@@ -17,11 +15,4 @@ interface QuoteRequestToCompanyUserInterface
      * @return string[]
      */
     public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array;
-
-    /**
-     * @param int $idCompanyUser
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
-    public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer;
 }

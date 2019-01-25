@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
+use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
@@ -22,20 +23,23 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
 {
     use TransactionTrait;
 
+    protected const ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
+    protected const ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
+
     /**
      * @var \Spryker\Zed\QuoteRequest\QuoteRequestConfig
      */
-    protected $config;
+    protected $quoteRequestConfig;
 
     /**
      * @var \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface
      */
-    protected $entityManager;
+    protected $quoteRequestEntityManager;
 
     /**
      * @var \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface
      */
-    protected $repository;
+    protected $quoteRequestRepository;
 
     /**
      * @var \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface
@@ -48,22 +52,22 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     protected $companyUserFacade;
 
     /**
-     * @param \Spryker\Zed\QuoteRequest\QuoteRequestConfig $config
-     * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface $entityManager
-     * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface $repository
+     * @param \Spryker\Zed\QuoteRequest\QuoteRequestConfig $quoteRequestConfig
+     * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface $quoteRequestEntityManager
+     * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface $quoteRequestRepository
      * @param \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface $referenceGenerator
      * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface $companyUserFacade
      */
     public function __construct(
-        QuoteRequestConfig $config,
-        QuoteRequestEntityManagerInterface $entityManager,
-        QuoteRequestRepositoryInterface $repository,
+        QuoteRequestConfig $quoteRequestConfig,
+        QuoteRequestEntityManagerInterface $quoteRequestEntityManager,
+        QuoteRequestRepositoryInterface $quoteRequestRepository,
         QuoteRequestReferenceGeneratorInterface $referenceGenerator,
         QuoteRequestToCompanyUserInterface $companyUserFacade
     ) {
-        $this->config = $config;
-        $this->entityManager = $entityManager;
-        $this->repository = $repository;
+        $this->quoteRequestConfig = $quoteRequestConfig;
+        $this->quoteRequestEntityManager = $quoteRequestEntityManager;
+        $this->quoteRequestRepository = $quoteRequestRepository;
         $this->referenceGenerator = $referenceGenerator;
         $this->companyUserFacade = $companyUserFacade;
     }
@@ -92,7 +96,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->getCompanyUser()
             ->requireIdCompanyUser();
 
-        $quoteRequests = $this->repository
+        $quoteRequests = $this->quoteRequestRepository
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
             ->getQuoteRequests()
             ->getArrayCopy();
@@ -100,13 +104,20 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         $quoteRequestTransfer = array_shift($quoteRequests);
         $quoteRequestResponseTransfer = new QuoteRequestResponseTransfer();
 
-        if (!$quoteRequestTransfer || $quoteRequestTransfer->getStatus() !== $this->config->getWaitingStatus()) {
-            return $quoteRequestResponseTransfer->setIsSuccess(false);
+        if (!$quoteRequestTransfer) {
+            return $quoteRequestResponseTransfer
+                ->setIsSuccess(false)
+                ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS);
         }
 
-        $quoteRequestTransfer->setStatus($this->config->getCancelStatus());
-        $quoteRequestTransfer = $this->entityManager
-            ->updateQuoteRequest($quoteRequestTransfer);
+        if ($quoteRequestTransfer->getStatus() !== SharedQuoteRequestConfig::STATUS_WAITING) {
+            return $quoteRequestResponseTransfer
+                ->setIsSuccess(false)
+                ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS);
+        }
+
+        $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_CANCELED);
+        $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
         return $quoteRequestResponseTransfer
             ->setQuoteRequest($quoteRequestTransfer)
@@ -143,12 +154,12 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
 
         $customerReference = $this->getCustomerReference($quoteRequestTransfer->getCompanyUser());
 
-        $quoteRequestTransfer->setStatus($this->config->getInitialStatus());
+        $quoteRequestTransfer->setStatus($this->quoteRequestConfig->getInitialStatus());
         $quoteRequestTransfer->setQuoteRequestReference(
             $this->referenceGenerator->generateQuoteRequestReference($quoteRequestTransfer, $customerReference)
         );
 
-        return $this->entityManager->createQuoteRequest($quoteRequestTransfer);
+        return $this->quoteRequestEntityManager->createQuoteRequest($quoteRequestTransfer);
     }
 
     /**
@@ -163,14 +174,14 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->requireQuote();
 
         $quoteRequestVersionTransfer = $quoteRequestTransfer->getLatestVersion()
-            ->setVersion($this->config->getInitialVersion())
+            ->setVersion($this->quoteRequestConfig->getInitialVersion())
             ->setFkQuoteRequest($quoteRequestTransfer->getIdQuoteRequest());
 
         $quoteRequestVersionTransfer->setVersionReference(
             $this->referenceGenerator->generateQuoteRequestVersionReference($quoteRequestTransfer, $quoteRequestVersionTransfer)
         );
 
-        return $this->entityManager->createQuoteRequestVersion($quoteRequestVersionTransfer);
+        return $this->quoteRequestEntityManager->createQuoteRequestVersion($quoteRequestVersionTransfer);
     }
 
     /**
