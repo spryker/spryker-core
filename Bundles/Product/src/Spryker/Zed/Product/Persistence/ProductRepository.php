@@ -267,20 +267,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 
         $query = $this->getFactory()
             ->createProductQuery()
-            ->joinWithSpyProductAbstract()
-            ->useSpyProductAbstractQuery()
-                ->filterByIdProductAbstract_In($abstractProductIds)
-            ->endUse()
-            ->joinWithSpyProductLocalizedAttributes()
-            ->useSpyProductLocalizedAttributesQuery()
-                ->joinWithLocale()
-            ->endUse()
-            ->useSpyProductAbstractQuery()
-            ->joinWithSpyProductAbstractStore()
-            ->useSpyProductAbstractStoreQuery()
-                ->joinWithSpyStore()
-            ->endUse()
-            ->endUse();
+            ->filterByFkProductAbstract_In($abstractProductIds);
 
         $productConcreteEntities = $query->find();
 

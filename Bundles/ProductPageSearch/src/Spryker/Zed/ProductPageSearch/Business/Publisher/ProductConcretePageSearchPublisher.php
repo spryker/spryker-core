@@ -119,7 +119,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      */
     public function unpublish(array $productIds): void
     {
-        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale($productIds);
+        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->getProductConcretePageSearchTransfersByProductIds($productIds);
 
         $this->getTransactionHandler()->handleTransaction(function () use ($productConcretePageSearchTransfers) {
             $this->executeUnpublishTransaction($productConcretePageSearchTransfers);
@@ -161,18 +161,14 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     }
 
     /**
-     * @param array $productConcretePageSearchTransfersGroupedByStoreAndLocale
+     * @param array $productConcretePageSearchTransfers
      *
      * @return void
      */
-    protected function executeUnpublishTransaction(array $productConcretePageSearchTransfersGroupedByStoreAndLocale): void
+    protected function executeUnpublishTransaction(array $productConcretePageSearchTransfers): void
     {
-        foreach ($productConcretePageSearchTransfersGroupedByStoreAndLocale as $productConcretePageSearchTransfersStores) {
-            foreach ($productConcretePageSearchTransfersStores as $productConcretePageSearchTransfersLocales) {
-                foreach ($productConcretePageSearchTransfersLocales as $productConcretePageSearchTransfer) {
-                    $this->deleteProductConcretePageSearch($productConcretePageSearchTransfer);
-                }
-            }
+        foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
+            $this->deleteProductConcretePageSearch($productConcretePageSearchTransfer);
         }
     }
 

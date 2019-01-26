@@ -69,12 +69,10 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
     /**
      * @param array $storesPerAbstractProducts - ['abstractProductId' => ['storeName1', 'storeName2']]
      *
-     * @return array - ['abstractProductId' => ['storeName1' => ['localeName1', 'localeName2']]]
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
     public function getProductConcretePageSearchTransfersByAbstractProductsAndStores(array $storesPerAbstractProducts): array
     {
-        $productConcreteSearchPageTransfers = $this->repository->getProductConcretePageSearchTransfersByAbstractProductsAndStores($storesPerAbstractProducts);
-
-        return $this->getTransfersGroupedByStoreAndLocale($productConcreteSearchPageTransfers);
+        return $this->repository->getProductConcretePageSearchTransfersByAbstractProductsAndStores($storesPerAbstractProducts);
     }
 }

@@ -44,27 +44,22 @@ class ProductConcretePageSearchUnpublisher implements ProductConcretePageSearchU
      */
     public function unpublishByAbstractProductsAndStores(array $storesPerAbstractProducts): void
     {
-        $productConcretePageSearchTransfersGroupedByStoreAndLocale = $this->productConcretePageSearchReader
-            ->getProductConcretePageSearchTransfersByAbstractProductsAndStores($storesPerAbstractProducts);
+        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->getProductConcretePageSearchTransfersByAbstractProductsAndStores($storesPerAbstractProducts);
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($productConcretePageSearchTransfersGroupedByStoreAndLocale) {
-            $this->executeUnpublishTransaction($productConcretePageSearchTransfersGroupedByStoreAndLocale);
+        $this->getTransactionHandler()->handleTransaction(function () use ($productConcretePageSearchTransfers) {
+            $this->executeUnpublishTransaction($productConcretePageSearchTransfers);
         });
     }
 
     /**
-     * @param array $productConcretePageSearchTransfersGroupedByStoreAndLocale
+     * @param array $productConcretePageSearchTransfers
      *
      * @return void
      */
-    protected function executeUnpublishTransaction(array $productConcretePageSearchTransfersGroupedByStoreAndLocale): void
+    protected function executeUnpublishTransaction(array $productConcretePageSearchTransfers): void
     {
-        foreach ($productConcretePageSearchTransfersGroupedByStoreAndLocale as $productConcretePageSearchTransfersStores) {
-            foreach ($productConcretePageSearchTransfersStores as $productConcretePageSearchTransfersLocales) {
-                foreach ($productConcretePageSearchTransfersLocales as $productConcretePageSearchTransfer) {
-                    $this->productConcretePageSearchWriter->deleteProductConcretePageSearch($productConcretePageSearchTransfer);
-                }
-            }
+        foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
+            $this->productConcretePageSearchWriter->deleteProductConcretePageSearch($productConcretePageSearchTransfer);
         }
     }
 }

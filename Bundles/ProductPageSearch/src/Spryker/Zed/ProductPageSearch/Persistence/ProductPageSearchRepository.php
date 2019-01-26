@@ -72,6 +72,8 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     }
 
     /**
+     * @module Product
+     *
      * @param array $storesPerAbstractProducts
      *
      * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch[]|\Propel\Runtime\Collection\ObjectCollection

@@ -13,7 +13,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractStoreTableMap;
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  */
-class ProductConcretePageSearchProductAbstractStoreUnpublishListener extends AbstractProductConcretePageSearchListener
+class ProductAbstractStoreProductConcretePageSearchUnpublishListener extends AbstractProductConcretePageSearchListener
 {
     /**
      * @api

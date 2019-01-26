@@ -11,8 +11,8 @@ use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
-use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductConcretePageSearchProductAbstractStorePublishListener;
-use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductConcretePageSearchProductAbstractStoreUnpublishListener;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductAbstractStoreProductConcretePageSearchPublishListener;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductAbstractStoreProductConcretePageSearchUnpublishListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductConcretePageSearchProductListener;
 
 /**
@@ -40,7 +40,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
         $this->addProductConcretePageProductConcreteUnpublishSearchListener($eventCollection);
 
         $this->addProductConcretePageSearchCreateProductAbstractStoreListener($eventCollection);
-        $this->addProductConcretePageSearchCreateUpdateProductAbstractStoreListener($eventCollection);
+        $this->addProductConcretePageSearchUpdateProductAbstractStoreListener($eventCollection);
         $this->addProductConcretePageSearchDeleteProductAbstractStoreListener($eventCollection);
 
         return $eventCollection;
@@ -105,7 +105,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
     {
         $eventCollection->addListenerQueued(
             ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_CREATE,
-            new ProductConcretePageSearchProductAbstractStorePublishListener()
+            new ProductAbstractStoreProductConcretePageSearchPublishListener()
         );
     }
 
@@ -114,11 +114,11 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
      *
      * @return void
      */
-    protected function addProductConcretePageSearchCreateUpdateProductAbstractStoreListener(EventCollectionInterface $eventCollection): void
+    protected function addProductConcretePageSearchUpdateProductAbstractStoreListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(
             ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_UPDATE,
-            new ProductConcretePageSearchProductAbstractStorePublishListener()
+            new ProductAbstractStoreProductConcretePageSearchPublishListener()
         );
     }
 
@@ -131,7 +131,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
     {
         $eventCollection->addListenerQueued(
             ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE,
-            new ProductConcretePageSearchProductAbstractStoreUnpublishListener()
+            new ProductAbstractStoreProductConcretePageSearchUnpublishListener()
         );
     }
 }
