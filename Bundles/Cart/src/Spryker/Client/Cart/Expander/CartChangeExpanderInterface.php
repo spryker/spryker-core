@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Cart\Builder;
+namespace Spryker\Client\Cart\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 
-interface CartChangeTransferBuilderInterface
+interface CartChangeExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function build(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+    public function expand(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

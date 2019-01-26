@@ -7,9 +7,10 @@
 
 namespace Spryker\Client\Cart\Expander;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
-class CartChangeItemExpander implements CartChangeItemExpanderInterface
+class CartChangeExpander implements CartChangeExpanderInterface
 {
     /**
      * @var \Spryker\Client\CartExtension\Dependency\Plugin\CartChangeItemExpanderPluginInterface[]
@@ -25,11 +26,29 @@ class CartChangeItemExpander implements CartChangeItemExpanderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expand(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        foreach ($cartChangeTransfer->getItems() as &$cartChangeItemTransfer) {
+            if ($cartChangeItemTransfer->getProductConcrete() === null) {
+                continue;
+            }
+
+            $cartChangeItemTransfer = $this->expandCartChangeItemTransfer($cartChangeItemTransfer);
+        }
+
+        return $cartChangeTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function expand(ItemTransfer $itemTransfer): ItemTransfer
+    protected function expandCartChangeItemTransfer(ItemTransfer $itemTransfer): ItemTransfer
     {
         foreach ($this->cartChangeItemExpanderPlugins as $cartChangeItemExpanderPlugin) {
             $itemTransfer = $cartChangeItemExpanderPlugin->expandItemTransfer($itemTransfer);

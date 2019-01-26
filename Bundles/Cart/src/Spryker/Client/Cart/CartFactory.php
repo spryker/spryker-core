@@ -7,11 +7,9 @@
 
 namespace Spryker\Client\Cart;
 
-use Spryker\Client\Cart\Builder\CartChangeTransferBuilder;
-use Spryker\Client\Cart\Builder\CartChangeTransferBuilderInterface;
 use Spryker\Client\Cart\CartChangeRequestExpander\CartChangeRequestExpander;
-use Spryker\Client\Cart\Expander\CartChangeItemExpander;
-use Spryker\Client\Cart\Expander\CartChangeItemExpanderInterface;
+use Spryker\Client\Cart\Expander\CartChangeExpander;
+use Spryker\Client\Cart\Expander\CartChangeExpanderInterface;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProvider;
 use Spryker\Client\Cart\Zed\CartStub;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -113,11 +111,11 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Cart\Expander\CartChangeItemExpanderInterface
+     * @return \Spryker\Client\Cart\Expander\CartChangeExpanderInterface
      */
-    public function createCartChangeItemExpander(): CartChangeItemExpanderInterface
+    public function createCartChangeExpander(): CartChangeExpanderInterface
     {
-        return new CartChangeItemExpander(
+        return new CartChangeExpander(
             $this->getCartChangeItemExpanderPlugins()
         );
     }
@@ -128,13 +126,5 @@ class CartFactory extends AbstractFactory
     public function getCartChangeItemExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_CART_CHANGE_TRANSFER_ITEM_EXPANDER);
-    }
-
-    /**
-     * @return \Spryker\Client\Cart\Builder\CartChangeTransferBuilderInterface
-     */
-    public function createCartChangeTransferBuilder(): CartChangeTransferBuilderInterface
-    {
-        return new CartChangeTransferBuilder($this->createCartChangeItemExpander());
     }
 }

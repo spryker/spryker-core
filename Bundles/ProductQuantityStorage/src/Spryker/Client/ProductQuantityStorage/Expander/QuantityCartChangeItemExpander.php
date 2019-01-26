@@ -15,12 +15,12 @@ use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderIn
 
 class QuantityCartChangeItemExpander implements QuantityCartChangeItemExpanderInterface
 {
-    protected const WARNING_MESSAGE_QUANTITY_MIN_NOT_FULFILLED = 'product-quantity.warning.quantity.min.failed';
-    protected const WARNING_MESSAGE_QUANTITY_MAX_NOT_FULFILLED = 'product-quantity.warning.quantity.max.failed';
-    protected const WARNING_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED = 'product-quantity.warning.quantity.interval.failed';
-    protected const WARNING_MESSAGE_PARAM_MIN = '%min%';
-    protected const WARNING_MESSAGE_PARAM_MAX = '%max%';
-    protected const WARNING_MESSAGE_PARAM_STEP = '%step%';
+    protected const NOTIFICATION_MESSAGE_QUANTITY_MIN_NOT_FULFILLED = 'product-quantity.notification.quantity.min.failed';
+    protected const NOTIFICATION_MESSAGE_QUANTITY_MAX_NOT_FULFILLED = 'product-quantity.notification.quantity.max.failed';
+    protected const NOTIFICATION_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED = 'product-quantity.notification.quantity.interval.failed';
+    protected const NOTIFICATION_MESSAGE_PARAM_MIN = '%min%';
+    protected const NOTIFICATION_MESSAGE_PARAM_MAX = '%max%';
+    protected const NOTIFICATION_MESSAGE_PARAM_STEP = '%step%';
     protected const FIELD_QUANTITY = 'quantity';
 
     /**
@@ -96,8 +96,8 @@ class QuantityCartChangeItemExpander implements QuantityCartChangeItemExpanderIn
         );
         $itemTransfer->setQuantity($nearestQuantity);
 
-        $itemTransfer->addWarningMessage(
-            $this->getWarningMessageBasedOnQuantityRestriction($quantity, $nearestQuantity, $productQuantityStorageTransfer)
+        $itemTransfer->addNotificationMessage(
+            $this->getNotificationMessageBasedOnQuantityRestriction($quantity, $nearestQuantity, $productQuantityStorageTransfer)
         );
 
         return $itemTransfer;
@@ -110,7 +110,7 @@ class QuantityCartChangeItemExpander implements QuantityCartChangeItemExpanderIn
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function getWarningMessageBasedOnQuantityRestriction(
+    protected function getNotificationMessageBasedOnQuantityRestriction(
         int $quantity,
         int $nearestQuantity,
         ProductQuantityStorageTransfer $productQuantityStorageTransfer
@@ -121,20 +121,20 @@ class QuantityCartChangeItemExpander implements QuantityCartChangeItemExpanderIn
 
         if ($quantity !== 0 && $quantity < $min) {
             return (new MessageTransfer())
-                ->setValue(static::WARNING_MESSAGE_QUANTITY_MIN_NOT_FULFILLED)
-                ->setParameters([static::WARNING_MESSAGE_PARAM_MIN => $nearestQuantity]);
+                ->setValue(static::NOTIFICATION_MESSAGE_QUANTITY_MIN_NOT_FULFILLED)
+                ->setParameters([static::NOTIFICATION_MESSAGE_PARAM_MIN => $nearestQuantity]);
         }
 
         if ($quantity !== 0 && ($quantity - $min) % $interval !== 0) {
             return (new MessageTransfer())
-                ->setValue(static::WARNING_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED)
-                ->setParameters([static::WARNING_MESSAGE_PARAM_STEP => $nearestQuantity]);
+                ->setValue(static::NOTIFICATION_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED)
+                ->setParameters([static::NOTIFICATION_MESSAGE_PARAM_STEP => $nearestQuantity]);
         }
 
         if ($max !== null && $quantity > $max) {
             return (new MessageTransfer())
-                ->setValue(static::WARNING_MESSAGE_QUANTITY_MAX_NOT_FULFILLED)
-                ->setParameters([static::WARNING_MESSAGE_PARAM_MAX => $nearestQuantity]);
+                ->setValue(static::NOTIFICATION_MESSAGE_QUANTITY_MAX_NOT_FULFILLED)
+                ->setParameters([static::NOTIFICATION_MESSAGE_PARAM_MAX => $nearestQuantity]);
         }
 
         return new MessageTransfer();
