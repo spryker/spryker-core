@@ -56,9 +56,7 @@ class CategoryEditDataProvider
      */
     public function getData()
     {
-        $categoryTransfer = $this->buildCategoryTransfer();
-
-        return $categoryTransfer;
+        return $this->buildCategoryTransfer();
     }
 
     /**
