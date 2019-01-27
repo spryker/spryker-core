@@ -39,7 +39,7 @@ class ProductListProductConcretePageSearchPublishListener extends AbstractPlugin
             ->getEventTransferIds($eventTransfers);
 
         $this->getFactory()->getProductPageSearchFacade()->publishProductConcretes(
-            $this->getFactory()->getProductListFacade()->findProductConcreteIdsByProductListIds($productListIds)
+            $this->getFactory()->getProductListFacade()->getProductConcreteIdsByProductListIds($productListIds)
         );
     }
 }

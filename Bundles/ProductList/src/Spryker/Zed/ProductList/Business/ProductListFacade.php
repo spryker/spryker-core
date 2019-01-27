@@ -286,7 +286,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @return int[]
      */
-    public function findProductConcreteIdsByProductListIds(array $productListIds): array
+    public function getProductConcreteIdsByProductListIds(array $productListIds): array
     {
         return $this->getFactory()
             ->createProductListReader()

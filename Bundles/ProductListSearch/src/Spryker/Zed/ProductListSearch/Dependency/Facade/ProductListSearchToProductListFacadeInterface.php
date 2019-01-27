@@ -35,5 +35,5 @@ interface ProductListSearchToProductListFacadeInterface
      *
      * @return int[]
      */
-    public function findProductConcreteIdsByProductListIds(array $productListIds): array;
+    public function getProductConcreteIdsByProductListIds(array $productListIds): array;
 }
