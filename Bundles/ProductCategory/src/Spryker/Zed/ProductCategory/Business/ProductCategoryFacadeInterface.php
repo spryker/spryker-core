@@ -119,7 +119,7 @@ interface ProductCategoryFacadeInterface
 
     /**
      * Specification:
-     *  - Finds list of concrete product ids by category ids.
+     *  - Returns all concrete product ids by provided category ids.
      *
      * @api
      *
