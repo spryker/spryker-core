@@ -105,7 +105,7 @@ class ProductBusinessTester extends Actor
         $productFacade = $this->getProductFacade();
 
         for ($i = 0; $i < 2; $i++) {
-            $productAbstractTransfer = $this->createProductAbstractTransfer($i);
+            $productAbstractTransfer = $this->createProductAbstractTransfer((string)$i);
             $productAbstractId = $productFacade->createProductAbstract($productAbstractTransfer);
 
             $productAbstractTransfer->setIdProductAbstract($productAbstractId);
@@ -129,11 +129,11 @@ class ProductBusinessTester extends Actor
     }
 
     /**
-     * @param int $sku
+     * @param string $sku
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    protected function createProductAbstractTransfer(int $sku): ProductAbstractTransfer
+    protected function createProductAbstractTransfer(string $sku): ProductAbstractTransfer
     {
         $productAbstractTransfer = new ProductAbstractTransfer();
         $productAbstractTransfer->setStoreRelation(

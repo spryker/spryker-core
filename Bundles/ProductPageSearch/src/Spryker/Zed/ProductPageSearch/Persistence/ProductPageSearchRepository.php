@@ -33,7 +33,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             ->filterByFkProduct_In($productIds)
             ->find();
 
-        return $this->getProductConcretePageSearchEntitiesToProductConcretePageSearchTransfer(
+        return $this->getProductConcretePageSearchTransferFromProductConcretePageSearchEntities(
             $productConcretePageSearchEntities
         );
     }
@@ -47,7 +47,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     {
         $productConcretePageSearchEntities = $this->getProductConcretePageSearchEntitiesByAbstractProductsAndStores($storesPerAbstractProducts);
 
-        return $this->getProductConcretePageSearchEntitiesToProductConcretePageSearchTransfer(
+        return $this->getProductConcretePageSearchTransferFromProductConcretePageSearchEntities(
             $productConcretePageSearchEntities
         );
     }
@@ -57,7 +57,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    protected function getProductConcretePageSearchEntitiesToProductConcretePageSearchTransfer($productConcretePageSearchEntities): array
+    protected function getProductConcretePageSearchTransferFromProductConcretePageSearchEntities($productConcretePageSearchEntities): array
     {
         $mapper = $this->getFactory()->createProductPageSearchMapper();
         $productConcretePageSearchTransfers = [];
