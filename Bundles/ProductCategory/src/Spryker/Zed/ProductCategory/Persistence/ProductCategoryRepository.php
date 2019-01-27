@@ -68,7 +68,6 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
 
     /**
      * @module Product
-     * @module ProductCategory
      *
      * @param int[] $categoryIds
      *

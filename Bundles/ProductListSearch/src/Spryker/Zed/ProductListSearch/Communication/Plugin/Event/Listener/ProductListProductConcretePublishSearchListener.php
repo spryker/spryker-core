@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -34,10 +33,10 @@ class ProductListProductConcretePublishSearchListener extends AbstractPlugin imp
     public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->preventTransaction();
-        $productConcreteIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventTransfers, SpyProductListProductConcreteTableMap::COL_FK_PRODUCT);
+        $concreteIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        $this->getFactory()->getProductPageSearchFacade()->publishProductConcretes($productConcreteIds);
+        $this->getFactory()->getProductPageSearchFacade()->publish(
+            $this->getFacade()->getProductAbstractIdsByConcreteIds($concreteIds)
+        );
     }
 }
