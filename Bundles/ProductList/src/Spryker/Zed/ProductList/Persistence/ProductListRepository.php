@@ -15,6 +15,7 @@ use Orm\Zed\ProductList\Persistence\Map\SpyProductListCategoryTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Propel\Runtime\ActiveQuery\Join;
+use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\ProductList\Persistence\Mapper\ProductListMapperInterface;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -492,10 +493,11 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
                 SpyProductListTableMap::COL_TYPE,
             ])
             ->having(sprintf(
-                'COUNT(DISTINCT %s) = COUNT(%s)',
+                'COUNT(DISTINCT %s) = COUNT(DISTINCT %s)',
                 SpyProductListProductConcreteTableMap::COL_FK_PRODUCT,
                 SpyProductTableMap::alias($spyProductTableAlias, SpyProductTableMap::COL_ID_PRODUCT)
             ))
+            ->setFormatter(SimpleArrayFormatter::class)
             ->find()
             ->toArray();
     }
@@ -526,6 +528,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
                 SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
                 SpyProductListTableMap::COL_TYPE,
             ])
+            ->setFormatter(SimpleArrayFormatter::class)
             ->find()
             ->toArray();
     }

@@ -80,7 +80,7 @@ class ProductListReader implements ProductListReaderInterface
             $this->productListRepository->getProductListIdsByProductIds($productIds)
         );
 
-        $productAbstractLists = $this->getProductAbstractListByProductAbstractIds(
+        $productAbstractLists = $this->getProductAbstractListIdsByProductAbstractIds(
             array_values($productConcreteIdsToProductAbstractIdsMap)
         );
 
@@ -92,7 +92,7 @@ class ProductListReader implements ProductListReaderInterface
      *
      * @return array
      */
-    public function getProductAbstractListByProductAbstractIds(array $productAbstractIds): array
+    public function getProductAbstractListIdsByProductAbstractIds(array $productAbstractIds): array
     {
         $productBlacklistsByProductAbstractIds = $this->getProductBlacklistsByProductAbstractIds($productAbstractIds);
         $productWhitelistsByProductAbstractIds = $this->getProductWhitelistsByProductAbstractIds($productAbstractIds);
