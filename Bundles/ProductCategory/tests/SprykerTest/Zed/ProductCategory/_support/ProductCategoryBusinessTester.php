@@ -54,9 +54,6 @@ class ProductCategoryBusinessTester extends Actor
      */
     public function getProductCategoryFacade(): ProductCategoryFacadeInterface
     {
-        /** @var \Spryker\Zed\ProductCategory\Business\ProductCategoryFacade $facade */
-        $facade = $this->getFacade();
-
-        return $facade;
+        return $this->getLocator()->productCategory()->facade();
     }
 }
