@@ -7,14 +7,11 @@
 
 namespace Spryker\Zed\ShipmentCartConnector\Business\Model;
 
-use Generated\Shared\Transfer\CartChangeTransfer;
+use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface as ShipmentCartValidatorWithMultiShippingAddressInterface;
 
-interface ShipmentCartValidatorInterface
+/**
+ * @deprecated Use \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface instead.
+ */
+interface ShipmentCartValidatorInterface extends ShipmentCartValidatorWithMultiShippingAddressInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
-     */
-    public function validateShipment(CartChangeTransfer $cartChangeTransfer);
 }

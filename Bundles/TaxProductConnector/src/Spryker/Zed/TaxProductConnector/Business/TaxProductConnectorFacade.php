@@ -65,7 +65,8 @@ class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConn
     public function calculateProductItemTaxRate(QuoteTransfer $quoteTransfer)
     {
         $this->getFactory()
-            ->createProductItemTaxRateCalculator()
+            ->createProductItemTaxRateCalculatorStrategyResolver()
+            ->resolve()
             ->recalculate($quoteTransfer);
     }
 

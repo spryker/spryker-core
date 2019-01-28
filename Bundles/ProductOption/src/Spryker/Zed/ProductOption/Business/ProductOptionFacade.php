@@ -153,7 +153,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     public function calculateProductOptionTaxRate(QuoteTransfer $quoteTransfer)
     {
         $this->getFactory()
-            ->createProductOptionTaxRateCalculator()
+            ->createProductItemTaxRateCalculatorStrategyResolver()
+            ->resolve()
             ->recalculate($quoteTransfer);
     }
 

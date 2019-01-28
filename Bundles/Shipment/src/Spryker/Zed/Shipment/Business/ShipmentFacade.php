@@ -19,6 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Shipment\Business\ShipmentBusinessFactory getFactory()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface getEntityManager()
  */
 class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
 {
@@ -204,7 +205,10 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function calculateShipmentTaxRate(QuoteTransfer $quoteTransfer)
     {
-        $this->getFactory()->createShipmentTaxCalculator()->recalculate($quoteTransfer);
+        $this->getFactory()
+            ->createShipmentTaxCalculatorStrategyResolver()
+            ->resolve()
+            ->recalculate($quoteTransfer);
     }
 
     /**
@@ -239,7 +243,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function saveOrderShipment(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         $this->getFactory()
-            ->createCheckoutShipmentOrderSaver()
+            ->createCheckoutShipmentOrderSaverStrategyResolver()
+            ->resolve()
             ->saveOrderShipment($quoteTransfer, $saveOrderTransfer);
     }
 

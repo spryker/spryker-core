@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Model\Address;
+namespace Spryker\Zed\Sales\Business\Address;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;

@@ -25,6 +25,9 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\SalesConfig;
 
+/**
+ * @deprecated Use \Spryker\Zed\Sales\Business\Order\SalesOrderSaver instead.
+ */
 class SalesOrderSaver implements SalesOrderSaverInterface
 {
     use DatabaseTransactionHandlerTrait;

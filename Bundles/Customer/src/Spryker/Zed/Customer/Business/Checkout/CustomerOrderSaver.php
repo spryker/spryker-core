@@ -11,11 +11,12 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Customer\Business\Customer\AddressInterface;
 use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
-use Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface;
 
+/**
+ * @deprecated Use \Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverWithMultiShippingAddress instead.
+ */
 class CustomerOrderSaver implements CustomerOrderSaverInterface
 {
     /**
@@ -29,28 +30,13 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     protected $address;
 
     /**
-     * @var \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface
-     */
-    protected $customerRepository;
-
-    /**
-     * @var \Generated\Shared\Transfer\AddressTransfer[]
-     */
-    protected $existingAddresses = [];
-
-    /**
      * @param \Spryker\Zed\Customer\Business\Customer\CustomerInterface $customer
      * @param \Spryker\Zed\Customer\Business\Customer\AddressInterface $address
-     * @param \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface $customerRepository
      */
-    public function __construct(
-        CustomerInterface $customer,
-        AddressInterface $address,
-        CustomerRepositoryInterface $customerRepository
-    ) {
+    public function __construct(CustomerInterface $customer, AddressInterface $address)
+    {
         $this->customer = $customer;
         $this->address = $address;
-        $this->customerRepository = $customerRepository;
     }
 
     /**
@@ -90,38 +76,11 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
             return;
         }
 
-        $this->processCustomerAddress($quoteTransfer->getBillingAddress(), $customer);
+        $this->processCustomerAddress($quoteTransfer->getShippingAddress(), $customer);
 
-        $this->existingAddresses = [];
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->requireShipment();
-
-            $addressTransfer = $this->getCustomerAddress($itemTransfer->getShipment());
-            $itemTransfer->getShipment()->setShippingAddress($addressTransfer);
-
-            $this->processCustomerAddress($addressTransfer, $customer);
+        if ($quoteTransfer->getBillingSameAsShipping() !== true) {
+            $this->processCustomerAddress($quoteTransfer->getBillingAddress(), $customer);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    protected function getCustomerAddress(ShipmentTransfer $shipmentTransfer)
-    {
-        $addressTransfer = $shipmentTransfer->getShippingAddress();
-
-        $key = $this->getAddressTransferKey($addressTransfer);
-        if (!isset($existingAddresses[$key])) {
-            $existingAddresses[$key] = $this->customerRepository->findAddressByAddressData($addressTransfer);
-        }
-        if ($existingAddresses[$key] !== null) {
-            return $existingAddresses[$key];
-        }
-
-        return $addressTransfer;
     }
 
     /**
@@ -186,27 +145,5 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     protected function isNewCustomer(CustomerTransfer $customerTransfer)
     {
         return $customerTransfer->getIdCustomer() === null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return string
-     */
-    protected function getAddressTransferKey(AddressTransfer $addressTransfer): string
-    {
-        return sprintf(
-            '%s %s %s %s %s %s %s %s %s %s',
-            $addressTransfer->getFkCustomer(),
-            $addressTransfer->getFirstName(),
-            $addressTransfer->getLastName(),
-            $addressTransfer->getAddress1(),
-            $addressTransfer->getAddress2(),
-            $addressTransfer->getAddress3(),
-            $addressTransfer->getZipCode(),
-            $addressTransfer->getCity(),
-            $addressTransfer->getFkCountry(),
-            $addressTransfer->getPhone()
-        );
     }
 }

@@ -1,0 +1,45 @@
+<div>
+    <div style="text-align: center;">{{ 'mail.order.confirmation.salutation' | trans }} {{ mail.order.firstName }} {{ mail.order.lastName }},</div>
+    <br />
+    <div style="text-align: center;">{{ 'mail.order.confirmation.text_line_1' | trans }}</div>
+    <br />
+    <div style="text-align: center;">{{ 'mail.order.confirmation.text_line_2' | trans }}</div>
+    <div style="text-align: center;">{{ 'mail.order.confirmation.text_line_3' | trans }}</div>
+    <br />
+    <div style="text-align: center;">{{ 'mail.order.confirmation.footer.text_line_1' | trans }}</div>
+    <div style="text-align: center;">{{ 'mail.order.confirmation.footer.text_line_2' | trans }}</div>
+    <hr /> <br />
+    <div>
+        <table align="center" border="0.1" cellpadding="1" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td><strong>{{ 'mail.order.confirmation.details' | trans }}</strong></td>
+                    <td><strong>{{ 'mail.order.confirmation.shipping_address' | trans }}</strong></td>
+                    <td><strong>{{ 'mail.order.confirmation.billing_address' | trans }}</strong></td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ 'mail.order.confirmation.order_number' | trans }}: {{ mail.order.orderReference }}<br />
+                        {{ 'mail.order.confirmation.price_including_tax' | trans }}: {{ mail.order.totals.grandTotal | money }}<br />
+                        {{ 'mail.order.confirmation.date' | trans }}: {{ mail.order.createdAt | date }}
+                    </td>
+                    {% for item in mail.order.items %}
+                    <td>
+                        {{ item.name }} ({{ item.sku }})<br />
+                        {{ item.shipment.shippingAddress.firstName }} {{ item.shipment.shippingAddress.lastName }}<br />
+                        {{ item.shipment.shippingAddress.address1 }} {{ item.shipment.shippingAddress.address2 }} {{ item.shipment.shippingAddress.address3 }}<br />
+                        {{ item.shipment.shippingAddress.zipCode }} {{ item.shipment.shippingAddress.city }}<br />
+                        {{ item.shipment.shippingAddress.region }}
+                    </td>
+                    {% endfor %}
+                    <td>
+                        {{ mail.order.billingAddress.firstName }} {{ mail.order.billingAddress.lastName }}<br />
+                        {{ mail.order.billingAddress.address1 }} {{ mail.order.billingAddress.address2 }} {{ mail.order.billingAddress.address3 }}<br />
+                        {{ mail.order.billingAddress.zipCode }} {{ mail.order.billingAddress.city }}<br />
+                        {{ mail.order.billingAddress.region }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

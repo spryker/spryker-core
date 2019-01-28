@@ -6,7 +6,7 @@
  */
 namespace Spryker\Service\Shipment;
 
-use \ArrayObject;
+use ArrayObject;
 
 interface ShipmentServiceInterface
 {
