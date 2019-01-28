@@ -18,6 +18,7 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUOTE_CALCULATOR_PLUGIN_STACK = 'quote calculator plugin stack';
     public const ORDER_CALCULATOR_PLUGIN_STACK = 'order calculator plugin stack';
+    public const QUOTE_AFTER_CALCULATE_PLUGINS = 'QUOTE_AFTER_CALCULATE_PLUGINS';
 
     public const SERVICE_UTIL_TEXT = 'util text service';
 
@@ -40,6 +41,22 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
             return new CalculationToUtilTextBridge($container->getLocator()->utilText()->service());
         };
 
+        $container = $this->addQuoteAfterCalculatePlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteAfterCalculatePlugins(Container $container): Container
+    {
+        $container[static::QUOTE_AFTER_CALCULATE_PLUGINS] = function (Container $container) {
+            return $this->getQuoteAfterCalculatePlugins();
+        };
+
         return $container;
     }
 
@@ -59,6 +76,14 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
      */
     protected function getOrderCalculatorPluginStack(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuoteAfterCalculatePluginInterface[]
+     */
+    protected function getQuoteAfterCalculatePlugins(): array
     {
         return [];
     }

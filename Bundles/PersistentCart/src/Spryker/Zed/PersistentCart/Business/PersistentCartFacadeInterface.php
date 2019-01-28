@@ -237,4 +237,18 @@ interface PersistentCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function updateAndReloadQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Saves quote after calculation.
+     * - Does nothing if not `DatabaseStorageStrategy` is disabled.
+     * - Does nothing if quoted does't have ID.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function saveQuoteAfterCalculate(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

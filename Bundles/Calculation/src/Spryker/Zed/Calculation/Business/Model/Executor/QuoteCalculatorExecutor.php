@@ -19,11 +19,20 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
     protected $quoteCalculators;
 
     /**
-     * @param \Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[] $quoteCalculators
+     * @var \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuoteAfterCalculatePluginInterface[]
      */
-    public function __construct(array $quoteCalculators)
-    {
+    protected $quoteAfterCalculatePlugins;
+
+    /**
+     * @param \Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[] $quoteCalculators
+     * @param \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuoteAfterCalculatePluginInterface[] $quoteAfterCalculatePlugins
+     */
+    public function __construct(
+        array $quoteCalculators,
+        array $quoteAfterCalculatePlugins
+    ) {
         $this->quoteCalculators = $quoteCalculators;
+        $this->quoteAfterCalculatePlugins = $quoteAfterCalculatePlugins;
     }
 
     /**
@@ -48,6 +57,7 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
         }
 
         $quoteTransfer = $this->mapQuoteTransfer($quoteTransfer, $calculableObjectTransfer);
+        $quoteTransfer = $this->executeQuoteAfterCalculatePlugins($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -96,5 +106,19 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
         $calculableObjectTransfer = $this->mapCalculableObjectTransfer($quoteTransfer);
 
         return $calculableObjectTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executeQuoteAfterCalculatePlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($this->quoteAfterCalculatePlugins as $quoteAfterCalculatePlugin) {
+            $quoteTransfer = $quoteAfterCalculatePlugin->afterCalculate($quoteTransfer);
+        }
+
+        return $quoteTransfer;
     }
 }

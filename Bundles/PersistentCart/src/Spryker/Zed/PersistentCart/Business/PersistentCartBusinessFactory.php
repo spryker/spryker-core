@@ -12,6 +12,8 @@ use Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpander;
 use Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpanderInterface;
 use Spryker\Zed\PersistentCart\Business\Model\CartOperation;
 use Spryker\Zed\PersistentCart\Business\Model\CartOperationInterface;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteAfterCalculateSaver;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteAfterCalculateSaverInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleter;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleterInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperation;
@@ -45,6 +47,17 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteResponseExpander(),
             $this->createQuoteResolver(),
             $this->createQuoteItemOperation()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteAfterCalculateSaverInterface
+     */
+    public function createQuoteAfterCalculateSaver(): QuoteAfterCalculateSaverInterface
+    {
+        return new QuoteAfterCalculateSaver(
+            $this->getQuoteFacade(),
+            $this->createQuoteWriter()
         );
     }
 
