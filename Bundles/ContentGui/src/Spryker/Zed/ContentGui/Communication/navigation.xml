@@ -8,6 +8,24 @@
                 <bundle>content-gui</bundle>
                 <controller>list-content</controller>
                 <action>index</action>
+                <pages>
+                    <edit-page>
+                        <label>Edit Content Item</label>
+                        <title>Edit Content Item</title>
+                        <bundle>content-gui</bundle>
+                        <controller>edit-content</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </edit-page>
+                    <create-page>
+                        <label>Create Content Item</label>
+                        <title>Create Content Item</title>
+                        <bundle>content-gui</bundle>
+                        <controller>create-content</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </create-page>
+                </pages>
             </content-items>
         </pages>
     </cms-gui>
