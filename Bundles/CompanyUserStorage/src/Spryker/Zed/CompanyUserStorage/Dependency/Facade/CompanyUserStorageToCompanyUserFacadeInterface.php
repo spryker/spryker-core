@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUserStorage\Persistence;
+namespace Spryker\Zed\CompanyUserStorage\Dependency\Facade;
 
-interface CompanyUserStorageRepositoryInterface
+interface CompanyUserStorageToCompanyUserFacadeInterface
 {
     /**
      * @param array $companyUserIds
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    public function findCompanyUserStorageTransfers(array $companyUserIds): array;
+    public function findCompanyUserTransfers(array $companyUserIds): array;
 }

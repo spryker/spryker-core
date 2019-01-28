@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyUserStorage;
 
+use Spryker\Zed\CompanyUserStorage\Dependency\Facade\CompanyUserStorageToCompanyUserFacadeBridge;
+use Spryker\Zed\CompanyUserStorage\Dependency\Facade\CompanyUserStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -15,13 +17,21 @@ use Spryker\Zed\Kernel\Container;
  */
 class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const PLUGIN_COMPANY_USER_STORAGE_EXPANDER = 'PLUGIN_COMPANY_USER_STORAGE_EXPANDER';
+
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addEventBehaviorFacade($container);
+
         return $container;
     }
 
@@ -30,8 +40,11 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addCompanyUserFacade($container);
+
         return $container;
     }
 
@@ -40,8 +53,64 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function providePersistenceLayerDependencies(Container $container)
+    public function providePersistenceLayerDependencies(Container $container): Container
     {
+        $container = parent::providePersistenceLayerDependencies($container);
+
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventBehaviorFacade(Container $container): Container
+    {
+        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+            return new CompanyUserStorageToEventBehaviorFacadeBridge(
+                $container->getLocator()->eventBehavior()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserFacade(Container $container): Container
+    {
+        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
+            return new CompanyUserStorageToCompanyUserFacadeBridge(
+                $container->getLocator()->companyUser()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserStorageExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_COMPANY_USER_STORAGE_EXPANDER] = function () {
+            return $this->getCompanyUserStorageExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserStorageExtension\Dependency\Plugin\CompanyUserStorageExpanderPluginInterface[]
+     */
+    protected function getCompanyUserStorageExpanderPlugins(): array
+    {
+        return [];
     }
 }

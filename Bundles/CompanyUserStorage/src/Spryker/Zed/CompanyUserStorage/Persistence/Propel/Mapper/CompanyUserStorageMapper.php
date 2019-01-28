@@ -7,6 +7,37 @@
 
 namespace Spryker\Zed\CompanyUserStorage\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\CompanyUserStorageTransfer;
+use Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage;
+
 class CompanyUserStorageMapper implements CompanyUserStorageMapperInterface
 {
+    /**
+     * @param \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage $spyCompanyUserEntity
+     * @param \Generated\Shared\Transfer\CompanyUserStorageTransfer $companyUserStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer
+     */
+    public function mapCompanyUserStorageEntityToCompanyUserStorageTransfer(
+        SpyCompanyUserStorage $spyCompanyUserEntity,
+        CompanyUserStorageTransfer $companyUserStorageTransfer
+    ): CompanyUserStorageTransfer {
+        return $companyUserStorageTransfer->fromArray($spyCompanyUserEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserStorageTransfer $companyUserStorageTransfer
+     * @param \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage $spyCompanyUserEntityTransfer
+     *
+     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage
+     */
+    public function mapCompanyUserStorageTransferToCompanyUserStorageEntity(
+        CompanyUserStorageTransfer $companyUserStorageTransfer,
+        SpyCompanyUserStorage $spyCompanyUserEntityTransfer
+    ): SpyCompanyUserStorage {
+        $spyCompanyUserEntityTransfer->setFkCompanyUser($companyUserStorageTransfer->getIdCompanyUser());
+        $spyCompanyUserEntityTransfer->setData($companyUserStorageTransfer->toArray());
+
+        return $spyCompanyUserEntityTransfer;
+    }
 }

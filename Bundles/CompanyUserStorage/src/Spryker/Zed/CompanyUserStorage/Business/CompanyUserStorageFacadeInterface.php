@@ -9,4 +9,21 @@ namespace Spryker\Zed\CompanyUserStorage\Business;
 
 interface CompanyUserStorageFacadeInterface
 {
+    /**
+     * @api
+     *
+     * @param int[] $companyUserIds
+     *
+     * @return void
+     */
+    public function publish(array $companyUserIds): void;
+
+    /**
+     * @api
+     *
+     * @param int[] $companyUserIds
+     *
+     * @return void
+     */
+    public function unpublish(array $companyUserIds): void;
 }

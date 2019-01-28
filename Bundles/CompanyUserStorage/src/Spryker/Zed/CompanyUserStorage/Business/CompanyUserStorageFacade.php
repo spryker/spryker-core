@@ -16,4 +16,31 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStorageFacadeInterface
 {
+    /**
+     * @api
+     *
+     * @param int[] $companyUserIds
+     *
+     * @return void
+     */
+    public function publish(array $companyUserIds): void
+    {
+        $this->getFactory()
+            ->createCompanyUserStorageWriter()
+            ->publish($companyUserIds);
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $companyUserIds
+     *
+     * @return void
+     */
+    public function unpublish(array $companyUserIds): void
+    {
+        $this->getFactory()
+            ->createCompanyUserStorageWriter()
+            ->unpublish($companyUserIds);
+    }
 }

@@ -197,6 +197,16 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
+     * @param array $companyUserIds
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function findCompanyUserTransfers(array $companyUserIds): array
+    {
+        return $this->companyUserRepository->findCompanyUserTransfers($companyUserIds);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer

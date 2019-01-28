@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserStorage\Persistence;
 
+use Generated\Shared\Transfer\CompanyUserStorageTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -14,4 +15,31 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class CompanyUserStorageRepository extends AbstractRepository implements CompanyUserStorageRepositoryInterface
 {
+    /**
+     * @param array $companyUserIds
+     *
+     * @return array
+     */
+    public function findCompanyUserStorageTransfers(array $companyUserIds): array
+    {
+        if (!$companyUserIds) {
+            return [];
+        }
+
+        $query = $this->getFactory()
+            ->createCompanyUserStorageQuery()
+            ->filterByFkCompanyUser_In($companyUserIds);
+        $companyUserStorageEntityCollection = $query->find();
+
+        $companyUserStorageTransfers = [];
+        $mapper = $this->getFactory()->createCompanyUserStorageMapper();
+        foreach ($companyUserStorageEntityCollection as $companyUserStorageEntity) {
+            $companyUserStorageTransfers[] = $mapper->mapCompanyUserStorageEntityToCompanyUserStorageTransfer(
+                $companyUserStorageEntity,
+                new CompanyUserStorageTransfer()
+            );
+        }
+
+        return $companyUserStorageTransfers;
+    }
 }

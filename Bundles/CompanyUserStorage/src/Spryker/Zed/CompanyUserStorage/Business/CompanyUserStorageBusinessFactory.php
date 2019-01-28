@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\CompanyUserStorage\Business;
 
+use Spryker\Zed\CompanyUserStorage\Business\Storage\CompanyUserStorageWriter;
+use Spryker\Zed\CompanyUserStorage\Business\Storage\CompanyUserStorageWriterInterface;
+use Spryker\Zed\CompanyUserStorage\CompanyUserStorageDependencyProvider;
+use Spryker\Zed\CompanyUserStorage\Dependency\Facade\CompanyUserStorageToCompanyUserFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -16,4 +20,32 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CompanyUserStorageBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\CompanyUserStorage\Business\Storage\CompanyUserStorageWriterInterface
+     */
+    public function createCompanyUserStorageWriter(): CompanyUserStorageWriterInterface
+    {
+        return new CompanyUserStorageWriter(
+            $this->getCompanyUserFacade(),
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->getCompanyUserStorageExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserStorage\Dependency\Facade\CompanyUserStorageToCompanyUserFacadeInterface
+     */
+    public function getCompanyUserFacade(): CompanyUserStorageToCompanyUserFacadeInterface
+    {
+        return $this->getProvidedDependency(CompanyUserStorageDependencyProvider::FACADE_COMPANY_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserStorageExtension\Dependency\Plugin\CompanyUserStorageExpanderPluginInterface[]
+     */
+    public function getCompanyUserStorageExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUserStorageDependencyProvider::PLUGIN_COMPANY_USER_STORAGE_EXPANDER);
+    }
 }

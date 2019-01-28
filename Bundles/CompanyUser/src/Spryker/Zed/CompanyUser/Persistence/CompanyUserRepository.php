@@ -285,4 +285,29 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
 
         return $query->count();
     }
+
+    /**
+     * @param array $companyUserIds
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function findCompanyUserTransfers(array $companyUserIds): array
+    {
+        if (!$companyUserIds) {
+            return [];
+        }
+
+        $query = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->filterByIdCompanyUser_In($companyUserIds);
+        $companyUserEntityCollection = $query->find();
+
+        $companyUnitTransfers = [];
+        $mapper = $this->getFactory()->createCompanyUserMapper();
+        foreach ($companyUserEntityCollection as $companyUserEntity) {
+            $companyUnitTransfers[] = $mapper->mapCompanyUserEntityToCompanyUserTransfer($companyUserEntity);
+        }
+
+        return $companyUnitTransfers;
+    }
 }

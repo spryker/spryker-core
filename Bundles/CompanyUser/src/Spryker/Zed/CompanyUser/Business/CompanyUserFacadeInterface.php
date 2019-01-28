@@ -211,4 +211,13 @@ interface CompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
+     * @api
+     *
+     * @param array $companyUserIds
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function findCompanyUserTransfers(array $companyUserIds): array;
 }
