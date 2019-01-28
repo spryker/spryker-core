@@ -8,11 +8,10 @@
 namespace Spryker\Zed\AvailabilityNotification\Business;
 
 use Generated\Shared\Transfer\AvailabilityNotificationTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\FindAvailabilitySubscriptionRequestTransfer;
-use Generated\Shared\Transfer\FindAvailabilitySubscriptionResponseTransfer;
 
 interface AvailabilityNotificationFacadeInterface
 {
@@ -34,15 +33,15 @@ interface AvailabilityNotificationFacadeInterface
 
     /**
      * Specification:
-     * - Checks if the provided subscription is already existing.
+     * - Find a availability subscription
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FindAvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\FindAvailabilitySubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function findAvailabilitySubscription(FindAvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer): FindAvailabilitySubscriptionResponseTransfer;
+    public function findAvailabilitySubscription(AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer): AvailabilitySubscriptionResponseTransfer;
 
     /**
      * Specification:

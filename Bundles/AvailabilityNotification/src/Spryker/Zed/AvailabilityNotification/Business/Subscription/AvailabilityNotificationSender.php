@@ -168,30 +168,16 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
         ProductConcreteTransfer $productConcreteTransfer,
         LocaleTransfer $localeTransfer
     ): array {
-        $attributes = [];
+        $attributes = [
+            'image' => $this->findProductImage($productConcreteTransfer),
+            'price' => $this->findProductPrice($productConcreteTransfer),
+            'url' => $this->findProductUrl($productConcreteTransfer, $localeTransfer),
+        ];
 
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
             if ($localizedAttributes->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {
                 $attributes = array_merge($attributes, $localizedAttributes->toArray());
             }
-        }
-
-        $image = $this->findProductImage($productConcreteTransfer);
-
-        if ($image !== null) {
-            $attributes['image'] = $image;
-        }
-
-        $price = $this->findProductPrice($productConcreteTransfer);
-
-        if ($price !== null) {
-            $attributes['price'] = $price;
-        }
-
-        $url = $this->findProductUrl($productConcreteTransfer, $localeTransfer);
-
-        if ($url !== null) {
-            $attributes['url'] = $url;
         }
 
         return $attributes;

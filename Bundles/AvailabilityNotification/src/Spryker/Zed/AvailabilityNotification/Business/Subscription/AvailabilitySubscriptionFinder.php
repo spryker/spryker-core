@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
-use Generated\Shared\Transfer\FindAvailabilitySubscriptionRequestTransfer;
-use Generated\Shared\Transfer\FindAvailabilitySubscriptionResponseTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 
-class AvailabilitySubscriptionChecker implements AvailabilitySubscriptionCheckerInterface
+class AvailabilitySubscriptionFinder implements AvailabilitySubscriptionFinderInterface
 {
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface
@@ -26,13 +26,13 @@ class AvailabilitySubscriptionChecker implements AvailabilitySubscriptionChecker
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FindAvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\FindAvailabilitySubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
     public function findAvailabilitySubscription(
-        FindAvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
-    ): FindAvailabilitySubscriptionResponseTransfer {
+        AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+    ): AvailabilitySubscriptionResponseTransfer {
         if ($availabilitySubscriptionExistenceRequestTransfer->getSubscriptionKey() !== null) {
             return $this->findBySubscriptionKey($availabilitySubscriptionExistenceRequestTransfer);
         }
@@ -41,30 +41,31 @@ class AvailabilitySubscriptionChecker implements AvailabilitySubscriptionChecker
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FindAvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\FindAvailabilitySubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
     protected function findBySubscriptionKey(
-        FindAvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
-    ): FindAvailabilitySubscriptionResponseTransfer {
+        AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+    ): AvailabilitySubscriptionResponseTransfer {
         $availabilitySubscriptionExistenceRequestTransfer->requireSubscriptionKey();
 
         $availabilitySubscription = $this->availabilitySubscriptionReader
             ->findOneBySubscriptionKey($availabilitySubscriptionExistenceRequestTransfer->getSubscriptionKey());
 
-        return (new FindAvailabilitySubscriptionResponseTransfer())
-            ->setAvailabilitySubscription($availabilitySubscription);
+        return (new AvailabilitySubscriptionResponseTransfer())
+            ->setAvailabilitySubscription($availabilitySubscription)
+            ->setIsSuccess($availabilitySubscription !== null);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FindAvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\FindAvailabilitySubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
     protected function findByEmailAndSku(
-        FindAvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
-    ): FindAvailabilitySubscriptionResponseTransfer {
+        AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+    ): AvailabilitySubscriptionResponseTransfer {
         $availabilitySubscriptionExistenceRequestTransfer->requireEmail();
         $availabilitySubscriptionExistenceRequestTransfer->requireSku();
 
@@ -74,7 +75,8 @@ class AvailabilitySubscriptionChecker implements AvailabilitySubscriptionChecker
                 $availabilitySubscriptionExistenceRequestTransfer->getSku()
             );
 
-        return (new FindAvailabilitySubscriptionResponseTransfer())
-            ->setAvailabilitySubscription($availabilitySubscriptionTransfer);
+        return (new AvailabilitySubscriptionResponseTransfer())
+            ->setAvailabilitySubscription($availabilitySubscriptionTransfer)
+            ->setIsSuccess($availabilitySubscriptionTransfer !== null);
     }
 }

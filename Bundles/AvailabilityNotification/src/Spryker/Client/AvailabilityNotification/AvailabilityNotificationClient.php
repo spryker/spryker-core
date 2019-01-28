@@ -7,10 +7,9 @@
 
 namespace Spryker\Client\AvailabilityNotification;
 
+use Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
-use Generated\Shared\Transfer\FindAvailabilitySubscriptionRequestTransfer;
-use Generated\Shared\Transfer\FindAvailabilitySubscriptionResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -55,11 +54,11 @@ class AvailabilityNotificationClient extends AbstractClient implements Availabil
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FindAvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\FindAvailabilitySubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function findAvailabilitySubscription(FindAvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer): FindAvailabilitySubscriptionResponseTransfer
+    public function findAvailabilitySubscription(AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer): AvailabilitySubscriptionResponseTransfer
     {
         return $this->getFactory()
             ->createZedAvailabilityNotificationStub()

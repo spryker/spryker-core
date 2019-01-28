@@ -51,18 +51,20 @@
                        width="100%"
                        style="background-color: #FFFFFF;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
                     <tbody>
-                    <tr>
-                        <td class="mcnImageCardBottomImageContent" align="center" valign="top"
-                            style="padding-top: 0px;padding-right: 0px;padding-bottom: 0;padding-left: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
-                            <a href="{{ mail.productAttributes.url }}" title="" class="" target="_blank"
-                               style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
-                                <img alt="{{ mail.productAttributes.name }}" src="{{ mail.productAttributes.image }}"
-                                     width="500"
-                                     style="max-width: 500px;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;vertical-align: bottom;"
-                                     class="mcnImage">
-                            </a>
-                        </td>
-                    </tr>
+                    {% if mail.productAttributes.url is not empty and mail.productAttributes.image is not empty %}
+                        <tr>
+                            <td class="mcnImageCardBottomImageContent" align="center" valign="top"
+                                style="padding-top: 0px;padding-right: 0px;padding-bottom: 0;padding-left: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                <a href="{{ mail.productAttributes.url }}" title="" class="" target="_blank"
+                                   style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                    <img alt="{{ mail.productAttributes.name }}" src="{{ mail.productAttributes.image }}"
+                                         width="500"
+                                         style="max-width: 500px;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;vertical-align: bottom;"
+                                         class="mcnImage">
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
                     <tr>
                         <td class="mcnTextContent" valign="top"
                             style="padding: 9px 18px;font-family: Helvetica;font-size: 14px;font-weight: normal;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #202020;line-height: 150%;"

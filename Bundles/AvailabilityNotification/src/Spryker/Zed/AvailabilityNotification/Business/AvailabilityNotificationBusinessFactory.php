@@ -16,8 +16,8 @@ use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotif
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriberInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationUnsubscriber;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationUnsubscriberInterface;
-use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionChecker;
-use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionFinder;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionFinderInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGenerator;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReader;
@@ -69,11 +69,11 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionFinderInterface
      */
-    public function createAvailabilitySubscriptionChecker(): AvailabilitySubscriptionCheckerInterface
+    public function createAvailabilitySubscriptionFinder(): AvailabilitySubscriptionFinderInterface
     {
-        return new AvailabilitySubscriptionChecker($this->createAvailabilityNotificationReader());
+        return new AvailabilitySubscriptionFinder($this->createAvailabilityNotificationReader());
     }
 
     /**
