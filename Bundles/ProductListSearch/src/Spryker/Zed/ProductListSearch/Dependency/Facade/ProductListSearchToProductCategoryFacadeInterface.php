@@ -10,11 +10,6 @@ namespace Spryker\Zed\ProductListSearch\Dependency\Facade;
 interface ProductListSearchToProductCategoryFacadeInterface
 {
     /**
-     * Specification:
-     *  - Finds list of concrete product ids by category ids.
-     *
-     * @api
-     *
      * @param int[] $categoryIds
      *
      * @return int[]
