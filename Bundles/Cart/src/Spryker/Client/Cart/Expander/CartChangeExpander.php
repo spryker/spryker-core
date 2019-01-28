@@ -32,11 +32,7 @@ class CartChangeExpander implements CartChangeExpanderInterface
      */
     public function expand(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        foreach ($cartChangeTransfer->getItems() as &$cartChangeItemTransfer) {
-            if ($cartChangeItemTransfer->getProductConcrete() === null) {
-                continue;
-            }
-
+        foreach ($cartChangeTransfer->getItems() as $cartChangeItemTransfer) {
             $cartChangeItemTransfer = $this->expandCartChangeItemTransfer($cartChangeItemTransfer);
         }
 

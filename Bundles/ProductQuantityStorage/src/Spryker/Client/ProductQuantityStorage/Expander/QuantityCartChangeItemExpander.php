@@ -54,7 +54,7 @@ class QuantityCartChangeItemExpander implements QuantityCartChangeItemExpanderIn
     {
         $productConcreteTransfer = $itemTransfer->getProductConcrete();
 
-        if (!$productConcreteTransfer || !$productConcreteTransfer->getIdProductConcrete()) {
+        if (!$productConcreteTransfer || $productConcreteTransfer->getIdProductConcrete() === null) {
             return $itemTransfer;
         }
 
