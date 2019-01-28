@@ -45,9 +45,9 @@ class GuestCartReader implements GuestCartReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCustomerQuoteByUuid(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface
+    public function readByIdentifier(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->cartReader->getCustomerQuoteByUuid($uuidCart, $restRequest);
+        return $this->cartReader->readByIdentifier($uuidCart, $restRequest);
     }
 
     /**
