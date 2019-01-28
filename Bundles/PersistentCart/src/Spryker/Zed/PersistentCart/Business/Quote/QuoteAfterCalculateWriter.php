@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriterInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
 
-class QuoteAfterCalculateSaver implements QuoteAfterCalculateSaverInterface
+class QuoteAfterCalculateWriter implements QuoteAfterCalculateWriterInterface
 {
     /**
-     * @uses QuoteConfig::STORAGE_STRATEGY_DATABASE
+     * @uses Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_DATABASE
      */
     protected const STORAGE_STRATEGY_DATABASE = 'STORAGE_STRATEGY_DATABASE';
 
@@ -47,9 +47,9 @@ class QuoteAfterCalculateSaver implements QuoteAfterCalculateSaverInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function saveQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if ($this->isQuoteNeedUpdate($quoteTransfer)) {
+        if (!$this->isQuoteNeedUpdate($quoteTransfer)) {
             return $quoteTransfer;
         }
 

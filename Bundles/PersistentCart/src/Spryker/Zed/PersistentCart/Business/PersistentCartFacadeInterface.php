@@ -240,7 +240,7 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     * - Saves quote after calculation.
+     * - Updates quote after calculation.
      * - Does nothing if not `DatabaseStorageStrategy` is disabled.
      * - Does nothing if quoted does't have ID.
      *
@@ -250,5 +250,5 @@ interface PersistentCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function saveQuoteAfterCalculate(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function updateQuoteAfterCalculate(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

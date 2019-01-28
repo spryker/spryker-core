@@ -9,12 +9,12 @@ namespace Spryker\Zed\PersistentCart\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteAfterCalculateSaverInterface
+interface QuoteAfterCalculateWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function saveQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

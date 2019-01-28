@@ -19,7 +19,7 @@ class QuoteSaveAfterQuoteCalculatePlugin extends AbstractPlugin implements Quote
 {
     /**
      * {@inheritdoc}
-     * - Saves quote after calculation.
+     * - Updates quote after calculation.
      * - Does nothing if not `DatabaseStorageStrategy` is disabled.
      * - Does nothing if quote does't have ID.
      *
@@ -31,6 +31,6 @@ class QuoteSaveAfterQuoteCalculatePlugin extends AbstractPlugin implements Quote
      */
     public function afterCalculate(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->getFacade()->saveQuoteAfterCalculate($quoteTransfer);
+        return $this->getFacade()->updateQuoteAfterCalculate($quoteTransfer);
     }
 }

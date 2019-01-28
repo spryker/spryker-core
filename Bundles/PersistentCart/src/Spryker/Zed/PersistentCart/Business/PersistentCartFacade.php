@@ -227,10 +227,10 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function saveQuoteAfterCalculate(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function updateQuoteAfterCalculate(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
-            ->createQuoteAfterCalculateSaver()
-            ->saveQuote($quoteTransfer);
+            ->createQuoteAfterCalculateWriter()
+            ->updateQuote($quoteTransfer);
     }
 }
