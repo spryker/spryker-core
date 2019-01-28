@@ -103,7 +103,7 @@ class CartReader implements CartReaderInterface
             ->setUuid($uuidCart));
 
         if ($quoteResponseTransfer->getIsSuccessful() === false
-            || $restRequest->getUser()->getNaturalIdentifier() !== $quoteResponseTransfer->getCustomer()->getCustomerReference()) {
+            || $restRequest->getUser()->getNaturalIdentifier() !== $quoteResponseTransfer->getQuoteTransfer()->getCustomerReference()) {
             return $this->cartRestResponseBuilder->createCartNotFoundErrorResponse();
         }
 
