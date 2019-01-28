@@ -14,7 +14,7 @@ use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig;
 
 class UrlGenerator implements UrlGeneratorInterface
 {
-    public const ROUTE_UNSUBSCRIBE = '/availability-notification/unsubscribe';
+    public const ROUTE_UNSUBSCRIBE = '/availability-notification/unsubscribe-by-key';
 
     public const PARAM_SUBSCRIPTION_KEY = 'subscriptionKey';
 

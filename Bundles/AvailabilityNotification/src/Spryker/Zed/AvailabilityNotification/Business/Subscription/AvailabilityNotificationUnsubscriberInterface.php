@@ -10,12 +10,12 @@ namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 
-interface AvailabilityUnsubscriptionProcessorInterface
+interface AvailabilityNotificationUnsubscriberInterface
 {
     /**
      * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function process(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer;
+    public function unsubscribe(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer;
 }

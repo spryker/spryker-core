@@ -7,23 +7,22 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
+use Generated\Shared\Transfer\AvailabilityNotificationTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationSubscribedMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationUnsubscribedMailTypePlugin;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMoneyFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface;
+use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface;
 
 class AvailabilityNotificationSender implements AvailabilityNotificationSenderInterface
 {
-    public const ROUTE_UNSUBSCRIBE = '/availability-notification/unsubscribe';
-
-    public const PARAM_SUBSCRIPTION_KEY = 'subscriptionKey';
-
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface
      */
@@ -50,24 +49,32 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
     protected $urlGenerator;
 
     /**
+     * @var \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface
+     */
+    protected $availabilityNotificationRepository;
+
+    /**
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface $mailFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMoneyFacadeInterface $moneyFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGeneratorInterface $urlGenerator
+     * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository
      */
     public function __construct(
         AvailabilityNotificationToMailFacadeInterface $mailFacade,
         AvailabilityNotificationToProductFacadeInterface $productFacade,
         AvailabilityNotificationToMoneyFacadeInterface $moneyFacade,
         AvailabilityNotificationToPriceProductFacadeInterface $priceProductFacade,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository
     ) {
         $this->mailFacade = $mailFacade;
         $this->productFacade = $productFacade;
         $this->moneyFacade = $moneyFacade;
         $this->priceProductFacade = $priceProductFacade;
         $this->urlGenerator = $urlGenerator;
+        $this->availabilityNotificationRepository = $availabilityNotificationRepository;
     }
 
     /**
@@ -102,35 +109,53 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
      */
     public function sendUnsubscriptionMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
     {
+        $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilitySubscriptionTransfer->getSku());
+        $productAttributes = $this->getProductAttributes(
+            $productConcreteTransfer,
+            $availabilitySubscriptionTransfer->getLocale()
+        );
+
         $mailTransfer = (new MailTransfer())
             ->setType(AvailabilityNotificationUnsubscribedMailTypePlugin::MAIL_TYPE)
             ->setAvailabilitySubscription($availabilitySubscriptionTransfer)
-            ->setLocale($availabilitySubscriptionTransfer->getLocale());
-
-        $mailTransfer = $this->setLocalizedAttributes($mailTransfer, $availabilitySubscriptionTransfer);
+            ->setLocale($availabilitySubscriptionTransfer->getLocale())
+            ->setProductAttributes($productAttributes);
 
         $this->mailFacade->handleMail($mailTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationTransfer $availabilityNotificationTransfer
      *
-     * @return \Generated\Shared\Transfer\MailTransfer
+     * @return void
      */
-    protected function setLocalizedAttributes(MailTransfer $mailTransfer, AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): MailTransfer
+    public function sendProductBecomeAvailableMail(AvailabilityNotificationTransfer $availabilityNotificationTransfer): void
     {
-        $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilitySubscriptionTransfer->getSku());
+        $availabilitySubscriptionCollectionTransfer = $this->availabilityNotificationRepository
+            ->findBySkuAndStore(
+                $availabilityNotificationTransfer->getSku(),
+                $availabilityNotificationTransfer->getStore()->getIdStore()
+            );
 
-        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
-            if ($availabilitySubscriptionTransfer->getLocale()->getIdLocale() === $localizedAttributesTransfer->getLocale()->getIdLocale()) {
-                $mailTransfer->setLocalizedAttributes($localizedAttributesTransfer);
+        foreach ($availabilitySubscriptionCollectionTransfer->getAvailabilitySubscriptions() as $availabilitySubscription) {
+            $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilitySubscription->getSku());
+            $productAttributes = $this->getProductAttributes(
+                $productConcreteTransfer,
+                $availabilitySubscription->getLocale()
+            );
 
-                return $mailTransfer;
-            }
+            $mailTransfer = (new MailTransfer())
+                ->setType(AvailabilityNotificationMailTypePlugin::MAIL_TYPE)
+                ->setLocale($availabilitySubscription->getLocale())
+                ->setAvailabilitySubscription($availabilitySubscription)
+                ->setProductConcrete($productConcreteTransfer)
+                ->setProductAttributes($productAttributes);
+
+            $unsubscriptionLink = $this->urlGenerator->createUnsubscriptionLink($availabilitySubscription);
+            $mailTransfer->setAvailabilityUnsubscriptionLink($unsubscriptionLink);
+
+            $this->mailFacade->handleMail($mailTransfer);
         }
-
-        return $mailTransfer;
     }
 
     /**
@@ -143,23 +168,85 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
         ProductConcreteTransfer $productConcreteTransfer,
         LocaleTransfer $localeTransfer
     ): array {
-        /** @var \Generated\Shared\Transfer\ProductImageSetTransfer $imageSetTransfer */
-        $imageSetTransfer = current($productConcreteTransfer->getImageSets());
-        /** @var \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer */
-        $productImageTransfer = current($imageSetTransfer->getProductImages());
-        $attributes = ['image' => $productImageTransfer->getExternalUrlLarge()];
-
-        $amount = $this->priceProductFacade->findPriceBySku($productConcreteTransfer->getSku());
-        $priceTransfer = $this->moneyFacade->fromInteger($amount);
-        $price = $this->moneyFacade->formatWithSymbol($priceTransfer);
-        $attributes['price'] = $price;
+        $attributes = [
+            'image' => $this->findProductImage($productConcreteTransfer),
+            'price' => $this->findProductPrice($productConcreteTransfer),
+            'url' => $this->findProductUrl($productConcreteTransfer, $localeTransfer),
+        ];
 
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
             if ($localizedAttributes->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {
-                return array_merge($attributes, $localizedAttributes->toArray());
+                $attributes = array_merge($attributes, $localizedAttributes->toArray());
             }
         }
 
         return $attributes;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return string|null
+     */
+    protected function findProductPrice(ProductConcreteTransfer $productConcreteTransfer): ?string
+    {
+        $amount = $this->priceProductFacade->findPriceBySku($productConcreteTransfer->getSku());
+
+        if ($amount === null) {
+            return null;
+        }
+
+        $priceTransfer = $this->moneyFacade->fromInteger($amount);
+
+        return $this->moneyFacade->formatWithSymbol($priceTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string|null
+     */
+    protected function findProductUrl(
+        ProductConcreteTransfer $productConcreteTransfer,
+        LocaleTransfer $localeTransfer
+    ): ?string {
+        $productAbstractTransfer = $this->productFacade->findProductAbstractById($productConcreteTransfer->getFkProductAbstract());
+
+        if ($productAbstractTransfer === null) {
+            return null;
+        }
+
+        $productUrlTransfer = $this->productFacade->getProductUrl($productAbstractTransfer);
+
+        foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
+            if ($localeTransfer->getIdLocale() === $localizedUrlTransfer->getLocale()->getIdLocale()) {
+                return $this->urlGenerator->generateProductUrl($localizedUrlTransfer);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return string|null
+     */
+    protected function findProductImage(ProductConcreteTransfer $productConcreteTransfer): ?string
+    {
+        $imageSetTransfer = current($productConcreteTransfer->getImageSets());
+
+        if ($imageSetTransfer === false) {
+            return null;
+        }
+
+        $productImageTransfer = current($imageSetTransfer->getProductImages());
+
+        if ($productImageTransfer === false) {
+            return null;
+        }
+
+        return $productImageTransfer->getExternalUrlLarge();
     }
 }

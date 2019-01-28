@@ -20,14 +20,10 @@
         <property name="errorMessage" type="string" />
     </transfer>
 
-    <transfer name="AvailabilitySubscriptionExistenceRequest">
+    <transfer name="AvailabilitySubscriptionRequest">
         <property name="subscriptionKey" type="string" />
         <property name="sku" type="string" />
         <property name="email" type="string" />
-    </transfer>
-
-    <transfer name="AvailabilitySubscriptionExistenceResponse">
-        <property name="availabilitySubscription" type="AvailabilitySubscription" />
     </transfer>
 
     <transfer name="Mail">
@@ -44,6 +40,12 @@
 
     <transfer name="AvailabilitySubscriptionCollection">
         <property name="availabilitySubscriptions" type="AvailabilitySubscription[]" singular="availabilitySubscription"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotification">
+        <property name="sku" type="string"/>
+        <property name="store" type="Store"/>
+        <property name="productConcrete" type="ProductConcrete"/>
     </transfer>
 
 </transfers>

@@ -13,7 +13,7 @@ use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificat
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface;
 
-class AvailabilityUnsubscriptionProcessor implements AvailabilityUnsubscriptionProcessorInterface
+class AvailabilityNotificationUnsubscriber implements AvailabilityNotificationUnsubscriberInterface
 {
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface
@@ -54,7 +54,7 @@ class AvailabilityUnsubscriptionProcessor implements AvailabilityUnsubscriptionP
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function process(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    public function unsubscribe(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         $availabilitySubscriptionTransfer->requireSubscriptionKey();
 

@@ -56,9 +56,8 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
      */
     protected function setSubject(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
-        $productLocalizedName = $mailBuilder->getMailTransfer()->getLocalizedAttributes()->getName();
-        $subject = sprintf('%s is available again!', $productLocalizedName);
-        $mailBuilder->setSubject($subject);
+        $productAttributes = $mailBuilder->getMailTransfer()->getProductAttributes();
+        $mailBuilder->setSubject('availability_subscription.mail.notification.subject', ['%name%' => $productAttributes['name'] ?? '']);
 
         return $this;
     }

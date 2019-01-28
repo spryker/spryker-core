@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
@@ -36,29 +35,29 @@ class AvailabilitySubscriptionSaver implements AvailabilitySubscriptionSaverInte
     protected $availabilityNotificationToLocaleFacade;
 
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface
+     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface
      */
-    protected $availabilitySubscriptionExistingChecker;
+    protected $availabilitySubscriptionReader;
 
     /**
      * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface $entityManager
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface $keyGenerator
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface $availabilityNotificationToStoreFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface $availabilityNotificationToLocaleFacade
-     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionCheckerInterface $availabilitySubscriptionExistingChecker
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface $availabilitySubscriptionReader
      */
     public function __construct(
         AvailabilityNotificationEntityManagerInterface $entityManager,
         AvailabilitySubscriptionKeyGeneratorInterface $keyGenerator,
         AvailabilityNotificationToStoreFacadeInterface $availabilityNotificationToStoreFacade,
         AvailabilityNotificationToLocaleFacadeInterface $availabilityNotificationToLocaleFacade,
-        AvailabilitySubscriptionCheckerInterface $availabilitySubscriptionExistingChecker
+        AvailabilitySubscriptionReaderInterface $availabilitySubscriptionReader
     ) {
         $this->entityManager = $entityManager;
         $this->keyGenerator = $keyGenerator;
         $this->availabilityNotificationToStoreFacade = $availabilityNotificationToStoreFacade;
         $this->availabilityNotificationToLocaleFacade = $availabilityNotificationToLocaleFacade;
-        $this->availabilitySubscriptionExistingChecker = $availabilitySubscriptionExistingChecker;
+        $this->availabilitySubscriptionReader = $availabilitySubscriptionReader;
     }
 
     /**
@@ -68,14 +67,14 @@ class AvailabilitySubscriptionSaver implements AvailabilitySubscriptionSaverInte
      */
     public function save(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionTransfer
     {
-        $availabilitySubscriptionExistenceRequestTransfer = (new AvailabilitySubscriptionExistenceRequestTransfer())
-            ->setSku($availabilitySubscriptionTransfer->getSku())
-            ->setEmail($availabilitySubscriptionTransfer->getEmail());
+        $availabilitySubscriptionTransfer->requireSku();
+        $availabilitySubscriptionTransfer->requireEmail();
 
-        $availabilitySubscriptionExistenceResponseTransfer = $this->availabilitySubscriptionExistingChecker->checkExistence($availabilitySubscriptionExistenceRequestTransfer);
+        $existedAvailabilitySubscriptionTransfer = $this->availabilitySubscriptionReader
+            ->findOneByEmailAndSku($availabilitySubscriptionTransfer->getEmail(), $availabilitySubscriptionTransfer->getSku());
 
-        if ($availabilitySubscriptionExistenceResponseTransfer->getAvailabilitySubscription() !== null) {
-            return $availabilitySubscriptionExistenceResponseTransfer->getAvailabilitySubscription();
+        if ($existedAvailabilitySubscriptionTransfer !== null) {
+            return $existedAvailabilitySubscriptionTransfer;
         }
 
         $subscriptionKey = $this->keyGenerator->generateKey();

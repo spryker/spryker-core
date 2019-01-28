@@ -7,8 +7,7 @@
 
 namespace Spryker\Client\AvailabilityNotification;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer;
-use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 
@@ -40,25 +39,13 @@ interface AvailabilityNotificationClientInterface
 
     /**
      * Specification:
-     * - Check if user is subscribed for product availability.
+     * - Find availability subscription.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function checkExistence(AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer): AvailabilitySubscriptionExistenceResponseTransfer;
-
-    /**
-     * Specification:
-     * - Finds availability subscription by sku and email for current store.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
-     */
-    public function findAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer;
+    public function findAvailabilitySubscription(AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer): AvailabilitySubscriptionResponseTransfer;
 }

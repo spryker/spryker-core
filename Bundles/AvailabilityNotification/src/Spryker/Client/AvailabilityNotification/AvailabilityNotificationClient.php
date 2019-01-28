@@ -7,8 +7,7 @@
 
 namespace Spryker\Client\AvailabilityNotification;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer;
-use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -55,30 +54,14 @@ class AvailabilityNotificationClient extends AbstractClient implements Availabil
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function checkExistence(AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer): AvailabilitySubscriptionExistenceResponseTransfer
+    public function findAvailabilitySubscription(AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer): AvailabilitySubscriptionResponseTransfer
     {
         return $this->getFactory()
             ->createZedAvailabilityNotificationStub()
-            ->checkExistence($availabilitySubscriptionExistenceRequestTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
-     */
-    public function findAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer
-    {
-        return $this->getFactory()
-            ->createZedAvailabilityNotificationStub()
-            ->findAvailabilitySubscription($availabilitySubscriptionTransfer);
+            ->findAvailabilitySubscription($availabilitySubscriptionRequestTransfer);
     }
 }

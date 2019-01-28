@@ -12,9 +12,17 @@ use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 interface AvailabilitySubscriptionReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param string $email
+     * @param string $sku
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findSubscriptionByEmailAndSku(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer;
+    public function findOneByEmailAndSku(string $email, string $sku): ?AvailabilitySubscriptionTransfer;
+
+    /**
+     * @param string $subscriptionKey
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
+     */
+    public function findOneBySubscriptionKey(string $subscriptionKey): ?AvailabilitySubscriptionTransfer;
 }
