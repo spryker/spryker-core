@@ -17,7 +17,7 @@ class ShipmentToCustomerBridge implements ShipmentToCustomerInterface
     protected $customerFacade;
 
     /**
-     * @param \Spryker\Zed\Customer\Business\CustomerFacadeInterface $currencyFacade
+     * @param \Spryker\Zed\Customer\Business\CustomerFacadeInterface $customerFacade
      */
     public function __construct($customerFacade)
     {
