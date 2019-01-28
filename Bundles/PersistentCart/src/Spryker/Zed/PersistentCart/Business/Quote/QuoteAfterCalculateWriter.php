@@ -18,7 +18,7 @@ class QuoteAfterCalculateWriter implements QuoteAfterCalculateWriterInterface
     /**
      * @uses Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_DATABASE
      */
-    protected const STORAGE_STRATEGY_DATABASE = 'STORAGE_STRATEGY_DATABASE';
+    protected const STORAGE_STRATEGY_DATABASE = 'database';
 
     /**
      * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface
