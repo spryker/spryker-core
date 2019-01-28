@@ -34,6 +34,9 @@ class ProductConcretePageSearchExpander implements ProductConcretePageSearchExpa
     public function expandProductConcretePageSearchTransferWithProductLists(
         ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
     ): ProductConcretePageSearchTransfer {
+        $productConcretePageSearchTransfer->requireFkProduct();
+
+        $productConcretePageSearchTransfer = $this->initializeProductListMapIfNotExists($productConcretePageSearchTransfer);
         $productConcretePageSearchTransfer = $this->expandProductConcretePageSearchTransferWithWhitelistIds($productConcretePageSearchTransfer);
         $productConcretePageSearchTransfer = $this->expandProductConcretePageSearchTransferWithBlacklistIds($productConcretePageSearchTransfer);
 
@@ -50,7 +53,6 @@ class ProductConcretePageSearchExpander implements ProductConcretePageSearchExpa
         $whitelists = $this->productListReader->getProductWhitelistIdsByIdProduct($productConcretePageSearchTransfer->getFkProduct());
 
         if ($whitelists) {
-            $productConcretePageSearchTransfer = $this->initializeProductListMapIfNotExists($productConcretePageSearchTransfer);
             $productConcretePageSearchTransfer->getProductListMap()->setWhitelists($whitelists);
         }
 
@@ -67,7 +69,6 @@ class ProductConcretePageSearchExpander implements ProductConcretePageSearchExpa
         $blacklists = $this->productListReader->getProductBlacklistIdsByIdProduct($productConcretePageSearchTransfer->getFkProduct());
 
         if ($blacklists) {
-            $productConcretePageSearchTransfer = $this->initializeProductListMapIfNotExists($productConcretePageSearchTransfer);
             $productConcretePageSearchTransfer->getProductListMap()->setBlacklists($blacklists);
         }
 

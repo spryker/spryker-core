@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductList\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductListBuilder;
+use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Propel\Runtime\Exception\PropelException;
 
 /**
@@ -51,6 +52,7 @@ class ProductListFacadeTest extends Unit
     {
         // Assign
         $categoryTransfer = $this->tester->haveCategory();
+        /** @var \Generated\Shared\Transfer\ProductListTransfer $productListTransfer */
         $productListTransfer = (new ProductListBuilder())->withProductListCategoryRelation()->build();
         $productListTransfer->getProductListCategoryRelation()->addCategoryIds($categoryTransfer->getIdCategory());
 
@@ -68,6 +70,8 @@ class ProductListFacadeTest extends Unit
     {
         // Assign
         $productTransfer = $this->tester->haveProduct();
+
+        /** @var \Generated\Shared\Transfer\ProductListTransfer $productListTransfer */
         $productListTransfer = (new ProductListBuilder())->withProductListProductConcreteRelation()->build();
         $productListTransfer->getProductListProductConcreteRelation()->addProductIds($productTransfer->getIdProductConcrete());
 
@@ -109,6 +113,25 @@ class ProductListFacadeTest extends Unit
         // Act
         $this->getFacade()->deleteProductList($productListTransfer);
         $this->getFacade()->saveProductList($productListTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConcretePageSearchTransferWithProductLists()
+    {
+        // Arrange
+        $productConcretePageSearchTransfer = new ProductConcretePageSearchTransfer();
+        $productConcrete = $this->tester->haveProduct();
+        $productConcretePageSearchTransfer->setFkProduct($productConcrete->getIdProductConcrete());
+
+        // Act
+        $this->getFacade()->expandProductConcretePageSearchTransferWithProductLists(
+            $productConcretePageSearchTransfer
+        );
+
+        // Assert
+        $this->assertNotEmpty($productConcretePageSearchTransfer->getProductListMap());
     }
 
     /**
