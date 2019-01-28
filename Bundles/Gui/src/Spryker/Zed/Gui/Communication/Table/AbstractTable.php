@@ -14,6 +14,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Spryker\Service\UtilSanitize\UtilSanitizeService;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
@@ -912,13 +913,13 @@ abstract class AbstractTable
         $class = $this->getButtonClass($defaultOptions, $customOptions);
         $parameters = $this->getButtonParameters($buttonOptions);
         $icon = '';
+        $url = Url::parse($url);
 
         if (is_string($url)) {
-            $utilSanitizeService = new UtilSanitizeService();
-            $url = $utilSanitizeService->escapeHtml($url);
-        } else {
-            $url = $url->build();
+            $url = Url::parse($url);
         }
+
+        $url = $url->build();
 
         if (array_key_exists(self::BUTTON_ICON, $buttonOptions) === true && $buttonOptions[self::BUTTON_ICON] !== null) {
             $icon = '<i class="fa ' . $buttonOptions[self::BUTTON_ICON] . '"></i> ';
