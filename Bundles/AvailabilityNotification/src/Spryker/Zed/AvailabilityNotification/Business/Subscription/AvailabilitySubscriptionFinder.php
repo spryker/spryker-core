@@ -26,32 +26,32 @@ class AvailabilitySubscriptionFinder implements AvailabilitySubscriptionFinderIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
     public function findAvailabilitySubscription(
-        AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+        AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer
     ): AvailabilitySubscriptionResponseTransfer {
-        if ($availabilitySubscriptionExistenceRequestTransfer->getSubscriptionKey() !== null) {
-            return $this->findBySubscriptionKey($availabilitySubscriptionExistenceRequestTransfer);
+        if ($availabilitySubscriptionRequestTransfer->getSubscriptionKey() !== null) {
+            return $this->findBySubscriptionKey($availabilitySubscriptionRequestTransfer);
         }
 
-        return $this->findByEmailAndSku($availabilitySubscriptionExistenceRequestTransfer);
+        return $this->findByEmailAndSku($availabilitySubscriptionRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
     protected function findBySubscriptionKey(
-        AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+        AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer
     ): AvailabilitySubscriptionResponseTransfer {
-        $availabilitySubscriptionExistenceRequestTransfer->requireSubscriptionKey();
+        $availabilitySubscriptionRequestTransfer->requireSubscriptionKey();
 
         $availabilitySubscription = $this->availabilitySubscriptionReader
-            ->findOneBySubscriptionKey($availabilitySubscriptionExistenceRequestTransfer->getSubscriptionKey());
+            ->findOneBySubscriptionKey($availabilitySubscriptionRequestTransfer->getSubscriptionKey());
 
         return (new AvailabilitySubscriptionResponseTransfer())
             ->setAvailabilitySubscription($availabilitySubscription)
@@ -59,20 +59,20 @@ class AvailabilitySubscriptionFinder implements AvailabilitySubscriptionFinderIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
     protected function findByEmailAndSku(
-        AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionExistenceRequestTransfer
+        AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer
     ): AvailabilitySubscriptionResponseTransfer {
-        $availabilitySubscriptionExistenceRequestTransfer->requireEmail();
-        $availabilitySubscriptionExistenceRequestTransfer->requireSku();
+        $availabilitySubscriptionRequestTransfer->requireEmail();
+        $availabilitySubscriptionRequestTransfer->requireSku();
 
         $availabilitySubscriptionTransfer = $this->availabilitySubscriptionReader
             ->findOneByEmailAndSku(
-                $availabilitySubscriptionExistenceRequestTransfer->getEmail(),
-                $availabilitySubscriptionExistenceRequestTransfer->getSku()
+                $availabilitySubscriptionRequestTransfer->getEmail(),
+                $availabilitySubscriptionRequestTransfer->getSku()
             );
 
         return (new AvailabilitySubscriptionResponseTransfer())
