@@ -10,8 +10,12 @@ namespace Spryker\Zed\ShipmentCartConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpander as ShipmentCartExpanderWithMultiShippingAddress;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderInterface;
+use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter;
+use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidator as ShipmentCartValidatorWithMultiShippingAddress;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface;
+use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapter;
+use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartExpander;
 use Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartValidator;
 use Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartExpanderStrategyResolver;
@@ -40,7 +44,11 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentCartExpanderWithMultiShippingAddress(): ShipmentCartExpanderInterface
     {
-        return new ShipmentCartExpanderWithMultiShippingAddress($this->getShipmentFacade(), $this->getPriceFacade());
+        return new ShipmentCartExpanderWithMultiShippingAddress(
+            $this->getShipmentFacade(),
+            $this->getPriceFacade(),
+            $this->createShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter()
+        );
     }
 
     /**
@@ -58,7 +66,11 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentCartValidatorWithMultiShippingAddress(): ShipmentCartValidatorInterface
     {
-        return new ShipmentCartValidatorWithMultiShippingAddress($this->getShipmentFacade(), $this->getPriceFacade());
+        return new ShipmentCartValidatorWithMultiShippingAddress(
+            $this->getShipmentFacade(),
+            $this->getPriceFacade(),
+            $this->createShipmentCartValidatorQuoteDataBCForMultiShipmentAdapter()
+        );
     }
 
     /**
@@ -78,7 +90,27 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createShipmentCartExpanderWithMultiShippingAddress() instead.
+     * @deprecated Will be removed in next major release.
+     *
+     * @return \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapterInterface
+     */
+    protected function createShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter(): ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapterInterface
+    {
+        return new ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter();
+    }
+
+    /**
+     * @deprecated Will be removed in next major release.
+     *
+     * @return \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapterInterface
+     */
+    protected function createShipmentCartValidatorQuoteDataBCForMultiShipmentAdapter(): ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapterInterface
+    {
+        return new ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapter();
+    }
+
+    /**
+     * @deprecated Will be removed in next major release. Use $this->createShipmentCartExpanderWithMultiShippingAddress() instead.
      *
      * @return \Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartExpanderStrategyResolverInterface
      */
@@ -93,7 +125,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *
@@ -109,7 +141,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *
@@ -125,7 +157,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createShipmentCartValidatorWithMultiShippingAddress() instead.
+     * @deprecated Will be removed in next major release. Use $this->createShipmentCartValidatorWithMultiShippingAddress() instead.
      *
      * @return \Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartValidatorStrategyResolverInterface
      */
@@ -140,7 +172,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *
@@ -156,7 +188,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *

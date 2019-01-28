@@ -31,15 +31,25 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     protected $priceFacade;
 
     /**
+     * @deprecated Will be removed in next major release.
+     *
+     * @var \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapterInterface
+     */
+    protected $quoteDataBCForMultiShipmentAdapter;
+
+    /**
      * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface $priceFacade
+     * @param \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
      */
     public function __construct(
         ShipmentCartConnectorToShipmentFacadeInterface $shipmentFacade,
-        ShipmentCartConnectorToPriceFacadeInterface $priceFacade
+        ShipmentCartConnectorToPriceFacadeInterface $priceFacade,
+        ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
     ) {
         $this->shipmentFacade = $shipmentFacade;
         $this->priceFacade = $priceFacade;
+        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
     }
 
     /**
@@ -52,9 +62,9 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
         $quoteTransfer = $cartChangeTransfer->getQuote();
 
         /**
-         * @deprecated Will be removed in next major version after multiple shipment release.
+         * @deprecated Will be removed in next major release.
          */
-        $quoteTransfer = $this->adaptQuoteDataBCForMultiShipment($quoteTransfer);
+        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 
         $availableShipmentMethods = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
 
@@ -84,68 +94,6 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
         }
 
         return $cartChangeTransfer;
-    }
-
-    /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function adaptQuoteDataBCForMultiShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() !== null) {
-                return $quoteTransfer;
-            }
-            break;
-        }
-
-        $shippingAddress = $quoteTransfer->getShippingAddress();
-        if ($shippingAddress === null) {
-            return $quoteTransfer;
-        }
-
-        $shipmentExpenseTransfer = null;
-        foreach ($quoteTransfer->getExpenses() as $key => $expenseTransfer) {
-            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                continue;
-            }
-
-            $shipmentExpenseTransfer = $expenseTransfer;
-            break;
-        }
-
-        $quoteShipment = $quoteTransfer->getShipment();
-        if ($quoteShipment === null && $shipmentExpenseTransfer === null) {
-            return $quoteTransfer;
-        }
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() !== null
-                && $itemTransfer->getShipment()->getExpense() !== null
-                && $itemTransfer->getShipment()->getShippingAddress() !== null
-            ) {
-                continue;
-            }
-
-            $shipmentTransfer = $itemTransfer->getShipment() ?: $quoteShipment;
-            if ($shipmentTransfer === null) {
-                $shipmentTransfer = (new ShipmentTransfer())
-                    ->setMethod(new ShipmentMethodTransfer());
-            }
-
-            if ($shipmentExpenseTransfer === null && $itemTransfer->getShipment() !== null) {
-                $shipmentExpenseTransfer = $itemTransfer->getShipment()->getExpense();
-            }
-
-            $shipmentTransfer->setExpense($shipmentExpenseTransfer)
-                ->setShippingAddress($shippingAddress);
-            $itemTransfer->setShipment($shipmentTransfer);
-        }
-
-        return $quoteTransfer;
     }
 
     /**

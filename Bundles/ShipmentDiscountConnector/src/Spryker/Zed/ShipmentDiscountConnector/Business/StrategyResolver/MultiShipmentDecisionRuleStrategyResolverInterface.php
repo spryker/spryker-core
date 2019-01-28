@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver;
 use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface;
 
 /**
- * @deprecated Will be removed in next major version after multiple shipment release.
+ * @deprecated Will be removed in next major release.
  */
 interface MultiShipmentDecisionRuleStrategyResolverInterface
 {

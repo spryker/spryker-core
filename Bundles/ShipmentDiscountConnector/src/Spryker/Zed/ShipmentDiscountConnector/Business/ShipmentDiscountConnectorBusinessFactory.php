@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentDiscountConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\QuoteDataBCForMultiShipmentAdapter;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollector as ShipmentDiscountCollectorWithMultiShipment;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollectorInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\CarrierDiscountDecisionRule as CarrierDiscountDecisionRuleWithMultiShipment;
@@ -24,6 +25,7 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmen
 use Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentDecisionRuleStrategyResolver;
 use Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentDecisionRuleStrategyResolverInterface;
 use Spryker\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorDependencyProvider;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\QuoteDataBCForMultiShipmentAdapterInterface;
 
 /**
  * @method \Spryker\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorConfig getConfig()
@@ -58,7 +60,8 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createCarrierDiscountCollectorWithMultiShipment(): ShipmentDiscountCollectorInterface
     {
         return new ShipmentDiscountCollectorWithMultiShipment(
-            $this->createCarrierDiscountDecisionRuleWithMultiShipment()
+            $this->createCarrierDiscountDecisionRuleWithMultiShipment(),
+            $this->createQuoteDataBCForMultiShipmentAdapter()
         );
     }
 
@@ -104,7 +107,8 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createMethodDiscountCollectorWithMultiShipment(): ShipmentDiscountCollectorInterface
     {
         return new ShipmentDiscountCollectorWithMultiShipment(
-            $this->createMethodDiscountDecisionRuleWithMultiShipment()
+            $this->createMethodDiscountDecisionRuleWithMultiShipment(),
+            $this->createQuoteDataBCForMultiShipmentAdapter()
         );
     }
 
@@ -148,7 +152,8 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createShipmentPriceDiscountCollectorWithMultiShipment(): ShipmentDiscountCollectorInterface
     {
         return new ShipmentDiscountCollectorWithMultiShipment(
-            $this->createShipmentPriceDiscountDecisionRuleWithMultiShipment()
+            $this->createShipmentPriceDiscountDecisionRuleWithMultiShipment(),
+            $this->createQuoteDataBCForMultiShipmentAdapter()
         );
     }
 
@@ -201,7 +206,17 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createCarrierDiscountCollectorWithMultiShipment(),
+     * @deprecated Will be removed in next major release.
+     *
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Collector\QuoteDataBCForMultiShipmentAdapterInterface
+     */
+    protected function createQuoteDataBCForMultiShipmentAdapter(): QuoteDataBCForMultiShipmentAdapterInterface
+    {
+        return new QuoteDataBCForMultiShipmentAdapter();
+    }
+
+    /**
+     * @deprecated Will be removed in next major release. Use $this->createCarrierDiscountCollectorWithMultiShipment(),
      * createMethodDiscountCollectorWithMultiShipment() or createShipmentPriceDiscountCollectorWithMultiShipment() instead.
      *
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentCollectorStrategyResolver
@@ -218,7 +233,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *
@@ -237,7 +252,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *
@@ -256,7 +271,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *
@@ -275,7 +290,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createCarrierDiscountDecisionRuleWithMultiShipment(),
+     * @deprecated Will be removed in next major release. Use $this->createCarrierDiscountDecisionRuleWithMultiShipment(),
      * createCarrierDiscountDecisionRuleWithMultiShipment() or createCarrierDiscountDecisionRuleWithMultiShipment() instead.
      *
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentCollectorStrategyResolver
@@ -292,7 +307,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *
@@ -311,7 +326,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *
@@ -330,7 +345,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *

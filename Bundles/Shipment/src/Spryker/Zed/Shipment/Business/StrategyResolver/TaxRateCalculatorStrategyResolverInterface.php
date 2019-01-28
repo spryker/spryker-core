@@ -10,7 +10,7 @@ namespace Spryker\Zed\Shipment\Business\StrategyResolver;
 use Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface;
 
 /**
- * @deprecated Will be removed in next major version after multiple shipment release.
+ * @deprecated Will be removed in next major release.
  */
 interface TaxRateCalculatorStrategyResolverInterface
 {

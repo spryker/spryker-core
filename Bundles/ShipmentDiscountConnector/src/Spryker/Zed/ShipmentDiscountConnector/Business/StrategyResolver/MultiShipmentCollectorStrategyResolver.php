@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollectorInterface;
 
 /**
- * @deprecated Will be removed in next major version after multiple shipment release.
+ * @deprecated Will be removed in next major release.
  */
 class MultiShipmentCollectorStrategyResolver implements MultiShipmentCollectorStrategyResolverInterface
 {

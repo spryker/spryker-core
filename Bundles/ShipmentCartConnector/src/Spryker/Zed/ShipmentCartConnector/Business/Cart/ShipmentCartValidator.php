@@ -33,15 +33,25 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
     protected $priceFacade;
 
     /**
+     * @deprecated Will be removed in next major release.
+     *
+     * @var \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapterInterface
+     */
+    protected $quoteDataBCForMultiShipmentAdapter;
+
+    /**
      * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface $priceFacade
+     * @param \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
      */
     public function __construct(
         ShipmentCartConnectorToShipmentFacadeInterface $shipmentFacade,
-        ShipmentCartConnectorToPriceFacadeInterface $priceFacade
+        ShipmentCartConnectorToPriceFacadeInterface $priceFacade,
+        ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
     ) {
         $this->shipmentFacade = $shipmentFacade;
         $this->priceFacade = $priceFacade;
+        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
     }
 
     /**
@@ -57,24 +67,24 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
         $quoteTransfer = $cartChangeTransfer->getQuote();
 
         /**
-         * @deprecated Will be removed in next major version after multiple shipment release.
+         * @deprecated Will be removed in next major release.
          */
-        $quoteTransfer = $this->adaptQuoteDataBCForMultiShipment($quoteTransfer);
+        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 
         $availableShipmentMethods = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $shipmentMethod = $itemTransfer->getShipment();
+            $shipmentTransfer = $itemTransfer->getShipment();
             $skipValidation = (
-                $shipmentMethod === null
-                || $this->isCurrencyChanged($shipmentMethod, $quoteTransfer) === false
+                $shipmentTransfer === null
+                || $this->isCurrencyChanged($shipmentTransfer, $quoteTransfer) === false
             );
 
             if ($skipValidation) {
                 continue;
             }
 
-            $idShipmentMethod = $shipmentMethod->getMethod()->getIdShipmentMethod();
+            $idShipmentMethod = $shipmentTransfer->getMethod()->getIdShipmentMethod();
             $shipmentMethodTransfer = $this->filterAvailableMethodById($idShipmentMethod, $availableShipmentMethods);
 
             if ($shipmentMethodTransfer === null) {
@@ -87,68 +97,6 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
         }
 
         return $cartPreCheckResponseTransfer;
-    }
-
-    /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function adaptQuoteDataBCForMultiShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() !== null) {
-                return $quoteTransfer;
-            }
-            break;
-        }
-
-        $shippingAddress = $quoteTransfer->getShippingAddress();
-        if ($shippingAddress === null) {
-            return $quoteTransfer;
-        }
-
-        $shipmentExpenseTransfer = null;
-        foreach ($quoteTransfer->getExpenses() as $key => $expenseTransfer) {
-            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                continue;
-            }
-
-            $shipmentExpenseTransfer = $expenseTransfer;
-            break;
-        }
-
-        $quoteShipment = $quoteTransfer->getShipment();
-        if ($quoteShipment === null && $shipmentExpenseTransfer === null) {
-            return $quoteTransfer;
-        }
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() !== null
-                && $itemTransfer->getShipment()->getExpense() !== null
-                && $itemTransfer->getShipment()->getShippingAddress() !== null
-            ) {
-                continue;
-            }
-
-            $shipmentTransfer = $itemTransfer->getShipment() ?: $quoteShipment;
-            if ($shipmentTransfer === null) {
-                $shipmentTransfer = (new ShipmentTransfer())
-                    ->setMethod(new ShipmentMethodTransfer());
-            }
-
-            if ($shipmentExpenseTransfer === null && $itemTransfer->getShipment() !== null) {
-                $shipmentExpenseTransfer = $itemTransfer->getShipment()->getExpense();
-            }
-
-            $shipmentTransfer->setExpense($shipmentExpenseTransfer)
-                ->setShippingAddress($shippingAddress);
-            $itemTransfer->setShipment($shipmentTransfer);
-        }
-
-        return $quoteTransfer;
     }
 
     /**

@@ -12,10 +12,31 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollector as ShipmentDiscountWithoutMultiShipmentCollector;
 
 class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentCollector
 {
+    /**
+     * @deprecated Will be removed in next major release.
+     *
+     * @var \Spryker\Zed\TaxProductConnector\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface
+     */
+    protected $quoteDataBCForMultiShipmentAdapter;
+
+    /**
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Business\Collector\QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
+     */
+    public function __construct(
+        ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule,
+        QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
+    ) {
+        parent::__construct($carrierDiscountDecisionRule);
+
+        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
@@ -25,9 +46,9 @@ class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentColl
     public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
         /**
-         * @deprecated Will be removed in next major version after multiple shipment release.
+         * @deprecated Will be removed in next major release.
          */
-        $quoteTransfer = $this->adaptQuoteDataBCForMultiShipment($quoteTransfer);
+        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 
         $discountableItems = [];
 
@@ -46,67 +67,5 @@ class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentColl
         }
 
         return $discountableItems;
-    }
-
-    /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function adaptQuoteDataBCForMultiShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() !== null) {
-                return $quoteTransfer;
-            }
-            break;
-        }
-
-        $shippingAddress = $quoteTransfer->getShippingAddress();
-        if ($shippingAddress === null) {
-            return $quoteTransfer;
-        }
-
-        $shipmentExpenseTransfer = null;
-        foreach ($quoteTransfer->getExpenses() as $key => $expenseTransfer) {
-            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                continue;
-            }
-
-            $shipmentExpenseTransfer = $expenseTransfer;
-            break;
-        }
-
-        $quoteShipment = $quoteTransfer->getShipment();
-        if ($quoteShipment === null && $shipmentExpenseTransfer === null) {
-            return $quoteTransfer;
-        }
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() !== null
-                && $itemTransfer->getShipment()->getExpense() !== null
-                && $itemTransfer->getShipment()->getShippingAddress() !== null
-            ) {
-                continue;
-            }
-
-            $shipmentTransfer = $itemTransfer->getShipment() ?: $quoteShipment;
-            if ($shipmentTransfer === null) {
-                $shipmentTransfer = (new ShipmentTransfer())
-                    ->setMethod(new ShipmentMethodTransfer());
-            }
-
-            if ($shipmentExpenseTransfer === null && $itemTransfer->getShipment() !== null) {
-                $shipmentExpenseTransfer = $itemTransfer->getShipment()->getExpense();
-            }
-
-            $shipmentTransfer->setExpense($shipmentExpenseTransfer)
-                ->setShippingAddress($shippingAddress);
-            $itemTransfer->setShipment($shipmentTransfer);
-        }
-
-        return $quoteTransfer;
     }
 }

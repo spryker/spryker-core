@@ -9,14 +9,66 @@ namespace Spryker\Zed\Sales\Business\Order;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
+use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver as SalesOrderSaverWithoutItemShipmentAddress;
+use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface;
+use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
+use Spryker\Zed\Sales\SalesConfig;
 
 class SalesOrderSaver extends SalesOrderSaverWithoutItemShipmentAddress
 {
+    /**
+     * @deprecated Will be removed in next major release.
+     *
+     * @var \Spryker\Zed\Sales\Business\Order\SalesOrderSaverQuoteDataBCForMultiShipmentAdapterInterface
+     */
+    protected $quoteDataBCForMultiShipmentAdapter;
+
+    /**
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface $countryFacade
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
+     * @param \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface $orderReferenceGenerator
+     * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
+     * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[] $orderExpanderPreSavePlugins
+     * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
+     * @param \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface $salesOrderItemMapper
+     * @param \Spryker\Zed\Sales\Business\Order\SalesOrderSaverQuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
+     */
+    public function __construct(
+        SalesToCountryInterface $countryFacade,
+        SalesToOmsInterface $omsFacade,
+        OrderReferenceGeneratorInterface $orderReferenceGenerator,
+        SalesConfig $salesConfiguration,
+        LocaleQueryContainerInterface $localeQueryContainer,
+        Store $store,
+        $orderExpanderPreSavePlugins,
+        SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor,
+        SalesOrderItemMapperInterface $salesOrderItemMapper,
+        SalesOrderSaverQuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
+    ) {
+        parent::__construct(
+            $countryFacade,
+            $omsFacade,
+            $orderReferenceGenerator,
+            $salesConfiguration,
+            $localeQueryContainer,
+            $store,
+            $orderExpanderPreSavePlugins,
+            $salesOrderSaverPluginExecutor,
+            $salesOrderItemMapper,
+
+        );
+
+        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
@@ -26,73 +78,11 @@ class SalesOrderSaver extends SalesOrderSaverWithoutItemShipmentAddress
     public function saveOrderSales(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         /**
-         * @deprecated Will be removed in next major version after multiple shipment release.
+         * @deprecated Will be removed in next major release.
          */
-        $quoteTransfer = $this->adaptQuoteDataBCForMultiShipment($quoteTransfer);
+        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 
         parent::saveOrderSales($quoteTransfer, $saveOrderTransfer);
-    }
-
-    /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function adaptQuoteDataBCForMultiShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() !== null) {
-                return $quoteTransfer;
-            }
-            break;
-        }
-
-        $shippingAddress = $quoteTransfer->getShippingAddress();
-        if ($shippingAddress === null) {
-            return $quoteTransfer;
-        }
-
-        $shipmentExpenseTransfer = null;
-        foreach ($quoteTransfer->getExpenses() as $key => $expenseTransfer) {
-            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                continue;
-            }
-
-            $shipmentExpenseTransfer = $expenseTransfer;
-            break;
-        }
-
-        $quoteShipment = $quoteTransfer->getShipment();
-        if ($quoteShipment === null && $shipmentExpenseTransfer === null) {
-            return $quoteTransfer;
-        }
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() !== null
-                && $itemTransfer->getShipment()->getExpense() !== null
-                && $itemTransfer->getShipment()->getShippingAddress() !== null
-            ) {
-                continue;
-            }
-
-            $shipmentTransfer = $itemTransfer->getShipment() ?: $quoteShipment;
-            if ($shipmentTransfer === null) {
-                $shipmentTransfer = (new ShipmentTransfer())
-                    ->setMethod(new ShipmentMethodTransfer());
-            }
-
-            if ($shipmentExpenseTransfer === null && $itemTransfer->getShipment() !== null) {
-                $shipmentExpenseTransfer = $itemTransfer->getShipment()->getExpense();
-            }
-
-            $shipmentTransfer->setExpense($shipmentExpenseTransfer)
-                ->setShippingAddress($shippingAddress);
-            $itemTransfer->setShipment($shipmentTransfer);
-        }
-
-        return $quoteTransfer;
     }
 
     /**

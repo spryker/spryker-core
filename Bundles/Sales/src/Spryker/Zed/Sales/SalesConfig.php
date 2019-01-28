@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Sales;
 
-use ArrayObject;
 use BadMethodCallException;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -72,9 +71,9 @@ class SalesConfig extends AbstractBundleConfig
     public function isTestOrder(QuoteTransfer $quoteTransfer)
     {
         /**
-         * @deprecated Will be removed in next major version after multiple shipment release.
+         * @deprecated Will be removed in next major release.
          */
-        if ($this->hasItemOwnShipmentTransfer($quoteTransfer->getItems()) === false) {
+        if (!defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT')) {
             return $this->isTestOrderWithoutMultiShippingAddress($quoteTransfer);
         }
 
@@ -114,7 +113,7 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -149,24 +148,5 @@ class SalesConfig extends AbstractBundleConfig
         }
 
         return true;
-    }
-
-    /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]|null $items
-     *
-     * @return bool
-     */
-    protected function hasItemOwnShipmentTransfer(?ArrayObject $items): bool
-    {
-        if ($items->count() === 0) {
-            return false;
-        }
-
-        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-        $itemTransfer = reset($items);
-
-        return $itemTransfer->offsetExists(static::PROPERTY_NAME_SHIPMENT_TRANSFER);
     }
 }

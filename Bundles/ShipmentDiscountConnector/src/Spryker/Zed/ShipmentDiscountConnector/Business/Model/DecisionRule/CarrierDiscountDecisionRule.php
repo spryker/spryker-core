@@ -61,7 +61,7 @@ class CarrierDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterfa
      *
      * @return bool
      */
-    public function isExpenseSatisfiedBy(QuoteTransfer $quoteTransfer, ExpenseTransfer $expenseTransfer, ClauseTransfer $clauseTransfer): bool
+    public function isExpenseSatisfiedBy(QuoteTransfer $quoteTransfer, ExpenseTransfer $expenseTransfer, ClauseTransfer $clauseTransfer)
     {
         return $this->isSatisfiedCarrier($quoteTransfer, $clauseTransfer);
     }
@@ -86,7 +86,7 @@ class CarrierDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterfa
      *
      * @return bool
      */
-    protected function isSatisfiedCarrier(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer): bool
+    protected function isSatisfiedCarrier(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
         $idShipmentCarrier = $this->getIdShipmentCarrierByQuote($quoteTransfer);
 
@@ -102,7 +102,7 @@ class CarrierDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterfa
      *
      * @return int|null
      */
-    protected function getIdShipmentCarrierByQuote(QuoteTransfer $quoteTransfer): ?int
+    protected function getIdShipmentCarrierByQuote(QuoteTransfer $quoteTransfer)
     {
         $shipment = $quoteTransfer->getShipment();
 

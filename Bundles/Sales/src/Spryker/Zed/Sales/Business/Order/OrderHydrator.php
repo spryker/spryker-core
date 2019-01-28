@@ -19,13 +19,37 @@ use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Sales\Persistence\SpySalesShipment;
-use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator as OrderHydratorWithoutMultiShipping;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderHydrator extends OrderHydratorWithoutMultiShipping
 {
+    /**
+     * @deprecated Will be removed in next major release.
+     *
+     * @var \Spryker\Zed\Sales\Business\Order\OrderHydratorOrderDataBCForMultiShipmentAdapterInterface
+     */
+    protected $quoteDataBCForMultiShipmentAdapter;
+
+    /**
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
+     * @param \Spryker\Zed\Sales\Business\Order\OrderHydratorOrderDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
+     * @param \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[] $hydrateOrderPlugins
+     */
+    public function __construct(
+        SalesQueryContainerInterface $queryContainer,
+        SalesToOmsInterface $omsFacade,
+        OrderHydratorOrderDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter,
+        array $hydrateOrderPlugins = []
+    ) {
+        parent::__construct($queryContainer,$omsFacade, $hydrateOrderPlugins);
+
+        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
+    }
+
     /**
      * @param int $idSalesOrder
      *
@@ -40,9 +64,9 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
             ->findOne();
 
         /**
-         * @deprecated Will be removed in next major version after multiple shipment release.
+         * @deprecated Will be removed in next major release.
          */
-        $orderEntity = $this->adaptOrderDataBCForMultiShipment($orderEntity);
+        $orderEntity = $this->quoteDataBCForMultiShipmentAdapter->adapt($orderEntity);
 
         if ($orderEntity === null) {
             throw new InvalidSalesOrderException(
@@ -54,66 +78,6 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
         }
 
         return $this->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
-    }
-
-    /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
-     *
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
-     */
-    protected function adaptOrderDataBCForMultiShipment(SpySalesOrder $orderEntity): SpySalesOrder
-    {
-        foreach ($orderEntity->getItems() as $orderItemEntity) {
-            if ($orderItemEntity->getSpySalesShipment() !== null) {
-                return $orderEntity;
-            }
-            break;
-        }
-
-        $shippingAddress = $orderEntity->getShippingAddress();
-        if ($shippingAddress === null) {
-            return $orderEntity;
-        }
-
-        $shipmentExpenseEntity = null;
-        foreach ($orderEntity->getExpenses() as $key => $expenseEntity) {
-            if ($expenseEntity->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                continue;
-            }
-
-            $shipmentExpenseEntity = $expenseEntity;
-            break;
-        }
-
-        if ($shipmentExpenseEntity === null) {
-            return $orderEntity;
-        }
-
-        foreach ($orderEntity->getItems() as $orderItemEntity) {
-            if ($orderItemEntity->getShipment() !== null
-                && $orderItemEntity->getShipment()->getExpense() !== null
-                && $orderItemEntity->getShipment()->getShippingAddress() !== null
-            ) {
-                continue;
-            }
-
-            $shipmentTransfer = $orderItemEntity->getSpySalesShipment();
-            if ($shipmentTransfer === null) {
-                $shipmentTransfer = (new SpySalesShipment());
-            }
-
-            if ($shipmentExpenseEntity === null && $orderItemEntity->getSpySalesShipment() !== null) {
-                $shipmentExpenseEntity = $orderItemEntity->getSpySalesShipment()->getExpense();
-            }
-
-            $shipmentTransfer->setExpense($shipmentExpenseEntity)
-                ->setShippingAddress($shippingAddress);
-            $orderItemEntity->setShipment($shipmentTransfer);
-        }
-
-        return $orderEntity;
     }
 
     /**

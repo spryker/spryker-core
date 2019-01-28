@@ -9,6 +9,8 @@ namespace Spryker\Zed\ShipmentCheckoutConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentCheckoutPreCheck;
+use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\QuoteDataBCForMultiShipmentAdapter;
+use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\QuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheck as ShipmentCheckoutPreCheckWithMultipleShippingAddress;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver\PreCheckStrategyResolver;
@@ -33,7 +35,10 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentCheckoutPreCheckWithMultipleShippingAddress(): ShipmentCheckoutPreCheckInterface
     {
-        return new ShipmentCheckoutPreCheckWithMultipleShippingAddress($this->getShipmentFacade());
+        return new ShipmentCheckoutPreCheckWithMultipleShippingAddress(
+            $this->getShipmentFacade(),
+            $this->createQuoteDataBCForMultiShipmentAdapter()
+        );
     }
 
     /**
@@ -45,7 +50,17 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createShipmentCheckoutPreCheckWithMultipleShippingAddress() instead.
+     * @deprecated Will be removed in next major release.
+     *
+     * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\QuoteDataBCForMultiShipmentAdapterInterface
+     */
+    protected function createQuoteDataBCForMultiShipmentAdapter(): QuoteDataBCForMultiShipmentAdapterInterface
+    {
+        return new QuoteDataBCForMultiShipmentAdapter();
+    }
+
+    /**
+     * @deprecated Will be removed in next major release. Use $this->createShipmentCheckoutPreCheckWithMultipleShippingAddress() instead.
      *
      * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver\PreCheckStrategyResolverInterface
      */
@@ -60,7 +75,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *
@@ -76,7 +91,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *

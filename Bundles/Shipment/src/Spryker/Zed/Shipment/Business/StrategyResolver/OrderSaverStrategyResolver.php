@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface;
 
 /**
- * @deprecated Will be removed in next major version after multiple shipment release.
+ * @deprecated Will be removed in next major release.
  */
 class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
 {

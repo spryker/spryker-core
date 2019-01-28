@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollectorInterface;
 
 /**
- * @deprecated Will be removed in next major version after multiple shipment release.
+ * @deprecated Will be removed in next major release.
  */
 interface MultiShipmentCollectorStrategyResolverInterface
 {

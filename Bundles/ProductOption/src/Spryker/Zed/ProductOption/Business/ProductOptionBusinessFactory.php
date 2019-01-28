@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOption\Business;
 
+use Spryker\Zed\Customer\Business\Checkout\QuoteDataBCForMultiShipmentAdapter;
+use Spryker\Zed\Customer\Business\Checkout\QuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator;
@@ -142,7 +144,11 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOptionTaxRateWithItemShipmentTaxRateCalculator(): CalculatorInterface
     {
-        return new ProductOptionTaxRateWithItemShipmentTaxRateCalculator($this->getQueryContainer(), $this->getTaxFacade());
+        return new ProductOptionTaxRateWithItemShipmentTaxRateCalculator(
+            $this->getQueryContainer(),
+            $this->getTaxFacade(),
+            $this->createQuoteDataBCForMultiShipmentAdapter()
+        );
     }
 
     /**
@@ -262,7 +268,17 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createProductOptionTaxRateWithItemShipmentTaxRateCalculator() instead.
+     * @deprecated Will be removed in next major release.
+     *
+     * @return \Spryker\Zed\ProductOption\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface
+     */
+    protected function createQuoteDataBCForMultiShipmentAdapter(): QuoteDataBCForMultiShipmentAdapterInterface
+    {
+        return new QuoteDataBCForMultiShipmentAdapter();
+    }
+
+    /**
+     * @deprecated Will be removed in next major release. Use $this->createProductOptionTaxRateWithItemShipmentTaxRateCalculator() instead.
      *
      * @return \Spryker\Zed\ProductOption\Business\StrategyResolver\TaxRateCalculatorStrategyResolver
      */
@@ -277,7 +293,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param \Spryker\Zed\Tax\Business\Model\CalculatorInterface[] $strategyContainer
      *
@@ -293,7 +309,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param \Spryker\Zed\Tax\Business\Model\CalculatorInterface[] $strategyContainer
      *
