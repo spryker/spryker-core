@@ -18,6 +18,6 @@ class FloatToIntegerConverter implements FloatToIntegerConverterInterface
      */
     public function convert(float $amount, int $precision = 0, int $mode = PHP_ROUND_HALF_UP): int
     {
-        return round($amount, $precision, $mode);
+        return (int)round($amount, $precision, $mode);
     }
 }
