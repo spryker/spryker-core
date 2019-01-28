@@ -7,40 +7,40 @@ Back,Zurück
 "Check for violations","Auf Verstöße überprüfen"
 "Composer dependencies",Composer-Abhängigkeiten
 "Composer dev only dependencies","Composer dev only dependencies"
-"Core module",Kernmodul
+"Core module","Core Modul"
 Count,Anzahl
 "Declared in composer.json","Declared in composer.json"
 "Declared in composer.json (dev)","Declared in composer.json (dev)"
 Dependency,Abhängigkeit
-"Dependency graphs of all core modules","Abhängigkeitsgraph aller Kernmodule"
+"Dependency graphs of all core modules","Abhängigkeitsgraph aller Core Module"
 detailed,detailliert
 "Dev only dependencies","Dev only dependencies"
-Development,Entwicklung
+Development,Development
 "Display all architecture rules","Alle Architekturregeln anzeigen"
 "Download CSV","CSV herunterladen"
 "Found in src","Gefunden in src"
 "Found in test","Gefunden im Test"
 From,Von
-in,ein
+in,in
 "in src","in src"
 "in tests","in Tests"
-Incoming,Eingang
+Incoming,Incoming
 "Incoming dependencies of the","Eingehende Abhängigkeiten der"
-"Indirect Incoming","Indirekter Eingang"
-"Indirect Outgoing","Indirekter Ausgang"
-"Indirect Stability","Indirekte Stabilität"
+"Indirect Incoming","Indirect Incoming"
+"Indirect Outgoing","Indirect Outgoing"
+"Indirect Stability","Indirect Stability"
 "List all used plugins","Alle verwendeten Plug-ins auflisten"
 module,Modul
 Module,Modul
 "Module name",Modulname
 "Module overview",Modulübersicht
-Namespace,Namensraum
+Namespace,Namespace
 "No architecture violations detected","Keine Architekturverstöße erkannt"
 "No plugins used in this Module","In diesem Modul werden keine Plug-ins verwendet"
-out,aus
-Outgoing,Ausgang
+out,out
+Outgoing,Outgoing
 "Outgoing dependencies of the","Ausgehende Abhängigkeiten der"
-"Plugins used in Projects DependencyProvider","Im DependencyProvider des Projects verwendete Plug-ins"
+"Plugins used in Projects DependencyProvider","Im DependencyProvider des Projekts verwendete Plug-ins"
 Priority:,Priorität:
 "Project module",Projektmodul
 Reload,"Neu laden"
@@ -51,11 +51,11 @@ require-dev,require-dev
 "Spryker Stability","Spryker Stabilität"
 Stability,Stabilität
 Stability,Stabilität
-"Stability is calculated by ""incoming dependencies / ( incoming dependencies + outgoing dependencies )"" the result will be between 0 (stable) and 1 (unstable)","Die Stabilität errechnet sich aus der Gleichung ""eingehende Dependencies / (eingehende Dependencies + ausgehende Dependencies )"", das Ergebnis liegt zwischen 0 (stabil) und 1 (instabil)"
+"Stability is calculated by ""incoming dependencies / ( incoming dependencies + outgoing dependencies )"" the result will be between 0 (stable) and 1 (unstable)","Stability is calculated by ""incoming dependencies / ( incoming dependencies + outgoing dependencies )"" the result will be between 0 (stable) and 1 (unstable)"
 "Stability of all core modules","Stabilität aller Kernmodule"
 "Suggested dependencies","Empfohlene Abhängigkeiten"
 SUM,SUM
 To,An
 "Used Plugins","Verwendete Plug-ins"
-"You must specify a bundle for which the graph should be build","Sie müssen ein Paket bestimmen, für das der Graph erstellt werden soll"
-"You need to run ""vendor/bin/console dev:dependency:build-tree"" to calculate stability for all bundles.","Sie müssen ""vendor/bin/console dev:dependency:build-tree"" ausführen, um die Stabilität aller Pakete zu berechnen."
+"You must specify a bundle for which the graph should be build","Sie müssen ein Bundle bestimmen, für das der Graph erstellt werden soll"
+"You need to run ""vendor/bin/console dev:dependency:build-tree"" to calculate stability for all bundles.","Sie müssen ""vendor/bin/console dev:dependency:build-tree"" ausführen, um die Stabilität aller Bundle zu berechnen."

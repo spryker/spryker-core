@@ -1,4 +1,3 @@
-"Product Abstract Attributes Management","Product Abstract Attributes Management"
 "1. General Information","1. General Information"
 "2. Translations","2. Translations"
 Add,Add
@@ -29,6 +28,7 @@ float,float
 number,number
 "Predefined value translations","Predefined value translations"
 "Predefined values","Predefined values"
+"Product Abstract Attributes Management","Product Abstract Attributes Management"
 "Product abstract attributes saved","Product abstract attributes saved"
 "Product attribute was created successfully.","Product attribute was created successfully."
 "Product attribute was not created.","Product attribute was not created."

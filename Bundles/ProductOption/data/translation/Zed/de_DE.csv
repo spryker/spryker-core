@@ -20,12 +20,12 @@ Name,Name
 "Net Price",Nettopreis
 "Option group ID","ID der Optionengruppe"
 "Option name",Optionsname
-"Option name translation key","Übersetzungsschlüssel für Optionsnamen"
+"Option name translation key","Übersetzungs-Key für Optionsnamen"
 "Option successfully activated.","Option erfolgreich aktiviert."
 "Option successfully deactivated.","Option erfolgreich deaktiviert."
 "Option Values",Optionswerte
-"Product option group created.","Optionengruppe des Produkts erstellt."
-"Product option group modified.","Optionengruppe des Produkts geändert."
+"Product option group created.","Gruppe der Produktoptionen erstellt."
+"Product option group modified.","Gruppe der Produktoptionen geändert."
 "Product option list",Produktoptionenliste
 Products,Produkte
 "Products to be assigned","Zuzuordnende Produkte"

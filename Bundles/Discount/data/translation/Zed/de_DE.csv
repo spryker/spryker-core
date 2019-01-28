@@ -4,8 +4,8 @@ Activate,Aktivieren
 "Add rule","Regel hinzufügen"
 Amount:,Betrag:
 "Apply to query:","Auf Query anwenden:"
-"Batch Value",Chargenwert
-"Calculator type",Rechnerart
+"Batch Value",Satz
+"Calculator type",Berechnungsgrundlage
 "Cart Rules",Warenkorb-Regeln
 Conditions,Bedingungen
 "Could not change discount visibility.","Sichtbarkeit des Rabatts konnte nicht geändert werden."
@@ -19,7 +19,7 @@ Deactivate,Deaktivieren
 Description,Beschreibung
 Description:,Beschreibung:
 "Discount calculation",Rabattberechnung
-"Discount collection type","Art der Rabattgruppe"
+"Discount collection type","Discount application type"
 "Discount List",Rabattliste
 "Discount successfully activated","Rabatt erfolgreich aktiviert"
 "Discount successfully created, but not activated.","Rabatt erfolgreich erstellt, aber nicht aktiviert."
@@ -40,7 +40,7 @@ Field,Feld
 "General Information","Allgemeine Informationen"
 "Generated Discount Codes","Generierte Rabattcodes"
 "List of Discounts","Liste der Rabatte"
-"Matches all elements which have a ""width"" attribute defined, but with any ""width"" value","Gleicht alle Elemente ab, bei denen das Attribut ""Breite"" festgelegt wurde, unabhängig von deren Wert für ""Breite"""
+"Matches all elements which have a ""width"" attribute defined, but with any ""width"" value","Gleicht alle Elemente ab, bei denen das Attribut ""width"" festgelegt wurde, unabhängig von deren Wert für ""width"""
 "Matches elements with the exact same SKU: ""SKU-1""","Gleicht Elemente mit der exakt gleichen SKU ab: ""SKU-1"""
 "Max nr. of uses","Maximale Anzahl der Verwendungen"
 "Max number of uses (0 = Infinite usage)","Maximale Anzahl der Verwendungen (0 = unendlich viele Verwendungen)"

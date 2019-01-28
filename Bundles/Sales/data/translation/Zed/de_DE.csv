@@ -1,12 +1,12 @@
-"Customer Full Name ","Vollständiger Name des Kunden"
 "<1d | 1d-7d | >7d","<1Tag| 1-7Tage | >7Tag"
 "Address successfully updated.","Adresse erfolgreich aktualisiert."
 Addresses,Adressen
 "All orders of the customer","Alle Bestellungen des Kunden"
 "Back to Orders","Zurück zu Bestellungen"
 "Canceled amount","Stornierter Betrag"
-"Cart Notes","Anmerkungen zum Einkaufswagen"
+"Cart Notes","Einkaufswagen Notizen"
 Comments,Kommentare
+"Customer Full Name ","Vollständiger Name des Kunden"
 "Customer successfully updated.","Kunde wurde erfolgreich aktualisiert."
 Discount,Rabatt
 "GRAND TOTAL",Gesamtsumme
@@ -16,7 +16,7 @@ Discount,Rabatt
 Legend,Legende
 "List of orders","Liste der Bestellungen"
 Matrix,Matrix
-"Number of Items","Anzahl der Artikel"
+"Number of Items","Menge der Artikel"
 Option,Option
 "Order Matrix",Bestellungsmatrix
 "Order Source","Quelle der Bestellung"
@@ -38,9 +38,9 @@ Sku,SKU
 State,Status
 "Sub total",Zwischensumme
 Totals,Gesamtsummen
-"Trigger all matching states","Alle passenden Status abrufen"
+"Trigger all matching states","Alle passenden Stati antriggern"
 "Trigger event","Trigger Event"
-"Unique Product Quantity","Einmalige Produktmenge"
+"Unique Product Quantity","Unique Product Quantity"
 "Unit Price",Stückpreis
 "Variant Details",Variantendetails
 "View Order","Bestellung anzeigen"

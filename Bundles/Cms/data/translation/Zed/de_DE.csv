@@ -12,15 +12,15 @@ Deactivate,Deaktivieren
 "Edit a Cms Block","Einen Cms-Block bearbeiten"
 "Edit a Cms page","Eine CMS-Seite bearbeiten"
 "From Url","Von URL"
-"ID redirect URL is not set.","Umleitung von ID auf URL ist nicht eingestellt."
+"ID redirect URL is not set.","ID redirect URL ist nicht gesetzt"
 Loading...,"Laden ..."
 "New template(s) detected and added to the template list.","Neue Vorlage(n) erkannt und der Vorlagenliste hinzugefügt."
-"Redirect status code","Statuscode umleiten"
-"Redirect was created successfully.","Umleitung wurde erfolgreich erstellt."
-"Redirect was deleted successfully.","Umleitung wurde erfolgreich gelöscht."
-"Redirect was updated successfully.","Umleitung wurde erfolgreich aktualisiert."
-Redirects,"Leitet um"
-Redirects,"Leitet um"
+"Redirect status code",Redirect-Statuscode
+"Redirect was created successfully.","Redirect wurde erfolgreich erstellt."
+"Redirect was deleted successfully.","Redirect wurde erfolgreich gelöscht."
+"Redirect was updated successfully.","Redirect wurde erfolgreich aktualisiert."
+Redirects,Redirects
+Redirects,Redirects
 Save,Speichern
 "Save All","Alle speichern"
 "To Url","An URL"

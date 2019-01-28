@@ -5,9 +5,9 @@ Action,Aktion
 "Assigned groups","Zugewiesene Gruppen"
 "Assigned Roles","Zugewiesene Rollen"
 "Assigned Rules","Zugeordnete Regeln"
-Bundle,Paket
+Bundle,Bundle
 Controller,Controller
-"Could not modify root role node!","Wurzelknoten der Rolle konnte nicht geändert werden!"
+"Could not modify root role node!","Knotenpunkt kann nicht geändert werden"
 Create,Erstellen
 "Create Group","Gruppe erstellen"
 "Create new Role","Neue Rolle erstellen"
@@ -20,6 +20,7 @@ Create,Erstellen
 "Group name already in use","Gruppenname bereits vergeben"
 "Group was created successfully.","Gruppe wurde erfolgreich erstellt."
 "Group was updated successfully.","Gruppe wurde erfolgreich aktualisiert."
+"Interface language",Interface-Sprache
 "List Groups","Gruppen auflisten"
 "List Groups","Gruppen auflisten"
 "List Roles","Liste der Rollen"
@@ -36,7 +37,7 @@ Role,Rolle
 "Role was successfully removed.","Rolle wurde erfolgreich entfernt."
 Roles,Rollen
 roles,Rollen
-"Root group",Wurzelgruppe
+"Root group","Root group"
 Rule,Regel
 "Rule successfully added.","Regel erfolgreich hinzugefügt."
 Save,Speichern
@@ -44,7 +45,7 @@ Save,Speichern
 "The password fields must match.","Die Passwort-Felder müssen übereinstimmen."
 "The User was removed from the group.","Der Nutzer wurde aus der Gruppe entfernt."
 "This action requires a DELETE request.","Diese Aktion erfordert eine LÖSCHEN-Anfrage."
-"This user is an agent","Dieser Nutzer ist ein Vermittler"
+"This user is an agent","Dieser User ist ein Kunden-Assistent"
 "Unable to delete because role has groups assigned.","Kann nicht gelöscht werden, da der Rolle Gruppen zugewiesen sind."
 "Update ""%s"" Role","""%s"" Rolle aktualisieren"
 "User and group are not found.","Nutzer und Gruppe wurden nicht gefunden."
@@ -53,4 +54,4 @@ Save,Speichern
 "User was deleted successfully.","Nutzer wurde erfolgreich gelöscht."
 "User was updated successfully.","Nutzer wurde erfolgreich aktualisiert."
 Users,Nutzer
-"Users Control",Nutzerkontrolle
+"Users Control",User-Verwaltung
