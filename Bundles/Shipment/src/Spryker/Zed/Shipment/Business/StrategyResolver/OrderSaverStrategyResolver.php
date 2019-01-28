@@ -30,8 +30,6 @@ class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface
      */
     public function resolve(): ShipmentOrderSaverInterface

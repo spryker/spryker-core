@@ -112,7 +112,7 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
      *
      * @param \Spryker\Zed\Tax\Business\Model\CalculatorInterface[] $strategyContainer
      *
-     * @return \Spryker\Zed\Tax\Business\Model\CalculatorInterface[]
+     * @return \Closure[]
      */
     protected function addStrategyProductItemTaxRateCalculatorWithoutMultipleShipmentTaxRate(array $strategyContainer): array
     {
@@ -128,7 +128,7 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
      *
      * @param \Spryker\Zed\Tax\Business\Model\CalculatorInterface[] $strategyContainer
      *
-     * @return \Spryker\Zed\Tax\Business\Model\CalculatorInterface[]
+     * @return \Closure[]
      */
     protected function addStrategyProductItemTaxRateCalculatorWithMultipleShipmentTaxRate(array $strategyContainer): array
     {

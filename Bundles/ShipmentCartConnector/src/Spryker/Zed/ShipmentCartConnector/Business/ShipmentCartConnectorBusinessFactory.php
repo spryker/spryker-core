@@ -102,7 +102,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Will be removed in next major release.
      *
-     * @return \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapterInterface
+     * @return \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapterInterface
      */
     protected function createShipmentCartValidatorQuoteDataBCForMultiShipmentAdapter(): ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapterInterface
     {
