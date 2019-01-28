@@ -985,4 +985,19 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getRepository()
             ->getProductConcreteTransfersByProductIds($productIds);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $abstractProductIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteTransfersByAbstractProductIds(array $abstractProductIds): array
+    {
+        return $this->getRepository()
+            ->getProductConcreteTransfersByAbstractProductIds($abstractProductIds);
+    }
 }

@@ -97,17 +97,48 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     }
 
     /**
+     * @param int[] $abstractProductIds
+     *
+     * @return void
+     */
+    public function publishProductConcretesByProductAbstractIds(array $abstractProductIds): void
+    {
+        $productConcreteTransfers = $this->productFacade->getProductConcreteTransfersByAbstractProductIds($abstractProductIds);
+        $productIds = $this->getProductIdsListFromProductConcreteTransfers($productConcreteTransfers);
+        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale($productIds);
+
+        $this->getTransactionHandler()->handleTransaction(function () use ($productConcreteTransfers, $productConcretePageSearchTransfers) {
+            $this->executePublishTransaction($productConcreteTransfers, $productConcretePageSearchTransfers);
+        });
+    }
+
+    /**
      * @param int[] $productIds
      *
      * @return void
      */
     public function unpublish(array $productIds): void
     {
-        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale($productIds);
+        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->getProductConcretePageSearchTransfersByProductIds($productIds);
 
         $this->getTransactionHandler()->handleTransaction(function () use ($productConcretePageSearchTransfers) {
             $this->executeUnpublishTransaction($productConcretePageSearchTransfers);
         });
+    }
+
+    /**
+     * @param array $productConcreteTransfers
+     *
+     * @return array
+     */
+    protected function getProductIdsListFromProductConcreteTransfers(array $productConcreteTransfers): array
+    {
+        $productIds = [];
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $productIds[] = $productConcreteTransfer->getIdProductConcrete();
+        }
+
+        return $productIds;
     }
 
     /**
@@ -130,7 +161,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[] $productConcretePageSearchTransfers
+     * @param array $productConcretePageSearchTransfers
      *
      * @return void
      */

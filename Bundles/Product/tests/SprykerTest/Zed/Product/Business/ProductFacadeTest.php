@@ -77,6 +77,22 @@ class ProductFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetProductConcreteTransfersByAbstractProductIds(): void
+    {
+        $productAbstractIds = $this->tester->getProductAbstractIds();
+
+        $this->assertTrue(count($productAbstractIds) > 0);
+        $productConcreteTransfers = $this->tester->getProductFacade()->getProductConcreteTransfersByAbstractProductIds($productAbstractIds);
+
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $this->assertInstanceOf(ProductConcreteTransfer::class, $productConcreteTransfer);
+            $this->assertContains($productConcreteTransfer->getFkProductAbstract(), $productAbstractIds);
+        }
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     protected function createProductAbstractTransfer()

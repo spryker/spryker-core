@@ -851,4 +851,16 @@ interface ProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getProductConcreteTransfersByProductIds(array $productIds): array;
+
+    /**
+     * Specification:
+     * - Returns concrete product transfers array by abstract product ids.
+     *
+     * @api
+     *
+     * @param int[] $abstractProductIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteTransfersByAbstractProductIds(array $abstractProductIds): array;
 }
