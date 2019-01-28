@@ -44,7 +44,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     /**
      * @var \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface
      */
-    protected $referenceGenerator;
+    protected $quoteRequestReferenceGenerator;
 
     /**
      * @var \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface
@@ -55,20 +55,20 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      * @param \Spryker\Zed\QuoteRequest\QuoteRequestConfig $quoteRequestConfig
      * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface $quoteRequestEntityManager
      * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface $quoteRequestRepository
-     * @param \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface $referenceGenerator
+     * @param \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface $quoteRequestReferenceGenerator
      * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface $companyUserFacade
      */
     public function __construct(
         QuoteRequestConfig $quoteRequestConfig,
         QuoteRequestEntityManagerInterface $quoteRequestEntityManager,
         QuoteRequestRepositoryInterface $quoteRequestRepository,
-        QuoteRequestReferenceGeneratorInterface $referenceGenerator,
+        QuoteRequestReferenceGeneratorInterface $quoteRequestReferenceGenerator,
         QuoteRequestToCompanyUserInterface $companyUserFacade
     ) {
         $this->quoteRequestConfig = $quoteRequestConfig;
         $this->quoteRequestEntityManager = $quoteRequestEntityManager;
         $this->quoteRequestRepository = $quoteRequestRepository;
-        $this->referenceGenerator = $referenceGenerator;
+        $this->quoteRequestReferenceGenerator = $quoteRequestReferenceGenerator;
         $this->companyUserFacade = $companyUserFacade;
     }
 
@@ -156,7 +156,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
 
         $quoteRequestTransfer->setStatus($this->quoteRequestConfig->getInitialStatus());
         $quoteRequestTransfer->setQuoteRequestReference(
-            $this->referenceGenerator->generateQuoteRequestReference($quoteRequestTransfer, $customerReference)
+            $this->quoteRequestReferenceGenerator->generateQuoteRequestReference($quoteRequestTransfer, $customerReference)
         );
 
         return $this->quoteRequestEntityManager->createQuoteRequest($quoteRequestTransfer);
@@ -178,7 +178,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->setFkQuoteRequest($quoteRequestTransfer->getIdQuoteRequest());
 
         $quoteRequestVersionTransfer->setVersionReference(
-            $this->referenceGenerator->generateQuoteRequestVersionReference($quoteRequestTransfer, $quoteRequestVersionTransfer)
+            $this->quoteRequestReferenceGenerator->generateQuoteRequestVersionReference($quoteRequestTransfer, $quoteRequestVersionTransfer)
         );
 
         return $this->quoteRequestEntityManager->createQuoteRequestVersion($quoteRequestVersionTransfer);
