@@ -9,10 +9,12 @@ namespace Spryker\Client\QuickOrder;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToLocaleClientBridge;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientBridge;
 
 class QuickOrderDependencyProvider extends AbstractDependencyProvider
 {
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const PLUGINS_PRODUCT_CONCRETE_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_EXPANDER';
     public const PLUGINS_QUICK_ORDER_VALIDATION = 'PLUGINS_QUICK_ORDER_VALIDATION';
@@ -25,8 +27,24 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addProductStorageClient($container);
+        $container = $this->addLocaleClient($container);
         $container = $this->addProductConcreteExpanderPlugins($container);
         $container = $this->addQuickOrderValidationPlugins($container);
+
+        return $container;
+    }
+
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container[static::CLIENT_LOCALE] = function (Container $container) {
+            return new QuickOrderToLocaleClientBridge($container->getLocator()->locale()->client());
+        };
 
         return $container;
     }
