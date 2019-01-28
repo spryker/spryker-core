@@ -74,7 +74,7 @@ class CartReader implements CartReaderInterface
             ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
             ->setUuid($uuidCart));
 
-        if ($quoteResponseTransfer->getIsSuccessful() === false) {
+        if ($quoteResponseTransfer->getIsSuccessful() === false || !$this->ifQuoteBelongsToCustomer($restRequest, $uuidCart)) {
             return $this->cartRestResponseBuilder->createCartNotFoundErrorResponse();
         }
 
@@ -147,6 +147,23 @@ class CartReader implements CartReaderInterface
         }
 
         return $quoteCollectionTransfer;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $uuidCart
+     *
+     * @return bool
+     */
+    protected function ifQuoteBelongsToCustomer(RestRequestInterface $restRequest, string $uuidCart): bool
+    {
+        foreach ($this->getCustomerQuotes($restRequest)->getQuotes() as $quote) {
+            if ($uuidCart === $quote->getUuid()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
