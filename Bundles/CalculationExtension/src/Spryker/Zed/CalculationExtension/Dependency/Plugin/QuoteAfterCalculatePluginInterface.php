@@ -13,7 +13,7 @@ interface QuoteAfterCalculatePluginInterface
 {
     /**
      * Specification:
-     * - Allows to add custom logic after calculations for quote done.
+     * - Allows to add custom logic after calculations for quote are executed.
      *
      * @api
      *

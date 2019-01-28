@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCart\Business\Model;
+namespace Spryker\Zed\PersistentCart\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteWriterInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
 
 class QuoteAfterCalculateSaver implements QuoteAfterCalculateSaverInterface
