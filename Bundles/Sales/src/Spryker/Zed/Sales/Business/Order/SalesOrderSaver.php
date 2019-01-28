@@ -62,8 +62,7 @@ class SalesOrderSaver extends SalesOrderSaverWithoutItemShipmentAddress
             $store,
             $orderExpanderPreSavePlugins,
             $salesOrderSaverPluginExecutor,
-            $salesOrderItemMapper,
-
+            $salesOrderItemMapper
         );
 
         $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;

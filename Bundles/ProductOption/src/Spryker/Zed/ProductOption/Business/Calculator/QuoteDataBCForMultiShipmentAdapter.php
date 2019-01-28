@@ -134,7 +134,7 @@ class QuoteDataBCForMultiShipmentAdapter implements QuoteDataBCForMultiShipmentA
             return $itemTransfer->getShipment()->getShippingAddress();
         }
 
-        return $quoteTransfer->getShipment()->getShippingAddress();
+        return $quoteTransfer->getShippingAddress();
     }
 
     /**
@@ -147,9 +147,10 @@ class QuoteDataBCForMultiShipmentAdapter implements QuoteDataBCForMultiShipmentA
      */
     protected function setItemTransferShipmentAndShipmentAddressForBC(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void
     {
-        $shippingAddressTransfer = $this->getShipmentAddressTransferForBC($itemTransfer, $quoteTransfer);
         $shipmentTransfer = $this->getShipmentTransferForBC($itemTransfer, $quoteTransfer);
-        $shipmentTransfer->setShippingAddress($shippingAddressTransfer);
         $itemTransfer->setShipment($shipmentTransfer);
+
+        $shippingAddressTransfer = $this->getShipmentAddressTransferForBC($itemTransfer, $quoteTransfer);
+        $shipmentTransfer->setShippingAddress($shippingAddressTransfer);
     }
 }

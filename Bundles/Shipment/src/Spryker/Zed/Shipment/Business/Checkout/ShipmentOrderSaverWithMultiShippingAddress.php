@@ -99,13 +99,13 @@ class ShipmentOrderSaverWithMultiShippingAddress implements ShipmentOrderSaverIn
          * @todo Check this code!
          */
         foreach ($shipmentGroups as $shipmentGroupTransfer) {
-            $this->saveShipmentAddressTransfer($shipmentGroupTransfer);
+//            $this->saveShipmentAddressTransfer($shipmentGroupTransfer);
             $this->addExpensesToOrder($shipmentGroupTransfer, $salesOrderTransfer, $saveOrderTransfer);
             $idSalesShipment = $this->entityManager->createSalesShipment(
                 $shipmentGroupTransfer->getShipment(),
                 $salesOrderTransfer->getIdSalesOrder()
             );
-            $this->updateItemsShipment($shipmentGroupTransfer, $idSalesShipment);
+            $this->updateSalesOrderItemsFkShipment($shipmentGroupTransfer, $idSalesShipment);
         }
     }
 
@@ -171,7 +171,7 @@ class ShipmentOrderSaverWithMultiShippingAddress implements ShipmentOrderSaverIn
      *
      * @return void
      */
-    protected function updateItemsShipment(
+    protected function updateSalesOrderItemsFkShipment(
         ShipmentGroupTransfer $shipmentGroupTransfer,
         int $idSalesShipment
     ): void {

@@ -116,6 +116,7 @@
         <property name="canceledAmount" type="int"/>
         <property name="stateHistory" type="ItemState[]" />
         <property name="isOrdered" type="bool" />
+        <property name="shipment" type="Shipment" />
     </transfer>
 
     <transfer name="ItemCollection">

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductOption\Business;
 
-use Spryker\Zed\Customer\Business\Checkout\QuoteDataBCForMultiShipmentAdapter;
-use Spryker\Zed\Customer\Business\Checkout\QuoteDataBCForMultiShipmentAdapterInterface;
+use Spryker\Zed\ProductOption\Business\Calculator\QuoteDataBCForMultiShipmentAdapter;
+use Spryker\Zed\ProductOption\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator;

@@ -36,7 +36,7 @@ class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
      */
     public function resolve(): ShipmentOrderSaverInterface
     {
-        if (!defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT')) {
+        if (!defined('\Generated\Shared\Transfer\ItemTransfer::SHIPMENT')) {
             $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
 
             return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);

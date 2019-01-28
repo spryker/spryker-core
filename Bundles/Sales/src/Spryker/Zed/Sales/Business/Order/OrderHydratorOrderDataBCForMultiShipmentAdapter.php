@@ -161,7 +161,7 @@ class OrderHydratorOrderDataBCForMultiShipmentAdapter implements OrderHydratorOr
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpense
      */
-    protected function getShipmentExpenseEntityForBC(SpySalesOrderItem $orderItemEntity, SpySalesExpense $orderExpenseEntity): ExpenseTransfer
+    protected function getShipmentExpenseEntityForBC(SpySalesOrderItem $orderItemEntity, SpySalesExpense $orderExpenseEntity): SpySalesExpense
     {
         if ($orderItemEntity->getShipment() !== null && $orderItemEntity->getShipment()->getExpense() !== null) {
             return $orderItemEntity->getShipment()->getExpense();
@@ -184,11 +184,12 @@ class OrderHydratorOrderDataBCForMultiShipmentAdapter implements OrderHydratorOr
         SpySalesOrder $orderEntity,
         SpySalesExpense $orderExpenseEntity
     ): void {
+        $shipmentEntity = $this->getShipmentEntityForBC($orderItemEntity);
+        $orderItemEntity->setSpySalesShipment($shipmentEntity);
+
         $shippingAddressEntity = $this->getShippingAddressForBC($orderItemEntity, $orderEntity);
         $shipmentExpenseTransfer = $this->getShipmentExpenseEntityForBC($orderItemEntity, $orderExpenseEntity);
-        $shipmentEntity = $this->getShipmentEntityForBC($orderItemEntity);
         $shipmentEntity->setSpySalesOrderAddress($shippingAddressEntity)
             ->setExpense($shipmentExpenseTransfer);
-        $orderItemEntity->setShipment($shipmentEntity);
     }
 }

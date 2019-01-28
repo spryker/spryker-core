@@ -203,11 +203,13 @@ class ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter implements Shipment
         QuoteTransfer $quoteTransfer,
         ExpenseTransfer $quoteExpenseTransfer
     ): void {
+        $shipmentTransfer = $this->getShipmentTransferForBC($itemTransfer, $quoteTransfer);
+        $itemTransfer->setShipment($shipmentTransfer);
+
         $shipmentMethodTransfer = $this->getShipmentMethodTransferForBC($itemTransfer, $quoteTransfer);
         $shipmentExpenseTransfer = $this->getShipmentExpenseTransferForBC($itemTransfer, $quoteExpenseTransfer);
-        $shipmentTransfer = $this->getShipmentTransferForBC($itemTransfer, $quoteTransfer);
         $shipmentTransfer->setMethod($shipmentMethodTransfer)
             ->setExpense($shipmentExpenseTransfer);
-        $itemTransfer->setShipment($shipmentTransfer);
+
     }
 }

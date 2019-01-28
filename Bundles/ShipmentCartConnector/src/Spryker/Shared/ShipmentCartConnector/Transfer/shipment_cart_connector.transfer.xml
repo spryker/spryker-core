@@ -27,6 +27,10 @@
         <property name="expenses" type="Expense[]" singular="expense"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="shipment" type="Shipment" />
+    </transfer>
+
     <transfer name="Expense">
         <property name="unitGrossPrice" type="int" />
         <property name="unitNetPrice" type="int" />
