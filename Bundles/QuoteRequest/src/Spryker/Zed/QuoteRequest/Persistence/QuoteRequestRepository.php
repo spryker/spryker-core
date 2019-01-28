@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Orm\Zed\QuoteRequest\Persistence\Map\SpyQuoteRequestTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -33,7 +32,7 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
     ): QuoteRequestCollectionTransfer {
         $quoteRequestQuery = $this->getFactory()
             ->getQuoteRequestPropelQuery()
-            ->addJoin(SpyQuoteRequestTableMap::COL_FK_COMPANY_USER, SpyCompanyUserTableMap::COL_ID_COMPANY_USER, Criteria::LEFT_JOIN)
+            ->joinWithCompanyUser()
             ->addJoin(SpyCompanyUserTableMap::COL_FK_CUSTOMER, SpyCustomerTableMap::COL_ID_CUSTOMER, Criteria::LEFT_JOIN)
             ->leftJoinWithSpyQuoteRequestVersion()
             ->orderByIdQuoteRequest(Criteria::DESC);
