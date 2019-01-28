@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\QuoteRequest\Zed;
 
+use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientInterface;
@@ -37,6 +39,38 @@ class QuoteRequestStub implements QuoteRequestStubInterface
         $quoteRequestResponseTransfer = $this->zedRequestClient->call(
             '/quote-request/gateway/create',
             $quoteRequestTransfer
+        );
+
+        return $quoteRequestResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
+     */
+    public function getQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer */
+        $quoteRequestCollectionTransfer = $this->zedRequestClient->call(
+            '/quote-request/gateway/get-quote-request-collection-by-filter',
+            $quoteRequestFilterTransfer
+        );
+
+        return $quoteRequestCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
+        $quoteRequestResponseTransfer = $this->zedRequestClient->call(
+            '/quote-request/gateway/cancel-by-reference',
+            $quoteRequestFilterTransfer
         );
 
         return $quoteRequestResponseTransfer;

@@ -111,5 +111,5 @@ interface CompanyUserClientInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
-    public function findCompanyUser();
+    public function findCompanyUser(): ?CompanyUserTransfer;
 }

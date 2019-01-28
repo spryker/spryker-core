@@ -52,4 +52,8 @@
     <transfer name="Totals">
         <property name="grandTotal" type="int" />
     </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int" />
+    </transfer>
 </transfers>

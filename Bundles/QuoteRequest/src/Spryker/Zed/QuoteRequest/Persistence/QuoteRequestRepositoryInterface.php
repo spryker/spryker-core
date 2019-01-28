@@ -7,6 +7,17 @@
 
 namespace Spryker\Zed\QuoteRequest\Persistence;
 
+use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+
 interface QuoteRequestRepositoryInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
+     */
+    public function getQuoteRequestCollectionByFilter(
+        QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+    ): QuoteRequestCollectionTransfer;
 }

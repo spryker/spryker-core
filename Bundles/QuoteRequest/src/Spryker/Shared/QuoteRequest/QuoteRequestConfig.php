@@ -11,11 +11,11 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class QuoteRequestConfig extends AbstractSharedConfig
 {
-    public const STATUS_WAITING = 'Waiting';
-    public const STATUS_IN_PROGRESS = 'In progress';
-    public const STATUS_READY = 'Ready';
-    public const STATUS_CLOSED = 'Closed';
-    public const STATUS_CANCELED = 'Canceled';
+    public const STATUS_WAITING = 'waiting';
+    public const STATUS_IN_PROGRESS = 'in-progress';
+    public const STATUS_READY = 'ready';
+    public const STATUS_CLOSED = 'closed';
+    public const STATUS_CANCELED = 'canceled';
 
     public const INITIAL_VERSION_NUMBER = 1;
 }
