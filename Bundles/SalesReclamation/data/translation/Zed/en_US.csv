@@ -15,7 +15,7 @@ Discount,Discount
 Option,Option
 Order,Order
 "Order id","Order id"
-"OrderItem with id %s not belong to order %s","OrderItem with id %s not belong to order %s"
+"OrderItem with id %s not belong to order %s","Order item with id %s does not belong to the order %s"
 "Overview of reclamation:","Overview of reclamation:"
 "Overview of reclamations","Overview of reclamations"
 Product,Product

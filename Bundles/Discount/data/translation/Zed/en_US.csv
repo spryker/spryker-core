@@ -19,7 +19,7 @@ Deactivate,Deactivate
 Description,Description
 Description:,Description:
 "Discount calculation","Discount calculation"
-"Discount collection type","Discount collection type"
+"Discount collection type","Discount application type"
 "Discount List","Discount List"
 "Discount successfully activated","Discount successfully activated"
 "Discount successfully created, but not activated.","Discount successfully created, but not activated."
@@ -42,7 +42,7 @@ Field,Field
 "List of Discounts","List of discounts"
 "Matches all elements which have a ""width"" attribute defined, but with any ""width"" value","Matches all elements which have a ""width"" attribute defined, but with any ""width"" value"
 "Matches elements with the exact same SKU: ""SKU-1""","Matches elements with the exact same SKU: ""SKU-1"""
-"Max nr. of uses","Max nr. of uses"
+"Max nr. of uses","Maximum number of uses"
 "Max number of uses (0 = Infinite usage)","Max number of uses (0 = Infinite usage)"
 N/A,n/a
 Name,Name

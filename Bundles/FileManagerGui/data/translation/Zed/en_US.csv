@@ -1,10 +1,10 @@
-confirm,confirm
 "Add a file","Add a file"
 "Add MIME type","Add MIME type"
 "Back to File Directory Elements","Back to File Directory Elements"
 "Back to File Tree","Back to File Tree"
 "Back to MIME type list","Back to MIME type list"
 Cancel,Cancel
+confirm,confirm
 "Confirm deleting","Confirm deleting"
 "Create Directory Element","Create Directory Element"
 "Create File Directory","Create File Directory"
@@ -31,7 +31,7 @@ Date,date
 "MIME type was successfully saved","MIME type was successfully saved"
 Save,Save
 "Save order","Save Order"
-"Specify a file name or use real one","Specify a file name or use real one"
+"Specify a file name or use real one","Specify a file name"
 "The file directory was added successfully.","The file directory was added successfully."
 "The file was added successfully.","The file was added successfully."
 "The file was edited successfully.","The file was edited successfully."

@@ -1,13 +1,13 @@
 "Back to Tax Rates","Zurück zu Steuerraten"
 "Back to Tax Sets","Zurück zu Steuersätzen"
-"Could not delete tax set. Is it assigned to product or shipping method?","Steuerklasse konnte nicht gelöscht werden. Ist sie dem Produkt oder der Versandart zugewiesen?"
+"Could not delete tax set. Is it assigned to product or shipping method?","Steuerset konnte nicht gelöscht werden. Ist sie dem Produkt oder der Versandart zugewiesen?"
 Country,Land
 "Create Tax Rate","Steuerrate erstellen"
 "Create Tax Set","Steuerset erstellen"
 "Created at","Erstellt am"
 Delete,Löschen
-"Delete Tax Rate","Steuersatz löschen"
-"Delete Tax Set","Steuerklasse löschen"
+"Delete Tax Rate","Steuerrate löschen"
+"Delete Tax Set","Steuersatz löschen"
 Edit,Bearbeiten
 "Edit Tax Rate:","Steuerrate bearbeiten:"
 "Edit Tax Set:","Steuerset bearbeiten:"
@@ -23,22 +23,22 @@ Save,Speichern
 "Tax rate %d was created successfully.","Steuersatz %d wurde erfolgreich erstellt."
 "Tax rate %d was deleted successfully.","Steuersatz %d wurde erfolgreich gelöscht."
 "Tax rate %d was updated successfully.","Steuersatz %d wurde erfolgreich aktualisiert."
-"Tax Rate deletion confirmation","Löschen des Steuersatzes bestätigt"
+"Tax Rate deletion confirmation","Steuersatz erfolgreich gelöscht"
 "Tax rate details","Details zum Steuersatz"
 "Tax rate ID",Steuersatz-ID
 "Tax rate with id %s doesn't exist","Steuersatz mit der ID %s existiert nicht"
 "Tax rate with provided name, percentage and country already exists.","Steuersatz mit dem angegebenen Namen, Prozentsatz und Land existiert bereits."
 "Tax rates",Steuersätze
-"Tax set %d was created successfully.","Steuerklasse %d wurde erfolgreich erstellt."
-"Tax set %d was updated successfully.","Steuerklasse %d wurde erfolgreich aktualisiert."
-"Tax Set deletion confirmation","Löschen der Steuerklasse bestätigt"
+"Tax set %d was created successfully.","Steuerset %d wurde erfolgreich erstellt."
+"Tax set %d was updated successfully.","Steuerset %d wurde erfolgreich aktualisiert."
+"Tax Set deletion confirmation","Steuerset wurde erfolgreich gelöscht"
 "Tax set details","Details zum Steuer-Set"
 "Tax set ID",Steuer-Set-ID
-"Tax set is not created. Please fill-in all required fields.","Steuerklasse wurde nicht erstellt. Bitte alle erforderlichen Felder ausfüllen."
-"Tax set with id %s doesn't exist","Steuerklasse mit der ID %s existiert nicht"
-"Tax Set with name ""%name%"" already exists.","Steuerklasse mit dem Namen ""%name%"" existiert bereits."
+"Tax set is not created. Please fill-in all required fields.","Steuerset wurde nicht erstellt. Bitte alle erforderlichen Felder ausfüllen."
+"Tax set with id %s doesn't exist","Steuerset mit der ID %s existiert nicht"
+"Tax Set with name ""%name%"" already exists.","Steuerset mit dem Namen ""%name%"" existiert bereits."
 Taxes,Steuern
-"The tax set has been deleted","Die Steuerklasse wurde entfernt"
+"The tax set has been deleted","Das Steuerset wurde gelöscht"
 "Updated at","Aktualisiert am"
 "View Tax Rate:","Steuerrate anzeigen:"
 "View Tax Set:","Steuersatz anzeigen:"

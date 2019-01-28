@@ -1,5 +1,5 @@
-"Edit Global threshold","Allgemeinen Grenzwert bearbeiten"
-"Edit Global threshold","Allgemeinen Grenzwert bearbeiten"
+"Edit Global threshold","Globalen Grenzwert bearbeiten"
+"Edit Global threshold","Globalen Grenzwert bearbeiten"
 "Edit Threshold Settings","Schwellwerteinstellungen bearbeiten"
 "Global threshold","Allgemeiner Grenzwert"
 "Hard Threshold","Harter Grenzwert"
@@ -8,6 +8,6 @@
 Save,Speichern
 "Soft Threshold","Weicher Grenzwert"
 "Soft Threshold","Weicher Grenzwert"
-"The Global Threshold is saved successfully.","Der allgemeine Grenzwert wurde erfolgreich gespeichert."
+"The Global Threshold is saved successfully.","Der globale Grenzwert wurde erfolgreich gespeichert."
 Threshold,Schwellenwert
 "You can use the the placeholders <b>{{threshold}}</b> <b>{{fee}}</b>","Sie können die Platzhalter <b>{{threshold}}</b> <b>{{fee}}</b> benutzen"

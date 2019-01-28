@@ -24,10 +24,10 @@ Edit,Edit
 "Full text","Full text"
 "Full text boosted","Full text boosted"
 "General Information","General Information"
-"Include for completion","Include for completion"
-"Include for full text","Include for full text"
-"Include for full text boosted","Include for full text boosted"
-"Include for suggestion","Include for suggestion"
+"Include for completion","Included for completion"
+"Include for full text","Included for full text"
+"Include for full text boosted","Included for full text boosted"
+"Include for suggestion","Included for suggestion"
 "List of filters","List of filters"
 "List of search preferences","List of search preferences"
 multi-select,multi-select
@@ -38,7 +38,7 @@ Save,Save
 "Search Preferences","Search Preferences"
 "Search preferences","Search Preferences"
 "Search preferences synchronization was successful.","Search preferences synchronization was successful."
-single-select,single-select
+single-select,"Single select"
 "Suggestion terms","Suggestion terms"
 "Synchronize filter preferences","Synchronize filter preferences"
 "Synchronize search preferences","Synchronize search preferences"

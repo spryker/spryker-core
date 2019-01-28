@@ -1,4 +1,4 @@
-"-Select value-","Wert auswählen-"
+"-Select value-","-Wert auswählen-"
 Active,Aktiv
 "Add Category to this Node","Kategorie zu diesem Knoten hinzufügen"
 "Additional Parents","Weitere Parents"
@@ -25,9 +25,9 @@ Inactive,Inaktiv
 no,Nein
 "Not in Menu","Nicht im Menü"
 "Please make sure required fields are properly filled in","Bitte überprüfen, ob alle erforderlichen Felder korrekt ausgefüllt sind"
-"Re-sort Child Categories","Child-Kategorien umsortieren"
-"Re-sort child-categories","Child-Kategorien umsortieren"
-"Root nodes list",Wurzelliste
+"Re-sort Child Categories","Unterkategorien umsortieren"
+"Re-sort child-categories","Unterkategorien umsortieren"
+"Root nodes list","Root nodes list"
 Save,Speichern
 "Save Order","Bestellung speichern"
 Searchable,Suchbar
