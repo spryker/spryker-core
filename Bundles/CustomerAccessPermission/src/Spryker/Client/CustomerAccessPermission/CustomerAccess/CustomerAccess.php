@@ -105,22 +105,4 @@ class CustomerAccess implements CustomerAccessInterface
 
         return $customerSecuredPattern;
     }
-
-    /**
-     * @param string $key
-     *
-     * @return bool
-     */
-    public function loggedOutCustomerCan(string $key): bool
-    {
-        $permissionCollection = $this->getLoggedOutCustomerPermissions();
-
-        foreach ($permissionCollection->getPermissions() as $permission) {
-            if ($permission->getKey() === $key) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 }

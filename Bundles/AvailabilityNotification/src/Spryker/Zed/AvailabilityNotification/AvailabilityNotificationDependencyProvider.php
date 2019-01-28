@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\AvailabilityNotification;
 
-use Spryker\Zed\AvailabilityNotification\Dependency\Client\AvailabilityNotificationToCustomerAccessPermissionClientBridge;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToGlossaryFacadeBridge;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeBridge;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeBridge;
@@ -36,8 +35,6 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
-    public const CLIENT_CUSTOMER_ACCESS_PERMISSION = 'CLIENT_CUSTOMER_ACCESS_PERMISSION';
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -53,7 +50,6 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
         $container = $this->addProductFacade($container);
         $container = $this->addMoneyFacade($container);
         $container = $this->addPriceProductFacade($container);
-        $container = $this->addCustomerAccessPermissionClient($container);
 
         return $container;
     }
@@ -194,20 +190,6 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
     {
         $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
             return new AvailabilityNotificationToPriceProductFacadeBridge($container->getLocator()->priceProduct()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCustomerAccessPermissionClient(Container $container): Container
-    {
-        $container[static::CLIENT_CUSTOMER_ACCESS_PERMISSION] = function (Container $container) {
-            return new AvailabilityNotificationToCustomerAccessPermissionClientBridge($container->getLocator()->customerAccessPermission()->client());
         };
 
         return $container;

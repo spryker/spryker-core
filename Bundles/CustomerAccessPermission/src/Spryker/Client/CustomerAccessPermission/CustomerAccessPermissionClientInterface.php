@@ -18,16 +18,4 @@ interface CustomerAccessPermissionClientInterface
      * @return string
      */
     public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string;
-
-    /**
-     * Specification
-     * - Return if logged out customer has access to permission
-     *
-     * @api
-     *
-     * @param string $key
-     *
-     * @return bool
-     */
-    public function loggedOutCustomerCan(string $key): bool;
 }

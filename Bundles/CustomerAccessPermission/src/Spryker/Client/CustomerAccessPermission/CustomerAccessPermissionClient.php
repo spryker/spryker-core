@@ -25,16 +25,4 @@ class CustomerAccessPermissionClient extends AbstractClient implements CustomerA
     {
         return $this->getFactory()->createCustomerAccess()->getCustomerSecuredPatternForUnauthenticatedCustomerAccess();
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return bool
-     */
-    public function loggedOutCustomerCan(string $key): bool
-    {
-        return $this->getFactory()->createCustomerAccess()->loggedOutCustomerCan($key);
-    }
 }

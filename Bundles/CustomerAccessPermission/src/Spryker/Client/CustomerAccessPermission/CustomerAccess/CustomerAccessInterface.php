@@ -25,11 +25,4 @@ interface CustomerAccessInterface
      * @return string
      */
     public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string;
-
-    /**
-     * @param string $key
-     *
-     * @return bool
-     */
-    public function loggedOutCustomerCan(string $key): bool;
 }
