@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Shipment\Business\Checkout;
 
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -23,6 +22,7 @@ class QuoteDataBCForMultiShipmentAdapter implements QuoteDataBCForMultiShipmentA
     /**
      * @todo Check this logic and order saver logic.
      */
+
     /**
      * @deprecated Will be removed in next major release.
      *

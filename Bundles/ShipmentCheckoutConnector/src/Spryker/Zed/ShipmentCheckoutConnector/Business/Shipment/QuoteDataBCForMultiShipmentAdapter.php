@@ -127,7 +127,8 @@ class QuoteDataBCForMultiShipmentAdapter implements QuoteDataBCForMultiShipmentA
      *
      * @return void
      */
-    protected function setItemTransferShipmentAndShipmentMethodForBC(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void {
+    protected function setItemTransferShipmentAndShipmentMethodForBC(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void
+    {
         $shipmentTransfer = $this->getShipmentTransferForBC($itemTransfer, $quoteTransfer);
         $shipmentTransfer->setMethod($quoteTransfer->getShipment()->getMethod());
         $itemTransfer->setShipment($shipmentTransfer);

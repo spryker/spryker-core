@@ -10,14 +10,14 @@ namespace Spryker\Zed\Shipment\Business;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface;
-use Spryker\Zed\Shipment\Business\Calculator\ShipmentTaxRateCalculator as ShipmentTaxRateCalculatorWithItemShipmentTaxRate;
 use Spryker\Zed\Shipment\Business\Calculator\QuoteDataBCForMultiShipmentAdapter as ShipmentTaxRateCalculatorQuoteDataBCForMultiShipmentAdapter;
 use Spryker\Zed\Shipment\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface as ShipmentTaxRateCalculatorQuoteDataBCForMultiShipmentAdapterInterface;
+use Spryker\Zed\Shipment\Business\Calculator\ShipmentTaxRateCalculator as ShipmentTaxRateCalculatorWithItemShipmentTaxRate;
+use Spryker\Zed\Shipment\Business\Checkout\QuoteDataBCForMultiShipmentAdapter as ShipmentOrderSaverQuoteDataBCForMultiShipmentAdapter;
+use Spryker\Zed\Shipment\Business\Checkout\QuoteDataBCForMultiShipmentAdapterInterface as ShipmentOrderSaverQuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverWithMultiShippingAddress;
-use Spryker\Zed\Shipment\Business\Checkout\QuoteDataBCForMultiShipmentAdapter as ShipmentOrderSaverQuoteDataBCForMultiShipmentAdapter;
-use Spryker\Zed\Shipment\Business\Checkout\QuoteDataBCForMultiShipmentAdapterInterface as ShipmentOrderSaverQuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
@@ -30,6 +30,7 @@ use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
@@ -118,11 +119,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentOrderSaver()
     {
-        return new ShipmentOrderSaver(
-            $this->getSalesQueryContainer(),
-            $this->getSalesFacade(),
-            $this->getShipmentService()
-        );
+        return new ShipmentOrderSaver($this->getSalesQueryContainer());
     }
 
     /**
@@ -132,11 +129,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createCheckoutShipmentOrderSaver()
     {
-        return new CheckoutShipmentOrderSaver(
-            $this->getEntityManager(),
-            $this->getSalesFacade(),
-            $this->getShipmentService()
-        );
+        return new CheckoutShipmentOrderSaver($this->getSalesQueryContainer());
     }
 
     /**
@@ -147,6 +140,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentOrderSaverWithMultiShippingAddress(
             $this->getEntityManager(),
             $this->getSalesFacade(),
+            $this->getCustomerFacade(),
             $this->getShipmentService(),
             $this->createShipmentOrderSaverQuoteDataBCForMultiShipmentAdapter()
         );
@@ -188,6 +182,14 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     protected function getCurrencyFacade()
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerInterface
+     */
+    protected function getCustomerFacade(): ShipmentToCustomerInterface
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_CUSTOMER);
     }
 
     /**

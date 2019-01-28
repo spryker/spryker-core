@@ -188,9 +188,9 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createOrderRepositoryReader()
     {
         return new OrderRepositoryReader(
-        /**
-         * @todo Look here and fix.
-         */
+            /**
+            * @todo Look here and fix.
+            */
             $this->createOrderHydratorStrategyResolver()->resolve(),
             $this->getRepository()
         );

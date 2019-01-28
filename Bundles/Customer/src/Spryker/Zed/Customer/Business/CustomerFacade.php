@@ -329,6 +329,23 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Retrieves customer address by address details.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer
+    {
+        return $this->getFactory()
+            ->createAddress()
+            ->findCustomerAddressByAddressData($addressTransfer);
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @api

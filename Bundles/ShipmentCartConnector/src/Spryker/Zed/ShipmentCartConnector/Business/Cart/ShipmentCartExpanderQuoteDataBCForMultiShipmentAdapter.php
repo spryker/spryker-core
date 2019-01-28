@@ -7,13 +7,11 @@
 
 namespace Spryker\Zed\ShipmentCartConnector\Business\Cart;
 
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Shared\Shipment\ShipmentConstants;
 
 /**
@@ -210,6 +208,5 @@ class ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter implements Shipment
         $shipmentExpenseTransfer = $this->getShipmentExpenseTransferForBC($itemTransfer, $quoteExpenseTransfer);
         $shipmentTransfer->setMethod($shipmentMethodTransfer)
             ->setExpense($shipmentExpenseTransfer);
-
     }
 }

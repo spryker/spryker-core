@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShipmentDiscountConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\QuoteDataBCForMultiShipmentAdapter;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\QuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollector as ShipmentDiscountCollectorWithMultiShipment;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollectorInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\CarrierDiscountDecisionRule as CarrierDiscountDecisionRuleWithMultiShipment;
@@ -25,7 +26,6 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmen
 use Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentDecisionRuleStrategyResolver;
 use Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentDecisionRuleStrategyResolverInterface;
 use Spryker\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorDependencyProvider;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\QuoteDataBCForMultiShipmentAdapterInterface;
 
 /**
  * @method \Spryker\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorConfig getConfig()

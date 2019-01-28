@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\ProductOption\Business;
 
-use Spryker\Zed\ProductOption\Business\Calculator\QuoteDataBCForMultiShipmentAdapter;
-use Spryker\Zed\ProductOption\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator;
 use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateWithItemShipmentTaxRateCalculator;
+use Spryker\Zed\ProductOption\Business\Calculator\QuoteDataBCForMultiShipmentAdapter;
+use Spryker\Zed\ProductOption\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupIdHydrator;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader;

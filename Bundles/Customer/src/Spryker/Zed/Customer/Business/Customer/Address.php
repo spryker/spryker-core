@@ -129,6 +129,8 @@ class Address implements AddressInterface
         return $addressTransfer;
     }
 
+
+
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
@@ -197,6 +199,16 @@ class Address implements AddressInterface
     public function findCustomerAddressById(int $idCustomerAddress): ?AddressTransfer
     {
         return $this->customerRepository->findCustomerAddressById($idCustomerAddress);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer
+    {
+        return $this->customerRepository->findAddressByAddressData($addressTransfer);
     }
 
     /**

@@ -45,7 +45,7 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
         OrderHydratorOrderDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter,
         array $hydrateOrderPlugins = []
     ) {
-        parent::__construct($queryContainer,$omsFacade, $hydrateOrderPlugins);
+        parent::__construct($queryContainer, $omsFacade, $hydrateOrderPlugins);
 
         $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
     }

@@ -276,6 +276,18 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves customer address by address details.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer;
+
+    /**
+     * Specification:
      * - Sets provided address as default billing address for the related customer.
      *
      * @api

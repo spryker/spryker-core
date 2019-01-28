@@ -12,11 +12,9 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
-use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface;
 
@@ -35,6 +33,11 @@ class ShipmentOrderSaverWithMultiShippingAddress implements ShipmentOrderSaverIn
     protected $salesFacade;
 
     /**
+     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerInterface
+     */
+    protected $customerFacade;
+
+    /**
      * @var \Spryker\Service\Shipment\ShipmentServiceInterface
      */
     protected $shipmentService;
@@ -49,17 +52,20 @@ class ShipmentOrderSaverWithMultiShippingAddress implements ShipmentOrderSaverIn
     /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface $entityManager
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface $salesFacade
+     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerInterface $customerFacade
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
      * @param \Spryker\Zed\Shipment\Business\Checkout\QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
      */
     public function __construct(
         ShipmentEntityManagerInterface $entityManager,
         ShipmentToSalesFacadeInterface $salesFacade,
+        ShipmentToCustomerInterface $customerFacade,
         ShipmentServiceInterface $shipmentService,
         QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
     ) {
         $this->entityManager = $entityManager;
         $this->salesFacade = $salesFacade;
+        $this->customerFacade = $customerFacade;
         $this->shipmentService = $shipmentService;
         $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
     }
@@ -95,11 +101,9 @@ class ShipmentOrderSaverWithMultiShippingAddress implements ShipmentOrderSaverIn
         $salesOrderTransfer = $this->salesFacade->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
         $shipmentGroups = $this->shipmentService->groupItemsByShipment($saveOrderTransfer->getOrderItems());
-        /**
-         * @todo Check this code!
-         */
+
         foreach ($shipmentGroups as $shipmentGroupTransfer) {
-//            $this->saveShipmentAddressTransfer($shipmentGroupTransfer);
+            $this->saveShipmentAddressTransfer($shipmentGroupTransfer);
             $this->addExpensesToOrder($shipmentGroupTransfer, $salesOrderTransfer, $saveOrderTransfer);
             $idSalesShipment = $this->entityManager->createSalesShipment(
                 $shipmentGroupTransfer->getShipment(),
@@ -117,7 +121,13 @@ class ShipmentOrderSaverWithMultiShippingAddress implements ShipmentOrderSaverIn
     protected function saveShipmentAddressTransfer(ShipmentGroupTransfer $shipmentGroupTransfer): void
     {
         $shippingAddressTransfer = $shipmentGroupTransfer->getShipment()->getShippingAddress();
+        $customerAddressTransfer = $this->customerFacade->findCustomerAddressByAddressData($shippingAddressTransfer);
+        if ($customerAddressTransfer !== null) {
+            $shippingAddressTransfer = $customerAddressTransfer;
+        }
+
         $shippingAddressTransfer = $this->salesFacade->createOrderAddress($shippingAddressTransfer);
+
         $shipmentGroupTransfer->getShipment()->setShippingAddress($shippingAddressTransfer);
     }
 

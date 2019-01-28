@@ -70,7 +70,7 @@ class OrderAddressWriter implements OrderAddressWriterInterface
         if ($foundAddressTransfer === null) {
             return false;
         }
-        // @todo: Check if correct order address saved.
+
         $foundAddressTransfer = $this->hydrateAddressTransferFromModifiedAddressTransfer($foundAddressTransfer, $addressTransfer);
         $this->entityManager->updateSalesOrderAddress($foundAddressTransfer);
 
