@@ -135,6 +135,27 @@ class ProductListFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetProductConcreteIdsByProductListIds()
+    {
+        // Arrange
+        $productTransfer = $this->tester->haveProduct();
+
+        /** @var \Generated\Shared\Transfer\ProductListTransfer $productListTransfer */
+        $productListTransfer = (new ProductListBuilder())->withProductListProductConcreteRelation()->build();
+        $productListTransfer->getProductListProductConcreteRelation()->addProductIds($productTransfer->getIdProductConcrete());
+        $this->getFacade()->saveProductList($productListTransfer);
+
+        // Act
+        $productConcreteIds = $this->getFacade()->getProductConcreteIdsByProductListIds([$productListTransfer->getIdProductList()]);
+
+        // Assert
+        $this->assertIsArray($productConcreteIds);
+        $this->assertEquals([$productTransfer->getIdProductConcrete()], $productConcreteIds);
+    }
+
+    /**
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\ProductList\Business\ProductListFacadeInterface
      */
     protected function getFacade()
