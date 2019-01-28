@@ -8,8 +8,6 @@
 namespace SprykerTest\Zed\ProductCategory;
 
 use Codeception\Actor;
-use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
-use Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface;
 
 /**
  * Inherited Methods
@@ -33,27 +31,4 @@ class ProductCategoryBusinessTester extends Actor
    /**
     * Define custom actions here
     */
-
-    /**
-     * @param int $idCategory
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
-    public function assignProductToCategory($idCategory, $idProductAbstract)
-    {
-        $spyProductCategory = new SpyProductCategory();
-        $spyProductCategory
-            ->setFkCategory($idCategory)
-            ->setFkProductAbstract($idProductAbstract)
-            ->save();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface
-     */
-    public function getProductCategoryFacade(): ProductCategoryFacadeInterface
-    {
-        return $this->getLocator()->productCategory()->facade();
-    }
 }
