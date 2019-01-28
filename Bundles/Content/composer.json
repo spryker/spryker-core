@@ -5,11 +5,13 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/locale": "^3.1.0"
+    "spryker/locale": "^3.1.0",
+    "spryker/kernel": "^3.8.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/propel": "*"
   },
   "autoload": {
     "psr-4": {

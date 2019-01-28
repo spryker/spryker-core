@@ -1,0 +1,14 @@
+{% block content %}
+    {% for localizedContentForm in contentForm.localizedContents %}
+        {% if localizedContentForm.vars.data.fkLocale == tab.name %}
+            {{ form_row(localizedContentForm.fk_locale) }}
+            {{ form_row(localizedContentForm.locale_name) }}
+            {% if localizedContentForm.parameters.vars.attr.template_path is defined %}
+                {% include localizedContentForm.parameters.vars.attr.template_path with {'form': localizedContentForm.parameters} %}
+            {% else %}
+                {{ form_widget(localizedContentForm.parameters) }}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+{% do contentForm.localizedContents.setRendered %}
