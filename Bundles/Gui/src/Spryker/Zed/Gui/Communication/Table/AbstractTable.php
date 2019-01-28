@@ -913,7 +913,6 @@ abstract class AbstractTable
         $class = $this->getButtonClass($defaultOptions, $customOptions);
         $parameters = $this->getButtonParameters($buttonOptions);
         $icon = '';
-        $url = Url::parse($url);
 
         if (is_string($url)) {
             $url = Url::parse($url);
