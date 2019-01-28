@@ -129,8 +129,6 @@ class Address implements AddressInterface
         return $addressTransfer;
     }
 
-
-
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
@@ -204,7 +202,7 @@ class Address implements AddressInterface
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
     public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer
     {

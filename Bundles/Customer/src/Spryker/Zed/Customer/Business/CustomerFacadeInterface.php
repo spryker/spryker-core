@@ -282,7 +282,7 @@ interface CustomerFacadeInterface
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
     public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer;
 
