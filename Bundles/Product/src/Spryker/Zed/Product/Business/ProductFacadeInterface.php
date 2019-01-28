@@ -854,7 +854,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns concrete product transfers array by abstract product ids.
+     * - Returns concrete product transfers by product abstract ids.
      *
      * @api
      *
