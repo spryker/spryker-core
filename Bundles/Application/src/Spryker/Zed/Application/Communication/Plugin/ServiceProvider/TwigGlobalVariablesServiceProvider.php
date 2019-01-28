@@ -34,7 +34,7 @@ class TwigGlobalVariablesServiceProvider extends AbstractPlugin implements Servi
                     'environment' => APPLICATION_ENV,
                     'store' => Store::getInstance()->getStoreName(),
                     'title' => Config::get(KernelConstants::PROJECT_NAMESPACE) . ' | Zed | ' . ucfirst(APPLICATION_ENV),
-                    'currentController' => get_class($this),
+                    'currentController' => static::class,
                 ];
 
                 return $variables;
