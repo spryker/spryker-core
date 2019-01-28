@@ -20,13 +20,13 @@
         <property name="errorMessage" type="string" />
     </transfer>
 
-    <transfer name="AvailabilitySubscriptionExistenceRequest">
+    <transfer name="FindAvailabilitySubscriptionRequest">
         <property name="subscriptionKey" type="string" />
         <property name="sku" type="string" />
         <property name="email" type="string" />
     </transfer>
 
-    <transfer name="AvailabilitySubscriptionExistenceResponse">
+    <transfer name="FindAvailabilitySubscriptionResponse">
         <property name="availabilitySubscription" type="AvailabilitySubscription" />
     </transfer>
 
