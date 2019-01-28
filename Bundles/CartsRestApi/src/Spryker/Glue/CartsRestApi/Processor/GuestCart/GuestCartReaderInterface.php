@@ -10,11 +10,10 @@ namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface GuestCartReaderInterface extends CartReaderInterface
+interface GuestCartReaderInterface
 {
     /**
      * @param string $uuidCart
@@ -22,7 +21,7 @@ interface GuestCartReaderInterface extends CartReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function readByIdentifier(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface;
+    public function getCustomerQuoteByUuid(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest

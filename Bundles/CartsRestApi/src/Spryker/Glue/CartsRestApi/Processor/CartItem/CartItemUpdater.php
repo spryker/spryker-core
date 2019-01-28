@@ -97,7 +97,7 @@ class CartItemUpdater implements CartItemUpdaterInterface
             return $this->cartRestResponseBuilder->returnWithErrorResponse($errors);
         }
 
-        return $this->cartReader->readByIdentifier($quoteTransfer->getUuid(), $restRequest);
+        return $this->cartReader->getCustomerQuoteByUuid($quoteTransfer->getUuid(), $restRequest);
     }
 
     /**

@@ -74,7 +74,36 @@ class CartReader implements CartReaderInterface
             ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
             ->setUuid($uuidCart));
 
-        if ($quoteResponseTransfer->getIsSuccessful() === false || !$this->ifQuoteBelongsToCustomer($restRequest, $uuidCart)) {
+        if ($quoteResponseTransfer->getIsSuccessful() === false) {
+            return $this->cartRestResponseBuilder->createCartNotFoundErrorResponse();
+        }
+
+        $cartResource = $this->cartsResourceMapper->mapCartsResource(
+            $quoteResponseTransfer->getQuoteTransfer(),
+            $restRequest
+        );
+
+        return $this->cartRestResponseBuilder->createCartRestResponse($cartResource);
+    }
+
+    /**
+     * @param string $uuidCart
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getCustomerQuoteByUuid(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface
+    {
+        if (!$uuidCart) {
+            return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
+        }
+
+        $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid((new QuoteTransfer())
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
+            ->setUuid($uuidCart));
+
+        if ($quoteResponseTransfer->getIsSuccessful() === false
+            || $restRequest->getUser()->getNaturalIdentifier() !== $quoteResponseTransfer->getCustomer()->getCustomerReference()) {
             return $this->cartRestResponseBuilder->createCartNotFoundErrorResponse();
         }
 
@@ -147,23 +176,6 @@ class CartReader implements CartReaderInterface
         }
 
         return $quoteCollectionTransfer;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param string $uuidCart
-     *
-     * @return bool
-     */
-    protected function ifQuoteBelongsToCustomer(RestRequestInterface $restRequest, string $uuidCart): bool
-    {
-        foreach ($this->getCustomerQuotes($restRequest)->getQuotes() as $quote) {
-            if ($uuidCart === $quote->getUuid()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

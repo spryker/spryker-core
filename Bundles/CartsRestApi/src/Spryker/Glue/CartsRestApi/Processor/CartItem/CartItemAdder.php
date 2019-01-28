@@ -97,7 +97,7 @@ class CartItemAdder implements CartItemAdderInterface
             return $this->cartRestResponseBuilder->returnWithErrorResponse($errors);
         }
 
-        return $this->cartReader->readByIdentifier($quoteResponseTransfer->getQuoteTransfer()->getUuid(), $restRequest);
+        return $this->cartReader->getCustomerQuoteByUuid($quoteResponseTransfer->getQuoteTransfer()->getUuid(), $restRequest);
     }
 
     /**
