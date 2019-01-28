@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant\Persistence;
 
+use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 interface MerchantEntityManagerInterface
@@ -34,4 +35,17 @@ interface MerchantEntityManagerInterface
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
     public function saveMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer;
+
+    /**
+     * Specification:
+     * - Creates merchant address.
+     * - Finds merchant address by MerchantAddressTransfer::idMerchantAddress.
+     * - Updates fields in the merchant address entity.
+     * - Persists the entity in DB.
+     *
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
+     */
+    public function saveMerchantAddress(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer;
 }

@@ -44,7 +44,13 @@ class MerchantWriter implements MerchantWriterInterface
     public function create(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         $merchantTransfer
-            ->requireName();
+            ->requireName()
+            ->requireRegistrationNumber()
+            ->requireContactPersonTitle()
+            ->requireContactPersonFirstName()
+            ->requireContactPersonLastName()
+            ->requireContactPersonPhone()
+            ->requireStatus();
 
         if (empty($merchantTransfer->getMerchantKey())) {
             $merchantTransfer->setMerchantKey(

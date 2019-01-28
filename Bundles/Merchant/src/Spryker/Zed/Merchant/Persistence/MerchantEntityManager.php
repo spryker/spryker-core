@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant\Persistence;
 
+use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -53,5 +54,30 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
         $merchantTransfer->setIdMerchant($spyMerchant->getIdMerchant());
 
         return $merchantTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
+     */
+    public function saveMerchantAddress(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer
+    {
+        $spyMerchantAddress = $this->getFactory()
+            ->createMerchantAddressQuery()
+            ->filterByIdMerchantAddress($merchantAddressTransfer->getIdMerchantAddress())
+            ->findOneOrCreate();
+
+        $spyMerchantAddress = $this->getFactory()
+            ->createPropelMerchantAddressMapper()
+            ->mapMerchantAddressTransferToSpyMerchantAddressEntity($merchantAddressTransfer, $spyMerchantAddress);
+
+        $spyMerchantAddress->save();
+
+        $merchantAddressTransfer->fromArray($spyMerchantAddress->toArray(), true);
+
+        return $merchantAddressTransfer;
     }
 }

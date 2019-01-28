@@ -37,7 +37,14 @@ class MerchantFacadeTest extends Unit
     {
         $merchantTransfer = (new MerchantTransfer())
             ->setMerchantKey('spryker-test-1')
-            ->setName('Spryker Merchant');
+            ->setName('Spryker Merchant')
+            ->setStatus('waiting-for-approval')
+            ->setContactPersonFirstName('Spryker')
+            ->setContactPersonLastName('Merchant')
+            ->setContactPersonPhone('1234567890')
+            ->setContactPersonTitle('Dr')
+            ->setRegistrationNumber('1234-56789-12')
+            ->setEmail('spryker.merchant@localhost.com');
 
         (new MerchantFacade())->createMerchant($merchantTransfer);
 
@@ -50,7 +57,14 @@ class MerchantFacadeTest extends Unit
     public function testCreateMerchantWithEmptyKeyGeneratesKey(): void
     {
         $merchantTransfer = (new MerchantTransfer())
-            ->setName('Spryker Merchant');
+            ->setName('Spryker Merchant')
+            ->setStatus('waiting-for-approval')
+            ->setContactPersonFirstName('Spryker')
+            ->setContactPersonLastName('Merchant')
+            ->setContactPersonPhone('1234567890')
+            ->setContactPersonTitle('Dr')
+            ->setRegistrationNumber('1234-56789-12')
+            ->setEmail('spryker.merchant@localhost.com');
 
         (new MerchantFacade())->createMerchant($merchantTransfer);
 
@@ -78,7 +92,14 @@ class MerchantFacadeTest extends Unit
         $merchantTransfer = $this->tester->haveMerchant();
         $newMerchantTransfer = (new MerchantTransfer())
             ->setMerchantKey($merchantTransfer->getMerchantKey() . '-1')
-            ->setName($merchantTransfer->getName());
+            ->setName($merchantTransfer->getName())
+            ->setStatus('waiting-for-approval')
+            ->setContactPersonFirstName('Spryker')
+            ->setContactPersonLastName('Merchant')
+            ->setContactPersonPhone('1234567890')
+            ->setContactPersonTitle('Dr')
+            ->setRegistrationNumber('1234-56789-12')
+            ->setEmail('spryker.merchant@localhost.com');
 
         (new MerchantFacade())->createMerchant($newMerchantTransfer);
         $this->assertNotNull($newMerchantTransfer->getIdMerchant());
@@ -93,7 +114,14 @@ class MerchantFacadeTest extends Unit
 
         $newMerchantTransfer = (new MerchantTransfer())
             ->setMerchantKey($merchantTransfer->getMerchantKey())
-            ->setName($merchantTransfer->getName());
+            ->setName($merchantTransfer->getName())
+            ->setStatus('waiting-for-approval')
+            ->setContactPersonFirstName('Spryker')
+            ->setContactPersonLastName('Merchant')
+            ->setContactPersonPhone('1234567890')
+            ->setContactPersonTitle('Dr')
+            ->setRegistrationNumber('1234-56789-12')
+            ->setEmail('spryker.merchant@localhost.com');
 
         $this->expectException(Exception::class);
 

@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\Merchant\Persistence;
 
+use Generated\Shared\Transfer\MerchantAddressCollectionTransfer;
+use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\Merchant\Persistence\MerchantPersistenceFactory getFactory()
@@ -30,6 +33,9 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
         $spyMerchant = $this->getFactory()
             ->createMerchantQuery()
             ->filterByIdMerchant($idMerchant)
+            ->useSpyMerchantAddressQuery(null, Criteria::LEFT_JOIN)
+                ->limit(1)
+            ->endUse()
             ->findOne();
 
         if (!$spyMerchant) {
@@ -82,6 +88,54 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
         return $this->getFactory()
             ->createMerchantQuery()
             ->filterByMerchantKey($key)
+            ->exists();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressCollectionTransfer
+     */
+    public function getMerchantAddresses(int $idMerchant): MerchantAddressCollectionTransfer
+    {
+        $spyMerchantAddresses = $this->getFactory()
+            ->createMerchantAddressQuery()
+            ->filterByFkMerchant($idMerchant)
+            ->find();
+
+        $merchantAddressMapper = $this->getFactory()->createPropelMerchantAddressMapper();
+
+        $merchantAddressCollectionTransfer = new MerchantAddressCollectionTransfer();
+        foreach ($spyMerchantAddresses as $spyMerchantAddress) {
+            $merchantAddressCollectionTransfer->addAddress(
+                $merchantAddressMapper->mapSpyMerchantAddressEntityToMerchantAddressTransfer(
+                    $spyMerchantAddress,
+                    new MerchantAddressTransfer()
+                )
+            );
+        }
+
+        return $merchantAddressCollectionTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function hasAddressKey(string $key): bool
+    {
+        return $this->getFactory()
+            ->createMerchantAddressQuery()
+            ->filterByKey($key)
             ->exists();
     }
 }
