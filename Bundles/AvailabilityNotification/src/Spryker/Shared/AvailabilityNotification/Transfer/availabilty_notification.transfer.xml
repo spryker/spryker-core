@@ -46,4 +46,10 @@
         <property name="availabilitySubscriptions" type="AvailabilitySubscription[]" singular="availabilitySubscription"/>
     </transfer>
 
+    <transfer name="AvailabilityNotification">
+        <property name="sku" type="string"/>
+        <property name="store" type="Store"/>
+        <property name="productConcrete" type="ProductConcrete"/>
+    </transfer>
+
 </transfers>
