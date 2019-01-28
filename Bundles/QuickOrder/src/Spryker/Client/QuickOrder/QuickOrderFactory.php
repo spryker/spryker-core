@@ -10,6 +10,7 @@ namespace Spryker\Client\QuickOrder;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\QuickOrder\Builder\QuickOrderTransferBuilder;
 use Spryker\Client\QuickOrder\Builder\QuickOrderTransferBuilderInterface;
+use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToLocaleClientInterface;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface;
 use Spryker\Client\QuickOrder\Expander\ProductConcreteExpander;
 use Spryker\Client\QuickOrder\Expander\ProductConcreteExpanderInterface;
@@ -34,7 +35,8 @@ class QuickOrderFactory extends AbstractFactory
     public function createProductConcreteResolver(): ProductConcreteResolverInterface
     {
         return new ProductConcreteResolver(
-            $this->getProductStorageClient()
+            $this->getProductStorageClient(),
+            $this->getLocaleClient()
         );
     }
 
@@ -82,5 +84,13 @@ class QuickOrderFactory extends AbstractFactory
     public function getProductStorageClient(): QuickOrderToProductStorageClientInterface
     {
         return $this->getProvidedDependency(QuickOrderDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToLocaleClientInterface
+     */
+    public function getLocaleClient(): QuickOrderToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(QuickOrderDependencyProvider::CLIENT_LOCALE);
     }
 }
