@@ -135,7 +135,7 @@ class ProductListFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertNotEmpty($productConcretePageSearchTransfer->getProductListMap());
+        $this->assertInstanceOf(ProductListMapTransfer::class, $productConcretePageSearchTransfer->getProductListMap());
     }
 
     /**
