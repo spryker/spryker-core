@@ -59,7 +59,7 @@ class CompanyRoleResourceRelationshipExpander implements CompanyRoleResourceRela
                 continue;
             }
 
-            $this->addCompanyRoleRelationShips($companyRoleCollectionTransfer, $resource);
+            $this->addCompanyRoleRelationships($companyRoleCollectionTransfer, $resource);
         }
 
         return $resources;
@@ -71,7 +71,7 @@ class CompanyRoleResourceRelationshipExpander implements CompanyRoleResourceRela
      *
      * @return void
      */
-    protected function addCompanyRoleRelationShips(
+    protected function addCompanyRoleRelationships(
         CompanyRoleCollectionTransfer $companyRoleCollectionTransfer,
         RestResourceInterface $resource
     ): void {

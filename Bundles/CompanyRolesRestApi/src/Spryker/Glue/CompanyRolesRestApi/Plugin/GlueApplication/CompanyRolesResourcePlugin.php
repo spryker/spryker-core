@@ -22,7 +22,7 @@ class CompanyRolesResourcePlugin extends AbstractPlugin implements ResourceRoute
 {
     /**
      * {@inheritdoc}
-     * - Configures available actions for companyRoles resource.
+     * - Configures available actions for company-roles resource.
      *
      * @api
      *

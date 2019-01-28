@@ -22,7 +22,7 @@ class CompanyRoleByCompanyUserResourceRelationshipPlugin extends AbstractPlugin 
      *
      * {@inheritdoc}
      *  - Adds Company roles resource as relationship.
-     *  - Requires CompanyUserTransfer be provided in resource payload.
+     *  - Requires CompanyUserTransfer to be provided in resource payload.
      *
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
