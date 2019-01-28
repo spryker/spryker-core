@@ -37,18 +37,9 @@ class QuoteReader implements QuoteReaderInterface
      */
     public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteTransfer->requireCustomerReference();
         $quoteTransfer->requireUuid();
 
-        $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid($quoteTransfer);
-
-        if (!$quoteResponseTransfer->getIsSuccessful()
-            || $quoteTransfer->getCustomerReference() !== $quoteResponseTransfer->getQuoteTransfer()->getCustomerReference()) {
-            return (new QuoteResponseTransfer())
-                ->setIsSuccessful(false);
-        }
-
-        return $quoteResponseTransfer;
+        return $this->quoteFacade->findQuoteByUuid($quoteTransfer);
     }
 
     /**

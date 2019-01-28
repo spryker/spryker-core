@@ -61,10 +61,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
             ->requireCustomerReference()
             ->requireQuoteUuid();
 
-        $quoteTransfer = $restQuoteRequestTransfer
-            ->getQuote()
-            ->setCustomerReference($restQuoteRequestTransfer->getCustomerReference());
-
+        $quoteTransfer = $restQuoteRequestTransfer->getQuote();
         $quoteResponseTransfer = $this->cartReader->findQuoteByUuid($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;

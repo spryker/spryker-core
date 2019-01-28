@@ -52,7 +52,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
     ): RestQuoteCollectionResponseTransfer {
         /** @var \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer $restQuoteCollectionResponseTransfer */
-        $restQuoteCollectionResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/find-customer-quote-collection', $restQuoteCollectionRequestTransfer);
+        $restQuoteCollectionResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/get-customer-quote-collection', $restQuoteCollectionRequestTransfer);
 
         return $restQuoteCollectionResponseTransfer;
     }
