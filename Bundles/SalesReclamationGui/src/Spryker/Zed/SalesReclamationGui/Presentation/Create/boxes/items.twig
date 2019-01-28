@@ -1,0 +1,35 @@
+{% set order = reclamation.order %}
+
+{% embed '@Gui/Partials/widget.twig' %}
+
+    {% block widget_title %}
+        <h5>Order
+        <a href="{{ url('/sales/detail', {'id-sales-order': reclamation.order.idSalesOrder}) }}"
+           target="_blank"
+        >
+            {{ reclamation.order.orderReference }}
+        </a></h5>
+    {% endblock %}
+
+    {% block widget_content %}
+
+        <table class="footable table toggle-arrow-tiny" data-qa="order-item-list">
+            <thead>
+            <tr class="text-left">
+                <th><input type="checkbox" id="check-all-orders" /></th>
+                <th colspan="2">{{ 'Product' | trans }}</th>
+                <th>{{ 'Unit Price' | trans }} <small>({{ reclamation.order.priceMode }})</small></th>
+                <th>{{ 'Item total' | trans }}</th>
+                <th>{{ 'State' | trans }}</th>
+            </tr>
+            </thead>
+            {% if order.itemGroups is defined and order.itemGroups | length > 0 %}
+              {% embed '@SalesReclamationGui/Create/boxes/item-group.twig' with {groups: order.itemGroups} %}{% endembed %}
+            {% else %}
+              {% embed '@SalesReclamationGui/Create/boxes/no-group-items.twig' with {items: order.items} %}{% endembed %}
+            {% endif %}
+        </table>
+
+    {% endblock %}
+
+{% endembed %}
