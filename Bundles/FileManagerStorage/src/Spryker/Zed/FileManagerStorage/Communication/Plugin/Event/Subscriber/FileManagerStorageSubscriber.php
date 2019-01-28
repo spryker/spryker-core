@@ -11,8 +11,9 @@ use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\FileManager\Dependency\FileManagerEvents;
 use Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener\FileInfoListener;
-use Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener\FileListener;
 use Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener\FileLocalizedAttributesListener;
+use Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener\FilePublishListener;
+use Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener\FileUnpublishListener;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -46,9 +47,9 @@ class FileManagerStorageSubscriber extends AbstractPlugin implements EventSubscr
     protected function addFileListeners(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_CREATE, new FileListener())
-            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_UPDATE, new FileListener())
-            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_DELETE, new FileListener());
+            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_CREATE, new FilePublishListener())
+            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_UPDATE, new FilePublishListener())
+            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_DELETE, new FileUnpublishListener());
     }
 
     /**
