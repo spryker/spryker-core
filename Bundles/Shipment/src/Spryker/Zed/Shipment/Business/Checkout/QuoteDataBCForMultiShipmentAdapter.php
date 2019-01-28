@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business\Checkout;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -32,13 +33,14 @@ class QuoteDataBCForMultiShipmentAdapter implements QuoteDataBCForMultiShipmentA
      */
     public function adapt(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if ($this->assertThatItemTransfersHaveShipmentAndShipmentMethodAndShipmentExpense($quoteTransfer)) {
+        if ($this->assertThatItemTransfersHaveShipmentAndShipmentMethodAndShipmentExpenseAndAddress($quoteTransfer)) {
             return $quoteTransfer;
         }
 
-        /**
-         * @todo Add check for quote->address.
-         */
+        if ($this->assertThatQuoteHasNoAddressTransfer($quoteTransfer)) {
+            return $quoteTransfer;
+        }
+
         if ($this->assertThatQuoteHasNoShipment($quoteTransfer)) {
             return $quoteTransfer;
         }
@@ -70,18 +72,31 @@ class QuoteDataBCForMultiShipmentAdapter implements QuoteDataBCForMultiShipmentA
      *
      * @return bool
      */
-    protected function assertThatItemTransfersHaveShipmentAndShipmentMethodAndShipmentExpense(QuoteTransfer $quoteTransfer): bool
+    protected function assertThatItemTransfersHaveShipmentAndShipmentMethodAndShipmentExpenseAndAddress(QuoteTransfer $quoteTransfer): bool
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null
                 || $itemTransfer->getShipment()->getMethod() === null
                 || $itemTransfer->getShipment()->getExpense() === null
+                || $itemTransfer->getShipment()->getShippingAddress() === null
             ) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    /**
+     * @deprecated Will be removed in next major release.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function assertThatQuoteHasNoAddressTransfer(QuoteTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->getShippingAddress() === null;
     }
 
     /**
@@ -199,6 +214,23 @@ class QuoteDataBCForMultiShipmentAdapter implements QuoteDataBCForMultiShipmentA
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function getShipmentAddressTransferForBC(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): AddressTransfer
+    {
+        if ($itemTransfer->getShipment()->getShippingAddress() !== null) {
+            return $itemTransfer->getShipment()->getShippingAddress();
+        }
+
+        return $quoteTransfer->getShippingAddress();
+    }
+
+    /**
+     * @deprecated Will be removed in next major release.
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ExpenseTransfer $quoteExpenseTransfer
      *
      * @return void
@@ -213,7 +245,9 @@ class QuoteDataBCForMultiShipmentAdapter implements QuoteDataBCForMultiShipmentA
 
         $shipmentMethodTransfer = $this->getShipmentMethodTransferForBC($itemTransfer, $quoteTransfer);
         $shipmentExpenseTransfer = $this->getShipmentExpenseTransferForBC($itemTransfer, $quoteExpenseTransfer);
+        $shippingAddressTransfer = $this->getShipmentAddressTransferForBC($itemTransfer, $quoteTransfer);
         $shipmentTransfer->setMethod($shipmentMethodTransfer)
-            ->setExpense($shipmentExpenseTransfer);
+            ->setExpense($shipmentExpenseTransfer)
+            ->setShippingAddress($shippingAddressTransfer);
     }
 }
