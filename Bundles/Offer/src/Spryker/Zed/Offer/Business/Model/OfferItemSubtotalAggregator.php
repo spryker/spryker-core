@@ -8,9 +8,23 @@
 namespace Spryker\Zed\Offer\Business\Model;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Spryker\Zed\Offer\Business\Model\Calculator\FloatToIntegerConverterInterface;
 
 class OfferItemSubtotalAggregator implements OfferItemSubtotalAggregatorInterface
 {
+    /**
+     * @var \Spryker\Zed\Offer\Business\Model\Calculator\FloatToIntegerConverterInterface
+     */
+    protected $floatToIntConverter;
+
+    /**
+     * @param \Spryker\Zed\Offer\Business\Model\Calculator\FloatToIntegerConverterInterface $floatToIntegerConverter
+     */
+    public function __construct(FloatToIntegerConverterInterface $floatToIntegerConverter)
+    {
+        $this->floatToIntConverter = $floatToIntegerConverter;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -45,7 +59,10 @@ class OfferItemSubtotalAggregator implements OfferItemSubtotalAggregatorInterfac
             $originSumSubtotal = $itemTransfer->getSumSubtotalAggregation();
             $calculatedFeeSumSubtotal = $itemTransfer->getQuantity() * $itemTransfer->getOfferFee();
             $calculatedSumSubtotal = $originSumSubtotal + $calculatedFeeSumSubtotal;
-            $calculatedSumSubtotal = (int)$calculatedSumSubtotal;
+            $calculatedSumSubtotal = $this
+                ->floatToIntConverter
+                ->convert($calculatedSumSubtotal);
+
             $itemTransfer->setSumSubtotalAggregation($calculatedSumSubtotal);
         }
     }

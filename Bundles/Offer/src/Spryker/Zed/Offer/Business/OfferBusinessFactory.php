@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Offer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Offer\Business\Model\Calculator\FloatToIntegerConverter;
+use Spryker\Zed\Offer\Business\Model\Calculator\FloatToIntegerConverterInterface;
 use Spryker\Zed\Offer\Business\Model\Calculator\OfferCalculator;
 use Spryker\Zed\Offer\Business\Model\Calculator\OfferCalculatorInterface;
 use Spryker\Zed\Offer\Business\Model\Hydrator\OfferQuoteExpander;
@@ -113,7 +115,8 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferSavingAmountHydrator(): OfferSavingAmountHydratorInterface
     {
         return new OfferSavingAmountHydrator(
-            $this->getConfig()
+            $this->getConfig(),
+            $this->createFloatToIntegerConverter()
         );
     }
 
@@ -122,7 +125,9 @@ class OfferBusinessFactory extends AbstractBusinessFactory
      */
     public function createOfferItemSubtotalAggregator(): OfferItemSubtotalAggregatorInterface
     {
-        return new OfferItemSubtotalAggregator();
+        return new OfferItemSubtotalAggregator(
+            $this->createFloatToIntegerConverter()
+        );
     }
 
     /**
@@ -155,5 +160,13 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferGrandTotalCalculator(): OfferGrandTotalCalculatorInterface
     {
         return new OfferGrandTotalCalculator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Offer\Business\Model\Calculator\FloatToIntegerConverterInterface
+     */
+    public function createFloatToIntegerConverter(): FloatToIntegerConverterInterface
+    {
+        return new FloatToIntegerConverter();
     }
 }

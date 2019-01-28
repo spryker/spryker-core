@@ -9,6 +9,7 @@ namespace Spryker\Zed\Offer\Business\Model\Hydrator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
+use Spryker\Zed\Offer\Business\Model\Calculator\FloatToIntegerConverterInterface;
 use Spryker\Zed\Offer\OfferConfig;
 
 class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
@@ -19,12 +20,20 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
     protected $offerConfig;
 
     /**
+     * @var \Spryker\Zed\Offer\Business\Model\Calculator\FloatToIntegerConverterInterface
+     */
+    protected $floatToIntegerConverter;
+
+    /**
      * @param \Spryker\Zed\Offer\OfferConfig $offerConfig
+     * @param \Spryker\Zed\Offer\Business\Model\Calculator\FloatToIntegerConverterInterface $floatToIntegerConverter
      */
     public function __construct(
-        OfferConfig $offerConfig
+        OfferConfig $offerConfig,
+        FloatToIntegerConverterInterface $floatToIntegerConverter
     ) {
         $this->offerConfig = $offerConfig;
+        $this->floatToIntegerConverter = $floatToIntegerConverter;
     }
 
     /**
@@ -42,6 +51,10 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
             $savingAmount += (int)($this->getUnitPrice($itemTransfer, $quoteTransfer->getPriceMode()) / 100 * $itemTransfer->getOfferDiscount());
             $savingAmount -= $itemTransfer->getOfferFee();
             $savingAmount *= $itemTransfer->getQuantity();
+
+            $savingAmount = $this
+                ->floatToIntegerConverter
+                ->convert($savingAmount);
 
             $itemTransfer->setSavingAmount($savingAmount);
         }
