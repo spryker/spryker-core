@@ -88,7 +88,7 @@ class CartItemUpdater implements CartItemUpdaterInterface
         $restCartItemRequestTransfer = (new RestCartItemRequestTransfer())
             ->setCartUuid($uuidQuote)
             ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
-            ->setCartItem($itemTransfer);
+            ->setCartItem($itemTransfer->setQuantity($restCartItemsAttributesTransfer->getQuantity()));
 
         $quoteTransfer = $this->cartsRestApiClient->updateItem($restCartItemRequestTransfer)->getQuoteTransfer();
 

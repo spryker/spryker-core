@@ -80,6 +80,7 @@ class CartItemAdder implements CartItemAdderInterface
         if ($uuidQuote === null) {
             return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
         }
+
         $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($uuidQuote, $restRequest);
         if (!$quoteResponseTransfer->getIsSuccessful() || $quoteResponseTransfer->getQuoteTransfer() === null) {
             return $this->cartRestResponseBuilder->createCartNotFoundErrorResponse();
