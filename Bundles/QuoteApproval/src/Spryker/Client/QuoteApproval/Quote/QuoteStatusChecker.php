@@ -51,14 +51,15 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
             return false;
         }
 
+        if ($this->isQuoteWaitingForApproval($quoteTransfer)) {
+            return true;
+        }
+
         if ($this->can(PlaceOrderPermissionPlugin::KEY, $quoteTransfer)) {
             return false;
         }
 
-        $quoteStatus = $this->quoteStatusCalculator
-            ->calculateQuoteStatus($quoteTransfer);
-
-        return $quoteStatus !== QuoteApprovalConfig::STATUS_APPROVED;
+        return !$this->isQuoteApproved($quoteTransfer);
     }
 
     /**

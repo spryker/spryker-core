@@ -34,7 +34,9 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
             return false;
         }
 
-        $centAmount = $quoteTransfer->getTotals()->getGrandTotal();
+        $shipmentTransfer = $quoteTransfer->getShipment();
+        $shipmentPrice = $shipmentTransfer ? $shipmentTransfer->getMethod()->getStoreCurrencyPrice() : 0;
+        $centAmount = $quoteTransfer->getTotals()->getGrandTotal() - $shipmentPrice;
         $currencyCode = $quoteTransfer->getCurrency()->getCode();
         $storeName = $quoteTransfer->getStore()->getName();
 
@@ -42,7 +44,7 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
             return true;
         }
 
-        if ($configuration[static::FIELD_STORE_MULTI_CURRENCY][$storeName][$currencyCode] < (int)$centAmount) {
+        if ($configuration[static::FIELD_STORE_MULTI_CURRENCY][$storeName][$currencyCode] < $centAmount) {
             return false;
         }
 

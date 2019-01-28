@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Checkout\Quote;
 
+use Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class QuoteProceedCheckoutChecker implements QuoteProceedCheckoutCheckerInterface
@@ -27,16 +28,19 @@ class QuoteProceedCheckoutChecker implements QuoteProceedCheckoutCheckerInterfac
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer
      */
-    public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): bool
+    public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): CanProceedCheckoutResponseTransfer
     {
         foreach ($this->quoteProccedCheckoutCheckPlugins as $quoteProccedCheckoutCheckPlugin) {
-            if (!$quoteProccedCheckoutCheckPlugin->can($quoteTransfer)) {
-                return false;
+            $canProceedCheckoutResponseTransfer = $quoteProccedCheckoutCheckPlugin->can($quoteTransfer);
+
+            if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
+                return $canProceedCheckoutResponseTransfer;
             }
         }
 
-        return true;
+        return (new CanProceedCheckoutResponseTransfer())
+            ->setIsSuccessful(true);
     }
 }

@@ -23,6 +23,7 @@
         <property name="quote" type="Quote"/>
         <property name="quoteApproval" type="QuoteApproval"/>
         <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="QuoteApprovalCreateRequest">
@@ -48,7 +49,7 @@
     <transfer name="QuoteApprovalResponse">
         <property name="quoteApproval" type="QuoteApproval"/>
         <property name="isSuccessful" type="bool" />
-        <property name="message" type="Message" />
+        <property name="messages" type="Message[]" singular="message" />
     </transfer>
 
     <transfer name="QuoteApprovalCollection">
@@ -75,6 +76,23 @@
 
     <transfer name="Totals">
         <property name="grandTotal" type="int" />
+    </transfer>
+
+    <transfer name="CanProceedCheckoutResponseTransfer">
+        <property name="isSuccessful" type="bool" />
+        <property name="messages" type="Message[]"  singular="message" />
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="method" type="ShipmentMethod"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="storeCurrencyPrice" type="int" />
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string" />
     </transfer>
 
 </transfers>

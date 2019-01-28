@@ -86,7 +86,7 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
 
         if (!$quoteApprovalRequestValidationReponse->getIsSuccessful()) {
             $quoteApprovalResponseTransfer->setIsSuccessful(false)
-                ->setMessage($this->createMessageTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED));
+                ->addMessage($this->createMessageTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED));
 
             return $quoteApprovalResponseTransfer;
         }
@@ -101,7 +101,7 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
         );
 
         $quoteApprovalResponseTransfer->setIsSuccessful(false)
-            ->setMessage($this->createMessageTransfer(static::GLOSSARY_KEY_APPROVAL_REMOVED));
+            ->addMessage($this->createMessageTransfer(static::GLOSSARY_KEY_APPROVAL_REMOVED));
 
         $quoteApprovalResponseTransfer->setIsSuccessful(true);
 

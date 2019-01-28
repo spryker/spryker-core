@@ -60,10 +60,6 @@ class QuoteApproverListProvider implements QuoteApproverListProviderInterface
 
         $quoteApproverList = $this->getCompanyUserCollectionByIds($approverIds);
         $quoteApproverList = $this->filterByBusinessUnit($quoteApproverList, $idBusinessUnit);
-        $quoteApproverList = $this->filterCompanyUsersWhichCantApproveQuote(
-            $quoteApproverList,
-            $quoteTransfer
-        );
 
         return $quoteApproverList;
     }
@@ -97,29 +93,6 @@ class QuoteApproverListProvider implements QuoteApproverListProviderInterface
 
         foreach ($companyUsers as $key => $companyUser) {
             if ($companyUser->getFkCompanyBusinessUnit() !== $idBusinessUnit) {
-                unset($companyUsers[$key]);
-            }
-        }
-
-        $companyUserCollectionTransfer->setCompanyUsers(new ArrayObject($companyUsers));
-
-        return $companyUserCollectionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
-     */
-    protected function filterCompanyUsersWhichCantApproveQuote(
-        CompanyUserCollectionTransfer $companyUserCollectionTransfer,
-        QuoteTransfer $quoteTransfer
-    ): CompanyUserCollectionTransfer {
-        $companyUsers = $companyUserCollectionTransfer->getCompanyUsers()->getArrayCopy();
-
-        foreach ($companyUsers as $key => $companyUser) {
-            if (!$this->can(ApproveQuotePermissionPlugin::KEY, $companyUser->getIdCompanyUser(), $quoteTransfer)) {
                 unset($companyUsers[$key]);
             }
         }

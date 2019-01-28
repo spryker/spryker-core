@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Checkout;
 
+use Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutClientInterface
@@ -25,13 +26,16 @@ interface CheckoutClientInterface
 
     /**
      * Specification:
-     * - Returns true if quote is applicable for checkout, false - otherwise.
+     * - Executes QuoteProceedCheckoutCheckPluginInterface plugins, if at least one plugin returns not successfull response that `isSuccess` property will be false.
+     * - Successfull if no `QuoteProceedCheckoutCheckPluginInterface` plugins registered.
+     * - Quote is applicable for checkout if response successful.
+     * - May return array of messages in response is not successful.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer
      */
-    public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): bool;
+    public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): CanProceedCheckoutResponseTransfer;
 }

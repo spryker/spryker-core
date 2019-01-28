@@ -7,15 +7,20 @@
 
 namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface;
+use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToSharedCartFacadeInterface;
 use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface;
 
 class QuoteApprovalWriter implements QuoteApprovalWriterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRequestValidatorInterface
      */
@@ -37,21 +42,29 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
     protected $quoteLocker;
 
     /**
+     * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToSharedCartFacadeInterface
+     */
+    protected $sharedCartFacade;
+
+    /**
      * @param \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRequestValidatorInterface $quoteApprovalRequestValidator
      * @param \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalMessageBuilderInterface $quoteApprovalMessageBuilder
      * @param \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface $quoteApprovalEntityManager
      * @param \Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface $quoteLocker
+     * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToSharedCartFacadeInterface $sharedCartFacade
      */
     public function __construct(
         QuoteApprovalRequestValidatorInterface $quoteApprovalRequestValidator,
         QuoteApprovalMessageBuilderInterface $quoteApprovalMessageBuilder,
         QuoteApprovalEntityManagerInterface $quoteApprovalEntityManager,
-        QuoteLockerInterface $quoteLocker
+        QuoteLockerInterface $quoteLocker,
+        QuoteApprovalToSharedCartFacadeInterface $sharedCartFacade
     ) {
         $this->quoteApprovalRequestValidator = $quoteApprovalRequestValidator;
         $this->quoteApprovalMessageBuilder = $quoteApprovalMessageBuilder;
         $this->quoteApprovalEntityManager = $quoteApprovalEntityManager;
         $this->quoteLocker = $quoteLocker;
+        $this->sharedCartFacade = $sharedCartFacade;
     }
 
     /**
@@ -61,17 +74,9 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
      */
     public function approveQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-        $quoteApprovalRequestValidationResponseTransfer = $this->quoteApprovalRequestValidator
-            ->validateQuoteApprovalRequest($quoteApprovalRequestTransfer);
-
-        if (!$quoteApprovalRequestValidationResponseTransfer->getIsSuccessful()) {
-            return $this->createNotSuccessfullQuoteApprovalResponseTransfer();
-        }
-
-        return $this->updateQuoteApprovalWithStatus(
-            $quoteApprovalRequestValidationResponseTransfer->getQuoteApproval(),
-            QuoteApprovalConfig::STATUS_APPROVED
-        );
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteApprovalRequestTransfer) {
+            return $this->executeApproveQuoteApprovalTransaction($quoteApprovalRequestTransfer);
+        });
     }
 
     /**
@@ -81,14 +86,31 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
      */
     public function declineQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteApprovalRequestTransfer) {
+            return $this->executeDeclineQuoteApprovalTransaction($quoteApprovalRequestTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    protected function executeDeclineQuoteApprovalTransaction(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    {
         $quoteApprovalRequestValidationResponseTransfer = $this->quoteApprovalRequestValidator
             ->validateQuoteApprovalRequest($quoteApprovalRequestTransfer);
 
         if (!$quoteApprovalRequestValidationResponseTransfer->getIsSuccessful()) {
-            return $this->createNotSuccessfullQuoteApprovalResponseTransfer();
+            return $this->createNotSuccessfullQuoteApprovalResponseTransfer(
+                $quoteApprovalRequestValidationResponseTransfer->getMessages()
+            );
         }
 
-        $this->quoteLocker->unlockQuote($quoteApprovalRequestValidationResponseTransfer->getQuote());
+        $quoteTransfer = $quoteApprovalRequestValidationResponseTransfer->getQuote();
+
+        $this->quoteLocker->unlockQuote($quoteTransfer);
+        $this->sharedCartFacade->deleteShareForQuote($quoteTransfer);
 
         return $this->updateQuoteApprovalWithStatus(
             $quoteApprovalRequestValidationResponseTransfer->getQuoteApproval(),
@@ -97,11 +119,39 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    protected function createNotSuccessfullQuoteApprovalResponseTransfer(): QuoteApprovalResponseTransfer
+    protected function executeApproveQuoteApprovalTransaction(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-        return (new QuoteApprovalResponseTransfer())->setIsSuccessful(false);
+        $quoteApprovalRequestValidationResponseTransfer = $this->quoteApprovalRequestValidator
+            ->validateQuoteApprovalRequest($quoteApprovalRequestTransfer);
+
+        if (!$quoteApprovalRequestValidationResponseTransfer->getIsSuccessful()) {
+            return $this->createNotSuccessfullQuoteApprovalResponseTransfer(
+                $quoteApprovalRequestValidationResponseTransfer->getMessages()
+            );
+        }
+
+        $this->sharedCartFacade->deleteShareForQuote($quoteApprovalRequestValidationResponseTransfer->getQuote());
+
+        return $this->updateQuoteApprovalWithStatus(
+            $quoteApprovalRequestValidationResponseTransfer->getQuoteApproval(),
+            QuoteApprovalConfig::STATUS_APPROVED
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer[]|\ArrayObject $messageTransfers
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    protected function createNotSuccessfullQuoteApprovalResponseTransfer(ArrayObject $messageTransfers): QuoteApprovalResponseTransfer
+    {
+        return (new QuoteApprovalResponseTransfer())
+            ->setMessages($messageTransfers)
+            ->setIsSuccessful(false);
     }
 
     /**
@@ -118,6 +168,6 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
         return (new QuoteApprovalResponseTransfer())
             ->setQuoteApproval($quoteApprovalTransfer)
             ->setIsSuccessful(true)
-            ->setMessage($this->quoteApprovalMessageBuilder->getSuccessMessage($quoteApprovalTransfer, $status));
+            ->addMessage($this->quoteApprovalMessageBuilder->getSuccessMessage($quoteApprovalTransfer, $status));
     }
 }
