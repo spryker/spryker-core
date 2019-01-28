@@ -23,10 +23,6 @@ class ProductListSearchToProductCategoryFacadeBridge implements ProductListSearc
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int[] $categoryIds
      *
      * @return int[]
