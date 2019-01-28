@@ -74,7 +74,9 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
      */
     public function unpublish(array $companyUserIds): void
     {
-        // TODO: Implement unpublish() method.
+        foreach ($companyUserIds as $idCompanyUser) {
+            $this->companyUserStorageEntityManager->deleteCompanyUserStorage($idCompanyUser);
+        }
     }
 
     /**

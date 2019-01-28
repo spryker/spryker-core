@@ -42,4 +42,33 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
 
         return $companyUserStorageTransfers;
     }
+
+    /**
+     * @param array $companyUserIds
+     *
+     * @return \Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer[]
+     */
+    public function findCompanyUserStorageEntities(array $companyUserIds): array
+    {
+        if (!$companyUserIds) {
+            return [];
+        }
+
+        $query = $this->getFactory()
+            ->createCompanyUserStorageQuery()
+            ->filterByFkCompanyUser_In($companyUserIds);
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer[]
+     */
+    public function findAllCompanyUserStorageEntities(): array
+    {
+        $query = $this->getFactory()
+            ->createCompanyUserStorageQuery();
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
 }

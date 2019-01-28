@@ -11,4 +11,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CompanyUserStorageConfig extends AbstractBundleConfig
 {
+    /**
+     * @return string|null
+     */
+    public function getProductImageSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
 }

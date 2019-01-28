@@ -45,5 +45,11 @@ class CompanyUserStorageEntityManager extends AbstractEntityManager implements C
             ->createCompanyUserStorageQuery()
             ->filterByFkCompanyUser($companyUserStorageTransfer->getIdCompanyUser())
             ->findOne();
+
+        if (!$companyUserStorageEntity) {
+            return;
+        }
+
+        $companyUserStorageEntity->delete();
     }
 }
