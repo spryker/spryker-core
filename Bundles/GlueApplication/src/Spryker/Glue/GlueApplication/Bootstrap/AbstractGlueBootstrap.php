@@ -54,7 +54,7 @@ abstract class AbstractGlueBootstrap
     /**
      * @return \Spryker\Shared\Application\Application|\Spryker\Glue\Kernel\Application
      */
-    public function boot(): Application
+    public function boot()
     {
         $this->registerServiceProviders();
 
