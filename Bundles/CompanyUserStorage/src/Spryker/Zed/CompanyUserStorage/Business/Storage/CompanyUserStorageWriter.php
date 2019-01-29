@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyUserStorage\Business\Storage;
 
 use Generated\Shared\Transfer\CompanyUserStorageTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage;
 use Spryker\Zed\CompanyUserStorage\Dependency\Facade\CompanyUserStorageToCompanyUserFacadeInterface;
 use Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageEntityManagerInterface;
 use Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface;
@@ -60,11 +61,10 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
      */
     public function publish(array $companyUserIds): void
     {
-        $companyUserTransfers = $this->companyUserFacade->findCompanyUserTransfers($companyUserIds);
-        $companyUserStorageTransfers = $this->findCompanyUserStorageTransfers($companyUserIds);
-        $mappedCompanyUnitStorageTransfers = $this->mapCompanyUserStorageTransfers($companyUserStorageTransfers);
+        $activeCompanyUserTransfers = $this->companyUserFacade->findActiveCompanyUserTransfers($companyUserIds);
+        $indexedCompanyUserStorageEntities = $this->companyUserStorageRepository->findCompanyUserStorageEntities($companyUserIds);
 
-        $this->storeData($companyUserTransfers, $mappedCompanyUnitStorageTransfers);
+        $this->storeData($activeCompanyUserTransfers, $indexedCompanyUserStorageEntities);
     }
 
     /**
@@ -74,68 +74,69 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
      */
     public function unpublish(array $companyUserIds): void
     {
-        foreach ($companyUserIds as $idCompanyUser) {
-            $this->companyUserStorageEntityManager->deleteCompanyUserStorage($idCompanyUser);
-        }
+        $companyUserStorageEntities = $this->companyUserStorageRepository->findCompanyUserStorageEntities($companyUserIds);
+        $this->deleteStorageEntities($companyUserStorageEntities);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer[] $companyUserTransfers
-     * @param \Generated\Shared\Transfer\CompanyUserStorageTransfer[] $mappedCompanyUnitStorageTransfers
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer[] $activeCompanyUserTransfers
+     * @param \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[] $indexedCompanyUserStorageEntities
      *
      * @return void
      */
-    protected function storeData(array $companyUserTransfers, array $mappedCompanyUnitStorageTransfers): void
+    protected function storeData(array $activeCompanyUserTransfers, array $indexedCompanyUserStorageEntities): void
     {
-        foreach ($companyUserTransfers as $companyUserTransfer) {
+        foreach ($activeCompanyUserTransfers as $companyUserTransfer) {
             $idCompanyUser = $companyUserTransfer->getIdCompanyUser();
-            $companyUserStorageTransfer = $this->selectCompanyUserStorageEntity($mappedCompanyUnitStorageTransfers, $idCompanyUser);
+            $companyUserStorageEntity = $this->selectCompanyUserStorageEntity($indexedCompanyUserStorageEntities, $idCompanyUser);
 
-            unset($mappedCompanyUnitStorageTransfers[$idCompanyUser]);
-            $this->storeDataSet($companyUserTransfer, $companyUserStorageTransfer);
+            unset($indexedCompanyUserStorageEntities[$idCompanyUser]);
+            $this->storeDataSet($companyUserTransfer, $companyUserStorageEntity);
+        }
+
+        $this->deleteStorageEntities($indexedCompanyUserStorageEntities);
+    }
+
+    /**
+     * @param \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[] $companyUserStorageEntities
+     *
+     * @return void
+     */
+    protected function deleteStorageEntities(array $companyUserStorageEntities): void
+    {
+        foreach ($companyUserStorageEntities as $companyUserStorageEntity) {
+            $companyUserStorageEntity->delete();
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserStorageTransfer $companyUserStorageTransfer
+     * @param \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage $companyUserStorageEntity
      *
      * @return void
      */
-    protected function storeDataSet(CompanyUserTransfer $companyUserTransfer, CompanyUserStorageTransfer $companyUserStorageTransfer): void
+    protected function storeDataSet(CompanyUserTransfer $companyUserTransfer, SpyCompanyUserStorage $companyUserStorageEntity): void
     {
-        $companyUserStorageTransfer->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
-        $companyUserStorageTransfer->setIdCompany($companyUserTransfer->getFkCompany());
+        $companyUserStorageTransfer = $this->getCompanyUserStorageTransfer($companyUserTransfer);
 
-        $this->companyUserStorageEntityManager->saveCompanyUserStorage($companyUserStorageTransfer);
+        $companyUserStorageEntity->setFkCompanyUser($companyUserTransfer->getIdCompanyUser())
+            ->setData($companyUserStorageTransfer->toArray());
+
+        $companyUserStorageEntity->save();
     }
 
     /**
-     * @param int[] $companyUserIds
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer[]
+     * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer
      */
-    protected function findCompanyUserStorageTransfers(array $companyUserIds): array
+    protected function getCompanyUserStorageTransfer(CompanyUserTransfer $companyUserTransfer): CompanyUserStorageTransfer
     {
-        $companyUserStorageTransfers = $this->companyUserStorageRepository->findCompanyUserStorageTransfers($companyUserIds);
+        $companyUserStorageTransfer = new CompanyUserStorageTransfer();
+        $companyUserStorageTransfer->fromArray($companyUserTransfer->toArray(), true);
+        $companyUserStorageTransfer = $this->expandCompanyUserStorageTransfers($companyUserStorageTransfer);
 
-        return $this->expandCompanyUserStorageTransfers($companyUserStorageTransfers);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserStorageTransfer[] $companyUserStorageTransfers
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer[]
-     */
-    protected function expandCompanyUserStorageTransfers(array $companyUserStorageTransfers): array
-    {
-        foreach ($companyUserStorageTransfers as $companyUserStorageTransfer) {
-            foreach ($this->companyUserStorageExpanderPlugins as $companyUserStorageExpanderPlugin) {
-                $companyUserStorageTransfer = $companyUserStorageExpanderPlugin->expand($companyUserStorageTransfer);
-            }
-        }
-
-        return $companyUserStorageTransfers;
+        return $companyUserStorageTransfer;
     }
 
     /**
@@ -143,7 +144,7 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer
      */
-    protected function executeCompanyUserStorageExpanderPlugins(CompanyUserStorageTransfer $companyUserStorageTransfer): CompanyUserStorageTransfer
+    protected function expandCompanyUserStorageTransfers(CompanyUserStorageTransfer $companyUserStorageTransfer): CompanyUserStorageTransfer
     {
         foreach ($this->companyUserStorageExpanderPlugins as $companyUserStorageExpanderPlugin) {
             $companyUserStorageTransfer = $companyUserStorageExpanderPlugin->expand($companyUserStorageTransfer);
@@ -153,28 +154,13 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserStorageTransfer[] $companyUserStorageTransfers
-     *
-     * @return array
-     */
-    protected function mapCompanyUserStorageTransfers(array $companyUserStorageTransfers): array
-    {
-        $mappedCompanyUserStorageTransfers = [];
-        foreach ($companyUserStorageTransfers as $companyUserStorageTransfer) {
-            $mappedCompanyUserStorageTransfers[$companyUserStorageTransfer->getIdCompanyUser()] = $companyUserStorageTransfer;
-        }
-
-        return $mappedCompanyUserStorageTransfers;
-    }
-
-    /**
-     * @param array $mappedCompanyUnitStorageTransfers
+     * @param \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[] $indexedCompanyUserStorageEntities
      * @param int $idCompanyUser
      *
-     * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer
+     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage
      */
-    protected function selectCompanyUserStorageEntity(array $mappedCompanyUnitStorageTransfers, int $idCompanyUser): CompanyUserStorageTransfer
+    protected function selectCompanyUserStorageEntity(array $indexedCompanyUserStorageEntities, int $idCompanyUser): SpyCompanyUserStorage
     {
-        return $mappedCompanyUnitStorageTransfers[$idCompanyUser] ?? new CompanyUserStorageTransfer();
+        return $indexedCompanyUserStorageEntities[$idCompanyUser] ?? new SpyCompanyUserStorage();
     }
 }

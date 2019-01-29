@@ -46,7 +46,7 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
     /**
      * @param array $companyUserIds
      *
-     * @return \Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer[]
+     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
      */
     public function findCompanyUserStorageEntities(array $companyUserIds): array
     {
@@ -58,7 +58,7 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
             ->createCompanyUserStorageQuery()
             ->filterByFkCompanyUser_In($companyUserIds);
 
-        return $this->buildQueryFromCriteria($query)->find();
+        return $query->find()->getArrayCopy('fkCompanyUser');
     }
 
     /**
@@ -69,6 +69,6 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
         $query = $this->getFactory()
             ->createCompanyUserStorageQuery();
 
-        return $this->buildQueryFromCriteria($query)->find();
+        return $query->find()->getArrayCopy();
     }
 }

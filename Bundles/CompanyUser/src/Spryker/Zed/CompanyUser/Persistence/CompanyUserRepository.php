@@ -291,15 +291,19 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    public function findCompanyUserTransfers(array $companyUserIds): array
+    public function findActiveCompanyUserTransfers(array $companyUserIds): array
     {
-        if (!$companyUserIds) {
-            return [];
-        }
-
         $query = $this->getFactory()
             ->createCompanyUserQuery()
-            ->filterByIdCompanyUser_In($companyUserIds);
+            ->filterByIdCompanyUser_In($companyUserIds)
+            ->filterByIsActive(true)
+            ->useCompanyQuery()
+                ->filterByIsActive(true)
+            ->endUse()
+            ->useCustomerQuery()
+                ->filterByAnonymizedAt(null, Criteria::ISNULL)
+            ->endUse();
+
         $companyUserEntityCollection = $query->find();
 
         $companyUnitTransfers = [];

@@ -265,10 +265,10 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    public function findCompanyUserTransfers(array $companyUserIds): array
+    public function findActiveCompanyUserTransfers(array $companyUserIds): array
     {
         return $this->getFactory()
             ->createCompanyUser()
-            ->findCompanyUserTransfers($companyUserIds);
+            ->findActiveCompanyUserTransfers($companyUserIds);
     }
 }

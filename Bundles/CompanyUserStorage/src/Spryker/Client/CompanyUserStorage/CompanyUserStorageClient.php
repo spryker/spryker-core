@@ -14,11 +14,4 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CompanyUserStorageClient extends AbstractClient implements CompanyUserStorageClientInterface
 {
-    /**
-     * @return \Spryker\Client\CompanyUserStorage\Zed\CompanyUserStorageStubInterface
-     */
-    protected function getZedStub()
-    {
-        return $this->getFactory()->createZedStub();
-    }
 }

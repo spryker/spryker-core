@@ -44,6 +44,7 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addCompanyUserFacade($container);
+        $container = $this->addCompanyUserStorageExpanderPlugins($container);
 
         return $container;
     }

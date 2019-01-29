@@ -219,5 +219,5 @@ interface CompanyUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    public function findCompanyUserTransfers(array $companyUserIds): array;
+    public function findActiveCompanyUserTransfers(array $companyUserIds): array;
 }

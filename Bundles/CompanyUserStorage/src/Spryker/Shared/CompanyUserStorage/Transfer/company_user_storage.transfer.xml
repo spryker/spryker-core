@@ -5,7 +5,7 @@
 
     <transfer name="CompanyUserStorage">
         <property name="idCompanyUser" type="int"/>
-        <property name="idCompany" type="int"/>
+        <property name="fkCompany" type="int"/>
     </transfer>
 
 </transfers>

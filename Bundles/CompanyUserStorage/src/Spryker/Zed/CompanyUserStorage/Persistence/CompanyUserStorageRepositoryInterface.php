@@ -19,7 +19,7 @@ interface CompanyUserStorageRepositoryInterface
     /**
      * @param array $companyUserIds
      *
-     * @return \Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer[]
+     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
      */
     public function findCompanyUserStorageEntities(array $companyUserIds): array;
 
