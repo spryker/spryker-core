@@ -58,6 +58,6 @@ class QuoteReader implements QuoteReaderInterface
     public function getCustomerQuoteCollection(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
     ): QuoteCollectionResponseTransfer {
-        return $this->quoteCollectionReaderPlugin->getQuoteCollectionByCriteria($restQuoteCollectionRequestTransfer);
+        return $this->quoteCollectionReaderPlugin->getQuoteCollection($restQuoteCollectionRequestTransfer);
     }
 }

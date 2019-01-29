@@ -36,6 +36,9 @@ class MultipleQuoteReader implements MultipleQuoteReaderInterface
     public function getCustomerQuoteCollection(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
     ): QuoteCollectionResponseTransfer {
+        $restQuoteCollectionRequestTransfer
+            ->requireCustomerReference();
+
         $quoteCollectionResponseTransfer = new QuoteCollectionResponseTransfer();
         $quoteCollectionTransfer = $this->getCustomerQuotes($restQuoteCollectionRequestTransfer);
         if (count($quoteCollectionTransfer->getQuotes()) === 0) {

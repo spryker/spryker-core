@@ -27,7 +27,7 @@ class MultipleQuoteCollectionReaderPlugin extends AbstractPlugin implements Quot
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
-    public function getQuoteCollectionByCriteria(
+    public function getQuoteCollection(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
     ): QuoteCollectionResponseTransfer {
         return $this->getFacade()->getCustomerQuoteCollection($restQuoteCollectionRequestTransfer);
