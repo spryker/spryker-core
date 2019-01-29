@@ -8,21 +8,24 @@
 namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 
 interface ShipmentGuiToShipmentInterface
 {
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
     public function getMethods();
 
     /**
-     * @api
+     * @param int $idShipmentMethod
      *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findMethodById($idShipmentMethod): ?ShipmentMethodTransfer;
+
+    /**
      * @param int $idShipment
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
@@ -30,18 +33,10 @@ interface ShipmentGuiToShipmentInterface
     public function findShipmentById(int $idShipment): ?ShipmentTransfer;
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param int $idSalesOrder
      *
      * @return void
      */
-    public function updateShipmentTransaction(ShipmentGroupTransfer $shipmentGroupTransfer): void;
-
-    /**
-     * @param int $idSalesShipment
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
-     */
-    public function findShipmentItemsByIsSalesShipment(int $idSalesShipment): ObjectCollection;
+    public function saveShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, int $idSalesOrder): void;
 }

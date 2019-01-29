@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class ShipmentGuiToShipmentBridge implements ShipmentGuiToShipmentInterface
 {
@@ -35,6 +35,16 @@ class ShipmentGuiToShipmentBridge implements ShipmentGuiToShipmentInterface
     }
 
     /**
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findMethodById($idShipmentMethod): ?ShipmentMethodTransfer
+    {
+        return $this->shipmentFacade->findMethodById($idShipmentMethod);
+    }
+
+    /**
      * @inheritdoc
      */
     public function findShipmentById(int $idShipment): ?ShipmentTransfer
@@ -45,16 +55,8 @@ class ShipmentGuiToShipmentBridge implements ShipmentGuiToShipmentInterface
     /**
      * @inheritdoc
      */
-    public function updateShipmentTransaction(ShipmentGroupTransfer $shipmentGroupTransfer): void
+    public function saveShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, int $idSalesOrder): void
     {
-        $this->shipmentFacade->updateShipmentTransaction($shipmentGroupTransfer);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function findShipmentItemsByIsSalesShipment(int $idSalesShipment): ObjectCollection
-    {
-        return $this->shipmentFacade->findShipmentItemsByIdSalesShipment($idSalesShipment);
+        $this->shipmentFacade->saveShipmentGroup($shipmentGroupTransfer, $idSalesOrder);
     }
 }

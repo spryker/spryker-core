@@ -8,50 +8,50 @@
 namespace Spryker\Zed\ShipmentGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\AddressFormDataProvider;
-use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentForm;
+use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormCreateDataProvider;
+use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerInterface;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesInterface;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface;
 use Spryker\Zed\ShipmentGui\ShipmentGuiDependencyProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\ShipmentGui\ShipmentGuiConfig getConfig()
- * @method \Spryker\Zed\ShipmentGui\Business\ShipmentGuiFacadeInterface getFacade()
  */
 class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormCreateDataProvider
      */
-    public function createShipmentFormDataProvider()
+    public function createShipmentFormCreateDataProvider(): ShipmentFormCreateDataProvider
     {
-        return new ShipmentFormDataProvider(
-            $this->getShipmentFacade(),
-            $this->getSalesFacade()
+        return new ShipmentFormCreateDataProvider(
+            $this->getSalesFacade(),
+            $this->getCustomerFacade(),
+            $this->getShipmentFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\AddressFormDataProvider
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
      */
-    public function createAddressFormDataProvider()
+    public function createShipmentFormCreate(array $formData, array $formOptions = []): FormInterface
     {
-        return new AddressFormDataProvider(
-            $this->getCountryFacade()
+        return $this->getFormFactory()->create(
+            ShipmentFormCreate::class,
+            $formData,
+            $formOptions
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCountryInterface
-     */
-    public function getCountryFacade()
-    {
-        return $this->getProvidedDependency(ShipmentGuiDependencyProvider::FACADE_COUNTRY);
     }
 
     /**
      * @return \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesInterface
      */
-    public function getSalesFacade()
+    public function getSalesFacade(): ShipmentGuiToSalesInterface
     {
         return $this->getProvidedDependency(ShipmentGuiDependencyProvider::FACADE_SALES);
     }
@@ -59,23 +59,16 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface
      */
-    public function getShipmentFacade()
+    public function getShipmentFacade(): ShipmentGuiToShipmentInterface
     {
         return $this->getProvidedDependency(ShipmentGuiDependencyProvider::FACADE_SHIPMENT);
     }
 
     /**
-     * @param array $data
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerInterface
      */
-    public function getShipmentForm($data, $options)
+    public function getCustomerFacade(): ShipmentGuiToCustomerInterface
     {
-        return $this->getFormFactory()->create(
-            ShipmentForm::class,
-            $data,
-            $options
-        );
+        return $this->getProvidedDependency(ShipmentGuiDependencyProvider::FACADE_CUSTOMER);
     }
 }

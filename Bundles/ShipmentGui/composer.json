@@ -1,49 +1,22 @@
 {
   "name": "spryker/shipment-gui",
   "type": "library",
-  "description": "Shipment module",
+  "description": "ShipmentGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/currency": "^3.1.0",
-    "spryker/gui": "^3.0.0",
-    "spryker/kernel": "^3.13.0",
-    "spryker/money": "^2.0.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/sales": "^8.0.0",
-    "spryker/session": "^3.0.0 || ^4.0.0",
-    "spryker/store": "^1.0.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/tax": "^5.0.0",
-    "spryker/util-text": "^1.1.0",
-    "spryker/zed-request": "^3.0.0"
+    "php": ">=7.1"
   },
   "require-dev": {
-    "spryker/application": "*",
-    "spryker/calculation": "*",
-    "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
-    "spryker/country": "*",
-    "spryker/propel": "*",
     "spryker/testify": "*",
-    "spryker/zed-navigation": "*"
-  },
-  "suggest": {
-    "spryker/calculation": "If you want to use Calculation plugins.",
-    "spryker/checkout": "If you want to use Checkout plugins."
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Shipment\\Helper\\": "tests/SprykerTest/Shared/Shipment/_support/Helper/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
-      "Propel\\Module\\": "vendor/spryker/propel/tests/_support/Module",
-      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module",
       "SprykerTest\\": "tests/SprykerTest/"
     }
   },
@@ -51,7 +24,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "4.0.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   },
   "config": {
