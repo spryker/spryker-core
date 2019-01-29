@@ -8,7 +8,7 @@
 {% block section_title 'Edit Content Item: ' | trans ~ contentName %}
 
 {% block action %}
-    {{ backActionButton('/content-gui/list-content', 'Back to Content Items' | trans) }}
+    {{ backActionButton(backButton, 'Back to Content Items' | trans) }}
 {% endblock %}
 
 {% block content %}
