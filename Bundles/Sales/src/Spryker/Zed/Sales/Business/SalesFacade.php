@@ -58,7 +58,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer
     {
         return $this->getFactory()
-            ->createOrderReader()
+            ->createOrderReaderStrategyResolver()
+            ->resolve()
             ->findOrderByIdSalesOrder($idSalesOrder);
     }
 

@@ -13,7 +13,7 @@ use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 class OrderRepositoryReader implements OrderRepositoryReaderInterface
 {
     /**
-     * @var \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface
+     * @var \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface
      */
     protected $orderHydrator;
 
@@ -23,7 +23,7 @@ class OrderRepositoryReader implements OrderRepositoryReaderInterface
     protected $salesRepository;
 
     /**
-     * @param \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface $orderHydrator
+     * @param \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface $orderHydrator
      * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
      */
     public function __construct(
