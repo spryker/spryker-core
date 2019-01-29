@@ -309,27 +309,19 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface
-     */
-    public function getQuoteClient(): CartsRestApiToQuoteClientInterface
-    {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_QUOTE);
-    }
-
-    /**
-     * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface
-     */
-    public function getCartClient(): CartsRestApiToCartClientInterface
-    {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_CART);
-    }
-
-    /**
      * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface
      */
     public function getPersistentCartClient(): CartsRestApiToPersistentCartClientInterface
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_PERSISTENT_CART);
+    }
+
+    /**
+     * @return \Spryker\Client\Session\SessionClientInterface
+     */
+    protected function getSessionClient()
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::SERVICE_SESSION);
     }
 
     /**
@@ -346,13 +338,5 @@ class CartsRestApiFactory extends AbstractFactory
     public function getQuoteCreatorPlugin(): QuoteCreatorPluginInterface
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGIN_QUOTE_CREATOR);
-    }
-
-    /**
-     * @return \Spryker\Client\Session\SessionClientInterface
-     */
-    protected function getSessionClient()
-    {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::SERVICE_SESSION);
     }
 }

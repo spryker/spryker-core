@@ -40,27 +40,11 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideDependencies($container);
 
-        $container = $this->addCartClient($container);
         $container = $this->addZedRequestClient($container);
-        $container = $this->addQuoteClient($container);
         $container = $this->addSessionClient($container);
         $container = $this->addPersistentCartClient($container);
         $container = $this->addQuoteCollectionReaderPlugin($container);
         $container = $this->addQuoteCreatorPlugin($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addCartClient(Container $container): Container
-    {
-        $container[static::CLIENT_CART] = function (Container $container) {
-            return new CartsRestApiToCartClientBridge($container->getLocator()->cart()->client());
-        };
 
         return $container;
     }
@@ -88,20 +72,6 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
             return new CartsRestApiToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addQuoteClient(Container $container): Container
-    {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
-            return new CartsRestApiToQuoteClientBridge($container->getLocator()->quote()->client());
         };
 
         return $container;
