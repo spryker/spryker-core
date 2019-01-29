@@ -27,6 +27,11 @@
         <property name="quote" type="Quote"/>
     </transfer>
 
+    <transfer name="ProductListMap">
+        <property name="whitelists" type="array"/>
+        <property name="blacklists" type="array"/>
+    </transfer>
+
     <transfer name="ProductConcretePageSearch">
         <property name="fkProduct" type="int"/>
         <property name="productListMap" type="ProductListMap"/>

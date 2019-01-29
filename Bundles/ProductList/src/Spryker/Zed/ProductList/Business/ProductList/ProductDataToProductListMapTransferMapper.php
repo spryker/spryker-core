@@ -15,7 +15,7 @@ class ProductDataToProductListMapTransferMapper implements ProductDataToProductL
     /**
      * {@inheritdoc}
      */
-    public static function mapProductDataProductList(array $productData, ProductListMapTransfer $productListMapTransfer): ProductListMapTransfer
+    public function mapProductDataProductList(array $productData, ProductListMapTransfer $productListMapTransfer): ProductListMapTransfer
     {
         return $productListMapTransfer->fromArray($productData[ProductPageSearchTransfer::PRODUCT_LIST_MAP]);
     }

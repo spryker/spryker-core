@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductList\Business\ProductConcretePageSearchExpander;
+namespace Spryker\Zed\ProductList\Business\Expander;
 
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductListMapTransfer;
@@ -36,7 +36,7 @@ class ProductConcretePageSearchExpander implements ProductConcretePageSearchExpa
     ): ProductConcretePageSearchTransfer {
         $productConcretePageSearchTransfer->requireFkProduct();
 
-        $productConcretePageSearchTransfer = $this->initializeProductListMapIfNotExists($productConcretePageSearchTransfer);
+        $productConcretePageSearchTransfer = $this->sanitizeProductConcretePageSearchTransfer($productConcretePageSearchTransfer);
         $productConcretePageSearchTransfer = $this->expandProductConcretePageSearchTransferWithWhitelistIds($productConcretePageSearchTransfer);
         $productConcretePageSearchTransfer = $this->expandProductConcretePageSearchTransferWithBlacklistIds($productConcretePageSearchTransfer);
 
@@ -80,7 +80,7 @@ class ProductConcretePageSearchExpander implements ProductConcretePageSearchExpa
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
      */
-    protected function initializeProductListMapIfNotExists(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): ProductConcretePageSearchTransfer
+    protected function sanitizeProductConcretePageSearchTransfer(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): ProductConcretePageSearchTransfer
     {
         if (!$productConcretePageSearchTransfer->getProductListMap()) {
             $productConcretePageSearchTransfer->setProductListMap(new ProductListMapTransfer());

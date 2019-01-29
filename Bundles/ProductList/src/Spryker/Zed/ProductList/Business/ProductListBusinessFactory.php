@@ -8,10 +8,10 @@
 namespace Spryker\Zed\ProductList\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductList\Business\Expander\ProductConcretePageSearchExpander;
+use Spryker\Zed\ProductList\Business\Expander\ProductConcretePageSearchExpanderInterface;
 use Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGenerator;
 use Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface;
-use Spryker\Zed\ProductList\Business\ProductConcretePageSearchExpander\ProductConcretePageSearchExpander;
-use Spryker\Zed\ProductList\Business\ProductConcretePageSearchExpander\ProductConcretePageSearchExpanderInterface;
 use Spryker\Zed\ProductList\Business\ProductList\ProductDataToProductListMapTransferMapper;
 use Spryker\Zed\ProductList\Business\ProductList\ProductDataToProductListMapTransferMapperInterface;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface;
@@ -186,7 +186,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductList\Business\ProductConcretePageSearchExpander\ProductConcretePageSearchExpanderInterface
+     * @return \Spryker\Zed\ProductList\Business\Expander\ProductConcretePageSearchExpanderInterface
      */
     public function createProductConcretePageSearchExpander(): ProductConcretePageSearchExpanderInterface
     {
