@@ -29,6 +29,8 @@ class CategoryConfig extends AbstractBundleConfig
 
     protected const REDIRECT_URL_DEFAULT = '/category/root';
 
+    protected const REDIRECT_URL_CATEGORY_GUI = '/category-gui/list';
+
     /**
      * @return array
      */
@@ -44,6 +46,10 @@ class CategoryConfig extends AbstractBundleConfig
      */
     public function getDefaultRedirectUrl(): string
     {
+        if (class_exists('\Spryker\Zed\CategoryGui\Communication\Controller\ListController')) {
+            return static::REDIRECT_URL_CATEGORY_GUI;
+        }
+
         return static::REDIRECT_URL_DEFAULT;
     }
 }

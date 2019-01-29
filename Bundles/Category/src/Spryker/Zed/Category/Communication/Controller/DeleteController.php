@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends AbstractController
 {
+    protected const REDIRECT_URL_CATEGORY_LIST = '/category-gui/list';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -42,7 +44,7 @@ class DeleteController extends AbstractController
                 ->getFacade()
                 ->delete($data['fk_category']);
 
-            return $this->redirectResponse('/category/root');
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
 
         return $this->viewResponse([
