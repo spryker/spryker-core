@@ -39,7 +39,7 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    public function querySearchableCategoryNodeTree(array $categoryNodeIds, int $idLocale): SpyCategoryNodeQuery;
+    public function queryWholeCategoryNodeTree(array $categoryNodeIds, int $idLocale): SpyCategoryNodeQuery;
 
     /**
      * @api

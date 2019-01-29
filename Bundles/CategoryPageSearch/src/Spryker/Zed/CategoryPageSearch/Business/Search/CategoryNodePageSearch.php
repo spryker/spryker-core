@@ -208,7 +208,7 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
         $categoryNodeTree = [];
         $this->disableInstancePooling();
         foreach ($locales as $locale) {
-            $categoryNodes = $this->queryContainer->querySearchableCategoryNodeTree($categoryNodeIds, $locale->getIdLocale())->find()->toKeyIndex();
+            $categoryNodes = $this->queryContainer->queryWholeCategoryNodeTree($categoryNodeIds, $locale->getIdLocale())->find()->toKeyIndex();
 
             foreach ($categoryNodeIds as $categoryNodeId) {
                 if (isset($categoryNodes[$categoryNodeId])) {

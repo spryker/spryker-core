@@ -75,7 +75,7 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    public function querySearchableCategoryNodeTree(array $categoryNodeIds, int $idLocale): SpyCategoryNodeQuery
+    public function queryWholeCategoryNodeTree(array $categoryNodeIds, int $idLocale): SpyCategoryNodeQuery
     {
         /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $query */
         $query = $this->getFactory()
@@ -93,7 +93,6 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
                     ->filterByFkLocale($idLocale)
                 ->endUse()
                 ->filterByIsActive(true)
-                ->filterByIsSearchable(true)
                 ->joinWithCategoryTemplate()
             ->endUse();
 
