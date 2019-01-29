@@ -113,5 +113,5 @@ interface ProductPageSearchFacadeInterface
      *
      * @return void
      */
-    public function publishProductConcretesByProductAbstractIds(array $productAbstractIds): void;
+    public function publishProductConcretePageSearchesByProductAbstractIds(array $productAbstractIds): void;
 }

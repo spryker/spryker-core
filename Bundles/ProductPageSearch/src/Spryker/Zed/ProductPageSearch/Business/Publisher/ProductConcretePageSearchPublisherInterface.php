@@ -28,5 +28,5 @@ interface ProductConcretePageSearchPublisherInterface
      *
      * @return void
      */
-    public function publishProductConcretesByProductAbstractIds(array $abstractProductIds): void;
+    public function publishProductConcretePageSearchesByProductAbstractIds(array $abstractProductIds): void;
 }

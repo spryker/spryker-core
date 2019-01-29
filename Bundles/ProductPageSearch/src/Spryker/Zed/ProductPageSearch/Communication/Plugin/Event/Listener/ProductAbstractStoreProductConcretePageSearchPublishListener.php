@@ -32,6 +32,6 @@ class ProductAbstractStoreProductConcretePageSearchPublishListener extends Abstr
             SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT
         );
 
-        $this->getFacade()->publishProductConcretesByProductAbstractIds($productAbstractIds);
+        $this->getFacade()->publishProductConcretePageSearchesByProductAbstractIds($productAbstractIds);
     }
 }

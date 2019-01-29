@@ -136,10 +136,10 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @return void
      */
-    public function publishProductConcretesByProductAbstractIds(array $productAbstractIds): void
+    public function publishProductConcretePageSearchesByProductAbstractIds(array $productAbstractIds): void
     {
         $this->getFactory()
             ->createProductConcretePageSearchPublisher()
-            ->publishProductConcretesByProductAbstractIds($productAbstractIds);
+            ->publishProductConcretePageSearchesByProductAbstractIds($productAbstractIds);
     }
 }
