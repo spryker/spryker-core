@@ -250,8 +250,7 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Expands ItemTransfer with validation messages.
-     * - Adjusts ItemTransfer according to validation results.
+     * - Expands provided ItemTransfer with additional data.
      *
      * @api
      *

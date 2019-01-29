@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\Map\SpyProductConcretePageSearchTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
@@ -33,7 +32,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             ->filterByFkProduct_In($productIds)
             ->find();
 
-        return $this->getProductConcretePageSearchTransferFromProductConcretePageSearchEntities(
+        return $this->mapProductConcretePageSearchTransferFromProductConcretePageSearchEntities(
             $productConcretePageSearchEntities
         );
     }
@@ -47,7 +46,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     {
         $productConcretePageSearchEntities = $this->getProductConcretePageSearchEntitiesByAbstractProductsAndStores($storesPerAbstractProducts);
 
-        return $this->getProductConcretePageSearchTransferFromProductConcretePageSearchEntities(
+        return $this->mapProductConcretePageSearchTransferFromProductConcretePageSearchEntities(
             $productConcretePageSearchEntities
         );
     }
@@ -57,7 +56,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    protected function getProductConcretePageSearchTransferFromProductConcretePageSearchEntities($productConcretePageSearchEntities): array
+    protected function mapProductConcretePageSearchTransferFromProductConcretePageSearchEntities($productConcretePageSearchEntities): array
     {
         $mapper = $this->getFactory()->createProductPageSearchMapper();
         $productConcretePageSearchTransfers = [];
@@ -86,10 +85,6 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
                 SpyProductConcretePageSearchTableMap::COL_FK_PRODUCT,
                 SpyProductTableMap::COL_ID_PRODUCT,
                 Criteria::INNER_JOIN
-            )->addJoin(
-                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-                Criteria::INNER_JOIN
             );
 
         $storesAndProductsConditions = $this->buildStoresAndProductsConditions(
@@ -103,6 +98,8 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     }
 
     /**
+     * @module Product
+     *
      * Builds related stores and products conditions in the following relation:
      * "(store1 AND product1) OR (store2 AND product1) OR (store2 AND product2)"
      *
@@ -121,7 +118,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             foreach ($stores as $store) {
                 $productConcretePageSearchQuery->condition(
                     $conditionIndex,
-                    SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT . ' = ?',
+                    SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT . ' = ?',
                     $abstractId,
                     PDO::PARAM_INT
                 );

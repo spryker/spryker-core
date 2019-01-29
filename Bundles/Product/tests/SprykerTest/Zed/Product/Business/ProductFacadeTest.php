@@ -79,12 +79,12 @@ class ProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductConcreteTransfersByAbstractProductIds(): void
+    public function testGetProductConcreteTransfersByProductAbstractIds(): void
     {
         $productAbstractIds = $this->tester->getProductAbstractIds();
 
         $this->assertTrue(count($productAbstractIds) > 0);
-        $productConcreteTransfers = $this->tester->getProductFacade()->getProductConcreteTransfersByAbstractProductIds($productAbstractIds);
+        $productConcreteTransfers = $this->tester->getProductFacade()->getProductConcreteTransfersByProductAbstractIds($productAbstractIds);
 
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
             $this->assertInstanceOf(ProductConcreteTransfer::class, $productConcreteTransfer);

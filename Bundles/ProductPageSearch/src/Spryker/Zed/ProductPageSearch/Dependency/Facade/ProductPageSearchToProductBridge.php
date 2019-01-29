@@ -80,8 +80,8 @@ class ProductPageSearchToProductBridge implements ProductPageSearchToProductInte
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getProductConcreteTransfersByAbstractProductIds(array $abstractProductIds): array
+    public function getProductConcreteTransfersByProductAbstractIds(array $abstractProductIds): array
     {
-        return $this->productFacade->getProductConcreteTransfersByAbstractProductIds($abstractProductIds);
+        return $this->productFacade->getProductConcreteTransfersByProductAbstractIds($abstractProductIds);
     }
 }

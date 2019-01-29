@@ -83,60 +83,58 @@ class QuantityCartChangeItemExpander implements QuantityCartChangeItemExpanderIn
         $interval = $productQuantityStorageTransfer->getQuantityInterval();
         $quantity = $itemTransfer->getQuantity();
 
-        if (($quantity === 0 || $quantity > $min)
-            && ($quantity === 0 || ($quantity - $min) % $interval === 0)
-            && ($max === null || $quantity < $max)
-        ) {
+        if ($quantity === null || $quantity === 0) {
             return $itemTransfer;
         }
 
-        $nearestQuantity = $this->productQuantityResolver->getNearestQuantity(
-            $itemTransfer->getProductConcrete()->getIdProductConcrete(),
-            $quantity
-        );
-        $itemTransfer->setQuantity($nearestQuantity);
+        if ($quantity < $min) {
+            return $this->adjustCartChangeItemQuantity(
+                $itemTransfer,
+                static::NOTIFICATION_MESSAGE_QUANTITY_MIN_NOT_FULFILLED,
+                static::NOTIFICATION_MESSAGE_PARAM_MIN
+            );
+        }
 
-        $itemTransfer->addNotificationMessage(
-            $this->getNotificationMessageBasedOnQuantityRestriction($quantity, $nearestQuantity, $productQuantityStorageTransfer)
-        );
+        if (($quantity - $min) % $interval !== 0) {
+            return $this->adjustCartChangeItemQuantity(
+                $itemTransfer,
+                static::NOTIFICATION_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED,
+                static::NOTIFICATION_MESSAGE_PARAM_STEP
+            );
+        }
+
+        if ($max !== null && $quantity > $max) {
+            return $this->adjustCartChangeItemQuantity(
+                $itemTransfer,
+                static::NOTIFICATION_MESSAGE_QUANTITY_MAX_NOT_FULFILLED,
+                static::NOTIFICATION_MESSAGE_PARAM_MAX
+            );
+        }
 
         return $itemTransfer;
     }
 
     /**
-     * @param int $quantity
-     * @param int $nearestQuantity
-     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer $productQuantityStorageTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $notificationMessage
+     * @param string $notificationParam
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function getNotificationMessageBasedOnQuantityRestriction(
-        int $quantity,
-        int $nearestQuantity,
-        ProductQuantityStorageTransfer $productQuantityStorageTransfer
-    ): MessageTransfer {
-        $min = $productQuantityStorageTransfer->getQuantityMin();
-        $max = $productQuantityStorageTransfer->getQuantityMax();
-        $interval = $productQuantityStorageTransfer->getQuantityInterval();
+    protected function adjustCartChangeItemQuantity(ItemTransfer $itemTransfer, string $notificationMessage, string $notificationParam): ItemTransfer
+    {
+        $nearestQuantity = $this->productQuantityResolver->getNearestQuantity(
+            $itemTransfer->getProductConcrete()->getIdProductConcrete(),
+            $itemTransfer->getQuantity()
+        );
+        $itemTransfer->setQuantity($nearestQuantity);
 
-        if ($quantity !== 0 && $quantity < $min) {
-            return (new MessageTransfer())
-                ->setValue(static::NOTIFICATION_MESSAGE_QUANTITY_MIN_NOT_FULFILLED)
-                ->setParameters([static::NOTIFICATION_MESSAGE_PARAM_MIN => $nearestQuantity]);
-        }
+        $messageTransfer = (new MessageTransfer())
+            ->setValue($notificationMessage)
+            ->setParameters([$notificationParam => $nearestQuantity]);
 
-        if ($quantity !== 0 && ($quantity - $min) % $interval !== 0) {
-            return (new MessageTransfer())
-                ->setValue(static::NOTIFICATION_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED)
-                ->setParameters([static::NOTIFICATION_MESSAGE_PARAM_STEP => $nearestQuantity]);
-        }
+        $itemTransfer->addNotificationMessage($messageTransfer);
 
-        if ($max !== null && $quantity > $max) {
-            return (new MessageTransfer())
-                ->setValue(static::NOTIFICATION_MESSAGE_QUANTITY_MAX_NOT_FULFILLED)
-                ->setParameters([static::NOTIFICATION_MESSAGE_PARAM_MAX => $nearestQuantity]);
-        }
-
-        return new MessageTransfer();
+        return $itemTransfer;
     }
 }
