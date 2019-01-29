@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;

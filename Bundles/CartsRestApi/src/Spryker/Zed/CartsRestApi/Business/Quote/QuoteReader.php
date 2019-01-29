@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
+use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
-use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
 use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 
