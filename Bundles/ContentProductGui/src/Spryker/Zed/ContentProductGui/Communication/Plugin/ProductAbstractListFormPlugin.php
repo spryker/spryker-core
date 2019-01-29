@@ -14,7 +14,7 @@ use Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface;
 use Spryker\Zed\ContentProductGui\Communication\Form\AbstractProductListContentTermForm;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-class ContentProductFormPlugin extends AbstractPlugin implements ContentPluginInterface
+class ProductAbstractListFormPlugin extends AbstractPlugin implements ContentPluginInterface
 {
     /**
      * {@inheritdoc}
