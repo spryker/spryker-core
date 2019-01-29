@@ -161,6 +161,6 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
      */
     public function getQuoteCreatorPlugins(): QuoteCreatorPluginInterface
     {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_READER);
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_CREATOR);
     }
 }

@@ -29,7 +29,7 @@ class MultiCartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\MultiCartsRestApi\Business\Quote\MultipleQuoteReaderInterface
      */
-    public function createQuoteReader(): MultipleQuoteReaderInterface
+    public function createMultipleQuoteReader(): MultipleQuoteReaderInterface
     {
         return new MultipleQuoteReader(
             $this->getMultiCartFacade()
@@ -39,7 +39,7 @@ class MultiCartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\MultiCartsRestApi\Business\Quote\MultipleQuoteCreatorInterface
      */
-    public function createQuoteCreator(): MultipleQuoteCreatorInterface
+    public function createMultipleQuoteCreator(): MultipleQuoteCreatorInterface
     {
         return new MultipleQuoteCreator(
             $this->getPersistentCartFacade()

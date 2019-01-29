@@ -29,8 +29,6 @@ class MultipleQuoteCreatorPlugin extends AbstractPlugin implements QuoteCreatorP
      */
     public function createQuote(RestQuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
-        return $this->getFactory()
-            ->createMultipleQuoteCreator()
-            ->createQuote($quoteRequestTransfer);
+        return $this->getFacade()->createQuote($quoteRequestTransfer);
     }
 }

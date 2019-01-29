@@ -84,7 +84,7 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new CartCreator(
             $this->createCartsResourceMapper(),
-            $this->getQuoteCreatorPlugin(),
+            $this->getClient(),
             $this->createCartRestResponseBuilder()
         );
     }
