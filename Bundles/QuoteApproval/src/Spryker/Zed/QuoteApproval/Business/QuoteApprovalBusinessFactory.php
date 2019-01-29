@@ -86,8 +86,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteApprovalRequestValidator(),
             $this->createQuoteApprovalMessageBuilder(),
             $this->getEntityManager(),
-            $this->createQuoteLocker(),
-            $this->getSharedCartFacade()
+            $this->createQuoteLocker()
         );
     }
 
