@@ -240,7 +240,7 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     * - Does nothing if not `DatabaseStorageStrategy` is disabled.
+     * - Does nothing if `DatabaseStorageStrategy` is disabled.
      * - Does nothing if quoted does't have ID.
      * - Saves quote attributes described in QuoteUpdateRequestAttributesTransfer to database.
      *

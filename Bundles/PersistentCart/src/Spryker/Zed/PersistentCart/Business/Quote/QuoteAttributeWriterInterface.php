@@ -9,7 +9,7 @@ namespace Spryker\Zed\PersistentCart\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteAttributesWriterInterface
+interface QuoteAttributeWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

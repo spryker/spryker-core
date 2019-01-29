@@ -19,7 +19,7 @@ class QuoteAttributesSavePostQuoteRecalculatePlugin extends AbstractPlugin imple
 {
     /**
      * {@inheritdoc}
-     * - Does nothing if not `DatabaseStorageStrategy` is disabled.
+     * - Does nothing if `DatabaseStorageStrategy` is disabled.
      * - Does nothing if quote does't have ID.
      * - Saves quote attributes described in QuoteUpdateRequestAttributesTransfer to database.
      *

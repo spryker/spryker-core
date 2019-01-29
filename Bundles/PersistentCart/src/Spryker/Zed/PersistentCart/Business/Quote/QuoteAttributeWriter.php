@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriterInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
 
-class QuoteAttributesWriter implements QuoteAttributesWriterInterface
+class QuoteAttributeWriter implements QuoteAttributeWriterInterface
 {
     /**
      * @uses \Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_DATABASE

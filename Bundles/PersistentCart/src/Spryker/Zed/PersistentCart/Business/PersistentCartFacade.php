@@ -230,7 +230,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     public function updateQuoteAttributes(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
-            ->createQuoteAttributesWriter()
+            ->createQuoteAttributeWriter()
             ->updateQuoteAttributes($quoteTransfer);
     }
 }
