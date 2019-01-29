@@ -6,6 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/application": "^3.13.0",
+    "spryker/container": "^1.0.0",
     "spryker/documentation-generator-rest-api-extension": "^1.0.0",
     "spryker/glue-application-extension": "^1.1.0",
     "spryker/kernel": "^3.31.0",

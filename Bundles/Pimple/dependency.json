@@ -1,0 +1,5 @@
+{
+  "include": {
+    "Container": "Required to use the new ContainerInterface."
+  }
+}
