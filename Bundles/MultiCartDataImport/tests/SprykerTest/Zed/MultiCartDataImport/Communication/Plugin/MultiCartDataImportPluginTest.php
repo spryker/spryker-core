@@ -43,7 +43,7 @@ class MultiCartDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->ensureQuoteDatabaseTableIsEmpty();
         $this->tester->createCustomer([
             CustomerTransfer::CUSTOMER_REFERENCE => static::TEST_CUSTOMER_REFERENCE,
         ]);
@@ -71,7 +71,7 @@ class MultiCartDataImportPluginTest extends Unit
      */
     public function testImportThrowsExceptionWhenCustomerNotFound(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->ensureQuoteDatabaseTableIsEmpty();
 
         // Arrange
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
@@ -96,7 +96,7 @@ class MultiCartDataImportPluginTest extends Unit
      */
     public function testImportThrowsExceptionWhenStoreNotFound(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->ensureQuoteDatabaseTableIsEmpty();
         $this->tester->createCustomer([
             CustomerTransfer::CUSTOMER_REFERENCE => static::TEST_CUSTOMER_REFERENCE_STORE,
         ]);
