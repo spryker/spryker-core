@@ -26,7 +26,7 @@ class ProductStockHelper implements ProductStockHelperInterface
             }
             $stockProductTransfer = new StockProductTransfer();
             $stockProductTransfer->setStockType($type->getName());
-            $stockProductTransfer->setQuantity(0);
+            $stockProductTransfer->setQuantity(0.00);
 
             $productConcreteTransfer->addStock($stockProductTransfer);
         }
