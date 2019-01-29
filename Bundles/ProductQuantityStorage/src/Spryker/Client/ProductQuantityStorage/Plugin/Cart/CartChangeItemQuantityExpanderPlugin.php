@@ -20,6 +20,8 @@ class CartChangeItemQuantityExpanderPlugin extends AbstractPlugin implements Car
      * {@inheritdoc}
      * - Adjusts ItemTransfer quantity according to product quantity restrictions.
      * - Adds quantity adjustment info messages.
+     * - Returns ItemTransfer untouched if ProductConcrete is not provided.
+     * - Returns ItemTransfer untouched if related product concrete has no product quantity restrictions.
      *
      * @api
      *
