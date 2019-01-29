@@ -64,7 +64,7 @@ class CartItemDeleter implements CartItemDeleterInterface
         $restCartItemRequestTransfer = (new RestCartItemRequestTransfer())
             ->setCartUuid($uuidQuote)
             ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
-            ->setCartItem(); //TODO map
+            ->setCartItem((new ItemTransfer())->setSku($itemIdentifier));
 
         $quoteResponseTransfer = $this->cartsRestApiClient->deleteItem($restCartItemRequestTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
