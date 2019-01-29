@@ -36,7 +36,7 @@ interface ProductDiscontinuedProductBundleConnectorFacadeInterface
      *
      * @return void
      */
-    public function markBundleAsDiscontinuedAfterSaveBundledProducts(ProductConcreteTransfer $productConcreteTransfer): void;
+    public function markBundleAsDiscontinuedByBundledProducts(ProductConcreteTransfer $productConcreteTransfer): void;
 
     /**
      * Specification:

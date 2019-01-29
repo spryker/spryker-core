@@ -67,10 +67,6 @@ class ProductBundleDiscontinuedWriter implements ProductBundleDiscontinuedWriter
 
         $bundledProducts = $productConcreteTransfer->getProductBundle()->getBundledProducts();
 
-        if ($bundledProducts->count() == 0) {
-            return;
-        }
-
         foreach ($bundledProducts as $bundledProduct) {
             $productDiscontinuedResponseTransfer = $this->productDiscontinuedFacade
                 ->findProductDiscontinuedByProductId($bundledProduct->getIdProductConcrete());

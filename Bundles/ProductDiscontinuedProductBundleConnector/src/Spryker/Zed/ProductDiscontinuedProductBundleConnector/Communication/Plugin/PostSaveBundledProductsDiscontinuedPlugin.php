@@ -30,6 +30,6 @@ class PostSaveBundledProductsDiscontinuedPlugin extends AbstractPlugin implement
      */
     public function execute(ProductConcreteTransfer $productConcreteTransfer): void
     {
-        $this->getFacade()->markBundleAsDiscontinuedAfterSaveBundledProducts($productConcreteTransfer);
+        $this->getFacade()->markBundleAsDiscontinuedByBundledProducts($productConcreteTransfer);
     }
 }

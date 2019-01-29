@@ -43,7 +43,7 @@ class ProductDiscontinuedProductBundleConnectorFacade extends AbstractFacade imp
      *
      * @return void
      */
-    public function markBundleAsDiscontinuedAfterSaveBundledProducts(ProductConcreteTransfer $productConcreteTransfer): void
+    public function markBundleAsDiscontinuedByBundledProducts(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $this->getFactory()
             ->createProductBundleDiscontinuedWriter()
