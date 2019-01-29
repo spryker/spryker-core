@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductList\Business;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
-use Generated\Shared\Transfer\ProductListMapTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -291,22 +290,5 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
         return $this->getFactory()
             ->createProductListReader()
             ->getProductConcreteIdsByProductListIds($productListIds);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param array $productData
-     * @param \Generated\Shared\Transfer\ProductListMapTransfer $productListMapTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductListMapTransfer
-     */
-    public function mapProductDataToProductListMapTransfer(array $productData, ProductListMapTransfer $productListMapTransfer): ProductListMapTransfer
-    {
-        return $this->getFactory()
-            ->createProductDataToProductListMapTransferMapper()
-            ->mapProductDataProductList($productData, $productListMapTransfer);
     }
 }

@@ -15,6 +15,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePage
 /**
  * @method \Spryker\Zed\ProductList\Business\ProductListFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductList\ProductListConfig getConfig()
+ * @method \Spryker\Zed\ProductList\Communication\ProductListCommunicationFactory getFactory()
  */
 class ProductConcreteProductListPageDataExpanderPlugin extends AbstractPlugin implements ProductConcretePageDataExpanderPluginInterface
 {

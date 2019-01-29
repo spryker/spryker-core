@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductListSearch\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductListSearch\Business\ProductAbstract\ProductAbstractReader;
 use Spryker\Zed\ProductListSearch\Business\ProductAbstract\ProductAbstractReaderInterface;
+use Spryker\Zed\ProductListSearch\Business\ProductList\ProductDataToProductListMapTransferMapper;
+use Spryker\Zed\ProductListSearch\Business\ProductList\ProductDataToProductListMapTransferMapperInterface;
 
 /**
  * @method \Spryker\Zed\ProductListSearch\Persistence\ProductListSearchRepositoryInterface getRepository()
@@ -25,5 +27,13 @@ class ProductListSearchBusinessFactory extends AbstractBusinessFactory
         return new ProductAbstractReader(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListSearch\Business\ProductList\ProductDataToProductListMapTransferMapperInterface
+     */
+    public function createProductDataToProductListMapTransferMapper(): ProductDataToProductListMapTransferMapperInterface
+    {
+        return new ProductDataToProductListMapTransferMapper();
     }
 }

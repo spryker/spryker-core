@@ -18,6 +18,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePage
 /**
  * @method \Spryker\Zed\ProductList\Business\ProductListFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductList\ProductListConfig getConfig()
+ * @method \Spryker\Zed\ProductList\Communication\ProductListCommunicationFactory getFactory()
  */
 class ProductConcreteProductListPageMapExpanderPlugin extends AbstractPlugin implements ProductConcretePageMapExpanderPluginInterface
 {
@@ -52,7 +53,9 @@ class ProductConcreteProductListPageMapExpanderPlugin extends AbstractPlugin imp
     protected function setProductListsData(PageMapTransfer $pageMapTransfer, array $productData): PageMapTransfer
     {
         $pageMapTransfer->setProductLists(
-            $this->getFacade()->mapProductDataToProductListMapTransfer($productData, new ProductListMapTransfer())
+            $this->getFactory()
+                ->getProductListSearchFacade()
+                ->mapProductDataToProductListMapTransfer($productData, new ProductListMapTransfer())
         );
 
         return $pageMapTransfer;

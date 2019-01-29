@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListSearch\Business;
 
+use Generated\Shared\Transfer\ProductListMapTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -45,5 +46,22 @@ class ProductListSearchFacade extends AbstractFacade implements ProductListSearc
         return $this->getFactory()
             ->createProductAbstractReader()
             ->getProductAbstractIdsByCategoryIds($categoryIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $productData
+     * @param \Generated\Shared\Transfer\ProductListMapTransfer $productListMapTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListMapTransfer
+     */
+    public function mapProductDataToProductListMapTransfer(array $productData, ProductListMapTransfer $productListMapTransfer): ProductListMapTransfer
+    {
+        return $this->getFactory()
+            ->createProductDataToProductListMapTransferMapper()
+            ->mapProductDataProductList($productData, $productListMapTransfer);
     }
 }

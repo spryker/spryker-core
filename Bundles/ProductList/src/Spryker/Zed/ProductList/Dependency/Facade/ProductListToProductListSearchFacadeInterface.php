@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductList\Business\ProductList;
+namespace Spryker\Zed\ProductList\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductListMapTransfer;
 
-interface ProductDataToProductListMapTransferMapperInterface
+interface ProductListToProductListSearchFacadeInterface
 {
     /**
      * @param array $productData
@@ -17,5 +17,5 @@ interface ProductDataToProductListMapTransferMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductListMapTransfer
      */
-    public function mapProductDataProductList(array $productData, ProductListMapTransfer $productListMapTransfer): ProductListMapTransfer;
+    public function mapProductDataToProductListMapTransfer(array $productData, ProductListMapTransfer $productListMapTransfer): ProductListMapTransfer;
 }

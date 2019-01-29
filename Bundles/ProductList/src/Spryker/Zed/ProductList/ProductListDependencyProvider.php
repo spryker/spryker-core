@@ -11,6 +11,7 @@ use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductList\Dependency\Facade\ProductListToMessengerFacadeBridge;
+use Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductListSearchFacadeBridge;
 use Spryker\Zed\ProductList\Dependency\Service\ProductListToUtilTextServiceBridge;
 
 /**
@@ -22,6 +23,7 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    public const FACADE_PRODUCT_LIST_SEARCH = 'FACADE_PRODUCT_LIST_SEARCH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -46,6 +48,19 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addUtilTextService($container);
         $container = $this->addMessengerFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addProductListSearchFacade($container);
 
         return $container;
     }
@@ -88,6 +103,20 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_MESSENGER] = function (Container $container) {
             return new ProductListToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductListSearchFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_LIST_SEARCH, function (Container $container) {
+            return new ProductListToProductListSearchFacadeBridge($container->getLocator()->productListSearch()->facade());
+        });
 
         return $container;
     }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductListSearch\Business;
 
+use Generated\Shared\Transfer\ProductListMapTransfer;
+
 interface ProductListSearchFacadeInterface
 {
     /**
@@ -32,4 +34,17 @@ interface ProductListSearchFacadeInterface
      * @return int[]
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
+
+    /**
+     *  Specification:
+     *  - Maps ProductList data to ProductListMapTransfer.
+     *
+     * @api
+     *
+     * @param array $productData
+     * @param \Generated\Shared\Transfer\ProductListMapTransfer $productListMapTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListMapTransfer
+     */
+    public function mapProductDataToProductListMapTransfer(array $productData, ProductListMapTransfer $productListMapTransfer): ProductListMapTransfer;
 }

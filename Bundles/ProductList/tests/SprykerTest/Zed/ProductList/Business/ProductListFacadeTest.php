@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductListBuilder;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductListMapTransfer;
-use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Propel\Runtime\Exception\PropelException;
 
 /**
@@ -27,8 +26,6 @@ use Propel\Runtime\Exception\PropelException;
  */
 class ProductListFacadeTest extends Unit
 {
-    protected const TEST_WHITELIST_KEY = 1;
-    protected const TEST_BLACKLIST_KEY = 2;
     /**
      * @var \SprykerTest\Zed\ProductList\ProductListBusinessTester
      */
@@ -157,30 +154,6 @@ class ProductListFacadeTest extends Unit
         // Assert
         $this->assertIsArray($productConcreteIds);
         $this->assertEquals([$productTransfer->getIdProductConcrete()], $productConcreteIds);
-    }
-
-    /**
-     * @return void
-     */
-    public function testMapProductDataToProductListMapTransfer()
-    {
-        // Arrange
-        $productData = [
-            ProductPageSearchTransfer::PRODUCT_LIST_MAP => [
-                ProductListMapTransfer::WHITELISTS => [self::TEST_WHITELIST_KEY],
-                ProductListMapTransfer::BLACKLISTS => [self::TEST_BLACKLIST_KEY],
-            ],
-        ];
-        $productListMapTransfer = new ProductListMapTransfer();
-
-        // Act
-        $this->getFacade()->mapProductDataToProductListMapTransfer($productData, $productListMapTransfer);
-
-        // Assert
-        $this->assertIsArray($productListMapTransfer->getWhitelists());
-        $this->assertIsArray($productListMapTransfer->getBlacklists());
-        $this->assertEquals([self::TEST_WHITELIST_KEY], $productListMapTransfer->getWhitelists());
-        $this->assertEquals([self::TEST_BLACKLIST_KEY], $productListMapTransfer->getBlacklists());
     }
 
     /**

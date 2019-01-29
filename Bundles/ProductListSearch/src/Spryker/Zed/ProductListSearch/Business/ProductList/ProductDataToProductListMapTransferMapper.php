@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductList\Business\ProductList;
+namespace Spryker\Zed\ProductListSearch\Business\ProductList;
 
 use Generated\Shared\Transfer\ProductListMapTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
@@ -13,7 +13,10 @@ use Generated\Shared\Transfer\ProductPageSearchTransfer;
 class ProductDataToProductListMapTransferMapper implements ProductDataToProductListMapTransferMapperInterface
 {
     /**
-     * {@inheritdoc}
+     * @param array $productData
+     * @param \Generated\Shared\Transfer\ProductListMapTransfer $productListMapTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListMapTransfer
      */
     public function mapProductDataProductList(array $productData, ProductListMapTransfer $productListMapTransfer): ProductListMapTransfer
     {
