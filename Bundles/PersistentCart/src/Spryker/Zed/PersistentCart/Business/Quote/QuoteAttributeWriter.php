@@ -54,9 +54,13 @@ class QuoteAttributeWriter implements QuoteAttributeWriterInterface
         }
 
         $quoteUpdateRequestTransfer = $this->prepareQuoteUpdateRequestTransfer($quoteTransfer);
-
-        return $this->quoteWriter->updateQuote($quoteUpdateRequestTransfer)
+        $updatedQuote = $this->quoteWriter->updateQuote($quoteUpdateRequestTransfer)
             ->getQuoteTransfer();
+
+        $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
+            ->fromArray($updatedQuote->modifiedToArray(), true);
+
+        return $quoteTransfer->fromArray($quoteUpdateRequestAttributesTransfer->modifiedToArray());
     }
 
     /**
