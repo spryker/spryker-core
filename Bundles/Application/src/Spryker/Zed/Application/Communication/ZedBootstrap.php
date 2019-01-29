@@ -58,11 +58,11 @@ class ZedBootstrap
      */
     public function boot()
     {
-        $this->application->set('debug', function () {
+        $this->application['debug'] = function () {
             return Config::get(ApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
-        });
+        };
 
-        $this->application->set('locale', Store::getInstance()->getCurrentLocale());
+        $this->application['locale'] = Store::getInstance()->getCurrentLocale();
 
         $this->enableHttpMethodParameterOverride();
         $this->setUp();
@@ -232,9 +232,9 @@ class ZedBootstrap
     protected function optimizeApp()
     {
         $application = $this->application;
-        $application->set('resolver', function () use ($application) {
+        $application['resolver'] = function () use ($application) {
             return new ZedFragmentControllerResolver($application);
-        });
+        };
     }
 
     /**
