@@ -77,7 +77,42 @@ class ItemsGrouper implements ItemsGrouperInterface
      */
     protected function getAddressTransferKey(AddressTransfer $addressTransfer): string
     {
-        return implode(' ', $addressTransfer->toArray());
+        return $this->implode(' ', $addressTransfer->toArray());
+    }
+
+    /**
+     * @param string $glue
+     * @param array $data
+     *
+     * @return string
+     */
+    protected function implode(string $glue, array $data): string
+    {
+        $resultString = '';
+        foreach ($data as $value) {
+            if ($value === null || $value === '') {
+                continue;
+            }
+            if (is_array($value)) {
+                $resultString .= $this->implode($glue, $value);
+                continue;
+            }
+            if (is_object($value) && method_exists($value, '__toString')) {
+                $resultString .= $glue . (string)$value;
+                continue;
+            }
+            if (is_object($value) && $value instanceof ArrayObject) {
+                $resultString .= $this->implode($glue, $value->getArrayCopy());
+                continue;
+            }
+            if (is_object($value)) {
+                continue;
+            }
+
+            $resultString .= $glue . $value;
+        }
+
+        return $resultString;
     }
 
     /**
