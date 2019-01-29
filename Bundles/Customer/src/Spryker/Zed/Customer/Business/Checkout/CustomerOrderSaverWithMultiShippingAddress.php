@@ -120,9 +120,6 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
             $customerAddressTransfer = $this->customerRepository->findAddressByAddressData($addressTransfer);
             $this->existingAddresses[$key] = $customerAddressTransfer ?: $addressTransfer;
         }
-        if ($this->existingAddresses[$key] !== null) {
-            return $this->existingAddresses[$key];
-        }
 
         return $this->existingAddresses[$key];
     }
