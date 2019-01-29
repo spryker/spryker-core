@@ -11,11 +11,13 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Customer\Business\Customer\AddressInterface;
 use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
 use Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface;
 
+/**
+ * @method \Spryker\Zed\Customer\Business\CustomerBusinessFactory getFactory()
+ */
 class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
 {
     /**
@@ -81,14 +83,20 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
             return;
         }
 
-        $this->processCustomerAddress($quoteTransfer->getBillingAddress(), $customer);
-
         $this->existingAddresses = [];
+
+        $billingAddressTransfer = $quoteTransfer->getBillingAddress();
+        $this->processCustomerAddress(
+            $this->getCustomerAddress($billingAddressTransfer, $customer),
+            $customer
+        );
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->requireShipment();
 
-            $addressTransfer = $this->getCustomerAddress($itemTransfer->getShipment());
+            $addressTransfer = $itemTransfer->getShipment()->getShippingAddress();
+            $addressTransfer = $this->getCustomerAddress($addressTransfer, $customer);
+
             $itemTransfer->getShipment()->setShippingAddress($addressTransfer);
 
             $this->processCustomerAddress($addressTransfer, $customer);
@@ -96,23 +104,24 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function getCustomerAddress(ShipmentTransfer $shipmentTransfer): AddressTransfer
+    protected function getCustomerAddress(AddressTransfer $addressTransfer, CustomerTransfer $customer): AddressTransfer
     {
-        $addressTransfer = $shipmentTransfer->getShippingAddress();
+        if ($addressTransfer->getFkCustomer() === null) {
+            $addressTransfer->setFkCustomer($customer->getIdCustomer());
+        }
 
         $key = $this->getAddressTransferKey($addressTransfer);
         if (!isset($this->existingAddresses[$key])) {
-            $this->existingAddresses[$key] = $this->customerRepository->findAddressByAddressData($addressTransfer);
-        }
-        if ($this->existingAddresses[$key] !== null) {
-            return $this->existingAddresses[$key];
+            $customerAddressTransfer = $this->customerRepository->findAddressByAddressData($addressTransfer);
+            $this->existingAddresses[$key] = $customerAddressTransfer ?: $addressTransfer;
         }
 
-        return $addressTransfer;
+        return $this->existingAddresses[$key];
     }
 
     /**
