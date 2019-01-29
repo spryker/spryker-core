@@ -9,13 +9,11 @@ namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
-use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
+use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -23,16 +21,6 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class GuestCartUpdater implements GuestCartUpdaterInterface
 {
-    /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface
-     */
-    protected $quoteClient;
-
-    /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface
-     */
-    protected $persistentCartClient;
-
     /**
      * @var \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface
      */
@@ -54,27 +42,29 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
     protected $cartsRestApiClient;
 
     /**
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface $quoteClient
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface $persistentCartClient
+     * @var \Spryker\Client\Session\SessionClientInterface
+     */
+    protected $sessionClient;
+
+    /**
      * @param \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface $guestCartReader
      * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface $cartUpdater
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
+     * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
      */
     public function __construct(
-        CartsRestApiToQuoteClientInterface $quoteClient,
-        CartsRestApiToPersistentCartClientInterface $persistentCartClient,
         GuestCartReaderInterface $guestCartReader,
         CartUpdaterInterface $cartUpdater,
         GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder,
-        CartsRestApiClientInterface $cartsRestApiClient
+        CartsRestApiClientInterface $cartsRestApiClient,
+        SessionClientInterface $sessionClient
     ) {
-        $this->quoteClient = $quoteClient;
-        $this->persistentCartClient = $persistentCartClient;
         $this->guestCartReader = $guestCartReader;
         $this->cartUpdater = $cartUpdater;
         $this->guestCartRestResponseBuilder = $guestCartRestResponseBuilder;
         $this->cartsRestApiClient = $cartsRestApiClient;
+        $this->sessionClient = $sessionClient;
     }
 
     public function updateQuote(
@@ -96,18 +86,41 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
      */
     public function updateGuestCartCustomerReferenceOnRegistration(CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        $quoteTransfer = $this->quoteClient->getQuote();
-        if (!$quoteTransfer->getIdQuote()) {
+        /** @var \Generated\Shared\Transfer\CustomerTransfer|null $anonymousCustomerTransfer */
+        $anonymousCustomerTransfer = $this->sessionClient->get('customer data');
+        if ($anonymousCustomerTransfer === null || $anonymousCustomerTransfer instanceof CustomerTransfer === false) {
             return $customerTransfer;
         }
 
-        $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
-            ->setCustomerReference($customerTransfer->getCustomerReference());
-        $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())
-            ->setIdQuote($quoteTransfer->getIdQuote())
-            ->setCustomer($customerTransfer)
-            ->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
-        $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
+        $restQuoteCollectionResponseTransfer = $this->cartsRestApiClient->getCustomerQuoteCollection(
+            (new RestQuoteCollectionRequestTransfer())->setCustomerReference($anonymousCustomerTransfer->getCustomerReference())
+        );
+
+        if (count($restQuoteCollectionResponseTransfer->getErrorCodes()) > 0) {
+            return $customerTransfer;
+        }
+
+        $quoteCollection = $restQuoteCollectionResponseTransfer->getQuoteCollection();
+        if ($quoteCollection === null) {
+            return $customerTransfer;
+        }
+
+        $quotes = $quoteCollection->getQuotes();
+        if ($quotes->count() === 0) {
+            return $customerTransfer;
+        }
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomerReference(
+                $customerTransfer->getCustomerReference()
+            )->setUuid($quotes[0]->getUuid())
+            ->setCustomer($customerTransfer);
+        $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
+            ->setCustomerReference($anonymousCustomerTransfer->getCustomerReference())
+            ->setQuote($quoteTransfer)
+            ->setQuoteUuid($quoteTransfer->getUuid());
+
+        $this->cartsRestApiClient->updateQuote($restQuoteRequestTransfer);
 
         return $customerTransfer;
     }

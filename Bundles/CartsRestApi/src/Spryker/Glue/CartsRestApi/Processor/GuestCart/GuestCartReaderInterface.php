@@ -10,10 +10,11 @@ namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface GuestCartReaderInterface
+interface GuestCartReaderInterface extends CartReaderInterface
 {
     /**
      * @param string $uuidCart

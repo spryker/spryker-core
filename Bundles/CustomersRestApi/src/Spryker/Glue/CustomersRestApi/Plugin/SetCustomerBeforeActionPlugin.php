@@ -42,7 +42,7 @@ class SetCustomerBeforeActionPlugin extends AbstractPlugin implements Controller
             ->setCustomerReference($user->getNaturalIdentifier());
 
         $this->getFactory()
-            ->getCustomerClient()
-            ->setCustomer($customerTransfer);
+            ->getSessionClient()
+            ->set('customer data', $customerTransfer);
     }
 }

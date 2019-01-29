@@ -181,12 +181,11 @@ class CartsRestApiFactory extends AbstractFactory
     public function createGuestCartUpdater(): GuestCartUpdaterInterface
     {
         return new GuestCartUpdater(
-            $this->getQuoteClient(),
-            $this->getPersistentCartClient(),
             $this->createGuestCartReader(),
             $this->createCartUpdater(),
             $this->createGuestCartRestResponseBuilder(),
-            $this->getClient()
+            $this->getClient(),
+            $this->getSessionClient()
         );
     }
 
@@ -347,5 +346,13 @@ class CartsRestApiFactory extends AbstractFactory
     public function getQuoteCreatorPlugin(): QuoteCreatorPluginInterface
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGIN_QUOTE_CREATOR);
+    }
+
+    /**
+     * @return \Spryker\Client\Session\SessionClientInterface
+     */
+    protected function getSessionClient()
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::SERVICE_SESSION);
     }
 }
