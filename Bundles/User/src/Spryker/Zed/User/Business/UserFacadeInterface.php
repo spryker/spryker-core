@@ -8,7 +8,6 @@
 namespace Spryker\Zed\User\Business;
 
 use Generated\Shared\Transfer\UserTransfer;
-use Symfony\Component\HttpFoundation\Session\Storage\MetadataBag;
 
 interface UserFacadeInterface
 {
@@ -190,18 +189,4 @@ interface UserFacadeInterface
      * @return bool
      */
     public function deactivateUser($idUser);
-
-    /**
-     * @api
-     *
-     * @return \Symfony\Component\HttpFoundation\Session\Storage\MetadataBag
-     */
-    public function getSessionMetadata(): MetadataBag;
-
-    /**
-     * @api
-     *
-     * @return void
-     */
-    public function updateSessionTtl(): void;
 }

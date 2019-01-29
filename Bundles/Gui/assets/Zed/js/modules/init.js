@@ -11,7 +11,6 @@ var TranslationCopyFields = require('./libs/translation-copy-fields');
 var Ibox = require('./libs/ibox');
 var dataTable = require('./libs/data-table');
 var safeChecks = require('./libs/safe-checks');
-var updateSession = require('./update-session');
 
 $(document).ready(function() {
     // editor
@@ -79,6 +78,4 @@ $(document).ready(function() {
 
     safeChecks.addSafeSubmitCheck();
     safeChecks.addSafeDatetimeCheck();
-    
-    updateSession.init();
 });
