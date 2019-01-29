@@ -15,7 +15,7 @@ use Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveBundledProducts
  * @method \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductDiscontinuedProductBundleConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductDiscontinuedProductBundleConnector\ProductDiscontinuedProductBundleConnectorConfig getConfig()
  */
-class PostSaveBundledProductsPlugin extends AbstractPlugin implements PostSaveBundledProductsPluginInterface
+class PostSaveBundledProductsDiscontinuedPlugin extends AbstractPlugin implements PostSaveBundledProductsPluginInterface
 {
     /**
      * {@inheritdoc}

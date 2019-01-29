@@ -16,7 +16,7 @@ use Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PreUnmarkProductD
  * @method \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductDiscontinuedProductBundleConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductDiscontinuedProductBundleConnector\ProductDiscontinuedProductBundleConnectorConfig getConfig()
  */
-class PreUnmarkProductDiscontinuedPlugin extends AbstractPlugin implements PreUnmarkProductDiscontinuedPluginInterface
+class PreUnmarkProductDiscontinuedBundledProductsPlugin extends AbstractPlugin implements PreUnmarkProductDiscontinuedPluginInterface
 {
     /**
      * {@inheritdoc}
