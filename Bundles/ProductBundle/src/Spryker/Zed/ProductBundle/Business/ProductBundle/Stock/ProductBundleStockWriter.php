@@ -190,13 +190,13 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     {
         $bundleTotalStockPerWarehouse = [];
         foreach ($bundledItemStock as $idStock => $warehouseStock) {
-            $bundleStock = 0;
+            $bundleStock = 0.0;
             $isAllNeverOutOfStock = true;
             foreach ($warehouseStock as $idProduct => $productStockQuantity) {
                 $bundleItemQuantity = $bundledItemQuantity[$idProduct];
                 $isNeverOutOfStock = $productStockQuantity[static::IS_NEVER_OUT_OF_STOCK];
 
-                $itemStock = (int)floor($productStockQuantity[static::QUANTITY] / $bundleItemQuantity);
+                $itemStock = floor($productStockQuantity[static::QUANTITY] / $bundleItemQuantity);
 
                 if ($this->isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock, $isNeverOutOfStock)) {
                     $bundleStock = $itemStock;
@@ -216,8 +216,8 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     }
 
     /**
-     * @param int $bundleStock
-     * @param int $itemStock
+     * @param float $bundleStock
+     * @param float $itemStock
      * @param bool $isNeverOutOfStock
      *
      * @return bool
@@ -306,7 +306,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     protected function removeBundleStock(ProductConcreteTransfer $productConcreteTransfer)
     {
         foreach ($this->findProductStocks($productConcreteTransfer->getIdProductConcrete()) as $stockProductEntity) {
-            $stockProductEntity->setQuantity(0);
+            $stockProductEntity->setQuantity(0.0);
             $stockProductEntity->setIsNeverOutOfStock(false);
             $stockProductEntity->save();
 
@@ -337,7 +337,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             if (isset($bundleTotalStockPerWarehouse[$productStockEntity->getFkStock()])) {
                 continue;
             }
-            $productStockEntity->setQuantity(0);
+            $productStockEntity->setQuantity(0.0);
             $productStockEntity->setIsNeverOutOfStock(false);
             $productStockEntity->save();
         }

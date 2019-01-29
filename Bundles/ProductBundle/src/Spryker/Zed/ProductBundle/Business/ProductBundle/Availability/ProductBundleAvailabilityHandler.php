@@ -109,7 +109,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      */
     public function removeBundleAvailability($bundleProductSku, StoreTransfer $storeTransfer)
     {
-        $this->availabilityFacade->saveProductAvailabilityForStore($bundleProductSku, 0, $storeTransfer);
+        $this->availabilityFacade->saveProductAvailabilityForStore($bundleProductSku, 0.0, $storeTransfer);
     }
 
     /**
@@ -198,11 +198,11 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      * @param \Traversable|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundleItems
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
     protected function calculateBundleQuantity(Traversable $bundleItems, StoreTransfer $storeTransfer)
     {
-        $bundleAvailabilityQuantity = 0;
+        $bundleAvailabilityQuantity = 0.0;
         foreach ($bundleItems as $bundleItemEntity) {
             $bundledItemSku = $bundleItemEntity->getSpyProductRelatedByFkBundledProduct()
                 ->getSku();
@@ -217,7 +217,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             }
 
             if ($this->isBundledItemUnavailable($bundledProductAvailabilityEntity)) {
-                return 0;
+                return 0.0;
             }
 
             $bundleAvailabilityQuantity = $this->calculateBundledItemQuantity(
@@ -260,9 +260,9 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     /**
      * @param \Orm\Zed\Availability\Persistence\SpyAvailability|null $bundledProductAvailabilityEntity
      * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle $bundleItemEntity
-     * @param int $bundleAvailabilityQuantity
+     * @param float $bundleAvailabilityQuantity
      *
-     * @return int
+     * @return float
      */
     protected function calculateBundledItemQuantity(
         ?SpyAvailability $bundledProductAvailabilityEntity,
@@ -270,10 +270,10 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
         $bundleAvailabilityQuantity
     ) {
         if (!$bundledProductAvailabilityEntity) {
-            return 0;
+            return 0.0;
         }
 
-        $bundledItemQuantity = (int)floor($bundledProductAvailabilityEntity->getQuantity() / $bundleItemEntity->getQuantity());
+        $bundledItemQuantity = floor($bundledProductAvailabilityEntity->getQuantity() / $bundleItemEntity->getQuantity());
         if ($this->isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)) {
             return $bundledItemQuantity;
         }
@@ -282,13 +282,13 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     }
 
     /**
-     * @param int $bundleAvailabilityQuantity
-     * @param int $bundledItemQuantity
+     * @param float $bundleAvailabilityQuantity
+     * @param float $bundledItemQuantity
      *
      * @return bool
      */
     protected function isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)
     {
-        return ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity == 0);
+        return ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity == 0.0);
     }
 }

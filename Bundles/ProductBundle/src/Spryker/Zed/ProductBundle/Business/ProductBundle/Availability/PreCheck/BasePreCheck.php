@@ -109,7 +109,7 @@ class BasePreCheck
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param int $itemQuantity
+     * @param float $itemQuantity
      *
      * @return bool
      */
@@ -117,7 +117,7 @@ class BasePreCheck
         ArrayObject $items,
         $sku,
         StoreTransfer $storeTransfer,
-        $itemQuantity = 0
+        $itemQuantity = 0.0
     ) {
         $currentItemQuantity = $this->getAccumulatedItemQuantityForGivenSku($items, $sku);
         $currentItemQuantity += $itemQuantity;
@@ -129,11 +129,11 @@ class BasePreCheck
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $sku
      *
-     * @return int
+     * @return float
      */
     protected function getAccumulatedItemQuantityForGivenSku(ArrayObject $items, $sku)
     {
-        $quantity = 0;
+        $quantity = 0.0;
         foreach ($items as $itemTransfer) {
             if ($itemTransfer->getSku() !== $sku) {
                 continue;

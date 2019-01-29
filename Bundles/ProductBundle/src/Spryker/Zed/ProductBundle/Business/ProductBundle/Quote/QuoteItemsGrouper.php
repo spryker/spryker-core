@@ -72,11 +72,11 @@ class QuoteItemsGrouper implements QuoteItemsGrouperInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $groupKey
      *
-     * @return int
+     * @return float
      */
-    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, string $groupKey): int
+    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, string $groupKey): float
     {
-        $bundleItemQuantity = 0;
+        $bundleItemQuantity = 0.0;
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if ($bundleItemTransfer->getGroupKey() !== $groupKey) {
                 continue;

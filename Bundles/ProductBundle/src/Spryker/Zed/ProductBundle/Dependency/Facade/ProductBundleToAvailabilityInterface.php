@@ -13,7 +13,7 @@ interface ProductBundleToAvailabilityInterface
 {
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return bool
      */
@@ -22,7 +22,7 @@ interface ProductBundleToAvailabilityInterface
     /**
      * @param string $sku
      *
-     * @return int
+     * @return float
      */
     public function calculateStockForProduct($sku);
 
@@ -35,7 +35,7 @@ interface ProductBundleToAvailabilityInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return int
      */
@@ -43,7 +43,7 @@ interface ProductBundleToAvailabilityInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
@@ -51,7 +51,7 @@ interface ProductBundleToAvailabilityInterface
     public function saveProductAvailabilityForStore($sku, $quantity, StoreTransfer $storeTransfer);
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
@@ -62,7 +62,7 @@ interface ProductBundleToAvailabilityInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
     public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer);
 }

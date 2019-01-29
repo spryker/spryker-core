@@ -152,7 +152,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         for ($i = 0; $i < $quantity; $i++) {
             $bundleItemTransfer = new ItemTransfer();
             $bundleItemTransfer->fromArray($itemTransfer->toArray(), true);
-            $bundleItemTransfer->setQuantity(1);
+            $bundleItemTransfer->setQuantity(1.0);
 
             $bundleItemIdentifier = $this->buildBundleIdentifier($bundleItemTransfer);
             $bundleItemTransfer->setBundleItemIdentifier($bundleItemIdentifier);
@@ -193,7 +193,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         usort(
             $options,
             function (ProductOptionTransfer $productOptionLeft, ProductOptionTransfer $productOptionRight) {
-                return ($productOptionLeft->getSku() < $productOptionRight->getSku()) ? -1 : 1;
+                return $productOptionLeft->getSku() <=> $productOptionRight->getSku();
             }
         );
 
@@ -230,13 +230,15 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         $bundledItems = [];
         foreach ($bundledProducts as $index => $productBundleEntity) {
-            $quantity = $productBundleEntity->getQuantity();
-            for ($i = 0; $i < $quantity; $i++) {
+            $productBundleQuantity = $productBundleEntity->getQuantity();
+
+            for ($i = $productBundleQuantity; $i > 0; $i--) {
                 $bundledItems[] = $this->createBundledItemTransfer(
                     $productBundleEntity,
                     $bundleItemIdentifier,
                     $priceMode,
-                    $currencyIsoCode
+                    $currencyIsoCode,
+                    $i > 1 ? 1.0 : $i
                 );
             }
         }
@@ -294,6 +296,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      * @param string $bundleItemIdentifier
      * @param string $priceMode
      * @param string $currencyIsoCode
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
@@ -301,7 +304,8 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         SpyProductBundle $bundleProductEntity,
         $bundleItemIdentifier,
         $priceMode,
-        $currencyIsoCode
+        $currencyIsoCode,
+        $quantity
     ) {
         $bundledConcreteProductEntity = $bundleProductEntity->getSpyProductRelatedByFkBundledProduct();
 
@@ -326,7 +330,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
             ->setAbstractSku($productConcreteTransfer->getAbstractSku())
             ->setName($localizedProductName)
-            ->setQuantity(1)
+            ->setQuantity($quantity)
             ->setRelatedBundleItemIdentifier($bundleItemIdentifier);
 
         $this->setPrice($itemTransfer, $unitPrice, $priceMode);

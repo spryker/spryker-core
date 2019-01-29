@@ -22,13 +22,13 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
     public function expand(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer
     {
         $itemTransferList = [];
-        foreach ($cartChangeTransfer->getItems() as $quoteTransfer) {
-            $bundledItemTransferList = $this->getBundledItems($cartChangeTransfer->getQuote(), $quoteTransfer->getGroupKey(), $quoteTransfer->getQuantity());
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $bundledItemTransferList = $this->getBundledItems($cartChangeTransfer->getQuote(), $itemTransfer->getGroupKey(), $itemTransfer->getQuantity());
             if (count($bundledItemTransferList)) {
                 $itemTransferList = array_merge($itemTransferList, $bundledItemTransferList);
                 continue;
             }
-            $itemTransferList[] = $quoteTransfer;
+            $itemTransferList[] = $itemTransfer;
         }
         $cartChangeTransfer->setItems(new ArrayObject($itemTransferList));
 
@@ -38,7 +38,7 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $groupKey
-     * @param int $numberOfBundlesToRemove
+     * @param float $numberOfBundlesToRemove
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
@@ -47,6 +47,7 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
         if (!$numberOfBundlesToRemove) {
             $numberOfBundlesToRemove = $this->getBundledProductTotalQuantity($quoteTransfer, $groupKey);
         }
+        $numberOfBundlesToRemove = (int)ceil($numberOfBundlesToRemove);
         $bundledItems = [];
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if ($numberOfBundlesToRemove === 0) {
@@ -73,11 +74,11 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $groupKey
      *
-     * @return int
+     * @return float
      */
-    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, $groupKey): int
+    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, $groupKey): float
     {
-        $bundleItemQuantity = 0;
+        $bundleItemQuantity = 0.0;
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if ($bundleItemTransfer->getGroupKey() !== $groupKey) {
                 continue;

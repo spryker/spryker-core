@@ -70,7 +70,7 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
      * The method check for "method_exists" is for BC for modules without multi store availability support.
      *
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
