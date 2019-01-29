@@ -22,8 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends AbstractController
 {
-    protected const REDIRECT_URL_CATEGORY_LIST = '/category-gui/list';
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
