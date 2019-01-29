@@ -34,7 +34,6 @@
         <column name="id_merchant_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="key" type="VARCHAR" size="255" description="Identifier for existing entities. It should never be changed."/>
         <column name="fk_country" required="true" type="INTEGER"/>
-        <column name="fk_region" type="INTEGER"/>
         <column name="address1" size="255" type="VARCHAR"/>
         <column name="address2" size="255" type="VARCHAR"/>
         <column name="address3" size="255" type="VARCHAR"/>

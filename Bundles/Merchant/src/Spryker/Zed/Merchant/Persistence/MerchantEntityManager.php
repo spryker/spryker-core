@@ -51,7 +51,7 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
 
         $spyMerchant->save();
 
-        $merchantTransfer->setIdMerchant($spyMerchant->getIdMerchant());
+        $merchantTransfer->fromArray($spyMerchant->toArray(), true);
 
         return $merchantTransfer;
     }

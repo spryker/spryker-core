@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 class MerchantGuiToMerchantFacadeBridge implements MerchantGuiToMerchantFacadeInterface
@@ -72,5 +73,45 @@ class MerchantGuiToMerchantFacadeBridge implements MerchantGuiToMerchantFacadeIn
     public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer
     {
         return $this->merchantFacade->findMerchantById($merchantTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function findMerchantByEmail(MerchantTransfer $merchantTransfer): ?MerchantTransfer
+    {
+        return $this->merchantFacade->findMerchantByEmail($merchantTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
+     */
+    public function findMerchantAddressById(MerchantAddressTransfer $merchantAddressTransfer): ?MerchantAddressTransfer
+    {
+        return $this->merchantFacade->findMerchantAddressById($merchantAddressTransfer);
+    }
+
+    /**
+     * @param string|null $currentStatus
+     *
+     * @return array
+     */
+    public function getNextStatuses(?string $currentStatus = null): array
+    {
+        return $this->merchantFacade->getNextStatuses($currentStatus);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
+     */
+    public function createMerchantAddress(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer
+    {
+        return $this->merchantFacade->createMerchantAddress($merchantAddressTransfer);
     }
 }

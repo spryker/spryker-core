@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant\Business;
 
+use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -108,5 +109,59 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
         return $this->getFactory()
             ->createMerchantReader()
             ->findMerchantById($merchantTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function findMerchantByEmail(MerchantTransfer $merchantTransfer): ?MerchantTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantReader()
+            ->findMerchantByEmail($merchantTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function findMerchantAddressById(MerchantAddressTransfer $merchantAddressTransfer): ?MerchantAddressTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantAddressReader()
+            ->findMerchantAddressById($merchantAddressTransfer);
+    }
+
+    /**
+     * @param string|null $currentStatus
+     *
+     * @return array
+     */
+    public function getNextStatuses(?string $currentStatus = null): array
+    {
+        return ['waiting-for-approval' => 'Waiting for approval'];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
+     */
+    public function createMerchantAddress(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantAddressWriter()
+            ->create($merchantAddressTransfer);
     }
 }

@@ -8,6 +8,12 @@
 namespace Spryker\Zed\Merchant\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Merchant\Business\Address\MerchantAddressReader;
+use Spryker\Zed\Merchant\Business\Address\MerchantAddressReaderInterface;
+use Spryker\Zed\Merchant\Business\Address\MerchantAddressWriter;
+use Spryker\Zed\Merchant\Business\Address\MerchantAddressWriterInterface;
+use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantAddressKeyGenerator;
+use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantAddressKeyGeneratorInterface;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGenerator;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
 use Spryker\Zed\Merchant\Business\Model\MerchantReader;
@@ -46,6 +52,27 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Merchant\Business\Address\MerchantAddressWriterInterface
+     */
+    public function createMerchantAddressWriter(): MerchantAddressWriterInterface
+    {
+        return new MerchantAddressWriter(
+            $this->getEntityManager(),
+            $this->createMerchantAddressKeyGenerator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\Address\MerchantAddressReaderInterface
+     */
+    public function createMerchantAddressReader(): MerchantAddressReaderInterface
+    {
+        return new MerchantAddressReader(
+            $this->getRepository()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface
      */
     public function createMerchantKeyGenerator(): MerchantKeyGeneratorInterface
@@ -54,6 +81,14 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getUtilTextService()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantAddressKeyGeneratorInterface
+     */
+    public function createMerchantAddressKeyGenerator(): MerchantAddressKeyGeneratorInterface
+    {
+        return new MerchantAddressKeyGenerator($this->getRepository());
     }
 
     /**

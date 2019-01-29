@@ -60,6 +60,13 @@ class CreateMerchantController extends AbstractController
             ->getMerchantFacade()
             ->createMerchant($merchantTransfer);
 
+        /** @var \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer */
+        $merchantAddressTransfer = $merchantTransfer->getAddresses()->offsetGet(0);
+        $merchantAddressTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+        $this->getFactory()
+            ->getMerchantFacade()
+            ->createMerchantAddress($merchantAddressTransfer);
+
         if (!$merchantTransfer->getIdMerchant()) {
             $this->addErrorMessage(static::MESSAGE_MERCHANT_CREATE_ERROR);
 

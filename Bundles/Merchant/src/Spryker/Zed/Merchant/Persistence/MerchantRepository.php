@@ -52,6 +52,31 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
      *
      * @api
      *
+     * @param string $merchantEmail
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function getMerchantByEmail(string $merchantEmail): ?MerchantTransfer
+    {
+        $spyMerchant = $this->getFactory()
+            ->createMerchantQuery()
+            ->filterByEmail($merchantEmail)
+            ->findOne();
+
+        if (!$spyMerchant) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createPropelMerchantMapper()
+            ->mapEntityToMerchantTransfer($spyMerchant, new MerchantTransfer());
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
     public function getMerchants(): MerchantCollectionTransfer
@@ -120,6 +145,31 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
         }
 
         return $merchantAddressCollectionTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idMerchantAddress
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
+     */
+    public function getMerchantAddressById(int $idMerchantAddress): ?MerchantAddressTransfer
+    {
+        $spyMerchantAddress = $this->getFactory()
+            ->createMerchantAddressQuery()
+            ->filterByIdMerchantAddress($idMerchantAddress)
+            ->findOne();
+
+        if (!$spyMerchantAddress) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createPropelMerchantAddressMapper()
+            ->mapSpyMerchantAddressEntityToMerchantAddressTransfer($spyMerchantAddress, new MerchantAddressTransfer());
     }
 
     /**

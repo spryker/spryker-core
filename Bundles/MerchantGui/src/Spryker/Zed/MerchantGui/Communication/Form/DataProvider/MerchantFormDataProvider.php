@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\MerchantTransfer;
+use Spryker\Zed\MerchantGui\Communication\Form\MerchantForm;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 
 class MerchantFormDataProvider
@@ -49,6 +50,7 @@ class MerchantFormDataProvider
     {
         return [
             'data_class' => MerchantTransfer::class,
+            MerchantForm::OPTION_STATUS_CHOICES => $this->merchantFacade->getNextStatuses(),
         ];
     }
 }
