@@ -111,7 +111,7 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
      */
     protected function getCustomerAddress(AddressTransfer $addressTransfer, CustomerTransfer $customer): AddressTransfer
     {
-        if (!$addressTransfer->getFkCustomer()) {
+        if ($addressTransfer->getFkCustomer() === null) {
             $addressTransfer->setFkCustomer($customer->getIdCustomer());
         }
 
