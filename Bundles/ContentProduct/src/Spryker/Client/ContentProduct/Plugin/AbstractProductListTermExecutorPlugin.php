@@ -56,7 +56,7 @@ class AbstractProductListTermExecutorPlugin extends AbstractPlugin implements Co
      */
     public function getTypeKey(): string
     {
-        return ContentProductConfig::CONTENT_TYPE_PRODUCT_LIST;
+        return ContentProductConfig::CONTENT_TYPE_ABSTRACT_PRODUCT_LIST;
     }
 
     /**

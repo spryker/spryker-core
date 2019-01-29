@@ -14,7 +14,7 @@ class ContentProductConfig extends AbstractSharedConfig
     /**
      * Content item abstract product list
      */
-    public const CONTENT_TYPE_PRODUCT_LIST = 'Product List';
+    public const CONTENT_TYPE_ABSTRACT_PRODUCT_LIST = 'Abstract Product List';
 
     /**
      * Content item abstract product list

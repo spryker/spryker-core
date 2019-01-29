@@ -37,7 +37,7 @@ class ProductAbstractListFormPlugin extends AbstractPlugin implements ContentPlu
      */
     public function getTypeKey(): string
     {
-        return ContentProductGuiConfig::CONTENT_TYPE_PRODUCT_LIST;
+        return ContentProductGuiConfig::CONTENT_TYPE_ABSTRACT_PRODUCT_LIST;
     }
 
     /**
