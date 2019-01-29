@@ -273,7 +273,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             return 0.0;
         }
 
-        $bundledItemQuantity = floor($bundledProductAvailabilityEntity->getQuantity() / $bundleItemEntity->getQuantity());
+        $bundledItemQuantity = $bundledProductAvailabilityEntity->getQuantity() / $bundleItemEntity->getQuantity();
         if ($this->isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)) {
             return $bundledItemQuantity;
         }

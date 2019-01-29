@@ -149,10 +149,10 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         $productOptions = $itemTransfer->getProductOptions();
         $priceMode = $quoteTransfer->getPriceMode();
         $currencyIsoCode = $quoteTransfer->getCurrency()->getCode();
-        for ($i = 0; $i < $quantity; $i++) {
+        for ($i = $quantity; $i > 0; $i--) {
             $bundleItemTransfer = new ItemTransfer();
             $bundleItemTransfer->fromArray($itemTransfer->toArray(), true);
-            $bundleItemTransfer->setQuantity(1.0);
+            $bundleItemTransfer->setQuantity($i > 1 ? 1.0 : $i);
 
             $bundleItemIdentifier = $this->buildBundleIdentifier($bundleItemTransfer);
             $bundleItemTransfer->setBundleItemIdentifier($bundleItemIdentifier);

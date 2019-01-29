@@ -51,6 +51,7 @@ class ChangeRequestExpander implements ChangeRequestExpanderInterface
         if (!$numberOfBundlesToRemove) {
             $numberOfBundlesToRemove = $this->getBundledProductTotalQuantity($quoteTransfer, $groupKey);
         }
+        $numberOfBundlesToRemove = (int)ceil($numberOfBundlesToRemove);
         $bundledItems = [];
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if ($numberOfBundlesToRemove === 0) {
@@ -77,11 +78,11 @@ class ChangeRequestExpander implements ChangeRequestExpanderInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $groupKey
      *
-     * @return int
+     * @return float
      */
-    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, string $groupKey): int
+    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, string $groupKey): float
     {
-        $bundleItemQuantity = 0;
+        $bundleItemQuantity = 0.0;
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if ($bundleItemTransfer->getGroupKey() !== $groupKey) {
                 continue;
