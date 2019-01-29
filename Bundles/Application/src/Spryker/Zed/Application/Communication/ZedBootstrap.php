@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Application\Communication;
 
+use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Application\Application as SprykerApplication;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
@@ -32,7 +33,7 @@ class ZedBootstrap
     protected $application;
 
     /**
-     * @var \Spryker\Shared\Application\Application
+     * @var \Spryker\Shared\Application\Application|null
      */
     protected $sprykerApplication;
 
@@ -44,12 +45,16 @@ class ZedBootstrap
     public function __construct()
     {
         $this->application = $this->getBaseApplication();
-        $this->sprykerApplication = new SprykerApplication($this->application);
+
+        if ($this->application instanceof ContainerInterface) {
+            $this->sprykerApplication = new SprykerApplication($this->application);
+        }
+
         $this->config = new ApplicationConfig();
     }
 
     /**
-     * @return \Spryker\Shared\Application\Application
+     * @return \Spryker\Shared\Application\Application|\Spryker\Shared\Kernel\Communication\Application
      */
     public function boot()
     {
@@ -63,6 +68,11 @@ class ZedBootstrap
         $this->setUp();
 
         $this->application->boot();
+
+        if ($this->sprykerApplication === null) {
+            return $this->application;
+        }
+
         $this->sprykerApplication->boot();
 
         return $this->sprykerApplication;
@@ -89,7 +99,10 @@ class ZedBootstrap
         }
 
         $this->registerServiceProvider();
-        $this->setupApplication();
+
+        if ($this->sprykerApplication !== null) {
+            $this->setupApplication();
+        }
     }
 
     /**
