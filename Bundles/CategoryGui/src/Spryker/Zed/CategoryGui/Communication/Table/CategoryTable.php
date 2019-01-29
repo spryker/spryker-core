@@ -27,6 +27,7 @@ class CategoryTable extends AbstractTable
     public const COL_TEMPLATE = 'template';
     public const COL_ACTIONS = 'actions';
     public const IDENTIFIER = 'category_data_table';
+    public const COL_ID_CATEGORY_NODE = 'id_category_node';
 
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface
@@ -133,7 +134,8 @@ class CategoryTable extends AbstractTable
             ->withColumn('count(node.fk_category)', 'count')
             ->withColumn('attr.name', static::COL_NAME)
             ->withColumn('tpl.name', static::COL_TEMPLATE)
-            ->withColumn('parent_attr.name', static::COL_PARENT);
+            ->withColumn('parent_attr.name', static::COL_PARENT)
+            ->withColumn('node.id_category_node', static::COL_ID_CATEGORY_NODE);
 
         return $query;
     }
@@ -206,6 +208,26 @@ class CategoryTable extends AbstractTable
                 CategoryConstants::PARAM_ID_CATEGORY => $item->getIdCategory(),
             ]),
             'Delete'
+        );
+
+        $urls[] = $this->generateViewButton(
+            Url::generate(
+                '/category/re-sort',
+                [
+                    CategoryConstants::PARAM_ID_NODE => $item->getVirtualColumn(static::COL_ID_CATEGORY_NODE),
+                ]
+            ),
+            'Re-sort child categories'
+        );
+
+        $urls[] = $this->generateViewButton(
+            Url::generate(
+                '/category/create',
+                [
+                    CategoryConstants::PARAM_ID_PARENT_NODE => $item->getVirtualColumn(static::COL_ID_CATEGORY_NODE),
+                ]
+            ),
+            'Add category to this node'
         );
 
         return $urls;
