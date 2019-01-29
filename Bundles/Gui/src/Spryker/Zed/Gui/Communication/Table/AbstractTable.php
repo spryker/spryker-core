@@ -936,7 +936,7 @@ abstract class AbstractTable
     protected function buildUrl($url): string
     {
         if ($url === static::URL_ANCHOR) {
-            return $url;
+            return static::URL_ANCHOR;
         }
 
         if (is_string($url)) {
