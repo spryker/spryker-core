@@ -7,9 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi;
 
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartCreator;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartCreatorInterface;

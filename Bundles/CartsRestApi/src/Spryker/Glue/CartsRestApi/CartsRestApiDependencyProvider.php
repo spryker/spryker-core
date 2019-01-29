@@ -7,9 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi;
 
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientBridge;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientBridge;
 use Spryker\Glue\CartsRestApi\Exception\MissingQuoteCollectionReaderPluginException;
 use Spryker\Glue\CartsRestApi\Exception\MissingQuoteCreatorPluginException;
