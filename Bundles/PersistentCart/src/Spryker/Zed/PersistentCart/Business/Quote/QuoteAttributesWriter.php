@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriterInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
 
-class QuoteAfterCalculateWriter implements QuoteAfterCalculateWriterInterface
+class QuoteAttributesWriter implements QuoteAttributesWriterInterface
 {
     /**
-     * @uses Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_DATABASE
+     * @uses \Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_DATABASE
      */
     protected const STORAGE_STRATEGY_DATABASE = 'database';
 
@@ -47,17 +47,16 @@ class QuoteAfterCalculateWriter implements QuoteAfterCalculateWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function updateQuoteAttributes(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if (!$this->isQuoteNeedUpdate($quoteTransfer)) {
+        if (!$this->isQuoteNeedsUpdate($quoteTransfer)) {
             return $quoteTransfer;
         }
 
         $quoteUpdateRequestTransfer = $this->prepareQuoteUpdateRequestTransfer($quoteTransfer);
 
-        return $this->quoteWriter->updateQuote(
-            $quoteUpdateRequestTransfer
-        )->getQuoteTransfer();
+        return $this->quoteWriter->updateQuote($quoteUpdateRequestTransfer)
+            ->getQuoteTransfer();
     }
 
     /**
@@ -65,7 +64,7 @@ class QuoteAfterCalculateWriter implements QuoteAfterCalculateWriterInterface
      *
      * @return bool
      */
-    protected function isQuoteNeedUpdate(QuoteTransfer $quoteTransfer): bool
+    protected function isQuoteNeedsUpdate(QuoteTransfer $quoteTransfer): bool
     {
         if ($quoteTransfer->getIdQuote() === null) {
             return false;
@@ -81,13 +80,13 @@ class QuoteAfterCalculateWriter implements QuoteAfterCalculateWriterInterface
      */
     protected function prepareQuoteUpdateRequestTransfer(QuoteTransfer $quoteTransfer): QuoteUpdateRequestTransfer
     {
-        $quoteUpdateRequestAttributesTransfer = new QuoteUpdateRequestAttributesTransfer();
-        $quoteUpdateRequestAttributesTransfer->fromArray($quoteTransfer->modifiedToArray(), true);
+        $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
+            ->fromArray($quoteTransfer->modifiedToArray(), true);
 
-        $quoteUpdateRequestTransfer = new QuoteUpdateRequestTransfer();
-        $quoteUpdateRequestTransfer->setIdQuote($quoteTransfer->getIdQuote());
-        $quoteUpdateRequestTransfer->setCustomer($quoteTransfer->getCustomer());
-        $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
+        $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())
+            ->setIdQuote($quoteTransfer->getIdQuote())
+            ->setCustomer($quoteTransfer->getCustomer())
+            ->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
 
         return $quoteUpdateRequestTransfer;
     }

@@ -5,23 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCart\Communication\Plugin;
+namespace Spryker\Zed\PersistentCart\Communication\Plugin\Calculation;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\CalculationExtension\Dependency\Plugin\QuoteAfterCalculatePluginInterface;
+use Spryker\Zed\CalculationExtension\Dependency\Plugin\PostQuoteRecalculatePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\PersistentCart\Business\PersistentCartFacade getFacade()
  * @method \Spryker\Zed\PersistentCart\PersistentCartConfig getConfig()
  */
-class QuoteSaveAfterQuoteCalculatePlugin extends AbstractPlugin implements QuoteAfterCalculatePluginInterface
+class QuoteAttributesSavePostQuoteRecalculatePlugin extends AbstractPlugin implements PostQuoteRecalculatePluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Updates quote after calculation.
      * - Does nothing if not `DatabaseStorageStrategy` is disabled.
      * - Does nothing if quote does't have ID.
+     * - Saves quote attributes described in QuoteUpdateRequestAttributesTransfer to database.
      *
      * @api
      *
@@ -29,8 +29,8 @@ class QuoteSaveAfterQuoteCalculatePlugin extends AbstractPlugin implements Quote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function afterCalculate(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->getFacade()->updateQuoteAfterCalculate($quoteTransfer);
+        return $this->getFacade()->updateQuoteAttributes($quoteTransfer);
     }
 }

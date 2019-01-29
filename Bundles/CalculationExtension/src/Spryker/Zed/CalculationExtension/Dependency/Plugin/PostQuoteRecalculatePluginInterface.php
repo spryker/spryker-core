@@ -9,11 +9,11 @@ namespace Spryker\Zed\CalculationExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteAfterCalculatePluginInterface
+interface PostQuoteRecalculatePluginInterface
 {
     /**
      * Specification:
-     * - Allows to add custom logic after calculations for quote are executed.
+     * - Executes after quote recalculation.
      *
      * @api
      *
@@ -21,5 +21,5 @@ interface QuoteAfterCalculatePluginInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function afterCalculate(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

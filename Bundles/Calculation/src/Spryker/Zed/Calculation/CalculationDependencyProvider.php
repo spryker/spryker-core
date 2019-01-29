@@ -18,7 +18,7 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUOTE_CALCULATOR_PLUGIN_STACK = 'quote calculator plugin stack';
     public const ORDER_CALCULATOR_PLUGIN_STACK = 'order calculator plugin stack';
-    public const PLUGINS_QUOTE_AFTER_CALCULATE = 'PLUGINS_QUOTE_AFTER_CALCULATE';
+    public const PLUGINS_POST_QUOTE_RECALCULATE = 'PLUGINS_POST_QUOTE_RECALCULATE';
 
     public const SERVICE_UTIL_TEXT = 'util text service';
 
@@ -41,7 +41,7 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
             return new CalculationToUtilTextBridge($container->getLocator()->utilText()->service());
         };
 
-        $container = $this->addQuoteAfterCalculatePlugins($container);
+        $container = $this->addPostQuoteRecalculatePlugins($container);
 
         return $container;
     }
@@ -51,10 +51,10 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addQuoteAfterCalculatePlugins(Container $container): Container
+    protected function addPostQuoteRecalculatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_AFTER_CALCULATE] = function (Container $container) {
-            return $this->getQuoteAfterCalculatePlugins();
+        $container[static::PLUGINS_POST_QUOTE_RECALCULATE] = function (Container $container) {
+            return $this->getPostQuoteRecalculatePlugins();
         };
 
         return $container;
@@ -81,9 +81,9 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuoteAfterCalculatePluginInterface[]
+     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\PostQuoteRecalculatePluginInterface[]
      */
-    protected function getQuoteAfterCalculatePlugins(): array
+    protected function getPostQuoteRecalculatePlugins(): array
     {
         return [];
     }

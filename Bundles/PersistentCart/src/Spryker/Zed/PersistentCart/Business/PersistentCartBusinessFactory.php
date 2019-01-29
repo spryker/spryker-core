@@ -26,8 +26,8 @@ use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizer;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizerInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriter;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriterInterface;
-use Spryker\Zed\PersistentCart\Business\Quote\QuoteAfterCalculateWriter;
-use Spryker\Zed\PersistentCart\Business\Quote\QuoteAfterCalculateWriterInterface;
+use Spryker\Zed\PersistentCart\Business\Quote\QuoteAttributesWriter;
+use Spryker\Zed\PersistentCart\Business\Quote\QuoteAttributesWriterInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface;
 use Spryker\Zed\PersistentCart\PersistentCartDependencyProvider;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
@@ -51,11 +51,11 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PersistentCart\Business\Quote\QuoteAfterCalculateWriterInterface
+     * @return \Spryker\Zed\PersistentCart\Business\Quote\QuoteAttributesWriterInterface
      */
-    public function createQuoteAfterCalculateWriter(): QuoteAfterCalculateWriterInterface
+    public function createQuoteAttributesWriter(): QuoteAttributesWriterInterface
     {
-        return new QuoteAfterCalculateWriter(
+        return new QuoteAttributesWriter(
             $this->getQuoteFacade(),
             $this->createQuoteWriter()
         );
