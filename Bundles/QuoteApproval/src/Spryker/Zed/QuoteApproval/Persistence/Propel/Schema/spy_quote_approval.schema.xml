@@ -10,6 +10,7 @@
         <column name="fk_quote" required="true" type="INTEGER"/>
         <column name="fk_company_user" required="true" type="INTEGER"/>
         <column name="status" required="true" type="VARCHAR" size="255" />
+        <column name="uuid" required="false" type="VARCHAR" size="255"/>
 
         <id-method-parameter value="id_quote_approval_pk_seq"/>
 
@@ -34,6 +35,10 @@
         </index>
 
         <behavior name="timestampable"/>
+
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_quote_approval.fk_company_user.fk_quote"/>
+        </behavior>
     </table>
 
 </database>
