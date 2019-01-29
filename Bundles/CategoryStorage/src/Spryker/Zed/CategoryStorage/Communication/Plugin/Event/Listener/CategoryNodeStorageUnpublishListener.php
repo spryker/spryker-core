@@ -35,26 +35,16 @@ class CategoryNodeStorageUnpublishListener extends AbstractPlugin implements Eve
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $categoryNodeIds = $this->getCategoryNodeIds($eventTransfers);
-
-        $this->getFacade()->unpublish($categoryNodeIds);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return int[]
-     */
-    protected function getCategoryNodeIds(array $eventTransfers): array
-    {
-        $parentCategoryNodeIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransfersOriginalValues($eventTransfers, SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE);
 
         $categoryNodeIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventTransfers);
 
-        return array_unique(array_merge($parentCategoryNodeIds, $categoryNodeIds));
+        $parentCategoryNodeIds = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransfersOriginalValues($eventTransfers, SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE);
+
+        $this->getFacade()->unpublish($categoryNodeIds);
+        $this->getFacade()->publish($parentCategoryNodeIds);
     }
 }
