@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/product-bundle-extension.svg)](https://travis-ci.org/spryker/product-bundle-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/product-bundle-extension/badge.svg)](https://coveralls.io/github/spryker/product-bundle-extension)
 
-{{ADD DESCRIPTION HERE}}
+Holds all extension points (plugins) of ProductBundle module
 
 ## Installation
 
