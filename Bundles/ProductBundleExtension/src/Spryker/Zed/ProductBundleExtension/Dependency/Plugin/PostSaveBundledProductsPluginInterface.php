@@ -13,7 +13,7 @@ interface PostSaveBundledProductsPluginInterface
 {
     /**
      * Specification:
-     * - Executes after save bundled products.
+     * - Executes plugins after bundled products saving.
      *
      * @api
      *

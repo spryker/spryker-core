@@ -20,9 +20,8 @@ class PreUnmarkProductDiscontinuedBundledProductsPlugin extends AbstractPlugin i
 {
     /**
      * {@inheritdoc}
-     * Specification:
      * - Checks bundled products.
-     * - Returns response transfer with success true if all bundled products are not discontinued.
+     * - Returns ProductDiscontinuedResponseTransfer with success true if all bundled products are not discontinued.
      *
      * @api
      *

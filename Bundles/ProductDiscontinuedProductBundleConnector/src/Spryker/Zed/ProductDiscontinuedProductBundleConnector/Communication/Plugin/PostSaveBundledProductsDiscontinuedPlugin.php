@@ -19,7 +19,6 @@ class PostSaveBundledProductsDiscontinuedPlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritdoc}
-     * Specification:
      * - Marks bundle as discontinued if one of bundled products is discontinued.
      *
      * @api

@@ -17,9 +17,9 @@ interface ProductDiscontinuedProductBundleConnectorRepositoryInterface
     public function findRelatedBundleProductsIds(int $idProductDiscontinue): array;
 
     /**
-     * @param int $idProductDiscontinue
+     * @param int $idProductDiscontinued
      *
      * @return int[]
      */
-    public function findBundledProductsByProductDiscontinuedId(int $idProductDiscontinue): array;
+    public function findBundledProductsByProductDiscontinuedId(int $idProductDiscontinued): array;
 }
