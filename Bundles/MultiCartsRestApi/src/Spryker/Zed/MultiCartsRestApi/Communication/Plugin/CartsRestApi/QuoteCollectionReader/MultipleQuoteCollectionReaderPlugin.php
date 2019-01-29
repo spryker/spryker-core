@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MultiCartsRestApi\Communication\Plugin\CartsRestApi\QuoteCollectionReader;
 
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer;
+use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -25,11 +25,11 @@ class MultipleQuoteCollectionReaderPlugin extends AbstractPlugin implements Quot
      *
      * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
     public function getQuoteCollectionByCriteria(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-    ): RestQuoteCollectionResponseTransfer {
+    ): QuoteCollectionResponseTransfer {
         return $this->getFacade()->getCustomerQuoteCollection($restQuoteCollectionRequestTransfer);
     }
 }

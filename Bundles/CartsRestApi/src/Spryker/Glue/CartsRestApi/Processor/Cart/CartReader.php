@@ -8,13 +8,12 @@
 namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
-use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -31,11 +30,6 @@ class CartReader implements CartReaderInterface
     protected $cartRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
-     */
-    protected $quoteCollectionReader;
-
-    /**
      * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
      */
     protected $cartsRestApiClient;
@@ -43,18 +37,15 @@ class CartReader implements CartReaderInterface
     /**
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
-     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface $quoteCollectionReader
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      */
     public function __construct(
         CartRestResponseBuilderInterface $cartRestResponseBuilder,
         CartsResourceMapperInterface $cartsResourceMapper,
-        QuoteCollectionReaderPluginInterface $quoteCollectionReader,
         CartsRestApiClientInterface $cartsRestApiClient
     ) {
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
         $this->cartsResourceMapper = $cartsResourceMapper;
-        $this->quoteCollectionReader = $quoteCollectionReader;
         $this->cartsRestApiClient = $cartsRestApiClient;
     }
 
@@ -165,17 +156,17 @@ class CartReader implements CartReaderInterface
      */
     public function getCustomerQuotes(RestRequestInterface $restRequest): QuoteCollectionTransfer
     {
-        $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
+        $restQuoteCollectionRequestTransfer = (new RestQuoteCollectionRequestTransfer())
             ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
 
-        $quoteCollectionTransfer = $this->quoteCollectionReader
-            ->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
+        $quoteCollectionTransfer = $this->cartsRestApiClient
+            ->getCustomerQuoteCollection($restQuoteCollectionRequestTransfer);
 
-        if (!$quoteCollectionTransfer) {
+        if (!$quoteCollectionTransfer->getQuoteCollection()) {
             return new QuoteCollectionTransfer();
         }
 
-        return $quoteCollectionTransfer;
+        return $quoteCollectionTransfer->getQuoteCollection();
     }
 
     /**

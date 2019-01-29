@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer;
+use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -58,11 +58,11 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
     public function getCustomerQuoteCollection(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-    ): RestQuoteCollectionResponseTransfer {
+    ): QuoteCollectionResponseTransfer {
         return $this->getFactory()
             ->createQuoteReader()
             ->getCustomerQuoteCollection($restQuoteCollectionRequestTransfer);

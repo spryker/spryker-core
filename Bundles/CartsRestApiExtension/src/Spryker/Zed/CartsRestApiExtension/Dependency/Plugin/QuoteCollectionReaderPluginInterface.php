@@ -2,8 +2,8 @@
 
 namespace Spryker\Zed\CartsRestApiExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer;
 
 interface QuoteCollectionReaderPluginInterface
 {
@@ -16,9 +16,9 @@ interface QuoteCollectionReaderPluginInterface
      *
      * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
     public function getQuoteCollectionByCriteria(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-    ): RestQuoteCollectionResponseTransfer;
+    ): QuoteCollectionResponseTransfer;
 }

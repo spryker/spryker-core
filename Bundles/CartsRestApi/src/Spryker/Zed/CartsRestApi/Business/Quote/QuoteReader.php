@@ -12,8 +12,9 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer;
+use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
+use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 
 class QuoteReader implements QuoteReaderInterface
 {
@@ -23,11 +24,20 @@ class QuoteReader implements QuoteReaderInterface
     protected $quoteFacade;
 
     /**
-     * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface $quoteFacade
+     * @var \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
      */
-    public function __construct(CartsRestApiToQuoteFacadeInterface $quoteFacade)
-    {
+    protected $quoteCollectionReaderPlugin;
+
+    /**
+     * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface $quoteFacade
+     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin
+     */
+    public function __construct(
+        CartsRestApiToQuoteFacadeInterface $quoteFacade,
+        QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin
+    ) {
         $this->quoteFacade = $quoteFacade;
+        $this->quoteCollectionReaderPlugin = $quoteCollectionReaderPlugin;
     }
 
     /**
@@ -45,31 +55,11 @@ class QuoteReader implements QuoteReaderInterface
     /**
      * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
     public function getCustomerQuoteCollection(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-    ): RestQuoteCollectionResponseTransfer {
-        $restQuoteCollectionResponseTransfer = new RestQuoteCollectionResponseTransfer();
-        $quoteCollectionTransfer = $this->getCustomerQuotes($restQuoteCollectionRequestTransfer);
-        if (count($quoteCollectionTransfer->getQuotes()) === 0) {
-            return $restQuoteCollectionResponseTransfer;
-        }
-
-        return $restQuoteCollectionResponseTransfer->setQuoteCollection($quoteCollectionTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
-     */
-    protected function getCustomerQuotes(RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer): QuoteCollectionTransfer
-    {
-        $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
-        $quoteCriteriaFilterTransfer->setCustomerReference($restQuoteCollectionRequestTransfer->getCustomerReference());
-        $quoteCollectionTransfer = $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
-
-        return $quoteCollectionTransfer;
+    ): QuoteCollectionResponseTransfer {
+        return $this->quoteCollectionReaderPlugin->getQuoteCollectionByCriteria($restQuoteCollectionRequestTransfer);
     }
 }

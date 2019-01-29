@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer;
+use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Client\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
 
@@ -46,15 +46,15 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     /**
      * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
     public function getCustomerQuoteCollection(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-    ): RestQuoteCollectionResponseTransfer {
-        /** @var \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer $restQuoteCollectionResponseTransfer */
-        $restQuoteCollectionResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/get-customer-quote-collection', $restQuoteCollectionRequestTransfer);
+    ): QuoteCollectionResponseTransfer {
+        /** @var \Generated\Shared\Transfer\QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer */
+        $quoteCollectionResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/get-customer-quote-collection', $restQuoteCollectionRequestTransfer);
 
-        return $restQuoteCollectionResponseTransfer;
+        return $quoteCollectionResponseTransfer;
     }
 
     /**

@@ -27,6 +27,8 @@ use Spryker\Zed\CartsRestApi\CartsRestApiDependencyProvider;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
+use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
+use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -50,7 +52,10 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createQuoteReader(): QuoteReaderInterface
     {
-        return new QuoteReader($this->getQuoteFacade());
+        return new QuoteReader(
+            $this->getQuoteFacade(),
+            $this->getQuoteCollectionReaderPlugins()
+        );
     }
 
     /**
@@ -59,7 +64,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createQuoteCreator(): QuoteCreatorInterface
     {
         return new QuoteCreator(
-            $this->getPersistentCartFacade()
+            $this->getQuoteCreatorPlugins()
         );
     }
 
@@ -141,5 +146,21 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function getCartFacade(): CartsRestApiToCartFacadeInterface
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::FACADE_CART);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
+     */
+    public function getQuoteCollectionReaderPlugins(): QuoteCollectionReaderPluginInterface
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_READER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface
+     */
+    public function getQuoteCreatorPlugins(): QuoteCreatorPluginInterface
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_READER);
     }
 }

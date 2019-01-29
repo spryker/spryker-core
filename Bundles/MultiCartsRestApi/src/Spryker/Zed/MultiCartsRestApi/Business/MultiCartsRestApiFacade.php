@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MultiCartsRestApi\Business;
 
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer;
+use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -25,11 +25,11 @@ class MultiCartsRestApiFacade extends AbstractFacade implements MultiCartsRestAp
      *
      * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
     public function getCustomerQuoteCollection(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-    ): RestQuoteCollectionResponseTransfer {
+    ): QuoteCollectionResponseTransfer {
         return $this->getFactory()
             ->createQuoteReader()
             ->getCustomerQuoteCollection($restQuoteCollectionRequestTransfer);

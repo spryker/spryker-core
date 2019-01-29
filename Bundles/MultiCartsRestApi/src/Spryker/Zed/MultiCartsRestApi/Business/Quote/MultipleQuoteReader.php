@@ -10,7 +10,7 @@ namespace Spryker\Zed\MultiCartsRestApi\Business\Quote;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer;
+use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Spryker\Zed\MultiCartsRestApi\Dependency\Facade\MultiCartsRestApiToMultiCartFacadeInterface;
 
 class MultipleQuoteReader implements MultipleQuoteReaderInterface
@@ -31,18 +31,18 @@ class MultipleQuoteReader implements MultipleQuoteReaderInterface
     /**
      * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\RestQuoteCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
     public function getCustomerQuoteCollection(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-    ): RestQuoteCollectionResponseTransfer {
-        $restQuoteCollectionResponseTransfer = new RestQuoteCollectionResponseTransfer();
+    ): QuoteCollectionResponseTransfer {
+        $quoteCollectionResponseTransfer = new QuoteCollectionResponseTransfer();
         $quoteCollectionTransfer = $this->getCustomerQuotes($restQuoteCollectionRequestTransfer);
         if (count($quoteCollectionTransfer->getQuotes()) === 0) {
-            return $restQuoteCollectionResponseTransfer;
+            return $quoteCollectionResponseTransfer;
         }
 
-        return $restQuoteCollectionResponseTransfer->setQuoteCollection($quoteCollectionTransfer);
+        return $quoteCollectionResponseTransfer->setQuoteCollection($quoteCollectionTransfer);
     }
 
     /**

@@ -11,6 +11,10 @@ use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeBridge;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeBridge;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeBridge;
+use Spryker\Zed\CartsRestApi\Exception\MissingQuoteCollectionReaderPluginException;
+use Spryker\Zed\CartsRestApi\Exception\MissingQuoteCreatorPluginException;
+use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
+use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -23,6 +27,8 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_PERSISTENT_CART = 'FACADE_PERSISTENT_CART';
     public const FACADE_CART = 'FACADE_CART';
     public const PROPEL_QUERY_QUOTE = 'PROPEL_QUERY_QUOTE';
+    public const PLUGINS_QUOTE_READER = 'PLUGINS_QUOTE_READER';
+    public const PLUGINS_QUOTE_CREATOR = 'PLUGINS_QUOTE_CREATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -35,6 +41,8 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteFacade($container);
         $container = $this->addPersistentCartFacade($container);
         $container = $this->addCartFacade($container);
+        $container = $this->addQuoteCollectionReaderPlugin($container);
+        $container = $this->addQuoteCreatorPlugin($container);
 
         return $container;
     }
@@ -106,5 +114,64 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteCollectionReaderPlugin(Container $container): Container
+    {
+        $container[static::PLUGINS_QUOTE_READER] = function () {
+            return $this->getQuoteCollectionReaderPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @throws \Spryker\Zed\CartsRestApi\Exception\MissingQuoteCollectionReaderPluginException
+     *
+     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
+     */
+    protected function getQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
+    {
+        throw new MissingQuoteCollectionReaderPluginException(sprintf(
+            'Missing instance of %s! You need to configure QuoteCollectionReaderPlugin ' .
+            'in your own CartsRestApiDependencyProvider::getQuoteCollectionReaderPlugin() ' .
+            'to be able to read quote collection.',
+            QuoteCollectionReaderPluginInterface::class
+        ));
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteCreatorPlugin(Container $container): Container
+    {
+        $container[static::PLUGINS_QUOTE_CREATOR] = function () {
+            return $this->getQuoteCreatorPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @throws \Spryker\Zed\CartsRestApi\Exception\MissingQuoteCreatorPluginException
+     *
+     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface
+     */
+    protected function getQuoteCreatorPlugin(): QuoteCreatorPluginInterface
+    {
+        throw new MissingQuoteCreatorPluginException(sprintf(
+            'Missing instance of %s! You need to configure QuoteCreatorPluginInterface ' .
+            'in your own CartsRestApiDependencyProvider::getQuoteCreatorPlugin() ' .
+            'to be able to create quote.',
+            QuoteCreatorPluginInterface::class
+        ));
     }
 }

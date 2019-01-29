@@ -10,22 +10,21 @@ namespace Spryker\Zed\CartsRestApi\Business\Quote;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
-use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
+use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
 
 class QuoteCreator implements QuoteCreatorInterface
 {
     /**
-     * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface
+     * @var \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface
      */
-    protected $persistentCartFacade;
+    protected $quoteCreatorPluginPlugin;
 
     /**
-     * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
+     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface $quoteCreatorPluginPlugin
      */
-    public function __construct(
-        CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
-    ) {
-        $this->persistentCartFacade = $persistentCartFacade;
+    public function __construct(QuoteCreatorPluginInterface $quoteCreatorPluginPlugin)
+    {
+        $this->quoteCreatorPluginPlugin = $quoteCreatorPluginPlugin;
     }
 
     /**
@@ -39,10 +38,6 @@ class QuoteCreator implements QuoteCreatorInterface
             ->requireQuote()
             ->requireCustomerReference();
 
-        return $this->persistentCartFacade->createQuote($restQuoteRequestTransfer->getQuote()
-            ->setCustomerReference($restQuoteRequestTransfer->getCustomerReference())
-            ->setCustomer(
-                (new CustomerTransfer())->setCustomerReference($restQuoteRequestTransfer->getCustomerReference())
-            ));
+        return $this->quoteCreatorPluginPlugin->createQuote($restQuoteRequestTransfer);
     }
 }
