@@ -58,13 +58,13 @@ abstract class AbstractGlueBootstrap
     {
         $this->registerServiceProviders();
 
-        if ($this->sprykerApplication !== null){
+        if ($this->sprykerApplication !== null) {
             $this->setupApplication();
         }
 
         $this->application->boot();
 
-        if ($this->sprykerApplication === null){
+        if ($this->sprykerApplication === null) {
             return $this->application;
         }
 
