@@ -57,7 +57,7 @@ class CartDeleter implements CartDeleterInterface
             return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
         }
 
-        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($uuidQuote, $restRequest);
+        $quoteResponseTransfer = $this->cartReader->getQuoteByUuid($uuidQuote, $restRequest);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->cartRestResponseBuilder->createCartNotFoundErrorResponse();

@@ -7,9 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -56,30 +54,9 @@ class GuestCartReader implements GuestCartReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteTransferByUuid(string $uuidCart, RestRequestInterface $restRequest): QuoteResponseTransfer
+    public function getQuoteByUuid(string $uuidCart, RestRequestInterface $restRequest): QuoteResponseTransfer
     {
-        return $this->cartReader->getQuoteTransferByUuid($uuidCart, $restRequest);
-    }
-
-    /**
-     * @param string $uuidCart
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function getCustomerQuoteByUuid(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface
-    {
-        return $this->cartReader->getCustomerQuoteByUuid($uuidCart, $restRequest);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
-     */
-    public function getCustomerQuotes(RestRequestInterface $restRequest): QuoteCollectionTransfer
-    {
-        return $this->cartReader->getCustomerQuotes($restRequest);
+        return $this->cartReader->getQuoteByUuid($uuidCart, $restRequest);
     }
 
     /**
@@ -94,28 +71,12 @@ class GuestCartReader implements GuestCartReaderInterface
                 ->createAnonymousCustomerUniqueIdEmptyErrorRestResponse();
         }
 
-        $quoteCollectionTransfer = $this->getCustomerQuotes($restRequest);
+        $quoteCollectionTransfer = $this->cartReader->getCustomerQuotes($restRequest);
         if (count($quoteCollectionTransfer->getQuotes()) === 0) {
             return $this->guestCartRestResponseBuilder->createEmptyGuestCartRestResponse();
         }
 
         return $this->guestCartRestResponseBuilder
             ->createGuestCartRestResponse($quoteCollectionTransfer->getQuotes()->offsetGet(0));
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|null
-     */
-    public function getCustomerQuote(RestRequestInterface $restRequest): ?QuoteTransfer
-    {
-        $quoteResponseTransfers = $this->getCustomerQuotes($restRequest);
-        $quotes = $quoteResponseTransfers->getQuotes();
-        if (!$quotes->count()) {
-            return null;
-        }
-
-        return $quotes->offsetGet(0);
     }
 }

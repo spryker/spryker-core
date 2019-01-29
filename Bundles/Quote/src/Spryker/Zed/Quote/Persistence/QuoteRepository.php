@@ -110,6 +110,11 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
             $quoteQuery->filterByCustomerReference($quoteCriteriaFilterTransfer->getCustomerReference());
         }
 
+        $idStore = $quoteCriteriaFilterTransfer->getIdStore();
+        if ($idStore !== null) {
+            $quoteQuery->filterByFkStore($idStore);
+        }
+
         $quoteEntityCollectionTransfer = $this->buildQueryFromCriteria($quoteQuery, $quoteCriteriaFilterTransfer->getFilter())->find();
 
         $quoteCollectionTransfer = new QuoteCollectionTransfer();

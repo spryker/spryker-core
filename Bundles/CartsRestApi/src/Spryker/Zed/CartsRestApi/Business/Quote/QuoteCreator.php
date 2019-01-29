@@ -16,14 +16,23 @@ class QuoteCreator implements QuoteCreatorInterface
     /**
      * @var \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface
      */
-    protected $quoteCreatorPluginPlugin;
+    protected $quoteCreatorPlugin;
 
     /**
-     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface $quoteCreatorPluginPlugin
+     * @var \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface
      */
-    public function __construct(QuoteCreatorPluginInterface $quoteCreatorPluginPlugin)
-    {
-        $this->quoteCreatorPluginPlugin = $quoteCreatorPluginPlugin;
+    protected $quoteReader;
+
+    /**
+     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface $quoteCreatorPlugin
+     * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
+     */
+    public function __construct(
+        QuoteCreatorPluginInterface $quoteCreatorPlugin,
+        QuoteReaderInterface $quoteReader
+    ) {
+        $this->quoteCreatorPlugin = $quoteCreatorPlugin;
+        $this->quoteReader = $quoteReader;
     }
 
     /**
@@ -37,6 +46,6 @@ class QuoteCreator implements QuoteCreatorInterface
             ->requireQuote()
             ->requireCustomerReference();
 
-        return $this->quoteCreatorPluginPlugin->createQuote($restQuoteRequestTransfer);
+        return $this->quoteCreatorPlugin->createQuote($restQuoteRequestTransfer);
     }
 }

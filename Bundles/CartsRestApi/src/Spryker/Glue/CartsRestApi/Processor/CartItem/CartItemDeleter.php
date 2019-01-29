@@ -61,46 +61,17 @@ class CartItemDeleter implements CartItemDeleterInterface
             return $this->cartRestResponseBuilder->createMissingRequiredParameterErrorResponse();
         }
 
-        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($uuidQuote, $restRequest);
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->cartRestResponseBuilder->createCartNotFoundErrorResponse();
-        }
-
-        $itemTransfer = $this->prepareItemTransfer($quoteResponseTransfer->getQuoteTransfer()->getItems(), $itemIdentifier);
-
-        if (!$itemTransfer) {
-            return $this->cartRestResponseBuilder->createCartItemNotFoundErrorResponse();
-        }
-
         $restCartItemRequestTransfer = (new RestCartItemRequestTransfer())
             ->setCartUuid($uuidQuote)
             ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
-            ->setCartItem($itemTransfer);
+            ->setCartItem(); //TODO map
 
-        $this->cartsRestApiClient->deleteItem($restCartItemRequestTransfer);
+        $quoteResponseTransfer = $this->cartsRestApiClient->deleteItem($restCartItemRequestTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->cartRestResponseBuilder->createFailedDeletingCartItemErrorResponse();
         }
 
         return $this->cartRestResponseBuilder->createRestResponse();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     * @param string $itemIdentifier
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer|null
-     */
-    protected function prepareItemTransfer($itemTransfers, string $itemIdentifier): ?ItemTransfer
-    {
-        foreach ($itemTransfers as $itemTransfer) {
-            if ($itemIdentifier === $itemTransfer->getSku()) {
-                return $itemTransfer;
-            }
-        }
-
-        return null;
     }
 
     /**

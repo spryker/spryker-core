@@ -15,7 +15,7 @@ use Spryker\Zed\MultiCartsRestApi\Dependency\Facade\MultiCartsRestApiToPersisten
 class MultipleQuoteCreator implements MultipleQuoteCreatorInterface
 {
     /**
-     * @var \Spryker\Zed\MultiCartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface
+     * @var \Spryker\Zed\MultiCartsRestApi\Dependency\Facade\MultiCartsRestApiToPersistentCartFacadeInterface
      */
     protected $persistentCartFacade;
 

@@ -29,4 +29,13 @@ interface QuoteReaderInterface
     public function getCustomerQuoteCollection(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
     ): QuoteCollectionResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
+     */
+    public function findQuoteByCustomerAndStore(
+        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+    ): QuoteCollectionResponseTransfer;
 }

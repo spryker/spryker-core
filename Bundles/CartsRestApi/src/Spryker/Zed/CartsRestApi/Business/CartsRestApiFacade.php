@@ -73,6 +73,23 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
+     */
+    public function findQuoteByCustomerAndStore(
+        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+    ): QuoteCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createQuoteReader()
+            ->findQuoteByCustomerAndStore($restQuoteCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

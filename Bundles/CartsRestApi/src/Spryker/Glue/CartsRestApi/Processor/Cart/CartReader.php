@@ -128,7 +128,7 @@ class CartReader implements CartReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteTransferByUuid(string $uuidCart, RestRequestInterface $restRequest): QuoteResponseTransfer
+    public function getQuoteByUuid(string $uuidCart, RestRequestInterface $restRequest): QuoteResponseTransfer
     {
         $quoteCollectionTransfer = $this->getCustomerQuotes($restRequest);
 

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\MultiCartsRestApi\Communication\Controller;
 
-use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**

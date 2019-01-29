@@ -98,7 +98,7 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
             );
         }
 
-        $quoteResponseTransfer = $this->guestCartReader->getQuoteTransferByUuid($parentResource->getId(), $restRequest);
+        $quoteResponseTransfer = $this->guestCartReader->getQuoteByUuid($parentResource->getId(), $restRequest);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->guestCartRestResponseBuilder->createGuestCartNotFoundErrorRestResponse();
         }

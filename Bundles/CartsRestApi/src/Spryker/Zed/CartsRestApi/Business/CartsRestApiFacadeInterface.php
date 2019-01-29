@@ -57,6 +57,21 @@ interface CartsRestApiFacadeInterface
 
     /**
      * Specification:
+     * - Finds customer quote collection.
+     * - customerReference must be set in the RestQuoteCollectionRequestTransfer taken as parameter.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
+     */
+    public function findQuoteByCustomerAndStore(
+        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+    ): QuoteCollectionResponseTransfer;
+
+    /**
+     * Specification:
      * - Updates customer quote.
      * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
      *

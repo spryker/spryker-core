@@ -11,6 +11,7 @@ use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeBridge;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeBridge;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeBridge;
+use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeBridge;
 use Spryker\Zed\CartsRestApi\Exception\MissingQuoteCollectionReaderPluginException;
 use Spryker\Zed\CartsRestApi\Exception\MissingQuoteCreatorPluginException;
 use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
@@ -26,6 +27,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_QUOTE = 'FACADE_QUOTE';
     public const FACADE_PERSISTENT_CART = 'FACADE_PERSISTENT_CART';
     public const FACADE_CART = 'FACADE_CART';
+    public const FACADE_STORE = 'FACADE_STORE';
     public const PROPEL_QUERY_QUOTE = 'PROPEL_QUERY_QUOTE';
     public const PLUGINS_QUOTE_READER = 'PLUGINS_QUOTE_READER';
     public const PLUGINS_QUOTE_CREATOR = 'PLUGINS_QUOTE_CREATOR';
@@ -41,8 +43,26 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteFacade($container);
         $container = $this->addPersistentCartFacade($container);
         $container = $this->addCartFacade($container);
+        $container = $this->addStoreFacade($container);
         $container = $this->addQuoteCollectionReaderPlugin($container);
         $container = $this->addQuoteCreatorPlugin($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addQuoteFacade($container);
+        $container = $this->addPersistentCartFacade($container);
+        $container = $this->addStoreFacade($container);
+        $container = $this->addQuoteCreatorPlugin($container);
+        $container = $this->addQuoteCollectionReaderPlugin($container);
 
         return $container;
     }
@@ -111,6 +131,20 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_CART] = function (Container $container) {
             return new CartsRestApiToCartFacadeBridge($container->getLocator()->cart()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new CartsRestApiToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 
         return $container;

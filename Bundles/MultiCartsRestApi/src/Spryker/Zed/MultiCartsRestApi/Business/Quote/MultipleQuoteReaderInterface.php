@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\MultiCartsRestApi\Business\Quote;
 
-use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 
 interface MultipleQuoteReaderInterface
 {

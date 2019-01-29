@@ -42,6 +42,17 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByCustomerAndStoreAction(
+        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+    ): QuoteResponseTransfer {
+        return $this->getFacade()->findQuoteByCustomerAndStore($restQuoteCollectionRequestTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

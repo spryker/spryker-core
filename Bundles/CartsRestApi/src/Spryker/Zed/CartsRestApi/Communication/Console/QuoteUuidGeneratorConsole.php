@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\CartsRestApi\Communication\CartsRestApiCommunicationFactory getFactory()
  */
 class QuoteUuidGeneratorConsole extends Console
 {

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MultiCartsRestApi\Communication\Plugin\CartsRestApi\QuoteCollectionReader;
+namespace Spryker\Zed\CartsRestApi\Communication\Plugin\CartsRestApi\QuoteCollectionReader;
 
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
@@ -13,10 +13,11 @@ use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPlu
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\MultiCartsRestApi\Business\MultiCartsRestApiFacadeInterface getFacade()
- * @method \Spryker\Zed\MultiCartsRestApi\MultiCartsRestApiConfig getConfig()
+ * @method \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\CartsRestApi\CartsRestApiConfig getConfig()
+ * @method \Spryker\Zed\CartsRestApi\Communication\CartsRestApiCommunicationFactory getFactory()
  */
-class MultipleQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCollectionReaderPluginInterface
+class SingleQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCollectionReaderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -31,6 +32,6 @@ class MultipleQuoteCollectionReaderPlugin extends AbstractPlugin implements Quot
     public function getQuoteCollection(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
     ): QuoteCollectionResponseTransfer {
-        return $this->getFacade()->getCustomerQuoteCollection($restQuoteCollectionRequestTransfer);
+        return $this->getFacade()->findQuoteByCustomerAndStore($restQuoteCollectionRequestTransfer);
     }
 }

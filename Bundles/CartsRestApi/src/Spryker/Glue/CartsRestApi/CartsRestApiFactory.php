@@ -211,7 +211,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
             $this->getZedRequestClient(),
-            $this->createGuestCartReader()
+            $this->createCartReader()
         );
     }
 
@@ -223,7 +223,7 @@ class CartsRestApiFactory extends AbstractFactory
         return new GuestCartItemDeleter(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->createGuestCartReader()
+            $this->createCartReader()
         );
     }
 

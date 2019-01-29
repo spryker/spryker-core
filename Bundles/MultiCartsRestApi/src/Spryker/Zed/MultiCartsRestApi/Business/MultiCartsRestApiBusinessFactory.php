@@ -7,19 +7,15 @@
 
 namespace Spryker\Zed\MultiCartsRestApi\Business;
 
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MultiCartsRestApi\Business\Quote\MultipleQuoteCreator;
 use Spryker\Zed\MultiCartsRestApi\Business\Quote\MultipleQuoteCreatorInterface;
 use Spryker\Zed\MultiCartsRestApi\Business\Quote\MultipleQuoteReader;
 use Spryker\Zed\MultiCartsRestApi\Business\Quote\MultipleQuoteReaderInterface;
-use Spryker\Zed\MultiCartsRestApi\Business\Quote\QuoteCreator;
-use Spryker\Zed\MultiCartsRestApi\Business\Quote\QuoteCreatorInterface;
-use Spryker\Zed\MultiCartsRestApi\Business\Quote\QuoteReader;
-use Spryker\Zed\MultiCartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\MultiCartsRestApi\Dependency\Facade\MultiCartsRestApiToMultiCartFacadeInterface;
+use Spryker\Zed\MultiCartsRestApi\Dependency\Facade\MultiCartsRestApiToPersistentCartFacadeInterface;
 use Spryker\Zed\MultiCartsRestApi\Dependency\Facade\MultiCartsRestApiToStoreFacadeInterface;
 use Spryker\Zed\MultiCartsRestApi\MultiCartsRestApiDependencyProvider;
-use Spryker\Zed\MultiCartsRestApi\Dependency\Facade\MultiCartsRestApiToPersistentCartFacadeInterface;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\MultiCartsRestApi\MultiCartsRestApiConfig getConfig()
