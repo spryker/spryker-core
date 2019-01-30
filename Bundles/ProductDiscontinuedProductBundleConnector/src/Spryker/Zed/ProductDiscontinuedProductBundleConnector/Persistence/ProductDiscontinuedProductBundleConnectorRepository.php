@@ -70,15 +70,9 @@ class ProductDiscontinuedProductBundleConnectorRepository extends AbstractReposi
             )
             ->addAsColumn(ProductDiscontinuedTransfer::FK_PRODUCT, SpyProductBundleTableMap::COL_FK_BUNDLED_PRODUCT);
 
-        $productIds = $productDiscontinuedPropelQuery
+        return $productDiscontinuedPropelQuery
             ->select([ProductDiscontinuedTransfer::FK_PRODUCT])
             ->find()
             ->toArray();
-
-        if ($productIds[0] === null) {
-            return [];
-        }
-
-        return $productIds;
     }
 }

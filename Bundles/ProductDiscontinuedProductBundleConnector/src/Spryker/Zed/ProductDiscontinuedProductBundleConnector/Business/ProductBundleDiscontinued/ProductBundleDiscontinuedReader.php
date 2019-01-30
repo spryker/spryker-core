@@ -47,6 +47,10 @@ class ProductBundleDiscontinuedReader implements ProductBundleDiscontinuedReader
             $productDiscontinuedTransfer->getIdProductDiscontinued()
         );
 
+        if ($idProductConcreteList[0] == null) {
+            return (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(true);
+        }
+
         foreach ($idProductConcreteList as $idProductConcrete) {
             $productDiscontinuedResponseTransfer = $this->productDiscontinuedFacade
                 ->findProductDiscontinuedByProductId($idProductConcrete);
