@@ -9,6 +9,7 @@ namespace Spryker\Zed\Calculation\Business\Model\Aggregator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
@@ -23,6 +24,7 @@ class PriceToPayAggregator implements CalculatorInterface
     {
         $this->calculatePriceToPayAggregationForItems($calculableObjectTransfer->getItems(), $calculableObjectTransfer->getPriceMode());
         $this->calculatePriceToPayAggregationForExpenses($calculableObjectTransfer->getExpenses(), $calculableObjectTransfer->getPriceMode());
+        $this->calculatePriceToPayAggregationForItemExpenses($calculableObjectTransfer->getItems(), $calculableObjectTransfer->getPriceMode());
     }
 
     /**
@@ -101,5 +103,50 @@ class PriceToPayAggregator implements CalculatorInterface
         }
 
         return $price - $discountAmount;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param string $priceMode
+     *
+     * @return void
+     */
+    protected function calculatePriceToPayAggregationForItemExpenses(ArrayObject $items, string $priceMode): void
+    {
+        foreach ($items as $itemTransfer) {
+            if ($this->assertItemHasNoExpenseRequirements($itemTransfer)) {
+                continue;
+            }
+
+            $expenseTransfer = $itemTransfer->getShipment()->getExpense();
+
+            $expenseTransfer->setUnitPriceToPayAggregation(
+                $this->calculatePriceToPayAggregation(
+                    $expenseTransfer->getUnitPrice(),
+                    $priceMode,
+                    $expenseTransfer->getUnitDiscountAmountAggregation(),
+                    $expenseTransfer->getUnitTaxAmount()
+                )
+            );
+
+            $expenseTransfer->setSumPriceToPayAggregation(
+                $this->calculatePriceToPayAggregation(
+                    $expenseTransfer->getSumPrice(),
+                    $priceMode,
+                    $expenseTransfer->getSumDiscountAmountAggregation(),
+                    $expenseTransfer->getSumTaxAmount()
+                )
+            );
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function assertItemHasNoExpenseRequirements(ItemTransfer $itemTransfer): bool
+    {
+        return $itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getExpense() === null;
     }
 }
