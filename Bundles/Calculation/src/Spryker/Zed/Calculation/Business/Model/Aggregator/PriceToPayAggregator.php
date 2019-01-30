@@ -113,31 +113,27 @@ class PriceToPayAggregator implements CalculatorInterface
      */
     protected function calculatePriceToPayAggregationForItemExpenses(ArrayObject $items, string $priceMode): void
     {
+        $expenses = $this->getItemExpenses($items);
+        $this->calculatePriceToPayAggregationForExpenses($expenses, $priceMode);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[]
+     */
+    protected function getItemExpenses(ArrayObject $items): ArrayObject
+    {
+        $expenses = new ArrayObject();
         foreach ($items as $itemTransfer) {
             if ($this->assertItemHasNoExpenseRequirements($itemTransfer)) {
                 continue;
             }
 
-            $expenseTransfer = $itemTransfer->getShipment()->getExpense();
-
-            $expenseTransfer->setUnitPriceToPayAggregation(
-                $this->calculatePriceToPayAggregation(
-                    $expenseTransfer->getUnitPrice(),
-                    $priceMode,
-                    $expenseTransfer->getUnitDiscountAmountAggregation(),
-                    $expenseTransfer->getUnitTaxAmount()
-                )
-            );
-
-            $expenseTransfer->setSumPriceToPayAggregation(
-                $this->calculatePriceToPayAggregation(
-                    $expenseTransfer->getSumPrice(),
-                    $priceMode,
-                    $expenseTransfer->getSumDiscountAmountAggregation(),
-                    $expenseTransfer->getSumTaxAmount()
-                )
-            );
+            $expenses->append($itemTransfer->getShipment()->getExpense());
         }
+
+        return $expenses;
     }
 
     /**
