@@ -22,6 +22,7 @@ use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttribute;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReader;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeWriter;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReader;
+use Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeServiceInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeDependencyProvider;
 
 /**

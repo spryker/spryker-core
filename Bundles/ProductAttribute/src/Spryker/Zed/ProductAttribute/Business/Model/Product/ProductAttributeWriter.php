@@ -37,7 +37,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     protected $productReader;
 
     /**
-     * @var \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeToUtilSanitizeServiceInterface
+     * @var \Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeServiceInterface
      */
     protected $sanitizeService;
 

@@ -7,10 +7,6 @@
 
 namespace Spryker\Zed\ProductAttribute\Dependency\Service;
 
-
-use Spryker\Service\UtilSanitize\UtilSanitizeService;
-use Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface;
-
 class ProductAttributeToUtilSanitizeServiceBridge implements ProductAttributeToUtilSanitizeServiceInterface
 {
     /**
@@ -21,19 +17,20 @@ class ProductAttributeToUtilSanitizeServiceBridge implements ProductAttributeToU
     /**
      * @param \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
      */
-    public function __construct(UtilSanitizeServiceInterface $utilSanitizeService)
+    public function __construct($utilSanitizeService)
     {
         $this->utilSanitizeService = $utilSanitizeService;
     }
 
     /**
-     * @param string|array $text
+     * @param array|string $text
      * @param bool $double
-     * @param null $charset
+     * @param string|null $charset
+     *
+     * @return string|array
      */
     public function escapeHtml($text, $double = true, $charset = null)
     {
-        $this->utilSanitizeService->escapeHtml($text, $double = true, $charset = null);
+        return $this->utilSanitizeService->escapeHtml($text, $double, $charset);
     }
-
 }

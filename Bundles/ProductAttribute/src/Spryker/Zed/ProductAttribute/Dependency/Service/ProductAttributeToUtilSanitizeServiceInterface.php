@@ -10,9 +10,11 @@ namespace Spryker\Zed\ProductAttribute\Dependency\Service;
 interface ProductAttributeToUtilSanitizeServiceInterface
 {
     /**
-     * @param string|array $text
+     * @param array|string $text
      * @param bool $double
-     * @param null $charset
+     * @param string|null $charset
+     *
+     * @return string|array
      */
     public function escapeHtml($text, $double = true, $charset = null);
 }
