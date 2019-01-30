@@ -40,7 +40,7 @@ interface ProductDiscontinuedProductBundleConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Checks discontinued status at bundled products.
+     * - Checks discontinued status of bundled products.
      * - Returns ProductDiscontinuedResponseTransfer with success true if all bundled products are not discontinued.
      *
      * @api
