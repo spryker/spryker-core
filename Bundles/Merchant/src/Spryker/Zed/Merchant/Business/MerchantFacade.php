@@ -132,9 +132,9 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantAddressTransfer
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
      */
     public function findMerchantAddressById(MerchantAddressTransfer $merchantAddressTransfer): ?MerchantAddressTransfer
     {
@@ -144,6 +144,10 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string|null $currentStatus
      *
      * @return array
@@ -154,6 +158,10 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantAddressTransfer

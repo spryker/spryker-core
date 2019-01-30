@@ -286,7 +286,7 @@ class MerchantForm extends AbstractType
                         $context->addViolation('Email is already used');
                     }
                 },
-            ])
+            ]),
         ];
     }
 
@@ -301,7 +301,7 @@ class MerchantForm extends AbstractType
             new Required(),
             new NotBlank(),
             new Length(['max' => 64]),
-            new Choice(['choices' => array_keys($choices)])
+            new Choice(['choices' => array_keys($choices)]),
         ];
     }
 }
