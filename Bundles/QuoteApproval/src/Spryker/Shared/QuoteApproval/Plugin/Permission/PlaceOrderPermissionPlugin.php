@@ -34,9 +34,7 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
             return false;
         }
 
-        $shipmentTransfer = $quoteTransfer->getShipment();
-        $shipmentPrice = $shipmentTransfer ? $shipmentTransfer->getMethod()->getStoreCurrencyPrice() : 0;
-        $centAmount = $quoteTransfer->getTotals()->getGrandTotal() - $shipmentPrice;
+        $centAmount = $quoteTransfer->getTotals()->getGrandTotal() - $this->getShipmentPriceForQuote($quoteTransfer);
         $currencyCode = $quoteTransfer->getCurrency()->getCode();
         $storeName = $quoteTransfer->getStore()->getName();
 
@@ -75,5 +73,26 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
     public function getKey(): string
     {
         return static::KEY;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int
+     */
+    protected function getShipmentPriceForQuote(QuoteTransfer $quoteTransfer): int
+    {
+        if (!$quoteTransfer->getShipment()) {
+            return 0;
+        }
+
+        $shipmentMethodTransfer = $quoteTransfer->getShipment()
+            ->getMethod();
+
+        if (!$shipmentMethodTransfer) {
+            return 0;
+        }
+
+        return $shipmentMethodTransfer->getStoreCurrencyPrice();
     }
 }
