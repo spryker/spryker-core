@@ -48,12 +48,12 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     /**
      * @param \Twig_Environment $twig
      * @param array $context
-     * @param array|string $blockNames
+     * @param string[] $blockNames
      * @param string|null $templateIdentifier
      *
      * @return string
      */
-    public function contentWidgetFunction(Twig_Environment $twig, array $context, $blockNames, $templateIdentifier = null): string
+    public function contentWidgetFunction(Twig_Environment $twig, array $context, array $blockNames, $templateIdentifier = null): string
     {
         $blocks = $this->getBlockDataByNames($blockNames);
         $templatePath = $this->resolveTemplatePath($templateIdentifier);
@@ -91,11 +91,11 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     }
 
     /**
-     * @param string[]|string $blockNames
+     * @param string[] $blockNames
      *
      * @return array
      */
-    protected function getBlockDataByNames($blockNames): array
+    protected function getBlockDataByNames(array $blockNames): array
     {
         $blocks = $this->getFactory()
             ->getCmsBlockStorageClient()
