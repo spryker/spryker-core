@@ -97,15 +97,18 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      *
      * @return int[]
      */
-    public function getQuoteIdsByIdCompanyUser(int $idCompanyUser): array
+    public function getQuotesIsDefaultFlagByIdCompanyUser(int $idCompanyUser): array
     {
         return $this->getFactory()->createQuoteQuery()
             ->useSpyQuoteCompanyUserQuery()
                 ->filterByFkCompanyUser($idCompanyUser)
             ->endUse()
-            ->select([SpyQuoteTableMap::COL_ID_QUOTE])
+            ->select([
+                SpyQuoteTableMap::COL_ID_QUOTE,
+                SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT,
+            ])
             ->find()
-            ->toArray();
+            ->toKeyValue(SpyQuoteTableMap::COL_ID_QUOTE, SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT);
     }
 
     /**

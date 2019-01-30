@@ -42,34 +42,29 @@ class QuoteReader implements QuoteReaderInterface
      */
     public function findCustomerSharedQuotes(CompanyUserTransfer $companyUserTransfer): QuoteCollectionTransfer
     {
-        $quoteIds = $this->sharedCartRepository->getQuoteIdsByIdCompanyUser(
+        $quotesIsDefaultFlagData = $this->sharedCartRepository->getQuotesIsDefaultFlagByIdCompanyUser(
             $companyUserTransfer->getIdCompanyUser()
         );
 
         $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
-            ->setQuoteIds($quoteIds);
+            ->setQuoteIds(array_keys($quotesIsDefaultFlagData));
 
         return $this->applyIsDefaultFlagForSharedQuotes(
             $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer),
-            $companyUserTransfer->getIdCompanyUser()
+            $quotesIsDefaultFlagData
         );
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
-     * @param int $idCompanyUser
+     * @param array $quotesIsDefaultFlagData
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    protected function applyIsDefaultFlagForSharedQuotes(QuoteCollectionTransfer $quoteCollectionTransfer, int $idCompanyUser): QuoteCollectionTransfer
+    protected function applyIsDefaultFlagForSharedQuotes(QuoteCollectionTransfer $quoteCollectionTransfer, array $quotesIsDefaultFlagData): QuoteCollectionTransfer
     {
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            $isDefault = $this->sharedCartRepository->getIsDefaultFlagForSharedCart(
-                $quoteTransfer->getIdQuote(),
-                $idCompanyUser
-            );
-
-            $quoteTransfer->setIsDefault($isDefault);
+            $quoteTransfer->setIsDefault($quotesIsDefaultFlagData[$quoteTransfer->getIdQuote()]);
         }
 
         return $quoteCollectionTransfer;
