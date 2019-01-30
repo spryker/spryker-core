@@ -38,13 +38,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
      */
     public function createCartRestResponse(RestResourceInterface $cartRestResource): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        if ($cartRestResource) {
-            $restResponse->addResource($cartRestResource);
-        }
-
-        return $restResponse;
+        return $this->restResourceBuilder->createRestResponse()->addResource($cartRestResource);
     }
 
     /**

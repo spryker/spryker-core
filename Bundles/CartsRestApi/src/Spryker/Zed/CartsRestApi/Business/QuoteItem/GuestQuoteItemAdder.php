@@ -58,20 +58,26 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
             ->requireCustomerReference();
 
         if (!$restCartItemRequestTransfer->getCartUuid()) {
-            return $this->quoteCreator->createQuote(
+            $quoteResponseTransfer = $this->quoteCreator->createQuote(
                 (new RestQuoteRequestTransfer())
-                    ->setQuote((new QuoteTransfer())->addItem($restCartItemRequestTransfer->getCartItem()))
+                    ->setQuote((new QuoteTransfer()))
                     ->setCustomerReference($restCartItemRequestTransfer->getCustomerReference())
             );
+
+            return $this->quoteItemAdder
+                ->add($restCartItemRequestTransfer->setCartUuid($quoteResponseTransfer->getQuoteTransfer()->getUuid()));
         }
 
         $quoteResponseTransfer = $this->cartReader->findQuoteByUuid(
             (new QuoteTransfer())->setUuid($restCartItemRequestTransfer->getCartUuid())
         );
+
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
 
-        return $this->quoteItemAdder->add($restCartItemRequestTransfer);
+        return $this->quoteItemAdder
+            ->add($restCartItemRequestTransfer
+                ->setCartUuid($quoteResponseTransfer->getQuoteTransfer()->getUuid()));
     }
 }

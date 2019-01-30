@@ -10,7 +10,6 @@ namespace Spryker\Glue\CartsRestApi\Processor\GuestCartItem;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
-use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;

@@ -94,7 +94,7 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
     {
         /** @var \Generated\Shared\Transfer\CustomerTransfer|null $anonymousCustomerTransfer */
         $anonymousCustomerTransfer = $this->sessionClient->get('customer data');
-        if ($anonymousCustomerTransfer === null || $anonymousCustomerTransfer instanceof CustomerTransfer === false) {
+        if ($anonymousCustomerTransfer === null || !($anonymousCustomerTransfer instanceof CustomerTransfer)) {
             return $customerTransfer;
         }
 
