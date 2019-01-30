@@ -113,9 +113,9 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createGuestQuoteItemAdder(): GuestQuoteItemAdderInterface
     {
         return new GuestQuoteItemAdder(
-            $this->getPersistentCartFacade(),
             $this->createQuoteReader(),
-            $this->createQuoteItemAdder()
+            $this->createQuoteItemAdder(),
+            $this->createQuoteCreator()
         );
     }
 

@@ -169,7 +169,7 @@ class CartsRestApiFactory extends AbstractFactory
         return new GuestCartCreator(
             $this->createGuestCartRestResponseBuilder(),
             $this->createCartsResourceMapper(),
-            $this->getQuoteCreatorPlugin()
+            $this->getClient()
         );
     }
 
@@ -195,8 +195,6 @@ class CartsRestApiFactory extends AbstractFactory
         return new GuestCartItemAdder(
             $this->getClient(),
             $this->getZedRequestClient(),
-            $this->createGuestCartReader(),
-            $this->createGuestCartCreator(),
             $this->createCartItemsResourceMapper(),
             $this->createGuestCartRestResponseBuilder()
         );
