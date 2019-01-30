@@ -97,7 +97,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      *
      * @return int[]
      */
-    public function findQuoteIdCollectionByIdCompanyUser(int $idCompanyUser): array
+    public function getQuoteIdCollectionByIdCompanyUser(int $idCompanyUser): array
     {
         return $this->getFactory()->createQuoteQuery()
             ->useSpyQuoteCompanyUserQuery()

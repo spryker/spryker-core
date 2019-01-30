@@ -32,7 +32,7 @@ interface SharedCartRepositoryInterface
      *
      * @return int[]
      */
-    public function findQuoteIdCollectionByIdCompanyUser(int $idCompanyUser): array;
+    public function getQuoteIdCollectionByIdCompanyUser(int $idCompanyUser): array;
 
     /**
      * @param string $customerReference
