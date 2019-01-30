@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Business\Model\Calculator\FloatRounderInterface;
 
 /**
  * Old implementation of DiscountAmountAggregation not used since Discount module version 5, kept for BC reasons.
@@ -35,6 +36,19 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
      * @var bool
      */
     protected $isOrder = false;
+
+    /**
+     * @var \Spryker\Zed\Calculation\Business\Model\Calculator\FloatRounderInterface
+     */
+    protected $floatRounder;
+
+    /**
+     * @param \Spryker\Zed\Calculation\Business\Model\Calculator\FloatRounderInterface $floatRounder
+     */
+    public function __construct(FloatRounderInterface $floatRounder)
+    {
+        $this->floatRounder = $floatRounder;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
@@ -118,8 +132,11 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
      */
     protected function setCalculatedDiscountsSumGrossAmount(CalculatedDiscountTransfer $calculatedDiscountTransfer)
     {
-        $calculatedDiscountTransfer->setSumGrossAmount(
+        $sumGrossAmount = $this->floatRounder->round(
             $calculatedDiscountTransfer->getUnitGrossAmount() * $calculatedDiscountTransfer->getQuantity()
+        );
+        $calculatedDiscountTransfer->setSumGrossAmount(
+            $sumGrossAmount
         );
 
         $this->setCalculatedDiscounts($calculatedDiscountTransfer);

@@ -17,6 +17,8 @@ use Spryker\Zed\Calculation\Business\Model\Aggregator\PriceToPayAggregator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CanceledTotalCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\DiscountTotalCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\FloatRounder;
+use Spryker\Zed\Calculation\Business\Model\Calculator\FloatRounderInterface;
 use Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\GrossPrice\PriceGrossCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\GrossPrice\SumGrossPriceCalculator;
@@ -132,7 +134,9 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSumGrossPriceCalculator()
     {
-        return new SumGrossPriceCalculator();
+        return new SumGrossPriceCalculator(
+            $this->createFloatRounder()
+        );
     }
 
     /**
@@ -148,7 +152,9 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountAmountAggregator()
     {
-        return new DiscountAmountAggregatorForGrossAmount();
+        return new DiscountAmountAggregatorForGrossAmount(
+            $this->createFloatRounder()
+        );
     }
 
     /**
@@ -156,7 +162,9 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountAmountAggregatorForGenericAmount()
     {
-        return new DiscountAmountAggregator();
+        return new DiscountAmountAggregator(
+            $this->createFloatRounder()
+        );
     }
 
     /**
@@ -309,6 +317,11 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     public function createNetTotalCalculator()
     {
         return new NetTotalCalculator();
+    }
+
+    protected function createFloatRounder(): FloatRounderInterface
+    {
+        return new FloatRounder();
     }
 
     /**
