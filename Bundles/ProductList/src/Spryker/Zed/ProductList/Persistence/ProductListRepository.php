@@ -137,7 +137,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      *
      * @return int[]
      */
-    public function getConcreteProductListIdsForType(int $idProduct, string $listType): array
+    public function getProductConcreteProductListIdsForType(int $idProduct, string $listType): array
     {
         return $this->getFactory()
             ->createProductListProductConcreteQuery()

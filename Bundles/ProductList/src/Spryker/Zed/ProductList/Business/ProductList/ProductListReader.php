@@ -86,7 +86,7 @@ class ProductListReader implements ProductListReaderInterface
     {
         return array_unique(
             array_merge(
-                $this->productListRepository->getConcreteProductListIdsForType(
+                $this->productListRepository->getProductConcreteProductListIdsForType(
                     $idProduct,
                     SpyProductListTableMap::COL_TYPE_BLACKLIST
                 ),
@@ -107,7 +107,7 @@ class ProductListReader implements ProductListReaderInterface
     {
         return array_unique(
             array_merge(
-                $this->productListRepository->getConcreteProductListIdsForType(
+                $this->productListRepository->getProductConcreteProductListIdsForType(
                     $idProduct,
                     SpyProductListTableMap::COL_TYPE_WHITELIST
                 ),

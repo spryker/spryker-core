@@ -82,7 +82,7 @@ interface ProductListRepositoryInterface
      *
      * @return int[]
      */
-    public function getConcreteProductListIdsForType(int $idProduct, string $listType): array;
+    public function getProductConcreteProductListIdsForType(int $idProduct, string $listType): array;
 
     /**
      * @param int $idProduct
