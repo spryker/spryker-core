@@ -42,7 +42,7 @@ class QuoteReader implements QuoteReaderInterface
      */
     public function findCustomerSharedQuotes(CompanyUserTransfer $companyUserTransfer): QuoteCollectionTransfer
     {
-        $quoteIds = $this->sharedCartRepository->getQuoteIdCollectionByIdCompanyUser(
+        $quoteIds = $this->sharedCartRepository->getQuoteIdsByIdCompanyUser(
             $companyUserTransfer->getIdCompanyUser()
         );
 
