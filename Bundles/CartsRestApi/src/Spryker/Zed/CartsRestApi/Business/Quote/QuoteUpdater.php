@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface;
@@ -135,8 +136,27 @@ class QuoteUpdater implements QuoteUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function transformGuestCartToRegularCart(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function assignGuestCartToRegisteredCustomer(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
     {
-        return new QuoteResponseTransfer();
+        $restQuoteRequestTransfer
+            ->requireCustomer()
+            ->requireCustomerReference();
+
+        $quoteCollectionResponseTransfer = $this->cartReader->findQuoteByCustomerAndStore(
+            (new RestQuoteCollectionRequestTransfer())
+                ->setCustomerReference($restQuoteRequestTransfer->getCustomerReference())
+        );
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomerReference(
+                $restQuoteRequestTransfer->getCustomer()->getCustomerReference()
+            )->setUuid($quoteCollectionResponseTransfer->getQuoteCollection()->getQuotes()[0]->getUuid())
+            ->setCustomer($restQuoteRequestTransfer->getCustomer());
+
+        return $this->updateQuote(
+            $restQuoteRequestTransfer
+                ->setQuote($quoteTransfer)
+                ->setQuoteUuid($quoteTransfer->getUuid())
+        );
     }
 }

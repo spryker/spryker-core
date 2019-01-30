@@ -145,22 +145,11 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
             return $customerTransfer;
         }
 
-        $quoteTransfer = $this->guestCartReader->getCustomerQuote($restRequest);
-        if (!$quoteTransfer) {
-            return $customerTransfer;
-        }
-
         $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
             ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
-            ->setQuote(
-                (new QuoteTransfer())->setCustomerReference(
-                    $customerTransfer->getCustomerReference()
-                )->setUuid($quoteTransfer->getUuid())
-                ->setCustomer($customerTransfer)
-            )
-            ->setQuoteUuid($quoteTransfer->getUuid());
+            ->setCustomer($customerTransfer);
 
-        $this->cartsRestApiClient->updateQuote($restQuoteRequestTransfer);
+        $this->cartsRestApiClient->assignGuestCartToRegisteredCustomer($restQuoteRequestTransfer);
 
         return $customerTransfer;
     }

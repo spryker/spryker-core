@@ -153,10 +153,10 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function transformGuestCartToRegularCart(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function assignGuestCartToRegisteredCustomer(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
-        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/transform-guest-cart-to-regular-cart', $restQuoteRequestTransfer);
+        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/assign-guest-cart-to-registered-customer', $restQuoteRequestTransfer);
 
         return $quoteResponseTransfer;
     }

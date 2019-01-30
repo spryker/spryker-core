@@ -16,11 +16,11 @@ use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 interface CartsRestApiToPersistentCartFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateQuote(QuoteUpdateRequestTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

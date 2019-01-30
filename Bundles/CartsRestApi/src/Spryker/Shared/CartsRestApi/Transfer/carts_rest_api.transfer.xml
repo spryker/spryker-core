@@ -80,6 +80,7 @@
         <property name="quote" type="Quote" />
         <property name="quoteUuid" type="string" />
         <property name="customerReference" type="string" />
+        <property name="customer" type="Customer" />
         <property name="errorCodes" type="string[]" singular="errorCode" />
     </transfer>
 

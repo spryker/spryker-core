@@ -116,8 +116,8 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function transformGuestCartToRegularCartAction(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function assignGuestCartToRegisteredCustomerAction(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->transformGuestCartToRegularCart($restQuoteRequestTransfer);
+        return $this->getFacade()->assignGuestCartToRegisteredCustomer($restQuoteRequestTransfer);
     }
 }

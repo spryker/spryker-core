@@ -172,5 +172,5 @@ interface CartsRestApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function transformGuestCartToRegularCart(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer;
+    public function assignGuestCartToRegisteredCustomer(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer;
 }

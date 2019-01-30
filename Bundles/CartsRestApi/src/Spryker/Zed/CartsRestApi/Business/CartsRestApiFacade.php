@@ -210,10 +210,10 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function transformGuestCartToRegularCart(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function assignGuestCartToRegisteredCustomer(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteUpdater()
-            ->transformGuestCartToRegularCart($restQuoteRequestTransfer);
+            ->assignGuestCartToRegisteredCustomer($restQuoteRequestTransfer);
     }
 }

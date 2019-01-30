@@ -29,13 +29,13 @@ class CartsRestApiToPersistentCartFacadeBridge implements CartsRestApiToPersiste
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateQuote(QuoteUpdateRequestTransfer $quoteTransfer): QuoteResponseTransfer
+    public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
-        return $this->persistentCartFacade->updateQuote($quoteTransfer);
+        return $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
     }
 
     /**
