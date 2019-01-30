@@ -133,7 +133,6 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
             }
 
             $orderEntity->getExpenses()->offsetUnset($key);
-            return $orderEntity;
         }
 
         return $orderEntity;
