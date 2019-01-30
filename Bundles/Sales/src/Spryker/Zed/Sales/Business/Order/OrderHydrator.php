@@ -37,18 +37,52 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
-     * @param \Spryker\Zed\Sales\Business\Order\OrderHydratorOrderDataBCForMultiShipmentAdapterInterface $orderDataBCForMultiShipmentAdapter
+     * @param \Spryker\Zed\Sales\Business\Order\OrderHydratorOrderDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
      * @param \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[] $hydrateOrderPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         SalesToOmsInterface $omsFacade,
-        OrderHydratorOrderDataBCForMultiShipmentAdapterInterface $orderDataBCForMultiShipmentAdapter,
+        OrderHydratorOrderDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter,
         array $hydrateOrderPlugins = []
     ) {
         parent::__construct($queryContainer, $omsFacade, $hydrateOrderPlugins);
 
-        $this->orderDataBCForMultiShipmentAdapter = $orderDataBCForMultiShipmentAdapter;
+        $this->orderDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    protected function getOrderEntity(OrderTransfer $orderTransfer)
+    {
+        $orderTransfer->requireIdSalesOrder()
+            ->requireFkCustomer();
+
+        $orderEntity = $this->queryContainer
+            ->querySalesOrderDetailsWithoutShippingAddress($orderTransfer->getIdSalesOrder())
+            ->filterByFkCustomer($orderTransfer->getFkCustomer())
+            ->findOne();
+
+        if ($orderEntity === null) {
+            throw new InvalidSalesOrderException(sprintf(
+                'Order could not be found for ID %s and customer reference %s',
+                $orderTransfer->getIdSalesOrder(),
+                $orderTransfer->getCustomerReference()
+            ));
+        }
+
+        /**
+         * @deprecated Will be removed in next major release.
+         */
+        $orderEntity = $this->orderDataBCForMultiShipmentAdapter->adapt($orderEntity);
+        $orderEntity = $this->sanitizeOrderShipmentExpense($orderEntity);
+
+        return $orderEntity;
     }
 
     /**
