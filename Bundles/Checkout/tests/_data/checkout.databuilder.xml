@@ -7,7 +7,7 @@
         <property name="sku" dataBuilderRule="isbn10" />
         <property name="unitGrossPrice" dataBuilderRule="randomFloat(2)"  />
         <property name="sumGrossPrice" dataBuilderRule="randomFloat(2)"  />
-        <property name="quantity" dataBuilderRule="=1" />
+        <property name="quantity" dataBuilderRule="=1.0" />
         <property name="name" dataBuilderRule="word" />
     </transfer>
 

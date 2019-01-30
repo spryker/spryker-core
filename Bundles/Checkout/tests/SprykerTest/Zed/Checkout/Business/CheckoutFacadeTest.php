@@ -234,7 +234,7 @@ class CheckoutFacadeTest extends Unit
 
         $stock1 = new SpyStockProduct();
         $stock1
-            ->setQuantity(1)
+            ->setQuantity(1.0)
             ->setStock($stock)
             ->setSpyProduct($productConcrete1)
             ->save();
@@ -242,7 +242,7 @@ class CheckoutFacadeTest extends Unit
         $item = new ItemTransfer();
         $item
             ->setSku('OSB1339')
-            ->setQuantity(2)
+            ->setQuantity(2.0)
             ->setUnitPrice(3000)
             ->setUnitGrossPrice(3000)
             ->setSumGrossPrice(6000);
@@ -331,14 +331,14 @@ class CheckoutFacadeTest extends Unit
 
         $stock1 = new SpyStockProduct();
         $stock1
-            ->setQuantity(1)
+            ->setQuantity(1.0)
             ->setStock($stock)
             ->setSpyProduct($productConcrete1)
             ->save();
 
         $stock2 = new SpyStockProduct();
         $stock2
-            ->setQuantity(1)
+            ->setQuantity(1.0)
             ->setStock($stock)
             ->setSpyProduct($productConcrete2)
             ->save();
@@ -347,7 +347,7 @@ class CheckoutFacadeTest extends Unit
         $item1
             ->setUnitPrice(4000)
             ->setSku('OSB1337')
-            ->setQuantity(1)
+            ->setQuantity(1.0)
             ->setUnitGrossPrice(3000)
             ->setSumGrossPrice(3000)
             ->setName('Product1');
@@ -356,7 +356,7 @@ class CheckoutFacadeTest extends Unit
         $item2
             ->setUnitPrice(4000)
             ->setSku('OSB1338')
-            ->setQuantity(1)
+            ->setQuantity(1.0)
             ->setUnitGrossPrice(4000)
             ->setSumGrossPrice(4000)
             ->setName('Product2');
