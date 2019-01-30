@@ -29,5 +29,4 @@ class OrderReader extends OrderReaderWithoutMultiShippingAddress
 
         return $this->orderHydrator->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
     }
-
 }

@@ -46,25 +46,4 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
 
         return $this->itemsGrouper;
     }
-
-    /**
-     * @api
-     *
-     * @param array $shipmentFormData
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
-     */
-    public function createShipmentGroupTransfer(array $shipmentFormData): ShipmentGroupTransfer
-    {
-        $shipmentGroupTransfer = new ShipmentGroupTransfer();
-        $shipmentGroupTransfer->setShipment(
-            (new ShipmentTransfer)->fromArray($data, true)
-        );
-
-        foreach ($data[ShipmentForm::FIELD_ORDER_ITEMS] as $item) {
-            $shipmentGroupTransfer->addItem($item);
-        }
-
-        return $shipmentGroupTransfer;
-    }
 }

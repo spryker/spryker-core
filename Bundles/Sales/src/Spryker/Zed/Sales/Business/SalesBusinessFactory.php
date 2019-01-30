@@ -23,8 +23,6 @@ use Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterfac
 use Spryker\Zed\Sales\Business\Model\Order\OrderExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
-use Spryker\Zed\Sales\Business\Order\OrderReader as OrderReaderWithMultiShippingAddress;
-use Spryker\Zed\Sales\Business\Order\OrderReaderInterface;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
@@ -41,6 +39,8 @@ use Spryker\Zed\Sales\Business\Order\OrderHydrator as OrderHydratorWithMultiShip
 use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
 use Spryker\Zed\Sales\Business\Order\OrderHydratorOrderDataBCForMultiShipmentAdapter;
 use Spryker\Zed\Sales\Business\Order\OrderHydratorOrderDataBCForMultiShipmentAdapterInterface;
+use Spryker\Zed\Sales\Business\Order\OrderReader as OrderReaderWithMultiShippingAddress;
+use Spryker\Zed\Sales\Business\Order\OrderReaderInterface;
 use Spryker\Zed\Sales\Business\Order\SalesOrderSaver as SalesOrderSaverMultipleShippingAddress;
 use Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface as SalesOrderSaverMultipleShippingAddressInterface;
 use Spryker\Zed\Sales\Business\Order\SalesOrderSaverQuoteDataBCForMultiShipmentAdapter;

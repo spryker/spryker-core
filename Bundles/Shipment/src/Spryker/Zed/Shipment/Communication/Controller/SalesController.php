@@ -35,7 +35,7 @@ class SalesController extends AbstractController
 
         return $this->viewResponse([
             'shipmentGroups' => $shipmentGroups,
-            'currencyIsoCode' => $orderTransfer->getCurrencyIsoCode()
+            'currencyIsoCode' => $orderTransfer->getCurrencyIsoCode(),
         ]);
     }
 }

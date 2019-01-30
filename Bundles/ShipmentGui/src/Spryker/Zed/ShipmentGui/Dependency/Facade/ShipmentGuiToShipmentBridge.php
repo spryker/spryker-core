@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -55,8 +56,8 @@ class ShipmentGuiToShipmentBridge implements ShipmentGuiToShipmentInterface
     /**
      * @inheritdoc
      */
-    public function saveShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, int $idSalesOrder): void
+    public function saveShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): void
     {
-        $this->shipmentFacade->saveShipmentGroup($shipmentGroupTransfer, $idSalesOrder);
+        $this->shipmentFacade->saveShipmentGroup($shipmentGroupTransfer, $orderTransfer);
     }
 }

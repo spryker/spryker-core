@@ -8,11 +8,11 @@
 namespace Spryker\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface;
-use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
 
-class ShipmentGroupSaver extends CheckoutShipmentOrderSaver implements ShipmentGroupSaverInterface
+class ShipmentGroupSaver implements ShipmentGroupSaverInterface
 {
     /**
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface
@@ -20,24 +20,36 @@ class ShipmentGroupSaver extends CheckoutShipmentOrderSaver implements ShipmentG
     protected $entityManager;
 
     /**
+     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface
+     */
+    protected $salesFacade;
+
+    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface $salesFacade
      */
     public function __construct(
-        ShipmentEntityManagerInterface $entityManager
+        ShipmentEntityManagerInterface $entityManager,
+        ShipmentToSalesFacadeInterface $salesFacade
     ) {
         $this->entityManager = $entityManager;
+        $this->salesFacade = $salesFacade;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $salesOrderTransfer
      *
      * @return void
      */
-    public function updateShipmentTransaction(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $salesOrderTransfer): void
-    {
-        $this->saveShipmentAddressTransfer($shipmentGroupTransfer);
+    public function saveShipmentGroup(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        OrderTransfer $salesOrderTransfer
+    ): void {
+        $shippingAddresTransfer = $shipmentGroupTransfer->getShipment()->getShippingAddress();
+        $this->salesFacade->createOrderAddress($shippingAddresTransfer);
 
-        $expenseTransfer = $this->sanitizeExpenseSumPrices($shipmentGroupTransfer->getShipment()->getExpense());
+        $expenseTransfer = $shipmentGroupTransfer->getShipment()->getExpense();
         $expenseTransfer->setFkSalesOrder($salesOrderTransfer->getIdSalesOrder());
         $expenseTransfer = $this->salesFacade->createSalesExpense($expenseTransfer);
 
@@ -53,8 +65,21 @@ class ShipmentGroupSaver extends CheckoutShipmentOrderSaver implements ShipmentG
             $salesOrderTransfer->getIdSalesOrder()
         );
 
-        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
-            $this->updateItemsShipment($shipmentGroupTransfer, $idSalesShipment);
+        $this->updateSalesOrderItems($shipmentGroupTransfer, $idSalesShipment);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param int $idSalesShipment
+     *
+     * @return void
+     */
+    protected function updateSalesOrderItems(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        int $idSalesShipment
+    ): void {
+        foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+            $this->entityManager->updateSalesOrderItemFkShipment($itemTransfer, $idSalesShipment);
         }
     }
 }

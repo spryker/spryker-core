@@ -47,10 +47,14 @@ class CreateController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $shipmentGroupTransfer = $this->createShipmentGroupTransfer($form->getData());
+            $orderTransfer = $this
+                ->getFactory()
+                ->getSalesFacade()
+                ->findOrderByIdSalesOrder($idSalesOrder);
 
             $this->getFactory()
                 ->getShipmentFacade()
-                ->saveShipmentGroup($shipmentGroupTransfer, $idSalesOrder);
+                ->saveShipmentGroup($shipmentGroupTransfer, $orderTransfer);
 
             return $this->redirectResponse($redirectUrl);
         }

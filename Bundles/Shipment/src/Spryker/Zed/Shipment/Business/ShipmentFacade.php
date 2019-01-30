@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -328,17 +328,20 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
-    public function updateShipmentTransaction(ShipmentGroupTransfer $shipmentGroupTransfer): void
+    public function saveShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): void
     {
         $this->getFactory()
             ->createShipmentGroupSaver()
-            ->updateShipmentTransaction($shipmentGroupTransfer);
+            ->saveShipmentGroup($shipmentGroupTransfer, $orderTransfer);
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesShipment
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]

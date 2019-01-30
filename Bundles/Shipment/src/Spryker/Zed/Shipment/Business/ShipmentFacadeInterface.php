@@ -273,15 +273,16 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Update sales shipment group.
+     * - Save sales shipment group.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
-    public function updateShipmentTransaction(ShipmentGroupTransfer $shipmentGroupTransfer): void;
+    public function saveShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): void;
 
     /**
      * @param int $idSalesShipment
