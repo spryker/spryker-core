@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
+use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -51,18 +52,18 @@ class QuoteUpdater implements QuoteUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $assigningGuestQuoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function updateQuote(RestQuoteRequestTransfer $assigningGuestQuoteRequestTransfer): QuoteResponseTransfer
     {
-        $restQuoteRequestTransfer
+        $assigningGuestQuoteRequestTransfer
             ->requireQuote()
             ->requireCustomerReference()
             ->requireQuoteUuid();
 
-        $quoteTransfer = $restQuoteRequestTransfer->getQuote();
+        $quoteTransfer = $assigningGuestQuoteRequestTransfer->getQuote();
         $quoteResponseTransfer = $this->cartReader->findQuoteByUuid($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
@@ -132,30 +133,32 @@ class QuoteUpdater implements QuoteUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer $assigningGuestQuoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function assignGuestCartToRegisteredCustomer(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function assignGuestCartToRegisteredCustomer(AssigningGuestQuoteRequestTransfer $assigningGuestQuoteRequestTransfer): QuoteResponseTransfer
     {
-        $restQuoteRequestTransfer
+        $assigningGuestQuoteRequestTransfer
             ->requireCustomer()
-            ->requireCustomerReference();
+            ->requireAnonymousCustomerReference();
 
         $quoteCollectionResponseTransfer = $this->cartReader->findQuoteByCustomerAndStore(
             (new RestQuoteCollectionRequestTransfer())
-                ->setCustomerReference($restQuoteRequestTransfer->getCustomerReference())
+                ->setCustomerReference($assigningGuestQuoteRequestTransfer->getAnonymousCustomerReference())
         );
 
+        $registeredCustomer = $assigningGuestQuoteRequestTransfer->getCustomer();
         $quoteTransfer = (new QuoteTransfer())
             ->setCustomerReference(
-                $restQuoteRequestTransfer->getCustomer()->getCustomerReference()
+                $registeredCustomer->getCustomerReference()
             )->setUuid($quoteCollectionResponseTransfer->getQuoteCollection()->getQuotes()[0]->getUuid())
-            ->setCustomer($restQuoteRequestTransfer->getCustomer());
+            ->setCustomer($registeredCustomer);
 
         return $this->updateQuote(
-            $restQuoteRequestTransfer
+            (new RestQuoteRequestTransfer())
                 ->setQuote($quoteTransfer)
+                ->setCustomerReference($registeredCustomer->getCustomerReference())
                 ->setQuoteUuid($quoteTransfer->getUuid())
         );
     }
