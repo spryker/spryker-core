@@ -17,6 +17,8 @@ use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUpdater;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUpdaterInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUuidWriter;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUuidWriterInterface;
+use Spryker\Zed\CartsRestApi\Business\QuoteItem\GuestQuoteItemAdder;
+use Spryker\Zed\CartsRestApi\Business\QuoteItem\GuestQuoteItemAdderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemAdder;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemAdderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemDeleter;
@@ -102,6 +104,18 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
         return new QuoteItemAdder(
             $this->getPersistentCartFacade(),
             $this->createQuoteReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApi\Business\QuoteItem\GuestQuoteItemAdderInterface
+     */
+    public function createGuestQuoteItemAdder(): GuestQuoteItemAdderInterface
+    {
+        return new GuestQuoteItemAdder(
+            $this->getPersistentCartFacade(),
+            $this->createQuoteReader(),
+            $this->createQuoteItemAdder()
         );
     }
 

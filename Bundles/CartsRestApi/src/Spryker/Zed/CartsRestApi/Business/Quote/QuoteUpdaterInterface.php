@@ -18,4 +18,11 @@ interface QuoteUpdaterInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function updateQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function transformGuestCartToRegularCart(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer;
 }

@@ -129,4 +129,14 @@ class QuoteUpdater implements QuoteUpdaterInterface
 
         return $quoteTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function transformGuestCartToRegularCart(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    {
+        return new QuoteResponseTransfer();
+    }
 }

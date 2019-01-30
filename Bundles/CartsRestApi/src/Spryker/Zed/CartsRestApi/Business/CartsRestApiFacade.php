@@ -180,4 +180,40 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
             ->createQuoteItemDeleter()
             ->remove($restCartItemRequestTransfer);
     }
+
+    /**
+     * Specification:
+     * - Adds an item to the guest cart.
+     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addItemToGuestCart(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createGuestQuoteItemAdder()
+            ->addItemToGuestCart($restCartItemRequestTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Transforms a guest cart to the regular cart.
+     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function transformGuestCartToRegularCart(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteUpdater()
+            ->transformGuestCartToRegularCart($restQuoteRequestTransfer);
+    }
 }

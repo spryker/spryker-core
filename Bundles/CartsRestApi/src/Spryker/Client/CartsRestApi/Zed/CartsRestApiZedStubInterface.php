@@ -73,4 +73,18 @@ interface CartsRestApiZedStubInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function deleteItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addItemToGuestCart(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function transformGuestCartToRegularCart(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer;
 }

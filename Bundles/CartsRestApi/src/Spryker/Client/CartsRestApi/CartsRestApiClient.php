@@ -148,4 +148,36 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
             ->createCartsRestApiZedStub()
             ->deleteItem($restCartItemRequestTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addItemToGuestCart(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartsRestApiZedStub()
+            ->addItemToGuestCart($restCartItemRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function transformGuestCartToRegularCart(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartsRestApiZedStub()
+            ->transformGuestCartToRegularCart($restQuoteRequestTransfer);
+    }
 }

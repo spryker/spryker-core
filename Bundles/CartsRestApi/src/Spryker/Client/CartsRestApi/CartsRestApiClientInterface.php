@@ -121,4 +121,30 @@ interface CartsRestApiClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function deleteItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Adds an item to the guest cart.
+     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addItemToGuestCart(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Transforms a guest cart to the regular cart.
+     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function transformGuestCartToRegularCart(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer;
 }

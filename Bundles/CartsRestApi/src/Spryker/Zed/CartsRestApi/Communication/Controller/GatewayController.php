@@ -111,4 +111,24 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->deleteItem($restCartItemRequestTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addItemToGuestCartAction(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->addItemToGuestCart($restCartItemRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function transformGuestCartToRegularCartAction(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->transformGuestCartToRegularCart($restQuoteRequestTransfer);
+    }
 }
