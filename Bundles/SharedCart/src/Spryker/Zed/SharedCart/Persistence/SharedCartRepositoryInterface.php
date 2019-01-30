@@ -32,7 +32,7 @@ interface SharedCartRepositoryInterface
      *
      * @return int[]
      */
-    public function getQuotesIsDefaultFlagByIdCompanyUser(int $idCompanyUser): array;
+    public function getIsDefaultFlagForSharedCartsByIdCompanyUser(int $idCompanyUser): array;
 
     /**
      * @param string $customerReference
@@ -69,14 +69,6 @@ interface SharedCartRepositoryInterface
      * @return bool
      */
     public function isSharedQuoteDefault(int $idQuote, int $idCompanyUser): bool;
-
-    /**
-     * @param int $idQuote
-     * @param int $idCompanyUser
-     *
-     * @return bool
-     */
-    public function getIsDefaultFlagForSharedCart(int $idQuote, int $idCompanyUser): bool;
 
     /**
      * @param int $idQuote

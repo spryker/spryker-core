@@ -42,16 +42,16 @@ class QuoteReader implements QuoteReaderInterface
      */
     public function findCustomerSharedQuotes(CompanyUserTransfer $companyUserTransfer): QuoteCollectionTransfer
     {
-        $quotesIsDefaultFlagData = $this->sharedCartRepository->getQuotesIsDefaultFlagByIdCompanyUser(
+        $sharedCartsIdDefaultFlagData = $this->sharedCartRepository->getIsDefaultFlagForSharedCartsByIdCompanyUser(
             $companyUserTransfer->getIdCompanyUser()
         );
 
         $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
-            ->setQuoteIds(array_keys($quotesIsDefaultFlagData));
+            ->setQuoteIds(array_keys($sharedCartsIdDefaultFlagData));
 
         return $this->applyIsDefaultFlagForSharedQuotes(
             $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer),
-            $quotesIsDefaultFlagData
+            $sharedCartsIdDefaultFlagData
         );
     }
 

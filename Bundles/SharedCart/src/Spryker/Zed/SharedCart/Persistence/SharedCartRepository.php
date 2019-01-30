@@ -97,7 +97,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      *
      * @return int[]
      */
-    public function getQuotesIsDefaultFlagByIdCompanyUser(int $idCompanyUser): array
+    public function getIsDefaultFlagForSharedCartsByIdCompanyUser(int $idCompanyUser): array
     {
         return $this->getFactory()->createQuoteQuery()
             ->useSpyQuoteCompanyUserQuery()
@@ -293,22 +293,6 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
             ->createQuoteCompanyUserQuery()
             ->filterByFkQuote($idQuote)
             ->filterByFkCompanyUser($idCompanyUser)->count();
-    }
-
-    /**
-     * @param int $idQuote
-     * @param int $idCompanyUser
-     *
-     * @return bool
-     */
-    public function getIsDefaultFlagForSharedCart(int $idQuote, int $idCompanyUser): bool
-    {
-        return $this->getFactory()
-            ->createQuoteCompanyUserQuery()
-            ->filterByFkQuote($idQuote)
-            ->filterByFkCompanyUser($idCompanyUser)
-            ->findOne()
-            ->isDefault();
     }
 
     /**
