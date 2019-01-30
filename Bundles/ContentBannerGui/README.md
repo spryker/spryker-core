@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/content-banner-gui.svg)](https://travis-ci.org/spryker/content-banner-gui)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/content-banner-gui/badge.svg)](https://coveralls.io/github/spryker/content-banner-gui)
 
-{{ADD DESCRIPTION HERE}}
+ContentBannerGui provides plugins for basic operations for banner
 
 ## Installation
 
