@@ -107,7 +107,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
             ->createQuoteQuery()
             ->joinWithSpyStore();
 
-        $quoteQuery = $this->applyQuoteCriteriaFiltersToQuoteQuery($quoteQuery, $quoteCriteriaFilterTransfer);
+        $quoteQuery = $this->applyQuoteCriteriaFilters($quoteQuery, $quoteCriteriaFilterTransfer);
         $quoteEntityCollectionTransfer = $this->buildQueryFromCriteria($quoteQuery, $quoteCriteriaFilterTransfer->getFilter())->find();
 
         $quoteCollectionTransfer = new QuoteCollectionTransfer();
@@ -125,7 +125,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
      *
      * @return \Orm\Zed\Quote\Persistence\SpyQuoteQuery
      */
-    protected function applyQuoteCriteriaFiltersToQuoteQuery(SpyQuoteQuery $quoteQuery, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): SpyQuoteQuery
+    protected function applyQuoteCriteriaFilters(SpyQuoteQuery $quoteQuery, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): SpyQuoteQuery
     {
         if ($quoteCriteriaFilterTransfer->getCustomerReference()) {
             $quoteQuery->filterByCustomerReference($quoteCriteriaFilterTransfer->getCustomerReference());
