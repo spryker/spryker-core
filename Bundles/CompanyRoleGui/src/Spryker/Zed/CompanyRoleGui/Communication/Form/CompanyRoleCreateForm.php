@@ -129,7 +129,7 @@ class CompanyRoleCreateForm extends AbstractType
             'required' => false,
         ]);
 
-        $this->disableIsDefaultWhenChecked($builder);
+        $this->disableIsDefaultFieldWhenChecked($builder);
 
         return $this;
     }
@@ -139,7 +139,7 @@ class CompanyRoleCreateForm extends AbstractType
      *
      * @return void
      */
-    protected function disableIsDefaultWhenChecked(FormBuilderInterface $builder)
+    protected function disableIsDefaultFieldWhenChecked(FormBuilderInterface $builder)
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             /** @var \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer */
