@@ -59,12 +59,24 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
      *
      * @return void
      */
-    public function publish(array $companyUserIds): void
+    public function publishByCompanyUserIds(array $companyUserIds): void
     {
-        $activeCompanyUserTransfers = $this->companyUserFacade->findActiveCompanyUserTransfers($companyUserIds);
+        $activeCompanyUserTransfers = $this->companyUserFacade->findActiveCompanyUsers($companyUserIds);
         $indexedCompanyUserStorageEntities = $this->companyUserStorageRepository->findCompanyUserStorageEntities($companyUserIds);
 
         $this->storeData($activeCompanyUserTransfers, $indexedCompanyUserStorageEntities);
+    }
+
+    /**
+     * @param array $companyIds
+     *
+     * @return void
+     */
+    public function publishByCompanyIds(array $companyIds): void
+    {
+        $companyUserIds = $this->companyUserFacade->findActiveCompanyUserIdsByCompanyIds($companyIds);
+
+        $this->publishByCompanyUserIds($companyUserIds);
     }
 
     /**
@@ -72,7 +84,7 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
      *
      * @return void
      */
-    public function unpublish(array $companyUserIds): void
+    public function unpublishByCompanyUserIds(array $companyUserIds): void
     {
         $companyUserStorageEntities = $this->companyUserStorageRepository->findCompanyUserStorageEntities($companyUserIds);
         $this->deleteStorageEntities($companyUserStorageEntities);

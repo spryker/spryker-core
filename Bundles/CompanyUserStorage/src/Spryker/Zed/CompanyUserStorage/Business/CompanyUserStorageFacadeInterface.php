@@ -16,7 +16,16 @@ interface CompanyUserStorageFacadeInterface
      *
      * @return void
      */
-    public function publish(array $companyUserIds): void;
+    public function publishByCompanyUserIds(array $companyUserIds): void;
+
+    /**
+     * @api
+     *
+     * @param int[] $companyIds
+     *
+     * @return void
+     */
+    public function publishByCompanyIds(array $companyIds): void;
 
     /**
      * @api
@@ -25,5 +34,5 @@ interface CompanyUserStorageFacadeInterface
      *
      * @return void
      */
-    public function unpublish(array $companyUserIds): void;
+    public function unpublishByCompanyUserIds(array $companyUserIds): void;
 }

@@ -23,11 +23,25 @@ class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStor
      *
      * @return void
      */
-    public function publish(array $companyUserIds): void
+    public function publishByCompanyUserIds(array $companyUserIds): void
     {
         $this->getFactory()
             ->createCompanyUserStorageWriter()
-            ->publish($companyUserIds);
+            ->publishByCompanyUserIds($companyUserIds);
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $companyIds
+     *
+     * @return void
+     */
+    public function publishByCompanyIds(array $companyIds): void
+    {
+        $this->getFactory()
+            ->createCompanyUserStorageWriter()
+            ->publishByCompanyIds($companyIds);
     }
 
     /**
@@ -37,10 +51,10 @@ class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStor
      *
      * @return void
      */
-    public function unpublish(array $companyUserIds): void
+    public function unpublishByCompanyUserIds(array $companyUserIds): void
     {
         $this->getFactory()
             ->createCompanyUserStorageWriter()
-            ->unpublish($companyUserIds);
+            ->unpublishByCompanyUserIds($companyUserIds);
     }
 }

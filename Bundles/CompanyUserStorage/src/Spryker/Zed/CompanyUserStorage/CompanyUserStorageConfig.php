@@ -14,7 +14,7 @@ class CompanyUserStorageConfig extends AbstractBundleConfig
     /**
      * @return string|null
      */
-    public function getProductImageSynchronizationPoolName(): ?string
+    public function getCompanyUserSynchronizationPoolName(): ?string
     {
         return null;
     }

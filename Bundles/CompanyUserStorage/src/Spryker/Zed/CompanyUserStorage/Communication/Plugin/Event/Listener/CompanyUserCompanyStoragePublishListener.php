@@ -16,7 +16,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\CompanyUserStorage\Business\CompanyUserStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyUserStorage\Communication\CompanyUserStorageCommunicationFactory getFactory()
  */
-class CompanyUserStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class CompanyUserCompanyStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -29,14 +29,14 @@ class CompanyUserStoragePublishListener extends AbstractPlugin implements EventB
     public function handleBulk(array $transfers, $eventName): void
     {
         $this->preventTransaction();
-        $companyUserIds = $this->getFactory()
+        $companyIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferIds($transfers);
 
-        if (!$companyUserIds) {
+        if (!$companyIds) {
             return;
         }
 
-        $this->getFacade()->publishByCompanyUserIds($companyUserIds);
+        $this->getFacade()->publishByCompanyIds($companyIds);
     }
 }

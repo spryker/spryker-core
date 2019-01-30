@@ -83,5 +83,12 @@ interface CompanyUserRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    public function findActiveCompanyUserTransfers(array $companyUserIds): array;
+    public function findActiveCompanyUsers(array $companyUserIds): array;
+
+    /**
+     * @param array $companyIds
+     *
+     * @return int[]
+     */
+    public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array;
 }

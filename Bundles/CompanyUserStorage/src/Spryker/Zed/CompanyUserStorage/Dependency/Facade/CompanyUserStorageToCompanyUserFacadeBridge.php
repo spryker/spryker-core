@@ -23,12 +23,22 @@ class CompanyUserStorageToCompanyUserFacadeBridge implements CompanyUserStorageT
     }
 
     /**
-     * @param array $companyUserIds
+     * @param int[] $companyUserIds
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    public function findActiveCompanyUserTransfers(array $companyUserIds): array
+    public function findActiveCompanyUsers(array $companyUserIds): array
     {
-        return $this->companyUserFacade->findActiveCompanyUserTransfers($companyUserIds);
+        return $this->companyUserFacade->findActiveCompanyUsers($companyUserIds);
+    }
+
+    /**
+     * @param int[] $companyIds
+     *
+     * @return int[]
+     */
+    public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array
+    {
+        return $this->companyUserFacade->findActiveCompanyUserIdsByCompanyIds($companyIds);
     }
 }

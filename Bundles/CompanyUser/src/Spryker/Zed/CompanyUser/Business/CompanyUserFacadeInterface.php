@@ -213,11 +213,31 @@ interface CompanyUserFacadeInterface
     public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 
     /**
+     * Specification
+     *  - Retrieves active company users collection by company user id.
+     *  - Checks activity flag in related company and company user.
+     *  - Checks whether related company is approved.
+     *  - Checks whether related customer is not anonymized.
+     *
      * @api
      *
-     * @param array $companyUserIds
+     * @param int[] $companyUserIds
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    public function findActiveCompanyUserTransfers(array $companyUserIds): array;
+    public function findActiveCompanyUsers(array $companyUserIds): array;
+
+    /**
+     * Specification
+     *  - Retrieves active company user ids by company ids.
+     *  - Checks activity flag in related company user.
+     *  - Checks whether related customer is not anonymized.
+     *
+     * @api
+     *
+     * @param int[] $companyIds
+     *
+     * @return int[]
+     */
+    public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array;
 }

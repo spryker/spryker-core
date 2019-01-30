@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CompanyUserStorage\Communication\Plugin\Event\Subscriber;
 
+use Spryker\Zed\Company\Dependency\CompanyEvents;
 use Spryker\Zed\CompanyUser\Dependency\CompanyUserEvents;
+use Spryker\Zed\CompanyUserStorage\Communication\Plugin\Event\Listener\CompanyUserCompanyStoragePublishListener;
 use Spryker\Zed\CompanyUserStorage\Communication\Plugin\Event\Listener\CompanyUserStoragePublishListener;
 use Spryker\Zed\CompanyUserStorage\Communication\Plugin\Event\Listener\CompanyUserStorageUnpublishListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
@@ -33,6 +35,7 @@ class CompanyUserStorageEventSubscriber extends AbstractPlugin implements EventS
         $this->addCompanyUserCreateListener($eventCollection);
         $this->addCompanyUserUpdateListener($eventCollection);
         $this->addCompanyUserDeleteListener($eventCollection);
+        $this->addCompanyUpdateListener($eventCollection);
 
         return $eventCollection;
     }
@@ -99,6 +102,19 @@ class CompanyUserStorageEventSubscriber extends AbstractPlugin implements EventS
         $eventCollection->addListenerQueued(
             CompanyUserEvents::ENTITY_SPY_COMPANY_USER_DELETE,
             new CompanyUserStorageUnpublishListener()
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCompanyUpdateListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(
+            CompanyEvents::ENTITY_SPY_COMPANY_UPDATE,
+            new CompanyUserCompanyStoragePublishListener()
         );
     }
 }

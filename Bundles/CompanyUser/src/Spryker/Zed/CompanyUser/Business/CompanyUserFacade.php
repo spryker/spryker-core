@@ -259,16 +259,34 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @param array $companyUserIds
+     * @param int[] $companyUserIds
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    public function findActiveCompanyUserTransfers(array $companyUserIds): array
+    public function findActiveCompanyUsers(array $companyUserIds): array
     {
         return $this->getFactory()
             ->createCompanyUser()
-            ->findActiveCompanyUserTransfers($companyUserIds);
+            ->findActiveCompanyUsers($companyUserIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $companyIds
+     *
+     * @return int[]
+     */
+    public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array
+    {
+        return $this->getFactory()
+            ->createCompanyUser()
+            ->findActiveCompanyUserIdsByCompanyIds($companyIds);
     }
 }

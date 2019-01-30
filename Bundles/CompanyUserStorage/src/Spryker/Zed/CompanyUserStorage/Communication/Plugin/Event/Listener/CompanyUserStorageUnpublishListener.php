@@ -37,6 +37,6 @@ class CompanyUserStorageUnpublishListener extends AbstractPlugin implements Even
             return;
         }
 
-        $this->getFacade()->unpublish($companyUserIds);
+        $this->getFacade()->unpublishByCompanyUserIds($companyUserIds);
     }
 }

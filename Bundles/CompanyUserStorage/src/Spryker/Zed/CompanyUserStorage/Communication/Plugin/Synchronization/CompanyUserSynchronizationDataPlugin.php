@@ -106,6 +106,6 @@ class CompanyUserSynchronizationDataPlugin extends AbstractPlugin implements Syn
     public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getConfig()
-            ->getProductImageSynchronizationPoolName();
+            ->getCompanyUserSynchronizationPoolName();
     }
 }

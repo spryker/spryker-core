@@ -14,12 +14,19 @@ interface CompanyUserStorageWriterInterface
      *
      * @return void
      */
-    public function publish(array $companyUserIds): void;
+    public function publishByCompanyUserIds(array $companyUserIds): void;
+
+    /**
+     * @param int[] $companyIds
+     *
+     * @return void
+     */
+    public function publishByCompanyIds(array $companyIds): void;
 
     /**
      * @param int[] $companyUserIds
      *
      * @return void
      */
-    public function unpublish(array $companyUserIds): void;
+    public function unpublishByCompanyUserIds(array $companyUserIds): void;
 }

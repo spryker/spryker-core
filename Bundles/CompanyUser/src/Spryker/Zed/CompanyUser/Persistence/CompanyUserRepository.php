@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -287,11 +288,14 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
+     * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
+     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     *
      * @param array $companyUserIds
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    public function findActiveCompanyUserTransfers(array $companyUserIds): array
+    public function findActiveCompanyUsers(array $companyUserIds): array
     {
         $query = $this->getFactory()
             ->createCompanyUserQuery()
@@ -299,6 +303,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->filterByIsActive(true)
             ->useCompanyQuery()
                 ->filterByIsActive(true)
+                ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
             ->endUse()
             ->useCustomerQuery()
                 ->filterByAnonymizedAt(null, Criteria::ISNULL)
@@ -313,5 +318,26 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
         }
 
         return $companyUnitTransfers;
+    }
+
+    /**
+     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     *
+     * @param array $companyIds
+     *
+     * @return int[]
+     */
+    public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array
+    {
+        $query = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->filterByFkCompany_In($companyIds)
+            ->filterByIsActive(true)
+            ->useCustomerQuery()
+                ->filterByAnonymizedAt(null, Criteria::ISNULL)
+            ->endUse()
+            ->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER);
+
+        return $query->find()->toArray();
     }
 }
