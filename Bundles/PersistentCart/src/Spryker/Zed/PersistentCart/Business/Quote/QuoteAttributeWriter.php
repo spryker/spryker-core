@@ -57,10 +57,7 @@ class QuoteAttributeWriter implements QuoteAttributeWriterInterface
         $updatedQuoteTransfer = $this->quoteWriter->updateQuote($quoteUpdateRequestTransfer)
             ->getQuoteTransfer();
 
-        $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
-            ->fromArray($updatedQuoteTransfer->modifiedToArray(), true);
-
-        return $quoteTransfer->fromArray($quoteUpdateRequestAttributesTransfer->modifiedToArray());
+        return $this->mapUpdatedQuoteAttributsToQuote($quoteTransfer, $updatedQuoteTransfer);
     }
 
     /**
@@ -93,5 +90,19 @@ class QuoteAttributeWriter implements QuoteAttributeWriterInterface
             ->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
 
         return $quoteUpdateRequestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $updatedQuoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function mapUpdatedQuoteAttributsToQuote(QuoteTransfer $quoteTransfer, QuoteTransfer $updatedQuoteTransfer): QuoteTransfer
+    {
+        $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
+            ->fromArray($updatedQuoteTransfer->modifiedToArray(), true);
+
+        return $quoteTransfer->fromArray($quoteUpdateRequestAttributesTransfer->modifiedToArray());
     }
 }
