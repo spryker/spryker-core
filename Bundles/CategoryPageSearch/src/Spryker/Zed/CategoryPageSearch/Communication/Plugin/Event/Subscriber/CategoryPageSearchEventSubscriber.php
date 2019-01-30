@@ -14,6 +14,7 @@ use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryN
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryPageSearchUnpublishListener;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateSearchPublishListener;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateSearchUnpublishListener;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeSearchParentPublishListener;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeSearchPublishListener;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeSearchUnpublishListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
@@ -170,6 +171,16 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
      *
      * @return void
      */
+    protected function addCategoryPageSearchParentUnPublishListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CategoryEvents::CATEGORY_NODE_UNPUBLISH, new CategoryNodeSearchParentPublishListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
     protected function addCategoryNodeSearchCreateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_CREATE, new CategoryNodeSearchPublishListener());
@@ -193,5 +204,15 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     protected function addCategoryNodeSearchDeleteListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE, new CategoryNodeSearchUnpublishListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCategoryNodeSearchParentDeleteListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE, new CategoryNodeSearchParentPublishListener());
     }
 }

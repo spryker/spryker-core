@@ -14,6 +14,7 @@ use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNode
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryStorageUnpublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateStoragePublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateStorageUnpublishListener;
+use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStorageParentPublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStoragePublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStorageUnpublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTreeStoragePublishListener;
@@ -104,6 +105,16 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      *
      * @return void
      */
+    protected function addCategoryNodeUnpublishParentListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CategoryEvents::CATEGORY_NODE_UNPUBLISH, new CategoryNodeStorageParentPublishListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
     protected function addCategoryNodeCreateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_CREATE, new CategoryNodeStoragePublishListener());
@@ -127,6 +138,16 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     protected function addCategoryNodeDeleteListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE, new CategoryNodeStorageUnpublishListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCategoryNodeDeleteParentListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE, new CategoryNodeStorageParentPublishListener());
     }
 
     /**
