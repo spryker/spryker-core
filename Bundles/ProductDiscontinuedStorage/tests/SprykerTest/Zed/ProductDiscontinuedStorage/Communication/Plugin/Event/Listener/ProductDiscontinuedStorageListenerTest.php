@@ -11,6 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Zed\ProductDiscontinued\Dependency\ProductDiscontinuedEvents;
 use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedStorageListener;
+use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedStoragePublishListener;
+use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedStorageUnpublishListener;
 use Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageRepository;
 
 /**
@@ -102,6 +104,64 @@ class ProductDiscontinuedStorageListenerTest extends Unit
             ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH
         );
         $this->productDiscontinuedStorageListener->handleBulk(
+            $eventTransfers,
+            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_UNPUBLISH
+        );
+        $productDiscontinuedEntityTransfers = $this->productDiscontinuedStorageRepository
+            ->findProductDiscontinuedStorageEntitiesByIds(
+                [$this->productDiscontinuedTransfer->getIdProductDiscontinued()]
+            );
+
+        // Assert
+        $this->assertCount(0, $productDiscontinuedEntityTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductDiscontinuedStorageEntityPublish(): void
+    {
+        $this->markTestSkipped('No availability to skip entity transfer sending to Queue');
+
+        // Arrange
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($this->productDiscontinuedTransfer->getIdProductDiscontinued()),
+        ];
+
+        // Act
+        $productDiscontinuedStoragePublishListener = new ProductDiscontinuedStoragePublishListener();
+        $productDiscontinuedStoragePublishListener->setFacade($this->tester->getFacade());
+
+        $productDiscontinuedStoragePublishListener->handleBulk(
+            $eventTransfers,
+            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH
+        );
+
+        $productDiscontinuedEntityTransfers = $this->productDiscontinuedStorageRepository
+            ->findProductDiscontinuedStorageEntitiesByIds(
+                [$this->productDiscontinuedTransfer->getIdProductDiscontinued()]
+            );
+
+        // Assert
+        $this->assertCount(1, $productDiscontinuedEntityTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductDiscontinuedStorageEntityUnpublish(): void
+    {
+        $this->markTestSkipped('No availability to skip entity transfer sending to Queue');
+        // Arrange
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($this->productDiscontinuedTransfer->getIdProductDiscontinued()),
+        ];
+
+        // Act
+        $productDiscontinuedStorageUnpublishListener = new ProductDiscontinuedStorageUnpublishListener();
+        $productDiscontinuedStorageUnpublishListener->setFacade($this->tester->getFacade());
+
+        $productDiscontinuedStorageUnpublishListener->handleBulk(
             $eventTransfers,
             ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_UNPUBLISH
         );

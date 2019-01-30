@@ -14,6 +14,8 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaParser implements PropelSchemaParserInterface
 {
+    protected const PROPEL_SCHEMA_PATH_PATTERN = '*/src/%s/Zed/*/Persistence/Propel/Schema';
+
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
      */
@@ -143,7 +145,9 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     protected function getSchemaFileFinder(): Finder
     {
         $finder = new Finder();
-        $finder->in($this->config->getPathToCore() . '*/src/Spryker/Zed/*/Persistence/Propel/Schema')->name('*.schema.xml');
+        $finder
+            ->in($this->computeLookupPaths())
+            ->name('*.schema.xml');
 
         return $finder;
     }
@@ -254,5 +258,19 @@ class PropelSchemaParser implements PropelSchemaParserInterface
         }
 
         return $uniqueFieldToModuleNameMap;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function computeLookupPaths(): array
+    {
+        $lookupPaths = $this->config->getOrganizationPathMap();
+
+        foreach ($lookupPaths as $organizationName => $path) {
+            $lookupPaths[$organizationName] = $path . sprintf(static::PROPEL_SCHEMA_PATH_PATTERN, $organizationName);
+        }
+
+        return array_filter($lookupPaths, 'glob');
     }
 }

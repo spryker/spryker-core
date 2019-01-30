@@ -136,6 +136,17 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string[]
+     */
+    public function getOrganizationPathMap(): array
+    {
+        return [
+            'Spryker' => $this->getPathToCore(),
+            'SprykerEco' => $this->getPathToEco(),
+        ];
+    }
+
+    /**
      * Either a relative or full path to the ruleset.xml or a name of an installed
      * standard (see `phpcs -i` for a list of available ones).
      *
@@ -219,7 +230,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Psr\\Container\\' => 'spryker/container',
             'Propel\\' => 'spryker/propel-orm',
             'Silex\\' => 'spryker/silex',
-            'Pimple' => 'spryker/pimple',
+            'Pimple' => 'spryker/container',
             'Predis\\' => 'spryker/redis',
             'Guzzle\\' => 'spryker/guzzle',
             'GuzzleHttp\\' => 'spryker/guzzle',
@@ -245,7 +256,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'psr/log' => 'spryker/log',
             'propel/propel' => 'spryker/propel-orm',
             'silex/silex' => 'spryker/silex',
-            'pimple/pimple' => 'spryker/pimple',
+            'pimple/pimple' => 'spryker/container',
             'mandrill/mandrill' => 'spryker/mandrill',
             'predis/predis' => 'spryker/redis',
             'guzzle/guzzle' => 'spryker/guzzle',
