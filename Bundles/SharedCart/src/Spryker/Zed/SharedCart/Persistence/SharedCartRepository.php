@@ -95,19 +95,17 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param int $idCompanyUser
      *
-     * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer[]
+     * @return int[]
      */
-    public function findQuotesByIdCompanyUser(int $idCompanyUser): array
+    public function findQuoteIdCollectionByIdCompanyUser(int $idCompanyUser): array
     {
-        /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $quoteQuery */
-        $quoteQuery = $this->getFactory()->createQuoteQuery()
-            ->joinWithSpyStore()
+        return $this->getFactory()->createQuoteQuery()
             ->useSpyQuoteCompanyUserQuery()
                 ->filterByFkCompanyUser($idCompanyUser)
             ->endUse()
-            ->addAsColumn('is_default', SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT);
-
-        return $this->buildQueryFromCriteria($quoteQuery)->find();
+            ->select([SpyQuoteTableMap::COL_ID_QUOTE])
+            ->find()
+            ->toArray();
     }
 
     /**
@@ -292,6 +290,22 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
             ->createQuoteCompanyUserQuery()
             ->filterByFkQuote($idQuote)
             ->filterByFkCompanyUser($idCompanyUser)->count();
+    }
+
+    /**
+     * @param int $idQuote
+     * @param int $idCompanyUser
+     *
+     * @return bool
+     */
+    public function getIsDefaultFlagForSharedCart(int $idQuote, int $idCompanyUser): bool
+    {
+        return $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByFkQuote($idQuote)
+            ->filterByFkCompanyUser($idCompanyUser)
+            ->findOne()
+            ->isDefault();
     }
 
     /**

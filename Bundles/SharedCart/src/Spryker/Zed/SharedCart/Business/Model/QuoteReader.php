@@ -9,8 +9,7 @@ namespace Spryker\Zed\SharedCart\Business\Model;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
 use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
@@ -43,35 +42,36 @@ class QuoteReader implements QuoteReaderInterface
      */
     public function findCustomerSharedQuotes(CompanyUserTransfer $companyUserTransfer): QuoteCollectionTransfer
     {
-        $quoteEntityTransferList = $this->sharedCartRepository->findQuotesByIdCompanyUser(
+        $quoteIds = $this->sharedCartRepository->findQuoteIdCollectionByIdCompanyUser(
             $companyUserTransfer->getIdCompanyUser()
         );
 
-        return $this->mapQuoteCollectionTransfer($quoteEntityTransferList);
+        $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
+        $quoteCriteriaFilterTransfer->setQuoteIds($quoteIds);
+
+        return $this->applyIsDefaultFlagForSharedQuotes(
+            $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer),
+            $companyUserTransfer->getIdCompanyUser()
+        );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyQuoteEntityTransfer[] $quoteEntityTransferList
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    protected function mapQuoteCollectionTransfer(array $quoteEntityTransferList): QuoteCollectionTransfer
+    protected function applyIsDefaultFlagForSharedQuotes(QuoteCollectionTransfer $quoteCollectionTransfer, int $idCompanyUser): QuoteCollectionTransfer
     {
-        $quoteCollectionTransfer = new QuoteCollectionTransfer();
-        foreach ($quoteEntityTransferList as $quoteEntityTransfer) {
-            $quoteCollectionTransfer->addQuote($this->mapQuoteTransfer($quoteEntityTransfer));
+        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
+            $isDefault = $this->sharedCartRepository->getIsDefaultFlagForSharedCart(
+                $quoteTransfer->getIdQuote(),
+                $idCompanyUser
+            );
+
+            $quoteTransfer->setIsDefault($isDefault);
         }
 
         return $quoteCollectionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyQuoteEntityTransfer $quoteEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer
-    {
-        return $this->quoteFacade->mapQuoteTransfer($quoteEntityTransfer);
     }
 }

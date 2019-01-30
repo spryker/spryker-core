@@ -16,6 +16,10 @@
         <property name="filter" type="Filter"/>
     </transfer>
 
+    <transfer name="QuoteCriteriaFilter">
+        <property name="quoteIds" type="array"/>
+    </transfer>
+
     <transfer name="QuotePermissionGroupResponse">
         <property name="quotePermissionGroups" type="QuotePermissionGroup[]" singular="quotePermissionGroup"/>
         <property name="isSuccessful" type="bool"/>

@@ -30,9 +30,9 @@ interface SharedCartRepositoryInterface
     /**
      * @param int $idCompanyUser
      *
-     * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer[]
+     * @return int[]
      */
-    public function findQuotesByIdCompanyUser(int $idCompanyUser): array;
+    public function findQuoteIdCollectionByIdCompanyUser(int $idCompanyUser): array;
 
     /**
      * @param string $customerReference
@@ -69,6 +69,14 @@ interface SharedCartRepositoryInterface
      * @return bool
      */
     public function isSharedQuoteDefault(int $idQuote, int $idCompanyUser): bool;
+
+    /**
+     * @param int $idQuote
+     * @param int $idCompanyUser
+     *
+     * @return bool
+     */
+    public function getIsDefaultFlagForSharedCart(int $idQuote, int $idCompanyUser): bool;
 
     /**
      * @param int $idQuote
