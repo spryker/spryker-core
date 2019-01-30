@@ -40,10 +40,6 @@ class SalesOrderDataBCForMultiShipmentAdapter implements SalesOrderDataBCForMult
             return $orderTransfer;
         }
 
-        if ($this->assertThatOrderHasNoShipmentMethod($orderTransfer)) {
-            return $orderTransfer;
-        }
-
         $orderExpenseTransfer = $this->findOrderShipmentExpense($orderTransfer);
         if ($orderExpenseTransfer === null) {
             return $orderTransfer;
@@ -134,10 +130,7 @@ class SalesOrderDataBCForMultiShipmentAdapter implements SalesOrderDataBCForMult
      */
     protected function assertThatItemTransferHasShipmentWithShipmentExpense(ItemTransfer $itemTransfer): bool
     {
-        return ($itemTransfer->getShipment() !== null
-            && $itemTransfer->getShipment()->getMethod() !== null
-            && $itemTransfer->getShipment()->getExpense() !== null
-        );
+        return ($itemTransfer->getShipment() !== null && $itemTransfer->getShipment()->getExpense() !== null);
     }
 
     /**
