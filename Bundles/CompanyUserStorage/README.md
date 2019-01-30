@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/company-user-storage.svg)](https://travis-ci.org/spryker/company-user-storage)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/company-user-storage/badge.svg)](https://coveralls.io/github/spryker/company-user-storage)
 
-{{ADD DESCRIPTION HERE}}
+Main responsible module for dealing with company users on the memory storage level.
 
 ## Installation
 

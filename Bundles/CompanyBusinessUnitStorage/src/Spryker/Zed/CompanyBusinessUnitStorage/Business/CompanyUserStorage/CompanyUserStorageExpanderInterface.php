@@ -5,26 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUserStorageExtension\Dependency\Plugin;
+namespace Spryker\Zed\CompanyBusinessUnitStorage\Business\CompanyUserStorage;
 
 use Generated\Shared\Transfer\CompanyUserStorageTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
-interface CompanyUserStorageExpanderPluginInterface
+interface CompanyUserStorageExpanderInterface
 {
     /**
-     * Specification:
-     *  - Expands CompanyUserStorageTransfer with additional data.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      * @param \Generated\Shared\Transfer\CompanyUserStorageTransfer $companyUserStorageTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer
      */
-    public function expand(
-        CompanyUserTransfer $companyUserTransfer,
-        CompanyUserStorageTransfer $companyUserStorageTransfer
-    ): CompanyUserStorageTransfer;
+    public function addCompanyBusinessUnitId(CompanyUserTransfer $companyUserTransfer, CompanyUserStorageTransfer $companyUserStorageTransfer): CompanyUserStorageTransfer;
 }

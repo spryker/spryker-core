@@ -7,18 +7,58 @@
 
 namespace Spryker\Client\CompanyUserStorage;
 
+use Spryker\Client\CompanyUserStorage\Dependency\Client\CompanyUserStorageToStorageClientBridge;
+use Spryker\Client\CompanyUserStorage\Dependency\Service\CompanyUserStorageToSynchronizationServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
 class CompanyUserStorageDependencyProvider extends AbstractDependencyProvider
 {
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
+    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
+        $container = parent::provideServiceLayerDependencies($container);
+        $container = $this->addStorageClient($container);
+        $container = $this->addSynchronizationService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_STORAGE] = function (Container $container) {
+            return new CompanyUserStorageToStorageClientBridge($container->getLocator()->storage()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addSynchronizationService(Container $container): Container
+    {
+        $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+            return new CompanyUserStorageToSynchronizationServiceBridge(
+                $container->getLocator()->synchronization()->service()
+            );
+        };
+
         return $container;
     }
 }

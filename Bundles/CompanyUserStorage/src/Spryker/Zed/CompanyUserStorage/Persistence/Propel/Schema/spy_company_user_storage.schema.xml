@@ -20,6 +20,7 @@
             <parameter name="store" required="false"/>
             <parameter name="key_suffix_column" value="fk_company_user"/>
             <parameter name="queue_group" value="sync.storage.company_user"/>
+            <parameter name="mappings" value="uuid:id_company_user"/>
         </behavior>
         <behavior name="timestampable"/>
     </table>

@@ -146,20 +146,24 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
     {
         $companyUserStorageTransfer = new CompanyUserStorageTransfer();
         $companyUserStorageTransfer->fromArray($companyUserTransfer->toArray(), true);
-        $companyUserStorageTransfer = $this->expandCompanyUserStorageTransfers($companyUserStorageTransfer);
+        $companyUserStorageTransfer->setIdCompany($companyUserTransfer->getFkCompany());
+        $companyUserStorageTransfer = $this->expandCompanyUserStorageTransfers($companyUserTransfer, $companyUserStorageTransfer);
 
         return $companyUserStorageTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      * @param \Generated\Shared\Transfer\CompanyUserStorageTransfer $companyUserStorageTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer
      */
-    protected function expandCompanyUserStorageTransfers(CompanyUserStorageTransfer $companyUserStorageTransfer): CompanyUserStorageTransfer
-    {
+    protected function expandCompanyUserStorageTransfers(
+        CompanyUserTransfer $companyUserTransfer,
+        CompanyUserStorageTransfer $companyUserStorageTransfer
+    ): CompanyUserStorageTransfer {
         foreach ($this->companyUserStorageExpanderPlugins as $companyUserStorageExpanderPlugin) {
-            $companyUserStorageTransfer = $companyUserStorageExpanderPlugin->expand($companyUserStorageTransfer);
+            $companyUserStorageTransfer = $companyUserStorageExpanderPlugin->expand($companyUserTransfer, $companyUserStorageTransfer);
         }
 
         return $companyUserStorageTransfer;

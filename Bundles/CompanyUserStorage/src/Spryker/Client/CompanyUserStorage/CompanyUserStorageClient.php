@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CompanyUserStorage;
 
+use Generated\Shared\Transfer\CompanyUserStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -14,4 +15,20 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CompanyUserStorageClient extends AbstractClient implements CompanyUserStorageClientInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string $identifier
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer|null
+     */
+    public function findCompanyUserByMapping(string $mappingType, string $identifier): ?CompanyUserStorageTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyUserStorage()
+            ->findCompanyUserByMapping($mappingType, $identifier);
+    }
 }

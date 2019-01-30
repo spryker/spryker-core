@@ -5,19 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CompanyUserStorage;
+namespace Spryker\Client\CompanyUserStorage\Storage;
 
 use Generated\Shared\Transfer\CompanyUserStorageTransfer;
 
-interface CompanyUserStorageClientInterface
+interface CompanyUserStorageInterface
 {
     /**
-     * Specification:
-     *  - Retrieves a CompanyUser resource from Storage using specified mapping.
-     *  - Responds with null if company user data is not found in storage.
-     *
-     * @api
-     *
      * @param string $mappingType
      * @param string $identifier
      *
