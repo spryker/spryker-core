@@ -175,11 +175,11 @@ class AvailabilityTable extends AbstractTable
     /**
      * @param array $productItem
      *
-     * @return int
+     * @return float
      */
     protected function calculateReservation(array $productItem)
     {
-        $quantity = (int)$productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY];
+        $quantity = productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY];
         $quantity += $this->omsFacade->getReservationsFromOtherStores($productItem[AvailabilityQueryContainer::CONCRETE_SKU], $this->storeTransfer);
 
         return $quantity;

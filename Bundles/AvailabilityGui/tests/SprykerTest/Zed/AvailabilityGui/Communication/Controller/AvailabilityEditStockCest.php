@@ -50,6 +50,10 @@ class AvailabilityEditStockCest
         $i->click('Save');
         $i->seeResponseCodeIs(200);
 
+        $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', 50.88);
+        $i->click('Save');
+        $i->seeResponseCodeIs(200);
+
         $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', 'string');
         $i->click('input[type=submit]');
         $i->see('This value is not valid.');

@@ -26,6 +26,8 @@ class StockSubForm extends AbstractType
     public const FIELD_STOCK_TYPE = 'stockType';
     public const FIELD_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
 
+    protected const PATTERN_QUANTITY = '/^\d*\.?\d{0,2}$/';
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -50,7 +52,7 @@ class StockSubForm extends AbstractType
             'label' => 'Quantity',
             'constraints' => [
                 new Required(),
-                new Regex(['pattern' => '/[\d]+/']),
+                new Regex(['pattern' => static::PATTERN_QUANTITY]),
             ],
         ]);
 

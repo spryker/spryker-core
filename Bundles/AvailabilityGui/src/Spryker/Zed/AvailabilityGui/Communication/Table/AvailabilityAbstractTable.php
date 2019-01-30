@@ -170,7 +170,7 @@ class AvailabilityAbstractTable extends AbstractTable
     }
 
     /**
-     * @param int $quantity
+     * @param float $quantity
      * @param bool $isNeverOutOfStock
      *
      * @return string
@@ -219,7 +219,7 @@ class AvailabilityAbstractTable extends AbstractTable
     /**
      * @param string $reservationQuantity
      *
-     * @return int
+     * @return float
      */
     protected function calculateReservation($reservationQuantity)
     {
@@ -232,7 +232,7 @@ class AvailabilityAbstractTable extends AbstractTable
     /**
      * @param array $reservationItems
      *
-     * @return int
+     * @return float
      */
     protected function getReservationUniqueValue($reservationItems)
     {
@@ -245,7 +245,7 @@ class AvailabilityAbstractTable extends AbstractTable
 
             [$sku, $quantity] = $itemParts;
 
-            $reservation += (int)$quantity;
+            $reservation += $quantity;
             $reservation += $this->omsFacade->getReservationsFromOtherStores($sku, $this->storeTransfer);
         }
 
