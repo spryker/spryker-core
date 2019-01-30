@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Constraints\Url;
 
 class BannerContentTermForm extends AbstractType
 {
@@ -88,7 +89,12 @@ class BannerContentTermForm extends AbstractType
                 'placeholder' => 'Title',
             ],
             'label' => false,
-            'constraints' => $this->getTextFieldConstraints(),
+            'constraints' => array_merge(
+                $this->getTextFieldConstraints(),
+                [
+                    new Length(['max' => 64]),
+                ]
+            ),
         ]);
 
         return $this;
@@ -106,7 +112,12 @@ class BannerContentTermForm extends AbstractType
                 'placeholder' => 'Sub Title',
             ],
             'label' => false,
-            'constraints' => $this->getTextFieldConstraints(),
+            'constraints' => array_merge(
+                $this->getTextFieldConstraints(),
+                [
+                    new Length(['max' => 128]),
+                ]
+            ),
         ]);
 
         return $this;
@@ -124,7 +135,13 @@ class BannerContentTermForm extends AbstractType
                 'placeholder' => 'Image URL',
             ],
             'label' => false,
-            'constraints' => $this->getTextFieldConstraints(),
+            'constraints' => array_merge(
+                $this->getTextFieldConstraints(),
+                [
+                    new Length(['max' => 1028]),
+                    new Url(),
+                ]
+            ),
         ]);
 
         return $this;
@@ -142,7 +159,13 @@ class BannerContentTermForm extends AbstractType
                 'placeholder' => 'Click URL',
             ],
             'label' => false,
-            'constraints' => $this->getTextFieldConstraints(),
+            'constraints' => array_merge(
+                $this->getTextFieldConstraints(),
+                [
+                    new Length(['max' => 1028]),
+                    new Url(),
+                ]
+            ),
         ]);
 
         return $this;
@@ -160,7 +183,12 @@ class BannerContentTermForm extends AbstractType
                 'placeholder' => 'Alt-text',
             ],
             'label' => false,
-            'constraints' => $this->getTextFieldConstraints(),
+            'constraints' => array_merge(
+                $this->getTextFieldConstraints(),
+                [
+                    new Length(['max' => 125]),
+                ]
+            ),
         ]);
 
         return $this;
@@ -174,7 +202,6 @@ class BannerContentTermForm extends AbstractType
         return [
             new Required(),
             new NotBlank(),
-            new Length(['max' => 100]),
         ];
     }
 }

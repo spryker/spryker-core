@@ -65,6 +65,10 @@ class ContentBannerFormPlugin extends AbstractPlugin implements ContentPluginInt
     {
         $contentBannerTransfer = new ContentBannerTransfer();
 
+        if ($params) {
+            $contentBannerTransfer->fromArray($params);
+        }
+
         return $contentBannerTransfer;
     }
 }
