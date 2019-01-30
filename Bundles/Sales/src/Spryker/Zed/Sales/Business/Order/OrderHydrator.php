@@ -127,12 +127,13 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
      */
     protected function sanitizeOrderShipmentExpense(SpySalesOrder $orderEntity): ?SpySalesOrder
     {
-        foreach ($orderEntity->getExpenses() as $key => $expenseEntity) {
+        $orderExpensesCollection = $orderEntity->getExpenses();
+        foreach ($orderExpensesCollection as $key => $expenseEntity) {
             if ($expenseEntity->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
                 continue;
             }
 
-            $orderEntity->getExpenses()->offsetUnset($key);
+            $orderExpensesCollection->offsetUnset($key);
         }
 
         return $orderEntity;
