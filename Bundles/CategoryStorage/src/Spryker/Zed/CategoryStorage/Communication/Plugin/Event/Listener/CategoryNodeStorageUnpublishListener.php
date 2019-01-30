@@ -42,7 +42,7 @@ class CategoryNodeStorageUnpublishListener extends AbstractPlugin implements Eve
 
         $parentCategoryNodeIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransfersOriginalValues($eventTransfers, SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE);
+            ->getEventTransferForeignKeys($eventTransfers, SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE);
 
         $this->getFacade()->unpublish($categoryNodeIds);
         $this->getFacade()->publish($parentCategoryNodeIds);
