@@ -5,9 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductList\ProductListCategory;
+namespace Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\ProductList\Persistence\Map\SpyProductListCategoryTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -17,13 +16,13 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
  */
-class ProductConcretePageSearchPublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductListProductConcretePageSearchPublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     /**
      * {@inheritdoc}
-     * - Handles product list category create, update and delete events.
+     * - Handles product list update event.
      *
      * @api
      *
@@ -35,12 +34,12 @@ class ProductConcretePageSearchPublishListener extends AbstractPlugin implements
     public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->preventTransaction();
-        $productListCategoryIds = $this->getFactory()
+        $productListIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventTransfers, SpyProductListCategoryTableMap::COL_FK_CATEGORY);
+            ->getEventTransferIds($eventTransfers);
 
         $this->getFactory()->getProductPageSearchFacade()->publishProductConcretes(
-            $this->getFactory()->getProductCategoryFacade()->getProductConcreteIdsByCategoryIds($productListCategoryIds)
+            $this->getFactory()->getProductListFacade()->getProductConcreteIdsByProductListIds($productListIds)
         );
     }
 }
