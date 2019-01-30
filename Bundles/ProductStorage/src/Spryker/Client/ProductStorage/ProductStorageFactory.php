@@ -10,6 +10,7 @@ namespace Spryker\Client\ProductStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
+use Spryker\Client\ProductStorage\Mapper\ProductAbstractStorageDataMapper;
 use Spryker\Client\ProductStorage\Finder\ProductAbstractViewTransferFinder;
 use Spryker\Client\ProductStorage\Finder\ProductConcreteViewTransferFinder;
 use Spryker\Client\ProductStorage\Finder\ProductViewTransferFinderInterface;
@@ -52,6 +53,7 @@ class ProductStorageFactory extends AbstractFactory
         return new ProductConcreteStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
+            $this->getLocaleClient(),
             $this->getProductConcreteRestrictionPlugins()
         );
     }
@@ -98,6 +100,17 @@ class ProductStorageFactory extends AbstractFactory
     public function createProductStorageDataMapper()
     {
         return new ProductStorageDataMapper(
+            $this->getStorageProductExpanderPlugins(),
+            $this->createProductAbstractAttributeMapRestrictionFilter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface
+     */
+    public function createProductAbstractStorageDataMapper()
+    {
+        return new ProductAbstractStorageDataMapper(
             $this->getStorageProductExpanderPlugins(),
             $this->createProductAbstractAttributeMapRestrictionFilter()
         );

@@ -96,4 +96,8 @@
         <property name="pagination" type="Pagination" />
     </transfer>
 
+    <transfer name="Quote">
+        <property name="isAddressSavingSkipped" type="bool" />
+    </transfer>
+
 </transfers>
