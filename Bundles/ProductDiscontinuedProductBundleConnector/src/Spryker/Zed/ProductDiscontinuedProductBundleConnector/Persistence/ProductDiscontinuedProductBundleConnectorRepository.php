@@ -56,7 +56,7 @@ class ProductDiscontinuedProductBundleConnectorRepository extends AbstractReposi
      *
      * @return int[]
      */
-    public function findBundledProductsByProductDiscontinuedId(int $idProductDiscontinued): array
+    public function getBundledProductsByProductDiscontinuedId(int $idProductDiscontinued): array
     {
         return $this->getFactory()
             ->createProductDiscontinuedPropelQuery()
