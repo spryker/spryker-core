@@ -97,10 +97,10 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
             return (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(false);
         }
 
-        $productDiscontinueResponseTransfer = $this->executePreUnmarkProductDiscontinuedPlugins($productDiscontinuedTransfer);
+        $productDiscontinuedResponseTransfer = $this->executePreUnmarkProductDiscontinuedPlugins($productDiscontinuedTransfer);
 
-        if (!$productDiscontinueResponseTransfer->getIsSuccessful()) {
-            return $productDiscontinueResponseTransfer;
+        if (!$productDiscontinuedResponseTransfer->getIsSuccessful()) {
+            return $productDiscontinuedResponseTransfer;
         }
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($productDiscontinuedTransfer) {

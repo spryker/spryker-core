@@ -14,7 +14,7 @@ interface PreUnmarkProductDiscontinuedPluginInterface
 {
     /**
      * Specification:
-     *  - Executes before unmark product as discontinued.
+     *  - Executes before unmark discontinued status from product.
      *
      * @api
      *
