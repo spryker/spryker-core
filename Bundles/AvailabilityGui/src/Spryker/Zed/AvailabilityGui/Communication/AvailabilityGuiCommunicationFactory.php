@@ -9,6 +9,8 @@ namespace Spryker\Zed\AvailabilityGui\Communication;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\AvailabilityGui\AvailabilityGuiDependencyProvider;
+use Spryker\Zed\AvailabilityGui\Business\Model\FloatCalculator;
+use Spryker\Zed\AvailabilityGui\Business\Model\FloatCalculatorInterface;
 use Spryker\Zed\AvailabilityGui\Communication\Form\AvailabilityStockForm;
 use Spryker\Zed\AvailabilityGui\Communication\Form\DataProvider\AvailabilityStockFormDataProvider;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable;
@@ -69,6 +71,14 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
             $storeTransfer,
             $this->getOmsFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityGui\Business\Model\FloatCalculatorInterface
+     */
+    public function createFloatCalculator(): FloatCalculatorInterface
+    {
+        return new FloatCalculator();
     }
 
     /**

@@ -245,7 +245,7 @@ class AvailabilityAbstractTable extends AbstractTable
 
             [$sku, $quantity] = $itemParts;
 
-            $reservation += $quantity;
+            $reservation += (float)$quantity;
             $reservation += $this->omsFacade->getReservationsFromOtherStores($sku, $this->storeTransfer);
         }
 
