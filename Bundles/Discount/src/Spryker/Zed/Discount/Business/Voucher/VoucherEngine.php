@@ -134,7 +134,7 @@ class VoucherEngine implements VoucherEngineInterface
             return $messageCreateInfoTransfer;
         }
 
-        if ($codeCollisions === $discountVoucherTransfer->getQuantity()) {
+        if ($codeCollisions === (int)round($discountVoucherTransfer->getQuantity())) {
             $messageCreateInfoTransfer->setType(DiscountConstants::MESSAGE_TYPE_ERROR);
             $messageCreateInfoTransfer->setMessage('No available codes to generate.');
 

@@ -10,6 +10,8 @@ namespace Spryker\Zed\Discount\Business;
 use Spryker\Zed\Discount\Business\Calculator\CollectorStrategyResolver;
 use Spryker\Zed\Discount\Business\Calculator\Discount;
 use Spryker\Zed\Discount\Business\Calculator\FilteredCalculator;
+use Spryker\Zed\Discount\Business\Calculator\FloatRounder;
+use Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface;
 use Spryker\Zed\Discount\Business\Calculator\Type\FixedType;
 use Spryker\Zed\Discount\Business\Calculator\Type\PercentageType;
 use Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaver;
@@ -102,7 +104,9 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createCalculatorPercentageType()
     {
-        return new PercentageType();
+        return new PercentageType(
+            $this->createFloatRounder()
+        );
     }
 
     /**
@@ -120,7 +124,8 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     {
         return new Distributor(
             $this->createDiscountableItemTransformer(),
-            $this->getDiscountableItemTransformerStrategyPlugins()
+            $this->getDiscountableItemTransformerStrategyPlugins(),
+            $this->createFloatRounder()
         );
     }
 
@@ -650,5 +655,13 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
         return new QuoteDiscountMaxUsageValidator(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface
+     */
+    public function createFloatRounder(): FloatRounderInterface
+    {
+        return new FloatRounder();
     }
 }

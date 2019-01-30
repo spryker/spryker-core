@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface;
 use Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface;
 
 class Distributor implements DistributorInterface
@@ -31,13 +32,23 @@ class Distributor implements DistributorInterface
     protected $discountableItemTransformerStrategyPlugins;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface $discountableItemTransformer
-     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface[] $discountableItemTransformerStrategyPlugins
+     * @var \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface
      */
-    public function __construct(DiscountableItemTransformerInterface $discountableItemTransformer, array $discountableItemTransformerStrategyPlugins)
-    {
+    protected $floatRounder;
+
+    /**
+     * @param \Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface $discountableItemTransformer
+     * @param array $discountableItemTransformerStrategyPlugins
+     * @param \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface $floatRounder
+     */
+    public function __construct(
+        DiscountableItemTransformerInterface $discountableItemTransformer,
+        array $discountableItemTransformerStrategyPlugins,
+        FloatRounderInterface $floatRounder
+    ) {
         $this->discountableItemTransformer = $discountableItemTransformer;
         $this->discountableItemTransformerStrategyPlugins = $discountableItemTransformerStrategyPlugins;
+        $this->floatRounder = $floatRounder;
     }
 
     /**
@@ -155,8 +166,11 @@ class Distributor implements DistributorInterface
     {
         $totalGrossAmount = 0;
         foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
-            $totalGrossAmount += $discountableItemTransfer->getUnitPrice() *
-                $this->getDiscountableItemQuantity($discountableItemTransfer);
+            $grossAmount = $this->floatRounder->round(
+                $discountableItemTransfer->getUnitPrice() *
+                $this->getDiscountableItemQuantity($discountableItemTransfer)
+            );
+            $totalGrossAmount += $grossAmount;
         }
 
         return $totalGrossAmount;
