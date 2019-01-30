@@ -66,6 +66,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
         }
 
         $idProductAbstract = $this->productFacade->findProductAbstractIdBySku($discountPromotionEntity->getAbstractSku());
+
         if (!$idProductAbstract) {
             return [];
         }
@@ -78,7 +79,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             $discountPromotionEntity->getQuantity()
         );
 
-        if ($promotionMaximumQuantity === 0) {
+        if (round($promotionMaximumQuantity, 2) === 0.0) {
             return [];
         }
 
@@ -132,7 +133,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
     /**
      * @param \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion $discountPromotionEntity
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param int $promotionProductMaximumQuantity
+     * @param float $promotionProductMaximumQuantity
      *
      * @return \Generated\Shared\Transfer\PromotionItemTransfer
      */
@@ -156,9 +157,9 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $promotionItemTransfer
-     * @param int $availableMaxQuantity
+     * @param float $availableMaxQuantity
      *
-     * @return int
+     * @return float
      */
     protected function adjustPromotionItemQuantity(ItemTransfer $promotionItemTransfer, $availableMaxQuantity)
     {
@@ -171,7 +172,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $promotionItemTransfer
-     * @param int $currentQuantity
+     * @param float $currentQuantity
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer
      */
@@ -244,7 +245,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion $discountPromotionEntity
-     * @param int $promotionMaximumQuantity
+     * @param float $promotionMaximumQuantity
      *
      * @return void
      */
