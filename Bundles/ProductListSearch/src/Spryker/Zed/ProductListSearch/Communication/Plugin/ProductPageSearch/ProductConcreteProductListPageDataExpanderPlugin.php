@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductList\Communication\Plugin\ProductPageSearch;
+namespace Spryker\Zed\ProductListSearch\Communication\Plugin\ProductPageSearch;
 
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -13,9 +13,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageDataExpanderPluginInterface;
 
 /**
- * @method \Spryker\Zed\ProductList\Business\ProductListFacadeInterface getFacade()
- * @method \Spryker\Zed\ProductList\ProductListConfig getConfig()
- * @method \Spryker\Zed\ProductList\Communication\ProductListCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductListSearch\Communication\ProductListSearchCommunicationFactory getFactory()
  */
 class ProductConcreteProductListPageDataExpanderPlugin extends AbstractPlugin implements ProductConcretePageDataExpanderPluginInterface
 {

@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductListSearch\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductListMapTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 
@@ -30,6 +31,25 @@ class ProductListSearchFacadeTest extends Unit
      * @var \SprykerTest\Zed\ProductListSearch\ProductListSearchBusinessTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConcretePageSearchTransferWithProductLists()
+    {
+        // Arrange
+        $productConcretePageSearchTransfer = new ProductConcretePageSearchTransfer();
+        $productConcrete = $this->tester->haveProduct();
+        $productConcretePageSearchTransfer->setFkProduct($productConcrete->getIdProductConcrete());
+
+        // Act
+        $this->getFacade()->expandProductConcretePageSearchTransferWithProductLists(
+            $productConcretePageSearchTransfer
+        );
+
+        // Assert
+        $this->assertInstanceOf(ProductListMapTransfer::class, $productConcretePageSearchTransfer->getProductListMap());
+    }
 
     /**
      * @return void

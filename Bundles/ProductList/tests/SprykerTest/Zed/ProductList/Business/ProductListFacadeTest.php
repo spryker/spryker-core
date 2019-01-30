@@ -9,8 +9,6 @@ namespace SprykerTest\Zed\ProductList\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductListBuilder;
-use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
-use Generated\Shared\Transfer\ProductListMapTransfer;
 use Propel\Runtime\Exception\PropelException;
 
 /**
@@ -114,25 +112,6 @@ class ProductListFacadeTest extends Unit
         // Act
         $this->getFacade()->deleteProductList($productListTransfer);
         $this->getFacade()->saveProductList($productListTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testExpandProductConcretePageSearchTransferWithProductLists()
-    {
-        // Arrange
-        $productConcretePageSearchTransfer = new ProductConcretePageSearchTransfer();
-        $productConcrete = $this->tester->haveProduct();
-        $productConcretePageSearchTransfer->setFkProduct($productConcrete->getIdProductConcrete());
-
-        // Act
-        $this->getFacade()->expandProductConcretePageSearchTransferWithProductLists(
-            $productConcretePageSearchTransfer
-        );
-
-        // Assert
-        $this->assertInstanceOf(ProductListMapTransfer::class, $productConcretePageSearchTransfer->getProductListMap());
     }
 
     /**

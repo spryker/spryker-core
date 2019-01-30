@@ -5,25 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductList\Business\Expander;
+namespace Spryker\Zed\ProductListSearch\Business\Expander;
 
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductListMapTransfer;
-use Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface;
+use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductListFacadeInterface;
 
 class ProductConcretePageSearchExpander implements ProductConcretePageSearchExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface
+     * @var \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductListFacadeInterface
      */
-    protected $productListReader;
+    protected $productListFacade;
 
     /**
-     * @param \Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface $productListReader
+     * @param \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductListFacadeInterface $productListFacade
      */
-    public function __construct(ProductListReaderInterface $productListReader)
+    public function __construct(ProductListSearchToProductListFacadeInterface $productListFacade)
     {
-        $this->productListReader = $productListReader;
+        $this->productListFacade = $productListFacade;
     }
 
     /**
@@ -50,7 +50,7 @@ class ProductConcretePageSearchExpander implements ProductConcretePageSearchExpa
      */
     protected function expandProductConcretePageSearchTransferWithWhitelistIds(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): ProductConcretePageSearchTransfer
     {
-        $whitelists = $this->productListReader->getProductWhitelistIdsByIdProduct($productConcretePageSearchTransfer->getFkProduct());
+        $whitelists = $this->productListFacade->getProductWhitelistIdsByIdProduct($productConcretePageSearchTransfer->getFkProduct());
 
         if ($whitelists) {
             $productConcretePageSearchTransfer->getProductListMap()->setWhitelists($whitelists);
@@ -66,7 +66,7 @@ class ProductConcretePageSearchExpander implements ProductConcretePageSearchExpa
      */
     protected function expandProductConcretePageSearchTransferWithBlacklistIds(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): ProductConcretePageSearchTransfer
     {
-        $blacklists = $this->productListReader->getProductBlacklistIdsByIdProduct($productConcretePageSearchTransfer->getFkProduct());
+        $blacklists = $this->productListFacade->getProductBlacklistIdsByIdProduct($productConcretePageSearchTransfer->getFkProduct());
 
         if ($blacklists) {
             $productConcretePageSearchTransfer->getProductListMap()->setBlacklists($blacklists);

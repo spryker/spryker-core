@@ -17,5 +17,5 @@ interface ProductDataToProductListMapTransferMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductListMapTransfer
      */
-    public function mapProductDataProductList(array $productData, ProductListMapTransfer $productListMapTransfer): ProductListMapTransfer;
+    public function mapProductDataToProductListMapTransfer(array $productData, ProductListMapTransfer $productListMapTransfer): ProductListMapTransfer;
 }

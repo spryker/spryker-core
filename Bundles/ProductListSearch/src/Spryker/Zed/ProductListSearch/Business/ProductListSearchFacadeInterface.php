@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListSearch\Business;
 
+use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductListMapTransfer;
 
 interface ProductListSearchFacadeInterface
@@ -34,6 +35,20 @@ interface ProductListSearchFacadeInterface
      * @return int[]
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
+
+    /**
+     * Specification:
+     * - Expands ProductConcretePageSearchTransfer with product lists data and returns the modified object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
+     */
+    public function expandProductConcretePageSearchTransferWithProductLists(
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+    ): ProductConcretePageSearchTransfer;
 
     /**
      *  Specification:

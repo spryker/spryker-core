@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductList\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
-use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -215,20 +214,6 @@ interface ProductListFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function filterRestrictedItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
-
-    /**
-     * Specification:
-     * - Expands ProductConcretePageSearchTransfer with product lists data and returns the modified object.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
-     */
-    public function expandProductConcretePageSearchTransferWithProductLists(
-        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
-    ): ProductConcretePageSearchTransfer;
 
     /**
      * Specification:

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListSearch\Business;
 
+use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductListMapTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -49,6 +50,23 @@ class ProductListSearchFacade extends AbstractFacade implements ProductListSearc
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
+     */
+    public function expandProductConcretePageSearchTransferWithProductLists(
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+    ): ProductConcretePageSearchTransfer {
+        return $this->getFactory()
+            ->createProductConcretePageSearchExpander()
+            ->expandProductConcretePageSearchTransferWithProductLists($productConcretePageSearchTransfer);
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @api
@@ -62,6 +80,6 @@ class ProductListSearchFacade extends AbstractFacade implements ProductListSearc
     {
         return $this->getFactory()
             ->createProductDataToProductListMapTransferMapper()
-            ->mapProductDataProductList($productData, $productListMapTransfer);
+            ->mapProductDataToProductListMapTransfer($productData, $productListMapTransfer);
     }
 }

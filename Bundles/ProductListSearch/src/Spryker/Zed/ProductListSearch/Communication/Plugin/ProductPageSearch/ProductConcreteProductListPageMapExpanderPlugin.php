@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductList\Communication\Plugin\ProductPageSearch;
+namespace Spryker\Zed\ProductListSearch\Communication\Plugin\ProductPageSearch;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
@@ -16,9 +16,9 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface;
 
 /**
- * @method \Spryker\Zed\ProductList\Business\ProductListFacadeInterface getFacade()
- * @method \Spryker\Zed\ProductList\ProductListConfig getConfig()
- * @method \Spryker\Zed\ProductList\Communication\ProductListCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductListSearch\Communication\ProductListSearchCommunicationFactory getFactory()
  */
 class ProductConcreteProductListPageMapExpanderPlugin extends AbstractPlugin implements ProductConcretePageMapExpanderPluginInterface
 {
@@ -53,9 +53,7 @@ class ProductConcreteProductListPageMapExpanderPlugin extends AbstractPlugin imp
     protected function setProductListsData(PageMapTransfer $pageMapTransfer, array $productData): PageMapTransfer
     {
         $pageMapTransfer->setProductLists(
-            $this->getFactory()
-                ->getProductListSearchFacade()
-                ->mapProductDataToProductListMapTransfer($productData, new ProductListMapTransfer())
+            $this->getFacade()->mapProductDataToProductListMapTransfer($productData, new ProductListMapTransfer())
         );
 
         return $pageMapTransfer;
