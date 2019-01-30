@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
-use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -36,26 +36,26 @@ class CartItemUpdater implements CartItemUpdaterInterface
     protected $zedRequestClient;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
      */
-    protected $cartReader;
+    protected $cartsResourceMapper;
 
     /**
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface $zedRequestClient
-     * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface $cartReader
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
      */
     public function __construct(
         CartsRestApiClientInterface $cartsRestApiClient,
         CartRestResponseBuilderInterface $cartRestResponseBuilder,
         CartsRestApiToZedRequestClientInterface $zedRequestClient,
-        CartReaderInterface $cartReader
+        CartsResourceMapperInterface $cartsResourceMapper
     ) {
         $this->cartsRestApiClient = $cartsRestApiClient;
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
         $this->zedRequestClient = $zedRequestClient;
-        $this->cartReader = $cartReader;
+        $this->cartsResourceMapper = $cartsResourceMapper;
     }
 
     /**
@@ -86,7 +86,12 @@ class CartItemUpdater implements CartItemUpdaterInterface
             return $this->cartRestResponseBuilder->returnWithErrorResponse($errors);
         }
 
-        return $this->cartReader->getCustomerQuoteByUuid($quoteTransfer->getUuid(), $restRequest);
+        $restResource = $this->cartsResourceMapper->mapCartsResource(
+            $quoteTransfer,
+            $restRequest
+        );
+
+        return $this->cartRestResponseBuilder->createCartRestResponse($restResource);
     }
 
     /**

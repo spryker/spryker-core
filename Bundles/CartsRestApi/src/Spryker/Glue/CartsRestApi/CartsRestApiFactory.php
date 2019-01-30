@@ -120,8 +120,8 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
             $this->getZedRequestClient(),
-            $this->createCartReader(),
-            $this->createCartItemsResourceMapper()
+            $this->createCartItemsResourceMapper(),
+            $this->createCartsResourceMapper()
         );
     }
 
@@ -132,8 +132,7 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new CartItemDeleter(
             $this->getClient(),
-            $this->createCartRestResponseBuilder(),
-            $this->createCartReader()
+            $this->createCartRestResponseBuilder()
         );
     }
 
@@ -146,7 +145,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
             $this->getZedRequestClient(),
-            $this->createCartReader()
+            $this->createCartsResourceMapper()
         );
     }
 
@@ -209,7 +208,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
             $this->getZedRequestClient(),
-            $this->createCartReader()
+            $this->createCartsResourceMapper()
         );
     }
 
@@ -220,8 +219,7 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new GuestCartItemDeleter(
             $this->getClient(),
-            $this->createCartRestResponseBuilder(),
-            $this->createCartReader()
+            $this->createCartRestResponseBuilder()
         );
     }
 
