@@ -9,6 +9,7 @@ namespace Spryker\Zed\Calculation\Business\Model\Aggregator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
@@ -23,6 +24,7 @@ class PriceToPayAggregator implements CalculatorInterface
     {
         $this->calculatePriceToPayAggregationForItems($calculableObjectTransfer->getItems(), $calculableObjectTransfer->getPriceMode());
         $this->calculatePriceToPayAggregationForExpenses($calculableObjectTransfer->getExpenses(), $calculableObjectTransfer->getPriceMode());
+        $this->calculatePriceToPayAggregationForItemExpenses($calculableObjectTransfer->getItems(), $calculableObjectTransfer->getPriceMode());
     }
 
     /**
@@ -101,5 +103,46 @@ class PriceToPayAggregator implements CalculatorInterface
         }
 
         return $price - $discountAmount;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param string $priceMode
+     *
+     * @return void
+     */
+    protected function calculatePriceToPayAggregationForItemExpenses(ArrayObject $items, string $priceMode): void
+    {
+        $expenses = $this->getItemExpenses($items);
+        $this->calculatePriceToPayAggregationForExpenses($expenses, $priceMode);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[]
+     */
+    protected function getItemExpenses(ArrayObject $items): ArrayObject
+    {
+        $expenses = new ArrayObject();
+        foreach ($items as $itemTransfer) {
+            if ($this->assertItemHasNoExpenseRequirements($itemTransfer)) {
+                continue;
+            }
+
+            $expenses->append($itemTransfer->getShipment()->getExpense());
+        }
+
+        return $expenses;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function assertItemHasNoExpenseRequirements(ItemTransfer $itemTransfer): bool
+    {
+        return $itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getExpense() === null;
     }
 }
