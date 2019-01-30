@@ -36,17 +36,11 @@ class BaseMessageTray
             }
         }
 
-        return $this->formatUntranslatedMessage($keyName, $data);
-    }
+        if ($this->translationPlugins) {
+            $translationPlugin = end($this->translationPlugins);
+            return $translationPlugin->translate($keyName, $data);
+        }
 
-    /**
-     * @param string $keyName
-     * @param array $data
-     *
-     * @return string
-     */
-    protected function formatUntranslatedMessage(string $keyName, array $data = []): string
-    {
-        return str_replace(array_keys($data), array_values($data), $keyName);
+        return $keyName;
     }
 }
