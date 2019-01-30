@@ -86,7 +86,7 @@ class PercentageType implements CalculatorTypeInterface
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
      *
-     * @return int
+     * @return float
      */
     protected function getDiscountableObjectQuantity(DiscountableItemTransfer $discountableItemTransfer)
     {

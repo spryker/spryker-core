@@ -103,7 +103,7 @@ class Distributor implements DistributorInterface
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      * @param int $totalDiscountAmount
      * @param int $totalAmount
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return void
      */
@@ -112,7 +112,7 @@ class Distributor implements DistributorInterface
         DiscountTransfer $discountTransfer,
         int $totalDiscountAmount,
         int $totalAmount,
-        int $quantity
+        float $quantity
     ) {
         $discountableItemTransformerTransfer = $this->mapDiscountableItemTransformerTransfer($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
         $discountableItemTransformerTransfer = $this->discountableItemTransformer->transformSplittableDiscountableItem($discountableItemTransformerTransfer);
@@ -124,7 +124,7 @@ class Distributor implements DistributorInterface
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      * @param int $totalDiscountAmount
      * @param int $totalAmount
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
      */
@@ -133,7 +133,7 @@ class Distributor implements DistributorInterface
         DiscountTransfer $discountTransfer,
         int $totalDiscountAmount,
         int $totalAmount,
-        int $quantity
+        float $quantity
     ): DiscountableItemTransformerTransfer {
         $discountableItemTransformerTransfer = new DiscountableItemTransformerTransfer();
         $discountableItemTransformerTransfer->setDiscountableItem($discountableItemTransfer)
@@ -165,9 +165,9 @@ class Distributor implements DistributorInterface
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
      *
-     * @return int
+     * @return float
      */
-    protected function getDiscountableItemQuantity(DiscountableItemTransfer $discountableItemTransfer): int
+    protected function getDiscountableItemQuantity(DiscountableItemTransfer $discountableItemTransfer): float
     {
         $quantity = 1;
         if ($discountableItemTransfer->getQuantity()) {
