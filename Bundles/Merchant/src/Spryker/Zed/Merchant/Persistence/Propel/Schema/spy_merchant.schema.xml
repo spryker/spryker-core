@@ -48,9 +48,6 @@
         <foreign-key name="spy_merchant_address-fk_country" foreignTable="spy_country">
             <reference local="fk_country" foreign="id_country"/>
         </foreign-key>
-        <foreign-key name="spy_merchant_address-fk_region" foreignTable="spy_region">
-            <reference local="fk_region" foreign="id_region"/>
-        </foreign-key>
         <foreign-key name="spy_merchant_address-fk_merchant" foreignTable="spy_merchant">
             <reference local="fk_merchant" foreign="id_merchant"/>
         </foreign-key>
