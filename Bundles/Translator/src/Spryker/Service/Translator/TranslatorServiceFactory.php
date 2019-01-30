@@ -23,7 +23,7 @@ use Spryker\Service\Translator\TranslationResource\CsvResourceFileLoader;
 use Spryker\Service\Translator\TranslationResource\TranslationResourceFileLoaderInterface;
 use Spryker\Service\Translator\TranslationResource\ValidatorResourceFileLoader;
 use Spryker\Service\Translator\Translator\Translator;
-use Spryker\Service\Translator\Translator\TranslatorCacheGeneratorInterface;
+use Spryker\Service\Translator\Translator\TranslatorInterface;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Kernel\Store;
 
@@ -96,9 +96,9 @@ class TranslatorServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\Translator\Translator\TranslatorCacheGeneratorInterface
+     * @return \Spryker\Service\Translator\Translator\TranslatorInterface
      */
-    public function createTranslator(): TranslatorCacheGeneratorInterface
+    public function createTranslator(): TranslatorInterface
     {
         $locale = $this->getApplication()['locale'];
         $translator = new Translator($locale, null, $this->getConfig()->getCacheDir());

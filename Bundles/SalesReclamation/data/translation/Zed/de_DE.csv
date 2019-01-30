@@ -15,7 +15,7 @@ Discount,Rabatt
 Option,Option
 Order,Bestellung
 "Order id",Bestellungs-ID
-"OrderItem with id %s not belong to order %s","BestellArtikel mit der ID %s gehört nicht zu Bestellung %s."
+"OrderItem with id %s not belong to order %s","Bestellartikel mit der ID %s gehört nicht zu Bestellung %s."
 "Overview of reclamation:","Übersicht der Reklamation:"
 "Overview of reclamations","Übersicht der Reklamationen"
 Product,Produkt
@@ -25,7 +25,7 @@ Product,Produkt
 "Reclamation state",Reklamationsstatus
 "Reclamation with id %s closed","Reklamation mit der ID %s geschlossen"
 "Reclamation with id %s not exists","Reklamation mit der ID %s existiert nicht"
-"Reclamation with id %s not own this item %s","Die Reklamation mit der ID %s enthält nicht den Artikel %s"
+"Reclamation with id %s not own this item %s","Reklamation mit der ID %s enthält nicht den Artikel %s"
 Shipment,Versand
 "Show less","Weniger anzeigen"
 "Show more","Mehr anzeigen"

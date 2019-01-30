@@ -4,5 +4,5 @@ Comment,Kommentar
 "Overview of Refunds","Übersicht der Rückerstattungen"
 "Refund date",Rückerstattungsdatum
 "Refund Id",Rückerstattungs-ID
-"Sales Order Id","ID des Verkaufsauftrags"
-Time,Zeit
+"Sales Order Id","Bestell ID"
+Time,time

@@ -2,19 +2,19 @@ Activate,Aktivieren
 "Add General Information","Allgemeine Informationen hinzufügen"
 "Add image","Bild hinzufügen"
 "Add image set","Bilderset hinzufügen"
-"Add Product Concrete","Verpackungseinheit hinzufügen"
+"Add Product Concrete","Konkretes Produkt hinzufügen"
 "Add Variant","Variante hinzufügen"
 "Assigned products","Zugeordnete Produkte"
 Attributes,Attribute
 "Available in stores","Im Store erhältlich"
 "Below are the product variants listed. Each variant may be edited independent from the others.","Im Folgenden sind die Produktvarianten aufgelistet. Jede Variante kann unabhängig von den anderen bearbeitet werden."
 "Below the name and description for your product can be edited for different locales (in different languages).","Im Folgenden kann der Name und die Beschreibung Ihres Produktes für verschiedene Regionen (in verschiedenen Sprachen) angepasst werden."
-"Below you can choose between your predefined tax sets and edit the price of your product.","Im Folgenden können Sie zwischen Ihren vorausgewählten Steuerklassen wählen und den Preis Ihres Produktes ändern."
+"Below you can choose between your predefined tax sets and edit the price of your product.","Im Folgenden können Sie zwischen Ihren vorausgewählten Steuersets wählen und den Preis Ihres Produktes ändern."
 "Bundle availability based on assigned products:","Verfügbarkeit des Bündels auf Basis der zugeordneten Produkte:"
 Categories,Kategorien
 "CMS Block list","CMS Blockliste"
 "Configurable Product Attributes","Konfigurierbare Produktattribute"
-"Contains bundles","Enthält Pakete"
+"Contains bundles","Enthält Bündelprodukte"
 "Create a Product","Produkt erstellen"
 "Create Bundle Product","Bundle-Produkt erstellen"
 "Create Product","Produkt erstellen"
@@ -40,15 +40,15 @@ n/a,k.A.
 "No records","Keine Einträge"
 "Note: Deactivated product variants are not available in the shop anymore.","Hinweis: Deaktivierte Produktvarianten sind nicht mehr im Shop verfügbar."
 "Note: Image sets can be used for different purposes such as being displayed in the catalog or the product detail page or elsewhere.","Hinweis: Bildersets können zu verschiedenen Zwecken benutzt werden, wie etwa zur Anzeige im Katalog, in der Detailansicht des Produkts oder an anderen Orten."
-"Note: Meta data are snippets of text describing a page’s content. The meta data appear only in the page’s code, not in its content.","Hinweis: Metadaten sind Textausschnitte, die den Inhalt einer Seite beschreiben. Die Metadaten erscheinen nur im Code der Seite, nicht in ihrem Inhalt."
+"Note: Meta data are snippets of text describing a page’s content. The meta data appear only in the page’s code, not in its content.","Hinweis: Metadaten sind Textausschnitte, die den Inhalt einer Seite beschreiben. Die Metadaten erscheinen nur im Code der Seite, nicht in ihrem Seiteninhalt."
 "Note: The price that you edit here is only displayed in the shop catalog and the product detail page for the non configured product (Not product variant)","Hinweis: Der Preis, den Sie hier bearbeiten, wird nur im Shop-Katalog und in der Detailansicht des nicht konfigurierten Produkts (nicht der Produktvariante) angezeigt."
 "Note: The SKU is not editable after saving anymore.","Hinweis: Die SKU kann nach dem Speichern nicht mehr bearbeitet werden."
 "Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore.","Hinweis: Das SKU-Präfix kann, genau wie die SKUs Ihrer Produktvarianten, nach dem Speichern nicht mehr bearbeitet werden."
-"Price & Tax","Preis & Steuer"
-"Price & Tax","Preis & Steuer"
-"Price & Taxes","Preis & Steuern"
-"Product bundle does not have variants!","Produktpaket hat keine Varianten!"
-"Product Group ID",Produktgruppen-ID
+"Price & Tax","Preis und Steuer"
+"Price & Tax","Preis und Steuer"
+"Price & Taxes","Preis und Steuern"
+"Product bundle does not have variants!","Bündelprodukt hat keine Varianten!"
+"Product Group ID",Produktgruppe-ID
 "Product Groups",Produktgruppen
 "Product has been activated.","Produkt wurde aktiviert."
 "Product has been deactivated.","Produkt wurde deaktiviert."
@@ -58,12 +58,12 @@ n/a,k.A.
 "Product variants",Produktvarianten
 Quantity,Menge
 Save,Speichern
-"Search engine optimization (SEO) is the process of affecting the visibility of a website or a web page in a web search engine's unpaid results — often referred to as ""natural,"" ""organic,"" or ""earned"" results.","Suchmaschinenoptimierung (SEO) bezeichnet einen Vorgang, bei dem die Sichtbarkeit einer Website oder Webpräsenz in den unbezahlten Suchergebnissen einer Internetsuchmaschine beeinflusst wird. Diese werden oft als ""natürliche"", ""organische"" oder ""verdiente"" Ergebnisse bezeichnet."
+"Search engine optimization (SEO) is the process of affecting the visibility of a website or a web page in a web search engine's unpaid results — often referred to as ""natural,"" ""organic,"" or ""earned"" results.","Suchmaschinenoptimierung (SEO) bezeichnet einen Vorgang, bei dem die Sichtbarkeit einer Webseite oder Webpräsenz in den unbezahlten Suchergebnissen einer Internetsuchmaschine beeinflusst wird. Diese werden oft als ""natürliche"", ""organische"" oder ""verdiente"" Ergebnisse bezeichnet."
 "Select attributes and corresponding values.","Attribute und entsprechende Werte auswählen."
 "SEO (Meta Information)","SEO (Metainformation)"
 Small,Klein
 "Stock Type",Bestandsart
-"Store relation",Shoprelation
+"Store relation","Store relation"
 "Tax Set",Steuer-Set
 "The product [%s] does not exist.","Das Produkt [%s] existiert nicht."
 "The product [%s] was saved successfully.","Das Produkt [%s] wurde erfolgreich gespeichert."

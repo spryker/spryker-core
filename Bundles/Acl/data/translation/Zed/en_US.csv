@@ -7,7 +7,7 @@ Action,Action
 "Assigned Rules","Assigned Rules"
 Bundle,Bundle
 Controller,Controller
-"Could not modify root role node!","Could not modify root role node!"
+"Could not modify root role node!","Could not modify node"
 Create,Create
 "Create Group","Create Group"
 "Create new Role","Create new Role"
@@ -20,6 +20,7 @@ Create,Create
 "Group name already in use","Group name already in use"
 "Group was created successfully.","Group was created successfully."
 "Group was updated successfully.","Group was updated successfully."
+"Interface language","Interface language"
 "List Groups","List Groups"
 "List Groups","List Groups"
 "List Roles","List of roles"

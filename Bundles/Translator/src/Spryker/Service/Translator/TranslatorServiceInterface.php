@@ -8,7 +8,7 @@
 namespace Spryker\Service\Translator;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Service\Translator\Translator\TranslatorCacheGeneratorInterface;
+use Spryker\Service\Translator\Translator\TranslatorInterface;
 
 interface TranslatorServiceInterface
 {
@@ -18,13 +18,13 @@ interface TranslatorServiceInterface
      *
      * @api
      *
-     * @return \Spryker\Service\Translator\Translator\TranslatorCacheGeneratorInterface
+     * @return \Spryker\Service\Translator\Translator\TranslatorInterface
      */
-    public function getTranslator(): TranslatorCacheGeneratorInterface;
+    public function getTranslator(): TranslatorInterface;
 
     /**
      * Specification:
-     * - Generates translation cache for Zed for all store's locales.
+     * - Generates translation cache for all locales of the current store.
      *
      * @api
      *
@@ -53,18 +53,4 @@ interface TranslatorServiceInterface
      * @return bool
      */
     public function hasTranslation($keyName): bool;
-
-    /**
-     * Specification:
-     *  - Finds a translation for the specified key for the particular locale.
-     *
-     * @api
-     *
-     * @param string $keyName
-     * @param array $data
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
-     * @return string
-     */
-    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null): string;
 }

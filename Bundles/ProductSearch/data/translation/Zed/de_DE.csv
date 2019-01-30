@@ -22,12 +22,12 @@ Edit,Bearbeiten
 "Filter successfully deleted.","Filter erfolgreich gelöscht."
 "Filter type",Filtertyp
 "Full text",Volltext
-"Full text boosted","Volltext erweitert"
+"Full text boosted","Volltext boosted"
 "General Information","Allgemeine Informationen"
-"Include for completion","Einschließen für Suchvervollständigung"
-"Include for full text","Einschließen für Volltextsuche"
-"Include for full text boosted","Einschließen für erweiterte Volltextsuche"
-"Include for suggestion","Einschließen für Suchvorschläge"
+"Include for completion","In Autovervollständigung eingebunde"
+"Include for full text","In Volltextsuche eingebunden"
+"Include for full text boosted","In boosted Volltextsuche eingebunden"
+"Include for suggestion","In Suchvorschläge eingebunden"
 "List of filters","Liste der Filter"
 "List of search preferences","Liste der Suchpräferenzen"
 multi-select,Mehrfachauswahl

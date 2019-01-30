@@ -8,7 +8,7 @@ Carrier,Carrier
 "Create new Shipment Carrier","Create new Shipment Carrier"
 "Delivery time plugin","Delivery time plugin"
 "Edit Shipment Method","Edit Shipment Method"
-Enabled?,Enabled?
+Enabled?,Activate
 "List Shipment Methods","List of shipment methods"
 Method,Method
 "New Shipment Method","New Shipment Method"
