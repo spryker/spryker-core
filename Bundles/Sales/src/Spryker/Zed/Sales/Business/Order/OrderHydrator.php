@@ -19,6 +19,7 @@ use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator as OrderHydratorWithoutMultiShipping;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
@@ -31,23 +32,23 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
      *
      * @var \Spryker\Zed\Sales\Business\Order\OrderHydratorOrderDataBCForMultiShipmentAdapterInterface
      */
-    protected $quoteDataBCForMultiShipmentAdapter;
+    protected $orderDataBCForMultiShipmentAdapter;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
-     * @param \Spryker\Zed\Sales\Business\Order\OrderHydratorOrderDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
+     * @param \Spryker\Zed\Sales\Business\Order\OrderHydratorOrderDataBCForMultiShipmentAdapterInterface $orderDataBCForMultiShipmentAdapter
      * @param \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[] $hydrateOrderPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         SalesToOmsInterface $omsFacade,
-        OrderHydratorOrderDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter,
+        OrderHydratorOrderDataBCForMultiShipmentAdapterInterface $orderDataBCForMultiShipmentAdapter,
         array $hydrateOrderPlugins = []
     ) {
         parent::__construct($queryContainer, $omsFacade, $hydrateOrderPlugins);
 
-        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
+        $this->orderDataBCForMultiShipmentAdapter = $orderDataBCForMultiShipmentAdapter;
     }
 
     /**
@@ -63,11 +64,6 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
             ->querySalesOrderDetailsWithoutShippingAddress($idSalesOrder)
             ->findOne();
 
-        /**
-         * @deprecated Will be removed in next major release.
-         */
-        $orderEntity = $this->quoteDataBCForMultiShipmentAdapter->adapt($orderEntity);
-
         if ($orderEntity === null) {
             throw new InvalidSalesOrderException(
                 sprintf(
@@ -77,7 +73,36 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
             );
         }
 
+        /**
+         * @deprecated Will be removed in next major release.
+         */
+        $orderEntity = $this->orderDataBCForMultiShipmentAdapter->adapt($orderEntity);
+        $orderEntity = $this->sanitizeOrderShipmentExpense($orderEntity);
+
         return $this->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
+    }
+
+    /**
+     * @deprecated Will be removed in next major release.
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    protected function sanitizeOrderShipmentExpense(SpySalesOrder $orderEntity): ?SpySalesOrder
+    {
+        foreach ($orderEntity->getExpenses() as $key => $expenseEntity) {
+            if ($expenseEntity->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+                continue;
+            }
+
+            $orderEntity->getExpenses()->offsetUnset($key);
+            return $orderEntity;
+        }
+
+        return $orderEntity;
     }
 
     /**

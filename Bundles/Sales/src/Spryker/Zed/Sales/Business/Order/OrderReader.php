@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Business\Order;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader as OrderReaderWithoutMultiShippingAddress;
 
 class OrderReader extends OrderReaderWithoutMultiShippingAddress
@@ -19,15 +20,12 @@ class OrderReader extends OrderReaderWithoutMultiShippingAddress
      */
     public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer
     {
-        $orderEntity = $this->queryContainer
-            ->querySalesOrderDetailsWithoutShippingAddress($idSalesOrder)
-            ->findOne();
-
-        if ($orderEntity === null) {
+        try {
+            $orderEntity = $this->orderHydrator->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
+        } catch (InvalidSalesOrderException $exception) {
             return null;
         }
 
-        return $this->orderHydrator->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
+        return $orderEntity;
     }
-
 }
