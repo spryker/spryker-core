@@ -5,17 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUser\Business\CompanyUser;
+namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyUserValidator;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 
 interface CompanyUserValidatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function checkIfCompanyUserUnique(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+    public function checkIfCompanyUserUnique(
+        CompanyUserResponseTransfer $companyUserResponseTransfer
+    ): CompanyUserResponseTransfer;
 }

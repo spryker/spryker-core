@@ -77,13 +77,4 @@ interface CompanyUserRepositoryInterface
     public function getActiveCompanyUsersByCustomerReference(
         string $customerReference
     ): CompanyUserCollectionTransfer;
-
-    /**
-     * @module CompanyUser
-     *
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return bool
-     */
-    public function checkIfCompanyUserExists(CompanyUserTransfer $companyUserTransfer): bool;
 }

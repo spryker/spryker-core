@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyBusinessUnit\Persistence;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -27,6 +28,8 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
      * @see \Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap::COL_CUSTOMER_REFERENCE
      */
     protected const COL_CUSTOMER_REFERENCE = 'spy_customer.customer_reference';
+
+    protected const COL_FK_CUSTOMER = 'fk_customer';
 
     /**
      * @param int $idCompanyBusinessUnit
@@ -212,5 +215,33 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
         if ($criteriaFilterTransfer->getCompanyBusinessUnitIds()) {
             $companyBusinessUnitQuery->filterByIdCompanyBusinessUnit_In($criteriaFilterTransfer->getCompanyBusinessUnitIds());
         }
+    }
+
+    /**
+     * @module CompanyUser
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return bool
+     */
+    public function hasCompanyUser(CompanyUserTransfer $companyUserTransfer): bool
+    {
+        $companyUserTransfer
+            ->requireFkCustomer()
+            ->requireFkCompanyBusinessUnit();
+
+        $companyUserQuery = $this->getFactory()
+            ->createCompanyBusinessUnitQuery()
+            ->useCompanyUserQuery();
+
+        if (!$companyUserQuery->getTableMap()->hasColumn(static::COL_FK_CUSTOMER)) {
+            return false;
+        }
+
+        return $companyUserQuery
+            ->filterByFkCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit())
+            ->filterByFkCustomer($companyUserTransfer->getFkCustomer())
+            ->endUse()
+            ->exists();
     }
 }

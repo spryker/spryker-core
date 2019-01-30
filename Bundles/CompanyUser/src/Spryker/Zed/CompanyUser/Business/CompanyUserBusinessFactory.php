@@ -9,8 +9,6 @@ namespace Spryker\Zed\CompanyUser\Business;
 
 use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserStatusHandler;
 use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserStatusHandlerInterface;
-use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserValidator;
-use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserValidatorInterface;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUser;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserInterface;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserPluginExecutor;
@@ -35,8 +33,7 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->getCustomerFacade(),
-            $this->createCompanyUserPluginExecutor(),
-            $this->createCompanyUserValidator()
+            $this->createCompanyUserPluginExecutor()
         );
     }
 
@@ -49,14 +46,6 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserValidatorInterface
-     */
-    public function createCompanyUserValidator(): CompanyUserValidatorInterface
-    {
-        return new CompanyUserValidator($this->getRepository());
     }
 
     /**
