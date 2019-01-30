@@ -16,7 +16,7 @@
 
     <transfer name="QuoteCriteriaFilter">
         <property name="customerReference" type="string"/>
-        <property name="quoteIds" type="array"/>
+        <property name="quoteIds" type="int[]"/>
         <property name="filter" type="Filter"/>
     </transfer>
 

@@ -46,8 +46,8 @@ class QuoteReader implements QuoteReaderInterface
             $companyUserTransfer->getIdCompanyUser()
         );
 
-        $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
-        $quoteCriteriaFilterTransfer->setQuoteIds($quoteIds);
+        $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
+            ->setQuoteIds($quoteIds);
 
         return $this->applyIsDefaultFlagForSharedQuotes(
             $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer),

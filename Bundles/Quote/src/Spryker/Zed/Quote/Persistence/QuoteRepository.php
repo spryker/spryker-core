@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
+use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -106,14 +107,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
             ->createQuoteQuery()
             ->joinWithSpyStore();
 
-        if ($quoteCriteriaFilterTransfer->getCustomerReference()) {
-            $quoteQuery->filterByCustomerReference($quoteCriteriaFilterTransfer->getCustomerReference());
-        }
-
-        if ($quoteCriteriaFilterTransfer->isPropertyModified(QuoteCriteriaFilterTransfer::QUOTE_IDS)) {
-            $quoteQuery->filterByIdQuote_In($quoteCriteriaFilterTransfer->getQuoteIds());
-        }
-
+        $quoteQuery = $this->applyQuoteCriteriaFiltersToQuoteQuery($quoteQuery, $quoteCriteriaFilterTransfer);
         $quoteEntityCollectionTransfer = $this->buildQueryFromCriteria($quoteQuery, $quoteCriteriaFilterTransfer->getFilter())->find();
 
         $quoteCollectionTransfer = new QuoteCollectionTransfer();
@@ -123,6 +117,25 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
         }
 
         return $quoteCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Quote\Persistence\SpyQuoteQuery $quoteQuery
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\Quote\Persistence\SpyQuoteQuery
+     */
+    protected function applyQuoteCriteriaFiltersToQuoteQuery(SpyQuoteQuery $quoteQuery, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): SpyQuoteQuery
+    {
+        if ($quoteCriteriaFilterTransfer->getCustomerReference()) {
+            $quoteQuery->filterByCustomerReference($quoteCriteriaFilterTransfer->getCustomerReference());
+        }
+
+        if ($quoteCriteriaFilterTransfer->isPropertyModified(QuoteCriteriaFilterTransfer::QUOTE_IDS)) {
+            $quoteQuery->filterByIdQuote_In($quoteCriteriaFilterTransfer->getQuoteIds());
+        }
+
+        return $quoteQuery;
     }
 
     /**
