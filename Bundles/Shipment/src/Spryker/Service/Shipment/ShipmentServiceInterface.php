@@ -28,7 +28,7 @@ interface ShipmentServiceInterface
      *
      * @param array $shipmentFormData
      *
-     * @return Generated\Shared\Transfer\ShipmentGroupTransfer
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function createShipmentGroupTransfer(array $shipmentFormData): ShipmentGroupTransfer
+    public function createShipmentGroupTransfer(array $shipmentFormData): ShipmentGroupTransfer;
 }

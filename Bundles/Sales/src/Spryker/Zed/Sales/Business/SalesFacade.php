@@ -39,7 +39,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
         return $this->getFactory()
-            ->createOrderHydrator()
+            ->createOrderHydratorStrategyResolver()
+            ->resolve()
             ->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
     }
 
@@ -57,7 +58,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer
     {
         return $this->getFactory()
-            ->createOrderReader()
+            ->createOrderReaderStrategyResolver()
+            ->resolve()
             ->findOrderByIdSalesOrder($idSalesOrder);
     }
 
@@ -196,7 +198,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function saveSalesOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         $this->getFactory()
-            ->createSalesOrderSaver()
+            ->createOrderSaverStrategyResolver()
+            ->resolve()
             ->saveOrderSales($quoteTransfer, $saveOrderTransfer);
     }
 

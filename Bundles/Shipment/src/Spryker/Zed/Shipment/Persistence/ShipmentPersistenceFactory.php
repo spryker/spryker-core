@@ -19,6 +19,7 @@ use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentMapperInterface;
 /**
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface getEntityManager()
  */
 class ShipmentPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -47,6 +48,14 @@ class ShipmentPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function createSalesOrderItemQuery()
+    {
+        return SpySalesOrderItemQuery::create();
+    }
+
+    /**
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
      */
     public function createShipmentMethodPriceQuery()
@@ -60,13 +69,5 @@ class ShipmentPersistenceFactory extends AbstractPersistenceFactory
     public function createShipmentMapper(): ShipmentMapperInterface
     {
         return new ShipmentMapper();
-    }
-
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function createSalesOrderItemQuery()
-    {
-        return new SpySalesOrderItemQuery();
     }
 }

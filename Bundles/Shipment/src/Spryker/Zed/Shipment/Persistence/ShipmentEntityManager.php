@@ -18,6 +18,7 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
 {
     /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param int $idSalesOrder
      *
      * @return int
      */
@@ -34,15 +35,18 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int $idSalesOrder
+     * @param int $idSalesShipment
      *
      * @return void
      */
-    public function updateSalesOrderItemFkShipment(ItemTransfer $itemTransfer, int $idSalesOrder): void
+    public function updateSalesOrderItemFkShipment(ItemTransfer $itemTransfer, int $idSalesShipment): void
     {
         $orderItemEntity = $this->getFactory()
-            ->createShipmentMapper()
-            ->mapItemTransferToSalesOrderItemEntity($itemTransfer, $idSalesOrder);
+            ->createSalesOrderItemQuery()
+            ->filterByIdSalesOrderItem($itemTransfer->getIdSalesOrderItem())
+            ->findOneOrCreate();
+
+        $orderItemEntity->setFkSalesShipment($idSalesShipment);
 
         $orderItemEntity->save();
     }

@@ -10,6 +10,9 @@ namespace Spryker\Zed\Sales\Business\Model\Order;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
+/**
+ * @deprecated Use Spryker\Zed\Sales\Business\Order\OrderReader instead.
+ */
 class OrderReader implements OrderReaderInterface
 {
     /**
@@ -18,13 +21,13 @@ class OrderReader implements OrderReaderInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface
+     * @var \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface
      */
     protected $orderHydrator;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface $orderHydrator
+     * @param \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface $orderHydrator
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,

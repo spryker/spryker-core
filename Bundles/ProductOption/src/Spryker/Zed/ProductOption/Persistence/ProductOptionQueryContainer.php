@@ -460,9 +460,9 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryTaxSetByIdProductOptionValueAndCountryIso2Codes(array $idProductOptionValues, array $countryIso2Codes): SpyProductOptionValueQuery
     {
         $idCountryList = $this->queryCountryListByIso2Codes($countryIso2Codes)
-        ->select([SpyCountryTableMap::COL_ID_COUNTRY])
-        ->find()
-        ->toArray();
+            ->select([SpyCountryTableMap::COL_ID_COUNTRY])
+            ->find()
+            ->toArray();
 
         return $this->getFactory()->createProductOptionValueQuery()
             ->filterByIdProductOptionValue($idProductOptionValues, Criteria::IN)

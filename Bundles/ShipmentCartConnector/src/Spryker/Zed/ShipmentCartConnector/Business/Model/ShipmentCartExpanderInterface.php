@@ -7,14 +7,11 @@
 
 namespace Spryker\Zed\ShipmentCartConnector\Business\Model;
 
-use Generated\Shared\Transfer\CartChangeTransfer;
+use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderInterface as ShipmentCartExpanderInterfaceWithMultiShippingAddress;
 
-interface ShipmentCartExpanderInterface
+/**
+ * @deprecated Use \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderInterface instead.
+ */
+interface ShipmentCartExpanderInterface extends ShipmentCartExpanderInterfaceWithMultiShippingAddress
 {
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    public function updateShipmentPrice(CartChangeTransfer $cartChangeTransfer);
 }

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ShipmentCartConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 
 interface ShipmentCartConnectorToShipmentFacadeInterface
 {
