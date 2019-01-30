@@ -21,7 +21,6 @@
         <property name="idMerchantAddress" type="int" />
         <property name="key" type="string" />
         <property name="fkCountry" type="int" />
-        <property name="fkRegion" type="int" />
         <property name="address1" type="string" />
         <property name="address2" type="string" />
         <property name="address3" type="string" />
