@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
+use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 
 interface QuoteItemMapperInterface
 {
@@ -44,4 +45,13 @@ interface QuoteItemMapperInterface
         QuoteTransfer $quoteTransfer,
         RestCartItemRequestTransfer $restCartItemRequestTransfer
     ): PersistentCartChangeQuantityTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
+     */
+    public function createRestQuoteRequestTransfer(
+        RestCartItemRequestTransfer $restCartItemRequestTransfer
+    ): RestQuoteRequestTransfer;
 }

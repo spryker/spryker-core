@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
+use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
 
 class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
 {
@@ -32,18 +33,27 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     protected $quoteCreator;
 
     /**
+     * @var \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface
+     */
+    protected $quoteItemMapper;
+
+    /**
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $cartReader
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemAdderInterface $quoteItemAdder
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface $quoteCreator
+     * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
      */
     public function __construct(
         QuoteReaderInterface $cartReader,
         QuoteItemAdderInterface $quoteItemAdder,
-        QuoteCreatorInterface $quoteCreator
+        QuoteCreatorInterface $quoteCreator,
+        QuoteItemMapperInterface $quoteItemMapper
+
     ) {
         $this->cartReader = $cartReader;
         $this->quoteItemAdder = $quoteItemAdder;
         $this->quoteCreator = $quoteCreator;
+        $this->quoteItemMapper = $quoteItemMapper;
     }
 
     /**
@@ -59,25 +69,34 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
 
         if (!$restCartItemRequestTransfer->getCartUuid()) {
             $quoteResponseTransfer = $this->quoteCreator->createQuote(
-                (new RestQuoteRequestTransfer())
-                    ->setQuote((new QuoteTransfer()))
-                    ->setCustomerReference($restCartItemRequestTransfer->getCustomerReference())
+                $this->quoteItemMapper->createRestQuoteRequestTransfer($restCartItemRequestTransfer)
             );
 
-            return $this->quoteItemAdder
-                ->add($restCartItemRequestTransfer->setCartUuid($quoteResponseTransfer->getQuoteTransfer()->getUuid()));
+            return $this->addItemToCart($quoteResponseTransfer, $restCartItemRequestTransfer);
         }
 
         $quoteResponseTransfer = $this->cartReader->findQuoteByUuid(
-            (new QuoteTransfer())->setUuid($restCartItemRequestTransfer->getCartUuid())
+            $this->quoteItemMapper->mapRestCartItemRequestTransferToQuoteTransfer($restCartItemRequestTransfer)
         );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
 
+        return $this->addItemToCart($quoteResponseTransfer, $restCartItemRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function addItemToCart(
+        QuoteResponseTransfer $quoteResponseTransfer,
+        RestCartItemRequestTransfer $restCartItemRequestTransfer
+    ) {
         return $this->quoteItemAdder
-            ->add($restCartItemRequestTransfer
-                ->setCartUuid($quoteResponseTransfer->getQuoteTransfer()->getUuid()));
+            ->add($restCartItemRequestTransfer->setCartUuid($quoteResponseTransfer->getQuoteTransfer()->getUuid()));
     }
 }

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
+use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 
 class QuoteItemMapper implements QuoteItemMapperInterface
 {
@@ -38,7 +39,7 @@ class QuoteItemMapper implements QuoteItemMapperInterface
         QuoteTransfer $quoteTransfer,
         RestCartItemRequestTransfer $restCartItemRequestTransfer
     ): PersistentCartChangeTransfer {
-        return $persistentCartChangeTransfer = (new PersistentCartChangeTransfer())
+        return (new PersistentCartChangeTransfer())
             ->setIdQuote($quoteTransfer->getIdQuote())
             ->addItem($restCartItemRequestTransfer->getCartItem())
             ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemRequestTransfer->getCustomerReference()));
@@ -54,9 +55,22 @@ class QuoteItemMapper implements QuoteItemMapperInterface
         QuoteTransfer $quoteTransfer,
         RestCartItemRequestTransfer $restCartItemRequestTransfer
     ): PersistentCartChangeQuantityTransfer {
-        return $persistentCartChangeTransfer = (new PersistentCartChangeQuantityTransfer())
+        return (new PersistentCartChangeQuantityTransfer())
             ->setIdQuote($quoteTransfer->getIdQuote())
             ->setItem($restCartItemRequestTransfer->getCartItem())
             ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemRequestTransfer->getCustomerReference()));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
+     */
+    public function createRestQuoteRequestTransfer(
+        RestCartItemRequestTransfer $restCartItemRequestTransfer
+    ): RestQuoteRequestTransfer {
+        return (new RestQuoteRequestTransfer())
+            ->setQuote((new QuoteTransfer()))
+            ->setCustomerReference($restCartItemRequestTransfer->getCustomerReference());
     }
 }
