@@ -51,7 +51,7 @@ class MerchantUpdateForm extends MerchantForm
             ->addNameField($builder)
             ->addEmailField($builder)
             ->addRegistrationNumberField($builder)
-            ->addContactPersonTitleField($builder)
+            ->addContactPersonTitleField($builder, $options[static::SALUTATION_CHOICES_OPTION])
             ->addContactPersonFirstNameField($builder)
             ->addContactPersonLastNameField($builder)
             ->addContactPersonPhoneField($builder)

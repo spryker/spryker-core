@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\MerchantGui\Communication\MerchantGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
  */
 class MerchantAddressForm extends AbstractType
 {

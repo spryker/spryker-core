@@ -23,6 +23,9 @@ use Spryker\Zed\MerchantGui\MerchantGuiDependencyProvider;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
+ */
 class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -61,7 +64,8 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createMerchantFormDataProvider(): MerchantFormDataProvider
     {
         return new MerchantFormDataProvider(
-            $this->getMerchantFacade()
+            $this->getMerchantFacade(),
+            $this->getConfig()
         );
     }
 

@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToCountryFacadeBridge;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
+ */
 class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COUNTRY = 'FACADE_COUNTRY';

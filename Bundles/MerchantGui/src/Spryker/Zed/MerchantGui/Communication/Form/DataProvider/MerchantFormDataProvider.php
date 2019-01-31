@@ -8,8 +8,10 @@
 namespace Spryker\Zed\MerchantGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\MerchantTransfer;
+use Spryker\Zed\MerchantGui\Communication\Form\MerchantForm;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantUpdateForm;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
+use Spryker\Zed\MerchantGui\MerchantGuiConfig;
 
 class MerchantFormDataProvider
 {
@@ -19,11 +21,20 @@ class MerchantFormDataProvider
     protected $merchantFacade;
 
     /**
-     * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface $merchantFacade
+     * @var \Spryker\Zed\MerchantGui\MerchantGuiConfig
      */
-    public function __construct(MerchantGuiToMerchantFacadeInterface $merchantFacade)
-    {
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface $merchantFacade
+     * @param \Spryker\Zed\MerchantGui\MerchantGuiConfig $config
+     */
+    public function __construct(
+        MerchantGuiToMerchantFacadeInterface $merchantFacade,
+        MerchantGuiConfig $config
+    ) {
         $this->merchantFacade = $merchantFacade;
+        $this->config = $config;
     }
 
     /**
@@ -50,10 +61,13 @@ class MerchantFormDataProvider
      */
     public function getOptions(?string $currentStatus = null): array
     {
-        $options = ['data_class' => MerchantTransfer::class];
+        $options = [
+            'data_class' => MerchantTransfer::class,
+            MerchantForm::SALUTATION_CHOICES_OPTION => $this->config->getSalutationChoices(),
+        ];
 
         if ($currentStatus !== null) {
-            $options = [
+            $options += [
                 MerchantUpdateForm::OPTION_STATUS_CHOICES => $this->merchantFacade->getNextStatuses($currentStatus),
             ];
         }
