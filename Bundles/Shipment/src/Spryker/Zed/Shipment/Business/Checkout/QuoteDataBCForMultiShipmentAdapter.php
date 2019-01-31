@@ -21,10 +21,6 @@ use Spryker\Shared\Shipment\ShipmentConstants;
 class QuoteDataBCForMultiShipmentAdapter implements QuoteDataBCForMultiShipmentAdapterInterface
 {
     /**
-     * @todo Check this logic and order saver logic.
-     */
-
-    /**
      * @deprecated Will be removed in next major release.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

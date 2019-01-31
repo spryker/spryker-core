@@ -162,7 +162,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function getCustomerOrder(OrderTransfer $orderTransfer)
     {
         return $this->getFactory()
-            ->createOrderHydrator()
+            ->createOrderHydratorStrategyResolver()
+            ->resolve()
             ->getCustomerOrder($orderTransfer);
     }
 

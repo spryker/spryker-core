@@ -19,6 +19,7 @@ use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator as OrderHydratorWithoutMultiShipping;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
@@ -31,7 +32,7 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
      *
      * @var \Spryker\Zed\Sales\Business\Order\OrderHydratorOrderDataBCForMultiShipmentAdapterInterface
      */
-    protected $quoteDataBCForMultiShipmentAdapter;
+    protected $orderDataBCForMultiShipmentAdapter;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
@@ -47,7 +48,41 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
     ) {
         parent::__construct($queryContainer, $omsFacade, $hydrateOrderPlugins);
 
-        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
+        $this->orderDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    protected function getOrderEntity(OrderTransfer $orderTransfer)
+    {
+        $orderTransfer->requireIdSalesOrder()
+            ->requireFkCustomer();
+
+        $orderEntity = $this->queryContainer
+            ->querySalesOrderDetailsWithoutShippingAddress($orderTransfer->getIdSalesOrder())
+            ->filterByFkCustomer($orderTransfer->getFkCustomer())
+            ->findOne();
+
+        if ($orderEntity === null) {
+            throw new InvalidSalesOrderException(sprintf(
+                'Order could not be found for ID %s and customer reference %s',
+                $orderTransfer->getIdSalesOrder(),
+                $orderTransfer->getCustomerReference()
+            ));
+        }
+
+        /**
+         * @deprecated Will be removed in next major release.
+         */
+        $orderEntity = $this->orderDataBCForMultiShipmentAdapter->adapt($orderEntity);
+        $orderEntity = $this->sanitizeOrderShipmentExpense($orderEntity);
+
+        return $orderEntity;
     }
 
     /**
@@ -63,11 +98,6 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
             ->querySalesOrderDetailsWithoutShippingAddress($idSalesOrder)
             ->findOne();
 
-        /**
-         * @deprecated Will be removed in next major release.
-         */
-        $orderEntity = $this->quoteDataBCForMultiShipmentAdapter->adapt($orderEntity);
-
         if ($orderEntity === null) {
             throw new InvalidSalesOrderException(
                 sprintf(
@@ -77,7 +107,36 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
             );
         }
 
+        /**
+         * @deprecated Will be removed in next major release.
+         */
+        $orderEntity = $this->orderDataBCForMultiShipmentAdapter->adapt($orderEntity);
+        $orderEntity = $this->sanitizeOrderShipmentExpense($orderEntity);
+
         return $this->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
+    }
+
+    /**
+     * @deprecated Will be removed in next major release.
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    protected function sanitizeOrderShipmentExpense(SpySalesOrder $orderEntity): ?SpySalesOrder
+    {
+        $orderExpensesCollection = $orderEntity->getExpenses();
+        foreach ($orderExpensesCollection as $key => $expenseEntity) {
+            if ($expenseEntity->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+                continue;
+            }
+
+            $orderExpensesCollection->offsetUnset($key);
+        }
+
+        return $orderEntity;
     }
 
     /**

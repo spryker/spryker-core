@@ -35,6 +35,7 @@
                 {% for expense in order.expenses %}
                     <div class="col-sm-12 row">
                         <div class="col-sm-11"><p>
+                            {# @deprecated Shipment expenses on order level will be removed in next major release. #}
                              {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' %}
                                 {{ 'Shipment' | trans }} - {{ expense.name }}
                              {% endif %}
