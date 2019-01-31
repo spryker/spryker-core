@@ -8,14 +8,14 @@
 namespace Spryker\Zed\SalesReclamation\Business;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\SalesReclamation\Business\SalesReclamationBusinessFactory getFactory()
+ * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface getRepository()
  */
 class SalesReclamationFacade extends AbstractFacade implements SalesReclamationFacadeInterface
 {
@@ -26,12 +26,12 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
      *
      * @param \Generated\Shared\Transfer\ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer
      *
-     * @return null|\Generated\Shared\Transfer\ReclamationTransfer
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function createReclamation(ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer): ?ReclamationTransfer
+    public function createReclamation(ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer): ReclamationTransfer
     {
         return $this->getFactory()
-            ->createReclamationCreator()
+            ->createReclamationWriter()
             ->createReclamation($reclamationCreateRequestTransfer);
     }
 
@@ -42,13 +42,13 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
      *
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return null|\Generated\Shared\Transfer\ReclamationTransfer
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function hydrateReclamationByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
+    public function closeReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
     {
         return $this->getFactory()
-            ->createReclamationHydrator()
-            ->hydrateByIdReclamation($reclamationTransfer);
+            ->createReclamationWriter()
+            ->closeReclamation($reclamationTransfer);
     }
 
     /**
@@ -60,25 +60,28 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function hydrateReclamationByOrder(OrderTransfer $orderTransfer): ReclamationTransfer
-    {
+    public function mapOrderTransferToReclamationTransfer(
+        OrderTransfer $orderTransfer,
+        ReclamationTransfer $reclamationTransfer
+    ): ReclamationTransfer {
         return $this->getFactory()
-            ->createReclamationHydrator()
-            ->hydrateByOrder($orderTransfer);
+            ->createReclamationMapper()
+            ->mapOrderTransferToReclamationTransfer($orderTransfer, $reclamationTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return void
+     * @throws \Spryker\Zed\SalesReclamation\Business\Exception\ReclamationNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function saveOrderReclamation(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function getReclamationById(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
     {
-        $this->getFactory()
-            ->createReclamationOrderSaver()
-            ->saveOrder($quoteTransfer, $saveOrderTransfer);
+        return $this->getFactory()->createReclamationReader()->getReclamationById($reclamationTransfer);
     }
 }
