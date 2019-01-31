@@ -209,13 +209,15 @@ class ShipmentGroupSaver implements ShipmentGroupSaverInterface
     {
         if ($priceMode === ShipmentConstants::PRICE_MODE_NET) {
             $shipmentExpenseTransfer->setUnitGrossPrice(0);
-            $shipmentExpenseTransfer->setSumGrossPrice(0);
+            $shipmentExpenseTransfer->setUnitPriceToPayAggregation(0);
+            $shipmentExpenseTransfer->setUnitPrice($price);
             $shipmentExpenseTransfer->setUnitNetPrice($price);
             return;
         }
 
+        $shipmentExpenseTransfer->setUnitPriceToPayAggregation(0);
         $shipmentExpenseTransfer->setUnitNetPrice(0);
-        $shipmentExpenseTransfer->setSumNetPrice(0);
+        $shipmentExpenseTransfer->setUnitPrice($price);
         $shipmentExpenseTransfer->setUnitGrossPrice($price);
     }
 
