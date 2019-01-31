@@ -5,12 +5,15 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/customer": "^7.16.1",
+    "spryker/kernel": "^3.31.0",
     "spryker/sales": "^8.18",
     "spryker/shipment": "^7.0",
+    "spryker/symfony": "^3.2.2"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
