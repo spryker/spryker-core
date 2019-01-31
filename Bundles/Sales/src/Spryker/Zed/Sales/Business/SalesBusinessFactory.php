@@ -190,7 +190,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderReaderWithMultiShippingAddress(
             $this->getQueryContainer(),
-            $this->createOrderHydratorStrategyResolver()->resolve()
+            $this->createOrderHydratorStrategyResolver()->resolve(),
+            $this->createOrderHydratorOrderDataBCForMultiShipmentAdapter()
         );
     }
 

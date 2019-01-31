@@ -37,18 +37,18 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
-     * @param \Spryker\Zed\Sales\Business\Order\OrderHydratorOrderDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
+     * @param \Spryker\Zed\Sales\Business\Order\OrderHydratorOrderDataBCForMultiShipmentAdapterInterface $orderDataBCForMultiShipmentAdapter
      * @param \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[] $hydrateOrderPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         SalesToOmsInterface $omsFacade,
-        OrderHydratorOrderDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter,
+        OrderHydratorOrderDataBCForMultiShipmentAdapterInterface $orderDataBCForMultiShipmentAdapter,
         array $hydrateOrderPlugins = []
     ) {
         parent::__construct($queryContainer, $omsFacade, $hydrateOrderPlugins);
 
-        $this->orderDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
+        $this->orderDataBCForMultiShipmentAdapter = $orderDataBCForMultiShipmentAdapter;
     }
 
     /**

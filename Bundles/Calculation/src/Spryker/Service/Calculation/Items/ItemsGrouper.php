@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Shipment\Items;
+namespace Spryker\Service\Calculation\Items;
 
 use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
@@ -27,13 +27,16 @@ class ItemsGrouper implements ItemsGrouperInterface
         $shipmentGroupTransfers = new ArrayObject();
 
         foreach ($itemTransfers as $itemTransfer) {
-            $this->assertRequiredShipment($itemTransfer);
+            $shipmentTransfer = $itemTransfer->getShipment();
+            if ($shipmentTransfer === null) {
+                continue;
+            }
 
-            $key = $this->getItemShipmentKey($itemTransfer->getShipment());
+            $key = $this->getItemShipmentKey($shipmentTransfer);
             if (!isset($shipmentGroupTransfers[$key])) {
                 $shipmentGroupTransfers[$key] = $this
                     ->createNewShipmentGroupTransfer()
-                    ->setShipment($itemTransfer->getShipment());
+                    ->setShipment($shipmentTransfer);
             }
 
             $shipmentGroupTransfers[$key]->addItem($itemTransfer);
@@ -43,28 +46,23 @@ class ItemsGrouper implements ItemsGrouperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
-    protected function assertRequiredShipment(ItemTransfer $itemTransfer): void
-    {
-        $itemTransfer->requireShipment();
-        $itemTransfer->getShipment()->requireMethod();
-        $itemTransfer->getShipment()->requireShippingAddress();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return string
      */
     protected function getItemShipmentKey(ShipmentTransfer $shipmentTransfer): string
     {
+        $idShipmentMethod = $shipmentTransfer->getMethod() !== null
+            ? $shipmentTransfer->getMethod()->getIdShipmentMethod()
+            : '';
+        $shippingAddressKey = $shipmentTransfer->getShippingAddress() !== null
+            ? $shipmentTransfer->getShippingAddress()->serialize()
+            : '';
+
         return sprintf(
             static::SHIPMENT_TRANSFER_KEY_PATTERN,
-            $shipmentTransfer->getMethod()->getIdShipmentMethod(),
-            $shipmentTransfer->getShippingAddress()->serialize(),
+            $idShipmentMethod,
+            $shippingAddressKey,
             $shipmentTransfer->getRequestedDeliveryDate()
         );
     }
