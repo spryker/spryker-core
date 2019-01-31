@@ -12,25 +12,30 @@
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/mail": "^4.0.0",
+    "spryker/money": "^2.0.0",
     "spryker/price-product": "^2.7.0",
     "spryker/product": "^6.8.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/store": "^1.5.0",
     "spryker/util-text": "^1.2.0",
     "spryker/util-validate": "^1.0.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/money": "^2.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/availability": "*",
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
+    "spryker/event": "*",
     "spryker/propel": "*",
-    "spryker/event": "*"
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/availability": "If you want use handler for availability_notification Event",
+    "spryker/event": "If you want to use availability_notification Event"
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\AvailabilityNotification\\Helper\\": "tests/SprykerTest/Zed/AvailabilityNotification/_support/Helper/"
     }
   },
   "autoload-dev": {
@@ -47,9 +52,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/availability": "If you want use handler for availability_notification Event",
-    "spryker/event": "If you want to use availability_notification Event"
   }
 }
