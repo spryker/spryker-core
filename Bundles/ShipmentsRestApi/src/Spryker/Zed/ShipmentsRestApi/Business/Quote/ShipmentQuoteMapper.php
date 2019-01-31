@@ -52,6 +52,9 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
             return $quoteTransfer;
         }
 
+        /**
+         * @todo Check what we should do with this code due to implement multiple shipment functionality.
+         */
         $shipmentTransfer = new ShipmentTransfer();
         $shipmentTransfer->setMethod($shipmentMethodTransfer)
             ->setShipmentSelection((string)$idShipmentMethod);
