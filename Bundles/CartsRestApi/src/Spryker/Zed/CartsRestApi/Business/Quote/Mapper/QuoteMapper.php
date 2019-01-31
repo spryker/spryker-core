@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote\Mapper;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
+use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Zed\CartsRestApi\CartsRestApiConfig;
 
 class QuoteMapper implements QuoteMapperInterface
@@ -31,6 +35,42 @@ class QuoteMapper implements QuoteMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteUpdateRequestTransfer
+     */
+    public function mapQuoteTransferToQuoteUpdateRequestTransfer(
+        QuoteTransfer $quoteTransfer
+    ): QuoteUpdateRequestTransfer {
+        return (new QuoteUpdateRequestTransfer())
+            ->fromArray($quoteTransfer->modifiedToArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $originalQuoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapOriginalQuoteTransferToQuoteTransfer(
+        QuoteTransfer $originalQuoteTransfer
+    ): QuoteTransfer {
+        return (new QuoteTransfer())
+            ->fromArray($originalQuoteTransfer->modifiedToArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer
+     */
+    public function mapQuoteTransferToQuoteUpdateRequestAttributesTransfer(
+        QuoteTransfer $quoteTransfer
+    ): QuoteUpdateRequestAttributesTransfer {
+        return (new QuoteUpdateRequestAttributesTransfer())
+            ->fromArray($quoteTransfer->modifiedToArray(), true);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -46,6 +86,22 @@ class QuoteMapper implements QuoteMapperInterface
             ->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote());
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $registeredCustomer
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
+     */
+    public function mapQuoteTransferToRestQuoteRequestTransfer(
+        QuoteTransfer $quoteTransfer,
+        CustomerTransfer $registeredCustomer
+    ): RestQuoteRequestTransfer {
+        return (new RestQuoteRequestTransfer())
+            ->setQuote($quoteTransfer)
+            ->setCustomerReference($registeredCustomer->getCustomerReference())
+            ->setQuoteUuid($quoteTransfer->getUuid());
     }
 
     /**

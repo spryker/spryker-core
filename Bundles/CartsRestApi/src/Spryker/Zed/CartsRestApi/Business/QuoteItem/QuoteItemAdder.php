@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;

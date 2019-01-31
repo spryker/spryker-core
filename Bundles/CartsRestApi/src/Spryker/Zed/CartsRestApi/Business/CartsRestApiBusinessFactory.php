@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CartsRestApi\Business;
 
+use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapper;
+use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreator;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteDeleter;
@@ -94,7 +96,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
         return new QuoteUpdater(
             $this->getPersistentCartFacade(),
             $this->getCartFacade(),
-            $this->createQuoteReader()
+            $this->createQuoteReader(),
+            $this->createQuoteMapper()
         );
     }
 
@@ -145,14 +148,22 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteReader(),
             $this->createQuoteItemMapper()
         );
-    }  
-    
+    }
+
     /**
      * @return \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface
      */
     public function createQuoteItemMapper(): QuoteItemMapperInterface
     {
         return new QuoteItemMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface
+     */
+    public function createQuoteMapper(): QuoteMapperInterface
+    {
+        return new QuoteMapper();
     }
 
     /**

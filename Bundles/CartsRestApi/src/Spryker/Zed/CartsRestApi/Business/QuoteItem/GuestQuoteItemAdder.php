@@ -8,9 +8,7 @@
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
@@ -48,7 +46,6 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
         QuoteItemAdderInterface $quoteItemAdder,
         QuoteCreatorInterface $quoteCreator,
         QuoteItemMapperInterface $quoteItemMapper
-
     ) {
         $this->cartReader = $cartReader;
         $this->quoteItemAdder = $quoteItemAdder;
