@@ -129,11 +129,11 @@ interface MerchantFacadeInterface
      *
      * @api
      *
-     * @param string|null $currentStatus
+     * @param string $currentStatus
      *
      * @return array
      */
-    public function getNextStatuses(?string $currentStatus = null): array;
+    public function getNextStatuses(string $currentStatus): array;
 
     /**
      * Specification:

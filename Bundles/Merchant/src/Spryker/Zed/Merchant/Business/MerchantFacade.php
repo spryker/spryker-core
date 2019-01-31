@@ -148,13 +148,13 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
      *
      * @api
      *
-     * @param string|null $currentStatus
+     * @param string $currentStatus
      *
      * @return array
      */
-    public function getNextStatuses(?string $currentStatus = null): array
+    public function getNextStatuses(string $currentStatus): array
     {
-        return ['waiting-for-approval' => 'Waiting for approval'];
+        return ['waiting-for-approval'];
     }
 
     /**

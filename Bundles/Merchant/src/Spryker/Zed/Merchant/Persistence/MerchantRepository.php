@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\Merchant\Persistence\MerchantPersistenceFactory getFactory()
@@ -20,22 +19,25 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class MerchantRepository extends AbstractRepository implements MerchantRepositoryInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idMerchant
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
     public function getMerchantById(int $idMerchant): ?MerchantTransfer
     {
+        return $this->findMerchantById($idMerchant);
+    }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function findMerchantById(int $idMerchant): ?MerchantTransfer
+    {
         $spyMerchant = $this->getFactory()
             ->createMerchantQuery()
             ->filterByIdMerchant($idMerchant)
-            ->useSpyMerchantAddressQuery(null, Criteria::LEFT_JOIN)
-                ->limit(1)
-            ->endUse()
             ->findOne();
 
         if (!$spyMerchant) {
@@ -48,15 +50,11 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $merchantEmail
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function getMerchantByEmail(string $merchantEmail): ?MerchantTransfer
+    public function findMerchantByEmail(string $merchantEmail): ?MerchantTransfer
     {
         $spyMerchant = $this->getFactory()
             ->createMerchantQuery()
@@ -73,10 +71,6 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
     public function getMerchants(): MerchantCollectionTransfer
@@ -100,10 +94,6 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $key
      *
      * @return bool
@@ -117,10 +107,6 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idMerchant
      *
      * @return \Generated\Shared\Transfer\MerchantAddressCollectionTransfer
@@ -148,15 +134,11 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idMerchantAddress
      *
      * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
      */
-    public function getMerchantAddressById(int $idMerchantAddress): ?MerchantAddressTransfer
+    public function findMerchantAddressById(int $idMerchantAddress): ?MerchantAddressTransfer
     {
         $spyMerchantAddress = $this->getFactory()
             ->createMerchantAddressQuery()
@@ -173,10 +155,6 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $key
      *
      * @return bool

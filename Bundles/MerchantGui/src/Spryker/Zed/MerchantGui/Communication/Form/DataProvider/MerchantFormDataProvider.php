@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\MerchantTransfer;
-use Spryker\Zed\MerchantGui\Communication\Form\MerchantForm;
+use Spryker\Zed\MerchantGui\Communication\Form\MerchantUpdateForm;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 
 class MerchantFormDataProvider
@@ -44,13 +44,15 @@ class MerchantFormDataProvider
     }
 
     /**
+     * @param string $currentStatus
+     *
      * @return array
      */
-    public function getOptions(): array
+    public function getOptions(string $currentStatus): array
     {
         return [
             'data_class' => MerchantTransfer::class,
-            MerchantForm::OPTION_STATUS_CHOICES => $this->merchantFacade->getNextStatuses(),
+            MerchantUpdateForm::OPTION_STATUS_CHOICES => $this->merchantFacade->getNextStatuses($currentStatus),
         ];
     }
 }

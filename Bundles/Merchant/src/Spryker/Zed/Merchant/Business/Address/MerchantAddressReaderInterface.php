@@ -14,13 +14,6 @@ interface MerchantAddressReaderInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
-     */
-    public function getMerchantAddressById(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
-     *
      * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
      */
     public function findMerchantAddressById(MerchantAddressTransfer $merchantAddressTransfer): ?MerchantAddressTransfer;

@@ -17,8 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class MerchantEntityManager extends AbstractEntityManager implements MerchantEntityManagerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @param int $idMerchant
      *
      * @return void
@@ -32,8 +30,6 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
@@ -57,8 +53,6 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantAddressTransfer
