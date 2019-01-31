@@ -23,7 +23,6 @@ class CartDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_ADD_ITEMS_REQUEST_EXPANDER = 'PLUGINS_ADD_ITEMS_REQUEST_EXPANDER';
     public const PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER = 'PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER';
     public const PLUGIN_QUOTE_ITEM_FINDER = 'PLUGIN_QUOTE_ITEMS_FINDER';
-    public const PLUGINS_CART_CHANGE_TRANSFER_ITEM_EXPANDER = 'PLUGINS_CART_CHANGE_TRANSFER_ITEM_EXPANDER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -39,7 +38,6 @@ class CartDependencyProvider extends AbstractDependencyProvider
         $container = $this->addQuoteItemFinderPlugin($container);
         $container = $this->addAddItemsRequestExpanderPlugins($container);
         $container = $this->addRemoveItemsRequestExpanderPlugins($container);
-        $container = $this->addCartChangeTransferItemExpanderPlugins($container);
 
         return $container;
     }
@@ -143,20 +141,6 @@ class CartDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addCartChangeTransferItemExpanderPlugins(Container $container): Container
-    {
-        $container[static::PLUGINS_CART_CHANGE_TRANSFER_ITEM_EXPANDER] = function () {
-            return $this->getCartChangeItemExpanderPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
      * @return \Spryker\Client\Cart\Dependency\Plugin\ItemCountPluginInterface
      */
     protected function getItemCountPlugin()
@@ -194,14 +178,6 @@ class CartDependencyProvider extends AbstractDependencyProvider
      * @return \Spryker\Client\CartExtension\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
      */
     protected function getRemoveItemsRequestExpanderPlugins()
-    {
-        return [];
-    }
-
-    /**
-     * @return \Spryker\Client\CartExtension\Dependency\Plugin\CartChangeItemExpanderPluginInterface[]
-     */
-    protected function getCartChangeItemExpanderPlugins(): array
     {
         return [];
     }
