@@ -107,8 +107,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      */
     public function hasPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): bool
     {
-        return $this->priceProductRepository
-            ->hasProductAbstractPricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
+        return $this->findPriceForProductAbstract($sku, $priceProductCriteriaTransfer) !== null;
     }
 
     /**
