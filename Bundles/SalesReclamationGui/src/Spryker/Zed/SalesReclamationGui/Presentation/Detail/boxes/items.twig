@@ -26,11 +26,11 @@
 
     {% block widget_title %}
         <h5>
-            Order
+            {{ 'Order' | trans }}
             <a href="{{ url('/sales/detail', {'id-sales-order': reclamation.order.idSalesOrder}) }}">
                 {{ reclamation.order.orderReference }}
             </a>
-            items:
+            {{ 'items' | trans }}:
         </h5>
     {% endblock %}
 
