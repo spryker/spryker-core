@@ -8,6 +8,8 @@
 namespace Spryker\Glue\CartsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleConfig;
+use Symfony\Component\HttpFoundation\Response;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
 
 class CartsRestApiConfig extends AbstractBundleConfig
 {
@@ -74,4 +76,48 @@ class CartsRestApiConfig extends AbstractBundleConfig
     {
         return static::GUEST_CART_RESOURCES;
     }
+
+    public const RESPONSE_UNEXPECTED_HTTP_STATUS = Response::HTTP_INTERNAL_SERVER_ERROR;
+    public const RESPONSE_ERROR_MAP = [
+        SharedCartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND => [
+            'status' => Response::HTTP_NOT_FOUND,
+            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND,
+        ],
+        SharedCartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND => [
+            'status' => Response::HTTP_NOT_FOUND,
+            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND,
+        ],
+        SharedCartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING => [
+            'status' => Response::HTTP_BAD_REQUEST,
+            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING,
+        ],
+        SharedCartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART => [
+            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART,
+        ],
+        SharedCartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART_ITEM => [
+            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART_ITEM,
+        ],
+        SharedCartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_CART => [
+            'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART,
+        ],
+        SharedCartsRestApiConfig::RESPONSE_CODE_MISSING_REQUIRED_PARAMETER => [
+            'status' => Response::HTTP_BAD_REQUEST,
+            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER,
+        ],
+        SharedCartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY => [
+            'status' => Response::HTTP_BAD_REQUEST,
+            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY,
+        ],
+        SharedCartsRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART => [
+            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART,
+        ],
+        SharedCartsRestApiConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED => [
+            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            'detail' => SharedCartsRestApiConfig::RESPONSE_MESSAGE_PRICE_MODE_CANT_BE_CHANGED,
+        ],
+    ];
 }

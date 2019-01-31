@@ -32,21 +32,21 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     }
 
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createRestResponse(): RestResponseInterface
+    {
+        return $this->restResourceBuilder->createRestResponse();
+    }
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $cartRestResource
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCartRestResponse(RestResourceInterface $cartRestResource): RestResponseInterface
     {
-        return $this->restResourceBuilder->createRestResponse()->addResource($cartRestResource);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createRestResponse(): RestResponseInterface
-    {
-        return $this->restResourceBuilder->createRestResponse();
+        return $this->createRestResponse()->addResource($cartRestResource);
     }
 
     /**
@@ -56,7 +56,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
      */
     public function createQuoteErrorResponse(QuoteResponseTransfer $quoteResponseTransfer): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this->createRestResponse();
         foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
             $restResponse->addError(
                 (new RestErrorMessageTransfer())
@@ -74,7 +74,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
      */
     public function createCartIdMissingErrorResponse(): RestResponseInterface
     {
-        return $this->restResourceBuilder->createRestResponse()->addError($this->createRestErrorMessageTransfer(
+        return $this->createRestResponse()->addError($this->createRestErrorMessageTransfer(
             CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING,
             Response::HTTP_BAD_REQUEST,
             CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
@@ -86,7 +86,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
      */
     public function createCartNotFoundErrorResponse(): RestResponseInterface
     {
-        return $this->restResourceBuilder->createRestResponse()->addError($this->createRestErrorMessageTransfer(
+        return $this->createRestResponse()->addError($this->createRestErrorMessageTransfer(
             CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND,
             Response::HTTP_NOT_FOUND,
             CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND
@@ -100,7 +100,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
      */
     public function createFailedCreatingCartErrorResponse(QuoteResponseTransfer $quoteResponseTransfer): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this->createRestResponse();
 
         if ($quoteResponseTransfer->getErrors()->count() === 0) {
             return $restResponse->addError($this->createRestErrorMessageTransfer(
@@ -136,7 +136,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
      */
     public function createFailedDeletingCartErrorResponse(): RestResponseInterface
     {
-        return $this->restResourceBuilder->createRestResponse()->addError($this->createRestErrorMessageTransfer(
+        return $this->createRestResponse()->addError($this->createRestErrorMessageTransfer(
             CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART,
             Response::HTTP_UNPROCESSABLE_ENTITY,
             CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART
@@ -150,7 +150,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
      */
     public function returnWithErrorResponse(array $errors): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this->createRestResponse();
 
         foreach ($errors as $messageTransfer) {
             $restErrorMessageTransfer = $this->createRestErrorMessageTransfer(
@@ -169,7 +169,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
      */
     public function createFailedDeletingCartItemErrorResponse(): RestResponseInterface
     {
-        return $this->restResourceBuilder->createRestResponse()->addError($this->createRestErrorMessageTransfer(
+        return $this->createRestResponse()->addError($this->createRestErrorMessageTransfer(
             CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART_ITEM,
             Response::HTTP_UNPROCESSABLE_ENTITY,
             CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART_ITEM
@@ -181,7 +181,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
      */
     public function createCartItemNotFoundErrorResponse(): RestResponseInterface
     {
-        return $this->restResourceBuilder->createRestResponse()->addError($this->createRestErrorMessageTransfer(
+        return $this->createRestResponse()->addError($this->createRestErrorMessageTransfer(
             CartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND,
             Response::HTTP_NOT_FOUND,
             CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND
@@ -193,11 +193,37 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
      */
     public function createMissingRequiredParameterErrorResponse(): RestResponseInterface
     {
-        return $this->restResourceBuilder->createRestResponse()->addError($this->createRestErrorMessageTransfer(
+        return $this->createRestResponse()->addError($this->createRestErrorMessageTransfer(
             CartsRestApiConfig::RESPONSE_CODE_MISSING_REQUIRED_PARAMETER,
             Response::HTTP_BAD_REQUEST,
             CartsRestApiConfig::EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER
         ));
+    }
+
+    /**
+     * @param string[] $errorCodes
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function buildErrorRestResponseBasedOnErrorCodes(array $errorCodes): RestResponseInterface
+    {
+        $restResponse = $this->createRestResponse();
+
+        foreach ($errorCodes as $errorCode) {
+            $errorSignature = CartsRestApiConfig::RESPONSE_ERROR_MAP[$errorCode] ?? [
+                    'status' => CartsRestApiConfig::RESPONSE_UNEXPECTED_HTTP_STATUS,
+                    'detail' => $errorCode,
+                ];
+
+            $restResponse->addError(
+                (new RestErrorMessageTransfer())
+                    ->setCode($errorCode)
+                    ->setDetail($errorSignature['detail'])
+                    ->setStatus($errorSignature['status'])
+            );
+        }
+
+        return $restResponse;
     }
 
     /**

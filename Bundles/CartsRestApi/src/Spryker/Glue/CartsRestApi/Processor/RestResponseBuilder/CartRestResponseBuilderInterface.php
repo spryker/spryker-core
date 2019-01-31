@@ -75,4 +75,11 @@ interface CartRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createMissingRequiredParameterErrorResponse(): RestResponseInterface;
+
+    /**
+     * @param string[] $errorCodes
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function buildErrorRestResponseBasedOnErrorCodes(array $errorCodes): RestResponseInterface;
 }

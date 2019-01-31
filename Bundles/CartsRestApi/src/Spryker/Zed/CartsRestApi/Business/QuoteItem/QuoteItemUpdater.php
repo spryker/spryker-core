@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
+use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
 
 class QuoteItemUpdater implements QuoteItemUpdaterInterface
@@ -28,15 +29,23 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
     protected $cartReader;
 
     /**
+     * @var \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface
+     */
+    protected $quoteItemMapper;
+
+    /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $cartReader
+     * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
-        QuoteReaderInterface $cartReader
+        QuoteReaderInterface $cartReader,
+        QuoteItemMapperInterface $quoteItemMapper
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->cartReader = $cartReader;
+        $this->quoteItemMapper = $quoteItemMapper;
     }
 
     /**
@@ -52,19 +61,17 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
             ->requireCartItem();
 
         $quoteResponseTransfer = $this->cartReader->findQuoteByUuid(
-            (new QuoteTransfer())
-                ->setUuid($restCartItemRequestTransfer->getCartUuid())
-                ->setCustomerReference($restCartItemRequestTransfer->getCustomerReference())
+            $this->quoteItemMapper->mapRestCartItemRequestTransferToQuoteTransfer($restCartItemRequestTransfer)
         );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
 
-        $persistentCartChangeQuantityTransfer = (new PersistentCartChangeQuantityTransfer())
-            ->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote())
-            ->setItem($restCartItemRequestTransfer->getCartItem())
-            ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemRequestTransfer->getCustomerReference()));
+        $persistentCartChangeQuantityTransfer = $this->quoteItemMapper->createPersistentCartChangeQuantityTransfer(
+            $quoteResponseTransfer->getQuoteTransfer(),
+            $restCartItemRequestTransfer
+        );
 
         return $this->persistentCartFacade->changeItemQuantity($persistentCartChangeQuantityTransfer);
     }

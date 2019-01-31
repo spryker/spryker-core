@@ -19,6 +19,8 @@ use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUuidWriter;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUuidWriterInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\GuestQuoteItemAdder;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\GuestQuoteItemAdderInterface;
+use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapper;
+use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemAdder;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemAdderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemDeleter;
@@ -103,7 +105,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteItemAdder(
             $this->getPersistentCartFacade(),
-            $this->createQuoteReader()
+            $this->createQuoteReader(),
+            $this->createQuoteItemMapper()
         );
     }
 
@@ -126,7 +129,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteItemDeleter(
             $this->getPersistentCartFacade(),
-            $this->createQuoteReader()
+            $this->createQuoteReader(),
+            $this->createQuoteItemMapper()
         );
     }
 
@@ -137,8 +141,17 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteItemUpdater(
             $this->getPersistentCartFacade(),
-            $this->createQuoteReader()
+            $this->createQuoteReader(),
+            $this->createQuoteItemMapper()
         );
+    }  
+    
+    /**
+     * @return \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface
+     */
+    public function createQuoteItemMapper(): QuoteItemMapperInterface
+    {
+        return new QuoteItemMapper();
     }
 
     /**
