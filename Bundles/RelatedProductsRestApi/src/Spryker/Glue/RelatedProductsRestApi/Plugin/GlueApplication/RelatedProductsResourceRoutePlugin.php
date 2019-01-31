@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\RelatedProductsRestApi\Plugin;
+namespace Spryker\Glue\RelatedProductsRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;

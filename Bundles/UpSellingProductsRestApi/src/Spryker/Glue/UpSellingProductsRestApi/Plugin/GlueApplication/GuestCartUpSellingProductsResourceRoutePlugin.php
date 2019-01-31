@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\UpSellingProductsRestApi\Plugin;
+namespace Spryker\Glue\UpSellingProductsRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
