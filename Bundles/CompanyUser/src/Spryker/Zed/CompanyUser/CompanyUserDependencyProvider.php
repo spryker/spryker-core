@@ -138,6 +138,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::PLUGINS_COMPANY_USER_PRE_SAVE_CHECK] = function () {
             return $this->getCompanyUserSavePreCheckPlugins();
         };
+
         return $container;
     }
 
