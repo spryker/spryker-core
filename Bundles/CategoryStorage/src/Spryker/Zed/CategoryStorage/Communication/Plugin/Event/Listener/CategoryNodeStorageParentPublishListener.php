@@ -40,6 +40,12 @@ class CategoryNodeStorageParentPublishListener extends AbstractPlugin implements
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE);
 
+        $originalParentCategoryNodeIds = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransfersOriginalValues($eventTransfers, SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE);
+
+        $parentCategoryNodeIds = array_unique(array_merge($parentCategoryNodeIds, $originalParentCategoryNodeIds));
+
         $this->getFacade()->publish($parentCategoryNodeIds);
     }
 }
