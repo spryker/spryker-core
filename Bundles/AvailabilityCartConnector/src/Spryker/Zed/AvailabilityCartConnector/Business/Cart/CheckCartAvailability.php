@@ -139,7 +139,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int $currentItemQuantity
+     * @param float $currentItemQuantity
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return bool
