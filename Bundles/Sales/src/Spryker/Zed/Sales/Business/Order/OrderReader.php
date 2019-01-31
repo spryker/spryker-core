@@ -20,12 +20,14 @@ class OrderReader extends OrderReaderWithoutMultiShippingAddress
      */
     public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer
     {
-        try {
-            $orderEntity = $this->orderHydrator->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
-        } catch (InvalidSalesOrderException $exception) {
+        $orderEntity = $this->queryContainer
+            ->querySalesOrderDetailsWithoutShippingAddress($idSalesOrder)
+            ->findOne();
+
+        if (!$orderEntity) {
             return null;
         }
 
-        return $orderEntity;
+        return $this->orderHydrator->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
     }
 }
