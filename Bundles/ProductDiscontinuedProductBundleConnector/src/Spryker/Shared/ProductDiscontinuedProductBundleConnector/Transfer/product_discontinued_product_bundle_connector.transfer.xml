@@ -25,5 +25,4 @@
             <property name="productDiscontinued" type="ProductDiscontinued"/>
             <property name="isSuccessful" type="bool"/>
         </transfer>
-
 </transfers>
