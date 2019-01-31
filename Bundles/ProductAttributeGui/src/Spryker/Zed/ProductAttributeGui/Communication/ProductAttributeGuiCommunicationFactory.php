@@ -202,16 +202,6 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @deprecated Use the FQCN directly.
-     *
-     * @return string
-     */
-    protected function createAttributeCsrfType()
-    {
-        return AttributeCsrfForm::class;
-    }
-
-    /**
      * @return \Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface
      */
     public function getProductAttributeQueryContainer()

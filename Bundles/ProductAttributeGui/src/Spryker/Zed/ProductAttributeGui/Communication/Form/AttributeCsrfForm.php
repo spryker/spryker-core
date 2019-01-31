@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductAttributeGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -17,6 +16,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AttributeCsrfForm extends AbstractType
 {
+    public const CSRF_TOKEN_NAME = 'csrf-token';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -24,22 +25,10 @@ class AttributeCsrfForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $csrfTokenName = $this->getConfig()->getCrsfTokenName();
-
         $resolver->setDefaults([
             'csrf_protection' => true,
-            'csrf_field_name' => $csrfTokenName,
+            'csrf_field_name' => static::CSRF_TOKEN_NAME,
         ]);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return void
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
     }
 
     /**
