@@ -52,8 +52,6 @@ class ShipmentFormCreate extends AbstractType
         $resolver->setRequired(static::OPTION_SHIPMENT_METHOD_CHOICES);
         $resolver->setRequired(AddressForm::OPTION_SALUTATION_CHOICES);
         $resolver->setRequired(ItemForm::OPTION_ORDER_ITEMS_CHOICES);
-
-//        $resolver->setDefault(static::OPTION_SHIPMENT_ITEMS_CHOICES, []);
     }
 
     /**
@@ -96,7 +94,6 @@ class ShipmentFormCreate extends AbstractType
         $builder->add(static::FIELD_ID_SHIPMENT_ADDRESS, ChoiceType::class, [
             'label' => 'Delivery Address',
             'choices' => array_flip($options),
-            'choices_as_values' => true,
             'required' => false,
             'placeholder' => false,
             'constraints' => [

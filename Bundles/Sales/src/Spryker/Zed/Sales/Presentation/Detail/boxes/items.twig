@@ -23,7 +23,7 @@
     {% block widget_title -%}
         <h5>{{ 'Order Items' | trans }}</h5>
         <div class="pull-right">
-            <a class="btn btn-default" href="#">{{ 'Create Shipment' | trans }}</a>
+            <a class="btn btn-default" href="{{ url('/shipment-gui/create', {'id-sales-order': order.idSalesOrder}) }}">{{ 'Create Shipment' | trans }}</a>
         </div>
     {% endblock %}
     {% block widget_content %}

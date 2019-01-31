@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\Shipment\Business\Model\Transformer;
 
-use ArrayObject;
-use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
-use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
 class ShipmentTransformer implements ShipmentTransformerInterface
@@ -33,7 +31,7 @@ class ShipmentTransformer implements ShipmentTransformerInterface
     }
 
     /**
-     * @param \Orm\Zed\Shipment\Persistence\SpySalesShipment $shipmentEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $shipmentEntity
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
@@ -41,13 +39,6 @@ class ShipmentTransformer implements ShipmentTransformerInterface
     {
         $shipmentTransfer = (new ShipmentTransfer())
             ->fromArray($shipmentEntity->toArray(), true);
-           /* ->setCarrier()
-            ->setMethod()
-            ->setShipmentSelection()
-            ->setRequestedDeliveryDate()
-            ->setShippingAddress($this->createAddressTransfer($shipmentEntity->getOrder()->get))
-            ->setExpense()
-            ->setCarrier();*/
 
         return $shipmentTransfer;
     }
@@ -76,7 +67,7 @@ class ShipmentTransformer implements ShipmentTransformerInterface
      *
      * @return string|null
      */
-    protected function findShipmentCarrierName(SpyShipmentMethod $shipmentMethodEntity)
+    protected function findShipmentCarrierName(SpyShipmentMethod $shipmentMethodEntity): ?string
     {
         /** @var \Orm\Zed\Shipment\Persistence\SpyShipmentCarrier|null $shipmentCarrierEntity */
         $shipmentCarrierEntity = $shipmentMethodEntity->getShipmentCarrier();

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 
 class ShipmentGuiToSalesBridge implements ShipmentGuiToSalesInterface
 {
@@ -28,7 +27,9 @@ class ShipmentGuiToSalesBridge implements ShipmentGuiToSalesInterface
     /**
      * @api
      *
-     * @inheritdoc
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
      */
     public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer
     {

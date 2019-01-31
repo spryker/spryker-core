@@ -228,7 +228,7 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
             ->filterByIdSalesShipment($idSalesShipment);
     }
 
-        /**
+    /**
      * @api
      *
      * @param string $carrierName

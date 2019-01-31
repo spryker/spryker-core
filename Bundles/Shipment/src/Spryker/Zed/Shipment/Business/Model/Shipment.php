@@ -9,9 +9,7 @@ namespace Spryker\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentTransformerInterface;
@@ -72,7 +70,7 @@ class Shipment implements ShipmentInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $shipmentEntity
-     * @param \Generated\Shared\Transfer\SpySalesShipmentEntityTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
@@ -90,15 +88,13 @@ class Shipment implements ShipmentInterface
             )
         );
 
-        $shipmentTransfer->setMethodName($shipmentEntity->getName());
-
         return $shipmentTransfer;
     }
 
     /**
      * @param int $idSalesShipment
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     public function findShipmentItemsByIdSalesShipment(int $idSalesShipment): ObjectCollection
     {

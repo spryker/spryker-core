@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressForm;
@@ -62,7 +63,6 @@ class AbstractShipmentFormDataProvider
         return [
             ShipmentFormCreate::OPTION_SHIPMENT_ADDRESS_CHOICES => $this->getShippingAddressesOptions($orderTransfer),
             ShipmentFormCreate::OPTION_SHIPMENT_METHOD_CHOICES => $this->getShippingMethodsOptions(),
-//            ShipmentFormCreate::OPTION_SHIPMENT_ITEMS_CHOICES   => $this->getShipmentItemsOptions($idSalesShipment),
             AddressForm::OPTION_SALUTATION_CHOICES => $this->getSalutationOptions(),
             ItemForm::OPTION_ORDER_ITEMS_CHOICES => $this->getOrderItemsOptions($orderTransfer),
         ];
@@ -99,21 +99,31 @@ class AbstractShipmentFormDataProvider
     {
         $addresses = ['New address'];
 
-        if (!$orderTransfer->getCustomer()) {
+        if ($orderTransfer->getCustomer() === null) {
             return $addresses;
         }
         $customerTransfer = $orderTransfer->getCustomer();
         $addressesTransfer = $this->customerFacade->getAddresses($customerTransfer);
 
         foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
-            $addresses[$addressTransfer->getIdCustomerAddress()] = implode(', ', [
-                $addressTransfer->getSalutation() . ' ' . $addressTransfer->getFirstName() . ' ' . $addressTransfer->getLastName(),
-                $addressTransfer->getAddress1() . ' ' . $addressTransfer->getAddress2(),
-                $addressTransfer->getZipCode() . ' ' . $addressTransfer->getCity(),
-            ]);
+            $addresses[$addressTransfer->getIdCustomerAddress()] = $this->getAddressLabel($addressTransfer);
         }
 
         return $addresses;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return string
+     */
+    protected function getAddressLabel(AddressTransfer $addressTransfer): string
+    {
+        return implode(', ', [
+            $addressTransfer->getSalutation() . ' ' . $addressTransfer->getFirstName() . ' ' . $addressTransfer->getLastName(),
+            $addressTransfer->getAddress1() . ' ' . $addressTransfer->getAddress2(),
+            $addressTransfer->getZipCode() . ' ' . $addressTransfer->getCity(),
+        ]);
     }
 
     /**

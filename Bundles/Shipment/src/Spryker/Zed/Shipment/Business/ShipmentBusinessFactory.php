@@ -24,12 +24,14 @@ use Spryker\Zed\Shipment\Business\Model\MethodPrice;
 use Spryker\Zed\Shipment\Business\Model\Shipment;
 use Spryker\Zed\Shipment\Business\Model\ShipmentCarrierReader;
 use Spryker\Zed\Shipment\Business\Model\ShipmentGroupSaver;
+use Spryker\Zed\Shipment\Business\Model\ShipmentGroupSaverInterface;
+use Spryker\Zed\Shipment\Business\Model\ShipmentInterface;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
+use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentTransformer;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentTransformerInterface;
-use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
@@ -82,7 +84,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Shipment\Business\Model\ShipmentInterface
      */
-    public function createShipment()
+    public function createShipment(): ShipmentInterface
     {
         return new Shipment(
             $this->getQueryContainer(),
@@ -374,13 +376,17 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentGroupSaver
+     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentGroupSaverInterface
      */
-    public function createShipmentGroupSaver()
+    public function createShipmentGroupSaver(): ShipmentGroupSaverInterface
     {
         return new ShipmentGroupSaver(
             $this->getEntityManager(),
-            $this->getSalesFacade()
+            $this->getSalesFacade(),
+            $this->getQueryContainer(),
+            $this->getStoreFacade(),
+            $this->createShipmentMethodTransformer(),
+            $this->getCurrencyFacade()
         );
     }
 }

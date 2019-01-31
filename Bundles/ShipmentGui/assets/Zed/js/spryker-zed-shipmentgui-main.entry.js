@@ -37,13 +37,14 @@ $(document).ready(function() {
         }
     });
 
-    $('#shipment_form_create_id_shipping_address').change(function () {
+    var addressForm = $('#shipment_form_create_id_shipping_address');
+    addressForm.change(function () {
         var value = $('#shipment_form_create_id_shipping_address option:selected').val();
 
         if (value == false) {
-            $('#shipment_form_create_shipping_address').show();
+            addressForm.show();
         } else {
-            $('#shipment_form_create_shipping_address').hide();
+            addressForm.hide();
         }
     });
 });

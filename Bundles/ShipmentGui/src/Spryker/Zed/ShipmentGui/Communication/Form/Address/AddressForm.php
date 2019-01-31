@@ -186,8 +186,6 @@ class AddressForm extends AbstractType
                 'required' => true,
                 'label' => 'Country',
                 'placeholder' => '-select-',
-                'choices_as_values' => true,
-//                'choices' => array_flip($options),
                 'constraints' => [
                     new NotBlank(),
                 ],

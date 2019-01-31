@@ -104,7 +104,7 @@ class ShipmentMethodTransformer implements ShipmentMethodTransformerInterface
     {
         /** @var \Orm\Zed\Shipment\Persistence\SpyShipmentCarrier|null $shipmentCarrierEntity */
         $shipmentCarrierEntity = $shipmentMethodEntity->getShipmentCarrier();
-        if (!$shipmentCarrierEntity) {
+        if ($shipmentCarrierEntity === null) {
             return null;
         }
 
