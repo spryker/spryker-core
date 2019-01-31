@@ -5,7 +5,7 @@
           namespace="Orm\Zed\ProductDiscontinuedStorage\Persistence"
           package="src.Orm.Zed.ProductDiscontinuedStorage.Persistence">
 
-    <table name="spy_product_discontinued_storage">
+    <table name="spy_product_discontinued_storage" identifierQuoting="true">
         <column name="id_product_discontinued_storage" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_discontinued" type="integer" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>

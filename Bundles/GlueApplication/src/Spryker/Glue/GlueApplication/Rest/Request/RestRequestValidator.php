@@ -9,12 +9,14 @@ namespace Spryker\Glue\GlueApplication\Rest\Request;
 
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class RestRequestValidator implements RestRequestValidatorInterface
 {
     protected const EXCEPTION_MESSAGE_POST_DATA_IS_INVALID = 'Post data is invalid.';
+    protected const EXCEPTION_MESSAGE_RESOURCE_TYPE_IS_INVALID = 'Invalid type.';
 
     /**
      * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
@@ -63,6 +65,13 @@ class RestRequestValidator implements RestRequestValidatorInterface
             return null;
         }
 
+        if (!$this->isResourceTypeValid($restRequest)) {
+            $restErrorMessageTransfer = new RestErrorMessageTransfer();
+            $restErrorMessageTransfer->setDetail(static::EXCEPTION_MESSAGE_RESOURCE_TYPE_IS_INVALID);
+
+            return (new RestErrorCollectionTransfer())->addRestError($restErrorMessageTransfer);
+        }
+
         $restResource = $restRequest->getResource();
         if (!$restResource->getAttributes()) {
             $restErrorMessageTransfer = new RestErrorMessageTransfer();
@@ -84,6 +93,12 @@ class RestRequestValidator implements RestRequestValidatorInterface
         Request $httpRequest,
         RestRequestInterface $restRequest
     ): ?RestErrorCollectionTransfer {
+        foreach ($this->validateRestRequestPlugins as $validateRestRequestPlugins) {
+            $restErrorMessageTransfer = $validateRestRequestPlugins->validate($httpRequest, $restRequest);
+            if ($restErrorMessageTransfer !== null) {
+                return (new RestErrorCollectionTransfer())->addRestError($restErrorMessageTransfer);
+            }
+        }
 
         foreach ($this->restRequestValidatorPlugins as $restRequestValidatorPlugin) {
             $restErrorCollectionTransfer = $restRequestValidatorPlugin->validate($httpRequest, $restRequest);
@@ -92,13 +107,16 @@ class RestRequestValidator implements RestRequestValidatorInterface
             }
         }
 
-        foreach ($this->validateRestRequestPlugins as $validateRestRequestPlugins) {
-            $restErrorMessageTransfer = $validateRestRequestPlugins->validate($httpRequest, $restRequest);
-            if ($restErrorMessageTransfer !== null) {
-                return (new RestErrorCollectionTransfer())->addRestError($restErrorMessageTransfer);
-            }
-        }
-
         return null;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
+    protected function isResourceTypeValid(RestRequestInterface $restRequest): bool
+    {
+        return $restRequest->getResource()->getType() === $restRequest->getHttpRequest()->attributes->get(RestResourceInterface::RESOURCE_TYPE);
     }
 }

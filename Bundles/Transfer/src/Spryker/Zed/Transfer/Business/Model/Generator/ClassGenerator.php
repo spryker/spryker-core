@@ -36,13 +36,12 @@ class ClassGenerator implements GeneratorInterface
     }
 
     /**
-     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface $definition
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface $definition
      *
      * @return string
      */
     public function generate(DefinitionInterface $definition)
     {
-        /** @var \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface $definition */
         $twigData = $this->getTwigData($definition);
         $fileName = $definition->getName() . '.php';
         $fileContent = $this->twig->render('class.php.twig', $twigData);

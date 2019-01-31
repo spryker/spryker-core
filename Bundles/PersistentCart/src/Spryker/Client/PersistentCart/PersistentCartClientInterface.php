@@ -27,7 +27,7 @@ interface PersistentCartClientInterface
 
     /**
      * Specification:
-     * - Create quote in database
+     * - Creates quote in database
      *
      * @api
      *
@@ -36,6 +36,20 @@ interface PersistentCartClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Creates quote in database.
+     * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createQuoteWithReloadedItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:

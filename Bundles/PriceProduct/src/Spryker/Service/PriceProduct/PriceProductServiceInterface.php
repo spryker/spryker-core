@@ -52,4 +52,18 @@ interface PriceProductServiceInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function resolveProductPricesByPriceProductFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array;
+
+    /**
+     * Specification:
+     * - Merges product concrete prices with its product abstract prices.
+     * - Overrides product abstract prices with the existing product concrete prices.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function mergeConcreteAndAbstractPrices(array $abstractPriceProductTransfers, array $concretePriceProductTransfers): array;
 }

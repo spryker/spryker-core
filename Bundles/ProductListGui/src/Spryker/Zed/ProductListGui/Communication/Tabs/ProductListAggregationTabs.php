@@ -37,7 +37,7 @@ class ProductListAggregationTabs extends AbstractTabs
             ->addProductListProductConcreteRelationTab($tabsViewTransfer)
             ->setFooter($tabsViewTransfer);
 
-        $tabsViewTransfer->setIsNavigable(false);
+        $tabsViewTransfer->setIsNavigable(true);
 
         return $tabsViewTransfer;
     }
@@ -47,7 +47,7 @@ class ProductListAggregationTabs extends AbstractTabs
      *
      * @return $this
      */
-    protected function addGeneralInformationTab(TabsViewTransfer $tabsViewTransfer): self
+    protected function addGeneralInformationTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
@@ -65,7 +65,7 @@ class ProductListAggregationTabs extends AbstractTabs
      *
      * @return $this
      */
-    protected function addProductListCategoryRelationTab(TabsViewTransfer $tabsViewTransfer): self
+    protected function addProductListCategoryRelationTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
@@ -83,7 +83,7 @@ class ProductListAggregationTabs extends AbstractTabs
      *
      * @return $this
      */
-    protected function addProductListProductConcreteRelationTab(TabsViewTransfer $tabsViewTransfer): self
+    protected function addProductListProductConcreteRelationTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer

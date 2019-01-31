@@ -73,7 +73,8 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getCountryFacade(),
             $this->getLocaleFacade(),
-            $this->createCustomerExpander()
+            $this->createCustomerExpander(),
+            $this->getRepository()
         );
     }
 
