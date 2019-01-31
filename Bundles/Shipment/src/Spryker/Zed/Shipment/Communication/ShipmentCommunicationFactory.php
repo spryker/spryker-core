@@ -14,6 +14,8 @@ use Spryker\Zed\Shipment\Communication\Form\CarrierForm;
 use Spryker\Zed\Shipment\Communication\Form\DataProvider\CarrierFormDataProvider;
 use Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider;
 use Spryker\Zed\Shipment\Communication\Form\MethodForm;
+use Spryker\Zed\Shipment\Communication\Order\SalesOrderDataBCForMultiShipmentAdapter;
+use Spryker\Zed\Shipment\Communication\Order\SalesOrderDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\Shipment\Communication\Table\MethodTable;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
@@ -133,5 +135,15 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     public function getShipmentService(): ShipmentServiceInterface
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::SERVICE_SHIPMENT);
+    }
+
+    /**
+     * @deprecated Will be removed in next major release.
+     *
+     * @return \Spryker\Zed\Shipment\Communication\Order\SalesOrderDataBCForMultiShipmentAdapterInterface
+     */
+    public function createSalesOrderDataBCForMultiShipmentAdapter(): SalesOrderDataBCForMultiShipmentAdapterInterface
+    {
+        return new SalesOrderDataBCForMultiShipmentAdapter();
     }
 }

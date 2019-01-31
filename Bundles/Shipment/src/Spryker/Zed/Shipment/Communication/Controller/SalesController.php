@@ -28,8 +28,11 @@ class SalesController extends AbstractController
         $orderTransfer = $request->request->get('orderTransfer');
 
         /**
-         * @todo Add order data adapter here.
+         * @deprecated Will be removed in next major release.
          */
+        $orderTransfer = $this->getFactory()
+            ->createSalesOrderDataBCForMultiShipmentAdapter()
+            ->adapt($orderTransfer);
 
         $shipmentGroups = $this->getFactory()->getShipmentService()->groupItemsByShipment($orderTransfer->getItems());
 

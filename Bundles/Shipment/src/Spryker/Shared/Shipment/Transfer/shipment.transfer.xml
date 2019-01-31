@@ -129,4 +129,5 @@
         <property name="shipment" type="Shipment" />
         <property name="items" type="Item[]" singular="item" />
     </transfer>
+
 </transfers>
