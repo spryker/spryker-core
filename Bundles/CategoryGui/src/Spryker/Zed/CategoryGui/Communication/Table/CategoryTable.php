@@ -180,37 +180,84 @@ class CategoryTable extends AbstractTable
      */
     protected function createActionColumn(SpyCategory $item): array
     {
-        $urls = [];
+        return [
+            $this->generateAssignProductsButton($item),
+            $this->generateEditCategoryButton($item),
+            $this->generateViewCategoryButton($item),
+            $this->generateCategoryRemoveButton($item),
+            $this->generateCategoryResortButton($item),
+            $this->generateAddCategoryToNodeButton($item),
+        ];
+    }
 
-        $urls[] = $this->generateViewButton(
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $item
+     *
+     * @return string
+     */
+    protected function generateAssignProductsButton(SpyCategory $item): string
+    {
+        return $this->generateViewButton(
             Url::generate('/product-category/assign', [
                 CategoryConstants::PARAM_ID_CATEGORY => $item->getIdCategory(),
             ]),
             'Assign products'
         );
+    }
 
-        $urls[] = $this->generateEditButton(
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $item
+     *
+     * @return string
+     */
+    protected function generateEditCategoryButton(SpyCategory $item): string
+    {
+        return $this->generateEditButton(
             Url::generate('/category/edit', [
                 CategoryConstants::PARAM_ID_CATEGORY => $item->getIdCategory(),
             ]),
             'Edit'
         );
+    }
 
-        $urls[] = $this->generateViewButton(
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $item
+     *
+     * @return string
+     */
+    protected function generateViewCategoryButton(SpyCategory $item): string
+    {
+        return $this->generateViewButton(
             Url::generate('/category/view', [
                 CategoryConstants::PARAM_ID_CATEGORY => $item->getIdCategory(),
             ]),
             'View'
         );
+    }
 
-        $urls[] = $this->generateRemoveButton(
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $item
+     *
+     * @return string
+     */
+    protected function generateCategoryRemoveButton(SpyCategory $item): string
+    {
+        return $this->generateRemoveButton(
             Url::generate('/category/delete', [
                 CategoryConstants::PARAM_ID_CATEGORY => $item->getIdCategory(),
             ]),
             'Delete'
         );
+    }
 
-        $urls[] = $this->generateViewButton(
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $item
+     *
+     * @return string
+     */
+    protected function generateCategoryResortButton(SpyCategory $item): string
+    {
+        return $this->generateViewButton(
             Url::generate(
                 '/category/re-sort',
                 [
@@ -219,8 +266,16 @@ class CategoryTable extends AbstractTable
             ),
             'Re-sort child categories'
         );
+    }
 
-        $urls[] = $this->generateViewButton(
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $item
+     *
+     * @return string
+     */
+    protected function generateAddCategoryToNodeButton(SpyCategory $item): string
+    {
+        return $this->generateViewButton(
             Url::generate(
                 '/category/create',
                 [
@@ -229,7 +284,5 @@ class CategoryTable extends AbstractTable
             ),
             'Add category to this node'
         );
-
-        return $urls;
     }
 }
