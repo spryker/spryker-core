@@ -56,7 +56,7 @@ class DataSetStepBrokerTransactionAware extends DataSetStepBroker
      */
     protected function beforeDataSetExecution()
     {
-        if ($this->count === 0) {
+        if ($this->count === 0 && !$this->propelConnection->inTransaction()) {
             $this->propelConnection->beginTransaction();
         }
 
