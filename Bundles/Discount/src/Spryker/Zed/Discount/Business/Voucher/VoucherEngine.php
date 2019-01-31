@@ -155,7 +155,7 @@ class VoucherEngine implements VoucherEngineInterface
 
     /**
      * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return int
      */
