@@ -230,7 +230,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     protected function createComparatorProvider()
     {
-        return new OperatorProvider();
+        return new OperatorProvider($this->createFloatRounder());
     }
 
     /**

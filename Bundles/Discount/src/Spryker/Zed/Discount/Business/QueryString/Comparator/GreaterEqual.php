@@ -8,11 +8,25 @@
 namespace Spryker\Zed\Discount\Business\QueryString\Comparator;
 
 use Generated\Shared\Transfer\ClauseTransfer;
+use Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 class GreaterEqual implements ComparatorInterface
 {
+    /**
+     * @var \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface $floatRounder
+     */
+    protected $floatRounder;
+
+    /**
+     * @param \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface $floatRounder
+     */
+    public function __construct(FloatRounderInterface $floatRounder)
+    {
+        $this->floatRounder = $floatRounder;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $withValue
@@ -23,7 +37,8 @@ class GreaterEqual implements ComparatorInterface
     {
         $this->isValidValue($withValue);
 
-        return $withValue >= $clauseTransfer->getValue();
+        return $this->floatRounder->round($withValue) >=
+            $this->floatRounder->round($clauseTransfer->getValue());
     }
 
     /**

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Discount\Business\QueryString;
 
+use Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\Contains;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\DoesNotContain;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\Equal;
@@ -20,6 +21,19 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\NotEqual;
 
 class OperatorProvider
 {
+    /**
+     * @var \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface
+     */
+    protected $floatRounder;
+
+    /**
+     * @param \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface $floatRounder
+     */
+    public function __construct(FloatRounderInterface $floatRounder)
+    {
+        $this->floatRounder = $floatRounder;
+    }
+
     /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface[]
      */
@@ -44,7 +58,7 @@ class OperatorProvider
      */
     protected function createContains()
     {
-        return new Contains();
+        return new Contains($this->floatRounder);
     }
 
     /**
@@ -52,7 +66,7 @@ class OperatorProvider
      */
     protected function createDoesNotContain()
     {
-        return new DoesNotContain();
+        return new DoesNotContain($this->floatRounder);
     }
 
     /**
@@ -60,7 +74,7 @@ class OperatorProvider
      */
     protected function createEqual()
     {
-        return new Equal();
+        return new Equal($this->floatRounder);
     }
 
     /**
@@ -84,7 +98,7 @@ class OperatorProvider
      */
     protected function createLess()
     {
-        return new Less();
+        return new Less($this->floatRounder);
     }
 
     /**
@@ -92,7 +106,7 @@ class OperatorProvider
      */
     protected function createLessEqual()
     {
-        return new LessEqual();
+        return new LessEqual($this->floatRounder);
     }
 
     /**
@@ -100,7 +114,7 @@ class OperatorProvider
      */
     protected function createGreater()
     {
-        return new Greater();
+        return new Greater($this->floatRounder);
     }
 
     /**
@@ -108,7 +122,7 @@ class OperatorProvider
      */
     protected function createGreaterEqual()
     {
-        return new GreaterEqual();
+        return new GreaterEqual($this->floatRounder);
     }
 
     /**
@@ -116,6 +130,6 @@ class OperatorProvider
      */
     protected function createNotEqual()
     {
-        return new NotEqual();
+        return new NotEqual($this->floatRounder);
     }
 }

@@ -8,11 +8,25 @@
 namespace Spryker\Zed\Discount\Business\QueryString\Comparator;
 
 use Generated\Shared\Transfer\ClauseTransfer;
+use Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 class DoesNotContain implements ComparatorInterface
 {
+    /**
+     * @var \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface
+     */
+    protected $floatRounder;
+
+    /**
+     * @param \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface $floatRounder
+     */
+    public function __construct(FloatRounderInterface $floatRounder)
+    {
+        $this->floatRounder = $floatRounder;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $withValue
@@ -22,8 +36,14 @@ class DoesNotContain implements ComparatorInterface
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
         $this->isValidValue($withValue);
+        $clauseValue = $clauseTransfer->getValue();
 
-        return (stripos(trim($withValue), $clauseTransfer->getValue()) === false);
+        if (is_numeric($withValue) && is_numeric($clauseValue)) {
+            $withValue = $this->floatRounder->round($withValue);
+            $clauseValue = $this->floatRounder->round($clauseValue);
+        }
+
+        return (stripos(trim($withValue), $clauseValue) === false);
     }
 
     /**

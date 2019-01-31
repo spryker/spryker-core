@@ -108,7 +108,7 @@ class VoucherEngine implements VoucherEngineInterface
 
     /**
      * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
@@ -134,7 +134,7 @@ class VoucherEngine implements VoucherEngineInterface
             return $messageCreateInfoTransfer;
         }
 
-        if ($codeCollisions === (int)round($discountVoucherTransfer->getQuantity())) {
+        if ($codeCollisions === $discountVoucherTransfer->getQuantity()) {
             $messageCreateInfoTransfer->setType(DiscountConstants::MESSAGE_TYPE_ERROR);
             $messageCreateInfoTransfer->setMessage('No available codes to generate.');
 
