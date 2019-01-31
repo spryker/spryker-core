@@ -95,19 +95,20 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param int $idCompanyUser
      *
-     * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer[]
+     * @return int[]
      */
-    public function findQuotesByIdCompanyUser(int $idCompanyUser): array
+    public function getIsDefaultFlagForSharedCartsByIdCompanyUser(int $idCompanyUser): array
     {
-        /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $quoteQuery */
-        $quoteQuery = $this->getFactory()->createQuoteQuery()
-            ->joinWithSpyStore()
+        return $this->getFactory()->createQuoteQuery()
             ->useSpyQuoteCompanyUserQuery()
                 ->filterByFkCompanyUser($idCompanyUser)
             ->endUse()
-            ->addAsColumn('is_default', SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT);
-
-        return $this->buildQueryFromCriteria($quoteQuery)->find();
+            ->select([
+                SpyQuoteTableMap::COL_ID_QUOTE,
+                SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT,
+            ])
+            ->find()
+            ->toKeyValue(SpyQuoteTableMap::COL_ID_QUOTE, SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT);
     }
 
     /**
