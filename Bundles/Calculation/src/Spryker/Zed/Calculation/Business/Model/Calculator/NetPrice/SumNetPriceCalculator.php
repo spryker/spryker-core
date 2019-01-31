@@ -11,10 +11,25 @@ use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Spryker\Service\Calculation\CalculationServiceInterface;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class SumNetPriceCalculator implements CalculatorInterface
 {
+    /**
+     * @var \Spryker\Service\Calculation\CalculationServiceInterface
+     */
+    protected $calculationService;
+
+    /**
+     * @param \Spryker\Service\Calculation\CalculationServiceInterface $calculationService
+     */
+    public function __construct(CalculationServiceInterface $calculationService)
+    {
+        $this->calculationService = $calculationService;
+    }
+
     /**
      * For already ordered entities, sum prices are acting as source of truth.
      *
@@ -24,8 +39,9 @@ class SumNetPriceCalculator implements CalculatorInterface
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->calculateItemGrossAmountForItems($calculableObjectTransfer->getItems());
-        $this->calculateSumGrossPriceForExpenses($calculableObjectTransfer->getExpenses());
+        $this->calculateItemNetAmountForItems($calculableObjectTransfer->getItems());
+        $this->calculateSumNetPriceForExpenses($calculableObjectTransfer->getExpenses());
+        $this->calculateSumNetPriceForItemExpenses($calculableObjectTransfer->getItems());
     }
 
     /**
@@ -33,7 +49,7 @@ class SumNetPriceCalculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function calculateSumGrossPriceForExpenses(ArrayObject $expenses)
+    protected function calculateSumNetPriceForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
             if ($expenseTransfer->getIsOrdered() === true) {
@@ -85,7 +101,7 @@ class SumNetPriceCalculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function calculateItemGrossAmountForItems(ArrayObject $items)
+    protected function calculateItemNetAmountForItems(ArrayObject $items)
     {
         foreach ($items as $itemTransfer) {
             $this->addCalculatedItemNetAmounts($itemTransfer);
@@ -99,5 +115,38 @@ class SumNetPriceCalculator implements CalculatorInterface
                 $productOptionTransfer->setSumNetPrice($productOptionTransfer->getUnitNetPrice() * $productOptionTransfer->getQuantity());
             }
         }
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return void
+     */
+    protected function calculateSumNetPriceForItemExpenses(ArrayObject $items): void
+    {
+        $shipmentGroups = $this->calculationService->groupItemsByShipment($items);
+
+        foreach ($shipmentGroups as $shipmentGroupTransfer) {
+            if ($this->assertShipmentGroupHasNoExpense($shipmentGroupTransfer)) {
+                continue;
+            }
+
+            $expenseTransfer = $shipmentGroupTransfer->getShipment()->getExpense();
+            if ($expenseTransfer->getIsOrdered() === true) {
+                continue;
+            }
+
+            $expenseTransfer->setSumNetPrice($expenseTransfer->getUnitNetPrice() * $expenseTransfer->getQuantity());
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return bool
+     */
+    protected function assertShipmentGroupHasNoExpense(ShipmentGroupTransfer $shipmentGroupTransfer): bool
+    {
+        return $shipmentGroupTransfer->getShipment() === null || $shipmentGroupTransfer->getShipment()->getExpense() === null;
     }
 }

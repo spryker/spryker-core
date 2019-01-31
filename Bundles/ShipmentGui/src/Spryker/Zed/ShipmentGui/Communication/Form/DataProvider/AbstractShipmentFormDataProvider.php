@@ -84,8 +84,11 @@ class AbstractShipmentFormDataProvider
             ShipmentFormCreate::FIELD_REQUESTED_DELIVERY_DATE => null,
         ];
 
-        $data = array_merge($data, $this->getAddressDefaultFields());
-        $data = array_merge($data, $this->getItemsDefaultFields($idSalesOrder));
+        $data = array_merge(
+            $data,
+            $this->getAddressDefaultFields(),
+            $this->getItemsDefaultFields($idSalesOrder)
+        );
 
         return $data;
     }

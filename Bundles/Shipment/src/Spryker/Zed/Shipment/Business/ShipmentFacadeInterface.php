@@ -12,11 +12,9 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
-use Propel\Runtime\Collection\ObjectCollection;
 
 interface ShipmentFacadeInterface
 {
@@ -77,18 +75,6 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     public function findMethodById($idShipmentMethod);
-
-    /**
-     * Specification:
-     * - Retrieves a shipment from database by ID.
-     *
-     * @api
-     *
-     * @param int $idShipment
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
-     */
-    public function findShipmentById(int $idShipment): ?ShipmentTransfer;
 
     /**
      * Specification:
@@ -283,11 +269,4 @@ interface ShipmentFacadeInterface
      * @return void
      */
     public function saveShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): void;
-
-    /**
-     * @param int $idSalesShipment
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
-     */
-    public function findShipmentItemsByIdSalesShipment(int $idSalesShipment): ObjectCollection;
 }

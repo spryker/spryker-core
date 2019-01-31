@@ -15,6 +15,8 @@ use Spryker\Zed\Sales\Communication\Form\CustomerForm;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CommentFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
+use Spryker\Zed\Sales\Communication\Order\SalesOrderDataBCForMultiShipmentAdapter;
+use Spryker\Zed\Sales\Communication\Order\SalesOrderDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\Sales\Communication\Table\CustomerOrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilder;
@@ -246,5 +248,15 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function getSalesTablePlugins()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::UI_SALES_TABLE_PLUGINS);
+    }
+
+    /**
+     * @deprecated Will be removed in next major release.
+     *
+     * @return \Spryker\Zed\Sales\Communication\Order\SalesOrderDataBCForMultiShipmentAdapterInterface
+     */
+    public function createSalesOrderDataBCForMultiShipmentAdapter(): SalesOrderDataBCForMultiShipmentAdapterInterface
+    {
+        return new SalesOrderDataBCForMultiShipmentAdapter();
     }
 }

@@ -235,7 +235,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function querySalesOrderItemsWithShippingAddresses($idSalesOrder): SpySalesOrderItemQuery
+    public function querySalesOrderItemsWithShippingAddresses(int $idSalesOrder): SpySalesOrderItemQuery
     {
         $query = $this->getFactory()->createSalesOrderItemQuery()
             ->setModelAlias('orderItem')
