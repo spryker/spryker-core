@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -35,26 +34,11 @@ class CategoryNodeStoragePublishListener extends AbstractPlugin implements Event
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $categoryNodeIds = $this->getCategoryNodeIds($eventTransfers);
-
-        $this->getFacade()->publish($categoryNodeIds);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return int[]
-     */
-    protected function getCategoryNodeIds(array $eventTransfers): array
-    {
-        $parentCategoryNodeIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransfersOriginalValues($eventTransfers, SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE);
 
         $categoryNodeIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventTransfers);
 
-        return array_unique(array_merge($parentCategoryNodeIds, $categoryNodeIds));
+        $this->getFacade()->publish($categoryNodeIds);
     }
 }
