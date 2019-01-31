@@ -24,8 +24,9 @@ class SumNetPriceCalculator implements CalculatorInterface
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->calculateItemGrossAmountForItems($calculableObjectTransfer->getItems());
-        $this->calculateSumGrossPriceForExpenses($calculableObjectTransfer->getExpenses());
+        $this->calculateItemNetAmountForItems($calculableObjectTransfer->getItems());
+        $this->calculateSumNetPriceForExpenses($calculableObjectTransfer->getExpenses());
+        $this->calculateSumNetPriceForItemExpenses($calculableObjectTransfer->getItems());
     }
 
     /**
@@ -33,7 +34,7 @@ class SumNetPriceCalculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function calculateSumGrossPriceForExpenses(ArrayObject $expenses)
+    protected function calculateSumNetPriceForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
             if ($expenseTransfer->getIsOrdered() === true) {
@@ -85,7 +86,7 @@ class SumNetPriceCalculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function calculateItemGrossAmountForItems(ArrayObject $items)
+    protected function calculateItemNetAmountForItems(ArrayObject $items)
     {
         foreach ($items as $itemTransfer) {
             $this->addCalculatedItemNetAmounts($itemTransfer);
@@ -99,5 +100,36 @@ class SumNetPriceCalculator implements CalculatorInterface
                 $productOptionTransfer->setSumNetPrice($productOptionTransfer->getUnitNetPrice() * $productOptionTransfer->getQuantity());
             }
         }
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return void
+     */
+    protected function calculateSumNetPriceForItemExpenses(ArrayObject $items): void
+    {
+        foreach ($items as $itemTransfer) {
+            if ($this->assertItemHasNoExpenseRequirements($itemTransfer)) {
+                continue;
+            }
+
+            $expenseTransfer = $itemTransfer->getShipment()->getExpense();
+            if ($expenseTransfer->getIsOrdered() === true) {
+                continue;
+            }
+
+            $expenseTransfer->setSumNetPrice($expenseTransfer->getUnitNetPrice() * $expenseTransfer->getQuantity());
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function assertItemHasNoExpenseRequirements(ItemTransfer $itemTransfer): bool
+    {
+        return $itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getExpense() === null;
     }
 }

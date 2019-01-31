@@ -26,6 +26,7 @@ class SumGrossPriceCalculator implements CalculatorInterface
     {
         $this->calculateItemGrossAmountForItems($calculableObjectTransfer->getItems());
         $this->calculateSumGrossPriceForExpenses($calculableObjectTransfer->getExpenses());
+        $this->calculateSumGrossPriceForItemExpenses($calculableObjectTransfer->getItems());
     }
 
     /**
@@ -99,5 +100,36 @@ class SumGrossPriceCalculator implements CalculatorInterface
                 $productOptionTransfer->setSumGrossPrice($productOptionTransfer->getUnitGrossPrice() * $productOptionTransfer->getQuantity());
             }
         }
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return void
+     */
+    protected function calculateSumGrossPriceForItemExpenses(ArrayObject $items): void
+    {
+        foreach ($items as $itemTransfer) {
+            if ($this->assertItemHasNoExpenseRequirements($itemTransfer)) {
+                continue;
+            }
+
+            $expenseTransfer = $itemTransfer->getShipment()->getExpense();
+            if ($expenseTransfer->getIsOrdered() === true) {
+                continue;
+            }
+
+            $expenseTransfer->setSumGrossPrice($expenseTransfer->getUnitGrossPrice() * $expenseTransfer->getQuantity());
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function assertItemHasNoExpenseRequirements(ItemTransfer $itemTransfer): bool
+    {
+        return $itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getExpense() === null;
     }
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 
 class TaxTotalCalculator implements CalculatorInterface
@@ -24,6 +25,7 @@ class TaxTotalCalculator implements CalculatorInterface
 
         $totalTaxAmount = $this->calculateTaxTotalForItems($calculableObjectTransfer->getItems());
         $totalTaxAmount += $this->calculateTaxTotalAmountForExpenses($calculableObjectTransfer->getExpenses());
+        $totalTaxAmount += $this->calculateTaxTotalAmountForItemExpenses($calculableObjectTransfer->getItems());
 
         $taxTotalTransfer = new TaxTotalTransfer();
         $taxTotalTransfer->setAmount((int)round($totalTaxAmount));
@@ -57,5 +59,34 @@ class TaxTotalCalculator implements CalculatorInterface
             $totalTaxAmount += $expenseTransfer->getSumTaxAmount();
         }
         return $totalTaxAmount;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return int
+     */
+    protected function calculateTaxTotalAmountForItemExpenses(ArrayObject $items): int
+    {
+        $totalTaxAmount = 0;
+        foreach ($items as $itemTransfer) {
+            if ($this->assertItemHasNoExpenseRequirements($itemTransfer)) {
+                continue;
+            }
+
+            $totalTaxAmount += $itemTransfer->getShipment()->getExpense()->getSumTaxAmount();
+        }
+
+        return $totalTaxAmount;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function assertItemHasNoExpenseRequirements(ItemTransfer $itemTransfer): bool
+    {
+        return $itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getExpense() === null;
     }
 }
