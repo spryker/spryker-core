@@ -70,6 +70,24 @@
                 </div>
             </div>
 
+            <div class="col-md-12 row">
+
+                {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Trigger all matching states' } %}
+
+                    {% block widget_content %}
+
+                        <div>
+                            {% for event in events %}
+                                <a class="btn btn-primary trigger-order-event" data-id-sales-order="{{ order.idSalesOrder }}" data-event="{{ event }}" href="#">{{ event }}</a>
+                            {% endfor %}
+                        </div>
+
+                    {% endblock %}
+
+                {% endembed %}
+
+            </div>
+
         </div>
 
     {% endblock %}
