@@ -8,8 +8,12 @@
 namespace Spryker\Zed\ProductQuantity\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductQuantity\Business\Model\Normalizer\ProductQuantityRestrictionNormalizer;
+use Spryker\Zed\ProductQuantity\Business\Model\Normalizer\ProductQuantityRestrictionNormalizerInterface;
 use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReader;
 use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface;
+use Spryker\Zed\ProductQuantity\Business\Model\Rounder\ProductQuantityRounder;
+use Spryker\Zed\ProductQuantity\Business\Model\Rounder\ProductQuantityRounderInterface;
 use Spryker\Zed\ProductQuantity\Business\Model\Validator\ProductQuantityRestrictionValidator;
 use Spryker\Zed\ProductQuantity\Business\Model\Validator\ProductQuantityRestrictionValidatorInterface;
 
@@ -34,5 +38,24 @@ class ProductQuantityBusinessFactory extends AbstractBusinessFactory
     public function createProductQuantityReader(): ProductQuantityReaderInterface
     {
         return new ProductQuantityReader($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductQuantity\Business\Model\Normalizer\ProductQuantityRestrictionNormalizerInterface
+     */
+    public function createProductQuantityRestrictionNormalizer(): ProductQuantityRestrictionNormalizerInterface
+    {
+        return new ProductQuantityRestrictionNormalizer(
+            $this->createProductQuantityReader(),
+            $this->createProductQuantityRounder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductQuantity\Business\Model\Rounder\ProductQuantityRounderInterface
+     */
+    public function createProductQuantityRounder(): ProductQuantityRounderInterface
+    {
+        return new ProductQuantityRounder();
     }
 }

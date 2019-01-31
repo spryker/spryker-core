@@ -22,6 +22,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
 
     public const CART_EXPANDER_PLUGINS = 'cart expander plugins';
     public const CART_PRE_CHECK_PLUGINS = 'pre check plugins';
+    public const CART_ITEM_NORMALIZER_PLUGINS = 'CART_ITEM_NORMALIZER_PLUGINS';
     public const CART_REMOVAL_PRE_CHECK_PLUGINS = 'CART_REMOVAL_PRE_CHECK_PLUGINS';
     public const CART_POST_SAVE_PLUGINS = 'cart post save plugins';
     public const CART_PRE_RELOAD_PLUGINS = 'cart pre reload plugins';
@@ -52,6 +53,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartAddItemStrategyPlugins($container);
         $container = $this->addCartRemoveItemStrategyPlugins($container);
         $container = $this->addPostReloadItemsPlugins($container);
+        $container = $this->addCartItemNormalizerPlugins($container);
 
         return $container;
     }
@@ -104,6 +106,19 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CART_POST_SAVE_PLUGINS] = function (Container $container) {
             return $this->getPostSavePlugins($container);
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCartItemNormalizerPlugins(Container $container)
+    {
+        $container[static::CART_ITEM_NORMALIZER_PLUGINS] = function (Container $container) {
+            return $this->getCartItemsNormalizerPlugins($container);
         };
         return $container;
     }
@@ -244,6 +259,16 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface[]
      */
     protected function getCartPreCheckPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemsNormalizerPluginInterface[]
+     */
+    protected function getCartItemsNormalizerPlugins(Container $container)
     {
         return [];
     }
