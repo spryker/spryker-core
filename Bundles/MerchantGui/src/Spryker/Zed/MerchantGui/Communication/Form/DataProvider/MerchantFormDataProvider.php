@@ -44,15 +44,20 @@ class MerchantFormDataProvider
     }
 
     /**
-     * @param string $currentStatus
+     * @param string|null $currentStatus
      *
      * @return array
      */
-    public function getOptions(string $currentStatus): array
+    public function getOptions(?string $currentStatus = null): array
     {
-        return [
-            'data_class' => MerchantTransfer::class,
-            MerchantUpdateForm::OPTION_STATUS_CHOICES => $this->merchantFacade->getNextStatuses($currentStatus),
-        ];
+        $options = ['data_class' => MerchantTransfer::class];
+
+        if ($currentStatus !== null) {
+            $options = [
+                MerchantUpdateForm::OPTION_STATUS_CHOICES => $this->merchantFacade->getNextStatuses($currentStatus),
+            ];
+        }
+
+        return $options;
     }
 }

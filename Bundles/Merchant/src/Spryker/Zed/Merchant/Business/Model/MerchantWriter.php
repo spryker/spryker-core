@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Merchant\Business\Model;
 
 use Generated\Shared\Transfer\MerchantTransfer;
+use Spryker\Zed\Merchant\Business\Address\MerchantAddressWriterInterface;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
+use Spryker\Zed\Merchant\MerchantConfig;
 use Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface;
 
 class MerchantWriter implements MerchantWriterInterface
@@ -25,15 +27,31 @@ class MerchantWriter implements MerchantWriterInterface
     protected $merchantKeyGenerator;
 
     /**
+     * @var \Spryker\Zed\Merchant\Business\Address\MerchantAddressWriterInterface
+     */
+    protected $merchantAddressWriter;
+
+    /**
+     * @var \Spryker\Zed\Merchant\MerchantConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $entityManager
      * @param \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface $merchantKeyGenerator
+     * @param \Spryker\Zed\Merchant\Business\Address\MerchantAddressWriterInterface $merchantAddressWriter
+     * @param \Spryker\Zed\Merchant\MerchantConfig $config
      */
     public function __construct(
         MerchantEntityManagerInterface $entityManager,
-        MerchantKeyGeneratorInterface $merchantKeyGenerator
+        MerchantKeyGeneratorInterface $merchantKeyGenerator,
+        MerchantAddressWriterInterface $merchantAddressWriter,
+        MerchantConfig $config
     ) {
         $this->entityManager = $entityManager;
         $this->merchantKeyGenerator = $merchantKeyGenerator;
+        $this->merchantAddressWriter = $merchantAddressWriter;
+        $this->config = $config;
     }
 
     /**
@@ -49,8 +67,7 @@ class MerchantWriter implements MerchantWriterInterface
             ->requireContactPersonTitle()
             ->requireContactPersonFirstName()
             ->requireContactPersonLastName()
-            ->requireContactPersonPhone()
-            ->requireStatus();
+            ->requireContactPersonPhone();
 
         if (empty($merchantTransfer->getMerchantKey())) {
             $merchantTransfer->setMerchantKey(
@@ -58,7 +75,20 @@ class MerchantWriter implements MerchantWriterInterface
             );
         }
 
-        return $this->entityManager->saveMerchant($merchantTransfer);
+        if (!$merchantTransfer->getIdMerchant()) {
+            $merchantTransfer->setStatus($this->config->getMerchantStatusWaitingForApproval());
+        }
+
+        $merchantTransfer = $this->entityManager->saveMerchant($merchantTransfer);
+
+        if ($merchantTransfer->getAddresses()->offsetExists(0)) {
+            /** @var \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer */
+            $merchantAddressTransfer = $merchantTransfer->getAddresses()->offsetGet(0);
+            $merchantAddressTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+            $this->merchantAddressWriter->create($merchantAddressTransfer);
+        }
+
+        return $merchantTransfer;
     }
 
     /**
@@ -81,6 +111,13 @@ class MerchantWriter implements MerchantWriterInterface
             $merchantTransfer->setMerchantKey(
                 $this->merchantKeyGenerator->generateMerchantKey($merchantTransfer->getName())
             );
+        }
+
+        if ($merchantTransfer->getAddresses()->offsetExists(0)) {
+            /** @var \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer */
+            $merchantAddressTransfer = $merchantTransfer->getAddresses()->offsetGet(0);
+            $merchantAddressTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+            $this->merchantAddressWriter->create($merchantAddressTransfer);
         }
 
         return $this->entityManager->saveMerchant($merchantTransfer);

@@ -30,6 +30,7 @@ class MerchantFacadeTest extends Unit
     protected const ID_MERCHANT = 123;
     protected const MERCHANT_EMAIL = 'merchant@test.test';
     protected const ID_MERCHANT_ADDRESS = 1243;
+    protected const MERCHANT_STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval';
 
     /**
      * @var \SprykerTest\Zed\Merchant\MerchantBusinessTester
@@ -44,7 +45,6 @@ class MerchantFacadeTest extends Unit
         $merchantTransfer = (new MerchantTransfer())
             ->setMerchantKey('spryker-test-1')
             ->setName('Spryker Merchant')
-            ->setStatus('waiting-for-approval')
             ->setContactPersonFirstName('Spryker')
             ->setContactPersonLastName('Merchant')
             ->setContactPersonPhone('1234567890')
@@ -64,7 +64,6 @@ class MerchantFacadeTest extends Unit
     {
         $merchantTransfer = (new MerchantTransfer())
             ->setName('Spryker Merchant')
-            ->setStatus('waiting-for-approval')
             ->setContactPersonFirstName('Spryker')
             ->setContactPersonLastName('Merchant')
             ->setContactPersonPhone('1234567890')
@@ -75,6 +74,25 @@ class MerchantFacadeTest extends Unit
         (new MerchantFacade())->createMerchant($merchantTransfer);
 
         $this->assertNotNull($merchantTransfer->getMerchantKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateMerchantCreatesMerchantWithCorrectStatus(): void
+    {
+        $merchantTransfer = (new MerchantTransfer())
+            ->setName('Spryker Merchant')
+            ->setContactPersonFirstName('Spryker')
+            ->setContactPersonLastName('Merchant')
+            ->setContactPersonPhone('1234567890')
+            ->setContactPersonTitle('Dr')
+            ->setRegistrationNumber('1234-56789-12')
+            ->setEmail('spryker.merchant@localhost.com');
+
+        (new MerchantFacade())->createMerchant($merchantTransfer);
+
+        $this->assertEquals(static::MERCHANT_STATUS_WAITING_FOR_APPROVAL, $merchantTransfer->getStatus());
     }
 
     /**
@@ -99,7 +117,6 @@ class MerchantFacadeTest extends Unit
         $newMerchantTransfer = (new MerchantTransfer())
             ->setMerchantKey($merchantTransfer->getMerchantKey() . '-1')
             ->setName($merchantTransfer->getName())
-            ->setStatus('waiting-for-approval')
             ->setContactPersonFirstName('Spryker')
             ->setContactPersonLastName('Merchant')
             ->setContactPersonPhone('1234567890')
@@ -121,7 +138,6 @@ class MerchantFacadeTest extends Unit
         $newMerchantTransfer = (new MerchantTransfer())
             ->setMerchantKey($merchantTransfer->getMerchantKey())
             ->setName($merchantTransfer->getName())
-            ->setStatus('waiting-for-approval')
             ->setContactPersonFirstName('Spryker')
             ->setContactPersonLastName('Merchant')
             ->setContactPersonPhone('1234567890')

@@ -35,7 +35,9 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantWriter(
             $this->getEntityManager(),
-            $this->createMerchantKeyGenerator()
+            $this->createMerchantKeyGenerator(),
+            $this->createMerchantAddressWriter(),
+            $this->getConfig()
         );
     }
 

@@ -21,7 +21,6 @@ class CreateMerchantController extends AbstractController
 
     protected const MESSAGE_MERCHANT_CREATE_SUCCESS = 'Merchant created successfully.';
     protected const MESSAGE_MERCHANT_CREATE_ERROR = 'Merchant has not been created.';
-    protected const STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -33,7 +32,8 @@ class CreateMerchantController extends AbstractController
         $dataProvider = $this->getFactory()->createMerchantFormDataProvider();
         $merchantForm = $this->getFactory()
             ->getMerchantForm(
-                $dataProvider->getData()
+                $dataProvider->getData(),
+                $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
@@ -56,17 +56,9 @@ class CreateMerchantController extends AbstractController
     {
         $redirectUrl = $request->get(static::PARAM_REDIRECT_URL, MerchantTableConstants::URL_MERCHANT_LIST);
         $merchantTransfer = $merchantForm->getData();
-        $merchantTransfer->setStatus(static::STATUS_WAITING_FOR_APPROVAL);
         $merchantTransfer = $this->getFactory()
             ->getMerchantFacade()
             ->createMerchant($merchantTransfer);
-
-        /** @var \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer */
-        $merchantAddressTransfer = $merchantTransfer->getAddresses()->offsetGet(0);
-        $merchantAddressTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
-        $this->getFactory()
-            ->getMerchantFacade()
-            ->createMerchantAddress($merchantAddressTransfer);
 
         if (!$merchantTransfer->getIdMerchant()) {
             $this->addErrorMessage(static::MESSAGE_MERCHANT_CREATE_ERROR);

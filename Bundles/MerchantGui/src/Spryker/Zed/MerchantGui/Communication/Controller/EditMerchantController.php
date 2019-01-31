@@ -72,13 +72,6 @@ class EditMerchantController extends AbstractController
                 ->getMerchantFacade()
                 ->updateMerchant($merchantTransfer);
 
-            /** @var \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer */
-            $merchantAddressTransfer = $merchantTransfer->getAddresses()->offsetGet(0);
-            $merchantAddressTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
-            $this->getFactory()
-                ->getMerchantFacade()
-                ->createMerchantAddress($merchantAddressTransfer);
-
             $this->addSuccessMessage(static::MESSAGE_MERCHANT_UPDATE_SUCCESS);
         } catch (MerchantNotFoundException $exception) {
             $this->addErrorMessage(static::MESSAGE_MERCHANT_NOT_FOUND);
