@@ -120,7 +120,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemsNormalizerPluginInterface[]
      */
-    protected function getCartItemNormalizerPlugins()
+    protected function getCartItemNormalizerPlugins(): array
     {
         return $this->getProvidedDependency(CartDependencyProvider::CART_ITEM_NORMALIZER_PLUGINS);
     }

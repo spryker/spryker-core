@@ -275,7 +275,7 @@ class Operation implements OperationInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function normalizeCartChangeItems(CartChangeTransfer $cartChangeTransfer)
+    protected function normalizeCartChangeItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($this->cartItemNormalizerPlugins as $cartItemNormalizerPlugin) {
             if (!$cartItemNormalizerPlugin->isApplicable($cartChangeTransfer)) {
@@ -356,7 +356,7 @@ class Operation implements OperationInterface
      *
      * @return void
      */
-    protected function collectMessagesAfterAddNormalization(CartChangeTransfer $cartChangeTransfer)
+    protected function collectMessagesAfterAddNormalization(CartChangeTransfer $cartChangeTransfer): void
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             foreach ($itemTransfer->getNotificationMessages() as $notificationMessage) {

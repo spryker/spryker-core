@@ -115,9 +115,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCartItemNormalizerPlugins(Container $container)
+    protected function addCartItemNormalizerPlugins(Container $container): Container
     {
-        $container[static::CART_ITEM_NORMALIZER_PLUGINS] = function (Container $container) {
+        $container[static::CART_ITEM_NORMALIZER_PLUGINS] = function (Container $container): array {
             return $this->getCartItemsNormalizerPlugins($container);
         };
         return $container;
@@ -268,7 +268,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemsNormalizerPluginInterface[]
      */
-    protected function getCartItemsNormalizerPlugins(Container $container)
+    protected function getCartItemsNormalizerPlugins(Container $container): array
     {
         return [];
     }

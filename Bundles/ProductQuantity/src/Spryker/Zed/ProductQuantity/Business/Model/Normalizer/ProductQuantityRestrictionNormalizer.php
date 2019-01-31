@@ -74,11 +74,7 @@ class ProductQuantityRestrictionNormalizer implements ProductQuantityRestriction
     {
         $normalizableFields = $itemTransfer->getNormalizableFields();
 
-        if (!empty($normalizableFields) && in_array(static::NORMALIZABLE_FIELD, $normalizableFields)) {
-            return true;
-        }
-
-        return false;
+        return !empty($normalizableFields) && in_array(static::NORMALIZABLE_FIELD, $normalizableFields);
     }
 
     /**
@@ -104,9 +100,11 @@ class ProductQuantityRestrictionNormalizer implements ProductQuantityRestriction
         }
 
         $notificationMessage = $this->findNotificationMessage($productQuantityTransfer, $nearestQuantity, $itemTransfer->getQuantity());
+
         if ($notificationMessage !== null) {
             $itemTransfer->addNotificationMessage($notificationMessage);
         }
+
         $itemTransfer->setQuantity($nearestQuantity);
     }
 
@@ -220,7 +218,7 @@ class ProductQuantityRestrictionNormalizer implements ProductQuantityRestriction
      *
      * @return string[] Keys are group keys, values are skus
      */
-    protected function getChangedSkuMap(CartChangeTransfer $cartChangeTransfer)
+    protected function getChangedSkuMap(CartChangeTransfer $cartChangeTransfer): array
     {
         $skuMap = [];
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
