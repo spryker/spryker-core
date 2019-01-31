@@ -24,7 +24,7 @@ class OrderReader extends OrderReaderWithoutMultiShippingAddress
             ->querySalesOrderDetailsWithoutShippingAddress($idSalesOrder)
             ->findOne();
 
-        if (!$orderEntity) {
+        if ($orderEntity === null) {
             return null;
         }
 
