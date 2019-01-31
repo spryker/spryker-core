@@ -16,7 +16,7 @@ class MerchantConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getMerchantStatusWaitingForApproval(): string
+    public function getDefaultMerchantStatus(): string
     {
         return static::MERCHANT_STATUS_WAITING_FOR_APPROVAL;
     }

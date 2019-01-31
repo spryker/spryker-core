@@ -170,6 +170,6 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
      */
     public function getNextStatuses(string $currentStatus): array
     {
-        return [$this->getFactory()->getConfig()->getMerchantStatusWaitingForApproval()];
+        return [$this->getFactory()->getConfig()->getDefaultMerchantStatus()];
     }
 }

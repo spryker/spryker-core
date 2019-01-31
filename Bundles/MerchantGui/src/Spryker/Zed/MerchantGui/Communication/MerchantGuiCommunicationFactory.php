@@ -15,12 +15,10 @@ use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantFormDataProv
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantAddressForm;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantForm;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantUpdateForm;
-use Spryker\Zed\MerchantGui\Communication\Form\Transformer\ArrayObjectToObjectTransformer;
 use Spryker\Zed\MerchantGui\Communication\Table\MerchantTable;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToCountryFacadeInterface;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 use Spryker\Zed\MerchantGui\MerchantGuiDependencyProvider;
-use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -94,14 +92,6 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getMerchantFacade(),
             $this->getCountryFacade()
         );
-    }
-
-    /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
-     */
-    public function createArrayObjectToObjectTransformer(): DataTransformerInterface
-    {
-        return new ArrayObjectToObjectTransformer();
     }
 
     /**

@@ -19,13 +19,6 @@ interface MerchantRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function getMerchantById(int $idMerchant): ?MerchantTransfer;
-
-    /**
-     * @param int $idMerchant
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
     public function findMerchantById(int $idMerchant): ?MerchantTransfer;
 
     /**

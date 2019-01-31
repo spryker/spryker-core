@@ -14,7 +14,7 @@
         <property name="contactPersonLastName" type="string" />
         <property name="contactPersonPhone" type="string" />
         <property name="email" type="string" />
-        <property name="addresses" type="MerchantAddress[]" singular="address" />
+        <property name="address" type="MerchantAddress" />
     </transfer>
 
     <transfer name="MerchantAddress">

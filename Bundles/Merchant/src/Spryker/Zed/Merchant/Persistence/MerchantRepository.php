@@ -23,16 +23,6 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function getMerchantById(int $idMerchant): ?MerchantTransfer
-    {
-        return $this->findMerchantById($idMerchant);
-    }
-
-    /**
-     * @param int $idMerchant
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
     public function findMerchantById(int $idMerchant): ?MerchantTransfer
     {
         $spyMerchant = $this->getFactory()

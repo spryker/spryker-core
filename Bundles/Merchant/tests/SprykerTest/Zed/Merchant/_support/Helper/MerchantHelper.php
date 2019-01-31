@@ -31,12 +31,20 @@ class MerchantHelper extends Module
     {
         /** @var \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer */
         $merchantTransfer = (new MerchantBuilder($seedData))->build();
+        $merchantTransfer->setAddress((new MerchantAddressBuilder())->build());
         $merchantTransfer->setIdMerchant(null);
 
         $merchantTransfer = $this->getLocator()
             ->merchant()
             ->facade()
             ->createMerchant($merchantTransfer);
+
+        $merchantAddressTransfer = $this->getLocator()
+            ->merchant()
+            ->facade()
+            ->createMerchantAddress($merchantTransfer->getAddress()->setFkMerchant($merchantTransfer->getIdMerchant()));
+
+        $merchantTransfer->getAddress()->setIdMerchantAddress($merchantAddressTransfer->getIdMerchantAddress());
 
         /** @var \SprykerTest\Shared\Testify\Helper\DataCleanupHelper $dataCleanupHelper */
         $dataCleanupHelper = $this->getDataCleanupHelper();

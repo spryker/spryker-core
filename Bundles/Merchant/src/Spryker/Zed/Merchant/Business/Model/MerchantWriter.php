@@ -67,7 +67,8 @@ class MerchantWriter implements MerchantWriterInterface
             ->requireContactPersonTitle()
             ->requireContactPersonFirstName()
             ->requireContactPersonLastName()
-            ->requireContactPersonPhone();
+            ->requireContactPersonPhone()
+            ->requireAddress();
 
         if (empty($merchantTransfer->getMerchantKey())) {
             $merchantTransfer->setMerchantKey(
@@ -75,18 +76,13 @@ class MerchantWriter implements MerchantWriterInterface
             );
         }
 
-        if (!$merchantTransfer->getIdMerchant()) {
-            $merchantTransfer->setStatus($this->config->getMerchantStatusWaitingForApproval());
-        }
+        $merchantTransfer->setStatus($this->config->getDefaultMerchantStatus());
 
         $merchantTransfer = $this->entityManager->saveMerchant($merchantTransfer);
 
-        if ($merchantTransfer->getAddresses()->offsetExists(0)) {
-            /** @var \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer */
-            $merchantAddressTransfer = $merchantTransfer->getAddresses()->offsetGet(0);
-            $merchantAddressTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
-            $this->merchantAddressWriter->create($merchantAddressTransfer);
-        }
+        $merchantAddressTransfer = $merchantTransfer->getAddress();
+        $merchantAddressTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+        $this->merchantAddressWriter->create($merchantAddressTransfer);
 
         return $merchantTransfer;
     }
@@ -105,7 +101,8 @@ class MerchantWriter implements MerchantWriterInterface
             ->requireContactPersonTitle()
             ->requireContactPersonFirstName()
             ->requireContactPersonLastName()
-            ->requireContactPersonPhone();
+            ->requireContactPersonPhone()
+            ->requireAddress();
 
         if (empty($merchantTransfer->getMerchantKey())) {
             $merchantTransfer->setMerchantKey(
@@ -113,12 +110,9 @@ class MerchantWriter implements MerchantWriterInterface
             );
         }
 
-        if ($merchantTransfer->getAddresses()->offsetExists(0)) {
-            /** @var \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer */
-            $merchantAddressTransfer = $merchantTransfer->getAddresses()->offsetGet(0);
-            $merchantAddressTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
-            $this->merchantAddressWriter->create($merchantAddressTransfer);
-        }
+        $merchantAddressTransfer = $merchantTransfer->getAddress();
+        $merchantAddressTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+        $this->merchantAddressWriter->update($merchantAddressTransfer);
 
         return $this->entityManager->saveMerchant($merchantTransfer);
     }

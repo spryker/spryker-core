@@ -221,7 +221,7 @@ class MerchantForm extends AbstractType
         $merchantAddressFormDataProvider = $this->getFactory()->createMerchantAddressFormDataProvider();
 
         $builder->add(
-            'addresses',
+            'address',
             MerchantAddressForm::class,
             $merchantAddressFormDataProvider->getOptions()
         );

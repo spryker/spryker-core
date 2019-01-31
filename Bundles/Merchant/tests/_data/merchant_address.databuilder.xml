@@ -11,7 +11,6 @@
         <property name="address3" dataBuilderRule="word" />
         <property name="city" dataBuilderRule="word" />
         <property name="zipCode" dataBuilderRule="word" />
-        <property name="email" dataBuilderRule="email" />
         <property name="fkMerchant" dataBuilderRule="=" />
     </transfer>
 

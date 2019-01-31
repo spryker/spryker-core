@@ -50,7 +50,8 @@ class MerchantFacadeTest extends Unit
             ->setContactPersonPhone('1234567890')
             ->setContactPersonTitle('Dr')
             ->setRegistrationNumber('1234-56789-12')
-            ->setEmail('spryker.merchant@localhost.com');
+            ->setEmail('spryker.merchant@localhost.com')
+            ->setAddress($this->tester->createMerchantAddressTransfer());
 
         (new MerchantFacade())->createMerchant($merchantTransfer);
 
@@ -69,7 +70,8 @@ class MerchantFacadeTest extends Unit
             ->setContactPersonPhone('1234567890')
             ->setContactPersonTitle('Dr')
             ->setRegistrationNumber('1234-56789-12')
-            ->setEmail('spryker.merchant@localhost.com');
+            ->setEmail('spryker.merchant@localhost.com')
+            ->setAddress($this->tester->createMerchantAddressTransfer());
 
         (new MerchantFacade())->createMerchant($merchantTransfer);
 
@@ -88,7 +90,8 @@ class MerchantFacadeTest extends Unit
             ->setContactPersonPhone('1234567890')
             ->setContactPersonTitle('Dr')
             ->setRegistrationNumber('1234-56789-12')
-            ->setEmail('spryker.merchant@localhost.com');
+            ->setEmail('spryker.merchant@localhost.com')
+            ->setAddress($this->tester->createMerchantAddressTransfer());
 
         (new MerchantFacade())->createMerchant($merchantTransfer);
 
@@ -122,7 +125,8 @@ class MerchantFacadeTest extends Unit
             ->setContactPersonPhone('1234567890')
             ->setContactPersonTitle('Dr')
             ->setRegistrationNumber('1234-56789-12')
-            ->setEmail('spryker.merchant@localhost.com');
+            ->setEmail('spryker.merchant@localhost.com')
+            ->setAddress($this->tester->createMerchantAddressTransfer());
 
         (new MerchantFacade())->createMerchant($newMerchantTransfer);
         $this->assertNotNull($newMerchantTransfer->getIdMerchant());
@@ -143,7 +147,8 @@ class MerchantFacadeTest extends Unit
             ->setContactPersonPhone('1234567890')
             ->setContactPersonTitle('Dr')
             ->setRegistrationNumber('1234-56789-12')
-            ->setEmail('spryker.merchant@localhost.com');
+            ->setEmail('spryker.merchant@localhost.com')
+            ->setAddress($this->tester->createMerchantAddressTransfer());
 
         $this->expectException(Exception::class);
 
@@ -161,9 +166,11 @@ class MerchantFacadeTest extends Unit
         ]);
 
         $expectedIdMerchant = $merchantTransfer->getIdMerchant();
+        $merchantAddressTransfer = $this->tester->haveMerchantAddress(['fkMerchant' => $expectedIdMerchant]);
         $merchantTransfer
             ->setMerchantKey('second-key')
-            ->setName('Second Company');
+            ->setName('Second Company')
+            ->setAddress($merchantAddressTransfer);
 
         $updatedMerchant = (new MerchantFacade())->updateMerchant($merchantTransfer);
 
@@ -287,7 +294,7 @@ class MerchantFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteMerchantWithoutThrowsException(): void
+    public function testDeleteMerchantWithoutIdMerchantThrowsException(): void
     {
         $merchantTransfer = new MerchantTransfer();
 

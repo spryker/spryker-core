@@ -42,4 +42,23 @@ class MerchantAddressWriter implements MerchantAddressWriterInterface
 
         return $this->entityManager->saveMerchantAddress($merchantAddressTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
+     */
+    public function update(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer
+    {
+        $merchantAddressTransfer
+            ->requireIdMerchantAddress()
+            ->requireCity()
+            ->requireZipCode()
+            ->requireAddress1()
+            ->requireAddress2()
+            ->requireFkMerchant()
+            ->requireFkCountry();
+
+        return $this->entityManager->saveMerchantAddress($merchantAddressTransfer);
+    }
 }

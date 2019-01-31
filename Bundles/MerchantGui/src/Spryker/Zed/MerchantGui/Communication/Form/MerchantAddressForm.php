@@ -65,8 +65,6 @@ class MerchantAddressForm extends AbstractType
             ->addAddress1Field($builder)
             ->addAddress2Field($builder)
             ->addAddress3Field($builder);
-
-        $builder->addModelTransformer($this->getFactory()->createArrayObjectToObjectTransformer());
     }
 
     /**

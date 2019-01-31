@@ -59,12 +59,14 @@ class MerchantMapper implements MerchantMapperInterface
         );
 
         foreach ($spyMerchant->getSpyMerchantAddresses() as $spyMerchantAddress) {
-            $merchantTransfer->addAddress(
+            $merchantTransfer->setAddress(
                 $this->merchantAddressMapper->mapSpyMerchantAddressEntityToMerchantAddressTransfer(
                     $spyMerchantAddress,
                     new MerchantAddressTransfer()
                 )
             );
+
+            break;
         }
 
         return $merchantTransfer;

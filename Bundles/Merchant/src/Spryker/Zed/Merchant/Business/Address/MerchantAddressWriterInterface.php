@@ -17,4 +17,11 @@ interface MerchantAddressWriterInterface
      * @return \Generated\Shared\Transfer\MerchantAddressTransfer
      */
     public function create(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
+     */
+    public function update(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer;
 }

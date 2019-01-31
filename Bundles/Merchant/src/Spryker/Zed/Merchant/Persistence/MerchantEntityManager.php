@@ -23,6 +23,8 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
      */
     public function deleteMerchantById(int $idMerchant): void
     {
+        $this->deleteMerchantAddressByMerchantId($idMerchant);
+
         $this->getFactory()
             ->createMerchantQuery()
             ->filterByIdMerchant($idMerchant)
@@ -73,5 +75,18 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
         $merchantAddressTransfer->fromArray($spyMerchantAddress->toArray(), true);
 
         return $merchantAddressTransfer;
+    }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return void
+     */
+    protected function deleteMerchantAddressByMerchantId(int $idMerchant): void
+    {
+        $this->getFactory()
+            ->createMerchantAddressQuery()
+            ->filterByFkMerchant($idMerchant)
+            ->deleteAll();
     }
 }
