@@ -66,6 +66,7 @@ class DetailController extends AbstractController
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
             'groupedOrderItems' => $groupedOrderItems,
             'groupedOrderItemsByShipment' => $groupedOrderItemsByShipment,
+            'isMultiShipmentEnabled' => defined('\Generated\Shared\Transfer\ItemTransfer::SHIPMENT'),
         ], $blockResponseData);
     }
 
