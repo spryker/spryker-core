@@ -13,7 +13,7 @@ interface CartItemsNormalizerPluginInterface
 {
     /**
      * Specification:
-     * - Checks if sanitizer is applicable for the given cart change transfer.
+     * - Checks if normalizer is applicable for the given cart change transfer.
      *
      * @api
      *
@@ -25,7 +25,7 @@ interface CartItemsNormalizerPluginInterface
 
     /**
      * Specification:
-     * - Executes cart change items sanitization before validations.
+     * - Executes cart change items normalization before preCheckCart checks.
      *
      * @api
      *

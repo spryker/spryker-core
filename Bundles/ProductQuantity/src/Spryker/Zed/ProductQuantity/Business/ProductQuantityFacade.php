@@ -23,8 +23,6 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
      *
      * @api
      *
-     * @api!
-     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
