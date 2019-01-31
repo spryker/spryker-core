@@ -227,8 +227,9 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     public function hasCompanyUser(CompanyUserTransfer $companyUserTransfer): bool
     {
         $companyUserTransfer
-            ->requireFkCustomer()
-            ->requireFkCompanyBusinessUnit();
+            ->requireFkCompanyBusinessUnit()
+            ->getCustomer()
+                ->requireIdCustomer();
 
         $companyUserQuery = $this->getFactory()
             ->createCompanyBusinessUnitQuery()
@@ -240,7 +241,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
 
         return $companyUserQuery
             ->filterByFkCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit())
-            ->filterByFkCustomer($companyUserTransfer->getFkCustomer())
+            ->filterByFkCustomer($companyUserTransfer->getCustomer()->getIdCustomer())
             ->endUse()
             ->exists();
     }

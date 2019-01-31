@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CompanyBusinessUnitFacadeInterface
@@ -158,11 +159,9 @@ interface CompanyBusinessUnitFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function checkIfCompanyUserUnique(
-        CompanyUserResponseTransfer $companyUserResponseTransfer
-    ): CompanyUserResponseTransfer;
+    public function checkIfCompanyUserUnique(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 }

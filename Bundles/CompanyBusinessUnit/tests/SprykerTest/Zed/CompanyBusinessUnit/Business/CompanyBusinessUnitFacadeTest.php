@@ -286,7 +286,7 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testCheckUniqueCompanyUserShouldReturnFalseIfCompanyUserRelationAlreadyExists()
+    public function testCheckIfCompanyUserUniqueShouldReturnFalseIfCompanyUserRelationAlreadyExists()
     {
         // Arrange
         $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
@@ -300,11 +300,10 @@ class CompanyBusinessUnitFacadeTest extends Test
                 CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
             ]
         );
-        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())->setCompanyUser($companyUserTransfer);
 
         // Act
         $existsCompanyUser = $this->getFacade()
-            ->checkIfCompanyUserUnique($companyUserResponseTransfer);
+            ->checkIfCompanyUserUnique($companyUserTransfer);
 
         // Assert
         $this->assertFalse($existsCompanyUser->getIsSuccessful());
@@ -313,7 +312,7 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testCheckUniqueCompanyUserShouldReturnTrueIfCompanyUserRelationDoesNotExists()
+    public function testCheckIfCompanyUserUniqueShouldReturnTrueIfCompanyUserRelationDoesNotExists()
     {
         // Arrange
         $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
@@ -321,16 +320,12 @@ class CompanyBusinessUnitFacadeTest extends Test
 
         $notExistentCompanyUserTransfer = (new CompanyUserBuilder())
             ->build()
-            ->setFkCustomer($customerTransfer->getIdCustomer())
+            ->setCustomer($customerTransfer)
             ->setFkCompanyBusinessUnit($businessUnitTransfer->getFkCompany());
-
-        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())
-            ->setCompanyUser($notExistentCompanyUserTransfer)
-            ->setIsSuccessful(true);
 
         // Act
         $existsCompanyUser = $this->getFacade()
-            ->checkIfCompanyUserUnique($companyUserResponseTransfer);
+            ->checkIfCompanyUserUnique($notExistentCompanyUserTransfer);
 
         // Assert
         $this->assertTrue($existsCompanyUser->getIsSuccessful());

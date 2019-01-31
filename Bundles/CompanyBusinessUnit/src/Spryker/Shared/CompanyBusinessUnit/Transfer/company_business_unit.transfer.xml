@@ -6,7 +6,7 @@
     <transfer name="CompanyUser">
         <property name="fkCompanyBusinessUnit" type="int"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
-        <property name="fkCustomer" type="int"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
@@ -79,5 +79,9 @@
     <transfer name="CompanyUserResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="ResponseMessage[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="idCustomer" type="int" />
     </transfer>
 </transfers>

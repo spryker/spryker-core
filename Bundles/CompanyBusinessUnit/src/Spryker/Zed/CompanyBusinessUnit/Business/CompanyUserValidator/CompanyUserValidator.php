@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyUserValidator;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface;
 
@@ -30,15 +31,15 @@ class CompanyUserValidator implements CompanyUserValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function checkIfCompanyUserUnique(
-        CompanyUserResponseTransfer $companyUserResponseTransfer
-    ): CompanyUserResponseTransfer {
+    public function checkIfCompanyUserUnique(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())->setIsSuccessful(true);
         $existsCompanyUser = $this->companyBusinessUnitRepository
-            ->hasCompanyUser($companyUserResponseTransfer->getCompanyUser());
+            ->hasCompanyUser($companyUserTransfer);
 
         if (!$existsCompanyUser) {
             return $companyUserResponseTransfer;
