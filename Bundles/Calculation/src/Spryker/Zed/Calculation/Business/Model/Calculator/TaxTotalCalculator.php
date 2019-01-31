@@ -10,10 +10,25 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
+use Spryker\Service\Calculation\CalculationServiceInterface;
 
 class TaxTotalCalculator implements CalculatorInterface
 {
+    /**
+     * @var \Spryker\Service\Calculation\CalculationServiceInterface
+     */
+    protected $calculationService;
+
+    /**
+     * @param \Spryker\Service\Calculation\CalculationServiceInterface $calculationService
+     */
+    public function __construct(CalculationServiceInterface $calculationService)
+    {
+        $this->calculationService = $calculationService;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -69,24 +84,26 @@ class TaxTotalCalculator implements CalculatorInterface
     protected function calculateTaxTotalAmountForItemExpenses(ArrayObject $items): int
     {
         $totalTaxAmount = 0;
-        foreach ($items as $itemTransfer) {
-            if ($this->assertItemHasNoExpenseRequirements($itemTransfer)) {
+        $shipmentGroups = $this->calculationService->groupItemsByShipment($items);
+
+        foreach ($shipmentGroups as $shipmentGroupTransfer) {
+            if ($this->assertShipmentGroupHasNoExpense($shipmentGroupTransfer)) {
                 continue;
             }
 
-            $totalTaxAmount += $itemTransfer->getShipment()->getExpense()->getSumTaxAmount();
+            $totalTaxAmount += $shipmentGroupTransfer->getShipment()->getExpense()->getSumTaxAmount();
         }
 
         return $totalTaxAmount;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      *
      * @return bool
      */
-    protected function assertItemHasNoExpenseRequirements(ItemTransfer $itemTransfer): bool
+    protected function assertShipmentGroupHasNoExpense(ShipmentGroupTransfer $shipmentGroupTransfer): bool
     {
-        return $itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getExpense() === null;
+        return $shipmentGroupTransfer->getShipment() === null || $shipmentGroupTransfer->getShipment()->getExpense() === null;
     }
 }

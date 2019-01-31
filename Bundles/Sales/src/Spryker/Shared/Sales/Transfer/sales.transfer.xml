@@ -219,4 +219,18 @@
         <property name="lastPage" type="int" />
     </transfer>
 
+    <transfer name="Shipment">
+        <property name="carrier" type="ShipmentCarrier"/>
+        <property name="method" type="ShipmentMethod"/>
+        <property name="shipmentSelection" type="string"/>
+        <property name="shippingAddress" type="Address" />
+        <property name="requestedDeliveryDate" type="string" />
+        <property name="expense" type="Expense" />
+    </transfer>
+
+    <transfer name="ShipmentGroup">
+        <property name="shipment" type="Shipment" />
+        <property name="items" type="Item[]" singular="item" />
+    </transfer>
+
 </transfers>
