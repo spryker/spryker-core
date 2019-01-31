@@ -70,7 +70,12 @@ class MerchantWriter implements MerchantWriterInterface
     {
         $merchantTransfer
             ->requireIdMerchant()
-            ->requireName();
+            ->requireName()
+            ->requireRegistrationNumber()
+            ->requireContactPersonTitle()
+            ->requireContactPersonFirstName()
+            ->requireContactPersonLastName()
+            ->requireContactPersonPhone();
 
         if (empty($merchantTransfer->getMerchantKey())) {
             $merchantTransfer->setMerchantKey(

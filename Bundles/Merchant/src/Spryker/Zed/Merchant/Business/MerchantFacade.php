@@ -88,18 +88,6 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
-     */
-    public function getMerchants(): MerchantCollectionTransfer
-    {
-        return $this->getRepository()->getMerchants();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
@@ -132,6 +120,34 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
      *
      * @api
      *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    public function getMerchants(): MerchantCollectionTransfer
+    {
+        return $this->getRepository()->getMerchants();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
+     */
+    public function createMerchantAddress(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantAddressWriter()
+            ->create($merchantAddressTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
@@ -155,21 +171,5 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
     public function getNextStatuses(string $currentStatus): array
     {
         return ['waiting-for-approval'];
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
-     */
-    public function createMerchantAddress(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer
-    {
-        return $this->getFactory()
-            ->createMerchantAddressWriter()
-            ->create($merchantAddressTransfer);
     }
 }

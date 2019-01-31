@@ -76,16 +76,6 @@ interface MerchantFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves collection of all merchants.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
-     */
-    public function getMerchants(): MerchantCollectionTransfer;
-
-    /**
-     * Specification:
      * - Finds a merchant by merchant id in provided transfer.
      * - Returns MerchantTransfer if found, NULL otherwise.
      *
@@ -112,6 +102,31 @@ interface MerchantFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves collection of all merchants.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    public function getMerchants(): MerchantCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Creates a new merchant address entity.
+     * - Uses incoming transfer to set entity fields.
+     * - Persists the entity to DB.
+     * - Sets ID to the returning transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
+     */
+    public function createMerchantAddress(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer;
+
+    /**
+     * Specification:
      * - Finds a merchant address by merchant address id in provided transfer.
      * - Returns MerchantAddressTransfer if found, NULL otherwise.
      *
@@ -134,19 +149,4 @@ interface MerchantFacadeInterface
      * @return array
      */
     public function getNextStatuses(string $currentStatus): array;
-
-    /**
-     * Specification:
-     * - Creates a new merchant address entity.
-     * - Uses incoming transfer to set entity fields.
-     * - Persists the entity to DB.
-     * - Sets ID to the returning transfer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
-     */
-    public function createMerchantAddress(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer;
 }

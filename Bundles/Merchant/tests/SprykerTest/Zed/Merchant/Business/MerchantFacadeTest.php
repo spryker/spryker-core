@@ -9,7 +9,9 @@ namespace SprykerTest\Zed\Merchant\Business;
 
 use Codeception\Test\Unit;
 use Exception;
+use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Merchant\Business\MerchantFacade;
 
@@ -25,6 +27,10 @@ use Spryker\Zed\Merchant\Business\MerchantFacade;
  */
 class MerchantFacadeTest extends Unit
 {
+    protected const ID_MERCHANT = 123;
+    protected const MERCHANT_EMAIL = 'merchant@test.test';
+    protected const ID_MERCHANT_ADDRESS = 1243;
+
     /**
      * @var \SprykerTest\Zed\Merchant\MerchantBusinessTester
      */
@@ -197,6 +203,62 @@ class MerchantFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testFindMerchantByIdWillFindExistingMerchant(): void
+    {
+        $expectedMerchant = $this->tester->haveMerchant();
+
+        $merchantTransfer = (new MerchantTransfer())
+            ->setIdMerchant($expectedMerchant->getIdMerchant());
+
+        $actualMerchant = (new MerchantFacade())->findMerchantById($merchantTransfer);
+
+        $this->assertEquals($expectedMerchant, $actualMerchant);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindMerchantByIdWillNotFindMerchant(): void
+    {
+        $merchantTransfer = (new MerchantTransfer())
+            ->setIdMerchant(static::ID_MERCHANT);
+
+        $actualMerchant = (new MerchantFacade())->findMerchantById($merchantTransfer);
+
+        $this->assertNull($actualMerchant);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindMerchantByEmailWillFindExistingMerchant(): void
+    {
+        $expectedMerchant = $this->tester->haveMerchant();
+
+        $merchantTransfer = (new MerchantTransfer())
+            ->setEmail($expectedMerchant->getEmail());
+
+        $actualMerchant = (new MerchantFacade())->findMerchantByEmail($merchantTransfer);
+
+        $this->assertEquals($expectedMerchant, $actualMerchant);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindMerchantByEmailWillNotFindMerchant(): void
+    {
+        $merchantTransfer = (new MerchantTransfer())
+            ->setEmail(static::MERCHANT_EMAIL);
+
+        $actualMerchant = (new MerchantFacade())->findMerchantByEmail($merchantTransfer);
+
+        $this->assertNull($actualMerchant);
+    }
+
+    /**
+     * @return void
+     */
     public function testDeleteMerchant(): void
     {
         $merchantTransfer = $this->tester->haveMerchant();
@@ -230,5 +292,125 @@ class MerchantFacadeTest extends Unit
 
         $merchantTransferCollection = (new MerchantFacade())->getMerchants();
         $this->assertCount(2, $merchantTransferCollection->getMerchants());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateMerchantAddress(): void
+    {
+        $merchantTransfer = $this->tester->haveMerchant();
+        $country = $this->tester->haveCountry();
+
+        $merchantAddressTransfer = (new MerchantAddressTransfer())
+            ->setKey('Merchant-address-1')
+            ->setFkMerchant($merchantTransfer->getIdMerchant())
+            ->setAddress1('street')
+            ->setAddress2('number')
+            ->setCity('city')
+            ->setZipCode('12567')
+            ->setFkCountry($country->getIdCountry());
+
+        /** @var \Spryker\Zed\Merchant\Business\MerchantFacade $merchantFacade */
+        $merchantFacade = $this->tester->getFacade();
+        $merchantFacade->createMerchantAddress($merchantAddressTransfer);
+
+        $this->assertNotNull($merchantAddressTransfer->getIdMerchantAddress());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateMerchantAddressWithEmptyKey(): void
+    {
+        $merchantTransfer = $this->tester->haveMerchant();
+        $country = $this->tester->haveCountry();
+
+        $merchantAddressTransfer = (new MerchantAddressTransfer())
+            ->setFkMerchant($merchantTransfer->getIdMerchant())
+            ->setAddress1('street')
+            ->setAddress2('number')
+            ->setCity('city')
+            ->setZipCode('12567')
+            ->setFkCountry($country->getIdCountry());
+
+        /** @var \Spryker\Zed\Merchant\Business\MerchantFacade $merchantFacade */
+        $merchantFacade = $this->tester->getFacade();
+        $merchantFacade->createMerchantAddress($merchantAddressTransfer);
+
+        $this->assertNotNull($merchantAddressTransfer->getIdMerchantAddress());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateMerchantAddressWithExistingKeyThrowsException(): void
+    {
+        $this->expectException(PropelException::class);
+
+        $merchantTransfer = $this->tester->haveMerchant();
+        $country = $this->tester->haveCountry();
+
+        $merchantAddressTransfer = $this->tester->haveMerchantAddress(['key' => 'Merchant-address-1']);
+
+        $merchantAddressTransfer2 = (new MerchantAddressTransfer())
+            ->setKey($merchantAddressTransfer->getKey())
+            ->setFkMerchant($merchantTransfer->getIdMerchant())
+            ->setAddress1('street')
+            ->setAddress2('number')
+            ->setCity('city')
+            ->setZipCode('12567')
+            ->setFkCountry($country->getIdCountry());
+
+        /** @var \Spryker\Zed\Merchant\Business\MerchantFacade $merchantFacade */
+        $merchantFacade = $this->tester->getFacade();
+        $merchantFacade->createMerchantAddress($merchantAddressTransfer);
+        $merchantFacade->createMerchantAddress($merchantAddressTransfer2);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateMerchantAddressWithoutRequiredDataThrowsException(): void
+    {
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        $merchantAddressTransfer = (new MerchantAddressTransfer());
+
+        /** @var \Spryker\Zed\Merchant\Business\MerchantFacade $merchantFacade */
+        $merchantFacade = $this->tester->getFacade();
+        $merchantFacade->createMerchantAddress($merchantAddressTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindMerchantAddressByIdWillFindMerchantAddress(): void
+    {
+        $expectedMerchantAddressTransfer = $this->tester->haveMerchantAddress();
+
+        /** @var \Spryker\Zed\Merchant\Business\MerchantFacade $merchantFacade */
+        $merchantFacade = $this->tester->getFacade();
+        $actualMerchantAddressTransfer = $merchantFacade->findMerchantAddressById(
+            (new MerchantAddressTransfer())
+                ->setIdMerchantAddress($expectedMerchantAddressTransfer->getIdMerchantAddress())
+        );
+
+        $this->assertNotEmpty($actualMerchantAddressTransfer->getIdMerchantAddress());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindMerchantAddressByIdWillNotFindMissingMerchantAddress(): void
+    {
+        /** @var \Spryker\Zed\Merchant\Business\MerchantFacade $merchantFacade */
+        $merchantFacade = $this->tester->getFacade();
+        $actualMerchantAddressTransfer = $merchantFacade->findMerchantAddressById(
+            (new MerchantAddressTransfer())
+                ->setIdMerchantAddress(static::ID_MERCHANT_ADDRESS)
+        );
+
+        $this->assertNull($actualMerchantAddressTransfer);
     }
 }
