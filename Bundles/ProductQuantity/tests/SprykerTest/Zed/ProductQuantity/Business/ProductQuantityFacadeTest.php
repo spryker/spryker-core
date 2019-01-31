@@ -285,4 +285,24 @@ class ProductQuantityFacadeTest extends Unit
         // Assert
         $this->assertSame($expectedCount, $actualCount);
     }
+
+    /**
+     * @return void
+     */
+    public function testNormalizeItemsWithProductQuantityRestrictions(): void
+    {
+        $concreteProduct = $this->tester->createProductWithProductQuantity();
+        $expectedSku = $concreteProduct->getSku();
+        $expectedQuantity = 1;
+        $expectedAmountOfItems = 1;
+
+        $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
+        $this->tester->addSkuToCartChangeTransfer($cartChangeTransfer, $expectedSku, $expectedQuantity);
+
+        $cartChangeTransfer = $this->productQuantityFacade->normalizeItemsWithProductQuantityRestrictions($cartChangeTransfer);
+
+        $this->assertSame($expectedAmountOfItems, count($cartChangeTransfer->getItems()));
+        $this->assertSame($expectedQuantity, $cartChangeTransfer->getItems()[0]->getQuantity());
+        $this->assertSame($expectedSku, $cartChangeTransfer->getItems()[0]->getSku());
+    }
 }
