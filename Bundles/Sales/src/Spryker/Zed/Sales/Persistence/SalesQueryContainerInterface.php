@@ -112,7 +112,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function querySalesOrderItemsWithShippingAddresses($idSalesOrder): SpySalesOrderItemQuery;
+    public function querySalesOrderItemsWithShippingAddresses(int $idSalesOrder): SpySalesOrderItemQuery;
 
     /**
      * @api

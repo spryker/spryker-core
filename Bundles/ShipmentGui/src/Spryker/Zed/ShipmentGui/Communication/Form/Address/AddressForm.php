@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -114,6 +115,7 @@ class AddressForm extends AbstractType
                 'label' => 'First name',
                 'constraints' => [
                     new NotBlank(),
+                    new Length(['max' => 255]),
                 ],
             ]);
 
@@ -131,6 +133,9 @@ class AddressForm extends AbstractType
             ->add(static::ADDRESS_FIELD_MIDDLE_NAME, TextType::class, [
                 'required' => false,
                 'label' => 'Middle name',
+                'constraints' => [
+                    new Length(['max' => 255]),
+                ],
             ]);
 
         return $this;
@@ -149,6 +154,7 @@ class AddressForm extends AbstractType
                 'label' => 'Last name',
                 'constraints' => [
                     new NotBlank(),
+                    new Length(['max' => 255]),
                 ],
             ]);
 
@@ -168,6 +174,7 @@ class AddressForm extends AbstractType
                 'label' => 'Email',
                 'constraints' => [
                     new Email(),
+                    new Length(['max' => 255]),
                 ],
             ]);
 
@@ -205,6 +212,10 @@ class AddressForm extends AbstractType
             ->add(static::ADDRESS_FIELD_ADDRESS_1, TextType::class, [
                 'required' => true,
                 'label' => 'Address 1',
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(['max' => 255]),
+                ],
             ]);
 
         return $this;
@@ -221,6 +232,9 @@ class AddressForm extends AbstractType
             ->add(static::ADDRESS_FIELD_ADDRESS_2, TextType::class, [
                 'required' => false,
                 'label' => 'Addres 2',
+                'constraints' => [
+                    new Length(['max' => 255]),
+                ],
             ]);
 
         return $this;
@@ -237,6 +251,9 @@ class AddressForm extends AbstractType
             ->add(static::ADDRESS_FIELD_COMPANY, TextType::class, [
                 'required' => false,
                 'label' => 'Company',
+                'constraints' => [
+                    new Length(['max' => 255]),
+                ],
             ]);
 
         return $this;
@@ -253,6 +270,10 @@ class AddressForm extends AbstractType
             ->add(static::ADDRESS_FIELD_CITY, TextType::class, [
                 'required' => true,
                 'label' => 'City',
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(['max' => 255]),
+                ],
             ]);
 
         return $this;
@@ -269,6 +290,10 @@ class AddressForm extends AbstractType
             ->add(static::ADDRESS_FIELD_ZIP_CODE, TextType::class, [
                 'required' => true,
                 'label' => 'ZIP code',
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(['max' => 15]),
+                ],
             ]);
 
         return $this;
@@ -285,6 +310,9 @@ class AddressForm extends AbstractType
             ->add(static::ADDRESS_FIELD_PO_BOX, TextType::class, [
                 'required' => false,
                 'label' => 'PO box',
+                'constraints' => [
+                    new Length(['max' => 255]),
+                ],
             ]);
 
         return $this;
@@ -301,6 +329,9 @@ class AddressForm extends AbstractType
             ->add(static::ADDRESS_FIELD_PHONE, TextType::class, [
                 'required' => false,
                 'label' => 'Phone',
+                'constraints' => [
+                    new Length(['max' => 255]),
+                ],
             ]);
 
         return $this;
@@ -317,6 +348,9 @@ class AddressForm extends AbstractType
             ->add(static::ADDRESS_FIELD_CELL_PHONE, TextType::class, [
                 'required' => false,
                 'label' => 'Cellphone',
+                'constraints' => [
+                    new Length(['max' => 255]),
+                ],
             ]);
 
         return $this;
@@ -333,6 +367,9 @@ class AddressForm extends AbstractType
             ->add(static::ADDRESS_FIELD_DESCRIPTION, TextType::class, [
                 'required' => false,
                 'label' => 'Description',
+                'constraints' => [
+                    new Length(['max' => 255]),
+                ],
             ]);
 
         return $this;
@@ -349,6 +386,9 @@ class AddressForm extends AbstractType
             ->add(static::ADDRESS_FIELD_COMMENT, TextareaType::class, [
                 'required' => false,
                 'label' => 'Comment',
+                'constraints' => [
+                    new Length(['max' => 255]),
+                ],
             ]);
 
         return $this;
