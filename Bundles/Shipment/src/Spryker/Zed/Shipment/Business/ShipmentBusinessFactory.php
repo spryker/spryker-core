@@ -91,16 +91,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentTransformerInterface
-     */
-    public function createShipmentTransformer(): ShipmentTransformerInterface
-    {
-        return new ShipmentTransformer(
-            $this->getQueryContainer()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Shipment\Business\Model\MethodPriceInterface
      */
     protected function createMethodPrice()
