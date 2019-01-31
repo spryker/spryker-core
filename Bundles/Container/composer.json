@@ -33,5 +33,10 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "conflict": {
+    "spryker/pimple": "*",
+    "pimple/pimple": "*",
+    "silex/silex": "*"
   }
 }
