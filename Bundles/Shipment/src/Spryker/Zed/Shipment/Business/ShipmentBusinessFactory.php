@@ -21,17 +21,15 @@ use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverWithMultiShippingAd
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
-use Spryker\Zed\Shipment\Business\Model\Shipment;
 use Spryker\Zed\Shipment\Business\Model\ShipmentCarrierReader;
-use Spryker\Zed\Shipment\Business\Model\ShipmentGroupSaver;
-use Spryker\Zed\Shipment\Business\Model\ShipmentGroupSaverInterface;
-use Spryker\Zed\Shipment\Business\Model\ShipmentInterface;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentTransformer;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentTransformerInterface;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupSaver;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupSaverInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
@@ -78,17 +76,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getPlugins(),
             $this->getMethodFilterPlugins()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentInterface
-     */
-    public function createShipment(): ShipmentInterface
-    {
-        return new Shipment(
-            $this->getQueryContainer(),
-            $this->createShipmentTransformer()
         );
     }
 
@@ -376,7 +363,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentGroupSaverInterface
+     * @return \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupSaverInterface
      */
     public function createShipmentGroupSaver(): ShipmentGroupSaverInterface
     {
