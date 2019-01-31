@@ -289,19 +289,56 @@ class ProductQuantityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testNormalizeItemsWithProductQuantityRestrictions(): void
+    public function testNormalizeItemsWithProductQuantityRestrictionsMinimumAdjustment(): void
     {
-        $concreteProduct = $this->tester->createProductWithProductQuantity();
-        $expectedSku = $concreteProduct->getSku();
-        $expectedQuantity = 1;
-        $expectedAmountOfItems = 1;
+        $expectedQuantity = 2;
+        $productTransfer = $this->tester->createProductWithSpecificProductQuantity($expectedQuantity, 100, 2);
+        $expectedSku = $productTransfer->getSku();
 
         $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
-        $this->tester->addSkuToCartChangeTransfer($cartChangeTransfer, $expectedSku, $expectedQuantity);
+        $cartChangeTransfer = $this->tester->addSkuToCartChangeTransfer($cartChangeTransfer, $expectedSku, 1);
+        $cartChangeTransfer->getItems()[0]->addNormalizableField('quantity');
 
         $cartChangeTransfer = $this->productQuantityFacade->normalizeItemsWithProductQuantityRestrictions($cartChangeTransfer);
 
-        $this->assertSame($expectedAmountOfItems, count($cartChangeTransfer->getItems()));
+        $this->assertSame($expectedQuantity, $cartChangeTransfer->getItems()[0]->getQuantity());
+        $this->assertSame($expectedSku, $cartChangeTransfer->getItems()[0]->getSku());
+    }
+
+    /**
+     * @return void
+     */
+    public function testNormalizeItemsWithProductQuantityRestrictionsMaximumAdjustment(): void
+    {
+        $expectedQuantity = 100;
+        $productTransfer = $this->tester->createProductWithSpecificProductQuantity(2, $expectedQuantity, 2);
+        $expectedSku = $productTransfer->getSku();
+
+        $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
+        $cartChangeTransfer = $this->tester->addSkuToCartChangeTransfer($cartChangeTransfer, $expectedSku, 200);
+        $cartChangeTransfer->getItems()[0]->addNormalizableField('quantity');
+
+        $cartChangeTransfer = $this->productQuantityFacade->normalizeItemsWithProductQuantityRestrictions($cartChangeTransfer);
+
+        $this->assertSame($expectedQuantity, $cartChangeTransfer->getItems()[0]->getQuantity());
+        $this->assertSame($expectedSku, $cartChangeTransfer->getItems()[0]->getSku());
+    }
+
+    /**
+     * @return void
+     */
+    public function testNormalizeItemsWithProductQuantityRestrictionsStepAdjustment(): void
+    {
+        $expectedQuantity = 4;
+        $productTransfer = $this->tester->createProductWithSpecificProductQuantity(2, 100, 2);
+        $expectedSku = $productTransfer->getSku();
+
+        $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
+        $cartChangeTransfer = $this->tester->addSkuToCartChangeTransfer($cartChangeTransfer, $expectedSku, 3);
+        $cartChangeTransfer->getItems()[0]->addNormalizableField('quantity');
+
+        $cartChangeTransfer = $this->productQuantityFacade->normalizeItemsWithProductQuantityRestrictions($cartChangeTransfer);
+
         $this->assertSame($expectedQuantity, $cartChangeTransfer->getItems()[0]->getQuantity());
         $this->assertSame($expectedSku, $cartChangeTransfer->getItems()[0]->getSku());
     }
