@@ -3,12 +3,14 @@
         {% if localizedContentForm.vars.data.fkLocale == tab.name %}
             {{ form_row(localizedContentForm.fk_locale) }}
             {{ form_row(localizedContentForm.locale_name) }}
-            {% if localizedContentForm.parameters.vars.attr.template_path is defined %}
-                {% include localizedContentForm.parameters.vars.attr.template_path with {'form': localizedContentForm.parameters} %}
-            {% else %}
-                {{ form_widget(localizedContentForm.parameters) }}
-            {% endif %}
-            <input type="button" data-tab="#{{ localizedContentForm.parameters.vars.id }}" class="btn btn-xl btn-outline  btn-view clear-fields" value="{{ 'Clear' | trans }}" />
+            <div id="localized-content-block-{{ localizedContentForm.vars.name }}">
+                {% if localizedContentForm.parameters.vars.attr.template_path is defined %}
+                    {% include localizedContentForm.parameters.vars.attr.template_path with {'form': localizedContentForm.parameters} %}
+                {% else %}
+                    {{ form_widget(localizedContentForm.parameters) }}
+                {% endif %}
+                <input type="button" data-tab="#localized-content-block-{{ localizedContentForm.vars.name }}" class="btn btn-xl btn-outline btn-view clear-fields" value="{{ 'Clear' | trans }}" />
+            </div>
         {% endif %}
     {% endfor %}
 {% endblock %}

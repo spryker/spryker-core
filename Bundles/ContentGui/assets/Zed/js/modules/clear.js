@@ -5,8 +5,6 @@
 
 'use strict';
 
-
-
 $(document).ready(function () {
     $('.clear-fields').click(function (e) {
         var subform = $($(this).data('tab'));

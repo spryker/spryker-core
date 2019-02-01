@@ -5,7 +5,5 @@
 
 'use strict';
 
-if (!window.ContentAbstractProductList) {
-    require('./modules/clear');
-    window.ContentAbstractProductList = true;
-}
+require('./modules/clear');
+
