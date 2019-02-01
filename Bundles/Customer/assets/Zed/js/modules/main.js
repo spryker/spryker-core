@@ -6,17 +6,11 @@
 'use strict';
 
 $(document).ready(function () {
-
-    var dateOfBirth = $('#customer_date_of_birth');
-
-    dateOfBirth.datepicker({
+    $('#customer_date_of_birth').datepicker({
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
         numberOfMonths: 3,
-        maxDate: dateOfBirth.val(),
-        defaultData: 0,
-        onClose: function (selectedDate) {
-            dateOfBirth.datepicker('option', 'minDate', selectedDate);
-        }
+        maxDate: 0,
+        defaultData: 0
     });
 });
