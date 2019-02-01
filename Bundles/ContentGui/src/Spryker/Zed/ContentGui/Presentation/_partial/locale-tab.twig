@@ -8,6 +8,7 @@
             {% else %}
                 {{ form_widget(localizedContentForm.parameters) }}
             {% endif %}
+            <input type="button" data-tab="#{{ localizedContentForm.parameters.vars.id }}" class="btn btn-xl btn-outline  btn-view clear-fields" value="{{ 'Clear' | trans }}" />
         {% endif %}
     {% endfor %}
 {% endblock %}
