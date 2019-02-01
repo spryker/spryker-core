@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OauthCustomerConnector\Communication\Plugin\Oauth;
+namespace Spryker\Zed\OauthCompanyUserConnector\Communication\Plugin\Oauth;
 
 use Generated\Shared\Transfer\OauthScopeRequestTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig;
+use Spryker\Zed\OauthCompanyUserConnector\OauthCompanyUserConnectorConfig;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface;
 
 /**
- * @method \Spryker\Zed\OauthCustomerConnector\Business\OauthCustomerConnectorFacadeInterface getFacade()
- * @method \Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig getConfig()
+ * @method \Spryker\Zed\OauthCompanyUserConnector\Business\OauthCompanyUserConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\OauthCompanyUserConnector\OauthCompanyUserConnectorConfig getConfig()
  */
-class CustomerOauthScopeProviderPlugin extends AbstractPlugin implements OauthScopeProviderPluginInterface
+class CompanyUserOauthScopeProviderPlugin extends AbstractPlugin implements OauthScopeProviderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -29,7 +29,7 @@ class CustomerOauthScopeProviderPlugin extends AbstractPlugin implements OauthSc
      */
     public function accept(OauthScopeRequestTransfer $oauthScopeRequestTransfer): bool
     {
-        if ($oauthScopeRequestTransfer->getGrantType() != OauthCustomerConnectorConfig::GRANT_TYPE_PASSWORD) {
+        if ($oauthScopeRequestTransfer->getGrantType() != OauthCompanyUserConnectorConfig::GRANT_TYPE_USER) {
             return false;
         }
 
