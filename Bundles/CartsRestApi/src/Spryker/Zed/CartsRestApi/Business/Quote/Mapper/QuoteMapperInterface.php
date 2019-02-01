@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote\Mapper;
 
+use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
@@ -14,6 +15,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 
 interface QuoteMapperInterface
@@ -79,6 +81,15 @@ interface QuoteMapperInterface
     ): RestQuoteRequestTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer $assigningGuestQuoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer
+     */
+    public function mapAssigningGuestQuoteRequestTransferToRestQuoteCollectionRequestTransfer(
+        AssigningGuestQuoteRequestTransfer $assigningGuestQuoteRequestTransfer
+    ): RestQuoteCollectionRequestTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -86,4 +97,15 @@ interface QuoteMapperInterface
     public function mapQuoteResponseErrorsToRestCodes(
         QuoteResponseTransfer $quoteResponseTransfer
     ): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $registeredCustomer
+     * @param \Generated\Shared\Transfer\QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function createQuoteTransfer(
+        CustomerTransfer $registeredCustomer,
+        QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
+    ): QuoteTransfer;
 }

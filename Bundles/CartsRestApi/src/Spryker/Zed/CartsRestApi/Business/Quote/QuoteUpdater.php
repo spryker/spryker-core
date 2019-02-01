@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
@@ -109,20 +108,18 @@ class QuoteUpdater implements QuoteUpdaterInterface
             ->requireAnonymousCustomerReference();
 
         $quoteCollectionResponseTransfer = $this->cartReader->findQuoteByCustomerAndStore(
-            (new RestQuoteCollectionRequestTransfer())
-                ->setCustomerReference($assigningGuestQuoteRequestTransfer->getAnonymousCustomerReference())
+            $this->quoteMapper->mapAssigningGuestQuoteRequestTransferToRestQuoteCollectionRequestTransfer(
+                $assigningGuestQuoteRequestTransfer
+            )
         );
 
         $registeredCustomer = $assigningGuestQuoteRequestTransfer->getCustomer();
-        $quoteTransfer = (new QuoteTransfer())
-            ->setCustomerReference(
-                $registeredCustomer->getCustomerReference()
-            )->setUuid($quoteCollectionResponseTransfer->getQuoteCollection()->getQuotes()[0]->getUuid())
-            ->setCustomer($registeredCustomer);
+        $quoteTransfer = $this->quoteMapper->createQuoteTransfer($registeredCustomer, $quoteCollectionResponseTransfer);
+        $quoteUpdateRequestTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer);
+        $quoteUpdateRequestAttributesTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestAttributesTransfer($quoteTransfer);
+        $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
 
-        return $this->updateQuote(
-            $this->quoteMapper->mapQuoteTransferToRestQuoteRequestTransfer($quoteTransfer, $registeredCustomer)
-        );
+        return $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
     }
 
     /**

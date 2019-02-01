@@ -8,8 +8,8 @@
 namespace Spryker\Glue\CartsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleConfig;
-use Symfony\Component\HttpFoundation\Response;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
+use Symfony\Component\HttpFoundation\Response;
 
 class CartsRestApiConfig extends AbstractBundleConfig
 {
