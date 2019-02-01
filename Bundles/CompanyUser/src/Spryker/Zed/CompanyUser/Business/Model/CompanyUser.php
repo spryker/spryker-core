@@ -197,6 +197,26 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
+     * @param int[] $companyUserIds
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function findActiveCompanyUsers(array $companyUserIds): array
+    {
+        return $this->companyUserRepository->findActiveCompanyUsers($companyUserIds);
+    }
+
+    /**
+     * @param int[] $companyIds
+     *
+     * @return int[]
+     */
+    public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array
+    {
+        return $this->companyUserRepository->findActiveCompanyUserIdsByCompanyIds($companyIds);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
