@@ -369,6 +369,6 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->endUse()
             ->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER);
 
-        return $query->find()->toArray();
+        return $query->find()->getData();
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserStorage\Persistence;
 
+use Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -29,7 +30,7 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
             ->createCompanyUserStorageQuery()
             ->filterByFkCompanyUser_In($companyUserIds);
 
-        return $query->find()->getArrayCopy('fkCompanyUser');
+        return $query->find()->getArrayCopy(SpyCompanyUserStorageEntityTransfer::FK_COMPANY_USER);
     }
 
     /**
