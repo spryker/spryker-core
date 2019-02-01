@@ -45,7 +45,7 @@ class CartItemsQuantityNormalizerPlugin extends AbstractPlugin implements CartIt
     /**
      * {@inheritdoc}
      * - Adjusts cart item quantity according to product quantity restrictions.
-     * - Adds notification message about adjusment.
+     * - Adds notification message about adjustment.
      *
      * @api
      *

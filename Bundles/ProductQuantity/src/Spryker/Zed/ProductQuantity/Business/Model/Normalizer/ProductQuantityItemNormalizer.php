@@ -276,7 +276,7 @@ class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInte
         int $nearestQuantity,
         ItemTransfer $itemTransfer
     ): ItemTransfer {
-        $notificationMessage = $this->findNotificationMessage($productQuantityTransfer, $nearestQuantity, $itemTransfer->getQuantity());
+        $notificationMessage = $this->createNotificationMessage($productQuantityTransfer, $nearestQuantity, $itemTransfer->getQuantity());
 
         if ($notificationMessage !== null) {
             $itemTransfer->addMessage($notificationMessage);
@@ -292,7 +292,7 @@ class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInte
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    protected function findNotificationMessage(ProductQuantityTransfer $productQuantityTransfer, int $nearestQuantity, int $quantity): ?MessageTransfer
+    protected function createNotificationMessage(ProductQuantityTransfer $productQuantityTransfer, int $nearestQuantity, int $quantity): ?MessageTransfer
     {
         $min = $productQuantityTransfer->getQuantityMin();
         $max = $productQuantityTransfer->getQuantityMax();

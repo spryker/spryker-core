@@ -62,7 +62,7 @@ interface ProductQuantityFacadeInterface
     /**
      * Specification:
      * - Adjusts cart item quantity according to product quantity restrictions.
-     * - Adds notification messages about adjusment.
+     * - Adds notification messages about adjustment.
      *
      * @api
      *
