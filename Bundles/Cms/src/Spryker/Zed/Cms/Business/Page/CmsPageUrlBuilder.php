@@ -30,7 +30,7 @@ class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
      *
      * @return string
      */
-    public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer)
+    public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer): string
     {
         $cmsPageAttributesTransfer->requireUrl()
             ->requireLocaleName();
@@ -58,7 +58,7 @@ class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
      *
      * @return string
      */
-    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer)
+    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer): string
     {
         if (!$this->cmsConfig->appendPrefixToCmsPageUrl()) {
             return '';
@@ -74,7 +74,7 @@ class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
      *
      * @return string
      */
-    protected function extractLanguageCode($localeName)
+    protected function extractLanguageCode(string $localeName): string
     {
         $localeNameParts = explode('_', $localeName);
         $languageCode = $localeNameParts[0];
