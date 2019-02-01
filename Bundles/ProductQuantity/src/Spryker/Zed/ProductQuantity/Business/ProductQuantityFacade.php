@@ -79,4 +79,20 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
             ->createProductQuantityReader()
             ->findProductQuantityTransfers();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function normalizeItemsWithProductQuantityRestrictions(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createProductQuantityItemNormalizer()
+            ->normalizeCartChangeItems($cartChangeTransfer);
+    }
 }

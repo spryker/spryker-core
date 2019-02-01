@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Cart\Expander;
+namespace Spryker\Zed\ProductQuantity\Business\Model\Normalizer;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 
-interface CartChangeExpanderInterface
+interface ProductQuantityItemNormalizerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expand(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+    public function normalizeCartChangeItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }
