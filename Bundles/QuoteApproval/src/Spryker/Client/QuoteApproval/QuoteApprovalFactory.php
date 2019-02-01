@@ -14,6 +14,8 @@ use Spryker\Client\QuoteApproval\Permission\PermissionLimitCalculator;
 use Spryker\Client\QuoteApproval\Permission\PermissionLimitCalculatorInterface;
 use Spryker\Client\QuoteApproval\Quote\QuoteStatusChecker;
 use Spryker\Client\QuoteApproval\Quote\QuoteStatusCheckerInterface;
+use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReader;
+use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReaderInterface;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStub;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface;
 use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculator;
@@ -38,6 +40,14 @@ class QuoteApprovalFactory extends AbstractFactory
             $this->getPermissionClient(),
             $this->createQuoteStatusCalculator()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReaderInterface
+     */
+    public function createQuoteApprovalReader(): QuoteApprovalReaderInterface
+    {
+        return new QuoteApprovalReader();
     }
 
     /**

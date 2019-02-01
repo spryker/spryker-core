@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
+use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteApprovalClientInterface
@@ -180,4 +181,18 @@ interface QuoteApprovalClientInterface
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
     public function declineQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns quote approval which waiting for approve from specific company user.
+     * - Returns null if approval not found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer|null
+     */
+    public function getWaitingQuoteApprovalByIdCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): ?QuoteApprovalTransfer;
 }

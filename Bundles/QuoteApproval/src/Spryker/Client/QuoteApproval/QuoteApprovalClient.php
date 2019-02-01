@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
+use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
@@ -197,5 +198,22 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
         return $this->getFactory()
             ->createQuoteApprovalStub()
             ->declineQuoteApproval($quoteApprovalRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer|null
+     */
+    public function getWaitingQuoteApprovalByIdCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): ?QuoteApprovalTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteApprovalReader()
+            ->getWaitingQuoteApprovalByIdCompanyUser($quoteTransfer, $idCompanyUser);
     }
 }
