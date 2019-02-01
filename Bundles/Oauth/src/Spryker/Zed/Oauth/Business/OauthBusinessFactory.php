@@ -8,6 +8,9 @@
 namespace Spryker\Zed\Oauth\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Oauth\Business\Installer\OauthClientInstaller;
+use Spryker\Zed\Oauth\Business\Installer\OauthScopeInstaller;
+use Spryker\Zed\Oauth\Business\Installer\OauthScopeInstallerInterface;
 use Spryker\Zed\Oauth\Business\Model\League\AccessGrantExecutor;
 use Spryker\Zed\Oauth\Business\Model\League\AccessGrantExecutorInterface;
 use Spryker\Zed\Oauth\Business\Model\League\AccessTokenValidator;
@@ -17,6 +20,7 @@ use Spryker\Zed\Oauth\Business\Model\League\AuthorizationServerBuilderInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\PasswordGrant;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\RefreshTokenGrant;
+use Spryker\Zed\Oauth\Business\Model\League\Grant\UserGrant;
 use Spryker\Zed\Oauth\Business\Model\League\RepositoryBuilder;
 use Spryker\Zed\Oauth\Business\Model\League\RepositoryBuilderInterface;
 use Spryker\Zed\Oauth\Business\Model\League\ResourceServerBuilder;
@@ -47,6 +51,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
         return new AccessGrantExecutor([
             OauthConfig::GRANT_TYPE_PASSWORD => $this->createPasswordGrant(),
             OauthConfig::GRANT_TYPE_REFRESH_TOKEN => $this->createRefreshTokenGrant(),
+            OauthConfig::GRANT_TYPE_USER => $this->createUserGrant(),
         ]);
     }
 
@@ -68,6 +73,18 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     protected function createRefreshTokenGrant(): GrantInterface
     {
         return new RefreshTokenGrant(
+            $this->createAuthorizationServerBuilder()->build(),
+            $this->createRepositoryBuilder(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface
+     */
+    protected function createUserGrant(): GrantInterface
+    {
+        return new UserGrant(
             $this->createAuthorizationServerBuilder()->build(),
             $this->createRepositoryBuilder(),
             $this->getConfig()
@@ -160,6 +177,30 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     {
         return new OauthClientReader(
             $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oauth\Business\Installer\OauthScopeInstallerInterface
+     */
+    public function createOauthScopeInstaller(): OauthScopeInstallerInterface
+    {
+        return new OauthScopeInstaller(
+            $this->createOauthScopeReader(),
+            $this->createOauthScopeWriter(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oauth\Business\Installer\OauthClientInstallerInterface
+     */
+    public function createOauthClientInstaller()
+    {
+        return new OauthClientInstaller(
+            $this->createOauthClientReader(),
+            $this->createOauthClientWriter(),
+            $this->getConfig()
         );
     }
 }
