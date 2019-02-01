@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Merchant;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 
 /**
@@ -47,5 +48,18 @@ class MerchantBusinessTester extends Actor
     protected function getMerchantQuery(): SpyMerchantQuery
     {
         return SpyMerchantQuery::create();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
+     */
+    public function createMerchantAddressTransfer(): MerchantAddressTransfer
+    {
+        return (new MerchantAddressTransfer())
+            ->setAddress1('street')
+            ->setAddress2('number')
+            ->setCity('city')
+            ->setZipCode('12567')
+            ->setFkCountry(60);
     }
 }

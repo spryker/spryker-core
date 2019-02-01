@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant\Persistence;
 
+use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -16,14 +17,14 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class MerchantEntityManager extends AbstractEntityManager implements MerchantEntityManagerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @param int $idMerchant
      *
      * @return void
      */
     public function deleteMerchantById(int $idMerchant): void
     {
+        $this->deleteMerchantAddressByMerchantId($idMerchant);
+
         $this->getFactory()
             ->createMerchantQuery()
             ->filterByIdMerchant($idMerchant)
@@ -31,8 +32,6 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
@@ -50,8 +49,44 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
 
         $spyMerchant->save();
 
-        $merchantTransfer->setIdMerchant($spyMerchant->getIdMerchant());
+        $merchantTransfer->fromArray($spyMerchant->toArray(), true);
 
         return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
+     */
+    public function saveMerchantAddress(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer
+    {
+        $spyMerchantAddress = $this->getFactory()
+            ->createMerchantAddressQuery()
+            ->filterByIdMerchantAddress($merchantAddressTransfer->getIdMerchantAddress())
+            ->findOneOrCreate();
+
+        $spyMerchantAddress = $this->getFactory()
+            ->createPropelMerchantAddressMapper()
+            ->mapMerchantAddressTransferToSpyMerchantAddressEntity($merchantAddressTransfer, $spyMerchantAddress);
+
+        $spyMerchantAddress->save();
+
+        $merchantAddressTransfer->fromArray($spyMerchantAddress->toArray(), true);
+
+        return $merchantAddressTransfer;
+    }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return void
+     */
+    protected function deleteMerchantAddressByMerchantId(int $idMerchant): void
+    {
+        $this->getFactory()
+            ->createMerchantAddressQuery()
+            ->filterByFkMerchant($idMerchant)
+            ->deleteAll();
     }
 }

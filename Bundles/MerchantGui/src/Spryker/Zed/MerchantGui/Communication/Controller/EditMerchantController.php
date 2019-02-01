@@ -32,7 +32,7 @@ class EditMerchantController extends AbstractController
     {
         $idMerchant = $this->castId($request->get(MerchantTableConstants::REQUEST_ID_MERCHANT));
 
-        $dataProvider = $this->getFactory()->createMerchantFormDataProvider();
+        $dataProvider = $this->getFactory()->createMerchantUpdateFormDataProvider();
         $merchantTransfer = $dataProvider->getData($idMerchant);
 
         if ($merchantTransfer === null) {
@@ -41,9 +41,9 @@ class EditMerchantController extends AbstractController
         }
 
         $merchantForm = $this->getFactory()
-            ->getMerchantForm(
+            ->getMerchantUpdateForm(
                 $merchantTransfer,
-                $dataProvider->getOptions()
+                $dataProvider->getOptions($merchantTransfer)
             )
             ->handleRequest($request);
 

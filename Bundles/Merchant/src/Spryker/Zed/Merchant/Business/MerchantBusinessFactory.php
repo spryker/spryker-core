@@ -8,6 +8,10 @@
 namespace Spryker\Zed\Merchant\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Merchant\Business\Address\MerchantAddressReader;
+use Spryker\Zed\Merchant\Business\Address\MerchantAddressReaderInterface;
+use Spryker\Zed\Merchant\Business\Address\MerchantAddressWriter;
+use Spryker\Zed\Merchant\Business\Address\MerchantAddressWriterInterface;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGenerator;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
 use Spryker\Zed\Merchant\Business\Model\MerchantReader;
@@ -31,7 +35,9 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantWriter(
             $this->getEntityManager(),
-            $this->createMerchantKeyGenerator()
+            $this->createMerchantKeyGenerator(),
+            $this->createMerchantAddressWriter(),
+            $this->getConfig()
         );
     }
 
@@ -41,6 +47,24 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     public function createMerchantReader(): MerchantReaderInterface
     {
         return new MerchantReader(
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\Address\MerchantAddressWriterInterface
+     */
+    public function createMerchantAddressWriter(): MerchantAddressWriterInterface
+    {
+        return new MerchantAddressWriter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\Address\MerchantAddressReaderInterface
+     */
+    public function createMerchantAddressReader(): MerchantAddressReaderInterface
+    {
+        return new MerchantAddressReader(
             $this->getRepository()
         );
     }
