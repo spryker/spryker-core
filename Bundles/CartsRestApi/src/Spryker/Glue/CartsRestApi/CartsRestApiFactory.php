@@ -94,7 +94,8 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new CartDeleter(
             $this->createCartRestResponseBuilder(),
-            $this->getClient()
+            $this->getClient(),
+            $this->createCartsResourceMapper()
         );
     }
 

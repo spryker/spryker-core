@@ -9,8 +9,6 @@ namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
@@ -61,9 +59,9 @@ class CartReader implements CartReaderInterface
             return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
         }
 
-        $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid((new QuoteTransfer())
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
-            ->setUuid($uuidCart));
+        $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid(
+            $this->cartsResourceMapper->createQuoteTransfer($uuidCart, $restRequest)
+        );
 
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
             return $this->cartRestResponseBuilder->createCartNotFoundErrorResponse();
@@ -89,9 +87,9 @@ class CartReader implements CartReaderInterface
             return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
         }
 
-        $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid((new QuoteTransfer())
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
-            ->setUuid($uuidCart));
+        $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid(
+            $this->cartsResourceMapper->createQuoteTransfer($uuidCart, $restRequest)
+        );
 
         if ($quoteResponseTransfer->getIsSuccessful() === false
             || $restRequest->getUser()->getNaturalIdentifier() !== $quoteResponseTransfer->getQuoteTransfer()->getCustomerReference()) {
@@ -156,8 +154,8 @@ class CartReader implements CartReaderInterface
      */
     public function getCustomerQuotes(RestRequestInterface $restRequest): QuoteCollectionTransfer
     {
-        $restQuoteCollectionRequestTransfer = (new RestQuoteCollectionRequestTransfer())
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+        $restQuoteCollectionRequestTransfer = $this->cartsResourceMapper
+            ->mapRestRequestToRestQuoteCollectionRequestTransfer($restRequest);
 
         $quoteCollectionTransfer = $this->cartsRestApiClient
             ->getCustomerQuoteCollection($restQuoteCollectionRequestTransfer);

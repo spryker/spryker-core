@@ -56,7 +56,7 @@ class CartCreator implements CartCreatorInterface
         RestRequestInterface $restRequest,
         RestCartsAttributesTransfer $restCartsAttributesTransfer
     ): RestResponseInterface {
-        $quoteTransfer = $this->cartsResourceMapper->createQuoteTransfer($restCartsAttributesTransfer, $restRequest);
+        $quoteTransfer = $this->cartsResourceMapper->mapRestCartsAttributesTransferToQuoteTransfer($restCartsAttributesTransfer, $restRequest);
         $restQuoteRequestTransfer = $this->cartsResourceMapper->createRestQuoteRequestTransfer($restRequest, $quoteTransfer);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->createQuote($restQuoteRequestTransfer);

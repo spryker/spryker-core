@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Generated\Shared\Transfer\RestCartsDiscountsTransfer;
 use Generated\Shared\Transfer\RestCartsTotalsTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
@@ -87,17 +88,27 @@ class CartsResourceMapper implements CartsResourceMapperInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
      */
     public function createRestQuoteRequestTransfer(
         RestRequestInterface $restRequest,
-        QuoteTransfer $quoteTransfer
+        ?QuoteTransfer $quoteTransfer
     ): RestQuoteRequestTransfer {
-        return (new RestQuoteRequestTransfer())
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
-            ->setQuote($quoteTransfer);
+        $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+        $uuidQuote = $restRequest->getResource()->getId();
+
+        if (!$quoteTransfer && $uuidQuote) {
+            $restQuoteRequestTransfer
+                ->setQuote((new QuoteTransfer())->setUuid($uuidQuote))
+                ->setQuoteUuid($uuidQuote);
+        }
+
+        $restQuoteRequestTransfer->setQuote($quoteTransfer);
+
+        return $restQuoteRequestTransfer;
     }
 
     /**
@@ -106,7 +117,7 @@ class CartsResourceMapper implements CartsResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function createQuoteTransfer(
+    public function mapRestCartsAttributesTransferToQuoteTransfer(
         RestCartsAttributesTransfer $restCartsAttributesTransfer,
         RestRequestInterface $restRequest
     ): QuoteTransfer {
@@ -122,6 +133,33 @@ class CartsResourceMapper implements CartsResourceMapperInterface
             ->setStore($storeTransfer);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer
+     */
+    public function mapRestRequestToRestQuoteCollectionRequestTransfer(
+        RestRequestInterface $restRequest
+    ): RestQuoteCollectionRequestTransfer {
+        return (new RestQuoteCollectionRequestTransfer())
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+    }
+
+    /**
+     * @param string $uuidCart
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function createQuoteTransfer(
+        string $uuidCart,
+        RestRequestInterface $restRequest
+    ): QuoteTransfer {
+        return (new QuoteTransfer())
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
+            ->setUuid($uuidCart);
     }
 
     /**

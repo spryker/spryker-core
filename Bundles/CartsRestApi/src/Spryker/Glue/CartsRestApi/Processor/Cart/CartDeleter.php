@@ -8,8 +8,8 @@
 namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -27,15 +27,23 @@ class CartDeleter implements CartDeleterInterface
     protected $cartRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
+     */
+    protected $cartsResourceMapper;
+
+    /**
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
      */
     public function __construct(
         CartRestResponseBuilderInterface $cartRestResponseBuilder,
-        CartsRestApiClientInterface $cartsRestApiClient
+        CartsRestApiClientInterface $cartsRestApiClient,
+        CartsResourceMapperInterface $cartsResourceMapper
     ) {
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
         $this->cartsRestApiClient = $cartsRestApiClient;
+        $this->cartsResourceMapper = $cartsResourceMapper;
     }
 
     /**
@@ -50,12 +58,12 @@ class CartDeleter implements CartDeleterInterface
             return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
         }
 
-        $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
-            ->setQuoteUuid($uuidQuote)
-            ->setQuote((new QuoteTransfer())->setUuid($uuidQuote))
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+        $quoteTransfer = (new QuoteTransfer())->setUuid($uuidQuote);
 
-        $quoteResponseTransfer = $this->cartsRestApiClient->deleteQuote($restQuoteRequestTransfer);
+        $quoteResponseTransfer = $this->cartsRestApiClient->deleteQuote(
+            $this->cartsResourceMapper->createRestQuoteRequestTransfer($restRequest, $quoteTransfer)
+        );
+
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->cartRestResponseBuilder->createFailedDeletingCartErrorResponse();
         }
