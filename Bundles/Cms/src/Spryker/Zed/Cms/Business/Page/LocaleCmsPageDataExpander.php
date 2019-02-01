@@ -25,12 +25,12 @@ class LocaleCmsPageDataExpander implements LocaleCmsPageDataExpanderInterface
     public const PARAM_META_DESCRIPTION = 'meta_description';
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
+     * @var \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
      */
     protected $cmsPageDataExpanderPlugins;
 
     /**
-     * @param array $cmsPageDataExpanderPlugins
+     * @param \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface[] $cmsPageDataExpanderPlugins
      */
     public function __construct(array $cmsPageDataExpanderPlugins)
     {
@@ -43,7 +43,7 @@ class LocaleCmsPageDataExpander implements LocaleCmsPageDataExpanderInterface
      *
      * @return array
      */
-    public function calculateFlattenedLocaleCmsPageData(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer, LocaleTransfer $localeTransfer)
+    public function calculateFlattenedLocaleCmsPageData(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer, LocaleTransfer $localeTransfer): array
     {
         return $this->expand($this->flattenLocaleCmsPageDataTransfer($localeCmsPageDataTransfer), $localeTransfer);
     }
@@ -54,7 +54,7 @@ class LocaleCmsPageDataExpander implements LocaleCmsPageDataExpanderInterface
      *
      * @return array
      */
-    protected function expand(array $cmsPageData, LocaleTransfer $localeTransfer)
+    protected function expand(array $cmsPageData, LocaleTransfer $localeTransfer): array
     {
         foreach ($this->cmsPageDataExpanderPlugins as $cmsPageDataExpanderPlugin) {
             $cmsPageData = $cmsPageDataExpanderPlugin->expand($cmsPageData, $localeTransfer);
@@ -68,7 +68,7 @@ class LocaleCmsPageDataExpander implements LocaleCmsPageDataExpanderInterface
      *
      * @return array
      */
-    protected function flattenLocaleCmsPageDataTransfer(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer)
+    protected function flattenLocaleCmsPageDataTransfer(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer): array
     {
         return [
             static::PARAM_URL => $localeCmsPageDataTransfer->getUrl(),
