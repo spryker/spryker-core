@@ -33,6 +33,7 @@ abstract class AbstractTable
     public const PARAMETER_VALUE = 'value';
     public const SORT_BY_COLUMN = 'column';
     public const SORT_BY_DIRECTION = 'dir';
+    public const URL_ANCHOR = '#';
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -914,23 +915,35 @@ abstract class AbstractTable
         $parameters = $this->getButtonParameters($buttonOptions);
         $icon = '';
 
-        if (is_string($url)) {
-            $url = Url::parse($url);
-        }
-
-        $url = $url->build();
-
         if (array_key_exists(self::BUTTON_ICON, $buttonOptions) === true && $buttonOptions[self::BUTTON_ICON] !== null) {
             $icon = '<i class="fa ' . $buttonOptions[self::BUTTON_ICON] . '"></i> ';
         }
 
         return $this->getTwig()->render('button.twig', [
-            'url' => $url,
+            'url' => $this->buildUrl($url),
             'class' => $class,
             'title' => $title,
             'icon' => $icon,
             'parameters' => $parameters,
         ]);
+    }
+
+    /**
+     * @param \Spryker\Service\UtilText\Model\Url\Url|string $url
+     *
+     * @return string
+     */
+    protected function buildUrl($url): string
+    {
+        if ($url === static::URL_ANCHOR) {
+            return static::URL_ANCHOR;
+        }
+
+        if (is_string($url)) {
+            $url = Url::parse($url);
+        }
+
+        return $url->build();
     }
 
     /**
