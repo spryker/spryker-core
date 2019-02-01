@@ -7,74 +7,8 @@
 
 namespace Spryker\Zed\Translator;
 
-use Spryker\Shared\Translator\TranslatorConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TranslatorConfig extends AbstractBundleConfig
 {
-    public const CSV_DELIMITER = ',';
-
-    /**
-     * @return string[]
-     */
-    public function getTranslationFilePathPatterns(): array
-    {
-        return array_merge($this->getCoreTranslationFilePathPatterns(), $this->getProjectTranslationFilePathPatterns());
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getCoreTranslationFilePathPatterns(): array
-    {
-        return [
-            APPLICATION_VENDOR_DIR . '/spryker/*/data/translation/Zed/[a-z][a-z]_[A-Z][A-Z].csv',
-        ];
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getValidatorTranslationFilePatterns(): array
-    {
-        return [
-            APPLICATION_VENDOR_DIR . '/symfony/validator/Resources/translations/validators.[a-z][a-z].xlf',
-        ];
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getProjectTranslationFilePathPatterns(): array
-    {
-        return $this->get(TranslatorConstants::TRANSLATION_FILE_PATH_PATTERNS, []);
-    }
-
-    /**
-     * @param string $localeCode
-     *
-     * @return string[]
-     */
-    public function getFallbackLocales(string $localeCode): array
-    {
-        $fallbackLocales = $this->get(TranslatorConstants::TRANSLATION_FALLBACK_LOCALES, []);
-
-        return $fallbackLocales[$localeCode] ?? [];
-    }
-
-    /**
-     * @return string
-     */
-    public function getCacheDir(): string
-    {
-        return $this->get(TranslatorConstants::TRANSLATION_CACHE_DIRECTORY);
-    }
-
-    /**
-     * @return string
-     */
-    public function getCsvDelimiter(): string
-    {
-        return static::CSV_DELIMITER;
-    }
 }

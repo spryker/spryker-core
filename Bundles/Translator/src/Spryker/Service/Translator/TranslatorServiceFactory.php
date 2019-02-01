@@ -14,8 +14,8 @@ use Spryker\Service\Translator\TranslationCache\CacheGenerator;
 use Spryker\Service\Translator\TranslationCache\CacheGeneratorInterface;
 use Spryker\Service\Translator\TranslationFinder\TranslationFileFinder;
 use Spryker\Service\Translator\TranslationFinder\TranslationFileFinderInterface;
-use Spryker\Service\Translator\TranslationKeyManager\TranslationKeyManagerInterface;
 use Spryker\Service\Translator\TranslationKeyManager\TranslationKeyManager;
+use Spryker\Service\Translator\TranslationKeyManager\TranslationKeyManagerInterface;
 use Spryker\Service\Translator\TranslationLoader\CsvFileLoader;
 use Spryker\Service\Translator\TranslationLoader\TranslationLoaderInterface;
 use Spryker\Service\Translator\TranslationLoader\XliffLoader;
@@ -23,7 +23,8 @@ use Spryker\Service\Translator\TranslationResource\CsvResourceFileLoader;
 use Spryker\Service\Translator\TranslationResource\TranslationResourceFileLoaderInterface;
 use Spryker\Service\Translator\TranslationResource\ValidatorResourceFileLoader;
 use Spryker\Service\Translator\Translator\Translator;
-use Spryker\Service\Translator\Translator\TranslatorInterface;
+use Spryker\Service\Translator\TranslatorBuilder\TranslatorBuilder;
+use Spryker\Service\Translator\TranslatorBuilder\TranslatorBuilderInterface;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Kernel\Store;
 
@@ -96,29 +97,27 @@ class TranslatorServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\Translator\Translator\TranslatorInterface
+     * @param string|null $localeName
+     *
+     * @return \Symfony\Component\Translation\TranslatorInterface|\Symfony\Component\Translation\TranslatorBagInterface| \Spryker\Service\Translator\Translator\TranslatorResourceAwareInterface
      */
-    public function createTranslator(): TranslatorInterface
+    public function createTranslator(string $localeName = null)
     {
-        $locale = $this->getApplication()['locale'];
-        $translator = new Translator($locale, null, $this->getConfig()->getCacheDir());
-        $translator->setFallbackLocales($this->getConfig()->getFallbackLocales($locale));
+        $localeName = $localeName ?? $this->getApplication()['locale'];
+        $translator = new Translator($localeName, null, $this->getConfig()->getCacheDirectory());
+        $translator->setFallbackLocales($this->getConfig()->getFallbackLocales($localeName));
 
-        foreach ($this->getTranslationResourceFileLoaderCollection() as $translationResourceFileLoader) {
-            $loaderFormat = $translationResourceFileLoader->getLoader()->getFormat();
-            $translator->addLoader($loaderFormat, $translationResourceFileLoader->getLoader());
+        return $this->createTranslationBuilder()->buildTranslator($translator);
+    }
 
-            foreach ($translationResourceFileLoader->getFilePaths() as $filePath) {
-                $translationResourceLocale = $translationResourceFileLoader->findLocaleFromFilename($filePath);
-                if (!$translationResourceLocale) {
-                    continue;
-                }
-
-                $translator->addResource($loaderFormat, $filePath, $translationResourceLocale, $translationResourceFileLoader->getDomain());
-            }
-        }
-
-        return $translator;
+    /**
+     * @return \Spryker\Service\Translator\TranslatorBuilder\TranslatorBuilderInterface
+     */
+    public function createTranslationBuilder(): TranslatorBuilderInterface
+    {
+        return new TranslatorBuilder(
+            $this->getTranslationResourceFileLoaderCollection()
+        );
     }
 
     /**

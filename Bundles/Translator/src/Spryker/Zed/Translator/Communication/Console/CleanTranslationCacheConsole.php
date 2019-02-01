@@ -14,9 +14,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Translator\Communication\TranslatorCommunicationFactory getFactory()
  */
-class ClearTranslationCacheConsole extends Console
+class CleanTranslationCacheConsole extends Console
 {
-    public const COMMAND_NAME = 'translator:clear-cache';
+    public const COMMAND_NAME = 'translator:clean-cache';
     public const DESCRIPTION = 'Clear translation cache for Zed';
 
     /**

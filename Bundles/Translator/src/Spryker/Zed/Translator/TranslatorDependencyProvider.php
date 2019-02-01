@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Translator;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -16,6 +17,7 @@ use Spryker\Zed\Kernel\Container;
 class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_TRANSLATOR = 'SERVICE_TRANSLATOR';
+    public const APPLICATION = 'APPLICATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -26,6 +28,7 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addTranslatorService($container);
+        $container = $this->addApplication($container);
 
         return $container;
     }
@@ -39,6 +42,20 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SERVICE_TRANSLATOR] = function (Container $container) {
             return $container->getLocator()->translator()->service();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addApplication(Container $container): Container
+    {
+        $container[static::APPLICATION] = function () {
+            return (new Pimple())->getApplication();
         };
 
         return $container;

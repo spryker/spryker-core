@@ -7,20 +7,22 @@
 
 namespace Spryker\Service\Translator;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Service\Translator\Translator\TranslatorInterface;
-
 interface TranslatorServiceInterface
 {
     /**
      * Specification:
-     *  - Returns Translator object.
+     * - Translates the given message.
      *
      * @api
      *
-     * @return \Spryker\Service\Translator\Translator\TranslatorInterface
+     * @param string $id
+     * @param array $parameters
+     * @param string|null $domain
+     * @param null $locale
+     *
+     * @return string
      */
-    public function getTranslator(): TranslatorInterface;
+    public function translate(string $id, array $parameters = [], string $domain = null, $locale = null): string;
 
     /**
      * Specification:
@@ -44,13 +46,14 @@ interface TranslatorServiceInterface
 
     /**
      * Specification:
-     *  - Finds a key in the dictionary.
+     *  - Finds a key in the dictionary for given locale (it does not take into account the fallback mechanism).
      *
      * @api
      *
-     * @param string $keyName
+     * @param string $message
+     * @param string $localeName
      *
      * @return bool
      */
-    public function hasTranslation($keyName): bool;
+    public function hasTranslation(string $message, string $localeName): bool;
 }

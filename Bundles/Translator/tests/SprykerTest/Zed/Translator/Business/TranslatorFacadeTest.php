@@ -62,7 +62,7 @@ class TranslatorFacadeTest extends Unit
 
         $translatorFactory = Stub::make(TranslatorBusinessFactory::class, [
             'getConfig' => Stub::make(TranslatorConfig::class, [
-                'getCacheDir' => static::TEST_CACHE_DIR,
+                'getCacheDirectory' => static::TEST_CACHE_DIR,
                 'getTranslationFilePathPatterns' => static::TEST_TRANSLATION_FILE_DIR,
             ]),
             'getFileSystem' => new Filesystem(),

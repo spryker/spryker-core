@@ -10,9 +10,10 @@ namespace Spryker\Service\Translator\TranslationKeyManager;
 interface TranslationKeyManagerInterface
 {
     /**
-     * @param string $keyName
+     * @param string $message
+     * @param string $localeName
      *
      * @return bool
      */
-    public function hasKey($keyName): bool;
+    public function hasTranslation(string $message, string $localeName): bool;
 }

@@ -7,9 +7,7 @@
 
 namespace Spryker\Service\Translator;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Service\Kernel\AbstractService;
-use Spryker\Service\Translator\Translator\TranslatorInterface;
 
 /**
  * @method \Spryker\Service\Translator\TranslatorServiceFactory getFactory()
@@ -21,11 +19,16 @@ class TranslatorService extends AbstractService implements TranslatorServiceInte
      *
      * @api
      *
-     * @return \Spryker\Service\Translator\Translator\TranslatorInterface
+     * @param string $id
+     * @param array $parameters
+     * @param string|null $domain
+     * @param null $locale
+     *
+     * @return string
      */
-    public function getTranslator(): TranslatorInterface
+    public function translate(string $id, array $parameters = [], string $domain = null, $locale = null): string
     {
-        return $this->getFactory()->createTranslator();
+        return $this->getFactory()->createTranslator()->trans($id, $parameters, $domain, $locale);
     }
 
     /**
@@ -57,12 +60,13 @@ class TranslatorService extends AbstractService implements TranslatorServiceInte
      *
      * @api
      *
-     * @param string $keyName
+     * @param string $message
+     * @param string $localeName
      *
      * @return bool
      */
-    public function hasTranslation($keyName): bool
+    public function hasTranslation(string $message, string $localeName): bool
     {
-        return $this->getFactory()->createTranslationKeyManager()->hasKey($keyName);
+        return $this->getFactory()->createTranslationKeyManager()->hasTranslation($message, $localeName);
     }
 }

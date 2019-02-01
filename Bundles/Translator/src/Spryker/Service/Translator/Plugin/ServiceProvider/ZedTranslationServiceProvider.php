@@ -5,28 +5,37 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Translator\Communication\Plugin\ServiceProvider;
+namespace Spryker\Service\Translator\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Service\Kernel\AbstractPlugin;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Twig_Environment;
 
 /**
- * @method \Spryker\Zed\Translator\Communication\TranslatorCommunicationFactory getFactory()
- * @method \Spryker\Zed\Translator\TranslatorConfig getConfig()
+ * @method \Spryker\Service\Translator\TranslatorServiceFactory getFactory()
+ * @method \Spryker\Service\Translator\TranslatorConfig getConfig()
  */
 class ZedTranslationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
-     * @param \Silex\Application $app
+     * {@inheritdoc}
      *
      * @return void
      */
-    public function boot(Application $app)
+    public function register(Application $app): void
     {
-        $translator = $this->getFactory()->getTranslatorService()->getTranslator();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return void
+     */
+    public function boot(Application $app): void
+    {
+        $translator = $this->getFactory()->createTranslator();
 
         $app['twig'] = $app->share(
             $app->extend('twig', function (Twig_Environment $twig) use ($translator) {
@@ -37,14 +46,5 @@ class ZedTranslationServiceProvider extends AbstractPlugin implements ServicePro
         );
 
         $app['translator'] = $translator;
-    }
-
-    /**
-     * @param \Silex\Application $app
-     *
-     * @return void
-     */
-    public function register(Application $app)
-    {
     }
 }
