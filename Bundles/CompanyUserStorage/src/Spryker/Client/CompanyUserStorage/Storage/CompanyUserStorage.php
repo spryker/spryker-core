@@ -15,6 +15,8 @@ use Spryker\Shared\CompanyUserStorage\CompanyUserStorageConfig;
 
 class CompanyUserStorage implements CompanyUserStorageInterface
 {
+    protected const KEY_ID = 'id';
+
     /**
      * @var \Spryker\Client\CompanyUserStorage\Dependency\Client\CompanyUserStorageToStorageClientInterface
      */
@@ -49,11 +51,11 @@ class CompanyUserStorage implements CompanyUserStorageInterface
         $mappingKey = $this->getStorageKey($reference);
         $mappingData = $this->storageClient->get($mappingKey);
 
-        if (!$mappingData || !isset($mappingData['id'])) {
+        if (!$mappingData || !isset($mappingData[static::KEY_ID])) {
             return null;
         }
 
-        $storageKey = $this->getStorageKey($mappingData['id']);
+        $storageKey = $this->getStorageKey($mappingData[static::KEY_ID]);
         $companyUserStorageData = $this->storageClient->get($storageKey);
 
         return (new CompanyUserStorageTransfer())->fromArray($companyUserStorageData, true);
