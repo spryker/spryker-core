@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsBlockProductConnector;
 
 use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToCollectorBridge;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleBridge;
+use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToProductBridge;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToTouchBridge;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -22,6 +23,7 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
     public const FACADE_LOCALE = 'CMS_BLOCK_PRODUCT_CONNECTOR:FACADE_LOCALE';
     public const FACADE_TOUCH = 'CMS_BLOCK_PRODUCT_CONNECTOR:FACADE_TOUCH';
     public const FACADE_COLLECTOR = 'CMS_BLOCK_PRODUCT_CONNECTOR:FACADE_COLLECTOR';
+    public const FACADE_PRODUCT = 'CMS_BLOCK_PRODUCT_CONNECTOR:FACADE_PRODUCT';
 
     public const QUERY_CONTAINER_PRODUCT_ABSTRACT = 'CMS_BLOCK_PRODUCT_CONNECTOR:QUERY_CONTAINER_PRODUCT_ABSTRACT';
     public const QUERY_CONTAINER_TOUCH = 'CMS_BLOCK_PRODUCT_CONNECTOR:QUERY_CONTAINER_TOUCH';
@@ -54,6 +56,7 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
         $container = $this->addTouchQueryContainer($container);
         $container = $this->addCollectorFacade($container);
         $container = $this->addDataReaderService($container);
+        $container = $this->addProductFacade($container);
 
         return $container;
     }
@@ -95,6 +98,20 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
     {
         $container[static::FACADE_TOUCH] = function (Container $container) {
             return new CmsBlockProductConnectorToTouchBridge($container->getLocator()->touch()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductFacade(Container $container)
+    {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
+            return new CmsBlockProductConnectorToProductBridge($container->getLocator()->product()->facade());
         };
 
         return $container;

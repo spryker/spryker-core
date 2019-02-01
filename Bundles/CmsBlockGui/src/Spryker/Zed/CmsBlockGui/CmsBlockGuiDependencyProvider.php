@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlockGui;
 
 use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockBridge;
+use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockProductConnectorBridge;
 use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToLocaleBridge;
 use Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerBridge;
 use Spryker\Zed\CmsBlockGui\Exception\MissingStoreRelationFormTypePluginException;
@@ -23,6 +24,7 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CMS_BLOCK = 'CMS_BLOCK_GUI:FACADE_CMS_BLOCK';
     public const FACADE_LOCALE = 'CMS_BLOCK_GUI:FACADE_LOCALE';
+    public const FACADE_CMS_BLOCK_PRODUCT_CONNECTOR = 'CMS_BLOCK_GUI:FACADE_CMS_BLOCK_PRODUCT_CONNECTOR';
 
     public const QUERY_CONTAINER_CMS_BLOCK = 'CMS_BLOCK_GUI:QUERY_CONTAINER_CMS_BLOCK';
 
@@ -42,6 +44,7 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addCmsBlockQueryContainer($container);
         $container = $this->addCmsBlockFacade($container);
+        $container = $this->addCmsBlockProductConnector($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addCmsBlockFormPlugins($container);
         $container = $this->addCmsBlockViewPlugins($container);
@@ -88,6 +91,20 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_CMS_BLOCK] = function (Container $container) {
             return new CmsBlockGuiToCmsBlockBridge($container->getLocator()->cmsBlock()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addCmsBlockProductConnector(Container $container)
+    {
+        $container[static::FACADE_CMS_BLOCK_PRODUCT_CONNECTOR] = function (Container $container) {
+            return new CmsBlockGuiToCmsBlockProductConnectorBridge($container->getLocator()->cmsBlockProductConnector()->facade());
         };
 
         return $container;
