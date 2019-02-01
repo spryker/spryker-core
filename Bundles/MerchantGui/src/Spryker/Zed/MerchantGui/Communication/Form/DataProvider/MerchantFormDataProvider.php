@@ -55,20 +55,21 @@ class MerchantFormDataProvider
     }
 
     /**
-     * @param string|null $currentStatus
+     * @param \Generated\Shared\Transfer\MerchantTransfer|null $merchantTransfer
      *
      * @return array
      */
-    public function getOptions(?string $currentStatus = null): array
+    public function getOptions(?MerchantTransfer $merchantTransfer = null): array
     {
         $options = [
             'data_class' => MerchantTransfer::class,
             MerchantForm::SALUTATION_CHOICES_OPTION => $this->config->getSalutationChoices(),
         ];
 
-        if ($currentStatus !== null) {
+        if ($merchantTransfer !== null) {
             $options += [
-                MerchantUpdateForm::OPTION_STATUS_CHOICES => $this->merchantFacade->getNextStatuses($currentStatus),
+                MerchantUpdateForm::OPTION_CURRENT_ID => $merchantTransfer->getIdMerchant(),
+                MerchantUpdateForm::OPTION_STATUS_CHOICES => $this->merchantFacade->getNextStatuses($merchantTransfer->getStatus()),
             ];
         }
 

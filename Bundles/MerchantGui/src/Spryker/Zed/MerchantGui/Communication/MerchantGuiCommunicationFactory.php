@@ -12,7 +12,6 @@ use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantAddressFormDataProvider;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantFormDataProvider;
-use Spryker\Zed\MerchantGui\Communication\Form\MerchantAddressForm;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantForm;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantUpdateForm;
 use Spryker\Zed\MerchantGui\Communication\Table\MerchantTable;
@@ -64,22 +63,6 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
         return new MerchantFormDataProvider(
             $this->getMerchantFacade(),
             $this->getConfig()
-        );
-    }
-
-    /**
-     * @param int|null $idMerchantAddress
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getMerchantAddressForm(?int $idMerchantAddress = null): FormInterface
-    {
-        $companyUnitAddressDataProvider = $this->createMerchantAddressFormDataProvider();
-
-        return $this->getFormFactory()->create(
-            MerchantAddressForm::class,
-            $companyUnitAddressDataProvider->getData($idMerchantAddress),
-            $companyUnitAddressDataProvider->getOptions()
         );
     }
 

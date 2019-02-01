@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Merchant\Business\Model;
 
 use Generated\Shared\Transfer\MerchantTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Merchant\Business\Address\MerchantAddressWriterInterface;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
 use Spryker\Zed\Merchant\MerchantConfig;
@@ -15,6 +16,8 @@ use Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface;
 
 class MerchantWriter implements MerchantWriterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface
      */
@@ -68,6 +71,7 @@ class MerchantWriter implements MerchantWriterInterface
             ->requireContactPersonFirstName()
             ->requireContactPersonLastName()
             ->requireContactPersonPhone()
+            ->requireEmail()
             ->requireAddress();
 
         if (empty($merchantTransfer->getMerchantKey())) {
@@ -78,11 +82,26 @@ class MerchantWriter implements MerchantWriterInterface
 
         $merchantTransfer->setStatus($this->config->getDefaultMerchantStatus());
 
+        $merchantTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {
+            return $this->executeCreateTransaction($merchantTransfer);
+        });
+
+        return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    protected function executeCreateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
+    {
         $merchantTransfer = $this->entityManager->saveMerchant($merchantTransfer);
 
         $merchantAddressTransfer = $merchantTransfer->getAddress();
         $merchantAddressTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
-        $this->merchantAddressWriter->create($merchantAddressTransfer);
+        $merchantAddressTransfer = $this->merchantAddressWriter->create($merchantAddressTransfer);
+        $merchantTransfer->setAddress($merchantAddressTransfer);
 
         return $merchantTransfer;
     }
@@ -102,6 +121,7 @@ class MerchantWriter implements MerchantWriterInterface
             ->requireContactPersonFirstName()
             ->requireContactPersonLastName()
             ->requireContactPersonPhone()
+            ->requireEmail()
             ->requireAddress();
 
         if (empty($merchantTransfer->getMerchantKey())) {
@@ -110,9 +130,24 @@ class MerchantWriter implements MerchantWriterInterface
             );
         }
 
+        $merchantTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {
+            return $this->executeUpdateTransaction($merchantTransfer);
+        });
+
+        return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    protected function executeUpdateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
+    {
         $merchantAddressTransfer = $merchantTransfer->getAddress();
         $merchantAddressTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
-        $this->merchantAddressWriter->update($merchantAddressTransfer);
+        $merchantAddressTransfer = $this->merchantAddressWriter->update($merchantAddressTransfer);
+        $merchantTransfer->setAddress($merchantAddressTransfer);
 
         return $this->entityManager->saveMerchant($merchantTransfer);
     }
@@ -126,6 +161,18 @@ class MerchantWriter implements MerchantWriterInterface
     {
         $merchantTransfer->requireIdMerchant();
 
+        $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {
+            $this->executeDeleteTransaction($merchantTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return void
+     */
+    protected function executeDeleteTransaction(MerchantTransfer $merchantTransfer): void
+    {
         $this->entityManager->deleteMerchantById($merchantTransfer->getIdMerchant());
     }
 }

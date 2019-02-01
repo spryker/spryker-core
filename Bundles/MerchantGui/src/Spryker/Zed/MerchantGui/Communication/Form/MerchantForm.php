@@ -133,14 +133,15 @@ class MerchantForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param int|null $currentId
      *
      * @return $this
      */
-    protected function addEmailField(FormBuilderInterface $builder)
+    protected function addEmailField(FormBuilderInterface $builder, ?int $currentId = null)
     {
         $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => static::LABEL_EMAIL,
-            'constraints' => $this->getEmailFieldConstraints(),
+            'constraints' => $this->getEmailFieldConstraints($currentId),
         ]);
 
         return $this;
@@ -255,9 +256,11 @@ class MerchantForm extends AbstractType
     }
 
     /**
+     * @param int|null $currentId
+     *
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    protected function getEmailFieldConstraints(): array
+    protected function getEmailFieldConstraints(?int $currentId = null): array
     {
         $merchantFacade = $this->getFactory()->getMerchantFacade();
 
