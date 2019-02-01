@@ -21,6 +21,11 @@ class QuoteRequestPreCheckPlugin extends AbstractPlugin implements CheckoutPreCo
 {
     /**
      * {@inheritdoc}
+     * - Validates quote request if quote request reference exists in quote.
+     * - Checks status property from quote request.
+     * - Checks the latest version.
+     * - Checks valid until property from quote request with current time.
+     * - Sets error message if not valid.
      *
      * @api
      *
