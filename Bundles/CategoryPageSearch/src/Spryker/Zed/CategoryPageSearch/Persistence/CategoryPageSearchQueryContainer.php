@@ -65,6 +65,8 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
     }
 
     /**
+     * @api
+     *
      * @module Url
      * @module Category
      *
