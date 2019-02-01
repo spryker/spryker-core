@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\QuoteRequest\Business\QuoteRequestFacade;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestFilterBuilder;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig;
 
@@ -27,6 +28,8 @@ use Spryker\Shared\QuoteRequest\QuoteRequestConfig;
  */
 class QuoteRequestFacadeTest extends Unit
 {
+    protected const FAKE_QUOTE_REQUEST_VERSION_REFERENCE = 'FAKE_QUOTE_REQUEST_VERSION_REFERENCE';
+
     /**
      * @var \SprykerTest\Zed\QuoteRequest\QuoteRequestBusinessTester
      */
@@ -170,5 +173,54 @@ class QuoteRequestFacadeTest extends Unit
             SharedQuoteRequestConfig::STATUS_CANCELED,
             $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckCheckoutQuoteRequestValidatesQuoteWithWrongQuoteRequestVersionReference(): void
+    {
+        // Arrange
+        $this->tester->createQuoteRequest(
+            $this->tester->createQuoteRequestVersion($this->quoteTransfer),
+            $this->companyUserTransfer
+        );
+        $this->quoteTransfer->setQuoteRequestVersionReference(static::FAKE_QUOTE_REQUEST_VERSION_REFERENCE);
+
+        // Act
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+        $isValid = $this->tester
+            ->getFacade()
+            ->checkCheckoutQuoteRequest($this->quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertFalse($isValid);
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckCheckoutQuoteRequestValidatesQuoteWithWrongQuoteRequestStatus(): void
+    {
+        $quoteRequestTransfer = $this->tester->createQuoteRequest(
+            $this->tester->createQuoteRequestVersion($this->quoteTransfer),
+            $this->companyUserTransfer
+        );
+        $this->quoteTransfer->setQuoteRequestVersionReference(
+            $quoteRequestTransfer->getLatestVersion()->getVersionReference()
+        );
+
+        // Act
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+        $isValid = $this->tester
+            ->getFacade()
+            ->checkCheckoutQuoteRequest($this->quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertFalse($isValid);
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
     }
 }

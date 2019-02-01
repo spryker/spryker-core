@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\QuoteRequest\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteRequestFacadeInterface
 {
@@ -60,4 +62,18 @@ interface QuoteRequestFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
     public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Checks valid until property from QuoteRequest if quote request reference is present in quote.
+     * - Sets error message if not valid.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function checkCheckoutQuoteRequest(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }

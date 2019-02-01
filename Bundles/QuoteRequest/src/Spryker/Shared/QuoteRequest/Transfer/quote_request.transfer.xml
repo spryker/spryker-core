@@ -13,6 +13,10 @@
         <property name="quoteRequests" type="QuoteRequest[]" singular="quoteRequest" />
     </transfer>
 
+    <transfer name="QuoteRequestVersionCollection">
+        <property name="quoteRequestVersions" type="QuoteRequestVersion[]" singular="quoteRequestVersion" />
+    </transfer>
+
     <transfer name="QuoteRequest">
         <property name="idQuoteRequest" type="int"/>
 
@@ -22,6 +26,7 @@
         <property name="metadata" type="array"/>
         <property name="status" type="string"/>
 
+        <property name="validUntil" type="string"/>
         <property name="createdAt" type="string" />
 
         <property name="latestVersion" type="QuoteRequestVersion"/>
@@ -34,12 +39,18 @@
         <property name="version" type="int"/>
         <property name="versionReference" type="string"/>
 
+        <property name="quoteRequest" type="QuoteRequest"/>
         <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="QuoteRequestFilter">
         <property name="companyUser" type="CompanyUser"/>
         <property name="quoteRequestReference" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteRequestVersionFilter">
+        <property name="quoteRequest" type="QuoteRequest"/>
+        <property name="quoteRequestVersionReference" type="string"/>
     </transfer>
 
     <transfer name="Quote">

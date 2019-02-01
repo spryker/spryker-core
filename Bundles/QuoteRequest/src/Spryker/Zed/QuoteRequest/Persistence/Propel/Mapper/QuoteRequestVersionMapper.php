@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServiceInterface;
 use Spryker\Zed\QuoteRequest\QuoteRequestConfig;
 
@@ -38,6 +41,27 @@ class QuoteRequestVersionMapper
     }
 
     /**
+     * @param \Propel\Runtime\Collection\Collection $quoteRequestEntities
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer
+     */
+    public function mapEntityCollectionToTransferCollection(
+        Collection $quoteRequestEntities
+    ): QuoteRequestVersionCollectionTransfer {
+        $quoteRequestVersionCollectionTransfer = new QuoteRequestVersionCollectionTransfer();
+
+        foreach ($quoteRequestEntities as $quoteRequestEntity) {
+            $quoteRequestVersionTransfer = $this->mapQuoteRequestVersionEntityToQuoteRequestVersionTransfer(
+                $quoteRequestEntity,
+                new QuoteRequestVersionTransfer()
+            );
+            $quoteRequestVersionCollectionTransfer->addQuoteRequestVersion($quoteRequestVersionTransfer);
+        }
+
+        return $quoteRequestVersionCollectionTransfer;
+    }
+
+    /**
      * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion $quoteRequestVersion
      * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer
      *
@@ -52,6 +76,10 @@ class QuoteRequestVersionMapper
 
         $quoteRequestVersionTransfer->setQuote(
             (new QuoteTransfer())->fromArray($this->decodeQuoteData($quoteRequestVersion), true)
+        );
+
+        $quoteRequestVersionTransfer->setQuoteRequest(
+            (new QuoteRequestTransfer())->fromArray($quoteRequestVersion->getSpyQuoteRequest()->toArray(), true)
         );
 
         return $quoteRequestVersionTransfer;
