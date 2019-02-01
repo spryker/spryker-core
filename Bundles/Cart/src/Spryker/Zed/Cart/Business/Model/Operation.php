@@ -156,7 +156,7 @@ class Operation implements OperationInterface
         $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->modifiedToArray(), true);
 
         $cartChangeTransfer = $this->normalizeCartChangeItems($cartChangeTransfer);
-        $this->addInfoMessaeges(
+        $this->addInfoMessages(
             $this->getNotificationMessages($cartChangeTransfer)
         );
 
@@ -361,7 +361,7 @@ class Operation implements OperationInterface
      *
      * @return void
      */
-    protected function addInfoMessaeges(array $infoMessages): void
+    protected function addInfoMessages(array $infoMessages): void
     {
         foreach ($infoMessages as $message) {
             $this->messengerFacade->addInfoMessage($message);
