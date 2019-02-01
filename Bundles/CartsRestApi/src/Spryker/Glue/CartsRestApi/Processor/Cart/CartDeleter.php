@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
@@ -15,11 +16,6 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CartDeleter implements CartDeleterInterface
 {
-    /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface
-     */
-    protected $cartReader;
-
     /**
      * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
      */
@@ -33,16 +29,13 @@ class CartDeleter implements CartDeleterInterface
     /**
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
-     * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface $cartReader
      */
     public function __construct(
         CartRestResponseBuilderInterface $cartRestResponseBuilder,
-        CartsRestApiClientInterface $cartsRestApiClient,
-        CartReaderInterface $cartReader
+        CartsRestApiClientInterface $cartsRestApiClient
     ) {
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
         $this->cartsRestApiClient = $cartsRestApiClient;
-        $this->cartReader = $cartReader;
     }
 
     /**
@@ -57,16 +50,9 @@ class CartDeleter implements CartDeleterInterface
             return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
         }
 
-        $quoteResponseTransfer = $this->cartReader->getQuoteByUuid($uuidQuote, $restRequest);
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->cartRestResponseBuilder->createCartNotFoundErrorResponse();
-        }
-
-        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
             ->setQuoteUuid($uuidQuote)
-            ->setQuote($quoteTransfer)
+            ->setQuote((new QuoteTransfer())->setUuid($uuidQuote))
             ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
 
         $quoteResponseTransfer = $this->cartsRestApiClient->deleteQuote($restQuoteRequestTransfer);

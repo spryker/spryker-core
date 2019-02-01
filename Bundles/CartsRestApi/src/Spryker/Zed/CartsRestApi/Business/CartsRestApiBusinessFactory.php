@@ -62,7 +62,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
         return new QuoteReader(
             $this->getQuoteFacade(),
             $this->getStoreFacade(),
-            $this->getQuoteCollectionReaderPlugins()
+            $this->getQuoteCollectionReaderPlugins(),
+            $this->createQuoteMapper()
         );
     }
 
@@ -84,7 +85,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteDeleter(
             $this->getPersistentCartFacade(),
-            $this->createQuoteReader()
+            $this->createQuoteReader(),
+            $this->createQuoteMapper()
         );
     }
 
