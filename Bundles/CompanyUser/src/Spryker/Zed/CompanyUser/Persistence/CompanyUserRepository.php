@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -63,6 +64,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->filterByFkCustomer($idCustomer)
             ->joinCompany()
             ->useCompanyQuery()
+                ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
                 ->filterByIsActive(true)
             ->endUse();
 
@@ -94,6 +96,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
                 ->filterByCustomerReference($customerReference)
             ->endUse()
             ->useCompanyQuery()
+                ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
                 ->filterByIsActive(true)
             ->endUse()
             ->joinWithCompany();
@@ -203,6 +206,35 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             return $this->getFactory()
                 ->createCompanyUserMapper()
                 ->mapCompanyUserEntityToCompanyUserTransfer($companyUserEntityTransfer);
+        }
+
+        return null;
+    }
+
+    /**
+     * @module Customer
+     * @module Company
+     *
+     * @param string $uuidCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findActiveCompanyUserByUuid(string $uuidCompanyUser): ?CompanyUserTransfer
+    {
+        $query = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->joinWithCustomer()
+            ->useCompanyQuery()
+                ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
+                ->filterByIsActive(true)
+            ->endUse()
+            ->filterByUuid($uuidCompanyUser);
+
+        $companyUserEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+        if ($companyUserEntityTransfer !== null) {
+            return $this->getFactory()
+                ->createCompanyUserMapper()
+                ->mapEntityTransferToCompanyUserTransfer($companyUserEntityTransfer);
         }
 
         return null;
