@@ -21,7 +21,7 @@ class QuoteStatusCalculator implements QuoteStatusCalculatorInterface
     {
         $status = null;
 
-        foreach ($quoteTransfer->getApprovals() as $quoteApprovalTransfer) {
+        foreach ($quoteTransfer->getQuoteApprovals() as $quoteApprovalTransfer) {
             if ($quoteApprovalTransfer->getStatus() === QuoteApprovalConfig::STATUS_APPROVED) {
                 return QuoteApprovalConfig::STATUS_APPROVED;
             }

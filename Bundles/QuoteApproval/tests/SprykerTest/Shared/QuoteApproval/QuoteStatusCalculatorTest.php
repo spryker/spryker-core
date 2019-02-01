@@ -138,7 +138,7 @@ class QuoteStatusCalculatorTest extends Unit
     protected function createQuoteTransfer(array $statuses = []): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setApprovals($this->createQuoteApprovalTransfers($statuses));
+        $quoteTransfer->setQuoteApprovals($this->createQuoteApprovalTransfers($statuses));
 
         return $quoteTransfer;
     }

@@ -260,11 +260,11 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Returns false if quote is locked.
+     * - Returns true if quote is locked.
      *
      * @api
      *
      * @return bool
      */
-    public function isQuoteEditable(): bool;
+    public function isQuoteLocked(): bool;
 }

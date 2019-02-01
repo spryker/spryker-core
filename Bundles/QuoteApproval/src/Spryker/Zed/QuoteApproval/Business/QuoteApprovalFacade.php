@@ -77,7 +77,7 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      */
     public function getQuoteApprovalsByIdQuote(int $idQuote): array
     {
-        return $this->getFactory()->getQuoteApprovalRepository()->findQuoteApprovalCollectionByIdQuote($idQuote);
+        return $this->getFactory()->getQuoteApprovalRepository()->findQuoteApprovalsByIdQuote($idQuote);
     }
 
     /**

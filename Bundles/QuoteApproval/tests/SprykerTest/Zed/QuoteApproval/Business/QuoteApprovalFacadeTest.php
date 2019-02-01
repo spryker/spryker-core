@@ -206,7 +206,7 @@ class QuoteApprovalFacadeTest extends Unit
 
         $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
 
-        $this->assertCount(1, $quoteTransfer->getApprovals());
+        $this->assertCount(1, $quoteTransfer->getQuoteApprovals());
     }
 
     /**

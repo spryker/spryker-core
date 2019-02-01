@@ -54,9 +54,9 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
     /**
      * @return bool
      */
-    public function isQuoteEditable(): bool
+    public function isQuoteLocked(): bool
     {
-        return !$this->getQuote()->getIsLocked();
+        return (bool)$this->getQuote()->getIsLocked();
     }
 
     /**
@@ -67,7 +67,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      */
     public function addItem(ItemTransfer $itemTransfer, array $params = []): QuoteTransfer
     {
-        if (!$this->isQuoteEditable()) {
+        if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
 
             return $this->getQuote();
@@ -84,7 +84,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      */
     public function addItems(array $itemTransfers, array $params = []): QuoteTransfer
     {
-        if (!$this->isQuoteEditable()) {
+        if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
 
             return $this->getQuote();
@@ -101,7 +101,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      */
     public function addValidItems(CartChangeTransfer $cartChangeTransfer, array $params = []): QuoteTransfer
     {
-        if (!$this->isQuoteEditable()) {
+        if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
 
             return $this->getQuote();
@@ -118,7 +118,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      */
     public function removeItem($sku, $groupKey = null): QuoteTransfer
     {
-        if (!$this->isQuoteEditable()) {
+        if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
 
             return $this->getQuote();
@@ -134,7 +134,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      */
     public function removeItems(ArrayObject $items): QuoteTransfer
     {
-        if (!$this->isQuoteEditable()) {
+        if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
 
             return $this->getQuote();
@@ -152,7 +152,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      */
     public function changeItemQuantity($sku, $groupKey = null, $quantity = 1): QuoteTransfer
     {
-        if (!$this->isQuoteEditable()) {
+        if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
 
             return $this->getQuote();
@@ -170,7 +170,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      */
     public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1): QuoteTransfer
     {
-        if (!$this->isQuoteEditable()) {
+        if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
 
             return $this->getQuote();
@@ -188,7 +188,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      */
     public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1): QuoteTransfer
     {
-        if (!$this->isQuoteEditable()) {
+        if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
 
             return $this->getQuote();
@@ -202,7 +202,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      */
     public function reloadItems(): void
     {
-        if (!$this->isQuoteEditable()) {
+        if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
 
             return;
@@ -226,7 +226,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      */
     public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer
     {
-        if (!$this->isQuoteEditable()) {
+        if ($this->isQuoteLocked()) {
             $this->messengerClient->addErrorMessage(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED);
 
             return $this->createNotSuccessfulQuoteResponseTransfer();

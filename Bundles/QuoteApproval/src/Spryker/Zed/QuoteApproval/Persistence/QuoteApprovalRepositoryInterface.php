@@ -16,7 +16,7 @@ interface QuoteApprovalRepositoryInterface
      *
      * @return array
      */
-    public function findQuoteApprovalCollectionByIdQuote(int $idQuote): array;
+    public function findQuoteApprovalsByIdQuote(int $idQuote): array;
 
     /**
      * @param int $idQuoteApproval
