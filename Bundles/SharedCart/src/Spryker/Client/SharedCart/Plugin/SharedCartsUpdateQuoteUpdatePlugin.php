@@ -34,15 +34,74 @@ class SharedCartsUpdateQuoteUpdatePlugin extends AbstractPlugin implements Quote
         if ($quoteResponseTransfer->getSharedCustomerQuotes() && count($quoteResponseTransfer->getSharedCustomerQuotes()->getQuotes())) {
             $multiCartClient = $this->getFactory()->getMultiCartClient();
             $customerQuoteCollectionTransfer = $multiCartClient->getQuoteCollection();
-            foreach ($quoteResponseTransfer->getSharedCustomerQuotes()->getQuotes() as $quoteTransfer) {
-                $customerQuoteCollectionTransfer->addQuote($quoteTransfer);
-            }
+            $sharedQuoteCollectionTransfer = $quoteResponseTransfer->getSharedCustomerQuotes();
+            $customerQuoteCollectionTransfer = $this->mergeQuoteCollections($customerQuoteCollectionTransfer, $sharedQuoteCollectionTransfer);
             $multiCartClient->setQuoteCollection(
                 $this->sortQuoteCollectionByName($customerQuoteCollectionTransfer)
             );
         }
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $customerQuoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $sharedQuoteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    protected function mergeQuoteCollections(
+        QuoteCollectionTransfer $customerQuoteCollectionTransfer,
+        QuoteCollectionTransfer $sharedQuoteCollectionTransfer
+    ): QuoteCollectionTransfer {
+        $mergedQuoteCollectionTransfer = $this->removeSharedQuotes($customerQuoteCollectionTransfer);
+
+        foreach ($sharedQuoteCollectionTransfer->getQuotes() as $quoteTransfer) {
+            if ($this->isQuoteAlreadyAdded($mergedQuoteCollectionTransfer, $quoteTransfer)) {
+                continue;
+            }
+
+            $mergedQuoteCollectionTransfer->addQuote($quoteTransfer);
+        }
+
+        return $mergedQuoteCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteAlreadyAdded(QuoteCollectionTransfer $quoteCollectionTransfer, QuoteTransfer $quoteTransfer): bool
+    {
+        foreach ($quoteCollectionTransfer->getQuotes() as $addedQuoteTransfer) {
+            if ($addedQuoteTransfer->getIdQuote() === $quoteTransfer->getIdQuote()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    protected function removeSharedQuotes(QuoteCollectionTransfer $quoteCollectionTransfer): QuoteCollectionTransfer
+    {
+        $quoteTransfers = $quoteCollectionTransfer->getQuotes()->getArrayCopy();
+
+        foreach ($quoteTransfers as $key => $quoteTransfer) {
+            if ($quoteTransfer->getCustomerReference() !== $quoteTransfer->getCustomer()->getCustomerReference()) {
+                unset($quoteTransfers[$key]);
+            }
+        }
+
+        $quoteCollectionTransfer->setQuotes(new ArrayObject($quoteTransfers));
+
+        return $quoteCollectionTransfer;
     }
 
     /**

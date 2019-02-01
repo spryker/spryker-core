@@ -184,7 +184,7 @@ interface QuoteApprovalClientInterface
 
     /**
      * Specification:
-     * - Returns quote approval which waiting for approve from specific company user.
+     * - Returns quote approval which waiting for approve from specified company user.
      * - Returns null if approval not found.
      *
      * @api
@@ -195,4 +195,17 @@ interface QuoteApprovalClientInterface
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer|null
      */
     public function getWaitingQuoteApprovalByIdCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): ?QuoteApprovalTransfer;
+
+    /**
+     * Specification:
+     * - Returns true if at least 1 approval request assigned to specified company user.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idCompanyUser
+     *
+     * @return bool
+     */
+    public function hasQuoteApprovalsForCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool;
 }
