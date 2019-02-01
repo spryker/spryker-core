@@ -9,11 +9,11 @@ namespace Spryker\Zed\Cms\Business\Version;
 
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class VersionMigration implements VersionMigrationInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    use TransactionTrait;
 
     /**
      * @var \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface
@@ -41,9 +41,9 @@ class VersionMigration implements VersionMigrationInterface
      *
      * @return void
      */
-    public function migrate($cmsVersionOriginData, $cmsVersionTargetData)
+    public function migrate(string $cmsVersionOriginData, string $cmsVersionTargetData): void
     {
-        $this->handleDatabaseTransaction(function () use ($cmsVersionOriginData, $cmsVersionTargetData) {
+        $this->getTransactionHandler()->handleTransaction(function () use ($cmsVersionOriginData, $cmsVersionTargetData) {
             $this->executeMigrateTransaction($cmsVersionOriginData, $cmsVersionTargetData);
         });
     }
@@ -54,7 +54,7 @@ class VersionMigration implements VersionMigrationInterface
      *
      * @return void
      */
-    protected function executeMigrateTransaction($cmsVersionOriginData, $cmsVersionTargetData)
+    protected function executeMigrateTransaction(string $cmsVersionOriginData, string $cmsVersionTargetData): void
     {
         $originDataArray = $this->utilEncoding->decodeJson($cmsVersionOriginData, true);
         $targetDataArray = $this->utilEncoding->decodeJson($cmsVersionTargetData, true);
