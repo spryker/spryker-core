@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Merchant\Persistence;
 
-use Generated\Shared\Transfer\MerchantAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -94,33 +93,6 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
             ->createMerchantQuery()
             ->filterByMerchantKey($key)
             ->exists();
-    }
-
-    /**
-     * @param int $idMerchant
-     *
-     * @return \Generated\Shared\Transfer\MerchantAddressCollectionTransfer
-     */
-    public function getMerchantAddresses(int $idMerchant): MerchantAddressCollectionTransfer
-    {
-        $spyMerchantAddresses = $this->getFactory()
-            ->createMerchantAddressQuery()
-            ->filterByFkMerchant($idMerchant)
-            ->find();
-
-        $merchantAddressMapper = $this->getFactory()->createPropelMerchantAddressMapper();
-
-        $merchantAddressCollectionTransfer = new MerchantAddressCollectionTransfer();
-        foreach ($spyMerchantAddresses as $spyMerchantAddress) {
-            $merchantAddressCollectionTransfer->addAddress(
-                $merchantAddressMapper->mapSpyMerchantAddressEntityToMerchantAddressTransfer(
-                    $spyMerchantAddress,
-                    new MerchantAddressTransfer()
-                )
-            );
-        }
-
-        return $merchantAddressCollectionTransfer;
     }
 
     /**

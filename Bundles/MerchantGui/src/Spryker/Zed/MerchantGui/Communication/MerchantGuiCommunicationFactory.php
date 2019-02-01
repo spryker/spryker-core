@@ -12,6 +12,7 @@ use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantAddressFormDataProvider;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantFormDataProvider;
+use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantUpdateFormDataProvider;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantForm;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantUpdateForm;
 use Spryker\Zed\MerchantGui\Communication\Table\MerchantTable;
@@ -61,6 +62,16 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createMerchantFormDataProvider(): MerchantFormDataProvider
     {
         return new MerchantFormDataProvider(
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantUpdateFormDataProvider
+     */
+    public function createMerchantUpdateFormDataProvider(): MerchantUpdateFormDataProvider
+    {
+        return new MerchantUpdateFormDataProvider(
             $this->getMerchantFacade(),
             $this->getConfig()
         );

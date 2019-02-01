@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Merchant\Persistence;
 
-use Generated\Shared\Transfer\MerchantAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -39,13 +38,6 @@ interface MerchantRepositoryInterface
      * @return bool
      */
     public function hasKey(string $key): bool;
-
-    /**
-     * @param int $idMerchant
-     *
-     * @return \Generated\Shared\Transfer\MerchantAddressCollectionTransfer
-     */
-    public function getMerchantAddresses(int $idMerchant): MerchantAddressCollectionTransfer;
 
     /**
      * @param int $idMerchantAddress
