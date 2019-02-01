@@ -204,6 +204,7 @@ class QuoteRequestFacadeTest extends Unit
      */
     public function testCheckCheckoutQuoteRequestValidatesQuoteWithWrongQuoteRequestStatus(): void
     {
+        // Arrange
         $quoteRequestTransfer = $this->tester->createQuoteRequest(
             $this->tester->createQuoteRequestVersion($this->quoteTransfer),
             $this->companyUserTransfer

@@ -145,7 +145,7 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
         }
 
         if (!$quoteRequestTransfer->getValidUntil()
-            && (new DateTime($quoteRequestTransfer->getValidUntil()) > new DateTime('now'))) {
+            || (new DateTime($quoteRequestTransfer->getValidUntil()) < new DateTime('now'))) {
             $checkoutResponseTransfer->addError(
                 (new CheckoutErrorTransfer())->setMessage(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VALID_UNTIL)
             );

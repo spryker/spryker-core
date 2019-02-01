@@ -66,9 +66,11 @@ interface QuoteRequestFacadeInterface
     /**
      * Specification:
      * - Validates quote request if quote request reference exists in quote.
-     * - Checks status property from quote request.
-     * - Checks the latest version.
-     * - Checks valid until property from quote request with current time.
+     * - Checks if quote request version exists in database.
+     * - Checks status from quote request.
+     * - Checks that the current version is the latest.
+     * - Checks valid until from quote request with current time.
+     * - Returns true if quote requests pass all checks.
      * - Sets error message if not valid.
      *
      * @api
