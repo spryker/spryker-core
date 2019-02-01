@@ -6,6 +6,7 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\Request\Data;
 
+use Generated\Shared\Transfer\RestUserIdentifierTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -72,10 +73,16 @@ interface RestRequestInterface
      * @param string $surrogateIdentifier
      * @param string $naturalIdentifier
      * @param array $scopes
+     * @param \Generated\Shared\Transfer\RestUserIdentifierTransfer|null $restUserIdentifierTransfer
      *
      * @return void
      */
-    public function setUser(string $surrogateIdentifier, string $naturalIdentifier, array $scopes = []): void;
+    public function setUser(
+        string $surrogateIdentifier,
+        string $naturalIdentifier,
+        array $scopes = [],
+        RestUserIdentifierTransfer $restUserIdentifierTransfer = null
+    ): void;
 
     /**
      * @return \Symfony\Component\HttpFoundation\Request

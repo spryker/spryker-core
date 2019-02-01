@@ -9,6 +9,7 @@ namespace Spryker\Glue\AuthRestApi\Processor\AccessTokens;
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\RestUserIdentifierTransfer;
 use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -111,7 +112,8 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
         $restRequest->setUser(
             $customerIdentifier['id_customer'],
             $customerIdentifier['customer_reference'],
-            $authAccessTokenValidationResponseTransfer->getOauthScopes()
+            $authAccessTokenValidationResponseTransfer->getOauthScopes(),
+            (new RestUserIdentifierTransfer())->fromArray($customerIdentifier, true)
         );
     }
 

@@ -19,4 +19,11 @@
         <property name="refreshToken" type="string" />
     </transfer>
 
+    <transfer name="RestUserIdentifier">
+        <property name="customerReference" type="string" />
+        <property name="idCompanyUser" type="string" />
+        <property name="uuidCompanyUser" type="string" />
+        <property name="idCompany" type="string" />
+    </transfer>
+
 </transfers>

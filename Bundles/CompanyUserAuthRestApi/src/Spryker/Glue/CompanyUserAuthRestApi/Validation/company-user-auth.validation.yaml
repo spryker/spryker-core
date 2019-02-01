@@ -2,4 +2,4 @@ company-user-access-tokens:
   post:
     idCompanyUser:
       - NotBlank
-      - Email
+      - Uuid

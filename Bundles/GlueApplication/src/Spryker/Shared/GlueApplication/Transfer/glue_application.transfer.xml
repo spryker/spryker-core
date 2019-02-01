@@ -27,4 +27,7 @@
         <property name="minor" type="int" />
     </transfer>
 
+    <transfer name="RestUserIdentifier">
+    </transfer>
+
 </transfers>

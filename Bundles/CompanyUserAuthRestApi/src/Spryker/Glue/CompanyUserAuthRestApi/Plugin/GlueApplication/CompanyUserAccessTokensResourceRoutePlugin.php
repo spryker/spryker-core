@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyUserAuthRestApi\Plugin;
+namespace Spryker\Glue\CompanyUserAuthRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\RestCompanyUserAccessTokensAttributesTransfer;
 use Spryker\Glue\CompanyUserAuthRestApi\CompanyUserAuthRestApiConfig;

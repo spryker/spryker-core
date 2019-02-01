@@ -271,7 +271,9 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
      */
     public function findActiveCompanyUserByUuid(CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer
     {
-        return $this->getFactory()->createCompanyUser()->findActiveCompanyUserByUuid($companyUserTransfer);
+        return $this->getFactory()
+            ->createCompanyUser()
+            ->findActiveCompanyUserByUuid($companyUserTransfer);
     }
 
     /**
