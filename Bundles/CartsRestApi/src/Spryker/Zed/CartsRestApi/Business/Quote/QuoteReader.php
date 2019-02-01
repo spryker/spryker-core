@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
+use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
 use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
@@ -35,18 +35,26 @@ class QuoteReader implements QuoteReaderInterface
     protected $quoteCollectionReaderPlugin;
 
     /**
+     * @var \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface
+     */
+    protected $quoteMapper;
+
+    /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin
+     * @param \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface $quoteMapper
      */
     public function __construct(
         CartsRestApiToQuoteFacadeInterface $quoteFacade,
         CartsRestApiToStoreFacadeInterface $storeFacade,
-        QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin
+        QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin,
+        QuoteMapperInterface $quoteMapper
     ) {
         $this->quoteFacade = $quoteFacade;
         $this->storeFacade = $storeFacade;
         $this->quoteCollectionReaderPlugin = $quoteCollectionReaderPlugin;
+        $this->quoteMapper = $quoteMapper;
     }
 
     /**
@@ -81,8 +89,9 @@ class QuoteReader implements QuoteReaderInterface
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
     ): QuoteCollectionResponseTransfer {
         $quoteCollectionResponseTransfer = new QuoteCollectionResponseTransfer();
-        $customerTransfer = (new CustomerTransfer())
-            ->setCustomerReference($restQuoteCollectionRequestTransfer->getCustomerReference());
+        $customerTransfer = $this->quoteMapper->mapRestQuoteCollectionRequestTransferToCustomerTransfer(
+            $restQuoteCollectionRequestTransfer
+        );
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);

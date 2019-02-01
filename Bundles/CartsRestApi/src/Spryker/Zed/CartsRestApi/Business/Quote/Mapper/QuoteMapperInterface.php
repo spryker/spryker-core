@@ -10,7 +10,6 @@ namespace Spryker\Zed\CartsRestApi\Business\Quote\Mapper;
 use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
@@ -20,17 +19,6 @@ use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 
 interface QuoteMapperInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
-     * @param \Generated\Shared\Transfer\QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
-     */
-    public function mapQuoteCollectionTransferToRestShoppingListCollectionResponseTransfer(
-        QuoteCollectionTransfer $quoteCollectionTransfer,
-        QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
-    ): QuoteCollectionResponseTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -59,26 +47,22 @@ interface QuoteMapperInterface
     ): QuoteUpdateRequestAttributesTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function mapQuoteResponseTransferToQuoteTransfer(
-        QuoteResponseTransfer $quoteResponseTransfer,
-        QuoteTransfer $quoteTransfer
-    ): QuoteTransfer;
+    public function mapRestQuoteCollectionRequestTransferToCustomerTransfer(
+        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+    ): CustomerTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $registeredCustomer
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function mapQuoteTransferToRestQuoteRequestTransfer(
-        QuoteTransfer $quoteTransfer,
-        CustomerTransfer $registeredCustomer
-    ): RestQuoteRequestTransfer;
+    public function mapRestQuoteRequestTransferToCustomerTransfer(
+        RestQuoteRequestTransfer $restQuoteRequestTransfer
+    ): CustomerTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer $assigningGuestQuoteRequestTransfer

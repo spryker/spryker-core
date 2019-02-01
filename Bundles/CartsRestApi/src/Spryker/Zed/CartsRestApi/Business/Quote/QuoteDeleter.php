@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
+use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
 
 class QuoteDeleter implements QuoteDeleterInterface
@@ -25,15 +25,23 @@ class QuoteDeleter implements QuoteDeleterInterface
     protected $cartReader;
 
     /**
+     * @var \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface
+     */
+    protected $quoteMapper;
+
+    /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $cartReader
+     * @param \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface $quoteMapper
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
-        QuoteReaderInterface $cartReader
+        QuoteReaderInterface $cartReader,
+        QuoteMapperInterface $quoteMapper
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->cartReader = $cartReader;
+        $this->quoteMapper = $quoteMapper;
     }
 
     /**
@@ -55,7 +63,7 @@ class QuoteDeleter implements QuoteDeleterInterface
         return $this->persistentCartFacade
             ->delete($quoteResponseTransfer->getQuoteTransfer()
                 ->setCustomer(
-                    (new CustomerTransfer())->setCustomerReference($restQuoteRequestTransfer->getCustomerReference())
+                    $this->quoteMapper->mapRestQuoteRequestTransferToCustomerTransfer($restQuoteRequestTransfer)
                 ));
     }
 }
