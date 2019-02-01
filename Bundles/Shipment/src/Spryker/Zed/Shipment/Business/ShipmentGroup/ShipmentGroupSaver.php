@@ -85,28 +85,9 @@ class ShipmentGroupSaver implements ShipmentGroupSaverInterface
         ShipmentGroupTransfer $shipmentGroupTransfer,
         OrderTransfer $salesOrderTransfer
     ): void {
-        $shippingAddresTransfer = $shipmentGroupTransfer->getShipment()->getShippingAddress();
-        $this->salesFacade->createOrderAddress($shippingAddresTransfer);
-
-        $shipmentMethodTransfer = $shipmentGroupTransfer
-            ->getShipment()
-            ->getMethod();
-
-        $shipmentGroupTransfer
-            ->getShipment()
-            ->setMethod($this->extendShipmentMethodTransfer($shipmentMethodTransfer, $salesOrderTransfer));
-
-        $expenseTransfer = $this->createShippingExpenseTransfer(
-            $shipmentGroupTransfer->getShipment()->getMethod(),
-            $salesOrderTransfer
-        );
-        $expenseTransfer = $this->salesFacade->createSalesExpense($expenseTransfer);
-
-        $shipmentGroupTransfer
-            ->getShipment()
-            ->setExpense($expenseTransfer);
-
-        $salesOrderTransfer->addExpense($expenseTransfer);
+        $this->createSalesOrderAddress($shipmentGroupTransfer);
+        $this->updateShipmentMethodForShipmentGroup($shipmentGroupTransfer, $salesOrderTransfer);
+        $this->createSalesExpense($shipmentGroupTransfer, $salesOrderTransfer);
 
         $idSalesShipment = $this->entityManager->createSalesShipment(
             $shipmentGroupTransfer->getShipment(),
@@ -118,14 +99,55 @@ class ShipmentGroupSaver implements ShipmentGroupSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return void
+     */
+    protected function createSalesOrderAddress(ShipmentGroupTransfer $shipmentGroupTransfer): void
+    {
+        $addressTransfer = $shipmentGroupTransfer->getShipment()->getShippingAddress();
+        $this->salesFacade->createOrderAddress($addressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    protected function updateShipmentMethodForShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): void
+    {
+        $shipmentMethodTransfer = $shipmentGroupTransfer->getShipment()->getMethod();
+        $shipmentGroupTransfer
+            ->getShipment()
+            ->setMethod($this->extendShipmentMethodTransfer($shipmentMethodTransfer, $orderTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    protected function createSalesExpense(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): void
+    {
+        $expenseTransfer = $this->createShippingExpenseTransfer(
+            $shipmentGroupTransfer->getShipment()->getMethod(),
+            $orderTransfer
+        );
+
+        $this->salesFacade->createSalesExpense($expenseTransfer);
+        $shipmentGroupTransfer->getShipment()->setExpense($expenseTransfer);
+        $orderTransfer->addExpense($expenseTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param int $idSalesShipment
      *
      * @return void
      */
-    protected function updateSalesOrderItems(
-        ShipmentGroupTransfer $shipmentGroupTransfer,
-        int $idSalesShipment
-    ): void {
+    protected function updateSalesOrderItems(ShipmentGroupTransfer $shipmentGroupTransfer, int $idSalesShipment): void
+    {
         foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
             $this->entityManager->updateSalesOrderItemFkShipment($itemTransfer, $idSalesShipment);
         }
@@ -179,9 +201,9 @@ class ShipmentGroupSaver implements ShipmentGroupSaverInterface
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    protected function createShippingExpenseTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, OrderTransfer $orderTransfer)
+    protected function createShippingExpenseTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, OrderTransfer $orderTransfer): ExpenseTransfer
     {
-        $shipmentExpenseTransfer = (new ExpenseTransfer());
+        $shipmentExpenseTransfer = new ExpenseTransfer();
 
         $shipmentExpenseTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
         $shipmentExpenseTransfer->setFkSalesOrder($orderTransfer->getIdSalesOrder());
@@ -205,7 +227,7 @@ class ShipmentGroupSaver implements ShipmentGroupSaverInterface
      *
      * @return void
      */
-    protected function setPrice(ExpenseTransfer $shipmentExpenseTransfer, $price, $priceMode)
+    protected function setPrice(ExpenseTransfer $shipmentExpenseTransfer, int $price, string $priceMode): void
     {
         if ($priceMode === ShipmentConstants::PRICE_MODE_NET) {
             $shipmentExpenseTransfer->setUnitGrossPrice(0);

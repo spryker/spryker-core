@@ -4,15 +4,15 @@
   "description": "ShipmentGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/customer": "^7.16.1",
     "spryker/kernel": "^3.31.0",
     "spryker/sales": "^8.18",
     "spryker/shipment": "^7.0",
-    "spryker/symfony": "^3.2.2"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/symfony": "^3.2.2",
     "spryker/testify": "*"
   },
   "autoload": {

@@ -156,8 +156,6 @@ class ShipmentFormCreate extends AbstractType
      */
     protected function addDateTimeTransformer($fieldName, FormBuilderInterface $builder): void
     {
-        $timeFormat = static::VALIDITY_DATETIME_FORMAT;
-
         $builder
             ->get($fieldName)
             ->addModelTransformer(new CallbackTransformer(
@@ -168,13 +166,12 @@ class ShipmentFormCreate extends AbstractType
 
                     return new DateTime($dateAsString);
                 },
-                function ($dateAsObject) use ($timeFormat) {
-                    /** @var \DateTime|null $dateAsObject */
+                function ($dateAsObject) {
                     if (!$dateAsObject) {
                         return null;
                     }
 
-                    return $dateAsObject->format($timeFormat);
+                    return $dateAsObject->format(static::VALIDITY_DATETIME_FORMAT);
                 }
             ));
     }
