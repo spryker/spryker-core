@@ -93,6 +93,6 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
     {
         return $this->getFactory()
             ->createProductQuantityItemNormalizer()
-            ->normalizeCartChangeTransfer($cartChangeTransfer);
+            ->normalizeCartChangeItems($cartChangeTransfer);
     }
 }

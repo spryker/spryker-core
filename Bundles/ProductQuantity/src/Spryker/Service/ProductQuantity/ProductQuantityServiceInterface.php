@@ -13,7 +13,7 @@ interface ProductQuantityServiceInterface
 {
     /**
      * Specification:
-     *  - Returns adjusted quantity based on quantity restrictions.
+     *  - Returns nearest valid quantity based on provided quantity and product quantity restrictions.
      *
      * @api
      *

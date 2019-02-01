@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductQuantity\Business\Model\Normalizer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -35,16 +36,16 @@ class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInte
     /**
      * @var \Spryker\Service\ProductQuantity\ProductQuantityServiceInterface
      */
-    protected $productQuantityRounder;
+    protected $productQuantityService;
 
     /**
      * @param \Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface $productQuantityReader
-     * @param \Spryker\Service\ProductQuantity\ProductQuantityServiceInterface $productQuantityRounder
+     * @param \Spryker\Service\ProductQuantity\ProductQuantityServiceInterface $productQuantityService
      */
-    public function __construct(ProductQuantityReaderInterface $productQuantityReader, ProductQuantityServiceInterface $productQuantityRounder)
+    public function __construct(ProductQuantityReaderInterface $productQuantityReader, ProductQuantityServiceInterface $productQuantityService)
     {
         $this->productQuantityReader = $productQuantityReader;
-        $this->productQuantityRounder = $productQuantityRounder;
+        $this->productQuantityService = $productQuantityService;
     }
 
     /**
@@ -52,20 +53,31 @@ class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInte
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function normalizeCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    public function normalizeCartChangeItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         $changedSkuMapByGroupKey = $this->getChangedSkuMap($cartChangeTransfer);
         $cartQuantityMapByGroupKey = $this->getItemAddCartQuantityMap($cartChangeTransfer);
         $productQuantityTransferMapBySku = $this->getProductQuantityTransferMap($cartChangeTransfer);
         $itemTransferMapBySku = $this->getItemTransferMap($cartChangeTransfer);
+        $normalizedItems = new ArrayObject();
 
         foreach ($cartQuantityMapByGroupKey as $productGroupKey => $productQuantity) {
             $productSku = $changedSkuMapByGroupKey[$productGroupKey];
 
-            if (isset($productQuantityTransferMapBySku[$productSku])) {
-                $this->normalizeItem($itemTransferMapBySku[$productSku], $productQuantityTransferMapBySku[$productSku], $productQuantity);
+            if (!isset($productQuantityTransferMapBySku[$productSku])) {
+                $normalizedItems->append($productQuantityTransferMapBySku[$productSku]);
+
+                continue;
             }
+            $normalizedItems->append(
+                $this->normalizeItem(
+                    $itemTransferMapBySku[$productSku],
+                    $productQuantityTransferMapBySku[$productSku],
+                    $productQuantity
+                )
+            );
         }
+        $cartChangeTransfer->setItems($normalizedItems);
 
         return $cartChangeTransfer;
     }
@@ -91,7 +103,7 @@ class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInte
      */
     protected function normalizeItem(ItemTransfer $itemTransfer, ProductQuantityTransfer $productQuantityTransfer, int $totalQuantityByGroupKey): ItemTransfer
     {
-        $nearestQuantity = $this->productQuantityRounder->getNearestQuantity($productQuantityTransfer, $totalQuantityByGroupKey);
+        $nearestQuantity = $this->productQuantityService->getNearestQuantity($productQuantityTransfer, $totalQuantityByGroupKey);
         $totalQuantityByGroupKeyAfterAdjustment = $totalQuantityByGroupKey - $itemTransfer->getQuantity() + $nearestQuantity;
 
         if (!$this->isItemQuantityValid($totalQuantityByGroupKeyAfterAdjustment, $productQuantityTransfer)) {
