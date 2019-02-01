@@ -25,7 +25,7 @@ class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInte
 
     protected const NORMALIZABLE_FIELD = 'quantity';
 
-    protected const DEFAULT_MESSAGE_TYPE = 'notification';
+    protected const MESSAGE_TYPE = 'notification';
 
     /**
      * @var \Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface
@@ -324,7 +324,7 @@ class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInte
     {
         return (new MessageTransfer())
             ->setValue($notificationMessage)
-            ->setType(static::DEFAULT_MESSAGE_TYPE)
+            ->setType(static::MESSAGE_TYPE)
             ->setParameters([$notificationParam => $nearestQuantity]);
     }
 }
