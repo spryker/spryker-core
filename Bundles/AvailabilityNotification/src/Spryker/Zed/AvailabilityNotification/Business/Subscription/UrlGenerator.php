@@ -39,7 +39,9 @@ class UrlGenerator implements UrlGeneratorInterface
     public function createUnsubscriptionLink(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): string
     {
         $params = [static::PARAM_SUBSCRIPTION_KEY => $availabilitySubscriptionTransfer->getSubscriptionKey()];
-        $unsubscriptionUrl = Url::generate(static::ROUTE_UNSUBSCRIBE, $params)->build();
+        $localeName = $availabilitySubscriptionTransfer->getLocale()->getLocaleName();
+        $locale = $this->getLanguageFromLocale($localeName);
+        $unsubscriptionUrl = Url::generate($locale . static::ROUTE_UNSUBSCRIBE, $params)->build();
 
         return $this->config->getBaseUrlYves() . $unsubscriptionUrl;
     }
@@ -54,5 +56,21 @@ class UrlGenerator implements UrlGeneratorInterface
         $yvesBaseUrl = $this->config->getBaseUrlYves();
 
         return $yvesBaseUrl . $localizedUrlTransfer->getUrl();
+    }
+
+    /**
+     * @param string $locale string The locale, e.g. 'de_DE'
+     *
+     * @return string The language, e.g. 'de'
+     */
+    protected function getLanguageFromLocale(string $locale): string
+    {
+        $splitLocale = explode('_', $locale);
+
+        if (current($splitLocale) === false) {
+            return '';
+        }
+
+        return '/' . current($splitLocale);
     }
 }

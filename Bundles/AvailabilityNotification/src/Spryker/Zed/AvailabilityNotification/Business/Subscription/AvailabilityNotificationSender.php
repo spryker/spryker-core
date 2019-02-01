@@ -114,11 +114,13 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
             $productConcreteTransfer,
             $availabilitySubscriptionTransfer->getLocale()
         );
+        $unsubscriptionLink = $this->urlGenerator->createUnsubscriptionLink($availabilitySubscriptionTransfer);
 
         $mailTransfer = (new MailTransfer())
             ->setType(AvailabilityNotificationUnsubscribedMailTypePlugin::MAIL_TYPE)
             ->setAvailabilitySubscription($availabilitySubscriptionTransfer)
             ->setLocale($availabilitySubscriptionTransfer->getLocale())
+            ->setAvailabilityUnsubscriptionLink($unsubscriptionLink)
             ->setProductAttributes($productAttributes);
 
         $this->mailFacade->handleMail($mailTransfer);
