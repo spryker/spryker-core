@@ -43,9 +43,7 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
     protected function addApplication(Container $container): Container
     {
         $container[static::APPLICATION] = function () {
-            $pimplePlugin = new Pimple();
-
-            return $pimplePlugin->getApplication();
+            return (new Pimple())->getApplication();
         };
 
         return $container;

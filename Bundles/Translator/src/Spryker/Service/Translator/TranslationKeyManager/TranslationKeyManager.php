@@ -7,33 +7,34 @@
 
 namespace Spryker\Service\Translator\TranslationKeyManager;
 
-use Spryker\Service\Translator\Translator\TranslatorInterface;
+use Symfony\Component\Translation\TranslatorBagInterface as SymfonyTranslatorBagInterface;
 
 class TranslationKeyManager implements TranslationKeyManagerInterface
 {
     /**
-     * @var \Spryker\Service\Translator\Translator\TranslatorInterface
+     * @var \Symfony\Component\Translation\TranslatorBagInterface
      */
     protected $translator;
 
     /**
-     * @param \Spryker\Service\Translator\Translator\TranslatorInterface $translator
+     *
+     * @param \Symfony\Component\Translation\TranslatorBagInterface $translator
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(SymfonyTranslatorBagInterface $translator)
     {
         $this->translator = $translator;
     }
 
     /**
-     * @param string $keyName
+     * @param string $message
+     * @param string $localeName
      *
      * @return bool
      */
-    public function hasKey($keyName): bool
+    public function hasTranslation(string $message, string $localeName): bool
     {
-        $locale = $this->translator->getLocale();
-        $catalogue = $this->translator->getCatalogue($locale);
+        $catalogue = $this->translator->getCatalogue($localeName);
 
-        return $catalogue->defines($keyName);
+        return $catalogue->defines($message);
     }
 }

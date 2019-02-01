@@ -27,7 +27,10 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
      */
     public function hasKey($keyName): bool
     {
-        return $this->getFactory()->getTranslatorService()->hasTranslation($keyName);
+        return $this->getFactory()->getTranslatorService()->hasTranslation(
+            $keyName,
+            $this->getLocaleName()
+        );
     }
 
     /**
@@ -42,6 +45,14 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
      */
     public function translate($keyName, array $data = []): string
     {
-        return $this->getFactory()->getTranslatorService()->getTranslator()->trans($keyName, $data);
+        return $this->getFactory()->getTranslatorService()->translate($keyName, $data, null, $this->getLocaleName());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getLocaleName(): string
+    {
+        return $this->getFactory()->getApplication()['locale'];
     }
 }

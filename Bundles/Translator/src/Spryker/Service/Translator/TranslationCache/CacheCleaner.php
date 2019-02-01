@@ -31,7 +31,7 @@ class CacheCleaner implements CacheCleanerInterface
      */
     public function cleanTranslationCache(): void
     {
-        $this->clearDirectory($this->config->getCacheDir());
+        $this->clearDirectory($this->config->getCacheDirectory());
     }
 
     /**

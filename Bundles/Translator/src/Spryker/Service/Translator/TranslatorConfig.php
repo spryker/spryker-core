@@ -65,7 +65,7 @@ class TranslatorConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getCacheDir(): string
+    public function getCacheDirectory(): string
     {
         return $this->get(TranslatorConstants::TRANSLATION_CACHE_DIRECTORY);
     }

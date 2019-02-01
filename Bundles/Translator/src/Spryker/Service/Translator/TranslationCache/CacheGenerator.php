@@ -7,13 +7,13 @@
 
 namespace Spryker\Service\Translator\TranslationCache;
 
-use Spryker\Service\Translator\Translator\TranslatorInterface;
 use Spryker\Shared\Kernel\Store;
+use Symfony\Component\Translation\TranslatorBagInterface as SymfonyTranslatorBagInterface;
 
 class CacheGenerator implements CacheGeneratorInterface
 {
     /**
-     * @var \Spryker\Service\Translator\Translator\TranslatorInterface
+     * @var \Symfony\Component\Translation\TranslatorBagInterface
      */
     protected $translator;
 
@@ -23,10 +23,10 @@ class CacheGenerator implements CacheGeneratorInterface
     protected $store;
 
     /**
-     * @param \Spryker\Service\Translator\Translator\TranslatorInterface $translator
+     * @param \Symfony\Component\Translation\TranslatorBagInterface $translator
      * @param \Spryker\Shared\Kernel\Store $store
      */
-    public function __construct(TranslatorInterface $translator, Store $store)
+    public function __construct(SymfonyTranslatorBagInterface $translator, Store $store)
     {
         $this->translator = $translator;
         $this->store = $store;
@@ -38,7 +38,7 @@ class CacheGenerator implements CacheGeneratorInterface
     public function generateTranslationCache(): void
     {
         foreach ($this->store->getLocales() as $localeName) {
-            $this->translator->generateCacheForLocale($localeName);
+            $this->translator->getCatalogue($localeName);
         }
     }
 }
