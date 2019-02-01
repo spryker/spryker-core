@@ -18,7 +18,6 @@ class CreateContentController extends AbstractController
     protected const PARAM_TERM_KEY = 'term-key';
     protected const PARAM_REDIRECT_URL = 'redirect-url';
     protected const URL_REDIRECT_CONTENT_LIST_PAGE = '/content-gui/list-content';
-    protected const URL_REDIRECT_CONTENT_PAGE = '/content-gui/edit-content?term-key=%s&id-content=%s';
     protected const MESSAGE_SUCCESS_CONTENT_CREATE = 'Content item has been successfully created.';
 
     /**
@@ -51,11 +50,7 @@ class CreateContentController extends AbstractController
             return $this->redirectResponse(
                 $request->query->get(
                     static::PARAM_REDIRECT_URL,
-                    sprintf(
-                        static::URL_REDIRECT_CONTENT_PAGE,
-                        $contentTransfer->getContentTermKey(),
-                        $contentTransfer->getIdContent()
-                    )
+                    static::URL_REDIRECT_CONTENT_LIST_PAGE
                 )
             );
         }
@@ -64,7 +59,7 @@ class CreateContentController extends AbstractController
         return $this->viewResponse([
             'contentTabs' => $contentTabs->createView(),
             'contentForm' => $contentForm->createView(),
-            'backButton' => static::URL_REDIRECT_CONTENT_PAGE,
+            'backButton' => static::URL_REDIRECT_CONTENT_LIST_PAGE,
             'contentName' => $this->getFactory()->createContentResolver()->getContentPlugin($termKey)->getTermKey(),
         ]);
     }

@@ -14,7 +14,7 @@ use Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface;
 use Spryker\Zed\ContentProductGui\Communication\Form\AbstractProductListContentTermForm;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-class ContentProductFormPlugin extends AbstractPlugin implements ContentPluginInterface
+class ProductAbstractListFormPlugin extends AbstractPlugin implements ContentPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -37,7 +37,7 @@ class ContentProductFormPlugin extends AbstractPlugin implements ContentPluginIn
      */
     public function getTypeKey(): string
     {
-        return ContentProductGuiConfig::CONTENT_TYPE_PRODUCT_LIST;
+        return ContentProductGuiConfig::CONTENT_TYPE_ABSTRACT_PRODUCT_LIST;
     }
 
     /**
