@@ -65,8 +65,6 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
     }
 
     /**
-     * @api
-     *
      * @module Url
      * @module Category
      *
@@ -77,8 +75,8 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      */
     public function queryWholeCategoryNodeTree(array $categoryNodeIds, int $idLocale): SpyCategoryNodeQuery
     {
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $query */
-        $query = $this->getFactory()
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery */
+        $categoryNodeQuery = $this->getFactory()
             ->getCategoryQueryContainer()
             ->queryAllCategoryNodes()
             ->filterByIdCategoryNode_In($categoryNodeIds)
@@ -96,7 +94,7 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
                 ->joinWithCategoryTemplate()
             ->endUse();
 
-        return $query;
+        return $categoryNodeQuery;
     }
 
     /**
