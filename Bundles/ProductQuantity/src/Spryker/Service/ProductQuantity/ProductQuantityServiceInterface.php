@@ -5,13 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductQuantity\Business\Model\Rounder;
+namespace Spryker\Service\ProductQuantity;
 
 use Generated\Shared\Transfer\ProductQuantityTransfer;
 
-interface ProductQuantityRounderInterface
+interface ProductQuantityServiceInterface
 {
     /**
+     * Specification:
+     *  - Returns adjusted quantity based on quantity restrictions.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
      * @param int $quantity
      *

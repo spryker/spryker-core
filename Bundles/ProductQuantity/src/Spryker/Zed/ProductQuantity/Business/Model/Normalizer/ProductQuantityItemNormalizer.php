@@ -11,19 +11,21 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
+use Spryker\Service\ProductQuantity\ProductQuantityServiceInterface;
 use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface;
-use Spryker\Zed\ProductQuantity\Business\Model\Rounder\ProductQuantityRounderInterface;
 
-class ProductQuantityRestrictionNormalizer implements ProductQuantityRestrictionNormalizerInterface
+class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInterface
 {
-    protected const NOTIFICATION_MESSAGE_QUANTITY_MIN_NOT_FULFILLED = 'product-quantity.notification.quantity.min.failed';
-    protected const NOTIFICATION_MESSAGE_QUANTITY_MAX_NOT_FULFILLED = 'product-quantity.notification.quantity.max.failed';
-    protected const NOTIFICATION_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED = 'product-quantity.notification.quantity.interval.failed';
+    protected const MESSAGE_QUANTITY_MIN_NOT_FULFILLED = 'product-quantity.notification.quantity.min.failed';
+    protected const MESSAGE_QUANTITY_MAX_NOT_FULFILLED = 'product-quantity.notification.quantity.max.failed';
+    protected const MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED = 'product-quantity.notification.quantity.interval.failed';
     protected const NOTIFICATION_MESSAGE_PARAM_MIN = '%min%';
     protected const NOTIFICATION_MESSAGE_PARAM_MAX = '%max%';
     protected const NOTIFICATION_MESSAGE_PARAM_STEP = '%step%';
 
     protected const NORMALIZABLE_FIELD = 'quantity';
+
+    protected const DEFAULT_MESSAGE_TYPE = 'notification';
 
     /**
      * @var \Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface
@@ -31,15 +33,15 @@ class ProductQuantityRestrictionNormalizer implements ProductQuantityRestriction
     protected $productQuantityReader;
 
     /**
-     * @var \Spryker\Zed\ProductQuantity\Business\Model\Rounder\ProductQuantityRounderInterface
+     * @var \Spryker\Service\ProductQuantity\ProductQuantityServiceInterface
      */
     protected $productQuantityRounder;
 
     /**
      * @param \Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface $productQuantityReader
-     * @param \Spryker\Zed\ProductQuantity\Business\Model\Rounder\ProductQuantityRounderInterface $productQuantityRounder
+     * @param \Spryker\Service\ProductQuantity\ProductQuantityServiceInterface $productQuantityRounder
      */
-    public function __construct(ProductQuantityReaderInterface $productQuantityReader, ProductQuantityRounderInterface $productQuantityRounder)
+    public function __construct(ProductQuantityReaderInterface $productQuantityReader, ProductQuantityServiceInterface $productQuantityRounder)
     {
         $this->productQuantityReader = $productQuantityReader;
         $this->productQuantityRounder = $productQuantityRounder;
@@ -59,7 +61,10 @@ class ProductQuantityRestrictionNormalizer implements ProductQuantityRestriction
 
         foreach ($cartQuantityMapByGroupKey as $productGroupKey => $productQuantity) {
             $productSku = $changedSkuMapByGroupKey[$productGroupKey];
-            $this->normalizeItem($itemTransferMapBySku[$productSku], $productQuantityTransferMapBySku[$productSku], $productQuantity);
+
+            if (isset($productQuantityTransferMapBySku[$productSku])) {
+                $this->normalizeItem($itemTransferMapBySku[$productSku], $productQuantityTransferMapBySku[$productSku], $productQuantity);
+            }
         }
 
         return $cartChangeTransfer;
@@ -82,30 +87,21 @@ class ProductQuantityRestrictionNormalizer implements ProductQuantityRestriction
      * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
      * @param int $totalQuantityByGroupKey
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function normalizeItem(ItemTransfer $itemTransfer, ProductQuantityTransfer $productQuantityTransfer, int $totalQuantityByGroupKey): void
+    protected function normalizeItem(ItemTransfer $itemTransfer, ProductQuantityTransfer $productQuantityTransfer, int $totalQuantityByGroupKey): ItemTransfer
     {
-        $sku = $itemTransfer->getSku();
-        $min = $productQuantityTransfer->getQuantityMin();
-        $max = $productQuantityTransfer->getQuantityMax();
-        $interval = $productQuantityTransfer->getQuantityInterval();
-
         $nearestQuantity = $this->productQuantityRounder->getNearestQuantity($productQuantityTransfer, $totalQuantityByGroupKey);
-
         $totalQuantityByGroupKeyAfterAdjustment = $totalQuantityByGroupKey - $itemTransfer->getQuantity() + $nearestQuantity;
 
         if (!$this->isItemQuantityValid($totalQuantityByGroupKeyAfterAdjustment, $productQuantityTransfer)) {
-            return;
+            return $itemTransfer;
         }
 
-        $notificationMessage = $this->findNotificationMessage($productQuantityTransfer, $nearestQuantity, $itemTransfer->getQuantity());
-
-        if ($notificationMessage !== null) {
-            $itemTransfer->addNotificationMessage($notificationMessage);
-        }
-
+        $itemTransfer = $this->addNotificationMessage($productQuantityTransfer, $nearestQuantity, $itemTransfer);
         $itemTransfer->setQuantity($nearestQuantity);
+
+        return $itemTransfer;
     }
 
     /**
@@ -136,9 +132,11 @@ class ProductQuantityRestrictionNormalizer implements ProductQuantityRestriction
     }
 
     /**
+     * Returns array where keys are product group keys, values are product quantities as 'quote.quantity + change.quantity'.
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return int[] Keys are product group keys, values are product quantities as 'quote.quantity + change.quantity'
+     * @return int[]
      */
     protected function getItemAddCartQuantityMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -179,9 +177,11 @@ class ProductQuantityRestrictionNormalizer implements ProductQuantityRestriction
     }
 
     /**
+     * Returns array where keys are product skus, values are itemTransfer.
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function getItemTransferMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -198,9 +198,11 @@ class ProductQuantityRestrictionNormalizer implements ProductQuantityRestriction
     }
 
     /**
+     * Returns array where keys are product SKUs.
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[] Keys are product SKUs.
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
     protected function getProductQuantityTransferMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -208,15 +210,16 @@ class ProductQuantityRestrictionNormalizer implements ProductQuantityRestriction
         $productQuantityTransfers = $this->productQuantityReader->findProductQuantityTransfersByProductSku($skus);
 
         $productQuantityTransferMap = $this->mapProductQuantityTransfersBySku($productQuantityTransfers);
-        $productQuantityTransferMap = $this->replaceMissingSkus($productQuantityTransferMap, $skus);
 
         return $productQuantityTransferMap;
     }
 
     /**
+     * Returns array where keys are group keys, values are skus
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[] Keys are group keys, values are skus
+     * @return string[]
      */
     protected function getChangedSkuMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -233,40 +236,11 @@ class ProductQuantityRestrictionNormalizer implements ProductQuantityRestriction
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer
-     */
-    protected function getDefaultProductQuantityTransfer(): ProductQuantityTransfer
-    {
-        return (new ProductQuantityTransfer())
-            ->setQuantityInterval(1)
-            ->setQuantityMin(1);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductQuantityTransfer[] $productQuantityTransferMap
-     * @param string[] $requiredSkus
+     * Returns array where keys are product SKUs.
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
-     */
-    protected function replaceMissingSkus(array $productQuantityTransferMap, array $requiredSkus): array
-    {
-        $defaultProductQuantityTransfer = $this->getDefaultProductQuantityTransfer();
-
-        foreach ($requiredSkus as $sku) {
-            if (isset($productQuantityTransferMap[$sku])) {
-                continue;
-            }
-
-            $productQuantityTransferMap[$sku] = $defaultProductQuantityTransfer;
-        }
-
-        return $productQuantityTransferMap;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductQuantityTransfer[] $productQuantityTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[] Keys are product SKUs.
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
     protected function mapProductQuantityTransfersBySku(array $productQuantityTransfers): array
     {
@@ -276,6 +250,27 @@ class ProductQuantityRestrictionNormalizer implements ProductQuantityRestriction
         }
 
         return $productQuantityTransferMap;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
+     * @param int $nearestQuantity
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function addNotificationMessage(
+        ProductQuantityTransfer $productQuantityTransfer,
+        int $nearestQuantity,
+        ItemTransfer $itemTransfer
+    ): ItemTransfer {
+        $notificationMessage = $this->findNotificationMessage($productQuantityTransfer, $nearestQuantity, $itemTransfer->getQuantity());
+
+        if ($notificationMessage !== null) {
+            $itemTransfer->addMessage($notificationMessage);
+        }
+
+        return $itemTransfer;
     }
 
     /**
@@ -293,7 +288,7 @@ class ProductQuantityRestrictionNormalizer implements ProductQuantityRestriction
 
         if ($quantity < $min) {
             return $this->buildNotificationMessage(
-                static::NOTIFICATION_MESSAGE_QUANTITY_MIN_NOT_FULFILLED,
+                static::MESSAGE_QUANTITY_MIN_NOT_FULFILLED,
                 static::NOTIFICATION_MESSAGE_PARAM_MIN,
                 $nearestQuantity
             );
@@ -301,7 +296,7 @@ class ProductQuantityRestrictionNormalizer implements ProductQuantityRestriction
 
         if (($quantity - $min) % $interval !== 0) {
             return $this->buildNotificationMessage(
-                static::NOTIFICATION_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED,
+                static::MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED,
                 static::NOTIFICATION_MESSAGE_PARAM_STEP,
                 $nearestQuantity
             );
@@ -309,7 +304,7 @@ class ProductQuantityRestrictionNormalizer implements ProductQuantityRestriction
 
         if ($max !== null && $quantity > $max) {
             return $this->buildNotificationMessage(
-                static::NOTIFICATION_MESSAGE_QUANTITY_MAX_NOT_FULFILLED,
+                static::MESSAGE_QUANTITY_MAX_NOT_FULFILLED,
                 static::NOTIFICATION_MESSAGE_PARAM_MAX,
                 $nearestQuantity
             );
@@ -329,6 +324,7 @@ class ProductQuantityRestrictionNormalizer implements ProductQuantityRestriction
     {
         return (new MessageTransfer())
             ->setValue($notificationMessage)
+            ->setType(static::DEFAULT_MESSAGE_TYPE)
             ->setParameters([$notificationParam => $nearestQuantity]);
     }
 }

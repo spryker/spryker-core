@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductQuantity\Business\Model\Rounder;
+namespace Spryker\Service\ProductQuantity\Rounder;
 
 use Generated\Shared\Transfer\ProductQuantityTransfer;
 
@@ -34,7 +34,7 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
         if ($interval && ($quantity - $min) % $interval !== 0) {
             $max = $max ?? ($quantity + $interval);
 
-            $quantity = $this->getNearestQuantityFromAllowed(
+            $quantity = $this->getNearestAllowedQuantity(
                 $quantity,
                 $this->getAllowedQuantities($min, $max, $interval, $quantity)
             );
@@ -70,7 +70,7 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
      *
      * @return int
      */
-    protected function getNearestQuantityFromAllowed(int $quantity, array $allowedQuantities): int
+    protected function getNearestAllowedQuantity(int $quantity, array $allowedQuantities): int
     {
         if (count($allowedQuantities) === 1) {
             return reset($allowedQuantities);

@@ -120,6 +120,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CART_ITEM_NORMALIZER_PLUGINS] = function (Container $container): array {
             return $this->getCartItemsNormalizerPlugins($container);
         };
+
         return $container;
     }
 

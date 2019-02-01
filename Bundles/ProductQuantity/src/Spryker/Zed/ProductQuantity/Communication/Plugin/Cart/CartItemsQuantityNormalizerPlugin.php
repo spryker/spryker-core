@@ -34,7 +34,7 @@ class CartItemsQuantityNormalizerPlugin extends AbstractPlugin implements CartIt
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $normalizableFields = $itemTransfer->getNormalizableFields();
 
-            if (!empty($normalizableFields) && in_array(static::NORMALIZABLE_FIELD, $normalizableFields)) {
+            if (count($normalizableFields) > 0 && in_array(static::NORMALIZABLE_FIELD, $normalizableFields)) {
                 return true;
             }
         }
@@ -44,7 +44,7 @@ class CartItemsQuantityNormalizerPlugin extends AbstractPlugin implements CartIt
 
     /**
      * {@inheritdoc}
-     * - Adjusts cart item quantity according to restrictions.
+     * - Adjusts cart item quantity according to product quantity restrictions.
      * - Adds notification messages about adjusment.
      *
      * @api

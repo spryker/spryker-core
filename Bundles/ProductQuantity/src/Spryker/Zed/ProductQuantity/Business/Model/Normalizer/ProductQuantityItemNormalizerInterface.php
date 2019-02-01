@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductQuantity\Business\Model\Normalizer;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 
-interface ProductQuantityRestrictionNormalizerInterface
+interface ProductQuantityItemNormalizerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer

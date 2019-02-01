@@ -28,7 +28,7 @@
         <property name="unitGrossPrice" type="int"/>
         <property name="sumGrossPrice" type="int"/>
         <property name="normalizableFields" type="string[]" singular="normalizableField"/>
-        <property name="notificationMessages" type="Message[]" singular="notificationMessage"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="CartPreCheckResponse">

@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\ProductQuantity\Business;
 
+use Spryker\Service\ProductQuantity\ProductQuantityServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductQuantity\Business\Model\Normalizer\ProductQuantityRestrictionNormalizer;
-use Spryker\Zed\ProductQuantity\Business\Model\Normalizer\ProductQuantityRestrictionNormalizerInterface;
+use Spryker\Zed\ProductQuantity\Business\Model\Normalizer\ProductQuantityItemNormalizer;
+use Spryker\Zed\ProductQuantity\Business\Model\Normalizer\ProductQuantityItemNormalizerInterface;
 use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReader;
 use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface;
-use Spryker\Zed\ProductQuantity\Business\Model\Rounder\ProductQuantityRounder;
-use Spryker\Zed\ProductQuantity\Business\Model\Rounder\ProductQuantityRounderInterface;
 use Spryker\Zed\ProductQuantity\Business\Model\Validator\ProductQuantityRestrictionValidator;
 use Spryker\Zed\ProductQuantity\Business\Model\Validator\ProductQuantityRestrictionValidatorInterface;
+use Spryker\Zed\ProductQuantity\ProductQuantityDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductQuantity\ProductQuantityConfig getConfig()
@@ -41,21 +41,21 @@ class ProductQuantityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductQuantity\Business\Model\Normalizer\ProductQuantityRestrictionNormalizerInterface
+     * @return \Spryker\Zed\ProductQuantity\Business\Model\Normalizer\ProductQuantityItemNormalizerInterface
      */
-    public function createProductQuantityRestrictionNormalizer(): ProductQuantityRestrictionNormalizerInterface
+    public function createProductQuantityItemNormalizer(): ProductQuantityItemNormalizerInterface
     {
-        return new ProductQuantityRestrictionNormalizer(
+        return new ProductQuantityItemNormalizer(
             $this->createProductQuantityReader(),
-            $this->createProductQuantityRounder()
+            $this->getProductQuantityService()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductQuantity\Business\Model\Rounder\ProductQuantityRounderInterface
+     * @return \Spryker\Service\ProductQuantity\ProductQuantityServiceInterface
      */
-    public function createProductQuantityRounder(): ProductQuantityRounderInterface
+    public function getProductQuantityService(): ProductQuantityServiceInterface
     {
-        return new ProductQuantityRounder();
+        return $this->getProvidedDependency(ProductQuantityDependencyProvider::SERVICE_PRODUCT_QUANTITY);
     }
 }

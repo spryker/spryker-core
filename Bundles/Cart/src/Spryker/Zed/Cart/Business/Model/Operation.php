@@ -10,6 +10,7 @@ namespace Spryker\Zed\Cart\Business\Model;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
@@ -25,6 +26,8 @@ class Operation implements OperationInterface
     protected const TERMINATION_EVENT_NAME_ADD = 'add';
     protected const TERMINATION_EVENT_NAME_REMOVE = 'remove';
     protected const TERMINATION_EVENT_NAME_RELOAD = 'reload';
+
+    protected const MESSAGE_TYPE_NOTIFICATION = 'notification';
 
     /**
      * @var \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
@@ -153,7 +156,9 @@ class Operation implements OperationInterface
         $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->modifiedToArray(), true);
 
         $cartChangeTransfer = $this->normalizeCartChangeItems($cartChangeTransfer);
-        $this->collectMessagesAfterAddNormalization($cartChangeTransfer);
+        $this->addInfoMessaeges(
+            $this->getNotificationMessages($cartChangeTransfer)
+        );
 
         if (!$this->preCheckCart($cartChangeTransfer)) {
             return $cartChangeTransfer->getQuote();
@@ -352,17 +357,52 @@ class Operation implements OperationInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\MessageTransfer[] $infoMessages
      *
      * @return void
      */
-    protected function collectMessagesAfterAddNormalization(CartChangeTransfer $cartChangeTransfer): void
+    protected function addInfoMessaeges(array $infoMessages): void
     {
+        foreach ($infoMessages as $message) {
+            $this->messengerFacade->addInfoMessage($message);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    protected function getNotificationMessages(CartChangeTransfer $cartChangeTransfer): array
+    {
+        $notificationMessages = [];
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            foreach ($itemTransfer->getNotificationMessages() as $notificationMessage) {
-                $this->messengerFacade->addInfoMessage($notificationMessage);
+            $notificationMessages = array_merge(
+                $notificationMessages,
+                $this->getMessagesByTypeFromItemTransfer($itemTransfer, static::MESSAGE_TYPE_NOTIFICATION)
+            );
+        }
+
+        return $notificationMessages;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $type
+     *
+     * @return array
+     */
+    protected function getMessagesByTypeFromItemTransfer(ItemTransfer $itemTransfer, string $type)
+    {
+        $messagesByType = [];
+
+        foreach ($itemTransfer->getMessages() as $message) {
+            if ($message->getType() === $type) {
+                $messagesByType[] = $message;
             }
         }
+
+        return $messagesByType;
     }
 
     /**
