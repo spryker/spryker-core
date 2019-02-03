@@ -78,4 +78,17 @@ interface AvailabilityNotificationFacadeInterface
      * @return void
      */
     public function sendAvailabilitySubscriptionNotification(AvailabilityNotificationTransfer $availabilityNotificationTransfer): void;
+
+    /**
+     * Specification:
+     * - Finds availability subscription lists.
+     * - Expands customer transfer with AvailabilitySubscriptionCollectionTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function expandCustomerTransferWithAvailabilitySubscriptionList(CustomerTransfer $customerTransfer): CustomerTransfer;
 }

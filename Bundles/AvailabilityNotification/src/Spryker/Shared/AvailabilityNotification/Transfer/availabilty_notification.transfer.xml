@@ -24,6 +24,7 @@
         <property name="subscriptionKey" type="string" />
         <property name="sku" type="string" />
         <property name="email" type="string" />
+        <property name="customerReference" type="string" />
     </transfer>
 
     <transfer name="Mail">
@@ -46,6 +47,10 @@
         <property name="sku" type="string"/>
         <property name="store" type="Store"/>
         <property name="productConcrete" type="ProductConcrete"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="availabilitySubscriptionCollection" type="AvailabilitySubscriptionCollection"/>
     </transfer>
 
 </transfers>

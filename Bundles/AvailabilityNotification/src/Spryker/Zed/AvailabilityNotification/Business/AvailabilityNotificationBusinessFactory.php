@@ -10,6 +10,8 @@ namespace Spryker\Zed\AvailabilityNotification\Business;
 use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationDependencyProvider;
 use Spryker\Zed\AvailabilityNotification\Business\Anonymizer\AvailabilitySubscriptionAnonymizer;
 use Spryker\Zed\AvailabilityNotification\Business\Anonymizer\AvailabilitySubscriptionAnonymizerInterface;
+use Spryker\Zed\AvailabilityNotification\Business\CustomerExpander\CustomerExpander;
+use Spryker\Zed\AvailabilityNotification\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSender;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriber;
@@ -204,5 +206,13 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     protected function createUrlGenerator(): UrlGeneratorInterface
     {
         return new UrlGenerator($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Business\CustomerExpander\CustomerExpanderInterface
+     */
+    public function createCustomerExpander(): CustomerExpanderInterface
+    {
+        return new CustomerExpander($this->createAvailabilityNotificationReader());
     }
 }

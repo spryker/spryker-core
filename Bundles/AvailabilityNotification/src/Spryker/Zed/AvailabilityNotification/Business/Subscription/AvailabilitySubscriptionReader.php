@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
+use Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface;
@@ -42,7 +43,7 @@ class AvailabilitySubscriptionReader implements AvailabilitySubscriptionReaderIn
     public function findOneByEmailAndSku(string $email, string $sku): ?AvailabilitySubscriptionTransfer
     {
         return $this->availabilityNotificationRepository
-            ->findOneBy($email, $sku, $this->storeFacade->getCurrentStore());
+            ->findOneByEmailAndSku($email, $sku, $this->storeFacade->getCurrentStore()->getIdStore());
     }
 
     /**
@@ -54,5 +55,28 @@ class AvailabilitySubscriptionReader implements AvailabilitySubscriptionReaderIn
     {
         return $this->availabilityNotificationRepository
             ->findOneBySubscriptionKey($subscriptionKey);
+    }
+
+    /**
+     * @param string $customerReference
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
+     */
+    public function findOneByCustomerReferenceAndSku(string $customerReference, string $sku): ?AvailabilitySubscriptionTransfer
+    {
+        return $this->availabilityNotificationRepository
+            ->findOneByCustomerReferenceAndSku($customerReference, $sku, $this->storeFacade->getCurrentStore()->getIdStore());
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer
+     */
+    public function findByCustomerReference(string $customerReference): AvailabilitySubscriptionCollectionTransfer
+    {
+        return $this->availabilityNotificationRepository
+            ->findByCustomerReference($customerReference, $this->storeFacade->getCurrentStore()->getIdStore());
     }
 }

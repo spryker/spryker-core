@@ -9,18 +9,17 @@ namespace Spryker\Zed\AvailabilityNotification\Persistence;
 
 use Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 
 interface AvailabilityNotificationRepositoryInterface
 {
     /**
      * @param string $email
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int $fkStore
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findOneBy(string $email, string $sku, StoreTransfer $storeTransfer): ?AvailabilitySubscriptionTransfer;
+    public function findOneByEmailAndSku(string $email, string $sku, int $fkStore): ?AvailabilitySubscriptionTransfer;
 
     /**
      * @param string $subscriptionKey
@@ -30,10 +29,27 @@ interface AvailabilityNotificationRepositoryInterface
     public function findOneBySubscriptionKey(string $subscriptionKey): ?AvailabilitySubscriptionTransfer;
 
     /**
+     * @param string $customerReference
+     * @param string $sku
+     * @param int $fkStore
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
+     */
+    public function findOneByCustomerReferenceAndSku(string $customerReference, string $sku, int $fkStore): ?AvailabilitySubscriptionTransfer;
+
+    /**
      * @param string $sku
      * @param int $fkStore
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer
      */
     public function findBySkuAndStore(string $sku, int $fkStore): AvailabilitySubscriptionCollectionTransfer;
+
+    /**
+     * @param string $customerReference
+     * @param int $fkStore
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer
+     */
+    public function findByCustomerReference(string $customerReference, int $fkStore): AvailabilitySubscriptionCollectionTransfer;
 }

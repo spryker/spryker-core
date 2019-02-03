@@ -104,4 +104,20 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
             ->createAvailabilityNotificationSender()
             ->sendProductBecomeAvailableMail($availabilityNotificationTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function expandCustomerTransferWithAvailabilitySubscriptionList(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        return $this->getFactory()
+            ->createCustomerExpander()
+            ->expandCustomerTransferWithAvailabilitySubscriptionList($customerTransfer);
+    }
 }

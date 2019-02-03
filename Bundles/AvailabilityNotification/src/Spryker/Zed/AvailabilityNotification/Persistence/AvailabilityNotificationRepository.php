@@ -9,7 +9,6 @@ namespace Spryker\Zed\AvailabilityNotification\Persistence;
 
 use Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -21,19 +20,19 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
     /**
      * @param string $email
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int $fkStore
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findOneBy(
+    public function findOneByEmailAndSku(
         string $email,
         string $sku,
-        StoreTransfer $storeTransfer
+        int $fkStore
     ): ?AvailabilitySubscriptionTransfer {
         $availabilitySubscriptionEntity = $this->querySubscription()
             ->filterByEmail($email)
             ->filterBySku($sku)
-            ->filterByFkStore($storeTransfer->getIdStore())
+            ->filterByFkStore($fkStore)
             ->setIgnoreCase(true)
             ->findOne();
 
@@ -78,6 +77,55 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
         return $this->getFactory()
             ->createAvailabilitySubscriptionMapper()
             ->mapAvailabilitySubscriptionTransferCollection($availabilitySubscriptionEntities);
+    }
+
+    /**
+     * @param string $customerReference
+     * @param string $sku
+     * @param int $fkStore
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
+     */
+    public function findOneByCustomerReferenceAndSku(
+        string $customerReference,
+        string $sku,
+        int $fkStore
+    ): ?AvailabilitySubscriptionTransfer {
+        $availabilitySubscriptionEntity = $this->querySubscription()
+            ->filterByCustomerReference($customerReference)
+            ->filterBySku($sku)
+            ->filterByFkStore($fkStore)
+            ->setIgnoreCase(true)
+            ->findOne();
+
+        if ($availabilitySubscriptionEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()->createAvailabilitySubscriptionMapper()->mapAvailabilitySubscriptionTransfer($availabilitySubscriptionEntity);
+    }
+
+    /**
+     * @param string $customerReference
+     * @param int $fkStore
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer
+     */
+    public function findByCustomerReference(string $customerReference, int $fkStore): AvailabilitySubscriptionCollectionTransfer
+    {
+        $availabilitySubscriptionEntities = $this->querySubscription()
+            ->filterByCustomerReference($customerReference)
+            ->filterByFkStore($fkStore)
+            ->find();
+
+        $availabilitySubscriptionCollection = new AvailabilitySubscriptionCollectionTransfer();
+
+        foreach ($availabilitySubscriptionEntities as $availabilitySubscriptionEntity) {
+            $availabilitySubscription = $this->getFactory()->createAvailabilitySubscriptionMapper()->mapAvailabilitySubscriptionTransfer($availabilitySubscriptionEntity);
+            $availabilitySubscriptionCollection->addAvailabilitySubscription($availabilitySubscription);
+        }
+
+        return $availabilitySubscriptionCollection;
     }
 
     /**

@@ -37,7 +37,7 @@ class AvailabilitySubscriptionFinder implements AvailabilitySubscriptionFinderIn
             return $this->findBySubscriptionKey($availabilitySubscriptionRequestTransfer);
         }
 
-        return $this->findByEmailAndSku($availabilitySubscriptionRequestTransfer);
+        return $this->findByCustomerReferenceAndSku($availabilitySubscriptionRequestTransfer);
     }
 
     /**
@@ -63,15 +63,15 @@ class AvailabilitySubscriptionFinder implements AvailabilitySubscriptionFinderIn
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    protected function findByEmailAndSku(
+    protected function findByCustomerReferenceAndSku(
         AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer
     ): AvailabilitySubscriptionResponseTransfer {
-        $availabilitySubscriptionRequestTransfer->requireEmail();
+        $availabilitySubscriptionRequestTransfer->requireCustomerReference();
         $availabilitySubscriptionRequestTransfer->requireSku();
 
         $availabilitySubscriptionTransfer = $this->availabilitySubscriptionReader
-            ->findOneByEmailAndSku(
-                $availabilitySubscriptionRequestTransfer->getEmail(),
+            ->findOneByCustomerReferenceAndSku(
+                $availabilitySubscriptionRequestTransfer->getCustomerReference(),
                 $availabilitySubscriptionRequestTransfer->getSku()
             );
 
