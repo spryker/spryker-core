@@ -47,7 +47,7 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductDiscontinuedPluginExecutor(),
             $this->getConfig(),
-            $this->getPreUnmarkProductDiscontinuePlugins()
+            $this->getPreUnmarkProductDiscontinuedPlugins()
         );
     }
 
@@ -157,7 +157,7 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PreUnmarkProductDiscontinuedPluginInterface[]
      */
-    public function getPreUnmarkProductDiscontinuePlugins(): array
+    public function getPreUnmarkProductDiscontinuedPlugins(): array
     {
         return $this->getProvidedDependency(ProductDiscontinuedDependencyProvider::PLUGINS_PRE_UNMARK_PRODUCT_DISCONTINUED);
     }
