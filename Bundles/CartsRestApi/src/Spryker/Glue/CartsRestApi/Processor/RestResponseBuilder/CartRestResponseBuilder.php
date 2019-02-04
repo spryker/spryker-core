@@ -13,6 +13,7 @@ use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class CartRestResponseBuilder implements CartRestResponseBuilderInterface
@@ -60,7 +61,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
         foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
             $restResponse->addError(
                 (new RestErrorMessageTransfer())
-                    ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED)
+                    ->setCode(SharedCartsRestApiConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED)
                     ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
                     ->setDetail($quoteErrorTransfer->getMessage())
             );
@@ -75,9 +76,9 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     public function createCartIdMissingErrorResponse(): RestResponseInterface
     {
         return $this->createRestResponse()->addError($this->createRestErrorMessageTransfer(
-            CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING,
+            SharedCartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING,
             Response::HTTP_BAD_REQUEST,
-            CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
+            SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
         ));
     }
 
@@ -87,9 +88,9 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     public function createCartNotFoundErrorResponse(): RestResponseInterface
     {
         return $this->createRestResponse()->addError($this->createRestErrorMessageTransfer(
-            CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND,
+            SharedCartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND,
             Response::HTTP_NOT_FOUND,
-            CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND
+            SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND
         ));
     }
 
@@ -104,25 +105,25 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
 
         if ($quoteResponseTransfer->getErrors()->count() === 0) {
             return $restResponse->addError($this->createRestErrorMessageTransfer(
-                CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_CART,
+                SharedCartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_CART,
                 Response::HTTP_INTERNAL_SERVER_ERROR,
-                CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART
+                SharedCartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART
             ));
         }
 
         foreach ($quoteResponseTransfer->getErrors() as $error) {
             if ($error->getMessage() === CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART) {
                 $restResponse->addError($this->createRestErrorMessageTransfer(
-                    CartsRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART,
+                    SharedCartsRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART,
                     Response::HTTP_UNPROCESSABLE_ENTITY,
-                    CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART
+                    SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART
                 ));
 
                 continue;
             }
 
             $restResponse->addError($this->createRestErrorMessageTransfer(
-                CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_CART,
+                SharedCartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_CART,
                 Response::HTTP_INTERNAL_SERVER_ERROR,
                 $error->getMessage()
             ));
@@ -137,9 +138,9 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     public function createFailedDeletingCartErrorResponse(): RestResponseInterface
     {
         return $this->createRestResponse()->addError($this->createRestErrorMessageTransfer(
-            CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART,
+            SharedCartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART,
             Response::HTTP_UNPROCESSABLE_ENTITY,
-            CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART
+            SharedCartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART
         ));
     }
 
@@ -154,7 +155,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
 
         foreach ($errors as $messageTransfer) {
             $restErrorMessageTransfer = $this->createRestErrorMessageTransfer(
-                CartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION,
+                SharedCartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION,
                 Response::HTTP_UNPROCESSABLE_ENTITY,
                 $messageTransfer->getValue()
             );
@@ -170,9 +171,9 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     public function createFailedDeletingCartItemErrorResponse(): RestResponseInterface
     {
         return $this->createRestResponse()->addError($this->createRestErrorMessageTransfer(
-            CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART_ITEM,
+            SharedCartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART_ITEM,
             Response::HTTP_UNPROCESSABLE_ENTITY,
-            CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART_ITEM
+            SharedCartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART_ITEM
         ));
     }
 
@@ -182,9 +183,9 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     public function createCartItemNotFoundErrorResponse(): RestResponseInterface
     {
         return $this->createRestResponse()->addError($this->createRestErrorMessageTransfer(
-            CartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND,
+            SharedCartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND,
             Response::HTTP_NOT_FOUND,
-            CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND
+            SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND
         ));
     }
 
@@ -194,9 +195,9 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     public function createMissingRequiredParameterErrorResponse(): RestResponseInterface
     {
         return $this->createRestResponse()->addError($this->createRestErrorMessageTransfer(
-            CartsRestApiConfig::RESPONSE_CODE_MISSING_REQUIRED_PARAMETER,
+            SharedCartsRestApiConfig::RESPONSE_CODE_MISSING_REQUIRED_PARAMETER,
             Response::HTTP_BAD_REQUEST,
-            CartsRestApiConfig::EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER
+            SharedCartsRestApiConfig::EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER
         ));
     }
 

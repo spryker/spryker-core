@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
@@ -93,21 +94,21 @@ class QuoteMapper implements QuoteMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
     public function mapQuoteResponseErrorsToRestCodes(
-        QuoteResponseTransfer $quoteResponseTransfer
-    ): QuoteResponseTransfer {
+        QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
+    ): QuoteCollectionResponseTransfer {
         $errorCodes = [];
-        foreach ($quoteResponseTransfer->getErrors() as $error) {
+        foreach ($quoteCollectionResponseTransfer->getErrorCodes() as $error) {
             $errorCodes[] = CartsRestApiConfig::RESPONSE_ERROR_MAP[$error] ?? $error;
         }
 
-        $quoteResponseTransfer->setErrors($errorCodes);
+        $quoteCollectionResponseTransfer->setErrorCodes(new ArrayObject([$errorCodes]));
 
-        return $quoteResponseTransfer;
+        return $quoteCollectionResponseTransfer;
     }
 
     /**

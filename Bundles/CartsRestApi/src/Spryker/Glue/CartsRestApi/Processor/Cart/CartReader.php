@@ -14,6 +14,7 @@ use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
 
 class CartReader implements CartReaderInterface
 {
@@ -55,10 +56,6 @@ class CartReader implements CartReaderInterface
      */
     public function readByIdentifier(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (!$uuidCart) {
-            return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
-        }
-
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid(
             $this->cartsResourceMapper->createQuoteTransfer($uuidCart, $restRequest)
         );
@@ -83,10 +80,6 @@ class CartReader implements CartReaderInterface
      */
     public function getCustomerQuoteByUuid(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (!$uuidCart) {
-            return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
-        }
-
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid(
             $this->cartsResourceMapper->createQuoteTransfer($uuidCart, $restRequest)
         );
@@ -131,20 +124,16 @@ class CartReader implements CartReaderInterface
         $quoteCollectionTransfer = $this->getCustomerQuotes($restRequest);
 
         if ($quoteCollectionTransfer->getQuotes()->count() === 0) {
-            return (new QuoteResponseTransfer())
-                ->setIsSuccessful(false);
+            return $this->cartsResourceMapper->createRestQuoteResponseTransfer(false, null);
         }
 
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             if ($quoteTransfer->getUuid() === $uuidCart) {
-                return (new QuoteResponseTransfer())
-                    ->setIsSuccessful(true)
-                    ->setQuoteTransfer($quoteTransfer);
+                $this->cartsResourceMapper->createRestQuoteResponseTransfer(false, $quoteTransfer);
             }
         }
 
-        return (new QuoteResponseTransfer())
-            ->setIsSuccessful(false);
+        return $this->cartsResourceMapper->createRestQuoteResponseTransfer(false, null);
     }
 
     /**

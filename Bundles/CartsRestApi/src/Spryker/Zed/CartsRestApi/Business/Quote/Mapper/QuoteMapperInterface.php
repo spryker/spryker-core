@@ -74,13 +74,13 @@ interface QuoteMapperInterface
     ): RestQuoteCollectionRequestTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
     public function mapQuoteResponseErrorsToRestCodes(
-        QuoteResponseTransfer $quoteResponseTransfer
-    ): QuoteResponseTransfer;
+        QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
+    ): QuoteCollectionResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $registeredCustomer
