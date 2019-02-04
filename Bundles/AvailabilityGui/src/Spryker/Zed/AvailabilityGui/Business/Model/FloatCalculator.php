@@ -15,7 +15,7 @@ class FloatCalculator implements FloatCalculatorInterface
     protected $precision;
 
     /**
-     * @param $precision
+     * @param int $precision
      */
     public function __construct($precision = 2)
     {
