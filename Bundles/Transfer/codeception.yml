@@ -1,4 +1,5 @@
 namespace: SprykerTest
+actor: Tester
 
 include:
     - tests/SprykerTest/Shared/Transfer
@@ -6,7 +7,7 @@ include:
 
 paths:
     tests: tests
-    support: .
+    support: tests/_support
     log: tests/_output
     data: tests/_data
     envs: tests/_envs

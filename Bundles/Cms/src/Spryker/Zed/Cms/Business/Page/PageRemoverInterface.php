@@ -16,5 +16,5 @@ interface PageRemoverInterface
      *
      * @return void
      */
-    public function delete($idCmsPage);
+    public function delete(int $idCmsPage): void;
 }

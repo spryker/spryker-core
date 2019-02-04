@@ -27,7 +27,7 @@ class CompanyTypeChoiceFormType extends AbstractType
      *
      * @return $this
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): self
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addCompanyTypeField($builder, $options);
 
