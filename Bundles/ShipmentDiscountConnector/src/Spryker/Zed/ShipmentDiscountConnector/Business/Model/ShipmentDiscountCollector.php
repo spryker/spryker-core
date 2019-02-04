@@ -13,15 +13,18 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 
+/**
+ * @deprecated Use \Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollector instead.
+ */
 class ShipmentDiscountCollector implements ShipmentDiscountCollectorInterface
 {
     /**
-     * @var \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface
+     * @var \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface
      */
     protected $shipmentDiscountDecisionRule;
 
     /**
-     * @param \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule
      */
     public function __construct(ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule)
     {

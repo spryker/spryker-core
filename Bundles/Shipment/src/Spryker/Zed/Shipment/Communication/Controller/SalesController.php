@@ -24,8 +24,21 @@ class SalesController extends AbstractController
      */
     public function listAction(Request $request)
     {
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
+        $orderTransfer = $request->request->get('orderTransfer');
+
+        /**
+         * @deprecated Will be removed in next major release.
+         */
+        $orderTransfer = $this->getFactory()
+            ->createSalesOrderDataBCForMultiShipmentAdapter()
+            ->adapt($orderTransfer);
+
+        $shipmentGroups = $this->getFactory()->getShipmentService()->groupItemsByShipment($orderTransfer->getItems());
+
         return $this->viewResponse([
-            'order' => $request->request->get('orderTransfer'),
+            'shipmentGroups' => $shipmentGroups,
+            'currencyIsoCode' => $orderTransfer->getCurrencyIsoCode()
         ]);
     }
 }

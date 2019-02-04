@@ -17,13 +17,11 @@ interface ShipmentMethodFilterPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      */
     public function filterShipmentMethods(
         ShipmentGroupTransfer $shipmentGroupTransfer,
-        ArrayObject $shipmentMethods,
         QuoteTransfer $quoteTransfer): ArrayObject;
 }

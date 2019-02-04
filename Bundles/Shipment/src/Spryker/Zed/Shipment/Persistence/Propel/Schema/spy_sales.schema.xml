@@ -36,5 +36,4 @@
             <reference local="fk_sales_shipment" foreign="id_sales_shipment"/>
         </foreign-key>
     </table>
-
 </database>

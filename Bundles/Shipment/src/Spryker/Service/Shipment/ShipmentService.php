@@ -8,15 +8,19 @@
 namespace Spryker\Service\Shipment;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ShipmentGroupTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Kernel\AbstractService;
+use Spryker\Service\Shipment\Items\ItemsGrouperInterface;
 
 /**
  * @method \Spryker\Service\Shipment\ShipmentServiceFactory getFactory()
  */
 class ShipmentService extends AbstractService implements ShipmentServiceInterface
 {
+    /**
+     * @var \Spryker\Service\Shipment\Items\ItemsGrouperInterface
+     */
+    protected $itemsGrouper;
+
     /**
      * {@inheritdoc}
      *
@@ -28,41 +32,18 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
      */
     public function groupItemsByShipment(ArrayObject $itemTransfers): ArrayObject
     {
-        $shipmentGroupTransfers = new ArrayObject();
-
-        foreach ($itemTransfers as $itemTransfer) {
-            $itemTransfer->requireShipment();
-
-            $hash = $this->getItemHash($itemTransfer->getShipment());
-            if (!isset($shipmentGroupTransfers[$hash])) {
-                $shipmentGroupTransfers[$hash] = (new ShipmentGroupTransfer())
-                    ->setShipment($itemTransfer->getShipment())
-                    ->setHash($hash);
-            }
-
-            $shipmentGroupTransfers[$hash]->addItem($itemTransfer);
-        }
-
-        return $shipmentGroupTransfers;
+        return $this->getItemsGrouper()->groupByShipment($itemTransfers);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     *
-     * @return string
+     * @return \Spryker\Service\Shipment\Items\ItemsGrouperInterface
      */
-    protected function getItemHash(ShipmentTransfer $shipmentTransfer): string
+    protected function getItemsGrouper(): ItemsGrouperInterface
     {
-        $shippingMethod = '';
-
-        if ($shipmentTransfer->getMethod() !== null) {
-            $shippingMethod = (string)$shipmentTransfer->getMethod()->getIdShipmentMethod();
+        if ($this->itemsGrouper === null) {
+            $this->itemsGrouper = $this->getFactory()->createItemsGrouper();
         }
 
-        return md5(implode([
-            $shippingMethod,
-            $shipmentTransfer->getShippingAddress()->getAddress1(),
-            $shipmentTransfer->getRequestedDeliveryDate(),
-        ]));
+        return $this->itemsGrouper;
     }
 }

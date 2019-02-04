@@ -7,16 +7,11 @@
 
 namespace Spryker\Zed\ShipmentDiscountConnector\Business\Model;
 
-use Generated\Shared\Transfer\ClauseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollectorInterface as ShipmentDiscountWithMultiShipmentCollectorInterface;
 
-interface ShipmentDiscountCollectorInterface
+/**
+ * @deprecated Use \Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollectorInterface instead.
+ */
+interface ShipmentDiscountCollectorInterface extends ShipmentDiscountWithMultiShipmentCollectorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
-     */
-    public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer);
 }

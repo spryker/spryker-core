@@ -8,11 +8,14 @@
 namespace Spryker\Zed\Shipment\Communication;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Shipment\Communication\Form\CarrierForm;
 use Spryker\Zed\Shipment\Communication\Form\DataProvider\CarrierFormDataProvider;
 use Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider;
 use Spryker\Zed\Shipment\Communication\Form\MethodForm;
+use Spryker\Zed\Shipment\Communication\Order\SalesOrderDataBCForMultiShipmentAdapter;
+use Spryker\Zed\Shipment\Communication\Order\SalesOrderDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\Shipment\Communication\Table\MethodTable;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
@@ -20,6 +23,7 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
  * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface getEntityManager()
  */
 class ShipmentCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -123,5 +127,23 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     public function getMoneyCollectionFormTypePlugin()
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::MONEY_COLLECTION_FORM_TYPE_PLUGIN);
+    }
+
+    /**
+     * @return \Spryker\Service\Shipment\ShipmentServiceInterface
+     */
+    public function getShipmentService(): ShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::SERVICE_SHIPMENT);
+    }
+
+    /**
+     * @deprecated Will be removed in next major release.
+     *
+     * @return \Spryker\Zed\Shipment\Communication\Order\SalesOrderDataBCForMultiShipmentAdapterInterface
+     */
+    public function createSalesOrderDataBCForMultiShipmentAdapter(): SalesOrderDataBCForMultiShipmentAdapterInterface
+    {
+        return new SalesOrderDataBCForMultiShipmentAdapter();
     }
 }

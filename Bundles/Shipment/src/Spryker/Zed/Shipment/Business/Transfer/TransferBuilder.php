@@ -9,17 +9,17 @@ namespace Spryker\Zed\Shipment\Business\Transfer;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
-use Spryker\Zed\Shipment\Business\Model\MethodReaderInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
 
 class TransferBuilder
 {
     /**
-     * @var \Spryker\Zed\Shipment\Business\Model\MethodReaderInterface
+     * @var \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface
      */
     protected $methodReader;
 
     /**
-     * @param \Spryker\Zed\Shipment\Business\Model\MethodReaderInterface $methodReader
+     * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface $methodReader
      */
     public function __construct(MethodReaderInterface $methodReader)
     {
@@ -27,14 +27,17 @@ class TransferBuilder
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $qoute
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      */
-    public function getAvailableMethodsByShipmentGroups(QuoteTransfer $qoute): ShipmentGroupCollectionTransfer
+    public function getAvailableMethodsByShipmentGroups(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
     {
+        /**
+         * @todo Fix this or remove whole class
+         */
         return (new ShipmentGroupCollectionTransfer())->setGroups(
-            $this->methodReader->getAvailableMethodsByShipment($qoute)
+            $this->methodReader->getAvailableMethodsByShipment($quoteTransfer)
         );
     }
 }

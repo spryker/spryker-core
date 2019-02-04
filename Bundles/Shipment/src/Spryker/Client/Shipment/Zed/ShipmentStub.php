@@ -46,6 +46,7 @@ class ShipmentStub implements ShipmentStubInterface
      */
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
     {
+        /** @var \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer $shipmentGroupCollectionTransfer */
         $shipmentGroupCollectionTransfer = $this->zedStub->call('/shipment/gateway/get-available-methods-by-shipment', $quoteTransfer);
 
         return $shipmentGroupCollectionTransfer;

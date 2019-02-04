@@ -8,11 +8,12 @@
 namespace Spryker\Zed\ShipmentExtension\Communication\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
 interface ShipmentMethodAvailabilityPluginInterface
 {
     /**
-     * @param \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool

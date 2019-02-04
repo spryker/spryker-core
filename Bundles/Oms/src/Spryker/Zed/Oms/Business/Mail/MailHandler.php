@@ -98,7 +98,7 @@ class MailHandler
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
-     * @return null|\Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
     protected function mapShippingAddressEntityToShippingAddressTransfer(SpySalesOrder $salesOrderEntity): ?AddressTransfer
     {

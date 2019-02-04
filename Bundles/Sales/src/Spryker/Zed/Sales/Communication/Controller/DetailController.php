@@ -33,6 +33,13 @@ class DetailController extends AbstractController
 
         $orderTransfer = $this->getFacade()->findOrderByIdSalesOrder($idSalesOrder);
 
+        /**
+         * @deprecated Will be removed in next major release.
+         */
+        $orderTransfer = $this->getFactory()
+            ->createSalesOrderDataBCForMultiShipmentAdapter()
+            ->adapt($orderTransfer);
+
         if ($orderTransfer === null) {
             $this->addErrorMessage(sprintf(
                 'Sales order #%d not found.',
@@ -52,6 +59,8 @@ class DetailController extends AbstractController
             return $blockResponseData;
         }
 
+        $groupedOrderItems = $this->getFacade()
+            ->getUniqueOrderItems($orderTransfer->getItems());
         $groupedOrderItemsByShipment = $this->getFactory()
             ->getShipmentService()
             ->groupItemsByShipment($orderTransfer->getItems());
@@ -62,7 +71,9 @@ class DetailController extends AbstractController
             'distinctOrderStates' => $distinctOrderStates,
             'order' => $orderTransfer,
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
+            'groupedOrderItems' => $groupedOrderItems,
             'groupedOrderItemsByShipment' => $groupedOrderItemsByShipment,
+            'isMultiShipmentEnabled' => defined('\Generated\Shared\Transfer\ItemTransfer::SHIPMENT'),
         ], $blockResponseData);
     }
 

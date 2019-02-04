@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
@@ -38,7 +39,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
         return $this->getFactory()
-            ->createOrderHydrator()
+            ->createOrderHydratorStrategyResolver()
+            ->resolve()
             ->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
     }
 
@@ -56,7 +58,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer
     {
         return $this->getFactory()
-            ->createOrderReader()
+            ->createOrderReaderStrategyResolver()
+            ->resolve()
             ->findOrderByIdSalesOrder($idSalesOrder);
     }
 
@@ -159,7 +162,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function getCustomerOrder(OrderTransfer $orderTransfer)
     {
         return $this->getFactory()
-            ->createOrderHydrator()
+            ->createOrderHydratorStrategyResolver()
+            ->resolve()
             ->getCustomerOrder($orderTransfer);
     }
 
@@ -195,7 +199,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function saveSalesOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         $this->getFactory()
-            ->createSalesOrderSaver()
+            ->createOrderSaverStrategyResolver()
+            ->resolve()
             ->saveOrderSales($quoteTransfer, $saveOrderTransfer);
     }
 
@@ -338,5 +343,21 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createExpenseWriter()
             ->createSalesExpense($expenseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return array
+     */
+    public function getUniqueOrderItems(ArrayObject $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createSalesOrderItemGrouper()
+            ->getUniqueOrderItems($itemTransfers);
     }
 }

@@ -9,11 +9,27 @@ namespace Spryker\Zed\Calculation\Business\Model\Aggregator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Spryker\Service\Calculation\CalculationServiceInterface;
 use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class PriceToPayAggregator implements CalculatorInterface
 {
+    /**
+     * @var \Spryker\Service\Calculation\CalculationServiceInterface
+     */
+    protected $calculationService;
+
+    /**
+     * @param \Spryker\Service\Calculation\CalculationServiceInterface $calculationService
+     */
+    public function __construct(CalculationServiceInterface $calculationService)
+    {
+        $this->calculationService = $calculationService;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -23,6 +39,7 @@ class PriceToPayAggregator implements CalculatorInterface
     {
         $this->calculatePriceToPayAggregationForItems($calculableObjectTransfer->getItems(), $calculableObjectTransfer->getPriceMode());
         $this->calculatePriceToPayAggregationForExpenses($calculableObjectTransfer->getExpenses(), $calculableObjectTransfer->getPriceMode());
+        $this->calculatePriceToPayAggregationForItemExpenses($calculableObjectTransfer->getItems(), $calculableObjectTransfer->getPriceMode());
     }
 
     /**
@@ -101,5 +118,48 @@ class PriceToPayAggregator implements CalculatorInterface
         }
 
         return $price - $discountAmount;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param string $priceMode
+     *
+     * @return void
+     */
+    protected function calculatePriceToPayAggregationForItemExpenses(ArrayObject $items, string $priceMode): void
+    {
+        $expenses = $this->getItemExpenses($items);
+        $this->calculatePriceToPayAggregationForExpenses($expenses, $priceMode);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[]
+     */
+    protected function getItemExpenses(ArrayObject $items): ArrayObject
+    {
+        $expenses = new ArrayObject();
+        $shipmentGroups = $this->calculationService->groupItemsByShipment($items);
+
+        foreach ($shipmentGroups as $shipmentGroupTransfer) {
+            if ($this->assertShipmentGroupHasNoExpense($shipmentGroupTransfer)) {
+                continue;
+            }
+
+            $expenses->append($shipmentGroupTransfer->getShipment()->getExpense());
+        }
+
+        return $expenses;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return bool
+     */
+    protected function assertShipmentGroupHasNoExpense(ShipmentGroupTransfer $shipmentGroupTransfer): bool
+    {
+        return $shipmentGroupTransfer->getShipment() === null || $shipmentGroupTransfer->getShipment()->getExpense() === null;
     }
 }

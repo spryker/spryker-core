@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\Shipment\Business\Model;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
+/**
+ * @deprecated Use \Spryker\Zed\Shipment\Business\Calculator\ShipmentTaxRateCalculator instead.
+ */
 class ShipmentTaxRateCalculator implements CalculatorInterface
 {
     /**
@@ -42,52 +45,54 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getMethod() === null) {
-                continue;
+        if ($quoteTransfer->getShipment() === null || $quoteTransfer->getShipment()->getMethod() === null) {
+            return;
+        }
+
+        $taxRate = $this->getTaxRate($quoteTransfer);
+
+        $this->setShipmentTaxRate($quoteTransfer, $taxRate);
+        $this->setQuoteExpenseTaxRate($quoteTransfer, $taxRate);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param float $taxRate
+     *
+     * @return void
+     */
+    protected function setQuoteExpenseTaxRate(QuoteTransfer $quoteTransfer, $taxRate)
+    {
+        foreach ($quoteTransfer->getExpenses() as $expense) {
+            if ($expense->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE &&
+                $expense->getName() === $quoteTransfer->getShipment()->getMethod()->getName()
+            ) {
+                $expense->setTaxRate($taxRate);
             }
-            $taxRate = $this->getTaxRate($itemTransfer);
-            $this->setItemShipmentTaxRate($itemTransfer, $taxRate);
-            $this->setItemShipmentExpenseTaxRate($itemTransfer, $taxRate);
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param float $taxRate
      *
      * @return void
      */
-    protected function setItemShipmentExpenseTaxRate(ItemTransfer $itemTransfer, float $taxRate): void
+    protected function setShipmentTaxRate(QuoteTransfer $quoteTransfer, $taxRate)
     {
-        $itemTransfer
-            ->getShipment()
-            ->getExpense()
-            ->setTaxRate($taxRate);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param float $taxRate
-     *
-     * @return void
-     */
-    protected function setItemShipmentTaxRate(ItemTransfer $itemTransfer, float $taxRate): void
-    {
-        $itemTransfer
-            ->getShipment()
+        $quoteTransfer->getShipment()
             ->getMethod()
             ->setTaxRate($taxRate);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return float
      */
-    protected function getTaxRate(ItemTransfer $itemTransfer): float
+    protected function getTaxRate(QuoteTransfer $quoteTransfer)
     {
-        $taxSetEntity = $this->findTaxSet($itemTransfer);
+        $taxSetEntity = $this->findTaxSet($quoteTransfer);
         if ($taxSetEntity !== null) {
             return (float)$taxSetEntity[ShipmentQueryContainer::COL_MAX_TAX_RATE];
         }
@@ -96,34 +101,29 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|null
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod|null
      */
-    protected function findTaxSet(ItemTransfer $itemTransfer): ?array
+    protected function findTaxSet(QuoteTransfer $quoteTransfer)
     {
-        $countryIso2Code = $this->getCountryIso2Code($itemTransfer);
+        $countryIso2Code = $this->getCountryIso2Code($quoteTransfer);
 
-        /** @var array|null $taxSet */
-        $taxSet = $this->shipmentQueryContainer
-            ->queryTaxSetByIdShipmentMethodAndCountryIso2Code(
-                $itemTransfer->getShipment()->getMethod()->getIdShipmentMethod(),
-                $countryIso2Code
-            )
-            ->findOne();
-
-        return $taxSet;
+        return $this->shipmentQueryContainer->queryTaxSetByIdShipmentMethodAndCountryIso2Code(
+            $quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod(),
+            $countryIso2Code
+        )->findOne();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string
      */
-    protected function getCountryIso2Code(ItemTransfer $itemTransfer): string
+    protected function getCountryIso2Code(QuoteTransfer $quoteTransfer)
     {
-        if ($itemTransfer->getShipment()->getShippingAddress() && $itemTransfer->getShipment()->getShippingAddress()->getIso2Code()) {
-            return $itemTransfer->getShipment()->getShippingAddress()->getIso2Code();
+        if ($quoteTransfer->getShippingAddress()) {
+            return $quoteTransfer->getShippingAddress()->getIso2Code();
         }
 
         return $this->taxFacade->getDefaultTaxCountryIso2Code();
