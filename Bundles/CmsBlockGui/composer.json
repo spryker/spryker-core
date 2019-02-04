@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/cms-block": "^2.0.0",
-    "spryker/cms-block-product-connector": "*",
+    "spryker/cms-block-product-connector": "^1.1.0",
     "spryker/gui": "^3.3.3",
     "spryker/kernel": "^3.13.0",
     "spryker/locale": "^3.0.0",
