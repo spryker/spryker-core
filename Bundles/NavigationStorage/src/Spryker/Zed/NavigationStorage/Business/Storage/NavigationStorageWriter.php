@@ -134,7 +134,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
         }
 
         $newTransfer = $this->mapToNavigationStorageTransfer($navigationTreeByLocaleTransfer);
-        $data = $this->utilSanitizeService->arrayFilterRecursive($newTransfer->toArray());
+        $data = $this->utilSanitizeService->filterOutBlankValuesRecursively($newTransfer->toArray());
 
         $spyNavigationStorage->setFkNavigation($navigationTreeByLocaleTransfer->getNavigation()->getIdNavigation());
         $spyNavigationStorage->setNavigationKey($navigationTreeByLocaleTransfer->getNavigation()->getKey());

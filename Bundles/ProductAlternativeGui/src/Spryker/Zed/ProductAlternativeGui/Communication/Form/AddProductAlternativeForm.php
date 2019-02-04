@@ -45,7 +45,7 @@ class AddProductAlternativeForm extends AbstractType
      *
      * @return $this
      */
-    protected function addProductAlternativeSearchField(FormBuilderInterface $builder): self
+    protected function addProductAlternativeSearchField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_PRODUCT_ALTERNATIVE, SelectType::class, [
             'label' => 'Add Product Alternative by Name or SKU',

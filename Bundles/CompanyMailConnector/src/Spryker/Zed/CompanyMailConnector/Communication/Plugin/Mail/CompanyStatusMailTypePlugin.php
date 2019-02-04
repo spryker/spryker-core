@@ -55,7 +55,7 @@ class CompanyStatusMailTypePlugin extends AbstractPlugin implements MailTypePlug
      *
      * @return $this
      */
-    protected function setSubject(MailBuilderInterface $mailBuilder): self
+    protected function setSubject(MailBuilderInterface $mailBuilder)
     {
         $mailBuilder->setSubject('mail.company.status.subject');
 
@@ -67,7 +67,7 @@ class CompanyStatusMailTypePlugin extends AbstractPlugin implements MailTypePlug
      *
      * @return $this
      */
-    protected function setHtmlTemplate(MailBuilderInterface $mailBuilder): self
+    protected function setHtmlTemplate(MailBuilderInterface $mailBuilder)
     {
         $mailBuilder->setHtmlTemplate('company-mail-connector/mail/company_status.html.twig');
 
@@ -79,7 +79,7 @@ class CompanyStatusMailTypePlugin extends AbstractPlugin implements MailTypePlug
      *
      * @return $this
      */
-    protected function setTextTemplate(MailBuilderInterface $mailBuilder): self
+    protected function setTextTemplate(MailBuilderInterface $mailBuilder)
     {
         $mailBuilder->setTextTemplate('company-mail-connector/mail/company_status.text.twig');
 
@@ -91,7 +91,7 @@ class CompanyStatusMailTypePlugin extends AbstractPlugin implements MailTypePlug
      *
      * @return $this
      */
-    protected function setRecipient(MailBuilderInterface $mailBuilder): self
+    protected function setRecipient(MailBuilderInterface $mailBuilder)
     {
         $customerTransfer = $mailBuilder->getMailTransfer()->requireCustomer()->getCustomer();
 
@@ -108,7 +108,7 @@ class CompanyStatusMailTypePlugin extends AbstractPlugin implements MailTypePlug
      *
      * @return $this
      */
-    protected function setSender(MailBuilderInterface $mailBuilder): self
+    protected function setSender(MailBuilderInterface $mailBuilder)
     {
         $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
 
