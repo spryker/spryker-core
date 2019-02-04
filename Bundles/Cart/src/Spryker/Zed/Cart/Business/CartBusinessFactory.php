@@ -38,7 +38,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
             $this->getTerminationPlugins(),
             $this->getCartRemovalPreCheckPlugins(),
             $this->getPostReloadItemsPlugins(),
-            $this->getCartItemNormalizerPlugins()
+            $this->getCartBeforePreCheckNormalizerPlugins()
         );
 
         $operation->setPreReloadLoadPlugins($this->getPreReloadItemsPlugins());
@@ -118,11 +118,11 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemsNormalizerPluginInterface[]
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface[]
      */
-    protected function getCartItemNormalizerPlugins(): array
+    protected function getCartBeforePreCheckNormalizerPlugins(): array
     {
-        return $this->getProvidedDependency(CartDependencyProvider::CART_ITEM_NORMALIZER_PLUGINS);
+        return $this->getProvidedDependency(CartDependencyProvider::CART_BEFORE_PRE_CHECK_NORMALIZER_PLUGINS);
     }
 
     /**

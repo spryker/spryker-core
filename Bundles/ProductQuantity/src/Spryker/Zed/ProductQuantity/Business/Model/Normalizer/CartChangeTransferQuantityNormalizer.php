@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Spryker\Service\ProductQuantity\ProductQuantityServiceInterface;
 use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface;
 
-class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInterface
+class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantityNormalizerInterface
 {
     protected const MESSAGE_QUANTITY_MIN_NOT_FULFILLED = 'product-quantity.notification.quantity.min.failed';
     protected const MESSAGE_QUANTITY_MAX_NOT_FULFILLED = 'product-quantity.notification.quantity.max.failed';
@@ -53,7 +53,7 @@ class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInte
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function normalizeCartChangeItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    public function normalizeCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         $changedSkuMapByGroupKey = $this->getChangedSkuMap($cartChangeTransfer);
         $cartQuantityMapByGroupKey = $this->getItemAddCartQuantityMap($cartChangeTransfer);
@@ -70,7 +70,7 @@ class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInte
                 continue;
             }
             $normalizedItems->append(
-                $this->normalizeItem(
+                $this->normalizeItemTransfer(
                     $itemTransferMapBySku[$productSku],
                     $productQuantityTransferMapBySku[$productSku],
                     $productQuantity
@@ -87,7 +87,7 @@ class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInte
      *
      * @return bool
      */
-    protected function isCartItemNormalizable(ItemTransfer $itemTransfer): bool
+    protected function isItemTransferNormalizable(ItemTransfer $itemTransfer): bool
     {
         $normalizableFields = $itemTransfer->getNormalizableFields();
 
@@ -101,12 +101,12 @@ class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInte
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function normalizeItem(ItemTransfer $itemTransfer, ProductQuantityTransfer $productQuantityTransfer, int $totalQuantityByGroupKey): ItemTransfer
+    protected function normalizeItemTransfer(ItemTransfer $itemTransfer, ProductQuantityTransfer $productQuantityTransfer, int $totalQuantityByGroupKey): ItemTransfer
     {
         $nearestQuantity = $this->productQuantityService->getNearestQuantity($productQuantityTransfer, $totalQuantityByGroupKey);
         $totalQuantityByGroupKeyAfterAdjustment = $totalQuantityByGroupKey - $itemTransfer->getQuantity() + $nearestQuantity;
 
-        if (!$this->isItemQuantityValid($totalQuantityByGroupKeyAfterAdjustment, $productQuantityTransfer)) {
+        if (!$this->isItemTransferQuantityValid($totalQuantityByGroupKeyAfterAdjustment, $productQuantityTransfer)) {
             return $itemTransfer;
         }
 
@@ -122,7 +122,7 @@ class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInte
      *
      * @return bool
      */
-    protected function isItemQuantityValid(int $quantity, ProductQuantityTransfer $productQuantityTransfer): bool
+    protected function isItemTransferQuantityValid(int $quantity, ProductQuantityTransfer $productQuantityTransfer): bool
     {
         $min = $productQuantityTransfer->getQuantityMin();
         $max = $productQuantityTransfer->getQuantityMax();
@@ -156,7 +156,7 @@ class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInte
 
         $cartQuantityMap = [];
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$this->isCartItemNormalizable($itemTransfer)) {
+            if (!$this->isItemTransferNormalizable($itemTransfer)) {
                 continue;
             }
             $productGroupKey = $itemTransfer->getGroupKey();
@@ -179,7 +179,7 @@ class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInte
     {
         $quoteQuantityMap = [];
         foreach ($cartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
-            if (!$this->isCartItemNormalizable($itemTransfer)) {
+            if (!$this->isItemTransferNormalizable($itemTransfer)) {
                 continue;
             }
             $quoteQuantityMap[$itemTransfer->getGroupKey()] = $itemTransfer->getQuantity();
@@ -199,7 +199,7 @@ class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInte
     {
         $itemTransferMap = [];
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$this->isCartItemNormalizable($itemTransfer)) {
+            if (!$this->isItemTransferNormalizable($itemTransfer)) {
                 continue;
             }
 
@@ -237,7 +237,7 @@ class ProductQuantityItemNormalizer implements ProductQuantityItemNormalizerInte
     {
         $skuMap = [];
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$this->isCartItemNormalizable($itemTransfer)) {
+            if (!$this->isItemTransferNormalizable($itemTransfer)) {
                 continue;
             }
 

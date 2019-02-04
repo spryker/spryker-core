@@ -70,5 +70,5 @@ interface ProductQuantityFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function normalizeItemsWithProductQuantityRestrictions(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+    public function normalizeCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

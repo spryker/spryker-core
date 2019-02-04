@@ -33,9 +33,9 @@ interface ProductConcretePageSearchReaderInterface
     public function getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale(array $productConcreteIds): array;
 
     /**
-     * @param array $storesPerAbstractProducts - ['abstractProductId' => ['storeName1', 'storeName2']]
+     * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function getProductConcretePageSearchTransfersByAbstractProductsAndStores(array $storesPerAbstractProducts): array;
+    public function getProductConcretePageSearchTransfersByProductAbstractStoreMap(array $productAbstractStoreMap): array;
 }

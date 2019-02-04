@@ -10,17 +10,9 @@ namespace Spryker\Zed\ProductPageSearch\Business\Unpublisher;
 interface ProductConcretePageSearchUnpublisherInterface
 {
     /**
-     * @example
-     * [
-     *   'abstractProductId' => [
-     *      'storeName1',
-     *      'storeName2',
-     *  ],
-     * ]
-     *
-     * @param array $storesPerAbstractProducts
+     * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
      *
      * @return void
      */
-    public function unpublishByAbstractProductsAndStores(array $storesPerAbstractProducts): void;
+    public function unpublishByAbstractProductsAndStores(array $productAbstractStoreMap): void;
 }

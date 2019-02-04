@@ -84,11 +84,11 @@ interface ProductPageSearchFacadeInterface
      *
      * @api
      *
-     * @param array $storesPerAbstractProducts
+     * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
      *
      * @return void
      */
-    public function unpublishProductConcretesByAbstractProductsAndStores(array $storesPerAbstractProducts): void;
+    public function unpublishProductConcretePageSearches(array $productAbstractStoreMap): void;
 
     /**
      * Specification

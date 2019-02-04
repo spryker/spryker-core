@@ -32,21 +32,21 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             ->filterByFkProduct_In($productIds)
             ->find();
 
-        return $this->mapProductConcretePageSearchTransferFromProductConcretePageSearchEntities(
+        return $this->mapProductConcretePageSearchEntities(
             $productConcretePageSearchEntities
         );
     }
 
     /**
-     * @param array $storesPerAbstractProducts
+     * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function getProductConcretePageSearchTransfersByAbstractProductsAndStores(array $storesPerAbstractProducts): array
+    public function getProductConcretePageSearchTransfersByProductAbstractStoreMap(array $productAbstractStoreMap): array
     {
-        $productConcretePageSearchEntities = $this->getProductConcretePageSearchEntitiesByAbstractProductsAndStores($storesPerAbstractProducts);
+        $productConcretePageSearchEntities = $this->getProductConcretePageSearchEntitiesByAbstractProductsAndStores($productAbstractStoreMap);
 
-        return $this->mapProductConcretePageSearchTransferFromProductConcretePageSearchEntities(
+        return $this->mapProductConcretePageSearchEntities(
             $productConcretePageSearchEntities
         );
     }
@@ -56,7 +56,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    protected function mapProductConcretePageSearchTransferFromProductConcretePageSearchEntities($productConcretePageSearchEntities): array
+    protected function mapProductConcretePageSearchEntities($productConcretePageSearchEntities): array
     {
         $mapper = $this->getFactory()->createProductPageSearchMapper();
         $productConcretePageSearchTransfers = [];
@@ -73,11 +73,11 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     /**
      * @module Product
      *
-     * @param array $storesPerAbstractProducts
+     * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
      *
      * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function getProductConcretePageSearchEntitiesByAbstractProductsAndStores(array $storesPerAbstractProducts)
+    protected function getProductConcretePageSearchEntitiesByAbstractProductsAndStores(array $productAbstractStoreMap)
     {
         $productConcretePageSearchQuery = $this->getFactory()
             ->createProductConcretePageSearchQuery()
@@ -89,7 +89,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
 
         $storesAndProductsConditions = $this->buildStoresAndProductsConditions(
             $productConcretePageSearchQuery,
-            $storesPerAbstractProducts
+            $productAbstractStoreMap
         );
 
         return $productConcretePageSearchQuery->where($storesAndProductsConditions, Criteria::LOGICAL_OR)
@@ -104,17 +104,17 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      * "(store1 AND product1) OR (store2 AND product1) OR (store2 AND product2)"
      *
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery $productConcretePageSearchQuery
-     * @param array $storesPerAbstractProducts
+     * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
      *
      * @return array
      */
     protected function buildStoresAndProductsConditions(
         SpyProductConcretePageSearchQuery $productConcretePageSearchQuery,
-        array $storesPerAbstractProducts
+        array $productAbstractStoreMap
     ): array {
         $storesAndProductsConditions = [];
         $conditionIndex = 1;
-        foreach ($storesPerAbstractProducts as $abstractId => $stores) {
+        foreach ($productAbstractStoreMap as $abstractId => $stores) {
             foreach ($stores as $store) {
                 $productConcretePageSearchQuery->condition(
                     $conditionIndex,

@@ -38,13 +38,13 @@ class ProductConcretePageSearchUnpublisher implements ProductConcretePageSearchU
     }
 
     /**
-     * @param array $storesPerAbstractProducts
+     * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
      *
      * @return void
      */
-    public function unpublishByAbstractProductsAndStores(array $storesPerAbstractProducts): void
+    public function unpublishByAbstractProductsAndStores(array $productAbstractStoreMap): void
     {
-        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->getProductConcretePageSearchTransfersByAbstractProductsAndStores($storesPerAbstractProducts);
+        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->getProductConcretePageSearchTransfersByProductAbstractStoreMap($productAbstractStoreMap);
 
         $this->getTransactionHandler()->handleTransaction(function () use ($productConcretePageSearchTransfers) {
             $this->executeUnpublishTransaction($productConcretePageSearchTransfers);

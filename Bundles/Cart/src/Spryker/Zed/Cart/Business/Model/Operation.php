@@ -50,9 +50,9 @@ class Operation implements OperationInterface
     protected $itemExpanderPlugins = [];
 
     /**
-     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemsNormalizerPluginInterface[]
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface[]
      */
-    protected $cartItemNormalizerPlugins = [];
+    protected $cartBeforePreCheckNormalizerPlugins = [];
 
     /**
      * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface[]
@@ -94,7 +94,7 @@ class Operation implements OperationInterface
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[] $terminationPlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface[] $cartRemovalPreCheckPlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface[] $postReloadItemsPlugins
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemsNormalizerPluginInterface[] $cartItemNormalizerPlugins
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface[] $cartBeforePreCheckNormalizerPlugins
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
@@ -106,7 +106,7 @@ class Operation implements OperationInterface
         array $terminationPlugins,
         array $cartRemovalPreCheckPlugins,
         array $postReloadItemsPlugins,
-        array $cartItemNormalizerPlugins
+        array $cartBeforePreCheckNormalizerPlugins
     ) {
         $this->cartStorageProvider = $cartStorageProvider;
         $this->calculationFacade = $calculationFacade;
@@ -117,7 +117,7 @@ class Operation implements OperationInterface
         $this->terminationPlugins = $terminationPlugins;
         $this->cartRemovalPreCheckPlugins = $cartRemovalPreCheckPlugins;
         $this->postReloadItemsPlugins = $postReloadItemsPlugins;
-        $this->cartItemNormalizerPlugins = $cartItemNormalizerPlugins;
+        $this->cartBeforePreCheckNormalizerPlugins = $cartBeforePreCheckNormalizerPlugins;
     }
 
     /**
@@ -155,7 +155,7 @@ class Operation implements OperationInterface
 
         $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->modifiedToArray(), true);
 
-        $cartChangeTransfer = $this->normalizeCartChangeItems($cartChangeTransfer);
+        $cartChangeTransfer = $this->normalizeCartChangeTransfer($cartChangeTransfer);
         $this->addInfoMessages(
             $this->getNotificationMessages($cartChangeTransfer)
         );
@@ -280,13 +280,13 @@ class Operation implements OperationInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function normalizeCartChangeItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    protected function normalizeCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        foreach ($this->cartItemNormalizerPlugins as $cartItemNormalizerPlugin) {
+        foreach ($this->cartBeforePreCheckNormalizerPlugins as $cartItemNormalizerPlugin) {
             if (!$cartItemNormalizerPlugin->isApplicable($cartChangeTransfer)) {
                 continue;
             }
-            $cartChangeTransfer = $cartItemNormalizerPlugin->normalizeItems($cartChangeTransfer);
+            $cartChangeTransfer = $cartItemNormalizerPlugin->normalizeCartChangeTransfer($cartChangeTransfer);
         }
 
         return $cartChangeTransfer;

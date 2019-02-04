@@ -9,7 +9,7 @@ namespace Spryker\Zed\CartExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 
-interface CartItemsNormalizerPluginInterface
+interface CartChangeTransferNormalizerPluginInterface
 {
     /**
      * Specification:
@@ -33,5 +33,5 @@ interface CartItemsNormalizerPluginInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function normalizeItems($cartChangeTransfer): CartChangeTransfer;
+    public function normalizeCartChangeTransfer($cartChangeTransfer): CartChangeTransfer;
 }

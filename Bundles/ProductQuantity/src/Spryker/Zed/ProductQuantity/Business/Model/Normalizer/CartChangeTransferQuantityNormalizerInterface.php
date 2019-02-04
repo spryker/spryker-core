@@ -9,12 +9,12 @@ namespace Spryker\Zed\ProductQuantity\Business\Model\Normalizer;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 
-interface ProductQuantityItemNormalizerInterface
+interface CartChangeTransferQuantityNormalizerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function normalizeCartChangeItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+    public function normalizeCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

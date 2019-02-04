@@ -22,7 +22,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
 
     public const CART_EXPANDER_PLUGINS = 'cart expander plugins';
     public const CART_PRE_CHECK_PLUGINS = 'pre check plugins';
-    public const CART_ITEM_NORMALIZER_PLUGINS = 'CART_ITEM_NORMALIZER_PLUGINS';
+    public const CART_BEFORE_PRE_CHECK_NORMALIZER_PLUGINS = 'CART_BEFORE_PRE_CHECK_NORMALIZER_PLUGINS';
     public const CART_REMOVAL_PRE_CHECK_PLUGINS = 'CART_REMOVAL_PRE_CHECK_PLUGINS';
     public const CART_POST_SAVE_PLUGINS = 'cart post save plugins';
     public const CART_PRE_RELOAD_PLUGINS = 'cart pre reload plugins';
@@ -117,8 +117,8 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartItemNormalizerPlugins(Container $container): Container
     {
-        $container[static::CART_ITEM_NORMALIZER_PLUGINS] = function (Container $container): array {
-            return $this->getCartItemsNormalizerPlugins($container);
+        $container[static::CART_BEFORE_PRE_CHECK_NORMALIZER_PLUGINS] = function (Container $container): array {
+            return $this->getCartBeforePreCheckNormalizerPlugins($container);
         };
 
         return $container;
@@ -267,9 +267,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemsNormalizerPluginInterface[]
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface[]
      */
-    protected function getCartItemsNormalizerPlugins(Container $container): array
+    protected function getCartBeforePreCheckNormalizerPlugins(Container $container): array
     {
         return [];
     }

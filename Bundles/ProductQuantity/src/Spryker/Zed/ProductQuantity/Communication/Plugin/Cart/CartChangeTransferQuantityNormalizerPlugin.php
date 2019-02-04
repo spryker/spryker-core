@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductQuantity\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Spryker\Zed\CartExtension\Dependency\Plugin\CartItemsNormalizerPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductQuantity\Communication\ProductQuantityCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductQuantity\ProductQuantityConfig getConfig()
  */
-class CartItemsQuantityNormalizerPlugin extends AbstractPlugin implements CartItemsNormalizerPluginInterface
+class CartChangeTransferQuantityNormalizerPlugin extends AbstractPlugin implements CartChangeTransferNormalizerPluginInterface
 {
     protected const NORMALIZABLE_FIELD = 'quantity';
 
@@ -53,9 +53,9 @@ class CartItemsQuantityNormalizerPlugin extends AbstractPlugin implements CartIt
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function normalizeItems($cartChangeTransfer): CartChangeTransfer
+    public function normalizeCartChangeTransfer($cartChangeTransfer): CartChangeTransfer
     {
         return $this->getFacade()
-            ->normalizeItemsWithProductQuantityRestrictions($cartChangeTransfer);
+            ->normalizeCartChangeTransfer($cartChangeTransfer);
     }
 }

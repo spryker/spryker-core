@@ -29,13 +29,13 @@ class ProductAbstractStoreProductConcretePageSearchUnpublishListener extends Abs
             $eventTransfers,
             SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT
         );
-        $storesPerAbstractProducts = $this->filterGroupedForeignKeysByKey(
+        $productAbstractStoreMap = $this->filterGroupedForeignKeysByKey(
             $foreignKeysPerAbstractProducts,
             SpyProductAbstractStoreTableMap::COL_FK_STORE
         );
-        $storesPerAbstractProducts = $this->convertStoresPerAbstractProductsToStoreNames($storesPerAbstractProducts);
+        $productAbstractStoreMap = $this->convertStoresPerAbstractProductsToStoreNames($productAbstractStoreMap);
 
-        $this->getFacade()->unpublishProductConcretesByAbstractProductsAndStores($storesPerAbstractProducts);
+        $this->getFacade()->unpublishProductConcretePageSearches($productAbstractStoreMap);
     }
 
     /**

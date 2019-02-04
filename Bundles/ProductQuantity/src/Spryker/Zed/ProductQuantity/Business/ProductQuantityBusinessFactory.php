@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductQuantity\Business;
 
 use Spryker\Service\ProductQuantity\ProductQuantityServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductQuantity\Business\Model\Normalizer\ProductQuantityItemNormalizer;
-use Spryker\Zed\ProductQuantity\Business\Model\Normalizer\ProductQuantityItemNormalizerInterface;
+use Spryker\Zed\ProductQuantity\Business\Model\Normalizer\CartChangeTransferQuantityNormalizer;
+use Spryker\Zed\ProductQuantity\Business\Model\Normalizer\CartChangeTransferQuantityNormalizerInterface;
 use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReader;
 use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface;
 use Spryker\Zed\ProductQuantity\Business\Model\Validator\ProductQuantityRestrictionValidator;
@@ -41,11 +41,11 @@ class ProductQuantityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductQuantity\Business\Model\Normalizer\ProductQuantityItemNormalizerInterface
+     * @return \Spryker\Zed\ProductQuantity\Business\Model\Normalizer\CartChangeTransferQuantityNormalizerInterface
      */
-    public function createProductQuantityItemNormalizer(): ProductQuantityItemNormalizerInterface
+    public function createCartChangeTransferQuantityNormalizer(): CartChangeTransferQuantityNormalizerInterface
     {
-        return new ProductQuantityItemNormalizer(
+        return new CartChangeTransferQuantityNormalizer(
             $this->createProductQuantityReader(),
             $this->getProductQuantityService()
         );
