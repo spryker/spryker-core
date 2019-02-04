@@ -170,6 +170,6 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
      */
     public function getNextStatuses(string $currentStatus): array
     {
-        return [$this->getFactory()->getConfig()->getDefaultMerchantStatus()];
+        return $this->getFactory()->createMerchantStatusReader()->getNextStatuses($currentStatus);
     }
 }

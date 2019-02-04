@@ -75,12 +75,25 @@ class MerchantUpdateForm extends MerchantForm
         $builder->add(static::FIELD_STATUS, ChoiceType::class, [
             'label' => static::LABEL_STATUS,
             'constraints' => $this->getStatusFieldConstraints($choices),
-            'choices' => array_combine(array_values($choices), array_values($choices)),
+            'choices' => array_combine(
+                array_values(array_map([$this, 'getStatusLabel'], $choices)),
+                array_values($choices)
+            ),
             'choices_as_values' => true,
             'placeholder' => false,
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param string $statusKey
+     *
+     * @return string
+     */
+    protected function getStatusLabel(string $statusKey): string
+    {
+        return sprintf('%s', $statusKey);
     }
 
     /**

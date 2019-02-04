@@ -11,13 +11,38 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantConfig extends AbstractBundleConfig
 {
-    protected const MERCHANT_STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval';
+    public const STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval';
+    public const STATUS_APPROVED = 'approved';
+    public const STATUS_ACTIVE = 'active';
+    public const STATUS_INACTIVE = 'inactive';
 
     /**
      * @return string
      */
     public function getDefaultMerchantStatus(): string
     {
-        return static::MERCHANT_STATUS_WAITING_FOR_APPROVAL;
+        return static::STATUS_WAITING_FOR_APPROVAL;
+    }
+
+    /**
+     * @return array
+     */
+    public function getStatusTree(): array
+    {
+        return [
+            static::STATUS_WAITING_FOR_APPROVAL => [
+                static::STATUS_APPROVED,
+            ],
+            static::STATUS_APPROVED => [
+                static::STATUS_ACTIVE,
+                static::STATUS_INACTIVE,
+            ],
+            static::STATUS_ACTIVE => [
+                static::STATUS_INACTIVE,
+            ],
+            static::STATUS_INACTIVE => [
+                static::STATUS_ACTIVE,
+            ],
+        ];
     }
 }
