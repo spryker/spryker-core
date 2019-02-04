@@ -19,7 +19,7 @@ class ShoppingListItemsProductOptionValuesPreRemovePlugin extends AbstractPlugin
 {
     /**
      * {@inheritdoc}
-     * - Removes already deleted product option values by ids from shopping list items.
+     * - Removes deleted or deactivated product option values by ids from shopping list items.
      * - Product option values ids are taken from ProductOptionGroupTransfer::productOptionValuesToBeRemoved.
      *
      * @api
