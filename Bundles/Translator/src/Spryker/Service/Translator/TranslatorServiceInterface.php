@@ -18,11 +18,11 @@ interface TranslatorServiceInterface
      * @param string $id
      * @param array $parameters
      * @param string|null $domain
-     * @param null $locale
+     * @param string|null $locale
      *
      * @return string
      */
-    public function translate(string $id, array $parameters = [], string $domain = null, $locale = null): string;
+    public function translate(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string;
 
     /**
      * Specification:

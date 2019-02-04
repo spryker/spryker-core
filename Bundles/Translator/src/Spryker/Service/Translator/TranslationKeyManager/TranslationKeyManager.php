@@ -17,7 +17,6 @@ class TranslationKeyManager implements TranslationKeyManagerInterface
     protected $translator;
 
     /**
-     *
      * @param \Symfony\Component\Translation\TranslatorBagInterface $translator
      */
     public function __construct(SymfonyTranslatorBagInterface $translator)

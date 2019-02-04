@@ -99,9 +99,9 @@ class TranslatorServiceFactory extends AbstractServiceFactory
     /**
      * @param string|null $localeName
      *
-     * @return \Symfony\Component\Translation\TranslatorInterface|\Symfony\Component\Translation\TranslatorBagInterface| \Spryker\Service\Translator\Translator\TranslatorResourceAwareInterface
+     * @return \Symfony\Component\Translation\TranslatorInterface|\Symfony\Component\Translation\TranslatorBagInterface|\Spryker\Service\Translator\Translator\TranslatorResourceAwareInterface
      */
-    public function createTranslator(string $localeName = null)
+    public function createTranslator(?string $localeName = null)
     {
         $localeName = $localeName ?? $this->getApplication()['locale'];
         $translator = new Translator($localeName, null, $this->getConfig()->getCacheDirectory());

@@ -1,13 +1,11 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: devromans
- * Date: 2019-01-28
- * Time: 18:59
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Service\Translator\TranslatorBuilder;
-
 
 use Spryker\Service\Translator\TranslationResource\TranslationResourceFileLoaderInterface;
 use Spryker\Service\Translator\Translator\TranslatorResourceAwareInterface;
@@ -20,8 +18,6 @@ class TranslatorBuilder implements TranslatorBuilderInterface
     protected $translationResourceFileLoaders;
 
     /**
-     * TranslatorBuilder constructor.
-     *
      * @param \Spryker\Service\Translator\TranslationResource\TranslationResourceFileLoaderInterface[] $translationResourceFileLoaders
      */
     public function __construct(array $translationResourceFileLoaders = [])
@@ -69,8 +65,7 @@ class TranslatorBuilder implements TranslatorBuilderInterface
         TranslatorResourceAwareInterface $translator,
         TranslationResourceFileLoaderInterface $translationResourceFileLoader,
         string $loaderFormat
-    ): TranslatorResourceAwareInterface
-    {
+    ): TranslatorResourceAwareInterface {
         foreach ($translationResourceFileLoader->getFilePaths() as $filePath) {
             $translationResourceLocale = $translationResourceFileLoader->findLocaleFromFilename($filePath);
             if (!$translationResourceLocale) {
