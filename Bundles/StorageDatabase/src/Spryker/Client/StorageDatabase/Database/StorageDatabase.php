@@ -9,7 +9,7 @@ namespace Spryker\Client\StorageDatabase\Database;
 
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Client\StorageDatabase\ConnectionProvider\ConnectionProviderInterface;
-use Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceToTableMapperInterface;
+use Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceToTableResolverInterface;
 
 class StorageDatabase implements StorageDatabaseInterface
 {
@@ -27,14 +27,21 @@ class StorageDatabase implements StorageDatabaseInterface
     protected $connectionProvider;
 
     /**
-     * @var \Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceToTableMapperInterface
+     * @var \Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceToTableResolverInterface
      */
     protected $resourceToTableMapper;
 
     /**
      * @var array
      */
-    protected $accessStats;
+    protected $accessStats = [
+        'count' => [
+            'read' => 0,
+        ],
+        'keys' => [
+            'read' => [],
+        ],
+    ];
 
     /**
      * @var bool
@@ -43,9 +50,9 @@ class StorageDatabase implements StorageDatabaseInterface
 
     /**
      * @param \Spryker\Client\StorageDatabase\ConnectionProvider\ConnectionProviderInterface $connectionProvider
-     * @param \Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceToTableMapperInterface $resourceToTableMapper
+     * @param \Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceToTableResolverInterface $resourceToTableMapper
      */
-    public function __construct(ConnectionProviderInterface $connectionProvider, ResourceToTableMapperInterface $resourceToTableMapper)
+    public function __construct(ConnectionProviderInterface $connectionProvider, ResourceToTableResolverInterface $resourceToTableMapper)
     {
         $this->connectionProvider = $connectionProvider;
         $this->resourceToTableMapper = $resourceToTableMapper;
@@ -103,7 +110,7 @@ class StorageDatabase implements StorageDatabaseInterface
      */
     protected function fetchSingleResultForKey(string $key): string
     {
-        $tableName = $this->resourceToTableMapper->map($key);
+        $tableName = $this->resourceToTableMapper->resolve($key);
         $sqlString = sprintf(static::PATTERN_SELECT_SINGLE_RESULT, static::FIELD_DATA, $tableName, static::FIELD_KEY);
         $statement = $this->getConnection()->prepare($sqlString);
         $statement->bindValue(':key', $key);
@@ -162,7 +169,7 @@ class StorageDatabase implements StorageDatabaseInterface
         $result = [];
 
         foreach ($keys as $index => $key) {
-            $tableName = $this->resourceToTableMapper->map($key);
+            $tableName = $this->resourceToTableMapper->resolve($key);
             $placeholder = sprintf(':%s%d', static::FIELD_KEY, $index);
             $result[$tableName][$placeholder] = $key;
         }

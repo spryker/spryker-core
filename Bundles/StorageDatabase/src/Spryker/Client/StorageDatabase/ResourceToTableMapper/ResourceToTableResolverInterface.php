@@ -7,12 +7,12 @@
 
 namespace Spryker\Client\StorageDatabase\ResourceToTableMapper;
 
-interface ResourceToTableMapperInterface
+interface ResourceToTableResolverInterface
 {
     /**
      * @param string $resourceKey
      *
      * @return string
      */
-    public function map(string $resourceKey): string;
+    public function resolve(string $resourceKey): string;
 }

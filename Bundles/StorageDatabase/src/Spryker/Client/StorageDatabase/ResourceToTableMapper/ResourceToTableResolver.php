@@ -9,7 +9,7 @@ namespace Spryker\Client\StorageDatabase\ResourceToTableMapper;
 
 use Spryker\Client\StorageDatabase\StorageDatabaseConfig;
 
-class ResourceToTableMapper implements ResourceToTableMapperInterface
+class ResourceToTableResolver implements ResourceToTableResolverInterface
 {
     /**
      * @var \Spryker\Client\StorageDatabase\StorageDatabaseConfig
@@ -29,11 +29,11 @@ class ResourceToTableMapper implements ResourceToTableMapperInterface
      *
      * @return string
      */
-    public function map(string $resourceKey): string
+    public function resolve(string $resourceKey): string
     {
-        $resourceName = $this->getResourceNameFromKey($resourceKey);
+        $resourcePrefix = $this->getResourcePrefixFromKey($resourceKey);
 
-        return $this->getStorageTableNameByResourceName($resourceName);
+        return $this->getStorageTableNameByResourcePrefix($resourcePrefix);
     }
 
     /**
@@ -41,7 +41,7 @@ class ResourceToTableMapper implements ResourceToTableMapperInterface
      *
      * @return string
      */
-    protected function getResourceNameFromKey(string $resourceKey): string
+    protected function getResourcePrefixFromKey(string $resourceKey): string
     {
         [$resourceName] = explode(':', $resourceKey);
 
@@ -49,12 +49,19 @@ class ResourceToTableMapper implements ResourceToTableMapperInterface
     }
 
     /**
-     * @param string $resourceName
+     * @param string $resourcePrefix
      *
      * @return string
      */
-    protected function getStorageTableNameByResourceName(string $resourceName): string
+    protected function getStorageTableNameByResourcePrefix(string $resourcePrefix): string
     {
-        return $this->config->getStorageTableNameByResourceName($resourceName);
+        $resourcePrefixToTableMapping = $this->config->getResourcePrefixToStorageTableMapping();
+        $tableName = $resourcePrefixToTableMapping[$resourcePrefix] ?? $resourcePrefix;
+
+        return implode('_', [
+            $this->config->getStorageTablePrefix(),
+            $tableName,
+            $this->config->getStorageTableSuffix(),
+        ]);
     }
 }

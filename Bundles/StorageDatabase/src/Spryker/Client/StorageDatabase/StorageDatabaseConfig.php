@@ -13,7 +13,7 @@ use Spryker\Zed\Propel\PropelConfig;
 
 class StorageDatabaseConfig extends AbstractBundleConfig
 {
-    protected const RESOURCE_TO_STORAGE_TABLE_MAPPING = [
+    protected const RESOURCE_PREFIX_TO_STORAGE_TABLE_MAPPING = [
         'translation' => 'glossary',
         'product_search_config_extension' => 'product_search_config',
         'product_abstract_product_lists' => 'product_abstract_product_list',
@@ -46,20 +46,33 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     /**
      * @param string $resourceName
      *
-     * @return string
+     * @return string[]
      */
-    public function getStorageTableNameByResourceName(string $resourceName): string
+    public function getResourcePrefixToStorageTableMapping(): array
     {
-        $tableName = static::RESOURCE_TO_STORAGE_TABLE_MAPPING[$resourceName] ?? $resourceName;
-
-        return implode('_', [
-            static::STORAGE_TABLE_PREFIX,
-            $tableName,
-            static::STORAGE_TABLE_SUFFIX,
-        ]);
+        return static::RESOURCE_PREFIX_TO_STORAGE_TABLE_MAPPING;
     }
 
-    protected function getConnectionConfigData()
+    /**
+     * @return string
+     */
+    public function getStorageTablePrefix(): string
+    {
+        return static::STORAGE_TABLE_PREFIX;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStorageTableSuffix(): string
+    {
+        return static::STORAGE_TABLE_SUFFIX;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getConnectionConfigData(): array
     {
         return [
             PropelConfig::DB_ENGINE_PGSQL => [

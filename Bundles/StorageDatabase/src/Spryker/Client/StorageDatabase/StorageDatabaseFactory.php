@@ -12,8 +12,8 @@ use Spryker\Client\StorageDatabase\ConnectionProvider\ConnectionProvider;
 use Spryker\Client\StorageDatabase\ConnectionProvider\ConnectionProviderInterface;
 use Spryker\Client\StorageDatabase\Database\StorageDatabase;
 use Spryker\Client\StorageDatabase\Database\StorageDatabaseInterface;
-use Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceToTableMapper;
-use Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceToTableMapperInterface;
+use Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceToTableResolver;
+use Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceToTableResolverInterface;
 
 /**
  * @method \Spryker\Client\StorageDatabase\StorageDatabaseConfig getConfig()
@@ -37,16 +37,16 @@ class StorageDatabaseFactory extends AbstractFactory
     {
         return new StorageDatabase(
             $this->createConnectionProvider(),
-            $this->createResourceToTableMapper()
+            $this->createResourceToTableResolver()
         );
     }
 
     /**
-     * @return \Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceToTableMapperInterface
+     * @return \Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceToTableResolverInterface
      */
-    public function createResourceToTableMapper(): ResourceToTableMapperInterface
+    public function createResourceToTableResolver(): ResourceToTableResolverInterface
     {
-        return new ResourceToTableMapper(
+        return new ResourceToTableResolver(
             $this->getConfig()
         );
     }
