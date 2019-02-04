@@ -15,9 +15,9 @@ use Generated\Shared\DataBuilder\QuoteRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestVersionBuilder;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
-use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestChecker;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 
@@ -37,22 +37,22 @@ class QuoteRequestCheckerTest extends Unit
     /**
      * @uses \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestChecker::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_NOT_FOUND
      */
-    public const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_NOT_FOUND = 'quote_request.checkout.validation.error.not_found';
+    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_NOT_FOUND = 'quote_request.checkout.validation.error.not_found';
 
     /**
      * @uses \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestChecker::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS
      */
-    public const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
+    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
 
     /**
      * @uses \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestChecker::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION
      */
-    public const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION = 'quote_request.checkout.validation.error.wrong_version';
+    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION = 'quote_request.checkout.validation.error.wrong_version';
 
     /**
      * @uses \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestChecker::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VALID_UNTIL
      */
-    public const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.checkout.validation.error.wrong_valid_until';
+    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.checkout.validation.error.wrong_valid_until';
 
     /**
      * @var \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestChecker|\PHPUnit_Framework_MockObject_MockObject
