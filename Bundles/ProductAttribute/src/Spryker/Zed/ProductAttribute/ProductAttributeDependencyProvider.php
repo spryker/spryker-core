@@ -104,7 +104,7 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilSanitizeService(Container $container)
+    protected function addUtilSanitizeService(Container $container): Container
     {
         $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
             return new ProductAttributeToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
