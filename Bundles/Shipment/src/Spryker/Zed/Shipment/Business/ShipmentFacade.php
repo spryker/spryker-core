@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -319,5 +320,19 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
         $this->getFactory()
             ->createShipmentGroupSaver()
             ->saveShipmentGroup($shipmentGroupTransfer, $orderTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idSalesShipment
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
+     */
+    public function findShipmentTransferById(int $idSalesShipment): ?ShipmentTransfer
+    {
+        return $this->getFactory()
+            ->createShipmentReader()
+            ->findShipmentById($idSalesShipment);
     }
 }

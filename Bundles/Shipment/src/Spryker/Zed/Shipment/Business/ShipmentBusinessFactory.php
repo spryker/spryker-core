@@ -26,6 +26,8 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
+use Spryker\Zed\Shipment\Business\Shipment\ShipmentReader;
+use Spryker\Zed\Shipment\Business\Shipment\ShipmentReaderInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupSaver;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupSaverInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolver;
@@ -362,6 +364,17 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->createShipmentMethodTransformer(),
             $this->getCurrencyFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Shipment\ShipmentReaderInterface
+     */
+    public function createShipmentReader(): ShipmentReaderInterface
+    {
+        return new ShipmentReader(
+            $this->getQueryContainer(),
+            $this->getSalesFacade()
         );
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 
 interface SalesRepositoryInterface
 {
@@ -24,5 +25,12 @@ interface SalesRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findOrderAddressByIdOrderAddress(int $idOrderAddress): AddressTransfer;
+    public function findOrderAddressByIdOrderAddress(int $idOrderAddress): ?AddressTransfer;
+
+    /**
+     * @param int $idSalesShipment
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    public function findSalesOrderItemsBySalesShipmentId(int $idSalesShipment): ObjectCollection;
 }

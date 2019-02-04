@@ -50,7 +50,7 @@ class ShipmentGuiToShipmentBridge implements ShipmentGuiToShipmentInterface
      */
     public function findShipmentById(int $idShipment): ?ShipmentTransfer
     {
-        return $this->shipmentFacade->findShipmentById($idShipment);
+        return $this->shipmentFacade->findShipmentTransferById($idShipment);
     }
 
     /**

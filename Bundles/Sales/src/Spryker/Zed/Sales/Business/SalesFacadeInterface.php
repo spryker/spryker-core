@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 
 /**
  * @method \Spryker\Zed\Sales\Business\SalesBusinessFactory getFactory()
@@ -119,7 +120,7 @@ interface SalesFacadeInterface
      *
      * @return bool
      */
-    public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress);
+    public function updateOrderAddress(AddressTransfer $addressesTransfer, int $idAddress);
 
     /**
      * Specification:
@@ -279,4 +280,25 @@ interface SalesFacadeInterface
      * @return array
      */
     public function getUniqueOrderItems(ArrayObject $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Returns the sales order address for the given sales order address id.
+     *
+     * @api
+     *
+     * @param int $idSalesOrderAddress
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findOrderAddressByIdOrderAddress(int $idSalesOrderAddress): ?AddressTransfer;
+
+    /**
+     * @api
+     *
+     * @param int $idSalesShipment
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesShipment): ObjectCollection;
 }

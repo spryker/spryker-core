@@ -41,7 +41,7 @@ class CreateController extends AbstractController
         $form = $this->getFactory()
             ->createShipmentFormCreate(
                 $dataProvider->getData($idSalesOrder),
-                $dataProvider->getOptions($idSalesOrder)
+                $dataProvider->getOptions($idSalesOrder, null)
             )
             ->handleRequest($request);
 

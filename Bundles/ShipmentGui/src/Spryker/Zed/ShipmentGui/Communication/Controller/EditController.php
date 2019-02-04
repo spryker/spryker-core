@@ -37,12 +37,12 @@ class EditController extends AbstractController
 
         $idSalesOrder = $request->query->get(ShipmentGuiConfig::PARAM_ID_SALES_ORDER);
         $idSalesShipment = $request->query->get(ShipmentGuiConfig::PARAM_ID_SALES_SHIPMENT);
-        $dataProvider = $this->getFactory()->createShipmentFormCreateDataProvider();
+        $dataProvider = $this->getFactory()->createShipmentFormEditDataProvider();
 
         $form = $this->getFactory()
             ->createShipmentFormEdit(
-                $dataProvider->getData($idSalesOrder),
-                $dataProvider->getOptions($idSalesOrder)
+                $dataProvider->getData($idSalesOrder, $idSalesShipment),
+                $dataProvider->getOptions($idSalesOrder, $idSalesShipment)
             )
             ->handleRequest($request);
 

@@ -32,6 +32,7 @@ class ShipmentFormCreate extends AbstractType
     public const FIELD_ID_SHIPMENT_ADDRESS = 'id_shipping_address';
     public const FIELD_ID_SHIPMENT_METHOD = 'id_shipment_method';
     public const FIELD_REQUESTED_DELIVERY_DATE = 'requested_delivery_date';
+    public const FIELD_SHIPMENT_SELECTED_ITEMS = 'selected_items';
 
     public const FORM_SHIPPING_ADDRESS = 'shipping_address';
     public const FORM_SALES_ORDER_ITEMS = 'items';
@@ -50,6 +51,7 @@ class ShipmentFormCreate extends AbstractType
     {
         $resolver->setRequired(static::OPTION_SHIPMENT_ADDRESS_CHOICES);
         $resolver->setRequired(static::OPTION_SHIPMENT_METHOD_CHOICES);
+        $resolver->setRequired(static::FIELD_SHIPMENT_SELECTED_ITEMS);
         $resolver->setRequired(AddressForm::OPTION_SALUTATION_CHOICES);
         $resolver->setRequired(ItemForm::OPTION_ORDER_ITEMS_CHOICES);
     }
@@ -207,6 +209,7 @@ class ShipmentFormCreate extends AbstractType
                 'entry_type' => ItemForm::class,
                 'entry_options' => [
                     'label' => false,
+                    static::FIELD_SHIPMENT_SELECTED_ITEMS => $builder->getOption(static::FIELD_SHIPMENT_SELECTED_ITEMS),
                 ],
         ]);
         return $this;
