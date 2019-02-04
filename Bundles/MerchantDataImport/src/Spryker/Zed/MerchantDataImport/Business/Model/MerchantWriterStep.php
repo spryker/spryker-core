@@ -30,6 +30,13 @@ class MerchantWriterStep implements DataImportStepInterface
 
         $merchantEntity
             ->setName($dataSet[MerchantDataSetInterface::NAME])
+            ->setRegistrationNumber($dataSet[MerchantDataSetInterface::REGISTRATION_NUMBER])
+            ->setStatus($dataSet[MerchantDataSetInterface::STATUS])
+            ->setContactPersonTitle($dataSet[MerchantDataSetInterface::CONTACT_PERSON_TITLE])
+            ->setContactPersonFirstName($dataSet[MerchantDataSetInterface::CONTACT_PERSON_FIRST_NAME])
+            ->setContactPersonLastName($dataSet[MerchantDataSetInterface::CONTACT_PERSON_LAST_NAME])
+            ->setContactPersonPhone($dataSet[MerchantDataSetInterface::CONTACT_PERSON_PHONE])
+            ->setEmail($dataSet[MerchantDataSetInterface::EMAIL])
             ->save();
     }
 
@@ -48,6 +55,34 @@ class MerchantWriterStep implements DataImportStepInterface
 
         if (!$dataSet[MerchantDataSetInterface::NAME]) {
             throw new InvalidDataException('"' . MerchantDataSetInterface::NAME . '" is required.');
+        }
+
+        if (!$dataSet[MerchantDataSetInterface::REGISTRATION_NUMBER]) {
+            throw new InvalidDataException('"' . MerchantDataSetInterface::REGISTRATION_NUMBER . '" is required.');
+        }
+
+        if (!$dataSet[MerchantDataSetInterface::STATUS]) {
+            throw new InvalidDataException('"' . MerchantDataSetInterface::STATUS . '" is required.');
+        }
+
+        if (!$dataSet[MerchantDataSetInterface::CONTACT_PERSON_TITLE]) {
+            throw new InvalidDataException('"' . MerchantDataSetInterface::CONTACT_PERSON_TITLE . '" is required.');
+        }
+
+        if (!$dataSet[MerchantDataSetInterface::CONTACT_PERSON_FIRST_NAME]) {
+            throw new InvalidDataException('"' . MerchantDataSetInterface::CONTACT_PERSON_FIRST_NAME . '" is required.');
+        }
+
+        if (!$dataSet[MerchantDataSetInterface::CONTACT_PERSON_LAST_NAME]) {
+            throw new InvalidDataException('"' . MerchantDataSetInterface::CONTACT_PERSON_LAST_NAME . '" is required.');
+        }
+
+        if (!$dataSet[MerchantDataSetInterface::CONTACT_PERSON_PHONE]) {
+            throw new InvalidDataException('"' . MerchantDataSetInterface::CONTACT_PERSON_PHONE . '" is required.');
+        }
+
+        if (!$dataSet[MerchantDataSetInterface::EMAIL]) {
+            throw new InvalidDataException('"' . MerchantDataSetInterface::EMAIL . '" is required.');
         }
     }
 }
