@@ -8,12 +8,11 @@
 namespace Spryker\Client\StorageDatabase;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
-use Spryker\Shared\StorageDatabaseConstants;
+use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
+use Spryker\Zed\Propel\PropelConfig;
 
 class StorageDatabaseConfig extends AbstractBundleConfig
 {
-    protected const MESSAGE_CREDENTIALS_NOT_FOUND_EXCEPTION = 'Credentials not found';
-
     protected const RESOURCE_TO_STORAGE_TABLE_MAPPING = [
         'translation' => 'glossary',
         'product_search_config_extension' => 'product_search_config',
@@ -28,16 +27,12 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getConnectionConfig(): array
+    public function getConnectionConfigForCurrentEngine(): array
     {
         $dbEngine = $this->getDatabaseEngine();
-        $connections = $this->get(StorageDatabaseConstants::STORAGE_DATABASE_CONNECTION, []);
+        $connectionData = $this->getConnectionConfigData();
 
-        if (empty($connections[$dbEngine]) || !is_array($connections[$dbEngine])) {
-            // throw new exception
-        }
-
-        return $connections[$dbEngine];
+        return $connectionData[$dbEngine] ?? [];
     }
 
     /**
@@ -45,7 +40,7 @@ class StorageDatabaseConfig extends AbstractBundleConfig
      */
     public function getDatabaseEngine(): string
     {
-        return $this->get(StorageDatabaseConstants::STORAGE_DB_ENGINE, '');
+        return $this->get(StorageDatabaseConstants::DB_ENGINE, '');
     }
 
     /**
@@ -62,5 +57,44 @@ class StorageDatabaseConfig extends AbstractBundleConfig
             $tableName,
             static::STORAGE_TABLE_SUFFIX,
         ]);
+    }
+
+    protected function getConnectionConfigData()
+    {
+        return [
+            PropelConfig::DB_ENGINE_PGSQL => [
+                'adapter' => PropelConfig::DB_ENGINE_PGSQL,
+                'dsn' => $this->getDsn(),
+                'user' => $this->get(StorageDatabaseConstants::DB_USERNAME),
+                'password' => $this->get(StorageDatabaseConstants::DB_PASSWORD),
+                'settings' => [],
+            ],
+            PropelConfig::DB_ENGINE_MYSQL => [
+                'adapter' => PropelConfig::DB_ENGINE_MYSQL,
+                'dsn' => $this->getDsn(),
+                'user' => $this->get(StorageDatabaseConstants::DB_USERNAME),
+                'password' => $this->get(StorageDatabaseConstants::DB_PASSWORD),
+                'settings' => [
+                    'charset' => 'utf8',
+                    'queries' => [
+                        'utf8' => 'SET NAMES utf8 COLLATE utf8_unicode_ci, COLLATION_CONNECTION = utf8_unicode_ci, COLLATION_DATABASE = utf8_unicode_ci, COLLATION_SERVER = utf8_unicode_ci',
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDsn(): string
+    {
+        return sprintf(
+            '%s:host=%s;port=%d;dbname=%s',
+            $this->get(StorageDatabaseConstants::DB_ENGINE),
+            $this->get(StorageDatabaseConstants::DB_HOST),
+            $this->get(StorageDatabaseConstants::DB_PORT),
+            $this->get(StorageDatabaseConstants::DB_DATABASE)
+        );
     }
 }

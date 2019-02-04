@@ -1,21 +1,23 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\StorageDatabase\Client\Plugin;
+namespace Spryker\Client\StorageDatabase\Plugin;
 
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\StorageExtension\Dependency\StoragePluginInterface;
 
 /**
- * @method \Spryker\Client\StorageDatabase\StorageDatabaseFactory getFactory()
+ * @method \Spryker\Client\StorageDatabase\StorageDatabaseClientInterface getClient()
  */
 class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $key
@@ -28,10 +30,12 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      */
     public function set($key, $value, $ttl = null)
     {
-        // TODO: Implement set() method.
+        return 0;
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $items
@@ -40,10 +44,11 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      */
     public function setMulti(array $items)
     {
-        // TODO: Implement setMulti() method.
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $key
@@ -52,10 +57,12 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      */
     public function delete($key)
     {
-        // TODO: Implement delete() method.
+        return 0;
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $keys
@@ -64,20 +71,23 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      */
     public function deleteMulti(array $keys)
     {
-        // TODO: Implement deleteMulti() method.
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return int
      */
     public function deleteAll()
     {
-        // TODO: Implement deleteAll() method.
+        return 0;
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $key
@@ -86,10 +96,12 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      */
     public function get($key)
     {
-        // TODO: Implement get() method.
+        return $this->getClient()->get($key);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $keys
@@ -98,30 +110,36 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      */
     public function getMulti(array $keys)
     {
-        // TODO: Implement getMulti() method.
+        return $this->getClient()->getMulti($keys);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return array
      */
     public function getStats()
     {
-        // TODO: Implement getStats() method.
+        return [];
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return array
      */
     public function getAllKeys()
     {
-        // TODO: Implement getAllKeys() method.
+        return [];
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $pattern
@@ -130,46 +148,56 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      */
     public function getKeys($pattern)
     {
-        // TODO: Implement getKeys() method.
+        return [];
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
      */
     public function resetAccessStats()
     {
-        // TODO: Implement resetAccessStats() method.
+        $this->getClient()->resetAccessStats();
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return array
      */
     public function getAccessStats()
     {
-        // TODO: Implement getAccessStats() method.
+        return $this->getClient()->getAccessStats();
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return int
      */
     public function getCountItems()
     {
-        // TODO: Implement getCountItems() method.
+        return 0;
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param bool $debug
      *
      * @return $this
      */
     public function setDebug($debug)
     {
-        // TODO: Implement setDebug() method.
+        $this->getClient()->setDebug($debug);
+
+        return $this;
     }
 }

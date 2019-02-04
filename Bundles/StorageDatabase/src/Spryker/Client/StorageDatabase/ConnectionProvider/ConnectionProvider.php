@@ -10,12 +10,17 @@ namespace Spryker\Client\StorageDatabase\ConnectionProvider;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Connection\ConnectionManagerSingle;
 use Propel\Runtime\Propel;
+use Propel\Runtime\ServiceContainer\StandardServiceContainer;
+use Spryker\Client\StorageDatabase\Exception\ConnectionFailedException;
+use Spryker\Client\StorageDatabase\Exception\InvalidConnectionConfigurationException;
 use Spryker\Client\StorageDatabase\StorageDatabaseConfig;
 use Throwable;
 
 class ConnectionProvider implements ConnectionProviderInterface
 {
     protected const CONNECTION_NAME = 'storage connection';
+
+    protected const MESSAGE_INVALID_CONNECTION_CONFIGURATION_EXCEPTION = 'Connection configuration is invalid';
 
     /**
      * @var \Propel\Runtime\Connection\ConnectionInterface|null
@@ -25,7 +30,7 @@ class ConnectionProvider implements ConnectionProviderInterface
     /**
      * @var \Spryker\Client\StorageDatabase\StorageDatabaseConfig
      */
-    private $config;
+    protected $config;
 
     /**
      * @param \Spryker\Client\StorageDatabase\StorageDatabaseConfig $config
@@ -67,7 +72,7 @@ class ConnectionProvider implements ConnectionProviderInterface
     /**
      * @return \Propel\Runtime\ServiceContainer\StandardServiceContainer
      */
-    protected function getServiceContainer()
+    protected function getServiceContainer(): StandardServiceContainer
     {
         /** @var \Propel\Runtime\ServiceContainer\StandardServiceContainer $serviceContainer */
         $serviceContainer = Propel::getServiceContainer();
@@ -76,27 +81,32 @@ class ConnectionProvider implements ConnectionProviderInterface
     }
 
     /**
-     * Allowed try/catch. If we have no database setup, getConnection throws an Exception
-     * ServiceProvider is called more then once and after setup of database we can enable debug
+     * @throws \Spryker\Client\StorageDatabase\Exception\ConnectionFailedException
      *
-     * @return bool
+     * @return void
      */
-    private function setupConnection()
+    private function setupConnection(): void
     {
         try {
-            Propel::getConnection();
-
-            return true;
+            static::$connection = Propel::getConnection(static::CONNECTION_NAME);
         } catch (Throwable $e) {
-            // throw new connection failed exception
+            throw new ConnectionFailedException($e->getMessage());
         }
     }
 
     /**
+     * @throws \Spryker\Client\StorageDatabase\Exception\InvalidConnectionConfigurationException
+     *
      * @return array
      */
     private function getPropelConfig(): array
     {
-        return $this->config->getConnectionConfig();
+        $config = $this->config->getConnectionConfigForCurrentEngine();
+
+        if (empty($config) || !is_array($config)) {
+            throw new InvalidConnectionConfigurationException(static::MESSAGE_INVALID_CONNECTION_CONFIGURATION_EXCEPTION);
+        }
+
+        return $config;
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Client\StorageDatabase;
 
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\StorageDatabase\Database\StorageDatabaseInterface;
 
 /**
  * @method \Spryker\Client\StorageDatabase\StorageDatabaseFactory getFactory()
@@ -15,162 +16,85 @@ use Spryker\Client\Kernel\AbstractClient;
 class StorageDatabaseClient extends AbstractClient implements StorageDatabaseClientInterface
 {
     /**
-     * @api
-     *
-     * @param string $key
-     * @param mixed $value
-     * @param int|null $ttl
-     *
-     * @throws \Exception
-     *
-     * @return mixed
+     * @var \Spryker\Client\StorageDatabase\Database\StorageDatabaseInterface
      */
-    public function set($key, $value, $ttl = null)
-    {
-        // TODO: Implement set() method.
-    }
+    protected static $storageDatabaseService;
 
     /**
-     * @api
+     * {@inheritdoc}
      *
-     * @param array $items
-     *
-     * @return void
-     */
-    public function setMulti(array $items)
-    {
-        // TODO: Implement setMulti() method.
-    }
-
-    /**
      * @api
      *
      * @param string $key
      *
      * @return mixed
      */
-    public function delete($key)
+    public function get(string $key)
     {
-        // TODO: Implement delete() method.
+        return $this->getStorageDatabaseService()->get($key);
     }
 
     /**
-     * @api
+     * {@inheritdoc}
      *
-     * @param array $keys
-     *
-     * @return void
-     */
-    public function deleteMulti(array $keys)
-    {
-        // TODO: Implement deleteMulti() method.
-    }
-
-    /**
-     * @api
-     *
-     * @return int
-     */
-    public function deleteAll()
-    {
-        // TODO: Implement deleteAll() method.
-    }
-
-    /**
-     * @api
-     *
-     * @param string $key
-     *
-     * @return mixed
-     */
-    public function get($key)
-    {
-        // TODO: Implement get() method.
-    }
-
-    /**
      * @api
      *
      * @param array $keys
      *
      * @return array
      */
-    public function getMulti(array $keys)
+    public function getMulti(array $keys): array
     {
-        // TODO: Implement getMulti() method.
+        return $this->getStorageDatabaseService()->getMulti($keys);
     }
 
     /**
-     * @api
+     * {@inheritdoc}
      *
-     * @return array
-     */
-    public function getStats()
-    {
-        // TODO: Implement getStats() method.
-    }
-
-    /**
-     * @api
-     *
-     * @return array
-     */
-    public function getAllKeys()
-    {
-        // TODO: Implement getAllKeys() method.
-    }
-
-    /**
-     * @api
-     *
-     * @param string $pattern
-     *
-     * @return array
-     */
-    public function getKeys($pattern)
-    {
-        // TODO: Implement getKeys() method.
-    }
-
-    /**
      * @api
      *
      * @return void
      */
-    public function resetAccessStats()
+    public function resetAccessStats(): void
     {
-        // TODO: Implement resetAccessStats() method.
+        $this->getStorageDatabaseService()->resetAccessStats();
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return array
      */
-    public function getAccessStats()
+    public function getAccessStats(): array
     {
-        // TODO: Implement getAccessStats() method.
+        return $this->getStorageDatabaseService()->getAccessStats();
     }
 
     /**
-     * @api
+     * {@inheritdoc}
      *
-     * @return int
-     */
-    public function getCountItems()
-    {
-        // TODO: Implement getCountItems() method.
-    }
-
-    /**
      * @api
      *
      * @param bool $debug
      *
-     * @return $this
+     * @return void
      */
-    public function setDebug($debug)
+    public function setDebug(bool $debug): void
     {
-        // TODO: Implement setDebug() method.
+        $this->getStorageDatabaseService()->setDebug($debug);
+    }
+
+    /**
+     * @return \Spryker\Client\StorageDatabase\Database\StorageDatabaseInterface
+     */
+    protected function getStorageDatabaseService(): StorageDatabaseInterface
+    {
+        if (static::$storageDatabaseService === null) {
+            static::$storageDatabaseService = $this->getFactory()->createStorageDatabaseService();
+        }
+
+        return static::$storageDatabaseService;
     }
 }

@@ -4,6 +4,10 @@
   "description": "StorageDatabase module",
   "license": "proprietary",
   "require": {
+    "spryker/kernel": "^3.0.0",
+    "spryker/storage-extension": "^1.0.0",
+    "spryker/propel": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

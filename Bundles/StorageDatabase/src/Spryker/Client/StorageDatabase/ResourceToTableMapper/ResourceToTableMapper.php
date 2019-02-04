@@ -5,61 +5,47 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\StorageDatabase\QueryDataResolver;
+namespace Spryker\Client\StorageDatabase\ResourceToTableMapper;
 
 use Spryker\Client\StorageDatabase\StorageDatabaseConfig;
 
-class QueryDataMapper implements QueryDataMapperInterface
+class ResourceToTableMapper implements ResourceToTableMapperInterface
 {
     /**
      * @var \Spryker\Client\StorageDatabase\StorageDatabaseConfig
      */
-    private $config;
+    protected $config;
 
+    /**
+     * @param \Spryker\Client\StorageDatabase\StorageDatabaseConfig $config
+     */
     public function __construct(StorageDatabaseConfig $config)
     {
         $this->config = $config;
     }
 
     /**
-     * @param string $key
+     * @param string $resourceKey
      *
      * @return string
      */
-    public function map(string $key): string
+    public function map(string $resourceKey): string
     {
-        $resourceName = $this->getResourceNameFromKey($key);
+        $resourceName = $this->getResourceNameFromKey($resourceKey);
 
         return $this->getStorageTableNameByResourceName($resourceName);
     }
 
     /**
-     * @param string[] $keys
-     *
-     * @return array
-     */
-    public function mapMany(array $keys): array
-    {
-        $result = [];
-
-        foreach ($keys as $key) {
-            $tableName = $this->map($key);
-            $result[$tableName][] = $key;
-        }
-
-        return array_merge_recursive(...$result);
-    }
-
-    /**
-     * @param string $key
+     * @param string $resourceKey
      *
      * @return string
      */
-    protected function getResourceNameFromKey(string $key): string
+    protected function getResourceNameFromKey(string $resourceKey): string
     {
-        [$resourceName] = explode(':', $key);
+        [$resourceName] = explode(':', $resourceKey);
 
-        return (string)$resourceName;
+        return $resourceName;
     }
 
     /**

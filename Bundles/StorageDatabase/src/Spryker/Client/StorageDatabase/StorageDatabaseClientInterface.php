@@ -10,107 +10,58 @@ namespace Spryker\Client\StorageDatabase;
 interface StorageDatabaseClientInterface
 {
     /**
-     * @api
+     * Specification:
+     *  - Gets the value by key from storage database.
      *
-     * @param string $key
-     * @param mixed $value
-     * @param int|null $ttl
-     *
-     * @throws \Exception
-     *
-     * @return mixed
-     */
-    public function set($key, $value, $ttl = null);
-    /**
-     * @api
-     *
-     * @param array $items
-     *
-     * @return void
-     */
-    public function setMulti(array $items);
-    /**
      * @api
      *
      * @param string $key
      *
      * @return mixed
      */
-    public function delete($key);
+    public function get(string $key);
+
     /**
+     * Specification:
+     *  - Gets multiple values by array of keys from storage database.
+     *
      * @api
      *
-     * @param array $keys
-     *
-     * @return void
-     */
-    public function deleteMulti(array $keys);
-    /**
-     * @api
-     *
-     * @return int
-     */
-    public function deleteAll();
-    /**
-     * @api
-     *
-     * @param string $key
-     *
-     * @return mixed
-     */
-    public function get($key);
-    /**
-     * @api
-     *
-     * @param array $keys
+     * @param string[] $keys
      *
      * @return array
      */
-    public function getMulti(array $keys);
+    public function getMulti(array $keys): array;
+
     /**
-     * @api
+     * Specification:
+     *  - Resets in-memory access statistics for storage database.
      *
-     * @return array
-     */
-    public function getStats();
-    /**
-     * @api
-     *
-     * @return array
-     */
-    public function getAllKeys();
-    /**
-     * @api
-     *
-     * @param string $pattern
-     *
-     * @return array
-     */
-    public function getKeys($pattern);
-    /**
      * @api
      *
      * @return void
      */
-    public function resetAccessStats();
+    public function resetAccessStats(): void;
+
     /**
+     * Specification:
+     *  - Gets in-memory access statistics for storage database.
+     *
      * @api
      *
      * @return array
      */
-    public function getAccessStats();
+    public function getAccessStats(): array;
+
     /**
-     * @api
+     * Specification:
+     *  - Sets debug mode.
      *
-     * @return int
-     */
-    public function getCountItems();
-    /**
      * @api
      *
      * @param bool $debug
      *
-     * @return $this
+     * @return void
      */
-    public function setDebug($debug);
+    public function setDebug(bool $debug): void;
 }
