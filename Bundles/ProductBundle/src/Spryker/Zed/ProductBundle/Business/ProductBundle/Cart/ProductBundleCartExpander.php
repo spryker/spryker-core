@@ -149,10 +149,10 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         $productOptions = $itemTransfer->getProductOptions();
         $priceMode = $quoteTransfer->getPriceMode();
         $currencyIsoCode = $quoteTransfer->getCurrency()->getCode();
-        for ($i = $quantity; $i > 0; $i--) {
+        for ($i = 0; $i < $quantity; $i++) {
             $bundleItemTransfer = new ItemTransfer();
             $bundleItemTransfer->fromArray($itemTransfer->toArray(), true);
-            $bundleItemTransfer->setQuantity($i > 1 ? 1.0 : $i);
+            $bundleItemTransfer->setQuantity(1.0);
 
             $bundleItemIdentifier = $this->buildBundleIdentifier($bundleItemTransfer);
             $bundleItemTransfer->setBundleItemIdentifier($bundleItemIdentifier);
@@ -229,7 +229,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     protected function createBundledItemsTransferCollection(ObjectCollection $bundledProducts, $bundleItemIdentifier, $priceMode, $currencyIsoCode)
     {
         $bundledItems = [];
-        foreach ($bundledProducts as $index => $productBundleEntity) {
+        foreach ($bundledProducts as $productBundleEntity) {
             $productBundleQuantity = $productBundleEntity->getQuantity();
 
             for ($i = $productBundleQuantity; $i > 0; $i--) {
