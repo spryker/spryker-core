@@ -81,9 +81,6 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
     {
         $productOptionValueEntities = $this->productOptionQueryContainer
             ->queryProductOptionByProductOptionCriteria($productOptionCriteriaTransfer)
-            ->useSpyProductOptionGroupQuery()
-                ->filterByActive(true)
-            ->endUse()
             ->find();
 
         return $this->hydrateProductOptionCollectionTransfer(

@@ -26,6 +26,7 @@
 
     <transfer name="ProductOptionCriteria">
         <property name="ProductOptionIds" type="array" />
+        <property name="productOptionGroupActive" type="bool" />
     </transfer>
 
     <transfer name="Item">
