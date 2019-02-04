@@ -27,15 +27,12 @@ class MerchantStatusReader implements MerchantStatusReaderInterface
     /**
      * @param string $currentStatus
      *
-     * @return array
+     * @return string[]
      */
     public function getNextStatuses(string $currentStatus): array
     {
         $statusTree = $this->config->getStatusTree();
-        if (!isset($statusTree[$currentStatus])) {
-            return [$this->config->getDefaultMerchantStatus()];
-        }
 
-        return array_merge([$currentStatus], $statusTree[$currentStatus]);
+        return $statusTree[$currentStatus] ?? [];
     }
 }
