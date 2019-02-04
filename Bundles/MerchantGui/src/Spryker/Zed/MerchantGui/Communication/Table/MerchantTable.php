@@ -139,15 +139,16 @@ class MerchantTable extends AbstractTable
      */
     public function createStatusLabel(array $merchant): string
     {
-        if (empty(static::STATUS_CLASS_MAPPING[$merchant[SpyMerchantTableMap::COL_STATUS]])) {
+        $currentStatus = $merchant[SpyMerchantTableMap::COL_STATUS];
+
+        if (!isset(static::STATUS_CLASS_MAPPING[$currentStatus])) {
             return '';
         }
 
         return sprintf(
-            '<span class="label %s" title="%s">%s</span>',
-            static::STATUS_CLASS_MAPPING[$merchant[SpyMerchantTableMap::COL_STATUS]],
-            $merchant[SpyMerchantTableMap::COL_STATUS],
-            $merchant[SpyMerchantTableMap::COL_STATUS]
+            '<span class="label %1$s" title="%2$s">%2$s</span>',
+            static::STATUS_CLASS_MAPPING[$currentStatus],
+            $currentStatus
         );
     }
 }
