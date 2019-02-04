@@ -18,6 +18,10 @@ use Spryker\Zed\Messenger\Communication\Plugin\TranslationPlugin;
 class MessengerDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SESSION = 'session';
+    /**
+     * @deprecated See \Spryker\Zed\Messenger\MessengerDependencyProvider::PLUGINS_TRANSLATION
+     */
+    public const PLUGIN_TRANSLATION = 'translation plugin';
     public const PLUGINS_TRANSLATION = 'PLUGINS_TRANSLATION';
 
     /**
@@ -28,6 +32,7 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addSession($container);
+        $container = $this->addTranslationPlugin($container);
         $container = $this->addTranslationPlugins($container);
 
         return $container;
@@ -42,6 +47,22 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SESSION] = function (Container $container) {
             return (new Pimple())->getApplication()['request']->getSession();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @deprecated See \Spryker\Zed\Messenger\MessengerDependencyProvider::addTranslationPlugins
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTranslationPlugin(Container $container)
+    {
+        $container[static::PLUGIN_TRANSLATION] = function (Container $container) {
+            return new TranslationPlugin();
         };
 
         return $container;

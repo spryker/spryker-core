@@ -56,10 +56,23 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated See \Spryker\Zed\Messenger\Business\MessengerBusinessFactory::getTranslationPlugins
+     *
+     * @return \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface
+     */
+    public function getFallbackTranslationPlugin()
+    {
+        return $this->getProvidedDependency(MessengerDependencyProvider::PLUGIN_FALLBACK_TRANSLATION);
+    }
+
+    /**
      * @return \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[]
      */
     public function getTranslationPlugins(): array
     {
-        return $this->getProvidedDependency(MessengerDependencyProvider::PLUGINS_TRANSLATION);
+        return array_merge(
+            [$this->getFallbackTranslationPlugin()],
+            $this->getProvidedDependency(MessengerDependencyProvider::PLUGINS_TRANSLATION),
+        );
     }
 }
