@@ -7,15 +7,16 @@
 
 namespace Spryker\Zed\Cms\Business\Version;
 
+use Generated\Shared\Transfer\CmsVersionTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsVersion;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class VersionPublisher implements VersionPublisherInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    use TransactionTrait;
 
     /**
      * @var \Spryker\Zed\Cms\Business\Version\VersionGeneratorInterface
@@ -33,12 +34,12 @@ class VersionPublisher implements VersionPublisherInterface
     protected $versionFinder;
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface
      */
     protected $touchFacade;
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionPostSavePluginInterface[]
+     * @var \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsVersionPostSavePluginInterface[]
      */
     protected $postSavePlugins = [];
 
@@ -46,17 +47,16 @@ class VersionPublisher implements VersionPublisherInterface
      * @param \Spryker\Zed\Cms\Business\Version\VersionGeneratorInterface $versionGenerator
      * @param \Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface $versionDataMapper
      * @param \Spryker\Zed\Cms\Business\Version\VersionFinderInterface $versionFinder
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
-     * @param \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionPostSavePluginInterface[] $postSavePlugins
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface $touchFacade
+     * @param \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsVersionPostSavePluginInterface[] $postSavePlugins
      */
     public function __construct(
         VersionGeneratorInterface $versionGenerator,
         VersionDataMapperInterface $versionDataMapper,
         VersionFinderInterface $versionFinder,
-        CmsToTouchInterface $touchFacade,
+        CmsToTouchFacadeInterface $touchFacade,
         array $postSavePlugins
     ) {
-
         $this->versionGenerator = $versionGenerator;
         $this->versionDataMapper = $versionDataMapper;
         $this->versionFinder = $versionFinder;
@@ -70,7 +70,7 @@ class VersionPublisher implements VersionPublisherInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function publishWithVersion($idCmsPage, $versionName = null)
+    public function publishWithVersion(int $idCmsPage, ?string $versionName = null): CmsVersionTransfer
     {
         $cmsVersionDataTransfer = $this->versionFinder->getCmsVersionData($idCmsPage);
         $encodedData = $this->versionDataMapper->mapToJsonData($cmsVersionDataTransfer);
@@ -85,7 +85,7 @@ class VersionPublisher implements VersionPublisherInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    protected function createCmsVersion($data, $idCmsPage, $versionName = null)
+    protected function createCmsVersion(string $data, int $idCmsPage, ?string $versionName = null): CmsVersionTransfer
     {
         $versionNumber = $this->versionGenerator->generateNewCmsVersion($idCmsPage);
 
@@ -104,9 +104,9 @@ class VersionPublisher implements VersionPublisherInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    protected function saveAndTouchCmsVersion($data, $idCmsPage, $versionName, $versionNumber)
+    protected function saveAndTouchCmsVersion(string $data, int $idCmsPage, string $versionName, int $versionNumber): CmsVersionTransfer
     {
-        return $this->handleDatabaseTransaction(function () use ($data, $idCmsPage, $versionName, $versionNumber) {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($data, $idCmsPage, $versionName, $versionNumber) {
             return $this->executeSaveAndTouchCmsVersionTransaction($data, $idCmsPage, $versionName, $versionNumber);
         });
     }
@@ -119,7 +119,7 @@ class VersionPublisher implements VersionPublisherInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    protected function executeSaveAndTouchCmsVersionTransaction($data, $idCmsPage, $versionName, $versionNumber)
+    protected function executeSaveAndTouchCmsVersionTransaction(string $data, int $idCmsPage, string $versionName, int $versionNumber): CmsVersionTransfer
     {
         $cmsVersionTransfer = $this->saveCmsVersion($idCmsPage, $data, $versionNumber, $versionName);
 
@@ -140,7 +140,7 @@ class VersionPublisher implements VersionPublisherInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    protected function saveCmsVersion($idCmsPage, $data, $versionNumber, $versionName)
+    protected function saveCmsVersion(int $idCmsPage, string $data, int $versionNumber, string $versionName): CmsVersionTransfer
     {
         $cmsVersionEntity = new SpyCmsVersion();
         $cmsVersionEntity->setFkCmsPage($idCmsPage);
