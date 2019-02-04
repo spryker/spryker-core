@@ -23,6 +23,8 @@ use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemDeleter;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemDeleterInterface;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdater;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdaterInterface;
+use Spryker\Glue\CartsRestApi\Processor\CartRestRequest\CartRestRequestReader;
+use Spryker\Glue\CartsRestApi\Processor\CartRestRequest\CartRestRequestReaderInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\AnonymousCustomerUniqueIdValidator;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\AnonymousCustomerUniqueIdValidatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartCreator;
@@ -284,6 +286,14 @@ class CartsRestApiFactory extends AbstractFactory
     public function createCartItemsResourceMapper(): CartItemsResourceMapperInterface
     {
         return new CartItemsResourceMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\CartRestRequest\CartRestRequestReaderInterface
+     */
+    public function createCartRestRequestReader(): CartRestRequestReaderInterface
+    {
+        return new CartRestRequestReader();
     }
 
     /**

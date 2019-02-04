@@ -83,18 +83,6 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createCartNotFoundErrorResponse(): RestResponseInterface
-    {
-        return $this->createRestResponse()->addError($this->createRestErrorMessageTransfer(
-            SharedCartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND,
-            Response::HTTP_NOT_FOUND,
-            SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND
-        ));
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

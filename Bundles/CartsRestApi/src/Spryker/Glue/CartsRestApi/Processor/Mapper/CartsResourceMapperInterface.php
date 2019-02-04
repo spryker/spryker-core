@@ -33,6 +33,28 @@ interface CartsResourceMapperInterface
     public function mapQuoteTransferToRestCartsAttributesTransfer(QuoteTransfer $quoteTransfer): RestCartsAttributesTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
+     */
+    public function mapRestQuoteRequestTransferFromRequest(
+        QuoteResponseTransfer $quoteResponseTransfer,
+        RestRequestInterface $restRequest
+    ): RestQuoteRequestTransfer;
+
+    /**
+     * @param string|null $uuidCart
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
+     */
+    public function mapRestQuoteRequestTransferByUuid(
+        ?string $uuidCart,
+        RestRequestInterface $restRequest
+    ): RestQuoteRequestTransfer;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

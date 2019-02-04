@@ -22,6 +22,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
 
 class CartsResourceMapper implements CartsResourceMapperInterface
 {
@@ -85,6 +86,55 @@ class CartsResourceMapper implements CartsResourceMapperInterface
         $this->setDiscounts($quoteTransfer, $restCartsAttributesTransfer);
 
         return $restCartsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
+     */
+    public function mapRestQuoteRequestTransferFromRequest(
+        QuoteResponseTransfer $quoteResponseTransfer,
+        RestRequestInterface $restRequest
+    ): RestQuoteRequestTransfer {
+        if ($quoteResponseTransfer->getIsSuccessful() === false) {
+            return (new RestQuoteRequestTransfer())->setErrorCodes(
+                $this->mapQuoteResponseErrorsToErrorsCodes($quoteResponseTransfer->getErrors()->getArrayCopy())
+            );
+        }
+
+        return (new RestQuoteRequestTransfer())
+            ->setQuote(new QuoteTransfer())
+            ->setCustomerReference($quoteResponseTransfer->getCustomer()->getCustomerReference())
+            ->setQuoteUuid($quoteResponseTransfer->getQuoteTransfer()->getUuid());
+    }
+
+    /**
+     * @param string|null $uuidCart
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
+     */
+    public function mapRestQuoteRequestTransferByUuid(
+        ?string $uuidCart,
+        RestRequestInterface $restRequest
+    ): RestQuoteRequestTransfer {
+        if (!$uuidCart) {
+            return (new RestQuoteRequestTransfer())->addErrorCode(
+                SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
+            );
+        }
+
+        $restCartRequestTransfer = $this->createRestQuoteRequestTransfer($restRequest, (new QuoteTransfer())->setUuid($uuidCart));
+
+        if (count($restCartRequestTransfer->getErrorCodes()) > 0) {
+            return $restCartRequestTransfer;
+        }
+
+        $restCartRequestTransfer->getQuote()->setUuid($uuidCart);
+
+        return $restCartRequestTransfer;
     }
 
     /**
@@ -182,6 +232,23 @@ class CartsResourceMapper implements CartsResourceMapperInterface
             ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
             ->setUuid($uuidCart);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerErrorTransfer[] $errors
+     *
+     * @return string[]
+     */
+    protected function mapQuoteResponseErrorsToErrorsCodes(array $errors): array
+    {
+        $errorCodes = [];
+
+        foreach ($errors as $error) {
+            $errorCodes[] = $error->getMessage();
+        }
+
+        return $errorCodes;
+    }
+
 
     /**
      * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer

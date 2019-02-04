@@ -61,7 +61,9 @@ class CartReader implements CartReaderInterface
         );
 
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
-            return $this->cartRestResponseBuilder->createCartNotFoundErrorResponse();
+            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
+                [SharedCartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND]
+            );
         }
 
         $cartResource = $this->cartsResourceMapper->mapCartsResource(
@@ -86,7 +88,9 @@ class CartReader implements CartReaderInterface
 
         if ($quoteResponseTransfer->getIsSuccessful() === false
             || $restRequest->getUser()->getNaturalIdentifier() !== $quoteResponseTransfer->getQuoteTransfer()->getCustomerReference()) {
-            return $this->cartRestResponseBuilder->createCartNotFoundErrorResponse();
+            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
+                [SharedCartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND]
+            );
         }
 
         $cartResource = $this->cartsResourceMapper->mapCartsResource(

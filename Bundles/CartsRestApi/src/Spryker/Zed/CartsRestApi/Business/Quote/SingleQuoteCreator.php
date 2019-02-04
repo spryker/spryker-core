@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
-use Spryker\Shared\CartsRestApi\CartsRestApiConfig;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
 
 class SingleQuoteCreator implements SingleQuoteCreatorInterface
@@ -51,7 +51,7 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
         $quoteCollectionTransfer = $this->quoteReader->getCustomerQuoteCollection($restQuoteCollectionRequestTransfer);
         if ($quoteCollectionTransfer->getQuoteCollection()->getQuotes()->count()) {
             $quoteErrorTransfer = (new QuoteErrorTransfer())
-                ->setMessage(CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART);
+                ->setMessage(SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART);
 
             return (new QuoteResponseTransfer())
                 ->addError($quoteErrorTransfer)
