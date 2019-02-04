@@ -334,7 +334,7 @@ class OrdersTable extends AbstractTable
                 static::NUMBER_OF_ORDER_ITEMS => $item[OrdersTableQueryBuilder::FIELD_NUMBER_OF_ORDER_ITEMS],
                 static::URL => implode(' ', $this->createActionUrls($item)),
             ];
-            $itemLine = $this->applyUIPlugins($itemLine);
+            $itemLine = $this->applyUiPlugins($itemLine);
             $results[] = $itemLine;
         }
 
@@ -346,7 +346,7 @@ class OrdersTable extends AbstractTable
      *
      * @return array
      */
-    protected function applyUIPlugins(array $itemLine): array
+    protected function applyUiPlugins(array $itemLine): array
     {
         foreach ($this->salesTablePlugins as $uiPlugin) {
             $itemLine = $uiPlugin->formatTableRow([$this, 'buttonGeneratorCallable'], $itemLine);
