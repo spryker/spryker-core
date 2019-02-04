@@ -35,11 +35,11 @@ class CompanyUserValidator implements CompanyUserValidatorInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function checkIfCompanyUserUnique(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    public function isUniqueCompanyUserByCustomer(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         $companyUserResponseTransfer = (new CompanyUserResponseTransfer())->setIsSuccessful(true);
         $existsCompanyUser = $this->companyBusinessUnitRepository
-            ->hasCompanyUser($companyUserTransfer);
+            ->hasCompanyUserByCustomer($companyUserTransfer);
 
         if (!$existsCompanyUser) {
             return $companyUserResponseTransfer;

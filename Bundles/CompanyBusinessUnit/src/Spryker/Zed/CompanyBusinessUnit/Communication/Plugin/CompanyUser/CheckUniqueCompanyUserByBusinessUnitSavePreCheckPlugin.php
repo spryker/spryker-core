@@ -31,6 +31,6 @@ class CheckUniqueCompanyUserByBusinessUnitSavePreCheckPlugin extends AbstractPlu
     public function check(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         return $this->getFacade()
-            ->checkIfCompanyUserUnique($companyUserTransfer);
+            ->isUniqueCompanyUserByCustomer($companyUserTransfer);
     }
 }

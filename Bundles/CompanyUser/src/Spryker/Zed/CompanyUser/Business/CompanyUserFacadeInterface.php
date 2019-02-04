@@ -31,6 +31,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
+     * - Executes CompanyUserSavePreCheckPluginInterface check plugins before initial company user create.
      * - Creates an initial company user
      *
      * @api

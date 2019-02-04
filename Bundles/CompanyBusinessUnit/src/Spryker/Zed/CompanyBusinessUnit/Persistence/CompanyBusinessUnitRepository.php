@@ -218,13 +218,11 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     }
 
     /**
-     * @module CompanyUser
-     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return bool
      */
-    public function hasCompanyUser(CompanyUserTransfer $companyUserTransfer): bool
+    public function hasCompanyUserByCustomer(CompanyUserTransfer $companyUserTransfer): bool
     {
         $companyUserTransfer
             ->requireFkCompanyBusinessUnit()
@@ -232,8 +230,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
                 ->requireIdCustomer();
 
         $companyUserQuery = $this->getFactory()
-            ->createCompanyBusinessUnitQuery()
-            ->useCompanyUserQuery();
+            ->createCompanyUserQuery();
 
         if (!$companyUserQuery->getTableMap()->hasColumn(static::COL_FK_CUSTOMER)) {
             return false;
@@ -242,7 +239,6 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
         return $companyUserQuery
             ->filterByFkCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit())
             ->filterByFkCustomer($companyUserTransfer->getCustomer()->getIdCustomer())
-            ->endUse()
             ->exists();
     }
 }

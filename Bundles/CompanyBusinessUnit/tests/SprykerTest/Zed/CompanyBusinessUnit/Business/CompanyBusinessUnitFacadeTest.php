@@ -286,7 +286,7 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testCheckIfCompanyUserUniqueShouldReturnFalseIfCompanyUserRelationAlreadyExists()
+    public function testIsUniqueCompanyUserByCustomerShouldReturnFalseIfCompanyUserRelationAlreadyExists()
     {
         // Arrange
         $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
@@ -303,7 +303,7 @@ class CompanyBusinessUnitFacadeTest extends Test
 
         // Act
         $existsCompanyUser = $this->getFacade()
-            ->checkIfCompanyUserUnique($companyUserTransfer);
+            ->isUniqueCompanyUserByCustomer($companyUserTransfer);
 
         // Assert
         $this->assertFalse($existsCompanyUser->getIsSuccessful());
@@ -312,7 +312,7 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testCheckIfCompanyUserUniqueShouldReturnTrueIfCompanyUserRelationDoesNotExists()
+    public function testIsUniqueCompanyUserByCustomerShouldReturnTrueIfCompanyUserRelationDoesNotExists()
     {
         // Arrange
         $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
@@ -325,7 +325,7 @@ class CompanyBusinessUnitFacadeTest extends Test
 
         // Act
         $existsCompanyUser = $this->getFacade()
-            ->checkIfCompanyUserUnique($notExistentCompanyUserTransfer);
+            ->isUniqueCompanyUserByCustomer($notExistentCompanyUserTransfer);
 
         // Assert
         $this->assertTrue($existsCompanyUser->getIsSuccessful());

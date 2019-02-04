@@ -155,6 +155,7 @@ interface CompanyBusinessUnitFacadeInterface
     /**
      * Specification:
      * - Checks if company user already exists by customer id and company business unit id.
+     * - Returns false in isSuccessful property if column fk_customer doesn't exist.
      * - Returns false in isSuccessful property if company user already exists and adds error message to messages collection.
      *
      * @api
@@ -163,5 +164,5 @@ interface CompanyBusinessUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function checkIfCompanyUserUnique(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+    public function isUniqueCompanyUserByCustomer(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 }

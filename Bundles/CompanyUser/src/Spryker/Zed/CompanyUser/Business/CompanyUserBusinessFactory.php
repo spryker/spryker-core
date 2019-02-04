@@ -116,6 +116,6 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
      */
     public function getCompanyUserSavePreCheckPlugins(): array
     {
-        return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_COMPANY_USER_PRE_SAVE_CHECK);
+        return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_COMPANY_USER_SAVE_PRE_CHECK);
     }
 }

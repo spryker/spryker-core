@@ -58,5 +58,5 @@ interface CompanyBusinessUnitRepositoryInterface
      *
      * @return bool
      */
-    public function hasCompanyUser(CompanyUserTransfer $companyUserTransfer): bool;
+    public function hasCompanyUserByCustomer(CompanyUserTransfer $companyUserTransfer): bool;
 }

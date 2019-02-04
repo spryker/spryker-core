@@ -23,7 +23,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_COMPANY_USER_POST_CREATE = 'PLUGINS_COMPANY_USER_POST_CREATE';
     public const PLUGINS_COMPANY_USER_HYDRATE = 'PLUGINS_COMPANY_USER_HYDRATE';
     public const PLUGINS_COMPANY_USER_PRE_DELETE = 'PLUGINS_COMPANY_USER_PRE_DELETE';
-    public const PLUGINS_COMPANY_USER_PRE_SAVE_CHECK = 'PLUGINS_COMPANY_USER_PRE_SAVE_CHECK';
+    public const PLUGINS_COMPANY_USER_SAVE_PRE_CHECK = 'PLUGINS_COMPANY_USER_SAVE_PRE_CHECK';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -135,7 +135,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserSavePreCheckPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USER_PRE_SAVE_CHECK] = function () {
+        $container[static::PLUGINS_COMPANY_USER_SAVE_PRE_CHECK] = function () {
             return $this->getCompanyUserSavePreCheckPlugins();
         };
 
