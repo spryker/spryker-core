@@ -257,7 +257,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveBundledProductsPluginInterface[]
+     * @return \Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveProductBundlePluginInterface[]
      */
     protected function getPostSaveBundledProductsPlugins(): array
     {

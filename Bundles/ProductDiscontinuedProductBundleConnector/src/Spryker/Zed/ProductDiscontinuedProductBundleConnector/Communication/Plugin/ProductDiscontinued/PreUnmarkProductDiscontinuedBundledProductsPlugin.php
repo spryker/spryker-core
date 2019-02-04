@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Communication\Plugin;
+namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Communication\Plugin\ProductDiscontinued;
 
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
@@ -20,8 +20,8 @@ class PreUnmarkProductDiscontinuedBundledProductsPlugin extends AbstractPlugin i
 {
     /**
      * {@inheritdoc}
-     * - Checks discontinued status at bundled products
-     * - Returns ProductDiscontinuedResponseTransfer with success true if all bundled products are not discontinued.
+     * - Checks discontinued status of bundled products.
+     * - Returns ProductDiscontinuedResponseTransfer with isSuccessful=true if all bundled products are not discontinued.
      *
      * @api
      *

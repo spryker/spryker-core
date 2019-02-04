@@ -43,17 +43,17 @@ class ProductBundleDiscontinuedReader implements ProductBundleDiscontinuedReader
      */
     public function checkBundledProducts(ProductDiscontinuedTransfer $productDiscontinuedTransfer): ProductDiscontinuedResponseTransfer
     {
-        $idProductConcreteList = $this->productDiscontinuedProductBundleConnectorRepository->getBundledProductsByProductDiscontinuedId(
+        $productConcreteIds = $this->productDiscontinuedProductBundleConnectorRepository->getBundledProductsByProductDiscontinuedId(
             $productDiscontinuedTransfer->getIdProductDiscontinued()
         );
 
-        if ($idProductConcreteList[0] === null) {
+        if ($productConcreteIds[0] === null) {
             return (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(true);
         }
 
-        foreach ($idProductConcreteList as $idProductConcrete) {
+        foreach ($productConcreteIds as $productConcreteId) {
             $productDiscontinuedResponseTransfer = $this->productDiscontinuedFacade
-                ->findProductDiscontinuedByProductId($idProductConcrete);
+                ->findProductDiscontinuedByProductId($productConcreteId);
 
             if ($productDiscontinuedResponseTransfer->getIsSuccessful()) {
                 return $productDiscontinuedResponseTransfer->setProductDiscontinued(null)

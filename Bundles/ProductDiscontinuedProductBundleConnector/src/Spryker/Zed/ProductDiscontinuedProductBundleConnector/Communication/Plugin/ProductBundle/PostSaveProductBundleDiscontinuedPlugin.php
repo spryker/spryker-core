@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Communication\Plugin;
+namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Communication\Plugin\ProductBundle;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveBundledProductsPluginInterface;
+use Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveProductBundlePluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductDiscontinuedProductBundleConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductDiscontinuedProductBundleConnector\ProductDiscontinuedProductBundleConnectorConfig getConfig()
  */
-class PostSaveBundledProductsDiscontinuedPlugin extends AbstractPlugin implements PostSaveBundledProductsPluginInterface
+class PostSaveProductBundleDiscontinuedPlugin extends AbstractPlugin implements PostSaveProductBundlePluginInterface
 {
     /**
      * {@inheritdoc}

@@ -34,7 +34,7 @@ class ProductBundleWriter implements ProductBundleWriterInterface
     protected $productBundleStockWriter;
 
     /**
-     * @var \Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveBundledProductsPluginInterface[]
+     * @var \Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveProductBundlePluginInterface[]
      */
     protected $postSaveBundledProductsPlugins;
 
@@ -42,7 +42,7 @@ class ProductBundleWriter implements ProductBundleWriterInterface
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface $productFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface $productBundleStockWriter
-     * @param \Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveBundledProductsPluginInterface[] $postSaveBundledProductsPlugins
+     * @param \Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveProductBundlePluginInterface[] $postSaveBundledProductsPlugins
      */
     public function __construct(
         ProductBundleToProductInterface $productFacade,

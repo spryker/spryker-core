@@ -9,11 +9,11 @@ namespace Spryker\Zed\ProductBundleExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-interface PostSaveBundledProductsPluginInterface
+interface PostSaveProductBundlePluginInterface
 {
     /**
      * Specification:
-     * - Executes plugins after bundled products saving.
+     * - This plugin is execited after saving bundled products in product bundle.
      *
      * @api
      *
