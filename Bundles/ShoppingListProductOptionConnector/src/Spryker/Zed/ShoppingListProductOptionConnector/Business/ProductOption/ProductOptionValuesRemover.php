@@ -15,14 +15,14 @@ class ProductOptionValuesRemover implements ProductOptionValuesRemoverInterface
     /**
      * @var \Spryker\Zed\ShoppingListProductOptionConnector\Persistence\ShoppingListProductOptionConnectorEntityManagerInterface
      */
-    protected $entityManager;
+    protected $shoppingListProductOptionConnectorEntityManager;
 
     /**
-     * @param \Spryker\Zed\ShoppingListProductOptionConnector\Persistence\ShoppingListProductOptionConnectorEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\ShoppingListProductOptionConnector\Persistence\ShoppingListProductOptionConnectorEntityManagerInterface $shoppingListProductOptionConnectorEntityManager
      */
-    public function __construct(ShoppingListProductOptionConnectorEntityManagerInterface $entityManager)
+    public function __construct(ShoppingListProductOptionConnectorEntityManagerInterface $shoppingListProductOptionConnectorEntityManager)
     {
-        $this->entityManager = $entityManager;
+        $this->shoppingListProductOptionConnectorEntityManager = $shoppingListProductOptionConnectorEntityManager;
     }
 
     /**
@@ -39,6 +39,6 @@ class ProductOptionValuesRemover implements ProductOptionValuesRemoverInterface
             return;
         }
 
-        $this->entityManager->removeProductOptionValuesFromShoppingListItems($idsProductOptionValue);
+        $this->shoppingListProductOptionConnectorEntityManager->removeProductOptionValuesFromShoppingListItems($idsProductOptionValue);
     }
 }

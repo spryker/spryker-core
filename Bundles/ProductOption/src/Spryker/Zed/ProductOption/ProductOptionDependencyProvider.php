@@ -70,14 +70,11 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductOptionToTaxFacadeBridge($container->getLocator()->tax()->facade());
         };
 
-        $container[static::PLUGINS_PRODUCT_OPTION_VALUES_PRE_REMOVE] = function (Container $container) {
-            return $this->getProductOptionValuesPreRemovePlugins();
-        };
-
         $container = $this->addCurrencyFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addPriceFacade($container);
         $container = $this->addEventFacade($container);
+        $container = $this->addProductOptionValuesPreRemovePlugins($container);
 
         return $container;
     }
@@ -218,6 +215,20 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addCurrencyFacade($container);
         $container = $this->addMoneyCollectionFormTypePlugin($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductOptionValuesPreRemovePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_PRODUCT_OPTION_VALUES_PRE_REMOVE] = function (Container $container): array {
+            return $this->getProductOptionValuesPreRemovePlugins();
+        };
 
         return $container;
     }

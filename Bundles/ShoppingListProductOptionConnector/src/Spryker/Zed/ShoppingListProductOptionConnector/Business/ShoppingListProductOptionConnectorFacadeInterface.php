@@ -67,6 +67,7 @@ interface ShoppingListProductOptionConnectorFacadeInterface
      * Specification:
      * - Removes deleted product option values from shopping list items.
      * - Deleted product option values are marked in ProductOptionGroupTransfer::productOptionValuesToBeRemoved.
+     * -
      *
      * @api
      *

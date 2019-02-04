@@ -55,7 +55,7 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
     {
         $shoppingListProductOptionEntities = $this->getFactory()
             ->createSpyShoppingListProductOptionQuery()
-            ->filterByFkProductOptionValue($idsProductOptionValue, Criteria::IN)
+            ->filterByFkProductOptionValue_In($idsProductOptionValue)
             ->find();
 
         $this->deleteEntitiesAndTriggerEvents($shoppingListProductOptionEntities);

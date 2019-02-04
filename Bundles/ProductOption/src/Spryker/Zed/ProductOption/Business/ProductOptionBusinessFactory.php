@@ -57,7 +57,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
             $this->createTranslationSaver(),
             $this->createAbstractProductOptionSaver(),
             $this->createProductOptionValueSaver(),
-            $this->createProductOptionValuePluginExecutor()
+            $this->getProductOptionValuesPreRemovePlugins()
         );
     }
 
@@ -247,16 +247,6 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
             $this->getCurrencyFacade(),
             $this->getStoreFacade(),
             $this->getPriceFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOption\Business\ProductOption\ProductOptionValuePluginExecutorInterface
-     */
-    protected function createProductOptionValuePluginExecutor(): ProductOptionValuePluginExecutorInterface
-    {
-        return new ProductOptionValuePluginExecutor(
-            $this->getProductOptionValuesPreRemovePlugins()
         );
     }
 
