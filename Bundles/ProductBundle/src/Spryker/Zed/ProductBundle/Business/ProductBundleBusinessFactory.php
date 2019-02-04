@@ -53,7 +53,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->getQueryContainer(),
             $this->createProductBundleStockWriter(),
-            $this->getPostSaveBundledProductsPlugins()
+            $this->getPostSaveProductBundlePlugins()
         );
     }
 
@@ -270,9 +270,9 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveProductBundlePluginInterface[]
      */
-    public function getPostSaveBundledProductsPlugins(): array
+    public function getPostSaveProductBundlePlugins(): array
     {
-        return $this->getProvidedDependency(ProductBundleDependencyProvider::PLUGINS_POST_SAVE_BUNDLED_PRODUCTS);
+        return $this->getProvidedDependency(ProductBundleDependencyProvider::PLUGINS_POST_SAVE_PRODUCT_BUNDLE);
     }
 
     /**

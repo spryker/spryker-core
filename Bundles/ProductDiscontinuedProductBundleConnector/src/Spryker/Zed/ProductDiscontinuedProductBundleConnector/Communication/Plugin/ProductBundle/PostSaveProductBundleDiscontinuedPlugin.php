@@ -19,7 +19,7 @@ class PostSaveProductBundleDiscontinuedPlugin extends AbstractPlugin implements 
 {
     /**
      * {@inheritdoc}
-     * - Marks bundle as discontinued if one of bundled products is discontinued.
+     * - Marks product bundle as discontinued if one of bundled products is discontinued.
      *
      * @api
      *
@@ -29,6 +29,6 @@ class PostSaveProductBundleDiscontinuedPlugin extends AbstractPlugin implements 
      */
     public function execute(ProductConcreteTransfer $productConcreteTransfer): void
     {
-        $this->getFacade()->markBundleAsDiscontinuedByBundledProducts($productConcreteTransfer);
+        $this->getFacade()->markProductBundleAsDiscontinuedByBundledProducts($productConcreteTransfer);
     }
 }

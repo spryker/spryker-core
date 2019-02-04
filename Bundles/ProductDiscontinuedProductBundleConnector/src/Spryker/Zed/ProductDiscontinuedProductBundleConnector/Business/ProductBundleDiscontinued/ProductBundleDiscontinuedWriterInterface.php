@@ -24,5 +24,5 @@ interface ProductBundleDiscontinuedWriterInterface
      *
      * @return void
      */
-    public function discontinueBundleByProducts(ProductConcreteTransfer $productConcreteTransfer): void;
+    public function discontinueProductBundleByProducts(ProductConcreteTransfer $productConcreteTransfer): void;
 }

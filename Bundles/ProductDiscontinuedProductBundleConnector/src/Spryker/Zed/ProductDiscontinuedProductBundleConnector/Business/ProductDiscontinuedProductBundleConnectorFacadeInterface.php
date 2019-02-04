@@ -28,7 +28,7 @@ interface ProductDiscontinuedProductBundleConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Marks bundle as discontinued if one of bundled products is discontinued.
+     * - Marks product bundle as discontinued if one of bundled products is discontinued.
      *
      * @api
      *
@@ -36,7 +36,7 @@ interface ProductDiscontinuedProductBundleConnectorFacadeInterface
      *
      * @return void
      */
-    public function markBundleAsDiscontinuedByBundledProducts(ProductConcreteTransfer $productConcreteTransfer): void;
+    public function markProductBundleAsDiscontinuedByBundledProducts(ProductConcreteTransfer $productConcreteTransfer): void;
 
     /**
      * Specification:

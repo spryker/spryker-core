@@ -40,7 +40,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     public const QUERY_CONTAINER_STOCK = 'stock query container';
     public const QUERY_CONTAINER_PRODUCT = 'product query container';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
-    public const PLUGINS_POST_SAVE_BUNDLED_PRODUCTS = 'PLUGINS_POST_SAVE_BUNDLED_PRODUCTS';
+    public const PLUGINS_POST_SAVE_PRODUCT_BUNDLE = 'PLUGINS_POST_SAVE_PRODUCT_BUNDLE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -57,7 +57,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addFacadePrice($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMessengerFacade($container);
-        $container = $this->addPostSaveBundledProductsPlugins($container);
+        $container = $this->addPostSaveProductBundlePlugins($container);
 
         $container = $this->addQueryContainerAvailability($container);
         $container = $this->addQueryContainerSales($container);
@@ -248,10 +248,10 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPostSaveBundledProductsPlugins(Container $container): Container
+    protected function addPostSaveProductBundlePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_POST_SAVE_BUNDLED_PRODUCTS] = function (Container $container) {
-            return $this->getPostSaveBundledProductsPlugins();
+        $container[static::PLUGINS_POST_SAVE_PRODUCT_BUNDLE] = function () {
+            return $this->getPostSaveProductBundlePlugins();
         };
         return $container;
     }
@@ -259,7 +259,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveProductBundlePluginInterface[]
      */
-    protected function getPostSaveBundledProductsPlugins(): array
+    protected function getPostSaveProductBundlePlugins(): array
     {
         return [];
     }

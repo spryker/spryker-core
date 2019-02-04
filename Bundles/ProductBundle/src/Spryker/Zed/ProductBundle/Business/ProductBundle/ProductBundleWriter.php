@@ -36,24 +36,24 @@ class ProductBundleWriter implements ProductBundleWriterInterface
     /**
      * @var \Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveProductBundlePluginInterface[]
      */
-    protected $postSaveBundledProductsPlugins;
+    protected $postSaveProductBundlePlugins;
 
     /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface $productFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface $productBundleStockWriter
-     * @param \Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveProductBundlePluginInterface[] $postSaveBundledProductsPlugins
+     * @param \Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveProductBundlePluginInterface[] $postSaveProductBundlePlugins
      */
     public function __construct(
         ProductBundleToProductInterface $productFacade,
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleStockWriterInterface $productBundleStockWriter,
-        array $postSaveBundledProductsPlugins
+        array $postSaveProductBundlePlugins
     ) {
         $this->productFacade = $productFacade;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->productBundleStockWriter = $productBundleStockWriter;
-        $this->postSaveBundledProductsPlugins = $postSaveBundledProductsPlugins;
+        $this->postSaveProductBundlePlugins = $postSaveProductBundlePlugins;
     }
 
     /**
@@ -83,7 +83,7 @@ class ProductBundleWriter implements ProductBundleWriterInterface
             $this->productBundleQueryContainer->getConnection()->beginTransaction();
 
             $this->createBundledProducts($productConcreteTransfer, $bundledProducts);
-            $this->executePostSaveBundledProductsPlugins($productConcreteTransfer);
+            $this->executePostSaveProductBundlePlugins($productConcreteTransfer);
             $this->removeBundledProducts($productBundleTransfer->getBundlesToRemove(), $productConcreteTransfer->getIdProductConcrete());
 
             $this->productBundleQueryContainer->getConnection()->commit();
@@ -183,10 +183,10 @@ class ProductBundleWriter implements ProductBundleWriterInterface
      *
      * @return void
      */
-    protected function executePostSaveBundledProductsPlugins(ProductConcreteTransfer $productConcreteTransfer): void
+    protected function executePostSaveProductBundlePlugins(ProductConcreteTransfer $productConcreteTransfer): void
     {
-        foreach ($this->postSaveBundledProductsPlugins as $postSaveBundledProductsPlugin) {
-            $postSaveBundledProductsPlugin->execute($productConcreteTransfer);
+        foreach ($this->postSaveProductBundlePlugins as $postSaveProductBundlePlugin) {
+            $postSaveProductBundlePlugin->execute($productConcreteTransfer);
         }
     }
 }

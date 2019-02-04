@@ -59,7 +59,7 @@ class ProductBundleDiscontinuedWriter implements ProductBundleDiscontinuedWriter
      *
      * @return void
      */
-    public function discontinueBundleByProducts(ProductConcreteTransfer $productConcreteTransfer): void
+    public function discontinueProductBundleByProducts(ProductConcreteTransfer $productConcreteTransfer): void
     {
         if ($productConcreteTransfer->getProductBundle() === null) {
             return;
