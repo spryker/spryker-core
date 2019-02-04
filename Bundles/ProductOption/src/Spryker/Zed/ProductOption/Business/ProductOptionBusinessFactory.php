@@ -23,8 +23,6 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
 use Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaver;
-use Spryker\Zed\ProductOption\Business\ProductOption\ProductOptionValuePluginExecutor;
-use Spryker\Zed\ProductOption\Business\ProductOption\ProductOptionValuePluginExecutorInterface;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**

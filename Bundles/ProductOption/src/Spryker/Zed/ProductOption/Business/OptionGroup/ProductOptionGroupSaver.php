@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException;
-use Spryker\Zed\ProductOption\Business\ProductOption\ProductOptionValuePluginExecutorInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
