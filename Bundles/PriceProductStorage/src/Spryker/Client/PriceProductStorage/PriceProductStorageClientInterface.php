@@ -8,6 +8,8 @@
 namespace Spryker\Client\PriceProductStorage;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ItemValidationResponseTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
 interface PriceProductStorageClientInterface
@@ -66,4 +68,19 @@ interface PriceProductStorageClientInterface
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function getResolvedCurrentProductPriceTransfer(PriceProductFilterTransfer $priceProductFilterTransfer): CurrentProductPriceTransfer;
+
+    /**
+     * Specification:
+     * - Validates ItemTransfer with the product price validation.
+     * - Returns ItemValidationResponseTransfer with error or warning messages.
+     * - In case any fields need to be updated ItemValidationResponseTransfer contains ItemTransfer with 'recommended values transfer' inside.
+     * - Returns empty ItemValidationResponseTransfer when no validation errors or warnings.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
+     */
+    public function validateItemTransfer(ItemTransfer $itemTransfer): ItemValidationResponseTransfer;
 }

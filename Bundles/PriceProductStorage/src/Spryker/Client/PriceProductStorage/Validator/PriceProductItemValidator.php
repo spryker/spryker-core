@@ -7,14 +7,15 @@
 
 namespace Spryker\Client\PriceProductStorage\Validator;
 
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ItemValidationResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\QuickOrderItemTransfer;
-use Generated\Shared\Transfer\QuickOrderValidationResponseTransfer;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolverInterface;
 
-class PriceProductQuickOrderValidator implements PriceProductQuickOrderValidatorInterface
+class PriceProductItemValidator implements PriceProductItemValidatorInterface
 {
+    protected const MESSAGE_TYPE_ERROR = 'error';
     protected const ERROR_MESSAGE_NO_PRICE_PRODUCT = 'price_product.error.price_not_found';
 
     /**
@@ -31,21 +32,21 @@ class PriceProductQuickOrderValidator implements PriceProductQuickOrderValidator
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\QuickOrderValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
      */
-    public function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderValidationResponseTransfer
+    public function validate(ItemTransfer $itemTransfer): ItemValidationResponseTransfer
     {
-        $productConcreteTransfer = $quickOrderItemTransfer->getProductConcrete();
-        $quickOrderValidationResponseTransfer = new QuickOrderValidationResponseTransfer();
+        $productConcreteTransfer = $itemTransfer->getProductConcrete();
+        $itemValidationResponseTransfer = new ItemValidationResponseTransfer();
 
         if (!$productConcreteTransfer || !$productConcreteTransfer->getIdProductConcrete()) {
-            return $quickOrderValidationResponseTransfer;
+            return $itemValidationResponseTransfer;
         }
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
-            ->setQuantity($quickOrderItemTransfer->getQuantity())
+            ->setQuantity($itemTransfer->getQuantity())
             ->setIdProduct($productConcreteTransfer->getIdProductConcrete())
             ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract());
 
@@ -53,10 +54,11 @@ class PriceProductQuickOrderValidator implements PriceProductQuickOrderValidator
             ->resolveCurrentProductPriceTransfer($priceProductFilterTransfer);
 
         if (!$priceProductTransfer->getPrice()) {
-            $quickOrderValidationResponseTransfer->addErrorMessage((new MessageTransfer())
+            $itemValidationResponseTransfer->addMessage((new MessageTransfer())
+                ->setType(static::MESSAGE_TYPE_ERROR)
                 ->setValue(static::ERROR_MESSAGE_NO_PRICE_PRODUCT));
         }
 
-        return $quickOrderValidationResponseTransfer;
+        return $itemValidationResponseTransfer;
     }
 }

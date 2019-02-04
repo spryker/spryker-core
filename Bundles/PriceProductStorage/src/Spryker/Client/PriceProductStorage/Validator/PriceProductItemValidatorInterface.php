@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\QuickOrder\Validator;
+namespace Spryker\Client\PriceProductStorage\Validator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ItemValidationResponseTransfer;
 
-interface QuickOrderItemValidatorInterface
+interface PriceProductItemValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer

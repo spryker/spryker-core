@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\QuickOrder\Builder;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
@@ -16,6 +17,7 @@ use Spryker\Client\QuickOrder\Validator\QuickOrderItemValidatorInterface;
 
 class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
 {
+    protected const MESSAGE_TYPE_ERROR = 'error';
     protected const ERROR_MESSAGE_INVALID_SKU = 'quick-order.upload-order.errors.upload-order-invalid-sku-item';
 
     /**
@@ -79,7 +81,9 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
 
         if ($productConcreteTransfer === null) {
             $productConcreteTransfer = (new ProductConcreteTransfer())->setSku($quickOrderItemTransfer->getSku());
-            $quickOrderItemTransfer->addErrorMessage((new MessageTransfer())->setValue(static::ERROR_MESSAGE_INVALID_SKU));
+            $quickOrderItemTransfer->addMessage((new MessageTransfer())
+                ->setType(static::MESSAGE_TYPE_ERROR)
+                ->setValue(static::ERROR_MESSAGE_INVALID_SKU));
         }
 
         $quickOrderItemTransfer->setProductConcrete($productConcreteTransfer);
@@ -94,14 +98,18 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
      */
     protected function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
-        $quickOrderValidationResponseTransfer = $this->quickOrderItemValidator->validate($quickOrderItemTransfer);
-        $quickOrderItemTransfer->fromArray($quickOrderValidationResponseTransfer->modifiedToArray(), true);
+        $itemTransfer = $this->getItemTransfer($quickOrderItemTransfer);
+        $itemValidationResponseTransfer = $this->quickOrderItemValidator->validate($itemTransfer);
 
-        if (count($quickOrderValidationResponseTransfer->getCorrectValues())) {
-            foreach ($quickOrderValidationResponseTransfer->getCorrectValues() as $correctValue) {
-                $quickOrderItemTransfer->fromArray($correctValue, true);
-            }
+        if ($itemValidationResponseTransfer->getMessages()->count()) {
+            $quickOrderItemTransfer->setMessages($itemValidationResponseTransfer->getMessages());
         }
+
+        if (!$itemValidationResponseTransfer->getRecommendedValues()) {
+            return $quickOrderItemTransfer;
+        }
+
+        $quickOrderItemTransfer->fromArray($itemValidationResponseTransfer->getRecommendedValues()->toArray(), true);
 
         return $quickOrderItemTransfer;
     }
@@ -113,16 +121,30 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
      */
     protected function expandProductConcrete(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
-        if ($quickOrderItemTransfer->getProductConcrete()->getIdProductConcrete()) {
-            foreach ($this->productConcreteExpanderPlugins as $productConcreteExpanderPlugin) {
-                $expandedProductConcrete = $productConcreteExpanderPlugin->expand([$quickOrderItemTransfer->getProductConcrete()]);
-            }
+        if (!$quickOrderItemTransfer->getProductConcrete()->getIdProductConcrete()) {
+            return $quickOrderItemTransfer;
+        }
 
-            if (isset($expandedProductConcrete)) {
-                $quickOrderItemTransfer->setProductConcrete($expandedProductConcrete[0]);
-            }
+        foreach ($this->productConcreteExpanderPlugins as $productConcreteExpanderPlugin) {
+            $expandedProductConcrete = $productConcreteExpanderPlugin->expand([$quickOrderItemTransfer->getProductConcrete()]);
+        }
+
+        if (isset($expandedProductConcrete)) {
+            $quickOrderItemTransfer->setProductConcrete($expandedProductConcrete[0]);
         }
 
         return $quickOrderItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function getItemTransfer(QuickOrderItemTransfer $quickOrderItemTransfer): ItemTransfer
+    {
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->fromArray($quickOrderItemTransfer->toArray());
+        return $itemTransfer;
     }
 }

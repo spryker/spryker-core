@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductDiscontinuedStorage;
 
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ItemValidationResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
@@ -68,4 +70,19 @@ interface ProductDiscontinuedStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     public function expandDiscontinuedProductAvailability(ProductViewTransfer $productViewTransfer, string $localeName): ProductViewTransfer;
+
+    /**
+     * Specification:
+     * - Validates ItemTransfer with the product discontinued validation.
+     * - Returns ItemValidationResponseTransfer with error or warning messages.
+     * - In case any fields need to be updated ItemValidationResponseTransfer contains ItemTransfer with 'recommended values transfer' inside.
+     * - Returns empty ItemValidationResponseTransfer when no validation errors or warnings.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
+     */
+    public function validateItemTransfer(ItemTransfer $itemTransfer): ItemValidationResponseTransfer;
 }

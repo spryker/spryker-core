@@ -17,8 +17,8 @@ use Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReader;
 use Spryker\Client\PriceProductStorage\Storage\PriceProductMapper;
 use Spryker\Client\PriceProductStorage\Storage\PriceProductMapperInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGenerator;
-use Spryker\Client\PriceProductStorage\Validator\PriceProductQuickOrderValidator;
-use Spryker\Client\PriceProductStorage\Validator\PriceProductQuickOrderValidatorInterface;
+use Spryker\Client\PriceProductStorage\Validator\PriceProductItemValidator;
+use Spryker\Client\PriceProductStorage\Validator\PriceProductItemValidatorInterface;
 
 class PriceProductStorageFactory extends AbstractFactory
 {
@@ -77,11 +77,11 @@ class PriceProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorage\Validator\PriceProductQuickOrderValidatorInterface
+     * @return \Spryker\Client\PriceProductStorage\Validator\PriceProductItemValidatorInterface
      */
-    public function createPriceProductQuickOrderValidator(): PriceProductQuickOrderValidatorInterface
+    public function createPriceProductItemValidator(): PriceProductItemValidatorInterface
     {
-        return new PriceProductQuickOrderValidator(
+        return new PriceProductItemValidator(
             $this->createPriceConcreteResolver()
         );
     }

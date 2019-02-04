@@ -8,6 +8,8 @@
 namespace Spryker\Client\PriceProductStorage;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ItemValidationResponseTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -79,5 +81,21 @@ class PriceProductStorageClient extends AbstractClient implements PriceProductSt
         return $this->getFactory()
             ->createPriceConcreteResolver()
             ->resolveCurrentProductPriceTransfer($priceProductFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
+     */
+    public function validateItemTransfer(ItemTransfer $itemTransfer): ItemValidationResponseTransfer
+    {
+        return $this->getFactory()
+            ->createPriceProductItemValidator()
+            ->validate($itemTransfer);
     }
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductQuantityStorage;
 
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ItemValidationResponseTransfer;
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 
 interface ProductQuantityStorageClientInterface
@@ -36,4 +38,19 @@ interface ProductQuantityStorageClientInterface
      * @return int
      */
     public function getNearestQuantity(int $idProduct, int $quantity): int;
+
+    /**
+     * Specification:
+     * - Validates ItemTransfer with the product quantity validation.
+     * - Returns ItemValidationResponseTransfer with error or warning messages.
+     * - In case any fields need to be updated ItemValidationResponseTransfer contains ItemTransfer with 'recommended values transfer' inside.
+     * - Returns empty ItemValidationResponseTransfer when no validation errors or warnings.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
+     */
+    public function validateItemTransfer(ItemTransfer $itemTransfer): ItemValidationResponseTransfer;
 }

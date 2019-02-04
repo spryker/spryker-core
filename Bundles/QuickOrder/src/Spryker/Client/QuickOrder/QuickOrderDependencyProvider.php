@@ -34,7 +34,6 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
         return $container;
     }
 
-
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
@@ -86,7 +85,7 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderValidatorPluginInterface[]
+     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\ItemValidatorPluginInterface[]
      */
     protected function getQuickOrderValidationPlugins(): array
     {
