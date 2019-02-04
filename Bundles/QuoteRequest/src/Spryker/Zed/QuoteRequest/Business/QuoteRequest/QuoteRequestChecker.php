@@ -20,10 +20,10 @@ use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 
 class QuoteRequestChecker implements QuoteRequestCheckerInterface
 {
-    public const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_NOT_FOUND = 'quote_request.checkout.validation.error.not_found';
-    public const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
-    public const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION = 'quote_request.checkout.validation.error.wrong_version';
-    public const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.checkout.validation.error.wrong_valid_until';
+    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_NOT_FOUND = 'quote_request.checkout.validation.error.not_found';
+    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
+    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION = 'quote_request.checkout.validation.error.wrong_version';
+    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.checkout.validation.error.wrong_valid_until';
 
     /**
      * @var \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface
