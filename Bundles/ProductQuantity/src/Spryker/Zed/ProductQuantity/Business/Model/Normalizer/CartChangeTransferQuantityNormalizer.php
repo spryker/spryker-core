@@ -65,7 +65,7 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
             $productSku = $changedSkuMapByGroupKey[$productGroupKey];
 
             if (!isset($productQuantityTransferMapBySku[$productSku])) {
-                $normalizedItems->append($productQuantityTransferMapBySku[$productSku]);
+                $normalizedItems->append($itemTransferMapBySku[$productSku]);
 
                 continue;
             }
