@@ -6,7 +6,7 @@
     <transfer name="CompanyUserStorage">
         <property name="idCompanyUser" type="int"/>
         <property name="idCompany" type="int"/>
-        <property name="uuidCompanyUser" type="string"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
 </transfers>

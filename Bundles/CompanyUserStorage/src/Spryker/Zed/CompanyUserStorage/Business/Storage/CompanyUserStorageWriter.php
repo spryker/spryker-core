@@ -147,7 +147,6 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
         $companyUserStorageTransfer = new CompanyUserStorageTransfer();
         $companyUserStorageTransfer->fromArray($companyUserTransfer->toArray(), true);
         $companyUserStorageTransfer->setIdCompany($companyUserTransfer->getFkCompany());
-        $companyUserStorageTransfer->setUuidCompanyUser($companyUserTransfer->getUuid());
         $companyUserStorageTransfer = $this->expandCompanyUserStorageTransfers($companyUserTransfer, $companyUserStorageTransfer);
 
         return $companyUserStorageTransfer;
