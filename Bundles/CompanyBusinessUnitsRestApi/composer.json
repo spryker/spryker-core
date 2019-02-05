@@ -4,6 +4,10 @@
   "description": "CompanyBusinessUnitsRestApi module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
+    "spryker/customers-rest-api-extension": "^1.1.0",
+    "spryker/glue-application": "^1.13.0",
+    "spryker/kernel": "^3.29.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

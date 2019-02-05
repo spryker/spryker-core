@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin;
 
-
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 

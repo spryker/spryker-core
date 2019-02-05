@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/auth-rest-api-extension.svg)](https://travis-ci.org/spryker/auth-rest-api-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/auth-rest-api-extension/badge.svg)](https://coveralls.io/github/spryker/auth-rest-api-extension)
 
-{{ADD DESCRIPTION HERE}}
+Provides extension plugins for module AuthRestApi.
 
 ## Installation
 

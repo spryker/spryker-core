@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/oauth-company-user-connector.svg)](https://travis-ci.org/spryker/oauth-company-user-connector)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/oauth-company-user-connector/badge.svg)](https://coveralls.io/github/spryker/oauth-company-user-connector)
 
-{{ADD DESCRIPTION HERE}}
+OauthCompanyUserConnector module provides plugins for extending the Oauth module. This extension provides functionality to login company user.
 
 ## Installation
 

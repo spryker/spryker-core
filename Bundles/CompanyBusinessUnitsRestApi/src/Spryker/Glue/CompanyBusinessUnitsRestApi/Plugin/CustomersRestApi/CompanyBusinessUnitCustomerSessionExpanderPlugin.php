@@ -17,7 +17,6 @@ use Spryker\Glue\Kernel\AbstractPlugin;
  */
 class CompanyBusinessUnitCustomerSessionExpanderPlugin extends AbstractPlugin implements CustomerSessionExpanderPluginInterface
 {
-
     /**
      * {@inheritdoc}
      * - Expand customer transfer for session with company business unit transfer.
