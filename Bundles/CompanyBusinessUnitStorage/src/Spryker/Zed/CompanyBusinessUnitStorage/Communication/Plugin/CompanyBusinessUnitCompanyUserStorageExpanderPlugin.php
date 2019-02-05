@@ -21,7 +21,7 @@ class CompanyBusinessUnitCompanyUserStorageExpanderPlugin extends AbstractPlugin
 {
     /**
      * {@inheritdoc}
-     *  - Expand CompanyUserStorageTransfer with company business unit id.
+     *  - Expands CompanyUserStorageTransfer with company business unit id.
      *
      * @api
      *
@@ -33,6 +33,6 @@ class CompanyBusinessUnitCompanyUserStorageExpanderPlugin extends AbstractPlugin
     public function expand(CompanyUserTransfer $companyUserTransfer, CompanyUserStorageTransfer $companyUserStorageTransfer): CompanyUserStorageTransfer
     {
         return $this->getFacade()
-            ->addCompanyBusinessUnitId($companyUserTransfer, $companyUserStorageTransfer);
+            ->expandWithCompanyBusinessUnitId($companyUserStorageTransfer, $companyUserTransfer);
     }
 }
