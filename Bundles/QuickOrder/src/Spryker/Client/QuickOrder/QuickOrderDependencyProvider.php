@@ -56,7 +56,7 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductConcreteExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_CONCRETE_EXPANDER] = function () {
+        $container[static::PLUGINS_PRODUCT_CONCRETE_EXPANDER] = function (): array {
             return $this->getProductConcreteExpanderPlugins();
         };
 

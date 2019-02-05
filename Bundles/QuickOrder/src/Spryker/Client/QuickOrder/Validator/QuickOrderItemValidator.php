@@ -73,9 +73,7 @@ class QuickOrderItemValidator implements QuickOrderItemValidatorInterface
             return $resultValidationResponse;
         }
 
-        $resultValidationResponse
-            ->setRecommendedValues()
-            ->fromArray($resultValidationResponse->getRecommendedValues()->toArray());
+        $resultValidationResponse->setRecommendedValues($resultValidationResponse->getRecommendedValues());
 
         return $resultValidationResponse;
     }
