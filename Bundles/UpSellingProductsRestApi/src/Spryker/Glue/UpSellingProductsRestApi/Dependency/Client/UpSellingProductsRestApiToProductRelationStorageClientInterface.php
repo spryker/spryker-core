@@ -5,20 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductRelationStorage\Relation;
+namespace Spryker\Glue\UpSellingProductsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface UpSellingProductReaderInterface
+interface UpSellingProductsRestApiToProductRelationStorageClientInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
-     */
-    public function findUpSellingProducts(QuoteTransfer $quoteTransfer, $localeName);
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
