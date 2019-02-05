@@ -20,7 +20,10 @@ class ProductQuantityItemValidatorPlugin extends AbstractPlugin implements ItemV
 {
     /**
      * {@inheritdoc}
-     * - Validate provided ItemTransfer with quantity validation.
+     * - Checks if product concrete provided in ItemTransfer has product quantity restrictions or not.
+     * - Adds recommendedValues with valid ItemTransfer->quantity inside into ItemValidationResponseTransfer and warning message
+     *   when product has quantity restrictions.
+     * - Returns empty ItemValidationResponseTransfer if product has not quantity restrictions.
      *
      * @api
      *
