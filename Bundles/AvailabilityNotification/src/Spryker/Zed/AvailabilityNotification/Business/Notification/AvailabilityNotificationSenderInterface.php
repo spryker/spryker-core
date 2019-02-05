@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Notification;
 
-use Generated\Shared\Transfer\AvailabilityNotificationTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationDataTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 
 interface AvailabilityNotificationSenderInterface
@@ -27,9 +27,9 @@ interface AvailabilityNotificationSenderInterface
     public function sendUnsubscriptionMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void;
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationTransfer $availabilityNotificationTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationDataTransfer $availabilityNotificationDataTransfer
      *
      * @return void
      */
-    public function sendProductBecomeAvailableMail(AvailabilityNotificationTransfer $availabilityNotificationTransfer): void;
+    public function sendProductBecomeAvailableMail(AvailabilityNotificationDataTransfer $availabilityNotificationDataTransfer): void;
 }

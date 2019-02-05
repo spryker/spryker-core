@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
-use Generated\Shared\Transfer\AvailabilityNotificationTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationDataTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
@@ -169,7 +169,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             $this->touchAvailabilityAbstract($spyAvailabilityEntity->getFkAvailabilityAbstract());
         }
 
-        $this->notifyAvailabilitySubscribes($spyAvailabilityEntity, $currentQuantity, $sku, $quantity, $storeTransfer);
+        $this->notifyAvailabilitySubscribes($spyAvailabilityEntity, $currentQuantity, $sku, $quantity, $storeTransfer, $isNeverOutOfStockModified);
 
         return $spyAvailabilityEntity;
     }
@@ -348,6 +348,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      * @param string $sku
      * @param int $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param bool $isNeverOutOfStockModified
      *
      * @return void
      */
@@ -356,18 +357,17 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         int $currentQuantity,
         string $sku,
         int $quantity,
-        StoreTransfer $storeTransfer
+        StoreTransfer $storeTransfer,
+        bool $isNeverOutOfStockModified
     ): void {
-        $isNeverOutOfStockModified = $spyAvailabilityEntity->isColumnModified(SpyAvailabilityTableMap::COL_IS_NEVER_OUT_OF_STOCK);
-
         if (($this->isAvailabilityStatusChanged($currentQuantity, $quantity) || $isNeverOutOfStockModified)
             && ($quantity > 0 || $spyAvailabilityEntity->getIsNeverOutOfStock() === true)) {
-            $availabilityNotificationTransfer = (new AvailabilityNotificationTransfer())
+            $availabilityNotificationDataTransfer = (new AvailabilityNotificationDataTransfer())
                 ->setSku($sku)
                 ->setStore($storeTransfer);
             $this->eventFacade->trigger(
                 AvailabilityEvents::AVAILABILITY_NOTIFICATION,
-                $availabilityNotificationTransfer
+                $availabilityNotificationDataTransfer
             );
         }
     }

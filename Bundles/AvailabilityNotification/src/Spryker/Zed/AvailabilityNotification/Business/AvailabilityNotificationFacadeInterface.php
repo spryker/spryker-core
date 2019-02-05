@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business;
 
-use Generated\Shared\Transfer\AvailabilityNotificationTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationDataTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -62,11 +62,11 @@ interface AvailabilityNotificationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationTransfer $availabilityNotificationTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationDataTransfer $availabilityNotificationDataTransfer
      *
      * @return void
      */
-    public function sendAvailabilitySubscriptionNotification(AvailabilityNotificationTransfer $availabilityNotificationTransfer): void;
+    public function sendAvailabilitySubscriptionNotification(AvailabilityNotificationDataTransfer $availabilityNotificationDataTransfer): void;
 
     /**
      * Specification:

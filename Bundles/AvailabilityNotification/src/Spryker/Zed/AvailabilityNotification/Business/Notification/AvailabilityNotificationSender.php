@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Notification;
 
-use Generated\Shared\Transfer\AvailabilityNotificationTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationDataTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionMailDataTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -117,16 +117,16 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationTransfer $availabilityNotificationTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationDataTransfer $availabilityNotificationDataTransfer
      *
      * @return void
      */
-    public function sendProductBecomeAvailableMail(AvailabilityNotificationTransfer $availabilityNotificationTransfer): void
+    public function sendProductBecomeAvailableMail(AvailabilityNotificationDataTransfer $availabilityNotificationDataTransfer): void
     {
         $availabilitySubscriptions = $this->availabilityNotificationRepository
             ->findBySkuAndStore(
-                $availabilityNotificationTransfer->getSku(),
-                $availabilityNotificationTransfer->getStore()->getIdStore()
+                $availabilityNotificationDataTransfer->getSku(),
+                $availabilityNotificationDataTransfer->getStore()->getIdStore()
             );
 
         foreach ($availabilitySubscriptions as $availabilitySubscription) {
