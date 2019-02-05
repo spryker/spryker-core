@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
@@ -58,16 +57,24 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     ) {
 
         foreach ($salesOrderShipments as $salesShipmentEntity) {
-            $idShipmentMethod = $this->shipmentQueryContainer
+            $shipmentMethodEntity = $this->shipmentQueryContainer
                 ->queryActiveMethods()
-                ->select(SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD)
                 ->findOneByName($salesShipmentEntity->getName());
 
             $shipmentMethodTransfer = new ShipmentMethodTransfer();
+            $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
             $shipmentMethodTransfer->fromArray($salesShipmentEntity->toArray(), true);
+            $idShipmentMethod = $shipmentMethodTransfer->getIdShipmentMethod();
             if ($idShipmentMethod) {
                 $shipmentMethodTransfer->setIdShipmentMethod($idShipmentMethod);
             }
+
+            foreach ($orderTransfer->getItems() as $item) {
+                if ($item->getShipment()->getMethod()->getName() === $shipmentMethodTransfer->getName()) {
+                    $item->getShipment()->setMethod($shipmentMethodTransfer);
+                }
+            }
+
             $orderTransfer->addShipmentMethod($shipmentMethodTransfer);
         }
 
