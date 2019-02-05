@@ -65,7 +65,9 @@ class CartDeleter implements CartDeleterInterface
         );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->cartRestResponseBuilder->createFailedDeletingCartErrorResponse();
+            $restQuoteRequestTransfer = $this->cartsResourceMapper->mapRestQuoteRequestTransferFromRequest($quoteResponseTransfer, $restRequest);
+
+            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($restQuoteRequestTransfer->getErrorCodes());
         }
 
         return $this->cartRestResponseBuilder->createRestResponse();

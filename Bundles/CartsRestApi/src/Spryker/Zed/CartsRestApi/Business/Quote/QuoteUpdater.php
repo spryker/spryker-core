@@ -81,7 +81,6 @@ class QuoteUpdater implements QuoteUpdaterInterface
             $this->quoteMapper->mapOriginalQuoteTransferToQuoteTransfer($quoteTransfer, $originalQuoteTransfer)
         );
 
-
         $quoteUpdateRequestTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer);
         $quoteUpdateRequestAttributesTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestAttributesTransfer($quoteTransfer);
         $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
