@@ -64,10 +64,6 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
             $shipmentMethodTransfer = new ShipmentMethodTransfer();
             $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
             $shipmentMethodTransfer->fromArray($salesShipmentEntity->toArray(), true);
-            $idShipmentMethod = $shipmentMethodTransfer->getIdShipmentMethod();
-            if ($idShipmentMethod) {
-                $shipmentMethodTransfer->setIdShipmentMethod($idShipmentMethod);
-            }
 
             foreach ($orderTransfer->getItems() as $item) {
                 if ($item->getShipment()->getMethod()->getName() === $shipmentMethodTransfer->getName()) {
