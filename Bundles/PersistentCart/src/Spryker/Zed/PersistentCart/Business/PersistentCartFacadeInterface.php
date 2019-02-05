@@ -199,6 +199,7 @@ interface PersistentCartFacadeInterface
      * Specification:
      *  - Saves quote in database.
      *  - Call quote response extend plugins.
+     *  - Operation will be performed only if customer has permissions for shared cart writing.
      *
      * @api
      *
@@ -228,6 +229,7 @@ interface PersistentCartFacadeInterface
      *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
      *  - Saves quote in database.
      *  - Call quote response extend plugins.
+     *  - Operation will be performed only if customer has permissions for shared cart writing.
      *
      * @api
      *
