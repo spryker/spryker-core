@@ -60,9 +60,9 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface
      */
-    public function getFallbackTranslationPlugin()
+    public function getTranslationPlugin()
     {
-        return $this->getProvidedDependency(MessengerDependencyProvider::PLUGIN_FALLBACK_TRANSLATION);
+        return $this->getProvidedDependency(MessengerDependencyProvider::PLUGIN_TRANSLATION);
     }
 
     /**
@@ -71,7 +71,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     public function getTranslationPlugins(): array
     {
         return array_merge(
-            [$this->getFallbackTranslationPlugin()],
+            [$this->getTranslationPlugin()],
             $this->getProvidedDependency(MessengerDependencyProvider::PLUGINS_TRANSLATION),
         );
     }
