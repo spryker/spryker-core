@@ -39,7 +39,7 @@ interface QuickOrderClientInterface
      * Specification:
      * - Expands QuickOrderItemTransfers with validation messages.
      * - Expands ProductConcreteTransfers in QuickOrderItemTransfers with additional data.
-     * - Adjusts QuickOrderItemTransfers accordingly to corresponding values.
+     * - Adjusts QuickOrderItemTransfers accordingly to recommended values.
      *
      * @api
      *

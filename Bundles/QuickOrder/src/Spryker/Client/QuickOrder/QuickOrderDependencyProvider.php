@@ -10,6 +10,7 @@ namespace Spryker\Client\QuickOrder;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToLocaleClientBridge;
+use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToLocaleClientInterface;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientBridge;
 
 class QuickOrderDependencyProvider extends AbstractDependencyProvider
@@ -41,7 +42,7 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
      */
     protected function addLocaleClient(Container $container): Container
     {
-        $container[static::CLIENT_LOCALE] = function (Container $container) {
+        $container[static::CLIENT_LOCALE] = function (Container $container): QuickOrderToLocaleClientInterface {
             return new QuickOrderToLocaleClientBridge($container->getLocator()->locale()->client());
         };
 
@@ -69,7 +70,7 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuickOrderValidationPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUICK_ORDER_VALIDATION] = function () {
+        $container[static::PLUGINS_QUICK_ORDER_VALIDATION] = function (): array {
             return $this->getQuickOrderValidationPlugins();
         };
 
