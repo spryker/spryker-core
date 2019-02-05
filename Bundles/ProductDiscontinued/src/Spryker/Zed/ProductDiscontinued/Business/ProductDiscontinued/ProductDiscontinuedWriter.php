@@ -40,29 +40,29 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
     protected $productDiscontinuedPluginExecutor;
 
     /**
-     * @var \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PreUnmarkProductDiscontinuedPluginInterface[]
+     * @var \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\ProductDiscontinuedPreDeleteCheckPluginInterface[]
      */
-    protected $preUnmarkProductDiscontinuedPlugins;
+    protected $productDiscontinuedPreDeleteCheckPlugins;
 
     /**
      * @param \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManagerInterface $productDiscontinuedEntityManager
      * @param \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface $productDiscontinuedRepository
      * @param \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutorInterface $productDiscontinuedPluginExecutor
      * @param \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig $productDiscontinuedConfig
-     * @param \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PreUnmarkProductDiscontinuedPluginInterface[] $preUnmarkProductDiscontinuedPlugins
+     * @param \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\ProductDiscontinuedPreDeleteCheckPluginInterface[] $productDiscontinuedPreDeleteCheckPlugins
      */
     public function __construct(
         ProductDiscontinuedEntityManagerInterface $productDiscontinuedEntityManager,
         ProductDiscontinuedRepositoryInterface $productDiscontinuedRepository,
         ProductDiscontinuedPluginExecutorInterface $productDiscontinuedPluginExecutor,
         ProductDiscontinuedConfig $productDiscontinuedConfig,
-        array $preUnmarkProductDiscontinuedPlugins
+        array $productDiscontinuedPreDeleteCheckPlugins
     ) {
         $this->productDiscontinuedEntityManager = $productDiscontinuedEntityManager;
         $this->productDiscontinuedConfig = $productDiscontinuedConfig;
         $this->productDiscontinuedRepository = $productDiscontinuedRepository;
         $this->productDiscontinuedPluginExecutor = $productDiscontinuedPluginExecutor;
-        $this->preUnmarkProductDiscontinuedPlugins = $preUnmarkProductDiscontinuedPlugins;
+        $this->productDiscontinuedPreDeleteCheckPlugins = $productDiscontinuedPreDeleteCheckPlugins;
     }
 
     /**
@@ -97,7 +97,7 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
             return (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(false);
         }
 
-        $productDiscontinuedResponseTransfer = $this->executePreUnmarkProductDiscontinuedPlugins($productDiscontinuedTransfer);
+        $productDiscontinuedResponseTransfer = $this->executeProductDiscontinuedPreDeleteCheckPlugins($productDiscontinuedTransfer);
 
         if (!$productDiscontinuedResponseTransfer->getIsSuccessful()) {
             return $productDiscontinuedResponseTransfer;
@@ -160,13 +160,17 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
-    protected function executePreUnmarkProductDiscontinuedPlugins(
+    protected function executeProductDiscontinuedPreDeleteCheckPlugins(
         ProductDiscontinuedTransfer $productDiscontinuedTransfer
     ): ProductDiscontinuedResponseTransfer {
         $productDiscontinuedResponseTransfer = (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(true);
 
-        foreach ($this->preUnmarkProductDiscontinuedPlugins as $preUnmarkProductDiscontinuedPlugin) {
-            $productDiscontinuedResponseTransfer = $preUnmarkProductDiscontinuedPlugin->execute($productDiscontinuedTransfer);
+        foreach ($this->productDiscontinuedPreDeleteCheckPlugins as $productDiscontinuedPreDeleteCheckPlugin) {
+            $productDiscontinuedResponseTransfer = $productDiscontinuedPreDeleteCheckPlugin->execute($productDiscontinuedTransfer);
+
+            if (!$productDiscontinuedResponseTransfer->getIsSuccessful()) {
+                return $productDiscontinuedResponseTransfer;
+            }
         }
 
         return $productDiscontinuedResponseTransfer;

@@ -47,7 +47,7 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductDiscontinuedPluginExecutor(),
             $this->getConfig(),
-            $this->getPreUnmarkProductDiscontinuedPlugins()
+            $this->getProductDiscontinuedPreDeleteCheckPlugins()
         );
     }
 
@@ -155,10 +155,10 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PreUnmarkProductDiscontinuedPluginInterface[]
+     * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\ProductDiscontinuedPreDeleteCheckPluginInterface[]
      */
-    public function getPreUnmarkProductDiscontinuedPlugins(): array
+    public function getProductDiscontinuedPreDeleteCheckPlugins(): array
     {
-        return $this->getProvidedDependency(ProductDiscontinuedDependencyProvider::PLUGINS_PRE_UNMARK_PRODUCT_DISCONTINUED);
+        return $this->getProvidedDependency(ProductDiscontinuedDependencyProvider::PLUGINS_PRE_DELETE_CHECK_PRODUCT_DISCONTINUED);
     }
 }

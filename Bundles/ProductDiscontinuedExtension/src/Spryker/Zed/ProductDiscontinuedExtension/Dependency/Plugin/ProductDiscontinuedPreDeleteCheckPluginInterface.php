@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 
-interface PreUnmarkProductDiscontinuedPluginInterface
+interface ProductDiscontinuedPreDeleteCheckPluginInterface
 {
     /**
      * Specification:

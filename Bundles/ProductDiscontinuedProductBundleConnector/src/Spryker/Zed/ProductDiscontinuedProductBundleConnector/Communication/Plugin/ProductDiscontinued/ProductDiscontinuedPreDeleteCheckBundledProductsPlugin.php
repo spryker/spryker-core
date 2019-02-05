@@ -10,13 +10,13 @@ namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Communication\Pl
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PreUnmarkProductDiscontinuedPluginInterface;
+use Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\ProductDiscontinuedPreDeleteCheckPluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductDiscontinuedProductBundleConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductDiscontinuedProductBundleConnector\ProductDiscontinuedProductBundleConnectorConfig getConfig()
  */
-class PreUnmarkProductDiscontinuedBundledProductsPlugin extends AbstractPlugin implements PreUnmarkProductDiscontinuedPluginInterface
+class ProductDiscontinuedPreDeleteCheckBundledProductsPlugin extends AbstractPlugin implements ProductDiscontinuedPreDeleteCheckPluginInterface
 {
     /**
      * {@inheritdoc}

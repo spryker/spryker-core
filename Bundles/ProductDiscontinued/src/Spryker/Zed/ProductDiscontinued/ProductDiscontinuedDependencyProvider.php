@@ -19,7 +19,7 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const PLUGINS_POST_PRODUCT_DISCONTINUE = 'PLUGINS_POST_PRODUCT_DISCONTINUE';
     public const PLUGINS_POST_DELETE_PRODUCT_DISCONTINUED = 'PLUGINS_POST_DELETE_PRODUCT_DISCONTINUED';
-    public const PLUGINS_PRE_UNMARK_PRODUCT_DISCONTINUED = 'PLUGINS_PRE_UNMARK_PRODUCT_DISCONTINUED';
+    public const PLUGINS_PRE_DELETE_CHECK_PRODUCT_DISCONTINUED = 'PLUGINS_PRE_DELETE_CHECK_PRODUCT_DISCONTINUED';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -33,7 +33,7 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addProductFacade($container);
         $container = $this->addPostProductDiscontinuePlugins($container);
         $container = $this->addPostDeleteProductDiscontinuedPlugins($container);
-        $container = $this->addPreUnmarkProductDiscontinuedPlugins($container);
+        $container = $this->addProductDiscontinuedPreDeleteCheckPlugins($container);
 
         return $container;
     }
@@ -85,10 +85,10 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPreUnmarkProductDiscontinuedPlugins(Container $container): Container
+    protected function addProductDiscontinuedPreDeleteCheckPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRE_UNMARK_PRODUCT_DISCONTINUED] = function () {
-            return $this->getPreUnmarkProductDiscontinuedPlugins();
+        $container[static::PLUGINS_PRE_DELETE_CHECK_PRODUCT_DISCONTINUED] = function () {
+            return $this->getProductDiscontinuedPreDeleteCheckPlugins();
         };
 
         return $container;
@@ -111,9 +111,9 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PreUnmarkProductDiscontinuedPluginInterface[]
+     * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\ProductDiscontinuedPreDeleteCheckPluginInterface[]
      */
-    protected function getPreUnmarkProductDiscontinuedPlugins(): array
+    protected function getProductDiscontinuedPreDeleteCheckPlugins(): array
     {
         return [];
     }
