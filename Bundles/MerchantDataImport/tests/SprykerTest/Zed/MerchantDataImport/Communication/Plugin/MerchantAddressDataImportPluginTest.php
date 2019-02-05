@@ -43,11 +43,13 @@ class MerchantAddressDataImportPluginTest extends Unit
      */
     public function testImportAddressesImportsData(): void
     {
-        $this->tester->truncateMerchantRelations();
+        $this->tester->truncateMerchantAddressRelations();
 
         $this->tester->assertMerchantAddressDatabaseTableIsEmpty();
 
-        $this->importMerchantData();
+        $this->tester->haveMerchant([
+            'merchant_key' => 'kudu-merchant-1',
+        ]);
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/merchant_address.csv');
@@ -67,35 +69,6 @@ class MerchantAddressDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
         $this->tester->assertMerchantAddressDatabaseTableContainsData();
-    }
-
-    /**
-     * @return void
-     */
-    public function importMerchantData(): void
-    {
-        $this->tester->truncateMerchantRelations();
-
-        $this->tester->assertDatabaseTableIsEmpty();
-
-        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/merchant.csv');
-
-        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
-        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
-
-        $dataImportPlugin = new MerchantDataImportPlugin();
-        $pluginReflection = new ReflectionClass($dataImportPlugin);
-
-        $facadePropertyReflection = $pluginReflection->getParentClass()->getProperty('facade');
-        $facadePropertyReflection->setAccessible(true);
-        $facadePropertyReflection->setValue($dataImportPlugin, $this->getFacadeMock());
-
-        $dataImporterReportTransfer = $dataImportPlugin->import($dataImportConfigurationTransfer);
-
-        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-
-        $this->tester->assertDatabaseTableContainsData();
     }
 
     /**
