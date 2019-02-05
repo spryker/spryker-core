@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditCompanyUnitAddressController extends AbstractController
 {
+    /**
+     * @see \Spryker\Zed\CompanyUnitAddressGui\Communication\Controller\ListCompanyUnitAddressController::indexAction()
+     */
     protected const COMPANY_UNIT_ADDRESS_LIST_URL = '/company-unit-address-gui/list-company-unit-address';
 
     protected const MESSAGE_COMPANY_UNIT_ADDRESS_NOT_FOUND = 'Company unit address not found.';

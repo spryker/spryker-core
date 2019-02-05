@@ -102,6 +102,8 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     }
 
     /**
+     * @module Country
+     *
      * @param int $idCompanyUnitAddress
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
@@ -111,7 +113,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         $query = $this->getFactory()
             ->createCompanyUnitAddressQuery()
             ->filterByIdCompanyUnitAddress($idCompanyUnitAddress)
-            ->innerJoinWithCountry()
+            ->leftJoinWithCountry()
             ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithCompanyBusinessUnit()
             ->endUse();
@@ -121,7 +123,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
          */
         $companyUnitAddressEntity = $query->findOne();
 
-        if (empty($companyUnitAddressEntity)) {
+        if (!$companyUnitAddressEntity) {
             return null;
         }
 
