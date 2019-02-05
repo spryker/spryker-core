@@ -6,7 +6,6 @@
   "require": {
     "php": ">=7.1",
     "spryker/application": "^3.2.0",
-    "spryker/config": "^3.1.0",
     "spryker/customer": "^7.16.1",
     "spryker/glossary": "^3.0.0",
     "spryker/kernel": "^3.0.0",
@@ -22,7 +21,6 @@
   "require-dev": {
     "spryker/availability": "*",
     "spryker/code-sniffer": "*",
-    "spryker/customer": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
