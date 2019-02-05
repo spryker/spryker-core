@@ -9,6 +9,7 @@ namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
+use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
 
 class QuoteCreator implements QuoteCreatorInterface
@@ -24,15 +25,23 @@ class QuoteCreator implements QuoteCreatorInterface
     protected $quoteReader;
 
     /**
+     * @var \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface
+     */
+    protected $quoteMapper;
+
+    /**
      * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface $quoteCreatorPlugin
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
+     * @param \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface $quoteMapper
      */
     public function __construct(
         QuoteCreatorPluginInterface $quoteCreatorPlugin,
-        QuoteReaderInterface $quoteReader
+        QuoteReaderInterface $quoteReader,
+        QuoteMapperInterface $quoteMapper
     ) {
         $this->quoteCreatorPlugin = $quoteCreatorPlugin;
         $this->quoteReader = $quoteReader;
+        $this->quoteMapper = $quoteMapper;
     }
 
     /**
@@ -46,6 +55,14 @@ class QuoteCreator implements QuoteCreatorInterface
             ->requireQuote()
             ->requireCustomerReference();
 
-        return $this->quoteCreatorPlugin->createQuote($restQuoteRequestTransfer);
+        $quoteResponseTransfer = $this->quoteCreatorPlugin->createQuote($restQuoteRequestTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
+        }
+
+        return $quoteResponseTransfer;
     }
 }

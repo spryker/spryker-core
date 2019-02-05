@@ -61,7 +61,9 @@ class CartCreator implements CartCreatorInterface
 
         $quoteResponseTransfer = $this->cartsRestApiClient->createQuote($restQuoteRequestTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->cartRestResponseBuilder->createFailedCreatingCartErrorResponse($quoteResponseTransfer);
+            $restQuoteRequestTransfer = $this->cartsResourceMapper->mapRestQuoteRequestTransferFromRequest($quoteResponseTransfer, $restRequest);
+
+            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($restQuoteRequestTransfer->getErrorCodes());
         }
 
         $restResource = $this->cartsResourceMapper->mapCartsResource(

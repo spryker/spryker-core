@@ -78,9 +78,18 @@ interface QuoteMapperInterface
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
-    public function mapQuoteResponseErrorsToRestCodes(
+    public function mapQuoteResponseErrorsToRestQuoteCollectionResponseErrors(
         QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
     ): QuoteCollectionResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function mapQuoteResponseErrorsToRestCodes(
+        QuoteResponseTransfer $quoteResponseTransfer
+    ): QuoteResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $registeredCustomer

@@ -57,7 +57,9 @@ class QuoteDeleter implements QuoteDeleterInterface
 
         $quoteResponseTransfer = $this->cartReader->findQuoteByUuid($restQuoteRequestTransfer->getQuote());
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $quoteResponseTransfer;
+            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
         }
 
         return $this->persistentCartFacade

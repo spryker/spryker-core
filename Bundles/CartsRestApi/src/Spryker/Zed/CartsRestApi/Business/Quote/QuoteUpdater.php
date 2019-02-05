@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
-use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
@@ -71,27 +70,30 @@ class QuoteUpdater implements QuoteUpdaterInterface
 
         $quoteTransfer = $restQuoteRequestTransfer->getQuote();
         $quoteResponseTransfer = $this->cartReader->findQuoteByUuid($quoteTransfer);
+
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $quoteResponseTransfer;
+            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
         }
 
         $originalQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        $quoteTransfer = $this->processQuoteData($quoteTransfer, $originalQuoteTransfer);
-        $quoteResponseTransfer = $this->validateQuoteResponse(
-            $originalQuoteTransfer,
-            $quoteTransfer,
-            $quoteResponseTransfer
-        );
 
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-            $quoteTransfer = $this->cartFacade->reloadItems(
-                $this->quoteMapper->mapOriginalQuoteTransferToQuoteTransfer($originalQuoteTransfer)
-            );
-            $quoteUpdateRequestTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer);
-            $quoteUpdateRequestAttributesTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestAttributesTransfer($quoteTransfer);
-            $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
-            $quoteResponseTransfer = $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
-        }
+//        $quoteTransfer = $this->processQuoteData($quoteTransfer, $originalQuoteTransfer);
+//
+//        $quoteResponseTransfer = $this->validateQuoteResponse(
+//            $originalQuoteTransfer,
+//            $quoteTransfer,
+//            $quoteResponseTransfer
+//        );
+
+        $quoteTransfer = $this->cartFacade->reloadItems(
+            $this->quoteMapper->mapOriginalQuoteTransferToQuoteTransfer($originalQuoteTransfer)
+        );
+        $quoteUpdateRequestTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer);
+        $quoteUpdateRequestAttributesTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestAttributesTransfer($quoteTransfer);
+        $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
+        $quoteResponseTransfer = $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
 
         return $quoteResponseTransfer;
     }

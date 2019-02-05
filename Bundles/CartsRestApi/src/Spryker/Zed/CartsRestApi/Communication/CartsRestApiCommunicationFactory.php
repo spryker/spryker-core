@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CartsRestApi\Communication;
 
+use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapper;
+use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReader;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\SingleQuoteCreator;
@@ -44,8 +46,17 @@ class CartsRestApiCommunicationFactory extends AbstractCommunicationFactory
         return new QuoteReader(
             $this->getQuoteFacade(),
             $this->getStoreFacade(),
-            $this->getQuoteCollectionReaderPlugins()
+            $this->getQuoteCollectionReaderPlugins(),
+            $this->createQuoteMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface
+     */
+    public function createQuoteMapper(): QuoteMapperInterface
+    {
+        return new QuoteMapper();
     }
 
     /**

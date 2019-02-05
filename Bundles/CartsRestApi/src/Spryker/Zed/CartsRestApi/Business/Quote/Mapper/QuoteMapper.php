@@ -98,7 +98,7 @@ class QuoteMapper implements QuoteMapperInterface
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
-    public function mapQuoteResponseErrorsToRestCodes(
+    public function mapQuoteResponseErrorsToRestQuoteCollectionResponseErrors(
         QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
     ): QuoteCollectionResponseTransfer {
         $errorCodes = [];
@@ -109,6 +109,24 @@ class QuoteMapper implements QuoteMapperInterface
         $quoteCollectionResponseTransfer->setErrorCodes(new ArrayObject([$errorCodes]));
 
         return $quoteCollectionResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function mapQuoteResponseErrorsToRestCodes(
+        QuoteResponseTransfer $quoteResponseTransfer
+    ): QuoteResponseTransfer {
+        $errorCodes = [];
+        foreach ($quoteResponseTransfer->getErrors() as $error) {
+            $errorCodes[] = CartsRestApiConfig::RESPONSE_ERROR_MAP[$error] ?? $error;
+        }
+
+        $quoteResponseTransfer->setErrors($errorCodes);
+
+        return $quoteResponseTransfer;
     }
 
     /**
