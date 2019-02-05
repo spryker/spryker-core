@@ -15,6 +15,8 @@ interface ProductTaxSetsRestApiFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @return void
      */
     public function updateTaxSetsWithoutUuid(): void;

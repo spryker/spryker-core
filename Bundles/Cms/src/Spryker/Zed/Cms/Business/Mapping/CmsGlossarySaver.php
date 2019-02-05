@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\Cms\Business\Mapping;
 
-use Exception;
 use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsGlossaryKeyMappingTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException;
 use Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Throwable;
 
@@ -30,7 +30,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     protected $cmsQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface
      */
     protected $glossaryFacade;
 
@@ -41,12 +41,12 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
 
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface $glossaryFacade
      * @param \Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGeneratorInterface $cmsGlossaryKeyGenerator
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
-        CmsToGlossaryInterface $glossaryFacade,
+        CmsToGlossaryFacadeInterface $glossaryFacade,
         CmsGlossaryKeyGeneratorInterface $cmsGlossaryKeyGenerator
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
@@ -57,12 +57,11 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     /**
      * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
      *
-     * @throws \Exception
      * @throws \Throwable
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer)
+    public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
     {
         try {
             $this->cmsQueryContainer->getConnection()->beginTransaction();
@@ -77,9 +76,6 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
                 $glossaryAttributesTransfer->setFkCmsGlossaryMapping($idCmsGlossaryMapping);
             }
             $this->cmsQueryContainer->getConnection()->commit();
-        } catch (Exception $exception) {
-            $this->cmsQueryContainer->getConnection()->rollBack();
-            throw $exception;
         } catch (Throwable $exception) {
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
@@ -93,7 +89,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
      *
      * @return void
      */
-    public function deleteCmsGlossary($idCmsPage)
+    public function deleteCmsGlossary(int $idCmsPage): void
     {
         $idGlossaryKeys = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($idCmsPage)
             ->select(SpyCmsGlossaryKeyMappingTableMap::COL_FK_GLOSSARY_KEY)
@@ -114,7 +110,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
      *
      * @return int
      */
-    protected function saveCmsGlossaryKeyMapping(CmsGlossaryAttributesTransfer $glossaryAttributesTransfer)
+    protected function saveCmsGlossaryKeyMapping(CmsGlossaryAttributesTransfer $glossaryAttributesTransfer): int
     {
         if ($glossaryAttributesTransfer->getFkCmsGlossaryMapping() === null) {
             return $this->createPageKeyMapping($glossaryAttributesTransfer);
@@ -128,7 +124,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
      *
      * @return int
      */
-    protected function createPageKeyMapping(CmsGlossaryAttributesTransfer $cmsGlossaryAttributesTransfer)
+    protected function createPageKeyMapping(CmsGlossaryAttributesTransfer $cmsGlossaryAttributesTransfer): int
     {
         $this->checkPagePlaceholderNotAmbiguous(
             $cmsGlossaryAttributesTransfer->getFkPage(),
@@ -148,7 +144,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
      *
      * @return int
      */
-    protected function updatePageKeyMapping(CmsGlossaryAttributesTransfer $cmsGlossaryAttributesTransfer)
+    protected function updatePageKeyMapping(CmsGlossaryAttributesTransfer $cmsGlossaryAttributesTransfer): int
     {
         $glossaryKeyMappingEntity = $this->getGlossaryKeyMappingById($cmsGlossaryAttributesTransfer->getFkCmsGlossaryMapping());
         $glossaryKeyMappingEntity->fromArray($cmsGlossaryAttributesTransfer->modifiedToArray());
@@ -179,7 +175,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping
      */
-    protected function getGlossaryKeyMappingById($idMapping)
+    protected function getGlossaryKeyMappingById(int $idMapping): SpyCmsGlossaryKeyMapping
     {
         $mappingEntity = $this->findGlossaryKeyMappingEntityById($idMapping);
 
@@ -191,14 +187,14 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     }
 
     /**
-     * @param int $idPage
+     * @param int|null $idPage
      * @param string $placeholder
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException
      *
      * @return void
      */
-    protected function checkPagePlaceholderNotAmbiguous($idPage, $placeholder)
+    protected function checkPagePlaceholderNotAmbiguous(?int $idPage, string $placeholder): void
     {
         if ($this->hasPagePlaceholderMapping($idPage, $placeholder)) {
             throw new MappingAmbiguousException(sprintf('Tried to create an ambiguous mapping for placeholder %s on page %s', $placeholder, $idPage));
@@ -206,12 +202,12 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     }
 
     /**
-     * @param int $idPage
+     * @param int|null $idPage
      * @param string $placeholder
      *
      * @return bool
      */
-    protected function hasPagePlaceholderMapping($idPage, $placeholder)
+    protected function hasPagePlaceholderMapping(?int $idPage, string $placeholder): bool
     {
         $mappingCount = $this->cmsQueryContainer
             ->queryGlossaryKeyMapping($idPage, $placeholder)
@@ -225,7 +221,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
      *
      * @return string
      */
-    protected function resolveTranslationKey(CmsGlossaryAttributesTransfer $glossaryAttributesTransfer)
+    protected function resolveTranslationKey(CmsGlossaryAttributesTransfer $glossaryAttributesTransfer): string
     {
         $translationKey = $glossaryAttributesTransfer->getTranslationKey();
         if (!$glossaryAttributesTransfer->getTranslationKey()) {
@@ -244,7 +240,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
      *
      * @return void
      */
-    protected function translatePlaceholder(CmsGlossaryAttributesTransfer $glossaryAttributesTransfer, $translationKey)
+    protected function translatePlaceholder(CmsGlossaryAttributesTransfer $glossaryAttributesTransfer, string $translationKey): void
     {
         foreach ($glossaryAttributesTransfer->getTranslations() as $glossaryTranslationTransfer) {
             $this->setDefaultTranslation($glossaryTranslationTransfer);
@@ -266,7 +262,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
      *
      * @return \Generated\Shared\Transfer\KeyTranslationTransfer
      */
-    protected function createTranslationTransfer($translationKey, CmsPlaceholderTranslationTransfer $glossaryTranslationTransfer)
+    protected function createTranslationTransfer(string $translationKey, CmsPlaceholderTranslationTransfer $glossaryTranslationTransfer): KeyTranslationTransfer
     {
         $keyTranslationTransfer = new KeyTranslationTransfer();
         $keyTranslationTransfer->setGlossaryKey($translationKey);
@@ -281,7 +277,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     /**
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping
      */
-    protected function createCmsGlossaryKeyMappingEntity()
+    protected function createCmsGlossaryKeyMappingEntity(): SpyCmsGlossaryKeyMapping
     {
         return new SpyCmsGlossaryKeyMapping();
     }
@@ -291,7 +287,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey|null
      */
-    protected function findGlossaryKeyEntityByTranslationKey($translationKey)
+    protected function findGlossaryKeyEntityByTranslationKey(string $translationKey): ?SpyGlossaryKey
     {
         return $this->cmsQueryContainer
             ->queryKey($translationKey)
@@ -303,7 +299,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping|null
      */
-    protected function findGlossaryKeyMappingEntityById($idMapping)
+    protected function findGlossaryKeyMappingEntityById(int $idMapping): ?SpyCmsGlossaryKeyMapping
     {
         return $this->cmsQueryContainer
             ->queryGlossaryKeyMappingById($idMapping)
@@ -315,7 +311,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
      *
      * @return void
      */
-    protected function setDefaultTranslation(CmsPlaceholderTranslationTransfer $glossaryTranslationTransfer)
+    protected function setDefaultTranslation(CmsPlaceholderTranslationTransfer $glossaryTranslationTransfer): void
     {
         if ($glossaryTranslationTransfer->getTranslation() === null) {
             $glossaryTranslationTransfer->setTranslation(static::DEFAULT_TRANSLATION);
