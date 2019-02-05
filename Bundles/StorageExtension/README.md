@@ -1,6 +1,6 @@
 # StorageExtension Module
 
-StorageRedis provides implementation of Redis as a key-value storage.
+StorageExtension module provides interfaces for extension of the Storage module.
 
 ## Installation
 
