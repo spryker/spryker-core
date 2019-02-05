@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
@@ -34,15 +35,17 @@ class QuoteMapper implements QuoteMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $originalQuoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function mapOriginalQuoteTransferToQuoteTransfer(
+        QuoteTransfer $quoteTransfer,
         QuoteTransfer $originalQuoteTransfer
     ): QuoteTransfer {
-        return (new QuoteTransfer())
-            ->fromArray($originalQuoteTransfer->modifiedToArray(), true);
+        return $originalQuoteTransfer
+            ->fromArray($quoteTransfer->modifiedToArray(), true);
     }
 
     /**
@@ -94,21 +97,22 @@ class QuoteMapper implements QuoteMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
     public function mapQuoteResponseErrorsToRestQuoteCollectionResponseErrors(
-        QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
+        QuoteResponseTransfer $quoteResponseTransfer
     ): QuoteCollectionResponseTransfer {
         $errorCodes = [];
-        foreach ($quoteCollectionResponseTransfer->getErrorCodes() as $error) {
+        foreach ($quoteResponseTransfer->getErrorCodes() as $error) {
             $errorCodes[] = CartsRestApiConfig::RESPONSE_ERROR_MAP[$error] ?? $error;
         }
 
-        $quoteCollectionResponseTransfer->setErrorCodes(new ArrayObject([$errorCodes]));
+        $quoteResponseTransfer->setErrorCodes(new ArrayObject([$errorCodes]));
 
-        return $quoteCollectionResponseTransfer;
+        return (new QuoteCollectionResponseTransfer())
+            ->setQuoteCollection((new QuoteCollectionTransfer())->addQuote($quoteResponseTransfer->getQuoteTransfer()));
     }
 
     /**
@@ -121,10 +125,10 @@ class QuoteMapper implements QuoteMapperInterface
     ): QuoteResponseTransfer {
         $errorCodes = [];
         foreach ($quoteResponseTransfer->getErrors() as $error) {
-            $errorCodes[] = CartsRestApiConfig::RESPONSE_ERROR_MAP[$error] ?? $error;
+            $errorCodes[] = CartsRestApiConfig::RESPONSE_ERROR_MAP[$error['value']] ?? $error;
         }
 
-        $quoteResponseTransfer->setErrors($errorCodes);
+        $quoteResponseTransfer->setErrorCodes($errorCodes);
 
         return $quoteResponseTransfer;
     }

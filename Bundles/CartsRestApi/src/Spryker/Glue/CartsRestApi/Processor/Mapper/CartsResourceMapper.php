@@ -100,7 +100,7 @@ class CartsResourceMapper implements CartsResourceMapperInterface
     ): RestQuoteRequestTransfer {
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
             return (new RestQuoteRequestTransfer())->setErrorCodes(
-                $this->mapQuoteResponseErrorsToErrorsCodes($quoteResponseTransfer->getErrors()->getArrayCopy())
+                $this->mapQuoteResponseErrorsToErrorsCodes($quoteResponseTransfer->getErrorCodes())
             );
         }
 
@@ -157,7 +157,8 @@ class CartsResourceMapper implements CartsResourceMapperInterface
                 ->setQuoteUuid($uuidQuote);
         }
 
-        $restQuoteRequestTransfer->setQuote($quoteTransfer);
+        $restQuoteRequestTransfer->setQuote($quoteTransfer->setUuid($uuidQuote));
+        $restQuoteRequestTransfer->setQuoteUuid($uuidQuote);
 
         return $restQuoteRequestTransfer;
     }
@@ -243,7 +244,7 @@ class CartsResourceMapper implements CartsResourceMapperInterface
         $errorCodes = [];
 
         foreach ($errors as $error) {
-            $errorCodes[] = $error->getMessage();
+            $errorCodes[] = $error;
         }
 
         return $errorCodes;

@@ -47,6 +47,21 @@ class CartsRestApiConfig extends AbstractBundleConfig
      */
     public const GLOSSARY_KEY_ISO_CODE = '{{iso_code}}';
 
+    /**
+     * @see \Spryker\Zed\Price\Business\Validator\QuoteValidator::MESSAGE_PRICE_MODE_DATA_IS_MISSING
+     */
+    public const MESSAGE_PRICE_MODE_DATA_IS_MISSING = 'quote.validation.error.price_mode_is_missing';
+
+    /**
+     * @see \Spryker\Zed\Price\Business\Validator\QuoteValidator::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT
+     */
+    public const MESSAGE_PRICE_MODE_DATA_IS_INCORRECT = 'quote.validation.error.price_mode_is_incorrect';
+
+    /**
+     * @see \Spryker\Zed\Price\Business\Validator\QuoteValidator::GLOSSARY_KEY_PRICE_MODE
+     */
+    public const GLOSSARY_KEY_PRICE_MODE = '{{price_mode}}';
+
     public const RESPONSE_ERROR_MAP = [
         self::GLOSSARY_KEY_QUOTE_NOT_AVAILABLE => SharedCartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND,
         self::GLOSSARY_KEY_PERMISSION_FAILED => SharedCartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART_ITEM,
@@ -55,5 +70,8 @@ class CartsRestApiConfig extends AbstractBundleConfig
         self::MESSAGE_CURRENCY_DATA_IS_MISSING => SharedCartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_CART,
         self::MESSAGE_CURRENCY_DATA_IS_INCORRECT => SharedCartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_CART,
         self::GLOSSARY_KEY_ISO_CODE => SharedCartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_CART,
+        self::MESSAGE_PRICE_MODE_DATA_IS_MISSING => SharedCartsRestApiConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED,
+        self::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT => SharedCartsRestApiConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED,
+        self::GLOSSARY_KEY_PRICE_MODE => SharedCartsRestApiConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED,
     ];
 }

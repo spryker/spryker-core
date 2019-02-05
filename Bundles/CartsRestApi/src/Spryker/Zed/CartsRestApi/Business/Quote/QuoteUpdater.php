@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
 use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
-use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
@@ -72,28 +71,27 @@ class QuoteUpdater implements QuoteUpdaterInterface
         $quoteResponseTransfer = $this->cartReader->findQuoteByUuid($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
+            return $quoteResponseTransfer;
         }
 
         $originalQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
 
-//        $quoteTransfer = $this->processQuoteData($quoteTransfer, $originalQuoteTransfer);
-//
-//        $quoteResponseTransfer = $this->validateQuoteResponse(
-//            $originalQuoteTransfer,
-//            $quoteTransfer,
-//            $quoteResponseTransfer
-//        );
-
+        $this->processQuoteData($quoteTransfer, $originalQuoteTransfer);
         $quoteTransfer = $this->cartFacade->reloadItems(
-            $this->quoteMapper->mapOriginalQuoteTransferToQuoteTransfer($originalQuoteTransfer)
+            $this->quoteMapper->mapOriginalQuoteTransferToQuoteTransfer($quoteTransfer, $originalQuoteTransfer)
         );
+
+
         $quoteUpdateRequestTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer);
         $quoteUpdateRequestAttributesTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestAttributesTransfer($quoteTransfer);
         $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
         $quoteResponseTransfer = $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
+
+        if ($quoteResponseTransfer->getIsSuccessful() === false) {
+            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
+        }
 
         return $quoteResponseTransfer;
     }
@@ -141,27 +139,5 @@ class QuoteUpdater implements QuoteUpdaterInterface
         }
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $originalQuoteTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function validateQuoteResponse(
-        QuoteTransfer $originalQuoteTransfer,
-        QuoteTransfer $quoteTransfer,
-        QuoteResponseTransfer $quoteResponseTransfer
-    ): QuoteResponseTransfer {
-        if (count($originalQuoteTransfer->getItems()) > 0 && $quoteTransfer->getPriceMode()) {
-            $quoteResponseTransfer
-                ->setIsSuccessful(false)
-                ->addError((new QuoteErrorTransfer())
-                    ->setMessage(CartsRestApiConfig::RESPONSE_MESSAGE_PRICE_MODE_CANT_BE_CHANGED));
-        }
-
-        return $quoteResponseTransfer;
     }
 }

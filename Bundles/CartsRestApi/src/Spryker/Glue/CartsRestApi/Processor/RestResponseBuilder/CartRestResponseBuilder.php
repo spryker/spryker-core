@@ -198,6 +198,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     {
         $restResponse = $this->createRestResponse();
 
+        file_put_contents('vcv.txt', print_r($errorCodes, 1));
         foreach ($errorCodes as $errorCode) {
             $errorSignature = CartsRestApiConfig::RESPONSE_ERROR_MAP[$errorCode] ?? [
                     'status' => CartsRestApiConfig::RESPONSE_UNEXPECTED_HTTP_STATUS,

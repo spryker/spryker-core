@@ -29,11 +29,13 @@ interface QuoteMapperInterface
     ): QuoteUpdateRequestTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $originalQuoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function mapOriginalQuoteTransferToQuoteTransfer(
+        QuoteTransfer $quoteTransfer,
         QuoteTransfer $originalQuoteTransfer
     ): QuoteTransfer;
 
@@ -74,12 +76,12 @@ interface QuoteMapperInterface
     ): RestQuoteCollectionRequestTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
     public function mapQuoteResponseErrorsToRestQuoteCollectionResponseErrors(
-        QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
+        QuoteResponseTransfer $quoteResponseTransfer
     ): QuoteCollectionResponseTransfer;
 
     /**

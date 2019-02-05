@@ -32,7 +32,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER = 'Cart uuid or item group key is not specified.';
     public const EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY = 'Anonymous customer unique id is empty.';
     public const EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART = 'Customer already has a cart.';
-    public const RESPONSE_MESSAGE_PRICE_MODE_CANT_BE_CHANGED = 'Can’t switch price mode when there are items in the cart.';
+    public const RESPONSE_MESSAGE_PRICE_MODE_CANT_BE_CHANGED = 'Failed to update cart.';
 
     /**
      * Do not forget to add mapping:

@@ -16,6 +16,7 @@ use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
 use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
 
 class QuoteReader implements QuoteReaderInterface
 {
@@ -66,7 +67,13 @@ class QuoteReader implements QuoteReaderInterface
     {
         $quoteTransfer->requireUuid();
 
-        return $this->quoteFacade->findQuoteByUuid($quoteTransfer);
+        $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid($quoteTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            $quoteResponseTransfer->addErrorCode(SharedCartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND);
+        }
+
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -96,7 +103,9 @@ class QuoteReader implements QuoteReaderInterface
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $quoteCollectionResponseTransfer;
+            return $this->quoteMapper->mapQuoteResponseErrorsToRestQuoteCollectionResponseErrors(
+                $quoteResponseTransfer
+            );
         }
 
         return $quoteCollectionResponseTransfer

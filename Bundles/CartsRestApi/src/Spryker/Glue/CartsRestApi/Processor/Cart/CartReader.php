@@ -88,9 +88,7 @@ class CartReader implements CartReaderInterface
 
         if ($quoteResponseTransfer->getIsSuccessful() === false
             || $restRequest->getUser()->getNaturalIdentifier() !== $quoteResponseTransfer->getQuoteTransfer()->getCustomerReference()) {
-            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
-                [SharedCartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND]
-            );
+            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
         }
 
         $cartResource = $this->cartsResourceMapper->mapCartsResource(
