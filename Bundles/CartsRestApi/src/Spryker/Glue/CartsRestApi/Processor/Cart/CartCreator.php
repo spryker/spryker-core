@@ -60,7 +60,6 @@ class CartCreator implements CartCreatorInterface
         $restQuoteRequestTransfer = $this->cartsResourceMapper->createRestQuoteRequestTransfer($restRequest, $quoteTransfer);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->createQuote($restQuoteRequestTransfer);
-        file_put_contents('vcv.txt', print_r($quoteResponseTransfer->getErrors(), 1));
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             $restQuoteRequestTransfer = $this->cartsResourceMapper->mapRestQuoteRequestTransferFromRequest($quoteResponseTransfer, $restRequest);

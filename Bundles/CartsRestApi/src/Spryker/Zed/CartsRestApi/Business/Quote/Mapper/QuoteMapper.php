@@ -121,10 +121,10 @@ class QuoteMapper implements QuoteMapperInterface
     ): QuoteResponseTransfer {
         $errorCodes = [];
         foreach ($quoteResponseTransfer->getErrors() as $error) {
-            $errorCodes[] = CartsRestApiConfig::RESPONSE_ERROR_MAP[$error['value']] ?? $error;
+            $errorCodes[] = CartsRestApiConfig::RESPONSE_ERROR_MAP[$error] ?? $error;
         }
 
-        $quoteResponseTransfer->setErrors(new ArrayObject($errorCodes));
+        $quoteResponseTransfer->setErrors($errorCodes);
 
         return $quoteResponseTransfer;
     }

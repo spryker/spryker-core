@@ -110,7 +110,7 @@
     </transfer>
 
     <transfer name="QuoteResponse">
-        <property name="errors" type="QuoteError[]" singular="error"/>
+        <property name="errors" type="array" singular="error"/>
     </transfer>
 
 </transfers>
