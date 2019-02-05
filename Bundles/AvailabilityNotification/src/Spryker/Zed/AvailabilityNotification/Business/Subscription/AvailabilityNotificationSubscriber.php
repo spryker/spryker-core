@@ -10,6 +10,7 @@ namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Spryker\Shared\Customer\Code\Messages;
+use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface;
 
 class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubscriberInterface
@@ -20,7 +21,7 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
     protected $availabilitySubscriptionSaver;
 
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSenderInterface
+     * @var \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface
      */
     protected $availabilityNotificationSender;
 
@@ -31,7 +32,7 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
 
     /**
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaverInterface $availabilitySubscriptionSaver
-     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSenderInterface $availabilityNotificationSender
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface $availabilityNotificationSender
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface $utilValidateService
      */
     public function __construct(

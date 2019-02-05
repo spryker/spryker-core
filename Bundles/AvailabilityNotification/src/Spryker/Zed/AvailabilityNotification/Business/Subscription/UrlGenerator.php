@@ -9,13 +9,10 @@ namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\LocalizedUrlTransfer;
-use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig;
 
 class UrlGenerator implements UrlGeneratorInterface
 {
-    public const ROUTE_UNSUBSCRIBE = '/availability-notification/unsubscribe-by-key';
-
     public const PARAM_SUBSCRIPTION_KEY = 'subscriptionKey';
 
     /**
@@ -38,12 +35,16 @@ class UrlGenerator implements UrlGeneratorInterface
      */
     public function createUnsubscriptionLink(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): string
     {
-        $params = [static::PARAM_SUBSCRIPTION_KEY => $availabilitySubscriptionTransfer->getSubscriptionKey()];
+        $yvesBaseUrl = $this->config->getBaseUrlYves();
+
+        if ($yvesBaseUrl === null) {
+            return '';
+        }
+
         $localeName = $availabilitySubscriptionTransfer->getLocale()->getLocaleName();
         $locale = $this->getLanguageFromLocale($localeName);
-        $unsubscriptionUrl = Url::generate($locale . static::ROUTE_UNSUBSCRIBE, $params)->build();
 
-        return $this->config->getBaseUrlYves() . $unsubscriptionUrl;
+        return $yvesBaseUrl . $locale . $this->config->getUnsubscribeRoute() . $availabilitySubscriptionTransfer->getSubscriptionKey();
     }
 
     /**
@@ -54,6 +55,10 @@ class UrlGenerator implements UrlGeneratorInterface
     public function generateProductUrl(LocalizedUrlTransfer $localizedUrlTransfer): string
     {
         $yvesBaseUrl = $this->config->getBaseUrlYves();
+
+        if ($yvesBaseUrl === null) {
+            return '';
+        }
 
         return $yvesBaseUrl . $localizedUrlTransfer->getUrl();
     }

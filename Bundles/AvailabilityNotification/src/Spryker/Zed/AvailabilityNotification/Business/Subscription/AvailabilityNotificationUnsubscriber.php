@@ -9,6 +9,7 @@ namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface;
@@ -21,7 +22,7 @@ class AvailabilityNotificationUnsubscriber implements AvailabilityNotificationUn
     protected $entityManager;
 
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSenderInterface
+     * @var \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface
      */
     protected $availabilityNotificationSender;
 
@@ -37,12 +38,16 @@ class AvailabilityNotificationUnsubscriber implements AvailabilityNotificationUn
 
     /**
      * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface $entityManager
-     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSenderInterface $availabilityNotificationSender
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface $availabilityNotificationSender
      * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface $productFacade
      */
-    public function __construct(AvailabilityNotificationEntityManagerInterface $entityManager, AvailabilityNotificationSenderInterface $availabilityNotificationSender, AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository, AvailabilityNotificationToProductFacadeInterface $productFacade)
-    {
+    public function __construct(
+        AvailabilityNotificationEntityManagerInterface $entityManager,
+        AvailabilityNotificationSenderInterface $availabilityNotificationSender,
+        AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository,
+        AvailabilityNotificationToProductFacadeInterface $productFacade
+    ) {
         $this->entityManager = $entityManager;
         $this->availabilityNotificationSender = $availabilityNotificationSender;
         $this->availabilityNotificationRepository = $availabilityNotificationRepository;

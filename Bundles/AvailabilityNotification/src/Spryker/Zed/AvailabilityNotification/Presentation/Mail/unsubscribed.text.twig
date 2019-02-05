@@ -1,3 +1,3 @@
-{{ 'availability_subscription.mail.unsubscribed.body'|trans({'%name%': mail.productAttributes.name}) }}
+{{ 'availability_subscription.mail.unsubscribed.body'|trans({'%name%': mail.availabilitySubscriptionMailData.productAttributes.name}) }}
 
-{{ 'availability_subscription.mail.footer'|trans({'%link%': mail.availabilityUnsubscriptionLink})|raw }}
+{{ 'availability_subscription.mail.footer'|trans({'%link%': mail.availabilitySubscriptionMailData.availabilityUnsubscriptionLink})|raw }}

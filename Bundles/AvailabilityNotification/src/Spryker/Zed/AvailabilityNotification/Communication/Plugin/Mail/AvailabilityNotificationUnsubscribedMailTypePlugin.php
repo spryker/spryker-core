@@ -18,7 +18,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  */
 class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-    public const MAIL_TYPE = 'AVAILABILITY_NOTIFICATION_UNSUBSCRIBED_MAIL';
+    public const AVAILABILITY_NOTIFICATION_UNSUBSCRIBED_MAIL = 'AVAILABILITY_NOTIFICATION_UNSUBSCRIBED_MAIL';
 
     /**
      * @api
@@ -27,7 +27,7 @@ class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin 
      */
     public function getName(): string
     {
-        return static::MAIL_TYPE;
+        return static::AVAILABILITY_NOTIFICATION_UNSUBSCRIBED_MAIL;
     }
 
     /**
@@ -54,7 +54,11 @@ class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin 
      */
     protected function setSubject(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
-        $productAttributes = $mailBuilder->getMailTransfer()->getProductAttributes();
+        $mailTransfer = $mailBuilder->getMailTransfer();
+        $mailTransfer->requireAvailabilitySubscriptionMailData();
+        $productAttributes = $mailTransfer
+            ->getAvailabilitySubscriptionMailData()
+            ->getProductAttributes();
         $mailBuilder->setSubject(
             'availability_subscription.mail.unsubscribed.subject',
             ['%name%' => $productAttributes['name'] ?? '']
@@ -94,7 +98,12 @@ class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin 
      */
     protected function setRecipient(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
-        $availabilitySubscriptionTransfer = $mailBuilder->getMailTransfer()->requireAvailabilitySubscription()->getAvailabilitySubscription();
+        $mailTransfer = $mailBuilder->getMailTransfer();
+        $mailTransfer->requireAvailabilitySubscriptionMailData();
+        $availabilitySubscriptionTransfer = $mailTransfer
+            ->getAvailabilitySubscriptionMailData()
+            ->requireAvailabilitySubscription()
+            ->getAvailabilitySubscription();
 
         $mailBuilder->addRecipient($availabilitySubscriptionTransfer->getEmail(), '');
 

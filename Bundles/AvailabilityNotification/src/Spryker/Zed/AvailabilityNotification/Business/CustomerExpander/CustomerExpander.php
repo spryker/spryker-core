@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\CustomerExpander;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface;
 
@@ -32,8 +33,8 @@ class CustomerExpander implements CustomerExpanderInterface
      */
     public function expandCustomerTransferWithAvailabilitySubscriptionList(CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        $availabilitySubscriptionCollection = $this->availabilitySubscriptionReader->findByCustomerReference($customerTransfer->getCustomerReference());
-        $customerTransfer->setAvailabilitySubscriptionCollection($availabilitySubscriptionCollection);
+        $availabilitySubscriptions = $this->availabilitySubscriptionReader->findByCustomerReference($customerTransfer->getCustomerReference());
+        $customerTransfer->setAvailabilitySubscriptions(new ArrayObject($availabilitySubscriptions));
 
         return $customerTransfer;
     }

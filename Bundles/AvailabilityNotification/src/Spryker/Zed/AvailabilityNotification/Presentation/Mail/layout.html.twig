@@ -1,5 +1,5 @@
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <!-- NAME: 1 COLUMN -->
@@ -597,7 +597,7 @@
                                             <tbody>
                                             <tr>
                                                 <td class="mcnImageContent" valign="top" style="padding-right: 9px;padding-left: 9px;padding-top: 0;padding-bottom: 0;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
-                                                    <img align="center" alt="{{ mail.productAttributes.name }}" src="{{ mail.productAttributes.image }}" width="250" style="max-width: 500px;padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" class="mcnRetinaImage">
+                                                    <img align="center" alt="{{ mail.availabilitySubscriptionMailData.productAttributes.name }}" src="{{ mail.availabilitySubscriptionMailData.productAttributes.image }}" width="250" style="max-width: 500px;padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" class="mcnRetinaImage">
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -651,7 +651,7 @@
                                             <tbody>
                                             <tr>
                                                 <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #656565;font-family: Helvetica;font-size: 12px;line-height: 150%;text-align: center;">
-                                                    {{ 'availability_subscription.mail.footer'|trans({'%link%': mail.availabilityUnsubscriptionLink})|raw }}
+                                                    {{ 'availability_subscription.mail.footer'|trans({'%link%': mail.availabilitySubscriptionMailData.availabilityUnsubscriptionLink})|raw }}
                                                 </td>
                                             </tr>
                                             </tbody>

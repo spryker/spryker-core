@@ -8,16 +8,36 @@
 namespace Spryker\Zed\AvailabilityNotification;
 
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Config\Config;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AvailabilityNotificationConfig extends AbstractBundleConfig
 {
+    protected const ROUTE_UNSUBSCRIBE = '/availability-notification/unsubscribe-by-key/';
+
+    /**
+     * @return string|null
+     */
+    public function getBaseUrlYves(): ?string
+    {
+        $config = $this->getConfig();
+
+        if ($config->hasKey(ApplicationConstants::BASE_URL_YVES)) {
+            return $config->get(ApplicationConstants::BASE_URL_YVES);
+        }
+
+        // @deprecated This is just for backward compatibility
+        if ($config->hasKey(ApplicationConstants::HOST_YVES)) {
+            return $config->get(ApplicationConstants::HOST_YVES);
+        }
+
+        return null;
+    }
+
     /**
      * @return string
      */
-    public function getBaseUrlYves(): string
+    public function getUnsubscribeRoute(): string
     {
-        return Config::get(ApplicationConstants::BASE_URL_YVES);
+        return static::ROUTE_UNSUBSCRIBE;
     }
 }

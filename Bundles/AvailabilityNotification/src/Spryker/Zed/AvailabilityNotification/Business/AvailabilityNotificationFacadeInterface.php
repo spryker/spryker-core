@@ -8,7 +8,6 @@
 namespace Spryker\Zed\AvailabilityNotification\Business;
 
 use Generated\Shared\Transfer\AvailabilityNotificationTransfer;
-use Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -33,19 +32,8 @@ interface AvailabilityNotificationFacadeInterface
 
     /**
      * Specification:
-     * - Find a availability subscription
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
-     */
-    public function findAvailabilitySubscription(AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer): AvailabilitySubscriptionResponseTransfer;
-
-    /**
-     * Specification:
      * - Removes provided subscription.
+     * - Sends success email.
      *
      * @api
      *
@@ -58,6 +46,7 @@ interface AvailabilityNotificationFacadeInterface
     /**
      * Specification:
      * - Anonymizes personal information of the provided subscription.
+     * - Removes all user's subscriptions
      *
      * @api
      *
@@ -82,7 +71,7 @@ interface AvailabilityNotificationFacadeInterface
     /**
      * Specification:
      * - Finds availability subscription lists.
-     * - Expands customer transfer with AvailabilitySubscriptionCollectionTransfer.
+     * - Expands customer transfer with array.
      *
      * @api
      *

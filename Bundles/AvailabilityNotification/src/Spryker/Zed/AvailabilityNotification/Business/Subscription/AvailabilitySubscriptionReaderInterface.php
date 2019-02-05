@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 
 interface AvailabilitySubscriptionReaderInterface
@@ -33,12 +32,15 @@ interface AvailabilitySubscriptionReaderInterface
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findOneByCustomerReferenceAndSku(string $customerReference, string $sku): ?AvailabilitySubscriptionTransfer;
+    public function findOneByCustomerReferenceAndSku(
+        string $customerReference,
+        string $sku
+    ): ?AvailabilitySubscriptionTransfer;
 
     /**
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer[]
      */
-    public function findByCustomerReference(string $customerReference): AvailabilitySubscriptionCollectionTransfer;
+    public function findByCustomerReference(string $customerReference): array;
 }

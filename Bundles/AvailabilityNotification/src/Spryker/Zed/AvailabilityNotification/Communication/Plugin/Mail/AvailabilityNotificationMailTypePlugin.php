@@ -20,7 +20,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  */
 class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-    public const MAIL_TYPE = 'AVAILABILITY_NOTIFICATION_MAIL';
+    public const AVAILABILITY_NOTIFICATION_MAIL = 'AVAILABILITY_NOTIFICATION_MAIL';
 
     /**
      * @api
@@ -29,7 +29,7 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
      */
     public function getName(): string
     {
-        return static::MAIL_TYPE;
+        return static::AVAILABILITY_NOTIFICATION_MAIL;
     }
 
     /**
@@ -56,7 +56,9 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
      */
     protected function setSubject(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
-        $productAttributes = $mailBuilder->getMailTransfer()->getProductAttributes();
+        $mailTransfer = $mailBuilder->getMailTransfer();
+        $mailTransfer->requireAvailabilitySubscriptionMailData();
+        $productAttributes = $mailTransfer->getAvailabilitySubscriptionMailData()->getProductAttributes();
         $mailBuilder->setSubject('availability_subscription.mail.notification.subject', ['%name%' => $productAttributes['name'] ?? '']);
 
         return $this;
@@ -93,9 +95,11 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
      */
     protected function setRecipient(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
-        $customerTransfer = $mailBuilder->getMailTransfer()->requireAvailabilitySubscription()->getAvailabilitySubscription();
+        $mailTransfer = $mailBuilder->getMailTransfer();
+        $mailTransfer->requireAvailabilitySubscriptionMailData();
+        $subscription = $mailTransfer->getAvailabilitySubscriptionMailData()->getAvailabilitySubscription();
 
-        $mailBuilder->addRecipient($customerTransfer->getEmail(), '');
+        $mailBuilder->addRecipient($subscription->getEmail(), '');
 
         return $this;
     }

@@ -1,11 +1,11 @@
 {{ 'availability_subscription.mail.subscribed.head'|trans|raw }}
 
-{{ mail.productAttributes.name }}
+{{ mail.availabilitySubscriptionMailData.productAttributes.name }}
 
-{{ mail.productAttributes.price ?? '' }}
+{{ mail.availabilitySubscriptionMailData.productAttributes.price ?? '' }}
 
-{% for name, value in mail.product.attributes if name %}
+{% for name, value in mail.availabilitySubscriptionMailData.product.attributes if name %}
     {{ ('product.attribute.' ~ name) | trans }}: {{ value }}
 {% endfor %}
 
-{{ 'availability_subscription.mail.footer'|trans({'%link%': mail.availabilityUnsubscriptionLink})|raw }}
+{{ 'availability_subscription.mail.footer'|trans({'%link%': mail.availabilitySubscriptionMailData.availabilityUnsubscriptionLink})|raw }}

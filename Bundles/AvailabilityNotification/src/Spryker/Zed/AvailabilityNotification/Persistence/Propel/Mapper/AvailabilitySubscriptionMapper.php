@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -42,17 +41,16 @@ class AvailabilitySubscriptionMapper implements AvailabilitySubscriptionMapperIn
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $availabilitySubscriptionEntities
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer
+     * @return array
      */
-    public function mapAvailabilitySubscriptionTransferCollection(ObjectCollection $availabilitySubscriptionEntities): AvailabilitySubscriptionCollectionTransfer
+    public function mapAvailabilitySubscriptionTransferCollection(ObjectCollection $availabilitySubscriptionEntities): array
     {
-        $availabilitySubscriptionCollectionTransfer = new AvailabilitySubscriptionCollectionTransfer();
+        $availabilitySubscriptions = [];
 
         foreach ($availabilitySubscriptionEntities as $availabilitySubscriptionEntity) {
-            $availabilitySubscriptionTransfer = $this->mapAvailabilitySubscriptionTransfer($availabilitySubscriptionEntity);
-            $availabilitySubscriptionCollectionTransfer->addAvailabilitySubscription($availabilitySubscriptionTransfer);
+            $availabilitySubscriptions[] = $this->mapAvailabilitySubscriptionTransfer($availabilitySubscriptionEntity);
         }
 
-        return $availabilitySubscriptionCollectionTransfer;
+        return $availabilitySubscriptions;
     }
 }

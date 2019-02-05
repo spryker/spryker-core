@@ -8,7 +8,6 @@
 namespace Spryker\Zed\AvailabilityNotification\Business;
 
 use Generated\Shared\Transfer\AvailabilityNotificationTransfer;
-use Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -37,22 +36,6 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
             ->subscribe($availabilitySubscriptionTransfer);
 
         return $subscriptionResponse;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
-     */
-    public function findAvailabilitySubscription(AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer): AvailabilitySubscriptionResponseTransfer
-    {
-        return $this->getFactory()
-            ->createAvailabilitySubscriptionFinder()
-            ->findAvailabilitySubscription($availabilitySubscriptionRequestTransfer);
     }
 
     /**

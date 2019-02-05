@@ -16,9 +16,9 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  * @method \Spryker\Zed\AvailabilityNotification\Communication\AvailabilityNotificationCommunicationFactory getFactory()
  * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
  */
-class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
+class AvailabilityNotificationSubscriptionMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-    public const MAIL_TYPE = 'AVAILABILITY_NOTIFICATION_SUBSCRIBED_MAIL';
+    public const AVAILABILITY_NOTIFICATION_SUBSCRIPTION_MAIL = 'AVAILABILITY_NOTIFICATION_SUBSCRIBED_MAIL';
 
     /**
      * @api
@@ -27,7 +27,7 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
      */
     public function getName(): string
     {
-        return static::MAIL_TYPE;
+        return static::AVAILABILITY_NOTIFICATION_SUBSCRIPTION_MAIL;
     }
 
     /**
@@ -91,8 +91,8 @@ class AvailabilityNotificationSubscribedMailTypePlugin extends AbstractPlugin im
     protected function setRecipient(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $mailTransfer = $mailBuilder->getMailTransfer();
-        $mailTransfer->requireAvailabilitySubscription();
-        $availabilitySubscriptionTransfer = $mailTransfer->getAvailabilitySubscription();
+        $mailTransfer->requireAvailabilitySubscriptionMailData();
+        $availabilitySubscriptionTransfer = $mailTransfer->getAvailabilitySubscriptionMailData()->getAvailabilitySubscription();
 
         $mailBuilder->addRecipient($availabilitySubscriptionTransfer->getEmail(), '');
 

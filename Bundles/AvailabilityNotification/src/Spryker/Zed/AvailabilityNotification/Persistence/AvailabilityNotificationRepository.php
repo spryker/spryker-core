@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -65,9 +64,9 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
      * @param string $sku
      * @param int $fkStore
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer[]
      */
-    public function findBySkuAndStore(string $sku, int $fkStore): AvailabilitySubscriptionCollectionTransfer
+    public function findBySkuAndStore(string $sku, int $fkStore): array
     {
         $availabilitySubscriptionEntities = $this->querySubscription()
             ->filterBySku($sku)
@@ -109,23 +108,24 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
      * @param string $customerReference
      * @param int $fkStore
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer[]
      */
-    public function findByCustomerReference(string $customerReference, int $fkStore): AvailabilitySubscriptionCollectionTransfer
+    public function findByCustomerReference(string $customerReference, int $fkStore): array
     {
         $availabilitySubscriptionEntities = $this->querySubscription()
             ->filterByCustomerReference($customerReference)
             ->filterByFkStore($fkStore)
             ->find();
 
-        $availabilitySubscriptionCollection = new AvailabilitySubscriptionCollectionTransfer();
+        $availabilitySubscriptions = [];
 
         foreach ($availabilitySubscriptionEntities as $availabilitySubscriptionEntity) {
-            $availabilitySubscription = $this->getFactory()->createAvailabilitySubscriptionMapper()->mapAvailabilitySubscriptionTransfer($availabilitySubscriptionEntity);
-            $availabilitySubscriptionCollection->addAvailabilitySubscription($availabilitySubscription);
+            $availabilitySubscriptions[] = $this->getFactory()
+                ->createAvailabilitySubscriptionMapper()
+                ->mapAvailabilitySubscriptionTransfer($availabilitySubscriptionEntity);
         }
 
-        return $availabilitySubscriptionCollection;
+        return $availabilitySubscriptions;
     }
 
     /**

@@ -28,6 +28,10 @@
     </transfer>
 
     <transfer name="Mail">
+        <property name="availabilitySubscriptionMailData" type="AvailabilitySubscriptionMailData" />
+    </transfer>
+
+    <transfer name="AvailabilitySubscriptionMailDataTransfer">
         <property name="product" type="ProductConcrete" />
         <property name="productAttributes" type="array" />
         <property name="availabilitySubscription" type="AvailabilitySubscription" />
@@ -39,10 +43,6 @@
         <property name="currencyIsoCode" type="string"/>
     </transfer>
 
-    <transfer name="AvailabilitySubscriptionCollection">
-        <property name="availabilitySubscriptions" type="AvailabilitySubscription[]" singular="availabilitySubscription"/>
-    </transfer>
-
     <transfer name="AvailabilityNotification">
         <property name="sku" type="string"/>
         <property name="store" type="Store"/>
@@ -50,7 +50,7 @@
     </transfer>
 
     <transfer name="Customer">
-        <property name="availabilitySubscriptionCollection" type="AvailabilitySubscriptionCollection"/>
+        <property name="availabilitySubscriptions" type="AvailabilitySubscription[]" singular="availabilitySubscription"/>
     </transfer>
 
 </transfers>

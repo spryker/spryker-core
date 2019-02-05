@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\AvailabilityNotification\Zed;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Spryker\Client\AvailabilityNotification\Dependency\Client\AvailabilityNotificationToZedRequestClientInterface;
@@ -51,18 +50,5 @@ class AvailabilityNotificationStub implements AvailabilityNotificationStubInterf
         $availabilityNotificationResponseTransfer = $this->zedRequestClient->call('/availability-notification/gateway/unsubscribe', $availabilitySubscriptionTransfer);
 
         return $availabilityNotificationResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
-     */
-    public function findAvailabilitySubscription(AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer): AvailabilitySubscriptionResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer $availabilitySubscriptionTransfer */
-        $availabilitySubscriptionTransfer = $this->zedRequestClient->call('/availability-notification/gateway/find-availability-subscription', $availabilitySubscriptionRequestTransfer);
-
-        return $availabilitySubscriptionTransfer;
     }
 }

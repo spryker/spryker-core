@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\AvailabilityNotification;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 
@@ -15,7 +14,9 @@ interface AvailabilityNotificationClientInterface
 {
     /**
      * Specification:
+     * - Send Zed request
      * - Subscribe a user for product availability.
+     * - Send successful email
      *
      * @api
      *
@@ -27,7 +28,9 @@ interface AvailabilityNotificationClientInterface
 
     /**
      * Specification:
+     * - Send Zed request
      * - Unsubscribe a user for product availability.
+     * - Send successful email
      *
      * @api
      *
@@ -36,16 +39,4 @@ interface AvailabilityNotificationClientInterface
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
     public function unsubscribe(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer;
-
-    /**
-     * Specification:
-     * - Find availability subscription.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
-     */
-    public function findAvailabilitySubscription(AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer): AvailabilitySubscriptionResponseTransfer;
 }

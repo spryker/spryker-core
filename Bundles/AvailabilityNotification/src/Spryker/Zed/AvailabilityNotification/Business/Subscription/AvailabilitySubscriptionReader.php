@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface;
@@ -28,8 +27,10 @@ class AvailabilitySubscriptionReader implements AvailabilitySubscriptionReaderIn
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository
      */
-    public function __construct(AvailabilityNotificationToStoreFacadeInterface $storeFacade, AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository)
-    {
+    public function __construct(
+        AvailabilityNotificationToStoreFacadeInterface $storeFacade,
+        AvailabilityNotificationRepositoryInterface $availabilityNotificationRepository
+    ) {
         $this->storeFacade = $storeFacade;
         $this->availabilityNotificationRepository = $availabilityNotificationRepository;
     }
@@ -63,8 +64,10 @@ class AvailabilitySubscriptionReader implements AvailabilitySubscriptionReaderIn
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findOneByCustomerReferenceAndSku(string $customerReference, string $sku): ?AvailabilitySubscriptionTransfer
-    {
+    public function findOneByCustomerReferenceAndSku(
+        string $customerReference,
+        string $sku
+    ): ?AvailabilitySubscriptionTransfer {
         return $this->availabilityNotificationRepository
             ->findOneByCustomerReferenceAndSku($customerReference, $sku, $this->storeFacade->getCurrentStore()->getIdStore());
     }
@@ -72,9 +75,9 @@ class AvailabilitySubscriptionReader implements AvailabilitySubscriptionReaderIn
     /**
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer[]
      */
-    public function findByCustomerReference(string $customerReference): AvailabilitySubscriptionCollectionTransfer
+    public function findByCustomerReference(string $customerReference): array
     {
         return $this->availabilityNotificationRepository
             ->findByCustomerReference($customerReference, $this->storeFacade->getCurrentStore()->getIdStore());

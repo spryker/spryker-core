@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Communication\Controller;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -36,15 +35,5 @@ class GatewayController extends AbstractGatewayController
     public function unsubscribeAction(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         return $this->getFacade()->unsubscribe($availabilitySubscriptionTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
-     */
-    public function findAvailabilitySubscriptionAction(AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer): AvailabilitySubscriptionResponseTransfer
-    {
-        return $this->getFacade()->findAvailabilitySubscription($availabilitySubscriptionRequestTransfer);
     }
 }
