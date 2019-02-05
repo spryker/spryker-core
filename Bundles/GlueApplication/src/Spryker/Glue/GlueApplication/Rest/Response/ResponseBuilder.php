@@ -147,7 +147,6 @@ class ResponseBuilder implements ResponseBuilderInterface
         bool $includeRelations,
         RestRequestInterface $restRequest
     ): array {
-
         $data = $restResource->toArray($includeRelations);
 
         if (count($restRequest->getFields()) > 0 && isset($restRequest->getFields()[$restResource->getType()])) {
@@ -156,6 +155,8 @@ class ResponseBuilder implements ResponseBuilderInterface
                 array_flip($restRequest->getFields()[$restResource->getType()]->getAttributes())
             );
         }
+
+        $data = $this->filterRelationships($restRequest, $data);
 
         if (isset($data[RestResourceInterface::RESOURCE_LINKS])) {
             $data[RestResourceInterface::RESOURCE_LINKS] = $this->formatLinks(
@@ -216,5 +217,27 @@ class ResponseBuilder implements ResponseBuilderInterface
         }
 
         return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function filterRelationships(RestRequestInterface $restRequest, array $data): array
+    {
+        if ($restRequest->getExcludeRelationship()) {
+            unset($data[RestResourceInterface::RESOURCE_RELATIONSHIPS]);
+        }
+
+        if (count($restRequest->getInclude()) && array_key_exists(RestResourceInterface::RESOURCE_RELATIONSHIPS, $data)) {
+            $data[RestResourceInterface::RESOURCE_RELATIONSHIPS] = array_intersect_key(
+                $data[RestResourceInterface::RESOURCE_RELATIONSHIPS],
+                $restRequest->getInclude()
+            );
+        }
+
+        return $data;
     }
 }
