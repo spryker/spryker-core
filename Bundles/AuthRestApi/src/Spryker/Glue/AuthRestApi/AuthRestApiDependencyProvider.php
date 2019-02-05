@@ -18,6 +18,8 @@ class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_OAUTH = 'CLIENT_OAUTH';
 
+    public const PLUGINS_REST_USER_IDENTIFIER_EXPANDER = 'PLUGINS_REST_USER_IDENTIFIER_EXPANDER';
+
     /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
@@ -26,6 +28,7 @@ class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container): Container
     {
         $container = $this->addOauthClient($container);
+        $container = $this->addRestUserIdentifierExpanderPlugins($container);
 
         return $container;
     }
@@ -42,5 +45,27 @@ class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addRestUserIdentifierExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_REST_USER_IDENTIFIER_EXPANDER] = function () {
+            return $this->getRestUserIdentifierExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserIdentifierExpanderPluginInterface[]
+     */
+    protected function getRestUserIdentifierExpanderPlugins(): array
+    {
+        return [];
     }
 }

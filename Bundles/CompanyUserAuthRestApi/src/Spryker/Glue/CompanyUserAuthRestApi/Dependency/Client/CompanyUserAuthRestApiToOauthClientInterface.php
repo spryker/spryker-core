@@ -9,7 +9,7 @@ namespace Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 
-interface AuthRestApiToOauthClientInterface
+interface CompanyUserAuthRestApiToOauthClientInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer

@@ -36,7 +36,7 @@ class User implements UserInterface
      * @param array $scopes
      * @param \Generated\Shared\Transfer\RestUserIdentifierTransfer|null $restUserIdentifierTransfer
      */
-    public function __construct(string $surrogateIdentifier, string $naturalIdentifier, array $scopes = [], RestUserIdentifierTransfer $restUserIdentifierTransfer = null)
+    public function __construct(string $surrogateIdentifier, string $naturalIdentifier, array $scopes = [], ?RestUserIdentifierTransfer $restUserIdentifierTransfer = null)
     {
         $this->surrogateIdentifier = $surrogateIdentifier;
         $this->naturalIdentifier = $naturalIdentifier;

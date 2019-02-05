@@ -24,11 +24,20 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
     protected $oauthClient;
 
     /**
-     * @param \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface $oauthClient
+     * @var \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserIdentifierExpanderPluginInterface[]
      */
-    public function __construct(AuthRestApiToOauthClientInterface $oauthClient)
-    {
+    protected $restUserIdentifierExpanderPlugins;
+
+    /**
+     * @param \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface $oauthClient
+     * @param array $restUserIdentifierExpanderPlugins
+     */
+    public function __construct(
+        AuthRestApiToOauthClientInterface $oauthClient,
+        array $restUserIdentifierExpanderPlugins
+    ) {
         $this->oauthClient = $oauthClient;
+        $this->restUserIdentifierExpanderPlugins = $restUserIdentifierExpanderPlugins;
     }
 
     /**
@@ -109,11 +118,13 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
     ): void {
 
         $customerIdentifier = json_decode($authAccessTokenValidationResponseTransfer->getOauthUserId(), true);
+        $restUserIdentifierTransfer = $this->getRestUserIdentifierTransfer($customerIdentifier, $restRequest);
+
         $restRequest->setUser(
             $customerIdentifier['id_customer'],
             $customerIdentifier['customer_reference'],
             $authAccessTokenValidationResponseTransfer->getOauthScopes(),
-            (new RestUserIdentifierTransfer())->fromArray($customerIdentifier, true)
+            $restUserIdentifierTransfer
         );
     }
 
@@ -136,5 +147,23 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
         );
 
         return $authAccessTokenValidationResponseTransfer;
+    }
+
+    /**
+     * @param array $customerIdentifier
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\RestUserIdentifierTransfer
+     */
+    protected function getRestUserIdentifierTransfer(array $customerIdentifier, RestRequestInterface $restRequest): RestUserIdentifierTransfer
+    {
+        $restUserIdentifierTransfer = (new RestUserIdentifierTransfer())
+            ->fromArray($customerIdentifier, true);
+
+        foreach ($this->restUserIdentifierExpanderPlugins as $restUserIdentifierExpanderPlugin) {
+            $restUserIdentifierTransfer = $restUserIdentifierExpanderPlugin->expand($restUserIdentifierTransfer, $restRequest);
+        }
+
+        return $restUserIdentifierTransfer;
     }
 }

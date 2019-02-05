@@ -10,7 +10,7 @@ namespace Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 
-class AuthRestApiToOauthClientBridge implements AuthRestApiToOauthClientInterface
+class CompanyUserAuthRestApiToOauthClientBridge implements CompanyUserAuthRestApiToOauthClientInterface
 {
     /**
      * @var \Spryker\Client\Oauth\OauthClientInterface

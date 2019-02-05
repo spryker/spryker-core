@@ -81,7 +81,7 @@ interface RestRequestInterface
         string $surrogateIdentifier,
         string $naturalIdentifier,
         array $scopes = [],
-        RestUserIdentifierTransfer $restUserIdentifierTransfer = null
+        ?RestUserIdentifierTransfer $restUserIdentifierTransfer = null
     ): void;
 
     /**

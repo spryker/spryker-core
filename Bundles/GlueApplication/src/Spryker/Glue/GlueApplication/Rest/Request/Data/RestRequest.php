@@ -264,9 +264,8 @@ class RestRequest implements RestRequestInterface
         string $surrogateIdentifier,
         string $naturalIdentifier,
         array $scopes = [],
-        RestUserIdentifierTransfer $restUserIdentifierTransfer = null
-    ): void
-    {
+        ?RestUserIdentifierTransfer $restUserIdentifierTransfer = null
+    ): void {
         if ($this->user) {
             throw new UserAlreadySetException('Rest request object already have user set.');
         }

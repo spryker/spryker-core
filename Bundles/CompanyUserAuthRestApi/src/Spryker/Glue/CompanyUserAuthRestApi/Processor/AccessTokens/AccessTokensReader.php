@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\RestCompanyUserAccessTokensAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestTokenResponseAttributesTransfer;
 use Spryker\Glue\CompanyUserAuthRestApi\CompanyUserAuthRestApiConfig;
-use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface;
+use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AccessTokensReader implements AccessTokensReaderInterface
 {
     /**
-     * @var \Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface
+     * @var \Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthClientInterface
      */
     protected $oauthClient;
 
@@ -36,12 +36,12 @@ class AccessTokensReader implements AccessTokensReaderInterface
     protected $authRestApiConfig;
 
     /**
-     * @param \Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface $oauthClient
+     * @param \Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthClientInterface $oauthClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CompanyUserAuthRestApi\CompanyUserAuthRestApiConfig $authRestApiConfig
      */
     public function __construct(
-        AuthRestApiToOauthClientInterface $oauthClient,
+        CompanyUserAuthRestApiToOauthClientInterface $oauthClient,
         RestResourceBuilderInterface $restResourceBuilder,
         CompanyUserAuthRestApiConfig $authRestApiConfig
     ) {

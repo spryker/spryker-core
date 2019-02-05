@@ -5,19 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\AuthRestApiExtension\Dependency\Plugin;
+namespace Spryker\Glue\CompanyUserAuthRestApi\Processor\RestUserIdentifier;
 
 use Generated\Shared\Transfer\RestUserIdentifierTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface RestUserIdentifierExpanderPluginInterface
+interface RestUserIdentifierExpanderInterface
 {
     /**
-     * Specification:
-     * - Expand rest user identifier with additional data.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\RestUserIdentifierTransfer $restUserIdentifierTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
