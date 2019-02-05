@@ -27,7 +27,7 @@ interface CompanyUserStorageConfig
 
     /**
      * Specification:
-     *  - Resource name, this will use for key generating
+     *  - Resource name, this will use for key generation.
      *
      * @api
      */

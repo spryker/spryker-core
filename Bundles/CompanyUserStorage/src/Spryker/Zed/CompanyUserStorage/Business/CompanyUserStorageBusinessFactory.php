@@ -46,6 +46,6 @@ class CompanyUserStorageBusinessFactory extends AbstractBusinessFactory
      */
     public function getCompanyUserStorageExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(CompanyUserStorageDependencyProvider::PLUGIN_COMPANY_USER_STORAGE_EXPANDER);
+        return $this->getProvidedDependency(CompanyUserStorageDependencyProvider::PLUGINS_COMPANY_USER_STORAGE_EXPANDER);
     }
 }

@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 class CompanyUserStorageExpander implements CompanyUserStorageExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      * @param \Generated\Shared\Transfer\CompanyUserStorageTransfer $companyUserStorageTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer
      */
-    public function addCompanyBusinessUnitId(CompanyUserTransfer $companyUserTransfer, CompanyUserStorageTransfer $companyUserStorageTransfer): CompanyUserStorageTransfer
+    public function expandWithCompanyBusinessUnitId(CompanyUserStorageTransfer $companyUserStorageTransfer, CompanyUserTransfer $companyUserTransfer): CompanyUserStorageTransfer
     {
         $companyUserStorageTransfer->setIdCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit());
 

@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStorageFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int[] $companyUserIds
@@ -31,6 +33,8 @@ class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStor
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int[] $companyIds
@@ -45,6 +49,8 @@ class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStor
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int[] $companyUserIds
