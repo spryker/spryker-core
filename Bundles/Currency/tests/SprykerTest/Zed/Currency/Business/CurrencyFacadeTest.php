@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\Currency\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CurrencyBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
 
 /**
@@ -24,6 +26,11 @@ use Spryker\Zed\Currency\Business\CurrencyFacade;
  */
 class CurrencyFacadeTest extends Unit
 {
+    protected const MESSAGE_CURRENCY_DATA_IS_MISSING = 'quote.validation.error.currency_mode_is_missing';
+    protected const MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'quote.validation.error.currency_mode_is_incorrect';
+    protected const WRONG_ISO_CODE = 'WRONGCODE';
+    protected const STORE_NAME = 'DE';
+
     /**
      * @var \SprykerTest\Zed\Currency\CurrencyBusinessTester
      */
@@ -60,6 +67,67 @@ class CurrencyFacadeTest extends Unit
         $currencyTransfer = $this->createCurrencyFacade()->getByIdCurrency(1);
 
         $this->assertInstanceOf(CurrencyTransfer::class, $currencyTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCurrencyInQuoteWithEmptyCurrency()
+    {
+        $quoteTransfer = new QuoteTransfer();
+
+        //Act
+        $this->validateCurrencyInQuote($quoteTransfer, static::MESSAGE_CURRENCY_DATA_IS_MISSING);
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCurrencyInQuoteWithEmptyCurrencyIsoCode()
+    {
+        $currencyTransfer = new CurrencyTransfer();
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCurrency($currencyTransfer);
+
+        //Act
+        $this->validateCurrencyInQuote($quoteTransfer, static::MESSAGE_CURRENCY_DATA_IS_MISSING);
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCurrencyInQuoteWithWrongCurrencyIsoCode()
+    {
+        $currencyTransfer = (new CurrencyTransfer())
+            ->setCode(static::WRONG_ISO_CODE);
+        $storeTransfer = (new StoreTransfer())
+            ->setName(static::STORE_NAME);
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCurrency($currencyTransfer)
+            ->setStore($storeTransfer);
+
+        //Act
+        $this->validateCurrencyInQuote($quoteTransfer, static::MESSAGE_CURRENCY_DATA_IS_INCORRECT);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $errorMessage
+     *
+     * @return void
+     */
+    protected function validateCurrencyInQuote(QuoteTransfer $quoteTransfer, string $errorMessage): void
+    {
+        /** @var \Spryker\Zed\Currency\Business\CurrencyFacade $currencyFacade */
+        $currencyFacade = $this->tester->getFacade();
+        $quoteValidationResponseTransfer = $currencyFacade->validateCurrencyInQuote($quoteTransfer);
+
+        $errors = array_map(function ($messageTransfer) {
+            return $messageTransfer->getValue();
+        }, (array)$quoteValidationResponseTransfer->getErrors());
+
+        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccess());
+        $this->assertContains($errorMessage, $errors);
     }
 
     /**

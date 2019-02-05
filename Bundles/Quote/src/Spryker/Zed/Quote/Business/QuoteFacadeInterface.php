@@ -20,6 +20,8 @@ interface QuoteFacadeInterface
     /**
      * Specification:
      * - Creates new quote entity if it does not exist.
+     * - Verifies before saving if provided store is available.
+     * - Applies QuoteValidatorPluginInterface validation plugins before saving.
      *
      * @api
      *
@@ -32,6 +34,8 @@ interface QuoteFacadeInterface
     /**
      * Specification:
      * - Updates existing quote entity from QuoteTransfer.
+     * - Verifies before saving if provided store is available.
+     * - Applies QuoteValidatorPluginInterface validation plugins before saving.
      *
      * @api
      *

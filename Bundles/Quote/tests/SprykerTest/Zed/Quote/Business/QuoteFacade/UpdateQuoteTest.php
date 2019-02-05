@@ -11,6 +11,7 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 /**
  * Auto-generated group annotations
@@ -24,6 +25,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 class UpdateQuoteTest extends Unit
 {
+    protected const MESSAGE_STORE_DATA_IS_MISSING = 'quote.validation.error.store_is_missing';
+    protected const WRONG_STORE_NAME = 'WRONGSTORENAME';
+
     /**
      * @var \SprykerTest\Zed\Quote\QuoteBusinessTester
      */
@@ -50,12 +54,96 @@ class UpdateQuoteTest extends Unit
         $quoteTransfer->setItems($itemCollection);
 
         // Act
-        $persistQuoteResponseTransfer = $this->tester->getFacade()->updateQuote($quoteTransfer);
+        /** @var \Spryker\Zed\Quote\Business\QuoteFacade $quoteFacade */
+        $quoteFacade = $this->tester->getFacade();
+        $persistQuoteResponseTransfer = $quoteFacade->updateQuote($quoteTransfer);
 
         // Assert
         $this->assertTrue($persistQuoteResponseTransfer->getIsSuccessful(), 'Persist quote response transfer should have ben successful.');
-        $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
+        $findQuoteResponseTransfer = $quoteFacade->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
         $this->assertTrue($findQuoteResponseTransfer->getIsSuccessful(), 'Find quote response transfer should have ben successful.');
         $this->assertEquals($itemCollection, $findQuoteResponseTransfer->getQuoteTransfer()->getItems(), 'Quote response should have expected data from database.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateQuoteWithValidationEmptyStore()
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $customerTransfer,
+        ]);
+        $quoteTransfer->setStore(null);
+
+        // Act
+        // Act
+        $this->validateStoreInQuote($quoteTransfer, static::MESSAGE_STORE_DATA_IS_MISSING);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateQuoteWithValidationEmptyStoreName()
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $customerTransfer,
+        ]);
+        $storeTransfer = new StoreTransfer();
+
+        $quoteTransfer
+            ->setStore($storeTransfer);
+
+        // Act
+        $this->validateStoreInQuote($quoteTransfer, static::MESSAGE_STORE_DATA_IS_MISSING);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateQuoteWithValidationWrongStoreName()
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $customerTransfer,
+        ]);
+        $storeTransfer = (new StoreTransfer())
+            ->setName(static::WRONG_STORE_NAME);
+
+        $quoteTransfer
+            ->setStore($storeTransfer);
+
+        $this->validateStoreInQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $message
+     *
+     * @return void
+     */
+    protected function validateStoreInQuote(QuoteTransfer $quoteTransfer, string $message = ''): void
+    {
+        // Act
+        /** @var \Spryker\Zed\Quote\Business\QuoteFacade $quoteFacade */
+        $quoteFacade = $this->tester->getFacade();
+        $quoteResponseTransfer = $quoteFacade->updateQuote($quoteTransfer);
+
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+
+        if ($message) {
+            $errors = array_map(function ($messageTransfer) {
+                return $messageTransfer->getValue();
+            }, (array)$quoteResponseTransfer->getErrors());
+
+            $this->assertContains($message, $errors);
+        }
     }
 }
