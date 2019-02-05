@@ -178,8 +178,9 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
             ->setFkProductAbstract($idProductAbstract)
             ->setStore($storeName)
             ->setData($priceProductStorageTransfer->toArray())
-            ->setIsSendingToQueue($this->isSendingToQueue)
-            ->save();
+            ->setIsSendingToQueue($this->isSendingToQueue);
+
+        $priceProductAbstractStorageEntity->save();
     }
 
     /**
@@ -216,22 +217,36 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     {
         $priceGroups = [];
         $priceGroupsCollection = [];
-        $priceProductCriteria = $this->getPriceCriteriaTransfer();
-        foreach ($productAbstractIds as $idProductAbstract) {
-            $productAbstractPriceProductTransfers = $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteria);
-            $priceGroups[$idProductAbstract] = [];
-            foreach ($productAbstractPriceProductTransfers as $priceProductTransfer) {
-                $storeName = $this->getStoreNameById($priceProductTransfer->getMoneyValue()->getFkStore());
-                $priceGroups[$idProductAbstract][$storeName][] = $priceProductTransfer;
-            }
+        $priceProductCriteriaTransfer = $this->getPriceCriteriaTransfer();
+        $productAbstractPriceProductTransfers = $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria($productAbstractIds, $priceProductCriteriaTransfer);
 
-            foreach ($priceGroups[$idProductAbstract] as $storeName => $priceProductTransferCollection) {
-                $priceGroupsCollection[$idProductAbstract][$storeName] = $this->priceProductFacade->groupPriceProductCollection(
-                    $priceProductTransferCollection
-                );
-            }
+        foreach ($productAbstractPriceProductTransfers as $key => $priceProductTransfer) {
+            $idProductAbstract = $priceProductTransfer->getIdProductAbstract();
+            $storeName = $this->getStoreNameById($priceProductTransfer->getMoneyValue()->getFkStore());
+            $priceGroups[$idProductAbstract][$storeName][] = $priceProductTransfer;
         }
 
+        foreach ($productAbstractIds as $idProductAbstract) {
+            $priceGroupsCollection[$idProductAbstract] = $this->getProductAbstractPriceStoreGroups($priceGroups[$idProductAbstract], $idProductAbstract);
+        }
+
+        return $priceGroupsCollection;
+    }
+
+    /**
+     * @param array $productAbstractPriceGroups
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    protected function getProductAbstractPriceStoreGroups(array $productAbstractPriceGroups, int $idProductAbstract): array
+    {
+        $priceGroupsCollection = [];
+        foreach ($productAbstractPriceGroups as $storeName => $priceProductTransferCollection) {
+            $priceGroupsCollection[$storeName] = $this->priceProductFacade->groupPriceProductCollection(
+                $priceProductTransferCollection
+            );
+        }
         return $priceGroupsCollection;
     }
 

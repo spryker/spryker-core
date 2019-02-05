@@ -16,4 +16,10 @@
     <transfer name="MoneyValue">
         <property name="priceData" type="string" />
     </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="idProduct" type="int" />
+        <property name="idProductAbstract" type="int" />
+        <property name="quantity" type="int" />
+    </transfer>
 </transfers>
