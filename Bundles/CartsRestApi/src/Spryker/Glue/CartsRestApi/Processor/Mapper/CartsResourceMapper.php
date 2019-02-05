@@ -98,16 +98,20 @@ class CartsResourceMapper implements CartsResourceMapperInterface
         QuoteResponseTransfer $quoteResponseTransfer,
         RestRequestInterface $restRequest
     ): RestQuoteRequestTransfer {
-        if ($quoteResponseTransfer->getIsSuccessful() === false) {
+        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
             return (new RestQuoteRequestTransfer())->setErrorCodes(
                 $this->mapQuoteResponseErrorsToErrorsCodes($quoteResponseTransfer->getErrorCodes())
             );
         }
 
-        return (new RestQuoteRequestTransfer())
+        $retQuoteRequestTransfer = (new RestQuoteRequestTransfer())
             ->setQuote(new QuoteTransfer())
-            ->setCustomerReference($quoteResponseTransfer->getCustomer()->getCustomerReference())
-            ->setQuoteUuid($quoteResponseTransfer->getQuoteTransfer()->getUuid());
+            ->setCustomerReference($quoteResponseTransfer->getCustomer()->getCustomerReference());
+
+        if ($quoteResponseTransfer->getQuoteTransfer()) {
+            $retQuoteRequestTransfer->setQuoteUuid($quoteResponseTransfer->getQuoteTransfer()->getUuid());
+        }
+        return $retQuoteRequestTransfer;
     }
 
     /**
@@ -220,13 +224,13 @@ class CartsResourceMapper implements CartsResourceMapperInterface
     }
 
     /**
-     * @param string $uuidCart
+     * @param string|null $uuidCart
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function createQuoteTransfer(
-        string $uuidCart,
+        ?string $uuidCart,
         RestRequestInterface $restRequest
     ): QuoteTransfer {
         return (new QuoteTransfer())
@@ -249,7 +253,6 @@ class CartsResourceMapper implements CartsResourceMapperInterface
 
         return $errorCodes;
     }
-
 
     /**
      * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer

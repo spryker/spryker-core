@@ -13,7 +13,6 @@ use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
 
 class CartUpdater implements CartUpdaterInterface
 {
@@ -63,12 +62,13 @@ class CartUpdater implements CartUpdaterInterface
         }
 
         $quoteTransfer = $this->cartsResourceMapper->mapRestCartsAttributesTransferToQuoteTransfer(
-            $restCartsAttributesTransfer, $restRequest
+            $restCartsAttributesTransfer,
+            $restRequest
         );
 
         $restQuoteRequestTransfer = $this->cartsResourceMapper->createRestQuoteRequestTransfer($restRequest, $quoteTransfer);
         $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($restQuoteRequestTransfer);
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
+        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
             $restQuoteRequestTransfer = $this->cartsResourceMapper->mapRestQuoteRequestTransferFromRequest($quoteResponseTransfer, $restRequest);
 
             return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($restQuoteRequestTransfer->getErrorCodes());

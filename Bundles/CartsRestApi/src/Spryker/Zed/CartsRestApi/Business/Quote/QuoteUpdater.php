@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
@@ -76,7 +77,12 @@ class QuoteUpdater implements QuoteUpdaterInterface
 
         $originalQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
 
-        $this->processQuoteData($quoteTransfer, $originalQuoteTransfer);
+        $this->validateQuoteResponse($originalQuoteTransfer, $quoteTransfer, $quoteResponseTransfer);
+
+        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
+            return $quoteResponseTransfer;
+        }
+
         $quoteTransfer = $this->cartFacade->reloadItems(
             $this->quoteMapper->mapOriginalQuoteTransferToQuoteTransfer($quoteTransfer, $originalQuoteTransfer)
         );
@@ -122,21 +128,21 @@ class QuoteUpdater implements QuoteUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $originalQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function processQuoteData(QuoteTransfer $quoteTransfer, QuoteTransfer $originalQuoteTransfer): QuoteTransfer
-    {
-        if ($quoteTransfer->getCurrency() === null || !$quoteTransfer->getCurrency()->getCode()) {
-            $quoteTransfer->setCurrency($originalQuoteTransfer->getCurrency());
+    protected function validateQuoteResponse(
+        QuoteTransfer $originalQuoteTransfer,
+        QuoteTransfer $quoteTransfer,
+        QuoteResponseTransfer $quoteResponseTransfer
+    ): QuoteResponseTransfer {
+        if (count($originalQuoteTransfer->getItems()) > 0 && $quoteTransfer->getPriceMode()) {
+            return $quoteResponseTransfer->addErrorCode(SharedCartsRestApiConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED);
         }
 
-        if ($quoteTransfer->getStore() === null || !$quoteTransfer->getStore()->getName()) {
-            $quoteTransfer->setStore($originalQuoteTransfer->getStore());
-        }
-
-        return $quoteTransfer;
+        return $quoteResponseTransfer;
     }
 }

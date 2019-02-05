@@ -108,5 +108,9 @@ class CartsRestApiConfig extends AbstractBundleConfig
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
             'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CURRENCY_DATA_IS_MISSING,
         ],
+        SharedCartsRestApiConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED => [
+            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_PRICE_MODE_CANT_BE_CHANGED,
+        ],
     ];
 }

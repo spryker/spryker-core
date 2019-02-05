@@ -160,4 +160,16 @@ class QuoteMapper implements QuoteMapperInterface
 
         return $quoteTransfer->setCustomer($registeredCustomer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createQuoteResponseTransfer(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    {
+        return (new QuoteResponseTransfer())->setCustomer(
+            (new CustomerTransfer())->setCustomerReference($restQuoteRequestTransfer->getCustomerReference())
+        );
+    }
 }

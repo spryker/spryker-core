@@ -56,7 +56,7 @@ interface CartsResourceMapperInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
      */
@@ -97,13 +97,13 @@ interface CartsResourceMapperInterface
     ): RestQuoteCollectionRequestTransfer;
 
     /**
-     * @param string $uuidCart
+     * @param string|null $uuidCart
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function createQuoteTransfer(
-        string $uuidCart,
+        ?string $uuidCart,
         RestRequestInterface $restRequest
     ): QuoteTransfer;
 }

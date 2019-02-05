@@ -14,7 +14,6 @@ use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
 
 class CartReader implements CartReaderInterface
 {
@@ -60,9 +59,9 @@ class CartReader implements CartReaderInterface
             $this->cartsResourceMapper->createQuoteTransfer($uuidCart, $restRequest)
         );
 
-        if ($quoteResponseTransfer->getIsSuccessful() === false) {
+        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
             return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
-                [SharedCartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND]
+                $quoteResponseTransfer->getErrorCodes()
             );
         }
 

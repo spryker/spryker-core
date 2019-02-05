@@ -103,4 +103,11 @@ interface QuoteMapperInterface
         CustomerTransfer $registeredCustomer,
         QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
     ): QuoteTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createQuoteResponseTransfer(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer;
 }

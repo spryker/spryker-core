@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
@@ -53,18 +52,14 @@ class CartDeleter implements CartDeleterInterface
      */
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $uuidQuote = $restRequest->getResource()->getId();
-        if ($uuidQuote === null) {
-            return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
-        }
-
-        $quoteTransfer = (new QuoteTransfer())->setUuid($uuidQuote);
-
         $quoteResponseTransfer = $this->cartsRestApiClient->deleteQuote(
-            $this->cartsResourceMapper->createRestQuoteRequestTransfer($restRequest, $quoteTransfer)
+            $this->cartsResourceMapper->createRestQuoteRequestTransfer(
+                $restRequest,
+                $this->cartsResourceMapper->createQuoteTransfer($restRequest->getResource()->getId(), $restRequest)
+            )
         );
 
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
+        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
             $restQuoteRequestTransfer = $this->cartsResourceMapper->mapRestQuoteRequestTransferFromRequest($quoteResponseTransfer, $restRequest);
 
             return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($restQuoteRequestTransfer->getErrorCodes());
