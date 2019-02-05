@@ -1,0 +1,3 @@
+key,merchant_key,country_iso2_code,country_iso3_code,address1,address2,address3,city,zip_code
+merchant-address-1,wolf-gmbh-und-co-kg,DE,DEU,Caroline-Michaelis-Straße,8,,Berlin,10115
+merchant-address-2,safascan,NL,,Gilzeweg,24,,Bavel,4854SG
