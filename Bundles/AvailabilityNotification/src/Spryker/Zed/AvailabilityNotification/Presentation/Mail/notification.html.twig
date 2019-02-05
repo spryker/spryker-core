@@ -1,6 +1,6 @@
 {% extends '@AvailabilityNotification/mail/layout.html.twig' %}
 
-{% block title %}{{ 'availability_subscription.mail.notification.head'|trans({'%name%': mail.availabilitySubscriptionMailData.productAttributes.name}) }}{% endblock %}
+{% block title %}{{ 'availability_subscription.mail.notification.head'|trans({'%name%': mail.availabilitySubscriptionMailData.productName}) }}{% endblock %}
 
 {% block content %}
     <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock"
@@ -24,8 +24,8 @@
                         <td valign="top" class="mcnTextContent"
                             style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">
                             <h2 class="null"
-                                style="display: block;margin: 0;padding: 0;color: #202020;font-family: Helvetica;font-size: 22px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: normal;text-align: left;">{{ 'availability_subscription.mail.notification.head'|trans({'%name%': mail.availabilitySubscriptionMailData.productAttributes.name}) }}</h2>
-                            <p style="margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">{{ 'availability_subscription.mail.notification.body'|trans({'%name%': mail.availabilitySubscriptionMailData.productAttributes.name}) }}</p>
+                                style="display: block;margin: 0;padding: 0;color: #202020;font-family: Helvetica;font-size: 22px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: normal;text-align: left;">{{ 'availability_subscription.mail.notification.head'|trans({'%name%': mail.availabilitySubscriptionMailData.productName}) }}</h2>
+                            <p style="margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">{{ 'availability_subscription.mail.notification.body'|trans({'%name%': mail.availabilitySubscriptionMailData.productName}) }}</p>
                         </td>
                     </tr>
                     </tbody>
@@ -41,7 +41,7 @@
         </tr>
         </tbody>
     </table>
-    {% if mail.availabilitySubscriptionMailData.productAttributes.url is not empty %}
+    {% if mail.availabilitySubscriptionMailData.productUrl is not empty %}
         <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnButtonBlock"
                style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
             <tbody class="mcnButtonBlockOuter">
@@ -57,7 +57,7 @@
                                 <a target="_blank"
                                    class="mcnButton "
                                    title="{{ 'availability_subscription.mail.notification.buy_now'|trans }}"
-                                   href="{{ mail.availabilitySubscriptionMailData.productAttributes.url }}" target="_blank"
+                                   href="{{ mail.availabilitySubscriptionMailData.productUrl }}" target="_blank"
                                    style="font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;display: block;">{{ 'availability_subscription.mail.notification.buy_now'|trans }}</a>
                             </td>
                         </tr>
@@ -78,13 +78,13 @@
                        width="100%"
                        style="background-color: #FFFFFF;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
                     <tbody>
-                    {% if mail.availabilitySubscriptionMailData.productAttributes.image is not empty %}
+                    {% if mail.availabilitySubscriptionMailData.productImageUrl is not empty %}
                         <tr>
                             <td class="mcnImageCardBottomImageContent" align="center" valign="top"
                                 style="padding-top: 0px;padding-right: 0px;padding-bottom: 0;padding-left: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
-                                <a href="{{ mail.availabilitySubscriptionMailData.productAttributes.url }}" title="" class="" target="_blank"
+                                <a href="{{ mail.availabilitySubscriptionMailData.productUrl }}" title="" class="" target="_blank"
                                    style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
-                                    <img alt="{{ mail.availabilitySubscriptionMailData.productAttributes.name }}" src="{{ mail.availabilitySubscriptionMailData.productAttributes.image }}"
+                                    <img alt="{{ mail.availabilitySubscriptionMailData.productName }}" src="{{ mail.availabilitySubscriptionMailData.productImageUrl }}"
                                          width="500"
                                          style="max-width: 500px;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;vertical-align: bottom;"
                                          class="mcnImage">
@@ -96,7 +96,7 @@
                         <td class="mcnTextContent" valign="top"
                             style="padding: 9px 18px;font-family: Helvetica;font-size: 14px;font-weight: normal;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #202020;line-height: 150%;"
                             width="546">
-                            <div style="text-align: left;">{{ mail.availabilitySubscriptionMailData.productAttributes.name }}</div>
+                            <div style="text-align: left;">{{ mail.availabilitySubscriptionMailData.productName }}</div>
                             <br>
                             {% for name, value in mail.availabilitySubscriptionMailData.productConcrete.attributes %}
                                 <p class="col col--sm-12 col--md-6 col--lg-4 col--xl-3">
@@ -130,7 +130,7 @@
                             <a target="_blank"
                                class="mcnButton "
                                title="{{ 'availability_subscription.mail.notification.buy_now'|trans }}"
-                               href="{{ mail.availabilitySubscriptionMailData.productAttributes.url }}" target="_blank"
+                               href="{{ mail.availabilitySubscriptionMailData.productUrl }}" target="_blank"
                                style="font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;display: block;">{{ 'availability_subscription.mail.notification.buy_now'|trans }}</a>
                         </td>
                     </tr>

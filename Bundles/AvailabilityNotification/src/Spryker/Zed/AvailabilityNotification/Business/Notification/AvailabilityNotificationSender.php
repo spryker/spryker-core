@@ -69,15 +69,13 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
     public function sendSubscriptionMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
     {
         $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilitySubscriptionTransfer->getSku());
-        $productAttributes = $this->getProductAttributes(
-            $productConcreteTransfer,
-            $availabilitySubscriptionTransfer->getLocale()
-        );
         $unsubscriptionLink = $this->urlGenerator->createUnsubscriptionLink($availabilitySubscriptionTransfer);
 
         $mailData = (new AvailabilitySubscriptionMailDataTransfer())
             ->setProductConcrete($productConcreteTransfer)
-            ->setProductAttributes($productAttributes)
+            ->setProductName($this->getProductName($productConcreteTransfer, $availabilitySubscriptionTransfer->getLocale()))
+            ->setProductImageUrl($this->findProductImage($productConcreteTransfer))
+            ->setProductUrl($this->findProductUrl($productConcreteTransfer, $availabilitySubscriptionTransfer->getLocale()))
             ->setAvailabilitySubscription($availabilitySubscriptionTransfer)
             ->setAvailabilityUnsubscriptionLink($unsubscriptionLink);
 
@@ -97,16 +95,14 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
     public function sendUnsubscriptionMail(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
     {
         $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilitySubscriptionTransfer->getSku());
-        $productAttributes = $this->getProductAttributes(
-            $productConcreteTransfer,
-            $availabilitySubscriptionTransfer->getLocale()
-        );
         $unsubscriptionLink = $this->urlGenerator->createUnsubscriptionLink($availabilitySubscriptionTransfer);
 
         $mailData = (new AvailabilitySubscriptionMailDataTransfer())
             ->setAvailabilitySubscription($availabilitySubscriptionTransfer)
             ->setAvailabilityUnsubscriptionLink($unsubscriptionLink)
-            ->setProductAttributes($productAttributes);
+            ->setProductName($this->getProductName($productConcreteTransfer, $availabilitySubscriptionTransfer->getLocale()))
+            ->setProductImageUrl($this->findProductImage($productConcreteTransfer))
+            ->setProductUrl($this->findProductUrl($productConcreteTransfer, $availabilitySubscriptionTransfer->getLocale()));
 
         $mailTransfer = (new MailTransfer())
             ->setType(AvailabilityNotificationUnsubscribedMailTypePlugin::AVAILABILITY_NOTIFICATION_UNSUBSCRIBED_MAIL)
@@ -131,16 +127,14 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
 
         foreach ($availabilitySubscriptions as $availabilitySubscription) {
             $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilitySubscription->getSku());
-            $productAttributes = $this->getProductAttributes(
-                $productConcreteTransfer,
-                $availabilitySubscription->getLocale()
-            );
             $unsubscriptionLink = $this->urlGenerator->createUnsubscriptionLink($availabilitySubscription);
 
             $mailData = (new AvailabilitySubscriptionMailDataTransfer())
                 ->setAvailabilitySubscription($availabilitySubscription)
                 ->setProductConcrete($productConcreteTransfer)
-                ->setProductAttributes($productAttributes)
+                ->setProductName($this->getProductName($productConcreteTransfer, $availabilitySubscription->getLocale()))
+                ->setProductImageUrl($this->findProductImage($productConcreteTransfer))
+                ->setProductUrl($this->findProductUrl($productConcreteTransfer, $availabilitySubscription->getLocale()))
                 ->setAvailabilityUnsubscriptionLink($unsubscriptionLink);
 
             $mailTransfer = (new MailTransfer())
@@ -156,16 +150,13 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array
+     * @return string
      */
-    protected function getProductAttributes(
+    protected function getProductName(
         ProductConcreteTransfer $productConcreteTransfer,
         LocaleTransfer $localeTransfer
-    ): array {
-        $attributes = [
-            'image' => $this->findProductImage($productConcreteTransfer),
-            'url' => $this->findProductUrl($productConcreteTransfer, $localeTransfer),
-        ];
+    ): string {
+        $attributes = [];
 
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
             if ($localizedAttributes->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {
@@ -173,7 +164,7 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
             }
         }
 
-        return $attributes;
+        return $attributes['name'] ?? '';
     }
 
     /**

@@ -1,7 +1,7 @@
-{{ 'availability_subscription.mail.notification.head'|trans({'%name%': mail.availabilitySubscriptionMailData.productAttributes.name}) }}
-{{ 'availability_subscription.mail.notification.body'|trans({'%name%': mail.availabilitySubscriptionMailData.productAttributes.name}) }}
+{{ 'availability_subscription.mail.notification.head'|trans({'%name%': mail.availabilitySubscriptionMailData.productName}) }}
+{{ 'availability_subscription.mail.notification.body'|trans({'%name%': mail.availabilitySubscriptionMailData.productName}) }}
 
-{{ mail.availabilitySubscriptionMailData.productAttributes.name }}
+{{ mail.availabilitySubscriptionMailData.productName }}
 
 {% for name, value in mail.availabilitySubscriptionMailData.productConcrete.attributes if name %}
     {{ ('product.attribute.' ~ name) | trans }}: {{ value }}

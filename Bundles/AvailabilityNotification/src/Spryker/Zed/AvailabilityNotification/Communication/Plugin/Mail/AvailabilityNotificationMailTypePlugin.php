@@ -58,8 +58,10 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
     {
         $mailTransfer = $mailBuilder->getMailTransfer();
         $mailTransfer->requireAvailabilitySubscriptionMailData();
-        $productAttributes = $mailTransfer->getAvailabilitySubscriptionMailData()->getProductAttributes();
-        $mailBuilder->setSubject('availability_subscription.mail.notification.subject', ['%name%' => $productAttributes['name'] ?? '']);
+        $productName = $mailTransfer
+            ->getAvailabilitySubscriptionMailData()
+            ->getProductName();
+        $mailBuilder->setSubject('availability_subscription.mail.notification.subject', ['%name%' => $productName]);
 
         return $this;
     }
