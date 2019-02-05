@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnit\Persistence\Mapper;
+namespace Spryker\Zed\CompanyBusinessUnit\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit;
 
-interface CompanyBusinessUnitMapperInterface
+class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $businessUnitTransfer
@@ -22,7 +22,13 @@ interface CompanyBusinessUnitMapperInterface
     public function mapBusinessUnitTransferToEntityTransfer(
         CompanyBusinessUnitTransfer $businessUnitTransfer,
         SpyCompanyBusinessUnitEntityTransfer $businessUnitEntityTransfer
-    ): SpyCompanyBusinessUnitEntityTransfer;
+    ): SpyCompanyBusinessUnitEntityTransfer {
+        $businessUnitEntityTransfer->fromArray($businessUnitTransfer->modifiedToArray(), true);
+        $businessUnitEntityTransfer->setCompany(null);
+        $businessUnitEntityTransfer->setParentCompanyBusinessUnit(null);
+
+        return $businessUnitEntityTransfer;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer $businessUnitEntityTransfer
@@ -33,7 +39,14 @@ interface CompanyBusinessUnitMapperInterface
     public function mapEntityTransferToBusinessUnitTransfer(
         SpyCompanyBusinessUnitEntityTransfer $businessUnitEntityTransfer,
         CompanyBusinessUnitTransfer $businessUnitTransfer
-    ): CompanyBusinessUnitTransfer;
+    ): CompanyBusinessUnitTransfer {
+        $businessUnitTransfer->fromArray($businessUnitEntityTransfer->toArray(), true);
+        if (!$businessUnitTransfer->getFkParentCompanyBusinessUnit()) {
+            $businessUnitTransfer->setParentCompanyBusinessUnit(null);
+        }
+
+        return $businessUnitTransfer;
+    }
 
     /**
      * @param \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit $companyBusinessUnitEntity
@@ -44,5 +57,10 @@ interface CompanyBusinessUnitMapperInterface
     public function mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer(
         SpyCompanyBusinessUnit $companyBusinessUnitEntity,
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): CompanyBusinessUnitTransfer;
+    ): CompanyBusinessUnitTransfer {
+        return $companyBusinessUnitTransfer->fromArray(
+            $companyBusinessUnitEntity->toArray(),
+            true
+        );
+    }
 }

@@ -108,7 +108,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
      */
     public function findCompanyUnitAddressById(int $idCompanyUnitAddress): ?CompanyUnitAddressTransfer
     {
-        $query = $this->getFactory()
+        $companyUnitAddressQuery = $this->getFactory()
             ->createCompanyUnitAddressQuery()
             ->filterByIdCompanyUnitAddress($idCompanyUnitAddress)
             ->innerJoinWithCountry()
@@ -119,7 +119,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         /**
          * @var \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress
          */
-        $companyUnitAddressEntity = $query->findOne();
+        $companyUnitAddressEntity = $companyUnitAddressQuery->findOne();
 
         if (empty($companyUnitAddressEntity)) {
             return null;
