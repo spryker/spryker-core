@@ -15,6 +15,7 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Application as SilexApplication;
 use Spryker\Glue\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Glue\Kernel\Container;
+use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Application\Application;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -41,22 +42,32 @@ abstract class AbstractGlueBootstrap
     {
         $this->application = new SilexApplication();
 
-        $this->sprykerApplication = new Application($this->application);
+        if ($this->application instanceof ContainerInterface) {
+            $this->sprykerApplication = new Application($this->application);
+        }
+
         $this->config = new GlueApplicationConfig();
 
         $this->setUpSession();
     }
 
     /**
-     * @return \Spryker\Shared\Application\Application
+     * @return \Spryker\Shared\Application\Application|\Spryker\Glue\Kernel\Application
      */
-    public function boot(): Application
+    public function boot()
     {
         $this->registerServiceProviders();
 
-        $this->setupApplication();
+        if ($this->sprykerApplication !== null) {
+            $this->setupApplication();
+        }
 
         $this->application->boot();
+
+        if ($this->sprykerApplication === null) {
+            return $this->application;
+        }
+
         $this->sprykerApplication->boot();
 
         return $this->sprykerApplication;
