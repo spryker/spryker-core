@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductQuantityStorage\Storage;
 
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
+use Generated\Shared\Transfer\ProductQuantityTransfer;
 
 interface ProductQuantityStorageReaderInterface
 {
@@ -17,4 +18,11 @@ interface ProductQuantityStorageReaderInterface
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
      */
     public function findProductQuantityStorage(int $idProduct): ?ProductQuantityStorageTransfer;
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer|null
+     */
+    public function findProductQuantityStorageMappedToProductQuantityTransfer(int $idProduct): ?ProductQuantityTransfer;
 }
