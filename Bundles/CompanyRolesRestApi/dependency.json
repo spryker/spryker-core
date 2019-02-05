@@ -1,0 +1,5 @@
+{
+  "include": {
+    "CompanyRole": "CompanyRole provides base functionality."
+  }
+}
