@@ -22,7 +22,12 @@ class UsersTable extends AbstractTable
     public const DEACTIVATE_USER_URL = '/user/edit/deactivate-user';
     public const ACTIVATE_USER_URL = '/user/edit/activate-user';
     public const DELETE_USER_URL = '/user/edit/delete';
+
+    /**
+     * @see \Spryker\Zed\User\Communication\Controller\EditController::confirmDeleteAction()
+     */
     public const CONFIRM_DELETE_USER_URL = '/user/edit/confirm-delete';
+
     public const PARAM_ID_USER = 'id-user';
 
     /**

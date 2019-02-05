@@ -228,14 +228,11 @@ class EditController extends AbstractController
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
-        $deleteUserForm = $this->getFactory()->getDeleteUserForm();
+        $userDeleteConfirmForm = $this->getFactory()->getUserDeleteConfirmForm();
 
         return $this->viewResponse([
-            'idUser' => $idUser,
-            'idUserFieldName' => static::PARAM_ID_USER,
-            'deleteUserForm' => $deleteUserForm->createView(),
-            'userFirsName' => $userTransfer->getFirstName(),
-            'userLastName' => $userTransfer->getLastName(),
+            'userDeleteConfirmForm' => $userDeleteConfirmForm->createView(),
+            'user' => $userTransfer,
         ]);
     }
 

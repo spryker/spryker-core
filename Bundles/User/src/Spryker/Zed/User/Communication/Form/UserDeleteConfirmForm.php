@@ -17,8 +17,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
  * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
  */
-class UserDeleteForm extends AbstractType
+class UserDeleteConfirmForm extends AbstractType
 {
+    /**
+     * @see \Spryker\Zed\User\Communication\Controller\EditController::deleteAction()
+     */
     protected const DELETE_USER_URL = '/user/edit/delete';
     protected const DELETE_METHOD = 'DELETE';
 
@@ -27,7 +30,7 @@ class UserDeleteForm extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'delete_form';
+        return 'delete_confirm_form';
     }
 
     /**

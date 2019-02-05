@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\User\Communication\Form\DataProvider\UserFormDataProvider;
 use Spryker\Zed\User\Communication\Form\DataProvider\UserUpdateFormDataProvider;
 use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
-use Spryker\Zed\User\Communication\Form\UserDeleteForm;
+use Spryker\Zed\User\Communication\Form\UserDeleteConfirmForm;
 use Spryker\Zed\User\Communication\Form\UserForm;
 use Spryker\Zed\User\Communication\Form\UserUpdateForm;
 use Spryker\Zed\User\Communication\Table\PluginExecutor\UserTablePluginExecutor;
@@ -92,9 +92,9 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getDeleteUserForm(): FormInterface
+    public function getUserDeleteConfirmForm(): FormInterface
     {
-        return $this->getFormFactory()->create(UserDeleteForm::class);
+        return $this->getFormFactory()->create(UserDeleteConfirmForm::class);
     }
 
     /**
