@@ -92,9 +92,21 @@ class CartsRestApiConfig extends AbstractBundleConfig
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
             'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART,
         ],
-        SharedCartsRestApiConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED => [
+        SharedCartsRestApiConfig::RESPONSE_CODE_PRICE_MODE_DATA_IS_INCORRECT => [
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => SharedCartsRestApiConfig::RESPONSE_MESSAGE_PRICE_MODE_CANT_BE_CHANGED,
+            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_PRICE_MODE_DATA_IS_INCORRECT,
+        ],
+        SharedCartsRestApiConfig::RESPONSE_CODE_PRICE_MODE_DATA_IS_MISSING => [
+            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_PRICE_MODE_DATA_IS_MISSING,
+        ],
+        SharedCartsRestApiConfig::RESPONSE_CODE_CURRENCY_DATA_IS_INCORRECT => [
+            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CURRENCY_DATA_IS_INCORRECT,
+        ],
+        SharedCartsRestApiConfig::RESPONSE_CODE_CURRENCY_DATA_IS_MISSING => [
+            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CURRENCY_DATA_IS_MISSING,
         ],
     ];
 }

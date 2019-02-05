@@ -51,26 +51,6 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createQuoteErrorResponse(QuoteResponseTransfer $quoteResponseTransfer): RestResponseInterface
-    {
-        $restResponse = $this->createRestResponse();
-        foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
-            $restResponse->addError(
-                (new RestErrorMessageTransfer())
-                    ->setCode(SharedCartsRestApiConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED)
-                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->setDetail($quoteErrorTransfer->getMessage())
-            );
-        }
-
-        return $restResponse;
-    }
-
-    /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCartIdMissingErrorResponse(): RestResponseInterface
@@ -198,7 +178,6 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     {
         $restResponse = $this->createRestResponse();
 
-        file_put_contents('vcv.txt', print_r($errorCodes, 1));
         foreach ($errorCodes as $errorCode) {
             $errorSignature = CartsRestApiConfig::RESPONSE_ERROR_MAP[$errorCode] ?? [
                     'status' => CartsRestApiConfig::RESPONSE_UNEXPECTED_HTTP_STATUS,
