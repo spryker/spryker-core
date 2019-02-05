@@ -64,4 +64,16 @@ class QuoteClient extends AbstractClient implements QuoteClientInterface
     {
         return $this->getFactory()->getStorageStrategy()->getStorageStrategy();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isQuoteLocked(): bool
+    {
+        return $this->getFactory()->getStorageStrategy()->isQuoteLocked();
+    }
 }

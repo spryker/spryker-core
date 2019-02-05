@@ -13,6 +13,20 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface QuoteApprovalToQuoteFacadeInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
      * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

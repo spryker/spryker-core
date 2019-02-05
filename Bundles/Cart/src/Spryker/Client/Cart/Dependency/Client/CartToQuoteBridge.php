@@ -57,4 +57,12 @@ class CartToQuoteBridge implements CartToQuoteInterface
     {
         return $this->quoteClient->getStorageStrategy();
     }
+
+    /**
+     * @return bool
+     */
+    public function isQuoteLocked(): bool
+    {
+        return $this->quoteClient->isQuoteLocked();
+    }
 }

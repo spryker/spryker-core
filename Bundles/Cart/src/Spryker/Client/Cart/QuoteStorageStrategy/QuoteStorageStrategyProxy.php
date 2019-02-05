@@ -67,12 +67,6 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      */
     public function addItem(ItemTransfer $itemTransfer, array $params = []): QuoteTransfer
     {
-        if ($this->isQuoteLocked()) {
-            $this->addPermissionFailedMessage();
-
-            return $this->getQuote();
-        }
-
         return $this->quoteStorageStrategy->addItem($itemTransfer, $params);
     }
 
@@ -84,12 +78,6 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      */
     public function addItems(array $itemTransfers, array $params = []): QuoteTransfer
     {
-        if ($this->isQuoteLocked()) {
-            $this->addPermissionFailedMessage();
-
-            return $this->getQuote();
-        }
-
         return $this->quoteStorageStrategy->addItems($itemTransfers, $params);
     }
 
@@ -101,12 +89,6 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      */
     public function addValidItems(CartChangeTransfer $cartChangeTransfer, array $params = []): QuoteTransfer
     {
-        if ($this->isQuoteLocked()) {
-            $this->addPermissionFailedMessage();
-
-            return $this->getQuote();
-        }
-
         return $this->quoteStorageStrategy->addValidItems($cartChangeTransfer, $params);
     }
 

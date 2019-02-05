@@ -25,6 +25,7 @@ class Operation implements OperationInterface
     protected const TERMINATION_EVENT_NAME_ADD = 'add';
     protected const TERMINATION_EVENT_NAME_REMOVE = 'remove';
     protected const TERMINATION_EVENT_NAME_RELOAD = 'reload';
+    protected const GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED = 'cart.locked.change_denied';
 
     /**
      * @var \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
@@ -119,6 +120,13 @@ class Operation implements OperationInterface
         $cartChangeTransfer->requireQuote();
 
         $quoteTransfer = $cartChangeTransfer->getQuote();
+
+        if ($quoteTransfer->getIsLocked()) {
+            $this->messengerFacade->addErrorMessage($this->createMessengerMessageTransfer(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED));
+
+            return $quoteTransfer;
+        }
+
         $itemsTransfer = $cartChangeTransfer->getItems();
 
         foreach ($itemsTransfer as $currentItemTransfer) {
@@ -143,6 +151,12 @@ class Operation implements OperationInterface
         $cartChangeTransfer->requireQuote();
 
         $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->modifiedToArray(), true);
+
+        if ($originalQuoteTransfer->getIsLocked()) {
+            $this->messengerFacade->addErrorMessage($this->createMessengerMessageTransfer(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED));
+
+            return $originalQuoteTransfer;
+        }
 
         if (!$this->preCheckCart($cartChangeTransfer)) {
             return $cartChangeTransfer->getQuote();
@@ -223,30 +237,6 @@ class Operation implements OperationInterface
         if ($this->isTerminated(static::TERMINATION_EVENT_NAME_RELOAD, $cartChangeTransfer, $quoteTransfer)) {
             return $originalQuoteTransfer;
         }
-
-        return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function lock(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        $quoteTransfer->setIsLocked(true);
-
-        return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function unlock(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        $quoteTransfer->setIsLocked(false);
 
         return $quoteTransfer;
     }

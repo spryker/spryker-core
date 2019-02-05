@@ -32,4 +32,9 @@ interface CartToQuoteInterface
      * @return string
      */
     public function getStorageStrategy();
+
+    /**
+     * @return bool
+     */
+    public function isQuoteLocked(): bool;
 }

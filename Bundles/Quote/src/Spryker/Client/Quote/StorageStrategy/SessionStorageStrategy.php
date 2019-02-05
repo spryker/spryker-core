@@ -67,4 +67,13 @@ class SessionStorageStrategy implements StorageStrategyInterface
     {
         $this->quoteSession->clearQuote();
     }
+
+    /**
+     * @return bool
+     */
+    public function isQuoteLocked(): bool
+    {
+        return (bool)$this->quoteSession->getQuote()
+            ->getIsLocked();
+    }
 }

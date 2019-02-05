@@ -53,4 +53,14 @@ interface QuoteClientInterface
      * @return string
      */
     public function getStorageStrategy();
+
+    /**
+     * Specification:
+     * - Returns true if quote is locked.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isQuoteLocked(): bool;
 }

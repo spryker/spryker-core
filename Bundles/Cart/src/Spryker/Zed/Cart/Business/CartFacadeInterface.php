@@ -18,6 +18,7 @@ interface CartFacadeInterface
      *  Adds only valid item(s) to the quote. Each item gets additional information (e.g. price).
      *
      * Specification:
+     *  - Does nothing if cart is locked.
      *  - Run cart pre check plugins, per every item.
      *  - Add to cart only valid items.
      *  - If some items relay on one stock - items will be added by same order, until stock allow it.
@@ -40,6 +41,7 @@ interface CartFacadeInterface
      *  Adds item(s) to the quote. Each item gets additional information (e.g. price).
      *
      * Specification:
+     *  - Does nothing if cart is locked.
      *  - Run cart pre check plugins
      *  - For each new item run the item expander plugins (requires a SKU for each new item)
      *  - Add new item(s) to quote (requires, but not limited, a quantity > 0 for each new item)
@@ -109,28 +111,4 @@ interface CartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function cleanUpItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
-
-    /**
-     * Specification:
-     *  - Locks quote by setting `isLocked` transfer property to true.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
-
-    /**
-     * Specification:
-     *  - Unlocks quote by setting `isLocked` transfer property to false.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

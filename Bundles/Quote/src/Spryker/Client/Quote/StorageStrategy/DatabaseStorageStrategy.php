@@ -80,6 +80,15 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isQuoteLocked(): bool
+    {
+        return (bool)$this->quoteSession->getQuote()
+            ->getIsLocked();
+    }
+
+    /**
      * @return $this
      */
     public function clearQuote()

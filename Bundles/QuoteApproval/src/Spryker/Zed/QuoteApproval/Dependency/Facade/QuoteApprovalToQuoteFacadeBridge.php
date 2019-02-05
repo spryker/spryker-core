@@ -26,6 +26,26 @@ class QuoteApprovalToQuoteFacadeBridge implements QuoteApprovalToQuoteFacadeInte
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->quoteFacade->lockQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->quoteFacade->unlockQuote($quoteTransfer);
+    }
+
+    /**
      * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

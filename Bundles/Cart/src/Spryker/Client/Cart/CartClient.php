@@ -300,8 +300,8 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @return bool
      */
-    public function isQuoteLocked(): bool
+    public function isCartEditable(): bool
     {
-        return $this->getFactory()->createQuoteStorageStrategy()->isQuoteLocked();
+        return $this->getFactory()->createCartEditStatusChecker()->isCartEditable();
     }
 }
