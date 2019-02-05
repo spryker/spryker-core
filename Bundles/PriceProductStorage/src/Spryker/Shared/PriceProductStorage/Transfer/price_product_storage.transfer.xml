@@ -22,4 +22,26 @@
         <property name="idProductAbstract" type="int" />
         <property name="quantity" type="int" />
     </transfer>
+
+    <transfer name="Item">
+        <property name="productConcrete" type="ProductConcrete" />
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int" />
+        <property name="fkProductAbstract" type="int" />
+    </transfer>
+
+    <transfer name="CurrentProductPrice">
+        <property name="price" type="int" />
+    </transfer>
+
+    <transfer name="ItemValidationResponse">
+        <property name="messages" type="Message[]" singular="Message" />
+    </transfer>
+
+    <transfer name="Message">
+        <property name="type" type="string"/>
+        <property name="value" type="string"/>
+    </transfer>
 </transfers>

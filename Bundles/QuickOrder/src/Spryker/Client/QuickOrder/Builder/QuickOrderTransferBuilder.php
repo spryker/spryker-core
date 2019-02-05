@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\QuickOrder\Builder;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -57,15 +58,21 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
      */
     public function build(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
     {
+        $quickOrderItemTransfers = new ArrayObject();
+
         foreach ($quickOrderTransfer->getItems() as $quickOrderItemTransfer) {
-            if (empty($quickOrderItemTransfer->getSku())) {
+            if (!$quickOrderItemTransfer->getSku()) {
                 continue;
             }
 
             $quickOrderItemTransfer = $this->resolveProductConcrete($quickOrderItemTransfer);
             $quickOrderItemTransfer = $this->validateQuickOrderItem($quickOrderItemTransfer);
             $quickOrderItemTransfer = $this->expandProductConcrete($quickOrderItemTransfer);
+
+            $quickOrderItemTransfers->append($quickOrderItemTransfer);
         }
+
+        $quickOrderTransfer->setItems($quickOrderItemTransfers);
 
         return $quickOrderTransfer;
     }
@@ -121,6 +128,8 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
      */
     protected function expandProductConcrete(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
+        $quickOrderItemTransfer->requireProductConcrete();
+
         if (!$quickOrderItemTransfer->getProductConcrete()->getIdProductConcrete()) {
             return $quickOrderItemTransfer;
         }
@@ -145,6 +154,7 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->fromArray($quickOrderItemTransfer->toArray());
+
         return $itemTransfer;
     }
 }

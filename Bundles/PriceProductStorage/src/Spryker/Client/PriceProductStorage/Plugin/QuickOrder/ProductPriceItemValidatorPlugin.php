@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductQuantityStorage\Plugin;
+namespace Spryker\Client\PriceProductStorage\Plugin\QuickOrder;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ItemValidationResponseTransfer;
@@ -13,17 +13,15 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\QuickOrderExtension\Dependency\Plugin\ItemValidatorPluginInterface;
 
 /**
- * @method \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageClientInterface getClient()
- * @method \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageFactory getFactory()
+ * @method \Spryker\Client\PriceProductStorage\PriceProductStorageClientInterface getClient()
+ * @method \Spryker\Client\PriceProductStorage\PriceProductStorageFactory getFactory()
  */
-class ProductQuantityItemValidatorPlugin extends AbstractPlugin implements ItemValidatorPluginInterface
+class ProductPriceItemValidatorPlugin extends AbstractPlugin implements ItemValidatorPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Checks if product concrete provided in ItemTransfer has product quantity restrictions or not.
-     * - Adds recommendedValues with valid ItemTransfer->quantity inside into ItemValidationResponseTransfer and warning message
-     *   when product has quantity restrictions.
-     * - Returns empty ItemValidationResponseTransfer if product has not quantity restrictions.
+     * - Checks if product concrete provided in ItemTransfer has price or not.
+     * - If price is not found adds error message to ItemValidationResponseTransfer.
      *
      * @api
      *
