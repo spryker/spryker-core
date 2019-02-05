@@ -10,11 +10,12 @@ namespace Spryker\Glue\CompanyUsersRestApi\Plugin\CustomersRestApi;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerSessionExpanderPluginInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiFactory getFactory
  */
-class CompanyUserCustomerSessionExpanderPlugin implements CustomerSessionExpanderPluginInterface
+class CompanyUserCustomerSessionExpanderPlugin extends AbstractPlugin implements CustomerSessionExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
