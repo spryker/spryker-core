@@ -17,7 +17,6 @@ use Spryker\Zed\MerchantDataImport\Business\MerchantDataImportBusinessFactory;
 use Spryker\Zed\MerchantDataImport\Business\MerchantDataImportFacade;
 use Spryker\Zed\MerchantDataImport\Business\MerchantDataImportFacadeInterface;
 use Spryker\Zed\MerchantDataImport\Communication\Plugin\MerchantAddressDataImportPlugin;
-use Spryker\Zed\MerchantDataImport\Communication\Plugin\MerchantDataImportPlugin;
 use Spryker\Zed\MerchantDataImport\MerchantDataImportConfig;
 
 /**
@@ -76,8 +75,8 @@ class MerchantAddressDataImportPluginTest extends Unit
      */
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
-        $dataImportPlugin = new MerchantDataImportPlugin();
-        $this->assertSame(MerchantDataImportConfig::IMPORT_TYPE_MERCHANT, $dataImportPlugin->getImportType());
+        $dataImportPlugin = new MerchantAddressDataImportPlugin();
+        $this->assertSame(MerchantDataImportConfig::IMPORT_TYPE_MERCHANT_ADDRESS, $dataImportPlugin->getImportType());
     }
 
     /**
