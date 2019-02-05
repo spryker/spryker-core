@@ -106,7 +106,7 @@ class AbstractPlaceOrderStepTest extends Unit
     /**
      * @return void
      */
-    public function testPostConditionReturnFalseWHenNoOrderReferenceGiven()
+    public function testPostConditionReturnFalseWhenNoOrderReferenceGiven()
     {
         $abstractPlaceOrderStepMock = $this->getAbstractPlaceOrderStep(
             $this->getCheckoutClientMock()
