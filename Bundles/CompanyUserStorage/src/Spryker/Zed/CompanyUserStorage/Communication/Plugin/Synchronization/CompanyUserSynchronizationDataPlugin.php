@@ -64,7 +64,10 @@ class CompanyUserSynchronizationDataPlugin extends AbstractPlugin implements Syn
 
         foreach ($companyUserStorageEntities as $companyUserStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($companyUserStorageEntity->getData());
+
+            /** @var string $data */
+            $data = $companyUserStorageEntity->getData();
+            $synchronizationDataTransfer->setData($data);
             $synchronizationDataTransfer->setKey($companyUserStorageEntity->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }

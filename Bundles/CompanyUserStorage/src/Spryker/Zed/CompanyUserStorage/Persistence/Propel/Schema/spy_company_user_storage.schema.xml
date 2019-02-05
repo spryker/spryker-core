@@ -8,8 +8,6 @@
     <table name="spy_company_user_storage">
         <column name="id_company_user_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_company_user" type="INTEGER" required="true"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
-        <column name="key" type="VARCHAR" required="true"/>
 
         <index name="spy_company_user_storage-fk_company_user">
             <index-column name="fk_company_user"/>
