@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Quote\Business\Validator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
@@ -91,9 +92,8 @@ class QuoteValidator implements QuoteValidatorInterface
             $quoteValidationResponseTransferFromPlugin = $quoteValidatorPlugin->validate($quoteTransfer);
 
             if (!$quoteValidationResponseTransferFromPlugin->getIsSuccess()) {
-                $errors = array_merge($quoteValidationResponseTransfer->getErrors(), $quoteValidationResponseTransferFromPlugin->getErrors());
-
-                $quoteValidationResponseTransfer->setErrors($errors)
+                $errors = array_merge((array)$quoteValidationResponseTransfer->getErrors(), (array)$quoteValidationResponseTransferFromPlugin->getErrors());
+                $quoteValidationResponseTransfer->setErrors(new ArrayObject($errors))
                     ->setIsSuccess(false);
             }
         }

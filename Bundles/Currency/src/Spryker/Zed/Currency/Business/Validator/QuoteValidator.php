@@ -38,8 +38,6 @@ class QuoteValidator implements QuoteValidatorInterface
      */
     public function validate(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
-        file_put_contents('sdsd.txt', print_r($quoteTransfer, 1));
-
         $currencyTransfer = $quoteTransfer->getCurrency();
         $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
             ->setIsSuccess(true);
