@@ -289,7 +289,7 @@ class ProductQuantityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testNormalizeItemsWithProductQuantityRestrictionsMinimumAdjustment(): void
+    public function testNormalizeCartChangeTransferMinimumAdjustment(): void
     {
         $expectedQuantity = 2;
         $productTransfer = $this->tester->createProductWithSpecificProductQuantity($expectedQuantity, 100, 2);
@@ -299,7 +299,7 @@ class ProductQuantityFacadeTest extends Unit
         $cartChangeTransfer = $this->tester->addSkuToCartChangeTransfer($cartChangeTransfer, $expectedSku, 1);
         $cartChangeTransfer->getItems()[0]->addNormalizableField('quantity');
 
-        $cartChangeTransfer = $this->productQuantityFacade->normalizeItemsWithProductQuantityRestrictions($cartChangeTransfer);
+        $cartChangeTransfer = $this->productQuantityFacade->normalizeCartChangeTransfer($cartChangeTransfer);
 
         $this->assertSame($expectedQuantity, $cartChangeTransfer->getItems()[0]->getQuantity());
         $this->assertSame($expectedSku, $cartChangeTransfer->getItems()[0]->getSku());
@@ -308,7 +308,7 @@ class ProductQuantityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testNormalizeItemsWithProductQuantityRestrictionsMaximumAdjustment(): void
+    public function testNormalizeCartChangeTransferMaximumAdjustment(): void
     {
         $expectedQuantity = 100;
         $productTransfer = $this->tester->createProductWithSpecificProductQuantity(2, $expectedQuantity, 2);
@@ -318,7 +318,7 @@ class ProductQuantityFacadeTest extends Unit
         $cartChangeTransfer = $this->tester->addSkuToCartChangeTransfer($cartChangeTransfer, $expectedSku, 200);
         $cartChangeTransfer->getItems()[0]->addNormalizableField('quantity');
 
-        $cartChangeTransfer = $this->productQuantityFacade->normalizeItemsWithProductQuantityRestrictions($cartChangeTransfer);
+        $cartChangeTransfer = $this->productQuantityFacade->normalizeCartChangeTransfer($cartChangeTransfer);
 
         $this->assertSame($expectedQuantity, $cartChangeTransfer->getItems()[0]->getQuantity());
         $this->assertSame($expectedSku, $cartChangeTransfer->getItems()[0]->getSku());
@@ -327,7 +327,7 @@ class ProductQuantityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testNormalizeItemsWithProductQuantityRestrictionsStepAdjustment(): void
+    public function testNormalizeCartChangeTransferStepAdjustment(): void
     {
         $expectedQuantity = 4;
         $productTransfer = $this->tester->createProductWithSpecificProductQuantity(2, 100, 2);
@@ -337,7 +337,7 @@ class ProductQuantityFacadeTest extends Unit
         $cartChangeTransfer = $this->tester->addSkuToCartChangeTransfer($cartChangeTransfer, $expectedSku, 3);
         $cartChangeTransfer->getItems()[0]->addNormalizableField('quantity');
 
-        $cartChangeTransfer = $this->productQuantityFacade->normalizeItemsWithProductQuantityRestrictions($cartChangeTransfer);
+        $cartChangeTransfer = $this->productQuantityFacade->normalizeCartChangeTransfer($cartChangeTransfer);
 
         $this->assertSame($expectedQuantity, $cartChangeTransfer->getItems()[0]->getQuantity());
         $this->assertSame($expectedSku, $cartChangeTransfer->getItems()[0]->getSku());
