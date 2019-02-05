@@ -131,14 +131,6 @@ class ConsoleTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Console\Business\ConsoleBusinessFactory
-     */
-    private function getBusinessFactoryMock()
-    {
-        return $this->getMockBuilder(ConsoleDependencyProvider::class)->disableOriginalConstructor()->getMock();
-    }
-
-    /**
      * @return \SprykerTest\Zed\Console\Business\Model\Fixtures\ConsoleMock
      */
     private function getConsole()

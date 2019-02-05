@@ -31,4 +31,14 @@ class NavigationStorageToUtilSanitizeServiceBridge implements NavigationStorageT
     {
         return $this->utilSanitizeService->arrayFilterRecursive($array);
     }
+
+    /**
+     * @param array $array
+     *
+     * @return array
+     */
+    public function filterOutBlankValuesRecursively(array $array): array
+    {
+        return $this->utilSanitizeService->filterOutBlankValuesRecursively($array);
+    }
 }
