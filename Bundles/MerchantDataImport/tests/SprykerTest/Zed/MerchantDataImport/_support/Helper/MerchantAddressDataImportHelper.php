@@ -8,10 +8,8 @@
 namespace SprykerTest\Zed\MerchantDataImport\Helper;
 
 use Codeception\Module;
-use Orm\Zed\Merchant\Persistence\SpyMerchant;
 use Orm\Zed\Merchant\Persistence\SpyMerchantAddress;
 use Orm\Zed\Merchant\Persistence\SpyMerchantAddressQuery;
-use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class MerchantAddressDataImportHelper extends Module
