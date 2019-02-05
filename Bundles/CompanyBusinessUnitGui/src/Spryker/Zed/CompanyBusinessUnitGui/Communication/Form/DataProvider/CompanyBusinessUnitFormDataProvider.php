@@ -73,7 +73,7 @@ class CompanyBusinessUnitFormDataProvider
      */
     protected function findCompanyBusinessUnitTransfer(?int $idCompanyBusinessUnit = null): CompanyBusinessUnitTransfer
     {
-        $companyBusinessUnitTransfer = $this->createCompanyBusinessUnitTransfer();
+        $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
 
         if (!$idCompanyBusinessUnit) {
             return $companyBusinessUnitTransfer;
@@ -129,13 +129,5 @@ class CompanyBusinessUnitFormDataProvider
         }
 
         return [$values, $attributes];
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
-     */
-    protected function createCompanyBusinessUnitTransfer(): CompanyBusinessUnitTransfer
-    {
-        return new CompanyBusinessUnitTransfer();
     }
 }
