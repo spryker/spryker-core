@@ -20,7 +20,7 @@ class CompanyUserStorageExpander implements CompanyUserStorageExpanderInterface
      */
     public function addCompanyBusinessUnitId(CompanyUserTransfer $companyUserTransfer, CompanyUserStorageTransfer $companyUserStorageTransfer): CompanyUserStorageTransfer
     {
-        $companyUserStorageTransfer->setIdBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit());
+        $companyUserStorageTransfer->setIdCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit());
 
         return $companyUserStorageTransfer;
     }
