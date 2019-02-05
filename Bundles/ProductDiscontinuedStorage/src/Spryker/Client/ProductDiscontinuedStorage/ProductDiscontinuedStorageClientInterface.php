@@ -73,10 +73,9 @@ interface ProductDiscontinuedStorageClientInterface
 
     /**
      * Specification:
-     * - Validates ItemTransfer with the product discontinued validation.
-     * - Returns ItemValidationResponseTransfer with error or warning messages.
-     * - In case any fields need to be updated ItemValidationResponseTransfer contains ItemTransfer with 'recommended values transfer' inside.
-     * - Returns empty ItemValidationResponseTransfer when no validation errors or warnings.
+     * - Check if product concrete provided in ItemTransfer is discontinued or not.
+     * - Returns ItemValidationResponseTransfer with error message.
+     * - Returns empty ItemValidationResponseTransfer when product is not discontinued.
      *
      * @api
      *
