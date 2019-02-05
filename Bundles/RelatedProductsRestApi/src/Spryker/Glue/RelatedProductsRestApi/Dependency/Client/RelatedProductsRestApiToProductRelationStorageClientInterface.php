@@ -5,18 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductRelationStorage\Relation;
+namespace Spryker\Glue\RelatedProductsRestApi\Dependency\Client;
 
-interface RelatedProductReaderInterface
+interface RelatedProductsRestApiToProductRelationStorageClientInterface
 {
-    /**
-     * @param int $idProductAbstract
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
-     */
-    public function findRelatedProducts($idProductAbstract, $localeName);
-
     /**
      * @param int $idProductAbstract
      *
