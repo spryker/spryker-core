@@ -7,23 +7,23 @@
 
 namespace Spryker\Zed\Cms\Business\Mapping;
 
-use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface;
 
 class CmsGlossaryKeyGenerator implements CmsGlossaryKeyGeneratorInterface
 {
-    public const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms';
-    public const ID_CMS_PAGE = 'idCmsPage';
-    public const UNIQUE_ID = 'uniqueId';
+    protected const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms';
+    protected const ID_CMS_PAGE = 'idCmsPage';
+    protected const UNIQUE_ID = 'uniqueId';
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface $glossaryFacade
      */
-    public function __construct(CmsToGlossaryInterface $glossaryFacade)
+    public function __construct(CmsToGlossaryFacadeInterface $glossaryFacade)
     {
         $this->glossaryFacade = $glossaryFacade;
     }
@@ -36,7 +36,7 @@ class CmsGlossaryKeyGenerator implements CmsGlossaryKeyGeneratorInterface
      *
      * @return string
      */
-    public function generateGlossaryKeyName($idCmsPage, $templateName, $placeholder, $autoIncrement = true)
+    public function generateGlossaryKeyName(int $idCmsPage, string $templateName, string $placeholder, bool $autoIncrement = true): string
     {
         $keyName = static::GENERATED_GLOSSARY_KEY_PREFIX . '.';
         $keyName .= str_replace([' ', '.'], '-', $templateName) . '.';
