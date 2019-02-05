@@ -59,23 +59,31 @@ class ProductBundleDiscontinuedWriter implements ProductBundleDiscontinuedWriter
      *
      * @return void
      */
-    public function discontinueProductBundleByProducts(ProductConcreteTransfer $productConcreteTransfer): void
+    public function discontinueProductBundleByBundledProducts(ProductConcreteTransfer $productConcreteTransfer): void
     {
         if ($productConcreteTransfer->getProductBundle() === null) {
             return;
         }
 
-        $bundledProducts = $productConcreteTransfer->getProductBundle()->getBundledProducts();
+        $productForBundleTransfers = $productConcreteTransfer->getProductBundle()->getBundledProducts();
 
-        foreach ($bundledProducts as $bundledProduct) {
-            $productDiscontinuedResponseTransfer = $this->productDiscontinuedFacade
-                ->findProductDiscontinuedByProductId($bundledProduct->getIdProductConcrete());
-
-            if ($productDiscontinuedResponseTransfer->getIsSuccessful()) {
-                $this->discontinueProduct($productConcreteTransfer->getIdProductConcrete());
-                break;
-            }
+        if ($productForBundleTransfers->count() < 1) {
+            return;
         }
+
+        $productConcreteIds = [];
+        foreach ($productForBundleTransfers as $productForBundleTransfer) {
+            $productConcreteIds[] = $productForBundleTransfer->getIdProductConcrete();
+        }
+
+        $discontinuedBundledProducts = $this->productDiscontinuedProductBundleConnectorRepository
+            ->getDiscontinuedProductsByProductConcreteIds($productConcreteIds);
+
+        if (!$discontinuedBundledProducts) {
+            return;
+        }
+
+        $this->discontinueProduct($productConcreteTransfer->getIdProductConcrete());
     }
 
     /**

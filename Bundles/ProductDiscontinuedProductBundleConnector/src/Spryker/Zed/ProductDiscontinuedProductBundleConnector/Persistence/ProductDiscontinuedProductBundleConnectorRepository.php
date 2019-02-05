@@ -71,4 +71,18 @@ class ProductDiscontinuedProductBundleConnectorRepository extends AbstractReposi
             ->find()
             ->toArray();
     }
+
+    /**
+     * @param array $productConcreteIds
+     *
+     * @return array
+     */
+    public function getDiscontinuedProductsByProductConcreteIds(array $productConcreteIds): array
+    {
+        return $this->getFactory()
+            ->createProductDiscontinuedPropelQuery()
+            ->filterByFkProduct($productConcreteIds, Criteria::IN)
+            ->find()
+            ->toArray();
+    }
 }

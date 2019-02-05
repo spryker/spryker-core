@@ -47,7 +47,7 @@ class ProductDiscontinuedProductBundleConnectorFacade extends AbstractFacade imp
     {
         $this->getFactory()
             ->createProductBundleDiscontinuedWriter()
-            ->discontinueProductBundleByProducts($productConcreteTransfer);
+            ->discontinueProductBundleByBundledProducts($productConcreteTransfer);
     }
 
     /**
