@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Application;
 
+use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Application\Application;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Application as SilexApplication;
@@ -29,31 +30,41 @@ abstract class YvesBootstrap
     protected $config;
 
     /**
-     * @var \Spryker\Shared\Application\Application
+     * @var \Spryker\Shared\Application\Application|null
      */
     protected $sprykerApplication;
 
     public function __construct()
     {
         $this->application = new SilexApplication();
-        $this->sprykerApplication = new Application($this->application);
+
+        if ($this->application instanceof ContainerInterface) {
+            $this->sprykerApplication = new Application($this->application);
+        }
+
         $this->config = new ApplicationConfig();
     }
 
     /**
-     * @return \Spryker\Shared\Application\Application
+     * @return \Spryker\Shared\Application\Application|\Spryker\Yves\Kernel\Application
      */
     public function boot()
     {
         $this->registerServiceProviders();
 
-        $this->setupApplication();
+        if ($this->sprykerApplication !== null) {
+            $this->setupApplication();
+        }
 
         $this->registerRouters();
-
         $this->registerControllerProviders();
 
         $this->application->boot();
+
+        if ($this->sprykerApplication === null) {
+            return $this->application;
+        }
+
         $this->sprykerApplication->boot();
 
         return $this->sprykerApplication;
