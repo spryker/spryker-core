@@ -71,12 +71,11 @@ class AvailabilityNotificationUnsubscriber implements AvailabilityNotificationUn
                 ->setErrorMessage('Subscription doesn\'t exist');
         }
 
-        $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilitySubscriptionTransfer->getSku());
         $this->entityManager->deleteBySubscriptionKey($availabilitySubscriptionTransfer->getSubscriptionKey());
         $this->availabilityNotificationSender->sendUnsubscriptionMail($availabilitySubscriptionTransfer);
 
         return (new AvailabilitySubscriptionResponseTransfer())
             ->setIsSuccess(true)
-            ->setProduct($productConcreteTransfer);
+            ->setAvailabilitySubscription($availabilitySubscriptionTransfer);
     }
 }
