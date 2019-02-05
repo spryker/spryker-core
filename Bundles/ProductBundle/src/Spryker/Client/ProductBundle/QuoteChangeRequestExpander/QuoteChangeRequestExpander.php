@@ -47,7 +47,7 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
         if (!$numberOfBundlesToRemove) {
             $numberOfBundlesToRemove = $this->getBundledProductTotalQuantity($quoteTransfer, $groupKey);
         }
-        $numberOfBundlesToRemove = (int)ceil($numberOfBundlesToRemove);
+        $numberOfBundlesToRemove = (int)$numberOfBundlesToRemove;
         $bundledItems = [];
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if ($numberOfBundlesToRemove === 0) {
