@@ -3,7 +3,7 @@
 
 {{ mail.availabilitySubscriptionMailData.productAttributes.name }}
 
-{% for name, value in mail.availabilitySubscriptionMailData.product.attributes if name %}
+{% for name, value in mail.availabilitySubscriptionMailData.productConcrete.attributes if name %}
     {{ ('product.attribute.' ~ name) | trans }}: {{ value }}
 {% endfor %}
 

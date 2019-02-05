@@ -32,8 +32,18 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function unsubscribeAction(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    public function unsubscribeByCustomerReferenceAndSkuAction(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
-        return $this->getFacade()->unsubscribe($availabilitySubscriptionTransfer);
+        return $this->getFacade()->unsubscribeByCustomerReferenceAndSku($availabilitySubscriptionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
+     */
+    public function unsubscribeBySubscriptionKeyAction(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    {
+        return $this->getFacade()->unsubscribeBySubscriptionKey($availabilitySubscriptionTransfer);
     }
 }

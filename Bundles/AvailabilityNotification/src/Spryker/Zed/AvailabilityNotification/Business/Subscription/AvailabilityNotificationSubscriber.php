@@ -31,18 +31,26 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
     protected $utilValidateService;
 
     /**
+     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface
+     */
+    protected $availabilitySubscriptionReader;
+
+    /**
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaverInterface $availabilitySubscriptionSaver
      * @param \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface $availabilityNotificationSender
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface $utilValidateService
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface $availabilitySubscriptionReader
      */
     public function __construct(
         AvailabilitySubscriptionSaverInterface $availabilitySubscriptionSaver,
         AvailabilityNotificationSenderInterface $availabilityNotificationSender,
-        AvailabilityNotificationToUtilValidateServiceInterface $utilValidateService
+        AvailabilityNotificationToUtilValidateServiceInterface $utilValidateService,
+        AvailabilitySubscriptionReaderInterface $availabilitySubscriptionReader
     ) {
         $this->availabilitySubscriptionSaver = $availabilitySubscriptionSaver;
         $this->availabilityNotificationSender = $availabilityNotificationSender;
         $this->utilValidateService = $utilValidateService;
+        $this->availabilitySubscriptionReader = $availabilitySubscriptionReader;
     }
 
     /**
@@ -61,6 +69,13 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
             return $this->createInvalidEmailResponse();
         }
 
+        $existingAvailabilitySubscriptionTransfer = $this->availabilitySubscriptionReader
+            ->findOneByEmailAndSku($availabilitySubscriptionTransfer->getEmail(), $availabilitySubscriptionTransfer->getSku());
+
+        if ($existingAvailabilitySubscriptionTransfer !== null) {
+            return $this->createSubscriptionAlreadyExistsResponse();
+        }
+
         $availabilitySubscriptionTransfer = $this->availabilitySubscriptionSaver->save($availabilitySubscriptionTransfer);
 
         $this->availabilityNotificationSender->sendSubscriptionMail($availabilitySubscriptionTransfer);
@@ -76,6 +91,15 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
     {
         return $this->createSubscriptionResponseTransfer(false)
             ->setErrorMessage(Messages::CUSTOMER_EMAIL_FORMAT_INVALID);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
+     */
+    protected function createSubscriptionAlreadyExistsResponse(): AvailabilitySubscriptionResponseTransfer
+    {
+        return $this->createSubscriptionResponseTransfer(false)
+            ->setErrorMessage('Subscription already exists');
     }
 
     /**

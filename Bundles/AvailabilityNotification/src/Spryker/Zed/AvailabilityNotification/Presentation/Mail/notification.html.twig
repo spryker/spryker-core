@@ -98,7 +98,7 @@
                             width="546">
                             <div style="text-align: left;">{{ mail.availabilitySubscriptionMailData.productAttributes.name }}</div>
                             <br>
-                            {% for name, value in mail.availabilitySubscriptionMailData.product.attributes %}
+                            {% for name, value in mail.availabilitySubscriptionMailData.productConcrete.attributes %}
                                 <p class="col col--sm-12 col--md-6 col--lg-4 col--xl-3">
                                     <strong>{{ ('product.attribute.' ~ name) | trans }}</strong><br/>
                                     <span>{{ value }}</span>

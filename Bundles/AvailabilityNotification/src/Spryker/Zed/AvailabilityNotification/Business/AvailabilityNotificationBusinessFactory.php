@@ -49,7 +49,8 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
         return new AvailabilityNotificationSubscriber(
             $this->createAvailabilitySubscriptionSaver(),
             $this->createAvailabilityNotificationSender(),
-            $this->getUtilValidateService()
+            $this->getUtilValidateService(),
+            $this->createAvailabilityNotificationReader()
         );
     }
 
@@ -61,8 +62,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
         return new AvailabilityNotificationUnsubscriber(
             $this->getEntityManager(),
             $this->createAvailabilityNotificationSender(),
-            $this->getRepository(),
-            $this->getProductFacade()
+            $this->createAvailabilityNotificationReader()
         );
     }
 
@@ -83,8 +83,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createSubscriptionKeyGenerator(),
             $this->getStoreFacade(),
-            $this->getLocaleFacade(),
-            $this->createAvailabilityNotificationReader()
+            $this->getLocaleFacade()
         );
     }
 

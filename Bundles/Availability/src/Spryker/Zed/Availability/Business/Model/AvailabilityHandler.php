@@ -156,7 +156,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     protected function saveAndTouchAvailability($sku, $quantity, StoreTransfer $storeTransfer)
     {
-        $currentQuantity = $this->findCurrentPhysicalQuantity($sku, $storeTransfer);
+        $currentQuantity = $this->findCurrentPhysicalQuantity($sku, $storeTransfer) ?? 0;
         $spyAvailabilityEntity = $this->prepareAvailabilityEntityForSave($sku, $quantity, $storeTransfer);
 
         $isNeverOutOfStockModified = $spyAvailabilityEntity->isColumnModified(SpyAvailabilityTableMap::COL_IS_NEVER_OUT_OF_STOCK);
@@ -169,7 +169,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             $this->touchAvailabilityAbstract($spyAvailabilityEntity->getFkAvailabilityAbstract());
         }
 
-        $this->notifyAvailabilitySubscribes($spyAvailabilityEntity, $currentQuantity, $sku, $quantity, $storeTransfer, $isNeverOutOfStockModified);
+        $this->triggerProductIsAvailableAgainEvent($spyAvailabilityEntity, $currentQuantity, $sku, $quantity, $storeTransfer, $isNeverOutOfStockModified);
 
         return $spyAvailabilityEntity;
     }
@@ -352,7 +352,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      *
      * @return void
      */
-    protected function notifyAvailabilitySubscribes(
+    protected function triggerProductIsAvailableAgainEvent(
         SpyAvailability $spyAvailabilityEntity,
         int $currentQuantity,
         string $sku,

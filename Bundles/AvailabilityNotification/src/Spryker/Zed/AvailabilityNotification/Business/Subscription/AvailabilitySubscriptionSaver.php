@@ -35,29 +35,21 @@ class AvailabilitySubscriptionSaver implements AvailabilitySubscriptionSaverInte
     protected $availabilityNotificationToLocaleFacade;
 
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface
-     */
-    protected $availabilitySubscriptionReader;
-
-    /**
      * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface $entityManager
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface $keyGenerator
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface $availabilityNotificationToStoreFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface $availabilityNotificationToLocaleFacade
-     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface $availabilitySubscriptionReader
      */
     public function __construct(
         AvailabilityNotificationEntityManagerInterface $entityManager,
         AvailabilitySubscriptionKeyGeneratorInterface $keyGenerator,
         AvailabilityNotificationToStoreFacadeInterface $availabilityNotificationToStoreFacade,
-        AvailabilityNotificationToLocaleFacadeInterface $availabilityNotificationToLocaleFacade,
-        AvailabilitySubscriptionReaderInterface $availabilitySubscriptionReader
+        AvailabilityNotificationToLocaleFacadeInterface $availabilityNotificationToLocaleFacade
     ) {
         $this->entityManager = $entityManager;
         $this->keyGenerator = $keyGenerator;
         $this->availabilityNotificationToStoreFacade = $availabilityNotificationToStoreFacade;
         $this->availabilityNotificationToLocaleFacade = $availabilityNotificationToLocaleFacade;
-        $this->availabilitySubscriptionReader = $availabilitySubscriptionReader;
     }
 
     /**
@@ -69,13 +61,6 @@ class AvailabilitySubscriptionSaver implements AvailabilitySubscriptionSaverInte
     {
         $availabilitySubscriptionTransfer->requireSku();
         $availabilitySubscriptionTransfer->requireEmail();
-
-        $existedAvailabilitySubscriptionTransfer = $this->availabilitySubscriptionReader
-            ->findOneByEmailAndSku($availabilitySubscriptionTransfer->getEmail(), $availabilitySubscriptionTransfer->getSku());
-
-        if ($existedAvailabilitySubscriptionTransfer !== null) {
-            return $existedAvailabilitySubscriptionTransfer;
-        }
 
         $subscriptionKey = $this->keyGenerator->generateKey();
         $availabilitySubscriptionTransfer->setSubscriptionKey($subscriptionKey);

@@ -41,10 +41,26 @@ class AvailabilityNotificationClient extends AbstractClient implements Availabil
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function unsubscribe(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    public function unsubscribeByCustomerReferenceAndSku(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         return $this->getFactory()
             ->createZedAvailabilityNotificationStub()
-            ->unsubscribe($availabilitySubscriptionTransfer);
+            ->unsubscribeByCustomerReferenceAndSku($availabilitySubscriptionTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
+     */
+    public function unsubscribeBySubscriptionKey(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    {
+        return $this->getFactory()
+            ->createZedAvailabilityNotificationStub()
+            ->unsubscribeBySubscriptionKey($availabilitySubscriptionTransfer);
     }
 }

@@ -76,7 +76,7 @@ class AvailabilityNotificationSender implements AvailabilityNotificationSenderIn
         $unsubscriptionLink = $this->urlGenerator->createUnsubscriptionLink($availabilitySubscriptionTransfer);
 
         $mailData = (new AvailabilitySubscriptionMailDataTransfer())
-            ->setProduct($productConcreteTransfer)
+            ->setProductConcrete($productConcreteTransfer)
             ->setProductAttributes($productAttributes)
             ->setAvailabilitySubscription($availabilitySubscriptionTransfer)
             ->setAvailabilityUnsubscriptionLink($unsubscriptionLink);

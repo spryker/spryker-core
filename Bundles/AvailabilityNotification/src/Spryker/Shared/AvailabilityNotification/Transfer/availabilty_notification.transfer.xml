@@ -32,7 +32,6 @@
     </transfer>
 
     <transfer name="AvailabilitySubscriptionMailDataTransfer">
-        <property name="product" type="ProductConcrete" />
         <property name="productAttributes" type="array" />
         <property name="availabilitySubscription" type="AvailabilitySubscription" />
         <property name="availabilityUnsubscriptionLink" type="string" />
@@ -49,7 +48,7 @@
     </transfer>
 
     <transfer name="Customer">
-        <property name="availabilitySubscriptions" type="AvailabilitySubscription[]" singular="availabilitySubscription"/>
+        <property name="availabilitySubscriptionSkus" type="string[]" singular="availabilitySubscriptionSku"/>
     </transfer>
 
 </transfers>
