@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -19,11 +18,4 @@ interface GuestCartCreatorInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function create(RestRequestInterface $restRequest): RestResponseInterface;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function createQuote(RestRequestInterface $restRequest): QuoteResponseTransfer;
 }

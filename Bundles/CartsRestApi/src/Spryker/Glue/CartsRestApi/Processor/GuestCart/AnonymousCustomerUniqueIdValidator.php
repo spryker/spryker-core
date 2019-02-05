@@ -9,7 +9,9 @@ namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,11 +23,20 @@ class AnonymousCustomerUniqueIdValidator implements AnonymousCustomerUniqueIdVal
     protected $config;
 
     /**
-     * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $config
+     * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface
      */
-    public function __construct(CartsRestApiConfig $config)
-    {
+    protected $cartRestResponseBuilder;
+
+    /**
+     * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $config
+     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
+     */
+    public function __construct(
+        CartsRestApiConfig $config,
+        CartRestResponseBuilderInterface $cartRestResponseBuilder
+    ) {
         $this->config = $config;
+        $this->cartRestResponseBuilder = $cartRestResponseBuilder;
     }
 
     /**
@@ -36,17 +47,17 @@ class AnonymousCustomerUniqueIdValidator implements AnonymousCustomerUniqueIdVal
      */
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
-        if (!$httpRequest->headers->has(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID)) {
+        if (!$httpRequest->headers->has(SharedCartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID)) {
             return null;
         }
 
-        if (empty($httpRequest->headers->get(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID))
+        if (empty($httpRequest->headers->get(SharedCartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID))
             && in_array($restRequest->getResource()->getType(), $this->config->getGuestCartResources(), true)
         ) {
             return (new RestErrorMessageTransfer())
                 ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setCode(CartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
-                ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
+                ->setCode(SharedCartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
+                ->setDetail(SharedCartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
         }
 
         return null;

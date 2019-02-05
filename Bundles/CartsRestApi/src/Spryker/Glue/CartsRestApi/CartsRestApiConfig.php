@@ -39,8 +39,6 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const ACTION_GUEST_CART_ITEMS_PATCH = 'patch';
     public const ACTION_GUEST_CART_ITEMS_DELETE = 'delete';
 
-    public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
-
     protected const GUEST_CART_RESOURCES = [
         CartsRestApiConfig::RESOURCE_GUEST_CARTS,
         CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,

@@ -214,6 +214,21 @@ class CartsResourceMapper implements CartsResourceMapperInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapRestRequestToQuoteTransfer(RestRequestInterface $restRequest): QuoteTransfer
+    {
+        $customerTransfer = $this->createCustomerTransfer($restRequest);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer($customerTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
      * @return \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer
      */
     public function mapRestRequestToRestQuoteCollectionRequestTransfer(

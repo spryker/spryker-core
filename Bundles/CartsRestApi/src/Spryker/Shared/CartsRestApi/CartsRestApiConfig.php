@@ -42,6 +42,8 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_CURRENCY_DATA_IS_MISSING = 'Currency data is missing';
     public const EXCEPTION_MESSAGE_PRICE_MODE_CANT_BE_CHANGED = 'Can’t switch price mode when there are items in the cart.';
 
+    public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
+
     /**
      * Do not forget to add mapping:
      * @see \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_ERROR_MAP

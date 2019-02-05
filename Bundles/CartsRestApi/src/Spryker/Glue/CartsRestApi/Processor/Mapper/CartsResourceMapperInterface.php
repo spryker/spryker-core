@@ -90,6 +90,13 @@ interface CartsResourceMapperInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapRestRequestToQuoteTransfer(RestRequestInterface $restRequest): QuoteTransfer;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
      * @return \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer
      */
     public function mapRestRequestToRestQuoteCollectionRequestTransfer(

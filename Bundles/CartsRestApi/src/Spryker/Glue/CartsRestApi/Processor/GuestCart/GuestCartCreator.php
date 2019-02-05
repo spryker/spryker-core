@@ -7,10 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
@@ -58,8 +55,10 @@ class GuestCartCreator implements GuestCartCreatorInterface
     {
         $quoteResponseTransfer = $this->createQuote($restRequest);
 
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->guestCartRestResponseBuilder->createFailedCreatingCartErrorResponse();
+        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
+            $restQuoteRequestTransfer = $this->cartsResourceMapper->mapRestQuoteRequestTransferFromRequest($quoteResponseTransfer, $restRequest);
+
+            return $this->guestCartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($restQuoteRequestTransfer->getErrorCodes());
         }
 
         return $this->guestCartRestResponseBuilder->createGuestCartRestResponse($quoteResponseTransfer->getQuoteTransfer());
@@ -72,32 +71,9 @@ class GuestCartCreator implements GuestCartCreatorInterface
      */
     public function createQuote(RestRequestInterface $restRequest): QuoteResponseTransfer
     {
-        $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
-            ->setQuote($this->createQuoteTransfer($restRequest));
+        $quoteTransfer = $this->cartsResourceMapper->mapRestRequestToQuoteTransfer($restRequest);
+        $restQuoteRequestTransfer = $this->cartsResourceMapper->createRestQuoteRequestTransfer($restRequest, $quoteTransfer);
 
         return $this->cartsRestApiClient->createQuote($restQuoteRequestTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function createQuoteTransfer(RestRequestInterface $restRequest): QuoteTransfer
-    {
-        $customerTransfer = $this->getCustomerTransfer($restRequest);
-
-        return (new QuoteTransfer())->setCustomer($customerTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function getCustomerTransfer(RestRequestInterface $restRequest): CustomerTransfer
-    {
-        return (new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
     }
 }
