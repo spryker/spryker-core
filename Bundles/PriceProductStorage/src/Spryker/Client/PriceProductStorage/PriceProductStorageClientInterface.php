@@ -71,10 +71,9 @@ interface PriceProductStorageClientInterface
 
     /**
      * Specification:
-     * - Validates ItemTransfer with the product price validation.
-     * - Returns ItemValidationResponseTransfer with error or warning messages.
-     * - In case any fields need to be updated ItemValidationResponseTransfer contains ItemTransfer with 'recommended values transfer' inside.
-     * - Returns empty ItemValidationResponseTransfer when no validation errors or warnings.
+     * - Checks if product concrete provided in ItemTransfer has price or not.
+     * - If price is not found adds error message to ItemValidationResponseTransfer.
+     * - Returns empty ItemValidationResponseTransfer if price for product is exists.
      *
      * @api
      *

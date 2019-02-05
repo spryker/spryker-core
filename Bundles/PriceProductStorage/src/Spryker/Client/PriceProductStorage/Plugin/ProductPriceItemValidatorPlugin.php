@@ -20,7 +20,8 @@ class ProductPriceItemValidatorPlugin extends AbstractPlugin implements ItemVali
 {
     /**
      * {@inheritdoc}
-     * - Validate provided ItemTransfer with price validation.
+     * - Checks if product concrete provided in ItemTransfer has price or not.
+     * - If price is not found adds error message to ItemValidationResponseTransfer.
      *
      * @api
      *

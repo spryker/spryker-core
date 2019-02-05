@@ -41,10 +41,10 @@ interface ProductQuantityStorageClientInterface
 
     /**
      * Specification:
-     * - Validates ItemTransfer with the product quantity validation.
-     * - Returns ItemValidationResponseTransfer with error or warning messages.
-     * - In case any fields need to be updated ItemValidationResponseTransfer contains ItemTransfer with 'recommended values transfer' inside.
-     * - Returns empty ItemValidationResponseTransfer when no validation errors or warnings.
+     * - Checks if product concrete provided in ItemTransfer has product quantity restrictions or not.
+     * - Adds recommendedValues with valid ItemTransfer->quantity inside into ItemValidationResponseTransfer and warning message
+     *   when product has quantity restrictions.
+     * - Returns empty ItemValidationResponseTransfer if product has not quantity restrictions.
      *
      * @api
      *
