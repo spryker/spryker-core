@@ -87,4 +87,18 @@ interface CompanyUserInterface
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
+     * @param int[] $companyUserIds
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function findActiveCompanyUsers(array $companyUserIds): array;
+
+    /**
+     * @param int[] $companyIds
+     *
+     * @return int[]
+     */
+    public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array;
 }
