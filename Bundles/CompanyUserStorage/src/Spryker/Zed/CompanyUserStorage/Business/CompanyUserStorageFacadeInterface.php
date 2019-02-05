@@ -10,6 +10,12 @@ namespace Spryker\Zed\CompanyUserStorage\Business;
 interface CompanyUserStorageFacadeInterface
 {
     /**
+     * Specification:
+     *  - Queries all active companyUser with the given companyUserIds;
+     *  - Removes all inactive companyUser from storage;
+     *  - Stores data as json encoded to storage table;
+     *  - Sends a copy of data to queue based on module config.
+     *
      * @api
      *
      * @param int[] $companyUserIds
@@ -19,6 +25,12 @@ interface CompanyUserStorageFacadeInterface
     public function publishByCompanyUserIds(array $companyUserIds): void;
 
     /**
+     * Specification:
+     *  - Queries all active companyUser with the given companyIds;
+     *  - Removes all inactive companyUser from storage;
+     *  - Stores data as json encoded to storage table;
+     *  - Sends a copy of data to queue based on module config.
+     *
      * @api
      *
      * @param int[] $companyIds
@@ -28,6 +40,10 @@ interface CompanyUserStorageFacadeInterface
     public function publishByCompanyIds(array $companyIds): void;
 
     /**
+     * Specification:
+     *  - Finds and deletes companyUser storage entities with the given companyUserIds;
+     *  - Sends delete message to queue based on module config.
+     *
      * @api
      *
      * @param int[] $companyUserIds

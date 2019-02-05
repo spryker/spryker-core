@@ -30,6 +30,6 @@ class CompanyBusinessUnitStorageFacade extends AbstractFacade implements Company
     {
         return $this->getFactory()
             ->createCompanyUserStorageExpander()
-            ->addCompanyBusinessUnitId($companyUserTransfer, $companyUserStorageTransfer);
+            ->expandWithCompanyBusinessUnitId($companyUserStorageTransfer, $companyUserTransfer);
     }
 }

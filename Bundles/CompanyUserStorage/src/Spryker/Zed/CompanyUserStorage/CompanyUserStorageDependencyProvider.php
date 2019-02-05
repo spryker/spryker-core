@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Container;
  */
 class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PLUGIN_COMPANY_USER_STORAGE_EXPANDER = 'PLUGIN_COMPANY_USER_STORAGE_EXPANDER';
+    public const PLUGINS_COMPANY_USER_STORAGE_EXPANDER = 'PLUGINS_COMPANY_USER_STORAGE_EXPANDER';
 
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
@@ -45,18 +45,6 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addCompanyUserStorageExpanderPlugins($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function providePersistenceLayerDependencies(Container $container): Container
-    {
-        $container = parent::providePersistenceLayerDependencies($container);
 
         return $container;
     }
@@ -100,7 +88,7 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addCompanyUserStorageExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_COMPANY_USER_STORAGE_EXPANDER] = function () {
+        $container[static::PLUGINS_COMPANY_USER_STORAGE_EXPANDER] = function () {
             return $this->getCompanyUserStorageExpanderPlugins();
         };
 
