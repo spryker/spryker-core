@@ -11,6 +11,15 @@
         <property name="sku" type="string" />
     </transfer>
 
+    <transfer name="ItemValidationResponse">
+        <property name="messages" type="Message[]" singular="Message" />
+        <property name="recommendedValues" type="Item" />
+    </transfer>
+
+    <transfer name="Item">
+        <property name="messages" type="Message[]" singular="Message" />
+    </transfer>
+    
     <transfer name="ProductConcrete">
         <property name="sku" type="string" />
     </transfer>
