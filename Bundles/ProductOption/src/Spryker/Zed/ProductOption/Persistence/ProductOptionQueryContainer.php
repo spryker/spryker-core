@@ -131,16 +131,16 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         $productOptionCriteriaTransfer->requireProductOptionIds();
 
-        $query = $this->getFactory()->createProductOptionValueQuery();
+        $productOptionValueQuery = $this->getFactory()->createProductOptionValueQuery();
 
         if ($productOptionCriteriaTransfer->getProductOptionGroupActive() !== null) {
-            $query
+            $productOptionValueQuery
                 ->useSpyProductOptionGroupQuery()
                     ->filterByActive($productOptionCriteriaTransfer->getProductOptionGroupActive())
                 ->endUse();
         }
 
-        return $query->filterByIdProductOptionValue_In($productOptionCriteriaTransfer->getProductOptionIds());
+        return $productOptionValueQuery->filterByIdProductOptionValue_In($productOptionCriteriaTransfer->getProductOptionIds());
     }
 
     /**
