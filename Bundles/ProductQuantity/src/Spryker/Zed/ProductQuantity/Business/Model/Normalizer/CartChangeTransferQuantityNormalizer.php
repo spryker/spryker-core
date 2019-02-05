@@ -310,7 +310,7 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
             return $this->buildNotificationMessage(
                 static::MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED,
                 static::NOTIFICATION_MESSAGE_PARAM_STEP,
-                $nearestQuantity
+                $productQuantityTransfer->getQuantityInterval()
             );
         }
 
