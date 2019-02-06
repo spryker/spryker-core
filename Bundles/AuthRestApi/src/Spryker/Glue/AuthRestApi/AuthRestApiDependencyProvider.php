@@ -27,6 +27,7 @@ class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
         $container = $this->addOauthClient($container);
         $container = $this->addRestUserIdentifierExpanderPlugins($container);
 
