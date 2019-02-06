@@ -50,6 +50,67 @@ class CartsResourceMapper implements CartsResourceMapperInterface
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
+     */
+    public function createRestQuoteRequestTransfer(
+        RestRequestInterface $restRequest,
+        ?QuoteTransfer $quoteTransfer
+    ): RestQuoteRequestTransfer {
+        $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+        $uuidQuote = $restRequest->getResource()->getId();
+
+        if (!$quoteTransfer && $uuidQuote) {
+            $restQuoteRequestTransfer
+                ->setQuote((new QuoteTransfer())->setUuid($uuidQuote))
+                ->setQuoteUuid($uuidQuote);
+        }
+
+        $restQuoteRequestTransfer->setQuote($quoteTransfer->setUuid($uuidQuote));
+        $restQuoteRequestTransfer->setQuoteUuid($uuidQuote);
+
+        return $restQuoteRequestTransfer;
+    }
+
+    /**
+     * @param bool $isSuccessful
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createRestQuoteResponseTransfer(
+        bool $isSuccessful,
+        ?QuoteTransfer $quoteTransfer
+    ): QuoteResponseTransfer {
+        $quoteResponseTransfer = (new QuoteResponseTransfer())
+            ->setIsSuccessful($isSuccessful);
+
+        if ($quoteTransfer) {
+            $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
+        }
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer
+     */
+    public function createAssigningGuestQuoteRequestTransfer(
+        RestRequestInterface $restRequest,
+        CustomerTransfer $customerTransfer
+    ): AssigningGuestQuoteRequestTransfer {
+        return (new AssigningGuestQuoteRequestTransfer())
+            ->setAnonymousCustomerReference($restRequest->getUser()->getNaturalIdentifier())
+            ->setCustomer($customerTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -143,52 +204,6 @@ class CartsResourceMapper implements CartsResourceMapperInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
-     */
-    public function createRestQuoteRequestTransfer(
-        RestRequestInterface $restRequest,
-        ?QuoteTransfer $quoteTransfer
-    ): RestQuoteRequestTransfer {
-        $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
-        $uuidQuote = $restRequest->getResource()->getId();
-
-        if (!$quoteTransfer && $uuidQuote) {
-            $restQuoteRequestTransfer
-                ->setQuote((new QuoteTransfer())->setUuid($uuidQuote))
-                ->setQuoteUuid($uuidQuote);
-        }
-
-        $restQuoteRequestTransfer->setQuote($quoteTransfer->setUuid($uuidQuote));
-        $restQuoteRequestTransfer->setQuoteUuid($uuidQuote);
-
-        return $restQuoteRequestTransfer;
-    }
-
-    /**
-     * @param bool $isSuccessful
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function createRestQuoteResponseTransfer(
-        bool $isSuccessful,
-        ?QuoteTransfer $quoteTransfer
-    ): QuoteResponseTransfer {
-        $quoteResponseTransfer = (new QuoteResponseTransfer())
-            ->setIsSuccessful($isSuccessful);
-
-        if ($quoteTransfer) {
-            $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        }
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -252,21 +267,6 @@ class CartsResourceMapper implements CartsResourceMapperInterface
         return (new QuoteTransfer())
             ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
             ->setUuid($uuidCart);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer
-     */
-    public function createAssigningGuestQuoteRequestTransfer(
-        RestRequestInterface $restRequest,
-        CustomerTransfer $customerTransfer
-    ): AssigningGuestQuoteRequestTransfer {
-        return (new AssigningGuestQuoteRequestTransfer())
-            ->setAnonymousCustomerReference($restRequest->getUser()->getNaturalIdentifier())
-            ->setCustomer($customerTransfer);
     }
 
     /**
