@@ -26,6 +26,8 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_CURRENCY_DATA_IS_INCORRECT = '113';
     public const RESPONSE_CODE_CURRENCY_DATA_IS_MISSING = '114';
     public const RESPONSE_CODE_CART_CANT_BE_UPDATED = '115';
+    public const RESPONSE_CODE_STORE_DATA_IS_MISSING = '116';
+    public const RESPONSE_CODE_PERMISSION_FAILED = '117';
 
     public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
     public const EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND = 'Item with the given group key not found in the cart.';
@@ -41,6 +43,8 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'Currency data is incorrect';
     public const EXCEPTION_MESSAGE_CURRENCY_DATA_IS_MISSING = 'Currency data is missing';
     public const EXCEPTION_MESSAGE_PRICE_MODE_CANT_BE_CHANGED = 'Can’t switch price mode when there are items in the cart.';
+    public const EXCEPTION_MESSAGE_STORE_DATA_IS_MISSING = 'Store data is missing.';
+    public const EXCEPTION_MESSAGE_PERMISSION_FAILED = 'Permission failed.';
 
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 

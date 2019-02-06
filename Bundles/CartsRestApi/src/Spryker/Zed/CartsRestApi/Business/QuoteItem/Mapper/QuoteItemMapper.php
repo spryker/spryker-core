@@ -10,25 +10,14 @@ namespace Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
+use Spryker\Zed\CartsRestApi\CartsRestApiConfig;
 
 class QuoteItemMapper implements QuoteItemMapperInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function mapRestCartItemRequestTransferToQuoteTransfer(
-        RestCartItemRequestTransfer $restCartItemRequestTransfer
-    ): QuoteTransfer {
-        return (new QuoteTransfer())
-            ->setUuid($restCartItemRequestTransfer->getCartUuid())
-            ->setCustomerReference($restCartItemRequestTransfer->getCustomerReference());
-    }
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
@@ -72,5 +61,36 @@ class QuoteItemMapper implements QuoteItemMapperInterface
         return (new RestQuoteRequestTransfer())
             ->setQuote((new QuoteTransfer()))
             ->setCustomerReference($restCartItemRequestTransfer->getCustomerReference());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapRestCartItemRequestTransferToQuoteTransfer(
+        RestCartItemRequestTransfer $restCartItemRequestTransfer
+    ): QuoteTransfer {
+        return (new QuoteTransfer())
+            ->setUuid($restCartItemRequestTransfer->getCartUuid())
+            ->setCustomerReference($restCartItemRequestTransfer->getCustomerReference());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function mapQuoteResponseErrorsToRestCodes(
+        QuoteResponseTransfer $quoteResponseTransfer
+    ): QuoteResponseTransfer {
+        $errorCodes = [];
+        foreach ($quoteResponseTransfer->getErrors() as $error) {
+            $errorCodes[] = CartsRestApiConfig::RESPONSE_ERROR_MAP[$error['value']] ?? $error;
+        }
+
+        $quoteResponseTransfer->setErrorCodes($errorCodes);
+
+        return $quoteResponseTransfer;
     }
 }

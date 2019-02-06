@@ -9,7 +9,6 @@ namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,20 +22,11 @@ class AnonymousCustomerUniqueIdValidator implements AnonymousCustomerUniqueIdVal
     protected $config;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface
-     */
-    protected $cartRestResponseBuilder;
-
-    /**
      * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $config
-     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      */
-    public function __construct(
-        CartsRestApiConfig $config,
-        CartRestResponseBuilderInterface $cartRestResponseBuilder
-    ) {
+    public function __construct(CartsRestApiConfig $config)
+    {
         $this->config = $config;
-        $this->cartRestResponseBuilder = $cartRestResponseBuilder;
     }
 
     /**
