@@ -29,8 +29,8 @@ class CustomerSessionExpander implements CustomerSessionExpanderInterface
 
         if ($restUserIdentifier->getIdCompanyUser() !== null && $restUserIdentifier->getIdCompany() !== null) {
             $companyUserTransfer = (new CompanyUserTransfer())
-                ->setIdCompanyUser($restUserIdentifier->getIdCompanyUser())
-                ->setFkCompany($restUserIdentifier->getIdCompany());
+                ->setIdCompanyUser((int)$restUserIdentifier->getIdCompanyUser())
+                ->setFkCompany((int)$restUserIdentifier->getIdCompany());
 
             $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
         }

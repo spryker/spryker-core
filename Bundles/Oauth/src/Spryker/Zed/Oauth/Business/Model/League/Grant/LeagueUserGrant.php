@@ -83,7 +83,7 @@ class LeagueUserGrant extends AbstractGrant
             $this->getIdentifier(),
             $client
         );
-        if ($user instanceof UserEntityInterface === false) {
+        if (!$user instanceof UserEntityInterface) {
             $this->getEmitter()->emit(new RequestEvent(RequestEvent::USER_AUTHENTICATION_FAILED, $request));
 
             throw OAuthServerException::invalidCredentials();

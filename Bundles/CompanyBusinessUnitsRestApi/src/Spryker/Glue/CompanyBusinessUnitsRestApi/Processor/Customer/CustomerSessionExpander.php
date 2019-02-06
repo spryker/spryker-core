@@ -35,8 +35,8 @@ class CustomerSessionExpander implements CustomerSessionExpanderInterface
 
         if ($restUserIdentifier->getIdCompanyBusinessUnit() !== null) {
             $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())
-                ->setIdCompanyBusinessUnit($restUserIdentifier->getIdCompanyBusinessUnit());
-            $companyUserTransfer->setFkCompanyBusinessUnit($restUserIdentifier->getIdCompanyBusinessUnit())
+                ->setIdCompanyBusinessUnit((int)$restUserIdentifier->getIdCompanyBusinessUnit());
+            $companyUserTransfer->setFkCompanyBusinessUnit((int)$restUserIdentifier->getIdCompanyBusinessUnit())
                 ->setCompanyBusinessUnit($companyBusinessUnitTransfer);
 
             $customerTransfer->setCompanyUserTransfer($companyUserTransfer);

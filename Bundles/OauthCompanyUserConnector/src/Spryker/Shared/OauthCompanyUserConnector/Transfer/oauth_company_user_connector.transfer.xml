@@ -13,7 +13,7 @@
     <transfer name="CompanyUserIdentifier">
         <property name="customerReference" type="string"/>
         <property name="idCustomer" type="int"/>
-        <property name="idCompanyUser" type="int"/>
+        <property name="idCompanyUser" type="string"/>
     </transfer>
 
     <transfer name="OauthRequest">
