@@ -64,7 +64,7 @@ class GrandTotalCalculator implements CalculatorInterface
      *
      * @return int
      */
-    protected function calculateItemGrandTotal(CalculableObjectTransfer $calculableObjectTransfer, $grandTotal)
+    protected function calculateExpenseItemGrandTotal(CalculableObjectTransfer $calculableObjectTransfer, $grandTotal)
     {
         $shipmentGroups = $this->calculationService->groupItemsByShipment($calculableObjectTransfer->getItems());
 
@@ -100,7 +100,7 @@ class GrandTotalCalculator implements CalculatorInterface
      *
      * @return int
      */
-    protected function calculateExpenseItemGrandTotal(CalculableObjectTransfer $calculableObjectTransfer, int $grandTotal)
+    protected function calculateItemGrandTotal(CalculableObjectTransfer $calculableObjectTransfer, int $grandTotal)
     {
         foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
             $grandTotal += $itemTransfer->getSumPriceToPayAggregation() - $itemTransfer->getCanceledAmount();
