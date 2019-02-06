@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
@@ -56,14 +57,16 @@ class QuoteDeleter implements QuoteDeleterInterface
             ->requireCustomerReference();
 
         if (!$restQuoteRequestTransfer->getQuoteUuid()) {
-            return $this->quoteMapper->createQuoteResponseTransfer($restQuoteRequestTransfer)
-                ->addErrorCode(SharedCartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING);
+            $quoteResponseTransfer = $this->quoteMapper->createQuoteResponseTransfer($restQuoteRequestTransfer)
+                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING));
+
+            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
         }
 
         $quoteResponseTransfer = $this->cartReader->findQuoteByUuid($restQuoteRequestTransfer->getQuote());
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $quoteResponseTransfer->addErrorCode(SharedCartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND);
-
+        if ($quoteResponseTransfer->getIsSuccessful() === false) {
             return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer
             );
@@ -75,7 +78,7 @@ class QuoteDeleter implements QuoteDeleterInterface
                     $this->quoteMapper->mapRestQuoteRequestTransferToCustomerTransfer($restQuoteRequestTransfer)
                 ));
 
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
+        if ($quoteResponseTransfer->getIsSuccessful() === false) {
             return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer
             );

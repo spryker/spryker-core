@@ -63,56 +63,6 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createFailedCreatingCartErrorResponse(QuoteResponseTransfer $quoteResponseTransfer): RestResponseInterface
-    {
-        $restResponse = $this->createRestResponse();
-
-        if ($quoteResponseTransfer->getErrors()->count() === 0) {
-            return $restResponse->addError($this->createRestErrorMessageTransfer(
-                SharedCartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_CART,
-                Response::HTTP_INTERNAL_SERVER_ERROR,
-                SharedCartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART
-            ));
-        }
-
-        foreach ($quoteResponseTransfer->getErrors() as $error) {
-            if ($error->getMessage() === CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART) {
-                $restResponse->addError($this->createRestErrorMessageTransfer(
-                    SharedCartsRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART,
-                    Response::HTTP_UNPROCESSABLE_ENTITY,
-                    SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART
-                ));
-
-                continue;
-            }
-
-            $restResponse->addError($this->createRestErrorMessageTransfer(
-                SharedCartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_CART,
-                Response::HTTP_INTERNAL_SERVER_ERROR,
-                $error->getMessage()
-            ));
-        }
-
-        return $restResponse;
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createFailedDeletingCartErrorResponse(): RestResponseInterface
-    {
-        return $this->createRestResponse()->addError($this->createRestErrorMessageTransfer(
-            SharedCartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART,
-            Response::HTTP_UNPROCESSABLE_ENTITY,
-            SharedCartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART
-        ));
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\MessageTransfer[] $errors
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

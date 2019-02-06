@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
 use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
@@ -72,14 +73,16 @@ class QuoteUpdater implements QuoteUpdaterInterface
         $quoteResponseTransfer = $this->cartReader->findQuoteByUuid($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $quoteResponseTransfer;
+            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
         }
 
         $originalQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
 
         $this->validateQuoteResponse($originalQuoteTransfer, $quoteTransfer, $quoteResponseTransfer);
 
-        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
+        if (count($quoteResponseTransfer->getErrors()) > 0) {
             return $quoteResponseTransfer;
         }
 
@@ -140,7 +143,8 @@ class QuoteUpdater implements QuoteUpdaterInterface
         QuoteResponseTransfer $quoteResponseTransfer
     ): QuoteResponseTransfer {
         if (count($originalQuoteTransfer->getItems()) > 0 && $quoteTransfer->getPriceMode()) {
-            return $quoteResponseTransfer->addErrorCode(SharedCartsRestApiConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED);
+            return $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED));
         }
 
         return $quoteResponseTransfer;

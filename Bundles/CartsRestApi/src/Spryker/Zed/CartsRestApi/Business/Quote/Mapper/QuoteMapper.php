@@ -10,6 +10,7 @@ namespace Spryker\Zed\CartsRestApi\Business\Quote\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -118,10 +119,10 @@ class QuoteMapper implements QuoteMapperInterface
     ): QuoteCollectionResponseTransfer {
         $errorCodes = [];
         foreach ($quoteResponseTransfer->getErrorCodes() as $error) {
-            $errorCodes[] = CartsRestApiConfig::RESPONSE_ERROR_MAP[$error] ?? $error;
+            $errorCodes[] = $error;
         }
 
-        $quoteResponseTransfer->setErrorCodes(new ArrayObject([$errorCodes]));
+        $quoteResponseTransfer->setErrorCodes($errorCodes);
 
         return (new QuoteCollectionResponseTransfer())
             ->setQuoteCollection((new QuoteCollectionTransfer())->addQuote($quoteResponseTransfer->getQuoteTransfer()));
@@ -137,7 +138,9 @@ class QuoteMapper implements QuoteMapperInterface
     ): QuoteResponseTransfer {
         $errorCodes = [];
         foreach ($quoteResponseTransfer->getErrors() as $error) {
-            $errorCodes[] = CartsRestApiConfig::RESPONSE_ERROR_MAP[$error['value']] ?? $error;
+            $errorCodes[] = isset($error[MessageTransfer::VALUE])
+                ? CartsRestApiConfig::RESPONSE_ERROR_MAP[$error[MessageTransfer::VALUE]]
+                : $error->getMessage();
         }
 
         $quoteResponseTransfer->setErrorCodes($errorCodes);

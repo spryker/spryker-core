@@ -31,18 +31,6 @@ interface CartRestResponseBuilderInterface
     public function createCartIdMissingErrorResponse(): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createFailedCreatingCartErrorResponse(QuoteResponseTransfer $quoteResponseTransfer): RestResponseInterface;
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createFailedDeletingCartErrorResponse(): RestResponseInterface;
-
-    /**
      * @param \Generated\Shared\Transfer\MessageTransfer[] $errors
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
