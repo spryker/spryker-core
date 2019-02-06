@@ -85,15 +85,4 @@ class CartItemDeleter implements CartItemDeleterInterface
 
         return null;
     }
-
-    /**
-     * @param string|null $uuidQuote
-     * @param string|null $itemIdentifier
-     *
-     * @return bool
-     */
-    protected function isRequestInvalid(?string $uuidQuote, ?string $itemIdentifier): bool
-    {
-        return ($uuidQuote === null || $itemIdentifier === null);
-    }
 }
