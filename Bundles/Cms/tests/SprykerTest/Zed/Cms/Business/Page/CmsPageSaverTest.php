@@ -11,12 +11,14 @@ use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface;
 use Spryker\Zed\Cms\Business\Page\CmsPageSaver;
 use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface;
+use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriterInterface;
 use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Spryker\Zed\Url\Business\UrlFacadeInterface;
 use SprykerTest\Zed\Cms\Business\CmsMocks;
@@ -58,6 +60,7 @@ class CmsPageSaverTest extends CmsMocks
         $cmsPageTransfer = new CmsPageTransfer();
         $cmsPageTransfer->addPageAttribute(new CmsPageAttributesTransfer());
         $cmsPageTransfer->addMetaAttribute(new CmsPageMetaAttributesTransfer());
+        $cmsPageTransfer->setStoreRelation(new StoreRelationTransfer());
 
         $idCmsPage = $cmsPageSaverMock->createPage($cmsPageTransfer);
 
@@ -90,43 +93,55 @@ class CmsPageSaverTest extends CmsMocks
             ->method('getCmsPageEntity')
             ->willReturn($cmsPageEntityMock);
 
+        $cmsPageEntityMock->setIdCmsPage(1);
+
         $cmsPageTransfer = new CmsPageTransfer();
         $cmsPageTransfer->setIsSearchable(false);
+
+        $idStores = [1, 3];
+
+        $storeRelationTransfer = new StoreRelationTransfer();
+        $storeRelationTransfer->setIdEntity(1);
+        $storeRelationTransfer->setIdStores($idStores);
 
         $cmsPageAttributesTransfer = new CmsPageAttributesTransfer();
         $cmsPageAttributesTransfer->setIdCmsPageLocalizedAttributes(1);
         $cmsPageAttributesTransfer->setUrl('/en/english');
         $cmsPageAttributesTransfer->setName('english name');
         $cmsPageAttributesTransfer->setFkLocale(1);
+        $cmsPageAttributesTransfer->setIdCmsPage(1);
+        $cmsPageTransfer->setStoreRelation($storeRelationTransfer);
 
         $cmsPageTransfer->addPageAttribute($cmsPageAttributesTransfer);
 
-        $cmsPageSaverMock->updatePage($cmsPageTransfer);
+        $cmsPageTransfer = $cmsPageSaverMock->updatePage($cmsPageTransfer);
 
         $cmsPageAttributesEntity = $cmsPageEntityMock->getSpyCmsPageLocalizedAttributess()[0];
         $this->assertEquals($cmsPageAttributesEntity->getName(), $cmsPageAttributesTransfer->getName());
         $this->assertEquals($urlEntity->getUrl(), $cmsPageAttributesTransfer->getUrlPrefix());
+        $this->assertEquals($cmsPageTransfer->getStoreRelation()->getIdStores(), $idStores);
     }
 
     /**
      * @param \Spryker\Zed\Url\Business\UrlFacadeInterface|null $urlFacadeMock
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface|null $touchFacadeMock
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface|null $touchFacadeMock
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface|null $cmsQueryContainerMock
      * @param \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface|null $cmsPageUrlBuilderMock
      * @param \Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface|null $cmsGlossarySaverMock
      * @param \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface|null $templateManagerMock
+     * @param \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriterInterface|null $cmsPageStoreRelationWriterMock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageSaver
      */
     protected function createCmsPageSaverMock(
         ?UrlFacadeInterface $urlFacadeMock = null,
-        ?CmsToTouchInterface $touchFacadeMock = null,
+        ?CmsToTouchFacadeInterface $touchFacadeMock = null,
         ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
         ?CmsPageUrlBuilderInterface $cmsPageUrlBuilderMock = null,
         ?CmsGlossarySaverInterface $cmsGlossarySaverMock = null,
-        ?TemplateManagerInterface $templateManagerMock = null
+        ?TemplateManagerInterface $templateManagerMock = null,
+        ?CmsPageStoreRelationWriterInterface $cmsPageStoreRelationWriterMock = null
     ) {
-
         if ($urlFacadeMock === null) {
             $urlFacadeMock = $this->createUrlFacadeMock();
         }
@@ -151,6 +166,10 @@ class CmsPageSaverTest extends CmsMocks
             $templateManagerMock = $this->createTemplateManagerMock();
         }
 
+        if ($cmsPageStoreRelationWriterMock === null) {
+            $cmsPageStoreRelationWriterMock = $this->createCmsPageStoreRelationWriterMock();
+        }
+
         $templateManagerMock->expects($this->any())
             ->method('getTemplateById')
             ->willReturn((new CmsTemplateTransfer())->setTemplatePath('template_path'));
@@ -163,6 +182,7 @@ class CmsPageSaverTest extends CmsMocks
                 $cmsPageUrlBuilderMock,
                 $cmsGlossarySaverMock,
                 $templateManagerMock,
+                $cmsPageStoreRelationWriterMock,
             ])
             ->setMethods([
                 'getCmsPageEntity',

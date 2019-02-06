@@ -257,4 +257,20 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
             ->createRestrictedItemsFilter()
             ->filterRestrictedItems($quoteTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductListIds(array $productListIds): array
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->getProductConcreteIdsByProductListIds($productListIds);
+    }
 }

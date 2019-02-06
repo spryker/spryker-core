@@ -28,4 +28,24 @@ interface MessengerInterface
      * @return void
      */
     public function addFlashMessagesFromLastZedRequest();
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesInfoMessages(): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesErrorMessages(): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesSuccessMessages(): array;
+
+    /**
+     * @return void
+     */
+    public function addResponseMessagesToMessenger(): void;
 }
