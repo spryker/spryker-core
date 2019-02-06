@@ -10,6 +10,7 @@ namespace Spryker\Client\QuoteApproval\Quote;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\PermissionAwareTrait;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToPermissionClientInterface;
+use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
@@ -29,15 +30,23 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
     protected $quoteStatusCalculator;
 
     /**
+     * @var \Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface
+     */
+    protected $permissionContextProvider;
+
+    /**
      * @param \Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToPermissionClientInterface $permissionClient
      * @param \Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface $quoteStatusCalculator
+     * @param \Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface $permissionContextProvider
      */
     public function __construct(
         QuoteApprovalToPermissionClientInterface $permissionClient,
-        QuoteStatusCalculatorInterface $quoteStatusCalculator
+        QuoteStatusCalculatorInterface $quoteStatusCalculator,
+        PermissionContextProviderInterface $permissionContextProvider
     ) {
         $this->permissionClient = $permissionClient;
         $this->quoteStatusCalculator = $quoteStatusCalculator;
+        $this->permissionContextProvider = $permissionContextProvider;
     }
 
     /**
@@ -55,7 +64,7 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
             return true;
         }
 
-        if ($this->can(PlaceOrderPermissionPlugin::KEY, $quoteTransfer)) {
+        if ($this->can(PlaceOrderPermissionPlugin::KEY, $this->permissionContextProvider->provideContext($quoteTransfer))) {
             return false;
         }
 

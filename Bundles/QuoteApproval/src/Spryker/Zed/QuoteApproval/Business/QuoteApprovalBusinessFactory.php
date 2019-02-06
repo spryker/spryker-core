@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\QuoteApproval\Business;
 
+use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProvider;
+use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface;
 use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculator;
 use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -73,8 +75,17 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteFacade(),
             $this->createQuoteStatusCalculator(),
             $this->getRepository(),
-            $this->getCompanyUserFacade()
+            $this->getCompanyUserFacade(),
+            $this->createPermissionContextProvider()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface
+     */
+    public function createPermissionContextProvider(): PermissionContextProviderInterface
+    {
+        return new PermissionContextProvider();
     }
 
     /**

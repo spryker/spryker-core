@@ -7,8 +7,8 @@
 
 namespace Spryker\Shared\QuoteApproval\Plugin\Permission;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface;
 
 class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterface
 {
@@ -18,25 +18,25 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
     /**
      * {@inheritdoc}
      * - Checks if approver is allowed to approve order with cent amount up to some value for specific currency, provided in configuration.
-     * - Returns false, if quote is not provided.
+     * - Returns false, if context is not provided.
      * - Returns true, if configuration does not have cent amount for specific currency set.
      *
      * @api
      *
      * @param array $configuration
-     * @param int|string|array|null $quoteTransfer
+     * @param int|string|array|null $context
      *
      * @return bool
      */
-    public function can(array $configuration, $quoteTransfer = null): bool
+    public function can(array $configuration, $context = null): bool
     {
-        if ($quoteTransfer === null || !($quoteTransfer instanceof QuoteTransfer)) {
+        if ($context === null) {
             return false;
         }
 
-        $centAmount = $quoteTransfer->getTotals()->getGrandTotal() - $this->getShipmentPriceForQuote($quoteTransfer);
-        $currencyCode = $quoteTransfer->getCurrency()->getCode();
-        $storeName = $quoteTransfer->getStore()->getName();
+        $centAmount = $context[PermissionContextProviderInterface::CENT_AMOUNT];
+        $storeName = $context[PermissionContextProviderInterface::STORE_NAME];
+        $currencyCode = $context[PermissionContextProviderInterface::CURRENCY_CODE];
 
         if (!isset($configuration[static::FIELD_STORE_MULTI_CURRENCY][$storeName][$currencyCode])) {
             return true;
@@ -73,26 +73,5 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
     public function getKey(): string
     {
         return static::KEY;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return int
-     */
-    protected function getShipmentPriceForQuote(QuoteTransfer $quoteTransfer): int
-    {
-        if (!$quoteTransfer->getShipment()) {
-            return 0;
-        }
-
-        $shipmentMethodTransfer = $quoteTransfer->getShipment()
-            ->getMethod();
-
-        if (!$shipmentMethodTransfer) {
-            return 0;
-        }
-
-        return $shipmentMethodTransfer->getStoreCurrencyPrice();
     }
 }

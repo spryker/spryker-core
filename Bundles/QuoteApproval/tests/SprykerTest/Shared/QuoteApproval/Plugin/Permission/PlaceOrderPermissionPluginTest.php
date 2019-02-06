@@ -8,13 +8,8 @@
 namespace SprykerTest\Shared\QuoteApproval\Plugin\Permission;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
 
 /**
@@ -41,29 +36,9 @@ class PlaceOrderPermissionPluginTest extends Unit
     public function testCanWithValidDataReturnTrue(): void
     {
         $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = static::CENT_AMOUNT;
-        $quoteTransfer = $this->createQuoteTransfer();
 
         $placeOrderPermissionPlugin = $this->createPlaceOrderPermissionPlugin();
-        $result = $placeOrderPermissionPlugin->can($configuration, $quoteTransfer);
-
-        $this->assertTrue($result);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCanNotIncludeShipmentsInPlaceOrderLimit(): void
-    {
-        $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = static::CENT_AMOUNT;
-        $quoteTransfer = $this->createQuoteTransfer();
-        $quoteTransfer->getTotals()->setGrandTotal(
-            $quoteTransfer->getTotals()->getGrandTotal() + static::CENT_SHIPMENT_COST
-        );
-
-        $quoteTransfer->setShipment($this->createShipmentTransfer(static::CENT_SHIPMENT_COST));
-
-        $placeOrderPermissionPlugin = $this->createPlaceOrderPermissionPlugin();
-        $result = $placeOrderPermissionPlugin->can($configuration, $quoteTransfer);
+        $result = $placeOrderPermissionPlugin->can($configuration, $this->getContext());
 
         $this->assertTrue($result);
     }
@@ -74,10 +49,9 @@ class PlaceOrderPermissionPluginTest extends Unit
     public function testCanWithNullConfigurationCentAmountDataReturnTrue(): void
     {
         $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = null;
-        $quoteTransfer = $this->createQuoteTransfer();
 
         $placeOrderPermissionPlugin = $this->createPlaceOrderPermissionPlugin();
-        $result = $placeOrderPermissionPlugin->can($configuration, $quoteTransfer);
+        $result = $placeOrderPermissionPlugin->can($configuration, $this->getContext());
 
         $this->assertTrue($result);
     }
@@ -88,10 +62,9 @@ class PlaceOrderPermissionPluginTest extends Unit
     public function testCanWithZeroConfigurationCentAmountDataReturnFalse(): void
     {
         $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = 0;
-        $quoteTransfer = $this->createQuoteTransfer();
 
         $placeOrderPermissionPlugin = $this->createPlaceOrderPermissionPlugin();
-        $result = $placeOrderPermissionPlugin->can($configuration, $quoteTransfer);
+        $result = $placeOrderPermissionPlugin->can($configuration, $this->getContext());
 
         $this->assertFalse($result);
     }
@@ -115,42 +88,23 @@ class PlaceOrderPermissionPluginTest extends Unit
     public function testCanWithLessGrandTotalAmountReturnFalse(): void
     {
         $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = static::CENT_AMOUNT - 1;
-        $quoteTransfer = $this->createQuoteTransfer();
 
         $placeOrderPermissionPlugin = $this->createPlaceOrderPermissionPlugin();
-        $result = $placeOrderPermissionPlugin->can($configuration, $quoteTransfer);
+        $result = $placeOrderPermissionPlugin->can($configuration, $this->getContext());
 
         $this->assertFalse($result);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return array
      */
-    protected function createQuoteTransfer(): QuoteTransfer
+    protected function getContext(): array
     {
-        $totalsTransfer = (new TotalsTransfer())->setGrandTotal(static::CENT_AMOUNT);
-        $currencyTransfer = (new CurrencyTransfer())->setCode(static::CURRENCY_CODE);
-        $storeTransfer = (new StoreTransfer())->setName(static::STORE_NAME);
-        $quoteTransfer = (new QuoteTransfer())
-            ->setTotals($totalsTransfer)
-            ->setCurrency($currencyTransfer)
-            ->setStore($storeTransfer);
-
-        return $quoteTransfer;
-    }
-
-    /**
-     * @param int $priceInCents
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
-     */
-    protected function createShipmentTransfer(int $priceInCents): ShipmentTransfer
-    {
-        return (new ShipmentTransfer())
-            ->setMethod(
-                (new ShipmentMethodTransfer())
-                    ->setStoreCurrencyPrice($priceInCents)
-            );
+        return [
+            PermissionContextProviderInterface::CURRENCY_CODE => static::CURRENCY_CODE,
+            PermissionContextProviderInterface::CENT_AMOUNT => static::CENT_AMOUNT,
+            PermissionContextProviderInterface::STORE_NAME => static::STORE_NAME,
+        ];
     }
 
     /**
