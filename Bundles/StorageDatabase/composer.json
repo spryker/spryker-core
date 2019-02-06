@@ -11,7 +11,13 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/product": "*",
+    "spryker/product-quantity": "*",
+    "spryker/product-quantity-storage": "*",
+    "spryker/availability": "*",
+    "spryker/availability-storage": "*",
+    "spryker/queue": "*"
   },
   "autoload": {
     "psr-4": {

@@ -1,4 +1,8 @@
-namespace: StorageDatabase
+namespace: SprykerTest
+
+include:
+- tests/SprykerTest/Client/StorageDatabase
+
 actor: Tester
 paths:
     tests: tests
