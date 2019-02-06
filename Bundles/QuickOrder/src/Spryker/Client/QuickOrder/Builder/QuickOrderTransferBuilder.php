@@ -117,7 +117,7 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
             return $quickOrderItemTransfer;
         }
 
-        $recommendedValues = $itemValidationResponseTransfer->getRecommendedValues()->toArray();
+        $recommendedValues = array_filter($itemValidationResponseTransfer->getRecommendedValues()->toArray());
         $quickOrderItemTransfer->fromArray($recommendedValues, true);
 
         return $quickOrderItemTransfer;
