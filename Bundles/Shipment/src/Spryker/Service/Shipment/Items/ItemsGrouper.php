@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 class ItemsGrouper implements ItemsGrouperInterface
 {
     protected const SHIPMENT_TRANSFER_KEY_PATTERN = '%s-%s-%s';
-    protected const ADDRESS_TRANSFER_KEY_PATTERN = '%s %s %s %s %s %s %s %s %s %s';
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
@@ -65,54 +64,9 @@ class ItemsGrouper implements ItemsGrouperInterface
         return sprintf(
             static::SHIPMENT_TRANSFER_KEY_PATTERN,
             $shipmentTransfer->getMethod()->getIdShipmentMethod(),
-            $this->getAddressTransferKey($shipmentTransfer->getShippingAddress()),
+            $shipmentTransfer->getShippingAddress()->serialize(),
             $shipmentTransfer->getRequestedDeliveryDate()
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return string
-     */
-    protected function getAddressTransferKey(AddressTransfer $addressTransfer): string
-    {
-        return $this->implode(' ', $addressTransfer->toArray());
-    }
-
-    /**
-     * @param string $glue
-     * @param array $data
-     *
-     * @return string
-     */
-    protected function implode(string $glue, array $data): string
-    {
-        $resultString = '';
-        foreach ($data as $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-            if (is_array($value)) {
-                $resultString .= $this->implode($glue, $value);
-                continue;
-            }
-            if (is_object($value) && method_exists($value, '__toString')) {
-                $resultString .= $glue . (string)$value;
-                continue;
-            }
-            if (is_object($value) && $value instanceof ArrayObject) {
-                $resultString .= $this->implode($glue, $value->getArrayCopy());
-                continue;
-            }
-            if (is_object($value)) {
-                continue;
-            }
-
-            $resultString .= $glue . $value;
-        }
-
-        return $resultString;
     }
 
     /**
@@ -120,6 +74,6 @@ class ItemsGrouper implements ItemsGrouperInterface
      */
     protected function createNewShipmentGroupTransfer(): ShipmentGroupTransfer
     {
-        return (new ShipmentGroupTransfer());
+        return new ShipmentGroupTransfer();
     }
 }

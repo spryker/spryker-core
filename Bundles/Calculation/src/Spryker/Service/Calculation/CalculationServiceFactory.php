@@ -7,9 +7,9 @@
 
 namespace Spryker\Service\Calculation;
 
-use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Service\Calculation\Items\ItemsGrouper;
 use Spryker\Service\Calculation\Items\ItemsGrouperInterface;
+use Spryker\Service\Kernel\AbstractServiceFactory;
 
 class CalculationServiceFactory extends AbstractServiceFactory
 {
