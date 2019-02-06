@@ -71,7 +71,7 @@ class PageDataMapper implements PageDataMapperInterface
     }
 
     /**
-     * @deprecated use PageDataMapper::transferDataByMapperName() instead
+     * @deprecated Use transferDataByMapperName() instead.
      *
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
      * @param array $data
