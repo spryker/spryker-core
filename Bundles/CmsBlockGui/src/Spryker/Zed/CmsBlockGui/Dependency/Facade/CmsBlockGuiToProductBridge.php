@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsBlockProductConnector\Dependency\Facade;
+namespace Spryker\Zed\CmsBlockGui\Dependency\Facade;
 
-class CmsBlockProductConnectorToProductBridge implements CmsBlockProductConnectorToProductInterface
+class CmsBlockGuiToProductBridge implements CmsBlockGuiToProductInterface
 {
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
@@ -25,7 +25,7 @@ class CmsBlockProductConnectorToProductBridge implements CmsBlockProductConnecto
     /**
      * @param string $suggestion
      *
-     * @return array
+     * @return string[]
      */
     public function suggestProductAbstract(string $suggestion): array
     {

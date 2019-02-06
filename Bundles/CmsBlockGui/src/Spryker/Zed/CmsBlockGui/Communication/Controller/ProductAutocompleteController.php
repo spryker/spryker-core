@@ -32,7 +32,7 @@ class ProductAutocompleteController extends AbstractController
         $suggestion = $request->query->get(static::PARAM_NAME, '');
 
         $productAbstractSuggestions = $this->getFactory()
-            ->getCmsBlockProductConnectorFacade()
+            ->getProductFacade()
             ->suggestProductAbstract($suggestion);
 
         return $this->jsonResponse([

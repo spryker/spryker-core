@@ -18,7 +18,7 @@ use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlacehol
 use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderTranslationForm;
 use Spryker\Zed\CmsBlockGui\Communication\Table\CmsBlockTable;
 use Spryker\Zed\CmsBlockGui\Communication\Tabs\CmsBlockGlossaryTabs;
-use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockProductConnectorInterface;
+use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToProductInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -63,11 +63,11 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockProductConnectorInterface
+     * @return \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToProductBridge
      */
-    public function getCmsBlockProductConnectorFacade(): CmsBlockGuiToCmsBlockProductConnectorInterface
+    public function getProductFacade(): CmsBlockGuiToProductInterface
     {
-        return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::FACADE_CMS_BLOCK_PRODUCT_CONNECTOR);
+        return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::FACADE_PRODUCT);
     }
 
     /**

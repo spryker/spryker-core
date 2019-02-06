@@ -39,7 +39,7 @@ $(document).ready( function () {
         ajax: {
             url: '/cms-block-gui/product-autocomplete/',
             dataType: 'json',
-            delay: 250,
+            delay: 500,
             cache: true,
         },
         minimumInputLength: 3

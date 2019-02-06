@@ -126,16 +126,4 @@ class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockP
             $output
         );
     }
-
-    /**
-     * @api
-     *
-     * @param string $suggestion
-     *
-     * @return array
-     */
-    public function suggestProductAbstract(string $suggestion): array
-    {
-        return $this->getFactory()->getProductFacade()->suggestProductAbstract($suggestion);
-    }
 }

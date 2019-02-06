@@ -94,16 +94,4 @@ interface CmsBlockProductConnectorFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
-
-    /**
-     * Specification:
-     * - Suggests product abstract by name or SKU.
-     *
-     * @api
-     *
-     * @param string $suggestion
-     *
-     * @return array
-     */
-    public function suggestProductAbstract(string $suggestion): array;
 }

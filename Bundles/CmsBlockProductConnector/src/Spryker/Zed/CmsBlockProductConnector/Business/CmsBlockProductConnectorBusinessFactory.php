@@ -73,14 +73,6 @@ class CmsBlockProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToProductInterface
-     */
-    public function getProductFacade()
-    {
-        return $this->getProvidedDependency(CmsBlockProductConnectorDependencyProvider::FACADE_PRODUCT);
-    }
-
-    /**
      * @return \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface
      */
     protected function getDataReaderService()
