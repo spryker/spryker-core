@@ -131,13 +131,30 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         $productOptionCriteriaTransfer->requireProductOptionIds();
 
+        $productOptionGroupIsActive = $productOptionCriteriaTransfer->getProductOptionGroupIsActive();
+        $productOptionGroupIsAssigned = $productOptionCriteriaTransfer->getProductOptionGroupIsAssigned();
+
         $productOptionValueQuery = $this->getFactory()->createProductOptionValueQuery();
 
-        if ($productOptionCriteriaTransfer->getProductOptionGroupActive() !== null) {
-            $productOptionValueQuery
-                ->useSpyProductOptionGroupQuery()
-                    ->filterByActive($productOptionCriteriaTransfer->getProductOptionGroupActive())
-                ->endUse();
+        if ($productOptionGroupIsActive !== null || $productOptionGroupIsAssigned !== null) {
+            $productOptionGroupQuery = $productOptionValueQuery->useSpyProductOptionGroupQuery();
+
+            if ($productOptionGroupIsAssigned === true) {
+                $productOptionGroupQuery->innerJoinSpyProductAbstractProductOptionGroup();
+            }
+
+            if ($productOptionGroupIsAssigned === false) {
+                $productOptionGroupQuery
+                    ->useSpyProductAbstractProductOptionGroupQuery(null, Criteria::LEFT_JOIN)
+                        ->filterByFkProductAbstract(null, Criteria::ISNULL)
+                    ->endUse();
+            }
+
+            if ($productOptionGroupIsActive !== null) {
+                $productOptionGroupQuery->filterByActive($productOptionGroupIsActive);
+            }
+
+            $productOptionGroupQuery->endUse();
         }
 
         return $productOptionValueQuery->filterByIdProductOptionValue_In($productOptionCriteriaTransfer->getProductOptionIds());
