@@ -13,7 +13,8 @@ interface ProductRelationStorageClientInterface
 {
     /**
      * Specification:
-     * - TODO: add specification
+     *  - Retrieves related products for the provided product abstract ID.
+     *  - Maps raw product data from Storage to ProductViewTransfer for the provided locale.
      *
      * @api
      *
@@ -26,7 +27,8 @@ interface ProductRelationStorageClientInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     *  - Retrieves upselling products for the provided QuoteTransfer.
+     *  - Maps raw product data from Storage to ProductViewTransfer for the provided locale.
      *
      * @api
      *
@@ -36,4 +38,28 @@ interface ProductRelationStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
     public function findUpSellingProducts(QuoteTransfer $quoteTransfer, $localeName);
+
+    /**
+     * Specification:
+     *  - Retrieves related abstract product ids for the provided product abstract ID.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findRelatedAbstractProductIds(int $idProductAbstract): array;
+
+    /**
+     * Specification:
+     *  - Retrieves upselling abstract product ids for the provided QuoteTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int[]
+     */
+    public function findUpSellingAbstractProductIds(QuoteTransfer $quoteTransfer): array;
 }
