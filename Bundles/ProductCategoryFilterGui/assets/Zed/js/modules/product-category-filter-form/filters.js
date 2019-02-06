@@ -5,8 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
-
 var filters = $('#product_category_filter_filters');
 var activeFiltersContainer = $('#filters-container');
 var activeFilters = $('#filters-container ol');
