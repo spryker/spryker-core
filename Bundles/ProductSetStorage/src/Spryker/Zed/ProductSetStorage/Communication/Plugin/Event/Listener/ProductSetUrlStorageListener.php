@@ -34,6 +34,7 @@ class ProductSetUrlStorageListener extends AbstractPlugin implements EventBulkHa
     {
         $this->preventTransaction();
         $productSetIds = $this->getValidProductSetIds($eventTransfers);
+
         if (empty($productSetIds)) {
             return;
         }
