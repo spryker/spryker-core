@@ -15,8 +15,7 @@ interface AvailabilityNotificationConstants
     /**
      * Specification:
      * - Defines a custom URI where you can unsubscribe from availability notification by subscription key on the Yves side.
-     * - A string placeholder for subscriptionKey can be inserted in sprintf format
-     * - A string placeholder for locale can be inserted in sprintf format
+     * - A string placeholders for locale and subscriptionKey can be inserted in sprintf format
      *
      * @api
      */
