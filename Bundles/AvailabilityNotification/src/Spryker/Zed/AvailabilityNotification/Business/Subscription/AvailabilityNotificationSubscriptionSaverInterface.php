@@ -8,21 +8,13 @@
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
-use Generated\Shared\Transfer\LocalizedUrlTransfer;
 
-interface UrlGeneratorInterface
+interface AvailabilityNotificationSubscriptionSaverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer
      */
-    public function createUnsubscriptionLink(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): string;
-
-    /**
-     * @param \Generated\Shared\Transfer\LocalizedUrlTransfer $localizedUrlTransfer
-     *
-     * @return string
-     */
-    public function generateProductUrl(LocalizedUrlTransfer $localizedUrlTransfer): string;
+    public function save(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionTransfer;
 }

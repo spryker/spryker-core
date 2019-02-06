@@ -9,7 +9,7 @@ namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilTextServiceInterface;
 
-class AvailabilitySubscriptionKeyGenerator implements AvailabilitySubscriptionKeyGeneratorInterface
+class AvailabilityNotificationSubscriptionKeyGenerator implements AvailabilityNotificationSubscriptionKeyGeneratorInterface
 {
     public const DEFAULT_STRING_LENGTH = 32;
 

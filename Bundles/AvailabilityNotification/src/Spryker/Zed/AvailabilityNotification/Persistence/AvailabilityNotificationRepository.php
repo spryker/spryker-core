@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
-use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -21,61 +21,61 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
      * @param string $sku
      * @param int $fkStore
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer|null
      */
     public function findOneByEmailAndSku(
         string $email,
         string $sku,
         int $fkStore
-    ): ?AvailabilitySubscriptionTransfer {
-        $availabilitySubscriptionEntity = $this->querySubscription()
+    ): ?AvailabilityNotificationSubscriptionTransfer {
+        $availabilityNotificationSubscriptionEntity = $this->querySubscription()
             ->filterByEmail($email)
             ->filterBySku($sku)
             ->filterByFkStore($fkStore)
             ->setIgnoreCase(true)
             ->findOne();
 
-        if ($availabilitySubscriptionEntity === null) {
+        if ($availabilityNotificationSubscriptionEntity === null) {
             return null;
         }
 
-        return $this->getFactory()->createAvailabilitySubscriptionMapper()->mapAvailabilitySubscriptionTransfer($availabilitySubscriptionEntity);
+        return $this->getFactory()->createAvailabilityNotificationSubscriptionMapper()->mapAvailabilityNotificationSubscriptionTransfer($availabilityNotificationSubscriptionEntity);
     }
 
     /**
      * @param string $subscriptionKey
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer|null
      */
-    public function findOneBySubscriptionKey(string $subscriptionKey): ?AvailabilitySubscriptionTransfer
+    public function findOneBySubscriptionKey(string $subscriptionKey): ?AvailabilityNotificationSubscriptionTransfer
     {
-        $availabilitySubscriptionEntity = $this->querySubscription()
+        $availabilityNotificationSubscriptionEntity = $this->querySubscription()
             ->filterBySubscriptionKey($subscriptionKey)
             ->findOne();
 
-        if ($availabilitySubscriptionEntity === null) {
+        if ($availabilityNotificationSubscriptionEntity === null) {
             return null;
         }
 
-        return $this->getFactory()->createAvailabilitySubscriptionMapper()->mapAvailabilitySubscriptionTransfer($availabilitySubscriptionEntity);
+        return $this->getFactory()->createAvailabilityNotificationSubscriptionMapper()->mapAvailabilityNotificationSubscriptionTransfer($availabilityNotificationSubscriptionEntity);
     }
 
     /**
      * @param string $sku
      * @param int $fkStore
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer[]
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer[]
      */
     public function findBySkuAndStore(string $sku, int $fkStore): array
     {
-        $availabilitySubscriptionEntities = $this->querySubscription()
+        $availabilityNotificationSubscriptionEntities = $this->querySubscription()
             ->filterBySku($sku)
             ->filterByFkStore($fkStore)
             ->find();
 
         return $this->getFactory()
-            ->createAvailabilitySubscriptionMapper()
-            ->mapAvailabilitySubscriptionTransferCollection($availabilitySubscriptionEntities);
+            ->createAvailabilityNotificationSubscriptionMapper()
+            ->mapAvailabilityNotificationSubscriptionTransferCollection($availabilityNotificationSubscriptionEntities);
     }
 
     /**
@@ -83,56 +83,56 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
      * @param string $sku
      * @param int $fkStore
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer|null
      */
     public function findOneByCustomerReferenceAndSku(
         string $customerReference,
         string $sku,
         int $fkStore
-    ): ?AvailabilitySubscriptionTransfer {
-        $availabilitySubscriptionEntity = $this->querySubscription()
+    ): ?AvailabilityNotificationSubscriptionTransfer {
+        $availabilityNotificationSubscriptionEntity = $this->querySubscription()
             ->filterByCustomerReference($customerReference)
             ->filterBySku($sku)
             ->filterByFkStore($fkStore)
             ->setIgnoreCase(true)
             ->findOne();
 
-        if ($availabilitySubscriptionEntity === null) {
+        if ($availabilityNotificationSubscriptionEntity === null) {
             return null;
         }
 
-        return $this->getFactory()->createAvailabilitySubscriptionMapper()->mapAvailabilitySubscriptionTransfer($availabilitySubscriptionEntity);
+        return $this->getFactory()->createAvailabilityNotificationSubscriptionMapper()->mapAvailabilityNotificationSubscriptionTransfer($availabilityNotificationSubscriptionEntity);
     }
 
     /**
      * @param string $customerReference
      * @param int $fkStore
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer[]
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer[]
      */
     public function findByCustomerReference(string $customerReference, int $fkStore): array
     {
-        $availabilitySubscriptionEntities = $this->querySubscription()
+        $availabilityNotificationSubscriptionEntities = $this->querySubscription()
             ->filterByCustomerReference($customerReference)
             ->filterByFkStore($fkStore)
             ->find();
 
-        $availabilitySubscriptions = [];
+        $availabilityNotificationSubscriptions = [];
 
-        foreach ($availabilitySubscriptionEntities as $availabilitySubscriptionEntity) {
-            $availabilitySubscriptions[] = $this->getFactory()
-                ->createAvailabilitySubscriptionMapper()
-                ->mapAvailabilitySubscriptionTransfer($availabilitySubscriptionEntity);
+        foreach ($availabilityNotificationSubscriptionEntities as $availabilityNotificationSubscriptionEntity) {
+            $availabilityNotificationSubscriptions[] = $this->getFactory()
+                ->createAvailabilityNotificationSubscriptionMapper()
+                ->mapAvailabilityNotificationSubscriptionTransfer($availabilityNotificationSubscriptionEntity);
         }
 
-        return $availabilitySubscriptions;
+        return $availabilityNotificationSubscriptions;
     }
 
     /**
-     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery
+     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery
      */
-    protected function querySubscription(): SpyAvailabilitySubscriptionQuery
+    protected function querySubscription(): SpyAvailabilityNotificationSubscriptionQuery
     {
-        return $this->getFactory()->createAvailabilitySubscriptionQuery();
+        return $this->getFactory()->createAvailabilityNotificationSubscriptionQuery();
     }
 }

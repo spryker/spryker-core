@@ -8,8 +8,8 @@
 namespace Spryker\Zed\AvailabilityNotification\Business;
 
 use Generated\Shared\Transfer\AvailabilityNotificationDataTransfer;
-use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
-use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface AvailabilityNotificationFacadeInterface
@@ -24,11 +24,11 @@ interface AvailabilityNotificationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    public function subscribe(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer;
+    public function subscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer;
 
     /**
      * Specification:
@@ -37,11 +37,11 @@ interface AvailabilityNotificationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    public function unsubscribeBySubscriptionKey(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer;
+    public function unsubscribeBySubscriptionKey(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer;
 
     /**
      * Specification:
@@ -50,11 +50,11 @@ interface AvailabilityNotificationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    public function unsubscribeByCustomerReferenceAndSku(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer;
+    public function unsubscribeByCustomerReferenceAndSku(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer;
 
     /**
      * Specification:
@@ -79,7 +79,7 @@ interface AvailabilityNotificationFacadeInterface
      *
      * @return void
      */
-    public function sendAvailabilitySubscriptionNotification(AvailabilityNotificationDataTransfer $availabilityNotificationDataTransfer): void;
+    public function sendAvailabilityNotificationSubscriptionNotification(AvailabilityNotificationDataTransfer $availabilityNotificationDataTransfer): void;
 
     /**
      * Specification:
@@ -92,5 +92,5 @@ interface AvailabilityNotificationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function expandCustomerTransferWithAvailabilitySubscriptionList(CustomerTransfer $customerTransfer): CustomerTransfer;
+    public function expandCustomerTransferWithAvailabilityNotificationSubscriptionList(CustomerTransfer $customerTransfer): CustomerTransfer;
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig;
 
@@ -29,11 +29,11 @@ class UrlGenerator implements UrlGeneratorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return string
      */
-    public function createUnsubscriptionLink(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): string
+    public function createUnsubscriptionLink(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): string
     {
         $yvesBaseUrl = $this->config->getBaseUrlYves();
 
@@ -41,10 +41,10 @@ class UrlGenerator implements UrlGeneratorInterface
             return '';
         }
 
-        $localeName = $availabilitySubscriptionTransfer->getLocale()->getLocaleName();
+        $localeName = $availabilityNotificationSubscriptionTransfer->getLocale()->getLocaleName();
         $locale = $this->getLanguageFromLocale($localeName);
 
-        return $yvesBaseUrl . $locale . $this->config->getUnsubscribeRoute() . $availabilitySubscriptionTransfer->getSubscriptionKey();
+        return $yvesBaseUrl . $locale . $this->config->getUnsubscribeRoute() . $availabilityNotificationSubscriptionTransfer->getSubscriptionKey();
     }
 
     /**

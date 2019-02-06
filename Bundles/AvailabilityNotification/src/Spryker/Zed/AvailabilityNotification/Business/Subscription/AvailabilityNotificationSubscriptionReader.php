@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface;
 
-class AvailabilitySubscriptionReader implements AvailabilitySubscriptionReaderInterface
+class AvailabilityNotificationSubscriptionReader implements AvailabilityNotificationSubscriptionReaderInterface
 {
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface
@@ -39,9 +39,9 @@ class AvailabilitySubscriptionReader implements AvailabilitySubscriptionReaderIn
      * @param string $email
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer|null
      */
-    public function findOneByEmailAndSku(string $email, string $sku): ?AvailabilitySubscriptionTransfer
+    public function findOneByEmailAndSku(string $email, string $sku): ?AvailabilityNotificationSubscriptionTransfer
     {
         return $this->availabilityNotificationRepository
             ->findOneByEmailAndSku($email, $sku, $this->storeFacade->getCurrentStore()->getIdStore());
@@ -50,9 +50,9 @@ class AvailabilitySubscriptionReader implements AvailabilitySubscriptionReaderIn
     /**
      * @param string $subscriptionKey
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer|null
      */
-    public function findOneBySubscriptionKey(string $subscriptionKey): ?AvailabilitySubscriptionTransfer
+    public function findOneBySubscriptionKey(string $subscriptionKey): ?AvailabilityNotificationSubscriptionTransfer
     {
         return $this->availabilityNotificationRepository
             ->findOneBySubscriptionKey($subscriptionKey);
@@ -62,12 +62,12 @@ class AvailabilitySubscriptionReader implements AvailabilitySubscriptionReaderIn
      * @param string $customerReference
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer|null
      */
     public function findOneByCustomerReferenceAndSku(
         string $customerReference,
         string $sku
-    ): ?AvailabilitySubscriptionTransfer {
+    ): ?AvailabilityNotificationSubscriptionTransfer {
         return $this->availabilityNotificationRepository
             ->findOneByCustomerReferenceAndSku($customerReference, $sku, $this->storeFacade->getCurrentStore()->getIdStore());
     }
@@ -75,7 +75,7 @@ class AvailabilitySubscriptionReader implements AvailabilitySubscriptionReaderIn
     /**
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer[]
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer[]
      */
     public function findByCustomerReference(string $customerReference): array
     {

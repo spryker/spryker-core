@@ -8,22 +8,22 @@
 namespace Spryker\Zed\AvailabilityNotification\Business;
 
 use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationDependencyProvider;
-use Spryker\Zed\AvailabilityNotification\Business\Anonymizer\AvailabilitySubscriptionAnonymizer;
-use Spryker\Zed\AvailabilityNotification\Business\Anonymizer\AvailabilitySubscriptionAnonymizerInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Anonymizer\AvailabilityNotificationSubscriptionAnonymizer;
+use Spryker\Zed\AvailabilityNotification\Business\Anonymizer\AvailabilityNotificationSubscriptionAnonymizerInterface;
 use Spryker\Zed\AvailabilityNotification\Business\CustomerExpander\CustomerExpander;
 use Spryker\Zed\AvailabilityNotification\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSender;
 use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriber;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriberInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionKeyGenerator;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionKeyGeneratorInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionReader;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionReaderInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionSaver;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionSaverInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationUnsubscriber;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationUnsubscriberInterface;
-use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGenerator;
-use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface;
-use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReader;
-use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface;
-use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaver;
-use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaverInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGenerator;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGeneratorInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface;
@@ -47,7 +47,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     public function createAvailabilityNotificationSubscriber(): AvailabilityNotificationSubscriberInterface
     {
         return new AvailabilityNotificationSubscriber(
-            $this->createAvailabilitySubscriptionSaver(),
+            $this->createAvailabilityNotificationSubscriptionSaver(),
             $this->createAvailabilityNotificationSender(),
             $this->getUtilValidateService(),
             $this->createAvailabilityNotificationReader()
@@ -67,19 +67,19 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionKeyGeneratorInterface
      */
-    public function createSubscriptionKeyGenerator(): AvailabilitySubscriptionKeyGeneratorInterface
+    public function createSubscriptionKeyGenerator(): AvailabilityNotificationSubscriptionKeyGeneratorInterface
     {
-        return new AvailabilitySubscriptionKeyGenerator($this->getUtilTextService());
+        return new AvailabilityNotificationSubscriptionKeyGenerator($this->getUtilTextService());
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionSaverInterface
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionSaverInterface
      */
-    public function createAvailabilitySubscriptionSaver(): AvailabilitySubscriptionSaverInterface
+    public function createAvailabilityNotificationSubscriptionSaver(): AvailabilityNotificationSubscriptionSaverInterface
     {
-        return new AvailabilitySubscriptionSaver(
+        return new AvailabilityNotificationSubscriptionSaver(
             $this->getEntityManager(),
             $this->createSubscriptionKeyGenerator(),
             $this->getStoreFacade(),
@@ -88,11 +88,11 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityNotification\Business\Anonymizer\AvailabilitySubscriptionAnonymizerInterface
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Anonymizer\AvailabilityNotificationSubscriptionAnonymizerInterface
      */
-    public function createSubscriptionAnonymizer(): AvailabilitySubscriptionAnonymizerInterface
+    public function createSubscriptionAnonymizer(): AvailabilityNotificationSubscriptionAnonymizerInterface
     {
-        return new AvailabilitySubscriptionAnonymizer(
+        return new AvailabilityNotificationSubscriptionAnonymizer(
             $this->getEntityManager()
         );
     }
@@ -111,11 +111,11 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionReaderInterface
      */
-    public function createAvailabilityNotificationReader(): AvailabilitySubscriptionReaderInterface
+    public function createAvailabilityNotificationReader(): AvailabilityNotificationSubscriptionReaderInterface
     {
-        return new AvailabilitySubscriptionReader(
+        return new AvailabilityNotificationSubscriptionReader(
             $this->getStoreFacade(),
             $this->getRepository()
         );

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
-use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface;
 
@@ -25,19 +25,19 @@ class AvailabilityNotificationUnsubscriber implements AvailabilityNotificationUn
     protected $availabilityNotificationSender;
 
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface
+     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionReaderInterface
      */
     protected $availabilityNotificationReader;
 
     /**
      * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface $entityManager
      * @param \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface $availabilityNotificationSender
-     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface $availabilityNotificationReader
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionReaderInterface $availabilityNotificationReader
      */
     public function __construct(
         AvailabilityNotificationEntityManagerInterface $entityManager,
         AvailabilityNotificationSenderInterface $availabilityNotificationSender,
-        AvailabilitySubscriptionReaderInterface $availabilityNotificationReader
+        AvailabilityNotificationSubscriptionReaderInterface $availabilityNotificationReader
     ) {
         $this->entityManager = $entityManager;
         $this->availabilityNotificationSender = $availabilityNotificationSender;
@@ -45,79 +45,79 @@ class AvailabilityNotificationUnsubscriber implements AvailabilityNotificationUn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    public function unsubscribeBySubscriptionKey(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    public function unsubscribeBySubscriptionKey(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
     {
-        $availabilitySubscriptionTransfer->requireSubscriptionKey();
+        $availabilityNotificationSubscriptionTransfer->requireSubscriptionKey();
 
-        $availabilitySubscriptionTransfer = $this->availabilityNotificationReader->findOneBySubscriptionKey($availabilitySubscriptionTransfer->getSubscriptionKey());
+        $availabilityNotificationSubscriptionTransfer = $this->availabilityNotificationReader->findOneBySubscriptionKey($availabilityNotificationSubscriptionTransfer->getSubscriptionKey());
 
-        if ($availabilitySubscriptionTransfer === null) {
+        if ($availabilityNotificationSubscriptionTransfer === null) {
             return $this->createSubscriptionNotExistsResponse();
         }
 
-        $this->unsubscribe($availabilitySubscriptionTransfer);
+        $this->unsubscribe($availabilityNotificationSubscriptionTransfer);
 
-        return $this->createSuccessResponse($availabilitySubscriptionTransfer);
+        return $this->createSuccessResponse($availabilityNotificationSubscriptionTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
     public function unsubscribeByCustomerReferenceAndSku(
-        AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
-    ): AvailabilitySubscriptionResponseTransfer {
-        $availabilitySubscriptionTransfer->requireCustomerReference();
-        $availabilitySubscriptionTransfer->requireSku();
+        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+    ): AvailabilityNotificationSubscriptionResponseTransfer {
+        $availabilityNotificationSubscriptionTransfer->requireCustomerReference();
+        $availabilityNotificationSubscriptionTransfer->requireSku();
 
-        $availabilitySubscriptionTransfer = $this->availabilityNotificationReader->findOneByCustomerReferenceAndSku(
-            $availabilitySubscriptionTransfer->getCustomerReference(),
-            $availabilitySubscriptionTransfer->getSku()
+        $availabilityNotificationSubscriptionTransfer = $this->availabilityNotificationReader->findOneByCustomerReferenceAndSku(
+            $availabilityNotificationSubscriptionTransfer->getCustomerReference(),
+            $availabilityNotificationSubscriptionTransfer->getSku()
         );
 
-        if ($availabilitySubscriptionTransfer === null) {
+        if ($availabilityNotificationSubscriptionTransfer === null) {
             return $this->createSubscriptionNotExistsResponse();
         }
 
-        $this->unsubscribe($availabilitySubscriptionTransfer);
+        $this->unsubscribe($availabilityNotificationSubscriptionTransfer);
 
-        return $this->createSuccessResponse($availabilitySubscriptionTransfer);
+        return $this->createSuccessResponse($availabilityNotificationSubscriptionTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return void
      */
-    protected function unsubscribe(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
+    protected function unsubscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): void
     {
-        $this->entityManager->deleteBySubscriptionKey($availabilitySubscriptionTransfer->getSubscriptionKey());
-        $this->availabilityNotificationSender->sendUnsubscriptionMail($availabilitySubscriptionTransfer);
+        $this->entityManager->deleteBySubscriptionKey($availabilityNotificationSubscriptionTransfer->getSubscriptionKey());
+        $this->availabilityNotificationSender->sendUnsubscriptionMail($availabilityNotificationSubscriptionTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    protected function createSuccessResponse(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    protected function createSuccessResponse(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
     {
-        return (new AvailabilitySubscriptionResponseTransfer())
+        return (new AvailabilityNotificationSubscriptionResponseTransfer())
             ->setIsSuccess(true)
-            ->setAvailabilitySubscription($availabilitySubscriptionTransfer);
+            ->setAvailabilityNotificationSubscription($availabilityNotificationSubscriptionTransfer);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    protected function createSubscriptionNotExistsResponse(): AvailabilitySubscriptionResponseTransfer
+    protected function createSubscriptionNotExistsResponse(): AvailabilityNotificationSubscriptionResponseTransfer
     {
-        return (new AvailabilitySubscriptionResponseTransfer())
+        return (new AvailabilityNotificationSubscriptionResponseTransfer())
             ->setIsSuccess(false)
             ->setErrorMessage('Subscription doesn\'t exist');
     }

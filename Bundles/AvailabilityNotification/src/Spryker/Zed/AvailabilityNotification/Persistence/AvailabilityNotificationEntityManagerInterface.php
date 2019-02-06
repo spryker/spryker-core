@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 
 interface AvailabilityNotificationEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return void
      */
-    public function saveAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void;
+    public function saveAvailabilityNotificationSubscription(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): void;
 
     /**
      * @param string $subscriptionKey

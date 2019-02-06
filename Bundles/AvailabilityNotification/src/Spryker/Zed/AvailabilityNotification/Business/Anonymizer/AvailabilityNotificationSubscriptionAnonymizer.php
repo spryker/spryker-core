@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Anonymizer;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface;
 
-class AvailabilitySubscriptionAnonymizer implements AvailabilitySubscriptionAnonymizerInterface
+class AvailabilityNotificationSubscriptionAnonymizer implements AvailabilityNotificationSubscriptionAnonymizerInterface
 {
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface
@@ -29,14 +29,14 @@ class AvailabilitySubscriptionAnonymizer implements AvailabilitySubscriptionAnon
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    public function anonymizeSubscription(CustomerTransfer $customerTransfer): AvailabilitySubscriptionResponseTransfer
+    public function anonymizeSubscription(CustomerTransfer $customerTransfer): AvailabilityNotificationSubscriptionResponseTransfer
     {
         $customerTransfer->requireCustomerReference();
 
         $this->entityManager->deleteByCustomerReference($customerTransfer->getCustomerReference());
 
-        return (new AvailabilitySubscriptionResponseTransfer())->setIsSuccess(true);
+        return (new AvailabilityNotificationSubscriptionResponseTransfer())->setIsSuccess(true);
     }
 }

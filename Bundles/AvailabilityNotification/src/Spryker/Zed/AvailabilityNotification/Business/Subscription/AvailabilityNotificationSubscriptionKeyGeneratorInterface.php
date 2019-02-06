@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
-interface AvailabilitySubscriptionKeyGeneratorInterface
+interface AvailabilityNotificationSubscriptionKeyGeneratorInterface
 {
     /**
      * @return string

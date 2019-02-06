@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface;
 
-class AvailabilitySubscriptionSaver implements AvailabilitySubscriptionSaverInterface
+class AvailabilityNotificationSubscriptionSaver implements AvailabilityNotificationSubscriptionSaverInterface
 {
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface
@@ -20,7 +20,7 @@ class AvailabilitySubscriptionSaver implements AvailabilitySubscriptionSaverInte
     protected $entityManager;
 
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface
+     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionKeyGeneratorInterface
      */
     protected $keyGenerator;
 
@@ -36,13 +36,13 @@ class AvailabilitySubscriptionSaver implements AvailabilitySubscriptionSaverInte
 
     /**
      * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface $entityManager
-     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionKeyGeneratorInterface $keyGenerator
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionKeyGeneratorInterface $keyGenerator
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface $availabilityNotificationToStoreFacade
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface $availabilityNotificationToLocaleFacade
      */
     public function __construct(
         AvailabilityNotificationEntityManagerInterface $entityManager,
-        AvailabilitySubscriptionKeyGeneratorInterface $keyGenerator,
+        AvailabilityNotificationSubscriptionKeyGeneratorInterface $keyGenerator,
         AvailabilityNotificationToStoreFacadeInterface $availabilityNotificationToStoreFacade,
         AvailabilityNotificationToLocaleFacadeInterface $availabilityNotificationToLocaleFacade
     ) {
@@ -53,26 +53,26 @@ class AvailabilitySubscriptionSaver implements AvailabilitySubscriptionSaverInte
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer
      */
-    public function save(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionTransfer
+    public function save(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionTransfer
     {
-        $availabilitySubscriptionTransfer->requireSku();
-        $availabilitySubscriptionTransfer->requireEmail();
+        $availabilityNotificationSubscriptionTransfer->requireSku();
+        $availabilityNotificationSubscriptionTransfer->requireEmail();
 
         $subscriptionKey = $this->keyGenerator->generateKey();
-        $availabilitySubscriptionTransfer->setSubscriptionKey($subscriptionKey);
+        $availabilityNotificationSubscriptionTransfer->setSubscriptionKey($subscriptionKey);
 
         $store = $this->availabilityNotificationToStoreFacade->getCurrentStore();
-        $availabilitySubscriptionTransfer->setStore($store);
+        $availabilityNotificationSubscriptionTransfer->setStore($store);
 
         $locale = $this->availabilityNotificationToLocaleFacade->getCurrentLocale();
-        $availabilitySubscriptionTransfer->setLocale($locale);
+        $availabilityNotificationSubscriptionTransfer->setLocale($locale);
 
-        $this->entityManager->saveAvailabilitySubscription($availabilitySubscriptionTransfer);
+        $this->entityManager->saveAvailabilityNotificationSubscription($availabilityNotificationSubscriptionTransfer);
 
-        return $availabilitySubscriptionTransfer;
+        return $availabilityNotificationSubscriptionTransfer;
     }
 }

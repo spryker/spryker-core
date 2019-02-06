@@ -16,5 +16,5 @@ interface CustomerExpanderInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function expandCustomerTransferWithAvailabilitySubscriptionList(CustomerTransfer $customerTransfer): CustomerTransfer;
+    public function expandCustomerTransferWithAvailabilityNotificationSubscriptionList(CustomerTransfer $customerTransfer): CustomerTransfer;
 }

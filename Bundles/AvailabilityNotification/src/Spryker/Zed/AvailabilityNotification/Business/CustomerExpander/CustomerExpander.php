@@ -8,21 +8,21 @@
 namespace Spryker\Zed\AvailabilityNotification\Business\CustomerExpander;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionReaderInterface;
 
 class CustomerExpander implements CustomerExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface
+     * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionReaderInterface
      */
-    protected $availabilitySubscriptionReader;
+    protected $availabilityNotificationSubscriptionReader;
 
     /**
-     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilitySubscriptionReaderInterface $availabilitySubscriptionReader
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionReaderInterface $availabilityNotificationSubscriptionReader
      */
-    public function __construct(AvailabilitySubscriptionReaderInterface $availabilitySubscriptionReader)
+    public function __construct(AvailabilityNotificationSubscriptionReaderInterface $availabilityNotificationSubscriptionReader)
     {
-        $this->availabilitySubscriptionReader = $availabilitySubscriptionReader;
+        $this->availabilityNotificationSubscriptionReader = $availabilityNotificationSubscriptionReader;
     }
 
     /**
@@ -30,16 +30,16 @@ class CustomerExpander implements CustomerExpanderInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function expandCustomerTransferWithAvailabilitySubscriptionList(CustomerTransfer $customerTransfer): CustomerTransfer
+    public function expandCustomerTransferWithAvailabilityNotificationSubscriptionList(CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        $availabilitySubscriptions = $this->availabilitySubscriptionReader->findByCustomerReference($customerTransfer->getCustomerReference());
+        $availabilityNotificationSubscriptions = $this->availabilityNotificationSubscriptionReader->findByCustomerReference($customerTransfer->getCustomerReference());
         $skus = [];
 
-        foreach ($availabilitySubscriptions as $availabilitySubscription) {
-            $skus[] = $availabilitySubscription->getSku();
+        foreach ($availabilityNotificationSubscriptions as $availabilityNotificationSubscription) {
+            $skus[] = $availabilityNotificationSubscription->getSku();
         }
 
-        $customerTransfer->setAvailabilitySubscriptionSkus($skus);
+        $customerTransfer->setAvailabilityNotificationSubscriptionSkus($skus);
 
         return $customerTransfer;
     }

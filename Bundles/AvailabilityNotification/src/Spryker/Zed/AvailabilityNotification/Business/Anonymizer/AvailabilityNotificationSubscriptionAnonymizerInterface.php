@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Anonymizer;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
-interface AvailabilitySubscriptionAnonymizerInterface
+interface AvailabilityNotificationSubscriptionAnonymizerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    public function anonymizeSubscription(CustomerTransfer $customerTransfer): AvailabilitySubscriptionResponseTransfer;
+    public function anonymizeSubscription(CustomerTransfer $customerTransfer): AvailabilityNotificationSubscriptionResponseTransfer;
 }

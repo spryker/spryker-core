@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence;
 
-use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery;
-use Spryker\Zed\AvailabilityNotification\Persistence\Propel\Mapper\AvailabilitySubscriptionMapper;
-use Spryker\Zed\AvailabilityNotification\Persistence\Propel\Mapper\AvailabilitySubscriptionMapperInterface;
+use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery;
+use Spryker\Zed\AvailabilityNotification\Persistence\Propel\Mapper\AvailabilityNotificationSubscriptionMapper;
+use Spryker\Zed\AvailabilityNotification\Persistence\Propel\Mapper\AvailabilityNotificationSubscriptionMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -20,18 +20,18 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 class AvailabilityNotificationPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscriptionQuery
+     * @return \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery
      */
-    public function createAvailabilitySubscriptionQuery(): SpyAvailabilitySubscriptionQuery
+    public function createAvailabilityNotificationSubscriptionQuery(): SpyAvailabilityNotificationSubscriptionQuery
     {
-        return SpyAvailabilitySubscriptionQuery::create();
+        return SpyAvailabilityNotificationSubscriptionQuery::create();
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityNotification\Persistence\Propel\Mapper\AvailabilitySubscriptionMapperInterface
+     * @return \Spryker\Zed\AvailabilityNotification\Persistence\Propel\Mapper\AvailabilityNotificationSubscriptionMapperInterface
      */
-    public function createAvailabilitySubscriptionMapper(): AvailabilitySubscriptionMapperInterface
+    public function createAvailabilityNotificationSubscriptionMapper(): AvailabilityNotificationSubscriptionMapperInterface
     {
-        return new AvailabilitySubscriptionMapper();
+        return new AvailabilityNotificationSubscriptionMapper();
     }
 }

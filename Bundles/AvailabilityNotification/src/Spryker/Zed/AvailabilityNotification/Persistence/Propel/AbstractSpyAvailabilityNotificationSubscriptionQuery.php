@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence\Propel;
 
-use Orm\Zed\AvailabilityNotification\Persistence\Base\SpyAvailabilitySubscriptionQuery as BaseSpyAvailabilitySubscriptionQuery;
+use Orm\Zed\AvailabilityNotification\Persistence\Base\SpyAvailabilityNotificationSubscriptionQuery as BaseSpyAvailabilityNotificationSubscriptionQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_newsletter_subscription' table.
@@ -18,6 +18,6 @@ use Orm\Zed\AvailabilityNotification\Persistence\Base\SpyAvailabilitySubscriptio
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyAvailabilitySubscriptionQuery extends BaseSpyAvailabilitySubscriptionQuery
+abstract class AbstractSpyAvailabilityNotificationSubscriptionQuery extends BaseSpyAvailabilityNotificationSubscriptionQuery
 {
 }

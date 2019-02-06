@@ -57,11 +57,11 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
     protected function setSubject(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $mailTransfer = $mailBuilder->getMailTransfer();
-        $mailTransfer->requireAvailabilitySubscriptionMailData();
+        $mailTransfer->requireAvailabilityNotificationSubscriptionMailData();
         $productName = $mailTransfer
-            ->getAvailabilitySubscriptionMailData()
+            ->getAvailabilityNotificationSubscriptionMailData()
             ->getProductName();
-        $mailBuilder->setSubject('availability_subscription.mail.notification.subject', ['%name%' => $productName]);
+        $mailBuilder->setSubject('availability_notification_subscription.mail.notification.subject', ['%name%' => $productName]);
 
         return $this;
     }
@@ -98,8 +98,8 @@ class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements M
     protected function setRecipient(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $mailTransfer = $mailBuilder->getMailTransfer();
-        $mailTransfer->requireAvailabilitySubscriptionMailData();
-        $subscription = $mailTransfer->getAvailabilitySubscriptionMailData()->getAvailabilitySubscription();
+        $mailTransfer->requireAvailabilityNotificationSubscriptionMailData();
+        $subscription = $mailTransfer->getAvailabilityNotificationSubscriptionMailData()->getAvailabilityNotificationSubscription();
 
         $mailBuilder->addRecipient($subscription->getEmail(), '');
 

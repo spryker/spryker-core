@@ -55,12 +55,12 @@ class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin 
     protected function setSubject(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $mailTransfer = $mailBuilder->getMailTransfer();
-        $mailTransfer->requireAvailabilitySubscriptionMailData();
+        $mailTransfer->requireAvailabilityNotificationSubscriptionMailData();
         $productName = $mailTransfer
-            ->getAvailabilitySubscriptionMailData()
+            ->getAvailabilityNotificationSubscriptionMailData()
             ->getProductName();
         $mailBuilder->setSubject(
-            'availability_subscription.mail.unsubscribed.subject',
+            'availability_notification_subscription.mail.unsubscribed.subject',
             ['%name%' => $productName]
         );
 
@@ -99,13 +99,13 @@ class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin 
     protected function setRecipient(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $mailTransfer = $mailBuilder->getMailTransfer();
-        $mailTransfer->requireAvailabilitySubscriptionMailData();
-        $availabilitySubscriptionTransfer = $mailTransfer
-            ->getAvailabilitySubscriptionMailData()
-            ->requireAvailabilitySubscription()
-            ->getAvailabilitySubscription();
+        $mailTransfer->requireAvailabilityNotificationSubscriptionMailData();
+        $availabilityNotificationSubscriptionTransfer = $mailTransfer
+            ->getAvailabilityNotificationSubscriptionMailData()
+            ->requireAvailabilityNotificationSubscription()
+            ->getAvailabilityNotificationSubscription();
 
-        $mailBuilder->addRecipient($availabilitySubscriptionTransfer->getEmail(), '');
+        $mailBuilder->addRecipient($availabilityNotificationSubscriptionTransfer->getEmail(), '');
 
         return $this;
     }

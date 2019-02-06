@@ -54,7 +54,7 @@ class AvailabilityNotificationSubscriptionMailTypePlugin extends AbstractPlugin 
      */
     protected function setSubject(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
-        $mailBuilder->setSubject('availability_subscription.mail.subscribed.subject');
+        $mailBuilder->setSubject('availability_notification_subscription.mail.subscribed.subject');
 
         return $this;
     }
@@ -91,10 +91,10 @@ class AvailabilityNotificationSubscriptionMailTypePlugin extends AbstractPlugin 
     protected function setRecipient(MailBuilderInterface $mailBuilder): MailTypePluginInterface
     {
         $mailTransfer = $mailBuilder->getMailTransfer();
-        $mailTransfer->requireAvailabilitySubscriptionMailData();
-        $availabilitySubscriptionTransfer = $mailTransfer->getAvailabilitySubscriptionMailData()->getAvailabilitySubscription();
+        $mailTransfer->requireAvailabilityNotificationSubscriptionMailData();
+        $availabilityNotificationSubscriptionTransfer = $mailTransfer->getAvailabilityNotificationSubscriptionMailData()->getAvailabilityNotificationSubscription();
 
-        $mailBuilder->addRecipient($availabilitySubscriptionTransfer->getEmail(), '');
+        $mailBuilder->addRecipient($availabilityNotificationSubscriptionTransfer->getEmail(), '');
 
         return $this;
     }

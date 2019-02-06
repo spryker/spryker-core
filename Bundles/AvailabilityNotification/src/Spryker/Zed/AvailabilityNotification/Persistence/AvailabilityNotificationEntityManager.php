@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
-use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilitySubscription;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscription;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -17,19 +17,19 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class AvailabilityNotificationEntityManager extends AbstractEntityManager implements AvailabilityNotificationEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return void
      */
-    public function saveAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): void
+    public function saveAvailabilityNotificationSubscription(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): void
     {
-        $availabilitySubscriptionTransfer->requireLocale();
-        $availabilitySubscriptionTransfer->requireStore();
+        $availabilityNotificationSubscriptionTransfer->requireLocale();
+        $availabilityNotificationSubscriptionTransfer->requireStore();
 
-        $subscriptionEntity = new SpyAvailabilitySubscription();
-        $subscriptionEntity->fromArray($availabilitySubscriptionTransfer->toArray());
-        $subscriptionEntity->setFkStore($availabilitySubscriptionTransfer->getStore()->getIdStore());
-        $subscriptionEntity->setFkLocale($availabilitySubscriptionTransfer->getLocale()->getIdLocale());
+        $subscriptionEntity = new SpyAvailabilityNotificationSubscription();
+        $subscriptionEntity->fromArray($availabilityNotificationSubscriptionTransfer->toArray());
+        $subscriptionEntity->setFkStore($availabilityNotificationSubscriptionTransfer->getStore()->getIdStore());
+        $subscriptionEntity->setFkLocale($availabilityNotificationSubscriptionTransfer->getLocale()->getIdLocale());
 
         $subscriptionEntity->save();
     }
@@ -42,7 +42,7 @@ class AvailabilityNotificationEntityManager extends AbstractEntityManager implem
     public function deleteBySubscriptionKey(string $subscriptionKey): void
     {
         $this->getFactory()
-            ->createAvailabilitySubscriptionQuery()
+            ->createAvailabilityNotificationSubscriptionQuery()
             ->filterBySubscriptionKey($subscriptionKey)
             ->delete();
     }
@@ -55,7 +55,7 @@ class AvailabilityNotificationEntityManager extends AbstractEntityManager implem
     public function deleteByCustomerReference(string $customerReference): void
     {
         $this->getFactory()
-            ->createAvailabilitySubscriptionQuery()
+            ->createAvailabilityNotificationSubscriptionQuery()
             ->filterByCustomerReference($customerReference)
             ->delete();
     }

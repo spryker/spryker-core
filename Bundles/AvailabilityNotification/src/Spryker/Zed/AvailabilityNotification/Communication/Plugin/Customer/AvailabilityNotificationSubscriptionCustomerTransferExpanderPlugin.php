@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig getConfig()
  * @method \Spryker\Zed\AvailabilityNotification\Communication\AvailabilityNotificationCommunicationFactory getFactory()
  */
-class AvailabilitySubscriptionCustomerTransferExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
+class AvailabilityNotificationSubscriptionCustomerTransferExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -29,6 +29,6 @@ class AvailabilitySubscriptionCustomerTransferExpanderPlugin extends AbstractPlu
      */
     public function expandTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        return $this->getFacade()->expandCustomerTransferWithAvailabilitySubscriptionList($customerTransfer);
+        return $this->getFacade()->expandCustomerTransferWithAvailabilityNotificationSubscriptionList($customerTransfer);
     }
 }

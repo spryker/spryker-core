@@ -38,7 +38,7 @@ class AvailabilityNotificationListener extends AbstractPlugin implements EventBu
             }
 
             $this->getFacade()
-                ->sendAvailabilitySubscriptionNotification($availabilityNotificationDataTransfer);
+                ->sendAvailabilityNotificationSubscriptionNotification($availabilityNotificationDataTransfer);
         }
     }
 }

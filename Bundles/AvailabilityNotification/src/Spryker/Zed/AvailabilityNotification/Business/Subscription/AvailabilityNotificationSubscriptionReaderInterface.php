@@ -5,20 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AvailabilityNotification\Persistence;
+namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 
-interface AvailabilityNotificationRepositoryInterface
+interface AvailabilityNotificationSubscriptionReaderInterface
 {
     /**
      * @param string $email
      * @param string $sku
-     * @param int $fkStore
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer|null
      */
-    public function findOneByEmailAndSku(string $email, string $sku, int $fkStore): ?AvailabilityNotificationSubscriptionTransfer;
+    public function findOneByEmailAndSku(string $email, string $sku): ?AvailabilityNotificationSubscriptionTransfer;
 
     /**
      * @param string $subscriptionKey
@@ -30,25 +29,18 @@ interface AvailabilityNotificationRepositoryInterface
     /**
      * @param string $customerReference
      * @param string $sku
-     * @param int $fkStore
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer|null
      */
-    public function findOneByCustomerReferenceAndSku(string $customerReference, string $sku, int $fkStore): ?AvailabilityNotificationSubscriptionTransfer;
-
-    /**
-     * @param string $sku
-     * @param int $fkStore
-     *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer[]
-     */
-    public function findBySkuAndStore(string $sku, int $fkStore): array;
+    public function findOneByCustomerReferenceAndSku(
+        string $customerReference,
+        string $sku
+    ): ?AvailabilityNotificationSubscriptionTransfer;
 
     /**
      * @param string $customerReference
-     * @param int $fkStore
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer[]
      */
-    public function findByCustomerReference(string $customerReference, int $fkStore): array;
+    public function findByCustomerReference(string $customerReference): array;
 }
