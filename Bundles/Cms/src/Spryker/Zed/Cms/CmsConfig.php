@@ -12,14 +12,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsConfig extends AbstractBundleConfig
 {
-    public const CMS_TWIG_TEMPLATE_PREFIX = '@Cms';
-    public const CMS_PLACEHOLDER_PATTERN = '/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
-    public const CMS_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
+    protected const CMS_TWIG_TEMPLATE_PREFIX = '@Cms';
+    protected const CMS_PLACEHOLDER_PATTERN = '/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
+    protected const CMS_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
 
     /**
      * @return string
      */
-    public function getPlaceholderPattern()
+    public function getPlaceholderPattern(): string
     {
         return static::CMS_PLACEHOLDER_PATTERN;
     }
@@ -27,21 +27,9 @@ class CmsConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getPlaceholderValuePattern()
+    public function getPlaceholderValuePattern(): string
     {
         return static::CMS_PLACEHOLDER_VALUE_PATTERN;
-    }
-
-    /**
-     * @deprecated use getTemplateRealPaths() instead
-     *
-     * @param string $templateRelativePath
-     *
-     * @return string
-     */
-    public function getTemplateRealPath($templateRelativePath)
-    {
-        return $this->getAbsolutePath($templateRelativePath, 'Yves');
     }
 
     /**
@@ -49,7 +37,7 @@ class CmsConfig extends AbstractBundleConfig
      *
      * @return array
      */
-    public function getTemplateRealPaths($templateRelativePath)
+    public function getTemplateRealPaths(string $templateRelativePath): array
     {
         return [
             $this->getAbsolutePath($templateRelativePath, 'Yves'),
@@ -60,7 +48,7 @@ class CmsConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function appendPrefixToCmsPageUrl()
+    public function appendPrefixToCmsPageUrl(): bool
     {
         return false;
     }
@@ -71,7 +59,7 @@ class CmsConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    protected function getAbsolutePath($templateRelativePath, $twigLayer)
+    protected function getAbsolutePath(string $templateRelativePath, string $twigLayer): string
     {
         $templateRelativePath = str_replace(static::CMS_TWIG_TEMPLATE_PREFIX, '', $templateRelativePath);
 

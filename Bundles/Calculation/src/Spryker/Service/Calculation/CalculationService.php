@@ -8,8 +8,8 @@
 namespace Spryker\Service\Calculation;
 
 use ArrayObject;
-use Spryker\Service\Kernel\AbstractService;
 use Spryker\Service\Calculation\Items\ItemsGrouperInterface;
+use Spryker\Service\Kernel\AbstractService;
 
 /**
  * @method \Spryker\Service\Calculation\CalculationServiceFactory getFactory()

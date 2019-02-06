@@ -9,13 +9,13 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Spryker\Service\Calculation\CalculationServiceInterface;
 
 class TaxTotalCalculator implements CalculatorInterface
 {
+    use ShipmentAwareTrait;
+
     /**
      * @var \Spryker\Service\Calculation\CalculationServiceInterface
      */
@@ -95,15 +95,5 @@ class TaxTotalCalculator implements CalculatorInterface
         }
 
         return $totalTaxAmount;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     *
-     * @return bool
-     */
-    protected function assertShipmentGroupHasNoExpense(ShipmentGroupTransfer $shipmentGroupTransfer): bool
-    {
-        return $shipmentGroupTransfer->getShipment() === null || $shipmentGroupTransfer->getShipment()->getExpense() === null;
     }
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Calculation\Business\Model\Aggregator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Service\Calculation\CalculationServiceInterface;
 use Spryker\Shared\Calculation\CalculationPriceMode;
