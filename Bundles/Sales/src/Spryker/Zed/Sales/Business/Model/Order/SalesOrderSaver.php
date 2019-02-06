@@ -291,6 +291,10 @@ class SalesOrderSaver implements SalesOrderSaverInterface
             unset($customerData['created_at']);
         }
 
+        if (isset($customerData['updated_at'])) {
+            unset($customerData['updated_at']);
+        }
+
         $salesOrderEntity->fromArray($customerData);
     }
 
