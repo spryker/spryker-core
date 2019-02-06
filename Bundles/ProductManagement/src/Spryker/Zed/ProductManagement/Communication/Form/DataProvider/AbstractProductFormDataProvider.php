@@ -581,7 +581,6 @@ class AbstractProductFormDataProvider
 
         $result = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
-
             if (!$attributeTransfer->getIsSuper()) {
                 continue;
             }
