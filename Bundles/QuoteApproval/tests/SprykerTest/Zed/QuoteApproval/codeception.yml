@@ -12,7 +12,7 @@ coverage:
             - '../../../../src/*'
 suites:
     Business:
-        path: Business
+        path: .
         class_name: QuoteApprovalBusinessTester
         modules:
             enabled:

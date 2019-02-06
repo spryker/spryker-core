@@ -34,7 +34,7 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
             return false;
         }
 
-        $centAmount = $quoteTransfer->getTotals()->getGrandTotal();
+        $centAmount = $quoteTransfer->getTotals()->getGrandTotal() - $this->getShipmentPriceForQuote($quoteTransfer);
         $currencyCode = $quoteTransfer->getCurrency()->getCode();
         $storeName = $quoteTransfer->getStore()->getName();
 
@@ -42,7 +42,7 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
             return true;
         }
 
-        if ($configuration[static::FIELD_STORE_MULTI_CURRENCY][$storeName][$currencyCode] < (int)$centAmount) {
+        if ($configuration[static::FIELD_STORE_MULTI_CURRENCY][$storeName][$currencyCode] < $centAmount) {
             return false;
         }
 
@@ -73,5 +73,26 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
     public function getKey(): string
     {
         return static::KEY;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int
+     */
+    protected function getShipmentPriceForQuote(QuoteTransfer $quoteTransfer): int
+    {
+        if (!$quoteTransfer->getShipment()) {
+            return 0;
+        }
+
+        $shipmentMethodTransfer = $quoteTransfer->getShipment()
+            ->getMethod();
+
+        if (!$shipmentMethodTransfer) {
+            return 0;
+        }
+
+        return $shipmentMethodTransfer->getStoreCurrencyPrice();
     }
 }
