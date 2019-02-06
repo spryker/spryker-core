@@ -11,11 +11,11 @@ interface SalesOrderThresholdFormFieldDependenciesPluginInterface
 {
     /**
      * Specification:
-     *  - Returns the threshold dependent field names using in form.
+     *  - Returns the names of the fields that depend on the threshold in the form.
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getThresholdFieldDependentFieldNames(): array;
 }

@@ -135,7 +135,7 @@ class GlobalSoftThresholdFixedFeeFormExpanderPlugin extends AbstractPlugin imple
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getThresholdFieldDependentFieldNames(): array
     {

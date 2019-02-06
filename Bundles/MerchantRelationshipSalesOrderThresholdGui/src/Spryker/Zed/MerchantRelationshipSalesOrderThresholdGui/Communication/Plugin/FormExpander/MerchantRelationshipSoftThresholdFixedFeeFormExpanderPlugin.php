@@ -135,7 +135,7 @@ class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends Abstra
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getThresholdFieldDependentFieldNames(): array
     {

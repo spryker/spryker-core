@@ -134,7 +134,7 @@ class MerchantRelationshipSoftThresholdFlexibleFeeFormExpanderPlugin extends Abs
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getThresholdFieldDependentFieldNames(): array
     {

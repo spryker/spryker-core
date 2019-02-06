@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Constraint;
 
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\AbstractMerchantRelationshipThresholdType;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormFieldDependenciesPluginInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -26,7 +27,7 @@ class ThresholdStrategyConstraintValidator extends ConstraintValidator
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ThresholdStrategyConstraint) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\ThresholdStrategyConstraint');
@@ -38,24 +39,52 @@ class ThresholdStrategyConstraintValidator extends ConstraintValidator
         $salesOrderThresholdFormExpanderPlugins = $constraint->getSalesOrderThresholdFormExpanderPlugins();
 
         foreach ($salesOrderThresholdFormExpanderPlugins as $salesOrderThresholdFormExpanderPlugin) {
-            if (!$salesOrderThresholdFormExpanderPlugin instanceof  SalesOrderThresholdFormFieldDependenciesPluginInterface
-                || $salesOrderThresholdFormExpanderPlugin->getThresholdKey() !== $data[AbstractMerchantRelationshipThresholdType::FIELD_STRATEGY]
-            ) {
+            if (!$this->isValidPlugin($salesOrderThresholdFormExpanderPlugin, $data)) {
                 continue;
             }
 
-            /** @var \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormFieldDependenciesPluginInterface $salesOrderThresholdFormExpanderPlugin */
-            if (!$salesOrderThresholdFormExpanderPlugin->getThresholdFieldDependentFieldNames()) {
-                continue;
-            }
+            $fields = $salesOrderThresholdFormExpanderPlugin->getThresholdFieldDependentFieldNames();
 
-            foreach ($salesOrderThresholdFormExpanderPlugin->getThresholdFieldDependentFieldNames() as $field) {
+            foreach ($fields as $field) {
                 if ($data[$field] && !$data[AbstractMerchantRelationshipThresholdType::FIELD_THRESHOLD]) {
-                    $message = strtr(static::MESSAGE_UPDATE_SOFT_STRATEGY_ERROR, [static::MESSAGE_KEY => $salesOrderThresholdFormExpanderPlugin->getThresholdGroup()]);
-                    $this->context->addViolation($message);
+                    $this->createErrorMessage($salesOrderThresholdFormExpanderPlugin);
                     return;
                 }
             }
         }
+    }
+
+    /**
+     * @param \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface $plugin
+     * @param array $data
+     *
+     * @return bool
+     */
+    protected function isValidPlugin(SalesOrderThresholdFormExpanderPluginInterface $plugin, array $data): bool
+    {
+        if (!$plugin instanceof  SalesOrderThresholdFormFieldDependenciesPluginInterface
+            || $plugin->getThresholdKey() !== $data[AbstractMerchantRelationshipThresholdType::FIELD_STRATEGY]
+        ) {
+            return false;
+        }
+
+        if (!$plugin->getThresholdFieldDependentFieldNames()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface $plugin
+     *
+     * @return void
+     */
+    protected function createErrorMessage(SalesOrderThresholdFormExpanderPluginInterface $plugin): void
+    {
+        $message = strtr(static::MESSAGE_UPDATE_SOFT_STRATEGY_ERROR, [
+            static::MESSAGE_KEY => $plugin->getThresholdGroup(),
+        ]);
+        $this->context->addViolation($message);
     }
 }
