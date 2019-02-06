@@ -8,16 +8,21 @@
 namespace Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Relationship;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer;
 use Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiConfig;
 use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Mapper\CompanyRoleMapperInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyRoleResourceRelationshipExpander implements CompanyRoleResourceRelationshipExpanderInterface
 {
+    protected const PATTERN_COMPANY_ROLE_RESOURCE_SELF_LINK = '%s/%s/%s/%s';
+
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
@@ -55,25 +60,28 @@ class CompanyRoleResourceRelationshipExpander implements CompanyRoleResourceRela
             }
 
             $companyRoleCollectionTransfer = $payload->getCompanyRoleCollection();
-            if ($companyRoleCollectionTransfer === null || count($companyRoleCollectionTransfer->getRoles()) === 0) {
+            $companyTransfer = $payload->getCompany();
+            if ($companyRoleCollectionTransfer === null || $companyTransfer === null || count($companyRoleCollectionTransfer->getRoles()) === 0) {
                 continue;
             }
 
-            $this->addCompanyRoleRelationships($companyRoleCollectionTransfer, $resource);
+            $this->addCompanyRoleRelationships($resource, $companyTransfer, $companyRoleCollectionTransfer);
         }
 
         return $resources;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
      *
      * @return void
      */
     protected function addCompanyRoleRelationships(
-        CompanyRoleCollectionTransfer $companyRoleCollectionTransfer,
-        RestResourceInterface $resource
+        RestResourceInterface $resource,
+        CompanyTransfer $companyTransfer,
+        CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
     ): void {
         foreach ($companyRoleCollectionTransfer->getRoles() as $companyRoleTransfer) {
             $restCompanyRoleAttributesTransfer = $this->companyRoleMapper
@@ -82,13 +90,37 @@ class CompanyRoleResourceRelationshipExpander implements CompanyRoleResourceRela
                     new RestCompanyRoleAttributesTransfer()
                 );
 
-            $companyBusinessUnitResource = $this->restResourceBuilder->createRestResource(
+            $companyRoleResource = $this->restResourceBuilder->createRestResource(
                 CompanyRolesRestApiConfig::RESOURCE_COMPANY_ROLES,
                 $companyRoleTransfer->getUuid(),
                 $restCompanyRoleAttributesTransfer
             );
 
-            $resource->addRelationship($companyBusinessUnitResource);
+            $companyRoleResource->addLink(
+                RestLinkInterface::LINK_SELF,
+                $this->createSelfLink($companyTransfer, $companyRoleTransfer)
+            );
+
+            $resource->addRelationship($companyRoleResource);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return string
+     */
+    protected function createSelfLink(
+        CompanyTransfer $companyTransfer,
+        CompanyRoleTransfer $companyRoleTransfer
+    ): string {
+        return sprintf(
+            static::PATTERN_COMPANY_ROLE_RESOURCE_SELF_LINK,
+            CompanyRolesRestApiConfig::RESOURCE_COMPANIES,
+            $companyTransfer->getUuid(),
+            CompanyRolesRestApiConfig::RESOURCE_COMPANY_ROLES,
+            $companyRoleTransfer->getUuid()
+        );
     }
 }

@@ -1,5 +1,6 @@
 {
   "include": {
-    "Company": "Company provides base functionality."
+    "Company": "Company provides base functionality.",
+    "UuidBehavior": "Used to generate UUIDs for entities"
   }
 }

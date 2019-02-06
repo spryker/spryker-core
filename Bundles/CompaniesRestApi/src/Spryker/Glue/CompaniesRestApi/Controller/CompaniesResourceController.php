@@ -32,6 +32,18 @@ class CompaniesResourceController extends AbstractController
      *          "responses": {
      *             "501": "Not implemented."
      *          }
+     *     },
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieves company collection."
+     *          ],
+     *         "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "501": "Not implemented."
+     *          }
      *     }
      * })
      *
@@ -43,7 +55,6 @@ class CompaniesResourceController extends AbstractController
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setStatus(Response::HTTP_NOT_IMPLEMENTED)
-            ->setCode(CompaniesRestApiConfig::RESPONSE_CODE_ENDPOINT_NOT_IMPLEMENTED)
             ->setDetail(CompaniesRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED);
 
         return $this->getFactory()->getResourceBuilder()->createRestResponse()->addError($restErrorMessageTransfer);

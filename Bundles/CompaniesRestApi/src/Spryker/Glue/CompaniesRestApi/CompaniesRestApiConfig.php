@@ -16,6 +16,5 @@ class CompaniesRestApiConfig extends AbstractBundleConfig
 
     public const ACTION_COMPANIES_GET = 'get';
 
-    public const RESPONSE_CODE_ENDPOINT_NOT_IMPLEMENTED = '1801';
     public const RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED = 'Endpoint is not implemented.';
 }

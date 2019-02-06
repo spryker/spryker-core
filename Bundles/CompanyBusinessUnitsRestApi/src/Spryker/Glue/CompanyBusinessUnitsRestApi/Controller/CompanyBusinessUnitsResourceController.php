@@ -25,18 +25,24 @@ class CompanyBusinessUnitsResourceController extends AbstractController
      *          "summary": [
      *              "Retrieves a company business unit by id."
      *          ],
-     *
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
-     *              "501": "Not implemented.",
+     *              "501": "Not implemented."
      *          }
      *     },
      *     "getCollection": {
      *          "summary": [
      *              "Retrieves company business units collection."
      *          ],
-     *
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
-     *              "501": "Not implemented.",
+     *              "501": "Not implemented."
      *          }
      *     }
      * })
@@ -49,7 +55,6 @@ class CompanyBusinessUnitsResourceController extends AbstractController
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setStatus(Response::HTTP_NOT_IMPLEMENTED)
-            ->setCode(CompanyBusinessUnitsRestApiConfig::RESPONSE_CODE_ENDPOINT_NOT_IMPLEMENTED)
             ->setDetail(CompanyBusinessUnitsRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED);
 
         return $this->getFactory()->getResourceBuilder()->createRestResponse()->addError($restErrorMessageTransfer);

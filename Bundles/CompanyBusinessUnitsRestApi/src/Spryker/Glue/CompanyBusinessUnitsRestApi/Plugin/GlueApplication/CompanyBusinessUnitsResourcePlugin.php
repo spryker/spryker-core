@@ -8,7 +8,6 @@
 namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
-use Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\CompanyBusinessUnitsRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
@@ -83,6 +82,6 @@ class CompanyBusinessUnitsResourcePlugin extends AbstractPlugin implements Resou
      */
     public function getParentResourceType(): string
     {
-        return CompaniesRestApiConfig::RESOURCE_COMPANIES;
+        return CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANIES;
     }
 }

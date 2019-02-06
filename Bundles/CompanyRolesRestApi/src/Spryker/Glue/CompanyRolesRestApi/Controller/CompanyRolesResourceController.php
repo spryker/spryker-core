@@ -28,6 +28,18 @@ class CompanyRolesResourceController extends AbstractController
      *          "responses": {
      *              "501": "Not implemented."
      *          }
+     *     },
+     *    "getCollection": {
+     *          "summary": [
+     *              "Retrieves company role collection."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "501": "Not implemented."
+     *          }
      *     }
      * })
      *
@@ -39,7 +51,6 @@ class CompanyRolesResourceController extends AbstractController
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setStatus(Response::HTTP_NOT_IMPLEMENTED)
-            ->setCode(CompanyRolesRestApiConfig::RESPONSE_CODE_ENDPOINT_NOT_IMPLEMENTED)
             ->setDetail(CompanyRolesRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED);
 
         return $this->getFactory()->getResourceBuilder()->createRestResponse()->addError($restErrorMessageTransfer);

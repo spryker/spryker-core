@@ -1,5 +1,6 @@
 {
   "include": {
-    "CompanyRole": "CompanyRole provides base functionality."
+    "CompanyRole": "CompanyRole provides base functionality.",
+    "UuidBehavior": "Used to generate UUIDs for entities"
   }
 }

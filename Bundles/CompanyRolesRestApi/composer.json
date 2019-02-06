@@ -5,21 +5,20 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/company-role": "^1.2.1",
-    "spryker/glue-application": "^1.9.2",
-    "spryker/glue-application-extension": "^1.1.1",
+    "spryker/company-role": "^1.0.0",
+    "spryker/glue-application": "^1.14.0",
+    "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.29.0",
-    "spryker/symfony": "^3.0.0"
+    "spryker/symfony": "^3.0.0",
+    "spryker/uuid-behavior": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/companies-rest-api": "^1.0.0",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
-    "spryker/companies-rest-api": "If you want to add support of rest api endpoints for this module.",
-    "spryker/uuid-behavior": "Used to generate UUIDs for the company roles entities."
+    "spryker/companies-rest-api": "If you want to add support of rest api endpoints for this module."
   },
   "autoload": {
     "psr-4": {

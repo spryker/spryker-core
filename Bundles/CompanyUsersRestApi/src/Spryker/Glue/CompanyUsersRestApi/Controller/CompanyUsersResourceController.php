@@ -23,7 +23,7 @@ class CompanyUsersResourceController extends AbstractController
      *              "Retrieves a company user by id."
      *          ],
      *          "responses": {
-     *              "501": "Not implemented.",
+     *              "501": "Not implemented."
      *          }
      *     },
      *     "getCollection": {
@@ -33,7 +33,7 @@ class CompanyUsersResourceController extends AbstractController
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
-     *          }],
+     *          }]
      *     }
      * })
      *
