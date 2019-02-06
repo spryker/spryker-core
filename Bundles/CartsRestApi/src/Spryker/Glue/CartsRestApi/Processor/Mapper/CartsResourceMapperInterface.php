@@ -20,6 +20,17 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 interface CartsResourceMapperInterface
 {
     /**
+     * @param string|null $uuidCart
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function createQuoteTransfer(
+        ?string $uuidCart,
+        RestRequestInterface $restRequest
+    ): QuoteTransfer;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
      *
@@ -115,15 +126,4 @@ interface CartsResourceMapperInterface
     public function mapRestRequestToRestQuoteCollectionRequestTransfer(
         RestRequestInterface $restRequest
     ): RestQuoteCollectionRequestTransfer;
-
-    /**
-     * @param string|null $uuidCart
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function createQuoteTransfer(
-        ?string $uuidCart,
-        RestRequestInterface $restRequest
-    ): QuoteTransfer;
 }

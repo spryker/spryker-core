@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
 
-use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
@@ -81,10 +80,12 @@ class CartItemAdder implements CartItemAdderInterface
             return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
         }
 
-        $restCartItemRequestTransfer = (new RestCartItemRequestTransfer())
-            ->setCartItem($this->cartItemsResourceMapper->mapItemAttributesToItemTransfer($restCartItemsAttributesTransfer))
-            ->setCartUuid($uuidQuote)
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+        $cartItem = $this->cartItemsResourceMapper->mapItemAttributesToItemTransfer($restCartItemsAttributesTransfer);
+        $restCartItemRequestTransfer = $this->cartItemsResourceMapper->createRestCartItemRequestTransfer(
+            $cartItem,
+            $uuidQuote,
+            $restRequest
+        );
 
         $quoteTransfer = $this->cartsRestApiClient->addItem($restCartItemRequestTransfer)->getQuoteTransfer();
 

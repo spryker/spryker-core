@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\GuestCartItem;
 
-use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
@@ -66,10 +65,12 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
         RestRequestInterface $restRequest,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): RestResponseInterface {
-        $restCartItemRequestTransfer = (new RestCartItemRequestTransfer())
-            ->setCartItem($this->cartItemsResourceMapper->mapItemAttributesToItemTransfer($restCartItemsAttributesTransfer))
-            ->setCartUuid($restRequest->getResource()->getId())
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+        $itemTransfer = $this->cartItemsResourceMapper->mapItemAttributesToItemTransfer($restCartItemsAttributesTransfer);
+        $restCartItemRequestTransfer = $this->cartItemsResourceMapper->createRestCartItemRequestTransfer(
+            $itemTransfer,
+            $restRequest->getResource()->getId(),
+            $restRequest
+        );
 
         $quoteResponseTransfer = $this->cartsRestApiClient->addItemToGuestCart($restCartItemRequestTransfer);
 
