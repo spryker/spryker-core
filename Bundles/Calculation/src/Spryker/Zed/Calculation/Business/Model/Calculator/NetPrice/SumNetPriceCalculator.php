@@ -11,12 +11,14 @@ use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Service\Calculation\CalculationServiceInterface;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Business\Model\Calculator\ShipmentAwareTrait;
 
 class SumNetPriceCalculator implements CalculatorInterface
 {
+    use ShipmentAwareTrait;
+
     /**
      * @var \Spryker\Service\Calculation\CalculationServiceInterface
      */
@@ -138,15 +140,5 @@ class SumNetPriceCalculator implements CalculatorInterface
 
             $expenseTransfer->setSumNetPrice($expenseTransfer->getUnitNetPrice() * $expenseTransfer->getQuantity());
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     *
-     * @return bool
-     */
-    protected function assertShipmentGroupHasNoExpense(ShipmentGroupTransfer $shipmentGroupTransfer): bool
-    {
-        return $shipmentGroupTransfer->getShipment() === null || $shipmentGroupTransfer->getShipment()->getExpense() === null;
     }
 }
