@@ -66,13 +66,23 @@ class QuoteUpdater implements QuoteUpdaterInterface
     {
         $restQuoteRequestTransfer
             ->requireQuote()
-            ->requireCustomerReference()
-            ->requireQuoteUuid();
+            ->requireCustomerReference();
+
+        $restQuoteRequestTransfer->getQuote()->requireCustomer();
+
+        if (!$restQuoteRequestTransfer->getQuoteUuid()) {
+            $quoteResponseTransfer = $this->quoteMapper->createQuoteResponseTransfer($restQuoteRequestTransfer)
+                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING));
+
+            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
+        }
 
         $quoteTransfer = $restQuoteRequestTransfer->getQuote();
-        $quoteResponseTransfer = $this->cartReader->findQuoteByUuid($quoteTransfer);
 
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
+        $quoteResponseTransfer = $this->cartReader->findQuoteByUuid($restQuoteRequestTransfer->getQuote());
+        if ($quoteResponseTransfer->getIsSuccessful() === false) {
             return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer
             );

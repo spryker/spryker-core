@@ -90,17 +90,6 @@ interface CartsResourceMapperInterface
     ): RestQuoteRequestTransfer;
 
     /**
-     * @param string|null $uuidCart
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
-     */
-    public function mapRestQuoteRequestTransferByUuid(
-        ?string $uuidCart,
-        RestRequestInterface $restRequest
-    ): RestQuoteRequestTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *

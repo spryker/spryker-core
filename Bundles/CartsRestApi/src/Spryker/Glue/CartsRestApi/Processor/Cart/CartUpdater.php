@@ -56,18 +56,13 @@ class CartUpdater implements CartUpdaterInterface
         RestRequestInterface $restRequest,
         RestCartsAttributesTransfer $restCartsAttributesTransfer
     ): RestResponseInterface {
-        $uuidQuote = $restRequest->getResource()->getId();
-        if ($uuidQuote === null) {
-            return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
-        }
-
-        $quoteTransfer = $this->cartsResourceMapper->mapRestCartsAttributesTransferToQuoteTransfer(
-            $restCartsAttributesTransfer,
-            $restRequest
+        $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote(
+            $this->cartsResourceMapper->createRestQuoteRequestTransfer(
+                $restRequest,
+                $this->cartsResourceMapper->mapRestCartsAttributesTransferToQuoteTransfer($restCartsAttributesTransfer, $restRequest)
+            )
         );
 
-        $restQuoteRequestTransfer = $this->cartsResourceMapper->createRestQuoteRequestTransfer($restRequest, $quoteTransfer);
-        $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($restQuoteRequestTransfer);
         if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
             $restQuoteRequestTransfer = $this->cartsResourceMapper->mapRestQuoteRequestTransferFromRequest($quoteResponseTransfer, $restRequest);
 
