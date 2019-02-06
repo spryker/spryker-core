@@ -18,9 +18,6 @@ class ProductAutocompleteController extends AbstractController
 {
     protected const PARAM_NAME = 'term';
     protected const KEY_RESULTS = 'results';
-    protected const KEY_ID = 'id';
-    protected const KEY_TEXT = 'text';
-    protected const TEXT_FORMAT = '%s (sku: %s)';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -36,25 +33,7 @@ class ProductAutocompleteController extends AbstractController
             ->suggestProductAbstract($suggestion);
 
         return $this->jsonResponse([
-            static::KEY_RESULTS => $this->prepareData($productAbstractSuggestions),
+            static::KEY_RESULTS => $this->getFactory()->createProductListFormatter()->prepareData($productAbstractSuggestions),
         ]);
-    }
-
-    /**
-     * @param array $suggestData
-     *
-     * @return array
-     */
-    protected function prepareData(array $suggestData): array
-    {
-        $preparedSuggestData = [];
-        foreach ($suggestData as $sku => $name) {
-            $preparedSuggestData[] = [
-                static::KEY_ID => $sku,
-                static::KEY_TEXT => sprintf(static::TEXT_FORMAT, $name, $sku),
-            ];
-        }
-
-        return $preparedSuggestData;
     }
 }
