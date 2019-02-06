@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
+use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
 use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
 
 class QuoteCreator implements QuoteCreatorInterface
@@ -30,18 +33,26 @@ class QuoteCreator implements QuoteCreatorInterface
     protected $quoteMapper;
 
     /**
+     * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface $quoteCreatorPlugin
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface $quoteMapper
+     * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         QuoteCreatorPluginInterface $quoteCreatorPlugin,
         QuoteReaderInterface $quoteReader,
-        QuoteMapperInterface $quoteMapper
+        QuoteMapperInterface $quoteMapper,
+        CartsRestApiToStoreFacadeInterface $storeFacade
     ) {
         $this->quoteCreatorPlugin = $quoteCreatorPlugin;
         $this->quoteReader = $quoteReader;
         $this->quoteMapper = $quoteMapper;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -54,6 +65,15 @@ class QuoteCreator implements QuoteCreatorInterface
         $restQuoteRequestTransfer
             ->requireQuote()
             ->requireCustomerReference();
+
+        if ($this->storeFacade->getCurrentStore()->getName() !== $restQuoteRequestTransfer->getQuote()->getStore()->getName()) {
+            $quoteResponseTransfer = $this->quoteMapper->createQuoteResponseTransfer($restQuoteRequestTransfer)
+                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_STORE_DATA_IS_INVALID));
+
+            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
+        }
 
         $quoteResponseTransfer = $this->quoteCreatorPlugin->createQuote($restQuoteRequestTransfer);
 
