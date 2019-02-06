@@ -28,6 +28,7 @@
     </transfer>
 
     <transfer name="RestUserIdentifier">
+        <property name="idUser" type="string" />
     </transfer>
 
 </transfers>
