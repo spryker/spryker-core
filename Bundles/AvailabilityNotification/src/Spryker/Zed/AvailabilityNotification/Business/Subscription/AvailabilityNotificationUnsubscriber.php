@@ -22,7 +22,7 @@ class AvailabilityNotificationUnsubscriber implements AvailabilityNotificationUn
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface
      */
-    protected $availabilityNotificationSender;
+    protected $availabilityNotificationUnsubscriptionSender;
 
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionReaderInterface
@@ -31,16 +31,16 @@ class AvailabilityNotificationUnsubscriber implements AvailabilityNotificationUn
 
     /**
      * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface $entityManager
-     * @param \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface $availabilityNotificationSender
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface $availabilityNotificationUnsubscriptionSender
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionReaderInterface $availabilityNotificationReader
      */
     public function __construct(
         AvailabilityNotificationEntityManagerInterface $entityManager,
-        AvailabilityNotificationSenderInterface $availabilityNotificationSender,
+        AvailabilityNotificationSenderInterface $availabilityNotificationUnsubscriptionSender,
         AvailabilityNotificationSubscriptionReaderInterface $availabilityNotificationReader
     ) {
         $this->entityManager = $entityManager;
-        $this->availabilityNotificationSender = $availabilityNotificationSender;
+        $this->availabilityNotificationUnsubscriptionSender = $availabilityNotificationUnsubscriptionSender;
         $this->availabilityNotificationReader = $availabilityNotificationReader;
     }
 
@@ -97,7 +97,7 @@ class AvailabilityNotificationUnsubscriber implements AvailabilityNotificationUn
     protected function unsubscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): void
     {
         $this->entityManager->deleteBySubscriptionKey($availabilityNotificationSubscriptionTransfer->getSubscriptionKey());
-        $this->availabilityNotificationSender->sendUnsubscriptionMail($availabilityNotificationSubscriptionTransfer);
+        $this->availabilityNotificationUnsubscriptionSender->send($availabilityNotificationSubscriptionTransfer);
     }
 
     /**

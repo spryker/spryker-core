@@ -102,8 +102,8 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
     public function sendAvailabilityNotificationSubscriptionNotification(AvailabilityNotificationDataTransfer $availabilityNotificationDataTransfer): void
     {
         $this->getFactory()
-            ->createAvailabilityNotificationSender()
-            ->sendProductBecomeAvailableMail($availabilityNotificationDataTransfer);
+            ->createProductBecomeAvailableNotificationSender()
+            ->send($availabilityNotificationDataTransfer);
     }
 
     /**

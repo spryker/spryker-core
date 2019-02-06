@@ -23,7 +23,7 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface
      */
-    protected $availabilityNotificationSender;
+    protected $availabilityNotificationSubscriptionSender;
 
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface
@@ -37,18 +37,18 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
 
     /**
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionSaverInterface $availabilityNotificationSubscriptionSaver
-     * @param \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface $availabilityNotificationSender
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface $availabilityNotificationSubscriptionSender
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface $utilValidateService
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionReaderInterface $availabilityNotificationSubscriptionReader
      */
     public function __construct(
         AvailabilityNotificationSubscriptionSaverInterface $availabilityNotificationSubscriptionSaver,
-        AvailabilityNotificationSenderInterface $availabilityNotificationSender,
+        AvailabilityNotificationSenderInterface $availabilityNotificationSubscriptionSender,
         AvailabilityNotificationToUtilValidateServiceInterface $utilValidateService,
         AvailabilityNotificationSubscriptionReaderInterface $availabilityNotificationSubscriptionReader
     ) {
         $this->availabilityNotificationSubscriptionSaver = $availabilityNotificationSubscriptionSaver;
-        $this->availabilityNotificationSender = $availabilityNotificationSender;
+        $this->availabilityNotificationSubscriptionSender = $availabilityNotificationSubscriptionSender;
         $this->utilValidateService = $utilValidateService;
         $this->availabilityNotificationSubscriptionReader = $availabilityNotificationSubscriptionReader;
     }
@@ -78,7 +78,7 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
 
         $availabilityNotificationSubscriptionTransfer = $this->availabilityNotificationSubscriptionSaver->save($availabilityNotificationSubscriptionTransfer);
 
-        $this->availabilityNotificationSender->sendSubscriptionMail($availabilityNotificationSubscriptionTransfer);
+        $this->availabilityNotificationSubscriptionSender->send($availabilityNotificationSubscriptionTransfer);
 
         return $this->createSubscriptionResponseTransfer(true)
             ->setAvailabilityNotificationSubscription($availabilityNotificationSubscriptionTransfer);

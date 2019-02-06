@@ -12,8 +12,13 @@ use Spryker\Zed\AvailabilityNotification\Business\Anonymizer\AvailabilityNotific
 use Spryker\Zed\AvailabilityNotification\Business\Anonymizer\AvailabilityNotificationSubscriptionAnonymizerInterface;
 use Spryker\Zed\AvailabilityNotification\Business\CustomerExpander\CustomerExpander;
 use Spryker\Zed\AvailabilityNotification\Business\CustomerExpander\CustomerExpanderInterface;
-use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSender;
 use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSubscriptionSender;
+use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationUnsubscriptionSender;
+use Spryker\Zed\AvailabilityNotification\Business\Notification\ProductBecomeAvailableNotificationSender;
+use Spryker\Zed\AvailabilityNotification\Business\Notification\ProductBecomeAvailableNotificationSenderInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Product\ProductAttributeFinder;
+use Spryker\Zed\AvailabilityNotification\Business\Product\ProductAttributeFinderInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriber;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriberInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionKeyGenerator;
@@ -48,7 +53,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     {
         return new AvailabilityNotificationSubscriber(
             $this->createAvailabilityNotificationSubscriptionSaver(),
-            $this->createAvailabilityNotificationSender(),
+            $this->createAvailabilityNotificationSubscriptionSender(),
             $this->getUtilValidateService(),
             $this->createAvailabilityNotificationReader()
         );
@@ -61,7 +66,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     {
         return new AvailabilityNotificationUnsubscriber(
             $this->getEntityManager(),
-            $this->createAvailabilityNotificationSender(),
+            $this->createAvailabilityNotificationUnsubscriptionSender(),
             $this->createAvailabilityNotificationReader()
         );
     }
@@ -100,13 +105,51 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface
      */
-    public function createAvailabilityNotificationSender(): AvailabilityNotificationSenderInterface
+    public function createAvailabilityNotificationSubscriptionSender(): AvailabilityNotificationSenderInterface
     {
-        return new AvailabilityNotificationSender(
+        return new AvailabilityNotificationSubscriptionSender(
             $this->getMailFacade(),
             $this->getProductFacade(),
             $this->createUrlGenerator(),
-            $this->getRepository()
+            $this->createProductAttributesFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface
+     */
+    public function createAvailabilityNotificationUnsubscriptionSender(): AvailabilityNotificationSenderInterface
+    {
+        return new AvailabilityNotificationUnsubscriptionSender(
+            $this->getMailFacade(),
+            $this->getProductFacade(),
+            $this->createUrlGenerator(),
+            $this->createProductAttributesFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Notification\ProductBecomeAvailableNotificationSenderInterface
+     */
+    public function createProductBecomeAvailableNotificationSender(): ProductBecomeAvailableNotificationSenderInterface
+    {
+        return new ProductBecomeAvailableNotificationSender(
+            $this->getMailFacade(),
+            $this->getProductFacade(),
+            $this->createUrlGenerator(),
+            $this->getRepository(),
+            $this->createProductAttributesFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Product\ProductAttributeFinderInterface
+     */
+    public function createProductAttributesFinder(): ProductAttributeFinderInterface
+    {
+        return new ProductAttributeFinder(
+            $this->getProductFacade(),
+            $this->createUrlGenerator()
         );
     }
 
