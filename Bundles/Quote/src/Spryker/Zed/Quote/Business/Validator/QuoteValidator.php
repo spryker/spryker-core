@@ -48,7 +48,7 @@ class QuoteValidator implements QuoteValidatorInterface
         $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
             ->setIsSuccess(true);
         $quoteValidationResponseTransfer = $this->validateStore($quoteTransfer, $quoteValidationResponseTransfer);
-        $quoteValidationResponseTransfer = $this->executeQuoteValidatiorPlugins($quoteTransfer, $quoteValidationResponseTransfer);
+        $quoteValidationResponseTransfer = $this->executeQuoteValidatorPlugins($quoteTransfer, $quoteValidationResponseTransfer);
 
         return $quoteValidationResponseTransfer;
     }
@@ -84,7 +84,7 @@ class QuoteValidator implements QuoteValidatorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    protected function executeQuoteValidatiorPlugins(
+    protected function executeQuoteValidatorPlugins(
         QuoteTransfer $quoteTransfer,
         QuoteValidationResponseTransfer $quoteValidationResponseTransfer
     ): QuoteValidationResponseTransfer {
@@ -92,7 +92,10 @@ class QuoteValidator implements QuoteValidatorInterface
             $quoteValidationResponseTransferFromPlugin = $quoteValidatorPlugin->validate($quoteTransfer);
 
             if (!$quoteValidationResponseTransferFromPlugin->getIsSuccess()) {
-                $errors = array_merge((array)$quoteValidationResponseTransfer->getErrors(), (array)$quoteValidationResponseTransferFromPlugin->getErrors());
+                $errors = array_merge(
+                    $quoteValidationResponseTransfer->getErrors()->getArrayCopy(),
+                    $quoteValidationResponseTransferFromPlugin->getErrors()->getArrayCopy()
+                );
                 $quoteValidationResponseTransfer->setErrors(new ArrayObject($errors))
                     ->setIsSuccess(false);
             }
