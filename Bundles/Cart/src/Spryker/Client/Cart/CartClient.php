@@ -298,10 +298,12 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return bool
      */
-    public function isCartEditable(): bool
+    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->getFactory()->createCartEditStatusChecker()->isCartEditable();
+        return $this->getFactory()->createQuoteEditStatusChecker()->isQuoteEditable($quoteTransfer);
     }
 }

@@ -72,53 +72,17 @@ class QuoteStorageStrategyProxyTest extends Unit
     /**
      * @return void
      */
-    public function testAddItemShouldForwardCallToSubjectAndNotAddMessageForEditableQuote(): void
+    public function testAddItemShouldForwardCallToSubject(): void
     {
-        $this->expectsErrorMessageNotAdded();
-        $this->assertCallForwaredAndMessageNotAddedForEditableQuote(
-            'addItem',
-            [new ItemTransfer()],
-            QuoteTransfer::class
-        );
+        $this->assertCallForwardedToSubject('addItem', [new ItemTransfer()], QuoteTransfer::class);
     }
 
     /**
      * @return void
      */
-    public function testAddItemShouldNotForwardCallToSubjectAndAddMessageForNotEditableQuote(): void
+    public function testAddItemsShouldForwardCallToSubject(): void
     {
-        $this->expectsErrorMessageAdded();
-        $this->assertCallNotForwaredAndMessageAddedForNotEditableQuote(
-            'addItem',
-            [new ItemTransfer()],
-            QuoteTransfer::class
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testAddItemsShouldForwardCallToSubjectAndNotAddMessageForEditableQuote(): void
-    {
-        $this->expectsErrorMessageNotAdded();
-        $this->assertCallForwaredAndMessageNotAddedForEditableQuote(
-            'addItems',
-            [[new ItemTransfer()]],
-            QuoteTransfer::class
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testAddItemsShouldNotForwardCallToSubjectAndAddMessageForNotEditableQuote(): void
-    {
-        $this->expectsErrorMessageAdded();
-        $this->assertCallNotForwaredAndMessageAddedForNotEditableQuote(
-            'addItems',
-            [[new ItemTransfer()]],
-            QuoteTransfer::class
-        );
+        $this->assertCallForwardedToSubject('addItems', [[new ItemTransfer()]], QuoteTransfer::class);
     }
 
     /**
@@ -126,186 +90,15 @@ class QuoteStorageStrategyProxyTest extends Unit
      */
     public function testAddValidItemsShouldForwardCallToSubjectAndNotAddMessageForEditableQuote(): void
     {
-        $this->expectsErrorMessageNotAdded();
-        $this->assertCallForwaredAndMessageNotAddedForEditableQuote(
-            'addValidItems',
-            [new CartChangeTransfer()],
-            QuoteTransfer::class
-        );
+        $this->assertCallForwardedToSubject('addValidItems', [new CartChangeTransfer()], QuoteTransfer::class);
     }
 
     /**
      * @return void
      */
-    public function testAddValidItemsShouldNotForwardCallToSubjectAndAddMessageForNotEditableQuote(): void
+    public function testValidateQuoteShouldForwardCallToSubject(): void
     {
-        $this->expectsErrorMessageAdded();
-        $this->assertCallNotForwaredAndMessageAddedForNotEditableQuote(
-            'addValidItems',
-            [new CartChangeTransfer()],
-            QuoteTransfer::class
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testRemoveItemShouldForwardCallToSubjectAndNotAddMessageForEditableQuote(): void
-    {
-        $this->expectsErrorMessageNotAdded();
-        $this->assertCallForwaredAndMessageNotAddedForEditableQuote(
-            'removeItem',
-            ["sku"],
-            QuoteTransfer::class
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testRemoveItemShouldNotForwardCallToSubjectAndAddMessageForNotEditableQuote(): void
-    {
-        $this->expectsErrorMessageAdded();
-        $this->assertCallNotForwaredAndMessageAddedForNotEditableQuote(
-            'removeItem',
-            ["sku"],
-            QuoteTransfer::class
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testRemoveItemsShouldForwardCallToSubjectAndNotAddMessageForEditableQuote(): void
-    {
-        $this->expectsErrorMessageNotAdded();
-        $this->assertCallForwaredAndMessageNotAddedForEditableQuote(
-            'removeItems',
-            [new ArrayObject()],
-            QuoteTransfer::class
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testRemoveItemsShouldNotForwardCallToSubjectAndAddMessageForNotEditableQuote(): void
-    {
-        $this->expectsErrorMessageAdded();
-        $this->assertCallNotForwaredAndMessageAddedForNotEditableQuote(
-            'removeItems',
-            [new ArrayObject()],
-            QuoteTransfer::class
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testChangeItemQuantityShouldForwardCallToSubjectAndNotAddMessageForEditableQuote(): void
-    {
-        $this->expectsErrorMessageNotAdded();
-        $this->assertCallForwaredAndMessageNotAddedForEditableQuote(
-            'changeItemQuantity',
-            ['sku', null, 1],
-            QuoteTransfer::class
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testChangeItemQuantityShouldNotForwardCallToSubjectAndAddMessageForNotEditableQuote(): void
-    {
-        $this->expectsErrorMessageAdded();
-        $this->assertCallNotForwaredAndMessageAddedForNotEditableQuote(
-            'changeItemQuantity',
-            ['sku', null, 1],
-            QuoteTransfer::class
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testDecreaseItemQuantityShouldForwardCallToSubjectAndNotAddMessageForEditableQuote(): void
-    {
-        $this->expectsErrorMessageNotAdded();
-        $this->assertCallForwaredAndMessageNotAddedForEditableQuote(
-            'decreaseItemQuantity',
-            ['sku', null, 1],
-            QuoteTransfer::class
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testDecreaseItemQuantityShouldNotForwardCallToSubjectAndAddMessageForNotEditableQuote(): void
-    {
-        $this->expectsErrorMessageAdded();
-        $this->assertCallNotForwaredAndMessageAddedForNotEditableQuote(
-            'decreaseItemQuantity',
-            ['sku', null, 1],
-            QuoteTransfer::class
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testIncreaseItemQuantityShouldForwardCallToSubjectAndNotAddMessageForEditableQuote(): void
-    {
-        $this->expectsErrorMessageNotAdded();
-        $this->assertCallForwaredAndMessageNotAddedForEditableQuote(
-            'increaseItemQuantity',
-            ['sku', null, 1],
-            QuoteTransfer::class
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testIncreaseItemQuantityShouldNotForwardCallToSubjectAndAddMessageForNotEditableQuote(): void
-    {
-        $this->expectsErrorMessageAdded();
-        $this->assertCallNotForwaredAndMessageAddedForNotEditableQuote(
-            'increaseItemQuantity',
-            ['sku', null, 1],
-            QuoteTransfer::class
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testReloadItemsShouldForwardCallToSubjectAndNotAddMessageForEditableQuote(): void
-    {
-        $this->expectsErrorMessageNotAdded();
-        $this->assertCallForwaredAndMessageNotAddedForEditableQuote(
-            'increaseItemQuantity',
-            ['sku', null, 1],
-            QuoteTransfer::class
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testReloadItemsShouldNotForwardCallToSubjectAndAddMessageForNotEditableQuote(): void
-    {
-        $this->expectsErrorMessageAdded();
-        $this->assertCallNotForwaredAndMessageAddedForNotEditableQuote('reloadItems', []);
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidateQuoteShouldForwardCallToSubjectAndNotAddMessageForEditableQuote(): void
-    {
-        $this->expectsErrorMessageNotAdded();
-        $this->assertCallForwaredAndMessageNotAddedForEditableQuote(
+        $this->assertCallForwardedToSubject(
             'validateQuote',
             [],
             QuoteResponseTransfer::class
@@ -315,23 +108,175 @@ class QuoteStorageStrategyProxyTest extends Unit
     /**
      * @return void
      */
-    public function testValidateQuoteShouldNotForwardCallToSubjectAndAddMessageForNotEditableQuote(): void
+    public function testRemoveItemShouldForwardCallToSubjectAndNotAddMessageForNotLockedQuote(): void
     {
+        $this->haveNotLockedQuote();
         $this->expectsErrorMessageNotAdded();
-        $this->assertCallNotForwaredAndMessageAddedForNotEditableQuote(
-            'validateQuote',
-            [],
-            QuoteResponseTransfer::class
+        $this->assertCallForwardedToSubject(
+            'removeItem',
+            ["sku"],
+            QuoteTransfer::class
         );
     }
 
     /**
      * @return void
      */
-    public function testSetQuoteCurrencyShouldForwardCallToSubjectAndNotAddMessageForEditableQuote(): void
+    public function testRemoveItemShouldNotForwardCallToSubjectAndAddMessageForLockedQuote(): void
     {
+        $this->haveLockedQuote();
+        $this->expectsErrorMessageAdded();
+        $this->assertCallNotForwardedToSubject(
+            'removeItem',
+            ["sku"],
+            QuoteTransfer::class
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveItemsShouldForwardCallToSubjectAndNotAddMessageForNotLockedQuote(): void
+    {
+        $this->haveNotLockedQuote();
         $this->expectsErrorMessageNotAdded();
-        $this->assertCallForwaredAndMessageNotAddedForEditableQuote(
+        $this->assertCallForwardedToSubject(
+            'removeItems',
+            [new ArrayObject()],
+            QuoteTransfer::class
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveItemsShouldNotForwardCallToSubjectAndAddMessageForLockedQuote(): void
+    {
+        $this->haveLockedQuote();
+        $this->expectsErrorMessageAdded();
+        $this->assertCallNotForwardedToSubject(
+            'removeItems',
+            [new ArrayObject()],
+            QuoteTransfer::class
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testChangeItemQuantityShouldForwardCallToSubjectAndNotAddMessageForNotLockedQuote(): void
+    {
+        $this->haveNotLockedQuote();
+        $this->expectsErrorMessageNotAdded();
+        $this->assertCallForwardedToSubject(
+            'changeItemQuantity',
+            ['sku', null, 1],
+            QuoteTransfer::class
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testChangeItemQuantityShouldNotForwardCallToSubjectAndAddMessageForLockedQuote(): void
+    {
+        $this->haveLockedQuote();
+        $this->expectsErrorMessageAdded();
+        $this->assertCallNotForwardedToSubject(
+            'changeItemQuantity',
+            ['sku', null, 1],
+            QuoteTransfer::class
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testDecreaseItemQuantityShouldForwardCallToSubjectAndNotAddMessageForNotLockedQuote(): void
+    {
+        $this->haveNotLockedQuote();
+        $this->expectsErrorMessageNotAdded();
+        $this->assertCallForwardedToSubject(
+            'decreaseItemQuantity',
+            ['sku', null, 1],
+            QuoteTransfer::class
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testDecreaseItemQuantityShouldNotForwardCallToSubjectAndAddMessageForLockedQuote(): void
+    {
+        $this->haveLockedQuote();
+        $this->expectsErrorMessageAdded();
+        $this->assertCallNotForwardedToSubject(
+            'decreaseItemQuantity',
+            ['sku', null, 1],
+            QuoteTransfer::class
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testIncreaseItemQuantityShouldForwardCallToSubjectAndNotAddMessageForNotLockedQuote(): void
+    {
+        $this->haveNotLockedQuote();
+        $this->expectsErrorMessageNotAdded();
+        $this->assertCallForwardedToSubject(
+            'increaseItemQuantity',
+            ['sku', null, 1],
+            QuoteTransfer::class
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testIncreaseItemQuantityShouldNotForwardCallToSubjectAndAddMessageForLockedQuote(): void
+    {
+        $this->haveLockedQuote();
+        $this->expectsErrorMessageAdded();
+        $this->assertCallNotForwardedToSubject(
+            'increaseItemQuantity',
+            ['sku', null, 1],
+            QuoteTransfer::class
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testReloadItemsShouldForwardCallToSubjectAndNotAddMessageForNotLockedQuote(): void
+    {
+        $this->haveNotLockedQuote();
+        $this->expectsErrorMessageNotAdded();
+        $this->assertCallForwardedToSubject(
+            'increaseItemQuantity',
+            ['sku', null, 1],
+            QuoteTransfer::class
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testReloadItemsShouldNotForwardCallToSubjectAndAddMessageForLockedQuote(): void
+    {
+        $this->haveLockedQuote();
+        $this->expectsErrorMessageAdded();
+        $this->assertCallNotForwardedToSubject('reloadItems', []);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetQuoteCurrencyShouldForwardCallToSubjectAndNotAddMessageForNotLockedQuote(): void
+    {
+        $this->haveNotLockedQuote();
+        $this->expectsErrorMessageNotAdded();
+        $this->assertCallForwardedToSubject(
             'setQuoteCurrency',
             [new CurrencyTransfer()],
             QuoteResponseTransfer::class
@@ -341,10 +286,11 @@ class QuoteStorageStrategyProxyTest extends Unit
     /**
      * @return void
      */
-    public function testSetQuoteCurrencyShouldNotForwardCallToSubjectAndAddMessageForNotEditableQuote(): void
+    public function testSetQuoteCurrencyShouldNotForwardCallToSubjectAndAddMessageForLockedQuote(): void
     {
+        $this->haveLockedQuote();
         $this->expectsErrorMessageAdded();
-        $this->assertCallNotForwaredAndMessageAddedForNotEditableQuote(
+        $this->assertCallNotForwardedToSubject(
             'setQuoteCurrency',
             [new CurrencyTransfer()],
             QuoteResponseTransfer::class
@@ -374,31 +320,20 @@ class QuoteStorageStrategyProxyTest extends Unit
      *
      * @return void
      */
-    protected function assertCallForwaredAndMessageNotAddedForEditableQuote(
+    protected function assertCallNotForwardedToSubject(
         string $methodName,
         $parameters,
         ?string $expectedResultType = null
     ): void {
         // Assign
         $this->quoteStorageStrategyMock->method($methodName)->willReturn(
-            $expectedResultType === null ?: (new $expectedResultType())
+            class_exists($expectedResultType) ? new $expectedResultType() : $expectedResultType
         );
 
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setIsLocked(false);
-
-        $this->quoteClientMock->method('getQuote')->willReturn($quoteTransfer);
-
         //Assert
-        $this->quoteStorageStrategyMock->expects($this->once())->method($methodName);
+        $this->quoteStorageStrategyMock->expects($this->never())->method($methodName);
 
-        //Act
-        $result = call_user_func_array([$this->quoteStorageStrategyProxy, $methodName], $parameters);
-
-        //Assert
-        if ($expectedResultType !== null) {
-            $this->assertInstanceOf($expectedResultType, $result);
-        }
+        call_user_func_array([$this->quoteStorageStrategyProxy, $methodName], $parameters);
     }
 
     /**
@@ -408,29 +343,46 @@ class QuoteStorageStrategyProxyTest extends Unit
      *
      * @return void
      */
-    protected function assertCallNotForwaredAndMessageAddedForNotEditableQuote(
+    protected function assertCallForwardedToSubject(
         string $methodName,
         $parameters,
         ?string $expectedResultType = null
     ): void {
         // Assign
+        $this->quoteStorageStrategyMock->method($methodName)->willReturn(
+            class_exists($expectedResultType) ? new $expectedResultType() : $expectedResultType
+        );
 
+        //Assert
+        $this->quoteStorageStrategyMock->expects($this->once())->method($methodName);
+
+        //Act
+        call_user_func_array([$this->quoteStorageStrategyProxy, $methodName], $parameters);
+    }
+
+    /**
+     * @return void
+     */
+    protected function haveLockedQuote(): void
+    {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setCustomer(new CustomerTransfer());
         $quoteTransfer->setIsLocked(true);
 
         $this->quoteClientMock->method('getQuote')
             ->willReturn($quoteTransfer);
+    }
 
-        //Assert
-        $this->quoteStorageStrategyMock->expects($this->never())->method($methodName);
+    /**
+     * @return void
+     */
+    protected function haveNotLockedQuote(): void
+    {
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setCustomer(new CustomerTransfer());
+        $quoteTransfer->setIsLocked(false);
 
-        //Act
-        $result = call_user_func_array([$this->quoteStorageStrategyProxy, $methodName], $parameters);
-
-        //Assert
-        if ($expectedResultType !== null) {
-            $this->assertInstanceOf($expectedResultType, $result);
-        }
+        $this->quoteClientMock->method('getQuote')
+            ->willReturn($quoteTransfer);
     }
 }

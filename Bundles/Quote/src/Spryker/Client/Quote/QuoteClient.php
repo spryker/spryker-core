@@ -70,10 +70,12 @@ class QuoteClient extends AbstractClient implements QuoteClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return bool
      */
-    public function isQuoteLocked(): bool
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->getFactory()->getStorageStrategy()->isQuoteLocked();
+        return $this->getFactory()->getStorageStrategy()->isQuoteLocked($quoteTransfer);
     }
 }

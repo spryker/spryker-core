@@ -18,9 +18,7 @@ class QuoteLocker implements QuoteLockerInterface
      */
     public function lock(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $quoteTransfer->setIsLocked(true);
-
-        return $quoteTransfer;
+        return $quoteTransfer->setIsLocked(true);
     }
 
     /**
@@ -30,8 +28,6 @@ class QuoteLocker implements QuoteLockerInterface
      */
     public function unlock(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $quoteTransfer->setIsLocked(false);
-
-        return $quoteTransfer;
+        return $quoteTransfer->setIsLocked(false);
     }
 }

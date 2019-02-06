@@ -8,8 +8,8 @@
 namespace Spryker\Client\Cart;
 
 use Spryker\Client\Cart\CartChangeRequestExpander\CartChangeRequestExpander;
-use Spryker\Client\Cart\CartEditStatus\CartEditStatusChecker;
-use Spryker\Client\Cart\CartEditStatus\CartEditStatusCheckerInterface;
+use Spryker\Client\Cart\CartEditStatus\QuoteEditStatusChecker;
+use Spryker\Client\Cart\CartEditStatus\QuoteEditStatusCheckerInterface;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProvider;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProxy;
@@ -68,11 +68,11 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Cart\CartEditStatus\CartEditStatusCheckerInterface
+     * @return \Spryker\Client\Cart\CartEditStatus\QuoteEditStatusCheckerInterface
      */
-    public function createCartEditStatusChecker(): CartEditStatusCheckerInterface
+    public function createQuoteEditStatusChecker(): QuoteEditStatusCheckerInterface
     {
-        return new CartEditStatusChecker(
+        return new QuoteEditStatusChecker(
             $this->getQuoteClient()
         );
     }

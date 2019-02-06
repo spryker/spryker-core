@@ -260,11 +260,13 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Returns true if cart is editable.
+     * - Returns true if quote is editable.
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return bool
      */
-    public function isCartEditable(): bool;
+    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool;
 }

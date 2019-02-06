@@ -286,6 +286,7 @@ class CartClientTest extends Unit
             'clearQuote',
             'getStorageStrategy',
             'reloadItems',
+            'isQuoteLocked',
         ])->getMock();
 
         $quoteMock->method('getStorageStrategy')

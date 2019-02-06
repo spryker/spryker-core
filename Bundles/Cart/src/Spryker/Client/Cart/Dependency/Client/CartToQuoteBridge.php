@@ -59,10 +59,12 @@ class CartToQuoteBridge implements CartToQuoteInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return bool
      */
-    public function isQuoteLocked(): bool
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->quoteClient->isQuoteLocked();
+        return $this->quoteClient->isQuoteLocked($quoteTransfer);
     }
 }

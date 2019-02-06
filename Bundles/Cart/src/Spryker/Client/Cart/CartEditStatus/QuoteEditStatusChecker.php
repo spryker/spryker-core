@@ -7,10 +7,11 @@
 
 namespace Spryker\Client\Cart\CartEditStatus;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
 use Spryker\Client\Kernel\PermissionAwareTrait;
 
-class CartEditStatusChecker implements CartEditStatusCheckerInterface
+class QuoteEditStatusChecker implements QuoteEditStatusCheckerInterface
 {
     use PermissionAwareTrait;
 
@@ -33,19 +34,19 @@ class CartEditStatusChecker implements CartEditStatusCheckerInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return bool
      */
-    public function isCartEditable(): bool
+    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
     {
-        return !$this->quoteClient->isQuoteLocked() && $this->hasWritePermission();
-    }
+        if ($this->quoteClient->isQuoteLocked($quoteTransfer)) {
+            return false;
+        }
 
-    /**
-     * @return bool
-     */
-    protected function hasWritePermission(): bool
-    {
-        $quoteTransfer = $this->quoteClient->getQuote();
+        if ($quoteTransfer->getIdQuote() === null) {
+            return true;
+        }
 
         return $this->can(static::PERMISSION_WRITE_SHARED_CART, $quoteTransfer->getIdQuote());
     }

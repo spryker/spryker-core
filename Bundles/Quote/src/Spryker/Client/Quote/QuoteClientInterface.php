@@ -60,7 +60,9 @@ interface QuoteClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return bool
      */
-    public function isQuoteLocked(): bool;
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool;
 }

@@ -80,12 +80,13 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return bool
      */
-    public function isQuoteLocked(): bool
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
     {
-        return (bool)$this->quoteSession->getQuote()
-            ->getIsLocked();
+        return (bool)$quoteTransfer->getIsLocked();
     }
 
     /**

@@ -7,10 +7,14 @@
 
 namespace Spryker\Client\Cart\CartEditStatus;
 
-interface CartEditStatusCheckerInterface
+use Generated\Shared\Transfer\QuoteTransfer;
+
+interface QuoteEditStatusCheckerInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return bool
      */
-    public function isCartEditable(): bool;
+    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool;
 }
