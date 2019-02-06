@@ -73,7 +73,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantStatusValidator(
             $this->getRepository(),
-            $this->getConfig()
+            $this->createMerchantStatusReader()
         );
     }
 
