@@ -337,7 +337,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
         $quoteResponseTransfer = new QuoteResponseTransfer();
         $quoteResponseTransfer->setIsSuccessful(false);
         $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        if (count($this->getFactory()->getZedRequestClient()->getLastResponseErrorMessages()) === 0) {
+        if (count($this->getFactory()->getZedRequestClient()->getResponsesErrorMessages()) === 0) {
             $quoteResponseTransfer->setIsSuccessful(true);
             $this->getQuoteClient()->setQuote($quoteTransfer);
         }
