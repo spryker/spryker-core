@@ -24,9 +24,9 @@ interface ProductConcretePageSearchPublisherInterface
     public function unpublish(array $productIds): void;
 
     /**
-     * @param int[] $abstractProductIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function publishProductConcretePageSearchesByProductAbstractIds(array $abstractProductIds): void;
+    public function publishProductConcretePageSearchesByProductAbstractIds(array $productAbstractIds): void;
 }

@@ -97,13 +97,13 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     }
 
     /**
-     * @param int[] $abstractProductIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function publishProductConcretePageSearchesByProductAbstractIds(array $abstractProductIds): void
+    public function publishProductConcretePageSearchesByProductAbstractIds(array $productAbstractIds): void
     {
-        $productConcreteTransfers = $this->productFacade->getProductConcreteTransfersByProductAbstractIds($abstractProductIds);
+        $productConcreteTransfers = $this->productFacade->getProductConcreteTransfersByProductAbstractIds($productAbstractIds);
         $productIds = $this->getProductIdsListFromProductConcreteTransfers($productConcreteTransfers);
         $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale($productIds);
 

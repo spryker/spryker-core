@@ -858,9 +858,9 @@ interface ProductFacadeInterface
      *
      * @api
      *
-     * @param int[] $abstractProductIds
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getProductConcreteTransfersByProductAbstractIds(array $abstractProductIds): array;
+    public function getProductConcreteTransfersByProductAbstractIds(array $productAbstractIds): array;
 }

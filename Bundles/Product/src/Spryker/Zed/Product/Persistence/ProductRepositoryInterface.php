@@ -73,9 +73,9 @@ interface ProductRepositoryInterface
     public function getProductConcreteTransfersByProductIds(array $productIds): array;
 
     /**
-     * @param int[] $abstractProductIds
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getProductConcreteTransfersByProductAbstractIds(array $abstractProductIds): array;
+    public function getProductConcreteTransfersByProductAbstractIds(array $productAbstractIds): array;
 }
