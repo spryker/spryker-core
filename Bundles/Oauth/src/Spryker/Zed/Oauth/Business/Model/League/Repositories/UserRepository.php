@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oauth\Business\Model\League\Repositories;
 
 use Generated\Shared\Transfer\OauthUserTransfer;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
+use League\OAuth2\Server\Entities\UserEntityInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Entities\UserEntity;
 
 class UserRepository implements UserRepositoryInterface
@@ -31,13 +32,13 @@ class UserRepository implements UserRepositoryInterface
      * @param string $grantType The grant type used
      * @param \League\OAuth2\Server\Entities\ClientEntityInterface $clientEntity
      *
-     * @return \League\OAuth2\Server\Entities\UserEntityInterface
+     * @return \League\OAuth2\Server\Entities\UserEntityInterface|null
      */
     public function getUserEntityByRequest(
         array $request,
         string $grantType,
         ClientEntityInterface $clientEntity
-    ) {
+    ): ?UserEntityInterface {
 
         $oauthUserTransfer = new OauthUserTransfer();
         $oauthUserTransfer->fromArray($request, true);

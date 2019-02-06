@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyUserAuthRestApi\Processor\AccessTokens;
+namespace Spryker\Glue\CompanyUserAuthRestApi\Processor\AccessToken;
 
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAccessTokensAttributesTransfer;
@@ -18,7 +18,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class AccessTokensReader implements AccessTokensReaderInterface
+class AccessTokenReader implements AccessTokenReaderInterface
 {
     /**
      * @var \Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthClientInterface

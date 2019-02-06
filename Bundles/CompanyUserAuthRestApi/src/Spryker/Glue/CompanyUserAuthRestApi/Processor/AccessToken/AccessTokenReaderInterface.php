@@ -4,13 +4,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyUserAuthRestApi\Processor\AccessTokens;
+namespace Spryker\Glue\CompanyUserAuthRestApi\Processor\AccessToken;
 
 use Generated\Shared\Transfer\RestCompanyUserAccessTokensAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface AccessTokensReaderInterface
+interface AccessTokenReaderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest

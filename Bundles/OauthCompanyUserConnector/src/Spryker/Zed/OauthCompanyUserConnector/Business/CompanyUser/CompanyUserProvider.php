@@ -73,28 +73,4 @@ class CompanyUserProvider implements CompanyUserProviderInterface
 
         return $oauthUserTransfer;
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     * @param string $customerReference
-     *
-     * @return bool
-     */
-    protected function isCompanyUserAuthorized(CompanyUserTransfer $companyUserTransfer, string $customerReference): bool
-    {
-        return $companyUserTransfer !== null
-            && $companyUserTransfer->getCustomer()->getCustomerReference() === $customerReference;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return bool
-     */
-    protected function isCompanyUserActive(CompanyUserTransfer $companyUserTransfer): bool
-    {
-        return $companyUserTransfer->getIsActive()
-            && $companyUserTransfer->getCompany()->getIsActive()
-            && $companyUserTransfer->getCompany()->getStatus() === static::COMPANY_STATUS_APPROVED;
-    }
 }

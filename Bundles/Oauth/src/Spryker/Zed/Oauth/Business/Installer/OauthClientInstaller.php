@@ -55,7 +55,7 @@ class OauthClientInstaller implements OauthClientInstallerInterface
                 $oauthClientTransfer = new OauthClientTransfer();
                 $oauthClientTransfer->setIdentifier($idClient);
 
-                if (!$this->isExistOauthClient($oauthClientTransfer)) {
+                if (!$this->hasOauthClient($oauthClientTransfer)) {
                     $oauthClientTransfer->setSecret(
                         password_hash($clientSecret, PASSWORD_BCRYPT)
                     );
@@ -73,7 +73,7 @@ class OauthClientInstaller implements OauthClientInstallerInterface
      *
      * @return bool
      */
-    protected function isExistOauthClient(OauthClientTransfer $oauthClientTransfer): bool
+    protected function hasOauthClient(OauthClientTransfer $oauthClientTransfer): bool
     {
         return $this->oauthClientReader->findClientByIdentifier($oauthClientTransfer) !== null;
     }

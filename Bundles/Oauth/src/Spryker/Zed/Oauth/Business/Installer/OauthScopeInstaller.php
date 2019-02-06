@@ -54,7 +54,7 @@ class OauthScopeInstaller implements OauthScopeInstallerInterface
         $oauthScopesTransfers = $this->getScopesByIdentifiers($scopes);
 
         foreach ($scopes as $scope) {
-            if (!$this->isExistOauthScope($scope, $oauthScopesTransfers)) {
+            if (!$this->hasOauthScope($scope, $oauthScopesTransfers)) {
                 $oauthScopeTransfer = (new OauthScopeTransfer())
                     ->setIdentifier($scope);
 
@@ -87,22 +87,12 @@ class OauthScopeInstaller implements OauthScopeInstallerInterface
      *
      * @return bool
      */
-    protected function isExistOauthScope(string $oauthScopeIdentifier, array $oauthScopeTransfers): bool
+    protected function hasOauthScope(string $oauthScopeIdentifier, array $oauthScopeTransfers): bool
     {
         if (isset($oauthScopeTransfers[$oauthScopeIdentifier])) {
             return true;
         }
 
         return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
-     *
-     * @return bool
-     */
-    protected function isExistOauthClient(OauthClientTransfer $oauthClientTransfer): bool
-    {
-        return $this->oauthFacade->findClientByIdentifier($oauthClientTransfer) !== null;
     }
 }

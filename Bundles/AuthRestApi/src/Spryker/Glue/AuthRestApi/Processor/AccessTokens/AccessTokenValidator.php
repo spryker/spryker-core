@@ -30,7 +30,7 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
 
     /**
      * @param \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface $oauthClient
-     * @param array $restUserIdentifierExpanderPlugins
+     * @param \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserIdentifierExpanderPluginInterface[] $restUserIdentifierExpanderPlugins
      */
     public function __construct(
         AuthRestApiToOauthClientInterface $oauthClient,

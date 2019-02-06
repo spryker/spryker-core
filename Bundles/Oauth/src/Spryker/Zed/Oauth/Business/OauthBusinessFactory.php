@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oauth\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Oauth\Business\Installer\OauthClientInstaller;
+use Spryker\Zed\Oauth\Business\Installer\OauthClientInstallerInterface;
 use Spryker\Zed\Oauth\Business\Installer\OauthScopeInstaller;
 use Spryker\Zed\Oauth\Business\Installer\OauthScopeInstallerInterface;
 use Spryker\Zed\Oauth\Business\Model\League\AccessGrantExecutor;
@@ -195,7 +196,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oauth\Business\Installer\OauthClientInstallerInterface
      */
-    public function createOauthClientInstaller()
+    public function createOauthClientInstaller(): OauthClientInstallerInterface
     {
         return new OauthClientInstaller(
             $this->createOauthClientReader(),

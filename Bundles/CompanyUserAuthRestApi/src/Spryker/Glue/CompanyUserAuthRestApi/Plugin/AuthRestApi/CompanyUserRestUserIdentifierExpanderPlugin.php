@@ -19,7 +19,7 @@ class CompanyUserRestUserIdentifierExpanderPlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritdoc}
-     * - Expand rest user identifier with company user data.
+     * - Expands rest user identifier with company user data.
      *
      * @api
      *

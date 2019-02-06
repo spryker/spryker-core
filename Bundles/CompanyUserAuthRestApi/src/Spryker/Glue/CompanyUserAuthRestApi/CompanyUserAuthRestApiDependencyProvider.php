@@ -27,6 +27,8 @@ class CompanyUserAuthRestApiDependencyProvider extends AbstractBundleDependencyP
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
+
         $container = $this->addOauthClient($container);
         $container = $this->addCompanyUserStorageClient($container);
 

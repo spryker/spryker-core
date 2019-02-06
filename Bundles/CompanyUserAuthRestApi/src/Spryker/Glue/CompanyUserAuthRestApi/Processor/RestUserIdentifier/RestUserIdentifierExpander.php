@@ -43,7 +43,7 @@ class RestUserIdentifierExpander implements RestUserIdentifierExpanderInterface
             ->findCompanyUserByMapping('uuid', $uuidCompanyUser);
 
         if ($companyUserStorageTransfer !== null) {
-            $restUserIdentifierTransfer->fromArray($companyUserStorageTransfer->toArray(true), true);
+            $restUserIdentifierTransfer->fromArray($companyUserStorageTransfer->toArray(), true);
             $restUserIdentifierTransfer->setUuidCompanyUser($uuidCompanyUser);
         }
 

@@ -10,7 +10,7 @@ namespace Spryker\Shared\OauthCompanyUserConnector;
 /**
  * Declares global environment configuration keys. Do not use it for other class constants.
  */
-class OauthCompanyUserConnectorConstants
+interface OauthCompanyUserConnectorConstants
 {
     /**
      * Specification:
@@ -18,7 +18,7 @@ class OauthCompanyUserConnectorConstants
      *
      * @api
      */
-    public const OAUTH_CLIENT_IDENTIFIER = 'OAUTH_CLIENT_IDENTIFIER';
+    public const OAUTH_CLIENT_IDENTIFIER = 'OAUTH_COMPANY_USER_CONNECTOR:OAUTH_CLIENT_IDENTIFIER';
 
     /**
      * Specification:
@@ -26,5 +26,5 @@ class OauthCompanyUserConnectorConstants
      *
      * @api
      */
-    public const OAUTH_CLIENT_SECRET = 'OAUTH_CLIENT_SECRET';
+    public const OAUTH_CLIENT_SECRET = 'OAUTH_COMPANY_USER_CONNECTOR:OAUTH_CLIENT_SECRET';
 }

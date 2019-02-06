@@ -18,16 +18,16 @@ class CompanyUserAuthRestApiConfig extends AbstractBundleConfig
      */
     public function getClientSecret(): string
     {
-        return $this->get(AuthRestApiConstants::OAUTH_CLIENT_SECRET);
+        return $this->get(CompanyUserAuthRestApiConstants::OAUTH_CLIENT_SECRET);
     }
 
     /**
-     * The client id as is store in spy_oauth_client database table
+     * The identifier of Oauth client.
      *
      * @return string
      */
     public function getClientId(): string
     {
-        return $this->get(AuthRestApiConstants::OAUTH_CLIENT_IDENTIFIER);
+        return $this->get(CompanyUserAuthRestApiConstants::OAUTH_CLIENT_IDENTIFIER);
     }
 }

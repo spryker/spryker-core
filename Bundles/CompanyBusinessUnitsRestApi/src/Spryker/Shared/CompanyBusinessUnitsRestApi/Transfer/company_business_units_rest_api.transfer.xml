@@ -12,7 +12,7 @@
     </transfer>
 
     <transfer name="Customer">
-        <property name="companyUserTransfer" type="CompanyUser"/>CompanyUser
+        <property name="companyUserTransfer" type="CompanyUser"/>
     </transfer>
 
     <transfer name="RestUserIdentifier">

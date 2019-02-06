@@ -14,7 +14,7 @@ interface CustomerSessionExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expand customer transfer for session with additional data.
+     * - Expands customer transfer for session with additional data.
      *
      * @api
      *

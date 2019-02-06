@@ -14,7 +14,7 @@ interface RestUserIdentifierExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expand rest user identifier with additional data.
+     * - Expands rest user identifier with additional data.
      *
      * @api
      *

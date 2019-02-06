@@ -29,7 +29,7 @@ class CustomerOauthScopeProviderPlugin extends AbstractPlugin implements OauthSc
      */
     public function accept(OauthScopeRequestTransfer $oauthScopeRequestTransfer): bool
     {
-        if ($oauthScopeRequestTransfer->getGrantType() != OauthCustomerConnectorConfig::GRANT_TYPE_PASSWORD) {
+        if ($oauthScopeRequestTransfer->getGrantType() !== OauthCustomerConnectorConfig::GRANT_TYPE_PASSWORD) {
             return false;
         }
 

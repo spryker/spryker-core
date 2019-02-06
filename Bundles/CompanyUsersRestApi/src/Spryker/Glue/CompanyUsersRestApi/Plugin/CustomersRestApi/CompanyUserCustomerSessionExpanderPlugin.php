@@ -19,7 +19,7 @@ class CompanyUserCustomerSessionExpanderPlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritdoc}
-     * - Expand customer transfer for session with company user transfer.
+     * - Expands customer transfer for session with company user transfer.
      *
      * @api
      *

@@ -29,7 +29,7 @@ class CompanyUserOauthUserProviderPlugin extends AbstractPlugin implements Oauth
      */
     public function accept(OauthUserTransfer $oauthUserTransfer): bool
     {
-        if ($oauthUserTransfer->getGrantType() != OauthCompanyUserConnectorConfig::GRANT_TYPE_USER) {
+        if ($oauthUserTransfer->getGrantType() !== OauthCompanyUserConnectorConfig::GRANT_TYPE_USER) {
             return false;
         }
 

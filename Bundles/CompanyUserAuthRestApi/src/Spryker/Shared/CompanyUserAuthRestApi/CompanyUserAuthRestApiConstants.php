@@ -10,7 +10,7 @@ namespace Spryker\Shared\CompanyUserAuthRestApi;
 /**
  * Declares global environment configuration keys. Do not use it for other class constants.
  */
-interface AuthRestApiConstants
+interface CompanyUserAuthRestApiConstants
 {
     /**
      * Specification:
@@ -18,7 +18,7 @@ interface AuthRestApiConstants
      *
      * @api
      *
-     * @see \Spryker\Shared\OauthCustomerConnector\OauthCustomerConnectorConstants::OAUTH_CLIENT_IDENTIFIER
+     * @uses \Spryker\Shared\OauthCustomerConnector\OauthCustomerConnectorConstants::OAUTH_CLIENT_IDENTIFIER
      */
     public const OAUTH_CLIENT_IDENTIFIER = 'OAUTH_CLIENT_IDENTIFIER';
 
@@ -28,7 +28,7 @@ interface AuthRestApiConstants
      *
      * @api
      *
-     * @see \Spryker\Shared\OauthCustomerConnector\OauthCustomerConnectorConstants::OAUTH_CLIENT_SECRET
+     * @uses \Spryker\Shared\OauthCustomerConnector\OauthCustomerConnectorConstants::OAUTH_CLIENT_SECRET
      */
     public const OAUTH_CLIENT_SECRET = 'OAUTH_CLIENT_SECRET';
 }
