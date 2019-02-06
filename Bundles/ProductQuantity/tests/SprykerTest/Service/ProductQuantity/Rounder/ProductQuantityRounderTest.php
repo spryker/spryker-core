@@ -26,7 +26,7 @@ class ProductQuantityRounderTest extends Unit
     /**
      * @return void
      */
-    public function testGetNearestQuantity(): void
+    public function testGetNearestQuantityShouldReturnRoundedQuantity(): void
     {
         $productQuantityRounder = new ProductQuantityRounder();
 

@@ -11,6 +11,7 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageClientBridge;
 use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToProductQuantityServiceBridge;
+use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToProductQuantityServiceInterface;
 use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceBridge;
 
 class ProductQuantityStorageDependencyProvider extends AbstractDependencyProvider
@@ -68,7 +69,7 @@ class ProductQuantityStorageDependencyProvider extends AbstractDependencyProvide
      */
     protected function addProductQuantityService(Container $container): Container
     {
-        $container[static::SERVICE_PRODUCT_QUANTITY] = function (Container $container) {
+        $container[static::SERVICE_PRODUCT_QUANTITY] = function (Container $container): ProductQuantityStorageToProductQuantityServiceInterface {
             return new ProductQuantityStorageToProductQuantityServiceBridge($container->getLocator()->productQuantity()->service());
         };
 
