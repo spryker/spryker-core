@@ -5,7 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
 var availableCustomerTable = require('./available-customer-table');
 var assignedCustomerTable = require('./assigned-customer-table');
 

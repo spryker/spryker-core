@@ -52,12 +52,11 @@ class RelatedProductReader implements RelatedProductReaderInterface
      */
     public function findRelatedProducts($idProductAbstract, $localeName)
     {
-        $relationIds = $this->getRelationIds($idProductAbstract);
-        $productAbstractIds = $this->getSortedProductAbstractIds($relationIds);
+        $relatedProductAbstractIds = $this->findRelatedAbstractProductIds($idProductAbstract);
 
         $relatedProducts = [];
-        foreach ($productAbstractIds as $idProductAbstract) {
-            $productStorageData = $this->productStorageClient->getProductAbstractStorageData($idProductAbstract, $localeName);
+        foreach ($relatedProductAbstractIds as $idRelatedProductAbstract) {
+            $productStorageData = $this->productStorageClient->getProductAbstractStorageData($idRelatedProductAbstract, $localeName);
 
             if ($productStorageData !== null) {
                 $relatedProducts[] = $this->createProductView($localeName, $productStorageData);
@@ -65,6 +64,18 @@ class RelatedProductReader implements RelatedProductReaderInterface
         }
 
         return $relatedProducts;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findRelatedAbstractProductIds(int $idProductAbstract): array
+    {
+        $relationIds = $this->getRelationIds($idProductAbstract);
+
+        return $this->getSortedProductAbstractIds($relationIds);
     }
 
     /**
