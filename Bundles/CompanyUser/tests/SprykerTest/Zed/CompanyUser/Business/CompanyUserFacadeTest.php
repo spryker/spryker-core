@@ -14,7 +14,6 @@ use Generated\Shared\DataBuilder\CompanyUserBuilder;
 use Generated\Shared\DataBuilder\CompanyUserCriteriaFilterBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\CompanyTransfer;
-use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use TypeError;
@@ -237,19 +236,13 @@ class CompanyUserFacadeTest extends Test
     public function testGetActiveCompanyUsersByCustomerReferenceShouldReturnTransfer(): void
     {
         // Assign
-        $companyTransfer = $this->tester->haveCompany([CompanyUserTransfer::IS_ACTIVE => true]);
-        $customerTransfer = $this->tester->haveCustomer();
-        $this->tester->haveCompanyUser([
-            static::CUSTOMER_COLUMN_COMPANY_USER => $customerTransfer,
-            static::FK_COMPANY_COLUMN_COMPANY_USER => $companyTransfer->getIdCompany(),
-            static::IS_ACTIVE_COLUMN_COMPANY_USER => true,
-        ]);
+        $companyUserTransfer = $this->getCompanyUserTransferWithActiveCompany(true);
 
         // Act
-        $companyUserCollectionTransfer = $this->getFacade()->getActiveCompanyUsersByCustomerReference($customerTransfer);
+        $companyUserCollectionTransfer = $this->getFacade()
+            ->getActiveCompanyUsersByCustomerReference($companyUserTransfer->getCustomer());
 
         // Assert
-        $this->assertInstanceOf(CompanyUserCollectionTransfer::class, $companyUserCollectionTransfer);
         $this->assertCount(1, $companyUserCollectionTransfer->getCompanyUsers());
     }
 
