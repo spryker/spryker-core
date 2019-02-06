@@ -37,14 +37,10 @@ class UrlGenerator implements UrlGeneratorInterface
     {
         $yvesBaseUrl = $this->config->getBaseUrlYves();
 
-        if ($yvesBaseUrl === null) {
-            return '';
-        }
-
         $localeName = $availabilityNotificationSubscriptionTransfer->getLocale()->getLocaleName();
         $locale = $this->getLanguageFromLocale($localeName);
 
-        return $yvesBaseUrl . $locale . $this->config->getUnsubscribeRoute() . $availabilityNotificationSubscriptionTransfer->getSubscriptionKey();
+        return $yvesBaseUrl . sprintf($this->config->getUnsubscribeUri(), $locale, $availabilityNotificationSubscriptionTransfer->getSubscriptionKey());
     }
 
     /**
@@ -55,10 +51,6 @@ class UrlGenerator implements UrlGeneratorInterface
     public function generateProductUrl(LocalizedUrlTransfer $localizedUrlTransfer): string
     {
         $yvesBaseUrl = $this->config->getBaseUrlYves();
-
-        if ($yvesBaseUrl === null) {
-            return '';
-        }
 
         return $yvesBaseUrl . $localizedUrlTransfer->getUrl();
     }
@@ -76,6 +68,6 @@ class UrlGenerator implements UrlGeneratorInterface
             return '';
         }
 
-        return '/' . current($splitLocale);
+        return current($splitLocale);
     }
 }
