@@ -152,4 +152,19 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
             ->createCategoryReader()
             ->getCategoryTransferCollectionByIdProductAbstract($idProductAbstract, $localeTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $categoryIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByCategoryIds(array $categoryIds): array
+    {
+        return $this->getRepository()
+            ->getProductConcreteIdsByCategoryIds($categoryIds);
+    }
 }

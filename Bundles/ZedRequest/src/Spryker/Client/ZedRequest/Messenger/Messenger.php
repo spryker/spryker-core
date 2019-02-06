@@ -30,7 +30,6 @@ class Messenger implements MessengerInterface
         AbstractZedClientInterface $zedClient,
         ZedRequestToMessengerClientInterface $messengerClient
     ) {
-
         $this->zedClient = $zedClient;
         $this->messengerClient = $messengerClient;
     }
@@ -109,5 +108,69 @@ class Messenger implements MessengerInterface
         foreach ($this->getLastResponseInfoMessages() as $infoMessage) {
             $this->messengerClient->addInfoMessage($infoMessage->getValue());
         }
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesInfoMessages(): array
+    {
+        return $this->zedClient->getInfoStatusMessages();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesErrorMessages(): array
+    {
+        return $this->zedClient->getErrorStatusMessages();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesSuccessMessages(): array
+    {
+        return $this->zedClient->getSuccessStatusMessages();
+    }
+
+   /**
+    * @return void
+    */
+    protected function pushResponseErrorMessagesToMessenger(): void
+    {
+        foreach ($this->getResponsesErrorMessages() as $errorMessage) {
+            $this->messengerClient->addErrorMessage($errorMessage->getValue());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function pushResponseSuccessMessagesToMessenger(): void
+    {
+        foreach ($this->getResponsesSuccessMessages() as $successMessage) {
+            $this->messengerClient->addSuccessMessage($successMessage->getValue());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function pushResponseInfoMessagesToMessenger(): void
+    {
+        foreach ($this->getResponsesInfoMessages() as $infoMessage) {
+            $this->messengerClient->addInfoMessage($infoMessage->getValue());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function addResponseMessagesToMessenger(): void
+    {
+        $this->pushResponseErrorMessagesToMessenger();
+        $this->pushResponseSuccessMessagesToMessenger();
+        $this->pushResponseInfoMessagesToMessenger();
     }
 }

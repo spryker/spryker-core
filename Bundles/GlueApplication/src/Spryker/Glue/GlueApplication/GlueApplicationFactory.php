@@ -94,6 +94,7 @@ class GlueApplicationFactory extends AbstractFactory
         return new RequestFormatter(
             $this->createRestRequestMetaDataExtractor(),
             $this->createRestRequestResourceExtractor(),
+            $this->getConfig(),
             $this->getFormatRequestPlugins()
         );
     }
