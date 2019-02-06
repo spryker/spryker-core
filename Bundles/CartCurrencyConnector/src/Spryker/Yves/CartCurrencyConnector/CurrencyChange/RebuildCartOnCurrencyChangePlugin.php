@@ -11,7 +11,7 @@ use Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
- * @deprecated use \Spryker\Client\CartCurrencyConnector\CurrencyChange\CartUpdateCurrencyOnCurrencyChangePlugin instead
+ * @deprecated Use \Spryker\Client\CartCurrencyConnector\CurrencyChange\CartUpdateCurrencyOnCurrencyChangePlugin instead.
  *
  * @method \Spryker\Yves\CartCurrencyConnector\CartCurrencyConnectorFactory getFactory()
  */
@@ -35,7 +35,7 @@ class RebuildCartOnCurrencyChangePlugin extends AbstractPlugin implements Curren
             $cartClient->reloadItems();
 
             $zedRequestClient = $this->getFactory()->getZedRequestClient();
-            if (count($zedRequestClient->getLastResponseErrorMessages()) > 0) {
+            if (count($zedRequestClient->getResponsesErrorMessages()) > 0) {
                 return false;
             }
         }

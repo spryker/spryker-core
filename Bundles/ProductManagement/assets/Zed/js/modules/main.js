@@ -5,7 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
 require('../../sass/main.scss');
 
 $(document).ready(function() {
