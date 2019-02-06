@@ -22,6 +22,8 @@ class CartChangeTransferQuantityNormalizerPlugin extends AbstractPlugin implemen
 
     /**
      * {@inheritdoc}
+     * - Returns true if there is at least 1 ItemTransfer with a normalizable quantity field.
+     * - Returns false otherwise.
      *
      * @api
      *
