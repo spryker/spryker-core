@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cms\Business\Extractor;
 
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
+use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 interface DataExtractorInterface
@@ -17,7 +18,7 @@ interface DataExtractorInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
-    public function extractCmsVersionDataTransfer($data);
+    public function extractCmsVersionDataTransfer(string $data): CmsVersionDataTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $cmsVersionDataTransfer
@@ -25,5 +26,5 @@ interface DataExtractorInterface
      *
      * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */
-    public function extractLocaleCmsPageDataTransfer(CmsVersionDataTransfer $cmsVersionDataTransfer, LocaleTransfer $localeTransfer);
+    public function extractLocaleCmsPageDataTransfer(CmsVersionDataTransfer $cmsVersionDataTransfer, LocaleTransfer $localeTransfer): LocaleCmsPageDataTransfer;
 }

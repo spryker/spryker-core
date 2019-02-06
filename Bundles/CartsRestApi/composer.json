@@ -17,7 +17,7 @@
     "spryker/session": "^4.0.0",
     "spryker/store": "^1.9.1",
     "spryker/symfony": "^3.0.0",
-    "spryker/zed-request": "^3.4.0"
+    "spryker/zed-request": "^3.6.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

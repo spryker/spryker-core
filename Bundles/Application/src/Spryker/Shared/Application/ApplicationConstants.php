@@ -25,7 +25,7 @@ interface ApplicationConstants
     public const BACKTRACE_USER_PATH = 'BACKTRACE_USER_PATH';
 
     /**
-     * @deprecated Use `TwigConstants::YVES_THEME` instead
+     * @deprecated Use `TwigConstants::YVES_THEME` instead.
      */
     public const YVES_THEME = 'YVES_THEME';
 
@@ -81,47 +81,47 @@ interface ApplicationConstants
     public const YVES_AUTH_SETTINGS = 'YVES_AUTH_SETTINGS';
 
     /**
-     * @deprecated Use `Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACES` instead
+     * @deprecated Use `Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACES` instead.
      */
     public const PROJECT_NAMESPACES = KernelConstants::PROJECT_NAMESPACES;
 
     /**
-     * @deprecated Use `Spryker\Shared\Kernel\KernelConstants::CORE_NAMESPACES` instead
+     * @deprecated Use `Spryker\Shared\Kernel\KernelConstants::CORE_NAMESPACES` instead.
      */
     public const CORE_NAMESPACES = KernelConstants::CORE_NAMESPACES;
 
     /**
-     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__HOST` instead
+     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__HOST` instead.
      */
     public const ELASTICA_PARAMETER__HOST = 'ELASTICA_PARAMETER__HOST';
 
     /**
-     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__PORT` instead
+     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__PORT` instead.
      */
     public const ELASTICA_PARAMETER__PORT = 'ELASTICA_PARAMETER__PORT';
 
     /**
-     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__TRANSPORT` instead
+     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__TRANSPORT` instead.
      */
     public const ELASTICA_PARAMETER__TRANSPORT = 'ELASTICA_PARAMETER__TRANSPORT';
 
     /**
-     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__INDEX_NAME` instead
+     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__INDEX_NAME` instead.
      */
     public const ELASTICA_PARAMETER__INDEX_NAME = 'ELASTICA_PARAMETER__INDEX_NAME';
 
     /**
-     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER` instead
+     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER` instead.
      */
     public const ELASTICA_PARAMETER__AUTH_HEADER = 'ELASTICA_PARAMETER__AUTH_HEADER';
 
     /**
-     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE` instead
+     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE` instead.
      */
     public const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'ELASTICA_PARAMETER__DOCUMENT_TYPE';
 
     /**
-     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__EXTRA` instead
+     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__EXTRA` instead.
      */
     public const ELASTICA_PARAMETER__EXTRA = 'ELASTICA_PARAMETER__EXTRA';
 
@@ -177,7 +177,7 @@ interface ApplicationConstants
     /**
      * RabbitMQ
      *
-     * @deprecated use RabbitMQ module constants instead
+     * @deprecated Use RabbitMQ module constants instead.
      */
     /** @deprecated Use queue-adapter specific configuration constants */
     public const ZED_RABBITMQ_USERNAME = 'ZED_RABBITMQ_USERNAME';
@@ -196,26 +196,26 @@ interface ApplicationConstants
     public const PROJECT_TIMEZONE = 'PROJECT_TIMEZONE';
 
     /**
-     * @deprecated Use `Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACE` instead
+     * @deprecated Use `Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACE` instead.
      */
     public const PROJECT_NAMESPACE = KernelConstants::PROJECT_NAMESPACE;
 
     /**
      * Cloud
      */
-    /** @deprecated Unused, will be removed with next major release */
+    /** @deprecated Unused, will be removed with next major release. */
     public const CLOUD_ENABLED = 'CLOUD_ENABLED';
-    /** @deprecated Unused, will be removed with next major release */
+    /** @deprecated Unused, will be removed with next major release. */
     public const CLOUD_OBJECT_STORAGE_ENABLED = 'CLOUD_OBJECT_STORAGE_ENABLED';
     /** @deprecated Unused, will be removed with next major release */
     public const CLOUD_CDN_ENABLED = 'CLOUD_CDN_ENABLED';
-    /** @deprecated Unused, will be removed with next major release */
+    /** @deprecated Unused, will be removed with next major release. */
     public const CLOUD_CDN_STATIC_MEDIA_PREFIX = 'CLOUD_CDN_STATIC_MEDIA_PREFIX';
-    /** @deprecated Unused, will be removed with next major release */
+    /** @deprecated Unused, will be removed with next major release. */
     public const CLOUD_CDN_STATIC_MEDIA_HTTP = 'CLOUD_CDN_STATIC_MEDIA_HTTP';
-    /** @deprecated Unused, will be removed with next major release */
+    /** @deprecated Unused, will be removed with next major release. */
     public const CLOUD_CDN_STATIC_MEDIA_HTTPS = 'CLOUD_CDN_STATIC_MEDIA_HTTPS';
-    /** @deprecated Unused, will be removed with next major release */
+    /** @deprecated Unused, will be removed with next major release. */
     public const CLOUD_CDN_PRODUCT_IMAGES_PATH_NAME = 'CLOUD_CDN_PRODUCT_IMAGES';
 
     /**
@@ -316,24 +316,24 @@ interface ApplicationConstants
      */
     public const BASE_URL_SSL_STATIC_MEDIA = 'APPLICATION:BASE_URL_SSL_STATIC_MEDIA';
 
-    /** @deprecated Please use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead */
+    /** @deprecated Please use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead. */
     public const HOST_ZED_GUI = 'HOST_ZED_GUI';
-    /** @deprecated Please use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead */
+    /** @deprecated Please use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead. */
     public const HOST_ZED_API = 'HOST_ZED_API';
-    /** @deprecated Please use ApplicationConstants::BASE_URL_STATIC_ASSETS instead */
+    /** @deprecated Please use ApplicationConstants::BASE_URL_STATIC_ASSETS instead. */
     public const HOST_STATIC_ASSETS = 'HOST_STATIC_ASSETS';
-    /** @deprecated Please use ApplicationConstants::BASE_URL_STATIC_MEDIA instead */
+    /** @deprecated Please use ApplicationConstants::BASE_URL_STATIC_MEDIA instead. */
     public const HOST_STATIC_MEDIA = 'HOST_STATIC_MEDIA';
 
-    /** @deprecated Please use ApplicationConstants::BASE_URL_SSL_YVES instead */
+    /** @deprecated Please use ApplicationConstants::BASE_URL_SSL_YVES instead. */
     public const HOST_SSL_YVES = 'HOST_SSL_YVES';
-    /** @deprecated Unused, will be removed with next major release */
+    /** @deprecated Unused, will be removed with next major release. */
     public const HOST_SSL_ZED_GUI = 'HOST_SSL_ZED_GUI';
-    /** @deprecated Unused, will be removed with next major release */
+    /** @deprecated Unused, will be removed with next major release. */
     public const HOST_SSL_ZED_API = 'HOST_SSL_ZED_API';
-    /** @deprecated Please use ApplicationConstants::BASE_URL_SSL_STATIC_ASSETS instead */
+    /** @deprecated Please use ApplicationConstants::BASE_URL_SSL_STATIC_ASSETS instead. */
     public const HOST_SSL_STATIC_ASSETS = 'HOST_SSL_STATIC_ASSETS';
-    /** @deprecated Please use ApplicationConstants::BASE_URL_SSL_STATIC_MEDIA instead */
+    /** @deprecated Please use ApplicationConstants::BASE_URL_SSL_STATIC_MEDIA instead. */
     public const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 
     public const FORM_FACTORY = 'FORM_FACTORY';
