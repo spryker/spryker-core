@@ -53,23 +53,14 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
         $quoteRequestVersionTransfer = $this->findQuoteRequestVersion($quoteTransfer->getQuoteRequestVersionReference());
 
         if (!$quoteRequestVersionTransfer) {
-            $checkoutResponseTransfer->addError(
-                (new CheckoutErrorTransfer())->setMessage(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_NOT_FOUND)
-            );
-            $checkoutResponseTransfer->setIsSuccess(false);
+            $this->addCheckoutError($checkoutResponseTransfer, static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_NOT_FOUND);
 
             return false;
         }
 
         $quoteRequestTransfer = $this->getQuoteRequest($quoteRequestVersionTransfer);
 
-        if ($this->isQuoteRequestValid($quoteRequestTransfer, $quoteRequestVersionTransfer, $checkoutResponseTransfer)) {
-            return true;
-        }
-
-        $checkoutResponseTransfer->setIsSuccess(false);
-
-        return false;
+        return $this->isQuoteRequestValid($quoteRequestTransfer, $quoteRequestVersionTransfer, $checkoutResponseTransfer);
     }
 
     /**
@@ -129,30 +120,39 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool {
         if ($quoteRequestTransfer->getStatus() !== SharedQuoteRequestConfig::STATUS_READY) {
-            $checkoutResponseTransfer->addError(
-                (new CheckoutErrorTransfer())->setMessage(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS)
-            );
+            $this->addCheckoutError($checkoutResponseTransfer, static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS);
 
             return false;
         }
 
         if ($quoteRequestTransfer->getLatestVersion()->getIdQuoteRequestVersion() !== $quoteRequestVersionTransfer->getIdQuoteRequestVersion()) {
-            $checkoutResponseTransfer->addError(
-                (new CheckoutErrorTransfer())->setMessage(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION)
-            );
+            $this->addCheckoutError($checkoutResponseTransfer, static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION);
 
             return false;
         }
 
         if (!$quoteRequestTransfer->getValidUntil()
             || (new DateTime($quoteRequestTransfer->getValidUntil()) < new DateTime('now'))) {
-            $checkoutResponseTransfer->addError(
-                (new CheckoutErrorTransfer())->setMessage(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VALID_UNTIL)
-            );
+            $this->addCheckoutError($checkoutResponseTransfer, static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VALID_UNTIL);
 
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function addCheckoutError(CheckoutResponseTransfer $checkoutResponseTransfer, string $message): CheckoutResponseTransfer
+    {
+        $checkoutResponseTransfer
+            ->addError((new CheckoutErrorTransfer())->setMessage($message))
+            ->setIsSuccess(false);
+
+        return $checkoutResponseTransfer;
     }
 }
