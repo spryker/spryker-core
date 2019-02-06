@@ -56,9 +56,7 @@ class GuestCartCreator implements GuestCartCreatorInterface
         $quoteResponseTransfer = $this->createQuote($restRequest);
 
         if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
-            $restQuoteRequestTransfer = $this->cartsResourceMapper->mapRestQuoteRequestTransferFromRequest($quoteResponseTransfer, $restRequest);
-
-            return $this->guestCartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($restQuoteRequestTransfer->getErrorCodes());
+            return $this->guestCartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
         }
 
         return $this->guestCartRestResponseBuilder->createGuestCartRestResponse($quoteResponseTransfer->getQuoteTransfer());

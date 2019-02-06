@@ -30,6 +30,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_PERMISSION_FAILED = '117';
 
     public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
+    public const EXCEPTION_MESSAGE_ITEM_VALIDATION = 'Product sku is missing.';
     public const EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND = 'Item with the given group key not found in the cart.';
     public const EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART = 'Failed to create cart.';
     public const EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND = 'Cart with given uuid not found.';

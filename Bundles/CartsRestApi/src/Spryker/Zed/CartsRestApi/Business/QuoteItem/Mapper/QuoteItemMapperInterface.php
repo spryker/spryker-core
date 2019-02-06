@@ -28,13 +28,6 @@ interface QuoteItemMapperInterface
     ): PersistentCartChangeTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function createQuoteResponseTransfer(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
      *

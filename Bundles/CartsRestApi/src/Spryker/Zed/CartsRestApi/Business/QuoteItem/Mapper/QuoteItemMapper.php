@@ -38,18 +38,6 @@ class QuoteItemMapper implements QuoteItemMapperInterface
     /**
      * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function createQuoteResponseTransfer(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
-    {
-        return (new QuoteResponseTransfer())->setCustomer(
-            (new CustomerTransfer())->setCustomerReference($restCartItemRequestTransfer->getCustomerReference())
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
-     *
      * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
      */
     public function createRestQuoteRequestTransfer(

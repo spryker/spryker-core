@@ -60,9 +60,7 @@ class CartDeleter implements CartDeleterInterface
         );
 
         if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
-            $restQuoteRequestTransfer = $this->cartsResourceMapper->mapRestQuoteRequestTransferFromRequest($quoteResponseTransfer, $restRequest);
-
-            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($restQuoteRequestTransfer->getErrorCodes());
+            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
         }
 
         return $this->cartRestResponseBuilder->createRestResponse();

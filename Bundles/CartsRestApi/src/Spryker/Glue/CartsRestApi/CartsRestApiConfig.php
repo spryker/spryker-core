@@ -110,5 +110,9 @@ class CartsRestApiConfig extends AbstractBundleConfig
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
             'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_PRICE_MODE_CANT_BE_CHANGED,
         ],
+        SharedCartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION => [
+            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_ITEM_VALIDATION,
+        ],
     ];
 }

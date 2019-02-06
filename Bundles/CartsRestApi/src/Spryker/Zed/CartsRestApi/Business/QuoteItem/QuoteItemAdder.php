@@ -58,7 +58,13 @@ class QuoteItemAdder implements QuoteItemAdderInterface
             ->requireCartItem()
             ->requireCustomerReference();
 
-        $quoteResponseTransfer = $this->quoteItemMapper->createQuoteResponseTransfer($restCartItemRequestTransfer);
+        $quoteResponseTransfer = $this->cartReader->findQuoteByUuid(
+            $this->quoteItemMapper->mapRestCartItemRequestTransferToQuoteTransfer($restCartItemRequestTransfer)
+        );
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
+        }
+
         if (!$restCartItemRequestTransfer->getCartUuid()) {
             $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING));
@@ -68,20 +74,13 @@ class QuoteItemAdder implements QuoteItemAdderInterface
             );
         }
 
-        if ($restCartItemRequestTransfer->getCartItem()->getSku() || $restCartItemRequestTransfer->getCartItem()->getGroupKey()) {
+        if (!$restCartItemRequestTransfer->getCartItem()->getSku()) {
             $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION));
 
             return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer
             );
-        }
-
-        $quoteResponseTransfer = $this->cartReader->findQuoteByUuid(
-            $this->quoteItemMapper->mapRestCartItemRequestTransferToQuoteTransfer($restCartItemRequestTransfer)
-        );
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $quoteResponseTransfer;
         }
 
         $persistentCartChangeTransfer = $this->quoteItemMapper->createPersistentCartChangeTransfer(
@@ -91,9 +90,6 @@ class QuoteItemAdder implements QuoteItemAdderInterface
 
         $quoteResponseTransfer = $this->persistentCartFacade->add($persistentCartChangeTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND));
-
             return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer
             );

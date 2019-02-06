@@ -56,9 +56,6 @@ class CartItemDeleter implements CartItemDeleterInterface
     {
         $uuidQuote = $this->findCartIdentifier($restRequest);
         $itemIdentifier = $restRequest->getResource()->getId();
-        if ($this->isRequestInvalid($uuidQuote, $itemIdentifier)) {
-            return $this->cartRestResponseBuilder->createMissingRequiredParameterErrorResponse();
-        }
 
         $restCartItemRequestTransfer = $this->cartItemsResourceMapper->createRestCartItemRequestTransfer(
             (new ItemTransfer())->setSku($itemIdentifier),
@@ -67,8 +64,8 @@ class CartItemDeleter implements CartItemDeleterInterface
         );
 
         $quoteResponseTransfer = $this->cartsRestApiClient->deleteItem($restCartItemRequestTransfer);
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->cartRestResponseBuilder->createFailedDeletingCartItemErrorResponse();
+        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
+            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
         }
 
         return $this->cartRestResponseBuilder->createRestResponse();

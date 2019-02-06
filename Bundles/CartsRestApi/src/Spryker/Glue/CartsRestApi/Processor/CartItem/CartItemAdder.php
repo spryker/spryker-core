@@ -75,9 +75,7 @@ class CartItemAdder implements CartItemAdderInterface
 
         $quoteResponseTransfer = $this->cartsRestApiClient->addItem($restCartItemRequestTransfer);
         if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
-            $restQuoteRequestTransfer = $this->cartsResourceMapper->mapRestQuoteRequestTransferFromRequest($quoteResponseTransfer, $restRequest);
-
-            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($restQuoteRequestTransfer->getErrorCodes());
+            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
         }
 
         $restResource = $this->cartsResourceMapper->mapCartsResource(
