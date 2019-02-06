@@ -73,6 +73,14 @@ class QuoteItemAdder implements QuoteItemAdderInterface
             $restCartItemRequestTransfer
         );
 
-        return $this->persistentCartFacade->add($persistentCartChangeTransfer);
+        $quoteResponseTransfer = $this->persistentCartFacade->add($persistentCartChangeTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
+        }
+
+        return $quoteResponseTransfer;
     }
 }

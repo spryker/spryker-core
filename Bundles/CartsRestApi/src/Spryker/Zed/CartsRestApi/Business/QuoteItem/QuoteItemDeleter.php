@@ -70,6 +70,14 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
             $restCartItemRequestTransfer
         );
 
-        return $this->persistentCartFacade->remove($persistentCartChangeTransfer);
+        $quoteResponseTransfer = $this->persistentCartFacade->remove($persistentCartChangeTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
+        }
+
+        return $quoteResponseTransfer;
     }
 }

@@ -70,6 +70,14 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
             $restCartItemRequestTransfer
         );
 
-        return $this->persistentCartFacade->changeItemQuantity($persistentCartChangeQuantityTransfer);
+        $quoteResponseTransfer = $this->persistentCartFacade->changeItemQuantity($persistentCartChangeQuantityTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
+        }
+
+        return $quoteResponseTransfer;
     }
 }

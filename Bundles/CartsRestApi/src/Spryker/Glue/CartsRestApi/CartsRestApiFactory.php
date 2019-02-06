@@ -8,7 +8,6 @@
 namespace Spryker\Glue\CartsRestApi;
 
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartCreator;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartCreatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartDeleter;
@@ -119,7 +118,6 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartItemAdder(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->getZedRequestClient(),
             $this->createCartItemsResourceMapper(),
             $this->createCartsResourceMapper()
         );
@@ -132,7 +130,8 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new CartItemDeleter(
             $this->getClient(),
-            $this->createCartRestResponseBuilder()
+            $this->createCartRestResponseBuilder(),
+            $this->createCartItemsResourceMapper()
         );
     }
 
@@ -144,8 +143,8 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartItemUpdater(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->getZedRequestClient(),
-            $this->createCartsResourceMapper()
+            $this->createCartsResourceMapper(),
+            $this->createCartItemsResourceMapper()
         );
     }
 
@@ -194,7 +193,6 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new GuestCartItemAdder(
             $this->getClient(),
-            $this->getZedRequestClient(),
             $this->createCartItemsResourceMapper(),
             $this->createGuestCartRestResponseBuilder()
         );
@@ -208,7 +206,6 @@ class CartsRestApiFactory extends AbstractFactory
         return new GuestCartItemUpdater(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->getZedRequestClient(),
             $this->createCartsResourceMapper(),
             $this->createCartItemsResourceMapper()
         );
@@ -295,14 +292,6 @@ class CartsRestApiFactory extends AbstractFactory
     public function createCartsResourceMapper(): CartsResourceMapperInterface
     {
         return new CartsResourceMapper($this->createCartItemsResourceMapper(), $this->getResourceBuilder());
-    }
-
-    /**
-     * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface
-     */
-    public function getZedRequestClient(): CartsRestApiToZedRequestClientInterface
-    {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_ZED_REQUEST);
     }
 
     /**

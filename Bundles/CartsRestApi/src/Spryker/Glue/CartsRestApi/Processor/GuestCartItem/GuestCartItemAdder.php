@@ -9,7 +9,6 @@ namespace Spryker\Glue\CartsRestApi\Processor\GuestCartItem;
 
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -23,11 +22,6 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
     protected $cartsRestApiClient;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface
-     */
-    protected $zedRequestClient;
-
-    /**
      * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface
      */
     protected $cartItemsResourceMapper;
@@ -39,18 +33,15 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
 
     /**
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface $zedRequestClient
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface $cartItemsResourceMapper
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
      */
     public function __construct(
         CartsRestApiClientInterface $cartsRestApiClient,
-        CartsRestApiToZedRequestClientInterface $zedRequestClient,
         CartItemsResourceMapperInterface $cartItemsResourceMapper,
         GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
     ) {
         $this->cartsRestApiClient = $cartsRestApiClient;
-        $this->zedRequestClient = $zedRequestClient;
         $this->cartItemsResourceMapper = $cartItemsResourceMapper;
         $this->guestCartRestResponseBuilder = $guestCartRestResponseBuilder;
     }
@@ -73,11 +64,6 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
         );
 
         $quoteResponseTransfer = $this->cartsRestApiClient->addItemToGuestCart($restCartItemRequestTransfer);
-
-        $errors = $this->zedRequestClient->getLastResponseErrorMessages();
-        if (count($errors) > 0) {
-            return $this->guestCartRestResponseBuilder->createGuestCartErrorRestResponseFromErrorMessageTransfer($errors);
-        }
 
         return $this->guestCartRestResponseBuilder->createGuestCartRestResponse($quoteResponseTransfer->getQuoteTransfer());
     }

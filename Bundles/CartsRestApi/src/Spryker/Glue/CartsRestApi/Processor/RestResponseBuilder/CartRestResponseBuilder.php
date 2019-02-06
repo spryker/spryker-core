@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
