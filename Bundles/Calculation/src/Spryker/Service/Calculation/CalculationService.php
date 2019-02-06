@@ -8,7 +8,6 @@
 namespace Spryker\Service\Calculation;
 
 use ArrayObject;
-use Spryker\Service\Calculation\Items\ItemsGrouperInterface;
 use Spryker\Service\Kernel\AbstractService;
 
 /**
@@ -32,18 +31,8 @@ class CalculationService extends AbstractService implements CalculationServiceIn
      */
     public function groupItemsByShipment(ArrayObject $itemTransfers): ArrayObject
     {
-        return $this->getItemsGrouper()->groupByShipment($itemTransfers);
-    }
-
-    /**
-     * @return \Spryker\Service\Calculation\Items\ItemsGrouperInterface
-     */
-    protected function getItemsGrouper(): ItemsGrouperInterface
-    {
-        if ($this->itemsGrouper === null) {
-            $this->itemsGrouper = $this->getFactory()->createItemsGrouper();
-        }
-
-        return $this->itemsGrouper;
+        return $this->getFactory()
+            ->createItemsGrouper()
+            ->groupByShipment($itemTransfers);
     }
 }
