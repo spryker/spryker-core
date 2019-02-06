@@ -10,12 +10,14 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator\NetPrice;
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Service\Calculation\CalculationServiceInterface;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Business\Model\Calculator\ShipmentAwareTrait;
 
 class PriceNetCalculator implements CalculatorInterface
 {
+    use ShipmentAwareTrait;
+
     /**
      * @var \Spryker\Service\Calculation\CalculationServiceInterface
      */
@@ -100,15 +102,5 @@ class PriceNetCalculator implements CalculatorInterface
             $expenseTransfer->setUnitPrice($expenseTransfer->getUnitNetPrice());
             $expenseTransfer->setSumPrice($expenseTransfer->getSumNetPrice());
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     *
-     * @return bool
-     */
-    protected function assertShipmentGroupHasNoExpense(ShipmentGroupTransfer $shipmentGroupTransfer): bool
-    {
-        return $shipmentGroupTransfer->getShipment() === null || $shipmentGroupTransfer->getShipment()->getExpense() === null;
     }
 }

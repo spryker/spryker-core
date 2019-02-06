@@ -245,7 +245,10 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createGrandTotalCalculator()
     {
-        return new GrandTotalCalculator($this->getUtilTextService());
+        return new GrandTotalCalculator(
+            $this->getUtilTextService(),
+            $this->getCalculationService()
+        );
     }
 
     /**
