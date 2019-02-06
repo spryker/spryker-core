@@ -55,7 +55,7 @@ abstract class AbstractHealthIndicator implements HealthIndicatorInterface
     {
         if (!$this->healthIndicatorReport) {
             $this->healthIndicatorReport = new HealthIndicatorReportTransfer();
-            $this->healthIndicatorReport->setName(get_class($this));
+            $this->healthIndicatorReport->setName(static::class);
             $this->healthIndicatorReport->setStatus(true);
         }
 

@@ -34,6 +34,7 @@ class ProductSetPageUrlSearchListener extends AbstractPlugin implements EventBul
     {
         $this->preventTransaction();
         $productSetIds = $this->getValidProductSetIds($eventTransfers);
+
         if (empty($productSetIds)) {
             return;
         }
