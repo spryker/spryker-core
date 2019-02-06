@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Oauth\Business\Installer;
 
-use Generated\Shared\Transfer\OauthClientTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeReaderInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeWriterInterface;
