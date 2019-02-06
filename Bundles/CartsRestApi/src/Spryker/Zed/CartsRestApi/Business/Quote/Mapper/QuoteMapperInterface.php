@@ -20,6 +20,24 @@ use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 interface QuoteMapperInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $registeredCustomer
+     * @param \Generated\Shared\Transfer\QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function createQuoteTransfer(
+        CustomerTransfer $registeredCustomer,
+        QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
+    ): QuoteTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createQuoteResponseTransfer(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteUpdateRequestTransfer
@@ -92,22 +110,4 @@ interface QuoteMapperInterface
     public function mapQuoteResponseErrorsToRestCodes(
         QuoteResponseTransfer $quoteResponseTransfer
     ): QuoteResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $registeredCustomer
-     * @param \Generated\Shared\Transfer\QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function createQuoteTransfer(
-        CustomerTransfer $registeredCustomer,
-        QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
-    ): QuoteTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function createQuoteResponseTransfer(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer;
 }

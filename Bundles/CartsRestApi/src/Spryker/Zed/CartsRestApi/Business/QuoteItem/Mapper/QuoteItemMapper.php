@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -35,6 +36,19 @@ class QuoteItemMapper implements QuoteItemMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
+     */
+    public function createRestQuoteRequestTransfer(
+        RestCartItemRequestTransfer $restCartItemRequestTransfer
+    ): RestQuoteRequestTransfer {
+        return (new RestQuoteRequestTransfer())
+            ->setQuote((new QuoteTransfer()))
+            ->setCustomerReference($restCartItemRequestTransfer->getCustomerReference());
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
      *
@@ -48,19 +62,6 @@ class QuoteItemMapper implements QuoteItemMapperInterface
             ->setIdQuote($quoteTransfer->getIdQuote())
             ->setItem($restCartItemRequestTransfer->getCartItem())
             ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemRequestTransfer->getCustomerReference()));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
-     */
-    public function createRestQuoteRequestTransfer(
-        RestCartItemRequestTransfer $restCartItemRequestTransfer
-    ): RestQuoteRequestTransfer {
-        return (new RestQuoteRequestTransfer())
-            ->setQuote((new QuoteTransfer()))
-            ->setCustomerReference($restCartItemRequestTransfer->getCustomerReference());
     }
 
     /**
@@ -86,7 +87,9 @@ class QuoteItemMapper implements QuoteItemMapperInterface
     ): QuoteResponseTransfer {
         $errorCodes = [];
         foreach ($quoteResponseTransfer->getErrors() as $error) {
-            $errorCodes[] = CartsRestApiConfig::RESPONSE_ERROR_MAP[$error['value']] ?? $error;
+            $errorCodes[] = isset($error[MessageTransfer::VALUE])
+                ? CartsRestApiConfig::RESPONSE_ERROR_MAP[$error[MessageTransfer::VALUE]]
+                : $error->getMessage();
         }
 
         $quoteResponseTransfer->setErrorCodes($errorCodes);

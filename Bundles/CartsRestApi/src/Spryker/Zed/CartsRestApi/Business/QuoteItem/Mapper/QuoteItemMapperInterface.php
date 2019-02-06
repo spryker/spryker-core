@@ -20,6 +20,17 @@ interface QuoteItemMapperInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
      *
+     * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
+     */
+    public function createPersistentCartChangeTransfer(
+        QuoteTransfer $quoteTransfer,
+        RestCartItemRequestTransfer $restCartItemRequestTransfer
+    ): PersistentCartChangeTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     *
      * @return \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer
      */
     public function createPersistentCartChangeQuantityTransfer(
@@ -44,17 +55,6 @@ interface QuoteItemMapperInterface
     public function mapRestCartItemRequestTransferToQuoteTransfer(
         RestCartItemRequestTransfer $restCartItemRequestTransfer
     ): QuoteTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
-     */
-    public function createPersistentCartChangeTransfer(
-        QuoteTransfer $quoteTransfer,
-        RestCartItemRequestTransfer $restCartItemRequestTransfer
-    ): PersistentCartChangeTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
