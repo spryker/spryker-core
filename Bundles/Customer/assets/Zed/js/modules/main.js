@@ -5,8 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
-
 $(document).ready(function () {
     $('#customer_date_of_birth').datepicker({
         dateFormat: 'yy-mm-dd',

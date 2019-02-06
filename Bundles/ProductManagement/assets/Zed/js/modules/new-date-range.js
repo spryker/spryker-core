@@ -5,8 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
-
 $(document).ready(function() {
 
     var $fromDate = $('.js-from-date');
