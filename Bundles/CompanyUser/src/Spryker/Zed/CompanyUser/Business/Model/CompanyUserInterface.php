@@ -101,4 +101,11 @@ interface CompanyUserInterface
      * @return int[]
      */
     public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findActiveCompanyUserByUuid(CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer;
 }

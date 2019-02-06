@@ -16,6 +16,7 @@ class OauthConfig extends AbstractBundleConfig
 {
     public const GRANT_TYPE_PASSWORD = 'password';
     public const GRANT_TYPE_REFRESH_TOKEN = 'refresh_token';
+    public const GRANT_TYPE_USER = 'user';
 
     /**
      * @return string
@@ -55,5 +56,21 @@ class OauthConfig extends AbstractBundleConfig
     public function getAccessTokenTTL(): string
     {
         return $this->getSharedConfig()->getAccessTokenTTL();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getScopes(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getClients(): array
+    {
+        return [];
     }
 }

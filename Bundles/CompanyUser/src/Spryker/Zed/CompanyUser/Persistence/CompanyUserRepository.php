@@ -64,6 +64,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->filterByFkCustomer($idCustomer)
             ->joinCompany()
             ->useCompanyQuery()
+                ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
                 ->filterByIsActive(true)
             ->endUse();
 
@@ -95,6 +96,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
                 ->filterByCustomerReference($customerReference)
             ->endUse()
             ->useCompanyQuery()
+                ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
                 ->filterByIsActive(true)
             ->endUse()
             ->joinWithCompany();
@@ -204,6 +206,35 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             return $this->getFactory()
                 ->createCompanyUserMapper()
                 ->mapCompanyUserEntityToCompanyUserTransfer($companyUserEntityTransfer);
+        }
+
+        return null;
+    }
+
+    /**
+     * @module Customer
+     * @module Company
+     *
+     * @param string $uuidCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findActiveCompanyUserByUuid(string $uuidCompanyUser): ?CompanyUserTransfer
+    {
+        $query = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->joinWithCustomer()
+            ->useCompanyQuery()
+                ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
+                ->filterByIsActive(true)
+            ->endUse()
+            ->filterByUuid($uuidCompanyUser);
+
+        $companyUserEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+        if ($companyUserEntityTransfer !== null) {
+            return $this->getFactory()
+                ->createCompanyUserMapper()
+                ->mapEntityTransferToCompanyUserTransfer($companyUserEntityTransfer);
         }
 
         return null;

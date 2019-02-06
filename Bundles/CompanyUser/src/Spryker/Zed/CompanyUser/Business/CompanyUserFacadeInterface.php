@@ -213,6 +213,22 @@ interface CompanyUserFacadeInterface
     public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 
     /**
+     * Specification:
+     * - Finds active company user by uuid.
+     * - Requires uuid field to be set in CompanyUserTransfer.
+     * - Uuid is not a required field and could be missing.
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findActiveCompanyUserByUuid(CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer;
+
+    /**
      * Specification
      *  - Retrieves active company users collection by company user id.
      *  - Checks activity flag in related company and company user.
