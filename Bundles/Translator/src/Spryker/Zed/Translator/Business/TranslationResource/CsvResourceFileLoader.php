@@ -76,6 +76,6 @@ class CsvResourceFileLoader implements TranslationResourceFileLoaderInterface
      */
     public function getFilePaths(): array
     {
-        return $this->translationFileFinder->findFilesByGlobPatterns($this->translatorConfig->getZedTranslationFilePathPatterns());
+        return $this->translationFileFinder->findFilesByGlobPatterns($this->translatorConfig->getTranslationFilePathPatterns());
     }
 }

@@ -84,7 +84,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     public function createCsvFileLoader(): TranslationLoaderInterface
     {
         $csvFileLoader = new CsvFileLoader();
-        $csvFileLoader->setCsvControl($this->getConfig()->getZedCsvFileDelimiter());
+        $csvFileLoader->setCsvControl($this->getConfig()->getCsvFileDelimiter());
 
         return $csvFileLoader;
     }
@@ -105,8 +105,8 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     public function createTranslator(?string $localeName = null)
     {
         $localeName = $localeName ?? $this->getApplication()['locale'];
-        $translator = new Translator($localeName, null, $this->getConfig()->getZedTranslatorCacheDirectory());
-        $translator->setFallbackLocales($this->getConfig()->getZedFallbackLocales($localeName));
+        $translator = new Translator($localeName, null, $this->getConfig()->getTranslatorCacheDirectory());
+        $translator->setFallbackLocales($this->getConfig()->getFallbackLocales($localeName));
 
         return $this->createTranslationBuilder()->buildTranslator($translator);
     }

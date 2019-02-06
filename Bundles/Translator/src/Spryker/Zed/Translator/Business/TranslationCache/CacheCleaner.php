@@ -31,7 +31,7 @@ class CacheCleaner implements CacheCleanerInterface
      */
     public function cleanTranslationCache(): void
     {
-        $this->clearDirectory($this->config->getZedTranslatorCacheDirectory());
+        $this->clearDirectory($this->config->getTranslatorCacheDirectory());
     }
 
     /**

@@ -40,14 +40,13 @@ class TranslatorPreparator implements TranslatorPreparatorInterface
     public function prepareTranslatorService(): void
     {
         $translator = $this->translator;
-
         $twig = $this->application->get('twig');
+
         $this->application->remove('twig');
 
         $twig->addExtension(new TranslationExtension($translator));
 
         $this->application->set('twig', $twig);
-
         $this->application->set('translator', $translator);
     }
 }
