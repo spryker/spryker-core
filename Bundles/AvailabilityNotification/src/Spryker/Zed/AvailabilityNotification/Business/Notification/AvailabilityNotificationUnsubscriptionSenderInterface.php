@@ -9,7 +9,7 @@ namespace Spryker\Zed\AvailabilityNotification\Business\Notification;
 
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 
-interface AvailabilityNotificationSenderInterface
+interface AvailabilityNotificationUnsubscriptionSenderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer

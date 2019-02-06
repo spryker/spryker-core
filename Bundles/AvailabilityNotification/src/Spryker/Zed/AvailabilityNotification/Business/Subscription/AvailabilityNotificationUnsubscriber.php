@@ -9,7 +9,7 @@ namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
-use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationUnsubscriptionSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface;
 
 class AvailabilityNotificationUnsubscriber implements AvailabilityNotificationUnsubscriberInterface
@@ -20,7 +20,7 @@ class AvailabilityNotificationUnsubscriber implements AvailabilityNotificationUn
     protected $entityManager;
 
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface
+     * @var \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationUnsubscriptionSenderInterface
      */
     protected $availabilityNotificationUnsubscriptionSender;
 
@@ -31,12 +31,12 @@ class AvailabilityNotificationUnsubscriber implements AvailabilityNotificationUn
 
     /**
      * @param \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface $entityManager
-     * @param \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface $availabilityNotificationUnsubscriptionSender
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationUnsubscriptionSenderInterface $availabilityNotificationUnsubscriptionSender
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionReaderInterface $availabilityNotificationReader
      */
     public function __construct(
         AvailabilityNotificationEntityManagerInterface $entityManager,
-        AvailabilityNotificationSenderInterface $availabilityNotificationUnsubscriptionSender,
+        AvailabilityNotificationUnsubscriptionSenderInterface $availabilityNotificationUnsubscriptionSender,
         AvailabilityNotificationSubscriptionReaderInterface $availabilityNotificationReader
     ) {
         $this->entityManager = $entityManager;

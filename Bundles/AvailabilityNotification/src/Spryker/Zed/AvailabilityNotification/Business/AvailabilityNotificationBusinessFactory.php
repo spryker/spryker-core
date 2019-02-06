@@ -12,9 +12,10 @@ use Spryker\Zed\AvailabilityNotification\Business\Anonymizer\AvailabilityNotific
 use Spryker\Zed\AvailabilityNotification\Business\Anonymizer\AvailabilityNotificationSubscriptionAnonymizerInterface;
 use Spryker\Zed\AvailabilityNotification\Business\CustomerExpander\CustomerExpander;
 use Spryker\Zed\AvailabilityNotification\Business\CustomerExpander\CustomerExpanderInterface;
-use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSubscriptionSender;
+use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSubscriptionSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationUnsubscriptionSender;
+use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationUnsubscriptionSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Notification\ProductBecomeAvailableNotificationSender;
 use Spryker\Zed\AvailabilityNotification\Business\Notification\ProductBecomeAvailableNotificationSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Product\ProductAttributeFinder;
@@ -103,9 +104,9 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSubscriptionSenderInterface
      */
-    public function createAvailabilityNotificationSubscriptionSender(): AvailabilityNotificationSenderInterface
+    public function createAvailabilityNotificationSubscriptionSender(): AvailabilityNotificationSubscriptionSenderInterface
     {
         return new AvailabilityNotificationSubscriptionSender(
             $this->getMailFacade(),
@@ -116,9 +117,9 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationUnsubscriptionSenderInterface
      */
-    public function createAvailabilityNotificationUnsubscriptionSender(): AvailabilityNotificationSenderInterface
+    public function createAvailabilityNotificationUnsubscriptionSender(): AvailabilityNotificationUnsubscriptionSenderInterface
     {
         return new AvailabilityNotificationUnsubscriptionSender(
             $this->getMailFacade(),

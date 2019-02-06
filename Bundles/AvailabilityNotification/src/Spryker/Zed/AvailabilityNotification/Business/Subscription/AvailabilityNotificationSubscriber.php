@@ -10,7 +10,7 @@ namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Spryker\Shared\Customer\Code\Messages;
-use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSubscriptionSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface;
 
 class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubscriberInterface
@@ -21,7 +21,7 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
     protected $availabilityNotificationSubscriptionSaver;
 
     /**
-     * @var \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface
+     * @var \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSubscriptionSenderInterface
      */
     protected $availabilityNotificationSubscriptionSender;
 
@@ -37,13 +37,13 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
 
     /**
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionSaverInterface $availabilityNotificationSubscriptionSaver
-     * @param \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSenderInterface $availabilityNotificationSubscriptionSender
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSubscriptionSenderInterface $availabilityNotificationSubscriptionSender
      * @param \Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface $utilValidateService
      * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionReaderInterface $availabilityNotificationSubscriptionReader
      */
     public function __construct(
         AvailabilityNotificationSubscriptionSaverInterface $availabilityNotificationSubscriptionSaver,
-        AvailabilityNotificationSenderInterface $availabilityNotificationSubscriptionSender,
+        AvailabilityNotificationSubscriptionSenderInterface $availabilityNotificationSubscriptionSender,
         AvailabilityNotificationToUtilValidateServiceInterface $utilValidateService,
         AvailabilityNotificationSubscriptionReaderInterface $availabilityNotificationSubscriptionReader
     ) {

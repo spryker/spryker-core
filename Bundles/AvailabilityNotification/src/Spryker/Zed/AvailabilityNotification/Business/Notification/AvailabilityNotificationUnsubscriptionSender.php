@@ -16,7 +16,7 @@ use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityN
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface;
 
-class AvailabilityNotificationUnsubscriptionSender implements AvailabilityNotificationSenderInterface
+class AvailabilityNotificationUnsubscriptionSender implements AvailabilityNotificationUnsubscriptionSenderInterface
 {
     /**
      * @var \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface
