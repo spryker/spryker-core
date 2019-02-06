@@ -16,13 +16,21 @@ use Spryker\Zed\User\Business\Exception\UsernameExistsException;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 use Spryker\Zed\User\UserConfig;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class User implements UserInterface
 {
+    public const USER_BUNDLE_SESSION_KEY = 'user';
+
     /**
      * @var \Spryker\Zed\User\Persistence\UserQueryContainerInterface
      */
     protected $queryContainer;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+     */
+    protected $session;
 
     /**
      * @var \Spryker\Zed\User\UserConfig
@@ -38,15 +46,18 @@ class User implements UserInterface
 
     /**
      * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $queryContainer
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \Spryker\Zed\User\UserConfig $settings
      * @param \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface[] $userPostSavePlugins
      */
     public function __construct(
         UserQueryContainerInterface $queryContainer,
+        SessionInterface $session,
         UserConfig $settings,
         array $userPostSavePlugins = []
     ) {
         $this->queryContainer = $queryContainer;
+        $this->session = $session;
         $this->settings = $settings;
         $this->userPostSavePlugins = $userPostSavePlugins;
     }
@@ -336,6 +347,42 @@ class User implements UserInterface
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
+     * @return mixed
+     */
+    public function setCurrentUser(UserTransfer $user)
+    {
+        $key = $this->createUserKey();
+
+        return $this->session->set($key, clone $user);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasCurrentUser()
+    {
+        $user = $this->readUserFromSession();
+
+        return $user !== null;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    protected function readUserFromSession()
+    {
+        $key = $this->createUserKey();
+
+        if (!$this->session->has($key)) {
+            return null;
+        }
+
+        return $this->session->get($key);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $user
+     *
      * @return bool
      */
     public function isSystemUser(UserTransfer $user)
@@ -368,6 +415,22 @@ class User implements UserInterface
         }
 
         return $collection;
+    }
+
+    /**
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getCurrentUser()
+    {
+        $user = $this->readUserFromSession();
+
+        if ($user === null) {
+            throw new UserNotFoundException();
+        }
+
+        return clone $user;
     }
 
     /**
@@ -409,5 +472,13 @@ class User implements UserInterface
         $rowsAffected = $userEntity->save();
 
         return $rowsAffected > 0;
+    }
+
+    /**
+     * @return string
+     */
+    protected function createUserKey()
+    {
+        return sprintf('%s:currentUser', static::USER_BUNDLE_SESSION_KEY);
     }
 }

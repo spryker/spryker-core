@@ -117,6 +117,18 @@ interface UserInterface
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
+     * @return mixed
+     */
+    public function setCurrentUser(UserTransfer $user);
+
+    /**
+     * @return bool
+     */
+    public function hasCurrentUser();
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $user
+     *
      * @return bool
      */
     public function isSystemUser(UserTransfer $user);
@@ -125,6 +137,13 @@ interface UserInterface
      * @return \Generated\Shared\Transfer\CollectionTransfer
      */
     public function getSystemUsers();
+
+    /**
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getCurrentUser();
 
     /**
      * @param int $idUser

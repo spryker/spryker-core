@@ -168,7 +168,7 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     public function setCurrentUser(UserTransfer $user)
     {
         return $this->getFactory()
-            ->createUserSession()
+            ->createUserModel()
             ->setCurrentUser($user);
     }
 
@@ -180,7 +180,7 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     public function getCurrentUser()
     {
         return $this->getFactory()
-            ->createUserSession()
+            ->createUserModel()
             ->getCurrentUser();
     }
 
@@ -192,7 +192,7 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     public function hasCurrentUser()
     {
         return $this->getFactory()
-            ->createUserSession()
+            ->createUserModel()
             ->hasCurrentUser();
     }
 
