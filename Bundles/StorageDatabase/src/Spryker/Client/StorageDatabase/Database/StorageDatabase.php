@@ -248,7 +248,9 @@ class StorageDatabase implements StorageDatabaseInterface
     {
         if ($this->debug) {
             $this->accessStats['count']['read'] += count($keys);
-            $this->accessStats['keys']['read'] = $this->accessStats['keys']['read'] + $keys;
+            $this->accessStats['keys']['read'] = array_unique(
+                array_merge($this->accessStats['keys']['read'], $keys)
+            );
         }
     }
 }
