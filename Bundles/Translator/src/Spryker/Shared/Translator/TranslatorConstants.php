@@ -16,13 +16,13 @@ interface TranslatorConstants
      * Specification:
      * - Defines paths to Project level translations. Glob pattern can be used.
      */
-    public const TRANSLATION_FILE_PATH_PATTERNS = 'TRANSLATOR:TRANSLATION_FILE_PATH_PATTERN';
+    public const TRANSLATION_ZED_FILE_PATH_PATTERNS = 'TRANSLATOR:TRANSLATION_ZED_FILE_PATH_PATTERNS';
 
     /**
      * Specification:
      * - Absolute path to the translation cache directory. E.g. /var/www/data/DE/cache/Zed/translation.
      */
-    public const TRANSLATION_CACHE_DIRECTORY = 'TRANSLATOR:TRANSLATION_CACHE_DIRECTORY';
+    public const TRANSLATION_ZED_CACHE_DIRECTORY = 'TRANSLATOR:TRANSLATION_ZED_CACHE_DIRECTORY';
 
     /**
      * Specification:
@@ -30,5 +30,5 @@ interface TranslatorConstants
      *
      * @api
      */
-    public const TRANSLATION_FALLBACK_LOCALES = 'TRANSLATOR:FALLBACK_LOCALES';
+    public const TRANSLATION_ZED_FALLBACK_LOCALES = 'TRANSLATOR:TRANSLATION_ZED_FALLBACK_LOCALES';
 }

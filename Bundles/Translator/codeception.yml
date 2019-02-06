@@ -3,7 +3,7 @@ namespace: SprykerTest
 actor: Tester
 
 include:
-  - tests/SprykerTest/Service/Translator
+  - tests/SprykerTest/Zed/Translator
 
 paths:
   tests: tests

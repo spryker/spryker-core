@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Translator\Communication\TranslatorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Translator\Business\TranslatorFacadeInterface getFacade()
  */
 class CleanTranslationCacheConsole extends Console
 {
@@ -36,6 +37,6 @@ class CleanTranslationCacheConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $this->getFactory()->getTranslatorService()->cleanTranslationCache();
+        $this->getFacade()->cleanTranslationCache();
     }
 }
