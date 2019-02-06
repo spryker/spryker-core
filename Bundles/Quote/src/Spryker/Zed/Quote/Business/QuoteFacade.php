@@ -207,4 +207,20 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     {
         return $this->getFactory()->createQuoteLocker()->unlock($quoteTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteLockStatusChecker()
+            ->isQuoteLocked($quoteTransfer);
+    }
 }

@@ -16,11 +16,6 @@ class QuoteEditStatusChecker implements QuoteEditStatusCheckerInterface
     use PermissionAwareTrait;
 
     /**
-     * @uses \Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin::KEY
-     */
-    protected const PERMISSION_WRITE_SHARED_CART = 'WriteSharedCartPermissionPlugin';
-
-    /**
      * @var \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface
      */
     protected $quoteClient;
@@ -48,6 +43,6 @@ class QuoteEditStatusChecker implements QuoteEditStatusCheckerInterface
             return true;
         }
 
-        return $this->can(static::PERMISSION_WRITE_SHARED_CART, $quoteTransfer->getIdQuote());
+        return $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote());
     }
 }

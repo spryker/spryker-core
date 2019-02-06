@@ -10,6 +10,7 @@ namespace Spryker\Client\Quote\StorageStrategy;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Quote\Session\QuoteSessionInterface;
 use Spryker\Shared\Quote\QuoteConfig;
+use Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface;
 
 class SessionStorageStrategy implements StorageStrategyInterface
 {
@@ -19,11 +20,18 @@ class SessionStorageStrategy implements StorageStrategyInterface
     protected $quoteSession;
 
     /**
-     * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
+     * @var \Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface
      */
-    public function __construct(QuoteSessionInterface $quoteSession)
+    protected $quoteLockStatusChecker;
+
+    /**
+     * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
+     * @param \Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface $quoteLockStatusChecker
+     */
+    public function __construct(QuoteSessionInterface $quoteSession, QuoteLockStatusCheckerInterface $quoteLockStatusChecker)
     {
         $this->quoteSession = $quoteSession;
+        $this->quoteLockStatusChecker = $quoteLockStatusChecker;
     }
 
     /**
@@ -75,6 +83,6 @@ class SessionStorageStrategy implements StorageStrategyInterface
      */
     public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
     {
-        return (bool)$quoteTransfer->getIsLocked();
+        return $this->quoteLockStatusChecker->isQuoteLocked($quoteTransfer);
     }
 }

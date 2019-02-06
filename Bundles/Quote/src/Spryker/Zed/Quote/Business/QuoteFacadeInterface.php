@@ -177,4 +177,16 @@ interface QuoteFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Returns true if quote is locked.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool;
 }

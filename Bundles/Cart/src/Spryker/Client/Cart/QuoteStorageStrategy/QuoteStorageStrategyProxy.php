@@ -56,7 +56,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      */
     public function isQuoteLocked(): bool
     {
-        return (bool)$this->getQuote()->getIsLocked();
+        return $this->quoteClient->isQuoteLocked($this->getQuote());
     }
 
     /**
