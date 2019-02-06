@@ -581,6 +581,8 @@ class AbstractProductFormDataProvider
 
         $result = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
+            $type = (string)$type;
+
             if (!$attributeTransfer->getIsSuper()) {
                 continue;
             }
@@ -600,7 +602,9 @@ class AbstractProductFormDataProvider
 
         $productValues = $this->getProductAttributesFormValues($productAttributes);
 
-        return array_merge($productValues, $result);
+        $result = $result + $productValues;
+
+        return $result;
     }
 
     /**
