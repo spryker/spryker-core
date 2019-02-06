@@ -16,14 +16,14 @@ interface CartItemsResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
-     * @param string $uuidQuote
+     * @param string|null $uuidQuote
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\RestCartItemRequestTransfer
      */
     public function createRestCartItemRequestTransfer(
         ItemTransfer $cartItem,
-        string $uuidQuote,
+        ?string $uuidQuote,
         RestRequestInterface $restRequest
     ): RestCartItemRequestTransfer;
 

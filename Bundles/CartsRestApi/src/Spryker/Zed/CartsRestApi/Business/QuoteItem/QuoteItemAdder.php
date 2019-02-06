@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
@@ -54,16 +56,30 @@ class QuoteItemAdder implements QuoteItemAdderInterface
     {
         $restCartItemRequestTransfer
             ->requireCartItem()
-            ->requireCartUuid()
             ->requireCustomerReference();
 
-        $restCartItemRequestTransfer->getCartItem()
-            ->requireSku();
+        $quoteResponseTransfer = $this->quoteItemMapper->createQuoteResponseTransfer($restCartItemRequestTransfer);
+        if (!$restCartItemRequestTransfer->getCartUuid()) {
+            $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING));
+
+            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
+        }
+
+        if ($restCartItemRequestTransfer->getCartItem()->getSku() || $restCartItemRequestTransfer->getCartItem()->getGroupKey()) {
+            $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION));
+
+            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
+        }
 
         $quoteResponseTransfer = $this->cartReader->findQuoteByUuid(
             $this->quoteItemMapper->mapRestCartItemRequestTransferToQuoteTransfer($restCartItemRequestTransfer)
         );
-
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
@@ -74,8 +90,10 @@ class QuoteItemAdder implements QuoteItemAdderInterface
         );
 
         $quoteResponseTransfer = $this->persistentCartFacade->add($persistentCartChangeTransfer);
-
         if (!$quoteResponseTransfer->getIsSuccessful()) {
+            $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND));
+
             return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer
             );
