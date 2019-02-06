@@ -67,6 +67,20 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
             return $quoteResponseTransfer;
         }
 
+        $ifRequestedItemPresentInQuote = $this->checkIfRequestedItemPresentInQuote(
+            $restCartItemRequestTransfer->getCartItem()->getSku(),
+            $quoteResponseTransfer->getQuoteTransfer()->getItems()->getArrayCopy()
+        );
+
+        if (!$ifRequestedItemPresentInQuote) {
+            $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND));
+
+            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
+        }
+
         $persistentCartChangeQuantityTransfer = $this->quoteItemMapper->createPersistentCartChangeQuantityTransfer(
             $quoteResponseTransfer->getQuoteTransfer(),
             $restCartItemRequestTransfer
@@ -90,5 +104,26 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
         }
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param string $itemSku
+     * @param array $items
+     *
+     * @return bool
+     */
+    protected function checkIfRequestedItemPresentInQuote(string $itemSku, array $items): bool
+    {
+        if (empty($items)) {
+            return false;
+        }
+
+        foreach ($items as $item) {
+            if ($item->getSku() === $itemSku) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

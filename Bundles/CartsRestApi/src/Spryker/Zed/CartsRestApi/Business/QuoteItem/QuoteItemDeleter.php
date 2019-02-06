@@ -67,6 +67,20 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
             return $quoteResponseTransfer;
         }
 
+        $ifRequestedItemPresentInQuote = $this->checkIfRequestedItemPresentInQuote(
+            $restCartItemRequestTransfer->getCartItem()->getSku(),
+            $quoteResponseTransfer->getQuoteTransfer()->getItems()->getArrayCopy()
+        );
+
+        if (!$ifRequestedItemPresentInQuote) {
+            $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND));
+
+            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
+        }
+
         $persistentCartChangeTransfer = $this->quoteItemMapper->createPersistentCartChangeTransfer(
             $quoteResponseTransfer->getQuoteTransfer(),
             $restCartItemRequestTransfer
@@ -82,7 +96,6 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
         }
 
         $quoteResponseTransfer = $this->persistentCartFacade->remove($persistentCartChangeTransfer);
-
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer
@@ -90,5 +103,26 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
         }
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param string $itemSku
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return bool
+     */
+    protected function checkIfRequestedItemPresentInQuote(string $itemSku, array $items): bool
+    {
+        if (empty($items)) {
+            return false;
+        }
+
+        foreach ($items as $item) {
+            if ($item->getSku() === $itemSku) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
