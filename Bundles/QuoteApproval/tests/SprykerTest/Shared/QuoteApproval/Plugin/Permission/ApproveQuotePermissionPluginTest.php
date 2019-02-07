@@ -8,11 +8,9 @@
 namespace SprykerTest\Shared\QuoteApproval\Plugin\Permission;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
+use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 
 /**
  * Auto-generated group annotations
@@ -26,20 +24,21 @@ use Spryker\Shared\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
  */
 class ApproveQuotePermissionPluginTest extends Unit
 {
-    protected const FIELD_MULTI_CURRENCY = 'multi_currency';
+    protected const FIELD_MULTI_CURRENCY = 'store_multi_currency';
     protected const CURRENCY_CODE = 'EUR';
     protected const CENT_AMOUNT = 100;
+    protected const CENT_SHIPMENT_COST = 20;
+    protected const STORE_NAME = 'DE';
 
     /**
      * @return void
      */
     public function testCanWithValidDataReturnTrue(): void
     {
-        $configuration[static::FIELD_MULTI_CURRENCY][static::CURRENCY_CODE] = static::CENT_AMOUNT;
-        $quoteTransfer = $this->createQuoteTransfer();
+        $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = static::CENT_AMOUNT;
 
         $approveQuotePermissionPlugin = $this->createApproveQuotePermissionPlugin();
-        $result = $approveQuotePermissionPlugin->can($configuration, $quoteTransfer);
+        $result = $approveQuotePermissionPlugin->can($configuration, $this->getContext());
 
         $this->assertTrue($result);
     }
@@ -49,11 +48,10 @@ class ApproveQuotePermissionPluginTest extends Unit
      */
     public function testCanWithNullConfigurationCentAmountDataReturnTrue(): void
     {
-        $configuration[static::FIELD_MULTI_CURRENCY][static::CURRENCY_CODE] = null;
-        $quoteTransfer = $this->createQuoteTransfer();
+        $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = null;
 
         $approveQuotePermissionPlugin = $this->createApproveQuotePermissionPlugin();
-        $result = $approveQuotePermissionPlugin->can($configuration, $quoteTransfer);
+        $result = $approveQuotePermissionPlugin->can($configuration, $this->getContext());
 
         $this->assertTrue($result);
     }
@@ -63,11 +61,10 @@ class ApproveQuotePermissionPluginTest extends Unit
      */
     public function testCanWithZeroConfigurationCentAmountDataReturnFalse(): void
     {
-        $configuration[static::FIELD_MULTI_CURRENCY][static::CURRENCY_CODE] = 0;
-        $quoteTransfer = $this->createQuoteTransfer();
+        $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = 0;
 
         $approveQuotePermissionPlugin = $this->createApproveQuotePermissionPlugin();
-        $result = $approveQuotePermissionPlugin->can($configuration, $quoteTransfer);
+        $result = $approveQuotePermissionPlugin->can($configuration, $this->getContext());
 
         $this->assertFalse($result);
     }
@@ -77,7 +74,7 @@ class ApproveQuotePermissionPluginTest extends Unit
      */
     public function testCanWithEmptyQuoteReturnFalse(): void
     {
-        $configuration[static::FIELD_MULTI_CURRENCY][static::CURRENCY_CODE] = static::CENT_AMOUNT;
+        $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = static::CENT_AMOUNT;
 
         $approveQuotePermissionPlugin = $this->createApproveQuotePermissionPlugin();
         $result = $approveQuotePermissionPlugin->can($configuration, null);
@@ -90,27 +87,24 @@ class ApproveQuotePermissionPluginTest extends Unit
      */
     public function testCanWithLessGrandTotalAmountReturnFalse(): void
     {
-        $configuration[static::FIELD_MULTI_CURRENCY][static::CURRENCY_CODE] = static::CENT_AMOUNT - 1;
-        $quoteTransfer = $this->createQuoteTransfer();
+        $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = static::CENT_AMOUNT - 1;
 
         $approveQuotePermissionPlugin = $this->createApproveQuotePermissionPlugin();
-        $result = $approveQuotePermissionPlugin->can($configuration, $quoteTransfer);
+        $result = $approveQuotePermissionPlugin->can($configuration, $this->getContext());
 
         $this->assertFalse($result);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return array
      */
-    protected function createQuoteTransfer(): QuoteTransfer
+    protected function getContext(): array
     {
-        $totalsTransfer = (new TotalsTransfer())->setGrandTotal(static::CENT_AMOUNT);
-        $currencyTransfer = (new CurrencyTransfer())->setCode(static::CURRENCY_CODE);
-        $quoteTransfer = (new QuoteTransfer())
-            ->setTotals($totalsTransfer)
-            ->setCurrency($currencyTransfer);
-
-        return $quoteTransfer;
+        return [
+            QuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT => static::CENT_AMOUNT,
+            QuoteApprovalConfig::PERMISSION_CONTEXT_CURRENCY_CODE => static::CURRENCY_CODE,
+            QuoteApprovalConfig::PERMISSION_CONTEXT_STORE_NAME => static::STORE_NAME,
+        ];
     }
 
     /**

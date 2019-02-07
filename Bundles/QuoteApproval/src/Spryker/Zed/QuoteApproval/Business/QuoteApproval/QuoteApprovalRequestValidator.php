@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
+use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
@@ -56,21 +57,29 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     protected $companyUserFacade;
 
     /**
+     * @var \Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface
+     */
+    protected $permissionContextProvider;
+
+    /**
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface $quoteStatusCalculator
      * @param \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface $quoteApprovalRepository
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface $companyUserFacade
+     * @param \Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface $permissionContextProvider
      */
     public function __construct(
         QuoteApprovalToQuoteFacadeInterface $quoteFacade,
         QuoteStatusCalculatorInterface $quoteStatusCalculator,
         QuoteApprovalRepositoryInterface $quoteApprovalRepository,
-        QuoteApprovalToCompanyUserFacadeInterface $companyUserFacade
+        QuoteApprovalToCompanyUserFacadeInterface $companyUserFacade,
+        PermissionContextProviderInterface $permissionContextProvider
     ) {
         $this->quoteFacade = $quoteFacade;
         $this->quoteStatusCalculator = $quoteStatusCalculator;
         $this->quoteApprovalRepository = $quoteApprovalRepository;
         $this->companyUserFacade = $companyUserFacade;
+        $this->permissionContextProvider = $permissionContextProvider;
     }
 
     /**
@@ -260,7 +269,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         return $this->can(
             ApproveQuotePermissionPlugin::KEY,
             $idCompanyUser,
-            $quoteTransfer
+            $this->permissionContextProvider->provideContext($quoteTransfer)
         );
     }
 

@@ -18,6 +18,8 @@ use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReader;
 use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReaderInterface;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStub;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface;
+use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProvider;
+use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface;
 use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculator;
 use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
 
@@ -38,8 +40,17 @@ class QuoteApprovalFactory extends AbstractFactory
     {
         return new QuoteStatusChecker(
             $this->getPermissionClient(),
-            $this->createQuoteStatusCalculator()
+            $this->createQuoteStatusCalculator(),
+            $this->createPermissionContextProvider()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface
+     */
+    public function createPermissionContextProvider(): PermissionContextProviderInterface
+    {
+        return new PermissionContextProvider();
     }
 
     /**
