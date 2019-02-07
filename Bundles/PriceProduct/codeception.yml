@@ -2,6 +2,7 @@ namespace: SprykerTest
 
 include:
     - tests/SprykerTest/Zed/PriceProduct
+    - tests/SprykerTest/Service/PriceProduct
 
 paths:
     tests: tests

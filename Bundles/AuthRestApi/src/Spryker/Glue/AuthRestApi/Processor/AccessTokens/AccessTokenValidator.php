@@ -40,24 +40,24 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
     {
         $isProtected = $request->attributes->get('is-protected', false);
 
-        if ($isProtected === false) {
-            return null;
-        }
-
         $authorizationToken = $request->headers->get('Authorization');
-        if (!$authorizationToken) {
+        if (!$authorizationToken && $isProtected === true) {
             return $this->createErrorMessageTransfer(
-                'Missing access token.',
+                AuthRestApiConfig::RESPONSE_DETAIL_MISSING_ACCESS_TOKEN,
                 Response::HTTP_FORBIDDEN,
                 AuthRestApiConfig::RESPONSE_CODE_FORBIDDEN
             );
+        }
+
+        if (!$authorizationToken) {
+            return null;
         }
 
         $authAccessTokenValidationResponseTransfer = $this->validateAccessToken((string)$authorizationToken);
 
         if (!$authAccessTokenValidationResponseTransfer->getIsValid()) {
             return $this->createErrorMessageTransfer(
-                'Invalid access token.',
+                AuthRestApiConfig::RESPONSE_DETAIL_INVALID_ACCESS_TOKEN,
                 Response::HTTP_UNAUTHORIZED,
                 AuthRestApiConfig::RESPONSE_CODE_ACCESS_CODE_INVALID
             );

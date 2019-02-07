@@ -30,6 +30,7 @@ class CmsDataPageMapBuilder implements NamedPageMapInterface
     public const TYPE = 'type';
     public const ID_CMS_PAGE = 'id_cms_page';
     public const NAME = 'name';
+    protected const COL_NAME = 'name';
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
@@ -41,9 +42,10 @@ class CmsDataPageMapBuilder implements NamedPageMapInterface
     public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $cmsPageData, LocaleTransfer $localeTransfer)
     {
         $isActive = $cmsPageData['is_active'] && $cmsPageData['is_searchable'];
+        $storeName = $cmsPageData['store_name'] ?? Store::getInstance()->getStoreName();
 
         $pageMapTransfer = (new PageMapTransfer())
-            ->setStore(Store::getInstance()->getStoreName())
+            ->setStore($storeName)
             ->setLocale($localeTransfer->getLocaleName())
             ->setType(static::TYPE_CMS_PAGE)
             ->setIsActive($isActive);
@@ -62,6 +64,8 @@ class CmsDataPageMapBuilder implements NamedPageMapInterface
             ->addFullText($pageMapTransfer, implode(',', array_values($cmsPageData['placeholders'])))
             ->addSuggestionTerms($pageMapTransfer, $cmsPageData['name'])
             ->addCompletionTerms($pageMapTransfer, $cmsPageData['name']);
+
+        $pageMapTransfer = $this->addSort($pageMapBuilder, $pageMapTransfer, $cmsPageData);
 
         return $pageMapTransfer;
     }
@@ -93,5 +97,19 @@ class CmsDataPageMapBuilder implements NamedPageMapInterface
     public function getName()
     {
         return CmsPageSearchConstants::CMS_PAGE_RESOURCE_NAME;
+    }
+
+    /**
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param array $cmsPageData
+     *
+     * @return \Generated\Shared\Transfer\PageMapTransfer
+     */
+    protected function addSort(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $cmsPageData): PageMapTransfer
+    {
+        $pageMapBuilder->addStringSort($pageMapTransfer, static::COL_NAME, $cmsPageData['name']);
+
+        return $pageMapTransfer;
     }
 }
