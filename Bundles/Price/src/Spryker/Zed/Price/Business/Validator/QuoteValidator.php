@@ -46,9 +46,9 @@ class QuoteValidator implements QuoteValidatorInterface
             return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_PRICE_MODE_DATA_IS_MISSING);
         }
 
-        $availablePiceModes = $this->priceConfig->getPriceModes();
+        $availablePriceModes = $this->priceConfig->getPriceModes();
 
-        if (!isset($availablePiceModes[$priceMode])) {
+        if (!isset($availablePriceModes[$priceMode])) {
             return $this->addValidationError(
                 $quoteValidationResponseTransfer,
                 static::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT,
