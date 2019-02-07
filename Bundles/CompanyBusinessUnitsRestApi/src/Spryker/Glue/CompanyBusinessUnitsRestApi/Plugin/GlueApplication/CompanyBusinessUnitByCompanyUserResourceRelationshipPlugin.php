@@ -37,9 +37,9 @@ class CompanyBusinessUnitByCompanyUserResourceRelationshipPlugin extends Abstrac
     }
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @return string
      */

@@ -37,9 +37,9 @@ class CompanyByCompanyUserResourceRelationshipPlugin extends AbstractPlugin impl
     }
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @return string
      */
