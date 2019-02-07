@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\QuoteRequest;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Shared\QuoteRequest\QuoteRequestConstants;
@@ -35,7 +36,9 @@ class QuoteRequestConfig extends AbstractBundleConfig
      */
     public function getQuoteFieldsAllowedForSaving(): array
     {
-        return [];
+        return [
+            QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE,
+        ];
     }
 
     /**

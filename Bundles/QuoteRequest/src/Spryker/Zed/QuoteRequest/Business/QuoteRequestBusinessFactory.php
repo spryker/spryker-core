@@ -8,10 +8,13 @@
 namespace Spryker\Zed\QuoteRequest\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestChecker;
+use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestCheckerInterface;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGenerator;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriter;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriterInterface;
+use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToSequenceNumberInterface;
 use Spryker\Zed\QuoteRequest\QuoteRequestDependencyProvider;
@@ -33,7 +36,18 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createQuoteRequestReferenceGenerator(),
-            $this->getCompanyUserFacade()
+            $this->getCompanyUserFacade(),
+            $this->getCalculationFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestCheckerInterface
+     */
+    public function createQuoteRequestChecker(): QuoteRequestCheckerInterface
+    {
+        return new QuoteRequestChecker(
+            $this->getRepository()
         );
     }
 
@@ -62,5 +76,13 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     protected function getCompanyUserFacade(): QuoteRequestToCompanyUserInterface
     {
         return $this->getProvidedDependency(QuoteRequestDependencyProvider::FACADE_COMPANY_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationInterface
+     */
+    protected function getCalculationFacade(): QuoteRequestToCalculationInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestDependencyProvider::FACADE_CALCULATION);
     }
 }

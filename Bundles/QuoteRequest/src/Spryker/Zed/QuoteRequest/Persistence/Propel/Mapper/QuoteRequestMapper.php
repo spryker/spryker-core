@@ -41,17 +41,17 @@ class QuoteRequestMapper
     public function mapEntityCollectionToTransferCollection(
         Collection $quoteRequestEntities
     ): QuoteRequestCollectionTransfer {
-        $quoteRequestItemCollectionTransfer = new QuoteRequestCollectionTransfer();
+        $quoteRequestCollectionTransfer = new QuoteRequestCollectionTransfer();
 
         foreach ($quoteRequestEntities as $quoteRequestEntity) {
-            $quoteRequestItemTransfer = $this->mapQuoteRequestEntityToQuoteRequestTransfer(
+            $quoteRequestTransfer = $this->mapQuoteRequestEntityToQuoteRequestTransfer(
                 $quoteRequestEntity,
                 new QuoteRequestTransfer()
             );
-            $quoteRequestItemCollectionTransfer->addQuoteRequest($quoteRequestItemTransfer);
+            $quoteRequestCollectionTransfer->addQuoteRequest($quoteRequestTransfer);
         }
 
-        return $quoteRequestItemCollectionTransfer;
+        return $quoteRequestCollectionTransfer;
     }
 
     /**

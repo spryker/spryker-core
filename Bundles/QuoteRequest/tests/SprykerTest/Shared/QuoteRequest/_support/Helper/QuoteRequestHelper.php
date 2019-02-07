@@ -37,8 +37,8 @@ class QuoteRequestHelper extends Module
      */
     public function haveQuoteRequestVersion(array $seed = []): QuoteRequestVersionTransfer
     {
-        $quoteRequestTransfer = (new QuoteRequestVersionBuilder($seed))->build();
+        $quoteRequestVersionTransfer = (new QuoteRequestVersionBuilder($seed))->build();
 
-        return $quoteRequestTransfer;
+        return $quoteRequestVersionTransfer;
     }
 }
