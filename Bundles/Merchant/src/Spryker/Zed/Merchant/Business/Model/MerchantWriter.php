@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\Merchant\Business\Model;
 
+use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\Merchant\Business\Address\MerchantAddressWriterInterface;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
+use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface;
 use Spryker\Zed\Merchant\MerchantConfig;
 use Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface;
 
@@ -30,7 +31,7 @@ class MerchantWriter implements MerchantWriterInterface
     protected $merchantKeyGenerator;
 
     /**
-     * @var \Spryker\Zed\Merchant\Business\Address\MerchantAddressWriterInterface
+     * @var \Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface
      */
     protected $merchantAddressWriter;
 
@@ -42,7 +43,7 @@ class MerchantWriter implements MerchantWriterInterface
     /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $entityManager
      * @param \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface $merchantKeyGenerator
-     * @param \Spryker\Zed\Merchant\Business\Address\MerchantAddressWriterInterface $merchantAddressWriter
+     * @param \Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface $merchantAddressWriter
      * @param \Spryker\Zed\Merchant\MerchantConfig $config
      */
     public function __construct(
@@ -98,9 +99,7 @@ class MerchantWriter implements MerchantWriterInterface
     {
         $merchantTransfer = $this->entityManager->saveMerchant($merchantTransfer);
 
-        $merchantAddressTransfer = $merchantTransfer->getAddress();
-        $merchantAddressTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
-        $merchantAddressTransfer = $this->merchantAddressWriter->create($merchantAddressTransfer);
+        $merchantAddressTransfer = $this->createMerchantAddress($merchantTransfer);
         $merchantTransfer->setAddress($merchantAddressTransfer);
 
         return $merchantTransfer;
@@ -174,5 +173,19 @@ class MerchantWriter implements MerchantWriterInterface
     protected function executeDeleteTransaction(MerchantTransfer $merchantTransfer): void
     {
         $this->entityManager->deleteMerchantById($merchantTransfer->getIdMerchant());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
+     */
+    protected function createMerchantAddress(MerchantTransfer $merchantTransfer): MerchantAddressTransfer
+    {
+        $merchantAddressTransfer = $merchantTransfer->getAddress();
+        $merchantAddressTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+        $merchantAddressTransfer = $this->merchantAddressWriter->create($merchantAddressTransfer);
+
+        return $merchantAddressTransfer;
     }
 }

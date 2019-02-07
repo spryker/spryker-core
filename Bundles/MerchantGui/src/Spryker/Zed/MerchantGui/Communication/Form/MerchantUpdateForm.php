@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantGui\Communication\Form;
 
 use Generated\Shared\Transfer\MerchantTransfer;
+use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -113,13 +114,24 @@ class MerchantUpdateForm extends MerchantForm
             new Email(),
             new Length(['max' => 255]),
             new Callback([
-                'callback' => function ($email, ExecutionContextInterface $context) use ($merchantFacade, $currentId) {
-                    $merchantTransfer = $merchantFacade->findMerchantByEmail((new MerchantTransfer())->setEmail($email));
-                    if ($merchantTransfer !== null && $merchantTransfer->getIdMerchant() !== $currentId) {
-                        $context->addViolation('Email is already used');
-                    }
-                },
+                'callback' => $this->getExistingEmailValidationCallback($currentId, $merchantFacade),
             ]),
         ];
+    }
+
+    /**
+     * @param int|null $currentId
+     * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface $merchantFacade
+     *
+     * @return callable
+     */
+    protected function getExistingEmailValidationCallback(?int $currentId, MerchantGuiToMerchantFacadeInterface $merchantFacade): callable
+    {
+        return function ($email, ExecutionContextInterface $context) use ($merchantFacade, $currentId) {
+            $merchantTransfer = $merchantFacade->findMerchantByEmail((new MerchantTransfer())->setEmail($email));
+            if ($merchantTransfer !== null && $merchantTransfer->getIdMerchant() !== $currentId) {
+                $context->addViolation('Email is already used.');
+            }
+        };
     }
 }

@@ -39,7 +39,7 @@ class MerchantAddressFormDataProvider
     /**
      * @param int|null $idMerchantAddress
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
      */
     public function getData(?int $idMerchantAddress = null): ?MerchantAddressTransfer
     {
@@ -69,12 +69,12 @@ class MerchantAddressFormDataProvider
      */
     protected function prepareCountryChoices(): array
     {
-        $result = [];
+        $countryChoices = [];
 
         foreach ($this->countryFacade->getAvailableCountries()->getCountries() as $country) {
-            $result[$country->getIdCountry()] = $country->getName();
+            $countryChoices[$country->getIdCountry()] = $country->getName();
         }
 
-        return $result;
+        return $countryChoices;
     }
 }

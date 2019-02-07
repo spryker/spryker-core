@@ -46,14 +46,14 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer|null $data
+     * @param \Generated\Shared\Transfer\MerchantTransfer|null $merchantTransfer
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getMerchantUpdateForm(?MerchantTransfer $data = null, array $options = []): FormInterface
+    public function getMerchantUpdateForm(?MerchantTransfer $merchantTransfer = null, array $options = []): FormInterface
     {
-        return $this->getFormFactory()->create(MerchantUpdateForm::class, $data, $options);
+        return $this->getFormFactory()->create(MerchantUpdateForm::class, $merchantTransfer, $options);
     }
 
     /**

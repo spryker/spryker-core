@@ -35,7 +35,7 @@ class MerchantPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createPropelMerchantMapper(): MerchantMapperInterface
     {
-        return new MerchantMapper($this->createPropelMerchantAddressMapper());
+        return new MerchantMapper($this->createMerchantAddressMapper());
     }
 
     /**
@@ -49,7 +49,7 @@ class MerchantPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantAddressMapperInterface
      */
-    public function createPropelMerchantAddressMapper(): MerchantAddressMapperInterface
+    public function createMerchantAddressMapper(): MerchantAddressMapperInterface
     {
         return new MerchantAddressMapper();
     }

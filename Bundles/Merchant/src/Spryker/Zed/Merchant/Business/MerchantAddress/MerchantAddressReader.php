@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Merchant\Business\Address;
+namespace Spryker\Zed\Merchant\Business\MerchantAddress;
 
 use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
