@@ -8,24 +8,21 @@
 namespace Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 
 class PermissionContextProvider implements PermissionContextProviderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|null
+     * @return array
      */
-    public function provideContext(?QuoteTransfer $quoteTransfer): ?array
+    public function provideContext(QuoteTransfer $quoteTransfer): array
     {
-        if ($quoteTransfer === null) {
-            return null;
-        }
-
         return [
-            static::CENT_AMOUNT => $this->getQuoteSum($quoteTransfer),
-            static::STORE_NAME => $quoteTransfer->getStore()->getName(),
-            static::CURRENCY_CODE => $quoteTransfer->getCurrency()->getCode(),
+            QuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT => $this->getQuoteSum($quoteTransfer),
+            QuoteApprovalConfig::PERMISSION_CONTEXT_STORE_NAME => $quoteTransfer->getStore()->getName(),
+            QuoteApprovalConfig::PERMISSION_CONTEXT_CURRENCY_CODE => $quoteTransfer->getCurrency()->getCode(),
         ];
     }
 

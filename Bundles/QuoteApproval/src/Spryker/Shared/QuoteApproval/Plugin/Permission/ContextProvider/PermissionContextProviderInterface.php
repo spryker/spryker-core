@@ -11,14 +11,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface PermissionContextProviderInterface
 {
-    public const CENT_AMOUNT = 'CENT_AMOUNT';
-    public const STORE_NAME = 'STORE_NAME';
-    public const CURRENCY_CODE = 'CURRENCY_CODE';
-
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|null
+     * @return array
      */
-    public function provideContext(?QuoteTransfer $quoteTransfer): ?array;
+    public function provideContext(QuoteTransfer $quoteTransfer): array;
 }

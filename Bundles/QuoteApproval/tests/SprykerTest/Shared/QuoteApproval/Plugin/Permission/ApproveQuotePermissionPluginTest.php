@@ -10,7 +10,7 @@ namespace SprykerTest\Shared\QuoteApproval\Plugin\Permission;
 use Codeception\Test\Unit;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
-use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface;
+use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 
 /**
  * Auto-generated group annotations
@@ -101,9 +101,9 @@ class ApproveQuotePermissionPluginTest extends Unit
     protected function getContext(): array
     {
         return [
-            PermissionContextProviderInterface::CURRENCY_CODE => static::CURRENCY_CODE,
-            PermissionContextProviderInterface::CENT_AMOUNT => static::CENT_AMOUNT,
-            PermissionContextProviderInterface::STORE_NAME => static::STORE_NAME,
+            QuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT => static::CENT_AMOUNT,
+            QuoteApprovalConfig::PERMISSION_CONTEXT_CURRENCY_CODE => static::CURRENCY_CODE,
+            QuoteApprovalConfig::PERMISSION_CONTEXT_STORE_NAME => static::STORE_NAME,
         ];
     }
 

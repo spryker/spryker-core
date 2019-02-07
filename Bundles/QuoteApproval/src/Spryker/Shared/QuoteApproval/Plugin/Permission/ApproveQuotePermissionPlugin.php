@@ -8,7 +8,7 @@
 namespace Spryker\Shared\QuoteApproval\Plugin\Permission;
 
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
-use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface;
+use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 
 class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterface
 {
@@ -34,9 +34,9 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
             return false;
         }
 
-        $centAmount = $context[PermissionContextProviderInterface::CENT_AMOUNT];
-        $storeName = $context[PermissionContextProviderInterface::STORE_NAME];
-        $currencyCode = $context[PermissionContextProviderInterface::CURRENCY_CODE];
+        $centAmount = $context[QuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT];
+        $storeName = $context[QuoteApprovalConfig::PERMISSION_CONTEXT_STORE_NAME];
+        $currencyCode = $context[QuoteApprovalConfig::PERMISSION_CONTEXT_CURRENCY_CODE];
 
         if (!isset($configuration[static::FIELD_STORE_MULTI_CURRENCY][$storeName][$currencyCode])) {
             return true;
