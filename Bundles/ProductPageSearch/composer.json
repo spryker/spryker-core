@@ -31,6 +31,7 @@
     "spryker/locale": "*",
     "spryker/product-attribute": "*",
     "spryker/propel": "*",
+    "spryker/queue": "*",
     "spryker/testify": "*"
   },
   "suggest": {
