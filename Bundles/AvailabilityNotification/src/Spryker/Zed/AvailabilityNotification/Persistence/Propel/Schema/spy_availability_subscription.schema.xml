@@ -38,7 +38,7 @@
             <unique-column name="fk_store"/>
         </unique>
 
-        <unique name="spy_availability_notification_subscription-unique-subscription_key">
+        <unique name="spy_availability_notification_subscription-unq-subscription_key">
             <unique-column name="subscription_key"/>
         </unique>
 
