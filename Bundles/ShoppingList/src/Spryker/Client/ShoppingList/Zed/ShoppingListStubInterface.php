@@ -153,6 +153,11 @@ interface ShoppingListStubInterface
     public function getLastResponseErrorMessages(): array;
 
     /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesErrorMessages(): array;
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListDismissRequestTransfer $shoppingListDismissRequest
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer

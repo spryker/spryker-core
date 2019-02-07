@@ -19,9 +19,9 @@ use Spryker\Zed\Cms\Business\Exception\LocaleNotFoundException;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
 use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class PageManager implements PageManagerInterface
@@ -37,40 +37,31 @@ class PageManager implements PageManagerInterface
     protected $templateManager;
 
     /**
-     * @deprecated
-     *
-     * @var mixed
-     */
-    protected $blockManager;
-
-    /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface
      */
     protected $touchFacade;
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeInterface
      */
     protected $urlFacade;
 
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface $templateManager
-     * @param mixed $blockManager @deprecated
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface $glossaryFacade
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface $urlFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface $glossaryFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface $touchFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeInterface $urlFacade
      */
-    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, TemplateManagerInterface $templateManager, $blockManager, CmsToGlossaryInterface $glossaryFacade, CmsToTouchInterface $touchFacade, CmsToUrlInterface $urlFacade)
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, TemplateManagerInterface $templateManager, CmsToGlossaryFacadeInterface $glossaryFacade, CmsToTouchFacadeInterface $touchFacade, CmsToUrlFacadeInterface $urlFacade)
     {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->templateManager = $templateManager;
-        $this->blockManager = $blockManager;
         $this->glossaryFacade = $glossaryFacade;
         $this->touchFacade = $touchFacade;
         $this->urlFacade = $urlFacade;
@@ -81,7 +72,7 @@ class PageManager implements PageManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
-    public function savePage(PageTransfer $pageTransfer)
+    public function savePage(PageTransfer $pageTransfer): PageTransfer
     {
         $this->checkTemplateExists($pageTransfer->getFkTemplate());
 
@@ -97,7 +88,7 @@ class PageManager implements PageManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
-    protected function createPage(PageTransfer $pageTransfer)
+    protected function createPage(PageTransfer $pageTransfer): PageTransfer
     {
         $this->checkTemplateExists($pageTransfer->getFkTemplate());
 
@@ -119,7 +110,7 @@ class PageManager implements PageManagerInterface
      *
      * @return void
      */
-    protected function persistNewPage(PageTransfer $pageTransfer)
+    protected function persistNewPage(PageTransfer $pageTransfer): void
     {
         $pageEntity = new SpyCmsPage();
         $pageEntity->fromArray($pageTransfer->toArray());
@@ -140,7 +131,7 @@ class PageManager implements PageManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
-    protected function updatePage(PageTransfer $pageTransfer)
+    protected function updatePage(PageTransfer $pageTransfer): PageTransfer
     {
         $this->cmsQueryContainer
             ->getConnection()
@@ -160,7 +151,7 @@ class PageManager implements PageManagerInterface
      *
      * @return void
      */
-    protected function persistExistingPage(PageTransfer $pageTransfer)
+    protected function persistExistingPage(PageTransfer $pageTransfer): void
     {
         $pageEntity = $this->getPageById($pageTransfer->getIdCmsPage());
         $pageEntity->fromArray($pageTransfer->modifiedToArray());
@@ -182,7 +173,7 @@ class PageManager implements PageManagerInterface
      *
      * @return void
      */
-    protected function checkTemplateExists($idTemplate)
+    protected function checkTemplateExists(int $idTemplate): void
     {
         if (!$this->templateManager->hasTemplateId($idTemplate)) {
             throw new MissingTemplateException(sprintf('Tried to save page referring to a missing template with id %s', $idTemplate));
@@ -196,7 +187,7 @@ class PageManager implements PageManagerInterface
      *
      * @return void
      */
-    protected function checkPageExists($idPage)
+    protected function checkPageExists(int $idPage): void
     {
         if (!$this->hasPageId($idPage)) {
             throw new MissingPageException(sprintf('Tried to refer to a missing page with id %s', $idPage));
@@ -210,7 +201,7 @@ class PageManager implements PageManagerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
      */
-    public function getPageById($idPage)
+    public function getPageById(int $idPage): SpyCmsPage
     {
         $page = $this->cmsQueryContainer->queryPageById($idPage)
             ->findOne();
@@ -226,7 +217,7 @@ class PageManager implements PageManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
-    public function convertPageEntityToTransfer(SpyCmsPage $pageEntity)
+    public function convertPageEntityToTransfer(SpyCmsPage $pageEntity): PageTransfer
     {
         $pageTransfer = new PageTransfer();
         $pageTransfer->fromArray($pageEntity->toArray());
@@ -240,7 +231,7 @@ class PageManager implements PageManagerInterface
      *
      * @return void
      */
-    public function touchPageActive(PageTransfer $pageTransfer, ?LocaleTransfer $localeTransfer = null)
+    public function touchPageActive(PageTransfer $pageTransfer, ?LocaleTransfer $localeTransfer = null): void
     {
         $pageMappings = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($pageTransfer->getIdCmsPage())
             ->find();
@@ -256,7 +247,7 @@ class PageManager implements PageManagerInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createPageUrl(PageTransfer $pageTransfer)
+    public function createPageUrl(PageTransfer $pageTransfer): UrlTransfer
     {
         $this->checkPageExists($pageTransfer->getIdCmsPage());
         $idLocale = $pageTransfer->getUrl()->getFkLocale();
@@ -275,7 +266,7 @@ class PageManager implements PageManagerInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function updatePageUrl(PageTransfer $pageTransfer)
+    public function updatePageUrl(PageTransfer $pageTransfer): UrlTransfer
     {
         $this->checkPageExists($pageTransfer->getIdCmsPage());
 
@@ -289,7 +280,7 @@ class PageManager implements PageManagerInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createPageUrlWithLocale(PageTransfer $pageTransfer, $url, LocaleTransfer $localeTransfer)
+    public function createPageUrlWithLocale(PageTransfer $pageTransfer, string $url, LocaleTransfer $localeTransfer): UrlTransfer
     {
         $this->checkPageExists($pageTransfer->getIdCmsPage());
 
@@ -307,7 +298,7 @@ class PageManager implements PageManagerInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function savePageUrlAndTouch(PageTransfer $pageTransfer)
+    public function savePageUrlAndTouch(PageTransfer $pageTransfer): UrlTransfer
     {
         $this->cmsQueryContainer->getConnection()->beginTransaction();
 
@@ -331,7 +322,7 @@ class PageManager implements PageManagerInterface
      *
      * @return bool
      */
-    protected function hasPageId($idPage)
+    protected function hasPageId(int $idPage): bool
     {
         $query = $this->cmsQueryContainer->queryPageById($idPage);
 
@@ -345,7 +336,7 @@ class PageManager implements PageManagerInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    protected function getLocaleTransfer($idLocale)
+    protected function getLocaleTransfer($idLocale): LocaleTransfer
     {
         $localeEntity = $this->cmsQueryContainer->queryLocaleById($idLocale)->findOne();
 
@@ -367,7 +358,7 @@ class PageManager implements PageManagerInterface
      *
      * @return void
      */
-    protected function createCmsPageLocalizedAttributes(ArrayObject $cmsPageLocalizedAttributesTransfers, SpyCmsPage $pageEntity)
+    protected function createCmsPageLocalizedAttributes(ArrayObject $cmsPageLocalizedAttributesTransfers, SpyCmsPage $pageEntity): void
     {
         foreach ($cmsPageLocalizedAttributesTransfers as $localizedAttributesTransfer) {
             $pageLocalizedAttributesEntity = new SpyCmsPageLocalizedAttributes();
@@ -385,7 +376,7 @@ class PageManager implements PageManagerInterface
      *
      * @return void
      */
-    protected function updateCmsPageLocalizedAttributes(ArrayObject $cmsPageLocalizedAttributesTransfers, SpyCmsPage $pageEntity)
+    protected function updateCmsPageLocalizedAttributes(ArrayObject $cmsPageLocalizedAttributesTransfers, SpyCmsPage $pageEntity): void
     {
         foreach ($cmsPageLocalizedAttributesTransfers as $localizedAttributesTransfer) {
             $cmsPageLocalizedAttributesEntity = $this->getLocalizedAttributesForPage($pageEntity, $localizedAttributesTransfer);
@@ -402,7 +393,7 @@ class PageManager implements PageManagerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes
      */
-    protected function getLocalizedAttributesForPage(SpyCmsPage $pageEntity, CmsPageLocalizedAttributesTransfer $localizedAttributesTransfer)
+    protected function getLocalizedAttributesForPage(SpyCmsPage $pageEntity, CmsPageLocalizedAttributesTransfer $localizedAttributesTransfer): SpyCmsPageLocalizedAttributes
     {
         $cmsPageLocalizedAttributesQuery = $this->cmsQueryContainer
             ->queryCmsPageLocalizedAttributes()
