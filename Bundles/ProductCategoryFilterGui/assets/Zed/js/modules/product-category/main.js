@@ -5,7 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
 var categoryTable = require('./category-table');
 
 $(document).ready(function() {
