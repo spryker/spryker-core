@@ -16,7 +16,6 @@ use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 
 /**
  * @method \Spryker\Zed\CompanyUser\Persistence\CompanyUserPersistenceFactory getFactory()
@@ -363,7 +362,6 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     {
         $query = $this->getFactory()
             ->createCompanyUserQuery()
-            ->setFormatter(PropelArraySetFormatter::class)
             ->filterByFkCompany_In($companyIds)
             ->filterByIsActive(true)
             ->useCustomerQuery()
@@ -371,6 +369,6 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->endUse()
             ->select([SpyCompanyUserTableMap::COL_ID_COMPANY_USER]);
 
-        return $query->find();
+        return $query->find()->getData();
     }
 }
