@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductAttributeGui\Communication\Controller;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Zed\ProductAttributeGui\Communication\ProductAttributeGuiCommunicationFactory getFactory()
@@ -32,7 +33,7 @@ class SaveController extends AbstractController
     public function productAbstractAction(Request $request)
     {
         if (!$this->validateCsrfToken($request)) {
-            return $this->createJsonResponse(static::MESSAGE_INVALID_CSRF_TOKEN, false, 403);
+            return $this->createJsonResponse(static::MESSAGE_INVALID_CSRF_TOKEN, false, Response::HTTP_FORBIDDEN);
         }
 
         $idProductAbstract = $this->castId($request->get(
@@ -100,7 +101,7 @@ class SaveController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    protected function createJsonResponse(string $message, bool $isSuccess = true, int $statusCode = 200): JsonResponse
+    protected function createJsonResponse(string $message, bool $isSuccess = true, int $statusCode = Response::HTTP_OK): JsonResponse
     {
         return $this->jsonResponse([
             'success' => $isSuccess,
