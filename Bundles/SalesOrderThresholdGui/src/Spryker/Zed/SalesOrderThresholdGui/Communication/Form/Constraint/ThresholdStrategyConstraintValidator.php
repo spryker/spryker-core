@@ -33,24 +33,28 @@ class ThresholdStrategyConstraintValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\ThresholdStrategyConstraint');
         }
 
-        /** @var \Symfony\Component\Form\Form $form */
-        $form = $this->context->getObject();
-        $data = $form->getParent()->getData();
+        $formData = $this->getFormData();
+
+        if ($formData[AbstractGlobalThresholdType::FIELD_THRESHOLD]) {
+            return;
+        }
+
+        $fieldsToCheck = [];
+        $thresholdGroup = '';
         $salesOrderThresholdFormExpanderPlugins = $constraint->getSalesOrderThresholdFormExpanderPlugins();
 
         foreach ($salesOrderThresholdFormExpanderPlugins as $salesOrderThresholdFormExpanderPlugin) {
-            if (!$this->isValidPlugin($salesOrderThresholdFormExpanderPlugin, $data)) {
+            if (!$this->isValidPlugin($salesOrderThresholdFormExpanderPlugin, $formData)) {
                 continue;
             }
 
-            $fields = $salesOrderThresholdFormExpanderPlugin->getThresholdFieldDependentFieldNames();
+            $fieldsToCheck = array_merge($fieldsToCheck, $salesOrderThresholdFormExpanderPlugin->getThresholdFieldDependentFieldNames());
+            $thresholdGroup = $salesOrderThresholdFormExpanderPlugin->getThresholdGroup();
+        }
 
-            foreach ($fields as $field) {
-                if ($data[$field] && !$data[AbstractGlobalThresholdType::FIELD_THRESHOLD]) {
-                    $this->createErrorMessage($salesOrderThresholdFormExpanderPlugin);
-                    return;
-                }
-            }
+        if (!$this->isFieldsValid($fieldsToCheck, $formData)) {
+            $message = strtr(static::MESSAGE_UPDATE_SOFT_STRATEGY_ERROR, [static::MESSAGE_KEY => $thresholdGroup]);
+            $this->context->addViolation($message);
         }
     }
 
@@ -64,11 +68,8 @@ class ThresholdStrategyConstraintValidator extends ConstraintValidator
     {
         if (!$plugin instanceof  SalesOrderThresholdFormFieldDependenciesPluginInterface
             || $plugin->getThresholdKey() !== $data[AbstractGlobalThresholdType::FIELD_STRATEGY]
+            || !$plugin->getThresholdFieldDependentFieldNames()
         ) {
-            return false;
-        }
-
-        if (!$plugin->getThresholdFieldDependentFieldNames()) {
             return false;
         }
 
@@ -76,15 +77,29 @@ class ThresholdStrategyConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param \Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface $plugin
+     * @param array $fields
+     * @param array $formData
      *
-     * @return void
+     * @return bool
      */
-    protected function createErrorMessage(SalesOrderThresholdFormExpanderPluginInterface $plugin): void
+    protected function isFieldsValid(array $fields, array $formData): bool
     {
-        $message = strtr(static::MESSAGE_UPDATE_SOFT_STRATEGY_ERROR, [
-            static::MESSAGE_KEY => $plugin->getThresholdGroup(),
-        ]);
-        $this->context->addViolation($message);
+        foreach ($fields as $field) {
+            if ($formData[$field]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getFormData(): array
+    {
+        /** @var \Symfony\Component\Form\Form $form */
+        $form = $this->context->getObject();
+        return $form->getParent()->getData();
     }
 }
