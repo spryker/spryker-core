@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockGui\Dependency\Facade;
 
-class CmsBlockGuiToProductBridge implements CmsBlockGuiToProductInterface
+class CmsBlockGuiToProductFacadeBridge implements CmsBlockGuiToProductFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockGui\Dependency\Facade;
 
-interface CmsBlockGuiToProductInterface
+interface CmsBlockGuiToProductFacadeInterface
 {
     /**
      * @param string $suggestion

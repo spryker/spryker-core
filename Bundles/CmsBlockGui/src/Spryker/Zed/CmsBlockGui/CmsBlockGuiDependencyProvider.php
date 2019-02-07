@@ -9,7 +9,7 @@ namespace Spryker\Zed\CmsBlockGui;
 
 use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockBridge;
 use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToLocaleBridge;
-use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToProductBridge;
+use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToProductFacadeBridge;
 use Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerBridge;
 use Spryker\Zed\CmsBlockGui\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -118,7 +118,7 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addProductFacade(Container $container): Container
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
-            return new CmsBlockGuiToProductBridge($container->getLocator()->product()->facade());
+            return new CmsBlockGuiToProductFacadeBridge($container->getLocator()->product()->facade());
         };
 
         return $container;

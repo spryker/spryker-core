@@ -20,7 +20,7 @@ use Spryker\Zed\CmsBlockGui\Communication\Formatter\ProductListFormatter;
 use Spryker\Zed\CmsBlockGui\Communication\Formatter\ProductListFormatterInterface;
 use Spryker\Zed\CmsBlockGui\Communication\Table\CmsBlockTable;
 use Spryker\Zed\CmsBlockGui\Communication\Tabs\CmsBlockGlossaryTabs;
-use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToProductInterface;
+use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToProductFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -65,9 +65,9 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToProductBridge
+     * @return \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToProductFacadeBridge
      */
-    public function getProductFacade(): CmsBlockGuiToProductInterface
+    public function getProductFacade(): CmsBlockGuiToProductFacadeInterface
     {
         return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::FACADE_PRODUCT);
     }
