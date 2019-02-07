@@ -169,7 +169,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             $this->touchAvailabilityAbstract($spyAvailabilityEntity->getFkAvailabilityAbstract());
         }
 
-        $this->triggerProductIsAvailableAgainEvent($spyAvailabilityEntity, $currentQuantity, $sku, $quantity, $storeTransfer, $isNeverOutOfStockModified);
+        $this->triggerProductIsAvailableAgainEvent($spyAvailabilityEntity, $currentQuantity, $sku, $quantity, $storeTransfer);
 
         return $spyAvailabilityEntity;
     }
@@ -348,7 +348,6 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      * @param string $sku
      * @param int $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param bool $isNeverOutOfStockModified
      *
      * @return void
      */
@@ -357,9 +356,10 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         int $currentQuantity,
         string $sku,
         int $quantity,
-        StoreTransfer $storeTransfer,
-        bool $isNeverOutOfStockModified
+        StoreTransfer $storeTransfer
     ): void {
+        $isNeverOutOfStockModified = $spyAvailabilityEntity->isColumnModified(SpyAvailabilityTableMap::COL_IS_NEVER_OUT_OF_STOCK);
+
         if (($this->isAvailabilityStatusChanged($currentQuantity, $quantity) || $isNeverOutOfStockModified)
             && ($quantity > 0 || $spyAvailabilityEntity->getIsNeverOutOfStock() === true)) {
             $availabilityNotificationDataTransfer = (new AvailabilityNotificationDataTransfer())
