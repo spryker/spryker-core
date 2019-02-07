@@ -24,6 +24,7 @@ use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
+use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface;
 
 class MethodReader extends Method
 {
@@ -166,14 +167,16 @@ class MethodReader extends Method
     ): ShipmentGroupCollectionTransfer {
         foreach ($shipmentGroupCollectionTransfer->getGroups() as $shipmentGroupTransfer) {
             $shipmentMethods = $shipmentGroupTransfer->getAvailableShipmentMethods();
-            /**
-             * @todo Update this with plugin resolving
-             */
+
             foreach ($this->shipmentMethodFilters as $shipmentMethodFilter) {
-                $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods(
-                    $shipmentGroupTransfer,
-                    $quoteTransfer
-                );
+                if ($shipmentMethodFilter instanceof ShipmentMethodFilterPluginInterface) {
+                    $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods($shipmentGroupTransfer,$quoteTransfer);
+                } else {
+                    /**
+                     * @deprecated Will be removed in next major release.
+                     */
+                    $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods($shipmentMethods, $quoteTransfer);
+                }
             }
             $shipmentGroupTransfer->setAvailableShipmentMethods($shipmentMethods);
         }
@@ -335,9 +338,6 @@ class MethodReader extends Method
      */
     protected function getPricePlugin(SpyShipmentMethod $method, array $pricePlugins)
     {
-        /**
-         * @todo Update this with plugin resolving
-         */
         return $pricePlugins[$method->getPricePlugin()];
     }
 
@@ -364,15 +364,19 @@ class MethodReader extends Method
         ShipmentGroupTransfer $shipmentGroupTransfer,
         QuoteTransfer $quoteTransfer
     ): ?int {
-        /**
-         * @todo Update this with plugin resolving
-         */
         $deliveryTime = null;
         $deliveryTimePlugins = $this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS];
 
         if ($this->issetDeliveryTimePlugin($method, $deliveryTimePlugins)) {
             $deliveryTimePlugin = $this->getDeliveryTimePlugin($method, $deliveryTimePlugins);
-            $deliveryTime = $deliveryTimePlugin->getTime($shipmentGroupTransfer, $quoteTransfer);
+            if ($availabilityPlugin instanceof ShipmentMethodAvailabilityPluginInterface) {
+                $deliveryTime = $deliveryTimePlugin->getTime($shipmentGroupTransfer, $quoteTransfer);
+            } else {
+                /**
+                 * @deprecated Will be removed in next major release.
+                 */
+                $deliveryTime = $deliveryTimePlugin->getTime($quoteTransfer);
+            }
         }
 
         return $deliveryTime;
@@ -386,9 +390,6 @@ class MethodReader extends Method
      */
     protected function issetDeliveryTimePlugin(SpyShipmentMethod $method, array $deliveryTimePlugins): bool
     {
-        /**
-         * @todo Update this with plugin resolving
-         */
         return isset($deliveryTimePlugins[$method->getDeliveryTimePlugin()]);
     }
 
@@ -400,9 +401,6 @@ class MethodReader extends Method
      */
     protected function getDeliveryTimePlugin(SpyShipmentMethod $method, array $deliveryTimePlugins)
     {
-        /**
-         * @todo Update this with plugin resolving
-         */
         return $deliveryTimePlugins[$method->getDeliveryTimePlugin()];
     }
 }
