@@ -12,6 +12,7 @@ use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationDependencyProvi
 use Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationBusinessFactory;
 use Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacade;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
+use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -100,13 +101,13 @@ class AvailabilityNotificationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGuestUnsubscribeShouldSucceed()
+    public function testUnsubscribeBySubscriptionKeyShouldSucceed()
     {
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscription(
             $this->tester->haveProduct()
         );
 
-        $response = $this->getAvailabilityNotificationFacadeMock()->unsubscribe($availabilityNotificationSubscription);
+        $response = $this->getAvailabilityNotificationFacadeMock()->unsubscribeBySubscriptionKey($availabilityNotificationSubscription);
 
         $this->assertTrue($response->getIsSuccess());
     }
@@ -114,7 +115,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCustomerUnsubscribeShouldSucceed()
+    public function testUnsubscribeByCustomerReferenceAndSkuShouldSucceed()
     {
         $availabilityNotificationFacade = $this->getAvailabilityNotificationFacadeMock();
 
@@ -125,7 +126,7 @@ class AvailabilityNotificationFacadeTest extends Unit
 
         $availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
 
-        $response = $availabilityNotificationFacade->unsubscribe($availabilityNotificationSubscription);
+        $response = $availabilityNotificationFacade->unsubscribeByCustomerReferenceAndSku($availabilityNotificationSubscription);
 
         $this->assertTrue($response->getIsSuccess());
     }
@@ -143,7 +144,7 @@ class AvailabilityNotificationFacadeTest extends Unit
             ]
         );
 
-        $response = $this->getAvailabilityNotificationFacadeMock()->unsubscribe($availabilityNotificationSubscription);
+        $response = $this->getAvailabilityNotificationFacadeMock()->unsubscribeBySubscriptionKey($availabilityNotificationSubscription);
 
         $this->assertFalse($response->getIsSuccess());
     }
@@ -165,7 +166,14 @@ class AvailabilityNotificationFacadeTest extends Unit
 
         $availabilityNotificationFacade->anonymizeSubscription($customer);
 
-        $result = $this->getAvailabilityNotificationFacadeMock()->findAvailabilityNotificationSubscription($availabilityNotificationSubscription);
+        $repositoryMock = $this->getMockBuilder(AvailabilityNotificationRepositoryInterface::class)->getMock();
+
+        $result = $repositoryMock
+            ->findOneByCustomerReferenceAndSku(
+                $customer->getCustomerReference(),
+                $availabilityNotificationSubscription->getSku(),
+                $availabilityNotificationSubscription->getStore()->getIdStore()
+            );
 
         $this->assertNull($result);
     }
