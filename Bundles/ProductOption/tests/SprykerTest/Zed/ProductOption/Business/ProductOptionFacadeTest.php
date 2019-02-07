@@ -820,7 +820,8 @@ class ProductOptionFacadeTest extends Unit
         $expectedProductOptionIds = [$idProductOptionValue2];
         $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())
             ->setProductOptionIds($expectedProductOptionIds)
-            ->setProductOptionGroupActive(true);
+            ->setProductOptionGroupIsActive(true)
+            ->setProductOptionGroupIsAssigned(false);
 
         // Act
         $actualResult = $this->createProductOptionFacade()->getProductOptionCollectionByProductOptionCriteria($productOptionCriteriaTransfer);
