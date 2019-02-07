@@ -607,6 +607,10 @@ class CalculationFacadeTest extends Unit
             return $calculatorPlugins;
         };
 
+        $container[CalculationDependencyProvider::PLUGINS_POST_QUOTE_RECALCULATE] = function (Container $container) {
+            return [];
+        };
+
         $calculationBusinessFactory->setContainer($container);
         $calculationFacade->setFactory($calculationBusinessFactory);
 

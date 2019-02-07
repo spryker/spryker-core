@@ -11,7 +11,6 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -365,12 +364,10 @@ class QuoteStorageStrategyProxyTest extends Unit
      */
     protected function haveLockedQuote(): void
     {
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setCustomer(new CustomerTransfer());
-        $quoteTransfer->setIsLocked(true);
-
         $this->quoteClientMock->method('getQuote')
-            ->willReturn($quoteTransfer);
+            ->willReturn(new QuoteTransfer());
+        $this->quoteClientMock->method('isQuoteLocked')
+            ->willReturn(true);
     }
 
     /**
@@ -378,11 +375,9 @@ class QuoteStorageStrategyProxyTest extends Unit
      */
     protected function haveNotLockedQuote(): void
     {
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setCustomer(new CustomerTransfer());
-        $quoteTransfer->setIsLocked(false);
-
         $this->quoteClientMock->method('getQuote')
-            ->willReturn($quoteTransfer);
+            ->willReturn(new QuoteTransfer());
+        $this->quoteClientMock->method('isQuoteLocked')
+            ->willReturn(false);
     }
 }
