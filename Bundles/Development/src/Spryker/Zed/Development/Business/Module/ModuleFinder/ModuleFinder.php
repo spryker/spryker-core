@@ -175,9 +175,7 @@ class ModuleFinder implements ModuleFinderInterface
     {
         $pathToInternalNamespace = $this->config->getPathsToInternalNamespace();
 
-        return array_values(array_filter([
-            $this->config->getPathToEco(),
-        ] + $pathToInternalNamespace, 'is_dir'));
+        return array_values(array_filter($pathToInternalNamespace, 'is_dir'));
     }
 
     /**

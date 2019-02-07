@@ -309,7 +309,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
             return null;
         }
 
-        $pathToModules = $namespace === static::NAMESPACE_SPRYKER_SHOP ? $this->config->getPathToShop() : $this->config->getPathToCore();
+        $pathToModules = $this->config->getPathToInternalNamespace($namespace);
 
         return dirname($pathToModules) . DIRECTORY_SEPARATOR;
     }

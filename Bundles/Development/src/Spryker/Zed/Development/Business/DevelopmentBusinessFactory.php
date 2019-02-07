@@ -227,9 +227,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createPhpMdRunner()
     {
         return new PhpMdRunner(
-            $this->getConfig()->getPathToRoot(),
-            $this->getConfig()->getPathToCore(),
-            $this->getConfig()->getArchitectureStandard()
+            $this->getConfig()
         );
     }
 
@@ -310,7 +308,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createSprykerStandaloneModuleFilePathBuilder(): PathBuilderInterface
     {
-        return new SprykerStandaloneModulePathBuilder();
+        return new SprykerStandaloneModulePathBuilder($this->getConfig());
     }
 
     /**
@@ -319,7 +317,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createSprykerModuleFilePathBuilder(): PathBuilderInterface
     {
         return new SprykerModulePathBuilder(
-            $this->getConfig()->getPathToCore()
+            $this->getConfig()
         );
     }
 
@@ -329,7 +327,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createSprykerShopModuleFilePathBuilder(): PathBuilderInterface
     {
         return new SprykerShopModulePathBuilder(
-            $this->getConfig()->getPathToShop()
+            $this->getConfig()
         );
     }
 
@@ -339,7 +337,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createSprykerEcoModuleFilePathBuilder(): PathBuilderInterface
     {
         return new SprykerEcoModulePathBuilder(
-            $this->getConfig()->getPathToEco()
+            $this->getConfig()
         );
     }
 
@@ -555,12 +553,10 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createDependencyManager()
     {
-        return new Manager($this->createModuleDependencyParser(), [
-            $this->getConfig()->getPathToCore(),
-            $this->getConfig()->getPathToShop(),
-            $this->getConfig()->getPathToSdk(),
-            $this->getConfig()->getPathToEco(),
-        ]);
+        return new Manager(
+            $this->createModuleDependencyParser(),
+            $this->getConfig()
+        );
     }
 
     /**
