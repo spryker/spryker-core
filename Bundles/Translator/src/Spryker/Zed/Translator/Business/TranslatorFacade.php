@@ -39,6 +39,8 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
