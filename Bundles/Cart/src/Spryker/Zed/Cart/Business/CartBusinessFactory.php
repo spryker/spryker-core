@@ -120,7 +120,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface[]
      */
-    protected function getCartBeforePreCheckNormalizerPlugins(): array
+    public function getCartBeforePreCheckNormalizerPlugins(): array
     {
         return $this->getProvidedDependency(CartDependencyProvider::CART_BEFORE_PRE_CHECK_NORMALIZER_PLUGINS);
     }

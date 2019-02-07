@@ -31,17 +31,10 @@ class CartChangeTransferQuantityNormalizerPlugin extends AbstractPlugin implemen
      *
      * @return bool
      */
-    public function isApplicable($cartChangeTransfer): bool
+    public function isApplicable(CartChangeTransfer $cartChangeTransfer): bool
     {
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $normalizableFields = $itemTransfer->getNormalizableFields();
-
-            if (count($normalizableFields) > 0 && in_array(static::NORMALIZABLE_FIELD, $normalizableFields)) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->getFacade()
+            ->hasCartChangeTransferNormalizableItems($cartChangeTransfer, [static::NORMALIZABLE_FIELD]);
     }
 
     /**
@@ -55,9 +48,9 @@ class CartChangeTransferQuantityNormalizerPlugin extends AbstractPlugin implemen
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function normalizeCartChangeTransfer($cartChangeTransfer): CartChangeTransfer
+    public function normalizeCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         return $this->getFacade()
-            ->normalizeCartChangeTransfer($cartChangeTransfer);
+            ->normalizeCartChangeTransferItems($cartChangeTransfer);
     }
 }

@@ -21,7 +21,7 @@ interface CartChangeTransferNormalizerPluginInterface
      *
      * @return bool
      */
-    public function isApplicable($cartChangeTransfer): bool;
+    public function isApplicable(CartChangeTransfer $cartChangeTransfer): bool;
 
     /**
      * Specification:
@@ -33,5 +33,5 @@ interface CartChangeTransferNormalizerPluginInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function normalizeCartChangeTransfer($cartChangeTransfer): CartChangeTransfer;
+    public function normalizeCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

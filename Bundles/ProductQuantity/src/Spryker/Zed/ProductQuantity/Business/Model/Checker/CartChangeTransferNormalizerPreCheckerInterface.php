@@ -5,16 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductQuantity\Business\Model\Normalizer;
+namespace Spryker\Zed\ProductQuantity\Business\Model\Checker;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 
-interface CartChangeTransferQuantityNormalizerInterface
+interface CartChangeTransferNormalizerPreCheckerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array $normalizableFields
      *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     * @return bool
      */
-    public function normalizeCartChangeTransferItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+    public function hasNormalizableItems(CartChangeTransfer $cartChangeTransfer, array $normalizableFields): bool;
 }

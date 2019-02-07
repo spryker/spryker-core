@@ -53,7 +53,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartAddItemStrategyPlugins($container);
         $container = $this->addCartRemoveItemStrategyPlugins($container);
         $container = $this->addPostReloadItemsPlugins($container);
-        $container = $this->addCartItemNormalizerPlugins($container);
+        $container = $this->addCartBeforePreCheckNormalizerPlugins($container);
 
         return $container;
     }
@@ -115,7 +115,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCartItemNormalizerPlugins(Container $container): Container
+    protected function addCartBeforePreCheckNormalizerPlugins(Container $container): Container
     {
         $container[static::CART_BEFORE_PRE_CHECK_NORMALIZER_PLUGINS] = function (Container $container): array {
             return $this->getCartBeforePreCheckNormalizerPlugins($container);

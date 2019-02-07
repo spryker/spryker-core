@@ -89,10 +89,27 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function normalizeCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    public function normalizeCartChangeTransferItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         return $this->getFactory()
             ->createCartChangeTransferQuantityNormalizer()
-            ->normalizeCartChangeTransfer($cartChangeTransfer);
+            ->normalizeCartChangeTransferItems($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array $normalizableFields
+     *
+     * @return bool
+     */
+    public function hasCartChangeTransferNormalizableItems(CartChangeTransfer $cartChangeTransfer, array $normalizableFields): bool
+    {
+        return $this->getFactory()
+            ->createCartChangeTransferNormalizerPreChecker()
+            ->hasNormalizableItems($cartChangeTransfer, $normalizableFields);
     }
 }
