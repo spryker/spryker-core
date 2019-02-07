@@ -5,7 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
 var datePicker = require('./date-picker');
 var availableProductTable = require('./available-product-table');
 var assignedProductTable = require('./assigned-product-table');
