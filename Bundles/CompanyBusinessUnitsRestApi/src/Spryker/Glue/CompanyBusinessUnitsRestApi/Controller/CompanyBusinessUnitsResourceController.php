@@ -25,10 +25,6 @@ class CompanyBusinessUnitsResourceController extends AbstractController
      *          "summary": [
      *              "Retrieves a company business unit by id."
      *          ],
-     *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
-     *          }],
      *          "responses": {
      *              "501": "Not implemented."
      *          }
@@ -37,10 +33,6 @@ class CompanyBusinessUnitsResourceController extends AbstractController
      *          "summary": [
      *              "Retrieves company business units collection."
      *          ],
-     *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
-     *          }],
      *          "responses": {
      *              "501": "Not implemented."
      *          }

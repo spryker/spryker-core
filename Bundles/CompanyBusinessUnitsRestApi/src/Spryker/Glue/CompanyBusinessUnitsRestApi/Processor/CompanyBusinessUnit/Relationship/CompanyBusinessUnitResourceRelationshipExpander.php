@@ -62,13 +62,11 @@ class CompanyBusinessUnitResourceRelationshipExpander implements CompanyBusiness
             }
 
             $companyBusinessUnitTransfer = $payload->getCompanyBusinessUnit();
-            $companyTransfer = $payload->getCompany();
-            if ($companyBusinessUnitTransfer === null || $companyTransfer === null) {
+            if ($companyBusinessUnitTransfer === null) {
                 continue;
             }
 
             $companyBusinessUnitResource = $this->createCompanyBusinessUnitResource(
-                $companyTransfer,
                 $companyBusinessUnitTransfer
             );
 
@@ -79,13 +77,11 @@ class CompanyBusinessUnitResourceRelationshipExpander implements CompanyBusiness
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     protected function createCompanyBusinessUnitResource(
-        CompanyTransfer $companyTransfer,
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): RestResourceInterface {
         $restCompanyBusinessUnitAttributesTransfer = $this->companyBusinessUnitMapper
@@ -102,26 +98,24 @@ class CompanyBusinessUnitResourceRelationshipExpander implements CompanyBusiness
 
         $companyBusinessUnitResource->addLink(
             RestLinkInterface::LINK_SELF,
-            $this->createSelfLink($companyTransfer, $companyBusinessUnitTransfer)
+            $this->createSelfLink($companyBusinessUnitTransfer)
         );
 
         return $companyBusinessUnitResource;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
      * @return string
      */
     protected function createSelfLink(
-        CompanyTransfer $companyTransfer,
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): string {
         return sprintf(
             static::PATTERN_COMPANY_BUSINESS_UNIT_RESOURCE_SELF_LINK,
             CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANIES,
-            $companyTransfer->getUuid(),
+            $companyBusinessUnitTransfer->getCompany()->getUuid(),
             CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS,
             $companyBusinessUnitTransfer->getUuid()
         );

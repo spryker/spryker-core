@@ -33,10 +33,6 @@ class CompanyRolesResourceController extends AbstractController
      *          "summary": [
      *              "Retrieves company role collection."
      *          ],
-     *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
-     *          }],
      *          "responses": {
      *              "501": "Not implemented."
      *          }

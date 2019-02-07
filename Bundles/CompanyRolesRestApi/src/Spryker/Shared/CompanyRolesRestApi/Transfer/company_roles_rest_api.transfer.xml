@@ -18,6 +18,7 @@
 
     <transfer name="CompanyUser">
         <property name="companyRoleCollection" type="CompanyRoleCollection"/>
+        <property name="company" type="Company"/>
     </transfer>
 
 </transfers>

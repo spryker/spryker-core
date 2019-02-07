@@ -25,10 +25,6 @@ class CompaniesResourceController extends AbstractController
      *          "summary": [
      *              "Retrieves a company by id."
      *          ],
-     *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
-     *          }],
      *          "responses": {
      *             "501": "Not implemented."
      *          }
@@ -37,10 +33,6 @@ class CompaniesResourceController extends AbstractController
      *          "summary": [
      *              "Retrieves company collection."
      *          ],
-     *         "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
-     *          }],
      *          "responses": {
      *              "501": "Not implemented."
      *          }

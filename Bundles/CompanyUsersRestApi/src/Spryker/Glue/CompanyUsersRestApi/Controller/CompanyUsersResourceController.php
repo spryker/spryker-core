@@ -29,11 +29,7 @@ class CompanyUsersResourceController extends AbstractController
      *     "getCollection": {
      *          "summary": [
      *              "Retrieves list of company users."
-     *          ],
-     *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
-     *          }]
+     *          ]
      *     }
      * })
      *
