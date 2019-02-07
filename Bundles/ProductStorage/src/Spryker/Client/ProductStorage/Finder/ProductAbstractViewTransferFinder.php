@@ -15,7 +15,7 @@ class ProductAbstractViewTransferFinder extends ProductViewTransferFinderAbstrac
     /**
      * @var \Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReaderInterface
      */
-    protected $productAbstractStorage;
+    protected $productAbstractStorageReader;
 
     /**
      * @param \Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReaderInterface $productAbstractStorage
@@ -24,7 +24,7 @@ class ProductAbstractViewTransferFinder extends ProductViewTransferFinderAbstrac
     public function __construct(ProductAbstractStorageReaderInterface $productAbstractStorage, ProductStorageDataMapperInterface $productStorageDataMapper)
     {
         parent::__construct($productStorageDataMapper);
-        $this->productAbstractStorage = $productAbstractStorage;
+        $this->productAbstractStorageReader = $productAbstractStorage;
     }
 
     /**
@@ -35,6 +35,6 @@ class ProductAbstractViewTransferFinder extends ProductViewTransferFinderAbstrac
      */
     protected function findProductStorageData(int $idProductAbstract, string $localeName): ?array
     {
-        return $this->productAbstractStorage->findProductAbstractStorageData($idProductAbstract, $localeName);
+        return $this->productAbstractStorageReader->findProductAbstractStorageData($idProductAbstract, $localeName);
     }
 }

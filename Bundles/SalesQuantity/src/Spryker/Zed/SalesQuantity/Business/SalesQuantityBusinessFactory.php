@@ -9,7 +9,6 @@ namespace Spryker\Zed\SalesQuantity\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesQuantity\Business\Cart\Expander\ItemExpander;
-use Spryker\Zed\SalesQuantity\Business\Cart\Expander\ItemExpanderInterface;
 use Spryker\Zed\SalesQuantity\Business\Discount\DiscountableItem\DiscountableItemTransformer;
 use Spryker\Zed\SalesQuantity\Business\Discount\DiscountableItem\DiscountableItemTransformerInterface;
 use Spryker\Zed\SalesQuantity\Business\Order\Item\ItemQuantityValidator;
@@ -33,7 +32,7 @@ class SalesQuantityBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SalesQuantity\Business\Cart\Expander\ItemExpanderInterface
      */
-    public function createItemExpander(): ItemExpanderInterface
+    public function createItemExpander()
     {
         return new ItemExpander(
             $this->getRepository()

@@ -31,6 +31,7 @@ interface ProductStorageClientInterface
      * Specification:
      * - Retrieves a current Store specific ProductAbstract resource from Storage.
      * - Responds with null if product abstract is restricted.
+     * - Filter the restricted product variants (product concrete) in `attribute_map`.
      *
      * @api
      *
@@ -47,8 +48,7 @@ interface ProductStorageClientInterface
      * - Responds with null if product abstract is restricted.
      * - Maps raw product data to ProductViewTransfer for the current locale.
      * - Based on the super attributes and the selected attributes of the product the result is abstract product.
-     * - Executes a stack of Spryker\Client\ProductStorage\Dependency\Plugin\StorageProductExpanderPluginInterface plugins that
-     * can expand the result with extra data.
+     * - Executes a stack of `StorageProductExpanderPluginInterface` plugins that expand result.
      * - Filter the restricted product variants (product concrete) in `attribute_map`.
      *
      * @api
@@ -96,7 +96,6 @@ interface ProductStorageClientInterface
     /**
      * Specification:
      * - Retrieves a current Store specific ProductConcrete resource from Storage.
-     * - Responds with null if product concrete is restricted.
      *
      * @api
      *
@@ -124,8 +123,7 @@ interface ProductStorageClientInterface
      * - Responds with null if product concrete is restricted.
      * - Maps raw product data to ProductViewTransfer for the current locale.
      * - Based on the super attributes and the selected attributes of the product the result is concrete product.
-     * - Executes a stack of Spryker\Client\ProductStorage\Dependency\Plugin\StorageProductExpanderPluginInterface plugins that
-     * can expand the result with extra data.
+     * - Executes a stack of `StorageProductExpanderPluginInterface` plugins that expand result.
      *
      * @api
      *
@@ -160,8 +158,6 @@ interface ProductStorageClientInterface
      * - Filter the restricted product variants (product concrete) in `attribute_map`.
      *
      * @api
-     *
-     * @deprecated Use findProductAbstractViewTransfer(int $idProductAbstract, string $localeName): ?ProductViewTransfer
      *
      * @param array $data
      * @param string $localeName

@@ -35,7 +35,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     {
         $productQuery = $this->getFactory()
             ->createProductQuery()
-            ->leftJoinWithSpyProductAbstract()
+            ->joinWithSpyProductAbstract()
             ->filterBySku($productConcreteSku);
 
         return $this->buildQueryFromCriteria($productQuery)->findOne();
@@ -50,7 +50,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     {
         $productQuery = $this->getFactory()
             ->createProductQuery()
-            ->leftJoinWithSpyProductAbstract()
+            ->joinWithSpyProductAbstract()
             ->filterByIdProduct($productConcreteId);
 
         return $this->buildQueryFromCriteria($productQuery)->findOne();

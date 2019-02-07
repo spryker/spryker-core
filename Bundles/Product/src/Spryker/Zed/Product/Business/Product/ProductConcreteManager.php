@@ -276,7 +276,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getRawProductConcrete(string $concreteSku): ProductConcreteTransfer
+    public function getRawProductConcreteBySku(string $concreteSku): ProductConcreteTransfer
     {
         $productConcreteTransfer = $this->findRawProductConcreteBySku($concreteSku);
 
@@ -521,7 +521,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
             ->find();
 
         foreach ($productAttributeCollection as $attributeEntity) {
-            $localeTransfer = $this->getLocaleTransfer($attributeEntity->getFkLocale());
+            $localeTransfer = $this->getLocaleTransferByLocaleId($attributeEntity->getFkLocale());
 
             $localizedAttributesData = $attributeEntity->toArray();
             if (isset($localizedAttributesData[LocalizedAttributesTransfer::ATTRIBUTES])) {
@@ -544,7 +544,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    protected function getLocaleTransfer(int $idLocale): LocaleTransfer
+    protected function getLocaleTransferByLocaleId(int $idLocale): LocaleTransfer
     {
         if (!isset(static::$cachedLocaleTransfers[$idLocale])) {
             static::$cachedLocaleTransfers[$idLocale] = $this->localeFacade->getLocaleById($idLocale);

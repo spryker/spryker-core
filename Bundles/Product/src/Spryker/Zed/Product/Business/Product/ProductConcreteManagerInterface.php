@@ -74,7 +74,7 @@ interface ProductConcreteManagerInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getRawProductConcrete(string $concreteSku): ProductConcreteTransfer;
+    public function getRawProductConcreteBySku(string $concreteSku): ProductConcreteTransfer;
 
     /**
      * @param int $idProductAbstract
