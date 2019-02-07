@@ -27,7 +27,7 @@ class ThresholdStrategyConstraintValidator extends ConstraintValidator
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ThresholdStrategyConstraint) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\ThresholdStrategyConstraint');
@@ -44,7 +44,7 @@ class ThresholdStrategyConstraintValidator extends ConstraintValidator
         $salesOrderThresholdFormExpanderPlugins = $constraint->getSalesOrderThresholdFormExpanderPlugins();
 
         foreach ($salesOrderThresholdFormExpanderPlugins as $salesOrderThresholdFormExpanderPlugin) {
-            if (!$this->isValidPlugin($salesOrderThresholdFormExpanderPlugin, $formData)) {
+            if (!$this->isPluginApplicable($salesOrderThresholdFormExpanderPlugin, $formData)) {
                 continue;
             }
 
@@ -59,16 +59,18 @@ class ThresholdStrategyConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param \Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface $plugin
-     * @param array $data
+     * @param \Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface $salesOrderThresholdFormExpanderPlugin
+     * @param array $formData
      *
      * @return bool
      */
-    protected function isValidPlugin(SalesOrderThresholdFormExpanderPluginInterface $plugin, array $data): bool
-    {
-        if (!$plugin instanceof  SalesOrderThresholdFormFieldDependenciesPluginInterface
-            || $plugin->getThresholdKey() !== $data[AbstractGlobalThresholdType::FIELD_STRATEGY]
-            || !$plugin->getThresholdFieldDependentFieldNames()
+    protected function isPluginApplicable(
+        SalesOrderThresholdFormExpanderPluginInterface $salesOrderThresholdFormExpanderPlugin,
+        array $formData
+    ): bool {
+        if (!$salesOrderThresholdFormExpanderPlugin instanceof  SalesOrderThresholdFormFieldDependenciesPluginInterface
+            || $salesOrderThresholdFormExpanderPlugin->getThresholdKey() !== $formData[AbstractGlobalThresholdType::FIELD_STRATEGY]
+            || !$salesOrderThresholdFormExpanderPlugin->getThresholdFieldDependentFieldNames()
         ) {
             return false;
         }
@@ -77,7 +79,7 @@ class ThresholdStrategyConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $fields
+     * @param string[] $fields
      * @param array $formData
      *
      * @return bool

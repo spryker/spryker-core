@@ -21,7 +21,7 @@ class ThresholdStrategyConstraint extends Constraint
     /**
      * @return \Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[]|\Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormFieldDependenciesPluginInterface[]
      */
-    public function getSalesOrderThresholdFormExpanderPlugins()
+    public function getSalesOrderThresholdFormExpanderPlugins(): array
     {
         return $this->salesOrderThresholdFormExpanderPlugins;
     }

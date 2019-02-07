@@ -129,7 +129,7 @@ class SalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFa
     /**
      * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Constraint\ThresholdStrategyConstraint
      */
-    public function createThresholdStrategyConstraint()
+    public function createThresholdStrategyConstraint(): ThresholdStrategyConstraint
     {
         return new ThresholdStrategyConstraint([
             ThresholdStrategyConstraint::OPTION_SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS => $this->getSalesOrderThresholdFormExpanderPlugins(),
