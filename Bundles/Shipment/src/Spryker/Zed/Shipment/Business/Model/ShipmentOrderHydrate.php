@@ -99,7 +99,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
      */
     protected function hydrateShipmentMethodTransferFromShipmentMethod(ShipmentMethodTransfer $shipmentMethodTransfer, SpyShipmentMethod $shipmentMethod): ShipmentMethodTransfer
     {
-        return $shipmentMethodTransfer->fromArray($shipmentMethod->toArray());
+        return $shipmentMethodTransfer->fromArray($shipmentMethod->toArray(), true);
     }
 
     /**
@@ -110,6 +110,6 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
      */
     protected function hydrateShipmentMethodTransferFromSalesShipment(ShipmentMethodTransfer $shipmentMethodTransfer, SpySalesShipment $salesShipment): ShipmentMethodTransfer
     {
-        return $shipmentMethodTransfer->fromArray($salesShipment->toArray());
+        return $shipmentMethodTransfer->fromArray($salesShipment->toArray(), true);
     }
 }
