@@ -65,6 +65,10 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
 
         $quoteResponseTransfer = $this->cartsRestApiClient->addItemToGuestCart($restCartItemRequestTransfer);
 
+        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
+            return $this->guestCartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
+        }
+
         return $this->guestCartRestResponseBuilder->createGuestCartRestResponse($quoteResponseTransfer->getQuoteTransfer());
     }
 }

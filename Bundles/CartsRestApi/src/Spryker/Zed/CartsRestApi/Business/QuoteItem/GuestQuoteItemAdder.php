@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
@@ -69,6 +71,10 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
                 $this->quoteItemMapper->createRestQuoteRequestTransfer($restCartItemRequestTransfer)
             );
 
+            if (!$quoteResponseTransfer->getIsSuccessful()) {
+                return $quoteResponseTransfer;
+            }
+
             return $this->addItemToCart($quoteResponseTransfer, $restCartItemRequestTransfer);
         }
 
@@ -80,7 +86,23 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
             return $quoteResponseTransfer;
         }
 
-        return $this->addItemToCart($quoteResponseTransfer, $restCartItemRequestTransfer);
+        if (!$restCartItemRequestTransfer->getCartItem()->getSku()) {
+            $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION));
+
+            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
+        }
+
+        $quoteResponseTransfer = $this->addItemToCart($quoteResponseTransfer, $restCartItemRequestTransfer);
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
+        }
+
+        return $quoteResponseTransfer;
     }
 
     /**

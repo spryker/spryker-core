@@ -118,5 +118,9 @@ class CartsRestApiConfig extends AbstractBundleConfig
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
             'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_STORE_DATA_IS_INVALID,
         ],
+        SharedCartsRestApiConfig::RESPONSE_CODE_STORE_DATA_IS_MISSING => [
+            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_STORE_DATA_IS_MISSING,
+        ],
     ];
 }

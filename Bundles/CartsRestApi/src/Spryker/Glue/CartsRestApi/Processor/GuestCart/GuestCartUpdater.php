@@ -151,8 +151,8 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
             ->setAnonymousCustomerReference($restRequest->getUser()->getNaturalIdentifier())
             ->setCustomer($customerTransfer);
 
-        $this->cartsRestApiClient->assignGuestCartToRegisteredCustomer($assigningGuestQuoteRequestTransfer);
+        $quoteResponseTransfer = $this->cartsRestApiClient->assignGuestCartToRegisteredCustomer($assigningGuestQuoteRequestTransfer);
 
-        return $customerTransfer;
+        return $quoteResponseTransfer->getCustomer();
     }
 }
