@@ -1,13 +1,11 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: devromans
- * Date: 2019-02-06
- * Time: 14:32
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Zed\Translator\Business;
-
 
 use Codeception\TestCase\Test;
 use Spryker\Shared\Kernel\Communication\Application;
@@ -16,6 +14,16 @@ use Spryker\Zed\Translator\Business\TranslatorBusinessFactory;
 use Spryker\Zed\Translator\Business\TranslatorFacadeInterface;
 use Spryker\Zed\Translator\TranslatorConfig;
 
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group Translator
+ * @group Business
+ * @group Facade
+ * @group TranslatorFacadeTest
+ * Add your own group annotations below this line
+ */
 class TranslatorFacadeTest extends Test
 {
     /**
@@ -54,7 +62,6 @@ class TranslatorFacadeTest extends Test
         // Assert
         $this->tester->assertEquals(0, $this->tester->findFiles(codecept_output_dir())->count());
     }
-
 
     /**
      * @return \Spryker\Zed\Translator\Business\TranslatorFacadeInterface

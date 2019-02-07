@@ -8,7 +8,6 @@
 namespace Spryker\Zed\UserLocale\Business\UserExpander;
 
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\UserLocale\Business\UserLocale\UserLocaleReaderInterface;
 use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleFacadeBridgeInterface;
 
 class UserExpander implements UserExpanderInterface
@@ -19,20 +18,12 @@ class UserExpander implements UserExpanderInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\UserLocale\Business\UserLocale\UserLocaleReaderInterface
-     */
-    protected $userLocaleReader;
-
-    /**
      * @param \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleFacadeBridgeInterface $localeFacade
-     * @param \Spryker\Zed\UserLocale\Business\UserLocale\UserLocaleReaderInterface $userLocaleReader
      */
     public function __construct(
-        UserLocaleToLocaleFacadeBridgeInterface $localeFacade,
-        UserLocaleReaderInterface $userLocaleReader
+        UserLocaleToLocaleFacadeBridgeInterface $localeFacade
     ) {
         $this->localeFacade = $localeFacade;
-        $this->userLocaleReader = $userLocaleReader;
     }
 
     /**
@@ -46,7 +37,7 @@ class UserExpander implements UserExpanderInterface
         $localeName = $userTransfer->getLocaleName();
 
         if (!$idLocale && !$localeName) {
-            $localeTransfer = $this->userLocaleReader->getDefaultUserLocale();
+            $localeTransfer = $this->localeFacade->getCurrentLocale();
             $userTransfer->setFkLocale($localeTransfer->getIdLocale())
                 ->setLocaleName($localeName);
 

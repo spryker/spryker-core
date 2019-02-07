@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\UserLocale\Business;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 interface UserLocaleFacadeInterface
 {
     /**
      * Specification:
-     * - Expands UserTransfer with Locale Id and Locale Name.
+     * - Retrieve user locale from storage and expands UserTransfer with Locale Id and Locale Name.
      *
      * @api
      *

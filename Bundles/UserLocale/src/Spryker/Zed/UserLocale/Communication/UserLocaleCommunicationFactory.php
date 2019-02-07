@@ -9,6 +9,7 @@ namespace Spryker\Zed\UserLocale\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleFacadeBridgeInterface;
+use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToStoreInterface;
 use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserFacadeBridgeInterface;
 use Spryker\Zed\UserLocale\UserLocaleDependencyProvider;
 
@@ -32,5 +33,13 @@ class UserLocaleCommunicationFactory extends AbstractCommunicationFactory
     public function getUserFacade(): UserLocaleToUserFacadeBridgeInterface
     {
         return $this->getProvidedDependency(UserLocaleDependencyProvider::FACADE_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToStoreInterface
+     */
+    public function getStore(): UserLocaleToStoreInterface
+    {
+        return $this->getProvidedDependency(UserLocaleDependencyProvider::STORE);
     }
 }

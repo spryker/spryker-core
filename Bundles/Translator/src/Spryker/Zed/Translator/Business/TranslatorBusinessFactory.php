@@ -27,6 +27,7 @@ use Spryker\Zed\Translator\Business\Translator\TranslatorPreparator;
 use Spryker\Zed\Translator\Business\Translator\TranslatorPreparatorInterface;
 use Spryker\Zed\Translator\Business\TranslatorBuilder\TranslatorBuilder;
 use Spryker\Zed\Translator\Business\TranslatorBuilder\TranslatorBuilderInterface;
+use Spryker\Zed\Translator\Dependency\Facade\TranslatorToLocaleFacadeInterface;
 use Spryker\Zed\Translator\TranslatorDependencyProvider;
 
 /**
@@ -104,7 +105,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
      */
     public function createTranslator(?string $localeName = null)
     {
-        $localeName = $localeName ?? $this->getApplication()['locale'];
+        $localeName = $localeName ?? $this->getLocaleFacade()->getCurrentLocaleName();
         $translator = new Translator($localeName, null, $this->getConfig()->getTranslatorCacheDirectory());
         $translator->setFallbackLocales($this->getConfig()->getFallbackLocales($localeName));
 
@@ -167,5 +168,13 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
             $this->getApplication(),
             $this->createTranslator()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Translator\Dependency\Facade\TranslatorToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): TranslatorToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(TranslatorDependencyProvider::FACADE_LOCALE);
     }
 }

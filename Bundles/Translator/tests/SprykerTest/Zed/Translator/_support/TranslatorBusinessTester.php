@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\Translator;
 
+use Codeception\Actor;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
@@ -20,7 +26,7 @@ use Symfony\Component\Finder\Finder;
  *
  * @SuppressWarnings(PHPMD)
  */
-class TranslatorBusinessTester extends \Codeception\Actor
+class TranslatorBusinessTester extends Actor
 {
     use _generated\TranslatorBusinessTesterActions;
 

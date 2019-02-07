@@ -43,12 +43,18 @@ class UserLocaleToLocaleFacadeBridge implements UserLocaleToLocaleFacadeBridgeIn
     }
 
     /**
-     * @param string $localeName
-     *
-     * @return bool
+     * @return string
      */
-    public function hasLocale($localeName)
+    public function getCurrentLocaleName()
     {
-        return $this->localeFacade->hasLocale($localeName);
+        return $this->localeFacade->getCurrentLocaleName();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getCurrentLocale()
+    {
+        return $this->localeFacade->getCurrentLocale();
     }
 }

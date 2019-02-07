@@ -55,7 +55,7 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
      */
     protected function getLocaleName(): string
     {
-        return $this->getFactory()->getApplication()['locale'];
+        return $this->getFactory()->getLocaleFacade()->getCurrentLocaleName();
     }
 
     /**

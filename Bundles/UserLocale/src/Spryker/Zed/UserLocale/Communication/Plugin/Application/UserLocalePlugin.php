@@ -1,13 +1,11 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: devromans
- * Date: 2019-02-06
- * Time: 13:31
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\UserLocale\Communication\Plugin\Application;
-
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
@@ -33,10 +31,9 @@ class UserLocalePlugin extends AbstractPlugin implements ApplicationPluginInterf
      */
     public function boot(ContainerInterface $container): ContainerInterface
     {
-        $userLocaleName = $this->getCurrentUserLocaleCode() ?: $this->getConfig()->getDefaultLocaleName();
+        $userLocaleName = $this->getCurrentUserLocaleCode() ?: $this->getFactory()->getLocaleFacade()->getCurrentLocaleName();
 
-        $container->remove('locale');
-        $container->set('locale', $userLocaleName);
+        $this->getFactory()->getStore()->setCurrentLocale($userLocaleName);
 
         return $container;
     }
