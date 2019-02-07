@@ -14,6 +14,8 @@ use Spryker\Client\Quote\StorageStrategy\DatabaseStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\SessionStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\StorageStrategyProvider;
 use Spryker\Client\Quote\Zed\QuoteStub;
+use Spryker\Shared\Quote\QuoteLock\QuoteLockStatusChecker;
+use Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface;
 
 /**
  * @method \Spryker\Client\Quote\QuoteConfig getConfig()
@@ -69,7 +71,8 @@ class QuoteFactory extends AbstractFactory
     protected function createSessionStorageStrategy()
     {
         return new SessionStorageStrategy(
-            $this->createSession()
+            $this->createSession(),
+            $this->createQuoteLockStatusChecker()
         );
     }
 
@@ -81,8 +84,17 @@ class QuoteFactory extends AbstractFactory
         return new DatabaseStorageStrategy(
             $this->getCustomerClient(),
             $this->createZedQuoteStub(),
-            $this->createSession()
+            $this->createSession(),
+            $this->createQuoteLockStatusChecker()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface
+     */
+    public function createQuoteLockStatusChecker(): QuoteLockStatusCheckerInterface
+    {
+        return new QuoteLockStatusChecker();
     }
 
     /**

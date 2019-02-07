@@ -9,7 +9,6 @@ namespace Spryker\Zed\QuoteApproval;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyRoleFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeBridge;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCustomerFacadeBridge;
@@ -24,7 +23,6 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_SHARED_CART = 'FACADE_SHARED_CART';
     public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
-    public const FACADE_CART = 'FACADE_CART';
     public const FACADE_QUOTE = 'FACADE_QUOTE';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
 
@@ -37,25 +35,10 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addCustomerFacade($container);
-        $container = $this->addCartFacade($container);
         $container = $this->addQuoteFacade($container);
         $container = $this->addCompanyRoleFacade($container);
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addSharedCartFacade($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCartFacade(Container $container): Container
-    {
-        $container[static::FACADE_CART] = function (Container $container) {
-            return new QuoteApprovalToCartFacadeBridge($container->getLocator()->cart()->facade());
-        };
 
         return $container;
     }

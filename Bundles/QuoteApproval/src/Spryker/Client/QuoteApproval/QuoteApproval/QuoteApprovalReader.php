@@ -35,4 +35,21 @@ class QuoteApprovalReader implements QuoteApprovalReaderInterface
 
         return null;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idCompanyUser
+     *
+     * @return bool
+     */
+    public function hasQuoteApprovalsForCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool
+    {
+        foreach ($quoteTransfer->getQuoteApprovals() as $quoteApprovalTransfer) {
+            if ($quoteApprovalTransfer->getApprover()->getIdCompanyUser() === $idCompanyUser) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

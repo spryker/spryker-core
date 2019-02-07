@@ -99,32 +99,4 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     {
         return $this->getFactory()->createQuoteCleaner()->cleanUpItemGroupKeyPrefix($quoteTransfer);
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        return $this->getFactory()->createCartOperation()->lock($quoteTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        return $this->getFactory()->createCartOperation()->unlock($quoteTransfer);
-    }
 }

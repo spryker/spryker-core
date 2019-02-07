@@ -260,11 +260,13 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Returns true if quote is locked.
+     * - Returns true if quote is editable.
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return bool
      */
-    public function isQuoteLocked(): bool;
+    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool;
 }
