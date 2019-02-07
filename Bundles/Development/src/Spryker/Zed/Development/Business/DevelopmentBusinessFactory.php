@@ -113,6 +113,7 @@ use Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor;
 use Spryker\Zed\Development\Business\DependencyTree\Finder\FileFinder;
 use Spryker\Zed\Development\Business\DependencyTree\Finder\FinderComposite;
 use Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\SprykerEcoPathBuilder;
+use Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\SprykerMerchantPortalPathBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\SprykerPathBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\SprykerSdkPathBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\SprykerShopPathBuilder;
@@ -590,6 +591,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         $finderComposite = new FinderComposite();
         $finderComposite
             ->addFinder($this->createSprykerFinder())
+            ->addFinder($this->createSprykerMerchantPortalFinder())
             ->addFinder($this->createShopFinder());
 
         return $finderComposite;
@@ -608,6 +610,18 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface
+     */
+    protected function createSprykerMerchantPortalFinder()
+    {
+        $finder = new FileFinder(
+            $this->createSprykerMerchantPortalPathBuilder()
+        );
+
+        return $finder;
+    }
+
+    /**
      * @return \Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\PathBuilderInterface
      */
     protected function createSprykerPathBuilder()
@@ -615,6 +629,16 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new SprykerPathBuilder(
             $this->getConfig()->getPathToCore(),
             $this->getConfig()->getApplications()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\PathBuilderInterface
+     */
+    protected function createSprykerMerchantPortalPathBuilder()
+    {
+        return new SprykerMerchantPortalPathBuilder(
+            $this->getConfig()
         );
     }
 

@@ -523,8 +523,9 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getPathsToInternalNamespace(): array
     {
         $pathToSprykerRoot = $this->checkPathToSprykerRoot(static::NAMESPACE_SPRYKER);
+        $sprykerNamespacePath = $pathToSprykerRoot ? [static::NAMESPACE_SPRYKER => $pathToSprykerRoot] : [];
 
-        return static::INTERNAL_NAMESPACES_TO_PATH_MAPPING + ($pathToSprykerRoot ? [static::NAMESPACE_SPRYKER => $pathToSprykerRoot] : []);
+        return $sprykerNamespacePath + static::INTERNAL_NAMESPACES_TO_PATH_MAPPING;
     }
 
     /**
