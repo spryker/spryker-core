@@ -28,12 +28,13 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
         string $sku,
         int $fkStore
     ): ?AvailabilityNotificationSubscriptionTransfer {
-        $availabilityNotificationSubscriptionEntity = $this->querySubscription()
+        $query = $this->querySubscription()
             ->filterByEmail($email)
             ->filterBySku($sku)
-            ->filterByFkStore($fkStore)
-            ->setIgnoreCase(true)
-            ->findOne();
+            ->filterByFkStore($fkStore);
+        $query->setIgnoreCase(true);
+
+        $availabilityNotificationSubscriptionEntity = $query->findOne();
 
         if ($availabilityNotificationSubscriptionEntity === null) {
             return null;
@@ -94,7 +95,6 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
             ->filterByCustomerReference($customerReference)
             ->filterBySku($sku)
             ->filterByFkStore($fkStore)
-            ->setIgnoreCase(true)
             ->findOne();
 
         if ($availabilityNotificationSubscriptionEntity === null) {
