@@ -5,8 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
-
 function toggleValueTranslations()
 {
     if ($('.translate_values_checkbox').is(':checked')) {
