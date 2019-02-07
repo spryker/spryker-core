@@ -5,7 +5,7 @@
           namespace="Orm\Zed\CompanyUserStorage\Persistence"
           package="src.Orm.Zed.CompanyUserStorage.Persistence">
 
-    <table name="spy_company_user_storage">
+    <table name="spy_company_user_storage" identifierQuoting="true">
         <column name="id_company_user_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_company_user" type="INTEGER" required="true"/>
 
