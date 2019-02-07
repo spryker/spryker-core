@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -71,5 +72,21 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
         $query = $this->getFactory()->createSpyProductAbstractPackagingStorageQuery();
 
         return $this->buildQueryFromCriteria($query)->find();
+    }
+
+    /**
+     * @module ProductPackagingUnit
+     *
+     * @return int[]
+     */
+    public function findProductAbstractIdsWithProductPackagingUnit(): array
+    {
+        return $this->getFactory()
+            ->getSpyProductQuery()
+            ->innerJoinWithSpyProductPackagingUnit()
+            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->distinct()
+            ->find()
+            ->toArray();
     }
 }

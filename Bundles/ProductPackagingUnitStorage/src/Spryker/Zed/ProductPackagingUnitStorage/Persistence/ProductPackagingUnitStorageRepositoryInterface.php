@@ -27,4 +27,9 @@ interface ProductPackagingUnitStorageRepositoryInterface
      * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
      */
     public function findAllProductAbstractPackagingStorageEntities(): array;
+
+    /**
+     * @return int[]
+     */
+    public function findProductAbstractIdsWithProductPackagingUnit(): array;
 }

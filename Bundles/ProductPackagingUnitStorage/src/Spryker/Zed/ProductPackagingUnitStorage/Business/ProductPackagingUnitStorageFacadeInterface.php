@@ -46,4 +46,16 @@ interface ProductPackagingUnitStorageFacadeInterface
      * @return int[]
      */
     public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
+
+    /**
+     * Specification:
+     * - Retrieves array of ProductAbstractPackagingStorageTransfers which are associated with provided product abstract IDs.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function getProductAbstractPackagingStorageTransfersByProductAbstractIds(array $productAbstractIds): array;
 }
