@@ -49,7 +49,7 @@ class UserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\User\Business\Model\InstallerInterface
+     * @return \Spryker\Zed\User\Business\Model\Installer
      */
     public function createInstallerModel()
     {

@@ -12,8 +12,9 @@ use Generated\Shared\DataBuilder\UserBuilder;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
-use Spryker\Zed\User\Business\Model\UserSession;
+use Spryker\Zed\User\Business\Model\User;
 use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
+use Spryker\Zed\User\UserConfig;
 
 /**
  * Auto-generated group annotations
@@ -33,7 +34,7 @@ class UserTest extends Unit
     public const USERNAME = 'test@test.com';
 
     /**
-     * @var \SprykerTest\Zed\User\UserBusinessTester
+     * @var \SprykerTest\Zed\User\BusinessTester
      */
     public $tester;
 
@@ -284,7 +285,11 @@ class UserTest extends Unit
     {
         $sessionClient = $this->createSessionClient();
 
-        $userSession = new UserSession($sessionClient);
+        $userModel = new User(
+            $this->createQueryContainer(),
+            $sessionClient,
+            new UserConfig()
+        );
 
         $userTransfer = $this->createUserTransfer(static::USERNAME);
 
@@ -299,7 +304,7 @@ class UserTest extends Unit
                 )
             );
 
-        $userSession->setCurrentUser($userTransfer);
+        $userModel->setCurrentUser($userTransfer);
     }
 
     /**
@@ -309,7 +314,11 @@ class UserTest extends Unit
     {
         $sessionClient = $this->createSessionClient();
 
-        $userSession = new UserSession($sessionClient);
+        $userModel = new User(
+            $this->createQueryContainer(),
+            $sessionClient,
+            new UserConfig()
+        );
 
         $userTransfer = $this->createUserTransfer(static::USERNAME);
 
@@ -322,7 +331,7 @@ class UserTest extends Unit
             ->method('has')
             ->will($this->returnValue(true));
 
-        $userFromSession = $userSession->getCurrentUser();
+        $userFromSession = $userModel->getCurrentUser();
         $this->assertEquals($userTransfer, $userFromSession);
         $this->assertNotSame($userTransfer, $userFromSession);
     }
@@ -334,13 +343,17 @@ class UserTest extends Unit
     {
         $sessionClient = $this->createSessionClient();
 
-        $userSession = new UserSession($sessionClient);
+        $userModel = new User(
+            $this->createQueryContainer(),
+            $sessionClient,
+            new UserConfig()
+        );
 
         $sessionClient->expects($this->once())
             ->method('has')
             ->will($this->returnValue(null));
 
-        $hasCurrentUser = $userSession->hasCurrentUser();
+        $hasCurrentUser = $userModel->hasCurrentUser();
         $this->assertFalse($hasCurrentUser);
     }
 
