@@ -72,7 +72,7 @@ interface QuoteRequestFacadeInterface
      * - Checks that the current version is the latest.
      * - Checks valid until from quote request with current time.
      * - Returns true if quote requests pass all checks.
-     * - Sets error message if not valid.
+     * - Adds error message if not valid.
      *
      * @api
      *

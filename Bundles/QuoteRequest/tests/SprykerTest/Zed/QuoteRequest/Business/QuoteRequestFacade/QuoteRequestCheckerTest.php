@@ -35,6 +35,11 @@ class QuoteRequestCheckerTest extends Unit
     protected const FAKE_ID_QUOTE_REQUEST_VERSION = 'FAKE_ID_QUOTE_REQUEST_VERSION';
 
     /**
+     * @uses \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestChecker::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND
+     */
+    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND = 'quote_request.checkout.validation.error.version_not_found';
+
+    /**
      * @uses \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestChecker::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_NOT_FOUND
      */
     protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_NOT_FOUND = 'quote_request.checkout.validation.error.not_found';
@@ -87,7 +92,7 @@ class QuoteRequestCheckerTest extends Unit
         $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
 
         $this->quoteRequestCheckerMock->expects($this->any())
-            ->method('getQuoteRequest')
+            ->method('findQuoteRequest')
             ->willReturn($quoteRequestTransfer);
 
         $this->quoteRequestCheckerMock->expects($this->any())
@@ -150,6 +155,47 @@ class QuoteRequestCheckerTest extends Unit
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
         $this->assertCount(1, $checkoutResponseTransfer->getErrors());
         $this->assertEquals(
+            static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND,
+            $checkoutResponseTransfer->getErrors()[0]->getMessage()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckValidUntilValidatesQuoteWhenQuoteRequestNotFound(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = (new QuoteRequestBuilder([
+            QuoteRequestTransfer::STATUS => SharedQuoteRequestConfig::STATUS_IN_PROGRESS,
+        ]))->build();
+
+        $quoteRequestVersionTransfer = (new QuoteRequestVersionBuilder([
+            QuoteRequestVersionTransfer::QUOTE_REQUEST => $quoteRequestTransfer,
+        ]))->build();
+
+        $this->quoteRequestCheckerMock->expects($this->any())
+            ->method('findQuoteRequest')
+            ->willReturn(null);
+
+        $this->quoteRequestCheckerMock->expects($this->any())
+            ->method('findQuoteRequestVersion')
+            ->willReturn($quoteRequestVersionTransfer);
+
+        $quoteTransfer = (new QuoteBuilder([
+            QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE => static::FAKE_ID_QUOTE_REQUEST_VERSION,
+        ]))->build();
+
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
+        // Act
+        $isValid = $this->quoteRequestCheckerMock->checkValidUntil($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertFalse($isValid);
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
+        $this->assertEquals(
             static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_NOT_FOUND,
             $checkoutResponseTransfer->getErrors()[0]->getMessage()
         );
@@ -172,7 +218,7 @@ class QuoteRequestCheckerTest extends Unit
         $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
 
         $this->quoteRequestCheckerMock->expects($this->any())
-            ->method('getQuoteRequest')
+            ->method('findQuoteRequest')
             ->willReturn($quoteRequestTransfer);
 
         $this->quoteRequestCheckerMock->expects($this->any())
@@ -217,7 +263,7 @@ class QuoteRequestCheckerTest extends Unit
         ]))->build();
 
         $this->quoteRequestCheckerMock->expects($this->any())
-            ->method('getQuoteRequest')
+            ->method('findQuoteRequest')
             ->willReturn($quoteRequestTransfer);
 
         $this->quoteRequestCheckerMock->expects($this->any())
@@ -261,7 +307,7 @@ class QuoteRequestCheckerTest extends Unit
         $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
 
         $this->quoteRequestCheckerMock->expects($this->any())
-            ->method('getQuoteRequest')
+            ->method('findQuoteRequest')
             ->willReturn($quoteRequestTransfer);
 
         $this->quoteRequestCheckerMock->expects($this->any())
@@ -305,7 +351,7 @@ class QuoteRequestCheckerTest extends Unit
         $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
 
         $this->quoteRequestCheckerMock->expects($this->any())
-            ->method('getQuoteRequest')
+            ->method('findQuoteRequest')
             ->willReturn($quoteRequestTransfer);
 
         $this->quoteRequestCheckerMock->expects($this->any())
@@ -337,7 +383,7 @@ class QuoteRequestCheckerTest extends Unit
     protected function createQuoteRequestChecker(): QuoteRequestChecker
     {
         $quoteRequestChecker = $this->getMockBuilder(QuoteRequestChecker::class)
-            ->setMethods(['getQuoteRequest', 'findQuoteRequestVersion'])
+            ->setMethods(['findQuoteRequest', 'findQuoteRequestVersion'])
             ->setConstructorArgs([$this->createQuoteRequestRepositoryMock()])
             ->getMock();
 

@@ -9,7 +9,7 @@ namespace Spryker\Zed\QuoteRequest\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
+use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -27,7 +27,7 @@ class QuoteRequestPreCheckPlugin extends AbstractPlugin implements CheckoutPreCo
      * - Checks that the current version is the latest.
      * - Checks valid until from quote request with current time.
      * - Returns true if quote requests pass all checks.
-     * - Sets error message if not valid.
+     * - Adds error message if not valid.
      *
      * @api
      *

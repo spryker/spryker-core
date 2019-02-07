@@ -20,6 +20,7 @@ use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 
 class QuoteRequestChecker implements QuoteRequestCheckerInterface
 {
+    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND = 'quote_request.checkout.validation.error.version_not_found';
     protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_NOT_FOUND = 'quote_request.checkout.validation.error.not_found';
     protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
     protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION = 'quote_request.checkout.validation.error.wrong_version';
@@ -53,12 +54,18 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
         $quoteRequestVersionTransfer = $this->findQuoteRequestVersion($quoteTransfer->getQuoteRequestVersionReference());
 
         if (!$quoteRequestVersionTransfer) {
-            $this->addCheckoutError($checkoutResponseTransfer, static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_NOT_FOUND);
+            $this->addCheckoutError($checkoutResponseTransfer, static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND);
 
             return false;
         }
 
-        $quoteRequestTransfer = $this->getQuoteRequest($quoteRequestVersionTransfer);
+        $quoteRequestTransfer = $this->findQuoteRequest($quoteRequestVersionTransfer);
+
+        if (!$quoteRequestTransfer) {
+            $this->addCheckoutError($checkoutResponseTransfer, static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_NOT_FOUND);
+
+            return false;
+        }
 
         return $this->isQuoteRequestValid($quoteRequestTransfer, $quoteRequestVersionTransfer, $checkoutResponseTransfer);
     }
@@ -73,22 +80,20 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
         $quoteRequestVersionFilterTransfer = (new QuoteRequestVersionFilterTransfer())
             ->setQuoteRequestVersionReference($quoteRequestVersionReference);
 
-        $quoteRequestVersions = $this->quoteRequestRepository
+        $quoteRequestVersionTransfers = $this->quoteRequestRepository
             ->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer)
             ->getQuoteRequestVersions()
             ->getArrayCopy();
 
-        $quoteRequestVersionTransfer = array_shift($quoteRequestVersions);
-
-        return $quoteRequestVersionTransfer;
+        return array_shift($quoteRequestVersionTransfers);
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    protected function getQuoteRequest(QuoteRequestVersionTransfer $quoteRequestVersionTransfer): QuoteRequestTransfer
+    protected function findQuoteRequest(QuoteRequestVersionTransfer $quoteRequestVersionTransfer): ?QuoteRequestTransfer
     {
         $quoteRequestVersionTransfer->requireQuoteRequest()
             ->getQuoteRequest()
@@ -97,14 +102,12 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setQuoteRequestReference($quoteRequestVersionTransfer->getQuoteRequest()->getQuoteRequestReference());
 
-        $quoteRequests = $this->quoteRequestRepository
+        $quoteRequestTransfers = $this->quoteRequestRepository
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
             ->getQuoteRequests()
             ->getArrayCopy();
 
-        $quoteRequestTransfer = array_shift($quoteRequests);
-
-        return $quoteRequestTransfer;
+        return array_shift($quoteRequestTransfers);
     }
 
     /**
