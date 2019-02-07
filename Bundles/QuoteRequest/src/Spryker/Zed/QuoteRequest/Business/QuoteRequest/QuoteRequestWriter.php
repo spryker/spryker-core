@@ -180,7 +180,9 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     {
         $quoteRequestTransfer->requireLatestVersion()
             ->getLatestVersion()
-            ->requireQuote();
+            ->requireQuote()
+            ->getQuote()
+            ->requireItems();
 
         $recalculatedQuoteTransfer = $this->calculationFacade
             ->recalculate($quoteRequestTransfer->getLatestVersion()->getQuote());
