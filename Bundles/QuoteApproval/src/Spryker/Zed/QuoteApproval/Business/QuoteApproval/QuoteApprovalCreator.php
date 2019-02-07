@@ -8,10 +8,12 @@
 namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface;
@@ -95,21 +97,46 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
         }
 
         $quoteTransfer = $quoteApprovalRequestValidationReponseTransfer->getQuote();
-
-        $this->quoteLocker->lockQuote($quoteTransfer);
-        $this->sharedCartFacade->deleteShareForQuote($quoteTransfer);
-        $this->sharedCartFacade->shareQuoteWithCompanyUser(
-            $quoteTransfer->getIdQuote(),
-            $quoteApprovalCreateRequestTransfer->getApproverCompanyUserId(),
-            static::PERMISSION_GROUP_READ_ONLY
-        );
-
         $quoteApprovalTransfer = $this->createQuoteApprovalTransfer(
             $quoteTransfer->getIdQuote(),
             $quoteApprovalCreateRequestTransfer->getApproverCompanyUserId()
         );
 
+        $this->quoteLocker->lockQuote($quoteTransfer);
+        $this->sharedCartFacade->deleteShareForQuote($quoteTransfer);
+
+        if (!$this->isQuoteOwner($quoteTransfer, $quoteApprovalTransfer->getApprover())) {
+            $this->shareQuoteToApprover($quoteApprovalTransfer);
+        }
+
         return $this->createSuccessfullQuoteApprovalResponseTransfer($quoteApprovalTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalTransfer $quoteApprovalTransfer
+     *
+     * @return void
+     */
+    protected function shareQuoteToApprover(QuoteApprovalTransfer $quoteApprovalTransfer): void
+    {
+        $this->sharedCartFacade->shareQuoteWithCompanyUser(
+            $quoteApprovalTransfer->getFkQuote(),
+            $quoteApprovalTransfer->getFkCompanyUser(),
+            static::PERMISSION_GROUP_READ_ONLY
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteOwner(QuoteTransfer $quoteTransfer, CompanyUserTransfer $companyUserTransfer): bool
+    {
+        $quoteApproverCustomerReference = $companyUserTransfer->getCustomer()->getCustomerReference();
+
+        return $quoteTransfer->getCustomerReference() === $quoteApproverCustomerReference;
     }
 
     /**

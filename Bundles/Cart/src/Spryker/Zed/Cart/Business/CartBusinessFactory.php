@@ -32,6 +32,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
             $this->createStorageProvider(),
             $this->getCalculatorFacade(),
             $this->getMessengerFacade(),
+            $this->getQuoteFacade(),
             $this->getItemExpanderPlugins(),
             $this->getCartPreCheckPlugins(),
             $this->getPostSavePlugins(),
@@ -53,7 +54,8 @@ class CartBusinessFactory extends AbstractBusinessFactory
         return new QuoteValidator(
             $this->createCartOperation(),
             $this->createQuoteChangeObserver(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
+            $this->getQuoteFacade()
         );
     }
 
@@ -90,6 +92,14 @@ class CartBusinessFactory extends AbstractBusinessFactory
     protected function getCalculatorFacade()
     {
         return $this->getProvidedDependency(CartDependencyProvider::FACADE_CALCULATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface
+     */
+    protected function getQuoteFacade()
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::FACADE_QUOTE);
     }
 
     /**

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Quote\Business;
 
+use Spryker\Shared\Quote\QuoteLock\QuoteLockStatusChecker;
+use Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Quote\Business\GuestQuote\GuestQuoteDeleter;
 use Spryker\Zed\Quote\Business\GuestQuote\GuestQuoteDeleterInterface;
@@ -18,6 +20,8 @@ use Spryker\Zed\Quote\Business\Model\QuoteWriter;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutor;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutorInterface;
+use Spryker\Zed\Quote\Business\Quote\QuoteLocker;
+use Spryker\Zed\Quote\Business\Quote\QuoteLockerInterface;
 use Spryker\Zed\Quote\QuoteConfig;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
 
@@ -55,6 +59,14 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface
+     */
+    public function createQuoteLockStatusChecker(): QuoteLockStatusCheckerInterface
+    {
+        return new QuoteLockStatusChecker();
+    }
+
+    /**
      * @return \Spryker\Zed\Quote\Business\Model\QuoteReaderInterface
      */
     public function createQuoteReader(): QuoteReaderInterface
@@ -63,6 +75,14 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getQuoteExpanderPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Quote\Business\Quote\QuoteLockerInterface
+     */
+    public function createQuoteLocker(): QuoteLockerInterface
+    {
+        return new QuoteLocker();
     }
 
     /**
@@ -85,7 +105,9 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     {
         return new GuestQuoteDeleter(
             $this->getEntityManager(),
-            $this->getConfig()
+            $this->getRepository(),
+            $this->getConfig(),
+            $this->getQuoteDeleteBeforePlugins()
         );
     }
 

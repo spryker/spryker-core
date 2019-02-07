@@ -8,28 +8,20 @@
 namespace Spryker\Zed\QuoteApproval\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface;
 
 class QuoteLocker implements QuoteLockerInterface
 {
-    /**
-     * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface
-     */
-    protected $cartFacade;
-
     /**
      * @var \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface
      */
     protected $quoteFacade;
 
     /**
-     * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface $quoteFacade
      */
-    public function __construct(QuoteApprovalToCartFacadeInterface $cartFacade, QuoteApprovalToQuoteFacadeInterface $quoteFacade)
+    public function __construct(QuoteApprovalToQuoteFacadeInterface $quoteFacade)
     {
-        $this->cartFacade = $cartFacade;
         $this->quoteFacade = $quoteFacade;
     }
 
@@ -40,7 +32,7 @@ class QuoteLocker implements QuoteLockerInterface
      */
     public function lockQuote(QuoteTransfer $quoteTransfer): void
     {
-        $this->cartFacade->lockQuote($quoteTransfer);
+        $quoteTransfer = $this->quoteFacade->lockQuote($quoteTransfer);
         $this->quoteFacade->updateQuote($quoteTransfer);
     }
 
@@ -51,7 +43,7 @@ class QuoteLocker implements QuoteLockerInterface
      */
     public function unlockQuote(QuoteTransfer $quoteTransfer): void
     {
-        $this->cartFacade->unlockQuote($quoteTransfer);
+        $quoteTransfer = $this->quoteFacade->unlockQuote($quoteTransfer);
         $this->quoteFacade->updateQuote($quoteTransfer);
     }
 }

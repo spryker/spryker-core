@@ -26,7 +26,6 @@ use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalWriter;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalWriterInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApproverListProvider;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApproverListProviderInterface;
-use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyRoleFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCustomerFacadeInterface;
@@ -61,7 +60,6 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     public function createQuoteLocker(): QuoteLockerInterface
     {
         return new QuoteLocker(
-            $this->getCartFacade(),
             $this->getQuoteFacade()
         );
     }
@@ -150,14 +148,6 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     public function getQuoteApprovalRepository(): QuoteApprovalRepositoryInterface
     {
         return $this->getRepository();
-    }
-
-    /**
-     * @return \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCartFacadeInterface
-     */
-    protected function getCartFacade(): QuoteApprovalToCartFacadeInterface
-    {
-        return $this->getProvidedDependency(QuoteApprovalDependencyProvider::FACADE_CART);
     }
 
     /**

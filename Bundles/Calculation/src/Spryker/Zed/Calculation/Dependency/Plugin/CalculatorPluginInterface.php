@@ -10,7 +10,7 @@ namespace Spryker\Zed\Calculation\Dependency\Plugin;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * @deprecated use CalculationPluginInterface instead
+ * @deprecated Use \Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface instead.
  */
 interface CalculatorPluginInterface
 {

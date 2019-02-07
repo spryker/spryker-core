@@ -53,4 +53,16 @@ interface QuoteClientInterface
      * @return string
      */
     public function getStorageStrategy();
+
+    /**
+     * Specification:
+     * - Returns true if quote is locked.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool;
 }

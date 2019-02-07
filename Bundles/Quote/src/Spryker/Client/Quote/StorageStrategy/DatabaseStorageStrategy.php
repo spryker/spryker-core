@@ -12,6 +12,7 @@ use Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface;
 use Spryker\Client\Quote\Session\QuoteSessionInterface;
 use Spryker\Client\Quote\Zed\QuoteStubInterface;
 use Spryker\Shared\Quote\QuoteConfig;
+use Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface;
 
 class DatabaseStorageStrategy implements StorageStrategyInterface
 {
@@ -31,18 +32,26 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     protected $quoteSession;
 
     /**
+     * @var \Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface
+     */
+    protected $quoteLockStatusChecker;
+
+    /**
      * @param \Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface $customerClient
      * @param \Spryker\Client\Quote\Zed\QuoteStubInterface $quoteStub
      * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
+     * @param \Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface $quoteLockStatusChecker
      */
     public function __construct(
         QuoteToCustomerClientInterface $customerClient,
         QuoteStubInterface $quoteStub,
-        QuoteSessionInterface $quoteSession
+        QuoteSessionInterface $quoteSession,
+        QuoteLockStatusCheckerInterface $quoteLockStatusChecker
     ) {
         $this->customerClient = $customerClient;
         $this->quoteStub = $quoteStub;
         $this->quoteSession = $quoteSession;
+        $this->quoteLockStatusChecker = $quoteLockStatusChecker;
     }
 
     /**
@@ -77,6 +86,16 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     public function setQuote(QuoteTransfer $quoteTransfer)
     {
         $this->quoteSession->setQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteLockStatusChecker->isQuoteLocked($quoteTransfer);
     }
 
     /**

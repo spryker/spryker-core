@@ -18,5 +18,5 @@ interface LocaleCmsPageDataExpanderInterface
      *
      * @return array
      */
-    public function calculateFlattenedLocaleCmsPageData(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer, LocaleTransfer $localeTransfer);
+    public function calculateFlattenedLocaleCmsPageData(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer, LocaleTransfer $localeTransfer): array;
 }

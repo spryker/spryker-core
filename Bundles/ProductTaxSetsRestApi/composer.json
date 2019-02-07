@@ -18,6 +18,9 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/uuid": "If you want to generate UUIDs for existing entities."
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

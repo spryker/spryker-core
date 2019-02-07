@@ -98,9 +98,4 @@ interface QuoteStorageStrategyProxyInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer;
-
-    /**
-     * @return bool
-     */
-    public function isQuoteLocked(): bool;
 }

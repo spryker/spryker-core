@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
+use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
 use Spryker\Zed\CartExtension\Dependency\Plugin\TerminationAwareCartPreCheckPluginInterface;
 
 class Operation implements OperationInterface
@@ -25,6 +26,7 @@ class Operation implements OperationInterface
     protected const TERMINATION_EVENT_NAME_ADD = 'add';
     protected const TERMINATION_EVENT_NAME_REMOVE = 'remove';
     protected const TERMINATION_EVENT_NAME_RELOAD = 'reload';
+    protected const GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED = 'cart.locked.change_denied';
 
     /**
      * @var \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
@@ -40,6 +42,11 @@ class Operation implements OperationInterface
      * @var \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface
      */
     protected $messengerFacade;
+
+    /**
+     * @var \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface
+     */
+    protected $quoteFacade;
 
     /**
      * @var \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[]
@@ -80,6 +87,7 @@ class Operation implements OperationInterface
      * @param \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface $cartStorageProvider
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $calculationFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
+     * @param \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[] $itemExpanderPlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface[] $preCheckPlugins
      * @param \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[] $postSavePlugins
@@ -91,6 +99,7 @@ class Operation implements OperationInterface
         StorageProviderInterface $cartStorageProvider,
         CartToCalculationInterface $calculationFacade,
         CartToMessengerInterface $messengerFacade,
+        CartToQuoteFacadeInterface $quoteFacade,
         array $itemExpanderPlugins,
         array $preCheckPlugins,
         array $postSavePlugins,
@@ -101,6 +110,7 @@ class Operation implements OperationInterface
         $this->cartStorageProvider = $cartStorageProvider;
         $this->calculationFacade = $calculationFacade;
         $this->messengerFacade = $messengerFacade;
+        $this->quoteFacade = $quoteFacade;
         $this->itemExpanderPlugins = $itemExpanderPlugins;
         $this->preCheckPlugins = $preCheckPlugins;
         $this->postSavePlugins = $postSavePlugins;
@@ -119,6 +129,13 @@ class Operation implements OperationInterface
         $cartChangeTransfer->requireQuote();
 
         $quoteTransfer = $cartChangeTransfer->getQuote();
+
+        if ($this->quoteFacade->isQuoteLocked($quoteTransfer)) {
+            $this->messengerFacade->addErrorMessage($this->createMessengerMessageTransfer(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED));
+
+            return $quoteTransfer;
+        }
+
         $itemsTransfer = $cartChangeTransfer->getItems();
 
         foreach ($itemsTransfer as $currentItemTransfer) {
@@ -143,6 +160,12 @@ class Operation implements OperationInterface
         $cartChangeTransfer->requireQuote();
 
         $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->modifiedToArray(), true);
+
+        if ($this->quoteFacade->isQuoteLocked($originalQuoteTransfer)) {
+            $this->messengerFacade->addErrorMessage($this->createMessengerMessageTransfer(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED));
+
+            return $originalQuoteTransfer;
+        }
 
         if (!$this->preCheckCart($cartChangeTransfer)) {
             return $cartChangeTransfer->getQuote();
@@ -223,30 +246,6 @@ class Operation implements OperationInterface
         if ($this->isTerminated(static::TERMINATION_EVENT_NAME_RELOAD, $cartChangeTransfer, $quoteTransfer)) {
             return $originalQuoteTransfer;
         }
-
-        return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function lock(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        $quoteTransfer->setIsLocked(true);
-
-        return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function unlock(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        $quoteTransfer->setIsLocked(false);
 
         return $quoteTransfer;
     }
