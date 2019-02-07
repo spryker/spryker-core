@@ -112,7 +112,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
         }
 
         return $this->getFactory()
-            ->createPropelMerchantAddressMapper()
+            ->createMerchantAddressMapper()
             ->mapSpyMerchantAddressEntityToMerchantAddressTransfer($spyMerchantAddress, new MerchantAddressTransfer());
     }
 }

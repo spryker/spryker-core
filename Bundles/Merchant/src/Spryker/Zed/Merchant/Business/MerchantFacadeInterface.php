@@ -21,6 +21,15 @@ interface MerchantFacadeInterface
     /**
      * Specification:
      * - Creates a new merchant entity.
+     * - Requires the following data set on the MerchantTransfer:
+     *   - name
+     *   - registrationNumber
+     *   - contactPersonTitle
+     *   - contactPersonFirstName
+     *   - contactPersonLastName
+     *   - contactPersonPhone
+     *   - email
+     *   - address
      * - Uses incoming transfer to set entity fields.
      * - Persists the entity to DB.
      * - Sets ID to the returning transfer.
@@ -36,6 +45,16 @@ interface MerchantFacadeInterface
     /**
      * Specification:
      * - Finds a merchant record by ID in DB.
+     * - Requires the following data set on the MerchantTransfer:
+     *   - idMerchant
+     *   - name
+     *   - registrationNumber
+     *   - contactPersonTitle
+     *   - contactPersonFirstName
+     *   - contactPersonLastName
+     *   - contactPersonPhone
+     *   - email
+     *   - address
      * - Uses incoming transfer to update entity fields.
      * - Persists the entity to DB.
      * - Throws MerchantNotFoundException in case a record is not found.
@@ -77,6 +96,7 @@ interface MerchantFacadeInterface
     /**
      * Specification:
      * - Finds a merchant by merchant id in provided transfer.
+     * - Will fail in case id_merchant is not set on the MerchantTransfer.
      * - Returns MerchantTransfer if found, NULL otherwise.
      *
      * @api
@@ -90,6 +110,7 @@ interface MerchantFacadeInterface
     /**
      * Specification:
      * - Finds a merchant by email in provided transfer.
+     * - Will fail in case email is not set on the MerchantTransfer.
      * - Returns MerchantTransfer if found, NULL otherwise.
      *
      * @api
@@ -128,6 +149,7 @@ interface MerchantFacadeInterface
     /**
      * Specification:
      * - Finds a merchant address by merchant address id in provided transfer.
+     * - Will fail in case id_merchant_address is not set on the MerchantAddressTransfer.
      * - Returns MerchantAddressTransfer if found, NULL otherwise.
      *
      * @api

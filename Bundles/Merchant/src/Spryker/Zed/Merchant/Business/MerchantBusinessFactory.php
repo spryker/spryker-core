@@ -8,12 +8,12 @@
 namespace Spryker\Zed\Merchant\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Merchant\Business\Address\MerchantAddressReader;
-use Spryker\Zed\Merchant\Business\Address\MerchantAddressReaderInterface;
-use Spryker\Zed\Merchant\Business\Address\MerchantAddressWriter;
-use Spryker\Zed\Merchant\Business\Address\MerchantAddressWriterInterface;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGenerator;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
+use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressReader;
+use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressReaderInterface;
+use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriter;
+use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface;
 use Spryker\Zed\Merchant\Business\Model\MerchantReader;
 use Spryker\Zed\Merchant\Business\Model\MerchantReaderInterface;
 use Spryker\Zed\Merchant\Business\Model\MerchantWriter;
@@ -78,7 +78,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Merchant\Business\Address\MerchantAddressWriterInterface
+     * @return \Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface
      */
     public function createMerchantAddressWriter(): MerchantAddressWriterInterface
     {
@@ -86,7 +86,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Merchant\Business\Address\MerchantAddressReaderInterface
+     * @return \Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressReaderInterface
      */
     public function createMerchantAddressReader(): MerchantAddressReaderInterface
     {

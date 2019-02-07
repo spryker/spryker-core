@@ -110,7 +110,7 @@ class MerchantAddressForm extends AbstractType
             'required' => true,
             'constraints' => array_merge(
                 $this->getRequiredConstraints(),
-                $this->getLengthConstraint(255)
+                [new Length(['max' => 255])]
             ),
         ]);
 
@@ -129,7 +129,7 @@ class MerchantAddressForm extends AbstractType
             'required' => true,
             'constraints' => array_merge(
                 $this->getRequiredConstraints(),
-                $this->getLengthConstraint(10)
+                [new Length(['max' => 10])]
             ),
         ]);
 
@@ -148,7 +148,7 @@ class MerchantAddressForm extends AbstractType
             'required' => true,
             'constraints' => array_merge(
                 $this->getRequiredConstraints(),
-                $this->getLengthConstraint(255)
+                [new Length(['max' => 255])]
             ),
         ]);
 
@@ -165,7 +165,7 @@ class MerchantAddressForm extends AbstractType
         $builder->add(static::FIELD_ADDRESS_2, TextType::class, [
             'label' => static::LABEL_ADDRESS_2,
             'required' => false,
-            'constraints' => $this->getLengthConstraint(255),
+            'constraints' => [new Length(['max' => 255])],
         ]);
 
         return $this;
@@ -181,7 +181,7 @@ class MerchantAddressForm extends AbstractType
         $builder->add(static::FIELD_ADDRESS_3, TextType::class, [
             'label' => static::LABEL_ADDRESS_3,
             'required' => false,
-            'constraints' => $this->getLengthConstraint(255),
+            'constraints' => [new Length(['max' => 255])],
         ]);
 
         return $this;
@@ -190,7 +190,7 @@ class MerchantAddressForm extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'merchant_address';
     }
@@ -204,15 +204,5 @@ class MerchantAddressForm extends AbstractType
             new Required(),
             new NotBlank(),
         ];
-    }
-
-    /**
-     * @param int $length
-     *
-     * @return array
-     */
-    protected function getLengthConstraint(int $length): array
-    {
-        return [new Length(['max' => $length])];
     }
 }

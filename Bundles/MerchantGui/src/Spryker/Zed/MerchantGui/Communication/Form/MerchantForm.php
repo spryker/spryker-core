@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantGui\Communication\Form;
 
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -270,11 +271,7 @@ class MerchantForm extends AbstractType
             new Email(),
             new Length(['max' => 255]),
             new Callback([
-                'callback' => function ($email, ExecutionContextInterface $context) use ($merchantFacade) {
-                    if ($merchantFacade->findMerchantByEmail((new MerchantTransfer())->setEmail($email)) !== null) {
-                        $context->addViolation('Email is already used');
-                    }
-                },
+                'callback' => $this->getExistingEmailValidationCallback($merchantFacade),
             ]),
         ];
     }
@@ -292,5 +289,19 @@ class MerchantForm extends AbstractType
             new Length(['max' => 64]),
             new Choice(['choices' => array_keys($choices)]),
         ];
+    }
+
+    /**
+     * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface $merchantFacade
+     *
+     * @return callable
+     */
+    protected function getExistingEmailValidationCallback(MerchantGuiToMerchantFacadeInterface $merchantFacade): callable
+    {
+        return function ($email, ExecutionContextInterface $context) use ($merchantFacade) {
+            if ($merchantFacade->findMerchantByEmail((new MerchantTransfer())->setEmail($email)) !== null) {
+                $context->addViolation('Email is already used.');
+            }
+        };
     }
 }
