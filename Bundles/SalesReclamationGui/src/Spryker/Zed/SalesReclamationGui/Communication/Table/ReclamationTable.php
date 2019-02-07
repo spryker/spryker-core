@@ -127,7 +127,7 @@ class ReclamationTable extends AbstractTable
     protected function createStateLabel(bool $isOpen): string
     {
         if ($isOpen) {
-            return $this->generateLabel('Open', 'label-success');;
+            return $this->generateLabel('Open', 'label-success');
         }
         return $this->generateLabel('Closed', 'label-danger');
     }

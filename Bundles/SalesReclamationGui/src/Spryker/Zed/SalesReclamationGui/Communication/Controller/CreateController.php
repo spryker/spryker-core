@@ -58,7 +58,6 @@ class CreateController extends AbstractController
                 '%s' => $reclamationTransfer->getIdSalesReclamation(),
                 '%d' => $orderTransfer->getOrderReference(),
             ]);
-        }
 
             return $this->redirectResponse(
                 Url::generate(
