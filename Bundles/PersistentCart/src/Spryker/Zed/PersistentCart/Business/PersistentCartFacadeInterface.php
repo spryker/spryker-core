@@ -173,7 +173,7 @@ interface PersistentCartFacadeInterface
      * Specification:
      * - Removes quote from database.
      * - Executes update quote plugins.
-     * - Respond with QuoteResponseTransfer.
+     * - Calls quote response extend plugins.
      *
      * @api
      *
