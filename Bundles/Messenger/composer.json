@@ -13,8 +13,7 @@
     "spryker/silex": "*"
   },
   "suggest": {
-    "spryker/silex": "If you want to use ServiceProvider.",
-    "spryker/translator": "If you want to use Translator plugins."
+    "spryker/silex": "If you want to use ServiceProvider."
   },
   "autoload": {
     "psr-4": {
