@@ -15,9 +15,9 @@ interface PersistentCartClientInterface
 {
     /**
      * Specification:
+     * - Makes zed request.
      * - Deletes existing quote in database.
      * - Executes update quote plugins.
-     * - Respond with QuoteResponseTransfer.
      *
      * @api
      *
