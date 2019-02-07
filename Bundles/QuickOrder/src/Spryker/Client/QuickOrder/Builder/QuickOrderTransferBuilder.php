@@ -9,6 +9,7 @@ namespace Spryker\Client\QuickOrder\Builder;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ItemValidationTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
@@ -106,18 +107,20 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
      */
     protected function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
-        $itemTransfer = $this->getItemTransfer($quickOrderItemTransfer);
-        $itemValidationResponseTransfer = $this->quickOrderItemValidator->validate($itemTransfer);
+        $itemValidationTransfer = (new ItemValidationTransfer())->setItem(
+            $this->getItemTransfer($quickOrderItemTransfer)
+        );
+        $itemValidationTransfer = $this->quickOrderItemValidator->validate($itemValidationTransfer);
 
-        if ($itemValidationResponseTransfer->getMessages()->count() > 0) {
-            $quickOrderItemTransfer->setMessages($itemValidationResponseTransfer->getMessages());
+        if ($itemValidationTransfer->getMessages()->count() > 0) {
+            $quickOrderItemTransfer->setMessages($itemValidationTransfer->getMessages());
         }
 
-        if (!$itemValidationResponseTransfer->getRecommendedValues()) {
+        if (!$itemValidationTransfer->getSuggestedValues()) {
             return $quickOrderItemTransfer;
         }
 
-        $recommendedValues = $itemValidationResponseTransfer->getRecommendedValues()->modifiedToArray();
+        $recommendedValues = $itemValidationTransfer->getSuggestedValues()->modifiedToArray();
         $quickOrderItemTransfer->fromArray($recommendedValues, true);
 
         return $quickOrderItemTransfer;
@@ -155,7 +158,12 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
      */
     protected function getItemTransfer(QuickOrderItemTransfer $quickOrderItemTransfer): ItemTransfer
     {
+        $productConcreteTransfer = $quickOrderItemTransfer->getProductConcrete();
+
         return (new ItemTransfer())
-            ->fromArray($quickOrderItemTransfer->toArray(), true);
+            ->setSku($quickOrderItemTransfer->getSku())
+            ->setId($productConcreteTransfer ? $productConcreteTransfer->getIdProductConcrete() : null)
+            ->setIdProductAbstract($productConcreteTransfer ? $productConcreteTransfer->getFkProductAbstract() : null)
+            ->setQuantity($quickOrderItemTransfer->getQuantity());
     }
 }

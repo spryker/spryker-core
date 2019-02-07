@@ -7,8 +7,7 @@
 
 namespace Spryker\Client\ProductQuantityStorage;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ItemValidationResponseTransfer;
+use Generated\Shared\Transfer\ItemValidationTransfer;
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 
 interface ProductQuantityStorageClientInterface
@@ -41,16 +40,16 @@ interface ProductQuantityStorageClientInterface
 
     /**
      * Specification:
-     * - Checks if product concrete provided in ItemTransfer has product quantity restrictions or not.
-     * - Adds recommendedValues with valid ItemTransfer->quantity inside into ItemValidationResponseTransfer and warning message
+     * - Checks if product concrete provided in ItemValidationTransfer has product quantity restrictions or not.
+     * - Adds recommendedValues with valid ItemValidationTransfer->quantity inside into ItemValidationTransfer and warning message
      *   when product has quantity restrictions.
-     * - Returns empty ItemValidationResponseTransfer if product has not quantity restrictions.
+     * - Returns empty ItemValidationTransfer if product has not quantity restrictions.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemValidationTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validateItemTransfer(ItemTransfer $itemTransfer): ItemValidationResponseTransfer;
+    public function validateItemQuantity(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer;
 }

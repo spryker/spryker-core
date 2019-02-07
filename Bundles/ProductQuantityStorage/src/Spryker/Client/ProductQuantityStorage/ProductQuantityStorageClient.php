@@ -7,8 +7,7 @@
 
 namespace Spryker\Client\ProductQuantityStorage;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ItemValidationResponseTransfer;
+use Generated\Shared\Transfer\ItemValidationTransfer;
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -55,11 +54,11 @@ class ProductQuantityStorageClient extends AbstractClient implements ProductQuan
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validateItemTransfer(ItemTransfer $itemTransfer): ItemValidationResponseTransfer
+    public function validateItemQuantity(ItemValidationTransfer $itemTransfer): ItemValidationTransfer
     {
         return $this->getFactory()
             ->createProductQuantityItemTransferValidator()

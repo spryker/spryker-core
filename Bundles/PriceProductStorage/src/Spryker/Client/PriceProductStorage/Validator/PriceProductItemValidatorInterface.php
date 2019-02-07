@@ -7,15 +7,14 @@
 
 namespace Spryker\Client\PriceProductStorage\Validator;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ItemValidationResponseTransfer;
+use Generated\Shared\Transfer\ItemValidationTransfer;
 
 interface PriceProductItemValidatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validate(ItemTransfer $itemTransfer): ItemValidationResponseTransfer;
+    public function validate(ItemValidationTransfer $itemTransfer): ItemValidationTransfer;
 }

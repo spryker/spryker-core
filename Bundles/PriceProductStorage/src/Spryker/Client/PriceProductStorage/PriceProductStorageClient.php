@@ -8,8 +8,7 @@
 namespace Spryker\Client\PriceProductStorage;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ItemValidationResponseTransfer;
+use Generated\Shared\Transfer\ItemValidationTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -88,14 +87,14 @@ class PriceProductStorageClient extends AbstractClient implements PriceProductSt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $ItemValidationTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validateItemTransfer(ItemTransfer $itemTransfer): ItemValidationResponseTransfer
+    public function validateItemPrice(ItemValidationTransfer $ItemValidationTransfer): ItemValidationTransfer
     {
         return $this->getFactory()
             ->createPriceProductItemValidator()
-            ->validate($itemTransfer);
+            ->validate($ItemValidationTransfer);
     }
 }

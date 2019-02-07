@@ -8,8 +8,7 @@
 namespace Spryker\Client\PriceProductStorage;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ItemValidationResponseTransfer;
+use Generated\Shared\Transfer\ItemValidationTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
 interface PriceProductStorageClientInterface
@@ -71,15 +70,15 @@ interface PriceProductStorageClientInterface
 
     /**
      * Specification:
-     * - Checks if product concrete provided in ItemTransfer has price or not.
-     * - If price is not found adds error message to ItemValidationResponseTransfer.
-     * - Returns empty ItemValidationResponseTransfer if price for product is exists.
+     * - Checks if product concrete provided in ItemValidationTransfer has price or not.
+     * - If price is not found adds error message to ItemValidationTransfer.
+     * - Returns empty ItemValidationTransfer if price for product is exists.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $ItemValidationTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validateItemTransfer(ItemTransfer $itemTransfer): ItemValidationResponseTransfer;
+    public function validateItemPrice(ItemValidationTransfer $ItemValidationTransfer): ItemValidationTransfer;
 }

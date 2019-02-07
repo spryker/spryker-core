@@ -24,19 +24,17 @@
     </transfer>
 
     <transfer name="Item">
-        <property name="productConcrete" type="ProductConcrete" />
-    </transfer>
-
-    <transfer name="ProductConcrete">
-        <property name="idProductConcrete" type="int" />
-        <property name="fkProductAbstract" type="int" />
+        <property name="id" type="int" />
+        <property name="idProductAbstract" type="int" />
+        <property name="quantity" type="int" />
     </transfer>
 
     <transfer name="CurrentProductPrice">
         <property name="price" type="int" />
     </transfer>
 
-    <transfer name="ItemValidationResponse">
+    <transfer name="ItemValidation">
+        <property name="item" type="Item" />
         <property name="messages" type="Message[]" singular="Message" />
     </transfer>
 

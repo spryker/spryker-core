@@ -7,8 +7,7 @@
 
 namespace Spryker\Client\ProductQuantityStorage\Validator;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ItemValidationResponseTransfer;
+use Generated\Shared\Transfer\ItemValidationTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolverInterface;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
@@ -46,24 +45,25 @@ class ProductQuantityItemValidator implements ProductQuantityItemValidatorInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemValidationTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validate(ItemTransfer $itemTransfer): ItemValidationResponseTransfer
+    public function validate(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer
     {
-        $itemValidationResponseTransfer = new ItemValidationResponseTransfer();
-        $productConcreteTransfer = $itemTransfer->getProductConcrete();
+        $itemValidationTransfer->requireItem();
 
-        if (!$productConcreteTransfer || !$productConcreteTransfer->getIdProductConcrete()) {
-            return $itemValidationResponseTransfer;
+        if (!$itemValidationTransfer->getItem()->getId()) {
+            return $itemValidationTransfer;
         }
 
+        $itemTransfer = $itemValidationTransfer->getItem();
+
         $productQuantityTransfer = $this->productQuantityStorageReader
-            ->findProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
+            ->findProductQuantityStorage($itemTransfer->getId());
 
         if (!$productQuantityTransfer) {
-            return $itemValidationResponseTransfer;
+            return $itemValidationTransfer;
         }
 
         $min = $productQuantityTransfer->getQuantityMin();
@@ -72,53 +72,47 @@ class ProductQuantityItemValidator implements ProductQuantityItemValidatorInterf
         $quantity = $itemTransfer->requireQuantity()->getQuantity();
 
         if ($quantity !== 0 && $quantity < $min) {
-            $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($productConcreteTransfer->getIdProductConcrete(), $quantity);
+            $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($itemTransfer->getId(), $quantity);
 
-            $itemValidationResponseTransfer->addMessage((new MessageTransfer())
+            $itemValidationTransfer->addMessage((new MessageTransfer())
                 ->setType(static::MESSAGE_TYPE_WARNING)
                 ->setValue(static::WARNING_MESSAGE_QUANTITY_MIN_NOT_FULFILLED)
-                ->setParameters([static::WARNING_MESSAGE_PARAM_MIN => $nearestQuantity])
-            );
+                ->setParameters([static::WARNING_MESSAGE_PARAM_MIN => $nearestQuantity]));
 
-            $itemValidationResponseTransfer->setRecommendedValues((new ItemTransfer())
-                ->setQuantity($nearestQuantity)
-            );
+            $itemValidationTransfer->getSuggestedValues()
+                ->setQuantity($nearestQuantity);
 
-            return $itemValidationResponseTransfer;
+            return $itemValidationTransfer;
         }
 
         if ($quantity !== 0 && ($quantity - $min) % $interval !== 0) {
-            $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($productConcreteTransfer->getIdProductConcrete(), $quantity);
+            $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($itemTransfer->getId(), $quantity);
 
-            $itemValidationResponseTransfer->addMessage((new MessageTransfer())
+            $itemValidationTransfer->addMessage((new MessageTransfer())
                 ->setType(static::MESSAGE_TYPE_WARNING)
                 ->setValue(static::WARNING_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED)
-                ->setParameters([static::WARNING_MESSAGE_PARAM_STEP => $interval])
-            );
+                ->setParameters([static::WARNING_MESSAGE_PARAM_STEP => $interval]));
 
-            $itemValidationResponseTransfer->setRecommendedValues((new ItemTransfer())
-                ->setQuantity($nearestQuantity)
-            );
+            $itemValidationTransfer->getSuggestedValues()
+                ->setQuantity($nearestQuantity);
 
-            return $itemValidationResponseTransfer;
+            return $itemValidationTransfer;
         }
 
         if ($max !== null && $quantity > $max) {
-            $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($productConcreteTransfer->getIdProductConcrete(), $quantity);
+            $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($itemTransfer->getId(), $quantity);
 
-            $itemValidationResponseTransfer->addMessage((new MessageTransfer())
+            $itemValidationTransfer->addMessage((new MessageTransfer())
                 ->setType(static::MESSAGE_TYPE_WARNING)
                 ->setValue(static::WARNING_MESSAGE_QUANTITY_MAX_NOT_FULFILLED)
-                ->setParameters([static::WARNING_MESSAGE_PARAM_MAX => $nearestQuantity])
-            );
+                ->setParameters([static::WARNING_MESSAGE_PARAM_MAX => $nearestQuantity]));
 
-            $itemValidationResponseTransfer->setRecommendedValues((new ItemTransfer())
-                ->setQuantity($nearestQuantity)
-            );
+            $itemValidationTransfer->getSuggestedValues()
+                ->setQuantity($nearestQuantity);
 
-            return $itemValidationResponseTransfer;
+            return $itemValidationTransfer;
         }
 
-        return $itemValidationResponseTransfer;
+        return $itemValidationTransfer;
     }
 }

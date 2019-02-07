@@ -8,7 +8,7 @@
 namespace Spryker\Client\QuickOrder\Validator;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ItemValidationResponseTransfer;
+use Generated\Shared\Transfer\ItemValidationTransfer;
 
 class QuickOrderItemValidator implements QuickOrderItemValidatorInterface
 {
@@ -26,59 +26,20 @@ class QuickOrderItemValidator implements QuickOrderItemValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemValidationTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validate(ItemTransfer $itemTransfer): ItemValidationResponseTransfer
+    public function validate(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer
     {
-        $resultValidationResponse = new ItemValidationResponseTransfer();
+        if (!$itemValidationTransfer->getSuggestedValues()) {
+            $itemValidationTransfer->setSuggestedValues(new ItemTransfer());
+        }
+
         foreach ($this->itemValidatorPlugins as $itemValidationPlugin) {
-            $validationPluginResponse = $itemValidationPlugin->validate($itemTransfer);
-            $resultValidationResponse = $this->processValidationMessages($validationPluginResponse, $resultValidationResponse);
-            $resultValidationResponse = $this->processRecommendedValues($validationPluginResponse, $resultValidationResponse);
+            $itemValidationTransfer = $itemValidationPlugin->validate($itemValidationTransfer);
         }
 
-        return $resultValidationResponse;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemValidationResponseTransfer $validationPluginResponse
-     * @param \Generated\Shared\Transfer\ItemValidationResponseTransfer $resultValidationResponse
-     *
-     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
-     */
-    protected function processValidationMessages(ItemValidationResponseTransfer $validationPluginResponse, ItemValidationResponseTransfer $resultValidationResponse): ItemValidationResponseTransfer
-    {
-        if ($validationPluginResponse->getMessages()->count() === 0) {
-            return $resultValidationResponse;
-        }
-
-        foreach ($validationPluginResponse->getMessages() as $messageTransfer) {
-            $resultValidationResponse->addMessage($messageTransfer);
-        }
-
-        return $resultValidationResponse;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemValidationResponseTransfer $validationPluginResponse
-     * @param \Generated\Shared\Transfer\ItemValidationResponseTransfer $resultValidationResponse
-     *
-     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
-     */
-    protected function processRecommendedValues(ItemValidationResponseTransfer $validationPluginResponse, ItemValidationResponseTransfer $resultValidationResponse): ItemValidationResponseTransfer
-    {
-        if ($validationPluginResponse->getRecommendedValues() === null) {
-            return $resultValidationResponse;
-        }
-
-        $recommendedValues = $validationPluginResponse->getRecommendedValues()->modifiedToArray();
-        $itemTransfer = $resultValidationResponse->getRecommendedValues() ?: new ItemTransfer();
-        $itemTransfer->fromArray($recommendedValues);
-
-        $resultValidationResponse->setRecommendedValues($itemTransfer);
-
-        return $resultValidationResponse;
+        return $itemValidationTransfer;
     }
 }

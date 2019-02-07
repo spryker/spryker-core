@@ -7,8 +7,7 @@
 
 namespace Spryker\Client\PriceProductStorage\Plugin\QuickOrder;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ItemValidationResponseTransfer;
+use Generated\Shared\Transfer\ItemValidationTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\QuickOrderExtension\Dependency\Plugin\ItemValidatorPluginInterface;
 
@@ -21,16 +20,16 @@ class ProductPriceItemValidatorPlugin extends AbstractPlugin implements ItemVali
     /**
      * {@inheritdoc}
      * - Checks if product concrete provided in ItemTransfer has price or not.
-     * - If price is not found adds error message to ItemValidationResponseTransfer.
+     * - If price is not found adds error message to ItemValidationTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $ItemValidationTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validate(ItemTransfer $itemTransfer): ItemValidationResponseTransfer
+    public function validate(ItemValidationTransfer $ItemValidationTransfer): ItemValidationTransfer
     {
-        return $this->getClient()->validateItemTransfer($itemTransfer);
+        return $this->getClient()->validateItemPrice($ItemValidationTransfer);
     }
 }

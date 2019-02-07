@@ -7,8 +7,7 @@
 
 namespace Spryker\Client\PriceProductStorage\Validator;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ItemValidationResponseTransfer;
+use Generated\Shared\Transfer\ItemValidationTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolverInterface;
@@ -32,33 +31,36 @@ class PriceProductItemValidator implements PriceProductItemValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemValidationTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validate(ItemTransfer $itemTransfer): ItemValidationResponseTransfer
+    public function validate(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer
     {
-        $productConcreteTransfer = $itemTransfer->getProductConcrete();
-        $itemValidationResponseTransfer = new ItemValidationResponseTransfer();
+        $itemValidationTransfer->requireItem();
+        $itemTransfer = $itemValidationTransfer->getItem();
 
-        if (!$productConcreteTransfer || !$productConcreteTransfer->getIdProductConcrete()) {
-            return $itemValidationResponseTransfer;
+        if (!$itemTransfer->getId()) {
+            return $itemValidationTransfer;
         }
+
+        $itemTransfer->requireIdProductAbstract()
+            ->requireQuantity();
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setQuantity($itemTransfer->getQuantity())
-            ->setIdProduct($productConcreteTransfer->getIdProductConcrete())
-            ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract());
+            ->setIdProduct($itemTransfer->getId())
+            ->setIdProductAbstract($itemTransfer->getIdProductAbstract());
 
         $priceProductTransfer = $this->priceConcreteResolver
             ->resolveCurrentProductPriceTransfer($priceProductFilterTransfer);
 
         if (!$priceProductTransfer->getPrice()) {
-            $itemValidationResponseTransfer->addMessage((new MessageTransfer())
+            $itemValidationTransfer->addMessage((new MessageTransfer())
                 ->setType(static::MESSAGE_TYPE_ERROR)
                 ->setValue(static::ERROR_MESSAGE_NO_PRICE_PRODUCT));
         }
 
-        return $itemValidationResponseTransfer;
+        return $itemValidationTransfer;
     }
 }

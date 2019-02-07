@@ -11,17 +11,14 @@
     </transfer>
 
     <transfer name="Item">
-        <property name="productConcrete" type="ProductConcrete" />
+        <property name="id" type="int" />
         <property name="quantity" type="int" />
     </transfer>
 
-    <transfer name="ProductConcrete">
-        <property name="idProductConcrete" type="int" />
-    </transfer>
-
-    <transfer name="ItemValidationResponse">
+    <transfer name="ItemValidation">
+        <property name="item" type="Item" />
         <property name="messages" type="Message[]" singular="Message" />
-        <property name="recommendedValues" type="Item" />
+        <property name="suggestedValues" type="Item" />
     </transfer>
 
     <transfer name="Message">

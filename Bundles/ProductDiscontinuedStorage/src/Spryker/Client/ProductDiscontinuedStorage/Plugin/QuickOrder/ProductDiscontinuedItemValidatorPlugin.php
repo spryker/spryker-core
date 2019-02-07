@@ -7,8 +7,7 @@
 
 namespace Spryker\Client\ProductDiscontinuedStorage\Plugin\QuickOrder;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ItemValidationResponseTransfer;
+use Generated\Shared\Transfer\ItemValidationTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\QuickOrderExtension\Dependency\Plugin\ItemValidatorPluginInterface;
 
@@ -20,16 +19,16 @@ class ProductDiscontinuedItemValidatorPlugin extends AbstractPlugin implements I
 {
     /**
      * {@inheritdoc}
-     * - Validates whether the product in provided ItemTransfer is discontinued or not.
+     * - Validates whether the product in provided ItemValidationTransfer is discontinued or not.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validate(ItemTransfer $itemTransfer): ItemValidationResponseTransfer
+    public function validate(ItemValidationTransfer $itemTransfer): ItemValidationTransfer
     {
-        return $this->getClient()->validateItemTransfer($itemTransfer);
+        return $this->getClient()->validateItemDiscontinued($itemTransfer);
     }
 }

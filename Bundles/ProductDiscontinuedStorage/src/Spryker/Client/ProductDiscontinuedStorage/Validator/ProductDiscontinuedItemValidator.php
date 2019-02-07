@@ -7,8 +7,7 @@
 
 namespace Spryker\Client\ProductDiscontinuedStorage\Validator;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ItemValidationResponseTransfer;
+use Generated\Shared\Transfer\ItemValidationTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToLocaleClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface;
@@ -39,28 +38,27 @@ class ProductDiscontinuedItemValidator implements ProductDiscontinuedItemValidat
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemValidationTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validate(ItemTransfer $itemTransfer): ItemValidationResponseTransfer
+    public function validate(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer
     {
-        $productConcreteTransfer = $itemTransfer->getProductConcrete();
-        $itemValidationResponseTransfer = new ItemValidationResponseTransfer();
+        $itemValidationTransfer->requireItem();
 
-        if (!$productConcreteTransfer) {
-            return $itemValidationResponseTransfer;
+        if (!$itemValidationTransfer->getItem()->getId()) {
+            return $itemValidationTransfer;
         }
 
         $productDiscontinuedTransfer = $this->productDiscontinuedStorageReader
-            ->findProductDiscontinuedStorage($productConcreteTransfer->getSku(), $this->localeClient->getCurrentLocale());
+            ->findProductDiscontinuedStorage($itemValidationTransfer->getItem()->getSku(), $this->localeClient->getCurrentLocale());
 
         if ($productDiscontinuedTransfer) {
-            $itemValidationResponseTransfer->addMessage((new MessageTransfer())
+            $itemValidationTransfer->addMessage((new MessageTransfer())
                 ->setType(static::MESSAGE_TYPE_ERROR)
                 ->setValue(static::ERROR_MESSAGE_DISCONTINUED_PRODUCT));
         }
 
-        return $itemValidationResponseTransfer;
+        return $itemValidationTransfer;
     }
 }
