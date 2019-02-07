@@ -18,7 +18,7 @@ interface QuoteCreatorPluginInterface
      *
      * @api
      *
-     * @param RestQuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $quoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
