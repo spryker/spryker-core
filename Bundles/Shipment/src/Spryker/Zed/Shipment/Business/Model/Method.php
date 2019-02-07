@@ -184,6 +184,9 @@ class Method implements MethodInterface
     {
         $shipmentMethods = $shipmentMethodsTransfer->getMethods();
 
+        /**
+         * @todo Update this with plugin resolving
+         */
         foreach ($this->shipmentMethodFilters as $shipmentMethodFilter) {
             $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods($shipmentMethods, $quoteTransfer);
         }
@@ -375,6 +378,9 @@ class Method implements MethodInterface
      */
     protected function isShipmentMethodAvailable(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer)
     {
+        /**
+         * @todo Update this with plugin resolving
+         */
         $availabilityPlugins = $this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS];
         $isAvailable = true;
 
@@ -394,6 +400,9 @@ class Method implements MethodInterface
      */
     protected function getAvailabilityPlugin(SpyShipmentMethod $method, array $availabilityPlugins)
     {
+        /**
+         * @todo Update this with plugin resolving
+         */
         return $availabilityPlugins[$method->getAvailabilityPlugin()];
     }
 
@@ -407,6 +416,9 @@ class Method implements MethodInterface
      */
     protected function findStoreCurrencyPriceAmount(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer)
     {
+        /**
+         * @todo Update this with plugin resolving
+         */
         $idStore = $this->storeFacade->getCurrentStore()->getIdStore();
         $pricePlugins = $this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS];
 
@@ -458,6 +470,9 @@ class Method implements MethodInterface
      */
     protected function getPricePlugin(SpyShipmentMethod $method, array $pricePlugins)
     {
+        /**
+         * @todo Update this with plugin resolving
+         */
         return $pricePlugins[$method->getPricePlugin()];
     }
 
@@ -469,6 +484,9 @@ class Method implements MethodInterface
      */
     protected function getDeliveryTime(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer)
     {
+        /**
+         * @todo Update this with plugin resolving
+         */
         $deliveryTime = null;
         $deliveryTimePlugins = $this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS];
 
@@ -488,6 +506,9 @@ class Method implements MethodInterface
      */
     protected function getDeliveryTimePlugin(SpyShipmentMethod $method, array $deliveryTimePlugins)
     {
+        /**
+         * @todo Update this with plugin resolving
+         */
         return $deliveryTimePlugins[$method->getDeliveryTimePlugin()];
     }
 

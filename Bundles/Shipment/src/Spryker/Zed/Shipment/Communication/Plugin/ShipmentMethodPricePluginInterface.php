@@ -7,11 +7,17 @@
 
 namespace Spryker\Zed\Shipment\Communication\Plugin;
 
-use Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodPricePluginInterface as ShipmentGroupShipmentMethodPricePluginInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * @deprecated Use \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodPricePluginInterface instead.
  */
-interface ShipmentMethodPricePluginInterface extends ShipmentGroupShipmentMethodPricePluginInterface
+interface ShipmentMethodPricePluginInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int
+     */
+    public function getPrice(QuoteTransfer $quoteTransfer);
 }

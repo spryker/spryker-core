@@ -7,10 +7,17 @@
 
 namespace Spryker\Zed\Shipment\Communication\Plugin;
 
-use Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface as ShipmentGroupShipmentMethodsAvailabilityPluginInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
+
 /**
  * @deprecated Use \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface instead.
  */
-interface ShipmentMethodAvailabilityPluginInterface extends ShipmentGroupShipmentMethodsAvailabilityPluginInterface
+interface ShipmentMethodAvailabilityPluginInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isAvailable(QuoteTransfer $quoteTransfer);
 }

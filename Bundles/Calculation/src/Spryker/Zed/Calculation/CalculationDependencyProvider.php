@@ -71,7 +71,7 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCalculationService(Container $container)
+    protected function addCalculationService(Container $container): Container
     {
         $container[static::SERVICE_CALCULATION] = function (Container $container) {
             return $container->getLocator()->calculation()->service();

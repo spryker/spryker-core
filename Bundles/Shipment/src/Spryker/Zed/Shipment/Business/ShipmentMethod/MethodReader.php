@@ -166,6 +166,9 @@ class MethodReader extends Method
     ): ShipmentGroupCollectionTransfer {
         foreach ($shipmentGroupCollectionTransfer->getGroups() as $shipmentGroupTransfer) {
             $shipmentMethods = $shipmentGroupTransfer->getAvailableShipmentMethods();
+            /**
+             * @todo Update this with plugin resolving
+             */
             foreach ($this->shipmentMethodFilters as $shipmentMethodFilter) {
                 $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods(
                     $shipmentGroupTransfer,
@@ -227,7 +230,14 @@ class MethodReader extends Method
 
         if ($this->isSetAvailabilityPlugin($method, $availabilityPlugins)) {
             $availabilityPlugin = $this->getAvailabilityPlugin($method, $availabilityPlugins);
-            $isAvailable = $availabilityPlugin->isAvailable($shipmentGroupTransfer, $quoteTransfer);
+            if ($availabilityPlugin instanceof ShipmentMethodAvailabilityPluginInterface) {
+                $isAvailable = $availabilityPlugin->isAvailable($shipmentGroupTransfer, $quoteTransfer);
+            } else {
+                /**
+                 * @deprecated Will be removed in next major release.
+                 */
+                $isAvailable = $availabilityPlugin->isAvailable($quoteTransfer);
+            }
         }
 
         return $isAvailable;
@@ -237,7 +247,7 @@ class MethodReader extends Method
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param array $availabilityPlugins
      *
-     * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface
+     * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface
      */
     protected function getAvailabilityPlugin(SpyShipmentMethod $method, array $availabilityPlugins)
     {
@@ -270,9 +280,16 @@ class MethodReader extends Method
         $idStore = $this->storeFacade->getCurrentStore()->getIdStore();
         $pricePlugins = $this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS];
 
-        if (isset($pricePlugins[$method->getPricePlugin()])) {
+        if ($this->isSetPricePlugin($method, $pricePlugins)) {
             $pricePlugin = $this->getPricePlugin($method, $pricePlugins);
-            return $pricePlugin->getPrice($shipmentGroupTransfer, $quoteTransfer);
+            if ($pricePlugin instanceof ShipmentMethodPricePluginInterface) {
+                return $pricePlugin->getPrice($shipmentGroupTransfer, $quoteTransfer);
+            }
+
+            /**
+             * @deprecated Will be removed in next major release.
+             */
+            return $pricePlugin->getPrice($quoteTransfer);
         }
 
         $methodPriceEntity = $this->queryContainer
@@ -314,11 +331,25 @@ class MethodReader extends Method
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param array $pricePlugins
      *
-     * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodPricePluginInterface
+     * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodPricePluginInterface|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface
      */
     protected function getPricePlugin(SpyShipmentMethod $method, array $pricePlugins)
     {
+        /**
+         * @todo Update this with plugin resolving
+         */
         return $pricePlugins[$method->getPricePlugin()];
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
+     * @param array $pricePlugins
+     *
+     * @return bool
+     */
+    protected function isSetPricePlugin(SpyShipmentMethod $method, array $pricePlugins): bool
+    {
+        return isset($pricePlugins[$method->getPricePlugin()]);
     }
 
     /**
@@ -333,6 +364,9 @@ class MethodReader extends Method
         ShipmentGroupTransfer $shipmentGroupTransfer,
         QuoteTransfer $quoteTransfer
     ): ?int {
+        /**
+         * @todo Update this with plugin resolving
+         */
         $deliveryTime = null;
         $deliveryTimePlugins = $this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS];
 
@@ -352,6 +386,9 @@ class MethodReader extends Method
      */
     protected function issetDeliveryTimePlugin(SpyShipmentMethod $method, array $deliveryTimePlugins): bool
     {
+        /**
+         * @todo Update this with plugin resolving
+         */
         return isset($deliveryTimePlugins[$method->getDeliveryTimePlugin()]);
     }
 
@@ -363,6 +400,9 @@ class MethodReader extends Method
      */
     protected function getDeliveryTimePlugin(SpyShipmentMethod $method, array $deliveryTimePlugins)
     {
+        /**
+         * @todo Update this with plugin resolving
+         */
         return $deliveryTimePlugins[$method->getDeliveryTimePlugin()];
     }
 }

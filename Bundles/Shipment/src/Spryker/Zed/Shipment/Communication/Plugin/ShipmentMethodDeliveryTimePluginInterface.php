@@ -7,11 +7,17 @@
 
 namespace Spryker\Zed\Shipment\Communication\Plugin;
 
-use Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface as ShipmentGroupShipmentMethodDeliveryTimePluginInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * @deprecated Use \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface instead.
  */
-interface ShipmentMethodDeliveryTimePluginInterface extends ShipmentGroupShipmentMethodDeliveryTimePluginInterface
+interface ShipmentMethodDeliveryTimePluginInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int Delivery time in seconds
+     */
+    public function getTime(QuoteTransfer $quoteTransfer);
 }

@@ -57,12 +57,12 @@ class ItemsGrouper implements ItemsGrouperInterface
             ? $shipmentTransfer->getShippingAddress()->serialize()
             : '';
 
-        return sprintf(
+        return md5(sprintf(
             static::SHIPMENT_TRANSFER_KEY_PATTERN,
             $idShipmentMethod,
             $shippingAddressKey,
             $shipmentTransfer->getRequestedDeliveryDate()
-        );
+        ));
     }
 
     /**
