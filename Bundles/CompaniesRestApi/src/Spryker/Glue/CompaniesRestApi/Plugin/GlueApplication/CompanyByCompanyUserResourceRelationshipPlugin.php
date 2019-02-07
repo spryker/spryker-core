@@ -18,11 +18,11 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CompanyByCompanyUserResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * @api
-     *
      * {@inheritdoc}
      *  - Adds company resource as relationship.
      *  - Requires CompanyUserTransfer be provided in resource payload.
+     *
+     * @api
      *
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
