@@ -47,8 +47,11 @@ class CompanyResourceRelationshipExpander implements CompanyResourceRelationship
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): array
     {
         foreach ($resources as $resource) {
+            /**
+             * @var \Generated\Shared\Transfer\CompanyUserTransfer|null $payload
+             */
             $payload = $resource->getPayload();
-            if ($payload === null || $payload instanceof CompanyUserTransfer === false) {
+            if ($payload === null || !($payload instanceof CompanyUserTransfer)) {
                 continue;
             }
 

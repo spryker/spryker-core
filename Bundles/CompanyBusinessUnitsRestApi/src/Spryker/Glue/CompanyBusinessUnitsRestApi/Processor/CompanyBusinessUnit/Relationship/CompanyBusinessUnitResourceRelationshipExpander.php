@@ -15,6 +15,7 @@ use Spryker\Glue\CompanyBusinessUnitsRestApi\CompanyBusinessUnitsRestApiConfig;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Mapper\CompanyBusinessUnitMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyBusinessUnitResourceRelationshipExpander implements CompanyBusinessUnitResourceRelationshipExpanderInterface
@@ -52,8 +53,11 @@ class CompanyBusinessUnitResourceRelationshipExpander implements CompanyBusiness
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): array
     {
         foreach ($resources as $resource) {
+            /**
+             * @var \Generated\Shared\Transfer\CompanyUserTransfer|null $payload
+             */
             $payload = $resource->getPayload();
-            if ($payload === null || $payload instanceof CompanyUserTransfer === false) {
+            if ($payload === null || !($payload instanceof CompanyUserTransfer)) {
                 continue;
             }
 
@@ -63,27 +67,45 @@ class CompanyBusinessUnitResourceRelationshipExpander implements CompanyBusiness
                 continue;
             }
 
-            $restCompanyBusinessUnitAttributesTransfer = $this->companyBusinessUnitMapper
-                ->mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
-                    $companyBusinessUnitTransfer,
-                    new RestCompanyBusinessUnitAttributesTransfer()
-                );
-
-            $companyBusinessUnitResource = $this->restResourceBuilder->createRestResource(
-                CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS,
-                $companyBusinessUnitTransfer->getUuid(),
-                $restCompanyBusinessUnitAttributesTransfer
-            );
-
-            $companyBusinessUnitResource->addLink(
-                RestLinkInterface::LINK_SELF,
-                $this->createSelfLink($companyTransfer, $companyBusinessUnitTransfer)
+            $companyBusinessUnitResource = $this->createCompanyBusinessUnitResource(
+                $companyTransfer,
+                $companyBusinessUnitTransfer
             );
 
             $resource->addRelationship($companyBusinessUnitResource);
         }
 
         return $resources;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function createCompanyBusinessUnitResource(
+        CompanyTransfer $companyTransfer,
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): RestResourceInterface {
+        $restCompanyBusinessUnitAttributesTransfer = $this->companyBusinessUnitMapper
+            ->mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
+                $companyBusinessUnitTransfer,
+                new RestCompanyBusinessUnitAttributesTransfer()
+            );
+
+        $companyBusinessUnitResource = $this->restResourceBuilder->createRestResource(
+            CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS,
+            $companyBusinessUnitTransfer->getUuid(),
+            $restCompanyBusinessUnitAttributesTransfer
+        );
+
+        $companyBusinessUnitResource->addLink(
+            RestLinkInterface::LINK_SELF,
+            $this->createSelfLink($companyTransfer, $companyBusinessUnitTransfer)
+        );
+
+        return $companyBusinessUnitResource;
     }
 
     /**
