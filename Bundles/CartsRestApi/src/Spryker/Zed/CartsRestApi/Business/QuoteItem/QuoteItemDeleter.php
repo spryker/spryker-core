@@ -113,7 +113,7 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
      */
     protected function checkIfRequestedItemPresentInQuote(string $itemSku, array $items): bool
     {
-        if (empty($items)) {
+        if (count($items) === 0) {
             return false;
         }
 

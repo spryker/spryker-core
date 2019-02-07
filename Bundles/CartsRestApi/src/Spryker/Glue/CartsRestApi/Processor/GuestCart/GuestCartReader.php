@@ -56,7 +56,7 @@ class GuestCartReader implements GuestCartReaderInterface
      */
     public function getQuoteByUuid(string $uuidCart, RestRequestInterface $restRequest): QuoteResponseTransfer
     {
-        return $this->cartReader->getQuoteByUuid($uuidCart, $restRequest);
+        return $this->cartReader->getQuoteTransferByUuid($uuidCart, $restRequest);
     }
 
     /**

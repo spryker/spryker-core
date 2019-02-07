@@ -36,26 +36,6 @@ class QuoteItemMapper implements QuoteItemMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
-     */
-    public function createRestQuoteRequestTransfer(
-        RestCartItemRequestTransfer $restCartItemRequestTransfer
-    ): RestQuoteRequestTransfer {
-        $restQuoteRequestTransfer = new RestQuoteRequestTransfer();
-
-        $quoteTransfer = (new QuoteTransfer())
-            ->setCurrency($currencyTransfer)
-            ->setPriceMode($restCartsAttributesTransfer->getPriceMode())
-            ->setStore($storeTransfer)
-            ->setCustomerReference($restCartItemRequestTransfer->getCustomerReference());
-
-        return $restQuoteRequestTransfer->setQuote($quoteTransfer)->setCustomerReference($restCartItemRequestTransfer->getCustomerReference());
-
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
      *

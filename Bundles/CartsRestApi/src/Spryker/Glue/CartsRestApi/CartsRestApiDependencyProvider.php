@@ -23,7 +23,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
     public const PLUGIN_QUOTE_COLLECTION_READER = 'PLUGIN_QUOTE_COLLECTION_READER';
     public const PLUGIN_QUOTE_CREATOR = 'PLUGIN_QUOTE_CREATOR';
-    public const SERVICE_SESSION = 'session service';
+    public const SERVICE_SESSION = 'CLIENT_SESSION';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container

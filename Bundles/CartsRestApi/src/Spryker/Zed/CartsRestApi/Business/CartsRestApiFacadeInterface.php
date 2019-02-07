@@ -115,7 +115,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Updates cart item quantity.
-     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
+     * - Quote and customerReference must be set in the RestCartItemRequestTransfer.
      *
      * @api
      *
@@ -128,7 +128,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Adds an item to the cart.
-     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
+     * - Quote and customerReference must be set in the RestCartItemRequestTransfer.
      *
      * @api
      *
@@ -141,7 +141,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Removes item from cart.
-     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
+     * - Quote and customerReference must be set in the RestCartItemRequestTransfer.
      *
      * @api
      *
@@ -154,7 +154,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Adds an item to the guest cart.
-     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
+     * - Quote and customerReference must be set in the RestCartItemRequestTransfer.
      *
      * @api
      *
@@ -167,7 +167,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Transforms a guest cart to the regular cart.
-     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
+     * - Quote and customerReference must be set in the AssigningGuestQuoteRequestTransfer.
      *
      * @api
      *

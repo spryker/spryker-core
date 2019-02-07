@@ -9,7 +9,6 @@ namespace Spryker\Glue\CartsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Generated\Shared\Transfer\RestCartsDiscountsTransfer;
@@ -71,26 +70,6 @@ class CartsResourceMapper implements CartsResourceMapperInterface
         $restQuoteRequestTransfer->setQuoteUuid($uuidQuote);
 
         return $restQuoteRequestTransfer;
-    }
-
-    /**
-     * @param bool $isSuccessful
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function createRestQuoteResponseTransfer(
-        bool $isSuccessful,
-        ?QuoteTransfer $quoteTransfer
-    ): QuoteResponseTransfer {
-        $quoteResponseTransfer = (new QuoteResponseTransfer())
-            ->setIsSuccessful($isSuccessful);
-
-        if ($quoteTransfer) {
-            $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        }
-
-        return $quoteResponseTransfer;
     }
 
     /**

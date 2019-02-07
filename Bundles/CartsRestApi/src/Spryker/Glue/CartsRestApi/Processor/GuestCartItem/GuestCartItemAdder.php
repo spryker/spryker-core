@@ -59,8 +59,8 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
         $itemTransfer = $this->cartItemsResourceMapper->mapItemAttributesToItemTransfer($restCartItemsAttributesTransfer);
         $restCartItemRequestTransfer = $this->cartItemsResourceMapper->createRestCartItemRequestTransfer(
             $itemTransfer,
-            $restRequest->getResource()->getId(),
-            $restRequest
+            $restRequest,
+            $restRequest->getResource()->getId()
         );
 
         $quoteResponseTransfer = $this->cartsRestApiClient->addItemToGuestCart($restCartItemRequestTransfer);

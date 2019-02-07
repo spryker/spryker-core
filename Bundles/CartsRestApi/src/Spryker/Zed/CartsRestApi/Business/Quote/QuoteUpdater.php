@@ -98,7 +98,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
         }
 
         $quoteTransfer = $this->cartFacade->reloadItems(
-            $this->quoteMapper->mapOriginalQuoteTransferToQuoteTransfer($quoteTransfer, $originalQuoteTransfer)
+            $this->quoteMapper->mapQuoteTransferToOriginalQuoteTransfer($quoteTransfer, $originalQuoteTransfer)
         );
 
         $quoteUpdateRequestTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer);
@@ -133,7 +133,14 @@ class QuoteUpdater implements QuoteUpdaterInterface
         $quoteTransfer = $this->quoteMapper->createQuoteTransfer($registeredCustomer, $quoteCollectionResponseTransfer);
         $quoteUpdateRequestTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer);
 
-        return $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
+        $quoteResponseTransfer = $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
+        if ($quoteResponseTransfer->getIsSuccessful() === false) {
+            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
+        }
+
+        return $quoteResponseTransfer;
     }
 
     /**

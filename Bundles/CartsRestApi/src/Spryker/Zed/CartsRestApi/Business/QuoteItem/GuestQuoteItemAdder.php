@@ -7,13 +7,17 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
+use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
+use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
 
 class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
 {
@@ -33,6 +37,11 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     protected $quoteCreator;
 
     /**
+     * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @var \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface
      */
     protected $quoteItemMapper;
@@ -41,17 +50,20 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $cartReader
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemAdderInterface $quoteItemAdder
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface $quoteCreator
+     * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
      */
     public function __construct(
         QuoteReaderInterface $cartReader,
         QuoteItemAdderInterface $quoteItemAdder,
         QuoteCreatorInterface $quoteCreator,
+        CartsRestApiToStoreFacadeInterface $storeFacade,
         QuoteItemMapperInterface $quoteItemMapper
     ) {
         $this->cartReader = $cartReader;
         $this->quoteItemAdder = $quoteItemAdder;
         $this->quoteCreator = $quoteCreator;
+        $this->storeFacade = $storeFacade;
         $this->quoteItemMapper = $quoteItemMapper;
     }
 
@@ -66,9 +78,14 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
             ->requireCartItem()
             ->requireCustomerReference();
 
+        $currentStore = $this->storeFacade->getCurrentStore();
+
         if (!$restCartItemRequestTransfer->getCartUuid()) {
             $quoteResponseTransfer = $this->quoteCreator->createQuote(
-                $this->quoteItemMapper->createRestQuoteRequestTransfer($restCartItemRequestTransfer)
+                (new RestQuoteRequestTransfer())->setCustomerReference($restCartItemRequestTransfer->getCustomerReference())
+                    ->setQuote((new QuoteTransfer())->setStore($currentStore)
+                        ->setCurrency((new CurrencyTransfer())->setCode($currentStore->getDefaultCurrencyIsoCode()))
+                        ->setPriceMode('GROSS_MODE'))
             );
 
             if (!$quoteResponseTransfer->getIsSuccessful()) {

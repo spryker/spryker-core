@@ -14,6 +14,9 @@ use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestRespons
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
+/**
+ * @deprecated
+ */
 class GuestCartCreator implements GuestCartCreatorInterface
 {
     /**

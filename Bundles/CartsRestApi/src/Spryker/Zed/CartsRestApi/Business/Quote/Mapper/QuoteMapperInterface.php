@@ -49,7 +49,7 @@ interface QuoteMapperInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function mapOriginalQuoteTransferToQuoteTransfer(
+    public function mapQuoteTransferToOriginalQuoteTransfer(
         QuoteTransfer $quoteTransfer,
         QuoteTransfer $originalQuoteTransfer
     ): QuoteTransfer;

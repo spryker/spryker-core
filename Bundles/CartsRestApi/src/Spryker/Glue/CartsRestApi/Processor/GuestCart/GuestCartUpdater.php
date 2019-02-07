@@ -22,6 +22,8 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class GuestCartUpdater implements GuestCartUpdaterInterface
 {
+    protected const CUSTOMER_DATA = 'customer data';
+
     /**
      * @var \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface
      */
@@ -94,7 +96,7 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
     public function updateGuestCartCustomerReferenceOnRegistration(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         /** @var \Generated\Shared\Transfer\CustomerTransfer|null $anonymousCustomerTransfer */
-        $anonymousCustomerTransfer = $this->sessionClient->get('customer data');
+        $anonymousCustomerTransfer = $this->sessionClient->get(static::CUSTOMER_DATA);
         if ($anonymousCustomerTransfer === null || !($anonymousCustomerTransfer instanceof CustomerTransfer)) {
             return $customerTransfer;
         }
@@ -118,9 +120,8 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
         }
 
         $quoteTransfer = (new QuoteTransfer())
-            ->setCustomerReference(
-                $customerTransfer->getCustomerReference()
-            )->setUuid($quotes[0]->getUuid())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setUuid($quotes[0]->getUuid())
             ->setCustomer($customerTransfer);
 
         $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())

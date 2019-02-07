@@ -70,10 +70,14 @@ class CartItemUpdater implements CartItemUpdaterInterface
         $uuidQuote = $this->findCartIdentifier($restRequest);
         $itemIdentifier = $restRequest->getResource()->getId();
 
+        $itemTransfer = (new ItemTransfer())
+            ->setSku($itemIdentifier)
+            ->setQuantity($restCartItemsAttributesTransfer->getQuantity());
+
         $restCartItemRequestTransfer = $this->cartItemsResourceMapper->createRestCartItemRequestTransfer(
-            (new ItemTransfer())->setSku($itemIdentifier)->setQuantity($restCartItemsAttributesTransfer->getQuantity()),
-            $uuidQuote,
-            $restRequest
+            $itemTransfer,
+            $restRequest,
+            $uuidQuote
         );
 
         $quoteResponseTransfer = $this->cartsRestApiClient->updateItem($restCartItemRequestTransfer);

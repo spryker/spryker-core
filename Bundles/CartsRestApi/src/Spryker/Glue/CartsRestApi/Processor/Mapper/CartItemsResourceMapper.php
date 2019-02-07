@@ -17,15 +17,15 @@ class CartItemsResourceMapper implements CartItemsResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
-     * @param string|null $uuidQuote
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string|null $uuidQuote
      *
      * @return \Generated\Shared\Transfer\RestCartItemRequestTransfer
      */
     public function createRestCartItemRequestTransfer(
         ItemTransfer $cartItem,
-        ?string $uuidQuote,
-        RestRequestInterface $restRequest
+        RestRequestInterface $restRequest,
+        ?string $uuidQuote
     ): RestCartItemRequestTransfer {
         return (new RestCartItemRequestTransfer())
             ->setCartItem($cartItem)

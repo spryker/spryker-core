@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Quote\Business\Validator;
 
 use ArrayObject;
-use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ErrorMessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface;
@@ -16,7 +16,7 @@ use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 
 class QuoteValidator implements QuoteValidatorInterface
 {
-    protected const MESSAGE_STORE_DATA_IS_MISSING = 'quote.validation.error.store_is_missing';
+    protected const ERROR_MESSAGE_STORE_DATA_IS_MISSING = 'quote.validation.error.store_is_missing';
 
     /**
      * @var \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface
@@ -66,7 +66,7 @@ class QuoteValidator implements QuoteValidatorInterface
         $storeTransfer = $quoteTransfer->getStore();
 
         if (!$storeTransfer || !$storeTransfer->getName()) {
-            return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_STORE_DATA_IS_MISSING);
+            return $this->addValidationError($quoteValidationResponseTransfer, static::ERROR_MESSAGE_STORE_DATA_IS_MISSING);
         }
 
         try {
@@ -106,21 +106,21 @@ class QuoteValidator implements QuoteValidatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
-     * @param string $message
+     * @param string $errorMessage
      * @param array $parameters
      *
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
     protected function addValidationError(
         QuoteValidationResponseTransfer $quoteValidationResponseTransfer,
-        string $message,
+        string $errorMessage,
         array $parameters = []
     ): QuoteValidationResponseTransfer {
-        $messageTransfer = (new MessageTransfer())->setValue($message)
+        $errorMessageTransfer = (new ErrorMessageTransfer())->setValue($errorMessage)
             ->setParameters($parameters);
 
         return $quoteValidationResponseTransfer
-            ->addErrors($messageTransfer)
+            ->addErrors($errorMessageTransfer)
             ->setIsSuccess(false);
     }
 }

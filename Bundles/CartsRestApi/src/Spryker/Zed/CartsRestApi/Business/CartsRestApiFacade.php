@@ -185,9 +185,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * Specification:
-     * - Adds an item to the guest cart.
-     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -203,9 +201,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * Specification:
-     * - Transforms a guest cart to the regular cart.
-     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
+     * {@inheritdoc}
      *
      * @api
      *

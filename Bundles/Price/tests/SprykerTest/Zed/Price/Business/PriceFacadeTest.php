@@ -22,8 +22,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 class PriceFacadeTest extends Unit
 {
-    protected const MESSAGE_PRICE_MODE_DATA_IS_MISSING = 'quote.validation.error.price_mode_is_missing';
-    protected const MESSAGE_PRICE_MODE_DATA_IS_INCORRECT = 'quote.validation.error.price_mode_is_incorrect';
+    protected const ERROR_MESSAGE_PRICE_MODE_DATA_IS_MISSING = 'quote.validation.error.price_mode_is_missing';
+    protected const ERROR_MESSAGE_PRICE_MODE_DATA_IS_INCORRECT = 'quote.validation.error.price_mode_is_incorrect';
     protected const WRONG_PRICE_MODE = 'WRONGPRICEMODE';
 
     /**
@@ -39,7 +39,7 @@ class PriceFacadeTest extends Unit
         $quoteTransfer = new QuoteTransfer();
 
         //Act
-        $this->validatePriceModeInQuote($quoteTransfer, static::MESSAGE_PRICE_MODE_DATA_IS_MISSING);
+        $this->validatePriceModeInQuote($quoteTransfer, static::ERROR_MESSAGE_PRICE_MODE_DATA_IS_MISSING);
     }
 
     /**
@@ -51,27 +51,27 @@ class PriceFacadeTest extends Unit
             ->setPriceMode(static::WRONG_PRICE_MODE);
 
         //Act
-        $this->validatePriceModeInQuote($quoteTransfer, static::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT);
+        $this->validatePriceModeInQuote($quoteTransfer, static::ERROR_MESSAGE_PRICE_MODE_DATA_IS_INCORRECT);
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $message
+     * @param string $errorMessage
      *
      * @return void
      */
-    protected function validatePriceModeInQuote(QuoteTransfer $quoteTransfer, string $message): void
+    protected function validatePriceModeInQuote(QuoteTransfer $quoteTransfer, string $errorMessage): void
     {
         //Act
         /** @var \Spryker\Zed\Price\Business\PriceFacade $priceFacade */
         $priceFacade = $this->tester->getFacade();
         $quoteValidationResponseTransfer = $priceFacade->validatePriceModeInQuote($quoteTransfer);
 
-        $errors = array_map(function ($messageTransfer) {
-            return $messageTransfer->getValue();
+        $errors = array_map(function ($errorMessageTransfer) {
+            return $errorMessageTransfer->getValue();
         }, (array)$quoteValidationResponseTransfer->getErrors());
 
         $this->assertFalse($quoteValidationResponseTransfer->getIsSuccess());
-        $this->assertContains($message, $errors);
+        $this->assertContains($errorMessage, $errors);
     }
 }

@@ -29,8 +29,8 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_CART = 'FACADE_CART';
     public const FACADE_STORE = 'FACADE_STORE';
     public const PROPEL_QUERY_QUOTE = 'PROPEL_QUERY_QUOTE';
-    public const PLUGINS_QUOTE_READER = 'PLUGINS_QUOTE_READER';
-    public const PLUGINS_QUOTE_CREATOR = 'PLUGINS_QUOTE_CREATOR';
+    public const PLUGIN_QUOTE_READER = 'PLUGIN_QUOTE_READER';
+    public const PLUGIN_QUOTE_CREATOR = 'PLUGIN_QUOTE_CREATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -157,7 +157,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteCollectionReaderPlugin(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_READER] = function () {
+        $container[static::PLUGIN_QUOTE_READER] = function () {
             return $this->getQuoteCollectionReaderPlugin();
         };
 
@@ -186,7 +186,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteCreatorPlugin(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_CREATOR] = function () {
+        $container[static::PLUGIN_QUOTE_CREATOR] = function () {
             return $this->getQuoteCreatorPlugin();
         };
 

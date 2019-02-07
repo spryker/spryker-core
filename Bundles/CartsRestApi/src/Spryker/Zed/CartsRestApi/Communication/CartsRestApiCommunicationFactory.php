@@ -88,6 +88,6 @@ class CartsRestApiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getQuoteCollectionReaderPlugins(): QuoteCollectionReaderPluginInterface
     {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_READER);
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGIN_QUOTE_READER);
     }
 }

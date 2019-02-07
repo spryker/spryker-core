@@ -17,6 +17,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
  */
 class SetCustomerBeforeActionPlugin extends AbstractPlugin implements ControllerBeforeActionPluginInterface
 {
+    protected const CUSTOMER_DATA = 'customer data';
     /**
      * @api
      *
@@ -43,6 +44,6 @@ class SetCustomerBeforeActionPlugin extends AbstractPlugin implements Controller
 
         $this->getFactory()
             ->getSessionClient()
-            ->set('customer data', $customerTransfer);
+            ->set(static::CUSTOMER_DATA, $customerTransfer);
     }
 }

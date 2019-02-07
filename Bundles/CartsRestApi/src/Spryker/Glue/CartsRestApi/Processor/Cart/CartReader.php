@@ -56,11 +56,11 @@ class CartReader implements CartReaderInterface
      */
     public function readByIdentifier(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface
     {
-        $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid(
-            (new QuoteTransfer())
-                ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
-                ->setUuid($uuidCart)
-        );
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
+            ->setUuid($uuidCart);
+
+        $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
 
         if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
             return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
@@ -125,21 +125,45 @@ class CartReader implements CartReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteByUuid(string $uuidCart, RestRequestInterface $restRequest): QuoteResponseTransfer
+    public function getQuoteTransferByUuid(string $uuidCart, RestRequestInterface $restRequest): QuoteResponseTransfer
     {
         $quoteCollectionTransfer = $this->getCustomerQuotes($restRequest);
 
         if ($quoteCollectionTransfer->getQuotes()->count() === 0) {
-            return $this->cartsResourceMapper->createRestQuoteResponseTransfer(false, null);
+            return (new QuoteResponseTransfer())
+                ->setIsSuccessful(false);
         }
 
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             if ($quoteTransfer->getUuid() === $uuidCart) {
-                $this->cartsResourceMapper->createRestQuoteResponseTransfer(false, $quoteTransfer);
+                return (new QuoteResponseTransfer())
+                    ->setIsSuccessful(true)
+                    ->setQuoteTransfer($quoteTransfer);
             }
         }
 
-        return $this->cartsResourceMapper->createRestQuoteResponseTransfer(false, null);
+        return (new QuoteResponseTransfer())
+            ->setIsSuccessful(false);
+    }
+
+    /**
+     * @param bool $isSuccessful
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createRestQuoteResponseTransfer(
+        bool $isSuccessful,
+        ?QuoteTransfer $quoteTransfer
+    ): QuoteResponseTransfer {
+        $quoteResponseTransfer = (new QuoteResponseTransfer())
+            ->setIsSuccessful($isSuccessful);
+
+        if ($quoteTransfer) {
+            $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
+        }
+
+        return $quoteResponseTransfer;
     }
 
     /**

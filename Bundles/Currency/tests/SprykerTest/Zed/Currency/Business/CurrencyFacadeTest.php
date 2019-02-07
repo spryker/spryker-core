@@ -26,8 +26,8 @@ use Spryker\Zed\Currency\Business\CurrencyFacade;
  */
 class CurrencyFacadeTest extends Unit
 {
-    protected const MESSAGE_CURRENCY_DATA_IS_MISSING = 'quote.validation.error.currency_mode_is_missing';
-    protected const MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'quote.validation.error.currency_mode_is_incorrect';
+    protected const ERROR_MESSAGE_CURRENCY_DATA_IS_MISSING = 'quote.validation.error.currency_mode_is_missing';
+    protected const ERROR_MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'quote.validation.error.currency_mode_is_incorrect';
     protected const WRONG_ISO_CODE = 'WRONGCODE';
     protected const STORE_NAME = 'DE';
 
@@ -77,7 +77,7 @@ class CurrencyFacadeTest extends Unit
         $quoteTransfer = new QuoteTransfer();
 
         //Act
-        $this->validateCurrencyInQuote($quoteTransfer, static::MESSAGE_CURRENCY_DATA_IS_MISSING);
+        $this->validateCurrencyInQuote($quoteTransfer, static::ERROR_MESSAGE_CURRENCY_DATA_IS_MISSING);
     }
 
     /**
@@ -90,7 +90,7 @@ class CurrencyFacadeTest extends Unit
             ->setCurrency($currencyTransfer);
 
         //Act
-        $this->validateCurrencyInQuote($quoteTransfer, static::MESSAGE_CURRENCY_DATA_IS_MISSING);
+        $this->validateCurrencyInQuote($quoteTransfer, static::ERROR_MESSAGE_CURRENCY_DATA_IS_MISSING);
     }
 
     /**
@@ -107,7 +107,7 @@ class CurrencyFacadeTest extends Unit
             ->setStore($storeTransfer);
 
         //Act
-        $this->validateCurrencyInQuote($quoteTransfer, static::MESSAGE_CURRENCY_DATA_IS_INCORRECT);
+        $this->validateCurrencyInQuote($quoteTransfer, static::ERROR_MESSAGE_CURRENCY_DATA_IS_INCORRECT);
     }
 
     /**
@@ -122,8 +122,8 @@ class CurrencyFacadeTest extends Unit
         $currencyFacade = $this->tester->getFacade();
         $quoteValidationResponseTransfer = $currencyFacade->validateCurrencyInQuote($quoteTransfer);
 
-        $errors = array_map(function ($messageTransfer) {
-            return $messageTransfer->getValue();
+        $errors = array_map(function ($errorMessageTransfer) {
+            return $errorMessageTransfer->getValue();
         }, (array)$quoteValidationResponseTransfer->getErrors());
 
         $this->assertFalse($quoteValidationResponseTransfer->getIsSuccess());
