@@ -12,10 +12,75 @@ namespace Spryker\Shared\StorageDatabase;
  */
 interface StorageDatabaseConstants
 {
-    public const DB_ENGINE = 'STORAGE_DB_ENGINE';
-    public const DB_HOST = 'STORAGE_DB_HOST';
-    public const DB_PORT = 'STORAGE_DB_PORT';
-    public const DB_DATABASE = 'STORAGE_DB_DATABASE';
-    public const DB_USERNAME = 'STORAGE_DB_USERNAME';
-    public const DB_PASSWORD = 'STORAGE_DB_PASSWORD';
+    /**
+     * Specification:
+     * - Defines DBMS for storage database.
+     *
+     * @api
+     */
+    public const DB_ENGINE = 'STORAGE_DATABASE:DB_ENGINE';
+
+    /**
+     * Specification:
+     * - Defines host for storage database.
+     *
+     * @api
+     */
+    public const DB_HOST = 'STORAGE_DATABASE:DB_HOST';
+
+    /**
+     * Specification:
+     * - Defines TCP port for accessing storage database.
+     *
+     * @api
+     */
+    public const DB_PORT = 'STORAGE_DATABASE:DB_PORT';
+
+    /**
+     * Specification:
+     * - Defines storage database name.
+     *
+     * @api
+     */
+    public const DB_DATABASE = 'STORAGE_DATABASE:DB_DATABASE';
+
+    /**
+     * Specification:
+     * - Defines username for accessing storage database.
+     *
+     * @api
+     */
+    public const DB_USERNAME = 'STORAGE_DATABASE:DB_USERNAME';
+
+    /**
+     * Specification:
+     * - Defines password for accessing storage database.
+     *
+     * @api
+     */
+    public const DB_PASSWORD = 'STORAGE_DATABASE:DB_PASSWORD';
+
+    /**
+     * Specification:
+     * - Defines debug mode for connection to storage database.
+     *
+     * @api
+     */
+    public const DB_DEBUG = 'STORAGE_DATABASE:DB_PASSWORD';
+
+    /**
+     * Specification:
+     * - MySql database engine.
+     *
+     * @api
+     */
+    public const DB_ENGINE_MYSQL = 'STORAGE_DATABASE:DB_ENGINE_MYSQL';
+
+    /**
+     * Specification:
+     * - Postgres database engine.
+     *
+     * @api
+     */
+    public const DB_ENGINE_PGSQL = 'STORAGE_DATABASE:DB_ENGINE_PGSQL';
 }

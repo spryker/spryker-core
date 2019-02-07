@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\StorageDatabase\ResourceToTableMapper;
 
-interface ResourceToTableResolverInterface
+interface ResourceKeyToTableNameResolverInterface
 {
     /**
      * @param string $resourceKey

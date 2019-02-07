@@ -9,7 +9,7 @@ namespace Spryker\Client\StorageDatabase\Database;
 
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Client\StorageDatabase\ConnectionProvider\ConnectionProviderInterface;
-use Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceToTableResolverInterface;
+use Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceKeyToTableNameResolverInterface;
 
 class StorageDatabase implements StorageDatabaseInterface
 {
@@ -27,7 +27,7 @@ class StorageDatabase implements StorageDatabaseInterface
     protected $connectionProvider;
 
     /**
-     * @var \Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceToTableResolverInterface
+     * @var \Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceKeyToTableNameResolverInterface
      */
     protected $resourceToTableMapper;
 
@@ -50,9 +50,9 @@ class StorageDatabase implements StorageDatabaseInterface
 
     /**
      * @param \Spryker\Client\StorageDatabase\ConnectionProvider\ConnectionProviderInterface $connectionProvider
-     * @param \Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceToTableResolverInterface $resourceToTableMapper
+     * @param \Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceKeyToTableNameResolverInterface $resourceToTableMapper
      */
-    public function __construct(ConnectionProviderInterface $connectionProvider, ResourceToTableResolverInterface $resourceToTableMapper)
+    public function __construct(ConnectionProviderInterface $connectionProvider, ResourceKeyToTableNameResolverInterface $resourceToTableMapper)
     {
         $this->connectionProvider = $connectionProvider;
         $this->resourceToTableMapper = $resourceToTableMapper;
@@ -80,7 +80,7 @@ class StorageDatabase implements StorageDatabaseInterface
     public function getMulti(array $keys): array
     {
         if (count($keys) === 0) {
-            return $keys;
+            return [];
         }
 
         $decodedResults = [];

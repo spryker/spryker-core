@@ -21,6 +21,72 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      * @api
      *
      * @param string $key
+     *
+     * @return mixed
+     */
+    public function get($key)
+    {
+        return $this->getClient()->get($key);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $keys
+     *
+     * @return array
+     */
+    public function getMulti(array $keys)
+    {
+        return $this->getClient()->getMulti($keys);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function resetAccessStats()
+    {
+        $this->getClient()->resetAccessStats();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getAccessStats()
+    {
+        return $this->getClient()->getAccessStats();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param bool $debug
+     *
+     * @return $this
+     */
+    public function setDebug($debug)
+    {
+        $this->getClient()->setDebug($debug);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $key
      * @param mixed $value
      * @param int|null $ttl
      *
@@ -90,34 +156,6 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      *
      * @api
      *
-     * @param string $key
-     *
-     * @return mixed
-     */
-    public function get($key)
-    {
-        return $this->getClient()->get($key);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param array $keys
-     *
-     * @return array
-     */
-    public function getMulti(array $keys)
-    {
-        return $this->getClient()->getMulti($keys);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return array
      */
     public function getStats()
@@ -156,48 +194,10 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      *
      * @api
      *
-     * @return void
-     */
-    public function resetAccessStats()
-    {
-        $this->getClient()->resetAccessStats();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return array
-     */
-    public function getAccessStats()
-    {
-        return $this->getClient()->getAccessStats();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return int
      */
     public function getCountItems()
     {
         return 0;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param bool $debug
-     *
-     * @return $this
-     */
-    public function setDebug($debug)
-    {
-        $this->getClient()->setDebug($debug);
-
-        return $this;
     }
 }

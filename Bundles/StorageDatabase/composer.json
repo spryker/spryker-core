@@ -6,7 +6,6 @@
   "require": {
     "spryker/kernel": "^3.0.0",
     "spryker/storage-extension": "^1.0.0",
-    "spryker/propel": "^3.0.0",
     "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
@@ -17,7 +16,8 @@
     "spryker/product-quantity-storage": "*",
     "spryker/availability": "*",
     "spryker/availability-storage": "*",
-    "spryker/queue": "*"
+    "spryker/queue": "*",
+    "spryker/propel": "*"
   },
   "autoload": {
     "psr-4": {

@@ -15,13 +15,13 @@ use Spryker\Client\StorageDatabase\StorageDatabaseFactory;
  * @group SprykerTest
  * @group Client
  * @group StorageDatabase
- * @group ResourceToTableMapperTest
+ * @group ResourceKeyToTableNameResolverTest
  * Add your own group annotations below this line
  */
-class ResourceToTableMapperTest extends Unit
+class ResourceKeyToTableNameResolverTest extends Unit
 {
     /**
-     * @var \Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceToTableResolverInterface
+     * @var \Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceKeyToTableNameResolverInterface
      */
     private $resourceToTableResolver;
 
@@ -32,7 +32,7 @@ class ResourceToTableMapperTest extends Unit
     {
         parent::setUp();
 
-        $this->resourceToTableResolver = (new StorageDatabaseFactory())->createResourceToTableResolver();
+        $this->resourceToTableResolver = (new StorageDatabaseFactory())->createResourceKeyToTableNameResolver();
     }
 
     /**

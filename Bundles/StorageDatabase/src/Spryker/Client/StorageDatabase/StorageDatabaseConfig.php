@@ -9,20 +9,41 @@ namespace Spryker\Client\StorageDatabase;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
 use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
-use Spryker\Zed\Propel\PropelConfig;
 
 class StorageDatabaseConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Spryker\Zed\Propel\PropelConfig::DB_ENGINE_PGSQL
+     */
+    protected const DB_ENGINE_PGSQL = 'pgsql';
+
+    /**
+     * @uses \Spryker\Zed\Propel\PropelConfig::DB_ENGINE_MYSQL
+     */
+    protected const DB_ENGINE_MYSQL = 'mysql';
+
     protected const RESOURCE_PREFIX_TO_STORAGE_TABLE_MAPPING = [
-        'translation' => 'glossary',
-        'product_search_config_extension' => 'product_search_config',
-        'product_abstract_product_lists' => 'product_abstract_product_list',
-        'product_concrete_product_lists' => 'product_concrete_product_list',
+        'translation' => [
+            self::KEY_STORAGE_TABLE_NAME => 'glossary',
+        ],
+        'product_search_config_extension' => [
+            self::KEY_STORAGE_TABLE_NAME => 'product_search_config',
+        ],
+        'product_abstract_product_lists' => [
+            self::KEY_STORAGE_TABLE_NAME => 'product_abstract_product_list',
+        ],
+        'product_concrete_product_lists' => [
+            self::KEY_STORAGE_TABLE_NAME => 'product_concrete_product_list',
+        ],
     ];
 
-    protected const STORAGE_TABLE_PREFIX = 'spy';
+    protected const DEFAULT_STORAGE_TABLE_PREFIX = 'spy';
+    protected const DEFAULT_STORAGE_TABLE_SUFFIX = 'storage';
+    protected const STORAGE_TABLE_NAME_PART_SEPARATOR = '_';
 
-    protected const STORAGE_TABLE_SUFFIX = 'storage';
+    public const KEY_STORAGE_TABLE_PREFIX = 'KEY_STORAGE_TABLE_PREFIX';
+    public const KEY_STORAGE_TABLE_SUFFIX = 'KEY_STORAGE_TABLE_SUFFIX';
+    public const KEY_STORAGE_TABLE_NAME = 'KEY_STORAGE_TABLE_NAME';
 
     /**
      * @return array
@@ -44,8 +65,14 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param string $resourceName
-     *
+     * @return bool
+     */
+    public function isConnectInDebugMode(): bool
+    {
+        return $this->get(StorageDatabaseConstants::DB_DEBUG, false);
+    }
+
+    /**
      * @return string[]
      */
     public function getResourcePrefixToStorageTableMapping(): array
@@ -56,17 +83,25 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getStorageTablePrefix(): string
+    public function getDefaultStorageTablePrefix(): string
     {
-        return static::STORAGE_TABLE_PREFIX;
+        return static::DEFAULT_STORAGE_TABLE_PREFIX;
     }
 
     /**
      * @return string
      */
-    public function getStorageTableSuffix(): string
+    public function getDefaultStorageTableSuffix(): string
     {
-        return static::STORAGE_TABLE_SUFFIX;
+        return static::DEFAULT_STORAGE_TABLE_SUFFIX;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStorageTableNamePartSeparator(): string
+    {
+        return static::STORAGE_TABLE_NAME_PART_SEPARATOR;
     }
 
     /**
@@ -75,15 +110,15 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     protected function getConnectionConfigData(): array
     {
         return [
-            PropelConfig::DB_ENGINE_PGSQL => [
-                'adapter' => PropelConfig::DB_ENGINE_PGSQL,
+            static::DB_ENGINE_PGSQL => [
+                'adapter' => static::DB_ENGINE_PGSQL,
                 'dsn' => $this->getDsn(),
                 'user' => $this->get(StorageDatabaseConstants::DB_USERNAME),
                 'password' => $this->get(StorageDatabaseConstants::DB_PASSWORD),
                 'settings' => [],
             ],
-            PropelConfig::DB_ENGINE_MYSQL => [
-                'adapter' => PropelConfig::DB_ENGINE_MYSQL,
+            static::DB_ENGINE_MYSQL => [
+                'adapter' => static::DB_ENGINE_MYSQL,
                 'dsn' => $this->getDsn(),
                 'user' => $this->get(StorageDatabaseConstants::DB_USERNAME),
                 'password' => $this->get(StorageDatabaseConstants::DB_PASSWORD),

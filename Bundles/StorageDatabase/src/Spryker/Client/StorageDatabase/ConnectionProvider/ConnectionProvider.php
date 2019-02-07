@@ -10,6 +10,7 @@ namespace Spryker\Client\StorageDatabase\ConnectionProvider;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Connection\ConnectionManagerSingle;
 use Propel\Runtime\Propel;
+use Propel\Runtime\ServiceContainer\ServiceContainerInterface;
 use Propel\Runtime\ServiceContainer\StandardServiceContainer;
 use Spryker\Client\StorageDatabase\Exception\ConnectionFailedException;
 use Spryker\Client\StorageDatabase\Exception\InvalidConnectionConfigurationException;
@@ -23,7 +24,7 @@ class ConnectionProvider implements ConnectionProviderInterface
     protected const MESSAGE_INVALID_CONNECTION_CONFIGURATION_EXCEPTION = 'Connection configuration is invalid';
 
     /**
-     * @var \Propel\Runtime\Connection\ConnectionInterface|null
+     * @var \Propel\Runtime\Connection\ConnectionWrapper|null
      */
     protected static $connection;
 
@@ -88,7 +89,11 @@ class ConnectionProvider implements ConnectionProviderInterface
     private function setupConnection(): void
     {
         try {
-            static::$connection = Propel::getConnection(static::CONNECTION_NAME);
+            static::$connection = Propel::getConnection(static::CONNECTION_NAME, ServiceContainerInterface::CONNECTION_READ);
+
+            static::$connection->useDebug(
+                $this->config->isConnectInDebugMode()
+            );
         } catch (Throwable $e) {
             throw new ConnectionFailedException($e->getMessage());
         }
