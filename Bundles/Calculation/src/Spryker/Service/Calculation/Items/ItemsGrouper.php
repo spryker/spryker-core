@@ -34,7 +34,8 @@ class ItemsGrouper implements ItemsGrouperInterface
             if (!isset($shipmentGroupTransfers[$key])) {
                 $shipmentGroupTransfers[$key] = $this
                     ->createNewShipmentGroupTransfer()
-                    ->setShipment($shipmentTransfer);
+                    ->setShipment($shipmentTransfer)
+                    ->setHash($key);
             }
 
             $shipmentGroupTransfers[$key]->addItem($itemTransfer);
