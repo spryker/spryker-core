@@ -9,7 +9,7 @@ namespace Spryker\Client\ContentProduct\Executor;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
-class AbstractProductListTermExecutor implements ContentTermExecutorInterface
+class AbstractProductListTermExecutor implements AbstractProductListTermExecutorInterface
 {
     /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $parameters
