@@ -238,6 +238,8 @@ interface PriceProductFacadeInterface
      * Specification:
      *  - Reads prices same as findPricesBySkuForCurrentStore, then groups by currency, price mode, price type for current store.
      *  - Delegates call to findPricesBySkuForCurrentStore and groups result after by currency, price mode and price type.
+     *  - When grouping result assigns priceData from transfer to currency if priceData in provided transfer !== null
+     *  or priceData does not exist in result array.
      *
      * For example:
      *   $result = [
@@ -246,6 +248,7 @@ interface PriceProductFacadeInterface
      *           'DEFAULT' => 1000,
      *           'ORIGINAL' => 2000,
      *        ],
+     *      'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
      *     ]
      *  ];
      *
@@ -261,6 +264,8 @@ interface PriceProductFacadeInterface
     /**
      * Specification:
      * - Groups provided transfers by currency, price mode and price type.
+     * - Assigns priceData from transfer to currency if priceData in provided transfer !== null or
+     * priceData does not exist in result array.
      *
      * Example:
      *   $result = [
@@ -269,6 +274,7 @@ interface PriceProductFacadeInterface
      *           'DEFAULT' => 1000,
      *           'ORIGINAL' => 2000,
      *        ],
+     *      'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
      *     ]
      *  ];
      *
