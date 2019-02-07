@@ -9,6 +9,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
@@ -56,7 +57,9 @@ class CartReader implements CartReaderInterface
     public function readByIdentifier(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface
     {
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid(
-            $this->cartsResourceMapper->createQuoteTransfer($uuidCart, $restRequest)
+            (new QuoteTransfer())
+                ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
+                ->setUuid($uuidCart)
         );
 
         if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
@@ -82,7 +85,9 @@ class CartReader implements CartReaderInterface
     public function getCustomerQuoteByUuid(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface
     {
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid(
-            $this->cartsResourceMapper->createQuoteTransfer($uuidCart, $restRequest)
+            (new QuoteTransfer())
+                ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
+                ->setUuid($uuidCart)
         );
 
         if ($quoteResponseTransfer->getIsSuccessful() === false

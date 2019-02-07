@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -46,21 +45,6 @@ class CartsResourceMapper implements CartsResourceMapperInterface
     ) {
         $this->cartItemsResourceMapper = $cartItemsResourceMapper;
         $this->restResourceBuilder = $restResourceBuilder;
-    }
-
-    /**
-     * @param string|null $uuidCart
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function createQuoteTransfer(
-        ?string $uuidCart,
-        RestRequestInterface $restRequest
-    ): QuoteTransfer {
-        return (new QuoteTransfer())
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
-            ->setUuid($uuidCart);
     }
 
     /**
@@ -107,21 +91,6 @@ class CartsResourceMapper implements CartsResourceMapperInterface
         }
 
         return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer
-     */
-    public function createAssigningGuestQuoteRequestTransfer(
-        RestRequestInterface $restRequest,
-        CustomerTransfer $customerTransfer
-    ): AssigningGuestQuoteRequestTransfer {
-        return (new AssigningGuestQuoteRequestTransfer())
-            ->setAnonymousCustomerReference($restRequest->getUser()->getNaturalIdentifier())
-            ->setCustomer($customerTransfer);
     }
 
     /**

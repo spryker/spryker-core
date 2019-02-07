@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
@@ -102,9 +103,8 @@ class QuoteReader implements QuoteReaderInterface
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
     ): QuoteCollectionResponseTransfer {
         $quoteCollectionResponseTransfer = new QuoteCollectionResponseTransfer();
-        $customerTransfer = $this->quoteMapper->mapRestQuoteCollectionRequestTransferToCustomerTransfer(
-            $restQuoteCollectionRequestTransfer
-        );
+        $customerTransfer = (new CustomerTransfer())
+            ->setCustomerReference($restQuoteCollectionRequestTransfer->getCustomerReference());
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);

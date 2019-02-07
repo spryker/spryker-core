@@ -179,7 +179,6 @@ class CartsRestApiFactory extends AbstractFactory
         return new GuestCartUpdater(
             $this->createGuestCartReader(),
             $this->createCartUpdater(),
-            $this->createCartsResourceMapper(),
             $this->createGuestCartRestResponseBuilder(),
             $this->getClient(),
             $this->getSessionClient()

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote\Mapper;
 
-use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
@@ -16,7 +15,6 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Zed\CartsRestApi\CartsRestApiConfig;
 
@@ -55,11 +53,15 @@ class QuoteMapper implements QuoteMapperInterface
      *
      * @return \Generated\Shared\Transfer\QuoteUpdateRequestTransfer
      */
-    public function mapQuoteTransferToQuoteUpdateRequestTransfer(
-        QuoteTransfer $quoteTransfer
-    ): QuoteUpdateRequestTransfer {
-        return (new QuoteUpdateRequestTransfer())
+    public function mapQuoteTransferToQuoteUpdateRequestTransfer(QuoteTransfer $quoteTransfer): QuoteUpdateRequestTransfer
+    {
+        $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())
             ->fromArray($quoteTransfer->modifiedToArray(), true);
+        $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
+            ->fromArray($quoteTransfer->modifiedToArray(), true);
+        $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
+
+        return $quoteUpdateRequestTransfer;
     }
 
     /**
@@ -86,54 +88,6 @@ class QuoteMapper implements QuoteMapperInterface
         }
 
         return $originalQuoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer
-     */
-    public function mapQuoteTransferToQuoteUpdateRequestAttributesTransfer(
-        QuoteTransfer $quoteTransfer
-    ): QuoteUpdateRequestAttributesTransfer {
-        return (new QuoteUpdateRequestAttributesTransfer())
-            ->fromArray($quoteTransfer->modifiedToArray(), true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    public function mapRestQuoteCollectionRequestTransferToCustomerTransfer(
-        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-    ): CustomerTransfer {
-        return (new CustomerTransfer())
-            ->setCustomerReference($restQuoteCollectionRequestTransfer->getCustomerReference());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    public function mapRestQuoteRequestTransferToCustomerTransfer(
-        RestQuoteRequestTransfer $restQuoteRequestTransfer
-    ): CustomerTransfer {
-        return (new CustomerTransfer())
-            ->setCustomerReference($restQuoteRequestTransfer->getCustomerReference());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer $assigningGuestQuoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer
-     */
-    public function mapAssigningGuestQuoteRequestTransferToRestQuoteCollectionRequestTransfer(
-        AssigningGuestQuoteRequestTransfer $assigningGuestQuoteRequestTransfer
-    ): RestQuoteCollectionRequestTransfer {
-        return (new RestQuoteCollectionRequestTransfer())
-            ->setCustomerReference($assigningGuestQuoteRequestTransfer->getAnonymousCustomerReference());
     }
 
     /**

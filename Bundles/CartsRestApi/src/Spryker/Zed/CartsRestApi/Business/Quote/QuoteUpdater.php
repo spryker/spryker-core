@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
@@ -101,10 +102,8 @@ class QuoteUpdater implements QuoteUpdaterInterface
         );
 
         $quoteUpdateRequestTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer);
-        $quoteUpdateRequestAttributesTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestAttributesTransfer($quoteTransfer);
-        $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
-        $quoteResponseTransfer = $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
 
+        $quoteResponseTransfer = $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
             return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer
@@ -126,16 +125,13 @@ class QuoteUpdater implements QuoteUpdaterInterface
             ->requireAnonymousCustomerReference();
 
         $quoteCollectionResponseTransfer = $this->cartReader->findQuoteByCustomerAndStore(
-            $this->quoteMapper->mapAssigningGuestQuoteRequestTransferToRestQuoteCollectionRequestTransfer(
-                $assigningGuestQuoteRequestTransfer
-            )
+            (new RestQuoteCollectionRequestTransfer())
+                ->setCustomerReference($assigningGuestQuoteRequestTransfer->getAnonymousCustomerReference())
         );
 
         $registeredCustomer = $assigningGuestQuoteRequestTransfer->getCustomer();
         $quoteTransfer = $this->quoteMapper->createQuoteTransfer($registeredCustomer, $quoteCollectionResponseTransfer);
         $quoteUpdateRequestTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer);
-        $quoteUpdateRequestAttributesTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestAttributesTransfer($quoteTransfer);
-        $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
 
         return $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
     }
