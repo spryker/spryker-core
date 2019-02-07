@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
+use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
