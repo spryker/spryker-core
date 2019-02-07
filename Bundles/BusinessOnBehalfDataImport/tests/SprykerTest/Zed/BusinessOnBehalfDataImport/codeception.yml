@@ -27,3 +27,4 @@ suites:
                 - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
                 - \SprykerTest\Zed\Company\Helper\CompanyHelper
                 - \SprykerTest\Zed\BusinessOnBehalfDataImport\Helper\BusinessOnBehalfDataImportHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper

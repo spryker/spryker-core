@@ -43,7 +43,7 @@ class LocalizedMessagesType extends AbstractType
      *
      * @return $this
      */
-    protected function addMessageField(FormBuilderInterface $builder, array $options = []): self
+    protected function addMessageField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
             ->add(static::FIELD_MESSAGE, TextType::class, [
