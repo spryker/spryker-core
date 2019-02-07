@@ -25,6 +25,11 @@ class PermissionExecutor implements PermissionExecutorInterface
     protected $permissionFinder;
 
     /**
+     * @var \Generated\Shared\Transfer\PermissionCollectionTransfer[]
+     */
+    protected static $cachedPermissions = [];
+
+    /**
      * @param \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[] $permissionStoragePlugins
      * @param \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface $permissionConfigurator
      */
@@ -47,7 +52,7 @@ class PermissionExecutor implements PermissionExecutorInterface
         $permissionPlugin = $this->permissionFinder->findPermissionPlugin($permissionKey);
 
         if (!$permissionPlugin) {
-             return true;
+            return true;
         }
 
         $permissionCollectionTransfer = $this->findPermissions($permissionKey);
@@ -109,6 +114,10 @@ class PermissionExecutor implements PermissionExecutorInterface
      */
     protected function findPermissions($permissionKey): PermissionCollectionTransfer
     {
+        if ($this->hasCachedPermissionsByKey($permissionKey)) {
+            return $this->getCachedPermissionsByKey($permissionKey);
+        }
+
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 
         foreach ($this->permissionStoragePlugins as $permissionStoragePlugin) {
@@ -119,6 +128,39 @@ class PermissionExecutor implements PermissionExecutorInterface
             }
         }
 
+        $this->cachePermissionsByKey($permissionKey, $permissionCollectionTransfer);
+
         return $permissionCollectionTransfer;
+    }
+
+    /**
+     * @param string $permissionKey
+     *
+     * @return bool
+     */
+    protected function hasCachedPermissionsByKey(string $permissionKey): bool
+    {
+        return isset(static::$cachedPermissions[$permissionKey]);
+    }
+
+    /**
+     * @param string $permissionKey
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    protected function getCachedPermissionsByKey(string $permissionKey): PermissionCollectionTransfer
+    {
+        return static::$cachedPermissions[$permissionKey];
+    }
+
+    /**
+     * @param string $permissionKey
+     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
+     *
+     * @return void
+     */
+    protected function cachePermissionsByKey(string $permissionKey, PermissionCollectionTransfer $permissionCollectionTransfer): void
+    {
+        static::$cachedPermissions[$permissionKey] = $permissionCollectionTransfer;
     }
 }

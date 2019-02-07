@@ -30,6 +30,11 @@ class CustomerSession implements CustomerSessionInterface
     protected $customerSessionSetPlugins;
 
     /**
+     * @var \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected static $cachedCustomer;
+
+    /**
      * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
      * @param \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface[] $customerSessionGetPlugins
      * @param \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionSetPluginInterface[] $customerSessionSetPlugins
@@ -50,6 +55,7 @@ class CustomerSession implements CustomerSessionInterface
     public function logout()
     {
         $this->sessionClient->remove(self::SESSION_KEY);
+        $this->invalidateCachedCustomer();
     }
 
     /**
@@ -57,7 +63,7 @@ class CustomerSession implements CustomerSessionInterface
      */
     public function hasCustomer()
     {
-        return $this->sessionClient->has(self::SESSION_KEY);
+        return $this->hasCachedCustomer() || $this->sessionClient->has(self::SESSION_KEY);
     }
 
     /**
@@ -65,6 +71,10 @@ class CustomerSession implements CustomerSessionInterface
      */
     public function getCustomer()
     {
+        if ($this->hasCachedCustomer()) {
+            return $this->getCachedCustomer();
+        }
+
         $customerTransfer = $this->sessionClient->get(self::SESSION_KEY);
 
         if ($customerTransfer === null) {
@@ -74,6 +84,8 @@ class CustomerSession implements CustomerSessionInterface
         foreach ($this->customerSessionGetPlugins as $customerSessionGetPlugin) {
             $customerSessionGetPlugin->execute($customerTransfer);
         }
+
+        $this->cacheCustomer($customerTransfer);
 
         return $customerTransfer;
     }
@@ -94,6 +106,8 @@ class CustomerSession implements CustomerSessionInterface
             $customerSessionSetPlugin->execute($customerTransfer);
         }
 
+        $this->invalidateCachedCustomer();
+
         return $customerTransfer;
     }
 
@@ -104,6 +118,41 @@ class CustomerSession implements CustomerSessionInterface
     {
         if ($this->hasCustomer() !== false) {
             $this->getCustomer()->setIsDirty(true);
+            $this->invalidateCachedCustomer();
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasCachedCustomer(): bool
+    {
+        return static::$cachedCustomer !== null;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function getCachedCustomer(): CustomerTransfer
+    {
+        return static::$cachedCustomer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function cacheCustomer(CustomerTransfer $customerTransfer): void
+    {
+        static::$cachedCustomer = $customerTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function invalidateCachedCustomer(): void
+    {
+        static::$cachedCustomer = null;
     }
 }

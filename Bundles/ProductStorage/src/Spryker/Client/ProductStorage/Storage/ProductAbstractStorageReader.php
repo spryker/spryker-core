@@ -47,6 +47,11 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     protected $productAbstractVariantsRestrictionFilter;
 
     /**
+     * @var array
+     */
+    protected static $productsAbstractCache = [];
+
+    /**
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Shared\Kernel\Store $store
@@ -87,6 +92,24 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      * @return array|null
      */
     public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
+    {
+        if ($this->hasCachedProductAbstract($idProductAbstract, $localeName)) {
+            return $this->getCachedProductAbstract($idProductAbstract, $localeName);
+        }
+
+        $productStorageData = $this->findStorageData($idProductAbstract, $localeName);
+        $this->cacheProductAbstract($idProductAbstract, $localeName, $productStorageData);
+
+        return $productStorageData;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    protected function findStorageData(int $idProductAbstract, string $localeName): ?array
     {
         if ($this->isProductAbstractRestricted($idProductAbstract)) {
             return null;
@@ -197,5 +220,39 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
         return $this->synchronizationService
             ->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_ABSTRACT_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function getCachedProductAbstract(int $idProductAbstract, string $localeName): array
+    {
+        return static::$productsAbstractCache[$idProductAbstract][$localeName];
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $localeName
+     *
+     * @return bool
+     */
+    protected function hasCachedProductAbstract(int $idProductAbstract, string $localeName): bool
+    {
+        return isset(static::$productsAbstractCache[$idProductAbstract][$localeName]);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $localeName
+     * @param array|null $productData
+     *
+     * @return void
+     */
+    protected function cacheProductAbstract(int $idProductAbstract, string $localeName, ?array $productData): void
+    {
+        static::$productsAbstractCache[$idProductAbstract][$localeName] = $productData;
     }
 }
