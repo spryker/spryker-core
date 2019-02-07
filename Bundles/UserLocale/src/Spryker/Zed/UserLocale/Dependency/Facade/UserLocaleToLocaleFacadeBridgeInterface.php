@@ -28,11 +28,6 @@ interface UserLocaleToLocaleFacadeBridgeInterface
     public function getLocale($localeName);
 
     /**
-     * @return string
-     */
-    public function getCurrentLocaleName();
-
-    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale();

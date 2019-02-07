@@ -31,9 +31,11 @@ class UserLocalePlugin extends AbstractPlugin implements ApplicationPluginInterf
      */
     public function boot(ContainerInterface $container): ContainerInterface
     {
-        $userLocaleName = $this->getCurrentUserLocaleCode() ?: $this->getFactory()->getLocaleFacade()->getCurrentLocaleName();
+        $userLocaleName = $this->getCurrentUserLocaleCode();
 
-        $this->getFactory()->getStore()->setCurrentLocale($userLocaleName);
+        if ($userLocaleName !== null) {
+            $this->getFactory()->getStore()->setCurrentLocale($userLocaleName);
+        }
 
         return $container;
     }
