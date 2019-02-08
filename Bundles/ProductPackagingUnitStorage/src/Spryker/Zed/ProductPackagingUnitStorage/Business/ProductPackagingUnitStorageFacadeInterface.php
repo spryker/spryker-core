@@ -49,7 +49,7 @@ interface ProductPackagingUnitStorageFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves array of ProductAbstractPackagingStorageTransfers which are associated with provided product abstract IDs.
+     * - Retrieves ProductAbstractPackagingStorageTransfer collection, associated with provided product abstract IDs.
      *
      * @api
      *

@@ -35,20 +35,22 @@ class ProductAbstractPackagingEventResourceRepositoryPlugin extends AbstractPlug
 
     /**
      * {@inheritdoc}
+     * - Retrieves ProductAbstractPackagingStorageTransfer collection, associated with provided product abstract IDs,
+     * will apply to query to limit the result.
      *
      * @api
      *
-     * @param int[] $ids
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function getData(array $ids = []): array
+    public function getData(array $productAbstractIds = []): array
     {
-        if (!$ids) {
-            $ids = $this->getRepository()->findProductAbstractIdsWithProductPackagingUnit();
+        if (!$productAbstractIds) {
+            $productAbstractIds = $this->getRepository()->findProductAbstractIdsWithProductPackagingUnit();
         }
 
-        return $this->getFacade()->getProductAbstractPackagingStorageTransfersByProductAbstractIds($ids);
+        return $this->getFacade()->getProductAbstractPackagingStorageTransfersByProductAbstractIds($productAbstractIds);
     }
 
     /**

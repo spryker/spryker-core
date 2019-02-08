@@ -21,9 +21,9 @@ class ProductPackagingUnitStorageMapper implements ProductPackagingUnitStorageMa
         $synchronizationDataTransfers = [];
 
         foreach ($productAbstractPackagingStorageEntities as $productAbstractPackagingStorageEntity) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
             /** @var string $data */
             $data = $productAbstractPackagingStorageEntity->getData();
+            $synchronizationDataTransfer = new SynchronizationDataTransfer();
             $synchronizationDataTransfer->setData($data);
             $synchronizationDataTransfer->setKey($productAbstractPackagingStorageEntity->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;

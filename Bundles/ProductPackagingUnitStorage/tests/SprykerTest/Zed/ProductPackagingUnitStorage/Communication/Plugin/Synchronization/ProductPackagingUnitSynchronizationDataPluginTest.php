@@ -59,10 +59,10 @@ class ProductPackagingUnitSynchronizationDataPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetDataWithIds(): void
+    public function testGetDataReturnsEmptyArrayWithInvalidIds(): void
     {
         $productAbstractPackagingSynchronizationDataPlugin = $this->getProductAbstractPackagingSynchronizationDataPlugin();
-        $synchronizationDataTransfers = $productPackagingUnitSynchronizationDataPlugin->getData([
+        $synchronizationDataTransfers = $productAbstractPackagingSynchronizationDataPlugin->getData([
             static::TEST_INVALID_ID,
         ]);
 
@@ -72,13 +72,13 @@ class ProductPackagingUnitSynchronizationDataPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetDataWithoutIds(): void
+    public function testGetDataReturnsDataWithoutIds(): void
     {
         $this->tester->assertStorageDatabaseTableIsEmpty();
         $this->haveBoxProductPackagingUnit();
 
         $productAbstractPackagingSynchronizationDataPlugin = $this->getProductAbstractPackagingSynchronizationDataPlugin();
-        $synchronizationDataTransfers = $productPackagingUnitSynchronizationDataPlugin->getData();
+        $synchronizationDataTransfers = $productAbstractPackagingSynchronizationDataPlugin->getData();
 
         $this->assertNotEmpty($synchronizationDataTransfers);
     }

@@ -29,7 +29,7 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Resource name, this will be used for key generating
+     * - Resource name, this will be used for key generating.
      *
      * @api
      */
@@ -37,7 +37,7 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Resource name, this will be used for key generating
+     * - Resource name, this will be used for key generating.
      *
      * @deprecated Use ProductPackagingUnitStorageConfig::PRODUCT_ABSTRACT_PACKAGING_RESOURCE_NAME instead.
      *
