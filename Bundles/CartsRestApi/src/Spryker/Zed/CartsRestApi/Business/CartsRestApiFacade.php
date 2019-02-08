@@ -197,7 +197,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     {
         return $this->getFactory()
             ->createGuestQuoteItemAdder()
-            ->addItemToGuestCart($restCartItemRequestTransfer);
+            ->addItemToGuestQuote($restCartItemRequestTransfer);
     }
 
     /**

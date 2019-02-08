@@ -67,20 +67,14 @@ class QuoteCreator implements QuoteCreatorInterface
             ->requireCustomerReference();
 
         $store = $restQuoteRequestTransfer->getQuote()->getStore();
+        if ($store && $store->getName() !== $this->storeFacade->getCurrentStore()->getName()) {
+            $quoteResponseTransfer = $this->quoteMapper->createQuoteResponseTransfer($restQuoteRequestTransfer)
+                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_STORE_DATA_IS_INVALID));
 
-        if (!empty($store)) {
-            if ($store->getName() !== $this->storeFacade->getCurrentStore()->getName()) {
-                $quoteResponseTransfer = $this->quoteMapper->createQuoteResponseTransfer($restQuoteRequestTransfer)
-                    ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_STORE_DATA_IS_INVALID));
-
-                return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
-                    $quoteResponseTransfer
-                );
-            }
+            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes($quoteResponseTransfer);
         }
 
         $quoteResponseTransfer = $this->quoteCreatorPlugin->createQuote($restQuoteRequestTransfer);
-
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer
