@@ -10,5 +10,7 @@
         <property name="quantityInterval" type="int" />
     </transfer>
 
-    <transfer name="ProductQuantity"/>
+    <transfer name="ProductQuantity">
+        <property name="idProduct" type="int" />
+    </transfer>
 </transfers>
