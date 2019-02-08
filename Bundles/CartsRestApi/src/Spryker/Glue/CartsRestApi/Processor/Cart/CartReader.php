@@ -10,6 +10,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
@@ -171,8 +172,8 @@ class CartReader implements CartReaderInterface
      */
     public function getCustomerQuotes(RestRequestInterface $restRequest): QuoteCollectionTransfer
     {
-        $restQuoteCollectionRequestTransfer = $this->cartsResourceMapper
-            ->mapRestRequestToRestQuoteCollectionRequestTransfer($restRequest);
+        $restQuoteCollectionRequestTransfer = (new RestQuoteCollectionRequestTransfer())
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
 
         $quoteCollectionTransfer = $this->cartsRestApiClient
             ->getCustomerQuoteCollection($restQuoteCollectionRequestTransfer);

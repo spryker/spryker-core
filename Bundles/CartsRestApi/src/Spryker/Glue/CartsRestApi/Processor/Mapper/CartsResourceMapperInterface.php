@@ -9,7 +9,6 @@ namespace Spryker\Glue\CartsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -59,13 +58,4 @@ interface CartsResourceMapperInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function mapRestRequestToQuoteTransfer(RestRequestInterface $restRequest): QuoteTransfer;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer
-     */
-    public function mapRestRequestToRestQuoteCollectionRequestTransfer(
-        RestRequestInterface $restRequest
-    ): RestQuoteCollectionRequestTransfer;
 }

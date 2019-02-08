@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Generated\Shared\Transfer\RestCartsDiscountsTransfer;
 use Generated\Shared\Transfer\RestCartsTotalsTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
@@ -149,18 +148,6 @@ class CartsResourceMapper implements CartsResourceMapperInterface
             ->setCustomer($customerTransfer);
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer
-     */
-    public function mapRestRequestToRestQuoteCollectionRequestTransfer(
-        RestRequestInterface $restRequest
-    ): RestQuoteCollectionRequestTransfer {
-        return (new RestQuoteCollectionRequestTransfer())
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
     }
 
     /**
