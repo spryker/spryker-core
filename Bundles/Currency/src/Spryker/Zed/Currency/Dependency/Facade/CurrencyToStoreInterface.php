@@ -24,5 +24,5 @@ interface CurrencyToStoreInterface
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName(string $name);
+    public function getStoreByName($name);
 }
