@@ -23,4 +23,17 @@ interface ProductQuantityStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
      */
     public function findProductQuantityStorage(int $idProduct): ?ProductQuantityStorageTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves the nearest valid quantity for a given product based on its product quantity restrictions.
+     *
+     * @api
+     *
+     * @param int $idProduct
+     * @param int $quantity
+     *
+     * @return int
+     */
+    public function getNearestQuantity(int $idProduct, int $quantity): int;
 }
