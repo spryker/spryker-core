@@ -23,7 +23,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
     public const PLUGIN_QUOTE_COLLECTION_READER = 'PLUGIN_QUOTE_COLLECTION_READER';
     public const PLUGIN_QUOTE_CREATOR = 'PLUGIN_QUOTE_CREATOR';
-    public const SERVICE_SESSION = 'CLIENT_SESSION';
+    public const CLIENT_SESSION = 'CLIENT_SESSION';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -49,7 +49,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSessionClient(Container $container)
     {
-        $container[static::SERVICE_SESSION] = function (Container $container) {
+        $container[static::CLIENT_SESSION] = function (Container $container) {
             return $container->getLocator()->session()->client();
         };
 

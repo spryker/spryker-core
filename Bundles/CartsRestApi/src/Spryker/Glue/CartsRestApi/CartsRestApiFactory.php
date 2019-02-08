@@ -308,7 +308,7 @@ class CartsRestApiFactory extends AbstractFactory
      */
     protected function getSessionClient()
     {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::SERVICE_SESSION);
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_SESSION);
     }
 
     /**
