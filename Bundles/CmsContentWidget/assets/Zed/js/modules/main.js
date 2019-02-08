@@ -5,8 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
-
 var CmsContentEditor = require('./cms-content-editor');
 
 $(document).ready(function () {

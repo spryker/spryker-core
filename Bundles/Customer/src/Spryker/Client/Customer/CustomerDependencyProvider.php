@@ -10,6 +10,9 @@ namespace Spryker\Client\Customer;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
+/**
+ * @method \Spryker\Client\Customer\CustomerConfig getConfig()
+ */
 class CustomerDependencyProvider extends AbstractDependencyProvider
 {
     public const SERVICE_SESSION = 'session service';
@@ -18,6 +21,7 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_CUSTOMER_SESSION_GET = 'PLUGINS_CUSTOMER_SESSION_GET';
     public const PLUGINS_CUSTOMER_SESSION_SET = 'PLUGINS_CUSTOMER_SESSION_SET';
     public const PLUGINS_DEFAULT_ADDRESS_CHANGE = 'PLUGINS_DEFAULT_ADDRESS_CHANGE';
+    public const PLUGINS_CUSTOMER_SECURED_PATTERN_RULE = 'PLUGINS_CUSTOMER_SECURED_PATTERN_RULE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -31,6 +35,7 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
         $container = $this->addZedRequestClient($container);
         $container = $this->addCustomerSessionGetPlugins($container);
         $container = $this->addCustomerSessionSetPlugins($container);
+        $container = $this->addCustomerSecuredPatternRulePlugins($container);
 
         return $container;
     }
@@ -55,6 +60,14 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
      * @return \Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface[]
      */
     protected function getDefaultAddressChangePlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternRulePluginInterface[]
+     */
+    protected function getCustomerSecuredPatternRulePlugins(): array
     {
         return [];
     }
@@ -124,6 +137,20 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::PLUGINS_CUSTOMER_SESSION_SET] = function () {
             return $this->getCustomerSessionSetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    public function addCustomerSecuredPatternRulePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CUSTOMER_SECURED_PATTERN_RULE] = function () {
+            return $this->getCustomerSecuredPatternRulePlugins();
         };
 
         return $container;

@@ -5,7 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
 var availableItemTable = require('./available-item-table');
 var assignedItemTable = require('./assigned-item-table');
 
