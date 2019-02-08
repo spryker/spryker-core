@@ -33,5 +33,5 @@ interface ProductAttributeFinderInterface
      *
      * @return string|null
      */
-    public function findProductImage(ProductConcreteTransfer $productConcreteTransfer): ?string;
+    public function findExternalProductImage(ProductConcreteTransfer $productConcreteTransfer): ?string;
 }

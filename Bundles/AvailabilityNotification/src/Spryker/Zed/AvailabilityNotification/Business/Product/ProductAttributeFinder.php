@@ -83,7 +83,7 @@ class ProductAttributeFinder implements ProductAttributeFinderInterface
      *
      * @return string|null
      */
-    public function findProductImage(ProductConcreteTransfer $productConcreteTransfer): ?string
+    public function findExternalProductImage(ProductConcreteTransfer $productConcreteTransfer): ?string
     {
         $imageSetTransfer = current($productConcreteTransfer->getImageSets());
 
@@ -97,6 +97,6 @@ class ProductAttributeFinder implements ProductAttributeFinderInterface
             return null;
         }
 
-        return $productImageTransfer->getExternalUrlLarge();
+        return 'http:' . $productImageTransfer->getExternalUrlLarge();
     }
 }

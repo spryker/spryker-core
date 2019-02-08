@@ -69,7 +69,7 @@ class AvailabilityNotificationSubscriptionSender implements AvailabilityNotifica
         $mailData = (new AvailabilityNotificationSubscriptionMailDataTransfer())
             ->setProductConcrete($productConcreteTransfer)
             ->setProductName($this->productAttributeFinder->findProductName($productConcreteTransfer, $availabilityNotificationSubscriptionTransfer->getLocale()))
-            ->setProductImageUrl($this->productAttributeFinder->findProductImage($productConcreteTransfer))
+            ->setProductImageUrl($this->productAttributeFinder->findExternalProductImage($productConcreteTransfer))
             ->setProductUrl($this->productAttributeFinder->findProductUrl($productConcreteTransfer, $availabilityNotificationSubscriptionTransfer->getLocale()))
             ->setAvailabilityNotificationSubscription($availabilityNotificationSubscriptionTransfer)
             ->setAvailabilityUnsubscriptionLink($unsubscriptionLink);

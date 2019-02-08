@@ -70,7 +70,7 @@ class AvailabilityNotificationUnsubscriptionSender implements AvailabilityNotifi
             ->setAvailabilityNotificationSubscription($availabilityNotificationSubscriptionTransfer)
             ->setAvailabilityUnsubscriptionLink($unsubscriptionLink)
             ->setProductName($this->productAttributeFinder->findProductName($productConcreteTransfer, $availabilityNotificationSubscriptionTransfer->getLocale()))
-            ->setProductImageUrl($this->productAttributeFinder->findProductImage($productConcreteTransfer))
+            ->setProductImageUrl($this->productAttributeFinder->findExternalProductImage($productConcreteTransfer))
             ->setProductUrl($this->productAttributeFinder->findProductUrl($productConcreteTransfer, $availabilityNotificationSubscriptionTransfer->getLocale()));
 
         $mailTransfer = (new MailTransfer())
