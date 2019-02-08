@@ -51,12 +51,13 @@ class ProductDiscontinuedProductBundleConnectorRepository extends AbstractReposi
 
     /**
      * @module ProductBundle
+     * @module ProductDiscontinued
      *
      * @param int $idProductDiscontinued
      *
      * @return int[]
      */
-    public function getBundledProductsByProductDiscontinuedId(int $idProductDiscontinued): array
+    public function getBundledProductIdsByProductDiscontinuedId(int $idProductDiscontinued): array
     {
         return $this->getFactory()
             ->createProductDiscontinuedPropelQuery()
@@ -73,16 +74,17 @@ class ProductDiscontinuedProductBundleConnectorRepository extends AbstractReposi
     }
 
     /**
-     * @param array $productConcreteIds
+     * @param int[] $productConcreteIds
      *
-     * @return array
+     * @return int
      */
-    public function getDiscontinuedProductsByProductConcreteIds(array $productConcreteIds): array
+    public function getCountDiscontinuedProductsByProductConcreteIds(array $productConcreteIds): int
     {
         return $this->getFactory()
             ->createProductDiscontinuedPropelQuery()
             ->filterByFkProduct($productConcreteIds, Criteria::IN)
+            ->select([SpyProductDiscontinuedTableMap::COL_ID_PRODUCT_DISCONTINUED])
             ->find()
-            ->toArray();
+            ->count();
     }
 }

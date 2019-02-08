@@ -159,6 +159,6 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
      */
     public function getProductDiscontinuedPreDeleteCheckPlugins(): array
     {
-        return $this->getProvidedDependency(ProductDiscontinuedDependencyProvider::PLUGINS_PRE_DELETE_CHECK_PRODUCT_DISCONTINUED);
+        return $this->getProvidedDependency(ProductDiscontinuedDependencyProvider::PLUGINS_PRODUCT_DISCONTINUED_PRE_DELETE_CHECK);
     }
 }

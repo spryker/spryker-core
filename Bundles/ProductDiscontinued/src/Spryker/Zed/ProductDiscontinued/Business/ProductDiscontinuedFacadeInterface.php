@@ -45,7 +45,7 @@ interface ProductDiscontinuedFacadeInterface
     /**
      * Specification:
      *  - Marks concrete product as not discontinued.
-     *  - Executes plugins before save product as not discontinued.
+     *  - Executes ProductDiscontinuedPreDeleteCheckPluginInterface plugins before save product as not discontinued.
      *
      * @api
      *

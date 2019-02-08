@@ -45,12 +45,12 @@ class ProductBundleDiscontinuedReader implements ProductBundleDiscontinuedReader
     {
         $productDiscontinuedResponseTransfer = (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(true);
 
-        $bundledProductConcreteIds = $this->productDiscontinuedProductBundleConnectorRepository->getBundledProductsByProductDiscontinuedId(
+        $bundledProductConcreteIds = $this->productDiscontinuedProductBundleConnectorRepository->getBundledProductIdsByProductDiscontinuedId(
             $productDiscontinuedTransfer->getIdProductDiscontinued()
         );
 
         $discontinuedBundledProducts = $this->productDiscontinuedProductBundleConnectorRepository
-            ->getDiscontinuedProductsByProductConcreteIds($bundledProductConcreteIds);
+            ->getCountDiscontinuedProductsByProductConcreteIds($bundledProductConcreteIds);
 
         if (!$discontinuedBundledProducts) {
             return $productDiscontinuedResponseTransfer;

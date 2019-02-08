@@ -21,12 +21,12 @@ interface ProductDiscontinuedProductBundleConnectorRepositoryInterface
      *
      * @return int[]
      */
-    public function getBundledProductsByProductDiscontinuedId(int $idProductDiscontinued): array;
+    public function getBundledProductIdsByProductDiscontinuedId(int $idProductDiscontinued): array;
 
     /**
      * @param array $productConcreteIds
      *
-     * @return array
+     * @return int
      */
-    public function getDiscontinuedProductsByProductConcreteIds(array $productConcreteIds): array;
+    public function getCountDiscontinuedProductsByProductConcreteIds(array $productConcreteIds): int;
 }

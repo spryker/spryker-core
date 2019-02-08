@@ -61,13 +61,13 @@ class ProductBundleDiscontinuedWriter implements ProductBundleDiscontinuedWriter
      */
     public function discontinueProductBundleByBundledProducts(ProductConcreteTransfer $productConcreteTransfer): void
     {
-        if ($productConcreteTransfer->getProductBundle() === null) {
+        if (!$productConcreteTransfer->getProductBundle()) {
             return;
         }
 
         $productForBundleTransfers = $productConcreteTransfer->getProductBundle()->getBundledProducts();
 
-        if ($productForBundleTransfers->count() < 1) {
+        if (!$productForBundleTransfers->count()) {
             return;
         }
 
@@ -77,7 +77,7 @@ class ProductBundleDiscontinuedWriter implements ProductBundleDiscontinuedWriter
         }
 
         $discontinuedBundledProducts = $this->productDiscontinuedProductBundleConnectorRepository
-            ->getDiscontinuedProductsByProductConcreteIds($productConcreteIds);
+            ->getCountDiscontinuedProductsByProductConcreteIds($productConcreteIds);
 
         if (!$discontinuedBundledProducts) {
             return;

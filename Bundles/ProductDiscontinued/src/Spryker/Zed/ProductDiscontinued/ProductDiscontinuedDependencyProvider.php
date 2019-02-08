@@ -19,7 +19,7 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const PLUGINS_POST_PRODUCT_DISCONTINUE = 'PLUGINS_POST_PRODUCT_DISCONTINUE';
     public const PLUGINS_POST_DELETE_PRODUCT_DISCONTINUED = 'PLUGINS_POST_DELETE_PRODUCT_DISCONTINUED';
-    public const PLUGINS_PRE_DELETE_CHECK_PRODUCT_DISCONTINUED = 'PLUGINS_PRE_DELETE_CHECK_PRODUCT_DISCONTINUED';
+    public const PLUGINS_PRODUCT_DISCONTINUED_PRE_DELETE_CHECK = 'PLUGINS_PRODUCT_DISCONTINUED_PRE_DELETE_CHECK';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -87,7 +87,7 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductDiscontinuedPreDeleteCheckPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRE_DELETE_CHECK_PRODUCT_DISCONTINUED] = function () {
+        $container[static::PLUGINS_PRODUCT_DISCONTINUED_PRE_DELETE_CHECK] = function () {
             return $this->getProductDiscontinuedPreDeleteCheckPlugins();
         };
 
