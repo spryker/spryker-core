@@ -68,7 +68,6 @@ class QuoteCreator implements QuoteCreatorInterface
 
         $store = $restQuoteRequestTransfer->getQuote()->getStore();
 
-        file_put_contents('vcv.txt', print_r($this->storeFacade->getCurrentStore()->getDefaultCurrencyIsoCode(), 1));
         if (!empty($store)) {
             if ($store->getName() !== $this->storeFacade->getCurrentStore()->getName()) {
                 $quoteResponseTransfer = $this->quoteMapper->createQuoteResponseTransfer($restQuoteRequestTransfer)
