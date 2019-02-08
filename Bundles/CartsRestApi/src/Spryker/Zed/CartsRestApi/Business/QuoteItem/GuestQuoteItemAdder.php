@@ -120,7 +120,6 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
         $currentStore = $this->storeFacade->getCurrentStore();
         $quoteTransfer = (new QuoteTransfer())
             ->setStore($currentStore)
-            ->setPriceMode('GROSS_MODE')
             ->setCurrency((new CurrencyTransfer())
                 ->setCode($currentStore->getDefaultCurrencyIsoCode()));
 

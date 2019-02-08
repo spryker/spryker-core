@@ -67,7 +67,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
             return $quoteResponseTransfer;
         }
 
-        $ifRequestedItemPresentInQuote = $this->checkIfRequestedItemPresentInQuote(
+        $ifRequestedItemPresentInQuote = $this->checkRequestedItemPresentInQuote(
             $restCartItemRequestTransfer->getCartItem()->getSku(),
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->getArrayCopy()
         );
@@ -112,7 +112,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
      *
      * @return bool
      */
-    protected function checkIfRequestedItemPresentInQuote(string $itemSku, array $items): bool
+    protected function checkRequestedItemPresentInQuote(string $itemSku, array $items): bool
     {
         if (count($items) === 0) {
             return false;
