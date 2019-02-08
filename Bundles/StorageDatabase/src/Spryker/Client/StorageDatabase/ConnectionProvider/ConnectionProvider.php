@@ -108,7 +108,7 @@ class ConnectionProvider implements ConnectionProviderInterface
     {
         $config = $this->config->getConnectionConfigForCurrentEngine();
 
-        if (empty($config) || !is_array($config)) {
+        if (!$config) {
             throw new InvalidConnectionConfigurationException(static::MESSAGE_INVALID_CONNECTION_CONFIGURATION_EXCEPTION);
         }
 
