@@ -61,7 +61,7 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
      * - Builds score based on multimatch cross fileds query type.
      *
      * @api
-     * 
+     *
      * @param string $searchString
      *
      * @return void
