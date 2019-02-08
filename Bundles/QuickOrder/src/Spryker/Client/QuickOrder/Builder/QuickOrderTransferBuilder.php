@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
+use Spryker\Client\QuickOrder\Expander\ProductConcreteExpanderInterface;
 use Spryker\Client\QuickOrder\Product\ProductConcreteResolverInterface;
 use Spryker\Client\QuickOrder\Validator\QuickOrderItemValidatorInterface;
 
@@ -33,23 +34,23 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
     protected $quickOrderItemValidator;
 
     /**
-     * @var \Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface[]
+     * @var \Spryker\Client\QuickOrder\Expander\ProductConcreteExpanderInterface
      */
-    protected $productConcreteExpanderPlugins;
+    protected $productConcreteExpander;
 
     /**
      * @param \Spryker\Client\QuickOrder\Product\ProductConcreteResolverInterface $productConcreteResolver
      * @param \Spryker\Client\QuickOrder\Validator\QuickOrderItemValidatorInterface $quickOrderItemValidator
-     * @param \Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface[] $productConcreteExpanderPlugins
+     * @param \Spryker\Client\QuickOrder\Expander\ProductConcreteExpanderInterface $productConcreteExpander
      */
     public function __construct(
         ProductConcreteResolverInterface $productConcreteResolver,
         QuickOrderItemValidatorInterface $quickOrderItemValidator,
-        array $productConcreteExpanderPlugins
+        ProductConcreteExpanderInterface $productConcreteExpander
     ) {
         $this->productConcreteResolver = $productConcreteResolver;
         $this->quickOrderItemValidator = $quickOrderItemValidator;
-        $this->productConcreteExpanderPlugins = $productConcreteExpanderPlugins;
+        $this->productConcreteExpander = $productConcreteExpander;
     }
 
     /**
@@ -139,14 +140,8 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
             return $quickOrderItemTransfer;
         }
 
-        $expandedProductConcretes = [];
-        foreach ($this->productConcreteExpanderPlugins as $productConcreteExpanderPlugin) {
-            $expandedProductConcretes = $productConcreteExpanderPlugin->expand([$quickOrderItemTransfer->getProductConcrete()]);
-        }
-
-        if ($expandedProductConcretes) {
-            $quickOrderItemTransfer->setProductConcrete($expandedProductConcretes[0]);
-        }
+        $expandedProductConcretes = $this->productConcreteExpander->expand([$quickOrderItemTransfer->getProductConcrete()]);
+        $quickOrderItemTransfer->setProductConcrete($expandedProductConcretes[0]);
 
         return $quickOrderItemTransfer;
     }

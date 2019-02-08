@@ -70,9 +70,13 @@ interface PriceProductStorageClientInterface
 
     /**
      * Specification:
-     * - Checks if product concrete provided in ItemValidationTransfer has price or not.
-     * - If price is not found adds error message to ItemValidationTransfer.
-     * - Returns empty ItemValidationTransfer if price for product is exists.
+     * - Requires ItemTransfer inside ItemValidationTransfer.
+     * - Returns not modified ItemValidationTransfer if ItemValidationTransfer.Item.id is missing.
+     * - Gets ItemTransfer from the ItemValidationTransfer.
+     * - Requires quantity and idProductAbstract in ItemTransfer if ItemTransfer.id is present.
+     * - Creates PriceProductFilterTransfer and fill it with the quantity, id and idProductAbstract from the ItemTransfer.
+     * - Tries to find product price using the PriceProductStorageClient::resolveCurrentProductPriceTransfer().
+     * - Adds error message if price not found. Otherwise returns not modified ItemValidationTransfer.
      *
      * @api
      *
@@ -80,5 +84,5 @@ interface PriceProductStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validateItemPrice(ItemValidationTransfer $ItemValidationTransfer): ItemValidationTransfer;
+    public function validateItemProductPrice(ItemValidationTransfer $ItemValidationTransfer): ItemValidationTransfer;
 }

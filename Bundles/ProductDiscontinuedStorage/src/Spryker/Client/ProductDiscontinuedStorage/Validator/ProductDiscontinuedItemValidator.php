@@ -50,6 +50,7 @@ class ProductDiscontinuedItemValidator implements ProductDiscontinuedItemValidat
             return $itemValidationTransfer;
         }
 
+        $itemValidationTransfer->getItem()->requireSku();
         $productDiscontinuedTransfer = $this->productDiscontinuedStorageReader
             ->findProductDiscontinuedStorage($itemValidationTransfer->getItem()->getSku(), $this->localeClient->getCurrentLocale());
 

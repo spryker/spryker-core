@@ -58,10 +58,10 @@ class ProductQuantityStorageClient extends AbstractClient implements ProductQuan
      *
      * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validateItemQuantity(ItemValidationTransfer $itemTransfer): ItemValidationTransfer
+    public function validateItemProductQuantity(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer
     {
         return $this->getFactory()
             ->createProductQuantityItemTransferValidator()
-            ->validate($itemTransfer);
+            ->validate($itemValidationTransfer);
     }
 }

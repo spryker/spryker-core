@@ -13,16 +13,15 @@ interface ItemValidatorPluginInterface
 {
     /**
      * Specification:
-     * - Checks if product concrete provided in ItemValidationTransfer has price or not.
-     * - If price is not found adds error message to ItemValidationTransfer.
-     * - In case if some fields need to be updated ItemValidationTransfer contains recommendedValues with ItemValidationTransfer inside.
-     * - Returns empty ItemValidationTransfer if price for product is exists.
+     * - Validates ItemTransfer inside ItemValidationTransfer.
+     * - Returns not changed ItemValidationTransfer if ItemTransfer is valid.
+     * - Returns ItemValidationTransfer with messages and suggestedValues (optional) in case if ItemTransfer is not valid.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemValidationTransfer $ItemValidationTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemValidationTransfer
      *
      * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validate(ItemValidationTransfer $ItemValidationTransfer): ItemValidationTransfer;
+    public function validate(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer;
 }

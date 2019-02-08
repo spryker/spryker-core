@@ -72,9 +72,11 @@ interface ProductDiscontinuedStorageClientInterface
 
     /**
      * Specification:
-     * - Check if product concrete provided in ItemValidationTransfer is discontinued or not.
-     * - Returns ItemValidationTransfer with error message.
-     * - Returns empty ItemValidationTransfer when product is not discontinued.
+     * - Requires ItemTransfer inside ItemValidationTransfer.
+     * - Returns not modified ItemValidationTransfer if ItemTransfer.id is missing.
+     * - Requires sku inside ItemTransfer.
+     * - Calls ProductDiscontinuedStorageClient::findProductDiscontinuedStorage() to know if product is discontinued or not (uses current locale).
+     * - Adds error message if product is discontinued. Otherwise returns not modified ItemValidationTransfer.
      *
      * @api
      *
@@ -82,5 +84,5 @@ interface ProductDiscontinuedStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validateItemDiscontinued(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer;
+    public function validateItemProductDiscontinued(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer;
 }

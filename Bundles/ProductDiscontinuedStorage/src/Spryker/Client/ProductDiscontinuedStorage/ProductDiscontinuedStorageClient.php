@@ -94,7 +94,7 @@ class ProductDiscontinuedStorageClient extends AbstractClient implements Product
      *
      * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validateItemDiscontinued(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer
+    public function validateItemProductDiscontinued(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer
     {
         return $this->getFactory()
             ->createProductDiscontinuedItemValidator()

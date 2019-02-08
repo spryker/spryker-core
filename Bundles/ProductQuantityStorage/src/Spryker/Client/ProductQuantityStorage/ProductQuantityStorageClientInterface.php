@@ -40,10 +40,12 @@ interface ProductQuantityStorageClientInterface
 
     /**
      * Specification:
-     * - Checks if product concrete provided in ItemValidationTransfer has product quantity restrictions or not.
-     * - Adds recommendedValues with valid ItemValidationTransfer->quantity inside into ItemValidationTransfer and warning message
-     *   when product has quantity restrictions.
-     * - Returns empty ItemValidationTransfer if product has not quantity restrictions.
+     * - Requires ItemTransfer inside ItemValidationTransfer.
+     * - Returns not modified ItemValidationTransfer if ItemTransfer.id is missing.
+     * - Calls ProductQuantityStorageClient::findProductQuantityStorage() to find product quantity restrictions.
+     * - Returns not modified ItemValidationTransfer if product quantity restrictions was not found.
+     * - Requires quantity inside ItemTransfer and checks it with the product quantity restrictions.
+     * - Returns ItemValidationTransfer with messages and suggestedValues.quantity in case if ItemTransfer.quantity falls in restrictions.
      *
      * @api
      *
@@ -51,5 +53,5 @@ interface ProductQuantityStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validateItemQuantity(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer;
+    public function validateItemProductQuantity(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer;
 }

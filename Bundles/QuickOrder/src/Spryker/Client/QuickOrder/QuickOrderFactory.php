@@ -58,7 +58,7 @@ class QuickOrderFactory extends AbstractFactory
         return new QuickOrderTransferBuilder(
             $this->createProductConcreteResolver(),
             $this->createQuickOrderItemValidator(),
-            $this->getProductConcreteExpanderPlugins()
+            $this->createProductConcreteExpander()
         );
     }
 
@@ -75,7 +75,7 @@ class QuickOrderFactory extends AbstractFactory
      */
     public function getQuickOrderValidationPlugins(): array
     {
-        return $this->getProvidedDependency(QuickOrderDependencyProvider::PLUGINS_QUICK_ORDER_VALIDATION);
+        return $this->getProvidedDependency(QuickOrderDependencyProvider::QUICK_ORDER_BUILD_ITEM_VALIDATOR_PLUGINS);
     }
 
     /**

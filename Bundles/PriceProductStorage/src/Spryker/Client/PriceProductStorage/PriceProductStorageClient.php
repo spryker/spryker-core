@@ -87,14 +87,14 @@ class PriceProductStorageClient extends AbstractClient implements PriceProductSt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemValidationTransfer $ItemValidationTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemValidationTransfer
      *
      * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validateItemPrice(ItemValidationTransfer $ItemValidationTransfer): ItemValidationTransfer
+    public function validateItemProductPrice(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer
     {
         return $this->getFactory()
             ->createPriceProductItemValidator()
-            ->validate($ItemValidationTransfer);
+            ->validate($itemValidationTransfer);
     }
 }

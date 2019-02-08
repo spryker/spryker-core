@@ -19,17 +19,22 @@ class ProductPriceItemValidatorPlugin extends AbstractPlugin implements ItemVali
 {
     /**
      * {@inheritdoc}
-     * - Checks if product concrete provided in ItemTransfer has price or not.
-     * - If price is not found adds error message to ItemValidationTransfer.
+     * - Requires ItemTransfer inside ItemValidationTransfer.
+     * - Returns not modified ItemValidationTransfer if ItemValidationTransfer.Item.id is missing.
+     * - Gets ItemTransfer from the ItemValidationTransfer.
+     * - Requires quantity and idProductAbstract in ItemTransfer if ItemTransfer.id is present.
+     * - Creates PriceProductFilterTransfer and fill it with the quantity, id and idProductAbstract from the ItemTransfer.
+     * - Tries to find product price using the PriceProductStorageClient::resolveCurrentProductPriceTransfer().
+     * - Adds error message if price not found. Otherwise returns not modified ItemValidationTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemValidationTransfer $ItemValidationTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemValidationTransfer
      *
      * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validate(ItemValidationTransfer $ItemValidationTransfer): ItemValidationTransfer
+    public function validate(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer
     {
-        return $this->getClient()->validateItemPrice($ItemValidationTransfer);
+        return $this->getClient()->validateItemProductPrice($itemValidationTransfer);
     }
 }
