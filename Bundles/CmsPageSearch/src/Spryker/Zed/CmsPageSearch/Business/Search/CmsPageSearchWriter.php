@@ -21,6 +21,11 @@ use Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface;
 
 class CmsPageSearchWriter implements CmsPageSearchWriterInterface
 {
+    protected const CMS_PAGE_ENTITY = 'CMS_PAGE_ENTITY';
+    protected const CMS_PAGE_SEARCH_ENTITY = 'CMS_PAGE_SEARCH_ENTITY';
+    protected const LOCALE_NAME = 'LOCALE_NAME';
+    protected const STORE_NAME = 'STORE_NAME';
+
     /**
      * @var \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface
      */
@@ -76,81 +81,115 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     }
 
     /**
-     * @param array $cmsPageIds
+     * @param int[] $cmsPageIds
      *
      * @return void
      */
-    public function publish(array $cmsPageIds)
+    public function publish(array $cmsPageIds): void
     {
         $cmsPageEntities = $this->findCmsPageEntities($cmsPageIds);
-        $cmsPageStorageEntities = $this->findCmsPageSearchEntities($cmsPageIds);
+        $cmsPageSearchEntities = $this->findCmsPageSearchEntities($cmsPageIds);
 
-        $this->storeData($cmsPageEntities, $cmsPageStorageEntities);
+        $this->storeData($cmsPageEntities, $cmsPageSearchEntities);
     }
 
     /**
-     * @param array $cmsPageIds
+     * @param int[] $cmsPageIds
      *
      * @return void
      */
-    public function unpublish(array $cmsPageIds)
+    public function unpublish(array $cmsPageIds): void
     {
-        $cmsPageStorageEntities = $this->findCmsPageSearchEntities($cmsPageIds);
-        foreach ($cmsPageStorageEntities as $cmsPageStorageEntity) {
-            $cmsPageStorageEntity->delete();
-        }
+        $this->deleteSearchEntities($cmsPageIds);
     }
 
     /**
-     * @param array $cmsPageEntities
-     * @param array $cmsPageStorageEntities
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage[] $cmsPageEntities
+     * @param \Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearch[] $cmsPageSearchEntities
      *
      * @return void
      */
-    protected function storeData(array $cmsPageEntities, array $cmsPageStorageEntities)
+    protected function storeData(array $cmsPageEntities, array $cmsPageSearchEntities): void
     {
-        $localeNames = $this->store->getLocales();
+        $pairedEntities = $this->pairCmsPageEntitiesWithCmsPageSearchEntities(
+            $cmsPageEntities,
+            $cmsPageSearchEntities
+        );
 
-        foreach ($cmsPageEntities as $cmsPageEntity) {
-            foreach ($localeNames as $localeName) {
-                $idCmsPage = $cmsPageEntity->getIdCmsPage();
-                if (isset($cmsPageStorageEntities[$idCmsPage][$localeName])) {
-                    $this->storeDataSet($cmsPageEntity, $localeName, $cmsPageStorageEntities[$idCmsPage][$localeName]);
+        foreach ($pairedEntities as $pair) {
+            $cmsPageEntity = $pair[static::CMS_PAGE_ENTITY];
+            $cmsPageSearchEntity = $pair[static::CMS_PAGE_SEARCH_ENTITY];
 
-                    continue;
-                }
+            if (!$cmsPageSearchEntity->isNew() && ($cmsPageEntity === null
+                    || !$cmsPageEntity->getIsActive() || !$cmsPageEntity->getIsSearchable())
+            ) {
+                $this->deleteSearchEntity($cmsPageSearchEntity);
 
-                $this->storeDataSet($cmsPageEntity, $localeName);
+                continue;
             }
+
+            $this->storeDataSet(
+                $cmsPageEntity,
+                $cmsPageSearchEntity,
+                $pair[static::LOCALE_NAME],
+                $pair[static::STORE_NAME]
+            );
         }
+    }
+
+    /**
+     * @param int[] $cmsPageIds
+     *
+     * @return void
+     */
+    protected function deleteSearchEntities(array $cmsPageIds): void
+    {
+        if (empty($cmsPageIds)) {
+            return;
+        }
+
+        $this->queryContainer->queryCmsPageSearchEntities($cmsPageIds)->delete();
+    }
+
+    /**
+     * @param \Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearch $cmsPageSearchEntity
+     *
+     * @return void
+     */
+    protected function deleteSearchEntity(SpyCmsPageSearch $cmsPageSearchEntity): void
+    {
+        $cmsPageSearchEntity->delete();
     }
 
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
+     * @param \Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearch $cmsPageSearchEntity
      * @param string $localeName
-     * @param \Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearch|null $cmsPageStorageEntity
+     * @param string|null $storeName
      *
      * @return void
      */
-    protected function storeDataSet(SpyCmsPage $cmsPageEntity, $localeName, ?SpyCmsPageSearch $cmsPageStorageEntity = null)
-    {
-        if ($cmsPageStorageEntity === null) {
-            $cmsPageStorageEntity = new SpyCmsPageSearch();
-        }
+    protected function storeDataSet(
+        SpyCmsPage $cmsPageEntity,
+        SpyCmsPageSearch $cmsPageSearchEntity,
+        string $localeName,
+        ?string $storeName = null
+    ): void {
 
         if (empty($cmsPageEntity->getSpyCmsVersions())) {
             return;
         }
 
-        $localeCmsPageDataTransfer = $this->getLocalCmsPageDataTransfer($cmsPageEntity, $localeName);
+        $localeCmsPageDataTransfer = $this->getLocaleCmsPageDataTransfer($cmsPageEntity, $localeName, $storeName);
         $data = $this->mapToSearchData($localeCmsPageDataTransfer, $localeName);
 
-        $cmsPageStorageEntity->setStructuredData($this->utilEncodingService->encodeJson($localeCmsPageDataTransfer->toArray()));
-        $cmsPageStorageEntity->setData($data);
-        $cmsPageStorageEntity->setFkCmsPage($cmsPageEntity->getIdCmsPage());
-        $cmsPageStorageEntity->setLocale($localeName);
-        $cmsPageStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
-        $cmsPageStorageEntity->save();
+        $cmsPageSearchEntity->setStructuredData($this->utilEncodingService->encodeJson($localeCmsPageDataTransfer->toArray()));
+        $cmsPageSearchEntity->setData($data);
+        $cmsPageSearchEntity->setFkCmsPage($cmsPageEntity->getIdCmsPage());
+        $cmsPageSearchEntity->setLocale($localeName);
+        $cmsPageSearchEntity->setStore($storeName);
+        $cmsPageSearchEntity->setIsSendingToQueue($this->isSendingToQueue);
+        $cmsPageSearchEntity->save();
     }
 
     /**
@@ -159,7 +198,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
      *
      * @return array
      */
-    public function mapToSearchData(LocaleCmsPageDataTransfer $cmsPageDataTransfer, $localeName)
+    public function mapToSearchData(LocaleCmsPageDataTransfer $cmsPageDataTransfer, string $localeName): array
     {
         return $this->searchFacade
             ->transformPageMapToDocumentByMapperName(
@@ -174,7 +213,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPage[]
      */
-    protected function findCmsPageEntities(array $cmsPageIds)
+    protected function findCmsPageEntities(array $cmsPageIds): array
     {
         return $this->queryContainer->queryCmsPageVersionByIds($cmsPageIds)->find()->getData();
     }
@@ -184,12 +223,12 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
      *
      * @return array
      */
-    protected function findCmsPageSearchEntities(array $cmsPageIds)
+    protected function findCmsPageSearchEntities(array $cmsPageIds): array
     {
-        $spyCmsPageSearchEntities = $this->queryContainer->queryCmsPageSearchEntities($cmsPageIds)->find();
+        $cmsPageSearchEntities = $this->queryContainer->queryCmsPageSearchEntities($cmsPageIds)->find();
         $cmsPageStorageEntitiesByIdAndLocale = [];
-        foreach ($spyCmsPageSearchEntities as $spyCmsPageSearchEntity) {
-            $cmsPageStorageEntitiesByIdAndLocale[$spyCmsPageSearchEntity->getFkCmsPage()][$spyCmsPageSearchEntity->getLocale()] = $spyCmsPageSearchEntity;
+        foreach ($cmsPageSearchEntities as $entity) {
+            $cmsPageStorageEntitiesByIdAndLocale[$entity->getFkCmsPage()][$entity->getLocale()][$entity->getStore()] = $entity;
         }
 
         return $cmsPageStorageEntitiesByIdAndLocale;
@@ -201,7 +240,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
      *
      * @return string
      */
-    public function extractUrlByLocales(array $spyUrls, $localeName)
+    public function extractUrlByLocales(array $spyUrls, string $localeName): string
     {
         foreach ($spyUrls as $url) {
             if ($url->getSpyLocale()->getLocaleName() === $localeName) {
@@ -215,18 +254,30 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */
-    protected function getLocalCmsPageDataTransfer(SpyCmsPage $cmsPageEntity, $localeName)
-    {
-        $url = $this->extractUrlByLocales($cmsPageEntity->getSpyUrls()
-            ->getData(), $localeName);
-        $cmsVersionDataTransfer = $this->cmsFacade
-            ->extractCmsVersionDataTransfer($cmsPageEntity->getSpyCmsVersions()->getFirst()->getData());
-        $localeCmsPageDataTransfer = $this->cmsFacade
-            ->extractLocaleCmsPageDataTransfer($cmsVersionDataTransfer, (new LocaleTransfer())->setLocaleName($localeName));
+    protected function getLocaleCmsPageDataTransfer(
+        SpyCmsPage $cmsPageEntity,
+        string $localeName,
+        ?string $storeName = null
+    ): LocaleCmsPageDataTransfer {
+        $url = $this->extractUrlByLocales(
+            $cmsPageEntity->getSpyUrls()->getData(),
+            $localeName
+        );
 
+        $cmsVersionDataTransfer = $this->cmsFacade->extractCmsVersionDataTransfer(
+            $cmsPageEntity->getSpyCmsVersions()->getFirst()->getData()
+        );
+
+        $localeCmsPageDataTransfer = $this->cmsFacade->extractLocaleCmsPageDataTransfer(
+            $cmsVersionDataTransfer,
+            (new LocaleTransfer())->setLocaleName($localeName)
+        );
+
+        $localeCmsPageDataTransfer->setStoreName($storeName);
         $localeCmsPageDataTransfer->setIsActive($cmsPageEntity->getIsActive());
         $localeCmsPageDataTransfer->setIsSearchable($cmsPageEntity->getIsSearchable());
         $localeCmsPageDataTransfer->setIdCmsPage($cmsPageEntity->getIdCmsPage());
@@ -242,12 +293,99 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
      *
      * @return string|null
      */
-    protected function convertDateTimeToString(?DateTime $dateTime = null)
+    protected function convertDateTimeToString(?DateTime $dateTime = null): ?string
     {
         if (!$dateTime) {
             return null;
         }
 
         return $dateTime->format('c');
+    }
+
+    /**
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage[] $cmsPageEntities
+     * @param array $cmsPageSearchEntities
+     *
+     * @return array
+     */
+    protected function pairCmsPageEntitiesWithCmsPageSearchEntities(
+        array $cmsPageEntities,
+        array $cmsPageSearchEntities
+    ): array {
+        $localeNames = $this->store->getLocales();
+
+        $pairs = [];
+
+        foreach ($cmsPageEntities as $cmsPageEntity) {
+            [$pairs, $cmsPageSearchEntities] = $this->pairCmsPageEntityWithCmsPageSearchEntitiesByLocalesAndStores(
+                $cmsPageEntity,
+                $cmsPageSearchEntities,
+                $localeNames,
+                $pairs
+            );
+        }
+
+        $pairs = $this->pairRemainingCmsPageSearchEntities($cmsPageSearchEntities, $pairs);
+
+        return $pairs;
+    }
+
+    /**
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
+     * @param array $cmsPageSearchEntities
+     * @param string[] $localeNames
+     * @param array $pairs
+     *
+     * @return array
+     */
+    protected function pairCmsPageEntityWithCmsPageSearchEntitiesByLocalesAndStores(
+        SpyCmsPage $cmsPageEntity,
+        array $cmsPageSearchEntities,
+        array $localeNames,
+        array $pairs
+    ): array {
+        $idCmsPage = $cmsPageEntity->getIdCmsPage();
+        $cmsPageStores = $cmsPageEntity->getSpyCmsPageStores();
+
+        foreach ($localeNames as $localeName) {
+            foreach ($cmsPageStores as $cmsPageStore) {
+                $storeName = $cmsPageStore->getSpyStore()->getName();
+
+                $cmsPageSearchEntity = isset($cmsPageSearchEntities[$idCmsPage][$localeName][$storeName]) ?
+                    $cmsPageSearchEntities[$idCmsPage][$localeName][$storeName] :
+                    new SpyCmsPageSearch();
+
+                $pairs[] = [
+                    static::CMS_PAGE_ENTITY => $cmsPageEntity,
+                    static::CMS_PAGE_SEARCH_ENTITY => $cmsPageSearchEntity,
+                    static::LOCALE_NAME => $localeName,
+                    static::STORE_NAME => $storeName,
+                ];
+
+                unset($cmsPageSearchEntities[$idCmsPage][$localeName][$storeName]);
+            }
+        }
+
+        return [$pairs, $cmsPageSearchEntities];
+    }
+
+    /**
+     * @param array $cmsPageSearchEntities
+     * @param array $pairs
+     *
+     * @return array
+     */
+    protected function pairRemainingCmsPageSearchEntities(array $cmsPageSearchEntities, array $pairs): array
+    {
+        array_walk_recursive($cmsPageSearchEntities, function (SpyCmsPageSearch $cmsPageSearchEntity) use (&$pairs) {
+            $pairs[] = [
+                static::CMS_PAGE_ENTITY => null,
+                static::CMS_PAGE_SEARCH_ENTITY => $cmsPageSearchEntity,
+                static::LOCALE_NAME => $cmsPageSearchEntity->getLocale(),
+                static::STORE_NAME => $cmsPageSearchEntity->getStore(),
+            ];
+        });
+
+        return $pairs;
     }
 }

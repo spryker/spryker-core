@@ -63,7 +63,7 @@ abstract class AbstractWidget implements WidgetInterface
      *
      * @return $this
      */
-    protected function addParameter(string $name, $value): self
+    protected function addParameter(string $name, $value)
     {
         $this->parameters[$name] = $value;
 

@@ -15,6 +15,7 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
@@ -32,6 +33,8 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
     public const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
     public const FK_CATEGORY = 'fkCategory';
     public const VIRT_COLUMN_ID_CATEGORY_NODE = 'id_category_node';
+    protected const COLUMN_ID_IMAGE_SET = 'id_image_set';
+    protected const PRODUCT_IMAGE_SET_LIMIT = 1;
 
     /**
      * @api
@@ -61,6 +64,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
                 ->endUse()
             ->endUse()
             ->filterByFkProductAbstract_In($productAbstractIds)
+            ->withColumn($this->getIdImageSetSubQuery(), static::COLUMN_ID_IMAGE_SET)
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
 
         $query
@@ -71,11 +75,6 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
             ->join('SpyProductAbstract.SpyUrl')
             ->addJoinCondition('SpyUrl', 'spy_url.fk_locale = ' . SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE)
             ->withColumn(SpyUrlTableMap::COL_URL, 'url');
-
-        $query
-            ->join('SpyProductAbstract.SpyProductImageSet', Criteria::LEFT_JOIN)
-            ->addJoinCondition('SpyProductImageSet', sprintf('(spy_product_image_set.fk_locale = %s or spy_product_image_set.fk_locale is null)', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE))
-            ->withColumn(SpyProductImageSetTableMap::COL_ID_PRODUCT_IMAGE_SET, 'id_image_set');
 
         $query
             ->rightJoinWith('SpyProduct.SpyProductSearch')
@@ -321,5 +320,29 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
             ->endUse()
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::VIRT_COLUMN_ID_CATEGORY_NODE)
             ->setFormatter(new PropelArraySetFormatter());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getIdImageSetSubQuery(): string
+    {
+        $idImageSetSubQuery = $this->getFactory()
+            ->getProductImageQueryContainer()
+            ->queryProductImageSet()
+            ->addSelectColumn(SpyProductImageSetTableMap::COL_ID_PRODUCT_IMAGE_SET)
+            ->where(sprintf(
+                '(%s = %s AND (%s = %s OR %s IS NULL)) ',
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+                SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT,
+                SpyProductImageSetTableMap::COL_FK_LOCALE,
+                SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE,
+                SpyProductImageSetTableMap::COL_FK_LOCALE
+            ))
+            ->limit(static::PRODUCT_IMAGE_SET_LIMIT);
+
+        $params = [];
+
+        return sprintf('(%s)', $idImageSetSubQuery->createSelectSql($params));
     }
 }
