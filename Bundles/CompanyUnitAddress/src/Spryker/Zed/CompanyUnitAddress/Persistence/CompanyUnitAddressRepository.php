@@ -103,6 +103,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
 
     /**
      * @module Country
+     * @module CompanyBusinessUnit
      *
      * @param int $idCompanyUnitAddress
      *
