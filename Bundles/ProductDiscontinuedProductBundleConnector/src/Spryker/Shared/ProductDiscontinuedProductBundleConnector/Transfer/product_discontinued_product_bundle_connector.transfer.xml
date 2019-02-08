@@ -25,4 +25,12 @@
             <property name="productDiscontinued" type="ProductDiscontinued"/>
             <property name="isSuccessful" type="bool"/>
         </transfer>
+
+        <transfer name="ProductDiscontinuedCollection">
+            <property name="DiscontinuedProducts" type="ProductDiscontinued[]" singular="DiscontinuedProduct"/>
+        </transfer>
+
+        <transfer name="ProductDiscontinuedCriteriaFilter">
+            <property name="productConcreteIds" type="array"/>
+        </transfer>
 </transfers>

@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductBundleDiscontinued;
 
+use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
+use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductBundleFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Persistence\ProductDiscontinuedProductBundleConnectorRepositoryInterface;
 
@@ -25,14 +27,22 @@ class ProductBundleDiscontinuedReader implements ProductBundleDiscontinuedReader
     protected $productDiscontinuedFacade;
 
     /**
+     * @var \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductBundleFacadeInterface
+     */
+    protected $productBundleFacade;
+
+    /**
      * @param \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Persistence\ProductDiscontinuedProductBundleConnectorRepositoryInterface $productDiscontinuedProductBundleConnectorRepository
      * @param \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface $productDiscontinuedFacade
+     * @param \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductBundleFacadeInterface $productBundleFacade
      */
     public function __construct(
         ProductDiscontinuedProductBundleConnectorRepositoryInterface $productDiscontinuedProductBundleConnectorRepository,
-        ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface $productDiscontinuedFacade
+        ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface $productDiscontinuedFacade,
+        ProductDiscontinuedProductBundleConnectorToProductBundleFacadeInterface $productBundleFacade
     ) {
         $this->productDiscontinuedFacade = $productDiscontinuedFacade;
+        $this->productBundleFacade = $productBundleFacade;
         $this->productDiscontinuedProductBundleConnectorRepository = $productDiscontinuedProductBundleConnectorRepository;
     }
 
@@ -45,14 +55,27 @@ class ProductBundleDiscontinuedReader implements ProductBundleDiscontinuedReader
     {
         $productDiscontinuedResponseTransfer = (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(true);
 
-        $bundledProductConcreteIds = $this->productDiscontinuedProductBundleConnectorRepository->getBundledProductIdsByProductDiscontinuedId(
-            $productDiscontinuedTransfer->getIdProductDiscontinued()
+        $bundledProducts = $this->productBundleFacade->findBundledProductsByIdProductConcrete(
+            $productDiscontinuedTransfer->getFkProduct()
         );
 
-        $discontinuedBundledProducts = $this->productDiscontinuedProductBundleConnectorRepository
-            ->getCountDiscontinuedProductsByProductConcreteIds($bundledProductConcreteIds);
+        $productConcreteIds = [];
 
-        if (!$discontinuedBundledProducts) {
+        foreach ($bundledProducts as $bundledProduct) {
+            $productConcreteIds[] = $bundledProduct->getIdProductConcrete();
+        }
+
+        if (!$productConcreteIds) {
+            return $productDiscontinuedResponseTransfer;
+        }
+
+        $criteriaFilterTransfer = (new ProductDiscontinuedCriteriaFilterTransfer())
+            ->setProductConcreteIds($productConcreteIds);
+
+        $productDiscontinuedCollectionTransfer = $this->productDiscontinuedFacade
+            ->findProductDiscontinuedByConcreteProductsCollection($criteriaFilterTransfer);
+
+        if (!$productDiscontinuedCollectionTransfer->getDiscontinuedProducts()->count()) {
             return $productDiscontinuedResponseTransfer;
         }
 

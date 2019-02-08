@@ -48,43 +48,4 @@ class ProductDiscontinuedProductBundleConnectorRepository extends AbstractReposi
 
         return $productIds;
     }
-
-    /**
-     * @module ProductBundle
-     * @module ProductDiscontinued
-     *
-     * @param int $idProductDiscontinued
-     *
-     * @return int[]
-     */
-    public function getBundledProductIdsByProductDiscontinuedId(int $idProductDiscontinued): array
-    {
-        return $this->getFactory()
-            ->createProductDiscontinuedPropelQuery()
-            ->filterByIdProductDiscontinued($idProductDiscontinued)
-            ->addJoin(
-                SpyProductDiscontinuedTableMap::COL_FK_PRODUCT,
-                SpyProductBundleTableMap::COL_FK_PRODUCT,
-                Criteria::LEFT_JOIN
-            )
-            ->addAsColumn(ProductDiscontinuedTransfer::FK_PRODUCT, SpyProductBundleTableMap::COL_FK_BUNDLED_PRODUCT)
-            ->select([ProductDiscontinuedTransfer::FK_PRODUCT])
-            ->find()
-            ->toArray();
-    }
-
-    /**
-     * @param int[] $productConcreteIds
-     *
-     * @return int
-     */
-    public function getCountDiscontinuedProductsByProductConcreteIds(array $productConcreteIds): int
-    {
-        return $this->getFactory()
-            ->createProductDiscontinuedPropelQuery()
-            ->filterByFkProduct($productConcreteIds, Criteria::IN)
-            ->select([SpyProductDiscontinuedTableMap::COL_ID_PRODUCT_DISCONTINUED])
-            ->find()
-            ->count();
-    }
 }

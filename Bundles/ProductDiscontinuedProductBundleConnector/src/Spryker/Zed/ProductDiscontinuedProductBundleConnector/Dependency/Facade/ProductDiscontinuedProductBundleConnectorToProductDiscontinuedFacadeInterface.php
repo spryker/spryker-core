@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 
@@ -20,9 +22,11 @@ interface ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeIn
     public function markProductAsDiscontinued(ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer): ProductDiscontinuedResponseTransfer;
 
     /**
-     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
-    public function findProductDiscontinuedByProductId(int $idProduct): ProductDiscontinuedResponseTransfer;
+    public function findProductDiscontinuedByConcreteProductsCollection(
+        ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+    ): ProductDiscontinuedCollectionTransfer;
 }

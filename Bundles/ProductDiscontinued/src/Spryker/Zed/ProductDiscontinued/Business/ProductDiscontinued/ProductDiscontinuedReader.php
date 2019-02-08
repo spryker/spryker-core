@@ -58,6 +58,17 @@ class ProductDiscontinuedReader implements ProductDiscontinuedReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     */
+    public function findProductDiscontinuedByConcreteProductsCollection(
+        ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+    ): ProductDiscontinuedCollectionTransfer {
+        return $this->productDiscontinuedRepository->findProductDiscontinuedByConcreteProductsCollection($criteriaFilterTransfer);
+    }
+
+    /**
      * @param int[] $productIds
      *
      * @return bool

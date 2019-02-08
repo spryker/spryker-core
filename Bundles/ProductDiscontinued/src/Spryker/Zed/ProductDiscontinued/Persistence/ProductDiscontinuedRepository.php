@@ -113,6 +113,37 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     }
 
     /**
+     * @uses Product
+     *
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     */
+    public function findProductDiscontinuedByConcreteProductsCollection(
+        ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+    ): ProductDiscontinuedCollectionTransfer {
+        $productDiscontinuedQuery = $this->getFactory()
+            ->createProductDiscontinuedQuery()
+            ->leftJoinWithSpyProductDiscontinuedNote()
+            ->leftJoinWithProduct();
+
+        if ($criteriaFilterTransfer->getProductConcreteIds()) {
+            $productDiscontinuedQuery
+                ->filterByFkProduct_In($criteriaFilterTransfer->getProductConcreteIds());
+        }
+
+        $productDiscontinuedEntityCollection = $productDiscontinuedQuery->find();
+
+        if ($productDiscontinuedEntityCollection->count()) {
+            return $this->getFactory()
+                ->createProductDiscontinuedMapper()
+                ->mapTransferCollection($productDiscontinuedEntityCollection);
+        }
+
+        return new ProductDiscontinuedCollectionTransfer();
+    }
+
+    /**
      * @module Product
      *
      * @param string $sku

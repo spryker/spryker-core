@@ -97,6 +97,20 @@ interface ProductDiscontinuedFacadeInterface
 
     /**
      * Specification:
+     *  - Finds product discontinued by concrete product ids.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     */
+    public function findProductDiscontinuedByConcreteProductsCollection(
+        ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+    ): ProductDiscontinuedCollectionTransfer;
+
+    /**
+     * Specification:
      * - Saves product discontinued note.
      *
      * @api

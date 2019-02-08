@@ -42,4 +42,13 @@ interface ProductDiscontinuedReaderInterface
      * @return int[]
      */
     public function findProductAbstractIdsWithDiscontinuedConcrete(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     */
+    public function findProductDiscontinuedByConcreteProductsCollection(
+        ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+    ): ProductDiscontinuedCollectionTransfer;
 }

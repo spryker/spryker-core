@@ -15,18 +15,4 @@ interface ProductDiscontinuedProductBundleConnectorRepositoryInterface
      * @return int[]
      */
     public function findRelatedBundleProductsIds(int $idProductDiscontinue): array;
-
-    /**
-     * @param int $idProductDiscontinued
-     *
-     * @return int[]
-     */
-    public function getBundledProductIdsByProductDiscontinuedId(int $idProductDiscontinued): array;
-
-    /**
-     * @param array $productConcreteIds
-     *
-     * @return int
-     */
-    public function getCountDiscontinuedProductsByProductConcreteIds(array $productConcreteIds): int;
 }

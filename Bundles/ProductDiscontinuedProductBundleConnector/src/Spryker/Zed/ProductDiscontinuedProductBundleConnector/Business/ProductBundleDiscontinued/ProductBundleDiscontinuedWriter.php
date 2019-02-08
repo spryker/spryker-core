@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductBundleDiscontinued;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface;
@@ -72,14 +73,18 @@ class ProductBundleDiscontinuedWriter implements ProductBundleDiscontinuedWriter
         }
 
         $productConcreteIds = [];
+
         foreach ($productForBundleTransfers as $productForBundleTransfer) {
             $productConcreteIds[] = $productForBundleTransfer->getIdProductConcrete();
         }
 
-        $discontinuedBundledProducts = $this->productDiscontinuedProductBundleConnectorRepository
-            ->getCountDiscontinuedProductsByProductConcreteIds($productConcreteIds);
+        $criteriaFilterTransfer = (new ProductDiscontinuedCriteriaFilterTransfer())
+            ->setProductConcreteIds($productConcreteIds);
 
-        if (!$discontinuedBundledProducts) {
+        $productDiscontinuedCollectionTransfer = $this->productDiscontinuedFacade
+            ->findProductDiscontinuedByConcreteProductsCollection($criteriaFilterTransfer);
+
+        if (!$productDiscontinuedCollectionTransfer->getDiscontinuedProducts()->count()) {
             return;
         }
 

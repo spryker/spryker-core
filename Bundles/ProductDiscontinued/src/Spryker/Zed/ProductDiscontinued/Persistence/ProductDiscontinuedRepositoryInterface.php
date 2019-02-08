@@ -42,6 +42,15 @@ interface ProductDiscontinuedRepositoryInterface
     ): ProductDiscontinuedCollectionTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     */
+    public function findProductDiscontinuedByConcreteProductsCollection(
+        ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+    ): ProductDiscontinuedCollectionTransfer;
+
+    /**
      * @param string $sku
      *
      * @return bool

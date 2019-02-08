@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductBundleDiscontinued\ProductBundleDiscontinuedReader;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductBundleDiscontinued\ProductBundleDiscontinuedWriter;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductBundleDiscontinued\ProductBundleDiscontinuedWriterInterface;
+use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductBundleFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\ProductDiscontinuedProductBundleConnectorDependencyProvider;
 
@@ -39,7 +40,8 @@ class ProductDiscontinuedProductBundleConnectorBusinessFactory extends AbstractB
     {
         return new ProductBundleDiscontinuedReader(
             $this->getRepository(),
-            $this->getProductDiscontinuedFacade()
+            $this->getProductDiscontinuedFacade(),
+            $this->getProductBundleFacade()
         );
     }
 
@@ -49,5 +51,13 @@ class ProductDiscontinuedProductBundleConnectorBusinessFactory extends AbstractB
     public function getProductDiscontinuedFacade(): ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface
     {
         return $this->getProvidedDependency(ProductDiscontinuedProductBundleConnectorDependencyProvider::FACADE_PRODUCT_DISCONTINUED);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductBundleFacadeInterface
+     */
+    public function getProductBundleFacade(): ProductDiscontinuedProductBundleConnectorToProductBundleFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductDiscontinuedProductBundleConnectorDependencyProvider::FACADE_PRODUCT_BUNDLE);
     }
 }
