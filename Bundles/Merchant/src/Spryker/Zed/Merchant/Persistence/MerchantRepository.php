@@ -115,17 +115,4 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
             ->createMerchantAddressMapper()
             ->mapSpyMerchantAddressEntityToMerchantAddressTransfer($spyMerchantAddress, new MerchantAddressTransfer());
     }
-
-    /**
-     * @param string $key
-     *
-     * @return bool
-     */
-    public function hasAddressKey(string $key): bool
-    {
-        return $this->getFactory()
-            ->createMerchantAddressQuery()
-            ->filterByKey($key)
-            ->exists();
-    }
 }

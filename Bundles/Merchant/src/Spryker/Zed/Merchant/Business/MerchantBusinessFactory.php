@@ -18,6 +18,10 @@ use Spryker\Zed\Merchant\Business\Model\MerchantReader;
 use Spryker\Zed\Merchant\Business\Model\MerchantReaderInterface;
 use Spryker\Zed\Merchant\Business\Model\MerchantWriter;
 use Spryker\Zed\Merchant\Business\Model\MerchantWriterInterface;
+use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReader;
+use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReaderInterface;
+use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidator;
+use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface;
 use Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceInterface;
 use Spryker\Zed\Merchant\MerchantDependencyProvider;
 
@@ -37,6 +41,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createMerchantKeyGenerator(),
             $this->createMerchantAddressWriter(),
+            $this->createMerchantStatusValidator(),
             $this->getConfig()
         );
     }
@@ -48,6 +53,27 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantReader(
             $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReaderInterface
+     */
+    public function createMerchantStatusReader(): MerchantStatusReaderInterface
+    {
+        return new MerchantStatusReader(
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface
+     */
+    public function createMerchantStatusValidator(): MerchantStatusValidatorInterface
+    {
+        return new MerchantStatusValidator(
+            $this->getRepository(),
+            $this->createMerchantStatusReader()
         );
     }
 

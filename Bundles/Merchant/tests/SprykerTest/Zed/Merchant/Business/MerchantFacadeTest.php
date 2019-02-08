@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException;
+use Spryker\Zed\Merchant\Business\Exception\MerchantStatusTransitionNotAllowedException;
 use Spryker\Zed\Merchant\Business\MerchantFacade;
 
 /**
@@ -31,11 +33,29 @@ class MerchantFacadeTest extends Unit
     protected const MERCHANT_EMAIL = 'merchant@test.test';
     protected const ID_MERCHANT_ADDRESS = 1243;
     protected const MERCHANT_STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval';
+    protected const MERCHANT_STATUS_APPROVED = 'approved';
+    protected const MERCHANT_STATUS_ACTIVE = 'active';
+    protected const MERCHANT_STATUS_INACTIVE = 'inactive';
 
     /**
      * @var \SprykerTest\Zed\Merchant\MerchantBusinessTester
      */
     protected $tester;
+
+    /**
+     * @var \Spryker\Zed\Merchant\Business\MerchantFacadeInterface
+     */
+    protected $merchantFacade;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        $this->merchantFacade = new MerchantFacade();
+
+        parent::setUp();
+    }
 
     /**
      * @return void
@@ -53,7 +73,7 @@ class MerchantFacadeTest extends Unit
             ->setEmail('spryker.merchant@localhost.com')
             ->setAddress($this->tester->createMerchantAddressTransfer());
 
-        (new MerchantFacade())->createMerchant($merchantTransfer);
+        $this->merchantFacade->createMerchant($merchantTransfer);
 
         $this->assertNotNull($merchantTransfer->getIdMerchant());
     }
@@ -73,7 +93,7 @@ class MerchantFacadeTest extends Unit
             ->setEmail('spryker.merchant@localhost.com')
             ->setAddress($this->tester->createMerchantAddressTransfer());
 
-        (new MerchantFacade())->createMerchant($merchantTransfer);
+        $this->merchantFacade->createMerchant($merchantTransfer);
 
         $this->assertNotNull($merchantTransfer->getMerchantKey());
     }
@@ -93,7 +113,7 @@ class MerchantFacadeTest extends Unit
             ->setEmail('spryker.merchant@localhost.com')
             ->setAddress($this->tester->createMerchantAddressTransfer());
 
-        (new MerchantFacade())->createMerchant($merchantTransfer);
+        $this->merchantFacade->createMerchant($merchantTransfer);
 
         $this->assertEquals(static::MERCHANT_STATUS_WAITING_FOR_APPROVAL, $merchantTransfer->getStatus());
     }
@@ -108,7 +128,7 @@ class MerchantFacadeTest extends Unit
 
         $this->expectException(RequiredTransferPropertyException::class);
 
-        (new MerchantFacade())->createMerchant($merchantTransfer);
+        $this->merchantFacade->createMerchant($merchantTransfer);
     }
 
     /**
@@ -128,7 +148,7 @@ class MerchantFacadeTest extends Unit
             ->setEmail('spryker.merchant@localhost.com')
             ->setAddress($this->tester->createMerchantAddressTransfer());
 
-        (new MerchantFacade())->createMerchant($newMerchantTransfer);
+        $this->merchantFacade->createMerchant($newMerchantTransfer);
         $this->assertNotNull($newMerchantTransfer->getIdMerchant());
     }
 
@@ -152,7 +172,7 @@ class MerchantFacadeTest extends Unit
 
         $this->expectException(Exception::class);
 
-        (new MerchantFacade())->createMerchant($newMerchantTransfer);
+        $this->merchantFacade->createMerchant($newMerchantTransfer);
     }
 
     /**
@@ -172,11 +192,78 @@ class MerchantFacadeTest extends Unit
             ->setName('Second Company')
             ->setAddress($merchantAddressTransfer);
 
-        $updatedMerchant = (new MerchantFacade())->updateMerchant($merchantTransfer);
+        $updatedMerchant = $this->merchantFacade->updateMerchant($merchantTransfer);
 
         $this->assertSame($expectedIdMerchant, $updatedMerchant->getIdMerchant());
         $this->assertEquals('second-key', $updatedMerchant->getMerchantKey());
         $this->assertEquals('Second Company', $updatedMerchant->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateMerchantWithoutMerchantKey(): void
+    {
+        $merchantTransfer = $this->tester->haveMerchant();
+
+        $expectedIdMerchant = $merchantTransfer->getIdMerchant();
+        $merchantTransfer->setMerchantKey(null);
+
+        $updatedMerchant = $this->merchantFacade->updateMerchant($merchantTransfer);
+
+        $this->assertSame($expectedIdMerchant, $updatedMerchant->getIdMerchant());
+        $this->assertNotEmpty($updatedMerchant->getMerchantKey());
+    }
+
+    /**
+     * @dataProvider getCorrectStatusTransitions
+     *
+     * @param string[] $presetStatuses
+     * @param string $correctlyChangedStatus
+     *
+     * @return void
+     */
+    public function testUpdateMerchantWithCorrectStatusWorks(array $presetStatuses, string $correctlyChangedStatus): void
+    {
+        $merchantTransfer = $this->tester->haveMerchant();
+
+        foreach ($presetStatuses as $presetStatus) {
+            $merchantTransfer->setStatus($presetStatus);
+            $this->merchantFacade->updateMerchant($merchantTransfer);
+        }
+
+        $expectedIdMerchant = $merchantTransfer->getIdMerchant();
+        $merchantTransfer
+            ->setStatus($correctlyChangedStatus);
+
+        $updatedMerchant = $this->merchantFacade->updateMerchant($merchantTransfer);
+
+        $this->assertSame($expectedIdMerchant, $updatedMerchant->getIdMerchant());
+        $this->assertSame($correctlyChangedStatus, $updatedMerchant->getStatus());
+    }
+
+    /**
+     * @dataProvider getWrongStatusTransitions
+     *
+     * @param string[] $presetStatuses
+     * @param string $wronglyChangedStatus
+     *
+     * @return void
+     */
+    public function testUpdateMerchantWithIncorrectStatusThrowsException(array $presetStatuses, string $wronglyChangedStatus): void
+    {
+        $merchantTransfer = $this->tester->haveMerchant();
+
+        foreach ($presetStatuses as $presetStatus) {
+            $merchantTransfer->setStatus($presetStatus);
+            $this->merchantFacade->updateMerchant($merchantTransfer);
+        }
+        $this->expectException(MerchantStatusTransitionNotAllowedException::class);
+
+        $merchantTransfer
+            ->setStatus($wronglyChangedStatus);
+
+        $this->merchantFacade->updateMerchant($merchantTransfer);
     }
 
     /**
@@ -191,7 +278,7 @@ class MerchantFacadeTest extends Unit
 
         $this->expectException(RequiredTransferPropertyException::class);
 
-        (new MerchantFacade())->updateMerchant($merchantTransfer);
+        $this->merchantFacade->updateMerchant($merchantTransfer);
     }
 
     /**
@@ -205,7 +292,7 @@ class MerchantFacadeTest extends Unit
 
         $this->expectException(Exception::class);
 
-        (new MerchantFacade())->updateMerchant($merchantTransfer);
+        $this->merchantFacade->updateMerchant($merchantTransfer);
     }
 
     /**
@@ -218,9 +305,22 @@ class MerchantFacadeTest extends Unit
         $merchantTransfer = (new MerchantTransfer())
             ->setIdMerchant($expectedMerchant->getIdMerchant());
 
-        $actualMerchant = (new MerchantFacade())->getMerchantById($merchantTransfer);
+        $actualMerchant = $this->merchantFacade->getMerchantById($merchantTransfer);
 
         $this->assertEquals($expectedMerchant, $actualMerchant);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantByIdWillThrowOnMerchantNotFound(): void
+    {
+        $this->expectException(MerchantNotFoundException::class);
+
+        $merchantTransfer = (new MerchantTransfer())
+            ->setIdMerchant(123);
+
+        $this->merchantFacade->getMerchantById($merchantTransfer);
     }
 
     /**
@@ -233,7 +333,7 @@ class MerchantFacadeTest extends Unit
         $merchantTransfer = (new MerchantTransfer())
             ->setIdMerchant($expectedMerchant->getIdMerchant());
 
-        $actualMerchant = (new MerchantFacade())->findMerchantById($merchantTransfer);
+        $actualMerchant = $this->merchantFacade->findMerchantById($merchantTransfer);
 
         $this->assertEquals($expectedMerchant, $actualMerchant);
     }
@@ -246,7 +346,7 @@ class MerchantFacadeTest extends Unit
         $merchantTransfer = (new MerchantTransfer())
             ->setIdMerchant(static::ID_MERCHANT);
 
-        $actualMerchant = (new MerchantFacade())->findMerchantById($merchantTransfer);
+        $actualMerchant = $this->merchantFacade->findMerchantById($merchantTransfer);
 
         $this->assertNull($actualMerchant);
     }
@@ -261,7 +361,7 @@ class MerchantFacadeTest extends Unit
         $merchantTransfer = (new MerchantTransfer())
             ->setEmail($expectedMerchant->getEmail());
 
-        $actualMerchant = (new MerchantFacade())->findMerchantByEmail($merchantTransfer);
+        $actualMerchant = $this->merchantFacade->findMerchantByEmail($merchantTransfer);
 
         $this->assertEquals($expectedMerchant, $actualMerchant);
     }
@@ -274,7 +374,7 @@ class MerchantFacadeTest extends Unit
         $merchantTransfer = (new MerchantTransfer())
             ->setEmail(static::MERCHANT_EMAIL);
 
-        $actualMerchant = (new MerchantFacade())->findMerchantByEmail($merchantTransfer);
+        $actualMerchant = $this->merchantFacade->findMerchantByEmail($merchantTransfer);
 
         $this->assertNull($actualMerchant);
     }
@@ -286,7 +386,7 @@ class MerchantFacadeTest extends Unit
     {
         $merchantTransfer = $this->tester->haveMerchant();
 
-        (new MerchantFacade())->deleteMerchant($merchantTransfer);
+        $this->merchantFacade->deleteMerchant($merchantTransfer);
 
         $this->tester->assertMerchantNotExists($merchantTransfer->getIdMerchant());
     }
@@ -300,7 +400,7 @@ class MerchantFacadeTest extends Unit
 
         $this->expectException(RequiredTransferPropertyException::class);
 
-        (new MerchantFacade())->deleteMerchant($merchantTransfer);
+        $this->merchantFacade->deleteMerchant($merchantTransfer);
     }
 
     /**
@@ -313,7 +413,7 @@ class MerchantFacadeTest extends Unit
         $this->tester->haveMerchant();
         $this->tester->haveMerchant();
 
-        $merchantTransferCollection = (new MerchantFacade())->getMerchants();
+        $merchantTransferCollection = $this->merchantFacade->getMerchants();
         $this->assertCount(2, $merchantTransferCollection->getMerchants());
     }
 
@@ -334,9 +434,7 @@ class MerchantFacadeTest extends Unit
             ->setZipCode('12567')
             ->setFkCountry($country->getIdCountry());
 
-        /** @var \Spryker\Zed\Merchant\Business\MerchantFacade $merchantFacade */
-        $merchantFacade = $this->tester->getFacade();
-        $merchantFacade->createMerchantAddress($merchantAddressTransfer);
+        $this->merchantFacade->createMerchantAddress($merchantAddressTransfer);
 
         $this->assertNotNull($merchantAddressTransfer->getIdMerchantAddress());
     }
@@ -357,9 +455,7 @@ class MerchantFacadeTest extends Unit
             ->setZipCode('12567')
             ->setFkCountry($country->getIdCountry());
 
-        /** @var \Spryker\Zed\Merchant\Business\MerchantFacade $merchantFacade */
-        $merchantFacade = $this->tester->getFacade();
-        $merchantFacade->createMerchantAddress($merchantAddressTransfer);
+        $this->merchantFacade->createMerchantAddress($merchantAddressTransfer);
 
         $this->assertNotNull($merchantAddressTransfer->getIdMerchantAddress());
     }
@@ -385,10 +481,8 @@ class MerchantFacadeTest extends Unit
             ->setZipCode('12567')
             ->setFkCountry($country->getIdCountry());
 
-        /** @var \Spryker\Zed\Merchant\Business\MerchantFacade $merchantFacade */
-        $merchantFacade = $this->tester->getFacade();
-        $merchantFacade->createMerchantAddress($merchantAddressTransfer);
-        $merchantFacade->createMerchantAddress($merchantAddressTransfer2);
+        $this->merchantFacade->createMerchantAddress($merchantAddressTransfer);
+        $this->merchantFacade->createMerchantAddress($merchantAddressTransfer2);
     }
 
     /**
@@ -400,9 +494,7 @@ class MerchantFacadeTest extends Unit
 
         $merchantAddressTransfer = (new MerchantAddressTransfer());
 
-        /** @var \Spryker\Zed\Merchant\Business\MerchantFacade $merchantFacade */
-        $merchantFacade = $this->tester->getFacade();
-        $merchantFacade->createMerchantAddress($merchantAddressTransfer);
+        $this->merchantFacade->createMerchantAddress($merchantAddressTransfer);
     }
 
     /**
@@ -412,9 +504,7 @@ class MerchantFacadeTest extends Unit
     {
         $expectedMerchantAddressTransfer = $this->tester->haveMerchantAddress();
 
-        /** @var \Spryker\Zed\Merchant\Business\MerchantFacade $merchantFacade */
-        $merchantFacade = $this->tester->getFacade();
-        $actualMerchantAddressTransfer = $merchantFacade->findMerchantAddressById(
+        $actualMerchantAddressTransfer = $this->merchantFacade->findMerchantAddressById(
             (new MerchantAddressTransfer())
                 ->setIdMerchantAddress($expectedMerchantAddressTransfer->getIdMerchantAddress())
         );
@@ -427,13 +517,61 @@ class MerchantFacadeTest extends Unit
      */
     public function testFindMerchantAddressByIdWillNotFindMissingMerchantAddress(): void
     {
-        /** @var \Spryker\Zed\Merchant\Business\MerchantFacade $merchantFacade */
-        $merchantFacade = $this->tester->getFacade();
-        $actualMerchantAddressTransfer = $merchantFacade->findMerchantAddressById(
+        $actualMerchantAddressTransfer = $this->merchantFacade->findMerchantAddressById(
             (new MerchantAddressTransfer())
                 ->setIdMerchantAddress(static::ID_MERCHANT_ADDRESS)
         );
 
         $this->assertNull($actualMerchantAddressTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetNextStatusesWillReturnArray(): void
+    {
+        $nextStatuses = $this->merchantFacade->getNextStatuses(static::MERCHANT_STATUS_WAITING_FOR_APPROVAL);
+
+        $this->assertTrue(is_array($nextStatuses));
+        $this->assertNotEmpty($nextStatuses);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetNextStatusesWillReturnEmptyArrayOnNotFoundCurrentStatus(): void
+    {
+        $nextStatuses = $this->merchantFacade->getNextStatuses('random-status');
+
+        $this->assertTrue(is_array($nextStatuses));
+        $this->assertEmpty($nextStatuses);
+    }
+
+    /**
+     * @return array
+     */
+    public function getCorrectStatusTransitions(): array
+    {
+        return [
+            [[], static::MERCHANT_STATUS_APPROVED],
+            [[static::MERCHANT_STATUS_APPROVED], static::MERCHANT_STATUS_ACTIVE],
+            [[static::MERCHANT_STATUS_APPROVED], static::MERCHANT_STATUS_INACTIVE],
+            [[static::MERCHANT_STATUS_APPROVED, static::MERCHANT_STATUS_ACTIVE], static::MERCHANT_STATUS_INACTIVE],
+            [[static::MERCHANT_STATUS_APPROVED, static::MERCHANT_STATUS_INACTIVE], static::MERCHANT_STATUS_ACTIVE],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getWrongStatusTransitions(): array
+    {
+        return [
+            [[], static::MERCHANT_STATUS_ACTIVE],
+            [[], static::MERCHANT_STATUS_INACTIVE],
+            [[static::MERCHANT_STATUS_APPROVED], static::MERCHANT_STATUS_WAITING_FOR_APPROVAL],
+            [[static::MERCHANT_STATUS_APPROVED, static::MERCHANT_STATUS_ACTIVE], static::MERCHANT_STATUS_WAITING_FOR_APPROVAL],
+            [[static::MERCHANT_STATUS_APPROVED, static::MERCHANT_STATUS_INACTIVE], static::MERCHANT_STATUS_WAITING_FOR_APPROVAL],
+        ];
     }
 }

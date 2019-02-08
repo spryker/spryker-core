@@ -45,11 +45,4 @@ interface MerchantRepositoryInterface
      * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
      */
     public function findMerchantAddressById(int $idMerchantAddress): ?MerchantAddressTransfer;
-
-    /**
-     * @param string $key
-     *
-     * @return bool
-     */
-    public function hasAddressKey(string $key): bool;
 }

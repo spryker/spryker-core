@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
 use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface;
+use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface;
 use Spryker\Zed\Merchant\MerchantConfig;
 use Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface;
 
@@ -36,6 +37,11 @@ class MerchantWriter implements MerchantWriterInterface
     protected $merchantAddressWriter;
 
     /**
+     * @var \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface
+     */
+    protected $merchantStatusValidator;
+
+    /**
      * @var \Spryker\Zed\Merchant\MerchantConfig
      */
     protected $config;
@@ -44,17 +50,20 @@ class MerchantWriter implements MerchantWriterInterface
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $entityManager
      * @param \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface $merchantKeyGenerator
      * @param \Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface $merchantAddressWriter
+     * @param \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface $merchantStatusValidator
      * @param \Spryker\Zed\Merchant\MerchantConfig $config
      */
     public function __construct(
         MerchantEntityManagerInterface $entityManager,
         MerchantKeyGeneratorInterface $merchantKeyGenerator,
         MerchantAddressWriterInterface $merchantAddressWriter,
+        MerchantStatusValidatorInterface $merchantStatusValidator,
         MerchantConfig $config
     ) {
         $this->entityManager = $entityManager;
         $this->merchantKeyGenerator = $merchantKeyGenerator;
         $this->merchantAddressWriter = $merchantAddressWriter;
+        $this->merchantStatusValidator = $merchantStatusValidator;
         $this->config = $config;
     }
 
@@ -123,6 +132,8 @@ class MerchantWriter implements MerchantWriterInterface
             ->requireEmail()
             ->requireAddress();
 
+        $this->validateStatusTransition($merchantTransfer);
+
         if (empty($merchantTransfer->getMerchantKey())) {
             $merchantTransfer->setMerchantKey(
                 $this->merchantKeyGenerator->generateMerchantKey($merchantTransfer->getName())
@@ -173,6 +184,16 @@ class MerchantWriter implements MerchantWriterInterface
     protected function executeDeleteTransaction(MerchantTransfer $merchantTransfer): void
     {
         $this->entityManager->deleteMerchantById($merchantTransfer->getIdMerchant());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return void
+     */
+    protected function validateStatusTransition(MerchantTransfer $merchantTransfer): void
+    {
+        $this->merchantStatusValidator->validateTransitionToStatus($merchantTransfer);
     }
 
     /**
