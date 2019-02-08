@@ -97,6 +97,6 @@ class ProductAttributeFinder implements ProductAttributeFinderInterface
             return null;
         }
 
-        return 'http:' . $productImageTransfer->getExternalUrlLarge();
+        return $productImageTransfer->getExternalUrlLarge();
     }
 }
