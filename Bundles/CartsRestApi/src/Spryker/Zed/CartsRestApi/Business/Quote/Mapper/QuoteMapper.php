@@ -10,7 +10,6 @@ namespace Spryker\Zed\CartsRestApi\Business\Quote\Mapper;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
@@ -105,8 +104,7 @@ class QuoteMapper implements QuoteMapperInterface
 
         $quoteResponseTransfer->setErrorCodes($errorCodes);
 
-        return (new QuoteCollectionResponseTransfer())
-            ->setQuoteCollection((new QuoteCollectionTransfer())->addQuote($quoteResponseTransfer->getQuoteTransfer()));
+        return (new QuoteCollectionResponseTransfer())->setErrorCodes($errorCodes);
     }
 
     /**
