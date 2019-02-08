@@ -9,7 +9,6 @@ namespace Spryker\Client\Storage;
 
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Storage\Redis\Service;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Storage\StorageConstants;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,6 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class StorageClient extends AbstractClient implements StorageClientInterface
 {
+    public const KEY_NAME_PREFIX = 'storage';
+    public const KEY_NAME_SEPARATOR = ':';
     public const KEY_USED = 'used';
     public const KEY_NEW = 'new';
     public const KEY_INIT = 'init';
@@ -392,9 +393,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         $cacheKey = static::generateCacheKey($request);
 
         if ($cacheKey && is_array(self::$cachedKeys)) {
-            $this->getFactory()
-                ->createStorageCacheStrategy($storageCacheStrategyName)
-                ->updateCache($cacheKey);
+            $this->updateCache($storageCacheStrategyName, $cacheKey);
         }
     }
 
@@ -443,23 +442,106 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         if ($request) {
             $requestUri = $request->getRequestUri();
             $serverName = $request->server->get('SERVER_NAME');
+            $getParameters = $request->query->all();
         } else {
             $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null;
             $serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : null;
+            $getParameters = $_GET;
         }
 
         if ($requestUri === null || $serverName === null) {
             return '';
         }
 
-        $baseRequestUri = strtok($requestUri, '?');
+        $urlSegments = strtok($requestUri, '?');
 
-        return implode(':', [
-            static::CACHE_KEY_PREFIX,
-            Store::getInstance()->getCurrentLocale(),
-            $serverName,
-            $baseRequestUri,
-        ]);
+        $getParametersKey = static::generateGetParametersKey($getParameters);
+        $cacheKey = static::assembleCacheKey($urlSegments, $getParametersKey);
+
+        return $cacheKey;
+    }
+
+    /**
+     * @param array $getParameters
+     *
+     * @return string
+     */
+    protected static function generateGetParametersKey(array $getParameters): string
+    {
+        $allowedGetParametersConfig = static::getAllowedGetParametersConfig();
+        if (count($allowedGetParametersConfig) === 0) {
+            return '';
+        }
+
+        $allowedGetParameters = array_intersect_key($getParameters, array_flip($allowedGetParametersConfig));
+        if (count($allowedGetParameters) === 0) {
+            return '';
+        }
+
+        ksort($allowedGetParameters);
+        return '?' . http_build_query($allowedGetParameters);
+    }
+
+    /**
+     * @param string $urlSegments
+     * @param string $getParametersKey
+     *
+     * @return string
+     */
+    protected static function assembleCacheKey($urlSegments, $getParametersKey): string
+    {
+        $cacheKey = strtolower(
+            static::getStoreName() . self::KEY_NAME_SEPARATOR .
+            static::getCurrentLocale() . self::KEY_NAME_SEPARATOR .
+            self::KEY_NAME_PREFIX . self::KEY_NAME_SEPARATOR .
+            $urlSegments . $getParametersKey
+        );
+
+        return $cacheKey;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected static function getAllowedGetParametersConfig(): array
+    {
+        return (new static())->getFactory()
+            ->getStorageClientConfig()
+            ->getAllowedGetParametersList();
+    }
+
+    /**
+     * @return string
+     */
+    protected static function getStoreName(): string
+    {
+        return (new static())->getFactory()
+            ->getStoreClient()
+            ->getCurrentStore()
+            ->getName();
+    }
+
+    /**
+     * @return string
+     */
+    protected static function getCurrentLocale(): string
+    {
+        return (new static())->getFactory()
+            ->getLocaleClient()
+            ->getCurrentLocale();
+    }
+
+    /**
+     * @param string $storageCacheStrategyName
+     * @param string $cacheKey
+     *
+     * @return void
+     */
+    protected function updateCache($storageCacheStrategyName, $cacheKey): void
+    {
+        $this->getFactory()
+            ->createStorageCacheStrategy($storageCacheStrategyName)
+            ->updateCache($cacheKey);
     }
 
     /**

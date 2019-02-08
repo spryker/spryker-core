@@ -120,4 +120,25 @@ class QuoteReader implements QuoteReaderInterface
 
         return $quoteResponseTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        $quoteTransfer->requireUuid();
+        $quoteResponseTransfer = (new QuoteResponseTransfer())
+            ->setIsSuccessful(false);
+        $quoteTransfer = $this->quoteRepository
+            ->findQuoteByUuid($quoteTransfer->getUuid());
+        if (!$quoteTransfer) {
+            return $quoteResponseTransfer;
+        }
+
+        return $quoteResponseTransfer
+            ->setQuoteTransfer($quoteTransfer)
+            ->setIsSuccessful(true);
+    }
 }

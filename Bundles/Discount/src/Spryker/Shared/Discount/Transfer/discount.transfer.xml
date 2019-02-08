@@ -154,6 +154,7 @@
         <property name="code" type="string" />
         <property name="randomGeneratedCodeLength" type="int" />
         <property name="maxNumberOfUses" type="int" />
+        <property name="numberOfUses" type="int" />
     </transfer>
 
     <transfer name="CheckoutResponse">

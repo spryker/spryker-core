@@ -17,12 +17,10 @@
   "require-dev": {
     "spryker/catalog": "*",
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/event": "*",
     "spryker/locale": "*",
     "spryker/product-attribute": "*",
     "spryker/propel": "*",
-    "spryker/propel-query-builder": "*",
     "spryker/search": "*",
     "spryker/testify": "*"
   },

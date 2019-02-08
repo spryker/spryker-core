@@ -48,4 +48,45 @@ class ArrayFilter implements ArrayFilterInterface
 
         return $filteredArray;
     }
+
+    /**
+     * @param array $array
+     *
+     * @return array
+     */
+    public function filterOutBlankValuesRecursively(array $array): array
+    {
+        $filteredArray = [];
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $value = $this->filterOutBlankValuesRecursively($value);
+            }
+
+            if ($this->isBlankValue($value)) {
+                continue;
+            }
+
+            $filteredArray[$key] = $value;
+        }
+
+        return $filteredArray;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return bool
+     */
+    protected function isBlankValue($value): bool
+    {
+        if (is_string($value)) {
+            return $value === '';
+        }
+
+        if (is_array($value) || $value instanceof Countable) {
+            return count($value) === 0;
+        }
+
+        return !(is_scalar($value) || $value);
+    }
 }

@@ -5,45 +5,34 @@
 
 'use strict';
 
-require('ZedGui');
 require('../../scss/main.scss');
 
-var softThresholdStrategyToggle = function() {
-    var softStrategy = $('input[name="global-threshold[softStrategy]"]:checked').val();
-    var softValueBlock = $('#global-threshold_softThreshold').parents('.form-group');
-    var softFixedFeeBlock = $('#global-threshold_softFixedFee').parents('.form-group');
-    var softFlexibleFeeBlock = $('#global-threshold_softFlexibleFee').parents('.form-group');
+var thresholdStrategyToggle = function(thresholdGroup) {
+    var strategyKey = $('input[name="global-threshold[' + thresholdGroup + 'Threshold][strategy]"]:checked').val();
 
-    switch (softStrategy) {
-        case 'soft-minimum-threshold':
-            softValueBlock.removeClass('hidden');
-            softFixedFeeBlock.addClass('hidden');
-            softFlexibleFeeBlock.addClass('hidden');
-
-            break;
-        case 'soft-minimum-threshold-fixed-fee':
-            softValueBlock.removeClass('hidden');
-            softFixedFeeBlock.removeClass('hidden');
-            softFlexibleFeeBlock.addClass('hidden');
-
-            break;
-        case 'soft-minimum-threshold-flexible-fee':
-            softValueBlock.removeClass('hidden');
-            softFixedFeeBlock.addClass('hidden');
-            softFlexibleFeeBlock.removeClass('hidden');
-
-            break;
-
-        default:
-            softValueBlock.addClass('hidden');
-            softFixedFeeBlock.addClass('hidden');
-            softFlexibleFeeBlock.addClass('hidden');
-    }
+    $('.threshold-key-' + strategyKey).removeClass('hidden');
+    $('.threshold_group_' + thresholdGroup + ':not(.threshold-key-'+ strategyKey +')').addClass('hidden');
 };
 
 $(document).ready(function () {
-    softThresholdStrategyToggle();
-    $('input[name="global-threshold[softStrategy]"]').click(softThresholdStrategyToggle);
+    thresholdStrategyToggle('hard');
+    thresholdStrategyToggle('soft');
+
+    $('input[name="global-threshold[hardThreshold][strategy]"]').click(function () {
+        thresholdStrategyToggle('hard');
+    });
+
+    $('input[name="global-threshold[softThreshold][strategy]"]').click(function() {
+        thresholdStrategyToggle('soft');
+    });
+
+    if ($('input[name="global-threshold[hardThreshold][strategy]"][value!=""]').length === 1) {
+        $('input[name="global-threshold[hardThreshold][strategy]"]').parents('.form-group').addClass('hidden');
+    }
+
+    if ($('input[name="global-threshold[softThreshold][strategy]"][value!=""]').length === 1) {
+        $('input[name="global-threshold[softThreshold][strategy]"]').parents('.form-group').addClass('hidden');
+    }
 
     $('#global-threshold_storeCurrency').change(function() {
         window.location.href = '/sales-order-threshold-gui/global?store_currency='+$(this).val();
