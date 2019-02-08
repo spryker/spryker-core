@@ -26,8 +26,12 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcher;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcherInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupSaver;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupSaverInterface;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtender;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtenderInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
@@ -358,10 +362,30 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentGroupSaver(
             $this->getEntityManager(),
             $this->getSalesFacade(),
+            $this->createShipmentMethodExtender()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcherInterface
+     */
+    public function createShipmentFetcher(): ShipmentFetcherInterface
+    {
+        return new ShipmentFetcher(
             $this->getQueryContainer(),
             $this->getStoreFacade(),
-            $this->createShipmentMethodTransformer(),
             $this->getCurrencyFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtenderInterface
+     */
+    public function createShipmentMethodExtender(): ShipmentMethodExtenderInterface
+    {
+        return new ShipmentMethodExtender(
+            $this->createShipmentMethodTransformer(),
+            $this->createShipmentFetcher()
         );
     }
 }

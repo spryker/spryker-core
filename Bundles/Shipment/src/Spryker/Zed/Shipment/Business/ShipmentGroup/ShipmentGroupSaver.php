@@ -12,12 +12,8 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
-use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface;
-use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
-use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface;
-use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
 class ShipmentGroupSaver implements ShipmentGroupSaverInterface
 {
@@ -32,47 +28,23 @@ class ShipmentGroupSaver implements ShipmentGroupSaverInterface
     protected $salesFacade;
 
     /**
-     * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
+     * @var \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtenderInterface
      */
-    protected $queryContainer;
-
-    /**
-     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface
-     */
-    protected $storeFacade;
-
-    /**
-     * @var \Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface
-     */
-    protected $methodTransformer;
-
-    /**
-     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface
-     */
-    protected $currencyFacade;
+    protected $shipmentMethodExtender;
 
     /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface $entityManager
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface $salesFacade
-     * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface $storeFacade
-     * @param \Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface $methodTransformer
-     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface $currencyFacade
+     * @param \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtenderInterface $shipmentMethodExtender
      */
     public function __construct(
         ShipmentEntityManagerInterface $entityManager,
         ShipmentToSalesFacadeInterface $salesFacade,
-        ShipmentQueryContainerInterface $queryContainer,
-        ShipmentToStoreInterface $storeFacade,
-        ShipmentMethodTransformerInterface $methodTransformer,
-        ShipmentToCurrencyInterface $currencyFacade
+        ShipmentMethodExtenderInterface $shipmentMethodExtender
     ) {
         $this->entityManager = $entityManager;
         $this->salesFacade = $salesFacade;
-        $this->queryContainer = $queryContainer;
-        $this->storeFacade = $storeFacade;
-        $this->methodTransformer = $methodTransformer;
-        $this->currencyFacade = $currencyFacade;
+        $this->shipmentMethodExtender = $shipmentMethodExtender;
     }
 
     /**
@@ -119,7 +91,7 @@ class ShipmentGroupSaver implements ShipmentGroupSaverInterface
         $shipmentMethodTransfer = $shipmentGroupTransfer->getShipment()->getMethod();
         $shipmentGroupTransfer
             ->getShipment()
-            ->setMethod($this->extendShipmentMethodTransfer($shipmentMethodTransfer, $orderTransfer));
+            ->setMethod($this->shipmentMethodExtender->extendShipmentMethodTransfer($shipmentMethodTransfer, $orderTransfer));
     }
 
     /**
@@ -151,48 +123,6 @@ class ShipmentGroupSaver implements ShipmentGroupSaverInterface
         foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
             $this->entityManager->updateSalesOrderItemFkShipment($itemTransfer, $idSalesShipment);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
-     */
-    protected function extendShipmentMethodTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, OrderTransfer $orderTransfer): ShipmentMethodTransfer
-    {
-        $methodEntity = $this->queryContainer
-            ->queryActiveMethodsWithMethodPricesAndCarrierById($shipmentMethodTransfer->getIdShipmentMethod())
-            ->find()
-            ->getFirst();
-
-        if ($methodEntity === null) {
-            return $shipmentMethodTransfer;
-        }
-
-        $idStore = $this->storeFacade->getCurrentStore()->getIdStore();
-        $methodPriceEntity = $this->queryContainer
-            ->queryMethodPriceByShipmentMethodAndStoreCurrency(
-                $methodEntity->getIdShipmentMethod(),
-                $idStore,
-                $this->getIdCurrencyByIsoCode($orderTransfer->getCurrencyIsoCode())
-            )
-            ->findOne();
-
-        if ($methodPriceEntity === null) {
-            return $shipmentMethodTransfer;
-        }
-
-        $price = $orderTransfer->getPriceMode() === ShipmentConstants::PRICE_MODE_GROSS ?
-            $methodPriceEntity->getDefaultGrossPrice() :
-            $methodPriceEntity->getDefaultNetPrice();
-
-        $shipmentMethodTransfer = $this->methodTransformer->transformEntityToTransfer($methodEntity);
-        $shipmentMethodTransfer
-            ->setCurrencyIsoCode($orderTransfer->getCurrencyIsoCode())
-            ->setStoreCurrencyPrice($price);
-
-        return $shipmentMethodTransfer;
     }
 
     /**
@@ -260,17 +190,5 @@ class ShipmentGroupSaver implements ShipmentGroupSaverInterface
         $expenseTransfer->setSumPriceToPayAggregation($expenseTransfer->getSumPriceToPayAggregation() ?? $expenseTransfer->getUnitPriceToPayAggregation());
 
         return $expenseTransfer;
-    }
-
-    /**
-     * @param string $currencyIsoCode
-     *
-     * @return int
-     */
-    protected function getIdCurrencyByIsoCode($currencyIsoCode): int
-    {
-        return $this->currencyFacade
-                ->fromIsoCode($currencyIsoCode)
-                ->getIdCurrency();
     }
 }

@@ -96,7 +96,7 @@ class AddressForm extends AbstractType
                 'required' => false,
                 'label' => 'Salutation',
                 'placeholder' => '-select-',
-                'choices' => array_flip($options),
+                'choices' => $options,
             ]);
 
         return $this;
