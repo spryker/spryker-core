@@ -5,6 +5,5 @@
 
 'use strict';
 
-require('ZedGui');
 require('./root/bootstrap');
 require('../../sass/root.scss');

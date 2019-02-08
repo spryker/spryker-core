@@ -42,7 +42,7 @@ class GlueApplicationConfig extends AbstractBundleConfig
      */
     public function getCorsAllowOrigin(): string
     {
-        return $this->get(GlueApplicationConstants::GLUE_APPLICATION_DOMAIN);
+        return $this->get(GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN, '');
     }
 
     /**
@@ -60,5 +60,16 @@ class GlueApplicationConfig extends AbstractBundleConfig
             RequestConstantsInterface::HEADER_ACCEPT_LANGUAGE,
             RequestConstantsInterface::HEADER_AUTHORIZATION,
         ];
+    }
+
+    /**
+     * Specification:
+     *  - Indicates whether all relationships should be included in response by default.
+     *
+     * @return bool
+     */
+    public function isEagerRelationshipsLoadingEnabled(): bool
+    {
+        return true;
     }
 }
