@@ -131,31 +131,13 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         $productOptionCriteriaTransfer->requireProductOptionIds();
 
-        $productOptionGroupIsActive = $productOptionCriteriaTransfer->getProductOptionGroupIsActive();
-        $productOptionGroupIsAssigned = $productOptionCriteriaTransfer->getProductOptionGroupIsAssigned();
-
         $productOptionValueQuery = $this->getFactory()->createProductOptionValueQuery();
+        $productOptionGroupQuery = $productOptionValueQuery->useSpyProductOptionGroupQuery();
 
-        if ($productOptionGroupIsActive !== null || $productOptionGroupIsAssigned !== null) {
-            $productOptionGroupQuery = $productOptionValueQuery->useSpyProductOptionGroupQuery();
+        $this->filterProductOptionGroupByActiveField($productOptionCriteriaTransfer, $productOptionGroupQuery);
+        $this->joinProductAbstractProductOptionGroupToProductOptionGroup($productOptionCriteriaTransfer, $productOptionGroupQuery);
 
-            if ($productOptionGroupIsAssigned === true) {
-                $productOptionGroupQuery->innerJoinSpyProductAbstractProductOptionGroup();
-            }
-
-            if ($productOptionGroupIsAssigned === false) {
-                $productOptionGroupQuery
-                    ->useSpyProductAbstractProductOptionGroupQuery(null, Criteria::LEFT_JOIN)
-                        ->filterByFkProductAbstract(null, Criteria::ISNULL)
-                    ->endUse();
-            }
-
-            if ($productOptionGroupIsActive !== null) {
-                $productOptionGroupQuery->filterByActive($productOptionGroupIsActive);
-            }
-
-            $productOptionGroupQuery->endUse();
-        }
+        $productOptionGroupQuery->endUse();
 
         return $productOptionValueQuery->filterByIdProductOptionValue_In($productOptionCriteriaTransfer->getProductOptionIds());
     }
@@ -453,5 +435,54 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ->getCountryQueryContainer()
             ->queryCountries()
             ->filterByIso2Code($countryIso2Code);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery $productOptionGroupQuery
+     *
+     * @return void
+     */
+    protected function filterProductOptionGroupByActiveField(
+        ProductOptionCriteriaTransfer $productOptionCriteriaTransfer,
+        SpyProductOptionGroupQuery $productOptionGroupQuery
+    ): void {
+        $productOptionGroupIsActive = $productOptionCriteriaTransfer->getProductOptionGroupIsActive();
+
+        if ($productOptionGroupIsActive === null) {
+            return;
+        }
+
+        if ($productOptionGroupIsActive === true) {
+            $productOptionGroupQuery->filterByActive($productOptionGroupIsActive);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery $productOptionGroupQuery
+     *
+     * @return void
+     */
+    protected function joinProductAbstractProductOptionGroupToProductOptionGroup(
+        ProductOptionCriteriaTransfer $productOptionCriteriaTransfer,
+        SpyProductOptionGroupQuery $productOptionGroupQuery
+    ): void {
+        $productOptionGroupIsAssigned = $productOptionCriteriaTransfer->getProductOptionGroupIsAssigned();
+
+        if ($productOptionGroupIsAssigned === null) {
+            return;
+        }
+
+        if ($productOptionGroupIsAssigned === true) {
+            $productOptionGroupQuery->innerJoinSpyProductAbstractProductOptionGroup();
+        }
+
+        if ($productOptionGroupIsAssigned === false) {
+            $productOptionGroupQuery
+                ->useSpyProductAbstractProductOptionGroupQuery(null, Criteria::LEFT_JOIN)
+                ->filterByFkProductAbstract(null, Criteria::ISNULL)
+                ->endUse();
+        }
     }
 }

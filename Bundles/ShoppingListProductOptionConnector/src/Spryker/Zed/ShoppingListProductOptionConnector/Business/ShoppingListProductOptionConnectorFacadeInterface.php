@@ -40,7 +40,7 @@ interface ShoppingListProductOptionConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Populates shopping list item with active product options from persistence.
+     * - Populates shopping list item with active and assigned product options from persistence.
      *
      * @api
      *
