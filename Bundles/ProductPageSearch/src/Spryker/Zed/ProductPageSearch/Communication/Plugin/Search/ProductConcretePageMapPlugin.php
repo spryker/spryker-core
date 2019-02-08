@@ -82,6 +82,27 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements NamedPageMa
      */
     protected function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
     {
+        $pageMapTransfer = $this->applyProductPageMapExpanders($pageMapTransfer, $pageMapBuilder, $productData, $localeTransfer);
+
+        foreach ($this->getFactory()->getConcreteProductPageMapExpanderPlugins() as $productConcretePageMapExpanderPlugin) {
+            $pageMapTransfer = $productConcretePageMapExpanderPlugin->expand($pageMapTransfer, $pageMapBuilder, $productData, $localeTransfer);
+        }
+
+        return $pageMapTransfer;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param array $productData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PageMapTransfer
+     */
+    protected function applyProductPageMapExpanders($pageMapTransfer, $pageMapBuilder, $productData, $localeTransfer): PageMapTransfer
+    {
         foreach ($this->getFactory()->getProductConcretePageMapExpanderPlugins() as $productConcretePageMapExpanderPlugin) {
             $pageMapTransfer = $productConcretePageMapExpanderPlugin->expandProductPageMap($pageMapTransfer, $pageMapBuilder, $productData, $localeTransfer);
         }
