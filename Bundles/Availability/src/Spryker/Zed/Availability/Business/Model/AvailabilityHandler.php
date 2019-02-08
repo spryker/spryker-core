@@ -10,7 +10,6 @@ namespace Spryker\Zed\Availability\Business\Model;
 use Generated\Shared\Transfer\AvailabilityNotificationDataTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap;
-use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Spryker\Shared\Availability\AvailabilityConfig;
 use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
@@ -169,7 +168,10 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             $this->touchAvailabilityAbstract($spyAvailabilityEntity->getFkAvailabilityAbstract());
         }
 
-        $this->triggerProductIsAvailableAgainEvent($spyAvailabilityEntity, $currentQuantity, $sku, $quantity, $storeTransfer);
+        if (($this->isAvailabilityStatusChanged($currentQuantity, $quantity) || $isNeverOutOfStockModified)
+            && ($quantity > 0 || $spyAvailabilityEntity->getIsNeverOutOfStock() === true)) {
+            $this->triggerProductIsAvailableAgainEvent($sku, $storeTransfer);
+        }
 
         return $spyAvailabilityEntity;
     }
@@ -343,32 +345,19 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     }
 
     /**
-     * @param \Orm\Zed\Availability\Persistence\SpyAvailability $spyAvailabilityEntity
-     * @param int $currentQuantity
      * @param string $sku
-     * @param int $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return void
      */
-    protected function triggerProductIsAvailableAgainEvent(
-        SpyAvailability $spyAvailabilityEntity,
-        int $currentQuantity,
-        string $sku,
-        int $quantity,
-        StoreTransfer $storeTransfer
-    ): void {
-        $isNeverOutOfStockModified = $spyAvailabilityEntity->isColumnModified(SpyAvailabilityTableMap::COL_IS_NEVER_OUT_OF_STOCK);
-
-        if (($this->isAvailabilityStatusChanged($currentQuantity, $quantity) || $isNeverOutOfStockModified)
-            && ($quantity > 0 || $spyAvailabilityEntity->getIsNeverOutOfStock() === true)) {
-            $availabilityNotificationDataTransfer = (new AvailabilityNotificationDataTransfer())
-                ->setSku($sku)
-                ->setStore($storeTransfer);
-            $this->eventFacade->trigger(
-                AvailabilityEvents::AVAILABILITY_NOTIFICATION,
-                $availabilityNotificationDataTransfer
-            );
-        }
+    protected function triggerProductIsAvailableAgainEvent(string $sku, StoreTransfer $storeTransfer): void
+    {
+        $availabilityNotificationDataTransfer = (new AvailabilityNotificationDataTransfer())
+            ->setSku($sku)
+            ->setStore($storeTransfer);
+        $this->eventFacade->trigger(
+            AvailabilityEvents::AVAILABILITY_NOTIFICATION,
+            $availabilityNotificationDataTransfer
+        );
     }
 }
