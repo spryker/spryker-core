@@ -33,6 +33,9 @@ class MerchantFacadeTest extends Unit
     protected const MERCHANT_EMAIL = 'merchant@test.test';
     protected const ID_MERCHANT_ADDRESS = 1243;
     protected const MERCHANT_STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval';
+    protected const MERCHANT_STATUS_APPROVED = 'approved';
+    protected const MERCHANT_STATUS_ACTIVE = 'active';
+    protected const MERCHANT_STATUS_INACTIVE = 'inactive';
 
     /**
      * @var \SprykerTest\Zed\Merchant\MerchantBusinessTester
@@ -40,7 +43,7 @@ class MerchantFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\Merchant\Business\MerchantFacade
+     * @var \Spryker\Zed\Merchant\Business\MerchantFacadeInterface
      */
     protected $merchantFacade;
 
@@ -527,7 +530,7 @@ class MerchantFacadeTest extends Unit
      */
     public function testGetNextStatusesWillReturnArray(): void
     {
-        $nextStatuses = $this->merchantFacade->getNextStatuses('waiting-for-approval');
+        $nextStatuses = $this->merchantFacade->getNextStatuses(static::MERCHANT_STATUS_WAITING_FOR_APPROVAL);
 
         $this->assertTrue(is_array($nextStatuses));
         $this->assertNotEmpty($nextStatuses);
@@ -550,11 +553,11 @@ class MerchantFacadeTest extends Unit
     public function getCorrectStatusTransitions(): array
     {
         return [
-            [[], 'approved'],
-            [['approved'], 'active'],
-            [['approved'], 'inactive'],
-            [['approved', 'active'], 'inactive'],
-            [['approved', 'inactive'], 'active'],
+            [[], static::MERCHANT_STATUS_APPROVED],
+            [[static::MERCHANT_STATUS_APPROVED], static::MERCHANT_STATUS_ACTIVE],
+            [[static::MERCHANT_STATUS_APPROVED], static::MERCHANT_STATUS_INACTIVE],
+            [[static::MERCHANT_STATUS_APPROVED, static::MERCHANT_STATUS_ACTIVE], static::MERCHANT_STATUS_INACTIVE],
+            [[static::MERCHANT_STATUS_APPROVED, static::MERCHANT_STATUS_INACTIVE], static::MERCHANT_STATUS_ACTIVE],
         ];
     }
 
@@ -564,11 +567,11 @@ class MerchantFacadeTest extends Unit
     public function getWrongStatusTransitions(): array
     {
         return [
-            [[], 'active'],
-            [[], 'inactive'],
-            [['approved'], 'waiting-for-approval'],
-            [['approved', 'active'], 'waiting-for-approval'],
-            [['approved', 'inactive'], 'waiting-for-approval'],
+            [[], static::MERCHANT_STATUS_ACTIVE],
+            [[], static::MERCHANT_STATUS_INACTIVE],
+            [[static::MERCHANT_STATUS_APPROVED], static::MERCHANT_STATUS_WAITING_FOR_APPROVAL],
+            [[static::MERCHANT_STATUS_APPROVED, static::MERCHANT_STATUS_ACTIVE], static::MERCHANT_STATUS_WAITING_FOR_APPROVAL],
+            [[static::MERCHANT_STATUS_APPROVED, static::MERCHANT_STATUS_INACTIVE], static::MERCHANT_STATUS_WAITING_FOR_APPROVAL],
         ];
     }
 }
