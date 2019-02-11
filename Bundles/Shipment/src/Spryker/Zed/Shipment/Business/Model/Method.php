@@ -136,12 +136,13 @@ class Method implements MethodInterface
      */
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
     {
-        $shipmentGroupCollectionTransfer = new ShipmentGroupCollectionTransfer();
         $shipmentGroupTransfer = (new ShipmentGroupTransfer())
             ->setAvailableShipmentMethods($this->getAvailableMethods($quoteTransfer));
-        $shipmentGroupCollectionTransfer->addGroup($shipmentGroupTransfer);
+        $shipmentGroupCollection = (new ArrayObject());
+        $shipmentGroupCollection->offsetSet($shipmentGroupTransfer->getHash(), $shipmentGroupTransfer);
 
-        return $shipmentGroupCollectionTransfer;
+        return (new ShipmentGroupCollectionTransfer())
+            ->setGroups($shipmentGroupCollection);
     }
 
     /**

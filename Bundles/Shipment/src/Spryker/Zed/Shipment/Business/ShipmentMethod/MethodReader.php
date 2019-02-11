@@ -87,18 +87,19 @@ class MethodReader extends Method
     protected function getShipmentGroupWithAvailableMethods(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
     {
         $methods = $this->queryContainer->queryActiveMethodsWithMethodPricesAndCarrier()->find();
-        $shipmentGroupCollection = $this->getShipmentGroupCollection($quoteTransfer);
+        $quoteShipmentGroupCollection = $this->getShipmentGroupCollection($quoteTransfer);
 
-        $shipmentGroupCollectionTransfer = new ShipmentGroupCollectionTransfer();
-        foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
+        $shipmentGroupCollection = new ArrayObject();
+        foreach ($quoteShipmentGroupCollection as $shipmentGroupTransfer) {
             $shipmentGroupTransfer->setAvailableShipmentMethods(
                 $this->getAvailableMethodForShipmentGroup($shipmentGroupTransfer, $methods, $quoteTransfer)
             );
 
-            $shipmentGroupCollectionTransfer->addGroup($shipmentGroupTransfer);
+            $shipmentGroupCollection[$shipmentGroupTransfer->getHash()] = $shipmentGroupTransfer;
         }
 
-        return $shipmentGroupCollectionTransfer;
+        return (new ShipmentGroupCollectionTransfer())
+            ->setGroups($shipmentGroupCollection);
     }
 
     /**
