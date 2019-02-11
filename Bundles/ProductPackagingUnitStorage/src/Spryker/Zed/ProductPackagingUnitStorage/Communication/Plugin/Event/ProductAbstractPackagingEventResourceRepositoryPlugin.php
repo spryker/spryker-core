@@ -35,8 +35,7 @@ class ProductAbstractPackagingEventResourceRepositoryPlugin extends AbstractPlug
 
     /**
      * {@inheritdoc}
-     * - Retrieves ProductAbstractPackagingStorageTransfer collection, associated with provided product abstract IDs,
-     * will apply to query to limit the result.
+     * - Retrieves ProductAbstractPackagingStorageTransfer collection, associated with provided product abstract IDs.
      *
      * @api
      *

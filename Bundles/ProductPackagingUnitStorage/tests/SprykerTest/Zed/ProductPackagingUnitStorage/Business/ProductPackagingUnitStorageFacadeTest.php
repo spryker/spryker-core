@@ -90,13 +90,13 @@ class ProductPackagingUnitStorageFacadeTest extends Unit
      */
     public function testGetProductAbstractPackagingStorageTransfersByProductAbstractIdsReturnsEmptyWithNoIds(): void
     {
-        //Arrange
+        // Arrange
         $productPackagingUnitStorageFacade = $this->getProductPackagingUnitStorageFacade();
 
-        //Act
+        // Act
         $productAbstractPackagingStorageTransfers = $productPackagingUnitStorageFacade->getProductAbstractPackagingStorageTransfersByProductAbstractIds([]);
 
-        //Assert
+        // Assert
         $this->assertEmpty($productAbstractPackagingStorageTransfers);
     }
 
@@ -105,7 +105,7 @@ class ProductPackagingUnitStorageFacadeTest extends Unit
      */
     public function testGetProductAbstractPackagingStorageTransfersByProductAbstractIdsReturnsDataWithIds(): void
     {
-        //Arrange
+        // Arrange
         $productPackagingUnitStorageFacade = $this->getProductPackagingUnitStorageFacade();
 
         $productTransfer = $this->tester->haveProduct();
@@ -121,12 +121,12 @@ class ProductPackagingUnitStorageFacadeTest extends Unit
             SpyProductPackagingLeadProductEntityTransfer::FK_PRODUCT_ABSTRACT => $productTransfer->getFkProductAbstract(),
         ]);
 
-        //Act
+        // Act
         $productAbstractPackagingStorageTransfers = $productPackagingUnitStorageFacade->getProductAbstractPackagingStorageTransfersByProductAbstractIds([
             $productTransfer->getFkProductAbstract(),
         ]);
 
-        //Assert
+        // Assert
         $this->assertNotEmpty($productAbstractPackagingStorageTransfers);
     }
 

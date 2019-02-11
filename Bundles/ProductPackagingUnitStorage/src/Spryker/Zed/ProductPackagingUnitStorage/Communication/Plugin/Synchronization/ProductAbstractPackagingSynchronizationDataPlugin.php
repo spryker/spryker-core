@@ -44,7 +44,9 @@ class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin i
 
         return $this->getFactory()
             ->createProductAbstractPackagingStorageMapper()
-            ->mapProductAbstractPackagingStorageEntitiesToSynchronizationDataTransfers($productAbstractPackagingStorageEntities);
+            ->mapProductAbstractPackagingStorageEntitiesToSynchronizationDataTransfers(
+                $productAbstractPackagingStorageEntities
+            );
     }
 
     /**
