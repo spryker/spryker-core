@@ -60,8 +60,8 @@ class ProductPageSearchToEventBehaviorFacadeBridge implements ProductPageSearchT
      *
      * @return array
      */
-    public function getGroupedEventTransferForeignKeysByColumn(array $eventTransfers, string $foreignKeyColumnName)
+    public function getGroupedEventTransferForeignKeysByForeignKey(array $eventTransfers, string $foreignKeyColumnName)
     {
-        return $this->eventBehaviorFacade->getGroupedEventTransferForeignKeysByColumn($eventTransfers, $foreignKeyColumnName);
+        return $this->eventBehaviorFacade->getGroupedEventTransferForeignKeysByForeignKey($eventTransfers, $foreignKeyColumnName);
     }
 }
