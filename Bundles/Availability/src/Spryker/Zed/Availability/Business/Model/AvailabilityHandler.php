@@ -155,21 +155,20 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     protected function saveAndTouchAvailability($sku, $quantity, StoreTransfer $storeTransfer)
     {
-        $currentQuantity = $this->findCurrentPhysicalQuantity($sku, $storeTransfer) ?? 0;
         $spyAvailabilityEntity = $this->prepareAvailabilityEntityForSave($sku, $quantity, $storeTransfer);
-
         $isNeverOutOfStockModified = $spyAvailabilityEntity->isColumnModified(SpyAvailabilityTableMap::COL_IS_NEVER_OUT_OF_STOCK);
+        $currentQuantity = $this->findCurrentPhysicalQuantity($sku, $storeTransfer) ?? 0;
+        $isAvailabilityChanged = $this->isAvailabilityStatusChanged($currentQuantity, $quantity) || $isNeverOutOfStockModified;
 
         $spyAvailabilityEntity->save();
 
         $this->updateAbstractAvailabilityQuantity($spyAvailabilityEntity->getFkAvailabilityAbstract(), $storeTransfer);
 
-        if ($this->isAvailabilityStatusChanged($currentQuantity, $quantity) || $isNeverOutOfStockModified) {
+        if ($isAvailabilityChanged) {
             $this->touchAvailabilityAbstract($spyAvailabilityEntity->getFkAvailabilityAbstract());
         }
 
-        if (($this->isAvailabilityStatusChanged($currentQuantity, $quantity) || $isNeverOutOfStockModified)
-            && ($quantity > 0 || $spyAvailabilityEntity->getIsNeverOutOfStock() === true)) {
+        if ($isAvailabilityChanged && ($quantity > 0 || $spyAvailabilityEntity->getIsNeverOutOfStock() === true)) {
             $this->triggerProductIsAvailableAgainEvent($sku, $storeTransfer);
         }
 
