@@ -1,0 +1,42 @@
+{
+  "name": "spryker/storage-database",
+  "type": "library",
+  "description": "StorageDatabase module",
+  "license": "proprietary",
+  "require": {
+    "spryker/kernel": "^3.0.0",
+    "spryker/storage-extension": "^1.0.0",
+    "spryker/propel-orm": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*",
+    "spryker/product": "*",
+    "spryker/product-quantity": "*",
+    "spryker/product-quantity-storage": "*",
+    "spryker/availability": "*",
+    "spryker/availability-storage": "*",
+    "spryker/queue": "*",
+    "spryker/propel": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
