@@ -8,10 +8,10 @@
 namespace SprykerTest\Zed\Translator\Business;
 
 use Codeception\TestCase\Test;
-use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Translator\Business\TranslatorBusinessFactory;
 use Spryker\Zed\Translator\Business\TranslatorFacadeInterface;
+use Spryker\Zed\Translator\Dependency\Facade\TranslatorToLocaleFacadeBridge;
 use Spryker\Zed\Translator\TranslatorConfig;
 
 /**
@@ -81,17 +81,17 @@ class TranslatorFacadeTest extends Test
     protected function getFactoryMock()
     {
         $factoryMock = $this->getMockBuilder(TranslatorBusinessFactory::class)
-            ->setMethods(['getConfig', 'getApplication', 'getStore'])
+            ->setMethods(['getConfig', 'getStore', 'getLocaleFacade'])
             ->getMock();
 
         $factoryMock->method('getConfig')
             ->willReturn($this->getConfigMock());
 
-        $factoryMock->method('getApplication')
-            ->willReturn($this->getApplicationMock());
-
         $factoryMock->method('getStore')
             ->willReturn($this->getStoreMock());
+
+        $factoryMock->method('getLocaleFacade')
+            ->willReturn(new TranslatorToLocaleFacadeBridge($this->tester->getLocator()->locale()->facade()));
 
         return $factoryMock;
     }
@@ -113,29 +113,18 @@ class TranslatorFacadeTest extends Test
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Communication\Application
-     */
-    protected function getApplicationMock(): Application
-    {
-        $application = new Application();
-        $application['locale'] = 'de_DE';
-
-        return $application;
-    }
-
-    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Translator\TranslatorConfig
      */
     protected function getConfigMock()
     {
         $configMock = $this->getMockBuilder(TranslatorConfig::class)
-            ->setMethods(['getZedTranslationFilePathPatterns', 'getZedTranslatorCacheDirectory'])
+            ->setMethods(['getTranslationFilePathPatterns', 'getTranslatorCacheDirectory'])
             ->getMock();
 
-        $configMock->method('getZedTranslationFilePathPatterns')
+        $configMock->method('getTranslationFilePathPatterns')
             ->willReturn([codecept_data_dir('[a-z][a-z]_[A-Z][A-Z].csv')]);
 
-        $configMock->method('getZedTranslatorCacheDirectory')
+        $configMock->method('getTranslatorCacheDirectory')
             ->willReturn(codecept_output_dir());
 
         return $configMock;
