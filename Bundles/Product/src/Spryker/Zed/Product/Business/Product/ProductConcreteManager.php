@@ -28,7 +28,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    protected static $cachedLocaleTransfers;
+    protected static $localeTransfersCache;
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -272,34 +272,34 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @param string $concreteSku
+     * @param string $productConcreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getRawProductConcreteBySku(string $concreteSku): ProductConcreteTransfer
+    public function getRawProductConcreteBySku(string $productConcreteSku): ProductConcreteTransfer
     {
-        $productConcreteTransfer = $this->findRawProductConcreteBySku($concreteSku);
+        $productConcreteTransfer = $this->findRawProductConcreteBySku($productConcreteSku);
 
-        $this->assertProductConcreteTransfer($concreteSku, $productConcreteTransfer);
+        $this->assertProductConcreteTransfer($productConcreteSku, $productConcreteTransfer);
 
         return $productConcreteTransfer;
     }
 
     /**
-     * @param string $concreteSku
+     * @param string $productConcreteSku
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer|null $productConcreteTransfer
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return void
      */
-    public function assertProductConcreteTransfer(string $concreteSku, ?ProductConcreteTransfer $productConcreteTransfer): void
+    public function assertProductConcreteTransfer(string $productConcreteSku, ?ProductConcreteTransfer $productConcreteTransfer): void
     {
         if (!$productConcreteTransfer) {
             throw new MissingProductException(
                 sprintf(
                     'Tried to retrieve a product concrete with sku %s, but it does not exist.',
-                    $concreteSku
+                    $productConcreteSku
                 )
             );
         }
@@ -521,7 +521,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
             ->find();
 
         foreach ($productAttributeCollection as $attributeEntity) {
-            $localeTransfer = $this->getLocaleTransferByLocaleId($attributeEntity->getFkLocale());
+            $localeTransfer = $this->getLocaleTransferByIdLocale($attributeEntity->getFkLocale());
 
             $localizedAttributesData = $attributeEntity->toArray();
             if (isset($localizedAttributesData[LocalizedAttributesTransfer::ATTRIBUTES])) {
@@ -544,13 +544,13 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    protected function getLocaleTransferByLocaleId(int $idLocale): LocaleTransfer
+    protected function getLocaleTransferByIdLocale(int $idLocale): LocaleTransfer
     {
-        if (!isset(static::$cachedLocaleTransfers[$idLocale])) {
-            static::$cachedLocaleTransfers[$idLocale] = $this->localeFacade->getLocaleById($idLocale);
+        if (!isset(static::$localeTransfersCache[$idLocale])) {
+            static::$localeTransfersCache[$idLocale] = $this->localeFacade->getLocaleById($idLocale);
         }
 
-        return static::$cachedLocaleTransfers[$idLocale];
+        return static::$localeTransfersCache[$idLocale];
     }
 
     /**

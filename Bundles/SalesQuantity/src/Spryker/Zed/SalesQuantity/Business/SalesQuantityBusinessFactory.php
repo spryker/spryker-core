@@ -14,6 +14,7 @@ use Spryker\Zed\SalesQuantity\Business\Discount\DiscountableItem\DiscountableIte
 use Spryker\Zed\SalesQuantity\Business\Order\Item\ItemQuantityValidator;
 use Spryker\Zed\SalesQuantity\Business\Order\Item\ItemTransformer;
 use Spryker\Zed\SalesQuantity\Business\Order\Item\ItemTransformerInterface;
+use Spryker\Zed\SalesQuantity\SalesQuantityDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesQuantity\SalesQuantityConfig getConfig()
@@ -37,6 +38,16 @@ class SalesQuantityBusinessFactory extends AbstractBusinessFactory
         return new ItemExpander(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductFacadeInterface
+     */
+    public function getProductFacade()
+    {
+        return $this->getProvidedDependency(SalesQuantityDependencyProvider::FACADE_PRODUCT);
     }
 
     /**

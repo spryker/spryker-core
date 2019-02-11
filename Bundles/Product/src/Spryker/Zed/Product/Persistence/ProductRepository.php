@@ -42,16 +42,16 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param int $productConcreteId
+     * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer|null
      */
-    public function findProductConcreteById(int $productConcreteId): ?SpyProductEntityTransfer
+    public function findProductConcreteById(int $idProductConcrete): ?SpyProductEntityTransfer
     {
         $productQuery = $this->getFactory()
             ->createProductQuery()
             ->joinWithSpyProductAbstract()
-            ->filterByIdProduct($productConcreteId);
+            ->filterByIdProduct($idProductConcrete);
 
         return $this->buildQueryFromCriteria($productQuery)->findOne();
     }

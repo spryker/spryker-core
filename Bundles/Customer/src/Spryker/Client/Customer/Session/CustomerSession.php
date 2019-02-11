@@ -8,6 +8,7 @@
 namespace Spryker\Client\Customer\Session;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Client\Customer\Exception\EmptyCustomerTransferCacheException;
 use Spryker\Client\Session\SessionClientInterface;
 
 class CustomerSession implements CustomerSessionInterface
@@ -32,7 +33,7 @@ class CustomerSession implements CustomerSessionInterface
     /**
      * @var \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    protected static $cachedCustomer;
+    protected static $customerTransferCache;
 
     /**
      * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
@@ -55,7 +56,7 @@ class CustomerSession implements CustomerSessionInterface
     public function logout()
     {
         $this->sessionClient->remove(self::SESSION_KEY);
-        $this->invalidateCachedCustomer();
+        $this->invalidateCustomerTransferCache();
     }
 
     /**
@@ -63,7 +64,7 @@ class CustomerSession implements CustomerSessionInterface
      */
     public function hasCustomer()
     {
-        return $this->hasCachedCustomer() || $this->sessionClient->has(self::SESSION_KEY);
+        return $this->hasCustomerTransferCache() || $this->sessionClient->has(self::SESSION_KEY);
     }
 
     /**
@@ -71,8 +72,8 @@ class CustomerSession implements CustomerSessionInterface
      */
     public function getCustomer()
     {
-        if ($this->hasCachedCustomer()) {
-            return $this->getCachedCustomer();
+        if ($this->hasCustomerTransferCache()) {
+            return $this->getCustomerTransferCache();
         }
 
         $customerTransfer = $this->sessionClient->get(self::SESSION_KEY);
@@ -85,7 +86,7 @@ class CustomerSession implements CustomerSessionInterface
             $customerSessionGetPlugin->execute($customerTransfer);
         }
 
-        $this->cacheCustomer($customerTransfer);
+        $this->cacheCustomerTransfer($customerTransfer);
 
         return $customerTransfer;
     }
@@ -106,7 +107,7 @@ class CustomerSession implements CustomerSessionInterface
             $customerSessionSetPlugin->execute($customerTransfer);
         }
 
-        $this->invalidateCachedCustomer();
+        $this->invalidateCustomerTransferCache();
 
         return $customerTransfer;
     }
@@ -118,24 +119,30 @@ class CustomerSession implements CustomerSessionInterface
     {
         if ($this->hasCustomer() !== false) {
             $this->getCustomer()->setIsDirty(true);
-            $this->invalidateCachedCustomer();
+            $this->invalidateCustomerTransferCache();
         }
     }
 
     /**
      * @return bool
      */
-    protected function hasCachedCustomer(): bool
+    protected function hasCustomerTransferCache(): bool
     {
-        return static::$cachedCustomer !== null;
+        return static::$customerTransferCache !== null;
     }
 
     /**
+     * @throws \Spryker\Client\Customer\Exception\EmptyCustomerTransferCacheException
+     *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function getCachedCustomer(): CustomerTransfer
+    protected function getCustomerTransferCache(): CustomerTransfer
     {
-        return static::$cachedCustomer;
+        if (static::$customerTransferCache === null) {
+            throw new EmptyCustomerTransferCacheException();
+        }
+
+        return static::$customerTransferCache;
     }
 
     /**
@@ -143,16 +150,16 @@ class CustomerSession implements CustomerSessionInterface
      *
      * @return void
      */
-    protected function cacheCustomer(CustomerTransfer $customerTransfer): void
+    protected function cacheCustomerTransfer(CustomerTransfer $customerTransfer): void
     {
-        static::$cachedCustomer = $customerTransfer;
+        static::$customerTransferCache = $customerTransfer;
     }
 
     /**
      * @return void
      */
-    protected function invalidateCachedCustomer(): void
+    protected function invalidateCustomerTransferCache(): void
     {
-        static::$cachedCustomer = null;
+        static::$customerTransferCache = null;
     }
 }

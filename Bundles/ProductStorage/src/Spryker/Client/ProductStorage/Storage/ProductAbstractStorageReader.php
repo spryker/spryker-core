@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductStorage\Exception\NotFoundProductAbstractDataCacheException;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
 use Spryker\Shared\Kernel\Store;
@@ -49,7 +50,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     /**
      * @var array
      */
-    protected static $productsAbstractCache = [];
+    protected static $productsAbstractDataCache = [];
 
     /**
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
@@ -93,12 +94,12 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      */
     public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
     {
-        if ($this->hasCachedProductAbstract($idProductAbstract, $localeName)) {
-            return $this->getCachedProductAbstract($idProductAbstract, $localeName);
+        if ($this->hasProductAbstractDataCacheByIdProductAbstractAndLocaleName($idProductAbstract, $localeName)) {
+            return $this->getProductAbstractDataCacheByIdProductAbstractAndLocaleName($idProductAbstract, $localeName);
         }
 
         $productStorageData = $this->findStorageData($idProductAbstract, $localeName);
-        $this->cacheProductAbstract($idProductAbstract, $localeName, $productStorageData);
+        $this->cacheProductAbstractDataByIdProductAbstractAndLocaleName($idProductAbstract, $localeName, $productStorageData);
 
         return $productStorageData;
     }
@@ -226,11 +227,17 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      * @param int $idProductAbstract
      * @param string $localeName
      *
+     * @throws \Spryker\Client\ProductStorage\Exception\NotFoundProductAbstractDataCacheException
+     *
      * @return array
      */
-    protected function getCachedProductAbstract(int $idProductAbstract, string $localeName): array
+    protected function getProductAbstractDataCacheByIdProductAbstractAndLocaleName(int $idProductAbstract, string $localeName): array
     {
-        return static::$productsAbstractCache[$idProductAbstract][$localeName];
+        if (!$this->hasProductAbstractDataCacheByIdProductAbstractAndLocaleName($idProductAbstract, $localeName)) {
+            throw new NotFoundProductAbstractDataCacheException();
+        }
+
+        return static::$productsAbstractDataCache[$idProductAbstract][$localeName];
     }
 
     /**
@@ -239,9 +246,9 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      *
      * @return bool
      */
-    protected function hasCachedProductAbstract(int $idProductAbstract, string $localeName): bool
+    protected function hasProductAbstractDataCacheByIdProductAbstractAndLocaleName(int $idProductAbstract, string $localeName): bool
     {
-        return isset(static::$productsAbstractCache[$idProductAbstract][$localeName]);
+        return isset(static::$productsAbstractDataCache[$idProductAbstract][$localeName]);
     }
 
     /**
@@ -251,8 +258,8 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      *
      * @return void
      */
-    protected function cacheProductAbstract(int $idProductAbstract, string $localeName, ?array $productData): void
+    protected function cacheProductAbstractDataByIdProductAbstractAndLocaleName(int $idProductAbstract, string $localeName, ?array $productData): void
     {
-        static::$productsAbstractCache[$idProductAbstract][$localeName] = $productData;
+        static::$productsAbstractDataCache[$idProductAbstract][$localeName] = $productData;
     }
 }

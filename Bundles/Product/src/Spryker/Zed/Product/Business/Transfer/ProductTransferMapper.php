@@ -99,8 +99,8 @@ class ProductTransferMapper implements ProductTransferMapperInterface
     {
         $productTransfer = $this->mapProductConcreteFromData($productEntityTransfer->toArray());
         $attributes = $this->attributeEncoder->decodeAttributes($productEntityTransfer->getAttributes());
-        $productTransfer->setAttributes($attributes);
-        $productTransfer->setIdProductConcrete($productEntityTransfer->getIdProduct());
+        $productTransfer->setAttributes($attributes)
+                        ->setIdProductConcrete($productEntityTransfer->getIdProduct());
 
         $productAbstractEntityTransfer = $productEntityTransfer->getSpyProductAbstract();
         if ($productAbstractEntityTransfer !== null) {

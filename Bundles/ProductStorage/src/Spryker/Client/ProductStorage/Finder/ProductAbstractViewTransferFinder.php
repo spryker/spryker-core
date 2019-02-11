@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductStorage\Finder;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface;
 use Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReaderInterface;
 
-class ProductAbstractViewTransferFinder extends ProductViewTransferFinderAbstract
+class ProductAbstractViewTransferFinder extends AbstractProductViewTransferFinder
 {
     /**
      * @var \Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReaderInterface

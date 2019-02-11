@@ -287,11 +287,11 @@ interface ProductFacadeInterface
      *
      * @api
      *
-     * @param string $concreteSku
+     * @param string $productConcreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getRawProductConcreteBySku(string $concreteSku): ProductConcreteTransfer;
+    public function getRawProductConcreteBySku(string $productConcreteSku): ProductConcreteTransfer;
 
     /**
      * Specification:

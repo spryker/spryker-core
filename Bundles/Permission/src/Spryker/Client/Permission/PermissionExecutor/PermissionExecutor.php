@@ -9,6 +9,7 @@ namespace Spryker\Client\Permission\PermissionExecutor;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
+use Spryker\Client\Permission\Exception\NotFoundPermissionCollectionTransferCacheException;
 use Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 
@@ -27,7 +28,7 @@ class PermissionExecutor implements PermissionExecutorInterface
     /**
      * @var \Generated\Shared\Transfer\PermissionCollectionTransfer[]
      */
-    protected static $cachedPermissions = [];
+    protected static $permissionCollectionTransfersCache = [];
 
     /**
      * @param \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[] $permissionStoragePlugins
@@ -114,8 +115,8 @@ class PermissionExecutor implements PermissionExecutorInterface
      */
     protected function findPermissions($permissionKey): PermissionCollectionTransfer
     {
-        if ($this->hasCachedPermissionsByKey($permissionKey)) {
-            return $this->getCachedPermissionsByKey($permissionKey);
+        if ($this->hasPermissionCollectionTransferCacheByKey($permissionKey)) {
+            return $this->getPermissionCollectionTransferCacheByKey($permissionKey);
         }
 
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
@@ -128,7 +129,7 @@ class PermissionExecutor implements PermissionExecutorInterface
             }
         }
 
-        $this->cachePermissionsByKey($permissionKey, $permissionCollectionTransfer);
+        $this->cachePermissionCollectionTransferByKey($permissionKey, $permissionCollectionTransfer);
 
         return $permissionCollectionTransfer;
     }
@@ -138,19 +139,25 @@ class PermissionExecutor implements PermissionExecutorInterface
      *
      * @return bool
      */
-    protected function hasCachedPermissionsByKey(string $permissionKey): bool
+    protected function hasPermissionCollectionTransferCacheByKey(string $permissionKey): bool
     {
-        return isset(static::$cachedPermissions[$permissionKey]);
+        return isset(static::$permissionCollectionTransfersCache[$permissionKey]);
     }
 
     /**
      * @param string $permissionKey
      *
+     * @throws \Spryker\Client\Permission\Exception\NotFoundPermissionCollectionTransferCacheException
+     *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    protected function getCachedPermissionsByKey(string $permissionKey): PermissionCollectionTransfer
+    protected function getPermissionCollectionTransferCacheByKey(string $permissionKey): PermissionCollectionTransfer
     {
-        return static::$cachedPermissions[$permissionKey];
+        if (!$this->hasPermissionCollectionTransferCacheByKey($permissionKey)) {
+            throw new NotFoundPermissionCollectionTransferCacheException();
+        }
+
+        return static::$permissionCollectionTransfersCache[$permissionKey];
     }
 
     /**
@@ -159,8 +166,8 @@ class PermissionExecutor implements PermissionExecutorInterface
      *
      * @return void
      */
-    protected function cachePermissionsByKey(string $permissionKey, PermissionCollectionTransfer $permissionCollectionTransfer): void
+    protected function cachePermissionCollectionTransferByKey(string $permissionKey, PermissionCollectionTransfer $permissionCollectionTransfer): void
     {
-        static::$cachedPermissions[$permissionKey] = $permissionCollectionTransfer;
+        static::$permissionCollectionTransfersCache[$permissionKey] = $permissionCollectionTransfer;
     }
 }

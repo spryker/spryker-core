@@ -319,15 +319,15 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param string $concreteSku
+     * @param string $productConcreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getRawProductConcreteBySku(string $concreteSku): ProductConcreteTransfer
+    public function getRawProductConcreteBySku(string $productConcreteSku): ProductConcreteTransfer
     {
         return $this->getFactory()
             ->createProductConcreteManager()
-            ->getRawProductConcreteBySku($concreteSku);
+            ->getRawProductConcreteBySku($productConcreteSku);
     }
 
     /**

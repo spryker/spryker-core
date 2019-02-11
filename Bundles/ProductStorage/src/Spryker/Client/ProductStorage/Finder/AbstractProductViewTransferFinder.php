@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
 
-abstract class ProductViewTransferFinderAbstract implements ProductViewTransferFinderInterface
+abstract class AbstractProductViewTransferFinder implements ProductViewTransferFinderInterface
 {
     /**
      * @var \Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface

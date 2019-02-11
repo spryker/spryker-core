@@ -21,11 +21,11 @@ interface ProductRepositoryInterface
     public function findProductConcreteBySku(string $productConcreteSku): ?SpyProductEntityTransfer;
 
     /**
-     * @param int $productConcreteId
+     * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer|null
      */
-    public function findProductConcreteById(int $productConcreteId): ?SpyProductEntityTransfer;
+    public function findProductConcreteById(int $idProductConcrete): ?SpyProductEntityTransfer;
 
     /**
      * @param string $search
