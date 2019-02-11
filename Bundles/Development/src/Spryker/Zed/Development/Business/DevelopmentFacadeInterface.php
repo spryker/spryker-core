@@ -46,6 +46,16 @@ interface DevelopmentFacadeInterface
      * @param string|null $module
      * @param array $options
      *
+     * @return void
+     */
+    public function runFixtures($module, array $options = []);
+
+    /**
+     * @api
+     *
+     * @param string|null $module
+     * @param array $options
+     *
      * @return int Exit code
      */
     public function runPhpMd($module, array $options = []);

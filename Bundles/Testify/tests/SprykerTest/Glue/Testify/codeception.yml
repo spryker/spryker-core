@@ -1,0 +1,20 @@
+namespace: SprykerTest\Glue\Testify
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Glue:
+        path: /
+        class_name: TestifyTester
+        modules:
+            enabled:
+                - Asserts

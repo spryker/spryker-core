@@ -15,6 +15,9 @@ class TestifyConstants
     public const BOOTSTRAP_CLASS_YVES = 'TESTIFY_CONSTANTS:BOOTSTRAP_CLASS_YVES';
     public const BOOTSTRAP_CLASS_ZED = 'TESTIFY_CONSTANTS:BOOTSTRAP_CLASS_ZED';
 
+    public const GLUE_APPLICATION_DOMAIN = 'TESTIFY_CONSTANTS:GLUE_APPLICATION_DOMAIN';
+    public const GLUE_OPEN_API_SCHEMA = 'TESTIFY_CONSTANTS:GLUE_OPEN_API_SCHEMA';
+
     /**
      * Specification:
      * - Host to be used for Presentation tests.
