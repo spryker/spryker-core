@@ -36,7 +36,6 @@ class MerchantAddressWriter implements MerchantAddressWriterInterface
             ->requireCity()
             ->requireZipCode()
             ->requireAddress1()
-            ->requireAddress2()
             ->requireFkMerchant()
             ->requireFkCountry();
 
@@ -55,7 +54,6 @@ class MerchantAddressWriter implements MerchantAddressWriterInterface
             ->requireCity()
             ->requireZipCode()
             ->requireAddress1()
-            ->requireAddress2()
             ->requireFkMerchant()
             ->requireFkCountry();
 
