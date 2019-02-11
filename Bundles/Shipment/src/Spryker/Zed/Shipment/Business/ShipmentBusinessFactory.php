@@ -28,6 +28,8 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcher;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcherInterface;
+use Spryker\Zed\Shipment\Business\Shipment\ShipmentReader;
+use Spryker\Zed\Shipment\Business\Shipment\ShipmentReaderInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupSaver;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupSaverInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtender;
@@ -386,6 +388,17 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentMethodExtender(
             $this->createShipmentMethodTransformer(),
             $this->createShipmentFetcher()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Shipment\ShipmentReaderInterface
+     */
+    public function createShipmentReader(): ShipmentReaderInterface
+    {
+        return new ShipmentReader(
+            $this->getQueryContainer(),
+            $this->getSalesFacade()
         );
     }
 }

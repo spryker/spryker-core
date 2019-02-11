@@ -15,7 +15,7 @@ class ShipmentFormCreateDataProvider extends AbstractShipmentFormDataProvider
      *
      * @return array
      */
-    public function getData(int $idSalesOrder, ?int $idSalesShipment = null)
+    public function getData(int $idSalesOrder, ?int $idSalesShipment = null): array
     {
         $formData = [];
         $defaults = $this->getDefaultFormFields($idSalesOrder, $idSalesShipment);

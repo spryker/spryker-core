@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class ShipmentGuiToSalesBridge implements ShipmentGuiToSalesInterface
 {
@@ -34,5 +35,17 @@ class ShipmentGuiToSalesBridge implements ShipmentGuiToSalesInterface
     public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer
     {
         return $this->salesFacade->findOrderByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idSalesShipment
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesShipment): ObjectCollection
+    {
+        return $this->salesFacade->findSalesOrderItemsIdsBySalesShipmentId($idSalesShipment);
     }
 }

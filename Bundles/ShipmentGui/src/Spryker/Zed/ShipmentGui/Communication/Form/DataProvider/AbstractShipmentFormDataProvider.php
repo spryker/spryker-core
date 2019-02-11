@@ -61,8 +61,9 @@ class AbstractShipmentFormDataProvider
             ->findOrderByIdSalesOrder($idSalesOrder);
 
         return [
-            ShipmentFormCreate::OPTION_SHIPMENT_ADDRESS_CHOICES => $this->getShippingAddressesOptions($orderTransfer),
+            ShipmentFormCreate::OPTION_SHIPMENT_ADDRESS_CHOICES => $this->getShippingAddressesOptions($idSalesOrder, $idSalesShipment),
             ShipmentFormCreate::OPTION_SHIPMENT_METHOD_CHOICES => $this->getShippingMethodsOptions(),
+            ShipmentFormCreate::FIELD_SHIPMENT_SELECTED_ITEMS => $this->getShipmentSelectedItemsIds($idSalesShipment),
             AddressForm::OPTION_SALUTATION_CHOICES => $this->getSalutationOptions(),
             ItemForm::OPTION_ORDER_ITEMS_CHOICES => $this->getOrderItemsOptions($orderTransfer),
         ];
@@ -94,15 +95,17 @@ class AbstractShipmentFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param int $idSalesOrder
+     * @param int|null $idSalesShipment
      *
      * @return array
      */
-    protected function getShippingAddressesOptions(OrderTransfer $orderTransfer): array
+    protected function getShippingAddressesOptions(int $idSalesOrder, ?int $idSalesShipment): array
     {
         $addresses = ['New address'];
 
-        if ($orderTransfer->getCustomer() === null) {
+        $orderTransfer = $this->salesFacade->findOrderByIdSalesOrder($idSalesOrder);
+        if ($orderTransfer === null || $orderTransfer->getCustomer() === null) {
             return $addresses;
         }
         $customerTransfer = $orderTransfer->getCustomer();
@@ -210,11 +213,11 @@ class AbstractShipmentFormDataProvider
     }
 
     /**
-     * @param int $idSalesShipment
+     * @param int|null $idSalesShipment
      *
      * @return array
      */
-    protected function getShipmentItemsOptions(int $idSalesShipment): array
+    protected function getShipmentSelectedItemsIds(?int $idSalesShipment): array
     {
         return [];
     }

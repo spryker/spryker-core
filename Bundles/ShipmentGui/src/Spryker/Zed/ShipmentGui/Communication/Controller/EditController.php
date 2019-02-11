@@ -18,13 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
  */
-class CreateController extends AbstractController
+class EditController extends AbstractController
 {
     protected const PARAM_REDIRECT_URL = 'redirect-url';
     protected const REDIRECT_URL_DEFAULT = '/sales';
 
-    protected const MESSAGE_SHIPMENT_CREATE_SUCCESS = 'Shipment has been successfully created.';
-    protected const MESSAGE_SHIPMENT_CREATE_ERROR = 'Shipment create failed.';
+    protected const MESSAGE_SHIPMENT_EDIT_SUCCESS = 'Shipment has been successfully created.';
+    protected const MESSAGE_SHIPMENT_EDIT_ERROR = 'Shipment create failed.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -36,12 +36,13 @@ class CreateController extends AbstractController
         $redirectUrl = $request->get(static::PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
 
         $idSalesOrder = $request->query->get(ShipmentGuiConfig::PARAM_ID_SALES_ORDER);
-        $dataProvider = $this->getFactory()->createShipmentFormCreateDataProvider();
+        $idSalesShipment = $request->query->get(ShipmentGuiConfig::PARAM_ID_SALES_SHIPMENT);
+        $dataProvider = $this->getFactory()->createShipmentFormEditDataProvider();
 
         $form = $this->getFactory()
-            ->createShipmentFormCreate(
-                $dataProvider->getData($idSalesOrder),
-                $dataProvider->getOptions($idSalesOrder, null)
+            ->createShipmentFormEdit(
+                $dataProvider->getData($idSalesOrder, $idSalesShipment),
+                $dataProvider->getOptions($idSalesOrder, $idSalesShipment)
             )
             ->handleRequest($request);
 
