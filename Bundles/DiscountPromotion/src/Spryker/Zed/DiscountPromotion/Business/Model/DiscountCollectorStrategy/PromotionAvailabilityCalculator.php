@@ -39,7 +39,7 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
      * @param int $idProductAbstract
      * @param float $maxQuantity
      *
-     * @return int
+     * @return float
      */
     public function getMaximumQuantityBasedOnAvailability($idProductAbstract, $maxQuantity)
     {

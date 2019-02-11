@@ -13,7 +13,7 @@ use Spryker\Zed\Discount\Communication\Form\AbstractDiscountExtensionSubFormType
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Type;
 
 class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
 {
@@ -64,9 +64,7 @@ class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
                 'label' => 'Quantity',
                 'constraints' => [
                     new NotBlank(['groups' => DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY]),
-                    new Regex([
-                        'pattern' => '/[0-9]+/',
-                    ]),
+                    new Type('float'),
                 ],
             ]
         );
