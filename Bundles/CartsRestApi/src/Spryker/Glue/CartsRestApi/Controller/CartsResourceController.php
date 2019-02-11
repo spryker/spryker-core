@@ -134,6 +134,6 @@ class CartsResourceController extends AbstractController
      */
     public function patchAction(RestRequestInterface $restRequest, RestCartsAttributesTransfer $restCartsAttributesTransfer): RestResponseInterface
     {
-        return $this->getFactory()->createCartUpdater()->updateQuote($restRequest, $restCartsAttributesTransfer);
+        return $this->getFactory()->createCartUpdater()->update($restRequest, $restCartsAttributesTransfer);
     }
 }

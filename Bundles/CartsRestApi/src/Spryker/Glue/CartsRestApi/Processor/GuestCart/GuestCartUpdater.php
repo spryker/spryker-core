@@ -85,7 +85,7 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
                 ->createAnonymousCustomerUniqueIdEmptyErrorRestResponse();
         }
 
-        return $this->cartUpdater->updateQuote($restRequest, $restCartsAttributesTransfer);
+        return $this->cartUpdater->update($restRequest, $restCartsAttributesTransfer);
     }
 
     /**
