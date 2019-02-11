@@ -80,11 +80,6 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
         RestRequestInterface $restRequest,
         RestCartsAttributesTransfer $restCartsAttributesTransfer
     ): RestResponseInterface {
-        if (!$restRequest->getUser()) {
-            return $this->guestCartRestResponseBuilder
-                ->createAnonymousCustomerUniqueIdEmptyErrorRestResponse();
-        }
-
         return $this->cartUpdater->update($restRequest, $restCartsAttributesTransfer);
     }
 
@@ -144,10 +139,6 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
         RestRequestInterface $restRequest,
         CustomerTransfer $customerTransfer
     ): CustomerTransfer {
-        if (!$restRequest->getUser()) {
-            return $customerTransfer;
-        }
-
         $assigningGuestQuoteRequestTransfer = (new AssigningGuestQuoteRequestTransfer())
             ->setAnonymousCustomerReference($restRequest->getUser()->getNaturalIdentifier())
             ->setCustomer($customerTransfer);
