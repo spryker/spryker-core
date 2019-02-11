@@ -271,7 +271,7 @@ class MerchantForm extends AbstractType
             new Email(),
             new Length(['max' => 255]),
             new Callback([
-                'callback' => $this->getExistingEmailValidationCallback($merchantFacade),
+                'callback' => $this->getExistingEmailValidationCallback($currentId, $merchantFacade),
             ]),
         ];
     }
@@ -292,11 +292,12 @@ class MerchantForm extends AbstractType
     }
 
     /**
+     * @param int|null $currentId
      * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface $merchantFacade
      *
      * @return callable
      */
-    protected function getExistingEmailValidationCallback(MerchantGuiToMerchantFacadeInterface $merchantFacade): callable
+    protected function getExistingEmailValidationCallback(?int $currentId, MerchantGuiToMerchantFacadeInterface $merchantFacade): callable
     {
         return function ($email, ExecutionContextInterface $context) use ($merchantFacade) {
             if ($merchantFacade->findMerchantByEmail((new MerchantTransfer())->setEmail($email)) !== null) {
