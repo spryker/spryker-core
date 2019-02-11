@@ -12,7 +12,7 @@
                     ~ order.billingAddress.address2 ~ ', '
                     ~ order.billingAddress.zipCode ~ ' '
                     ~ order.billingAddress.city ~ ', '
-                    ~ order.billingAddress.country.name }}<a href="#" class="btn btn-default edit_billing_address">Edit</a></p>
+                    ~ order.billingAddress.country.name }}<a href="{{ url('/sales/edit/address', {'id-sales-order': order.idSalesOrder, 'id-address': order.billingAddress.idSalesOrderAddress}) }}" class="btn btn-default edit_billing_address">Edit</a></p>
             </div>
         </div>
     {% endblock %}
