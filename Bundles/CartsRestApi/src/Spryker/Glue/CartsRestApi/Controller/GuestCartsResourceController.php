@@ -66,8 +66,9 @@ class GuestCartsResourceController extends AbstractController
      *              "Updates a guest cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "name": "X-Anonymous-Customer-Unique-Id",
+     *              "in": "header",
+     *              "required": true
      *          }],
      *          "responses": {
      *              "400": "Cart id is missing.",

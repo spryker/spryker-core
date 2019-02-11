@@ -306,7 +306,7 @@ class CartsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Session\SessionClientInterface
      */
-    protected function getSessionClient()
+    public function getSessionClient()
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_SESSION);
     }
