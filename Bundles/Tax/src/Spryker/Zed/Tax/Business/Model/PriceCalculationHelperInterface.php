@@ -46,8 +46,9 @@ interface PriceCalculationHelperInterface
     /**
      * @param int $netPrice
      * @param float $taxPercentage
+     * @param bool $round
      *
      * @return float|int
      */
-    public function getTaxValueFromNetPrice($netPrice, $taxPercentage);
+    public function getTaxValueFromNetPrice($netPrice, $taxPercentage, bool $round = true);
 }
