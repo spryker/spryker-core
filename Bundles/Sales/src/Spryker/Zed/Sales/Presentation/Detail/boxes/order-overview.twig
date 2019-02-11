@@ -58,9 +58,15 @@
                     <div class="col-sm-11"><p><b>{{ 'GRAND TOTAL' | trans }}</b></p></div>
                     <div class="col-sm-1"><p><b>{{ order.totals.grandTotal | money(true, order.currencyIsoCode) }}</b></p></div>
                 </div>
-                <div class="col-sm-12 row">
+                <div class="col-sm-12 row taxTotal-row">
                     <div class="col-sm-11"><p>{{ 'Total taxes' | trans }}</p></div>
                     <div class="col-sm-1">{{ order.totals.taxTotal.amount | money(true, order.currencyIsoCode) }}</div>
+                </div>
+                <div class="col-sm-12 row sumTaxAmount-row">
+                    {% for item in order.items %}
+                        <div class="col-sm-11"><p> - {{ 'Tax set' | trans }} {{ item.taxRate }}%</p></div>
+                        <div class="col-sm-1">{{ item.sumTaxAmount | money(true, order.currencyIsoCode) }}</div>
+                    {% endfor %}
                 </div>
                 <div>
                     <p><b>{{ 'Status' | trans }}:</b>
