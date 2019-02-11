@@ -92,14 +92,16 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
         );
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->requireShipment();
+            if ($itemTransfer->getIsAddressSavingSkipped()) {
+                $itemTransfer->requireShipment();
 
-            $addressTransfer = $itemTransfer->getShipment()->getShippingAddress();
-            $addressTransfer = $this->getCustomerAddress($addressTransfer, $customer);
+                $addressTransfer = $itemTransfer->getShipment()->getShippingAddress();
+                $addressTransfer = $this->getCustomerAddress($addressTransfer, $customer);
 
-            $itemTransfer->getShipment()->setShippingAddress($addressTransfer);
+                $itemTransfer->getShipment()->setShippingAddress($addressTransfer);
 
-            $this->processCustomerAddress($addressTransfer, $customer);
+                $this->processCustomerAddress($addressTransfer, $customer);
+            }
         }
     }
 
