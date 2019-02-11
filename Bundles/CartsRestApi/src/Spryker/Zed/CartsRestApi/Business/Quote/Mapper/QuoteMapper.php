@@ -29,7 +29,13 @@ class QuoteMapper implements QuoteMapperInterface
         CustomerTransfer $registeredCustomer,
         QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
     ): QuoteTransfer {
-        $quoteTransfer = $quoteCollectionResponseTransfer->getQuoteCollection()->getQuotes()[0];
+        $quoteCollection = $quoteCollectionResponseTransfer->getQuoteCollection();
+
+        if (!$quoteCollection || $quoteCollection->getQuotes()->count() === 0) {
+            return (new QuoteTransfer())->setCustomer($registeredCustomer);
+        }
+
+        $quoteTransfer = $quoteCollection->getQuotes()[0];
         $quoteTransfer->setCustomerReference($registeredCustomer->getCustomerReference());
 
         return $quoteTransfer->setCustomer($registeredCustomer);
