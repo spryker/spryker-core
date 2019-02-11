@@ -92,7 +92,7 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
         );
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getIsAddressSavingSkipped() === false) {
+            if ($itemTransfer->getIsAddressSavingSkipped() === true) {
                 return;
             }
 
