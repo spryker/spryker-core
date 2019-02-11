@@ -13,9 +13,9 @@ interface ItemValidatorPluginInterface
 {
     /**
      * Specification:
-     * - Validates ItemTransfer inside ItemValidationTransfer.
-     * - Returns not changed ItemValidationTransfer if ItemTransfer is valid.
-     * - Returns ItemValidationTransfer with messages and suggestedValues (optional) in case if ItemTransfer is not valid.
+     * - Validates ItemValidationTransfer::item property.
+     * - Returns unchanged ItemValidationTransfer if ItemValidationTransfer::item property is valid.
+     * - Sets ItemValidationTransfer::messages and ItemValidationTransfer::suggestedValues otherwise.
      *
      * @api
      *
