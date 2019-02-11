@@ -23,6 +23,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
 {
     public const COL_MAX_TAX_RATE = 'MaxTaxRate';
     public const COL_ID_ABSTRACT_PRODUCT = 'IdProductAbstract';
+    public const COL_ISO2_CODE = 'Iso2Code';
 
     /**
      * @api
@@ -153,13 +154,14 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
                 ->useSpyTaxRateQuery()
                     ->useCountryQuery()
                         ->filterByIso2Code($countryIso2Codes, Criteria::IN)
-                        ->groupByIso2Code()
+                        ->withColumn(SpyCountryTableMap::COL_ISO2_CODE, static::COL_ISO2_CODE)
+                        ->groupBy(SpyCountryTableMap::COL_ISO2_CODE)
                     ->endUse()
                     ->_or()
                     ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
                 ->endUse()
                 ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', static::COL_MAX_TAX_RATE)
             ->endUse()
-            ->select([SpyCountryTableMap::COL_ISO2_CODE, static::COL_MAX_TAX_RATE, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT]);
+            ->select([static::COL_ISO2_CODE, static::COL_MAX_TAX_RATE, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT]);
     }
 }
