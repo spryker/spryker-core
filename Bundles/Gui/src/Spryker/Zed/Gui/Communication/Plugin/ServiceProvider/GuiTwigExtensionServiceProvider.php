@@ -16,6 +16,7 @@ use Twig_Environment;
 
 /**
  * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Gui\GuiConfig getConfig()
  */
 class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

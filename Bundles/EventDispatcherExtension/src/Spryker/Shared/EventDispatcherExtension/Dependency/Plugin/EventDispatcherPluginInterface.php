@@ -10,7 +10,7 @@ namespace Spryker\Shared\EventDispatcherExtension\Dependency\Plugin;
 use Spryker\Service\Container\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-interface EventDispatcherExtensionPluginInterface
+interface EventDispatcherPluginInterface
 {
     /**
      * Specification:

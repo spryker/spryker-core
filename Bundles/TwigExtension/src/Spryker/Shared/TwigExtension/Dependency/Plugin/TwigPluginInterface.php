@@ -7,9 +7,10 @@
 
 namespace Spryker\Shared\TwigExtension\Dependency\Plugin;
 
+use Spryker\Service\Container\ContainerInterface;
 use Twig\Environment;
 
-interface TwigExtensionPluginInterface
+interface TwigPluginInterface
 {
     /**
      * Specification:
@@ -18,8 +19,9 @@ interface TwigExtensionPluginInterface
      * @api
      *
      * @param \Twig\Environment $twig
+     * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Twig\Environment
      */
-    public function extend(Environment $twig): Environment;
+    public function extend(Environment $twig, ContainerInterface $container): Environment;
 }

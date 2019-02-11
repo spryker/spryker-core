@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Container;
  */
 class EventDispatcherDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PLUGINS_EVENT_DISPATCHER_EXTENSIONS = 'PLUGINS_EVENT_DISPATCHER_EXTENSIONS';
+    public const PLUGINS_EVENT_DISPATCHER_PLUGINS = 'PLUGINS_EVENT_DISPATCHER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -24,7 +24,7 @@ class EventDispatcherDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        $container = $this->addEventDispatcherExtensionPlugins($container);
+        $container = $this->addEventDispatcherPlugins($container);
 
         return $container;
     }
@@ -34,19 +34,19 @@ class EventDispatcherDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addEventDispatcherExtensionPlugins(Container $container): Container
+    protected function addEventDispatcherPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_EVENT_DISPATCHER_EXTENSIONS, function (Container $container) {
-            return $this->getEventDispatcherExtensionPlugins();
+        $container->set(static::PLUGINS_EVENT_DISPATCHER_PLUGINS, function (Container $container) {
+            return $this->getEventDispatcherPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherExtensionPluginInterface[]
+     * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface[]
      */
-    protected function getEventDispatcherExtensionPlugins(): array
+    protected function getEventDispatcherPlugins(): array
     {
         return [];
     }

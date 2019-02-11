@@ -102,8 +102,8 @@ class EventDispatcherApplicationPlugin extends AbstractPlugin implements Applica
      */
     protected function addSubscribers(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        foreach ($this->getFactory()->getEventDispatcherExtensionPlugins() as $eventDispatcherExtensionPlugin) {
-            $eventDispatcher->addSubscriber($eventDispatcherExtensionPlugin->getSubscriber($container));
+        foreach ($this->getFactory()->getEventDispatcherPlugins() as $eventDispatcherPlugin) {
+            $eventDispatcher->addSubscriber($eventDispatcherPlugin->getSubscriber($container));
         }
 
         return $eventDispatcher;
