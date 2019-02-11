@@ -72,6 +72,11 @@ class ShoppingListFacadeTest extends Unit
     protected $product;
 
     /**
+     * @var \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected $productTwo;
+
+    /**
      * @var \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
      */
     protected $fullAccessPermissionGroup;
@@ -131,6 +136,9 @@ class ShoppingListFacadeTest extends Unit
 
         $this->product = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $this->product->getSku()]);
+
+        $this->productTwo = $this->tester->haveProduct();
+        $this->tester->haveProductInStock([StockProductTransfer::SKU => $this->productTwo->getSku()]);
     }
 
     /**
@@ -739,5 +747,111 @@ class ShoppingListFacadeTest extends Unit
         }
 
         return $shoppingListPermissionGroupNames;
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddItemsOwnerCanAddItemsToShoppingList(): void
+    {
+        // Arrange
+        $customerTransfer = (clone $this->ownerCompanyUserTransfer->getCustomer())
+            ->setCompanyUserTransfer($this->ownerCompanyUserTransfer);
+        $shoppingLisTransfer = (new ShoppingListTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+        $shoppingLisTransfer->addItem(
+            $this->tester->buildShoppingListItem([
+                ShoppingListItemTransfer::QUANTITY => 1,
+                ShoppingListItemTransfer::SKU => $this->product->getSku(),
+            ])
+        );
+        $shoppingLisTransfer->addItem(
+            $this->tester->buildShoppingListItem([
+                ShoppingListItemTransfer::QUANTITY => 1,
+                ShoppingListItemTransfer::SKU => $this->productTwo->getSku(),
+            ])
+        );
+
+        // Act
+        $shoppingListResponseTransfer = $this->tester->getFacade()->addItems($shoppingLisTransfer);
+        $shoppingListCollectionTransfer = (new ShoppingListCollectionTransfer())
+            ->addShoppingList($shoppingListResponseTransfer->getShoppingList());
+        $shoppingListItemCollectionTransfer = $this->tester->getFacade()->getShoppingListItemCollection($shoppingListCollectionTransfer);
+
+        // Assert
+        $this->assertTrue($shoppingListResponseTransfer->getIsSuccess(), 'Owner should be able to add items to shopping list.');
+        $this->assertCount(2, $shoppingListItemCollectionTransfer->getItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddItemsOwnerCanNotAddIncorrectProductsToShoppingList(): void
+    {
+        // Arrange
+        $customerTransfer = (clone $this->ownerCompanyUserTransfer->getCustomer())
+            ->setCompanyUserTransfer($this->ownerCompanyUserTransfer);
+        $shoppingListTransfer = (new ShoppingListTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+        $shoppingListTransfer->addItem(
+            $this->tester->buildShoppingListItem([
+                ShoppingListItemTransfer::QUANTITY => 1,
+                ShoppingListItemTransfer::SKU => $this->product->getSku(),
+            ])
+        );
+        $shoppingListTransfer->addItem(
+            $this->tester->buildShoppingListItem([
+                ShoppingListItemTransfer::QUANTITY => 1,
+                ShoppingListItemTransfer::SKU => uniqid('', true),
+            ])
+        );
+
+        // Act
+        $shoppingListResponseTransfer = $this->tester->getFacade()->addItems($shoppingListTransfer);
+        $shoppingListCollectionTransfer = (new ShoppingListCollectionTransfer())
+            ->addShoppingList($shoppingListTransfer);
+        $shoppingListItemCollectionTransfer = $this->tester->getFacade()->getShoppingListItemCollection($shoppingListCollectionTransfer);
+
+        // Assert
+        $this->assertFalse($shoppingListResponseTransfer->getIsSuccess(), 'Owner should be able to add items to shopping list.');
+        $this->assertCount(0, $shoppingListItemCollectionTransfer->getItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddItemsCustomerWithoutAccessCanNotAddItemsToShoppingList(): void
+    {
+        // Arrange
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+        $customerTransfer = (clone $this->otherCompanyUserTransfer->getCustomer())
+            ->setCompanyUserTransfer($this->otherCompanyUserTransfer);
+        $shoppingLisTransfer = (new ShoppingListTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+        $shoppingLisTransfer->addItem(
+            $this->tester->buildShoppingListItem([
+                ShoppingListItemTransfer::QUANTITY => 1,
+                ShoppingListItemTransfer::SKU => $this->product->getSku(),
+            ])
+        );
+        $shoppingLisTransfer->addItem(
+            $this->tester->buildShoppingListItem([
+                ShoppingListItemTransfer::QUANTITY => 1,
+                ShoppingListItemTransfer::SKU => uniqid('', true),
+            ])
+        );
+
+        // Act
+        $shoppingListResponseTransfer = $this->tester->getFacade()->addItems($shoppingLisTransfer);
+        $shoppingListCollectionTransfer = (new ShoppingListCollectionTransfer())
+            ->addShoppingList($shoppingListTransfer);
+        $shoppingListItemCollectionTransfer = $this->tester->getFacade()->getShoppingListItemCollection($shoppingListCollectionTransfer);
+
+        // Assert
+        $this->assertFalse($shoppingListResponseTransfer->getIsSuccess(), 'Owner should be able to add items to shopping list.');
+        $this->assertCount(0, $shoppingListItemCollectionTransfer->getItems());
     }
 }

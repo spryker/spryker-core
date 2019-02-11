@@ -5,5 +5,4 @@
 
 'use strict';
 
-require('ZedGui');
 require('./product-review-table');

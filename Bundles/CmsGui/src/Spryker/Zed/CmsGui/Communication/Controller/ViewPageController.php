@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CmsPageTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -38,14 +40,41 @@ class ViewPageController extends AbstractController
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
 
+        $cmsVersionDataTransfer = $this->getFactory()->getCmsFacade()->getCmsVersionData($idCmsPage);
+
         $cmsVersionDataHelper = $this->getFactory()->createCmsVersionDataHelper();
-        $cmsVersionDataTransfer = $cmsVersionDataHelper->mapToCmsVersionDataTransfer($cmsVersionTransfer);
+        $cmsVersionDataTransfer = $cmsVersionDataHelper->mapCmsPageTransferWithUrl($cmsVersionDataTransfer);
+
+        $cmsPageTransfer = $cmsVersionDataTransfer->getCmsPage();
+
+        $relatedStoreNames = $this->getStoreNames($cmsPageTransfer);
 
         return [
-            'cmsPage' => $cmsVersionDataTransfer->getCmsPage(),
+            'cmsPage' => $cmsPageTransfer,
             'cmsGlossary' => $cmsVersionDataTransfer->getCmsGlossary(),
             'cmsVersion' => $cmsVersionTransfer,
             'pageCreatedDate' => $cmsLocalizedPageEntity->getCreatedAt(),
+            'relatedStoreNames' => $relatedStoreNames,
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     *
+     * @return string[]
+     */
+    protected function getStoreNames(CmsPageTransfer $cmsPageTransfer): array
+    {
+        $storeRelation = $cmsPageTransfer->getStoreRelation();
+
+        if (!$storeRelation) {
+            return [];
+        }
+
+        $stores = $storeRelation->getStores();
+
+        return array_map(function (StoreTransfer $storeTransfer) {
+            return $storeTransfer->getName();
+        }, $stores->getArrayCopy());
     }
 }

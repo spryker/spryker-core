@@ -62,11 +62,37 @@ class QuoteCreator implements QuoteCreatorInterface
     public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteResponseTransfer = $this->persistentCartStub->createQuote($quoteTransfer);
-        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
+        $quoteResponseTransfer = $this->processQuoteResponse($quoteResponseTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createQuoteWithReloadedItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = $this->persistentCartStub->createQuoteWithReloadedItems($quoteTransfer);
+        $quoteResponseTransfer = $this->processQuoteResponse($quoteResponseTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function processQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
+    {
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
         }
         $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
+
+        $this->zedRequestClient->addResponseMessagesToMessenger();
 
         return $quoteResponseTransfer;
     }

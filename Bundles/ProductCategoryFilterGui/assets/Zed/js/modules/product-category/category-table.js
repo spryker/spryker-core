@@ -5,7 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
 var categoryTree = require('./category-tree');
 var categoryTable;
 
