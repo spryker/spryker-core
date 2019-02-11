@@ -67,6 +67,8 @@ class ProductAbstractPackagingEventResourceRepositoryPlugin extends AbstractPlug
 
     /**
      * {@inheritdoc}
+     * - Returns the name of ID column needed in the ProductPackagingUnit.product_abstract_packaging.publish event.
+     * - The ID is selected from the key range of ProductAbstractPackagingStorageTransfer.
      *
      * @api
      *
