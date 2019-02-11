@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductAutocompleteController extends AbstractController
 {
-    protected const PARAM_NAME = 'term';
-    protected const KEY_RESULTS = 'results';
+    protected const REQUEST_PARAM_SUGGESTION = 'term';
+    protected const RESPONSE_KEY_RESULTS = 'results';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -26,14 +26,14 @@ class ProductAutocompleteController extends AbstractController
      */
     public function indexAction(Request $request): JsonResponse
     {
-        $suggestion = $request->query->get(static::PARAM_NAME, '');
+        $suggestion = $request->query->get(static::REQUEST_PARAM_SUGGESTION, '');
 
         $productAbstractSuggestions = $this->getFactory()
             ->getProductFacade()
             ->suggestProductAbstract($suggestion);
 
         return $this->jsonResponse([
-            static::KEY_RESULTS => $this->getFactory()->createProductListFormatter()->prepareData($productAbstractSuggestions),
+            static::RESPONSE_KEY_RESULTS => $this->getFactory()->createProductListFormatter()->prepareData($productAbstractSuggestions),
         ]);
     }
 }
