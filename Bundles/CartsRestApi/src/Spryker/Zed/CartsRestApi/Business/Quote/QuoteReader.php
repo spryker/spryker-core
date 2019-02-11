@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
-use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
@@ -73,7 +73,7 @@ class QuoteReader implements QuoteReaderInterface
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND));
+                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_CART_NOT_FOUND));
 
             return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer
@@ -99,7 +99,7 @@ class QuoteReader implements QuoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
-    public function findQuoteByCustomerAndStore(
+    public function getQuoteCollectionByCustomerAndStore(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
     ): QuoteCollectionResponseTransfer {
         $quoteCollectionResponseTransfer = new QuoteCollectionResponseTransfer();

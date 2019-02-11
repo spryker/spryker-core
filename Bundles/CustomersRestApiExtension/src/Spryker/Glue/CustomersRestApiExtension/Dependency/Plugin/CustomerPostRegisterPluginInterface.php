@@ -10,7 +10,7 @@ namespace Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 /**
- * @deprecated use CustomerPostCreatePluginInterface
+ * @deprecated use \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface
  */
 interface CustomerPostRegisterPluginInterface
 {

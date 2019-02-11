@@ -10,7 +10,7 @@ namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
-use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
@@ -25,7 +25,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
     /**
      * @var \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface
      */
-    protected $cartReader;
+    protected $quoteReader;
 
     /**
      * @var \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface
@@ -34,16 +34,16 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
 
     /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
-     * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $cartReader
+     * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
-        QuoteReaderInterface $cartReader,
+        QuoteReaderInterface $quoteReader,
         QuoteItemMapperInterface $quoteItemMapper
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
-        $this->cartReader = $cartReader;
+        $this->quoteReader = $quoteReader;
         $this->quoteItemMapper = $quoteItemMapper;
     }
 
@@ -59,7 +59,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
             ->requireCustomerReference()
             ->requireCartItem();
 
-        $quoteResponseTransfer = $this->cartReader->findQuoteByUuid(
+        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
             $this->quoteItemMapper->mapRestCartItemRequestTransferToQuoteTransfer($restCartItemRequestTransfer)
         );
 
@@ -74,7 +74,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
 
         if (!$ifRequestedItemPresentInQuote) {
             $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND));
+                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_ITEM_NOT_FOUND));
 
             return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer
@@ -88,7 +88,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
 
         if (!$restCartItemRequestTransfer->getCartItem()->getSku()) {
             $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_MISSING_REQUIRED_PARAMETER));
+                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_MISSING_REQUIRED_PARAMETER));
 
             return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer

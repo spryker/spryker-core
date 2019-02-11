@@ -80,7 +80,6 @@
         <property name="quote" type="Quote" />
         <property name="quoteUuid" type="string" />
         <property name="customerReference" type="string" />
-        <property name="errorCodes" type="string[]" singular="errorCode" />
     </transfer>
 
     <transfer name="AssigningGuestQuoteRequest">
@@ -90,7 +89,6 @@
 
     <transfer name="RestQuoteCollectionRequest">
         <property name="customerReference" type="string" />
-        <property name="errorCodes" type="string[]" singular="errorCode" />
     </transfer>
 
     <transfer name="QuoteCollectionResponse">
@@ -102,7 +100,6 @@
         <property name="cartItem" type="Item" />
         <property name="cartUuid" type="string" />
         <property name="customerReference" type="string" />
-        <property name="errorCodes" type="string[]" singular="errorCode" />
     </transfer>
 
     <transfer name="QuoteError">

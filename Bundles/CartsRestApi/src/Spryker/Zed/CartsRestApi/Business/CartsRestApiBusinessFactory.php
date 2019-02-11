@@ -62,7 +62,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
         return new QuoteReader(
             $this->getQuoteFacade(),
             $this->getStoreFacade(),
-            $this->getQuoteCollectionReaderPlugins(),
+            $this->getQuoteCollectionReaderPlugin(),
             $this->createQuoteMapper()
         );
     }
@@ -206,9 +206,9 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
      */
-    public function getQuoteCollectionReaderPlugins(): QuoteCollectionReaderPluginInterface
+    public function getQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
     {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGIN_QUOTE_READER);
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGIN_QUOTE_COLLECTION_READER);
     }
 
     /**

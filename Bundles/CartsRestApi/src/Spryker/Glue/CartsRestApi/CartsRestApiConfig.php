@@ -8,7 +8,7 @@
 namespace Spryker\Glue\CartsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleConfig;
-use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class CartsRestApiConfig extends AbstractBundleConfig
@@ -54,73 +54,73 @@ class CartsRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_UNEXPECTED_HTTP_STATUS = Response::HTTP_INTERNAL_SERVER_ERROR;
     public const RESPONSE_ERROR_MAP = [
-        SharedCartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND => [
+        CartsRestApiSharedConfig::RESPONSE_CODE_CART_NOT_FOUND => [
             'status' => Response::HTTP_NOT_FOUND,
-            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND,
         ],
-        SharedCartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND => [
+        CartsRestApiSharedConfig::RESPONSE_CODE_ITEM_NOT_FOUND => [
             'status' => Response::HTTP_NOT_FOUND,
-            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND,
         ],
-        SharedCartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING => [
+        CartsRestApiSharedConfig::RESPONSE_CODE_CART_ID_MISSING => [
             'status' => Response::HTTP_BAD_REQUEST,
-            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_CART_ID_MISSING,
         ],
-        SharedCartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART => [
+        CartsRestApiSharedConfig::RESPONSE_CODE_FAILED_DELETING_CART => [
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART,
         ],
-        SharedCartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART_ITEM => [
+        CartsRestApiSharedConfig::RESPONSE_CODE_FAILED_DELETING_CART_ITEM => [
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART_ITEM,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART_ITEM,
         ],
-        SharedCartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_CART => [
+        CartsRestApiSharedConfig::RESPONSE_CODE_FAILED_CREATING_CART => [
             'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
-            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART,
         ],
-        SharedCartsRestApiConfig::RESPONSE_CODE_MISSING_REQUIRED_PARAMETER => [
+        CartsRestApiSharedConfig::RESPONSE_CODE_MISSING_REQUIRED_PARAMETER => [
             'status' => Response::HTTP_BAD_REQUEST,
-            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER,
         ],
-        SharedCartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY => [
+        CartsRestApiSharedConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY => [
             'status' => Response::HTTP_BAD_REQUEST,
-            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY,
         ],
-        SharedCartsRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART => [
+        CartsRestApiSharedConfig::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART => [
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART,
         ],
-        SharedCartsRestApiConfig::RESPONSE_CODE_PRICE_MODE_DATA_IS_INCORRECT => [
+        CartsRestApiSharedConfig::RESPONSE_CODE_PRICE_MODE_DATA_IS_INCORRECT => [
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_PRICE_MODE_DATA_IS_INCORRECT,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_PRICE_MODE_DATA_IS_INCORRECT,
         ],
-        SharedCartsRestApiConfig::RESPONSE_CODE_PRICE_MODE_DATA_IS_MISSING => [
+        CartsRestApiSharedConfig::RESPONSE_CODE_PRICE_MODE_DATA_IS_MISSING => [
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_PRICE_MODE_DATA_IS_MISSING,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_PRICE_MODE_DATA_IS_MISSING,
         ],
-        SharedCartsRestApiConfig::RESPONSE_CODE_CURRENCY_DATA_IS_INCORRECT => [
+        CartsRestApiSharedConfig::RESPONSE_CODE_CURRENCY_DATA_IS_INCORRECT => [
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CURRENCY_DATA_IS_INCORRECT,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_CURRENCY_DATA_IS_INCORRECT,
         ],
-        SharedCartsRestApiConfig::RESPONSE_CODE_CURRENCY_DATA_IS_MISSING => [
+        CartsRestApiSharedConfig::RESPONSE_CODE_CURRENCY_DATA_IS_MISSING => [
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CURRENCY_DATA_IS_MISSING,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_CURRENCY_DATA_IS_MISSING,
         ],
-        SharedCartsRestApiConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED => [
+        CartsRestApiSharedConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED => [
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_PRICE_MODE_CANT_BE_CHANGED,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_PRICE_MODE_CANT_BE_CHANGED,
         ],
-        SharedCartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION => [
+        CartsRestApiSharedConfig::RESPONSE_CODE_ITEM_VALIDATION => [
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_ITEM_VALIDATION,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_ITEM_VALIDATION,
         ],
-        SharedCartsRestApiConfig::RESPONSE_CODE_STORE_DATA_IS_INVALID => [
+        CartsRestApiSharedConfig::RESPONSE_CODE_STORE_DATA_IS_INVALID => [
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_STORE_DATA_IS_INVALID,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_STORE_DATA_IS_INVALID,
         ],
-        SharedCartsRestApiConfig::RESPONSE_CODE_STORE_DATA_IS_MISSING => [
+        CartsRestApiSharedConfig::RESPONSE_CODE_STORE_DATA_IS_MISSING => [
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => SharedCartsRestApiConfig::EXCEPTION_MESSAGE_STORE_DATA_IS_MISSING,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_STORE_DATA_IS_MISSING,
         ],
     ];
 }

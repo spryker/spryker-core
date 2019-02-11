@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
-use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
@@ -25,7 +25,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     /**
      * @var \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface
      */
-    protected $cartReader;
+    protected $quoteReader;
 
     /**
      * @var \Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemAdderInterface
@@ -48,20 +48,20 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     protected $quoteItemMapper;
 
     /**
-     * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $cartReader
+     * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemAdderInterface $quoteItemAdder
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface $quoteCreator
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
      */
     public function __construct(
-        QuoteReaderInterface $cartReader,
+        QuoteReaderInterface $quoteReader,
         QuoteItemAdderInterface $quoteItemAdder,
         QuoteCreatorInterface $quoteCreator,
         CartsRestApiToStoreFacadeInterface $storeFacade,
         QuoteItemMapperInterface $quoteItemMapper
     ) {
-        $this->cartReader = $cartReader;
+        $this->quoteReader = $quoteReader;
         $this->quoteItemAdder = $quoteItemAdder;
         $this->quoteCreator = $quoteCreator;
         $this->storeFacade = $storeFacade;
@@ -73,7 +73,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addItemToGuestQuote(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    public function addItemToGuestCart(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
     {
         $restCartItemRequestTransfer
             ->requireCartItem()
@@ -82,7 +82,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
         $restQuoteCollectionRequest = (new RestQuoteCollectionRequestTransfer())
             ->setCustomerReference($restCartItemRequestTransfer->getCustomerReference());
 
-        $customerCarts = $this->cartReader->findQuoteByCustomerAndStore($restQuoteCollectionRequest);
+        $customerCarts = $this->quoteReader->getQuoteCollectionByCustomerAndStore($restQuoteCollectionRequest);
         if ($customerCarts->getQuoteCollection() && $customerCarts->getQuoteCollection()->getQuotes()->count()) {
             $restCartItemRequestTransfer->setCartUuid($customerCarts->getQuoteCollection()->getQuotes()[0]->getUuid());
         }
@@ -91,7 +91,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
             return $this->createGuestQuote($restCartItemRequestTransfer);
         }
 
-        $quoteResponseTransfer = $this->cartReader->findQuoteByUuid(
+        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
             $this->quoteItemMapper->mapRestCartItemRequestTransferToQuoteTransfer($restCartItemRequestTransfer)
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -100,7 +100,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
 
         if (!$restCartItemRequestTransfer->getCartItem()->getSku()) {
             $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION));
+                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_ITEM_VALIDATION));
 
             return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer

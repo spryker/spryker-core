@@ -21,7 +21,8 @@ class SingleQuoteCreatorPlugin extends AbstractPlugin implements QuoteCreatorPlu
 {
     /**
      * {@inheritdoc}
-     *  - Creates a quote for customer.
+     * - Creates a single quote for customer.
+     * - Creating of more than one quote is not allowed.
      *
      * @api
      *

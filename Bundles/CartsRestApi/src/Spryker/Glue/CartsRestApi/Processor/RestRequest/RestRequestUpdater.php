@@ -9,7 +9,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\RestRequest;
 
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 
 class RestRequestUpdater implements RestRequestUpdaterInterface
 {
@@ -38,7 +38,7 @@ class RestRequestUpdater implements RestRequestUpdaterInterface
         }
 
         $anonymousCustomerUniqueId = $restRequest->getHttpRequest()->headers
-            ->get(SharedCartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID);
+            ->get(CartsRestApiSharedConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID);
         if (empty($anonymousCustomerUniqueId)) {
             return;
         }

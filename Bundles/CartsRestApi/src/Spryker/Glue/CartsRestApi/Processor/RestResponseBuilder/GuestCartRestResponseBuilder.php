@@ -16,7 +16,7 @@ use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterface
@@ -88,9 +88,9 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
     public function createAnonymousCustomerUniqueIdEmptyErrorRestResponse(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(SharedCartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
+            ->setCode(CartsRestApiSharedConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(SharedCartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
+            ->setDetail(CartsRestApiSharedConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
 
         return $this->createEmptyGuestCartRestResponse()->addError($restErrorTransfer);
     }

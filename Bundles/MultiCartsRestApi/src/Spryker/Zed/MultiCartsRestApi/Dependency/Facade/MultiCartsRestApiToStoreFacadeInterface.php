@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\MultiCartsRestApi\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 interface MultiCartsRestApiToStoreFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer;
+    public function getCurrentStore();
 }

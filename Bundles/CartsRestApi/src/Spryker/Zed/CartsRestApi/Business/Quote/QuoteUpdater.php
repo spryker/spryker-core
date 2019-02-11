@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
-use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
@@ -33,7 +33,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
     /**
      * @var \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface
      */
-    protected $cartReader;
+    protected $quoteReader;
 
     /**
      * @var \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface
@@ -43,18 +43,18 @@ class QuoteUpdater implements QuoteUpdaterInterface
     /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface $cartFacade
-     * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $cartReader
+     * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface $quoteMapper
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
         CartsRestApiToCartFacadeInterface $cartFacade,
-        QuoteReaderInterface $cartReader,
+        QuoteReaderInterface $quoteReader,
         QuoteMapperInterface $quoteMapper
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->cartFacade = $cartFacade;
-        $this->cartReader = $cartReader;
+        $this->quoteReader = $quoteReader;
         $this->quoteMapper = $quoteMapper;
     }
 
@@ -73,7 +73,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
 
         if (!$restQuoteRequestTransfer->getQuoteUuid()) {
             $quoteResponseTransfer = $this->quoteMapper->createQuoteResponseTransfer($restQuoteRequestTransfer)
-                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING));
+                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_CART_ID_MISSING));
 
             return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer
@@ -82,7 +82,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
 
         $quoteTransfer = $restQuoteRequestTransfer->getQuote();
 
-        $quoteResponseTransfer = $this->cartReader->findQuoteByUuid($restQuoteRequestTransfer->getQuote());
+        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($restQuoteRequestTransfer->getQuote());
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
             return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer
@@ -124,7 +124,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
             ->requireCustomer()
             ->requireAnonymousCustomerReference();
 
-        $quoteCollectionResponseTransfer = $this->cartReader->findQuoteByCustomerAndStore(
+        $quoteCollectionResponseTransfer = $this->quoteReader->getQuoteCollectionByCustomerAndStore(
             (new RestQuoteCollectionRequestTransfer())
                 ->setCustomerReference($assigningGuestQuoteRequestTransfer->getAnonymousCustomerReference())
         );
@@ -155,9 +155,9 @@ class QuoteUpdater implements QuoteUpdaterInterface
         QuoteTransfer $quoteTransfer,
         QuoteResponseTransfer $quoteResponseTransfer
     ): QuoteResponseTransfer {
-        if (count($originalQuoteTransfer->getItems()) > 0 && $quoteTransfer->getPriceMode()) {
+        if ($originalQuoteTransfer->getItems()->count() > 0 && $quoteTransfer->getPriceMode()) {
             return $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED));
+                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED));
         }
 
         return $quoteResponseTransfer;

@@ -29,7 +29,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_CART = 'FACADE_CART';
     public const FACADE_STORE = 'FACADE_STORE';
     public const PROPEL_QUERY_QUOTE = 'PROPEL_QUERY_QUOTE';
-    public const PLUGIN_QUOTE_READER = 'PLUGIN_QUOTE_READER';
+    public const PLUGIN_QUOTE_COLLECTION_READER = 'PLUGIN_QUOTE_COLLECTION_READER';
     public const PLUGIN_QUOTE_CREATOR = 'PLUGIN_QUOTE_CREATOR';
 
     /**
@@ -157,7 +157,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteCollectionReaderPlugin(Container $container): Container
     {
-        $container[static::PLUGIN_QUOTE_READER] = function () {
+        $container[static::PLUGIN_QUOTE_COLLECTION_READER] = function () {
             return $this->getQuoteCollectionReaderPlugin();
         };
 

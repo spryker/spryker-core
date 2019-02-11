@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 
 class SingleQuoteCreator implements SingleQuoteCreatorInterface
 {
@@ -49,7 +49,7 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
         $quoteCollectionTransfer = $this->cartReader->getCustomerQuotes($restRequest);
         if ($quoteCollectionTransfer->getQuotes()->count()) {
             $quoteErrorTransfer = (new QuoteErrorTransfer())
-                ->setMessage(SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART);
+                ->setMessage(CartsRestApiSharedConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART);
 
             return (new QuoteResponseTransfer())
                 ->addError($quoteErrorTransfer)

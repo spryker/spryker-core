@@ -50,9 +50,4 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_STORE_DATA_IS_INVALID = 'Store data is invalid.';
 
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
-
-    /**
-     * Do not forget to add mapping:
-     * @see \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_ERROR_MAP
-     */
 }

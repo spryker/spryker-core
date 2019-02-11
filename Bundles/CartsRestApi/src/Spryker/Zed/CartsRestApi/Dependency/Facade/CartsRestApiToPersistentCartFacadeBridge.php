@@ -53,7 +53,7 @@ class CartsRestApiToPersistentCartFacadeBridge implements CartsRestApiToPersiste
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function delete(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->persistentCartFacade->deleteQuote($quoteTransfer);
     }

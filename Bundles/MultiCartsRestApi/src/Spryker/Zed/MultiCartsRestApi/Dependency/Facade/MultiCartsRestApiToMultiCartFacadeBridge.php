@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MultiCartsRestApi\Dependency\Facade;
 
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 
 class MultiCartsRestApiToMultiCartFacadeBridge implements MultiCartsRestApiToMultiCartFacadeInterface
@@ -29,7 +30,7 @@ class MultiCartsRestApiToMultiCartFacadeBridge implements MultiCartsRestApiToMul
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer)
+    public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
         return $this->multiCartFacade->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
     }

@@ -34,7 +34,7 @@ interface CartsRestApiToPersistentCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function delete(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer

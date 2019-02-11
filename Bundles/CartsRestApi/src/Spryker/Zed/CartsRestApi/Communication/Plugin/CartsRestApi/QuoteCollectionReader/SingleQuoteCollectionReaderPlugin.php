@@ -21,7 +21,7 @@ class SingleQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteC
 {
     /**
      * {@inheritdoc}
-     * - Returns quote collection transfer with list of quotes for customer.
+     * - Returns quote collection transfer with quote of customer.
      *
      * @api
      *

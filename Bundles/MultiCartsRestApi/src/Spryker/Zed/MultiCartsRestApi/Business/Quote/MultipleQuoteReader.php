@@ -16,16 +16,16 @@ use Spryker\Zed\MultiCartsRestApi\Dependency\Facade\MultiCartsRestApiToMultiCart
 class MultipleQuoteReader implements MultipleQuoteReaderInterface
 {
     /**
-     * @var \Spryker\Zed\MultiCartsRestApi\Dependency\Facade\MultiCartsRestApiToMultiCartFacadeInterface $multiCartsRestApiFacade
+     * @var \Spryker\Zed\MultiCartsRestApi\Dependency\Facade\MultiCartsRestApiToMultiCartFacadeInterface $multiCartFacade
      */
-    protected $multiCartsRestApiFacade;
+    protected $multiCartFacade;
 
     /**
-     * @param \Spryker\Zed\MultiCartsRestApi\Dependency\Facade\MultiCartsRestApiToMultiCartFacadeInterface $multiCartsRestApiFacade
+     * @param \Spryker\Zed\MultiCartsRestApi\Dependency\Facade\MultiCartsRestApiToMultiCartFacadeInterface $multiCartFacade
      */
-    public function __construct(MultiCartsRestApiToMultiCartFacadeInterface $multiCartsRestApiFacade)
+    public function __construct(MultiCartsRestApiToMultiCartFacadeInterface $multiCartFacade)
     {
-        $this->multiCartsRestApiFacade = $multiCartsRestApiFacade;
+        $this->multiCartFacade = $multiCartFacade;
     }
 
     /**
@@ -57,7 +57,7 @@ class MultipleQuoteReader implements MultipleQuoteReaderInterface
     {
         $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
         $quoteCriteriaFilterTransfer->setCustomerReference($restQuoteCollectionRequestTransfer->getCustomerReference());
-        $quoteCollectionTransfer = $this->multiCartsRestApiFacade->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
+        $quoteCollectionTransfer = $this->multiCartFacade->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
 
         return $quoteCollectionTransfer;
     }

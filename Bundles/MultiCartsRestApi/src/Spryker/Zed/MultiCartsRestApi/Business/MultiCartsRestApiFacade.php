@@ -14,8 +14,6 @@ use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @api
- *
  * @method \Spryker\Zed\MultiCartsRestApi\Business\MultiCartsRestApiBusinessFactory getFactory()
  */
 class MultiCartsRestApiFacade extends AbstractFacade implements MultiCartsRestApiFacadeInterface

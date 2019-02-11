@@ -85,7 +85,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     ): QuoteCollectionResponseTransfer {
         return $this->getFactory()
             ->createQuoteReader()
-            ->findQuoteByCustomerAndStore($restQuoteCollectionRequestTransfer);
+            ->getQuoteCollectionByCustomerAndStore($restQuoteCollectionRequestTransfer);
     }
 
     /**
@@ -197,7 +197,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     {
         return $this->getFactory()
             ->createGuestQuoteItemAdder()
-            ->addItemToGuestQuote($restCartItemRequestTransfer);
+            ->addItemToGuestCart($restCartItemRequestTransfer);
     }
 
     /**

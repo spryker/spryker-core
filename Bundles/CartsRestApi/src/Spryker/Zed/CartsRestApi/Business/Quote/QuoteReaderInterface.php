@@ -35,7 +35,7 @@ interface QuoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
-    public function findQuoteByCustomerAndStore(
+    public function getQuoteCollectionByCustomerAndStore(
         RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
     ): QuoteCollectionResponseTransfer;
 }

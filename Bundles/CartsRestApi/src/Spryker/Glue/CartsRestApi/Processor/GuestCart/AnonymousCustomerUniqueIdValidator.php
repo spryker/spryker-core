@@ -10,7 +10,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -37,17 +37,17 @@ class AnonymousCustomerUniqueIdValidator implements AnonymousCustomerUniqueIdVal
      */
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
-        if (!$httpRequest->headers->has(SharedCartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID)) {
+        if (!$httpRequest->headers->has(CartsRestApiSharedConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID)) {
             return null;
         }
 
-        if (empty($httpRequest->headers->get(SharedCartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID))
+        if (empty($httpRequest->headers->get(CartsRestApiSharedConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID))
             && in_array($restRequest->getResource()->getType(), $this->config->getGuestCartResources(), true)
         ) {
             return (new RestErrorMessageTransfer())
                 ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setCode(SharedCartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
-                ->setDetail(SharedCartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
+                ->setCode(CartsRestApiSharedConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
+                ->setDetail(CartsRestApiSharedConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
         }
 
         return null;

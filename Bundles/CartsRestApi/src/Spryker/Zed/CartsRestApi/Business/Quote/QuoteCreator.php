@@ -10,7 +10,7 @@ namespace Spryker\Zed\CartsRestApi\Business\Quote;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
-use Spryker\Shared\CartsRestApi\CartsRestApiConfig as SharedCartsRestApiConfig;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
 use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
@@ -69,7 +69,7 @@ class QuoteCreator implements QuoteCreatorInterface
         $store = $restQuoteRequestTransfer->getQuote()->getStore();
         if ($store && $store->getName() !== $this->storeFacade->getCurrentStore()->getName()) {
             $quoteResponseTransfer = $this->quoteMapper->createQuoteResponseTransfer($restQuoteRequestTransfer)
-                ->addError((new QuoteErrorTransfer())->setMessage(SharedCartsRestApiConfig::RESPONSE_CODE_STORE_DATA_IS_INVALID));
+                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_STORE_DATA_IS_INVALID));
 
             return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes($quoteResponseTransfer);
         }
