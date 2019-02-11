@@ -11,13 +11,12 @@ use Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer;
 use Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiFactory getFactory()
  */
-class CompanyRolesResourcePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
+class CompanyRolesResourcePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
      * {@inheritdoc}
@@ -71,17 +70,5 @@ class CompanyRolesResourcePlugin extends AbstractPlugin implements ResourceRoute
     public function getResourceAttributesClassName(): string
     {
         return RestCompanyRoleAttributesTransfer::class;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getParentResourceType(): string
-    {
-        return CompanyRolesRestApiConfig::RESOURCE_COMPANIES;
     }
 }

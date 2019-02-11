@@ -11,10 +11,6 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class CompanyBusinessUnitsRestApiConfig extends AbstractBundleConfig
 {
-    /**
-     * @uses \Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig::RESOURCE_COMPANIES
-     */
-    public const RESOURCE_COMPANIES = 'companies';
     public const RESOURCE_COMPANY_BUSINESS_UNITS = 'company-business-units';
 
     public const CONTROLLER_RESOURCE_COMPANY_BUSINESS_UNITS = 'company-business-units-resource';

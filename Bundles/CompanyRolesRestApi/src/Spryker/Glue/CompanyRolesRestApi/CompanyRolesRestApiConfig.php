@@ -11,10 +11,6 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class CompanyRolesRestApiConfig extends AbstractBundleConfig
 {
-    /**
-     * @uses \Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig::RESOURCE_COMPANIES
-     */
-    public const RESOURCE_COMPANIES = 'companies';
     public const RESOURCE_COMPANY_ROLES = 'company-roles';
     public const CONTROLLER_RESOURCE_COMPANY_ROLES = 'company-roles-resource';
 

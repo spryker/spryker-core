@@ -12,15 +12,12 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\CompanyBusinessUnitsRestApiConfig;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Mapper\CompanyBusinessUnitMapperInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyBusinessUnitResourceRelationshipExpander implements CompanyBusinessUnitResourceRelationshipExpanderInterface
 {
-    protected const PATTERN_COMPANY_BUSINESS_UNIT_RESOURCE_SELF_LINK = '%s/%s/%s/%s';
-
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
@@ -95,28 +92,6 @@ class CompanyBusinessUnitResourceRelationshipExpander implements CompanyBusiness
             $restCompanyBusinessUnitAttributesTransfer
         );
 
-        $companyBusinessUnitResource->addLink(
-            RestLinkInterface::LINK_SELF,
-            $this->createSelfLink($companyBusinessUnitTransfer)
-        );
-
         return $companyBusinessUnitResource;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return string
-     */
-    protected function createSelfLink(
-        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): string {
-        return sprintf(
-            static::PATTERN_COMPANY_BUSINESS_UNIT_RESOURCE_SELF_LINK,
-            CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANIES,
-            $companyBusinessUnitTransfer->getCompany()->getUuid(),
-            CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS,
-            $companyBusinessUnitTransfer->getUuid()
-        );
     }
 }

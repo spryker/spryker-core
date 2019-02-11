@@ -17,8 +17,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
-    "spryker/companies-rest-api": "If you want to add support of rest api endpoints for this module."
+    "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens."
   },
   "autoload": {
     "psr-4": {
