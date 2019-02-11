@@ -5,8 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
-
 const parentField = require('./parent-field');
 
 $(document).ready( function () {
