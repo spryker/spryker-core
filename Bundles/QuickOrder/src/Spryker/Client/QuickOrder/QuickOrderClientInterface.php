@@ -37,16 +37,13 @@ interface QuickOrderClientInterface
 
     /**
      * Specification:
-     * - Expects QuickOrderItem.sku for finding product, otherwise proceed to next QuickOrderItem.
-     * - Tries to find product based on the sku using ProductConcreteResolver::findProductConcreteBySku().
-     * - If product was not found, creates new ProductConcreteTransfer with QuickOrderItem.sku and adds error message.
-     * - Puts ProductConcreteTransfer inside QuickOrderItemTransfer.
-     * - Validates QuickOrderItemTransfer using pre-configured plugins.
-     * - Skips validation if there are no plugins are registered.
-     * - Copies ItemValidationTransfer.messages into QuickOrderItemTransfer.messages, if messages exist.
-     * - Adjusts QuickOrderItemTransfer fields based on ItemValidationTransfer.suggestedValues, if they exist.
-     * - Expands QuickOrderItemTransfer.ProductConcrete with additional data using pre-configured plugins, if ProductConcrete.IdProductConcrete exists.
-     * - Skips expanding if there are no plugins are registered.
+     * - Populates QuickOrderItemTransfer ProductConcrete property by provided SKU property.
+     * - Skips QuickOrderItemTransfers with empty SKU property.
+     * - Sets empty ProductConcrete proeprty with error message if product was not found by SKU property.
+     * - Validates QuickOrderItemTransfer using pre-configured `ItemValidatorPluginInterface` plugins.
+     * - Sets validation error messages into QuickOrderItemTransfer messages property.
+     * - Adjusts QuickOrderItemTransfer fields based on validation suggested values.
+     * - Expands ProductConcrete with additional data using pre-configured `ProductConcreteExpanderPluginInterface` plugins.
      *
      * @api
      *
