@@ -42,6 +42,7 @@ class MerchantAddressDataImportPluginTest extends Unit
      */
     public function testImportAddressesImportsData(): void
     {
+        $this->tester->truncateMerchantRelations();
         $this->tester->truncateMerchantAddressRelations();
 
         $this->tester->assertMerchantAddressDatabaseTableIsEmpty();
