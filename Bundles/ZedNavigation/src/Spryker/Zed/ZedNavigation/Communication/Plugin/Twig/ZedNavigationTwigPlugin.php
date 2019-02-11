@@ -25,6 +25,12 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
     protected const URI_SUFFIX_INDEX = '\/index$';
     protected const URI_SUFFIX_SLASH = '\/$';
 
+    protected const TWIG_FUNCTION_NAME_NAVIGATION = 'navigation';
+    protected const TWIG_FUNCTION_NAME_BREADCRUMBS = 'breadcrumb';
+
+    protected const TWIG_GLOBAL_VARIABLE_NAME_NAVIGATION = 'navigation';
+    protected const TWIG_GLOBAL_VARIABLE_NAME_BREADCRUMBS = 'breadcrumb';
+
     protected const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
@@ -76,8 +82,8 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
         $navigation = $this->buildNavigation(Request::createFromGlobals());
         $breadcrumbs = $navigation['path'];
 
-        $twig->addGlobal('navigation', $navigation);
-        $twig->addGlobal('breadcrumbs', $breadcrumbs);
+        $twig->addGlobal(static::TWIG_GLOBAL_VARIABLE_NAME_NAVIGATION, $navigation);
+        $twig->addGlobal(static::TWIG_GLOBAL_VARIABLE_NAME_BREADCRUMBS, $breadcrumbs);
 
         return $twig;
     }
@@ -89,7 +95,7 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
      */
     protected function getNavigationFunction(ContainerInterface $container): TwigFunction
     {
-        $navigation = new TwigFunction('navigation', function () use ($container) {
+        $navigation = new TwigFunction(static::TWIG_FUNCTION_NAME_NAVIGATION, function () use ($container) {
             $request = $this->getRequest($container);
             $navigation = $this->buildNavigation($request);
 
@@ -106,7 +112,7 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
      */
     protected function getBreadcrumbFunction(ContainerInterface $container): TwigFunction
     {
-        $navigation = new TwigFunction('breadcrumb', function () use ($container) {
+        $navigation = new TwigFunction(static::TWIG_FUNCTION_NAME_BREADCRUMBS, function () use ($container) {
             $request = $this->getRequest($container);
             $navigation = $this->buildNavigation($request);
 
