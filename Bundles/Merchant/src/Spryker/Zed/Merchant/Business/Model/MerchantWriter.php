@@ -154,12 +154,26 @@ class MerchantWriter implements MerchantWriterInterface
      */
     protected function executeUpdateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantAddressTransfer = $merchantTransfer->getAddress();
-        $merchantAddressTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
-        $merchantAddressTransfer = $this->merchantAddressWriter->update($merchantAddressTransfer);
+        $merchantAddressTransfer = $this->handleMerchantAddressSave($merchantTransfer);
         $merchantTransfer->setAddress($merchantAddressTransfer);
 
         return $this->entityManager->saveMerchant($merchantTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
+     */
+    protected function handleMerchantAddressSave(MerchantTransfer $merchantTransfer): MerchantAddressTransfer
+    {
+        $merchantAddressTransfer = $merchantTransfer->getAddress();
+        $merchantAddressTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+        if ($merchantAddressTransfer->getIdMerchantAddress() === null) {
+            return $this->merchantAddressWriter->create($merchantAddressTransfer);
+        }
+
+        return $this->merchantAddressWriter->update($merchantAddressTransfer);
     }
 
     /**

@@ -87,6 +87,6 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
         $this->getFactory()
             ->createMerchantAddressQuery()
             ->filterByFkMerchant($idMerchant)
-            ->deleteAll();
+            ->delete();
     }
 }
