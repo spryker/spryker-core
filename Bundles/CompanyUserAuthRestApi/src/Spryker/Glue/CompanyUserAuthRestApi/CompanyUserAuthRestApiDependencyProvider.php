@@ -9,6 +9,7 @@ namespace Spryker\Glue\CompanyUserAuthRestApi;
 
 use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToCompanyUserStorageClientBridge;
 use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthClientBridge;
+use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthCompanyUserConnectorClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -18,6 +19,7 @@ use Spryker\Glue\Kernel\Container;
 class CompanyUserAuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_OAUTH = 'CLIENT_OAUTH';
+    public const CLIENT_OAUTH_COMPANY_USER_CONNECTOR = 'CLIENT_OAUTH_COMPANY_USER_CONNECTOR';
     public const CLIENT_COMPANY_USER_STORAGE = 'CLIENT_COMPANY_USER_STORAGE';
 
     /**
@@ -30,6 +32,7 @@ class CompanyUserAuthRestApiDependencyProvider extends AbstractBundleDependencyP
         $container = parent::provideDependencies($container);
 
         $container = $this->addOauthClient($container);
+        $container = $this->addOauthCompanyUserConnectorClient($container);
         $container = $this->addCompanyUserStorageClient($container);
 
         return $container;
@@ -44,6 +47,20 @@ class CompanyUserAuthRestApiDependencyProvider extends AbstractBundleDependencyP
     {
         $container[static::CLIENT_OAUTH] = function (Container $container) {
             return new CompanyUserAuthRestApiToOauthClientBridge($container->getLocator()->oauth()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addOauthCompanyUserConnectorClient(Container $container): Container
+    {
+        $container[static::CLIENT_OAUTH_COMPANY_USER_CONNECTOR] = function (Container $container) {
+            return new CompanyUserAuthRestApiToOauthCompanyUserConnectorClientBridge($container->getLocator()->oauthCompanyUserConnector()->client());
         };
 
         return $container;

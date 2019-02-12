@@ -9,6 +9,7 @@ namespace Spryker\Glue\CompanyUserAuthRestApi;
 
 use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToCompanyUserStorageClientInterface;
 use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthClientInterface;
+use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthCompanyUserConnectorClientInterface;
 use Spryker\Glue\CompanyUserAuthRestApi\Processor\AccessToken\AccessTokenReader;
 use Spryker\Glue\CompanyUserAuthRestApi\Processor\AccessToken\AccessTokenReaderInterface;
 use Spryker\Glue\CompanyUserAuthRestApi\Processor\RestUserIdentifier\RestUserIdentifierExpander;
@@ -27,8 +28,8 @@ class CompanyUserAuthRestApiFactory extends AbstractFactory
     {
         return new AccessTokenReader(
             $this->getOauthClient(),
-            $this->getResourceBuilder(),
-            $this->getConfig()
+            $this->getOauthCompanyUserConnectorClient(),
+            $this->getResourceBuilder()
         );
     }
 
@@ -54,5 +55,13 @@ class CompanyUserAuthRestApiFactory extends AbstractFactory
     public function getCompanyUserStorageClient(): CompanyUserAuthRestApiToCompanyUserStorageClientInterface
     {
         return $this->getProvidedDependency(CompanyUserAuthRestApiDependencyProvider::CLIENT_COMPANY_USER_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthCompanyUserConnectorClientInterface
+     */
+    public function getOauthCompanyUserConnectorClient(): CompanyUserAuthRestApiToOauthCompanyUserConnectorClientInterface
+    {
+        return $this->getProvidedDependency(CompanyUserAuthRestApiDependencyProvider::CLIENT_OAUTH_COMPANY_USER_CONNECTOR);
     }
 }

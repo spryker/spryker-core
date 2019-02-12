@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\OauthCompanyUserConnector;
 
-use Spryker\Shared\OauthCompanyUserConnector\OauthCompanyUserConnectorConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\OauthCompanyUserConnector\OauthCompanyUserConnectorConfig getSharedConfig()
+ */
 class OauthCompanyUserConnectorConfig extends AbstractBundleConfig
 {
     public const SCOPE_COMPANY_USER = 'company_user';
@@ -31,7 +33,7 @@ class OauthCompanyUserConnectorConfig extends AbstractBundleConfig
      */
     public function getClientSecret(): string
     {
-        return $this->get(OauthCompanyUserConnectorConstants::OAUTH_CLIENT_SECRET);
+        return $this->getSharedConfig()->getClientSecret();
     }
 
     /**
@@ -41,7 +43,7 @@ class OauthCompanyUserConnectorConfig extends AbstractBundleConfig
      */
     public function getClientId(): string
     {
-        return $this->get(OauthCompanyUserConnectorConstants::OAUTH_CLIENT_IDENTIFIER);
+        return $this->getSharedConfig()->getClientId();
     }
 
     /**

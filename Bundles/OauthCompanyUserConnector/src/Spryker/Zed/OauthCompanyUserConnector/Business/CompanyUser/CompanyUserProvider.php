@@ -15,8 +15,6 @@ use Spryker\Zed\OauthCompanyUserConnector\Dependency\Service\OauthCompanyUserCon
 
 class CompanyUserProvider implements CompanyUserProviderInterface
 {
-    protected const COMPANY_STATUS_APPROVED = 'approved';
-
     /**
      * @var \Spryker\Zed\OauthCompanyUserConnector\Dependency\Facade\OauthCompanyUserConnectorToCompanyUserFacadeInterface
      */
@@ -57,8 +55,8 @@ class CompanyUserProvider implements CompanyUserProviderInterface
 
         $companyUserTransfer = $this->companyUserFacade->findActiveCompanyUserByUuid($companyUserTransfer);
 
-        if ($companyUserTransfer !== null
-            && $companyUserTransfer->getCustomer()->getCustomerReference() !== $oauthUserTransfer->getCustomerReference()) {
+        if ($companyUserTransfer === null
+            || $companyUserTransfer->getCustomer()->getCustomerReference() !== $oauthUserTransfer->getCustomerReference()) {
             return $oauthUserTransfer;
         }
 

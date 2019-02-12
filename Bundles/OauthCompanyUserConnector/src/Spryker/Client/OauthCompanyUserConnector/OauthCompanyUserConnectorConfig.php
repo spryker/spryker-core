@@ -5,11 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\CompanyUserAuthRestApi;
+namespace Spryker\Client\OauthCompanyUserConnector;
 
-use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Client\Kernel\AbstractBundleConfig;
 
-class CompanyUserAuthRestApiConfig extends AbstractBundleConfig
+/**
+ * @method \Spryker\Shared\OauthCompanyUserConnector\OauthCompanyUserConnectorConfig getSharedConfig()
+ */
+class OauthCompanyUserConnectorConfig extends AbstractBundleConfig
 {
     /**
      * The client secret used to authenticate Oauth client requests, to create use "password_hash('your password', PASSWORD_BCRYPT)".
@@ -18,16 +21,16 @@ class CompanyUserAuthRestApiConfig extends AbstractBundleConfig
      */
     public function getClientSecret(): string
     {
-        return $this->get(CompanyUserAuthRestApiConstants::OAUTH_CLIENT_SECRET);
+        return $this->getSharedConfig()->getClientSecret();
     }
 
     /**
-     * The identifier of Oauth client.
+     * The client id as is store in spy_oauth_client database table
      *
      * @return string
      */
     public function getClientId(): string
     {
-        return $this->get(CompanyUserAuthRestApiConstants::OAUTH_CLIENT_IDENTIFIER);
+        return $this->getSharedConfig()->getClientId();
     }
 }

@@ -53,11 +53,24 @@ class CustomerSessionWriter implements CustomerSessionWriterInterface
             ->setIsDirty(false)
             ->setCustomerReference($user->getNaturalIdentifier());
 
+        $customerTransfer = $this->executeCustomerSessionExpanderPlugins($restRequest, $customerTransfer);
+
+        $this->customerClient
+            ->setCustomer($customerTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function executeCustomerSessionExpanderPlugins(RestRequestInterface $restRequest, CustomerTransfer $customerTransfer): \Generated\Shared\Transfer\CustomerTransfer
+    {
         foreach ($this->customerSessionExpanderPlugins as $customerSessionExpanderPlugin) {
             $customerTransfer = $customerSessionExpanderPlugin->expand($customerTransfer, $restRequest);
         }
 
-        $this->customerClient
-            ->setCustomer($customerTransfer);
+        return $customerTransfer;
     }
 }
