@@ -11,6 +11,8 @@ use Codeception\Module;
 use Codeception\Util\Shared\Asserts;
 use DateTime;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use Orm\Zed\Touch\Persistence\SpyTouch;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class TouchAssertionHelper extends Module
@@ -25,14 +27,13 @@ class TouchAssertionHelper extends Module
      *
      * @return void
      */
-    public function assertTouchActive($itemType, $itemId, $message = '')
+    public function assertNoTouchEntry(string $itemType, int $itemId, string $message = ''): void
     {
         $touchEntity = $this->getTouchQueryContainer()
-            ->queryTouchEntry($itemType, $itemId)
+            ->queryUpdateTouchEntry($itemType, $itemId)
             ->findOne();
 
-        $this->assertNotNull($touchEntity, $message);
-        $this->assertSame(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $touchEntity->getItemEvent(), $message);
+        $this->assertNull($touchEntity, $message);
     }
 
     /**
@@ -42,14 +43,64 @@ class TouchAssertionHelper extends Module
      *
      * @return void
      */
-    public function assertTouchDeleted($itemType, $itemId, $message = '')
+    public function assertTouchActive(string $itemType, int $itemId, string $message = ''): void
     {
         $touchEntity = $this->getTouchQueryContainer()
-            ->queryTouchEntry($itemType, $itemId)
+            ->queryUpdateTouchEntry($itemType, $itemId, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
+            ->findOne();
+
+        $this->assertNotNull($touchEntity, $message);
+        $this->assertSame(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $touchEntity->getItemEvent(), $message);
+        $this->assertTouchSame($touchEntity, $itemType, $itemId);
+    }
+
+    /**
+     * @param string $itemType
+     * @param int $itemId
+     * @param string $message
+     *
+     * @return void
+     */
+    public function assertTouchInactive(string $itemType, int $itemId, string $message = ''): void
+    {
+        $touchEntity = $this->getTouchQueryContainer()
+            ->queryUpdateTouchEntry($itemType, $itemId, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE)
+            ->findOne();
+
+        $this->assertNotNull($touchEntity, $message);
+        $this->assertSame(SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, $touchEntity->getItemEvent(), $message);
+        $this->assertTouchSame($touchEntity, $itemType, $itemId);
+    }
+
+    /**
+     * @param string $itemType
+     * @param int $itemId
+     * @param string $message
+     *
+     * @return void
+     */
+    public function assertTouchDeleted(string $itemType, int $itemId, string $message = ''): void
+    {
+        $touchEntity = $this->getTouchQueryContainer()
+            ->queryUpdateTouchEntry($itemType, $itemId, SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
             ->findOne();
 
         $this->assertNotNull($touchEntity, $message);
         $this->assertSame(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $touchEntity->getItemEvent(), $message);
+        $this->assertTouchSame($touchEntity, $itemType, $itemId);
+    }
+
+    /**
+     * @param \Orm\Zed\Touch\Persistence\SpyTouch $touchEntity
+     * @param string $itemType
+     * @param int $itemId
+     *
+     * @return void
+     */
+    protected function assertTouchSame(SpyTouch $touchEntity, string $itemType, int $itemId): void
+    {
+        $this->assertSame($itemType, $touchEntity->getItemType());
+        $this->assertSame($itemId, $touchEntity->getItemId());
     }
 
     /**
@@ -74,7 +125,7 @@ class TouchAssertionHelper extends Module
      *
      * @return void
      */
-    public function assertTouchDeletedAfter($itemType, $itemId, DateTime $dateTime, $message = '')
+    public function assertTouchDeletedAfter(string $itemType, int $itemId, DateTime $dateTime, string $message = ''): void
     {
         $this->assertTouchDeleted($itemType, $itemId, $message);
         $this->assertTouchAfter($itemType, $itemId, $dateTime, $message);
@@ -88,7 +139,7 @@ class TouchAssertionHelper extends Module
      *
      * @return void
      */
-    protected function assertTouchAfter($itemType, $itemId, DateTime $dateTime, $message)
+    protected function assertTouchAfter(string $itemType, int $itemId, DateTime $dateTime, string $message): void
     {
         $touchEntity = $this->getTouchQueryContainer()
             ->queryTouchEntry($itemType, $itemId)
@@ -109,7 +160,7 @@ class TouchAssertionHelper extends Module
      *
      * @return void
      */
-    public function assertNoTouchAfter($itemType, $itemId, DateTime $dateTime, $message = '')
+    public function assertNoTouchAfter(string $itemType, int $itemId, DateTime $dateTime, string $message = ''): void
     {
         $touchEntity = $this->getTouchQueryContainer()
             ->queryTouchEntry($itemType, $itemId)
@@ -126,7 +177,7 @@ class TouchAssertionHelper extends Module
     /**
      * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
-    protected function getTouchQueryContainer()
+    protected function getTouchQueryContainer(): TouchQueryContainerInterface
     {
         return $this->getLocator()->touch()->queryContainer();
     }
