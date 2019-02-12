@@ -22,6 +22,7 @@ interface CalculationFacadeInterface
      *  - Maps Quote to CalculableObject
      *  - Run all calculator plugins
      *  - Maps CalculableObject to Quote
+     *  - Executes `QuotePostRecalculatePluginInterface` stack of plugins.
      *  - Return the updated quote
      *
      * @api
@@ -63,6 +64,7 @@ interface CalculationFacadeInterface
      * Specification:
      *  - Checks if the calculated totals in the quote are still valid/consistent.
      *  - If not valid then adds an error code and message to the response
+     *  - Executes `QuotePostRecalculatePluginInterface` stack of plugins.
      *
      * @api
      *
