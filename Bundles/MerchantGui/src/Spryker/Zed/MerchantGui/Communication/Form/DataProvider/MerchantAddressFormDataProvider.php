@@ -60,6 +60,7 @@ class MerchantAddressFormDataProvider
     {
         return [
             'data_class' => MerchantAddressTransfer::class,
+            'label' => false,
             MerchantAddressForm::OPTION_COUNTRY_CHOICES => $this->prepareCountryChoices(),
         ];
     }
