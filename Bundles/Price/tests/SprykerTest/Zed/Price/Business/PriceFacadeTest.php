@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Price\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 
 /**
  * Auto-generated group annotations
@@ -25,6 +26,7 @@ class PriceFacadeTest extends Unit
     protected const ERROR_MESSAGE_PRICE_MODE_DATA_IS_MISSING = 'quote.validation.error.price_mode_is_missing';
     protected const ERROR_MESSAGE_PRICE_MODE_DATA_IS_INCORRECT = 'quote.validation.error.price_mode_is_incorrect';
     protected const WRONG_PRICE_MODE = 'WRONGPRICEMODE';
+    protected const GROSS_MODE = 'GROSS_MODE';
 
     /**
      * @var \SprykerTest\Zed\Price\PriceBusinessTester
@@ -34,44 +36,68 @@ class PriceFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidatePriceModeInQuoteWithEmptyPriceMode(): void
+    public function testValidateEmptyPriceModeInQuote(): void
     {
         $quoteTransfer = new QuoteTransfer();
+        $quoteValidationResponseTransfer = $this->getQuoteValidationResponseTransfer($quoteTransfer);
 
         //Act
-        $this->validatePriceModeInQuote($quoteTransfer, static::ERROR_MESSAGE_PRICE_MODE_DATA_IS_MISSING);
+        $this->validatePriceModeInQuote($quoteValidationResponseTransfer, static::ERROR_MESSAGE_PRICE_MODE_DATA_IS_MISSING);
     }
 
     /**
      * @return void
      */
-    public function testValidatePriceModeInQuoteWithWrongPriceMode()
+    public function testValidateWrongPriceModeInQuote()
     {
         $quoteTransfer = (new QuoteTransfer())
             ->setPriceMode(static::WRONG_PRICE_MODE);
+        $quoteValidationResponseTransfer = $this->getQuoteValidationResponseTransfer($quoteTransfer);
 
         //Act
-        $this->validatePriceModeInQuote($quoteTransfer, static::ERROR_MESSAGE_PRICE_MODE_DATA_IS_INCORRECT);
+        $this->validatePriceModeInQuote($quoteValidationResponseTransfer, static::ERROR_MESSAGE_PRICE_MODE_DATA_IS_INCORRECT);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @return void
+     */
+    public function testValidateCorrectPriceModeInQuote()
+    {
+        $quoteTransfer = (new QuoteTransfer())
+            ->setPriceMode(static::GROSS_MODE);
+        $quoteValidationResponseTransfer = $this->getQuoteValidationResponseTransfer($quoteTransfer);
+
+        //Act
+        $this->assertTrue($quoteValidationResponseTransfer->getIsSuccess());
+        $this->assertEmpty($quoteValidationResponseTransfer->getErrors());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
      * @param string $errorMessage
      *
      * @return void
      */
-    protected function validatePriceModeInQuote(QuoteTransfer $quoteTransfer, string $errorMessage): void
+    protected function validatePriceModeInQuote(QuoteValidationResponseTransfer $quoteValidationResponseTransfer, string $errorMessage): void
     {
-        //Act
-        /** @var \Spryker\Zed\Price\Business\PriceFacade $priceFacade */
-        $priceFacade = $this->tester->getFacade();
-        $quoteValidationResponseTransfer = $priceFacade->validatePriceModeInQuote($quoteTransfer);
-
         $errors = array_map(function ($errorMessageTransfer) {
             return $errorMessageTransfer->getValue();
         }, (array)$quoteValidationResponseTransfer->getErrors());
 
         $this->assertFalse($quoteValidationResponseTransfer->getIsSuccess());
         $this->assertContains($errorMessage, $errors);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    protected function getQuoteValidationResponseTransfer(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
+    {
+        /** @var \Spryker\Zed\Price\Business\PriceFacade $priceFacade */
+        $priceFacade = $this->tester->getFacade();
+
+        return $priceFacade->validatePriceModeInQuote($quoteTransfer);
     }
 }
