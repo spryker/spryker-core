@@ -14,6 +14,7 @@ class EndpointTransfer extends AbstractTransfer
     public const EMAIL_FIELD = 'emailField';
     public const STRING_FIELD = 'stringField';
     public const INTEGER_FIELD = 'integerField';
+    public const NESTED_FIELD = 'nestedField';
 
     /**
      * @var string
@@ -33,6 +34,11 @@ class EndpointTransfer extends AbstractTransfer
     /**
      * @var array
      */
+    protected $nestedField;
+
+    /**
+     * @var array
+     */
     protected $transferPropertyNameMap = [
         'email_field' => 'emailField',
         'emailField' => 'emailField',
@@ -43,6 +49,9 @@ class EndpointTransfer extends AbstractTransfer
         'integer_field' => 'integerField',
         'integerField' => 'integerField',
         'IntegerField' => 'integerField',
+        'nested_field' => 'nestedField',
+        'nestedField' => 'nestedField',
+        'NestedField' => 'nestedField',
         'self' => 'self',
         'Self' => 'self',
         'links' => 'links',
@@ -70,6 +79,12 @@ class EndpointTransfer extends AbstractTransfer
         self::INTEGER_FIELD => [
             'type' => 'int',
             'name_underscore' => 'integer_field',
+            'is_collection' => false,
+            'is_transfer' => false,
+        ],
+        self::NESTED_FIELD => [
+            'type' => 'array',
+            'name_underscore' => 'nested_field',
             'is_collection' => false,
             'is_transfer' => false,
         ],

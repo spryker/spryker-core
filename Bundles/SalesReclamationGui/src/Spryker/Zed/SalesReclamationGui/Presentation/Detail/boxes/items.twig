@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-md-12">
+
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Trigger all matching states' } %}
+
+            {% block widget_content %}
+
+                <div>
+                    {% for event in events %}
+                        <a class="btn btn-primary trigger-order-event"
+                           data-id-sales-order="{{ reclamation.order.idSalesOrder }}"
+                           data-id-sales-reclamation="{{ reclamation.idSalesReclamation }}"
+                           data-event="{{ event }}" href="#">{{ event }}
+                        </a>
+                    {% endfor %}
+                </div>
+
+            {% endblock %}
+
+        {% endembed %}
+
+    </div>
+</div>
+
+{% embed '@Gui/Partials/widget.twig' %}
+
+    {% block widget_title %}
+        <h5>
+            {{ 'Order' | trans }}
+            <a href="{{ url('/sales/detail', {'id-sales-order': reclamation.order.idSalesOrder}) }}">
+                {{ reclamation.order.orderReference }}
+            </a>
+            {{ 'items' | trans }}:
+        </h5>
+    {% endblock %}
+
+    {% block widget_header_content %}
+        Reclamation state: {{ reclamation.isOpen ? 'Open' | trans : 'Close' | trans }}
+    {% endblock %}
+
+    {% block widget_content %}
+
+        <table class="footable table toggle-arrow-tiny" data-qa="order-item-list">
+            <thead>
+            <tr class="text-left">
+                <th><input type="checkbox" id="check-all-orders" /></th>
+                <th colspan="2">{{ 'Product' | trans }}</th>
+                <th>{{ 'Unit Price' | trans }} <small>({{ reclamation.order.priceMode }})</small></th>
+                <th>{{ 'Item total' | trans }}</th>
+                <th>{{ 'State' | trans }}</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            {% embed '@SalesReclamationGui/Detail/boxes/no-group-items.twig' with {items: reclamation.reclamationItems} %}{% endembed %}
+        </table>
+
+    {% endblock %}
+
+{% endembed %}

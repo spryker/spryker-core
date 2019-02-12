@@ -7,7 +7,7 @@ ProductAvailabilitiesRestApi Module provides Glue API endpoints for abstract and
 ## Installation
 
 ```
-composer require spryker/products-availability-rest-api
+composer require spryker/product-availabilities-rest-api
 ```
 
 ## Documentation
