@@ -14,9 +14,7 @@ interface QuoteProceedCheckoutCheckPluginInterface
 {
     /**
      * Specification:
-     * - Returns QuoteValidationResponseTransfer with array of Messages and isSuccessful flag.
-     * - Successful if quote applicable for checkout.
-     * - Unsuccessful if quite is not applicable for checkout.
+     * - Checks if quote is applicable for checkout.
      *
      * @api
      *
