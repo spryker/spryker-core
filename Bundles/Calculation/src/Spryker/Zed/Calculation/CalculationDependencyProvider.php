@@ -18,7 +18,7 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUOTE_CALCULATOR_PLUGIN_STACK = 'quote calculator plugin stack';
     public const ORDER_CALCULATOR_PLUGIN_STACK = 'order calculator plugin stack';
-    public const PLUGINS_POST_QUOTE_RECALCULATE = 'PLUGINS_POST_QUOTE_RECALCULATE';
+    public const PLUGINS_QUOTE_POST_RECALCULATE = 'PLUGINS_QUOTE_POST_RECALCULATE';
 
     public const SERVICE_UTIL_TEXT = 'util text service';
 
@@ -53,7 +53,7 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuotePostRecalculatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_POST_QUOTE_RECALCULATE] = function (Container $container) {
+        $container[static::PLUGINS_QUOTE_POST_RECALCULATE] = function (Container $container) {
             return $this->getQuotePostRecalculatePlugins();
         };
 

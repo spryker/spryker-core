@@ -335,7 +335,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function getQuotePostRecalculatePlugins(): array
     {
-        return $this->getProvidedDependency(CalculationDependencyProvider::PLUGINS_POST_QUOTE_RECALCULATE);
+        return $this->getProvidedDependency(CalculationDependencyProvider::PLUGINS_QUOTE_POST_RECALCULATE);
     }
 
     /**
