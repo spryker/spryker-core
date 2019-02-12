@@ -169,7 +169,8 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
      */
     protected function updateQuickOrderItemTransfer(QuickOrderItemTransfer $quickOrderItemTransfer, ItemValidationTransfer $itemValidationTransfer): QuickOrderItemTransfer
     {
-        $recommendedValues = $itemValidationTransfer->getSuggestedValues()->modifiedToArray();
-        return $quickOrderItemTransfer->fromArray($recommendedValues, true);
+        $suggestedValues = $itemValidationTransfer->getSuggestedValues()->modifiedToArray();
+        
+        return $quickOrderItemTransfer->fromArray($suggestedValues, true);
     }
 }
