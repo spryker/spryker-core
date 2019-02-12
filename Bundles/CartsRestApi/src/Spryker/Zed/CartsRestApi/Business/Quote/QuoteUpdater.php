@@ -101,16 +101,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
             $this->quoteMapper->mapQuoteTransferToOriginalQuoteTransfer($quoteTransfer, $originalQuoteTransfer)
         );
 
-        $quoteUpdateRequestTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer);
-
-        $quoteResponseTransfer = $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
-        if ($quoteResponseTransfer->getIsSuccessful() === false) {
-            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
-        }
-
-        return $quoteResponseTransfer;
+        return $this->performUpdatingQuote($quoteTransfer);
     }
 
     /**
@@ -131,16 +122,8 @@ class QuoteUpdater implements QuoteUpdaterInterface
 
         $registeredCustomer = $assigningGuestQuoteRequestTransfer->getCustomer();
         $quoteTransfer = $this->quoteMapper->createQuoteTransfer($registeredCustomer, $quoteCollectionResponseTransfer);
-        $quoteUpdateRequestTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer);
 
-        $quoteResponseTransfer = $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
-        if ($quoteResponseTransfer->getIsSuccessful() === false) {
-            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
-        }
-
-        return $quoteResponseTransfer;
+        return $this->performUpdatingQuote($quoteTransfer);
     }
 
     /**
@@ -158,6 +141,25 @@ class QuoteUpdater implements QuoteUpdaterInterface
         if ($originalQuoteTransfer->getItems()->count() > 0 && $quoteTransfer->getPriceMode()) {
             return $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED));
+        }
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function performUpdatingQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        $quoteUpdateRequestTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer);
+
+        $quoteResponseTransfer = $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
+        if ($quoteResponseTransfer->getIsSuccessful() === false) {
+            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
         }
 
         return $quoteResponseTransfer;

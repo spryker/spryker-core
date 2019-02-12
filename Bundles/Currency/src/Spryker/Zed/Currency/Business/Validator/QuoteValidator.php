@@ -40,14 +40,14 @@ class QuoteValidator implements QuoteValidatorInterface
     {
         $currencyTransfer = $quoteTransfer->getCurrency();
         $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
-            ->setIsSuccess(true);
+            ->setIsSuccess(false);
 
         if (!$currencyTransfer || !$currencyTransfer->getCode()) {
             return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_CURRENCY_DATA_IS_MISSING);
         }
 
         if (!$quoteTransfer->getStore()) {
-            return $quoteValidationResponseTransfer->setIsSuccess(false);
+            return $quoteValidationResponseTransfer;
         }
 
         $currencyCode = $currencyTransfer->getCode();
@@ -61,7 +61,7 @@ class QuoteValidator implements QuoteValidatorInterface
             );
         }
 
-        return $quoteValidationResponseTransfer;
+        return $quoteValidationResponseTransfer->setIsSuccess(true);
     }
 
     /**
@@ -79,7 +79,6 @@ class QuoteValidator implements QuoteValidatorInterface
         $errorTransfer = (new ErrorMessageTransfer())->setValue($errorMessage)
             ->setParameters($parameters);
 
-        return $quoteValidationResponseTransfer->setIsSuccess(false)
-            ->addErrors($errorTransfer);
+        return $quoteValidationResponseTransfer->addErrors($errorTransfer);
     }
 }
