@@ -5,24 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Shared\QuoteApproval\Plugin\Permission;
+namespace SprykerTest\Zed\QuoteApproval\Communication\Plugin\Permission;
 
 use Codeception\Test\Unit;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
-use Spryker\Shared\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
+use Spryker\Zed\QuoteApproval\Communication\Plugin\PlaceOrderPermissionPlugin;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
- * @group Shared
+ * @group Zed
  * @group QuoteApproval
+ * @group Communication
  * @group Plugin
  * @group Permission
- * @group ApproveQuotePermissionPluginTest
+ * @group PlaceOrderPermissionPluginTest
  * Add your own group annotations below this line
  */
-class ApproveQuotePermissionPluginTest extends Unit
+class PlaceOrderPermissionPluginTest extends Unit
 {
     protected const FIELD_MULTI_CURRENCY = 'store_multi_currency';
     protected const CURRENCY_CODE = 'EUR';
@@ -37,8 +38,8 @@ class ApproveQuotePermissionPluginTest extends Unit
     {
         $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = static::CENT_AMOUNT;
 
-        $approveQuotePermissionPlugin = $this->createApproveQuotePermissionPlugin();
-        $result = $approveQuotePermissionPlugin->can($configuration, $this->getContext());
+        $placeOrderPermissionPlugin = $this->createPlaceOrderPermissionPlugin();
+        $result = $placeOrderPermissionPlugin->can($configuration, $this->getContext());
 
         $this->assertTrue($result);
     }
@@ -50,8 +51,8 @@ class ApproveQuotePermissionPluginTest extends Unit
     {
         $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = null;
 
-        $approveQuotePermissionPlugin = $this->createApproveQuotePermissionPlugin();
-        $result = $approveQuotePermissionPlugin->can($configuration, $this->getContext());
+        $placeOrderPermissionPlugin = $this->createPlaceOrderPermissionPlugin();
+        $result = $placeOrderPermissionPlugin->can($configuration, $this->getContext());
 
         $this->assertTrue($result);
     }
@@ -63,8 +64,8 @@ class ApproveQuotePermissionPluginTest extends Unit
     {
         $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = 0;
 
-        $approveQuotePermissionPlugin = $this->createApproveQuotePermissionPlugin();
-        $result = $approveQuotePermissionPlugin->can($configuration, $this->getContext());
+        $placeOrderPermissionPlugin = $this->createPlaceOrderPermissionPlugin();
+        $result = $placeOrderPermissionPlugin->can($configuration, $this->getContext());
 
         $this->assertFalse($result);
     }
@@ -76,8 +77,8 @@ class ApproveQuotePermissionPluginTest extends Unit
     {
         $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = static::CENT_AMOUNT;
 
-        $approveQuotePermissionPlugin = $this->createApproveQuotePermissionPlugin();
-        $result = $approveQuotePermissionPlugin->can($configuration, null);
+        $placeOrderPermissionPlugin = $this->createPlaceOrderPermissionPlugin();
+        $result = $placeOrderPermissionPlugin->can($configuration, null);
 
         $this->assertFalse($result);
     }
@@ -89,8 +90,8 @@ class ApproveQuotePermissionPluginTest extends Unit
     {
         $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = static::CENT_AMOUNT - 1;
 
-        $approveQuotePermissionPlugin = $this->createApproveQuotePermissionPlugin();
-        $result = $approveQuotePermissionPlugin->can($configuration, $this->getContext());
+        $placeOrderPermissionPlugin = $this->createPlaceOrderPermissionPlugin();
+        $result = $placeOrderPermissionPlugin->can($configuration, $this->getContext());
 
         $this->assertFalse($result);
     }
@@ -110,8 +111,8 @@ class ApproveQuotePermissionPluginTest extends Unit
     /**
      * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface
      */
-    protected function createApproveQuotePermissionPlugin(): ExecutablePermissionPluginInterface
+    protected function createPlaceOrderPermissionPlugin(): ExecutablePermissionPluginInterface
     {
-        return new ApproveQuotePermissionPlugin();
+        return new PlaceOrderPermissionPlugin();
     }
 }
