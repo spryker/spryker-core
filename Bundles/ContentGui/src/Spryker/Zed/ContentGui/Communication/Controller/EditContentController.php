@@ -30,7 +30,7 @@ class EditContentController extends AbstractController
     {
         $contentId = $request->query->get(static::PARAM_ID_CONTENT);
         $termKey = $request->query->get(static::PARAM_TERM_KEY, '');
-        if (empty($termKey)) {
+        if (!$termKey) {
             return $this->redirectResponse(static::URL_REDIRECT_CONTENT_LIST_PAGE);
         }
         $dataProvider = $this->getFactory()->createContentFormDataProvider();
@@ -44,7 +44,7 @@ class EditContentController extends AbstractController
         if ($contentForm->isSubmitted() && $contentForm->isValid()) {
             /** @var \Generated\Shared\Transfer\ContentTransfer $data */
             $data = $contentForm->getData();
-            $contentTransfer = $this->getFactory()
+            $this->getFactory()
                 ->getContentFacade()
                 ->create($data);
 
