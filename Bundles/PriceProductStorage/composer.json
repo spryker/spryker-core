@@ -14,7 +14,8 @@
     "spryker/storage": "^3.4.0",
     "spryker/store": "^1.7.0",
     "spryker/synchronization": "^0.2.0 || ^1.0.0",
-    "spryker/synchronization-extension": "^1.0.0"
+    "spryker/synchronization-extension": "^1.0.0",
+    "spryker/quick-order-extension": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
