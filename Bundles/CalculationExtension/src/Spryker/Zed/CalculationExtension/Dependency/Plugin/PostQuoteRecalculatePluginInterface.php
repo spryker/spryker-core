@@ -13,7 +13,7 @@ interface PostQuoteRecalculatePluginInterface
 {
     /**
      * Specification:
-     * - Executes after quote recalculation.
+     * - Executes various business logic after quote recalculation.
      *
      * @api
      *

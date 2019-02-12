@@ -333,7 +333,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\PostQuoteRecalculatePluginInterface[]
      */
-    protected function getPostQuoteRecalculatePlugins(): array
+    public function getPostQuoteRecalculatePlugins(): array
     {
         return $this->getProvidedDependency(CalculationDependencyProvider::PLUGINS_POST_QUOTE_RECALCULATE);
     }
