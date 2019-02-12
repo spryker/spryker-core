@@ -192,8 +192,6 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
     }
 
     /**
-     * @todo fix return type
-     *
      * @param int[] $idProductOptionValues
      * @param string[] $countryIso2CodesByIdProductAbstracts
      *
