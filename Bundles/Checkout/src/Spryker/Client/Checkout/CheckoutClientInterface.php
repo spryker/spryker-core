@@ -26,10 +26,8 @@ interface CheckoutClientInterface
 
     /**
      * Specification:
-     * - Executes QuoteProceedCheckoutCheckPluginInterface plugins, if at least one plugin returns not successful response that `isSuccess` property will be false.
-     * - Successful if no `QuoteProceedCheckoutCheckPluginInterface` plugins registered.
-     * - Quote is applicable for checkout if response successful.
-     * - May return array of messages in response is not successful.
+     * - Validates quote using `QuoteProceedCheckoutCheckPluginInterface` plugins.
+     * - Consideres quote valid for checkout if no plugin returns with `isSuccessful=false`.
      *
      * @api
      *
