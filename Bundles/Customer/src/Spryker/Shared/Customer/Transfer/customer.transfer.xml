@@ -103,6 +103,7 @@
 
     <transfer name="Item">
         <property name="shipment" type="Shipment" />
+        <property name="isAddressSavingSkipped" type="bool"/>
     </transfer>
 
     <transfer name="Shipment">
