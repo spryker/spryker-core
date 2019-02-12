@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
-use Spryker\Client\Session\SessionClientInterface;
+use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToSessionClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -45,7 +45,7 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
     protected $cartsRestApiClient;
 
     /**
-     * @var \Spryker\Client\Session\SessionClientInterface
+     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToSessionClientInterface
      */
     protected $sessionClient;
 
@@ -54,14 +54,14 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
      * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface $cartUpdater
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
-     * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
+     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToSessionClientInterface $sessionClient
      */
     public function __construct(
         GuestCartReaderInterface $guestCartReader,
         CartUpdaterInterface $cartUpdater,
         GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder,
         CartsRestApiClientInterface $cartsRestApiClient,
-        SessionClientInterface $sessionClient
+        CartsRestApiToSessionClientInterface $sessionClient
     ) {
         $this->guestCartReader = $guestCartReader;
         $this->cartUpdater = $cartUpdater;

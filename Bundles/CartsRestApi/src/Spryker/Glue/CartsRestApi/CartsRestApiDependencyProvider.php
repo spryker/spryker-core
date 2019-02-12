@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CartsRestApi;
 
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientBridge;
+use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToSessionClientBridge;
 use Spryker\Glue\CartsRestApi\Exception\MissingQuoteCollectionReaderPluginException;
 use Spryker\Glue\CartsRestApi\Exception\MissingQuoteCreatorPluginException;
 use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
@@ -50,7 +51,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addSessionClient(Container $container)
     {
         $container[static::CLIENT_SESSION] = function (Container $container) {
-            return $container->getLocator()->session()->client();
+            return new CartsRestApiToSessionClientBridge($container->getLocator()->session()->client());
         };
 
         return $container;

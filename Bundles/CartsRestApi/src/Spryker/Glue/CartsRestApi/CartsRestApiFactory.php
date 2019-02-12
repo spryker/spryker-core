@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CartsRestApi;
 
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
+use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToSessionClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartCreator;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartCreatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartDeleter;
@@ -304,9 +305,9 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Session\SessionClientInterface
+     * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToSessionClientInterface
      */
-    public function getSessionClient()
+    public function getSessionClient(): CartsRestApiToSessionClientInterface
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_SESSION);
     }

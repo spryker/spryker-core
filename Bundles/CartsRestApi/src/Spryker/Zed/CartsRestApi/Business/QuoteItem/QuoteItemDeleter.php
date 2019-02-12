@@ -25,7 +25,7 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
     /**
      * @var \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface
      */
-    protected $cartReader;
+    protected $quoteReader;
 
     /**
      * @var \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface
@@ -34,16 +34,16 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
 
     /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
-     * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $cartReader
+     * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
-        QuoteReaderInterface $cartReader,
+        QuoteReaderInterface $quoteReader,
         QuoteItemMapperInterface $quoteItemMapper
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
-        $this->cartReader = $cartReader;
+        $this->quoteReader = $quoteReader;
         $this->quoteItemMapper = $quoteItemMapper;
     }
 
@@ -59,7 +59,7 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
             ->requireCustomerReference()
             ->requireCartItem();
 
-        $quoteResponseTransfer = $this->cartReader->findQuoteByUuid(
+        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
             $this->quoteItemMapper->mapRestCartItemRequestTransferToQuoteTransfer($restCartItemRequestTransfer)
         );
 

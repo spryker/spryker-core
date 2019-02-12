@@ -34,7 +34,7 @@ class PriceFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidatePriceModeInQuoteWithEmptyPriceMode()
+    public function testValidatePriceModeInQuoteWithEmptyPriceMode(): void
     {
         $quoteTransfer = new QuoteTransfer();
 

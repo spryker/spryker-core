@@ -103,7 +103,7 @@ class PersistQuoteTest extends Unit
     /**
      * @return void
      */
-    public function testPersistQuoteWithValidationEmptyStore()
+    public function testPersistQuoteWithValidationEmptyStore(): void
     {
         $quoteTransfer = new QuoteTransfer();
 
