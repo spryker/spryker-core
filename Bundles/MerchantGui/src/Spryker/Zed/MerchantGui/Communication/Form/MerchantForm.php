@@ -207,7 +207,7 @@ class MerchantForm extends AbstractType
     {
         $builder->add(static::FIELD_CONTACT_PERSON_PHONE, TextType::class, [
             'label' => static::LABEL_CONTACT_PERSON_PHONE,
-            'constraints' => $this->getNumberTextFieldConstraints(),
+            'constraints' => $this->getPhoneFieldConstraints(),
         ]);
 
         return $this;
@@ -246,12 +246,11 @@ class MerchantForm extends AbstractType
     /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    protected function getNumberTextFieldConstraints(): array
+    protected function getPhoneFieldConstraints(): array
     {
         return [
             new Required(),
             new NotBlank(),
-            new Type(['type' => 'numeric']),
             new Length(['max' => 255]),
         ];
     }
