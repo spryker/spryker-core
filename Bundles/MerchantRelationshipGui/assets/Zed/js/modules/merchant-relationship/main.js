@@ -5,7 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
 var merchantRelationshipTable = require('./merchant-relationship-table');
 
 $(document).ready(function() {

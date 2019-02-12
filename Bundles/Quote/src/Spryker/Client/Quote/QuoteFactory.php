@@ -102,7 +102,7 @@ class QuoteFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated use getCurrencyClient instead due to CurrencyPlugin is deprecated.
+     * @deprecated Use getCurrencyClient() instead due to CurrencyPlugin is deprecated.
      *
      * @return \Spryker\Client\Currency\Plugin\CurrencyPluginInterface
      */

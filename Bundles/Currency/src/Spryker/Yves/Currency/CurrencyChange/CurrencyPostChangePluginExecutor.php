@@ -12,7 +12,7 @@ use Spryker\Yves\Currency\Dependency\Client\CurrencyToMessengerClientInterface;
 use Spryker\Yves\Currency\Dependency\Client\CurrencyToZedRequestClientInterface;
 
 /**
- * @deprecated use \Spryker\Client\Currency\CurrencyChange\CurrencyPostChangePluginExecutor instead
+ * @deprecated Use \Spryker\Client\Currency\CurrencyChange\CurrencyPostChangePluginExecutor instead.
  */
 class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecutorInterface
 {
@@ -80,7 +80,7 @@ class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecut
      */
     protected function addErrorMessages()
     {
-        foreach ($this->zedRequestClient->getLastResponseErrorMessages() as $messageTransfer) {
+        foreach ($this->zedRequestClient->getResponsesErrorMessages() as $messageTransfer) {
             $this->messengerClient->addErrorMessage($messageTransfer->getValue());
         }
     }
