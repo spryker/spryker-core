@@ -8,11 +8,11 @@
 namespace Spryker\Zed\ProductCategory\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductCategory\Communication\Form\AssignForm;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductTable;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
 /**
