@@ -71,7 +71,7 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
     }
 
     /**
-     * @deprecated This is added only for BC.
+     * @deprecated This is added only for BC. Use `ZedNavigationTwigPlugin::addTwigFunctions()` instead. Also use `navigation()` and `breadcrumb()` functions in twig instead of corespondent twig global variables.
      *
      * @param \Twig\Environment $twig
      *
