@@ -103,6 +103,28 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return array|string
+     */
+    public function getSessionHandlerRedisParametersZed()
+    {
+        $connectionParameters = $this->get(SessionConstants::ZED_SESSION_REDIS_CONFIGURATION, []);
+
+        if ($connectionParameters) {
+            return $connectionParameters;
+        }
+
+        return $this->getSessionHandlerRedisDataSourceNameZed();
+    }
+
+    /**
+     * @return array
+     */
+    public function getSessionHandlerRedisOptionsZed(): array
+    {
+        return $this->get(SessionConstants::ZED_SESSION_REDIS_OPTIONS, []);
+    }
+
+    /**
      * @return string
      */
     public function getSessionHandlerRedisDataSourceNameZed()
@@ -180,6 +202,28 @@ class SessionConfig extends AbstractBundleConfig
             $this->get(SessionConstants::YVES_SESSION_REDIS_DATABASE, static::DEFAULT_REDIS_DATABASE),
             $this->get(SessionConstants::YVES_SESSION_REDIS_PASSWORD, false)
         );
+    }
+
+    /**
+     * @return array|string
+     */
+    public function getSessionHandlerRedisParametersYves()
+    {
+        $connectionConfiguration = $this->get(SessionConstants::YVES_SESSION_REDIS_CONFIGURATION, []);
+
+        if ($connectionConfiguration) {
+            return $connectionConfiguration;
+        }
+
+        return $this->getSessionHandlerRedisDataSourceNameYves();
+    }
+
+    /**
+     * @return array
+     */
+    public function getSessionHandlerRedisOptionsYves(): array
+    {
+        return $this->get(SessionConstants::YVES_SESSION_REDIS_OPTIONS, []);
     }
 
     /**

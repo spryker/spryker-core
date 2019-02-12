@@ -69,47 +69,51 @@ abstract class SessionFactory
 
     /**
      * @param string $savePath
+     * @param array $options
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedis
      */
-    public function registerRedisSessionHandler($savePath)
+    public function registerRedisSessionHandler($savePath, array $options = [])
     {
-        $handler = $this->createSessionHandlerRedis($savePath);
-        $this->setSessionSaveHandler($this->createSessionHandlerRedis($savePath));
+        $handler = $this->createSessionHandlerRedis($savePath, $options);
+        $this->setSessionSaveHandler($this->createSessionHandlerRedis($savePath, $options));
 
         return $handler;
     }
 
     /**
      * @param string $savePath
+     * @param array $options
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedis
      */
-    public function createSessionHandlerRedis($savePath)
+    public function createSessionHandlerRedis($savePath, array $options = [])
     {
         $lifetime = $this->getSessionLifetime();
 
-        return new SessionHandlerRedis($savePath, $lifetime, $this->getMonitoringService());
+        return new SessionHandlerRedis($savePath, $lifetime, $this->getMonitoringService(), $options);
     }
 
     /**
      * @param string $dsn
+     * @param array $options
      *
      * @return void
      */
-    public function registerRedisLockingSessionHandler($dsn)
+    public function registerRedisLockingSessionHandler($dsn, array $options = [])
     {
-        $this->setSessionSaveHandler($this->createRedisLockingSessionHandler($dsn));
+        $this->setSessionSaveHandler($this->createRedisLockingSessionHandler($dsn, $options));
     }
 
     /**
      * @param string $dsn
+     * @param array $options
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking
      */
-    public function createRedisLockingSessionHandler($dsn)
+    public function createRedisLockingSessionHandler($dsn, array $options = [])
     {
-        $redisClient = $this->createRedisClient($dsn);
+        $redisClient = $this->createRedisClient($dsn, $options);
 
         return new SessionHandlerRedisLocking(
             $redisClient,
@@ -121,12 +125,13 @@ abstract class SessionFactory
 
     /**
      * @param string $dsn
+     * @param array $options
      *
      * @return \Predis\Client
      */
-    public function createRedisClient($dsn)
+    public function createRedisClient($dsn, array $options = [])
     {
-        return new Client($dsn);
+        return new Client($dsn, $options);
     }
 
     /**

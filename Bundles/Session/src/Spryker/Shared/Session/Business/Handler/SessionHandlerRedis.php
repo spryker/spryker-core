@@ -43,15 +43,22 @@ class SessionHandlerRedis implements SessionHandlerInterface
     protected $monitoringService;
 
     /**
+     * @var array
+     */
+    private $connectionOptions;
+
+    /**
      * @param string $savePath
      * @param int $lifetime
      * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
+     * @param array $connectionOptions
      */
-    public function __construct($savePath, $lifetime, SessionToMonitoringServiceInterface $monitoringService)
+    public function __construct($savePath, $lifetime, SessionToMonitoringServiceInterface $monitoringService, array $connectionOptions = [])
     {
         $this->savePath = $savePath;
         $this->lifetime = $lifetime;
         $this->monitoringService = $monitoringService;
+        $this->connectionOptions = $connectionOptions;
     }
 
     /**
@@ -62,7 +69,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
      */
     public function open($savePath, $sessionName)
     {
-        $this->connection = new Client($this->savePath);
+        $this->connection = new Client($this->savePath, $this->connectionOptions);
 
         return $this->connection ? true : false;
     }

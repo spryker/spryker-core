@@ -94,6 +94,20 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return array|string
+     */
+    public function getSessionHandlerRedisParameters()
+    {
+        $connectionParameters = $this->get(SessionConstants::YVES_SESSION_REDIS_CONFIGURATION, []);
+
+        if ($connectionParameters) {
+            return $connectionParameters;
+        }
+
+        return $this->getSessionHandlerRedisDataSourceName();
+    }
+
+    /**
      * @return string
      */
     public function getSessionHandlerRedisDataSourceName()
@@ -105,6 +119,14 @@ class SessionConfig extends AbstractBundleConfig
             $this->get(SessionConstants::YVES_SESSION_REDIS_DATABASE, static::DEFAULT_REDIS_DATABASE),
             $this->get(SessionConstants::YVES_SESSION_REDIS_PASSWORD, false)
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function getSessionHandlerRedisOptions(): array
+    {
+        return $this->get(SessionConstants::YVES_SESSION_REDIS_OPTIONS, []);
     }
 
     /**
