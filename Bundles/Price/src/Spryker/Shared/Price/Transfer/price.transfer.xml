@@ -13,5 +13,10 @@
         <property name="parameters" type="array" />
     </transfer>
 
+    <transfer name="Quote">
+        <property name="store" type="Store" />
+        <property name="priceMode" type="string" />
+    </transfer>
+
 </transfers>
 

@@ -121,6 +121,18 @@ interface CustomerClientInterface
 
     /**
      * Specification:
+     * - Stores provided customer information in without executing of customer session plugins session.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function addCustomerToSession(CustomerTransfer $customerTransfer): CustomerTransfer;
+
+    /**
+     * Specification:
      * - Checks if customer exists in persistent storage by provided email and plain text password.
      * - Stores found customer information in session.
      *

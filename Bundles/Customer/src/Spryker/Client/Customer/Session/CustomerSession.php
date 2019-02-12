@@ -98,6 +98,21 @@ class CustomerSession implements CustomerSessionInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function addCustomerToSession(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        $this->sessionClient->set(
+            self::SESSION_KEY,
+            $customerTransfer
+        );
+
+        return $customerTransfer;
+    }
+
+    /**
      * @return void
      */
     public function markCustomerAsDirty()

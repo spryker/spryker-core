@@ -27,5 +27,19 @@
         <property name="parameters" type="array"/>
     </transfer>
 
+    <transfer name="Quote">
+        <property name="store" type="Store" />
+        <property name="currency" type="Currency" />
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string" />
+        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode" />
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string" />
+    </transfer>
+
 </transfers>
 
