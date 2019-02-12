@@ -96,20 +96,21 @@ class ContentStorage implements ContentStorageInterface
         $localizedContents = $this->getExtractLocalizedContents($contentTransfer);
 
         foreach ($availableLocales as $availableLocale) {
-            $localizedContent = (!empty($localizedContents[$availableLocale->getLocaleName()])) ?
-                $localizedContents[$availableLocale->getLocaleName()] :
-                $localizedContents[static::DEFAULT_LOCALE];
+            $localizedContent = $localizedContents[$availableLocale->getLocaleName()] ?? $localizedContents[static::DEFAULT_LOCALE];
 
             $contentStorageTransfer = new ContentStorageTransfer();
             if (!empty($contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale->getLocaleName()])) {
-                $contentStorageTransfer->fromArray($contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale->getLocaleName()]->toArray());
+                $contentStorageTransfer->fromArray(
+                    $contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale->getLocaleName()]->toArray()
+                );
             }
-            $contentStorageTransfer->setFkContent($contentTransfer->getIdContent());
-            $contentStorageTransfer->setLocale($availableLocale->getLocaleName());
-            $contentStorageTransfer->setData([
-                ContentStorageConfig::TERM_KEY => $contentTransfer->getContentTermKey(),
-                ContentStorageConfig::CONTENT_KEY => json_decode($localizedContent->getParameters(), true),
-            ]);
+
+            $contentStorageTransfer->setFkContent($contentTransfer->getIdContent())
+                ->setLocale($availableLocale->getLocaleName())
+                ->setData([
+                    ContentStorageConfig::TERM_KEY => $contentTransfer->getContentTermKey(),
+                    ContentStorageConfig::CONTENT_KEY => json_decode($localizedContent->getParameters(), true),
+                ]);
 
             $this->contentStorageEntityManager->saveContentStorageEntity($contentStorageTransfer);
         }
