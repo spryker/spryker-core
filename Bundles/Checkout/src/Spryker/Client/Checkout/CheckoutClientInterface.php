@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\Checkout;
 
-use Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 
 interface CheckoutClientInterface
 {
@@ -35,7 +35,7 @@ interface CheckoutClientInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): CanProceedCheckoutResponseTransfer;
+    public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer;
 }

@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\Checkout;
 
-use Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -37,9 +37,9 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): CanProceedCheckoutResponseTransfer
+    public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteProceedCheckoutChecker()

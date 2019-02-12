@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\QuoteApproval\Plugin\Quote;
 
-use Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Client\CheckoutExtension\Dependency\Plugin\QuoteProceedCheckoutCheckPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
@@ -32,23 +32,23 @@ class QuoteApprovalProceedCheckoutCheckPlugin extends AbstractPlugin implements 
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    public function can(QuoteTransfer $quoteTransfer): CanProceedCheckoutResponseTransfer
+    public function can(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
         $canProceedCheckout = !$this->getClient()->isQuoteRequireApproval($quoteTransfer);
 
-        $canProceedCheckoutResponseTransfer = new CanProceedCheckoutResponseTransfer();
-        $canProceedCheckoutResponseTransfer->setIsSuccessful($canProceedCheckout);
+        $quoteValidationResponseTransfer = new QuoteValidationResponseTransfer();
+        $quoteValidationResponseTransfer->setIsSuccessful($canProceedCheckout);
 
         if ($canProceedCheckout) {
-            return $canProceedCheckoutResponseTransfer;
+            return $quoteValidationResponseTransfer;
         }
 
-        $canProceedCheckoutResponseTransfer->addMessage(
+        $quoteValidationResponseTransfer->addMessage(
             (new MessageTransfer())->setValue(static::MESSAGE_CART_REQUIRE_APPROVAL)
         );
 
-        return $canProceedCheckoutResponseTransfer;
+        return $quoteValidationResponseTransfer;
     }
 }
