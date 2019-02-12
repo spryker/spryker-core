@@ -93,7 +93,7 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
             ->validateQuoteApprovalRequest($quoteApprovalRequestTransfer);
 
         if (!$quoteApprovalRequestValidationResponseTransfer->getIsSuccessful()) {
-            return $this->createNotSuccessfullQuoteApprovalResponseTransfer(
+            return $this->createNotSuccessfulQuoteApprovalResponseTransfer(
                 $quoteApprovalRequestValidationResponseTransfer->getMessages()
             );
         }
@@ -117,7 +117,7 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
             ->validateQuoteApprovalRequest($quoteApprovalRequestTransfer);
 
         if (!$quoteApprovalRequestValidationResponseTransfer->getIsSuccessful()) {
-            return $this->createNotSuccessfullQuoteApprovalResponseTransfer(
+            return $this->createNotSuccessfulQuoteApprovalResponseTransfer(
                 $quoteApprovalRequestValidationResponseTransfer->getMessages()
             );
         }
@@ -133,7 +133,7 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    protected function createNotSuccessfullQuoteApprovalResponseTransfer(ArrayObject $messageTransfers): QuoteApprovalResponseTransfer
+    protected function createNotSuccessfulQuoteApprovalResponseTransfer(ArrayObject $messageTransfers): QuoteApprovalResponseTransfer
     {
         return (new QuoteApprovalResponseTransfer())
             ->setMessages($messageTransfers)
