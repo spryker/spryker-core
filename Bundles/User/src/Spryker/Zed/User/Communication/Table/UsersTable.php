@@ -22,6 +22,12 @@ class UsersTable extends AbstractTable
     public const DEACTIVATE_USER_URL = '/user/edit/deactivate-user';
     public const ACTIVATE_USER_URL = '/user/edit/activate-user';
     public const DELETE_USER_URL = '/user/edit/delete';
+
+    /**
+     * @see \Spryker\Zed\User\Communication\Controller\EditController::confirmDeleteAction()
+     */
+    public const CONFIRM_DELETE_USER_URL = '/user/edit/confirm-delete';
+
     public const PARAM_ID_USER = 'id-user';
 
     /**
@@ -154,9 +160,11 @@ class UsersTable extends AbstractTable
 
         $urls[] = $this->createStatusButton($user);
 
-        $urls[] = $this->generateRemoveButton(self::DELETE_USER_URL, 'Delete', [
+        $deleteUrl = Url::generate(static::CONFIRM_DELETE_USER_URL, [
             self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
         ]);
+
+        $urls[] = $this->generateRemoveButton($deleteUrl, 'Delete');
 
         return $urls;
     }
