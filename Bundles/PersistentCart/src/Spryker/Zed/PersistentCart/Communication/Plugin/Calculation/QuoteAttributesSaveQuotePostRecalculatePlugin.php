@@ -8,14 +8,14 @@
 namespace Spryker\Zed\PersistentCart\Communication\Plugin\Calculation;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\CalculationExtension\Dependency\Plugin\PostQuoteRecalculatePluginInterface;
+use Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\PersistentCart\Business\PersistentCartFacade getFacade()
  * @method \Spryker\Zed\PersistentCart\PersistentCartConfig getConfig()
  */
-class QuoteAttributesSavePostQuoteRecalculatePlugin extends AbstractPlugin implements PostQuoteRecalculatePluginInterface
+class QuoteAttributesSaveQuotePostRecalculatePlugin extends AbstractPlugin implements QuotePostRecalculatePluginInterface
 {
     /**
      * {@inheritdoc}

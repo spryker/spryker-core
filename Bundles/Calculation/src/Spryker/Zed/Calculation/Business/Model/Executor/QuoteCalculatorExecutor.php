@@ -19,20 +19,20 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
     protected $quoteCalculators;
 
     /**
-     * @var \Spryker\Zed\CalculationExtension\Dependency\Plugin\PostQuoteRecalculatePluginInterface[]
+     * @var \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginInterface[]
      */
-    protected $postQuoteRecalculatePlugins;
+    protected $quotePostRecalculatePlugins;
 
     /**
      * @param \Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[] $quoteCalculators
-     * @param \Spryker\Zed\CalculationExtension\Dependency\Plugin\PostQuoteRecalculatePluginInterface[] $postQuoteRecalculatePlugins
+     * @param \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginInterface[] $quotePostRecalculatePlugins
      */
     public function __construct(
         array $quoteCalculators,
-        array $postQuoteRecalculatePlugins
+        array $quotePostRecalculatePlugins
     ) {
         $this->quoteCalculators = $quoteCalculators;
-        $this->postQuoteRecalculatePlugins = $postQuoteRecalculatePlugins;
+        $this->quotePostRecalculatePlugins = $quotePostRecalculatePlugins;
     }
 
     /**
@@ -57,7 +57,7 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
         }
 
         $quoteTransfer = $this->mapQuoteTransfer($quoteTransfer, $calculableObjectTransfer);
-        $quoteTransfer = $this->executePostQuoteRecalculatePlugins($quoteTransfer);
+        $quoteTransfer = $this->executeQuotePostRecalculatePlugins($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -113,10 +113,10 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function executePostQuoteRecalculatePlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function executeQuotePostRecalculatePlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        foreach ($this->postQuoteRecalculatePlugins as $postQuoteRecalculatePlugin) {
-            $quoteTransfer = $postQuoteRecalculatePlugin->execute($quoteTransfer);
+        foreach ($this->quotePostRecalculatePlugins as $quotePostRecalculatePlugin) {
+            $quoteTransfer = $quotePostRecalculatePlugin->execute($quoteTransfer);
         }
 
         return $quoteTransfer;

@@ -41,7 +41,7 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
             return new CalculationToUtilTextBridge($container->getLocator()->utilText()->service());
         };
 
-        $container = $this->addPostQuoteRecalculatePlugins($container);
+        $container = $this->addQuotePostRecalculatePlugins($container);
 
         return $container;
     }
@@ -51,10 +51,10 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPostQuoteRecalculatePlugins(Container $container): Container
+    protected function addQuotePostRecalculatePlugins(Container $container): Container
     {
         $container[static::PLUGINS_POST_QUOTE_RECALCULATE] = function (Container $container) {
-            return $this->getPostQuoteRecalculatePlugins();
+            return $this->getQuotePostRecalculatePlugins();
         };
 
         return $container;
@@ -81,9 +81,9 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\PostQuoteRecalculatePluginInterface[]
+     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginInterface[]
      */
-    protected function getPostQuoteRecalculatePlugins(): array
+    protected function getQuotePostRecalculatePlugins(): array
     {
         return [];
     }

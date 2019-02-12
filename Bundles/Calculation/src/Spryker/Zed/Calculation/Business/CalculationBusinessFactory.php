@@ -51,7 +51,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteCalculatorExecutor(
             $this->getProvidedQuoteCalculatorPluginStack(),
-            $this->getPostQuoteRecalculatePlugins()
+            $this->getQuotePostRecalculatePlugins()
         );
     }
 
@@ -331,9 +331,9 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\PostQuoteRecalculatePluginInterface[]
+     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginInterface[]
      */
-    public function getPostQuoteRecalculatePlugins(): array
+    public function getQuotePostRecalculatePlugins(): array
     {
         return $this->getProvidedDependency(CalculationDependencyProvider::PLUGINS_POST_QUOTE_RECALCULATE);
     }

@@ -9,7 +9,7 @@ namespace Spryker\Zed\CalculationExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface PostQuoteRecalculatePluginInterface
+interface QuotePostRecalculatePluginInterface
 {
     /**
      * Specification:
