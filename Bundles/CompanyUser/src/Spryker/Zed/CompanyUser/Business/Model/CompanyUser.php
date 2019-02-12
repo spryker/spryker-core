@@ -394,4 +394,20 @@ class CompanyUser implements CompanyUserInterface
 
         return (new CompanyUserResponseTransfer())->setIsSuccessful(true);
     }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserById(int $idCompanyUser): ?CompanyUserTransfer
+    {
+        $companyUserTransfer = $this->companyUserRepository->findCompanyUserById($idCompanyUser);
+
+        if ($companyUserTransfer !== null) {
+            return $this->companyUserPluginExecutor->executeHydrationPlugins($companyUserTransfer);
+        }
+
+        return null;
+    }
 }

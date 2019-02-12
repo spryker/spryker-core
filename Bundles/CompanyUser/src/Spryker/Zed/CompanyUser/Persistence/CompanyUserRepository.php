@@ -285,4 +285,30 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
 
         return $query->count();
     }
+
+    /**
+     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
+     *
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserById(int $idCompanyUser): ?CompanyUserTransfer
+    {
+        $companyUserEntity = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->joinWithCustomer()
+            ->leftJoinWithCompany()
+            ->filterByIdCompanyUser($idCompanyUser)
+            ->findOne();
+
+        if (!$companyUserEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCompanyUserMapper()
+            ->mapCompanyUserEntityToCompanyUserTransfer($companyUserEntity);
+    }
 }
