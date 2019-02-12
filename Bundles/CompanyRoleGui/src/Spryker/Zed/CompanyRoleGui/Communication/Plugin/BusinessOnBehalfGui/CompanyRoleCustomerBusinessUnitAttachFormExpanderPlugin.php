@@ -28,13 +28,19 @@ class CompanyRoleCustomerBusinessUnitAttachFormExpanderPlugin extends AbstractPl
      */
     public function expand(FormBuilderInterface $builder): FormBuilderInterface
     {
+        $companyUserTransfer = $builder->getData();
+
+        if (!$companyUserTransfer->getCompany()) {
+            return $builder;
+        }
+
         $companyUserRoleByCompanyForm = $this->getFactory()
             ->createCompanyUserRoleByCompanyForm();
 
         $dataProvider = $this->getFactory()
             ->createCompanyUserRoleFormDataProviderByCompany();
 
-        $companyUserTransfer = $dataProvider->getData($builder->getData());
+        $companyUserTransfer = $dataProvider->getData($companyUserTransfer);
         $builder->setData($companyUserTransfer);
 
         $companyUserRoleByCompanyForm->buildForm(
