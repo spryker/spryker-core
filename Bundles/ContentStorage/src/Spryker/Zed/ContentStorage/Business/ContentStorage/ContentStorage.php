@@ -126,10 +126,7 @@ class ContentStorage implements ContentStorageInterface
         $localizedContents = [];
 
         foreach ($contentTransfer->getLocalizedContents() as $contentLocalized) {
-            $localeKey = ($contentLocalized->getFkLocale() === null) ?
-                static::DEFAULT_LOCALE :
-                $contentLocalized->getLocaleName();
-
+            $localeKey = $contentLocalized->getFkLocale() ? $contentLocalized->getLocaleName() : static::DEFAULT_LOCALE;
             $localizedContents[$localeKey] = $contentLocalized;
         }
 
