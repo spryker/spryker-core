@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Kernel\PermissionAwareTrait;
 
@@ -164,5 +165,22 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
             ->getCustomer();
 
         return $customerTransfer ? $customerTransfer->getCompanyUserTransfer() : null;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getActiveCompanyUsersByCustomerReference(
+        CustomerTransfer $customerTransfer
+    ): CompanyUserCollectionTransfer {
+        return $this->getFactory()
+            ->createZedCompanyUserStub()
+            ->getActiveCompanyUsersByCustomerReference($customerTransfer);
     }
 }

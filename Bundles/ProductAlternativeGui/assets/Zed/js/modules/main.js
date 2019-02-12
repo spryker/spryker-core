@@ -5,8 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
-
 $(document).ready(function() {
     jQuery('#product_concrete_form_edit_alternative_products').select2({
       ajax: {

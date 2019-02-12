@@ -42,7 +42,7 @@ class DeleteController extends AbstractController
                 ->getFacade()
                 ->delete($data['fk_category']);
 
-            return $this->redirectResponse('/category/root');
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
 
         return $this->viewResponse([

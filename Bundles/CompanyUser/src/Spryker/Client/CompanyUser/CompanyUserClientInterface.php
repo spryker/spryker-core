@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CompanyUserClientInterface
 {
@@ -112,4 +113,19 @@ interface CompanyUserClientInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
     public function findCompanyUser(): ?CompanyUserTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves active company users collection by customer reference.
+     * - Checks activity flag in a related company and company user.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getActiveCompanyUsersByCustomerReference(
+        CustomerTransfer $customerTransfer
+    ): CompanyUserCollectionTransfer;
 }

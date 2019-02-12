@@ -93,4 +93,12 @@ interface PriceProductRepositoryInterface
      * @return int|null
      */
     public function findIdPriceProductForProductConcrete(PriceProductTransfer $priceProductTransfer): ?int;
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    public function findProductAbstractPricesByIdInAndCriteria(array $productAbstractIds, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): ObjectCollection;
 }
