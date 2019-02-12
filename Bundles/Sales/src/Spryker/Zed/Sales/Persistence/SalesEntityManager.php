@@ -60,8 +60,11 @@ class SalesEntityManager extends AbstractEntityManager implements SalesEntityMan
     public function updateSalesOrderAddress(AddressTransfer $addressTransfer): AddressTransfer
     {
         $salesOrderAddressEntity = $this->getFactory()
-            ->createSalesOrderAddressMapper()
-            ->mapAddressTransferToSalesOrderAddressEntity($addressTransfer);
+            ->createSalesOrderAddressQuery()
+            ->filterByIdSalesOrderAddress($addressTransfer->getIdSalesOrderAddress())
+            ->findOne();
+
+        $salesOrderAddressEntity->fromArray($addressTransfer->toArray());
 
         $salesOrderAddressEntity->save();
 

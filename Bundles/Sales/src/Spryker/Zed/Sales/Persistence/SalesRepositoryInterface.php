@@ -24,5 +24,5 @@ interface SalesRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findOrderAddressByIdOrderAddress(int $idOrderAddress): AddressTransfer;
+    public function findOrderAddressByIdOrderAddress(int $idOrderAddress): ?AddressTransfer;
 }
