@@ -281,6 +281,20 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
+     * - Returns concrete product with attributes and localized attributes.
+     * - Throws exception if the concrete product is not found.
+     * - Triggers `ProductEvents::PRODUCT_CONCRETE_READ` event but doesn't trigger READ plugins.
+     *
+     * @api
+     *
+     * @param string $productConcreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getRawProductConcreteBySku(string $productConcreteSku): ProductConcreteTransfer;
+
+    /**
+     * Specification:
      * - Returns concrete product collection.
      * - Triggers READ plugins.
      *
