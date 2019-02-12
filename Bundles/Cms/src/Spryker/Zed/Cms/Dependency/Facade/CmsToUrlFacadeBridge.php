@@ -84,9 +84,9 @@ class CmsToUrlFacadeBridge implements CmsToUrlFacadeInterface
      *
      * @return bool
      */
-    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer)
+    public function hasUrlOrRedirectedUrlCaseInsensitive(UrlTransfer $urlTransfer)
     {
-        return $this->urlFacade->hasUrlOrRedirectedUrl($urlTransfer);
+        return $this->urlFacade->hasUrlOrRedirectedUrlCaseInsensitive($urlTransfer);
     }
 
     /**

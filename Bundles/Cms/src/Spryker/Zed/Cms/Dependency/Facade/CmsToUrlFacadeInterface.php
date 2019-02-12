@@ -56,7 +56,7 @@ interface CmsToUrlFacadeInterface
      *
      * @return bool
      */
-    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer);
+    public function hasUrlOrRedirectedUrlCaseInsensitive(UrlTransfer $urlTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer|\Generated\Shared\Transfer\RedirectTransfer $urlRedirectTransfer Deprecated: RedirectTransfer format is accepted for BC reasons only.
