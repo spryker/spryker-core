@@ -8,7 +8,9 @@
 namespace Spryker\Zed\CompanyBusinessUnit\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer;
+use Orm\Zed\Company\Persistence\SpyCompany;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit;
 
 class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
@@ -58,8 +60,30 @@ class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
         SpyCompanyBusinessUnit $companyBusinessUnitEntity,
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitTransfer {
-        return $companyBusinessUnitTransfer->fromArray(
+        $companyBusinessUnitTransfer->fromArray(
             $companyBusinessUnitEntity->toArray(),
+            true
+        );
+        $companyBusinessUnitTransfer->setCompany($this->mapCompanyEntityToCompanyTransfer(
+            $companyBusinessUnitEntity->getCompany(),
+            new CompanyTransfer()
+        ));
+
+        return $companyBusinessUnitTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Company\Persistence\SpyCompany $companyEntity
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    protected function mapCompanyEntityToCompanyTransfer(
+        SpyCompany $companyEntity,
+        CompanyTransfer $companyTransfer
+    ): CompanyTransfer {
+        return $companyTransfer->fromArray(
+            $companyEntity->toArray(),
             true
         );
     }
