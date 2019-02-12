@@ -220,7 +220,7 @@ interface CompanyUserFacadeInterface
      *
      * @api
      *
-     * {@internal will work if uuid field is provided.}
+     * {@internal will work if uuid field is provided by another module.}
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
@@ -241,7 +241,7 @@ interface CompanyUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    public function findActiveCompanyUsers(array $companyUserIds): array;
+    public function findActiveCompanyUsersByIds(array $companyUserIds): array;
 
     /**
      * Specification

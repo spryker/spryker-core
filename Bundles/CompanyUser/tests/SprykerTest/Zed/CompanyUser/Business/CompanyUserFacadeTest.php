@@ -426,7 +426,7 @@ class CompanyUserFacadeTest extends Test
         ];
 
         //Act
-        $activeCompanyUsers = $this->getFacade()->findActiveCompanyUsers($companyUserIds);
+        $activeCompanyUsers = $this->getFacade()->findActiveCompanyUsersByIds($companyUserIds);
 
         //Assert
         $this->assertCount(1, $activeCompanyUsers);

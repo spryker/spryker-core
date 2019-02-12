@@ -14,7 +14,7 @@ interface CompanyUserStorageToCompanyUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    public function findActiveCompanyUsers(array $companyUserIds): array;
+    public function findActiveCompanyUsersByIds(array $companyUserIds): array;
 
     /**
      * @param int[] $companyIds

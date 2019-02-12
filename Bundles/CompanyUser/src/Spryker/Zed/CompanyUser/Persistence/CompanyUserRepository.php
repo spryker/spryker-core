@@ -64,7 +64,6 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->filterByFkCustomer($idCustomer)
             ->joinCompany()
             ->useCompanyQuery()
-                ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
                 ->filterByIsActive(true)
             ->endUse();
 
@@ -96,7 +95,6 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
                 ->filterByCustomerReference($customerReference)
             ->endUse()
             ->useCompanyQuery()
-                ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
                 ->filterByIsActive(true)
             ->endUse()
             ->joinWithCompany();
@@ -326,7 +324,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    public function findActiveCompanyUsers(array $companyUserIds): array
+    public function findActiveCompanyUsersByIds(array $companyUserIds): array
     {
         $query = $this->getFactory()
             ->createCompanyUserQuery()
@@ -362,7 +360,11 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     {
         $query = $this->getFactory()
             ->createCompanyUserQuery()
-            ->filterByFkCompany_In($companyIds)
+            ->useCompanyQuery()
+                ->filterByIdCompany_In($companyIds)
+                ->filterByIsActive(true)
+                ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
+            ->endUse()
             ->filterByIsActive(true)
             ->useCustomerQuery()
                 ->filterByAnonymizedAt(null, Criteria::ISNULL)

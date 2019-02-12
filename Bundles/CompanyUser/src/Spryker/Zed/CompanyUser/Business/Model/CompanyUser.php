@@ -203,7 +203,7 @@ class CompanyUser implements CompanyUserInterface
      */
     public function findActiveCompanyUsers(array $companyUserIds): array
     {
-        return $this->companyUserRepository->findActiveCompanyUsers($companyUserIds);
+        return $this->companyUserRepository->findActiveCompanyUsersByIds($companyUserIds);
     }
 
     /**
