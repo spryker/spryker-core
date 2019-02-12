@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Permission\PermissionExecutor;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface;
@@ -110,15 +111,16 @@ class PermissionExecutor implements PermissionExecutorInterface
     protected function findPermissions($permissionKey): PermissionCollectionTransfer
     {
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
+        $permissions = [];
 
         foreach ($this->permissionStoragePlugins as $permissionStoragePlugin) {
             foreach ($permissionStoragePlugin->getPermissionCollection()->getPermissions() as $permission) {
                 if ($permission->getKey() === $permissionKey) {
-                    $permissionCollectionTransfer->addPermission($permission);
+                    $permissions[$permissionKey] = $permission;
                 }
             }
         }
 
-        return $permissionCollectionTransfer;
+        return $permissionCollectionTransfer->setPermissions(new ArrayObject($permissions));
     }
 }
