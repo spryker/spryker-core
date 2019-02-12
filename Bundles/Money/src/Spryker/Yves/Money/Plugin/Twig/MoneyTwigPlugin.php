@@ -24,6 +24,8 @@ class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected const FILTER_NAME_MONEY = 'money';
     protected const FILTER_NAME_MONEY_RAW = 'moneyRaw';
 
+    protected const WRONG_MONEY_TYPE_ERROR_MESSAGE = 'Argument 1 passed to MoneyTwigPlugin::getMoneyTransfer() must be of the type integer, string or float, %s given.';
+
     /**
      * {@inheritdoc}
      *
@@ -119,6 +121,6 @@ class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
             return $moneyBuilder->fromFloat($money, $isoCode);
         }
 
-        throw new WrongMoneyValueTypeException();
+        throw new WrongMoneyValueTypeException(sprintf(static::WRONG_MONEY_TYPE_ERROR_MESSAGE, gettype($money)));
     }
 }
