@@ -19,7 +19,7 @@ class QuoteApprovalReader implements QuoteApprovalReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer|null
      */
-    public function getWaitingQuoteApprovalByIdCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): ?QuoteApprovalTransfer
+    public function findWaitingQuoteApprovalByIdCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): ?QuoteApprovalTransfer
     {
         foreach ($quoteTransfer->getQuoteApprovals() as $quoteApprovalTransfer) {
             if ($quoteApprovalTransfer->getApprover()->getIdCompanyUser() !== $idCompanyUser) {

@@ -9,8 +9,6 @@ namespace Spryker\Zed\QuoteApproval\Business;
 
 use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProvider;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface;
-use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculator;
-use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLocker;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface;
@@ -26,6 +24,8 @@ use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalWriter;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalWriterInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApproverListProvider;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApproverListProviderInterface;
+use Spryker\Zed\QuoteApproval\Business\QuoteStatus\QuoteStatusCalculator;
+use Spryker\Zed\QuoteApproval\Business\QuoteStatus\QuoteStatusCalculatorInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyRoleFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCustomerFacadeInterface;
@@ -100,7 +100,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteStatus\QuoteStatusCalculatorInterface
      */
     public function createQuoteStatusCalculator(): QuoteStatusCalculatorInterface
     {

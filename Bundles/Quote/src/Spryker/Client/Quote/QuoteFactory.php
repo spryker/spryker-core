@@ -9,13 +9,13 @@ namespace Spryker\Client\Quote;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface;
+use Spryker\Client\Quote\QuoteLock\QuoteLockStatusChecker;
+use Spryker\Client\Quote\QuoteLock\QuoteLockStatusCheckerInterface;
 use Spryker\Client\Quote\Session\QuoteSession;
 use Spryker\Client\Quote\StorageStrategy\DatabaseStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\SessionStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\StorageStrategyProvider;
 use Spryker\Client\Quote\Zed\QuoteStub;
-use Spryker\Shared\Quote\QuoteLock\QuoteLockStatusChecker;
-use Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface;
 
 /**
  * @method \Spryker\Client\Quote\QuoteConfig getConfig()
@@ -90,7 +90,7 @@ class QuoteFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface
+     * @return \Spryker\Client\Quote\QuoteLock\QuoteLockStatusCheckerInterface
      */
     public function createQuoteLockStatusChecker(): QuoteLockStatusCheckerInterface
     {

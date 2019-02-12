@@ -15,7 +15,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
  * @method \Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacadeInterface getFacade()
  * @method \Spryker\Zed\QuoteApproval\QuoteApprovalConfig getConfig()
  */
-class RepoveQuoteApprovalsBeforeQuoteDeletePlugin extends AbstractPlugin implements QuoteWritePluginInterface
+class RemoveQuoteApprovalsBeforeQuoteDeletePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     /**
      * Specification:

@@ -20,7 +20,7 @@ class QuoteApprovalExpanderPlugin extends AbstractPlugin implements QuoteExpande
 {
     /**
      * {@inheritdoc}
-     * - Expads quote with approvals.
+     * - Expands quote with approvals.
      *
      * @api
      *

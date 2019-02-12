@@ -113,7 +113,9 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCustomerFacade(Container $container): Container
     {
         $container[static::FACADE_CUSTOMER] = function (Container $container) {
-            return new QuoteApprovalToCustomerFacadeBridge($container->getLocator()->customer()->facade());
+            return new QuoteApprovalToCustomerFacadeBridge(
+                $container->getLocator()->customer()->facade()
+            );
         };
 
         return $container;

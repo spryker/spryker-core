@@ -16,17 +16,17 @@ use Spryker\Client\QuoteApproval\Quote\QuoteStatusChecker;
 use Spryker\Client\QuoteApproval\Quote\QuoteStatusCheckerInterface;
 use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReader;
 use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReaderInterface;
+use Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculator;
+use Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStub;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProvider;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface;
-use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculator;
-use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
 
 class QuoteApprovalFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface
+     * @return \Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface
      */
     public function createQuoteStatusCalculator(): QuoteStatusCalculatorInterface
     {

@@ -81,17 +81,17 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
     {
         $quoteApprovalResponseTransfer = new QuoteApprovalResponseTransfer();
 
-        $quoteApprovalRequestValidationReponse = $this->quoteApprovalRequestValidator
+        $quoteApprovalRequestValidationResponse = $this->quoteApprovalRequestValidator
             ->validateQuoteApprovalRemoveRequest($quoteApprovalRemoveRequestTransfer);
 
-        if (!$quoteApprovalRequestValidationReponse->getIsSuccessful()) {
+        if (!$quoteApprovalRequestValidationResponse->getIsSuccessful()) {
             $quoteApprovalResponseTransfer->setIsSuccessful(false)
                 ->addMessage($this->createMessageTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED));
 
             return $quoteApprovalResponseTransfer;
         }
 
-        $quoteTransfer = $quoteApprovalRequestValidationReponse->getQuote();
+        $quoteTransfer = $quoteApprovalRequestValidationResponse->getQuote();
 
         $this->quoteLocker->unlockQuote($quoteTransfer);
 

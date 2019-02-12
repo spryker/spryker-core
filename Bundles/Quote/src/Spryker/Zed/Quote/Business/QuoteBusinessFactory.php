@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Quote\Business;
 
-use Spryker\Shared\Quote\QuoteLock\QuoteLockStatusChecker;
-use Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Quote\Business\GuestQuote\GuestQuoteDeleter;
 use Spryker\Zed\Quote\Business\GuestQuote\GuestQuoteDeleterInterface;
@@ -22,6 +20,8 @@ use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutor;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutorInterface;
 use Spryker\Zed\Quote\Business\Quote\QuoteLocker;
 use Spryker\Zed\Quote\Business\Quote\QuoteLockerInterface;
+use Spryker\Zed\Quote\Business\QuoteLock\QuoteLockStatusChecker;
+use Spryker\Zed\Quote\Business\QuoteLock\QuoteLockStatusCheckerInterface;
 use Spryker\Zed\Quote\QuoteConfig;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
 
@@ -59,7 +59,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface
+     * @return \Spryker\Zed\Quote\Business\QuoteLock\QuoteLockStatusCheckerInterface
      */
     public function createQuoteLockStatusChecker(): QuoteLockStatusCheckerInterface
     {

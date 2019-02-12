@@ -87,16 +87,16 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
      */
     protected function executeCreateQuoteApprovalTransaction(QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer): QuoteApprovalResponseTransfer
     {
-        $quoteApprovalRequestValidationReponseTransfer = $this->quoteApprovalRequestValidator
+        $quoteApprovalRequestValidationResponseTransfer = $this->quoteApprovalRequestValidator
             ->validateQuoteApprovalCreateRequest($quoteApprovalCreateRequestTransfer);
 
-        if (!$quoteApprovalRequestValidationReponseTransfer->getIsSuccessful()) {
+        if (!$quoteApprovalRequestValidationResponseTransfer->getIsSuccessful()) {
             return $this->createNotSuccessfulQuoteApprovalResponseTransfer(
-                $quoteApprovalRequestValidationReponseTransfer->getMessages()
+                $quoteApprovalRequestValidationResponseTransfer->getMessages()
             );
         }
 
-        $quoteTransfer = $quoteApprovalRequestValidationReponseTransfer->getQuote();
+        $quoteTransfer = $quoteApprovalRequestValidationResponseTransfer->getQuote();
         $quoteApprovalTransfer = $this->createQuoteApprovalTransfer(
             $quoteTransfer->getIdQuote(),
             $quoteApprovalCreateRequestTransfer->getApproverCompanyUserId()

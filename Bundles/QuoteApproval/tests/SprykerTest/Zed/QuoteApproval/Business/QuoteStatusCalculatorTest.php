@@ -5,21 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Shared\QuoteApproval;
+namespace SprykerTest\Zed\QuoteApproval\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
-use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculator;
-use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
+use Spryker\Zed\QuoteApproval\Business\QuoteStatus\QuoteStatusCalculator;
+use Spryker\Zed\QuoteApproval\Business\QuoteStatus\QuoteStatusCalculatorInterface;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
- * @group Shared
+ * @group Zed
  * @group QuoteApproval
+ * @group Business
  * @group QuoteStatusCalculatorTest
  * Add your own group annotations below this line
  */
@@ -160,7 +161,7 @@ class QuoteStatusCalculatorTest extends Unit
     }
 
     /**
-     * @return \Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteStatus\QuoteStatusCalculatorInterface
      */
     protected function createQuoteStatusCalculator(): QuoteStatusCalculatorInterface
     {

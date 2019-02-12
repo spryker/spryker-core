@@ -9,10 +9,10 @@ namespace Spryker\Client\Quote\StorageStrategy;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface;
+use Spryker\Client\Quote\QuoteLock\QuoteLockStatusCheckerInterface;
 use Spryker\Client\Quote\Session\QuoteSessionInterface;
 use Spryker\Client\Quote\Zed\QuoteStubInterface;
 use Spryker\Shared\Quote\QuoteConfig;
-use Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface;
 
 class DatabaseStorageStrategy implements StorageStrategyInterface
 {
@@ -32,7 +32,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     protected $quoteSession;
 
     /**
-     * @var \Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface
+     * @var \Spryker\Client\Quote\QuoteLock\QuoteLockStatusCheckerInterface
      */
     protected $quoteLockStatusChecker;
 
@@ -40,7 +40,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
      * @param \Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface $customerClient
      * @param \Spryker\Client\Quote\Zed\QuoteStubInterface $quoteStub
      * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
-     * @param \Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface $quoteLockStatusChecker
+     * @param \Spryker\Client\Quote\QuoteLock\QuoteLockStatusCheckerInterface $quoteLockStatusChecker
      */
     public function __construct(
         QuoteToCustomerClientInterface $customerClient,

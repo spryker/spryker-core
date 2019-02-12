@@ -17,8 +17,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
-use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
+use Spryker\Zed\QuoteApproval\Business\QuoteStatus\QuoteStatusCalculatorInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface;
 use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface;
@@ -37,7 +37,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     protected const GLOSSARY_KEY_ONLY_QUOTE_OWNER_CAN_SEND_APPROVAL_REQUEST = 'quote_approval.create.only_quote_owner_can_send_request';
     protected const GLOSSARY_KEY_DO_NOT_HAVE_PERMISSION_TO_CANCEL_APPROVAL_REQUEST = 'quote_approval.cancel.do_not_have_permission';
     /**
-     * @var \Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface
+     * @var \Spryker\Zed\QuoteApproval\Business\QuoteStatus\QuoteStatusCalculatorInterface
      */
     protected $quoteStatusCalculator;
 
@@ -63,7 +63,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
 
     /**
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface $quoteFacade
-     * @param \Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface $quoteStatusCalculator
+     * @param \Spryker\Zed\QuoteApproval\Business\QuoteStatus\QuoteStatusCalculatorInterface $quoteStatusCalculator
      * @param \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface $quoteApprovalRepository
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface $companyUserFacade
      * @param \Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface $permissionContextProvider
@@ -143,7 +143,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
             ->findQuoteApprovalById($quoteApprovalRequestTransfer->getIdQuoteApproval());
         $quoteTransfer = $this->findQuoteByIdQuoteApproval($quoteApprovalTransfer->getIdQuoteApproval());
 
-        if ($this->isQuoteApprovalReququestCanceled($quoteTransfer)) {
+        if ($this->isQuoteApprovalRequestCanceled($quoteTransfer)) {
             return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_QUOTE_ALREADY_CANCELLED);
         }
 
@@ -298,7 +298,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
      *
      * @return bool
      */
-    protected function isQuoteApprovalReququestCanceled(QuoteTransfer $quoteTransfer): bool
+    protected function isQuoteApprovalRequestCanceled(QuoteTransfer $quoteTransfer): bool
     {
         return $this->quoteStatusCalculator->calculateQuoteStatus($quoteTransfer) === null;
     }

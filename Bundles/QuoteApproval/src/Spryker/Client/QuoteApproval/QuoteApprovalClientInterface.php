@@ -23,7 +23,7 @@ interface QuoteApprovalClientInterface
      * - Calculates approval status for quote.
      * - Returns status `Approved` if at least one approval request has status `Approved`.
      * - Returns status `Waiting` if at least one approval request in status `Waiting` and there is no `Approved` requests.
-     * - Returns status `Desclined` if all all approval requests are declined.
+     * - Returns status `Declined` if all all approval requests are declined.
      *
      * @api
      *
@@ -84,9 +84,9 @@ interface QuoteApprovalClientInterface
     /**
      * Specification:
      * - Returns false if customer does't have PlaceOrderPermissionPlugin permission assigned.
-     * - Returns false if excecuting of PlaceOrderPermissionPlugin permission returns true.
+     * - Returns false if executing of PlaceOrderPermissionPlugin permission returns true.
      * - Returns false if quote approval status is `approved`.
-     * - Returns true othervise.
+     * - Returns true otherwise.
      *
      * @api
      *
@@ -194,7 +194,19 @@ interface QuoteApprovalClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer|null
      */
-    public function getWaitingQuoteApprovalByIdCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): ?QuoteApprovalTransfer;
+    public function findWaitingQuoteApprovalByIdCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): ?QuoteApprovalTransfer;
+
+    /**
+     * Specification:
+     * - Returns true if customer has `ApproveQuotePermissionPlugin` and it's execution returns true.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteCanBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool;
 
     /**
      * Specification:

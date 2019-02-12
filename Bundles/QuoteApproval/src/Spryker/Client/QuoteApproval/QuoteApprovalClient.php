@@ -210,11 +210,27 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer|null
      */
-    public function getWaitingQuoteApprovalByIdCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): ?QuoteApprovalTransfer
+    public function findWaitingQuoteApprovalByIdCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): ?QuoteApprovalTransfer
     {
         return $this->getFactory()
             ->createQuoteApprovalReader()
-            ->getWaitingQuoteApprovalByIdCompanyUser($quoteTransfer, $idCompanyUser);
+            ->findWaitingQuoteApprovalByIdCompanyUser($quoteTransfer, $idCompanyUser);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteCanBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteStatusChecker()
+            ->isQuoteCanBeApprovedByCurrentCustomer($quoteTransfer);
     }
 
     /**

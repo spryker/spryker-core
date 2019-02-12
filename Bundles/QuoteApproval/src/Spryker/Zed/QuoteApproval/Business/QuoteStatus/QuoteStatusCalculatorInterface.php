@@ -5,19 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Quote\QuoteLock;
+namespace Spryker\Zed\QuoteApproval\Business\QuoteStatus;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class QuoteLockStatusChecker implements QuoteLockStatusCheckerInterface
+interface QuoteStatusCalculatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return bool
+     * @return string|null
      */
-    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
-    {
-        return (bool)$quoteTransfer->getIsLocked();
-    }
+    public function calculateQuoteStatus(QuoteTransfer $quoteTransfer): ?string;
 }

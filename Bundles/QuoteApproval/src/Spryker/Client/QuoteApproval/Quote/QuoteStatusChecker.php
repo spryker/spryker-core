@@ -10,10 +10,11 @@ namespace Spryker\Client\QuoteApproval\Quote;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\PermissionAwareTrait;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToPermissionClientInterface;
+use Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
+use Spryker\Shared\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
-use Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
 
 class QuoteStatusChecker implements QuoteStatusCheckerInterface
 {
@@ -25,7 +26,7 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
     protected $permissionClient;
 
     /**
-     * @var \Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface
+     * @var \Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface
      */
     protected $quoteStatusCalculator;
 
@@ -36,7 +37,7 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
 
     /**
      * @param \Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToPermissionClientInterface $permissionClient
-     * @param \Spryker\Shared\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface $quoteStatusCalculator
+     * @param \Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface $quoteStatusCalculator
      * @param \Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface $permissionContextProvider
      */
     public function __construct(
@@ -69,6 +70,16 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
         }
 
         return !$this->isQuoteApproved($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteCanBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->can(ApproveQuotePermissionPlugin::KEY, $this->permissionContextProvider->provideContext($quoteTransfer));
     }
 
     /**

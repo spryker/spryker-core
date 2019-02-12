@@ -22,11 +22,11 @@ class QuoteApprovalProceedCheckoutCheckPlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritdoc}
-     * - Successfull if customer does't have PlaceOrderPermissionPlugin permission assigned.
-     * - Successfull if excecuting of PlaceOrderPermissionPlugin permission returns true.
-     * - Successfull if quote approval status is `approved`.
-     * - Unsuccessfull othervise.
-     * - Returns message if not successfull.
+     * - Successful if customer does't have PlaceOrderPermissionPlugin permission assigned.
+     * - Successful if executing of PlaceOrderPermissionPlugin permission returns true.
+     * - Successful if quote approval status is `approved`.
+     * - Unsuccessful otherwise.
+     * - Returns message if not successful.
      *
      * @api
      *
