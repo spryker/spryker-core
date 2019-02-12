@@ -38,7 +38,7 @@ abstract class AbstractLocator implements LocatorInterface
     final public function __construct()
     {
         if ($this->application === null) {
-            throw new Exception('Properties missing for: ' . get_class($this));
+            throw new Exception('Properties missing for: ' . static::class);
         }
     }
 

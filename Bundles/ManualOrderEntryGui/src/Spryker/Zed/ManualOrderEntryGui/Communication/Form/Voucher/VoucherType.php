@@ -51,7 +51,7 @@ class VoucherType extends AbstractType
      *
      * @return $this
      */
-    protected function addVoucherCodeField(FormBuilderInterface $builder, array $options): self
+    protected function addVoucherCodeField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_VOUCHER_CODE, TextType::class, [
             'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::VOUCHER_CODE,

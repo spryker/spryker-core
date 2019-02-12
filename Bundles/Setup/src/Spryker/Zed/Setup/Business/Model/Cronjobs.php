@@ -474,7 +474,7 @@ cd %s
             $sourceBashCommand = '. ' . APPLICATION_ROOT_DIR . '/deploy/vars';
 
             $customBashCommand = $checkDeployFolderExistsBashCommand . ' ' . '&amp;&amp;' . ' ' . $sourceBashCommand;
-            $destination = '\$destination_release_dir';
+            $destination = '$destination_release_dir';
         }
 
         return sprintf(
