@@ -335,7 +335,7 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated use UrlFacade::findUrl() instead.
+     * @deprecated Use UrlFacade::findUrl() instead.
      *
      * @param int $idUrl
      *

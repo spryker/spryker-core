@@ -36,4 +36,5 @@ interface KernelConstants
      * A set of whitelist domains, that every external URL is checked against, before redirect.
      */
     public const DOMAIN_WHITELIST = 'KERNEL:DOMAIN_WHITELIST';
+    public const STRICT_DOMAIN_REDIRECT = 'KERNEL:STRICT_DOMAIN_REDIRECT';
 }

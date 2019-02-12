@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Quote\Business\QuoteBusinessFactory getFactory()
  * @method \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface getRepository()
- * @method \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface getEntityManager()()
+ * @method \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface getEntityManager()
  */
 class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
 {
@@ -160,5 +160,21 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     public function deleteExpiredGuestQuote(): void
     {
         $this->getFactory()->createGuestQuoteDeleter()->deleteExpiredGuestQuote();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteReader()->findQuoteByUuid($quoteTransfer);
     }
 }

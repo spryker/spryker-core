@@ -16,6 +16,7 @@ use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 abstract class AbstractFactory
 {
     use BundleConfigResolverAwareTrait;
+    use ClientResolverAwareTrait;
     use ContainerMocker;
 
     /**
@@ -73,11 +74,11 @@ abstract class AbstractFactory
             $this->container = $this->createContainerWithProvidedDependencies();
         }
 
-        if ($this->container->offsetExists($key) === false) {
+        if ($this->container->has($key) === false) {
             throw new ContainerKeyNotFoundException($this, $key);
         }
 
-        return $this->container[$key];
+        return $this->container->get($key);
     }
 
     /**

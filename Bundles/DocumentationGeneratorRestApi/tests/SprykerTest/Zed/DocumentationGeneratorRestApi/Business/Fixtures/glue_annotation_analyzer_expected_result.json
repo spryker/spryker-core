@@ -1,0 +1,543 @@
+{
+  "paths": {
+    "\/test-resource-with-all-methods": {
+      "post": {
+        "summary": "post summary",
+        "tags": [
+          "test-resource-with-all-methods"
+        ],
+        "requestBody": {
+          "description": "Expected request body.",
+          "required": true,
+          "content": {
+            "application\/json": {
+              "schema": {
+                "$ref": "#\/components\/schemas\/RestTestRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Expected response to a valid request.",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestTestResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Expected response to a bad request.",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "\/test-resource-with-all-methods\/{testResourceWithAllMethodId}": {
+      "get": {
+        "summary": "getResource summary",
+        "tags": [
+          "test-resource-with-all-methods"
+        ],
+        "parameters": [
+          {
+            "name": "testResourceWithAllMethodId",
+            "in": "path",
+            "required": true,
+            "description": "Id of test resource with all method.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request.",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestTestResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Expected response to a bad request.",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "patch summary",
+        "tags": [
+          "test-resource-with-all-methods"
+        ],
+        "parameters": [
+          {
+            "name": "testResourceWithAllMethodId",
+            "in": "path",
+            "required": true,
+            "description": "Id of test resource with all method.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Expected request body.",
+          "required": true,
+          "content": {
+            "application\/json": {
+              "schema": {
+                "$ref": "#\/components\/schemas\/RestTestRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request.",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestTestResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Expected response to a bad request.",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "patch summary",
+        "tags": [
+          "test-resource-with-all-methods"
+        ],
+        "parameters": [
+          {
+            "name": "testResourceWithAllMethodId",
+            "in": "path",
+            "required": true,
+            "description": "Id of test resource with all method.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Expected response to a valid request."
+          },
+          "404": {
+            "description": "Item not found",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Expected response to a bad request.",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "\/test-resource-with-get-resource-by-id\/{testResourceWithGetResourceByIdId}": {
+      "get": {
+        "summary": "Summary example",
+        "tags": [
+          "test-resource-with-get-resource-by-id"
+        ],
+        "parameters": [
+          {
+            "name": "testResourceWithGetResourceByIdId",
+            "in": "path",
+            "required": true,
+            "description": "Id of test resource with get resource by id.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request.",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestTestResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Expected response to a bad request.",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "\/test-resource-with-get-resource-by-id\/{testResourceWithGetResourceByIdId}\/test-resource-with-empty-annotations": {
+      "post": {
+        "summary": "Create test resource with empty annotations.",
+        "tags": [
+          "test-resource-with-empty-annotations"
+        ],
+        "parameters": [
+          {
+            "name": "testResourceWithGetResourceByIdId",
+            "in": "path",
+            "required": true,
+            "description": "Id of test resource with get resource by id.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Expected request body.",
+          "required": true,
+          "content": {
+            "application\/json": {
+              "schema": {
+                "$ref": "#\/components\/schemas\/RestTestRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Expected response to a valid request.",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestTestResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Expected response to a bad request.",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "\/test-resource-with-get-collection": {
+      "get": {
+        "summary": "Summary example",
+        "tags": [
+          "test-resource-with-get-collection"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request.",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestTestCollectionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Expected response to a bad request.",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "schemas": {
+    "RestErrorMessage": {
+      "properties": {
+        "status": {
+          "type": "integer"
+        },
+        "code": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "string"
+        }
+      }
+    },
+    "RestLinks": {
+      "properties": {
+        "self": {
+          "type": "string"
+        }
+      }
+    },
+    "RestRelationships": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "RestTestAttributes": {
+      "properties": {
+        "attribute1": {
+          "type": "string"
+        },
+        "attribute2": {
+          "type": "string"
+        }
+      }
+    },
+    "RestTestCollectionResponse": {
+      "properties": {
+        "data": {
+          "items": {
+            "$ref": "#\/components\/schemas\/RestTestCollectionResponseData"
+          }
+        }
+      }
+    },
+    "RestTestCollectionResponseData": {
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "attributes": {
+          "$ref": "#\/components\/schemas\/RestTestAttributes"
+        },
+        "links": {
+          "$ref": "#\/components\/schemas\/RestLinks"
+        }
+      }
+    },
+    "RestTestRequest": {
+      "properties": {
+        "data": {
+          "$ref": "#\/components\/schemas\/RestTestRequestData"
+        }
+      }
+    },
+    "RestTestRequestAttributes": {
+      "properties": {
+        "attribute2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "attribute2"
+      ]
+    },
+    "RestTestRequestData": {
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "attributes": {
+          "$ref": "#\/components\/schemas\/RestTestRequestAttributes"
+        }
+      }
+    },
+    "RestTestResponse": {
+      "properties": {
+        "data": {
+          "$ref": "#\/components\/schemas\/RestTestResponseData"
+        },
+        "links": {
+          "$ref": "#\/components\/schemas\/RestLinks"
+        }
+      }
+    },
+    "RestTestResponseData": {
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "attributes": {
+          "$ref": "#\/components\/schemas\/RestTestAttributes"
+        },
+        "links": {
+          "$ref": "#\/components\/schemas\/RestLinks"
+        }
+      }
+    }
+  },
+  "securitySchemes": {
+    "BearerAuth": {
+      "type": "http",
+      "scheme": "bearer"
+    }
+  }
+}

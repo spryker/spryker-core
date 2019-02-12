@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/category-extension": "^1.0.0",
     "spryker/event": "^1.0.0 || ^2.0.0",
     "spryker/graph": "^3.0.0",
     "spryker/gui": "^3.0.0",

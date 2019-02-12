@@ -16,9 +16,6 @@ use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTa
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValuePriceTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
 use Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\ProductOption\Dependency\ProductOptionEvents;
 use Spryker\Zed\ProductOptionStorage\Business\ProductOptionStorageBusinessFactory;
 use Spryker\Zed\ProductOptionStorage\Business\ProductOptionStorageFacade;
@@ -61,18 +58,11 @@ class ProductOptionStorageListenerTest extends Unit
     protected $productOptionGroupTransfer;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     protected function setUp()
     {
         parent::setUp();
-
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
 
         $this->productOptionGroupTransfer = $this->tester->haveProductOptionGroupWithValues(
             [],
@@ -248,7 +238,7 @@ class ProductOptionStorageListenerTest extends Unit
     protected function assertProductAbstractOptionGroupStorage($beforeCount)
     {
         $productOptionStorageCount = SpyProductAbstractOptionStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $productOptionStorageCount);
+        $this->assertGreaterThan($beforeCount, $productOptionStorageCount);
     }
 
     /**
@@ -259,7 +249,7 @@ class ProductOptionStorageListenerTest extends Unit
     protected function assertProductAbstractOptionStorage($beforeCount)
     {
         $productOptionStorageCount = SpyProductAbstractOptionStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $productOptionStorageCount);
+        $this->assertGreaterThan($beforeCount, $productOptionStorageCount);
         $spyProductAbstractOptionStorage = SpyProductAbstractOptionStorageQuery::create()->orderByIdProductAbstractOptionStorage()->findOneByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract());
         $this->assertNotNull($spyProductAbstractOptionStorage);
         $data = $spyProductAbstractOptionStorage->getData();

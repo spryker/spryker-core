@@ -69,6 +69,6 @@ class SharedCartsUpdateQuoteUpdatePlugin extends AbstractPlugin implements Quote
      */
     protected function compareQuotes(QuoteTransfer $quoteTransferA, QuoteTransfer $quoteTransferB): int
     {
-        return strcmp($quoteTransferA->getName(), $quoteTransferB->getName());
+        return $quoteTransferA->getName() <=> $quoteTransferB->getName();
     }
 }

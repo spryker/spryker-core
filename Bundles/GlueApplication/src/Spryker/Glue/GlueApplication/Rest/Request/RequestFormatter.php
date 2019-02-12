@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\Request;
 
+use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface;
@@ -26,6 +27,11 @@ class RequestFormatter implements RequestFormatterInterface
     protected $requestResourceExtractor;
 
     /**
+     * @var \Spryker\Glue\GlueApplication\GlueApplicationConfig
+     */
+    protected $glueApplicationConfig;
+
+    /**
      * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatRequestPluginInterface[]
      */
     protected $requestFormatterPlugins = [];
@@ -33,16 +39,19 @@ class RequestFormatter implements RequestFormatterInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\RequestMetaDataExtractorInterface $requestMetaDataExtractor
      * @param \Spryker\Glue\GlueApplication\Rest\Request\RequestResourceExtractorInterface $requestResourceExtractor
+     * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $glueApplicationConfig
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatRequestPluginInterface[] $requestFormatterPlugins
      */
     public function __construct(
         RequestMetaDataExtractorInterface $requestMetaDataExtractor,
         RequestResourceExtractorInterface $requestResourceExtractor,
+        GlueApplicationConfig $glueApplicationConfig,
         array $requestFormatterPlugins = []
     ) {
         $this->requestMetaDataExtractor = $requestMetaDataExtractor;
-        $this->requestFormatterPlugins = $requestFormatterPlugins;
         $this->requestResourceExtractor = $requestResourceExtractor;
+        $this->glueApplicationConfig = $glueApplicationConfig;
+        $this->requestFormatterPlugins = $requestFormatterPlugins;
     }
 
     /**
@@ -153,6 +162,10 @@ class RequestFormatter implements RequestFormatterInterface
     ): void {
 
         if (!isset($queryParameters[RequestConstantsInterface::QUERY_INCLUDE])) {
+            $requestBuilder->setExcludeRelationship(
+                !$this->glueApplicationConfig->isEagerRelationshipsLoadingEnabled()
+            );
+
             return;
         }
 
