@@ -70,13 +70,13 @@ class CmsToUrlFacadeBridge implements CmsToUrlFacadeInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return bool
      */
-    public function hasUrl($urlTransfer)
+    public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool
     {
-        return $this->urlFacade->hasUrl($urlTransfer);
+        return $this->urlFacade->hasUrlCaseInsensitive($urlTransfer);
     }
 
     /**
