@@ -19,12 +19,15 @@ class DeleteCompanyUserController extends AbstractController
 {
     protected const MESSAGE_SUCCESS_COMPANY_USER_DELETE = 'Company user successfully removed.';
     protected const MESSAGE_ERROR_COMPANY_USER_DELETE = 'Company user cannot be removed.';
+    protected const MESSAGE_COMPANY_USER_NOT_FOUND = 'Company user not found.';
 
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
     protected const PARAM_ID_COMPANY_USER = 'id-company-user';
 
     /**
+     * @deprecated Use DeleteCompanyUserController::deleteConfirmAction() instead.
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
@@ -67,5 +70,29 @@ class DeleteCompanyUserController extends AbstractController
         $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_DELETE);
 
         return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteConfirmAction(Request $request)
+    {
+        $idCompanyUser = $this->castId($request->query->getInt(static::PARAM_ID_COMPANY_USER));
+
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserFacade()
+            ->findCompanyUserById($idCompanyUser);
+
+        if (!$companyUserTransfer) {
+            $this->addErrorMessage(static::MESSAGE_COMPANY_USER_NOT_FOUND);
+
+            return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+        }
+
+        return $this->viewResponse([
+            'companyUser' => $companyUserTransfer,
+        ]);
     }
 }
