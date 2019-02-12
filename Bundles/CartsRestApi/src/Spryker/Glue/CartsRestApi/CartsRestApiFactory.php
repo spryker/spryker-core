@@ -7,8 +7,11 @@
 
 namespace Spryker\Glue\CartsRestApi;
 
+use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
+use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToSessionClientInterface;
+use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartCreator;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartCreatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartDeleter;
@@ -294,6 +297,36 @@ class CartsRestApiFactory extends AbstractFactory
     public function createCartsResourceMapper(): CartsResourceMapperInterface
     {
         return new CartsResourceMapper($this->createCartItemsResourceMapper(), $this->getResourceBuilder());
+    }
+
+    /**
+     * @deprecated Will be removed in the next major.
+     *
+     * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface
+     */
+    public function getZedRequestClient(): CartsRestApiToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @deprecated Will be removed in the next major.
+     *
+     * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface
+     */
+    public function getQuoteClient(): CartsRestApiToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @deprecated Will be removed in the next major.
+     *
+     * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface
+     */
+    public function getCartClient(): CartsRestApiToCartClientInterface
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_CART);
     }
 
     /**
