@@ -108,7 +108,9 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Gets quote collection filtered by criteria.
+     * - Filters by FilterTransfer when provided.
+     * - Filters by customer reference when provided.
+     * - Filters by store ID when provided.
      *
      * @api
      *

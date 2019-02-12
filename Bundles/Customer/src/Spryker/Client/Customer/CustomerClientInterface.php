@@ -384,4 +384,14 @@ interface CustomerClientInterface
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function findCustomerByReference(CustomerTransfer $customerTransfer): CustomerResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns customer secured pattern with applied customer access rules.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCustomerSecuredPattern(): string;
 }
