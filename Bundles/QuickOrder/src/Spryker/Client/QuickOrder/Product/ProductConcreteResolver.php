@@ -77,7 +77,29 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductConcreteBySku(string $sku): ?ProductConcreteTransfer
+    protected function findProductConcreteBySku(string $sku): ?ProductConcreteTransfer
+    {
+        $productConcreteStorageData = $this->productStorageClient
+            ->findProductConcreteStorageDataByMappingForCurrentLocale(static::MAPPING_TYPE_SKU, $sku);
+
+        if ($productConcreteStorageData === null) {
+            return null;
+        }
+
+        $productConcreteTransfer = (new ProductConcreteTransfer())->fromArray($productConcreteStorageData, true);
+        $localizedAttributesTransfer = (new LocalizedAttributesTransfer())->setName($productConcreteStorageData[static::NAME]);
+
+        return $productConcreteTransfer
+            ->setFkProductAbstract($productConcreteStorageData[static::ID_PRODUCT_ABSTRACT])
+            ->addLocalizedAttributes($localizedAttributesTransfer);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteWithProductAbstractBySku(string $sku): ?ProductConcreteTransfer
     {
         $productConcreteStorageData = $this->productStorageClient
             ->findProductConcreteStorageDataByMappingForCurrentLocale(static::MAPPING_TYPE_SKU, $sku);

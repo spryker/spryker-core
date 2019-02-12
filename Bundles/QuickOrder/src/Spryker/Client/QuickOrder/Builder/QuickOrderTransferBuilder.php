@@ -121,8 +121,7 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
             return $quickOrderItemTransfer;
         }
 
-        $recommendedValues = $itemValidationTransfer->getSuggestedValues()->modifiedToArray();
-        $quickOrderItemTransfer->fromArray($recommendedValues, true);
+        $quickOrderItemTransfer = $this->updateQuickOrderItemTransfer($quickOrderItemTransfer, $itemValidationTransfer);
 
         return $quickOrderItemTransfer;
     }
@@ -160,5 +159,17 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
             ->setId($productConcreteTransfer ? $productConcreteTransfer->getIdProductConcrete() : null)
             ->setIdProductAbstract($productConcreteTransfer ? $productConcreteTransfer->getFkProductAbstract() : null)
             ->setQuantity($quickOrderItemTransfer->getQuantity());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemValidationTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
+     */
+    protected function updateQuickOrderItemTransfer(QuickOrderItemTransfer $quickOrderItemTransfer, ItemValidationTransfer $itemValidationTransfer): QuickOrderItemTransfer
+    {
+        $recommendedValues = $itemValidationTransfer->getSuggestedValues()->modifiedToArray();
+        return $quickOrderItemTransfer->fromArray($recommendedValues, true);
     }
 }

@@ -24,5 +24,5 @@ interface ProductConcreteResolverInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductConcreteBySku(string $sku): ?ProductConcreteTransfer;
+    public function findProductConcreteWithProductAbstractBySku(string $sku): ?ProductConcreteTransfer;
 }

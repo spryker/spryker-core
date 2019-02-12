@@ -75,7 +75,7 @@ class QuickOrderFactory extends AbstractFactory
      */
     public function getQuickOrderValidationPlugins(): array
     {
-        return $this->getProvidedDependency(QuickOrderDependencyProvider::QUICK_ORDER_BUILD_ITEM_VALIDATOR_PLUGINS);
+        return $this->getProvidedDependency(QuickOrderDependencyProvider::PLUGINS_QUICK_ORDER_BUILD_ITEM_VALIDATOR);
     }
 
     /**
