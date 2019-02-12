@@ -14,6 +14,8 @@ use Twig_Environment;
 use Twig_SimpleFunction;
 
 /**
+ * @deprecated Use `Spryker\Zed\Currency\Communication\Plugin\Twig\CurrencyTwigPlugin` instead.
+ *
  * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
  * @method \Spryker\Zed\Currency\CurrencyConfig getConfig()
  * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface getQueryContainer()
