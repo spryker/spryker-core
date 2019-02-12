@@ -10,6 +10,8 @@ namespace Spryker\Client\QuoteApproval;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToPermissionClientInterface;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface;
+use Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProvider;
+use Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProviderInterface;
 use Spryker\Client\QuoteApproval\Permission\PermissionLimitCalculator;
 use Spryker\Client\QuoteApproval\Permission\PermissionLimitCalculatorInterface;
 use Spryker\Client\QuoteApproval\Quote\QuoteStatusChecker;
@@ -20,8 +22,6 @@ use Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculator;
 use Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStub;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface;
-use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProvider;
-use Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface;
 
 class QuoteApprovalFactory extends AbstractFactory
 {
@@ -46,7 +46,7 @@ class QuoteApprovalFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider\PermissionContextProviderInterface
+     * @return \Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProviderInterface
      */
     public function createPermissionContextProvider(): PermissionContextProviderInterface
     {

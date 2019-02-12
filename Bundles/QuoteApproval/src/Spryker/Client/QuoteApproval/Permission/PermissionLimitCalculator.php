@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToPermissionClientInterface;
-use Spryker\Shared\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
-use Spryker\Shared\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
+use Spryker\Client\QuoteApproval\Plugin\ApproveQuotePermissionPlugin;
+use Spryker\Client\QuoteApproval\Plugin\PlaceOrderPermissionPlugin;
 
 class PermissionLimitCalculator implements PermissionLimitCalculatorInterface
 {

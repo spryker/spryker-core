@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\QuoteApproval\Plugin\Permission\ContextProvider;
+namespace Spryker\Zed\QuoteApproval\Business\Permission\ContextProvider;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;

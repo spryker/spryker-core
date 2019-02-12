@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Shared\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
+use Spryker\Client\QuoteApproval\Plugin\PlaceOrderPermissionPlugin;
 
 /**
  * @method \Spryker\Client\QuoteApproval\QuoteApprovalFactory getFactory()
