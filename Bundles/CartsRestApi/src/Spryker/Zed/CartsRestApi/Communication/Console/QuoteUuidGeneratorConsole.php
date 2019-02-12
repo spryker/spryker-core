@@ -15,7 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @deprecated Use Spryker\Zed\Uuid\Communication\Console\UuidGeneratorConsole instead.
  *
  * @method \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface getFacade()
- * @method \Spryker\Zed\CartsRestApi\Communication\CartsRestApiCommunicationFactory getFactory()
  */
 class QuoteUuidGeneratorConsole extends Console
 {

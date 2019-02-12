@@ -101,6 +101,19 @@ interface CartsRestApiFacadeInterface
 
     /**
      * Specification:
+     * - Creates customer quote.
+     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createSingleQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
      * - Deletes customer quote.
      * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
      *

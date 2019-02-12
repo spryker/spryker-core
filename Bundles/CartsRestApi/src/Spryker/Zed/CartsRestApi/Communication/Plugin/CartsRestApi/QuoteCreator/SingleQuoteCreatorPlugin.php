@@ -13,7 +13,6 @@ use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterf
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\CartsRestApi\Communication\CartsRestApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface getFacade()
  * @method \Spryker\Zed\CartsRestApi\CartsRestApiConfig getConfig()
  */
@@ -32,6 +31,6 @@ class SingleQuoteCreatorPlugin extends AbstractPlugin implements QuoteCreatorPlu
      */
     public function createQuote(RestQuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
-        return $this->getFactory()->createSingleQuoteCreator()->createSingleQuote($quoteRequestTransfer);
+        return $this->getFacade()->createSingleQuote($quoteRequestTransfer);
     }
 }

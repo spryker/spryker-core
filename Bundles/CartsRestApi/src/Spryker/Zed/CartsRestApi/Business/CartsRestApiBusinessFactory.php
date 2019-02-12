@@ -19,6 +19,8 @@ use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUpdater;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUpdaterInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUuidWriter;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUuidWriterInterface;
+use Spryker\Zed\CartsRestApi\Business\Quote\SingleQuoteCreator;
+use Spryker\Zed\CartsRestApi\Business\Quote\SingleQuoteCreatorInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\GuestQuoteItemAdder;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\GuestQuoteItemAdderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapper;
@@ -77,6 +79,17 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteReader(),
             $this->createQuoteMapper(),
             $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApi\Business\Quote\SingleQuoteCreatorInterface
+     */
+    public function createSingleQuoteCreator(): SingleQuoteCreatorInterface
+    {
+        return new SingleQuoteCreator(
+            $this->createQuoteReader(),
+            $this->getPersistentCartFacade()
         );
     }
 

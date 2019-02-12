@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface getFacade()
  * @method \Spryker\Zed\CartsRestApi\CartsRestApiConfig getConfig()
- * @method \Spryker\Zed\CartsRestApi\Communication\CartsRestApiCommunicationFactory getFactory()
  */
 class SingleQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCollectionReaderPluginInterface
 {
