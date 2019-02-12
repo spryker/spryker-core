@@ -211,7 +211,8 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     {
         return $this->getFactory()
             ->createSalesShipmentQuery()
-            ->filterByIdSalesShipment($idSalesOrder);
+            ->leftJoinWithSpySalesOrderItem()
+            ->filterByFkSalesOrder($idSalesOrder);
     }
 
     /**

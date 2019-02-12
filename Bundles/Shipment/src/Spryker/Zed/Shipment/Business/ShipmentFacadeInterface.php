@@ -272,6 +272,9 @@ interface ShipmentFacadeInterface
     public function saveShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): void;
 
     /**
+     * Specification:
+     * - Returns ShipmentTransfer for provided id or null.
+     *
      * @api
      *
      * @param int $idSalesShipment

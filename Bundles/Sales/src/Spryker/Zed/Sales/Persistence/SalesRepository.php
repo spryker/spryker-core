@@ -46,6 +46,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     {
         $addressEntity = $this->getFactory()
             ->createSalesOrderAddressQuery()
+            ->leftJoinWithCountry()
             ->filterByIdSalesOrderAddress($idOrderAddress)
             ->findOne();
 
@@ -67,6 +68,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         SpySalesOrderAddress $addressEntity
     ): AddressTransfer {
         $addressTransfer->fromArray($addressEntity->toArray(), true);
+        $addressTransfer->setIso2Code($addressEntity->getCountry()->getIso2Code());
 
         return $addressTransfer;
     }

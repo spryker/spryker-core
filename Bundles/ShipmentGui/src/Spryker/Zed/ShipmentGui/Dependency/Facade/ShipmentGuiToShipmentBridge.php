@@ -46,7 +46,9 @@ class ShipmentGuiToShipmentBridge implements ShipmentGuiToShipmentInterface
     }
 
     /**
-     * @inheritdoc
+     * @param int $idShipment
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
     public function findShipmentById(int $idShipment): ?ShipmentTransfer
     {
@@ -54,7 +56,10 @@ class ShipmentGuiToShipmentBridge implements ShipmentGuiToShipmentInterface
     }
 
     /**
-     * @inheritdoc
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     public function saveShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): void
     {

@@ -174,7 +174,7 @@ class ShipmentGroupSaver implements ShipmentGroupSaverInterface
     }
 
     /**
-     * @deprecated For BC reasons the missing sum prices are mirrored from unit prices
+     * @deprecated For BC reasons the missing sum prices are mirrored from unit prices. Will be removed in next major release.
      *
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      *

@@ -60,13 +60,18 @@ class AbstractShipmentFormDataProvider
         $orderTransfer = $this->salesFacade
             ->findOrderByIdSalesOrder($idSalesOrder);
 
-        return [
+        $options = [
             ShipmentFormCreate::OPTION_SHIPMENT_ADDRESS_CHOICES => $this->getShippingAddressesOptions($idSalesOrder, $idSalesShipment),
             ShipmentFormCreate::OPTION_SHIPMENT_METHOD_CHOICES => $this->getShippingMethodsOptions(),
             ShipmentFormCreate::FIELD_SHIPMENT_SELECTED_ITEMS => $this->getShipmentSelectedItemsIds($idSalesShipment),
             AddressForm::OPTION_SALUTATION_CHOICES => $this->getSalutationOptions(),
-            ItemForm::OPTION_ORDER_ITEMS_CHOICES => $this->getOrderItemsOptions($orderTransfer),
         ];
+
+        if ($orderTransfer !== null) {
+            $options[ItemForm::OPTION_ORDER_ITEMS_CHOICES] = $this->getOrderItemsOptions($orderTransfer);
+        }
+
+        return $options;
     }
 
     /**
@@ -182,6 +187,10 @@ class AbstractShipmentFormDataProvider
     protected function getItemsDefaultFields(int $idSalesOrder): array
     {
         $orderTransfer = $this->salesFacade->findOrderByIdSalesOrder($idSalesOrder);
+        if ($orderTransfer === null) {
+            return [];
+        }
+
         return [
             ShipmentFormCreate::FORM_SALES_ORDER_ITEMS => $this->getOrderItemsOptions($orderTransfer),
         ];

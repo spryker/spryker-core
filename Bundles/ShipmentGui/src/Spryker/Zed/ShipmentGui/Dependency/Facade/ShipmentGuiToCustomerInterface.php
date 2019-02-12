@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 interface ShipmentGuiToCustomerInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer

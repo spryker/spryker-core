@@ -13,8 +13,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 interface ShipmentGuiToSalesInterface
 {
     /**
-     * @api
-     *
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer|null
@@ -22,8 +20,6 @@ interface ShipmentGuiToSalesInterface
     public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer;
 
     /**
-     * @api
-     *
      * @param int $idSalesShipment
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection

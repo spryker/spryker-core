@@ -9,28 +9,21 @@ namespace Spryker\Zed\Shipment\Business\ShipmentGroup;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
-use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface;
 
 class ShipmentMethodExtender implements ShipmentMethodExtenderInterface
 {
-    /**
-     * @var \Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface
-     */
-    protected $methodTransformer;
-
     /**
      * @var \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcherInterface
      */
     protected $shipmentFetcher;
 
     /**
-     * @param \Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface $methodTransformer
      * @param \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcherInterface $shipmentFetcher
      */
-    public function __construct(ShipmentMethodTransformerInterface $methodTransformer, ShipmentFetcherInterface $shipmentFetcher)
+    public function __construct(ShipmentFetcherInterface $shipmentFetcher)
     {
-        $this->methodTransformer = $methodTransformer;
         $this->shipmentFetcher = $shipmentFetcher;
     }
 
@@ -42,29 +35,39 @@ class ShipmentMethodExtender implements ShipmentMethodExtenderInterface
      */
     public function extendShipmentMethodTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, OrderTransfer $orderTransfer): ShipmentMethodTransfer
     {
-        $methodEntity = $this->shipmentFetcher
+        $newShipmentTransfer = $this->shipmentFetcher
             ->findActiveShipmentMethodWithPricesAndCarrierById($shipmentMethodTransfer->getIdShipmentMethod());
 
-        if ($methodEntity === null) {
+        if ($newShipmentTransfer === null) {
             return $shipmentMethodTransfer;
         }
 
-        $methodPriceEntity = $this->shipmentFetcher
-            ->findMethodPriceByShipmentMethodAndCurrentStoreCurrency($methodEntity, $orderTransfer->getCurrencyIsoCode());
+        $methodPrice = $this->shipmentFetcher
+            ->findMethodPriceByShipmentMethodAndCurrentStoreCurrency($newShipmentTransfer, $orderTransfer->getCurrencyIsoCode());
 
-        if ($methodPriceEntity === null) {
+        if ($methodPrice === null) {
             return $shipmentMethodTransfer;
         }
 
-        $price = $orderTransfer->getPriceMode() === ShipmentConstants::PRICE_MODE_GROSS ?
-            $methodPriceEntity->getDefaultGrossPrice() :
-            $methodPriceEntity->getDefaultNetPrice();
+        $price = $this->getPrice($orderTransfer, $methodPrice);
 
-        $shipmentMethodTransfer = $this->methodTransformer->transformEntityToTransfer($methodEntity);
-        $shipmentMethodTransfer
+        $newShipmentTransfer
             ->setCurrencyIsoCode($orderTransfer->getCurrencyIsoCode())
             ->setStoreCurrencyPrice($price);
 
-        return $shipmentMethodTransfer;
+        return $newShipmentTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentPriceTransfer $shipmentMethodPriceTransfer
+     *
+     * @return int
+     */
+    protected function getPrice(OrderTransfer $orderTransfer, ShipmentPriceTransfer $shipmentMethodPriceTransfer): int
+    {
+        return $orderTransfer->getPriceMode() === ShipmentConstants::PRICE_MODE_GROSS ?
+            $shipmentMethodPriceTransfer->getDefaultGrossPrice() :
+            $shipmentMethodPriceTransfer->getDefaultNetPrice();
     }
 }

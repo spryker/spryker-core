@@ -379,6 +379,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idSalesShipment

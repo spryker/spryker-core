@@ -53,9 +53,17 @@ class EditController extends AbstractController
                 ->getSalesFacade()
                 ->findOrderByIdSalesOrder($idSalesOrder);
 
+            if ($orderTransfer === null) {
+                $this->addErrorMessage('Order does not exist');
+
+                return $this->redirectResponse($redirectUrl);
+            }
+
             $this->getFactory()
                 ->getShipmentFacade()
                 ->saveShipmentGroup($shipmentGroupTransfer, $orderTransfer);
+
+            $this->addSuccessMessage('Shipment has been updated successfully');
 
             return $this->redirectResponse($redirectUrl);
         }
@@ -89,6 +97,10 @@ class EditController extends AbstractController
     protected function addShipmentTransfer(ShipmentGroupTransfer $shipmentGroupTransfer, array $formData): ShipmentGroupTransfer
     {
         $shipmentTransfer = (new ShipmentTransfer())->fromArray($formData, true);
+        $shipmentTransfer->requireShippingAddress();
+        $shipmentTransfer->getShippingAddress()
+            ->setIdSalesOrderAddress($formData['id_shipping_address']);
+
         $shipmentMethodTransfer = $this
             ->getFactory()
             ->getShipmentFacade()

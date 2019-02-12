@@ -26,8 +26,6 @@ class ShipmentGuiToCustomerBridge implements ShipmentGuiToCustomerInterface
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer

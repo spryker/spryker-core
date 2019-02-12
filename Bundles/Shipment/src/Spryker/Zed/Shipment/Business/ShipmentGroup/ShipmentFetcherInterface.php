@@ -7,23 +7,23 @@
 
 namespace Spryker\Zed\Shipment\Business\ShipmentGroup;
 
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentPriceTransfer;
 
 interface ShipmentFetcherInterface
 {
     /**
      * @param int $shipmentMethodId
      *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod|null
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findActiveShipmentMethodWithPricesAndCarrierById(int $shipmentMethodId): ?SpyShipmentMethod;
+    public function findActiveShipmentMethodWithPricesAndCarrierById(int $shipmentMethodId): ?ShipmentMethodTransfer;
 
     /**
-     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      * @param string $currencyIsoCode
      *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice|null
+     * @return \Generated\Shared\Transfer\ShipmentPriceTransfer|null
      */
-    public function findMethodPriceByShipmentMethodAndCurrentStoreCurrency(SpyShipmentMethod $shipmentMethodEntity, string $currencyIsoCode): ?SpyShipmentMethodPrice;
+    public function findMethodPriceByShipmentMethodAndCurrentStoreCurrency(ShipmentMethodTransfer $shipmentMethodTransfer, string $currencyIsoCode): ?ShipmentPriceTransfer;
 }

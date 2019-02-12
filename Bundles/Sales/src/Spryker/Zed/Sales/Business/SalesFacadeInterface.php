@@ -294,6 +294,9 @@ interface SalesFacadeInterface
     public function findOrderAddressByIdOrderAddress(int $idSalesOrderAddress): ?AddressTransfer;
 
     /**
+     * Specification:
+     * - Returns sales order items by salesShipmentId or null.
+     *
      * @api
      *
      * @param int $idSalesShipment

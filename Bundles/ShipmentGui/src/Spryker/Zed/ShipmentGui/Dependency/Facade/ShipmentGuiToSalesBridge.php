@@ -26,8 +26,6 @@ class ShipmentGuiToSalesBridge implements ShipmentGuiToSalesInterface
     }
 
     /**
-     * @api
-     *
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer|null
@@ -38,8 +36,6 @@ class ShipmentGuiToSalesBridge implements ShipmentGuiToSalesInterface
     }
 
     /**
-     * @api
-     *
      * @param int $idSalesShipment
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection

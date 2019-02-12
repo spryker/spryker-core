@@ -130,4 +130,13 @@
         <property name="items" type="Item[]" singular="item" />
     </transfer>
 
+    <transfer name="ShipmentPrice">
+        <property name="idShipmentMethodPrice" type="int"/>
+        <property name="fkCurrency" type="int"/>
+        <property name="fkShipmentMethod" type="int"/>
+        <property name="fkStore" type="int"/>
+        <property name="defaultGrossPrice" type="int"/>
+        <property name="defaultNetPrice" type="int"/>
+    </transfer>
+
 </transfers>
