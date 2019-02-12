@@ -373,11 +373,10 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     {
         $companyRoleTransfer->requireIdCompanyRole();
 
-        $companyRoleQuery = $this->getFactory()
+        $companyRoleEntity = $this->getFactory()
             ->createCompanyRoleQuery()
-            ->filterByIdCompanyRole($companyRoleTransfer->getIdCompanyRole());
-
-        $companyRoleEntity = $this->buildQueryFromCriteria($companyRoleQuery)->findOne();
+            ->filterByIdCompanyRole($companyRoleTransfer->getIdCompanyRole())
+            ->findOne();
 
         if (!$companyRoleEntity) {
             return null;
