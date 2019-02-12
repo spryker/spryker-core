@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipSalesOrderThresholdGuiConfig;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormFieldDependenciesPluginInterface;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Range;
@@ -20,7 +21,7 @@ use Symfony\Component\Validator\Constraints\Range;
  * @method \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipSalesOrderThresholdGuiConfig getConfig()
  */
-class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends AbstractPlugin implements SalesOrderThresholdFormExpanderPluginInterface
+class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends AbstractPlugin implements SalesOrderThresholdFormExpanderPluginInterface, SalesOrderThresholdFormFieldDependenciesPluginInterface
 {
     protected const FIELD_SOFT_FIXED_FEE = 'fixedFee';
 
@@ -127,5 +128,19 @@ class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends Abstra
         ]);
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getThresholdFieldDependentFieldNames(): array
+    {
+        return [
+            static::FIELD_SOFT_FIXED_FEE,
+        ];
     }
 }
