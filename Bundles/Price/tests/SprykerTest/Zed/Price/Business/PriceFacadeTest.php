@@ -48,7 +48,7 @@ class PriceFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWrongPriceModeInQuote()
+    public function testValidateWrongPriceModeInQuote(): void
     {
         $quoteTransfer = (new QuoteTransfer())
             ->setPriceMode(static::WRONG_PRICE_MODE);
@@ -61,7 +61,7 @@ class PriceFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateCorrectPriceModeInQuote()
+    public function testValidateCorrectPriceModeInQuote(): void
     {
         $quoteTransfer = (new QuoteTransfer())
             ->setPriceMode(static::GROSS_MODE);

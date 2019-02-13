@@ -85,7 +85,7 @@ class UpdateQuoteTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateQuoteWithValidationEmptyStoreName()
+    public function testUpdateQuoteWithValidationEmptyStoreName(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
@@ -105,7 +105,7 @@ class UpdateQuoteTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateQuoteWithValidationWrongStoreName()
+    public function testUpdateQuoteWithValidationWrongStoreName(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
