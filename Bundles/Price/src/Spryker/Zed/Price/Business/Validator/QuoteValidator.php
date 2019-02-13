@@ -43,7 +43,7 @@ class QuoteValidator implements QuoteValidatorInterface
             ->setIsSuccess(true);
 
         if (!$priceMode) {
-            return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_PRICE_MODE_DATA_IS_MISSING);
+            return $quoteValidationResponseTransfer;
         }
 
         $availablePriceModes = $this->priceConfig->getPriceModes();
