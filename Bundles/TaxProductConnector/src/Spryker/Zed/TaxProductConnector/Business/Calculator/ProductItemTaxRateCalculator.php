@@ -128,8 +128,8 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected function getEffectiveTaxRate(int $idProductAbstract, string $countryIso2Code): float
     {
         $foundResults = $this->taxQueryContainer
-            ->queryTaxSetBySinleIdProductAbstractAndCountryIso2Code(
-                $idProductAbstract,
+            ->queryTaxSetByIdProductAbstractAndCountryIso2Code(
+                [$idProductAbstract],
                 $countryIso2Code
             )
             ->findOne();

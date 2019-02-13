@@ -103,8 +103,6 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
     /**
      * @api
      *
-     * @deprecated Use queryTaxSetByIdProductAbstractAndCountryIso2Codes() instead.
-     *
      * @param int[] $allIdProductAbstracts
      * @param string $countryIso2Code
      *
@@ -115,35 +113,6 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
         return $this->getFactory()->createTaxSetQuery()
             ->useSpyProductAbstractQuery()
                 ->filterByIdProductAbstract($allIdProductAbstracts, Criteria::IN)
-                ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, self::COL_ID_ABSTRACT_PRODUCT)
-                ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
-            ->endUse()
-            ->useSpyTaxSetTaxQuery()
-                ->useSpyTaxRateQuery()
-                    ->useCountryQuery()
-                        ->filterByIso2Code($countryIso2Code)
-                    ->endUse()
-                    ->_or()
-                    ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
-                ->endUse()
-                ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_MAX_TAX_RATE)
-            ->endUse()
-            ->select([self::COL_MAX_TAX_RATE]);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstracts
-     * @param string $countryIso2Code
-     *
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
-     */
-    public function queryTaxSetBySinleIdProductAbstractAndCountryIso2Code($idProductAbstracts, $countryIso2Code): SpyTaxSetQuery
-    {
-        return $this->getFactory()->createTaxSetQuery()
-            ->useSpyProductAbstractQuery()
-                ->filterByIdProductAbstract($idProductAbstracts)
                 ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, self::COL_ID_ABSTRACT_PRODUCT)
                 ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->endUse()
