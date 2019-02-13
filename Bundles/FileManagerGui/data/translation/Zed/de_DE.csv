@@ -1,0 +1,41 @@
+"Add a file","Datei hinzufügen"
+"Add MIME type","MIME-Typ hinzufügen"
+"Back to File Directory Elements","Zurück zu Elementen des Dateiverzeichnisses"
+"Back to File Tree","Zurück zu Dateibaum"
+"Back to MIME type list","Zurück zu Liste der MIME-Typen"
+Cancel,Abbrechen
+confirm,bestätigt
+"Confirm deleting","Löschen bestätigen"
+"Create Directory Element","Verzeichniselement erstellen"
+"Create File Directory","Dateiverzeichnis erstellen"
+Date,date
+"Delete Directory","Verzeichnis löschen"
+"Directory element details","Details des Verzeichniselements"
+"Do you want to remove the folder with all files?","Wollen Sie den Ordner mit allen Dateien wirklich löschen?"
+"Edit file","Datei bearbeiten"
+"Edit MIME type","MIME-Typ bearbeiten"
+"Failed to delete MIME type","MIME-Type konnte nicht gelöscht werden."
+"File Directory tree updated successfully.","Dateienverzeichnisstruktur erfolgreich aktualisiert."
+"File List",Dateiliste
+"File Manager",Dateimanager
+"File name",Dateiname
+"File type",Dateityp
+"File type is not allowed for uploading","Hochladen des Dateityps ist nicht zulässig."
+"File upload","Datei hochladen"
+"File was not found","Datei wurde nicht gefunden"
+"Files list",Dateienliste
+"MIME type",MIME-Type
+"MIME type already exists","MIME-Type existiert bereits"
+"MIME type settings","MIME-Type Einstellungen"
+"MIME type was successfully deleted","MIME-Type wurde erfolgreich gelöscht."
+"MIME type was successfully saved","MIME-Type wurde erfolgreich gespeichert."
+Save,Speichern
+"Save order","Bestellung speichern"
+"Specify a file name or use real one","Dateinamen festlegen"
+"The file directory was added successfully.","Das Dateienverzeichnis wurde erfolgreich hinzugefügt."
+"The file was added successfully.","Die Datei wurde erfolgreich hinzugefügt."
+"The file was edited successfully.","Die Datei wurde erfolgreich bearbeitet."
+"Upload a file","Eine Datei hochladen"
+"Upload a file or specify a new file name","Eine Datei hochladen oder einen neuen Dateinamen angeben"
+"Use file name","Dateinamen benutzen"
+"View file","Datei anzeigen"
