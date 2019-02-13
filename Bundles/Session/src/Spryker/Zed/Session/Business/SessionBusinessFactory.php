@@ -39,8 +39,8 @@ class SessionBusinessFactory extends AbstractBusinessFactory
         $sessionLockReleaserPool = new SessionLockReleaserPool();
         $sessionLockReleaserPool->addLockReleaser(
             $this->createRedisSessionLockReleaser(
-                $this->getConfig()->getSessionHandlerRedisParametersYves(),
-                $this->getConfig()->getSessionHandlerRedisOptionsYves()
+                $this->getConfig()->getSessionHandlerRedisConnectionParametersYves(),
+                $this->getConfig()->getSessionHandlerRedisConnectionOptionsYves()
             ),
             SessionConfig::SESSION_HANDLER_REDIS_LOCKING
         );
@@ -65,8 +65,8 @@ class SessionBusinessFactory extends AbstractBusinessFactory
         $sessionLockReleaserPool = new SessionLockReleaserPool();
         $sessionLockReleaserPool->addLockReleaser(
             $this->createRedisSessionLockReleaser(
-                $this->getConfig()->getSessionHandlerRedisParametersZed(),
-                $this->getConfig()->getSessionHandlerRedisOptionsZed()
+                $this->getConfig()->getSessionHandlerRedisConnectionParametersZed(),
+                $this->getConfig()->getSessionHandlerRedisConnectionOptionsZed()
             ),
             SessionConfig::SESSION_HANDLER_REDIS_LOCKING
         );
@@ -75,14 +75,14 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param array|string $parameters
-     * @param array $options
+     * @param array|string $connectionParameters
+     * @param array $connectionOptions
      *
      * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface
      */
-    protected function createRedisSessionLockReleaser($parameters, array $options = [])
+    protected function createRedisSessionLockReleaser($connectionParameters, array $connectionOptions = [])
     {
-        $redisClient = $this->getRedisClient($parameters, $options);
+        $redisClient = $this->getRedisClient($connectionParameters, $connectionOptions);
 
         return new SessionLockReleaser(
             $this->getRedisSessionLocker($redisClient),
@@ -91,16 +91,16 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param array|string $parameters
-     * @param array $options
+     * @param array|string $connectionParameters
+     * @param array $connectionOptions
      *
      * @return \Predis\Client
      */
-    protected function getRedisClient($parameters, array $options = [])
+    protected function getRedisClient($connectionParameters, array $connectionOptions = [])
     {
         return $this
             ->createSessionHandlerFactory()
-            ->createRedisClient($parameters, $options);
+            ->createRedisClient($connectionParameters, $connectionOptions);
     }
 
     /**

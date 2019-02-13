@@ -105,9 +105,9 @@ class SessionConfig extends AbstractBundleConfig
     /**
      * @return array|string
      */
-    public function getSessionHandlerRedisParametersZed()
+    public function getSessionHandlerRedisConnectionParametersZed()
     {
-        $connectionParameters = $this->get(SessionConstants::ZED_SESSION_REDIS_CONFIGURATION, []);
+        $connectionParameters = $this->get(SessionConstants::ZED_SESSION_REDIS_CONNECTION_CONFIGURATION, []);
 
         if ($connectionParameters) {
             return $connectionParameters;
@@ -119,9 +119,9 @@ class SessionConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getSessionHandlerRedisOptionsZed(): array
+    public function getSessionHandlerRedisConnectionOptionsZed(): array
     {
-        return $this->get(SessionConstants::ZED_SESSION_REDIS_OPTIONS, []);
+        return $this->get(SessionConstants::ZED_SESSION_REDIS_CONNECTION_OPTIONS, []);
     }
 
     /**
@@ -207,12 +207,12 @@ class SessionConfig extends AbstractBundleConfig
     /**
      * @return array|string
      */
-    public function getSessionHandlerRedisParametersYves()
+    public function getSessionHandlerRedisConnectionParametersYves()
     {
-        $connectionConfiguration = $this->get(SessionConstants::YVES_SESSION_REDIS_CONFIGURATION, []);
+        $connectionParameters = $this->get(SessionConstants::YVES_SESSION_REDIS_CONNECTION_CONFIGURATION, []);
 
-        if ($connectionConfiguration) {
-            return $connectionConfiguration;
+        if ($connectionParameters) {
+            return $connectionParameters;
         }
 
         return $this->getSessionHandlerRedisDataSourceNameYves();
@@ -221,9 +221,9 @@ class SessionConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getSessionHandlerRedisOptionsYves(): array
+    public function getSessionHandlerRedisConnectionOptionsYves(): array
     {
-        return $this->get(SessionConstants::YVES_SESSION_REDIS_OPTIONS, []);
+        return $this->get(SessionConstants::YVES_SESSION_REDIS_CONNECTION_OPTIONS, []);
     }
 
     /**

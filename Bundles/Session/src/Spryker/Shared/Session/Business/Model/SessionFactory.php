@@ -68,52 +68,52 @@ abstract class SessionFactory
     }
 
     /**
-     * @param array|string $parameters
-     * @param array $options
+     * @param array|string $connectionParameters
+     * @param array $connectionOptions
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedis
      */
-    public function registerRedisSessionHandler($parameters, array $options = [])
+    public function registerRedisSessionHandler($connectionParameters, array $connectionOptions = [])
     {
-        $handler = $this->createSessionHandlerRedis($parameters, $options);
-        $this->setSessionSaveHandler($this->createSessionHandlerRedis($parameters, $options));
+        $handler = $this->createSessionHandlerRedis($connectionParameters, $connectionOptions);
+        $this->setSessionSaveHandler($this->createSessionHandlerRedis($connectionParameters, $connectionOptions));
 
         return $handler;
     }
 
     /**
-     * @param array|string $parameters
-     * @param array $options
+     * @param array|string $connectionParameters
+     * @param array $connectionOptions
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedis
      */
-    public function createSessionHandlerRedis($parameters, array $options = [])
+    public function createSessionHandlerRedis($connectionParameters, array $connectionOptions = [])
     {
         $lifetime = $this->getSessionLifetime();
 
-        return new SessionHandlerRedis($parameters, $lifetime, $this->getMonitoringService(), $options);
+        return new SessionHandlerRedis($connectionParameters, $lifetime, $this->getMonitoringService(), $connectionOptions);
     }
 
     /**
-     * @param array|string $parameters
-     * @param array $options
+     * @param array|string $connectionParameters
+     * @param array $connectionOptions
      *
      * @return void
      */
-    public function registerRedisLockingSessionHandler($parameters, array $options = [])
+    public function registerRedisLockingSessionHandler($connectionParameters, array $connectionOptions = [])
     {
-        $this->setSessionSaveHandler($this->createRedisLockingSessionHandler($parameters, $options));
+        $this->setSessionSaveHandler($this->createRedisLockingSessionHandler($connectionParameters, $connectionOptions));
     }
 
     /**
-     * @param array|string $parameters
-     * @param array $options
+     * @param array|string $connectionParameters
+     * @param array $connectionOptions
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking
      */
-    public function createRedisLockingSessionHandler($parameters, array $options = [])
+    public function createRedisLockingSessionHandler($connectionParameters, array $connectionOptions = [])
     {
-        $redisClient = $this->createRedisClient($parameters, $options);
+        $redisClient = $this->createRedisClient($connectionParameters, $connectionOptions);
 
         return new SessionHandlerRedisLocking(
             $redisClient,
@@ -124,14 +124,14 @@ abstract class SessionFactory
     }
 
     /**
-     * @param array|string $parameters
-     * @param array $options
+     * @param array|string $connectionParameters
+     * @param array $connectionOptions
      *
      * @return \Predis\Client
      */
-    public function createRedisClient($parameters, array $options = [])
+    public function createRedisClient($connectionParameters, array $connectionOptions = [])
     {
-        return new Client($parameters, $options);
+        return new Client($connectionParameters, $connectionOptions);
     }
 
     /**

@@ -96,9 +96,9 @@ class SessionConfig extends AbstractBundleConfig
     /**
      * @return array|string
      */
-    public function getSessionHandlerRedisParameters()
+    public function getSessionHandlerRedisConnectionParameters()
     {
-        $connectionParameters = $this->get(SessionConstants::YVES_SESSION_REDIS_CONFIGURATION, []);
+        $connectionParameters = $this->get(SessionConstants::YVES_SESSION_REDIS_CONNECTION_CONFIGURATION, []);
 
         if ($connectionParameters) {
             return $connectionParameters;
@@ -124,9 +124,9 @@ class SessionConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getSessionHandlerRedisOptions(): array
+    public function getSessionHandlerRedisConnectionOptions(): array
     {
-        return $this->get(SessionConstants::YVES_SESSION_REDIS_OPTIONS, []);
+        return $this->get(SessionConstants::YVES_SESSION_REDIS_CONNECTION_OPTIONS, []);
     }
 
     /**
