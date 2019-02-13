@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\SharedCart\Business\Model;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
 use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
@@ -37,15 +37,13 @@ class QuoteReader implements QuoteReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function findCustomerSharedQuotes(CompanyUserTransfer $companyUserTransfer): QuoteCollectionTransfer
+    public function findCustomerSharedQuoteCollectionBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
-        $quoteEntityTransferList = $this->sharedCartRepository->findQuotesByIdCompanyUser(
-            $companyUserTransfer->getIdCompanyUser()
-        );
+        $quoteEntityTransferList = $this->sharedCartRepository->findQuotesBySharedQuoteCriteriaFilter($sharedQuoteCriteriaFilterTransfer);
 
         return $this->mapQuoteCollectionTransfer($quoteEntityTransferList);
     }

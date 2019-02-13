@@ -122,7 +122,8 @@ class QuoteDeleter implements QuoteDeleterInterface
     {
         $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
         $quoteCriteriaFilterTransfer
-            ->setCustomerReference($customerTransfer->getCustomerReference());
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setIdStore($quoteTransfer->getStore()->getIdStore());
         $customerQuoteCollectionTransfer = $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
 
         $customerQuoteQuantity = 0;
