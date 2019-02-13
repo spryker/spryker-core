@@ -214,7 +214,8 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves company user information by customer ID.
+     * - Finds company user by ID.
+     * - Executes CompanyUserHydrationPluginInterface plugins if company user exists.
      * - Returns null if company user does not exist.
      *
      * @api

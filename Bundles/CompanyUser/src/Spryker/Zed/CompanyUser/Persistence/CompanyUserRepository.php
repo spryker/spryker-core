@@ -287,8 +287,8 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
-     * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
+     * @module Customer
+     * @module Company
      *
      * @param int $idCompanyUser
      *
