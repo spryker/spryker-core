@@ -28,7 +28,7 @@
     </transfer>
 
     <transfer name="Locale">
-        <property name="localeName" dataBuilderRule="locale"/>
+        <property name="localeName" type="string"/>
     </transfer>
 </transfers>
 
