@@ -55,7 +55,7 @@ class ContentEntityManager extends AbstractEntityManager implements ContentEntit
                 ->filterByFkLocale($localizedContent->getFkLocale())
                 ->findOneOrCreate();
 
-            if (empty($localizedContent->getParameters())) {
+            if (!$localizedContent->getParameters()) {
                 $isModified = true;
                 $spyContentEntity->removeSpyContentLocalized($contentLocalizedEntity);
 

@@ -26,15 +26,16 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
     public function findContentStorageByContentIds(array $contentIds): ArrayObject
     {
         $contentStorageTransfers = new ArrayObject();
-
         $contentStorageEntities = $this->getFactory()
             ->createContentStorageQuery()
             ->filterByFkContent($contentIds, Criteria::IN)
             ->find();
+
         foreach ($contentStorageEntities as $contentStorageEntity) {
-            $contentStorageTransfers->append(
-                $this->getFactory()->createContentStorageMapper()->mapContentStorageEntityToTransfer($contentStorageEntity, new ContentStorageTransfer())
-            );
+            $contentStorageTransfer = $this->getFactory()
+                ->createContentStorageMapper()
+                ->mapContentStorageEntityToTransfer($contentStorageEntity, new ContentStorageTransfer());
+            $contentStorageTransfers->append($contentStorageTransfer);
         }
 
         return $contentStorageTransfers;
@@ -48,7 +49,6 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
     public function findContentByIds(array $contentIds): ArrayObject
     {
         $contentTransfers = new ArrayObject();
-
         $contentEntities = $this->getFactory()
             ->getContentQuery()
             ->filterByIdContent($contentIds, Criteria::IN)
@@ -56,9 +56,10 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
             ->find();
 
         foreach ($contentEntities as $contentEntity) {
-            $contentTransfers->append(
-                $this->getFactory()->createContentStorageMapper()->mapContentEntityToTransfer($contentEntity, new ContentTransfer())
-            );
+            $contentStorageTransfer = $this->getFactory()
+                ->createContentStorageMapper()
+                ->mapContentEntityToTransfer($contentEntity, new ContentTransfer());
+            $contentTransfers->append($contentStorageTransfer);
         }
 
         return $contentTransfers;
@@ -70,15 +71,15 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
     public function findAllContentStorage(): ArrayObject
     {
         $contentStorageTransfers = new ArrayObject();
-
         $contentStorageEntities = $this->getFactory()
             ->createContentStorageQuery()
             ->find();
 
         foreach ($contentStorageEntities as $contentStorageEntity) {
-            $contentStorageTransfers->append(
-                $this->getFactory()->createContentStorageMapper()->mapContentStorageEntityToTransfer($contentStorageEntity, new ContentStorageTransfer())
-            );
+            $contentStorageTransfer = $this->getFactory()
+                ->createContentStorageMapper()
+                ->mapContentStorageEntityToTransfer($contentStorageEntity, new ContentStorageTransfer());
+            $contentStorageTransfers->append($contentStorageTransfer);
         }
 
         return $contentStorageTransfers;
@@ -90,7 +91,6 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
     public function findAllContent(): ArrayObject
     {
         $contentTransfers = new ArrayObject();
-
         $contentEntities = $this->getFactory()
             ->getContentQuery()
             ->useSpyContentLocalizedQuery()
@@ -99,10 +99,12 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
             ->find();
 
         foreach ($contentEntities as $contentEntity) {
-            $contentTransfers->append(
-                $this->getFactory()->createContentStorageMapper()->mapContentEntityToTransfer($contentEntity, new ContentTransfer())
-            );
+            $contentStorageTransfer = $this->getFactory()
+                ->createContentStorageMapper()
+                ->mapContentEntityToTransfer($contentEntity, new ContentTransfer());
+            $contentTransfers->append($contentStorageTransfer);
         }
+
         return $contentTransfers;
     }
 }

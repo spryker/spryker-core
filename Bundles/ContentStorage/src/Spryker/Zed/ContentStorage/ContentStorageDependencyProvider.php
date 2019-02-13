@@ -10,6 +10,7 @@ namespace Spryker\Zed\ContentStorage;
 use Orm\Zed\Content\Persistence\SpyContentQuery;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeBridge;
+use Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -21,6 +22,7 @@ class ContentStorageDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const PROPEL_QUERY_CONTENT = 'PROPEL_QUERY_CONTENT';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,6 +33,7 @@ class ContentStorageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addContentQuery($container);
+        $container = $this->addUtilEncoding($container);
 
         return $container;
     }
@@ -57,6 +60,7 @@ class ContentStorageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addUtilEncoding($container);
 
         return $container;
     }
@@ -102,6 +106,20 @@ class ContentStorageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PROPEL_QUERY_CONTENT] = function () {
             return SpyContentQuery::create();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncoding(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new ContentStorageToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;

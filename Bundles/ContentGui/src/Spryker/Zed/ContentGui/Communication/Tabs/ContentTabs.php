@@ -53,7 +53,7 @@ class ContentTabs extends AbstractTabs
             $tabItemTransfer->setName((string)$availableLocale->getIdLocale());
             $tabItemTransfer->setTemplate('@ContentGui/_partial/locale-tab.twig');
             $tabItemTransfer->setTitle($availableLocale->getLocaleName());
-            $tabItemTransfer->setHasError(true);
+            $tabItemTransfer->setHasError(false);
 
             $tabsViewTransfer->addTab($tabItemTransfer);
         }
@@ -76,7 +76,7 @@ class ContentTabs extends AbstractTabs
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    protected function getAvailableLocales()
+    protected function getAvailableLocales(): array
     {
         $defaultLocale = new LocaleTransfer();
         $defaultLocale->setLocaleName('Default locale');

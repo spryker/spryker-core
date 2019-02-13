@@ -5,8 +5,8 @@
 
 'use strict';
 
-if (!window.ContentAbstractProductList) {
+if (!window.ContentProductAbstractList) {
     require('../sass/main.scss');
     require('./modules/add');
-    window.ContentAbstractProductList = true;
+    window.ContentProductAbstractList = true;
 }

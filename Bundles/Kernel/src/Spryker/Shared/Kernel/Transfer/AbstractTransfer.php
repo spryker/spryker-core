@@ -207,7 +207,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
             throw new RequiredTransferPropertyException(sprintf(
                 'Missing required property "%s" for transfer %s.',
                 $property,
-                get_class($this)
+                static::class
             ));
         }
     }
@@ -227,7 +227,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
             throw new RequiredTransferPropertyException(sprintf(
                 'Empty required collection property "%s" for transfer %s.',
                 $property,
-                get_class($this)
+                static::class
             ));
         }
     }
@@ -273,7 +273,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
         }
 
         throw new InvalidArgumentException(
-            sprintf('Missing property "%s" in "%s"', $property, get_class($this))
+            sprintf('Missing property "%s" in "%s"', $property, static::class)
         );
     }
 
@@ -328,7 +328,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
             throw new TransferUnserializationException(
                 sprintf(
                     'Failed to unserialize %s. Updating or clearing your data source may solve this problem: %s',
-                    get_class($this),
+                    static::class,
                     $exception->getMessage()
                 ),
                 $exception->getCode(),

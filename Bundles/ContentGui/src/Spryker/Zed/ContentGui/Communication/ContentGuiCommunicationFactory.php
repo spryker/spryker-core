@@ -114,4 +114,12 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ContentGuiDependencyProvider::PLUGINS_CONTENT_ITEM);
     }
+
+    /**
+     * @return \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingInterface
+     */
+    public function getUtilEncoding()
+    {
+        return $this->getProvidedDependency(ContentGuiDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
 }

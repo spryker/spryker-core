@@ -65,12 +65,9 @@ class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements 
 
         foreach ($contentStorageTransfers as $contentStorageTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            /**
-             * @var string $data
-             */
-            $data = $contentStorageTransfer->getData();
-            $synchronizationDataTransfer->setData($data);
+            $synchronizationDataTransfer->setData($contentStorageTransfer->getData());
             $synchronizationDataTransfer->setKey($contentStorageTransfer->getKey());
+
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 

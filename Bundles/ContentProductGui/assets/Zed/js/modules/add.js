@@ -5,8 +5,6 @@
 
 'use strict';
 
-
-
 $(document).ready(function () {
     $.each($('.add-abstract-product-sku'), function(index, subform) {
         var subformList = $($(subform).data('list'));
@@ -16,10 +14,6 @@ $(document).ready(function () {
             }
         });
     });
-
-    function addRemoveSkuButton(element) {
-        return $(element).append('<i class="fa fa-minus remove-abstract-product-sku pull-right"></i>');
-    }
 
     $('.add-abstract-product-sku').click(function (e) {
         var list = $($(this).data('list'));
@@ -35,4 +29,8 @@ $(document).ready(function () {
     $(document).on("click", ".remove-abstract-product-sku", function() {
         $(this).parent().remove();
     });
+
+    function addRemoveSkuButton(element) {
+        return $(element).append('<i class="fa fa-minus remove-abstract-product-sku pull-right"></i>');
+    }
 });

@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
@@ -26,6 +27,9 @@ class ContentForm extends AbstractType
     public const FIELD_CONTENT_TERM_KEY = 'content_term_key';
     public const FIELD_CONTENT_TYPE_KEY = 'content_type_key';
     public const FIELD_LOCALES = 'localizedContents';
+
+    public const PLACEHOLDER_NAME = 'Name';
+    public const PLACEHOLDER_DESCRIPTION = 'Description';
 
     public const OPTION_AVAILABLE_LOCALES = 'OPTION_AVAILABLE_LOCALES';
     public const OPTION_CONTENT_ITEM_FORM_PLUGIN = 'OPTION_CONTENT_ITEM_FORM_PLUGIN';
@@ -68,7 +72,7 @@ class ContentForm extends AbstractType
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'attr' => [
-                'placeholder' => 'Name',
+                'placeholder' => static::PLACEHOLDER_NAME,
             ],
             'label' => false,
             'constraints' => $this->getFieldDefaultConstraints(),
@@ -86,7 +90,7 @@ class ContentForm extends AbstractType
     {
         $builder->add(static::FIELD_DESCRIPTION, TextType::class, [
             'attr' => [
-                'placeholder' => 'Description',
+                'placeholder' => static::PLACEHOLDER_DESCRIPTION,
             ],
             'label' => false,
             'constraints' => $this->getFieldDefaultConstraints(),
@@ -152,6 +156,7 @@ class ContentForm extends AbstractType
         return [
             new NotBlank(),
             new Required(),
+            new Length(['max' => 255]),
         ];
     }
 
