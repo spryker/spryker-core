@@ -73,6 +73,7 @@ class IndexController extends AbstractController
 
             return $this->redirectToReferer($request);
         }
+
         $this->addErrorMessage(static::MESSAGE_PRODUCT_UNDISCONTINUED_ERROR);
 
         foreach ($productDiscontinuedResponseTransfer->getMessages() as $messageTransfer) {
