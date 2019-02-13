@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
-class ShipmentFormCreateDataProvider extends AbstractShipmentFormDataProvider
+class ShipmentFormCreateDataProvider extends BaseShipmentFormDataProvider
 {
     /**
      * @param int $idSalesOrder

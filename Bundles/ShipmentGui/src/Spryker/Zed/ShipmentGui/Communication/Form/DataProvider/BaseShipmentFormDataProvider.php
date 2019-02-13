@@ -17,7 +17,7 @@ use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface;
 
-class AbstractShipmentFormDataProvider
+class BaseShipmentFormDataProvider
 {
     /**
      * @var \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesInterface
@@ -107,7 +107,7 @@ class AbstractShipmentFormDataProvider
      */
     protected function getShippingAddressesOptions(int $idSalesOrder, ?int $idSalesShipment): array
     {
-        $addresses = ['New address'];
+        $addresses = [null => 'New address'];
 
         $orderTransfer = $this->salesFacade->findOrderByIdSalesOrder($idSalesOrder);
         if ($orderTransfer === null || $orderTransfer->getCustomer() === null) {

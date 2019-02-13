@@ -14,7 +14,7 @@ use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormEdit;
 
-class ShipmentFormEditDataProvider extends AbstractShipmentFormDataProvider
+class ShipmentFormEditDataProvider extends BaseShipmentFormDataProvider
 {
     /**
      * @param int $idSalesOrder
@@ -22,7 +22,7 @@ class ShipmentFormEditDataProvider extends AbstractShipmentFormDataProvider
      *
      * @return array
      */
-    public function getData(int $idSalesOrder, int $idSalesShipment = null): array
+    public function getData(int $idSalesOrder, ?int $idSalesShipment = null): array
     {
         $shipmentTransfer = $this->shipmentFacade->findShipmentById($idSalesShipment);
         $formData = $shipmentTransfer !== null ? $this->getFormData($shipmentTransfer) : [];

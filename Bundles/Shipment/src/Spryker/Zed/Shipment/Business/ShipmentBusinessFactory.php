@@ -28,10 +28,10 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentReader;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentReaderInterface;
+use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaver;
+use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaverInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcher;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcherInterface;
-use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupSaver;
-use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupSaverInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtender;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtenderInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolver;
@@ -357,18 +357,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupSaverInterface
-     */
-    public function createShipmentGroupSaver(): ShipmentGroupSaverInterface
-    {
-        return new ShipmentGroupSaver(
-            $this->getEntityManager(),
-            $this->getSalesFacade(),
-            $this->createShipmentMethodExtender()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcherInterface
      */
     public function createShipmentFetcher(): ShipmentFetcherInterface
@@ -399,6 +387,17 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentReader(
             $this->getQueryContainer(),
             $this->getSalesFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Shipment\ShipmentSaverInterface
+     */
+    public function createShipmentSaver(): ShipmentSaverInterface
+    {
+        return new ShipmentSaver(
+            $this->createCheckoutShipmentOrderSaverWithMultiShippingAddress(),
+            $this->createShipmentMethodExtender()
         );
     }
 }

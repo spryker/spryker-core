@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Form;
 
 use DateTime;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemForm;
@@ -98,9 +99,6 @@ class ShipmentFormCreate extends AbstractType
             'choices' => array_flip($options),
             'required' => false,
             'placeholder' => false,
-            'constraints' => [
-                new NotBlank(),
-            ],
         ]);
 
         return $this;
@@ -203,7 +201,7 @@ class ShipmentFormCreate extends AbstractType
     protected function addOrderItemsForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add(static::FORM_SALES_ORDER_ITEMS, CollectionType::class, [
-                'entry_type' => ItemForm::class,
+                'entry_type' => ItemTransfer::class,
                 'entry_options' => [
                     'label' => false,
                     static::FIELD_SHIPMENT_SELECTED_ITEMS => $builder->getOption(static::FIELD_SHIPMENT_SELECTED_ITEMS),

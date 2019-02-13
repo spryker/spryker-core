@@ -7,12 +7,11 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
-use Spryker\Zed\ShipmentGui\ShipmentGuiConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,7 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
+    protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
+    protected const PARAM_ID_SALES_SHIPMENT = 'id-shipment';
     protected const PARAM_REDIRECT_URL = 'redirect-url';
+
     protected const REDIRECT_URL_DEFAULT = '/sales';
 
     protected const MESSAGE_SHIPMENT_EDIT_SUCCESS = 'Shipment has been successfully created.';
@@ -35,8 +37,8 @@ class EditController extends AbstractController
     {
         $redirectUrl = $request->get(static::PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
 
-        $idSalesOrder = $request->query->get(ShipmentGuiConfig::PARAM_ID_SALES_ORDER);
-        $idSalesShipment = $request->query->get(ShipmentGuiConfig::PARAM_ID_SALES_SHIPMENT);
+        $idSalesOrder = $request->query->get(static::PARAM_ID_SALES_ORDER);
+        $idSalesShipment = $request->query->get(static::PARAM_ID_SALES_SHIPMENT);
         $dataProvider = $this->getFactory()->createShipmentFormEditDataProvider();
 
         $form = $this->getFactory()
@@ -59,11 +61,13 @@ class EditController extends AbstractController
                 return $this->redirectResponse($redirectUrl);
             }
 
-            $this->getFactory()
+            $responseTransfer = $this->getFactory()
                 ->getShipmentFacade()
-                ->saveShipmentGroup($shipmentGroupTransfer, $orderTransfer);
+                ->saveShipment($shipmentGroupTransfer, $orderTransfer);
 
-            $this->addSuccessMessage('Shipment has been updated successfully');
+            if ($responseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessage('Shipment has been updated successfully');
+            }
 
             return $this->redirectResponse($redirectUrl);
         }
@@ -83,7 +87,7 @@ class EditController extends AbstractController
     {
         $shipmentGroupTransfer = new ShipmentGroupTransfer();
         $shipmentGroupTransfer = $this->addShipmentTransfer($shipmentGroupTransfer, $formData);
-        $shipmentGroupTransfer = $this->addItems($shipmentGroupTransfer, $formData);
+        $shipmentGroupTransfer->getShipment()->setExpense(new ExpenseTransfer());
 
         return $shipmentGroupTransfer;
     }
@@ -98,8 +102,10 @@ class EditController extends AbstractController
     {
         $shipmentTransfer = (new ShipmentTransfer())->fromArray($formData, true);
         $shipmentTransfer->requireShippingAddress();
-        $shipmentTransfer->getShippingAddress()
-            ->setIdSalesOrderAddress($formData['id_shipping_address']);
+        if ($formData['id_shipping_address']) {
+            $shipmentTransfer->getShippingAddress()
+                ->setIdSalesOrderAddress($formData['id_shipping_address']);
+        }
 
         $shipmentMethodTransfer = $this
             ->getFactory()
@@ -108,25 +114,5 @@ class EditController extends AbstractController
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         return $shipmentGroupTransfer->setShipment($shipmentTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     * @param array $formData
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
-     */
-    protected function addItems(ShipmentGroupTransfer $shipmentGroupTransfer, array $formData): ShipmentGroupTransfer
-    {
-        foreach ($formData[ShipmentFormCreate::FORM_SALES_ORDER_ITEMS] as $item) {
-            if ($item['is_updated']) {
-                $itemTransfer = (new ItemTransfer())
-                    ->fromArray($item->toArray(), true)
-                    ->setShipment($shipmentGroupTransfer->getShipment());
-                $shipmentGroupTransfer->addItem($itemTransfer);
-            }
-        }
-
-        return $shipmentGroupTransfer;
     }
 }

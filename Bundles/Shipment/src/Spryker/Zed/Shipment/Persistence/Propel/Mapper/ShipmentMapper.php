@@ -15,12 +15,12 @@ class ShipmentMapper implements ShipmentMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      * @param int $idSalesOrder
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
      */
-    public function mapShipmentTransferToSalesOrderAddressEntity(ShipmentTransfer $shipmentTransfer, int $idSalesOrder): SpySalesShipment
+    public function mapShipmentTransferToSalesOrderAddressEntity(ShipmentTransfer $shipmentTransfer, int $idSalesOrder, SpySalesShipment $salesShipmentEntity): SpySalesShipment
     {
-        $salesShipmentEntity = new SpySalesShipment();
 
         $salesShipmentEntity->fromArray($shipmentTransfer->getMethod()->toArray());
         $salesShipmentEntity->setFkSalesOrder($idSalesOrder);

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -211,6 +212,19 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
+     * - Creates or updates shipment for order via admin web interface.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return void
+     */
+    public function saveOrderShipmentFromAdmin(OrderTransfer $orderTransfer, ShipmentGroupTransfer $shipmentGroupTransfer);
+
+    /**
+     * Specification:
      *   - Hydrates order transfer with additional shipment data from shipment sales tables.
      *
      * @api
@@ -260,19 +274,6 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Save sales shipment group.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    public function saveShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): void;
-
-    /**
-     * Specification:
      * - Returns ShipmentTransfer for provided id or null.
      *
      * @api
@@ -282,4 +283,17 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
     public function findShipmentTransferById(int $idSalesShipment): ?ShipmentTransfer;
+
+    /**
+     * Specification:
+     * - Save shipment for specified order.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupResponseTransfer
+     */
+    public function saveShipment(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): ShipmentGroupResponseTransfer;
 }

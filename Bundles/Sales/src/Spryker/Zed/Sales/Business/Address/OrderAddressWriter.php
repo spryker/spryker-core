@@ -55,7 +55,7 @@ class OrderAddressWriter implements OrderAddressWriterInterface
             $this->countryFacade->getIdCountryByIso2Code($addressTransfer->getIso2Code())
         );
 
-        if ($addressTransfer->getIdSalesOrderAddress() !== null) {
+        if ($addressTransfer->getIdSalesOrderAddress()) {
             $this->update($addressTransfer, $addressTransfer->getIdSalesOrderAddress());
 
             return $addressTransfer;

@@ -4,14 +4,16 @@
     {% block widget_title -%}
         <h5>{{ 'Order Items' | trans }}</h5>
         <div class="pull-right">
-            <a class="btn btn-default" href="{{ url('/shipment-gui/create', {'id-sales-order': order.idSalesOrder}) }}">{{ 'Create Shipment' | trans }}</a>
+            {% include '@ShipmentGui/Create/_partials/create-shipment-link.twig' ignore missing %}
         </div>
     {% endblock %}
     {% block widget_content %}
         {% for keys, shipmentOrderItems in groupedOrderItemsByShipment %}
             <div>
                 <h3>Shipment {{ loop.index }} of {{ loop.length }}</h3>
-                <div class="pull-right"><a class="btn btn-default" href="{{ url('/shipment-gui/edit', {'id-sales-order': order.idSalesOrder, 'id-shipment': shipmentOrderItems.shipment.idSalesShipment}) }}">{{ 'Edit Shipment' | trans }}</a></div>
+                <div class="pull-right">
+                    {% include '@ShipmentGui/Edit/_partials/edit-shipment-link.twig' ignore missing %}
+                </div>
             </div>
             <div class="row">
                 <div class="col-xs-12">

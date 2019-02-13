@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -52,9 +51,13 @@ class CreateController extends AbstractController
                 ->getSalesFacade()
                 ->findOrderByIdSalesOrder($idSalesOrder);
 
-            $this->getFactory()
+            $responseTransfer = $this->getFactory()
                 ->getShipmentFacade()
-                ->saveShipmentGroup($shipmentGroupTransfer, $orderTransfer);
+                ->saveShipment($shipmentGroupTransfer, $orderTransfer);
+
+            if ($responseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessage('Shipment has been successfully created');
+            }
 
             return $this->redirectResponse($redirectUrl);
         }
@@ -74,7 +77,6 @@ class CreateController extends AbstractController
     {
         $shipmentGroupTransfer = new ShipmentGroupTransfer();
         $shipmentGroupTransfer = $this->addShipmentTransfer($shipmentGroupTransfer, $formData);
-        $shipmentGroupTransfer = $this->addItems($shipmentGroupTransfer, $formData);
 
         return $shipmentGroupTransfer;
     }
@@ -88,6 +90,13 @@ class CreateController extends AbstractController
     protected function addShipmentTransfer(ShipmentGroupTransfer $shipmentGroupTransfer, array $formData): ShipmentGroupTransfer
     {
         $shipmentTransfer = (new ShipmentTransfer())->fromArray($formData, true);
+
+        $shipmentTransfer->requireShippingAddress();
+        if ($formData['id_shipping_address']) {
+            $shipmentTransfer->getShippingAddress()
+                ->setIdSalesOrderAddress($formData['id_shipping_address']);
+        }
+
         $shipmentMethodTransfer = $this
             ->getFactory()
             ->getShipmentFacade()
@@ -95,25 +104,5 @@ class CreateController extends AbstractController
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         return $shipmentGroupTransfer->setShipment($shipmentTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     * @param array $formData
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
-     */
-    protected function addItems(ShipmentGroupTransfer $shipmentGroupTransfer, array $formData): ShipmentGroupTransfer
-    {
-        foreach ($formData[ShipmentFormCreate::FORM_SALES_ORDER_ITEMS] as $item) {
-            if ($item['is_updated']) {
-                $itemTransfer = (new ItemTransfer())
-                    ->fromArray($item->toArray(), true)
-                    ->setShipment($shipmentGroupTransfer->getShipment());
-                $shipmentGroupTransfer->addItem($itemTransfer);
-            }
-        }
-
-        return $shipmentGroupTransfer;
     }
 }

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -256,6 +257,24 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return void
+     */
+    public function saveOrderShipmentFromAdmin(OrderTransfer $orderTransfer, ShipmentGroupTransfer $shipmentGroupTransfer)
+    {
+        $this->getFactory()
+            ->createCheckoutShipmentOrderSaverStrategyResolver()
+            ->resolve()
+            ->saveOrderShipmentFromAdmin($orderTransfer, $shipmentGroupTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -310,23 +329,6 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    public function saveShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): void
-    {
-        $this->getFactory()
-            ->createShipmentGroupSaver()
-            ->saveShipmentGroup($shipmentGroupTransfer, $orderTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idSalesShipment
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
@@ -336,5 +338,22 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
         return $this->getFactory()
             ->createShipmentReader()
             ->findShipmentById($idSalesShipment);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupResponseTransfer
+     */
+    public function saveShipment(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): ShipmentGroupResponseTransfer
+    {
+        return $this->getFactory()
+            ->createShipmentSaver()
+            ->saveShipment($shipmentGroupTransfer, $orderTransfer);
     }
 }

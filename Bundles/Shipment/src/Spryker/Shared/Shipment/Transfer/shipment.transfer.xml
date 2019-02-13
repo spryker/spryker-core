@@ -139,4 +139,10 @@
         <property name="defaultNetPrice" type="int"/>
     </transfer>
 
+    <transfer name="ShipmentGroupResponse">
+        <property name="shipmentGroup" type="ShipmentGroup"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message" singular="message"/>
+    </transfer>
+
 </transfers>
