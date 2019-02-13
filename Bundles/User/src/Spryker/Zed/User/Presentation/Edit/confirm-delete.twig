@@ -1,0 +1,34 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Warning' %}
+
+{% block action %}
+    {{ backActionButton('/user', 'List Users' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <p>{{ "You are trying to delete user" | trans }}: <b>{{ user.firstName ~ ' ' ~ user.lastName }}</b></p>
+                    <p>{{ "It will be deleted from everywhere" | trans }}</p>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Back' | trans }}</a>
+                    {{ form_start(userDeleteConfirmForm) }}
+                        <input type="hidden" name="id-user" value="{{ user.idUser }}" />
+                        <input type="submit" class="btn btn-danger safe-submit" value="{{ 'Delete' | trans }}" />
+                    {{ form_end(userDeleteConfirmForm) }}
+                </div>
+            </div>
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

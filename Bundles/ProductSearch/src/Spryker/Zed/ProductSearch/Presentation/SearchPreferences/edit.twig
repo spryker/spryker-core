@@ -2,8 +2,12 @@
 
 {% set action_name = (app.request.query.get('id') > 0) ? 'Edit search preferences' : 'Add attribute to search' %}
 
-{% block section_title action_name | trans %}
-{% block head_title action_name | trans %}
+{% block section_title %}
+    {{ action_name | trans }}
+{% endblock %}
+{% block head_title %}
+    {{ action_name | trans }}
+{% endblock %}
 
 {% block action %}
     {{ backActionButton('/product-search/search-preferences', 'List of search preferences' | trans) }}
