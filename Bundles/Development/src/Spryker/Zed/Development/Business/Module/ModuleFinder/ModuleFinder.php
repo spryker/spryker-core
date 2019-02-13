@@ -22,8 +22,6 @@ use Zend\Filter\Word\DashToCamelCase;
 
 class ModuleFinder implements ModuleFinderInterface
 {
-    protected const SPRYKER_SDK_NAMESPACE = 'SprykerSdk';
-
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
      */
@@ -176,10 +174,6 @@ class ModuleFinder implements ModuleFinderInterface
     protected function getModuleDirectories(): array
     {
         $pathToInternalNamespace = $this->config->getPathsToInternalNamespace();
-
-        if (isset($pathToInternalNamespace[static::SPRYKER_SDK_NAMESPACE])) {
-            unset($pathToInternalNamespace[static::SPRYKER_SDK_NAMESPACE]);
-        }
 
         return array_values(array_filter($pathToInternalNamespace, 'is_dir'));
     }

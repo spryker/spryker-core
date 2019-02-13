@@ -301,6 +301,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createSprykerModuleFilePathBuilder(),
             $this->createSprykerShopModuleFilePathBuilder(),
             $this->createSprykerEcoModuleFilePathBuilder(),
+            $this->createSprykerSdkModulePathBuilder(),
             $this->createSprykerMerchantPortalModulePathBuilder(),
         ]);
     }
