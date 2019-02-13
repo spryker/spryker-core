@@ -33,14 +33,4 @@ class AuthMailConnectorToMailBridge implements AuthMailConnectorToMailInterface
     {
         $this->mailFacade->handleMail($mailTransfer);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
-     *
-     * @return void
-     */
-    public function sendMail(MailTransfer $mailTransfer)
-    {
-        $this->mailFacade->sendMail($mailTransfer);
-    }
 }
