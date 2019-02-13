@@ -9,12 +9,12 @@ namespace Spryker\Zed\Development\Business\Module\PathBuilder;
 
 use Generated\Shared\Transfer\ModuleTransfer;
 
-class SprykerStandaloneModulePathBuilder extends AbstractPathBuilder
+class SprykerSdkModulePathBuilder extends AbstractPathBuilder
 {
     /**
      * @var string
      */
-    protected const ORGANIZATION = 'Spryker';
+    protected const ORGANIZATION = 'SprykerSdk';
 
     /**
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
@@ -23,13 +23,12 @@ class SprykerStandaloneModulePathBuilder extends AbstractPathBuilder
      */
     public function buildPaths(ModuleTransfer $moduleTransfer): array
     {
-        $paths = [
-            sprintf(
-                '%s%s/',
-                APPLICATION_VENDOR_DIR . '/spryker/',
-                $this->getModuleName($moduleTransfer)
-            ),
-        ];
+        $paths = [];
+        $basePath = rtrim($this->config->getPathToInternalNamespace(static::ORGANIZATION), '/');
+        foreach ($this->config->getApplications() as $application) {
+            $paths[] = sprintf('%s/%s/src/SprykerSdk/%s/%s', $basePath, $this->getModuleName($moduleTransfer), $application, $moduleTransfer->getName());
+            $paths[] = sprintf('%s/%s/tests/SprykerSdkTest/%s/%s', $basePath, $this->getModuleName($moduleTransfer), $application, $moduleTransfer->getName());
+        }
 
         return $paths;
     }

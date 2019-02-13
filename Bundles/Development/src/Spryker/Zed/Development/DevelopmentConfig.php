@@ -51,6 +51,8 @@ class DevelopmentConfig extends AbstractBundleConfig
         self::NAMESPACE_SPRYKER_MERCHANT_PORTAL => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-merchant-portal/',
     ];
 
+    protected const INTERNAL_PACKAGE_DIRECTORIES = ['spryker', 'spryker-shop', 'spryker-merchant-portal'];
+
     /**
      * @return int
      */
@@ -544,5 +546,13 @@ class DevelopmentConfig extends AbstractBundleConfig
         }
 
         return null;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getInternalPackageDirectories(): array
+    {
+        return static::INTERNAL_PACKAGE_DIRECTORIES;
     }
 }

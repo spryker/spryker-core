@@ -28,11 +28,6 @@ class Manager implements ManagerInterface
     protected $config;
 
     /**
-     * @var string[]
-     */
-    protected $moduleDirectories;
-
-    /**
      * @param \Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface $moduleParser
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
      */
@@ -40,7 +35,6 @@ class Manager implements ManagerInterface
     {
         $this->moduleParser = $moduleParser;
         $this->config = $config;
-        $this->moduleDirectories = array_filter($this->config->getPathsToInternalNamespace(), 'is_dir');
     }
 
     /**
@@ -141,7 +135,8 @@ class Manager implements ManagerInterface
      */
     protected function collectCoreModules()
     {
-        $modules = (new Finder())->directories()->depth('== 0')->in($this->moduleDirectories);
+        $moduleDirectories = array_filter($this->config->getPathsToInternalNamespace(), 'is_dir');
+        $modules = (new Finder())->directories()->depth('== 0')->in($moduleDirectories);
 
         return $modules;
     }

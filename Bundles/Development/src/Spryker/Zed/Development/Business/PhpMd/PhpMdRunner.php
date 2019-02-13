@@ -64,15 +64,15 @@ class PhpMdRunner
     }
 
     /**
-     * @param string $bundle
+     * @param string $value
      *
      * @return string
      */
-    protected function normalizeBundleName($bundle)
+    protected function convertToCamelCase(string $value): string
     {
         $filter = new UnderscoreToCamelCase();
 
-        return ucfirst($filter->filter($bundle));
+        return ucfirst($filter->filter($value));
     }
 
     /**
@@ -87,7 +87,7 @@ class PhpMdRunner
                 return $this->config->getPathToCore();
             }
 
-            $bundle = $this->normalizeBundleName($bundle);
+            $bundle = $this->convertToCamelCase($bundle);
 
             return $this->getPathToBundle($bundle);
         }
@@ -123,9 +123,9 @@ class PhpMdRunner
             return $pathToInternalNamespace . $module . DIRECTORY_SEPARATOR;
         }
 
-        $vendor = $this->normalizeBundleName($namespace);
-        $module = $this->normalizeBundleName($module);
-        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
+        $namespace = $this->convertToCamelCase($namespace);
+        $module = $this->convertToCamelCase($module);
+        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $namespace . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
 
         return $path;
     }
