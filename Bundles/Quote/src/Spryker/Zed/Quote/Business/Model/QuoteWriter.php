@@ -193,6 +193,7 @@ class QuoteWriter implements QuoteWriterInterface
     protected function createQuoteResponseTransfer(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return (new QuoteResponseTransfer())
+            ->setQuoteTransfer($quoteTransfer)
             ->setCustomer($quoteTransfer->getCustomer())
             ->setIsSuccessful(false);
     }
