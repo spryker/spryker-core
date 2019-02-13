@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Sales;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -94,5 +95,22 @@ class SalesClient extends AbstractClient implements SalesClientInterface
         return $this->getFactory()
             ->createZedSalesStub()
             ->getCustomerOrderByOrderReference($orderTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Creates array of unique order items.
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \ArrayObject
+     */
+    public function getUniqueOrderItems(ArrayObject $itemTransfers): ArrayObject
+    {
+        return $this->getFactory()
+            ->createZedSalesStub()
+            ->getUniqueOrderItems($itemTransfers);
     }
 }

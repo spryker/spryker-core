@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Business\Model\OrderItem;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
 class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
@@ -15,11 +16,11 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function getUniqueOrderItems(ArrayObject $itemTransfers): array
+    public function getUniqueOrderItems(ArrayObject $itemTransfers): ItemCollectionTransfer
     {
-        $existedOrderLines = [];
+        $existedOrderLines = new ArrayObject();
         foreach ($itemTransfers as $itemTransfer) {
             $itemTransfer->requireSku();
             if (isset($existedOrderLines[$itemTransfer->getSku()])) {
@@ -30,16 +31,19 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
             $existedOrderLines = $this->addItemToUniqueItemsArray($existedOrderLines, $itemTransfer);
         }
 
-        return $existedOrderLines;
+        $itemCollectionTransfer = (new ItemCollectionTransfer())
+            ->setItems($existedOrderLines);
+
+        return $itemCollectionTransfer;
     }
 
     /**
-     * @param array $existedOrderLines
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $existedOrderLines
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return array
      */
-    protected function changeQuantityOfUniqueItem(array $existedOrderLines, ItemTransfer $itemTransfer): array
+    protected function changeQuantityOfUniqueItem(ArrayObject $existedOrderLines, ItemTransfer $itemTransfer): ArrayObject
     {
         $sku = $itemTransfer->getSku();
         $newQuantity = $existedOrderLines[$sku]['quantity'] + $itemTransfer->getQuantity();
@@ -51,12 +55,12 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
     }
 
     /**
-     * @param array $existedOrderLines
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $existedOrderLines
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return array
      */
-    protected function addItemToUniqueItemsArray(array $existedOrderLines, ItemTransfer $itemTransfer): array
+    protected function addItemToUniqueItemsArray(ArrayObject $existedOrderLines, ItemTransfer $itemTransfer): ArrayObject
     {
         $existedOrderLines[$itemTransfer->getSku()] = [
             'name' => $itemTransfer->getName(),
