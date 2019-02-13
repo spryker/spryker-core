@@ -141,9 +141,11 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
     {
         if ($this->navigation === null) {
             $uri = $this->removeUriSuffix($request->getPathInfo());
-            $zedNavigation = $this->getFactory()->createZedNavigation();
-            $this->navigation = $zedNavigation
-                ->buildNavigation($uri);
+            $this->navigation = [];
+            if ($this->getConfig()->isNavigationEnabled()) {
+                $this->navigation = $this->getFacade()
+                    ->buildNavigation($uri);
+            }
         }
 
         return $this->navigation;

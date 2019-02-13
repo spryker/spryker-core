@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ZedNavigation\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ZedNavigation\Communication\Plugin\ZedNavigation;
 
 /**
  * @method \Spryker\Zed\ZedNavigation\ZedNavigationConfig getConfig()
@@ -16,11 +15,4 @@ use Spryker\Zed\ZedNavigation\Communication\Plugin\ZedNavigation;
  */
 class ZedNavigationCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\ZedNavigation\Communication\Plugin\ZedNavigation
-     */
-    public function createZedNavigation(): ZedNavigation
-    {
-        return new ZedNavigation();
-    }
 }
