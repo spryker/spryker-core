@@ -153,7 +153,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
                 ->useSpyTaxRateQuery()
                     ->useCountryQuery()
                         ->filterByIso2Code($countryIso2Codes, Criteria::IN)
-                        ->groupByIso2Code()
+                        ->groupBy(SpyCountryTableMap::COL_ISO2_CODE)
                     ->endUse()
                     ->_or()
                     ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)

@@ -194,7 +194,7 @@ class PersistentCartStub implements PersistentCartStubInterface
     public function createQuoteWithReloadedItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
-        $quoteResponseTransfer = $this->zedRequestClient->call('/persistent-cart/gateway/create-and-reload-quote', $quoteTransfer);
+        $quoteResponseTransfer = $this->zedRequestClient->call('/persistent-cart/gateway/create-quote-with-reloaded-items', $quoteTransfer);
 
         return $quoteResponseTransfer;
     }
