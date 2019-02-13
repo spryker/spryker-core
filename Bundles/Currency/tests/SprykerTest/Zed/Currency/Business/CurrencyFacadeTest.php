@@ -74,7 +74,7 @@ class CurrencyFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateCurrencyInQuoteWithEmptyCurrency()
+    public function testValidateCurrencyInQuoteWithEmptyCurrency(): void
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteValidationResponseTransfer = $this->getQuoteValidationResponseTransfer($quoteTransfer);
@@ -86,7 +86,7 @@ class CurrencyFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateCurrencyInQuoteWithEmptyCurrencyIsoCode()
+    public function testValidateCurrencyInQuoteWithEmptyCurrencyIsoCode(): void
     {
         $currencyTransfer = new CurrencyTransfer();
         $quoteTransfer = (new QuoteTransfer())
@@ -100,7 +100,7 @@ class CurrencyFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateCurrencyInQuoteWithWrongCurrencyIsoCode()
+    public function testValidateCurrencyInQuoteWithWrongCurrencyIsoCode(): void
     {
         $currencyTransfer = (new CurrencyTransfer())
             ->setCode(static::WRONG_ISO_CODE);
@@ -118,7 +118,7 @@ class CurrencyFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateCurrencyInQuoteWithCorrectIsoCode()
+    public function testValidateCurrencyInQuoteWithCorrectIsoCode(): void
     {
         $currencyTransfer = (new CurrencyTransfer())
             ->setCode(static::EUR_ISO_CODE);

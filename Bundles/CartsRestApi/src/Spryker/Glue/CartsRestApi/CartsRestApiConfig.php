@@ -88,7 +88,6 @@ class CartsRestApiConfig extends AbstractBundleConfig
      * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART
      */
     public const RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART = '110';
-    public const RESPONSE_CODE_CART_CANT_BE_UPDATED = '111';
 
     /**
      * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
@@ -134,25 +133,11 @@ class CartsRestApiConfig extends AbstractBundleConfig
      * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART
      */
     public const EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART = 'Customer already has a cart.';
-    public const RESPONSE_MESSAGE_PRICE_MODE_CANT_BE_CHANGED = 'Can’t switch price mode when there are items in the cart.';
 
     /**
      * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID
      */
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
-
-    protected const GUEST_CART_RESOURCES = [
-        CartsRestApiConfig::RESOURCE_GUEST_CARTS,
-        CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
-    ];
-
-    /**
-     * @return string[]
-     */
-    public function getGuestCartResources(): array
-    {
-        return static::GUEST_CART_RESOURCES;
-    }
 
     public const RESPONSE_UNEXPECTED_HTTP_STATUS = Response::HTTP_INTERNAL_SERVER_ERROR;
     public const RESPONSE_ERROR_MAP = [
@@ -225,4 +210,17 @@ class CartsRestApiConfig extends AbstractBundleConfig
             'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_STORE_DATA_IS_MISSING,
         ],
     ];
+
+    protected const GUEST_CART_RESOURCES = [
+        CartsRestApiConfig::RESOURCE_GUEST_CARTS,
+        CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
+    ];
+
+    /**
+     * @return string[]
+     */
+    public function getGuestCartResources(): array
+    {
+        return static::GUEST_CART_RESOURCES;
+    }
 }

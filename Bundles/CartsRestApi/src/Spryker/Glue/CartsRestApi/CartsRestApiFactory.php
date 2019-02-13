@@ -115,18 +115,6 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface
-     */
-    public function createCartUpdater(): CartUpdaterInterface
-    {
-        return new CartUpdater(
-            $this->getClient(),
-            $this->createCartsResourceMapper(),
-            $this->getResourceBuilder()
-        );
-    }
-
-    /**
      * @return \Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemAdderInterface
      */
     public function createCartItemAdder(): CartItemAdderInterface
