@@ -45,7 +45,7 @@ class EditContentController extends AbstractController
         if ($contentForm->isSubmitted() && $contentForm->isValid()) {
             /** @var \Generated\Shared\Transfer\ContentTransfer $data */
             $data = $contentForm->getData();
-            $contentTransfer = $this->getFactory()
+            $this->getFactory()
                 ->getContentFacade()
                 ->create($data);
 

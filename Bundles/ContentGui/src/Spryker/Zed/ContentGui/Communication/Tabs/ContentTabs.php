@@ -76,7 +76,7 @@ class ContentTabs extends AbstractTabs
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    protected function getAvailableLocales()
+    protected function getAvailableLocales(): array
     {
         $defaultLocale = new LocaleTransfer();
         $defaultLocale->setLocaleName('Default locale');

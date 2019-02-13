@@ -28,9 +28,10 @@ class CreateContentController extends AbstractController
     public function indexAction(Request $request)
     {
         $termKey = $request->query->get(static::PARAM_TERM_KEY);
-        if (empty($termKey)) {
+        if (!$termKey) {
             return $this->redirectResponse(static::URL_REDIRECT_CONTENT_LIST_PAGE);
         }
+
         $dataProvider = $this->getFactory()->createContentFormDataProvider();
         $contentForm = $this->getFactory()
             ->getContentForm(
@@ -41,7 +42,7 @@ class CreateContentController extends AbstractController
 
         if ($contentForm->isSubmitted() && $contentForm->isValid()) {
             $data = $contentForm->getData();
-            $contentTransfer = $this->getFactory()
+            $this->getFactory()
                 ->getContentFacade()
                 ->create($data);
 

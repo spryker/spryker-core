@@ -56,9 +56,7 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
         if ($contentId !== null) {
             $contentTransfer = $this->contentFacade->findContentById($contentId);
 
-            $this->setAvailableLocales($contentTransfer);
-
-            return $contentTransfer;
+            return $this->setAvailableLocales($contentTransfer);
         }
 
         $contentTransfer = new ContentTransfer();
@@ -66,9 +64,7 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
         $contentTransfer->setContentTypeKey($contentPlugin->getTypeKey());
         $contentTransfer->setContentTermKey($contentPlugin->getTermKey());
 
-        $contentTransfer = $this->setAvailableLocales($contentTransfer);
-
-        return $contentTransfer;
+        return $this->setAvailableLocales($contentTransfer);
     }
 
     /**
@@ -100,7 +96,7 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
     protected function setAvailableLocales(ContentTransfer $contentTransfer): ContentTransfer
     {
         $localizedContents = $this->getLocalizedContentList($contentTransfer->getLocalizedContents());
-        $contentTransfer->setLocalizedContents((new ArrayObject()));
+        $contentTransfer->setLocalizedContents(new ArrayObject());
         foreach ($this->getAvailableLocales() as $locale) {
             $localizedContentTransfer = new LocalizedContentTransfer();
             if (!empty($localizedContents[$locale->getIdLocale()])) {

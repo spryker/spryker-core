@@ -43,7 +43,7 @@ class ProductAbstractListContentTermForm extends AbstractType
                 $contentProductAbstractList = $form->getNormData();
 
                 foreach ($contentProductAbstractList->getSkus() as $sku) {
-                    if (!empty($sku)) {
+                    if ($sku) {
                         return [Constraint::DEFAULT_GROUP];
                     }
                 }
