@@ -24,13 +24,11 @@
         <transfer name="ProductDiscontinuedResponse">
             <property name="productDiscontinued" type="ProductDiscontinued"/>
             <property name="isSuccessful" type="bool"/>
+            <property name="messages" type="Message[]" singular="message"/>
         </transfer>
 
-        <transfer name="ProductDiscontinuedCollection">
-            <property name="DiscontinuedProducts" type="ProductDiscontinued[]" singular="DiscontinuedProduct"/>
-        </transfer>
-
-        <transfer name="ProductDiscontinuedCriteriaFilter">
-            <property name="productConcreteIds" type="array"/>
+        <transfer name="Message">
+            <property name="value" type="string"/>
+            <property name="parameters" type="array"/>
         </transfer>
 </transfers>

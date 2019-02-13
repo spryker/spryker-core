@@ -16,7 +16,7 @@ use Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\ProductDiscontinu
  * @method \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductDiscontinuedProductBundleConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductDiscontinuedProductBundleConnector\ProductDiscontinuedProductBundleConnectorConfig getConfig()
  */
-class ProductDiscontinuedPreDeleteCheckBundledProductsPlugin extends AbstractPlugin implements ProductDiscontinuedPreDeleteCheckPluginInterface
+class BundledProductsProductDiscontinuedPreDeleteCheckPlugin extends AbstractPlugin implements ProductDiscontinuedPreDeleteCheckPluginInterface
 {
     /**
      * {@inheritdoc}

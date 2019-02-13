@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductBundleDiscontinued;
 
-use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductBundleFacadeInterface;
@@ -16,6 +16,8 @@ use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Persistence\ProductDis
 
 class ProductBundleDiscontinuedReader implements ProductBundleDiscontinuedReaderInterface
 {
+    protected const ERROR_MESSAGE_PRODUCT_BUNDLE_DISCONTINUED = 'You can not unmark the discontinued bundle until any of the bundled products are discontinued.';
+
     /**
      * @var \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Persistence\ProductDiscontinuedProductBundleConnectorRepositoryInterface
      */
@@ -54,31 +56,40 @@ class ProductBundleDiscontinuedReader implements ProductBundleDiscontinuedReader
     public function checkBundledProducts(ProductDiscontinuedTransfer $productDiscontinuedTransfer): ProductDiscontinuedResponseTransfer
     {
         $productDiscontinuedResponseTransfer = (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(true);
+        $bundledProductConcreteIds = $this->getBundledProductConcreteIds($productDiscontinuedTransfer);
 
+        if (!$bundledProductConcreteIds
+            || !$this->productDiscontinuedFacade->isOneOfConcreteProductsDiscontinued($bundledProductConcreteIds)
+        ) {
+            return $productDiscontinuedResponseTransfer;
+        }
+
+        $errorMessageTransfer = (new MessageTransfer())->setValue(static::ERROR_MESSAGE_PRODUCT_BUNDLE_DISCONTINUED);
+
+        return $productDiscontinuedResponseTransfer->setIsSuccessful(false)
+            ->addMessage($errorMessageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
+     *
+     * @return int[]
+     */
+    protected function getBundledProductConcreteIds(ProductDiscontinuedTransfer $productDiscontinuedTransfer): array
+    {
+        $bundledProductConcreteIds = [];
         $bundledProducts = $this->productBundleFacade->findBundledProductsByIdProductConcrete(
             $productDiscontinuedTransfer->getFkProduct()
         );
 
-        $productConcreteIds = [];
+        if (!$bundledProducts->count()) {
+            return $bundledProductConcreteIds;
+        }
 
         foreach ($bundledProducts as $bundledProduct) {
-            $productConcreteIds[] = $bundledProduct->getIdProductConcrete();
+            $bundledProductConcreteIds[] = $bundledProduct->getIdProductConcrete();
         }
 
-        if (!$productConcreteIds) {
-            return $productDiscontinuedResponseTransfer;
-        }
-
-        $criteriaFilterTransfer = (new ProductDiscontinuedCriteriaFilterTransfer())
-            ->setProductConcreteIds($productConcreteIds);
-
-        $productDiscontinuedCollectionTransfer = $this->productDiscontinuedFacade
-            ->findProductDiscontinuedByConcreteProductsCollection($criteriaFilterTransfer);
-
-        if (!$productDiscontinuedCollectionTransfer->getDiscontinuedProducts()->count()) {
-            return $productDiscontinuedResponseTransfer;
-        }
-
-        return $productDiscontinuedResponseTransfer->setIsSuccessful(false);
+        return $bundledProductConcreteIds;
     }
 }

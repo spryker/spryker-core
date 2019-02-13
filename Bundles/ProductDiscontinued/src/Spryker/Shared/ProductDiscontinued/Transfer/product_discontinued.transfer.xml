@@ -43,7 +43,6 @@
 
     <transfer name="ProductDiscontinuedCriteriaFilter">
         <property name="ids" type="array"/>
-        <property name="productConcreteIds" type="array"/>
     </transfer>
 
     <transfer name="ProductConcrete">

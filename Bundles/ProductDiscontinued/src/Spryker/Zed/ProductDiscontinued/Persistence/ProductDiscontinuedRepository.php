@@ -63,6 +63,23 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $productIds
+     *
+     * @return bool
+     */
+    public function isOneOfConcreteProductsDiscontinued(array $productIds): bool
+    {
+        return ($this->getFactory()
+                ->createProductDiscontinuedQuery()
+                ->filterByFkProduct_In($productIds)
+                ->count() > 0);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
     public function findProductsToDeactivate(): ProductDiscontinuedCollectionTransfer
@@ -99,37 +116,6 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
         if ($criteriaFilterTransfer->getIds()) {
             $productDiscontinuedQuery
                 ->filterByIdProductDiscontinued_In($criteriaFilterTransfer->getIds());
-        }
-
-        $productDiscontinuedEntityCollection = $productDiscontinuedQuery->find();
-
-        if ($productDiscontinuedEntityCollection->count()) {
-            return $this->getFactory()
-                ->createProductDiscontinuedMapper()
-                ->mapTransferCollection($productDiscontinuedEntityCollection);
-        }
-
-        return new ProductDiscontinuedCollectionTransfer();
-    }
-
-    /**
-     * @uses Product
-     *
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
-     */
-    public function findProductDiscontinuedByConcreteProductsCollection(
-        ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
-    ): ProductDiscontinuedCollectionTransfer {
-        $productDiscontinuedQuery = $this->getFactory()
-            ->createProductDiscontinuedQuery()
-            ->leftJoinWithSpyProductDiscontinuedNote()
-            ->leftJoinWithProduct();
-
-        if ($criteriaFilterTransfer->getProductConcreteIds()) {
-            $productDiscontinuedQuery
-                ->filterByFkProduct_In($criteriaFilterTransfer->getProductConcreteIds());
         }
 
         $productDiscontinuedEntityCollection = $productDiscontinuedQuery->find();

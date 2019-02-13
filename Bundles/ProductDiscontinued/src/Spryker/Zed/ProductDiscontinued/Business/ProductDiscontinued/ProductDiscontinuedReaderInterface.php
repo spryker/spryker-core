@@ -39,16 +39,14 @@ interface ProductDiscontinuedReaderInterface
     public function areAllConcreteProductsDiscontinued(array $productIds): bool;
 
     /**
+     * @param int[] $productConcreteIds
+     *
+     * @return bool
+     */
+    public function isOneOfConcreteProductsDiscontinued(array $productConcreteIds): bool;
+
+    /**
      * @return int[]
      */
     public function findProductAbstractIdsWithDiscontinuedConcrete(): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
-     */
-    public function findProductDiscontinuedByConcreteProductsCollection(
-        ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
-    ): ProductDiscontinuedCollectionTransfer;
 }

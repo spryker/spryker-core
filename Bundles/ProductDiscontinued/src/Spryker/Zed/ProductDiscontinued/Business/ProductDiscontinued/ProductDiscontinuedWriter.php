@@ -163,8 +163,6 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
     protected function executeProductDiscontinuedPreDeleteCheckPlugins(
         ProductDiscontinuedTransfer $productDiscontinuedTransfer
     ): ProductDiscontinuedResponseTransfer {
-        $productDiscontinuedResponseTransfer = (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(true);
-
         foreach ($this->productDiscontinuedPreDeleteCheckPlugins as $productDiscontinuedPreDeleteCheckPlugin) {
             $productDiscontinuedResponseTransfer = $productDiscontinuedPreDeleteCheckPlugin->execute($productDiscontinuedTransfer);
 
@@ -173,6 +171,6 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
             }
         }
 
-        return $productDiscontinuedResponseTransfer;
+        return (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(true);
     }
 }

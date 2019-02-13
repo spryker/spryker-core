@@ -102,16 +102,15 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param int[] $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     * @return bool
      */
-    public function findProductDiscontinuedCollection(
-        ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
-    ): ProductDiscontinuedCollectionTransfer {
+    public function isOneOfConcreteProductsDiscontinued(array $productConcreteIds): bool
+    {
         return $this->getFactory()
             ->createProductDiscontinuedReader()
-            ->findProductDiscontinuedCollection($criteriaFilterTransfer);
+            ->isOneOfConcreteProductsDiscontinued($productConcreteIds);
     }
 
     /**
@@ -123,12 +122,12 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
-    public function findProductDiscontinuedByConcreteProductsCollection(
+    public function findProductDiscontinuedCollection(
         ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
     ): ProductDiscontinuedCollectionTransfer {
         return $this->getFactory()
             ->createProductDiscontinuedReader()
-            ->findProductDiscontinuedByConcreteProductsCollection($criteriaFilterTransfer);
+            ->findProductDiscontinuedCollection($criteriaFilterTransfer);
     }
 
     /**

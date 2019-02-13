@@ -47,6 +47,16 @@ class ProductDiscontinuedReader implements ProductDiscontinuedReaderInterface
     }
 
     /**
+     * @param int[] $productConcreteIds
+     *
+     * @return bool
+     */
+    public function isOneOfConcreteProductsDiscontinued(array $productConcreteIds): bool
+    {
+        return $this->productDiscontinuedRepository->isOneOfConcreteProductsDiscontinued($productConcreteIds);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
@@ -55,17 +65,6 @@ class ProductDiscontinuedReader implements ProductDiscontinuedReaderInterface
         ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
     ): ProductDiscontinuedCollectionTransfer {
         return $this->productDiscontinuedRepository->findProductDiscontinuedCollection($criteriaFilterTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
-     */
-    public function findProductDiscontinuedByConcreteProductsCollection(
-        ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
-    ): ProductDiscontinuedCollectionTransfer {
-        return $this->productDiscontinuedRepository->findProductDiscontinuedByConcreteProductsCollection($criteriaFilterTransfer);
     }
 
     /**

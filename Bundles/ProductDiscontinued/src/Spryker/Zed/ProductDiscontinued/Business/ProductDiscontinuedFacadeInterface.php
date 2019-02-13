@@ -83,6 +83,18 @@ interface ProductDiscontinuedFacadeInterface
 
     /**
      * Specification:
+     *  - Checks if at least one of given products is discontinued.
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return bool
+     */
+    public function isOneOfConcreteProductsDiscontinued(array $productConcreteIds): bool;
+
+    /**
+     * Specification:
      *  - Finds product discontinued by filters.
      *
      * @api
@@ -92,20 +104,6 @@ interface ProductDiscontinuedFacadeInterface
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
     public function findProductDiscontinuedCollection(
-        ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
-    ): ProductDiscontinuedCollectionTransfer;
-
-    /**
-     * Specification:
-     *  - Finds product discontinued by concrete product ids.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
-     */
-    public function findProductDiscontinuedByConcreteProductsCollection(
         ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
     ): ProductDiscontinuedCollectionTransfer;
 

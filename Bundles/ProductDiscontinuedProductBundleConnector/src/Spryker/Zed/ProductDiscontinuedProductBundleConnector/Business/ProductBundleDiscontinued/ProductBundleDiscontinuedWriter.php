@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductBundleDiscontinued;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface;
@@ -62,29 +61,11 @@ class ProductBundleDiscontinuedWriter implements ProductBundleDiscontinuedWriter
      */
     public function discontinueProductBundleByBundledProducts(ProductConcreteTransfer $productConcreteTransfer): void
     {
-        if (!$productConcreteTransfer->getProductBundle()) {
-            return;
-        }
+        $bundledProductConcreteIds = $this->getBundledProductConcreteIds($productConcreteTransfer);
 
-        $productForBundleTransfers = $productConcreteTransfer->getProductBundle()->getBundledProducts();
-
-        if (!$productForBundleTransfers->count()) {
-            return;
-        }
-
-        $productConcreteIds = [];
-
-        foreach ($productForBundleTransfers as $productForBundleTransfer) {
-            $productConcreteIds[] = $productForBundleTransfer->getIdProductConcrete();
-        }
-
-        $criteriaFilterTransfer = (new ProductDiscontinuedCriteriaFilterTransfer())
-            ->setProductConcreteIds($productConcreteIds);
-
-        $productDiscontinuedCollectionTransfer = $this->productDiscontinuedFacade
-            ->findProductDiscontinuedByConcreteProductsCollection($criteriaFilterTransfer);
-
-        if (!$productDiscontinuedCollectionTransfer->getDiscontinuedProducts()->count()) {
+        if (!$bundledProductConcreteIds
+            || !$this->productDiscontinuedFacade->isOneOfConcreteProductsDiscontinued($bundledProductConcreteIds)
+        ) {
             return;
         }
 
@@ -102,5 +83,31 @@ class ProductBundleDiscontinuedWriter implements ProductBundleDiscontinuedWriter
             ->setIdProduct($idProduct);
 
         $this->productDiscontinuedFacade->markProductAsDiscontinued($productDiscontinuedRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return int[]
+     */
+    protected function getBundledProductConcreteIds(ProductConcreteTransfer $productConcreteTransfer): array
+    {
+        $bundledProductConcreteIds = [];
+
+        if (!$productConcreteTransfer->getProductBundle()) {
+            return $bundledProductConcreteIds;
+        }
+
+        $productForBundleTransfers = $productConcreteTransfer->getProductBundle()->getBundledProducts();
+
+        if (!$productForBundleTransfers->count()) {
+            return $bundledProductConcreteIds;
+        }
+
+        foreach ($productForBundleTransfers as $productForBundleTransfer) {
+            $bundledProductConcreteIds[] = $productForBundleTransfer->getIdProductConcrete();
+        }
+
+        return $bundledProductConcreteIds;
     }
 }
