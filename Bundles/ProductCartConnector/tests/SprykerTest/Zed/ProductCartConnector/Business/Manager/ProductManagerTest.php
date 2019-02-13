@@ -138,7 +138,14 @@ class ProductManagerTest extends Unit
     private function getMockProductFacade()
     {
         return $this->getMockBuilder(ProductCartConnectorToProductInterface::class)
-            ->setMethods(['getProductConcrete', 'getLocalizedProductConcreteName', 'hasProductAbstract', 'hasProductConcrete', 'isProductConcreteActive'])
+            ->setMethods([
+                'getProductConcrete',
+                'getLocalizedProductConcreteName',
+                'hasProductAbstract',
+                'hasProductConcrete',
+                'isProductConcreteActive',
+                'getRawProductConcreteBySku',
+            ])
             ->disableOriginalConstructor()
             ->getMock();
     }
