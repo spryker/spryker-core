@@ -11,25 +11,11 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToPermissionClientInterface;
 use Spryker\Client\QuoteApproval\Plugin\ApproveQuotePermissionPlugin;
 use Spryker\Client\QuoteApproval\Plugin\PlaceOrderPermissionPlugin;
 
 class PermissionLimitCalculator implements PermissionLimitCalculatorInterface
 {
-    /**
-     * @var \Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToPermissionClientInterface
-     */
-    protected $permissionClient;
-
-    /**
-     * @param \Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToPermissionClientInterface $permissionClient
-     */
-    public function __construct(QuoteApprovalToPermissionClientInterface $permissionClient)
-    {
-        $this->permissionClient = $permissionClient;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer

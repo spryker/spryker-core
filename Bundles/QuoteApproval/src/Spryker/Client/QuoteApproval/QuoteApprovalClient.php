@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\QuoteApproval\Plugin\PlaceOrderPermissionPlugin;
 
 /**
  * @method \Spryker\Client\QuoteApproval\QuoteApprovalFactory getFactory()
@@ -93,18 +92,6 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     public function isQuoteRequireApproval(QuoteTransfer $quoteTransfer): bool
     {
         return $this->getFactory()->createQuoteStatusChecker()->isQuoteRequireApproval($quoteTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return bool
-     */
-    public function isCustomerHasPlaceOrderPermission(): bool
-    {
-        return (bool)$this->getFactory()->getPermissionClient()->findCustomerPermissionByKey(PlaceOrderPermissionPlugin::KEY);
     }
 
     /**

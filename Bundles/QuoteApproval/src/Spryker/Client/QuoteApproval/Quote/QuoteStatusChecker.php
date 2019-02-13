@@ -9,21 +9,16 @@ namespace Spryker\Client\QuoteApproval\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\PermissionAwareTrait;
-use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToPermissionClientInterface;
 use Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProviderInterface;
 use Spryker\Client\QuoteApproval\Plugin\ApproveQuotePermissionPlugin;
 use Spryker\Client\QuoteApproval\Plugin\PlaceOrderPermissionPlugin;
 use Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
+use Spryker\Shared\QuoteApproval\Plugin\RequestQuoteApprovalPermissionPlugin;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 
 class QuoteStatusChecker implements QuoteStatusCheckerInterface
 {
     use PermissionAwareTrait;
-
-    /**
-     * @var \Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToPermissionClientInterface
-     */
-    protected $permissionClient;
 
     /**
      * @var \Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface
@@ -36,16 +31,13 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
     protected $permissionContextProvider;
 
     /**
-     * @param \Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToPermissionClientInterface $permissionClient
      * @param \Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface $quoteStatusCalculator
      * @param \Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProviderInterface $permissionContextProvider
      */
     public function __construct(
-        QuoteApprovalToPermissionClientInterface $permissionClient,
         QuoteStatusCalculatorInterface $quoteStatusCalculator,
         PermissionContextProviderInterface $permissionContextProvider
     ) {
-        $this->permissionClient = $permissionClient;
         $this->quoteStatusCalculator = $quoteStatusCalculator;
         $this->permissionContextProvider = $permissionContextProvider;
     }
@@ -57,7 +49,7 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
      */
     public function isQuoteRequireApproval(QuoteTransfer $quoteTransfer): bool
     {
-        if (!$this->permissionClient->findCustomerPermissionByKey(PlaceOrderPermissionPlugin::KEY)) {
+        if (!$this->can(RequestQuoteApprovalPermissionPlugin::KEY)) {
             return false;
         }
 

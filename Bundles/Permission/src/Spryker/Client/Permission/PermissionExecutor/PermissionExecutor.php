@@ -15,17 +15,25 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPlu
 class PermissionExecutor implements PermissionExecutorInterface
 {
     /**
+     * @var \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
+     */
+    protected $permissionStoragePlugins;
+
+    /**
      * @var \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface
      */
     protected $permissionFinder;
 
     /**
+     * @param \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[] $permissionStoragePlugins
      * @param \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface $permissionConfigurator
      */
     public function __construct(
+        array $permissionStoragePlugins,
         PermissionFinderInterface $permissionConfigurator
     ) {
         $this->permissionFinder = $permissionConfigurator;
+        $this->permissionStoragePlugins = $permissionStoragePlugins;
     }
 
     /**
@@ -42,7 +50,7 @@ class PermissionExecutor implements PermissionExecutorInterface
              return true;
         }
 
-        $permissionCollectionTransfer = $this->permissionFinder->getCustomerPermissionsByKey($permissionKey);
+        $permissionCollectionTransfer = $this->findPermissions($permissionKey);
 
         if ($permissionCollectionTransfer->getPermissions()->count() <= 0) {
             return false;
@@ -92,5 +100,25 @@ class PermissionExecutor implements PermissionExecutorInterface
     protected function executePermission(ExecutablePermissionPluginInterface $permissionPlugin, PermissionTransfer $permissionTransfer, $context = null): bool
     {
         return $permissionPlugin->can($permissionTransfer->getConfiguration(), $context);
+    }
+
+    /**
+     * @param string $permissionKey
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    protected function findPermissions($permissionKey): PermissionCollectionTransfer
+    {
+        $permissionCollectionTransfer = new PermissionCollectionTransfer();
+
+        foreach ($this->permissionStoragePlugins as $permissionStoragePlugin) {
+            foreach ($permissionStoragePlugin->getPermissionCollection()->getPermissions() as $permission) {
+                if ($permission->getKey() === $permissionKey) {
+                    $permissionCollectionTransfer->addPermission($permission);
+                }
+            }
+        }
+
+        return $permissionCollectionTransfer;
     }
 }

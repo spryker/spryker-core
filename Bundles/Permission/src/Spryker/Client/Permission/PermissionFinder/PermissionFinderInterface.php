@@ -8,7 +8,6 @@
 namespace Spryker\Client\Permission\PermissionFinder;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
-use Generated\Shared\Transfer\PermissionTransfer;
 
 interface PermissionFinderInterface
 {
@@ -26,18 +25,4 @@ interface PermissionFinderInterface
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function getRegisteredPermissionCollection(): PermissionCollectionTransfer;
-
-    /**
-     * @param string $permissionKey
-     *
-     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
-     */
-    public function getCustomerPermissionsByKey(string $permissionKey): PermissionCollectionTransfer;
-
-    /**
-     * @param string $permissionKey
-     *
-     * @return \Generated\Shared\Transfer\PermissionTransfer|null
-     */
-    public function findCustomerPermissionByKey(string $permissionKey): ?PermissionTransfer;
 }

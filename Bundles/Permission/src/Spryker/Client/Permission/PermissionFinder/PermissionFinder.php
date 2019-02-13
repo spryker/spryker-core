@@ -20,20 +20,11 @@ class PermissionFinder implements PermissionFinderInterface
     protected $permissionPlugins = [];
 
     /**
-     * @var \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
-     */
-    protected $permissionStoragePlugins;
-
-    /**
      * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface[] $permissionPlugins
-     * @param \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[] $permissionStoragePlugins
      */
-    public function __construct(
-        array $permissionPlugins,
-        array $permissionStoragePlugins
-    ) {
+    public function __construct(array $permissionPlugins)
+    {
         $this->permissionPlugins = $this->indexPermissions($permissionPlugins);
-        $this->permissionStoragePlugins = $permissionStoragePlugins;
     }
 
     /**
@@ -88,43 +79,5 @@ class PermissionFinder implements PermissionFinderInterface
         }
 
         return $plugins;
-    }
-
-    /**
-     * @param string $permissionKey
-     *
-     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
-     */
-    public function getCustomerPermissionsByKey(string $permissionKey): PermissionCollectionTransfer
-    {
-        $permissionCollectionTransfer = new PermissionCollectionTransfer();
-
-        foreach ($this->permissionStoragePlugins as $permissionStoragePlugin) {
-            foreach ($permissionStoragePlugin->getPermissionCollection()->getPermissions() as $permissionTransfer) {
-                if ($permissionTransfer->getKey() === $permissionKey) {
-                    $permissionCollectionTransfer->addPermission($permissionTransfer);
-                }
-            }
-        }
-
-        return $permissionCollectionTransfer;
-    }
-
-    /**
-     * @param string $permissionKey
-     *
-     * @return \Generated\Shared\Transfer\PermissionTransfer|null
-     */
-    public function findCustomerPermissionByKey(string $permissionKey): ?PermissionTransfer
-    {
-        foreach ($this->permissionStoragePlugins as $permissionStoragePlugin) {
-            foreach ($permissionStoragePlugin->getPermissionCollection()->getPermissions() as $permissionTransfer) {
-                if ($permissionTransfer->getKey() === $permissionKey) {
-                    return $permissionTransfer;
-                }
-            }
-        }
-
-        return null;
     }
 }

@@ -83,7 +83,7 @@ interface QuoteApprovalClientInterface
 
     /**
      * Specification:
-     * - Returns false if customer does't have PlaceOrderPermissionPlugin permission assigned.
+     * - Returns false if customer does't have RequestQuoteApprovalPermissionPlugin permission assigned.
      * - Returns false if executing of PlaceOrderPermissionPlugin permission returns true.
      * - Returns false if quote approval status is `approved`.
      * - Returns true otherwise.
@@ -95,16 +95,6 @@ interface QuoteApprovalClientInterface
      * @return bool
      */
     public function isQuoteRequireApproval(QuoteTransfer $quoteTransfer): bool;
-
-    /**
-     * Specification:
-     * - Returns true if customer has PlaceOrderPermissionPlugin permission.
-     *
-     * @api
-     *
-     * @return bool
-     */
-    public function isCustomerHasPlaceOrderPermission(): bool;
 
     /**
      * Specification:

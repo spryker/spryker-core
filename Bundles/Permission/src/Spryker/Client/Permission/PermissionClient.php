@@ -8,7 +8,6 @@
 namespace Spryker\Client\Permission;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
-use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -59,22 +58,6 @@ class PermissionClient extends AbstractClient implements PermissionClientInterfa
         return $this->getFactory()
             ->createPermissionExecutor()
             ->can($permissionKey, $context);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $permissionKey
-     *
-     * @return \Generated\Shared\Transfer\PermissionTransfer|null
-     */
-    public function findCustomerPermissionByKey(string $permissionKey): ?PermissionTransfer
-    {
-        return $this->getFactory()
-            ->createPermissionFinder()
-            ->findCustomerPermissionByKey($permissionKey);
     }
 
     /**
