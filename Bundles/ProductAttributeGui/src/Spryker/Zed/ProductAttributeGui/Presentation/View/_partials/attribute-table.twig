@@ -86,7 +86,7 @@
                     {% endfor %}
                     <td style="vertical-align: middle; text-align: left;">
                         {% if isSuper == false %}
-                            <a data-key="{{ key }}" href="#" class="btn btn-xs btn-outline btn-danger remove-item">Remove</a>
+                            <a data-key="{{ key }}" href="#" class="btn btn-xs btn-outline btn-danger remove-item">{{ 'Remove' | trans }}</a>
                         {% endif %}
                     </td>
                 </tr>
