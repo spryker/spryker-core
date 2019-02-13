@@ -70,7 +70,7 @@ class GuestCartCreator implements GuestCartCreatorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createQuote(RestRequestInterface $restRequest): QuoteResponseTransfer
+    protected function createQuote(RestRequestInterface $restRequest): QuoteResponseTransfer
     {
         $quoteTransfer = $this->cartsResourceMapper->mapRestRequestToQuoteTransfer($restRequest);
         $restQuoteRequestTransfer = $this->cartsResourceMapper->createRestQuoteRequestTransfer($restRequest, $quoteTransfer);
