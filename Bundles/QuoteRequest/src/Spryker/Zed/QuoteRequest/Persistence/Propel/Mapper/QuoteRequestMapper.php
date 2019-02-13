@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
@@ -67,7 +69,7 @@ class QuoteRequestMapper
         $quoteRequestTransfer = $quoteRequestTransfer->fromArray($quoteRequestEntity->toArray(), true);
 
         $quoteRequestTransfer->setCompanyUser($this->getCompanyUserTransfer($quoteRequestEntity));
-        $quoteRequestTransfer->setLatestVersion($this->getLatestQuoteRequestVersionTransfer($quoteRequestEntity));
+        $quoteRequestTransfer->setLatestVersion($this->findLatestQuoteRequestVersionTransfer($quoteRequestEntity));
         $quoteRequestTransfer->setMetadata($this->decodeMetadata($quoteRequestEntity));
 
         return $quoteRequestTransfer;
@@ -97,11 +99,16 @@ class QuoteRequestMapper
     /**
      * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequest $quoteRequestEntity
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
      */
-    protected function getLatestQuoteRequestVersionTransfer(SpyQuoteRequest $quoteRequestEntity): QuoteRequestVersionTransfer
+    protected function findLatestQuoteRequestVersionTransfer(SpyQuoteRequest $quoteRequestEntity): ?QuoteRequestVersionTransfer
     {
         $quoteRequestVersionEntity = $quoteRequestEntity->getSpyQuoteRequestVersions()->getLast();
+
+        if (!$quoteRequestVersionEntity) {
+            return null;
+        }
+
         $latestQuoteRequestVersionTransfer = (new QuoteRequestVersionTransfer())
             ->fromArray($quoteRequestVersionEntity->toArray(), true);
 
@@ -122,9 +129,17 @@ class QuoteRequestMapper
         $customerTransfer = (new CustomerTransfer())
             ->fromArray($quoteRequestEntity->getCompanyUser()->getCustomer()->toArray(), true);
 
+        $companyTransfer = (new CompanyTransfer())
+            ->fromArray($quoteRequestEntity->getCompanyUser()->getCompany()->toArray(), true);
+
+        $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())
+            ->fromArray($quoteRequestEntity->getCompanyUser()->getCompanyBusinessUnit()->toArray(), true);
+
         return (new CompanyUserTransfer())
             ->fromArray($quoteRequestEntity->getCompanyUser()->toArray(), true)
-            ->setCustomer($customerTransfer);
+            ->setCustomer($customerTransfer)
+            ->setCompany($companyTransfer)
+            ->setCompanyBusinessUnit($companyBusinessUnitTransfer);
     }
 
     /**
