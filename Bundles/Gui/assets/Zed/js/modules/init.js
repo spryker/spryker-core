@@ -12,6 +12,30 @@ var Ibox = require('./libs/ibox');
 var dataTable = require('./libs/data-table');
 var safeChecks = require('./libs/safe-checks');
 
+var dataTablesSearchDelay = function() {
+    var dataTablesWrapper = $('.dataTables_wrapper');
+    dataTablesWrapper.each(function(index, wrapper) {
+        var searchInput = $(wrapper).find('input[type="search"]');
+        var dataTable = $(wrapper).find('.gui-table-data');
+        var dataTableApi = dataTable.dataTable().api();
+        var timeOutId = 0;
+        
+        if(searchInput.length && dataTable.length) {
+            searchInput
+            .unbind()
+            .bind("input", function(e) {
+                var self = this;
+                
+                clearTimeout(timeOutId);
+                timeOutId = setTimeout(function() {
+                    dataTableApi.search(self.value).draw();
+                }, 1000);
+                return;
+            });
+        }
+    });
+}
+
 $(document).ready(function() {
     // editor
     $('.html-editor').summernote(editor.getConfig());
@@ -23,7 +47,7 @@ $(document).ready(function() {
     $('.gui-table-data')
         .on('error.dt', dataTable.onError)
         .dataTable(dataTable.defaultConfiguration);
-
+    
     /* Draw data tables without search */
     $('.gui-table-data-no-search')
         .on('error.dt', dataTable.onError)
@@ -78,4 +102,8 @@ $(document).ready(function() {
 
     safeChecks.addSafeSubmitCheck();
     safeChecks.addSafeDatetimeCheck();
+});
+
+$(window).on('load', function() {
+    dataTablesSearchDelay();
 });

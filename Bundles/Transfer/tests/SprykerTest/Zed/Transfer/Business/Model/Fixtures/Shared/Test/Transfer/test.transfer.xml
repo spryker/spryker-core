@@ -8,6 +8,10 @@
         <property name="item" type="Item" />
         <property name="items" type="Item[]" singular="item" />
         <property name="typedArray" type="string[]" />
+        <property name="typedAssociativeStringArray" type="string[]" associative="true" />
+        <property name="typedAssociativeCollection" type="Item[]" associative="1" />
+        <property name="typedNotAssociativeStringArray" type="string[]" associative="false" />
+        <property name="typedNotAssociativeArray" type="array" associative="0" />
     </transfer>
 
 </transfers>

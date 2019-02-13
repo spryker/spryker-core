@@ -75,6 +75,7 @@ class ClassDefinitionTest extends Unit
             'type' => ($return === null) ? $type : $return,
             'bundles' => $bundles,
             'is_typed_array' => false,
+            'is_associative' => false,
         ];
 
         if ($singular !== null) {
@@ -308,6 +309,7 @@ class ClassDefinitionTest extends Unit
                 "bundles" => [
                     "Bundle1",
                 ],
+                "is_associative" => false,
             ],
         ];
         $this->assertSame($expected, $properties);
@@ -420,6 +422,7 @@ class ClassDefinitionTest extends Unit
     {
         $method = $this->getMethod($method, $property, $var, $return, $typeHint, $constant, $bundles);
         $method['parent'] = $parent;
+        $method['is_associative'] = false;
 
         return $method;
     }
@@ -436,6 +439,146 @@ class ClassDefinitionTest extends Unit
         $transferDefinition = [
             'name' => 'name',
             'property' => [$property],
+        ];
+
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
+    }
+
+    /**
+     * @param string $name
+     * @param string $type
+     * @param string|null $singular
+     * @param string|null $return
+     * @param array $bundles
+     * @param mixed $isAssociative
+     *
+     * @return array
+     */
+    private function getPropertyAssociative($name, $type, $singular = null, $return = null, array $bundles = [], $isAssociative = false)
+    {
+        $property = [
+            'name' => $name,
+            'type' => ($return === null) ? $type : $return,
+            'bundles' => $bundles,
+            'is_typed_array' => false,
+            'associative' => $isAssociative,
+        ];
+
+        if ($singular !== null) {
+            $property['singular'] = $singular;
+        }
+
+        return $property;
+    }
+
+    /**
+     * @return void
+     */
+    public function testTypedAssociativeSimpleArray()
+    {
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [$this->getPropertyAssociative('property1', 'string[]', null, null, [], true)],
+        ];
+
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
+
+        $properties = $classDefinition->getProperties();
+
+        $expected = [
+            "property1" => [
+                "name" => "property1",
+                "type" => "string[]",
+                "is_typed_array" => true,
+                "bundles" => [],
+                "is_associative" => true,
+            ],
+        ];
+        $this->assertSame($expected, $properties);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTypedAssociativeCollectionArray()
+    {
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [$this->getPropertyAssociative('property1', 'Type[]', null, null, [], true)],
+        ];
+
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
+
+        $properties = $classDefinition->getProperties();
+
+        $expected = [
+            "property1" => [
+                "name" => "property1",
+                "type" => "\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]",
+                "is_typed_array" => false,
+                "bundles" => [],
+                "is_associative" => true,
+            ],
+        ];
+        $this->assertSame($expected, $properties);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTypedYesAssociativeCollectionArray()
+    {
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [$this->getPropertyAssociative('property1', 'Type[]', null, null, [], "1")],
+        ];
+
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
+
+        $properties = $classDefinition->getProperties();
+
+        $expected = [
+            "property1" => [
+                "name" => "property1",
+                "type" => "\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]",
+                "is_typed_array" => false,
+                "bundles" => [],
+                "is_associative" => true,
+            ],
+        ];
+        $this->assertSame($expected, $properties);
+    }
+
+    /**
+     * @expectedException \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException
+     *
+     * @return void
+     */
+    public function testInvalidAssociativeTypeException()
+    {
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [$this->getPropertyAssociative('property1', 'string', null, null, [], true)],
+        ];
+
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
+    }
+
+    /**
+     * @expectedException \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException
+     *
+     * @return void
+     */
+    public function testInvalidAssociativeValueException()
+    {
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [$this->getPropertyAssociative('properties', 'string[]', 'property', null, [], 'Yeah')],
         ];
 
         $classDefinition = new ClassDefinition();
