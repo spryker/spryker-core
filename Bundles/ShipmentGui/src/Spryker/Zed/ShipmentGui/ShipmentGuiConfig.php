@@ -11,6 +11,4 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ShipmentGuiConfig extends AbstractBundleConfig
 {
-    public const PARAM_ID_SALES_ORDER = 'id-sales-order';
-    public const PARAM_ID_SALES_SHIPMENT = 'id-shipment';
 }
