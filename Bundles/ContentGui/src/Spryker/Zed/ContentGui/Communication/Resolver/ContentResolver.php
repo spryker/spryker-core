@@ -53,6 +53,6 @@ class ContentResolver implements ContentResolverInterface
             }
         }
 
-        throw new MissingContentTermFormTypePluginException(sprintf("The term %s is missing.", $termKey));
+        throw new MissingContentTermFormTypePluginException(sprintf('There is no registered plugin which can work with the term %s.', $termKey));
     }
 }
