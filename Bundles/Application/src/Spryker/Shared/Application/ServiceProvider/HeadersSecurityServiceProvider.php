@@ -22,6 +22,11 @@ class HeadersSecurityServiceProvider implements ServiceProviderInterface
     /**
      * @const string
      */
+    public const HEADER_CONTENT_SECURITY_POLICY = 'Content-Security-Policy';
+
+    /**
+     * @const string
+     */
     public const HEADER_X_CONTENT_TYPE_OPTIONS = 'X-Content-Type-Options';
 
     /**
@@ -64,6 +69,7 @@ class HeadersSecurityServiceProvider implements ServiceProviderInterface
         }
 
         $event->getResponse()->headers->set(static::HEADER_X_FRAME_OPTIONS, 'SAMEORIGIN');
+        $event->getResponse()->headers->set(static::HEADER_CONTENT_SECURITY_POLICY, 'frame-ancestors \'self\'');
         $event->getResponse()->headers->set(static::HEADER_X_CONTENT_TYPE_OPTIONS, 'nosniff');
         $event->getResponse()->headers->set(static::HEADER_X_XSS_PROTECTION, '1; mode=block');
     }
