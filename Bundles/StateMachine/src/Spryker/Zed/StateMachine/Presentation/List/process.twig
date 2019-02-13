@@ -7,7 +7,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Processes for "{{ stateMachineName }}" state machine</h1>
+                    <h1>{{ 'Processes for "%s" state machine' | trans | format(stateMachineName | e) }}</h1>
                 </div>
 
                 {% for process in processes %}
@@ -18,7 +18,7 @@
                             </div>
                             <div class="panel-body">
                                 <a href="{{ url('/state-machine/graph/draw', {process: process.processName, 'state-machine': stateMachineName}) }}" target="_blank">{{ process.processName }}</a>
-                                <a style="font-size:10px;" href="{{ url('/state-machine/graph/draw-preview-version', {process: process.processName}) }}" target="_blank">[preview-version]</a>
+                                <a style="font-size:10px;" href="{{ url('/state-machine/graph/draw-preview-version', {process: process.processName}) }}" target="_blank">[{{ 'preview-version' | trans }}]</a>
                             </div>
 
                         </div>
