@@ -88,6 +88,8 @@ class CompanyUserReader implements CompanyUserReaderInterface
                 $restCompanyUserAttributesTransfer
             );
 
+            $restResource->setPayload($companyUserTransfer);
+
             $restResponse->addResource($restResource);
         }
 
