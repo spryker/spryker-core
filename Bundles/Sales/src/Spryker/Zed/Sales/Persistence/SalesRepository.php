@@ -41,7 +41,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findOrderAddressByIdOrderAddress(int $idOrderAddress): AddressTransfer
+    public function findOrderAddressByIdOrderAddress(int $idOrderAddress): ?AddressTransfer
     {
         $addressEntity = $this->getFactory()
             ->createSalesOrderAddressQuery()
@@ -65,7 +65,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         AddressTransfer $addressTransfer,
         SpySalesOrderAddress $addressEntity
     ): AddressTransfer {
-        $addressTransfer->fromArray($addressEntity->toArray());
+        $addressTransfer->fromArray($addressEntity->toArray(), true);
 
         return $addressTransfer;
     }
