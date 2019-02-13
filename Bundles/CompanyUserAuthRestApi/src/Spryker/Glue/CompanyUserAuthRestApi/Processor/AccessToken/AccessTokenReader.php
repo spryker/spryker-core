@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestTokenResponseAttributesTransfer;
 use Spryker\Glue\CompanyUserAuthRestApi\CompanyUserAuthRestApiConfig;
 use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthClientInterface;
-use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthCompanyUserConnectorClientInterface;
+use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthCompanyUserClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -27,9 +27,9 @@ class AccessTokenReader implements AccessTokenReaderInterface
     protected $oauthClient;
 
     /**
-     * @var \Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthCompanyUserConnectorClientInterface
+     * @var \Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthCompanyUserClientInterface
      */
-    protected $oauthCompanyUserConnectorClient;
+    protected $oauthCompanyUserClient;
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -38,16 +38,16 @@ class AccessTokenReader implements AccessTokenReaderInterface
 
     /**
      * @param \Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthClientInterface $oauthClient
-     * @param \Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthCompanyUserConnectorClientInterface $oauthCompanyUserConnectorClient
+     * @param \Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthCompanyUserClientInterface $oauthCompanyUserClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(
         CompanyUserAuthRestApiToOauthClientInterface $oauthClient,
-        CompanyUserAuthRestApiToOauthCompanyUserConnectorClientInterface $oauthCompanyUserConnectorClient,
+        CompanyUserAuthRestApiToOauthCompanyUserClientInterface $oauthCompanyUserClient,
         RestResourceBuilderInterface $restResourceBuilder
     ) {
         $this->oauthClient = $oauthClient;
-        $this->oauthCompanyUserConnectorClient = $oauthCompanyUserConnectorClient;
+        $this->oauthCompanyUserClient = $oauthCompanyUserClient;
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
@@ -65,8 +65,8 @@ class AccessTokenReader implements AccessTokenReaderInterface
             ->setIdCompanyUser($restCompanyUserAccessTokensAttributesTransfer->getIdCompanyUser())
             ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
             ->setGrantType(CompanyUserAuthRestApiConfig::CLIENT_GRANT_USER)
-            ->setClientId($this->oauthCompanyUserConnectorClient->getClientId())
-            ->setClientSecret($this->oauthCompanyUserConnectorClient->getClientSecret());
+            ->setClientId($this->oauthCompanyUserClient->getClientId())
+            ->setClientSecret($this->oauthCompanyUserClient->getClientSecret());
 
         $oauthResponseTransfer = $this->oauthClient->processAccessTokenRequest($oauthRequestTransfer);
 

@@ -9,7 +9,7 @@ namespace Spryker\Glue\CompanyUserAuthRestApi;
 
 use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToCompanyUserStorageClientBridge;
 use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthClientBridge;
-use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthCompanyUserConnectorClientBridge;
+use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthCompanyUserClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -19,7 +19,7 @@ use Spryker\Glue\Kernel\Container;
 class CompanyUserAuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_OAUTH = 'CLIENT_OAUTH';
-    public const CLIENT_OAUTH_COMPANY_USER_CONNECTOR = 'CLIENT_OAUTH_COMPANY_USER_CONNECTOR';
+    public const CLIENT_OAUTH_COMPANY_USER = 'CLIENT_OAUTH_COMPANY_USER';
     public const CLIENT_COMPANY_USER_STORAGE = 'CLIENT_COMPANY_USER_STORAGE';
 
     /**
@@ -32,7 +32,7 @@ class CompanyUserAuthRestApiDependencyProvider extends AbstractBundleDependencyP
         $container = parent::provideDependencies($container);
 
         $container = $this->addOauthClient($container);
-        $container = $this->addOauthCompanyUserConnectorClient($container);
+        $container = $this->addOauthCompanyUserClient($container);
         $container = $this->addCompanyUserStorageClient($container);
 
         return $container;
@@ -57,10 +57,10 @@ class CompanyUserAuthRestApiDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addOauthCompanyUserConnectorClient(Container $container): Container
+    protected function addOauthCompanyUserClient(Container $container): Container
     {
-        $container[static::CLIENT_OAUTH_COMPANY_USER_CONNECTOR] = function (Container $container) {
-            return new CompanyUserAuthRestApiToOauthCompanyUserConnectorClientBridge($container->getLocator()->oauthCompanyUserConnector()->client());
+        $container[static::CLIENT_OAUTH_COMPANY_USER] = function (Container $container) {
+            return new CompanyUserAuthRestApiToOauthCompanyUserClientBridge($container->getLocator()->oauthCompanyUser()->client());
         };
 
         return $container;
