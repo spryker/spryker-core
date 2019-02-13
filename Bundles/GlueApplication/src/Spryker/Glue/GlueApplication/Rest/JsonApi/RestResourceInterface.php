@@ -84,4 +84,16 @@ interface RestResourceInterface
      * @return array
      */
     public function toArray($includeRelations = true): array;
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $payload
+     *
+     * @return $this
+     */
+    public function setPayload(?AbstractTransfer $payload);
+
+    /**
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
+     */
+    public function getPayload(): ?AbstractTransfer;
 }
