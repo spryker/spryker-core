@@ -43,7 +43,8 @@ interface CartClientInterface
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Adds items to cart using quote storage strategy.
      *  - Invalid items will be skipped.
-     *  - Does nothing if cart is locked.
+     *  - Returns the unchanged QuoteTransfer and CustomerTransfer with 'isSuccessful=false' when provided quote is locked.
+     *  - Adds error message to Messenger when quote is locked.
      *
      * @api
      *
