@@ -22,16 +22,16 @@ class AddLocalesStep implements DataImportStepInterface
     protected $locales = [];
 
     /**
-     * @var array
+     * @var \Spryker\Shared\Kernel\Store
      */
-    protected $availableLocales;
+    protected $store;
 
     /**
      * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(Store $store)
     {
-        $this->availableLocales = $this->getLocales($store);
+        $this->store = $store;
     }
 
     /**
@@ -43,7 +43,7 @@ class AddLocalesStep implements DataImportStepInterface
     {
         if (empty($this->locales)) {
             $localeEntityCollection = SpyLocaleQuery::create()
-                ->filterByLocaleName($this->availableLocales, Criteria::IN)
+                ->filterByLocaleName($this->getLocales(), Criteria::IN)
                 ->find();
 
             foreach ($localeEntityCollection as $localeEntity) {
@@ -55,15 +55,14 @@ class AddLocalesStep implements DataImportStepInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Store $store
-     *
-     * @return string[]
+     * @return array
      */
-    protected function getLocales(Store $store): array
+    protected function getLocales(): array
     {
-        $locales = $store->getLocales();
-        foreach ($store->getStoresWithSharedPersistence() as $storeName) {
-            $locales = array_merge($locales, $store->getLocalesPerStore($storeName));
+        $locales = $this->store->getLocales();
+
+        foreach ($this->store->getStoresWithSharedPersistence() as $storeName) {
+            $locales = array_merge($locales, $this->store->getLocalesPerStore($storeName));
         }
 
         return $locales;
