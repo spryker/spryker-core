@@ -121,7 +121,7 @@ interface CustomerClientInterface
 
     /**
      * Specification:
-     * - Stores provided customer information in without executing of customer session plugins session.
+     * - Stores provided customer information in session without executing plugins.
      *
      * @api
      *
