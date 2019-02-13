@@ -301,8 +301,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createSprykerModuleFilePathBuilder(),
             $this->createSprykerShopModuleFilePathBuilder(),
             $this->createSprykerEcoModuleFilePathBuilder(),
-            $this->createSprykerSdkModuleFilePathBuilder(),
-            $this->createSprykerMerchantPortalModuleFilePathBuilder(),
+            $this->createSprykerSdkModulePathBuilder(),
+            $this->createSprykerMerchantPortalModulePathBuilder(),
         ]);
     }
 
@@ -347,7 +347,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface
      */
-    public function createSprykerSdkModuleFilePathBuilder(): PathBuilderInterface
+    public function createSprykerSdkModulePathBuilder(): PathBuilderInterface
     {
         return new SprykerSdkModulePathBuilder(
             $this->getConfig()
@@ -357,7 +357,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface
      */
-    public function createSprykerMerchantPortalModuleFilePathBuilder(): PathBuilderInterface
+    public function createSprykerMerchantPortalModulePathBuilder(): PathBuilderInterface
     {
         return new SprykerMerchantPortalModulePathBuilder($this->getConfig());
     }
