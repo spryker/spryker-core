@@ -102,10 +102,10 @@ class ContentStorageWriter implements ContentStorageWriterInterface
      */
     protected function saveContentStorage(ContentTransfer $contentTransfer, array $contentStorageTransfers, array $availableLocales): void
     {
-        $localizedContents = $this->indexContentTransfersByLocale($contentTransfer);
+        $localizedContentTransfers = $this->indexContentTransfersByLocale($contentTransfer);
 
         foreach ($availableLocales as $availableLocale) {
-            $localizedContent = $localizedContents[$availableLocale->getLocaleName()] ?? $localizedContents[static::DEFAULT_LOCALE];
+            $localizedContentTransfer = $localizedContentTransfers[$availableLocale->getLocaleName()] ?? $localizedContentTransfers[static::DEFAULT_LOCALE];
 
             $contentStorageTransfer = new ContentStorageTransfer();
             if (!empty($contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale->getLocaleName()])) {
@@ -118,7 +118,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
                 ->setLocale($availableLocale->getLocaleName())
                 ->setData($this->utilEncodingService->encodeJson([
                     ContentStorageConfig::TERM_KEY => $contentTransfer->getContentTermKey(),
-                    ContentStorageConfig::CONTENT_KEY => $this->utilEncodingService->decodeJson($localizedContent->getParameters(), true),
+                    ContentStorageConfig::CONTENT_KEY => $this->utilEncodingService->decodeJson($localizedContentTransfer->getParameters(), true),
                 ]));
 
             $this->contentStorageEntityManager->saveContentStorageEntity($contentStorageTransfer);
@@ -134,11 +134,9 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     {
         $localizedContentTransfers = [];
 
-        foreach ($contentTransfer->getLocalizedContents() as $contentLocalized) {
-            $localeKey = $contentLocalized->getFkLocale() ? $contentLocalized->getLocaleName() : static::DEFAULT_LOCALE;
-            $localizedContentTransfers[$localeKey] = $contentLocalized;
-
-            $localizedContentTransfers[$localeKey] = $contentLocalized;
+        foreach ($contentTransfer->getLocalizedContents() as $localizedContentTransfer) {
+            $localeKey = $localizedContentTransfer->getFkLocale() ? $localizedContentTransfer->getLocaleName() : static::DEFAULT_LOCALE;
+            $localizedContentTransfers[$localeKey] = $localizedContentTransfer;
         }
 
         return $localizedContentTransfers;
