@@ -135,30 +135,29 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
     /**
      * @api
      *
-     * @param int[] $idProductAbstracts
-     * @param string[] $countryIso2Codes
+     * @param int $idProductAbstracts
+     * @param string $countryIso2Code
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
-    public function queryTaxSetByIdProductAbstractAndCountryIso2Codes(array $idProductAbstracts, array $countryIso2Codes): SpyTaxSetQuery
+    public function queryTaxSetBySinleIdProductAbstractAndCountryIso2Code( $idProductAbstracts, $countryIso2Code): SpyTaxSetQuery
     {
         return $this->getFactory()->createTaxSetQuery()
             ->useSpyProductAbstractQuery()
-                ->filterByIdProductAbstract($idProductAbstracts, Criteria::IN)
-                ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_ABSTRACT_PRODUCT)
+                ->filterByIdProductAbstract($idProductAbstracts)
+                ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, self::COL_ID_ABSTRACT_PRODUCT)
                 ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->endUse()
             ->useSpyTaxSetTaxQuery()
                 ->useSpyTaxRateQuery()
                     ->useCountryQuery()
-                        ->filterByIso2Code($countryIso2Codes, Criteria::IN)
-                        ->groupBy(SpyCountryTableMap::COL_ISO2_CODE)
+                        ->filterByIso2Code($countryIso2Code)
                     ->endUse()
                     ->_or()
                     ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
                 ->endUse()
-                ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', static::COL_MAX_TAX_RATE)
+                ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_MAX_TAX_RATE)
             ->endUse()
-            ->select([SpyCountryTableMap::COL_ISO2_CODE, static::COL_MAX_TAX_RATE, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT]);
+            ->select([self::COL_MAX_TAX_RATE]);
     }
 }

@@ -70,11 +70,8 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
 
         $countryIso2CodesByIdProductAbstracts = $this->getCountryIso2CodesByIdProductAbstracts($quoteTransfer->getItems());
 
-        $taxRates = $this->findTaxRatesByAllIdProductAbstractsAndCountryIso2Codes($countryIso2CodesByIdProductAbstracts);
-
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $taxRate = $this->getEffectiveTaxRate(
-                $taxRates,
                 $itemTransfer->getIdProductAbstract(),
                 $countryIso2CodesByIdProductAbstracts[$itemTransfer->getIdProductAbstract()]
             );
@@ -125,44 +122,25 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param array $taxRates
      * @param int $idProductAbstract
      * @param string $countryIso2Code
      *
      * @return float
      */
-    protected function getEffectiveTaxRate(array $taxRates, int $idProductAbstract, string $countryIso2Code): float
+    protected function getEffectiveTaxRate(int $idProductAbstract, string $countryIso2Code): float
     {
-        $key = $this->getTaxGroupedKey($idProductAbstract, $countryIso2Code?? TaxConstants::TAX_EXEMPT_PLACEHOLDER);
+        $foundResults = $this->taxQueryContainer
+            ->queryTaxSetBySinleIdProductAbstractAndCountryIso2Code(
+                $idProductAbstract,
+                $countryIso2Code
+            )
+            ->findOne();
 
-        if (isset($taxRates[$key])) {
-            return (float)$taxRates[$key];
+        if (isset($foundResults[TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE])) {
+            return (float)$foundResults[TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE];
         }
 
         return $this->taxFacade->getDefaultTaxRate();
-    }
-
-    /**
-     * @param string[] $countryIso2CodesByIdProductAbstracts
-     *
-     * @return array
-     */
-    protected function findTaxRatesByAllIdProductAbstractsAndCountryIso2Codes(array $countryIso2CodesByIdProductAbstracts): array
-    {
-        $groupedResults = [];
-        $foundResults = $this->taxQueryContainer
-            ->queryTaxSetByIdProductAbstractAndCountryIso2Codes(
-                $this->getIdProductAbstracts($countryIso2CodesByIdProductAbstracts),
-                $this->getUniqueCountryIso2Codes($countryIso2CodesByIdProductAbstracts)
-            )
-            ->find();
-
-        foreach ($foundResults as $data) {
-            $key = $this->getTaxGroupedKey($data[TaxProductConnectorQueryContainer::COL_ID_ABSTRACT_PRODUCT], $data[SpyCountryTableMap::COL_ISO2_CODE] ?? TaxConstants::TAX_EXEMPT_PLACEHOLDER);
-            $groupedResults[$key] = $data[TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE];
-        }
-
-        return $groupedResults;
     }
 
     /**
@@ -183,17 +161,6 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected function getUniqueCountryIso2Codes(array $countryIso2Codes): array
     {
         return array_unique($countryIso2Codes);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param string $countryIso2Code
-     *
-     * @return string
-     */
-    protected function getTaxGroupedKey(int $idProductAbstract, string $countryIso2Code): string
-    {
-        return $countryIso2Code . $idProductAbstract;
     }
 
     /**
