@@ -133,11 +133,11 @@ class Mapper implements MapperInterface
         trigger_error(sprintf(
             'Class %s must implement one of the following interfaces: %s',
             $class,
-            [
+            implode(',', [
                 ObjectInterface::class,
                 CollectionInterface::class,
                 PrimitiveInterface::class,
-            ]
+            ])
         ), E_USER_WARNING);
 
         return new PropertyValue(
