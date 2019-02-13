@@ -79,7 +79,6 @@ class UpdateQuoteTest extends Unit
         $quoteTransfer->setStore(null);
 
         // Act
-        // Act
         $this->validateStoreInQuote($quoteTransfer, static::ERROR_MESSAGE_STORE_DATA_IS_MISSING);
     }
 
