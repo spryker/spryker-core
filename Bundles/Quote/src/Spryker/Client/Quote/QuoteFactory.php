@@ -9,6 +9,8 @@ namespace Spryker\Client\Quote;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface;
+use Spryker\Client\Quote\QuoteEditStatus\QuoteEditStatusChecker;
+use Spryker\Client\Quote\QuoteEditStatus\QuoteEditStatusCheckerInterface;
 use Spryker\Client\Quote\QuoteLock\QuoteLockStatusChecker;
 use Spryker\Client\Quote\QuoteLock\QuoteLockStatusCheckerInterface;
 use Spryker\Client\Quote\Session\QuoteSession;
@@ -72,7 +74,8 @@ class QuoteFactory extends AbstractFactory
     {
         return new SessionStorageStrategy(
             $this->createSession(),
-            $this->createQuoteLockStatusChecker()
+            $this->createQuoteLockStatusChecker(),
+            $this->createQuoteEditStatusChecker()
         );
     }
 
@@ -85,6 +88,17 @@ class QuoteFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->createZedQuoteStub(),
             $this->createSession(),
+            $this->createQuoteLockStatusChecker(),
+            $this->createQuoteEditStatusChecker()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Quote\QuoteEditStatus\QuoteEditStatusCheckerInterface
+     */
+    public function createQuoteEditStatusChecker(): QuoteEditStatusCheckerInterface
+    {
+        return new QuoteEditStatusChecker(
             $this->createQuoteLockStatusChecker()
         );
     }

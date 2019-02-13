@@ -259,18 +259,4 @@ interface CartClientInterface
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
     public function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer;
-
-    /**
-     * Specification:
-     * - Returns false if quote locked.
-     * - Returns true if quote has empty id.
-     * - Returns true if customer has `WriteSharedCartPermission`.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool;
 }

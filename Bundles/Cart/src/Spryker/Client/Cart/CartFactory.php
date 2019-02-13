@@ -8,8 +8,6 @@
 namespace Spryker\Client\Cart;
 
 use Spryker\Client\Cart\CartChangeRequestExpander\CartChangeRequestExpander;
-use Spryker\Client\Cart\CartEditStatus\QuoteEditStatusChecker;
-use Spryker\Client\Cart\CartEditStatus\QuoteEditStatusCheckerInterface;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProvider;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProxy;
@@ -65,16 +63,6 @@ class CartFactory extends AbstractFactory
     public function getQuoteStorageStrategy()
     {
         return $this->createQuoteStorageStrategyProvider()->provideStorage();
-    }
-
-    /**
-     * @return \Spryker\Client\Cart\CartEditStatus\QuoteEditStatusCheckerInterface
-     */
-    public function createQuoteEditStatusChecker(): QuoteEditStatusCheckerInterface
-    {
-        return new QuoteEditStatusChecker(
-            $this->getQuoteClient()
-        );
     }
 
     /**

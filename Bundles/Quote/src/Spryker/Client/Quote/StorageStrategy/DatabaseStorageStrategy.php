@@ -9,6 +9,7 @@ namespace Spryker\Client\Quote\StorageStrategy;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface;
+use Spryker\Client\Quote\QuoteEditStatus\QuoteEditStatusCheckerInterface;
 use Spryker\Client\Quote\QuoteLock\QuoteLockStatusCheckerInterface;
 use Spryker\Client\Quote\Session\QuoteSessionInterface;
 use Spryker\Client\Quote\Zed\QuoteStubInterface;
@@ -37,21 +38,29 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     protected $quoteLockStatusChecker;
 
     /**
+     * @var \Spryker\Client\Quote\QuoteEditStatus\QuoteEditStatusCheckerInterface
+     */
+    protected $quoteEditStatusChecker;
+
+    /**
      * @param \Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface $customerClient
      * @param \Spryker\Client\Quote\Zed\QuoteStubInterface $quoteStub
      * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
      * @param \Spryker\Client\Quote\QuoteLock\QuoteLockStatusCheckerInterface $quoteLockStatusChecker
+     * @param \Spryker\Client\Quote\QuoteEditStatus\QuoteEditStatusCheckerInterface $quoteEditStatusChecker
      */
     public function __construct(
         QuoteToCustomerClientInterface $customerClient,
         QuoteStubInterface $quoteStub,
         QuoteSessionInterface $quoteSession,
-        QuoteLockStatusCheckerInterface $quoteLockStatusChecker
+        QuoteLockStatusCheckerInterface $quoteLockStatusChecker,
+        QuoteEditStatusCheckerInterface $quoteEditStatusChecker
     ) {
         $this->customerClient = $customerClient;
         $this->quoteStub = $quoteStub;
         $this->quoteSession = $quoteSession;
         $this->quoteLockStatusChecker = $quoteLockStatusChecker;
+        $this->quoteEditStatusChecker = $quoteEditStatusChecker;
     }
 
     /**
@@ -109,5 +118,15 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteEditStatusChecker->isQuoteEditable($quoteTransfer);
     }
 }

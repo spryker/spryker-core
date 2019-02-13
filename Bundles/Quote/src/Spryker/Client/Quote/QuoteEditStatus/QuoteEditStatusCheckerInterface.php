@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Cart\CartEditStatus;
+namespace Spryker\Client\Quote\QuoteEditStatus;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 

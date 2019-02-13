@@ -78,4 +78,18 @@ class QuoteClient extends AbstractClient implements QuoteClientInterface
     {
         return $this->getFactory()->getStorageStrategy()->isQuoteLocked($quoteTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()->getStorageStrategy()->isQuoteEditable($quoteTransfer);
+    }
 }

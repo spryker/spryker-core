@@ -293,18 +293,4 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         return $this->getFactory()->getQuoteItemFinderPlugin()->findItem($quoteTransfer, $sku, $groupKey);
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
-    {
-        return $this->getFactory()->createQuoteEditStatusChecker()->isQuoteEditable($quoteTransfer);
-    }
 }
