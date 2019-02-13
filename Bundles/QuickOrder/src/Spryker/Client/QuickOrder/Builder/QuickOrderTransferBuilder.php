@@ -87,7 +87,7 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
      */
     protected function resolveProductConcrete(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
-        $productConcreteTransfer = $this->productConcreteResolver->findProductConcreteBySku($quickOrderItemTransfer->getSku());
+        $productConcreteTransfer = $this->productConcreteResolver->findProductConcreteWithProductAbstractBySku($quickOrderItemTransfer->getSku());
 
         if ($productConcreteTransfer === null) {
             $productConcreteTransfer = (new ProductConcreteTransfer())->setSku($quickOrderItemTransfer->getSku());
