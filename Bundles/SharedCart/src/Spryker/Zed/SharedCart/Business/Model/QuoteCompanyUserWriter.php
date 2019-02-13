@@ -72,11 +72,11 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
      */
     public function shareQuoteWithCompanyUser(int $idQuote, int $idCompanyUser, string $permissionGroupName): void
     {
-        $shareDetailTransfer = new ShareDetailTransfer();
-        $shareDetailTransfer->setIdCompanyUser($idCompanyUser);
-        $shareDetailTransfer->setQuotePermissionGroup(
-            $this->getPermissionGroupByName($permissionGroupName)
-        );
+        $shareDetailTransfer = (new ShareDetailTransfer())
+            ->setIdCompanyUser($idCompanyUser)
+            ->setQuotePermissionGroup(
+                $this->getPermissionGroupByName($permissionGroupName)
+            );
 
         $this->createNewQuoteCompanyUser($idQuote, $shareDetailTransfer);
     }

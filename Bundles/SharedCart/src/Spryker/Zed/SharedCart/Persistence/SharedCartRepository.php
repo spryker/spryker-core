@@ -93,6 +93,8 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     }
 
     /**
+     * @module Quote
+     *
      * @param int $idCompanyUser
      *
      * @return int[]
