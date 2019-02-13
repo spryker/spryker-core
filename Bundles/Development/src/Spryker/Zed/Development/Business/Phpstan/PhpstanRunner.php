@@ -342,7 +342,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
         }
 
         $pathToInternalNamespace = $this->config->getPathToInternalNamespace($namespace);
-        if ($pathToInternalNamespace !== null && is_dir($pathToInternalNamespace . $module)) {
+        if ($pathToInternalNamespace && is_dir($pathToInternalNamespace . $module)) {
             return $this->addPath($paths, $pathToInternalNamespace . $module . DIRECTORY_SEPARATOR, $namespace);
         }
 

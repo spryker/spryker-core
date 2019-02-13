@@ -104,9 +104,9 @@ class PhpMdRunner
     {
         if (strpos($bundle, '.') !== false) {
             return $this->resolveCorePaths($bundle);
-        } else {
-            return $this->config->getPathToCore() . $bundle . DIRECTORY_SEPARATOR;
         }
+
+        return $this->config->getPathToCore() . $bundle . DIRECTORY_SEPARATOR;
     }
 
     /**
