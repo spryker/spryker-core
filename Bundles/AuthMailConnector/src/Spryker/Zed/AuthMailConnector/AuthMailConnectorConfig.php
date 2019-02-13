@@ -7,8 +7,16 @@
 
 namespace Spryker\Zed\AuthMailConnector;
 
+use Spryker\Shared\AuthMailConnector\AuthMailConnectorConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AuthMailConnectorConfig extends AbstractBundleConfig
 {
+    /**
+     * @return string
+     */
+    public function getBaseUrlZed(): string
+    {
+        return $this->get(AuthMailConnectorConstants::BASE_URL_ZED);
+    }
 }

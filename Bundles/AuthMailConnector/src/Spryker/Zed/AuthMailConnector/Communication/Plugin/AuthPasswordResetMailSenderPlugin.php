@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\AuthMailConnector\Communication\Plugin;
 
+use Generated\Shared\Transfer\MailLinkTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
+use Spryker\Zed\AuthMailConnector\Communication\Plugin\Mail\RestorePasswordMailTypePlugin;
 use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -18,8 +20,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPasswordResetSenderInterface
 {
-    public const SUBJECT = 'Password reset request';
-    public const TEMPLATE = 'Auth.password.reset';
+    protected const PARAM_TOKEN = 'token';
+    protected const AUTH_PASSWORD_RESET_URL = '/auth/password/reset';
+    protected const HREF_FORMAT = '%s%s?%s';
+
+    protected const RESTORE_PASSWORD_LINK_TEXT = 'mail.auth.restore_password.text';
+    protected const RESTORE_PASSWORD_LINK_LABEL = 'mail.auth.restore_password.label';
 
     /**
      * @api
@@ -31,21 +37,73 @@ class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPa
      */
     public function send($email, $token)
     {
+        $mailTransfer = $this->generateMailTransfer($email, $token);
+
+        $this->getFactory()->getMailFacade()->handleMail($mailTransfer);
+    }
+
+    /**
+     * @param string $email
+     * @param string $token
+     *
+     * @return \Generated\Shared\Transfer\MailTransfer
+     */
+    protected function generateMailTransfer(string $email, string $token): MailTransfer
+    {
         $mailTransfer = new MailTransfer();
+        $mailTransfer->setType(RestorePasswordMailTypePlugin::MAIL_TYPE);
+
+        $mailRecipientTransfer = $this->generateMailRecipientTransfer($email);
+        $mailTransfer->addRecipient($mailRecipientTransfer);
+
+        $mailLinkTransfer = $this->generateMailLinkTransfer($token);
+        $mailTransfer->addLink($mailLinkTransfer);
+
+        return $mailTransfer;
+    }
+
+    /**
+     * @param string $email
+     *
+     * @return \Generated\Shared\Transfer\MailRecipientTransfer
+     */
+    protected function generateMailRecipientTransfer(string $email): MailRecipientTransfer
+    {
         $mailRecipientTransfer = new MailRecipientTransfer();
         $mailRecipientTransfer->setEmail($email);
 
-        $mailTransfer->addRecipient($mailRecipientTransfer);
-        $mailTransfer->setSubject(static::SUBJECT);
-        $mailTransfer->setTemplateName(static::TEMPLATE);
-        $mailTransfer->setMerge(true);
-        $mailTransfer->setMergeLanguage('handlebars');
-        $mailTransfer->setGlobalMergeVars([
-            'reset_password_token' => $token,
+        return $mailRecipientTransfer;
+    }
+
+    /**
+     * @param string $token
+     *
+     * @return \Generated\Shared\Transfer\MailLinkTransfer
+     */
+    protected function generateMailLinkTransfer(string $token): MailLinkTransfer
+    {
+        $mailLinkTransfer = new MailLinkTransfer();
+        $mailLinkTransfer
+            ->setText(static::RESTORE_PASSWORD_LINK_TEXT)
+            ->setLabel(static::RESTORE_PASSWORD_LINK_LABEL)
+            ->setHref($this->generateHref($token));
+
+        return $mailLinkTransfer;
+    }
+
+    /**
+     * @param string $token
+     *
+     * @return string
+     */
+    protected function generateHref(string $token): string
+    {
+        $baseUrlZed = $this->getConfig()->getBaseUrlZed();
+
+        $query = http_build_query([
+            static::PARAM_TOKEN => $token,
         ]);
 
-        $this->getFactory()
-            ->getMailFacade()
-            ->sendMail($mailTransfer);
+        return sprintf(static::HREF_FORMAT, $baseUrlZed, static::AUTH_PASSWORD_RESET_URL, $query);
     }
 }

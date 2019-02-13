@@ -16,5 +16,14 @@ interface AuthMailConnectorToMailInterface
      *
      * @return void
      */
+    public function handleMail(MailTransfer $mailTransfer);
+
+    /**
+     * @deprecated
+     *
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     *
+     * @return void
+     */
     public function sendMail(MailTransfer $mailTransfer);
 }
