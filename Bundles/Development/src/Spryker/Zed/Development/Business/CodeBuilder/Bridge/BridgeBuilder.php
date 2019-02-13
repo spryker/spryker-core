@@ -360,7 +360,7 @@ class BridgeBuilder
     protected function resolveModulePath(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer): string
     {
         $pathToInternalNamespace = $this->config->getPathToInternalNamespace($bridgeBuilderDataTransfer->getVendor());
-        if (!$pathToInternalNamespace) {
+        if ($pathToInternalNamespace) {
             return $pathToInternalNamespace . $bridgeBuilderDataTransfer->getModule();
         }
 
@@ -381,7 +381,8 @@ class BridgeBuilder
      */
     protected function resolveTargetModulePath(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer): string
     {
-        if ($pathToInternalNamespace = $this->config->getPathToInternalNamespace($bridgeBuilderDataTransfer->getToVendor())) {
+        $pathToInternalNamespace = $this->config->getPathToInternalNamespace($bridgeBuilderDataTransfer->getToVendor());
+        if ($pathToInternalNamespace) {
             return $pathToInternalNamespace . $bridgeBuilderDataTransfer->getToModule();
         }
 

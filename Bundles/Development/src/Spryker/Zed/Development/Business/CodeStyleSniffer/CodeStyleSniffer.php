@@ -118,7 +118,7 @@ class CodeStyleSniffer
 
         $pathToInternalNamespace = $this->config->getPathToInternalNamespace($namespace);
 
-        if ($pathToInternalNamespace === null) {
+        if (!$pathToInternalNamespace) {
             throw new RuntimeException('Namespace invalid: ' . $namespace);
         }
 
@@ -160,7 +160,7 @@ class CodeStyleSniffer
     protected function getCorePath($module, $namespace, $pathSuffix = null)
     {
         $pathToInternalNamespace = $this->config->getPathToInternalNamespace($namespace);
-        if ($pathToInternalNamespace !== null && is_dir($pathToInternalNamespace . $module)) {
+        if ($pathToInternalNamespace && is_dir($pathToInternalNamespace . $module)) {
             return $this->buildPath($pathToInternalNamespace . $module . DIRECTORY_SEPARATOR, $pathSuffix);
         }
 

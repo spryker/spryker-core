@@ -227,7 +227,7 @@ class ModuleBuilder
     protected function getDirectoryName($namespace)
     {
         $pathToInternalNamespace = $this->config->getPathToInternalNamespace($namespace);
-        if ($pathToInternalNamespace !== null) {
+        if ($pathToInternalNamespace) {
             return $pathToInternalNamespace;
         }
 
