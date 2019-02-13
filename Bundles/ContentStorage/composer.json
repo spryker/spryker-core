@@ -6,22 +6,22 @@
   "require": {
     "php": ">=7.1",
     "spryker/content": "^1.0.0",
+    "spryker/content-storage-extension": "^1.0.0",
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/synchronization-extension": "^1.0.0",
-    "spryker/content-storage-extension": "^1.0.0",
     "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^1.0.0",
+    "spryker/synchronization-extension": "^1.0.0",
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
-    "spryker/queue": "*"
+    "spryker/queue": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"

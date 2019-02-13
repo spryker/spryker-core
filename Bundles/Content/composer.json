@@ -5,17 +5,18 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/locale": "^3.0.0",
-    "spryker/kernel": "^3.8.0"
+    "spryker/kernel": "^3.8.0",
+    "spryker/locale": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/propel": "*"
+    "spryker/propel": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\Content\\Helper\\": "tests/SprykerTest/Zed/Content/_support/Helper/"
     }
   },
   "autoload-dev": {
