@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ContentProduct\Plugin;
+namespace Spryker\Client\ContentProduct\Plugin\ContentStorage;
 
-use Generated\Shared\Transfer\ContentAbstractProductListTransfer;
+use Generated\Shared\Transfer\ContentProductAbstractListTransfer;
 use Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\ContentProduct\ContentProductConfig;
@@ -15,10 +15,11 @@ use Spryker\Shared\ContentProduct\ContentProductConfig;
 /**
  * @method \Spryker\Client\ContentProduct\ContentProductFactory getFactory()
  */
-class AbstractProductListTermExecutorPlugin extends AbstractPlugin implements ContentTermExecutorPluginInterface
+class ProductAbstractListTermExecutorPlugin extends AbstractPlugin implements ContentTermExecutorPluginInterface
 {
     /**
      * {@inheritdoc}
+     * - Creates needed format.
      *
      * @api
      *
@@ -29,7 +30,7 @@ class AbstractProductListTermExecutorPlugin extends AbstractPlugin implements Co
     public function execute(array $parameters): array
     {
         return $this->getFactory()
-            ->createAbstractProductListTermExecutor()
+            ->createProductAbstractListTermExecutor()
             ->execute(
                 $this->mapParametersToTransferObject($parameters)
             );
@@ -44,7 +45,7 @@ class AbstractProductListTermExecutorPlugin extends AbstractPlugin implements Co
      */
     public function getTermKey(): string
     {
-        return ContentProductConfig::CONTENT_TERM_ABSTRACT_PRODUCT_LIST;
+        return ContentProductConfig::CONTENT_TERM_PRODUCT_ABSTRACT_LIST;
     }
 
     /**
@@ -56,7 +57,7 @@ class AbstractProductListTermExecutorPlugin extends AbstractPlugin implements Co
      */
     public function getTypeKey(): string
     {
-        return ContentProductConfig::CONTENT_TYPE_ABSTRACT_PRODUCT_LIST;
+        return ContentProductConfig::CONTENT_TYPE_PRODUCT_ABSTRACT_LIST;
     }
 
     /**
@@ -66,13 +67,10 @@ class AbstractProductListTermExecutorPlugin extends AbstractPlugin implements Co
      *
      * @param array $parameters
      *
-     * @return \Generated\Shared\Transfer\ContentAbstractProductListTransfer
+     * @return \Generated\Shared\Transfer\ContentProductAbstractListTransfer
      */
-    protected function mapParametersToTransferObject(array $parameters): ContentAbstractProductListTransfer
+    protected function mapParametersToTransferObject(array $parameters): ContentProductAbstractListTransfer
     {
-        $contentAbstractProductListTransfer = new ContentAbstractProductListTransfer();
-        $contentAbstractProductListTransfer->fromArray($parameters, true);
-
-        return $contentAbstractProductListTransfer;
+        return (new ContentProductAbstractListTransfer())->fromArray($parameters, true);
     }
 }

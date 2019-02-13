@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ContentProductGui\Communication\Plugin;
+namespace Spryker\Zed\ContentProductGui\Communication\Plugin\ContentGui;
 
-use Generated\Shared\Transfer\ContentAbstractProductListTransfer;
+use Generated\Shared\Transfer\ContentProductAbstractListTransfer;
 use Spryker\Shared\ContentProductGui\ContentProductGuiConfig;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface;
-use Spryker\Zed\ContentProductGui\Communication\Form\AbstractProductListContentTermForm;
+use Spryker\Zed\ContentProductGui\Communication\Form\ProductAbstractListContentTermForm;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 class ProductAbstractListFormPlugin extends AbstractPlugin implements ContentPluginInterface
@@ -25,7 +25,7 @@ class ProductAbstractListFormPlugin extends AbstractPlugin implements ContentPlu
      */
     public function getTermKey(): string
     {
-        return ContentProductGuiConfig::CONTENT_TERM_ABSTRACT_PRODUCT_LIST;
+        return ContentProductGuiConfig::CONTENT_TERM_PRODUCT_ABSTRACT_LIST;
     }
 
     /**
@@ -37,7 +37,7 @@ class ProductAbstractListFormPlugin extends AbstractPlugin implements ContentPlu
      */
     public function getTypeKey(): string
     {
-        return ContentProductGuiConfig::CONTENT_TYPE_ABSTRACT_PRODUCT_LIST;
+        return ContentProductGuiConfig::CONTENT_TYPE_PRODUCT_ABSTRACT_LIST;
     }
 
     /**
@@ -49,7 +49,7 @@ class ProductAbstractListFormPlugin extends AbstractPlugin implements ContentPlu
      */
     public function getForm(): string
     {
-        return AbstractProductListContentTermForm::class;
+        return ProductAbstractListContentTermForm::class;
     }
 
     /**
@@ -59,20 +59,20 @@ class ProductAbstractListFormPlugin extends AbstractPlugin implements ContentPlu
      *
      * @param array|null $params
      *
-     * @return \Generated\Shared\Transfer\ContentAbstractProductListTransfer
+     * @return \Generated\Shared\Transfer\ContentProductAbstractListTransfer
      */
     public function getTransferObject(?array $params = null): AbstractTransfer
     {
-        $contentAbstractProductListTransfer = new ContentAbstractProductListTransfer();
+        $contentProductAbstractPListTransfer = new ContentProductAbstractListTransfer();
 
-        if (empty($params) || empty($params['skus'])) {
-            $contentAbstractProductListTransfer->setSkus(['']);
+        if (empty($params) || empty($params[ContentProductAbstractListTransfer::SKUS])) {
+            $contentProductAbstractPListTransfer->setSkus(['']);
 
-            return $contentAbstractProductListTransfer;
+            return $contentProductAbstractPListTransfer;
         }
-        $params['skus'] = array_values($params['skus']);
-        $contentAbstractProductListTransfer->fromArray($params);
+        $params[ContentProductAbstractListTransfer::SKUS] = array_values($params[ContentProductAbstractListTransfer::SKUS]);
+        $contentProductAbstractPListTransfer->fromArray($params);
 
-        return $contentAbstractProductListTransfer;
+        return $contentProductAbstractPListTransfer;
     }
 }

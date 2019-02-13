@@ -12,7 +12,7 @@ interface ContentStorageClientInterface
     /**
      * Specification:
      * - Finds content item in the key-value storage.
-     * - Executes data.
+     * - Resolves content type and executes data.
      *
      * @api
      *

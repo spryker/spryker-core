@@ -7,17 +7,17 @@
 
 namespace Spryker\Client\ContentProduct;
 
-use Spryker\Client\ContentProduct\Executor\AbstractProductListTermExecutor;
-use Spryker\Client\ContentProduct\Executor\AbstractProductListTermExecutorInterface;
+use Spryker\Client\ContentProduct\Executor\ProductAbstractListTermExecutor;
+use Spryker\Client\ContentProduct\Executor\ProductAbstractListTermExecutorInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class ContentProductFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\ContentProduct\Executor\AbstractProductListTermExecutorInterface
+     * @return \Spryker\Client\ContentProduct\Executor\ProductAbstractListTermExecutorInterface
      */
-    public function createAbstractProductListTermExecutor(): AbstractProductListTermExecutorInterface
+    public function createProductAbstractListTermExecutor(): ProductAbstractListTermExecutorInterface
     {
-        return new AbstractProductListTermExecutor();
+        return new ProductAbstractListTermExecutor();
     }
 }

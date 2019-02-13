@@ -9,12 +9,18 @@ namespace Spryker\Client\ContentProduct\Executor;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
-interface AbstractProductListTermExecutorInterface
+class ProductAbstractListTermExecutor implements ProductAbstractListTermExecutorInterface
 {
     /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $parameters
      *
      * @return array
      */
-    public function execute(TransferInterface $parameters): array;
+    public function execute(TransferInterface $parameters): array
+    {
+        /** @var \Generated\Shared\Transfer\ContentProductAbstractListTransfer $contentProductAbstractListTransfer */
+        $contentProductAbstractListTransfer = $parameters;
+
+        return $contentProductAbstractListTransfer->getSkus();
+    }
 }

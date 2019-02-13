@@ -44,4 +44,12 @@ class ContentStoragePersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(ContentStorageDependencyProvider::PROPEL_QUERY_CONTENT);
     }
+
+    /**
+     * @return \Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface
+     */
+    public function getUtilEncoding()
+    {
+        return $this->getProvidedDependency(ContentStorageDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
 }

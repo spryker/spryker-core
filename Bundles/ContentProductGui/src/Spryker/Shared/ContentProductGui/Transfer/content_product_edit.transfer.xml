@@ -5,4 +5,8 @@
     <transfer name="ContentProductAbstractList">
         <property name="skus" type="string[]" />
     </transfer>
+
+    <transfer name="LocalizedContent">
+        <property name="fkLocale" type="int" />
+    </transfer>
 </transfers>

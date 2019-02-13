@@ -53,6 +53,6 @@ class ContentResolver implements ContentResolverInterface
             }
         }
 
-        throw new MissingContentTermTypePluginException();
+        throw new MissingContentTermTypePluginException(sprintf("The term %s is missing.", $termKey));
     }
 }

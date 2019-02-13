@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ContentStorage\Storage;
+namespace Spryker\Client\ContentStorage\ContentStorage;
 
-interface ContentStorageInterface
+interface ContentStorageReaderInterface
 {
     /**
      * @param int $idContent

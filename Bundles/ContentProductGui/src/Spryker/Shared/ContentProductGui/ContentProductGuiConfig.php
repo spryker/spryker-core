@@ -12,16 +12,16 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 class ContentProductGuiConfig extends AbstractSharedConfig
 {
     /**
-     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::CONTENT_TYPE_ABSTRACT_PRODUCT_LIST
+     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::CONTENT_TYPE_PRODUCT_ABSTRACT_LIST
      *
      * Content item abstract product list
      */
-    public const CONTENT_TYPE_ABSTRACT_PRODUCT_LIST = 'Abstract Product List';
+    public const CONTENT_TYPE_PRODUCT_ABSTRACT_LIST = 'Abstract Product List';
 
     /**
-     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::CONTENT_TERM_ABSTRACT_PRODUCT_LIST
+     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::CONTENT_TERM_PRODUCT_ABSTRACT_LIST
      *
      * Content item abstract product list
      */
-    public const CONTENT_TERM_ABSTRACT_PRODUCT_LIST = 'Abstract Product List';
+    public const CONTENT_TERM_PRODUCT_ABSTRACT_LIST = 'Abstract Product List';
 }

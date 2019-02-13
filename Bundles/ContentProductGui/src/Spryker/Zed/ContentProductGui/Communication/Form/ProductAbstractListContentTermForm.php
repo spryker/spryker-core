@@ -18,11 +18,12 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
-class AbstractProductListContentTermForm extends AbstractType
+class ProductAbstractListContentTermForm extends AbstractType
 {
     public const FIELD_SKUS = 'skus';
+    public const PLACEHOLDER_SKU = 'sku';
 
-    protected const TEMPLATE_PATH = '@ContentProductGui/AbstractProductList/abstract_product_list.twig';
+    protected const TEMPLATE_PATH = '@ContentProductGui/ProductAbstractList/product_abstract_list.twig';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -38,10 +39,10 @@ class AbstractProductListContentTermForm extends AbstractType
                 if ($localizedContentTransfer->getFkLocale() === null) {
                     return [Constraint::DEFAULT_GROUP];
                 }
-                /** @var \Generated\Shared\Transfer\ContentAbstractProductListTransfer $contentAbstractProductList */
-                $contentAbstractProductList = $form->getNormData();
+                /** @var \Generated\Shared\Transfer\ContentProductAbstractListTransfer $contentProductAbstractList */
+                $contentProductAbstractList = $form->getNormData();
 
-                foreach ($contentAbstractProductList->getSkus() as $sku) {
+                foreach ($contentProductAbstractList->getSkus() as $sku) {
                     if (!empty($sku)) {
                         return [Constraint::DEFAULT_GROUP];
                     }
@@ -90,7 +91,7 @@ class AbstractProductListContentTermForm extends AbstractType
             'entry_options' => [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'sku',
+                    'placeholder' => static::PLACEHOLDER_SKU,
                 ],
                 'constraints' => $this->getTextFieldConstraints(),
             ],

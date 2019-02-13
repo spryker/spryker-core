@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ContentStorage\Storage;
+namespace Spryker\Client\ContentStorage\ContentStorage;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface;
@@ -13,7 +13,7 @@ use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchroniza
 use Spryker\Client\ContentStorage\Resolver\ContentResolverInterface;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
 
-class ContentStorage implements ContentStorageInterface
+class ContentStorageReader implements ContentStorageReaderInterface
 {
     /**
      * @var \Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface
@@ -56,7 +56,7 @@ class ContentStorage implements ContentStorageInterface
         $storageKey = $this->generateKey((string)$idContent, $localeName);
         $content = $this->storageClient->get($storageKey);
 
-        if (empty($content)) {
+        if (!$content) {
             return null;
         }
 
@@ -77,6 +77,8 @@ class ContentStorage implements ContentStorageInterface
         $synchronizationDataTransfer->setReference($keyName);
         $synchronizationDataTransfer->setLocale($localeName);
 
-        return $this->synchronizationService->getStorageKeyBuilder(ContentStorageConfig::CONTENT_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
+        return $this->synchronizationService
+            ->getStorageKeyBuilder(ContentStorageConfig::CONTENT_RESOURCE_NAME)
+            ->generateKey($synchronizationDataTransfer);
     }
 }

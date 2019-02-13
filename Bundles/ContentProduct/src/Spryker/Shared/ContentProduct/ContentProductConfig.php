@@ -14,10 +14,10 @@ class ContentProductConfig extends AbstractSharedConfig
     /**
      * Content item abstract product list
      */
-    public const CONTENT_TYPE_ABSTRACT_PRODUCT_LIST = 'Abstract Product List';
+    public const CONTENT_TYPE_PRODUCT_ABSTRACT_LIST = 'Abstract Product List';
 
     /**
      * Content item abstract product list
      */
-    public const CONTENT_TERM_ABSTRACT_PRODUCT_LIST = 'Abstract Product List';
+    public const CONTENT_TERM_PRODUCT_ABSTRACT_LIST = 'Abstract Product List';
 }
