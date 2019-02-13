@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
+use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
@@ -132,7 +133,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      */
     protected function getEffectiveTaxRate(array $taxRates, int $idProductAbstract, string $countryIso2Code): float
     {
-        $key = $this->getTaxGroupedKey($idProductAbstract, $countryIso2Code);
+        $key = $this->getTaxGroupedKey($idProductAbstract, $countryIso2Code?? TaxConstants::TAX_EXEMPT_PLACEHOLDER);
 
         if (isset($taxRates[$key])) {
             return (float)$taxRates[$key];
@@ -157,7 +158,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
             ->find();
 
         foreach ($foundResults as $data) {
-            $key = $this->getTaxGroupedKey($data[TaxProductConnectorQueryContainer::COL_ID_ABSTRACT_PRODUCT], $data[SpyCountryTableMap::COL_ISO2_CODE]);
+            $key = $this->getTaxGroupedKey($data[TaxProductConnectorQueryContainer::COL_ID_ABSTRACT_PRODUCT], $data[SpyCountryTableMap::COL_ISO2_CODE] ?? TaxConstants::TAX_EXEMPT_PLACEHOLDER);
             $groupedResults[$key] = $data[TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE];
         }
 

@@ -142,10 +142,9 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      */
     public function queryTaxSetByIdProductAbstractAndCountryIso2Codes(array $idProductAbstracts, array $countryIso2Codes): SpyTaxSetQuery
     {
-        $allIdProductAbstracts = array_keys($countryIso2Codes);
         return $this->getFactory()->createTaxSetQuery()
             ->useSpyProductAbstractQuery()
-                ->filterByIdProductAbstract($allIdProductAbstracts, Criteria::IN)
+                ->filterByIdProductAbstract($idProductAbstracts, Criteria::IN)
                 ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_ABSTRACT_PRODUCT)
                 ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->endUse()
