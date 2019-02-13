@@ -61,7 +61,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     protected function createSessionHandlerRedis()
     {
         return $this->createSessionHandlerFactory()->createSessionHandlerRedis(
-            $this->getConfig()->getSessionHandlerRedisDataSourceNameZed(),
+            $this->getConfig()->getSessionHandlerRedisParametersZed(),
             $this->getConfig()->getSessionHandlerRedisOptionsZed()
         );
     }
