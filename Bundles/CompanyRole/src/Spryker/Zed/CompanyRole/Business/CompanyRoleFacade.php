@@ -203,9 +203,9 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
      *
      * @return int[]
      */
-    public function findCompanyUserIdsByPermissionKey(string $permissionKey): array
+    public function getCompanyUserIdsByPermissionKey(string $permissionKey): array
     {
-        return $this->getRepository()->findCompanyUserIdsByPermissionKey($permissionKey);
+        return $this->getRepository()->getCompanyUserIdsByPermissionKey($permissionKey);
     }
 
     /**

@@ -42,7 +42,7 @@ class PermissionExecutor implements PermissionExecutorInterface
              return true;
         }
 
-        $permissionCollectionTransfer = $this->permissionFinder->findCustomerPermissionsByKey($permissionKey);
+        $permissionCollectionTransfer = $this->permissionFinder->getCustomerPermissionsByKey($permissionKey);
 
         if ($permissionCollectionTransfer->getPermissions()->count() <= 0) {
             return false;

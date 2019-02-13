@@ -13,9 +13,15 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 
-interface QuoteStorageStrategyProxyInterface
+interface QuoteStorageStrategyProxyInterface extends QuoteStorageStrategyPluginInterface
 {
+    /**
+     * @return string
+     */
+    public function getStorageStrategy(): string;
+
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param array $params

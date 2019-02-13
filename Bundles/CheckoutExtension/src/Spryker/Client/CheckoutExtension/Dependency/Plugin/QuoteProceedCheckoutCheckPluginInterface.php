@@ -24,5 +24,5 @@ interface QuoteProceedCheckoutCheckPluginInterface
      *
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    public function can(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer;
+    public function isValid(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer;
 }

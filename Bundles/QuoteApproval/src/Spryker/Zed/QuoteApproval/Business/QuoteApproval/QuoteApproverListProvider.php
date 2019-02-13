@@ -107,6 +107,6 @@ class QuoteApproverListProvider implements QuoteApproverListProviderInterface
      */
     protected function getApproversIds(): array
     {
-        return $this->companyRoleFacade->findCompanyUserIdsByPermissionKey(ApproveQuotePermissionPlugin::KEY);
+        return $this->companyRoleFacade->getCompanyUserIdsByPermissionKey(ApproveQuotePermissionPlugin::KEY);
     }
 }

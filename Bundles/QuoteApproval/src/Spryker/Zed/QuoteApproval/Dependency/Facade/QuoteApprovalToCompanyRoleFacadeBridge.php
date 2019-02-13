@@ -29,9 +29,9 @@ class QuoteApprovalToCompanyRoleFacadeBridge implements QuoteApprovalToCompanyRo
      *
      * @return int[]
      */
-    public function findCompanyUserIdsByPermissionKey(string $permissionKey): array
+    public function getCompanyUserIdsByPermissionKey(string $permissionKey): array
     {
-        return $this->companyRoleFacade->findCompanyUserIdsByPermissionKey($permissionKey);
+        return $this->companyRoleFacade->getCompanyUserIdsByPermissionKey($permissionKey);
     }
 
     /**

@@ -189,13 +189,12 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
 
     /**
      * @module Permission
-     * @module CompanyUser
      *
      * @param string $permissionKey
      *
      * @return int[]
      */
-    public function findCompanyUserIdsByPermissionKey(string $permissionKey): array
+    public function getCompanyUserIdsByPermissionKey(string $permissionKey): array
     {
         return $this->getFactory()
             ->createCompanyRoleQuery()

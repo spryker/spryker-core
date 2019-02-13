@@ -27,7 +27,8 @@ interface CartFacadeInterface
      *  - Group items in quote (-> ItemGrouper)
      *  - Recalculate quote (-> Calculation)
      *  - Add success message to messenger (-> Messenger)
-     *  - Return updated quote
+     *  - Return updated quote if quote is not locked.
+     *  - Adds messenger error message and returns unchanged QuoteTransfer if quote is locked.
      *
      * @api
      *
@@ -48,7 +49,8 @@ interface CartFacadeInterface
      *  - Group items in quote (-> ItemGrouper)
      *  - Recalculate quote (-> Calculation)
      *  - Add success message to messenger (-> Messenger)
-     *  - Return updated quote
+     *  - Return updated quote if quote is not locked.
+     *  - Adds messenger error message and returns unchanged QuoteTransfer if quote is locked.
      *
      * @api
      *
@@ -90,7 +92,7 @@ interface CartFacadeInterface
      * Specification:
      *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      *  - Check changes and add notes to messenger (-> Messenger)
-     *  - Does nothing if cart is locked.
+     *  - Returns with unchanged QuoteTransfer and `isSuccessful=true` when cart is locked.
      *
      * @api
      *

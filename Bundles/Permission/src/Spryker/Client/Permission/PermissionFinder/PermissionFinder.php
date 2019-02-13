@@ -95,7 +95,7 @@ class PermissionFinder implements PermissionFinderInterface
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function findCustomerPermissionsByKey(string $permissionKey): PermissionCollectionTransfer
+    public function getCustomerPermissionsByKey(string $permissionKey): PermissionCollectionTransfer
     {
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 

@@ -169,7 +169,7 @@ interface CompanyRoleFacadeInterface
      *
      * @return int[]
      */
-    public function findCompanyUserIdsByPermissionKey(string $permissionKey): array;
+    public function getCompanyUserIdsByPermissionKey(string $permissionKey): array;
 
     /**
      * Specification:

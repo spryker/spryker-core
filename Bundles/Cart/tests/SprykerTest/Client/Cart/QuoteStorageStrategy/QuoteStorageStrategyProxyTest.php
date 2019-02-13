@@ -107,6 +107,18 @@ class QuoteStorageStrategyProxyTest extends Unit
     /**
      * @return void
      */
+    public function testGetStorageStrategyShouldForwardCallToSubject(): void
+    {
+        $this->assertCallForwardedToSubject(
+            'getStorageStrategy',
+            [],
+            'string'
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testRemoveItemShouldForwardCallToSubjectAndNotAddMessageForNotLockedQuote(): void
     {
         $this->haveNotLockedQuote();

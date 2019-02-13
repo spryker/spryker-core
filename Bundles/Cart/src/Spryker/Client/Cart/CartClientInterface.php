@@ -132,6 +132,7 @@ interface CartClientInterface
      *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Change item quantity using quote storage strategy.
+     *  - Does nothing if cart is locked.
      *
      * @api
      *
@@ -260,7 +261,9 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Returns true if quote is editable.
+     * - Returns false if quote locked.
+     * - Returns true if quote has empty id.
+     * - Returns true if customer has `WriteSharedCartPermission`.
      *
      * @api
      *

@@ -16,6 +16,7 @@ use Spryker\Zed\Cart\Business\Model\QuoteValidator;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\CartDependencyProvider;
+use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -97,7 +98,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface
      */
-    protected function getQuoteFacade()
+    public function getQuoteFacade(): CartToQuoteFacadeInterface
     {
         return $this->getProvidedDependency(CartDependencyProvider::FACADE_QUOTE);
     }

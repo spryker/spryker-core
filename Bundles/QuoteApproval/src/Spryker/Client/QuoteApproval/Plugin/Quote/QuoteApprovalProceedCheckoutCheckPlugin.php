@@ -34,7 +34,7 @@ class QuoteApprovalProceedCheckoutCheckPlugin extends AbstractPlugin implements 
      *
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    public function can(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
+    public function isValid(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
         $canProceedCheckout = !$this->getClient()->isQuoteRequireApproval($quoteTransfer);
 

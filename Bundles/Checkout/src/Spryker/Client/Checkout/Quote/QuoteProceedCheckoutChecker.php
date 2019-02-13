@@ -33,7 +33,7 @@ class QuoteProceedCheckoutChecker implements QuoteProceedCheckoutCheckerInterfac
     public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
         foreach ($this->quoteProccedCheckoutCheckPlugins as $quoteProccedCheckoutCheckPlugin) {
-            $quoteValidationResponseTransfer = $quoteProccedCheckoutCheckPlugin->can($quoteTransfer);
+            $quoteValidationResponseTransfer = $quoteProccedCheckoutCheckPlugin->isValid($quoteTransfer);
 
             if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
                 return $quoteValidationResponseTransfer;

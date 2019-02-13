@@ -32,7 +32,7 @@ interface PermissionFinderInterface
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function findCustomerPermissionsByKey(string $permissionKey): PermissionCollectionTransfer;
+    public function getCustomerPermissionsByKey(string $permissionKey): PermissionCollectionTransfer;
 
     /**
      * @param string $permissionKey
