@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 
@@ -24,9 +25,9 @@ interface ShipmentCheckoutConnectorToShipmentFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): array;
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ArrayObject;
 
     /**
      * @param int $idShipmentMethod
