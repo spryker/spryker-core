@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\TaxProductConnector\Persistence;
 
-use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
@@ -140,7 +139,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
-    public function queryTaxSetBySinleIdProductAbstractAndCountryIso2Code( $idProductAbstracts, $countryIso2Code): SpyTaxSetQuery
+    public function queryTaxSetBySinleIdProductAbstractAndCountryIso2Code($idProductAbstracts, $countryIso2Code): SpyTaxSetQuery
     {
         return $this->getFactory()->createTaxSetQuery()
             ->useSpyProductAbstractQuery()
