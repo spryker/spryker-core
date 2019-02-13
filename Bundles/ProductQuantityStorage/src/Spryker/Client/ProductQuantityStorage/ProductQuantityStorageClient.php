@@ -54,7 +54,7 @@ class ProductQuantityStorageClient extends AbstractClient implements ProductQuan
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemValidationTransfer
      *
      * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
