@@ -12,6 +12,7 @@ use Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegiste
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated use UpdateCartCreateCustomerReferencePlugin
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
 class UpdateCartCustomerReferencePlugin extends AbstractPlugin implements CustomerPostRegisterPluginInterface

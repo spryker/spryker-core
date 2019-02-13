@@ -25,6 +25,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const PLUGINS_QUOTE_DELETE_BEFORE = 'PLUGINS_QUOTE_DELETE_BEFORE';
     public const PLUGINS_QUOTE_DELETE_AFTER = 'PLUGINS_QUOTE_DELETE_AFTER';
+    public const PLUGINS_QUOTE_VALIDATOR = 'PLUGINS_QUOTE_VALIDATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -40,6 +41,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteUpdateBeforePlugins($container);
         $container = $this->addQuoteDeleteBeforePlugins($container);
         $container = $this->addQuoteDeleteAfterPlugins($container);
+        $container = $this->addQuoteValidatorPlugins($container);
 
         return $container;
     }
@@ -169,6 +171,20 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteValidatorPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUOTE_VALIDATOR] = function (Container $container) {
+            return $this->getQuoteValidatorPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
      */
     protected function getQuoteCreateAfterPlugins(): array
@@ -212,6 +228,14 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteDeleteAfterPluginInterface[]
      */
     protected function getQuoteDeleteAfterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface[]
+     */
+    protected function getQuoteValidatorPlugins(): array
     {
         return [];
     }

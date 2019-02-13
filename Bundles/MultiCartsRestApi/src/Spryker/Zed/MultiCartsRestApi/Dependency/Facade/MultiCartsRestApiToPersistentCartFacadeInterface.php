@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartsRestApi\Business\Cart;
+namespace Spryker\Zed\MultiCartsRestApi\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteUpdaterInterface
+interface MultiCartsRestApiToPersistentCartFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

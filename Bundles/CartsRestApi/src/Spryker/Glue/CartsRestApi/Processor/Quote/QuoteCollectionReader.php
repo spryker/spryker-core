@@ -9,21 +9,22 @@ namespace Spryker\Glue\CartsRestApi\Processor\Quote;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface;
+use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
+use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 
 class QuoteCollectionReader implements QuoteCollectionReaderInterface
 {
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface
+     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
      */
-    protected $cartClient;
+    protected $cartsRestApiClient;
 
     /**
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface $cartClient
+     * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      */
-    public function __construct(CartsRestApiToCartClientInterface $cartClient)
+    public function __construct(CartsRestApiClientInterface $cartsRestApiClient)
     {
-        $this->cartClient = $cartClient;
+        $this->cartsRestApiClient = $cartsRestApiClient;
     }
 
     /**
@@ -33,13 +34,15 @@ class QuoteCollectionReader implements QuoteCollectionReaderInterface
      */
     public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
-        $quoteCollectionTransfer = new QuoteCollectionTransfer();
+        $quoteCollectionResponseTransfer = $this->cartsRestApiClient->getCustomerQuoteCollection(
+            (new RestQuoteCollectionRequestTransfer())->setCustomerReference($quoteCriteriaFilterTransfer->getCustomerReference())
+        );
 
-        $quoteTransfer = $this->cartClient->getQuote();
-        if ($quoteTransfer->getIdQuote() === null) {
-            return $quoteCollectionTransfer;
+        $quoteCollectionTransfer = $quoteCollectionResponseTransfer->getQuoteCollection();
+        if (!$quoteCollectionTransfer) {
+            return new QuoteCollectionTransfer();
         }
 
-        return $quoteCollectionTransfer->addQuote($quoteTransfer);
+        return $quoteCollectionTransfer;
     }
 }

@@ -14,6 +14,8 @@
     "spryker/persistent-cart": "^1.2.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/quote": "^2.5.0",
+    "spryker/session": "^4.0.0",
+    "spryker/store": "^1.9.1",
     "spryker/symfony": "^3.0.0",
     "spryker/zed-request": "^3.6.0"
   },

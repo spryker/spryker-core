@@ -16,6 +16,7 @@ use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterface
@@ -84,61 +85,40 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createGuestCartNotFoundErrorRestResponse(): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND);
-
-        return $this->createEmptyGuestCartRestResponse()->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $errors
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createGuestCartErrorRestResponseFromErrorMessageTransfer(array $errors): RestResponseInterface
-    {
-        $restResponse = $this->createEmptyGuestCartRestResponse();
-
-        foreach ($errors as $messageTransfer) {
-            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION)
-                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                ->setDetail($messageTransfer->getValue());
-
-            $restResponse->addError($restErrorMessageTransfer);
-        }
-
-        return $restResponse;
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createGuestCartIdMissingError(): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING);
-
-        return $this->createEmptyGuestCartRestResponse()->addError($restErrorTransfer);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createAnonymousCustomerUniqueIdEmptyErrorRestResponse(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
+            ->setCode(CartsRestApiSharedConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
+            ->setDetail(CartsRestApiSharedConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
 
         return $this->createEmptyGuestCartRestResponse()->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param string[] $errorCodes
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function buildErrorRestResponseBasedOnErrorCodes(array $errorCodes): RestResponseInterface
+    {
+        $restResponse = $this->createEmptyGuestCartRestResponse();
+
+        foreach ($errorCodes as $errorCode) {
+            $errorSignature = CartsRestApiConfig::RESPONSE_ERROR_MAP[$errorCode] ?? [
+                    'status' => CartsRestApiConfig::RESPONSE_UNEXPECTED_HTTP_STATUS,
+                    'detail' => $errorCode,
+                ];
+
+            $restResponse->addError(
+                (new RestErrorMessageTransfer())
+                    ->setCode($errorCode)
+                    ->setDetail($errorSignature['detail'])
+                    ->setStatus($errorSignature['status'])
+            );
+        }
+
+        return $restResponse;
     }
 
     /**

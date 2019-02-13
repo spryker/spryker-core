@@ -7,10 +7,14 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Generated\Shared\Transfer\RestCartsDiscountsTransfer;
 use Generated\Shared\Transfer\RestCartsTotalsTransfer;
+use Generated\Shared\Transfer\RestQuoteRequestTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -39,6 +43,32 @@ class CartsResourceMapper implements CartsResourceMapperInterface
     ) {
         $this->cartItemsResourceMapper = $cartItemsResourceMapper;
         $this->restResourceBuilder = $restResourceBuilder;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
+     */
+    public function createRestQuoteRequestTransfer(
+        RestRequestInterface $restRequest,
+        ?QuoteTransfer $quoteTransfer
+    ): RestQuoteRequestTransfer {
+        $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+        $uuidQuote = $restRequest->getResource()->getId();
+
+        if (!$quoteTransfer && $uuidQuote) {
+            $restQuoteRequestTransfer
+                ->setQuote((new QuoteTransfer())->setUuid($uuidQuote))
+                ->setQuoteUuid($uuidQuote);
+        }
+
+        $restQuoteRequestTransfer->setQuote($quoteTransfer->setUuid($uuidQuote));
+        $restQuoteRequestTransfer->setQuoteUuid($uuidQuote);
+
+        return $restQuoteRequestTransfer;
     }
 
     /**
@@ -79,6 +109,77 @@ class CartsResourceMapper implements CartsResourceMapperInterface
         $this->setDiscounts($quoteTransfer, $restCartsAttributesTransfer);
 
         return $restCartsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapRestCartsAttributesTransferToQuoteTransfer(
+        RestCartsAttributesTransfer $restCartsAttributesTransfer,
+        RestRequestInterface $restRequest
+    ): QuoteTransfer {
+        $currencyTransfer = $this->createCurrencyTransfer($restCartsAttributesTransfer);
+        $customerTransfer = $this->createCustomerTransfer($restRequest);
+        $storeTransfer = $this->createStoreTransfer($restCartsAttributesTransfer);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->fromArray($restCartsAttributesTransfer->toArray(), true)
+            ->setCurrency($currencyTransfer)
+            ->setCustomer($customerTransfer)
+            ->setPriceMode($restCartsAttributesTransfer->getPriceMode())
+            ->setStore($storeTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapRestRequestToQuoteTransfer(RestRequestInterface $restRequest): QuoteTransfer
+    {
+        $customerTransfer = $this->createCustomerTransfer($restRequest);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer($customerTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function createCurrencyTransfer(RestCartsAttributesTransfer $restCartsAttributesTransfer): CurrencyTransfer
+    {
+        return (new CurrencyTransfer())
+            ->setCode($restCartsAttributesTransfer->getCurrency());
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function createCustomerTransfer(RestRequestInterface $restRequest): CustomerTransfer
+    {
+        return (new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function createStoreTransfer(RestCartsAttributesTransfer $restCartsAttributesTransfer): StoreTransfer
+    {
+        return (new StoreTransfer())
+            ->setName($restCartsAttributesTransfer->getStore());
     }
 
     /**

@@ -9,6 +9,9 @@ namespace Spryker\Glue\CartsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @deprecated Will be removed in the next major.
+ */
 class CartsRestApiToQuoteClientBridge implements CartsRestApiToQuoteClientInterface
 {
     /**

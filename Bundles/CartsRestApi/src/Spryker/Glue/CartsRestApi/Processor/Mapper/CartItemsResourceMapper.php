@@ -9,10 +9,30 @@ namespace Spryker\Glue\CartsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestCartItemCalculationsTransfer;
+use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CartItemsResourceMapper implements CartItemsResourceMapperInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string|null $uuidQuote
+     *
+     * @return \Generated\Shared\Transfer\RestCartItemRequestTransfer
+     */
+    public function createRestCartItemRequestTransfer(
+        ItemTransfer $cartItem,
+        RestRequestInterface $restRequest,
+        ?string $uuidQuote
+    ): RestCartItemRequestTransfer {
+        return (new RestCartItemRequestTransfer())
+            ->setCartItem($cartItem)
+            ->setCartUuid($uuidQuote)
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+    }
+
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
@@ -32,14 +52,14 @@ class CartItemsResourceMapper implements CartItemsResourceMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function mapItemAttributesToItemTransfer(RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer): ItemTransfer
+    public function mapItemAttributesToItemTransfer(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): ItemTransfer
     {
         $itemTransfer = (new ItemTransfer())->fromArray(
-            $restCartItemsAttributesRequestTransfer->toArray(),
+            $restCartItemsAttributesTransfer->toArray(),
             true
         );
 

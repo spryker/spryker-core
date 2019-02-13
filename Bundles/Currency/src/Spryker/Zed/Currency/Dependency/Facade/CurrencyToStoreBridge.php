@@ -37,4 +37,14 @@ class CurrencyToStoreBridge implements CurrencyToStoreInterface
     {
         return $this->storeFacade->getCurrentStore();
     }
+
+    /**
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreByName($name)
+    {
+        return $this->storeFacade->getStoreByName($name);
+    }
 }

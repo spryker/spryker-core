@@ -76,12 +76,41 @@
         <property name="customerReference" type="string"/>
     </transfer>
 
+    <transfer name="RestQuoteRequest">
+        <property name="quote" type="Quote" />
+        <property name="quoteUuid" type="string" />
+        <property name="customerReference" type="string" />
+    </transfer>
+
+    <transfer name="AssigningGuestQuoteRequest">
+        <property name="anonymousCustomerReference" type="string" />
+        <property name="customer" type="Customer" />
+    </transfer>
+
+    <transfer name="RestQuoteCollectionRequest">
+        <property name="customerReference" type="string" />
+    </transfer>
+
+    <transfer name="QuoteCollectionResponse">
+        <property name="quoteCollection" type="QuoteCollection" />
+        <property name="errorCodes" type="string[]" singular="errorCode" />
+    </transfer>
+
+    <transfer name="RestCartItemRequest">
+        <property name="cartItem" type="Item" />
+        <property name="cartUuid" type="string" />
+        <property name="customerReference" type="string" />
+    </transfer>
+
     <transfer name="QuoteError">
         <property name="message" type="string"/>
     </transfer>
 
     <transfer name="QuoteResponse">
         <property name="errors" type="QuoteError[]" singular="error"/>
+        <property name="errorCodes" type="string[]" singular="errorCode"/>
     </transfer>
 
 </transfers>
+
+

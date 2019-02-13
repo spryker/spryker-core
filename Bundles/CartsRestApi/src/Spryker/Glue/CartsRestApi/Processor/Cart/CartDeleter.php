@@ -7,44 +7,43 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class CartDeleter implements CartDeleterInterface
 {
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface
+     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
      */
-    protected $cartReader;
+    protected $cartsRestApiClient;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface
      */
-    protected $persistentCartClient;
+    protected $cartRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
      */
-    protected $restResourceBuilder;
+    protected $cartsResourceMapper;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface $persistentCartClient
-     * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface $cartReader
+     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
+     * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
      */
     public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
-        CartsRestApiToPersistentCartClientInterface $persistentCartClient,
-        CartReaderInterface $cartReader
+        CartRestResponseBuilderInterface $cartRestResponseBuilder,
+        CartsRestApiClientInterface $cartsRestApiClient,
+        CartsResourceMapperInterface $cartsResourceMapper
     ) {
-        $this->restResourceBuilder = $restResourceBuilder;
-        $this->persistentCartClient = $persistentCartClient;
-        $this->cartReader = $cartReader;
+        $this->cartRestResponseBuilder = $cartRestResponseBuilder;
+        $this->cartsRestApiClient = $cartsRestApiClient;
+        $this->cartsResourceMapper = $cartsResourceMapper;
     }
 
     /**
@@ -54,71 +53,19 @@ class CartDeleter implements CartDeleterInterface
      */
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-        $idCart = $restRequest->getResource()->getId();
-        if ($idCart === null) {
-            return $this->createCartIdMissingError($restResponse);
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
+            ->setUuid($restRequest->getResource()->getId());
+        $restQuoteRequestTransfer = $this->cartsResourceMapper->createRestQuoteRequestTransfer(
+            $restRequest,
+            $quoteTransfer
+        );
+
+        $quoteResponseTransfer = $this->cartsRestApiClient->deleteQuote($restQuoteRequestTransfer);
+        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
+            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
         }
 
-        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idCart, $restRequest);
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createCartNotFoundError($restResponse);
-        }
-
-        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        $quoteTransfer->setCustomer($quoteResponseTransfer->getCustomer());
-
-        $quoteResponseTransfer = $this->persistentCartClient->deleteQuote($quoteTransfer);
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createFailedDeletingCartError($restResponse);
-        }
-
-        return $restResponse;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createCartIdMissingError(RestResponseInterface $response): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING);
-
-        return $response->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createCartNotFoundError(RestResponseInterface $response): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND);
-
-        return $response->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createFailedDeletingCartError(RestResponseInterface $response): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART)
-            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART);
-
-        return $response->addError($restErrorTransfer);
+        return $this->cartRestResponseBuilder->createRestResponse();
     }
 }

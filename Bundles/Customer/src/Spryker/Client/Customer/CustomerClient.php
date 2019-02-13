@@ -122,6 +122,24 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function addCustomerToSession(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        $customerTransfer = $this->getFactory()
+            ->createSessionCustomerSession()
+            ->addCustomerToSession($customerTransfer);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer()

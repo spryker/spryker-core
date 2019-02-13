@@ -10,10 +10,11 @@ namespace Spryker\Glue\CartsRestApi\Processor\Quote;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
+use Generated\Shared\Transfer\RestQuoteRequestTransfer;
+use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 
 class SingleQuoteCreator implements SingleQuoteCreatorInterface
 {
@@ -23,18 +24,18 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
     protected $cartReader;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface
+     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
      */
-    protected $persistentCartClient;
+    protected $cartsRestApiClient;
 
     /**
      * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface $cartReader
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface $persistentCartClient
+     * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      */
-    public function __construct(CartReaderInterface $cartReader, CartsRestApiToPersistentCartClientInterface $persistentCartClient)
+    public function __construct(CartReaderInterface $cartReader, CartsRestApiClientInterface $cartsRestApiClient)
     {
         $this->cartReader = $cartReader;
-        $this->persistentCartClient = $persistentCartClient;
+        $this->cartsRestApiClient = $cartsRestApiClient;
     }
 
     /**
@@ -48,7 +49,7 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
         $quoteCollectionTransfer = $this->cartReader->getCustomerQuotes($restRequest);
         if ($quoteCollectionTransfer->getQuotes()->count()) {
             $quoteErrorTransfer = (new QuoteErrorTransfer())
-                ->setMessage(CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART);
+                ->setMessage(CartsRestApiSharedConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART);
 
             return (new QuoteResponseTransfer())
                 ->addError($quoteErrorTransfer)
@@ -56,6 +57,10 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
                 ->setIsSuccessful(false);
         }
 
-        return $this->persistentCartClient->createQuote($quoteTransfer);
+        $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
+            ->setQuote($quoteTransfer)
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+
+        return $this->cartsRestApiClient->createQuote($restQuoteRequestTransfer);
     }
 }

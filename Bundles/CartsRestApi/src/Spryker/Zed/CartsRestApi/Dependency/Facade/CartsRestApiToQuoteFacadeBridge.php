@@ -7,8 +7,12 @@
 
 namespace Spryker\Zed\CartsRestApi\Dependency\Facade;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 class CartsRestApiToQuoteFacadeBridge implements CartsRestApiToQuoteFacadeInterface
 {
@@ -33,5 +37,28 @@ class CartsRestApiToQuoteFacadeBridge implements CartsRestApiToQuoteFacadeInterf
     public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->quoteFacade->findQuoteByUuid($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function getQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    {
+        return $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByCustomerAndStore(
+        CustomerTransfer $customerTransfer,
+        StoreTransfer $storeTransfer
+    ): QuoteResponseTransfer {
+        return $this->quoteFacade->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
     }
 }
