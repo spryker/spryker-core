@@ -10,8 +10,9 @@ namespace Spryker\Zed\AuthMailConnector\Communication\Plugin;
 use Generated\Shared\Transfer\MailLinkTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use Spryker\Zed\AuthMailConnector\Communication\Plugin\Mail\RestorePasswordMailTypePlugin;
+use Spryker\Zed\Auth\Communication\Controller\PasswordController;
 use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
+use Spryker\Zed\AuthMailConnector\Communication\Plugin\Mail\RestorePasswordMailTypePlugin;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -20,7 +21,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPasswordResetSenderInterface
 {
-    protected const PARAM_TOKEN = 'token';
     protected const AUTH_PASSWORD_RESET_URL = '/auth/password/reset';
     protected const HREF_FORMAT = '%s%s?%s';
 
@@ -99,11 +99,20 @@ class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPa
     protected function generateHref(string $token): string
     {
         $baseUrlZed = $this->getConfig()->getBaseUrlZed();
-
-        $query = http_build_query([
-            static::PARAM_TOKEN => $token,
-        ]);
+        $query = $this->generateHrefQuery($token);
 
         return sprintf(static::HREF_FORMAT, $baseUrlZed, static::AUTH_PASSWORD_RESET_URL, $query);
+    }
+
+    /**
+     * @param string $token
+     *
+     * @return string
+     */
+    protected function generateHrefQuery(string $token): string
+    {
+        return http_build_query([
+            PasswordController::PARAM_TOKEN => $token,
+        ]);
     }
 }
