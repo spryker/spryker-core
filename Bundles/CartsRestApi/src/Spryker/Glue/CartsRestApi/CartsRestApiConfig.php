@@ -88,6 +88,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
      * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART
      */
     public const RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART = '110';
+    public const RESPONSE_CODE_CART_CANT_BE_UPDATED = '111';
 
     /**
      * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
@@ -133,6 +134,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
      * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART
      */
     public const EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART = 'Customer already has a cart.';
+    public const RESPONSE_MESSAGE_PRICE_MODE_CANT_BE_CHANGED = 'Can’t switch price mode when there are items in the cart.';
 
     /**
      * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID
