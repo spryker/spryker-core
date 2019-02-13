@@ -9,6 +9,7 @@ namespace Spryker\Client\CmsStorage;
 
 use Spryker\Client\CmsStorage\Mapper\CmsPageStorageMapper;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Shared\Kernel\Store;
 
 class CmsStorageFactory extends AbstractFactory
 {
@@ -26,5 +27,13 @@ class CmsStorageFactory extends AbstractFactory
     public function getSynchronizationService()
     {
         return $this->getProvidedDependency(CmsStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore(): Store
+    {
+        return $this->getProvidedDependency(CmsStorageDependencyProvider::STORE);
     }
 }
