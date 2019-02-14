@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ContentBannerGui\Communication\Plugin;
+namespace Spryker\Zed\ContentBannerGui\Communication\Plugin\ContentGui;
 
 use Generated\Shared\Transfer\ContentBannerTransfer;
 use Spryker\Shared\ContentBannerGui\ContentBannerGuiConfig;

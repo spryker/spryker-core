@@ -44,7 +44,7 @@ class BannerContentTermForm extends AbstractType
                 $contentBanner = $form->getNormData();
 
                 foreach ($contentBanner->toArray() as $field) {
-                    if (!empty($field)) {
+                    if ($field) {
                         return [Constraint::DEFAULT_GROUP];
                     }
                 }

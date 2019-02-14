@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ContentBanner\Plugin;
+namespace Spryker\Client\ContentBanner\Plugin\ContentStorage;
 
 use Generated\Shared\Transfer\ContentBannerTransfer;
 use Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface;
