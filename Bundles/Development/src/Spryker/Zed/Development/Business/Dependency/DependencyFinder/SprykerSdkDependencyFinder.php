@@ -12,7 +12,7 @@ use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\Depende
 use Spryker\Zed\Development\Business\Dependency\ModuleParser\UseStatementParserInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 
-class SprykDependencyFinder extends AbstractFileDependencyFinder
+class SprykerSdkDependencyFinder extends AbstractFileDependencyFinder
 {
     public const TYPE_INTERNAL = 'internal';
 
