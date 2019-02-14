@@ -32,4 +32,11 @@ interface ShipmentToSalesFacadeInterface
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     public function createSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer;
+
+    /**
+     * @param int $idSalesOrderAddress
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findOrderAddressByIdOrderAddress(int $idSalesOrderAddress): ?AddressTransfer;
 }

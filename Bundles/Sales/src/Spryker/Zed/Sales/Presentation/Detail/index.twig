@@ -16,7 +16,7 @@
     {% for blockName, externalBlock in blocks %}
     <div id="{{ blockName }}">{{ externalBlock | raw }}</div>
     {% endfor %}
-    {# @deprecated Addresses block will be removed in next major release. #}
+     {# @deprecated Addresses block will be removed in next major release. #}
     {%  if not isMultiShipmentEnabled %}
         <div id="address">{% include '@Sales/Detail/boxes/addresses.twig' %}</div>
     {% endif %}

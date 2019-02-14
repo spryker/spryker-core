@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ShipmentQueryContainerInterface extends QueryContainerInterface
@@ -66,6 +68,15 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
      */
     public function querySalesShipmentByIdSalesOrder($idSalesOrder);
+
+    /**
+     * @api
+     *
+     * @param int $idSalesShipment
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
+     */
+    public function querySalesShipmentById(int $idSalesShipment): SpySalesShipmentQuery;
 
     /**
      * @api
@@ -144,4 +155,13 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryActiveShipmentMethodByIdShipmentMethod($idShipmentMethod);
+
+    /**
+     * @api
+     *
+     * @param int $idSalesShipment
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function querySalesOrderItemsByIdSalesShipment(int $idSalesShipment): SpySalesOrderItemQuery;
 }

@@ -8,7 +8,6 @@
 namespace Spryker\Service\Shipment\Items;
 
 use ArrayObject;
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;

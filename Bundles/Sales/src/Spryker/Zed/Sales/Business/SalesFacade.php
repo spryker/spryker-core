@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -291,11 +292,11 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @return bool
      */
-    public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress)
+    public function updateOrderAddress(AddressTransfer $addressesTransfer, int $idAddress)
     {
         return $this->getFactory()
             ->createOrderAddressWriter()
-            ->update($addressesTransfer, (int)$idAddress);
+            ->update($addressesTransfer, $idAddress);
     }
 
     /**
@@ -377,5 +378,37 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createSalesOrderItemGrouper()
             ->getUniqueOrderItemsForShipmentGroups($orderTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idSalesOrderAddress
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findOrderAddressByIdOrderAddress(int $idSalesOrderAddress): ?AddressTransfer
+    {
+        return $this
+            ->getRepository()
+            ->findOrderAddressByIdOrderAddress($idSalesOrderAddress);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idSalesShipment
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesShipment): ObjectCollection
+    {
+        return $this
+            ->getRepository()
+            ->findSalesOrderItemsBySalesShipmentId($idSalesShipment);
     }
 }

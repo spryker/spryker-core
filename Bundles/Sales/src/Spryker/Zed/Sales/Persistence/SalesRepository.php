@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -45,6 +46,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     {
         $addressEntity = $this->getFactory()
             ->createSalesOrderAddressQuery()
+            ->leftJoinWithCountry()
             ->filterByIdSalesOrderAddress($idOrderAddress)
             ->findOne();
 
@@ -66,6 +68,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         SpySalesOrderAddress $addressEntity
     ): AddressTransfer {
         $addressTransfer->fromArray($addressEntity->toArray(), true);
+        $addressTransfer->setIso2Code($addressEntity->getCountry()->getIso2Code());
 
         return $addressTransfer;
     }
@@ -76,5 +79,18 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     protected function createOrderAddressTranfer(): AddressTransfer
     {
         return new AddressTransfer();
+    }
+
+    /**
+     * @param int $idSalesShipment
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    public function findSalesOrderItemsBySalesShipmentId(int $idSalesShipment): ObjectCollection
+    {
+        return $this->getFactory()
+            ->createSalesOrderItemQuery()
+            ->filterByFkSalesShipment($idSalesShipment)
+            ->find();
     }
 }

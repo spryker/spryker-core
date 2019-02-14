@@ -69,6 +69,10 @@
         <property name="expense" type="Expense" />
     </transfer>
 
+    <transfer name="Address">
+        <property name="iso2Code" type="string" />
+    </transfer>
+
     <transfer name="Quote">
         <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
@@ -128,6 +132,21 @@
 
     <transfer name="ShipmentGroupCollection">
         <property name="groups" type="ShipmentGroup[]" singular="group" />
+    </transfer>
+
+    <transfer name="ShipmentPrice">
+        <property name="idShipmentMethodPrice" type="int"/>
+        <property name="fkCurrency" type="int"/>
+        <property name="fkShipmentMethod" type="int"/>
+        <property name="fkStore" type="int"/>
+        <property name="defaultGrossPrice" type="int"/>
+        <property name="defaultNetPrice" type="int"/>
+    </transfer>
+
+    <transfer name="ShipmentGroupResponse">
+        <property name="shipmentGroup" type="ShipmentGroup"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message" singular="message"/>
     </transfer>
 
 </transfers>

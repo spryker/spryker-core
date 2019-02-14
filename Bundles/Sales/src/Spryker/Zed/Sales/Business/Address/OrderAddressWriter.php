@@ -20,7 +20,7 @@ class OrderAddressWriter implements OrderAddressWriterInterface
     protected $entityManager;
 
     /**
-     * @var \Spryker\Zed\Sales\Persistence\SalesRepository
+     * @var \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface
      */
     protected $repository;
 
@@ -54,6 +54,13 @@ class OrderAddressWriter implements OrderAddressWriterInterface
         $addressTransfer->setFkCountry(
             $this->countryFacade->getIdCountryByIso2Code($addressTransfer->getIso2Code())
         );
+
+        if ($addressTransfer->getIdSalesOrderAddress()) {
+            $this->update($addressTransfer, $addressTransfer->getIdSalesOrderAddress());
+
+            return $addressTransfer;
+        }
+
         return $this->entityManager->createSalesOrderAddress($addressTransfer);
     }
 
