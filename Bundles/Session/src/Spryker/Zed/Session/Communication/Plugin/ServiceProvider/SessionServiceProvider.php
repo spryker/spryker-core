@@ -72,8 +72,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
             [
             $this,
             'extendCookieLifetime',
-            ],
-            -128
+            ]
         );
     }
 
@@ -92,10 +91,6 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
         if ($session != null && $session->isStarted()) {
             $params = session_get_cookie_params();
-
-            if (!$params) {
-                return;
-            }
 
             $event->getResponse()->headers->setCookie(new Cookie(
                 $session->getName(),
