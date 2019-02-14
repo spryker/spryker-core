@@ -12,11 +12,21 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AuthMailConnectorConfig extends AbstractBundleConfig
 {
+    protected const AUTH_PASSWORD_RESET_URL = '/auth/password/reset';
+
     /**
      * @return string
      */
     public function getBaseUrlZed(): string
     {
         return $this->get(AuthMailConnectorConstants::BASE_URL_ZED);
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthPasswordResetUrl(): string
+    {
+        return static::AUTH_PASSWORD_RESET_URL;
     }
 }

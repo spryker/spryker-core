@@ -8,8 +8,7 @@
 namespace SprykerTest\Zed\AuthMailConnector\Business\Mail;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\MailTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\Shared\AuthMailConnector\AuthMailConnectorConstants;
 use Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig;
 use Spryker\Zed\AuthMailConnector\Business\Mail\MailTransferGenerator;
 use Spryker\Zed\AuthMailConnector\Communication\Plugin\Mail\RestorePasswordMailTypePlugin;
@@ -36,20 +35,17 @@ class MailTransferGeneratorTest extends Unit
     protected const EXPECTED_RESET_PASSWORD_LINK_FORMAT = '%s/auth/password/reset?token=%s';
 
     /**
-     * @return void
+     * @var \SprykerTest\Zed\AuthMailConnector\AuthMailConnectorBusinessTester
      */
-    public function testGenerateResetPasswordMailTransferReturnMailTransfer(): void
-    {
-        $resetPasswordMailTransfer = $this->createMailTransferGenerator()->generateResetPasswordMailTransfer(static::EMAIL, static::TOKEN);
-
-        $this->assertInstanceOf(MailTransfer::class, $resetPasswordMailTransfer);
-    }
+    protected $tester;
 
     /**
      * @return void
      */
     public function testGenerateResetPasswordMailTransferReturnCorrectResetPasswordLink(): void
     {
+        $this->tester->setConfig(AuthMailConnectorConstants::BASE_URL_ZED, static::BASE_URL_ZED);
+
         $resetPasswordMailTransfer = $this->createMailTransferGenerator()->generateResetPasswordMailTransfer(static::EMAIL, static::TOKEN);
         $expectedResetPasswordLink = sprintf(static::EXPECTED_RESET_PASSWORD_LINK_FORMAT, static::BASE_URL_ZED, static::TOKEN);
 
@@ -85,23 +81,15 @@ class MailTransferGeneratorTest extends Unit
     protected function createMailTransferGenerator(): MailTransferGenerator
     {
         return new MailTransferGenerator(
-            $this->createAuthMailConnectorConfigMock()
+            $this->createAuthMailConnectorConfig()
         );
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig
      */
-    protected function createAuthMailConnectorConfigMock(): MockObject
+    protected function createAuthMailConnectorConfig(): AuthMailConnectorConfig
     {
-        $authMailConnectorConfigMockBuilder = $this->getMockBuilder(AuthMailConnectorConfig::class)
-            ->setMethods(['getBaseUrlZed']);
-
-        $authMailConnectorConfigMock = $authMailConnectorConfigMockBuilder->getMock();
-        $authMailConnectorConfigMock
-            ->method('getBaseUrlZed')
-            ->willReturn(static::BASE_URL_ZED);
-
-        return $authMailConnectorConfigMock;
+        return new AuthMailConnectorConfig();
     }
 }

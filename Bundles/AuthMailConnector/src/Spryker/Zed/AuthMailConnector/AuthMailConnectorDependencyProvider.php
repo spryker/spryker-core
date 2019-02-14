@@ -38,7 +38,7 @@ class AuthMailConnectorDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addMailFacade(Container $container): Container
     {
-        $container[self::FACADE_MAIL] = function (Container $container) {
+        $container[static::FACADE_MAIL] = function (Container $container) {
             return new AuthMailConnectorToMailBridge($container->getLocator()->mail()->facade());
         };
 

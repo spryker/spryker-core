@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig getConfig()
+ * @method \Spryker\Zed\AuthMailConnector\Business\AuthMailConnectorFacadeInterface getFacade()
  */
 class AuthMailConnectorCommunicationFactory extends AbstractCommunicationFactory
 {

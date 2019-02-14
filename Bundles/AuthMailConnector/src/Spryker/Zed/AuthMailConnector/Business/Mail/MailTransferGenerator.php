@@ -20,8 +20,6 @@ class MailTransferGenerator implements MailTransferGeneratorInterface
      */
     protected $config;
 
-    protected const AUTH_PASSWORD_RESET_URL = '/auth/password/reset';
-
     /**
      * @param \Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig $config
      */
@@ -66,10 +64,9 @@ class MailTransferGenerator implements MailTransferGeneratorInterface
      */
     protected function generateResetPasswordLink(string $token): string
     {
-        $baseUrlZed = $this->config->getBaseUrlZed();
         $query = $this->generateResetPasswordLinkQuery($token);
 
-        return sprintf('%s%s?%s', $baseUrlZed, static::AUTH_PASSWORD_RESET_URL, $query);
+        return sprintf('%s%s?%s', $this->config->getBaseUrlZed(), $this->config->getAuthPasswordResetUrl(), $query);
     }
 
     /**

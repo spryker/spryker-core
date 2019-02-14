@@ -15,3 +15,8 @@ suites:
     Business:
         path: Business
         class_name: AuthMailConnectorBusinessTester
+        modules:
+            enabled:
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
