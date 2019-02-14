@@ -17,6 +17,8 @@ use Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReader;
 use Spryker\Client\PriceProductStorage\Storage\PriceProductMapper;
 use Spryker\Client\PriceProductStorage\Storage\PriceProductMapperInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGenerator;
+use Spryker\Client\PriceProductStorage\Validator\PriceProductItemValidator;
+use Spryker\Client\PriceProductStorage\Validator\PriceProductItemValidatorInterface;
 
 class PriceProductStorageFactory extends AbstractFactory
 {
@@ -71,6 +73,16 @@ class PriceProductStorageFactory extends AbstractFactory
             $this->createPriceConcreteStorageReader(),
             $this->getPriceProductService(),
             $this->getPriceProductClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorage\Validator\PriceProductItemValidatorInterface
+     */
+    public function createPriceProductItemValidator(): PriceProductItemValidatorInterface
+    {
+        return new PriceProductItemValidator(
+            $this->createPriceConcreteResolver()
         );
     }
 
