@@ -42,6 +42,21 @@ class QuoteEditStatusValidator implements QuoteEditStatusValidatorInterface
             return true;
         }
 
+        if ($this->isQuoteOwner($quoteTransfer)) {
+            return true;
+        }
+
         return $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteOwner(QuoteTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->getCustomerReference() === $quoteTransfer->getCustomer()
+            ->getCustomerReference();
     }
 }
