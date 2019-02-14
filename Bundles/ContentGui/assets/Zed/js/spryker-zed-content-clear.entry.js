@@ -5,5 +5,5 @@
 
 'use strict';
 
-require('./modules/from-clear');
+require('./modules/form-clear');
 
