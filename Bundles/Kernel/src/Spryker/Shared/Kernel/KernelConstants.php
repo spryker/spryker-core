@@ -37,7 +37,4 @@ interface KernelConstants
      */
     public const DOMAIN_WHITELIST = 'KERNEL:DOMAIN_WHITELIST';
     public const STRICT_DOMAIN_REDIRECT = 'KERNEL:STRICT_DOMAIN_REDIRECT';
-
-    public const ENABLE_APPLICATION_DEBUG = 'ENABLE_APPLICATION_DEBUG';
-    public const LOG_LEVEL = 'LOG_LEVEL';
 }

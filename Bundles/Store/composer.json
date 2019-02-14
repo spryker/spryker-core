@@ -5,21 +5,16 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/application-extension": "*",
     "spryker/kernel": "^3.18.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
-    "spryker/container": "*",
     "spryker/quote": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/config": "If you want to use StoreApplicationPlugin",
-    "spryker/container": "If you want to use Twig Plugins",
     "spryker/quote": "If you want to use StoreQuoteTransferExpander plugin, minimum required version: 1.2.0"
   },
   "autoload": {
