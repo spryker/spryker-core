@@ -9,6 +9,7 @@ namespace Spryker\Client\Sales\Zed;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class SalesStub implements SalesStubInterface
@@ -89,5 +90,20 @@ class SalesStub implements SalesStubInterface
         $orderTransfer = $this->zedStub->call('/sales/gateway/get-customer-order-by-order-reference', $orderTransfer);
 
         return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     */
+    public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer): ShipmentGroupCollectionTransfer
+    {
+        /**
+         * @var \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer $shipmentGroupCollectionTransfer
+         */
+        $shipmentGroupCollectionTransfer = $this->zedStub->call('/sales/gateway/get-unique-order-items-for-shipment-groups', $orderTransfer);
+
+        return $shipmentGroupCollectionTransfer;
     }
 }

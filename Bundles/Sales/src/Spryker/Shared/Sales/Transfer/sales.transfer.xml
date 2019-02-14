@@ -233,4 +233,8 @@
         <property name="items" type="Item[]" singular="item" />
     </transfer>
 
+    <transfer name="ShipmentGroupCollection">
+        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
+    </transfer>
+
 </transfers>

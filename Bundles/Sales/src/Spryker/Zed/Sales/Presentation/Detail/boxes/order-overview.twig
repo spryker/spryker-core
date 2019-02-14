@@ -12,7 +12,7 @@
                 {% for orderItem in groupedOrderItems %}
                     <div class="col-sm-12 row">
                         <div class="col-sm-11"><p><b>{{ orderItem.name }} x {{ orderItem.quantity }}</b></p></div>
-                        <div class="col-sm-1">{{ orderItem.price | money(true, order.currencyIsoCode)  }}</div>
+                        <div class="col-sm-1">{{ orderItem.sumPrice | money(true, order.currencyIsoCode)  }}</div>
                     </div>
                     {% for orderItemOption in orderItem.productOptions %}
                         <div class="col-sm-12 row">
