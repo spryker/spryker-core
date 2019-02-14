@@ -7,7 +7,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Processes</h1>
+                    <h1>{{ 'Processes' | trans }}</h1>
                 </div>
 
                 {% for process in processes %}
@@ -18,7 +18,7 @@
                             </div>
                             <div class="panel-body">
                                 <a href="{{ url('/oms/index/draw', {process: process.name}) }}" target="_blank">{{ process.name }}</a>
-                                <a style="font-size:10px;" href="{{ url('/oms/index/draw-preview-version', {process: process.name}) }}" target="_blank">[preview-version]</a>
+                                <a style="font-size:10px;" href="{{ url('/oms/index/draw-preview-version', {process: process.name}) }}" target="_blank">[{{ 'preview-version' | trans }}]</a>
                             </div>
 
                         </div>

@@ -255,6 +255,26 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteTransfersByProductAbstractIds(array $productAbstractIds): array
+    {
+        if (empty($productAbstractIds)) {
+            return [];
+        }
+
+        $query = $this->getFactory()
+            ->createProductQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds);
+
+        $productConcreteEntities = $query->find();
+
+        return $this->getProductConcreteTransfersMappedFromProductConcreteEntities($productConcreteEntities);
+    }
+
+    /**
      * @param \Propel\Runtime\Collection\ObjectCollection $productConcreteEntities
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
