@@ -7,10 +7,12 @@
 
 namespace SprykerTest\Zed\QuoteRequest\Business\QuoteRequestFacade;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestFilterBuilder;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig;
 
@@ -55,7 +57,10 @@ class QuoteRequestFacadeTest extends Unit
         $customerTransfer = $this->tester->haveCustomer();
 
         $this->companyUserTransfer = $this->tester->createCompanyUser($customerTransfer);
-        $this->quoteTransfer = $this->tester->createQuote($customerTransfer);
+        $this->quoteTransfer = $this->tester->createQuote(
+            $customerTransfer,
+            $this->tester->haveProduct()
+        );
     }
 
     /**
@@ -79,6 +84,25 @@ class QuoteRequestFacadeTest extends Unit
             $quoteRequestTransfer->getLatestVersion()->getQuote(),
             $storedQuoteRequestTransfer->getLatestVersion()->getQuote()
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateCreatesQuoteRequestWithEmptyQuoteItems(): void
+    {
+        // Arrange
+        $this->quoteTransfer->setItems(new ArrayObject());
+
+        $quoteRequestTransfer = (new QuoteRequestBuilder())->build()
+            ->setCompanyUser($this->companyUserTransfer)
+            ->setLatestVersion($this->tester->createQuoteRequestVersion($this->quoteTransfer));
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->tester->getFacade()->create($quoteRequestTransfer);
     }
 
     /**

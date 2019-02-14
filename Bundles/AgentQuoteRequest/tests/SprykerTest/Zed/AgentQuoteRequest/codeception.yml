@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\QuoteRequest
+namespace: SprykerTest\Zed\AgentQuoteRequest
 
 paths:
     tests: .
@@ -14,7 +14,7 @@ coverage:
 suites:
     Business:
         path: .
-        class_name: QuoteRequestBusinessTester
+        class_name: AgentQuoteRequestBusinessTester
         modules:
             enabled:
                 - Asserts

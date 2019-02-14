@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\QuoteRequest;
+namespace SprykerTest\Zed\AgentQuoteRequest;
 
 use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
@@ -30,13 +30,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
- * @method \Spryker\Zed\QuoteRequest\Business\QuoteRequestFacadeInterface getFacade()
+ * @method \Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequestFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
-class QuoteRequestBusinessTester extends Actor
+class AgentQuoteRequestBusinessTester extends Actor
 {
-    use _generated\QuoteRequestBusinessTesterActions;
+    use _generated\AgentQuoteRequestBusinessTesterActions;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer
