@@ -5,23 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductQuantityStorage\Rounder;
+namespace Spryker\Service\ProductQuantity\Rounder;
 
-use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
+use Generated\Shared\Transfer\ProductQuantityTransfer;
 
 class ProductQuantityRounder implements ProductQuantityRounderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer $productQuantityStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
      * @param int $quantity
      *
      * @return int
      */
-    public function getNearestQuantity(ProductQuantityStorageTransfer $productQuantityStorageTransfer, int $quantity): int
+    public function getNearestQuantity(ProductQuantityTransfer $productQuantityTransfer, int $quantity): int
     {
-        $min = $productQuantityStorageTransfer->getQuantityMin() ?: 1;
-        $max = $productQuantityStorageTransfer->getQuantityMax();
-        $interval = $productQuantityStorageTransfer->getQuantityInterval();
+        $min = $productQuantityTransfer->getQuantityMin() ?: 1;
+        $max = $productQuantityTransfer->getQuantityMax();
+        $interval = $productQuantityTransfer->getQuantityInterval();
 
         if ($quantity < $min) {
             return $min;
@@ -34,7 +34,7 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
         if ($interval && ($quantity - $min) % $interval !== 0) {
             $max = $max ?? ($quantity + $interval);
 
-            $quantity = $this->getNearestQuantityFromAllowed(
+            $quantity = $this->getNearestAllowedQuantity(
                 $quantity,
                 $this->getAllowedQuantities($min, $max, $interval, $quantity)
             );
@@ -70,7 +70,7 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
      *
      * @return int
      */
-    protected function getNearestQuantityFromAllowed(int $quantity, array $allowedQuantities): int
+    protected function getNearestAllowedQuantity(int $quantity, array $allowedQuantities): int
     {
         if (count($allowedQuantities) === 1) {
             return reset($allowedQuantities);
