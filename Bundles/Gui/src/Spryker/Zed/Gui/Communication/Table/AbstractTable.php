@@ -14,6 +14,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Spryker\Service\UtilSanitize\UtilSanitizeService;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
@@ -32,6 +33,7 @@ abstract class AbstractTable
     public const PARAMETER_VALUE = 'value';
     public const SORT_BY_COLUMN = 'column';
     public const SORT_BY_DIRECTION = 'dir';
+    public const URL_ANCHOR = '#';
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -911,24 +913,51 @@ abstract class AbstractTable
 
         $class = $this->getButtonClass($defaultOptions, $customOptions);
         $parameters = $this->getButtonParameters($buttonOptions);
-
-        if (is_string($url)) {
-            $utilSanitizeService = new UtilSanitizeService();
-            $url = $utilSanitizeService->escapeHtml($url);
-        } else {
-            $url = $url->buildEscaped();
-        }
-
-        $html = '<a href="' . $url . '" class="btn btn-xs btn-outline ' . $class . '"' . $parameters . '>';
+        $icon = '';
 
         if (array_key_exists(self::BUTTON_ICON, $buttonOptions) === true && $buttonOptions[self::BUTTON_ICON] !== null) {
-            $html .= '<i class="fa ' . $buttonOptions[self::BUTTON_ICON] . '"></i> ';
+            $icon = '<i class="fa ' . $buttonOptions[self::BUTTON_ICON] . '"></i> ';
         }
 
-        $html .= $title;
-        $html .= '</a>';
+        return $this->getTwig()->render('button.twig', [
+            'url' => $this->buildUrl($url),
+            'class' => $class,
+            'title' => $title,
+            'icon' => $icon,
+            'parameters' => $parameters,
+        ]);
+    }
 
-        return $html;
+    /**
+     * @param \Spryker\Service\UtilText\Model\Url\Url|string $url
+     *
+     * @return string
+     */
+    protected function buildUrl($url): string
+    {
+        if ($url === static::URL_ANCHOR) {
+            return static::URL_ANCHOR;
+        }
+
+        if (is_string($url)) {
+            $url = Url::parse($url);
+        }
+
+        return $url->build();
+    }
+
+    /**
+     * @param string $title
+     * @param string|null $class
+     *
+     * @return string
+     */
+    protected function generateLabel(string $title, ?string $class): string
+    {
+        return $this->getTwig()->render('label.twig', [
+            'title' => $title,
+            'class' => $class,
+        ]);
     }
 
     /**
@@ -964,15 +993,7 @@ abstract class AbstractTable
      */
     protected function generateButtonDropdownHtml(array $buttons, $title, $icon, $class, $parameters)
     {
-        $html = sprintf(
-            '<div class="btn-group"><button data-toggle="dropdown" class="btn btn-xs btn-outline %s dropdown-toggle" aria-expanded="true" %s>%s%s<span class="caret"></span></button>',
-            $class,
-            $parameters,
-            $icon,
-            $title
-        );
-
-        $html .= '<ul class="dropdown-menu">';
+        $nestedButtons = [];
 
         foreach ($buttons as $button) {
             if (is_string($button['url'])) {
@@ -984,23 +1005,26 @@ abstract class AbstractTable
                 $url = $buttonUrl->buildEscaped();
             }
 
-            if (!empty($button['separated'])) {
-                $html .= '<li class="divider"></li>';
-            }
-
             $buttonParameters = '';
             if (isset($button['options'])) {
                 $buttonParameters = $this->getButtonParameters($button['options']);
             }
 
-            $html .= sprintf('<li><a href="%s" %s>', $url, $buttonParameters);
-            $html .= $button['title'];
-            $html .= '</a></li>';
+            $nestedButtons[] = [
+                'needDivider' => !empty($button['separated']),
+                'url' => $url,
+                'params' => $buttonParameters,
+                'title' => $button['title'],
+            ];
         }
 
-        $html .= '</ul></div>';
-
-        return $html;
+        return $this->getTwig()->render('button-dropdown.twig', [
+            'class' => $class,
+            'parameters' => $parameters,
+            'icon' => $icon,
+            'title' => $title,
+            'nestedButtons' => $nestedButtons,
+        ]);
     }
 
     /**

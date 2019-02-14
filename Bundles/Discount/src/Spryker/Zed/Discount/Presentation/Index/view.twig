@@ -1,6 +1,8 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title 'View discount' %}
+{% block section_title %}
+    {{ 'View discount' | trans }}
+{% endblock %}
 
 {% block action %}
     {{ editActionButton(url('/discount/index/edit', {'id-discount' : discountConfigurator.discountGeneral.idDiscount}), 'Edit' | trans, {'id': 'create-discount-button'}) }}

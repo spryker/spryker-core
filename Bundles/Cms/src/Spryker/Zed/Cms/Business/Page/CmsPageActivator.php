@@ -7,13 +7,12 @@
 
 namespace Spryker\Zed\Cms\Business\Page;
 
-use Exception;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\CannotActivatePageException;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Throwable;
 
@@ -25,7 +24,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
     protected $cmsQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface
      */
     protected $touchFacade;
 
@@ -36,10 +35,10 @@ class CmsPageActivator implements CmsPageActivatorInterface
 
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface $touchFacade
      * @param \Spryker\Zed\Cms\Communication\Plugin\PostCmsPageActivatorPluginInterface[] $postCmsPageActivatorPlugins
      */
-    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToTouchInterface $touchFacade, array $postCmsPageActivatorPlugins)
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToTouchFacadeInterface $touchFacade, array $postCmsPageActivatorPlugins)
     {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->touchFacade = $touchFacade;
@@ -49,12 +48,11 @@ class CmsPageActivator implements CmsPageActivatorInterface
     /**
      * @param int $idCmsPage
      *
-     * @throws \Exception
      * @throws \Throwable
      *
      * @return void
      */
-    public function activate($idCmsPage)
+    public function activate(int $idCmsPage): void
     {
         $cmsPageEntity = $this->getCmsPageEntity($idCmsPage);
 
@@ -69,9 +67,6 @@ class CmsPageActivator implements CmsPageActivatorInterface
             $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage());
 
             $this->cmsQueryContainer->getConnection()->commit();
-        } catch (Exception $exception) {
-            $this->cmsQueryContainer->getConnection()->rollBack();
-            throw $exception;
         } catch (Throwable $exception) {
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
@@ -87,7 +82,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
      *
      * @return bool
      */
-    protected function assertCanActivatePage($idCmsPage)
+    protected function assertCanActivatePage(int $idCmsPage): bool
     {
         if ($this->countNumberOfGlossaryKeysForIdCmsPage($idCmsPage) === 0) {
             throw new CannotActivatePageException(
@@ -95,18 +90,17 @@ class CmsPageActivator implements CmsPageActivatorInterface
             );
         }
 
-         return true;
+        return true;
     }
 
     /**
      * @param int $idCmsPage
      *
-     * @throws \Exception
      * @throws \Throwable
      *
      * @return void
      */
-    public function deactivate($idCmsPage)
+    public function deactivate(int $idCmsPage): void
     {
         $cmsPageEntity = $this->getCmsPageEntity($idCmsPage);
 
@@ -119,9 +113,6 @@ class CmsPageActivator implements CmsPageActivatorInterface
             $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage());
 
             $this->cmsQueryContainer->getConnection()->commit();
-        } catch (Exception $exception) {
-            $this->cmsQueryContainer->getConnection()->rollBack();
-            throw $exception;
         } catch (Throwable $exception) {
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
@@ -137,7 +128,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
      */
-    protected function getCmsPageEntity($idCmsPage)
+    protected function getCmsPageEntity(int $idCmsPage): SpyCmsPage
     {
         $cmsPageEntity = $this->cmsQueryContainer
             ->queryPageById($idCmsPage)
@@ -159,7 +150,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
-    protected function generateCmsPageTransferFromEntity(SpyCmsPage $cmsPageEntity)
+    protected function generateCmsPageTransferFromEntity(SpyCmsPage $cmsPageEntity): CmsPageTransfer
     {
         $cmsPageTransfer = (new CmsPageTransfer())->fromArray($cmsPageEntity->toArray(), true);
         $cmsPageTransfer->setFkPage($cmsPageEntity->getIdCmsPage());
@@ -172,7 +163,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
      *
      * @return int
      */
-    protected function countNumberOfGlossaryKeysForIdCmsPage($idCmsPage)
+    protected function countNumberOfGlossaryKeysForIdCmsPage(int $idCmsPage): int
     {
         return $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($idCmsPage)->count();
     }
@@ -182,7 +173,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
      *
      * @return void
      */
-    protected function runPostActivatorPlugins(CmsPageTransfer $cmsPageTransfer)
+    protected function runPostActivatorPlugins(CmsPageTransfer $cmsPageTransfer): void
     {
         foreach ($this->postCmsPageActivatorPlugins as $postCmsPageActivatorPlugin) {
             $postCmsPageActivatorPlugin->execute($cmsPageTransfer);

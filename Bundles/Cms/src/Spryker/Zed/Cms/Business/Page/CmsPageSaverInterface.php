@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Cms\Business\Page;
 
 use Generated\Shared\Transfer\CmsPageTransfer;
@@ -15,7 +16,7 @@ interface CmsPageSaverInterface
      *
      * @return int
      */
-    public function createPage(CmsPageTransfer $cmsPageTransfer);
+    public function createPage(CmsPageTransfer $cmsPageTransfer): int;
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
@@ -24,5 +25,5 @@ interface CmsPageSaverInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
-    public function updatePage(CmsPageTransfer $cmsPageTransfer);
+    public function updatePage(CmsPageTransfer $cmsPageTransfer): CmsPageTransfer;
 }
