@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\SharedCart\Business\Model;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer;
+use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
 use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
@@ -33,6 +35,18 @@ class QuoteReader implements QuoteReaderInterface
     {
         $this->sharedCartRepository = $sharedCartRepository;
         $this->quoteFacade = $quoteFacade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function findCustomerSharedQuoteCollectionBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    {
+        $quoteEntityTransferList = $this->sharedCartRepository->findQuotesBySharedQuoteCriteriaFilter($sharedQuoteCriteriaFilterTransfer);
+
+        return $this->mapQuoteCollectionTransfer($quoteEntityTransferList);
     }
 
     /**
@@ -68,5 +82,30 @@ class QuoteReader implements QuoteReaderInterface
         }
 
         return $quoteCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyQuoteEntityTransfer[] $quoteEntityTransferList
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    protected function mapQuoteCollectionTransfer(array $quoteEntityTransferList): QuoteCollectionTransfer
+    {
+        $quoteCollectionTransfer = new QuoteCollectionTransfer();
+        foreach ($quoteEntityTransferList as $quoteEntityTransfer) {
+            $quoteCollectionTransfer->addQuote($this->mapQuoteTransfer($quoteEntityTransfer));
+        }
+
+        return $quoteCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyQuoteEntityTransfer $quoteEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer
+    {
+        return $this->quoteFacade->mapQuoteTransfer($quoteEntityTransfer);
     }
 }

@@ -139,6 +139,10 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
             $quoteQuery->filterByIdQuote_In($quoteCriteriaFilterTransfer->getQuoteIds());
         }
 
+        if ($quoteCriteriaFilterTransfer->getIdStore()) {
+            $quoteQuery->filterByFkStore($quoteCriteriaFilterTransfer->getIdStore());
+        }
+
         return $quoteQuery;
     }
 

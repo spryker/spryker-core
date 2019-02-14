@@ -291,7 +291,7 @@ class CmsPageTable extends AbstractTable
                 $this->createEditPageButtonItem($item),
                 $this->createEditGlossaryButtonItem($item),
             ],
-            'Edit ',
+            'Edit',
             [
                 'class' => 'btn-edit',
                 'icon' => 'fa-pencil-square-o',
@@ -389,10 +389,10 @@ class CmsPageTable extends AbstractTable
     protected function getActiveStatusLabel($item)
     {
         if (!$item[CmsPageTableConstants::COL_IS_ACTIVE]) {
-            return '<span class="label label-danger">Inactive</span>';
+            return $this->generateLabel('Inactive', 'label-danger');
         }
 
-        return '<span class="label label-info">Active</span>';
+        return $this->generateLabel('Active', 'label-info');
     }
 
     /**
@@ -406,7 +406,7 @@ class CmsPageTable extends AbstractTable
             return $this->getActiveStatusLabel($item);
         }
 
-        return '<span class="label label-default">Unpublished</span>';
+        return $this->generateLabel('Unpublished', 'label-default');
     }
 
     /**

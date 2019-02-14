@@ -479,4 +479,18 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
             ->createZedCustomerStub()
             ->findCustomerByReference($customerTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCustomerSecuredPattern(): string
+    {
+        return $this->getFactory()
+            ->createCustomerSecuredPattern()
+            ->getCustomerSecuredPattern();
+    }
 }

@@ -106,7 +106,7 @@ class FilterPreferencesController extends AbstractController
         $filterPreferencesFormData = $dataProvider->getData($idProductSearchAttribute);
 
         if ($filterPreferencesFormData === []) {
-            $this->addErrorMessage(sprintf('Attribute with id %s doesn\'t exist', $idProductSearchAttribute));
+            $this->addErrorMessage("Attribute with id %s doesn't exist", ["%s" => $idProductSearchAttribute]);
 
             return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
         }

@@ -6,7 +6,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'MIME type settings' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'MIME type settings' | trans } %}
 
         {% block widget_content %}
             {{ table | raw }}
