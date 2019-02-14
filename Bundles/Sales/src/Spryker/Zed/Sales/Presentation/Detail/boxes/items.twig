@@ -27,7 +27,7 @@
                         ~ shipmentOrderItems.shipment.shippingAddress.country.name}}</p>
                     <p><b>{{ 'Delivery Method' | trans }}:</b> {{ shipmentOrderItems.shipment.carrier.name }}</p>
                     <p><b>{{ 'Shipping Method' | trans }}:</b> {{ shipmentOrderItems.shipment.method.name }}</p>
-                    <p><b>{{ 'Request delivery date' | trans }}:</b> {{ shipmentOrderItems.shipment.requestedDeliveryDate }}</p>
+                    <p><b>{{ 'Request delivery date' | trans }}:</b> {{ shipmentOrderItems.shipment.requestedDeliveryDate | default('ASAP') }}</p>
                 </div>
             </div>
             <h4>{{ 'Trigger all matching states of order inside this shipment' | trans }}</h4>
@@ -43,7 +43,7 @@
                     <th colspan="2">{{ 'Product' | trans }}</th>
                     <th>{{ 'Quantity' | trans }}</th>
                     <th>{{ 'Unit Price' | trans }} <small>({{ order.priceMode }})</small></th>
-                    <th>{{ 'Item total' | trans }}</th>
+                    <th>{{ 'Total' | trans }}</th>
                     <th>{{ 'State' | trans }}</th>
                     <th>{{ 'Trigger event' | trans }}</th>
                 </tr>
