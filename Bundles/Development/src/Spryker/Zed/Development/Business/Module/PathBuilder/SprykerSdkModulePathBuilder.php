@@ -29,11 +29,6 @@ class SprykerSdkModulePathBuilder extends AbstractPathBuilder
             sprintf('%s/%s/tests/SprykerSdkTest/', $basePath, $this->getModuleName($moduleTransfer)),
         ];
 
-        foreach ($this->config->getApplications() as $application) {
-            $paths[] = sprintf('%s/%s/src/SprykerSdk/%s/%s', $basePath, $this->getModuleName($moduleTransfer), $application, $moduleTransfer->getName());
-            $paths[] = sprintf('%s/%s/tests/SprykerSdkTest/%s/%s', $basePath, $this->getModuleName($moduleTransfer), $application, $moduleTransfer->getName());
-        }
-
         return $paths;
     }
 
