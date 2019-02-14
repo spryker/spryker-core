@@ -32,7 +32,7 @@ class AgentQuoteRequestBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequestInterface
      */
-    protected function getQuoteRequestFacade(): AgentQuoteRequestToQuoteRequestInterface
+    public function getQuoteRequestFacade(): AgentQuoteRequestToQuoteRequestInterface
     {
         return $this->getProvidedDependency(AgentQuoteRequestDependencyProvider::FACADE_QUOTE_REQUEST);
     }

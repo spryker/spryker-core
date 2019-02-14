@@ -37,11 +37,9 @@ class AgentQuoteRequestReader implements AgentQuoteRequestReaderInterface
     public function getQuoteRequestOverviewCollection(
         QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer
     ): QuoteRequestOverviewCollectionTransfer {
-        $quoteRequestOverviewCollectionTransfer = (new QuoteRequestOverviewCollectionTransfer())
+        return (new QuoteRequestOverviewCollectionTransfer())
             ->setQuoteRequests($this->getQuoteRequestCollection($quoteRequestOverviewFilterTransfer)->getQuoteRequests())
             ->setCurrentQuoteRequest($this->findQuoteRequest($quoteRequestOverviewFilterTransfer));
-
-        return $quoteRequestOverviewCollectionTransfer;
     }
 
     /**

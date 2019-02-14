@@ -54,7 +54,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface
      */
-    protected function createQuoteRequestReferenceGenerator(): QuoteRequestReferenceGeneratorInterface
+    public function createQuoteRequestReferenceGenerator(): QuoteRequestReferenceGeneratorInterface
     {
         return new QuoteRequestReferenceGenerator(
             $this->getSequenceNumberFacade(),
@@ -65,7 +65,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToSequenceNumberInterface
      */
-    protected function getSequenceNumberFacade(): QuoteRequestToSequenceNumberInterface
+    public function getSequenceNumberFacade(): QuoteRequestToSequenceNumberInterface
     {
         return $this->getProvidedDependency(QuoteRequestDependencyProvider::FACADE_SEQUENCE_NUMBER);
     }
@@ -73,7 +73,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface
      */
-    protected function getCompanyUserFacade(): QuoteRequestToCompanyUserInterface
+    public function getCompanyUserFacade(): QuoteRequestToCompanyUserInterface
     {
         return $this->getProvidedDependency(QuoteRequestDependencyProvider::FACADE_COMPANY_USER);
     }
@@ -81,7 +81,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationInterface
      */
-    protected function getCalculationFacade(): QuoteRequestToCalculationInterface
+    public function getCalculationFacade(): QuoteRequestToCalculationInterface
     {
         return $this->getProvidedDependency(QuoteRequestDependencyProvider::FACADE_CALCULATION);
     }
