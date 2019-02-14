@@ -70,7 +70,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         $application['dispatcher']->addListener(KernelEvents::RESPONSE, [
             $this,
             'extendCookieLifetime',
-            ], -255
+            ], 0
         );
     }
 
