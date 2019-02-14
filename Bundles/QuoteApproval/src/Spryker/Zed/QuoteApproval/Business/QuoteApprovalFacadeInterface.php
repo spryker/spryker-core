@@ -100,7 +100,7 @@ interface QuoteApprovalFacadeInterface
 
     /**
      * Specification:
-     * - Removes all approvals for quote.
+     * - Removes all approvals for quote from Persistence.
      *
      * @api
      *
