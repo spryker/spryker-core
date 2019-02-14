@@ -139,6 +139,10 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
         RestRequestInterface $restRequest,
         CustomerTransfer $customerTransfer
     ): CustomerTransfer {
+        if (!$restRequest->getUser()) {
+            return $customerTransfer;
+        }
+
         $assigningGuestQuoteRequestTransfer = (new AssigningGuestQuoteRequestTransfer())
             ->setAnonymousCustomerReference($restRequest->getUser()->getNaturalIdentifier())
             ->setCustomer($customerTransfer);
