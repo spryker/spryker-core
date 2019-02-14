@@ -38,17 +38,14 @@ class QuoteApprovalCheckoutPreCheckPlugin extends AbstractPlugin implements Chec
     {
         $canProceedCheckout = !$this->getClient()->isQuoteRequireApproval($quoteTransfer);
 
-        $quoteValidationResponseTransfer = new QuoteValidationResponseTransfer();
-        $quoteValidationResponseTransfer->setIsSuccessful($canProceedCheckout);
-
-        if ($canProceedCheckout) {
-            return $quoteValidationResponseTransfer;
+        if ($canProceedCheckout === true) {
+            return (new QuoteValidationResponseTransfer())->setIsSuccessful(true);
         }
 
-        $quoteValidationResponseTransfer->addMessage(
-            (new MessageTransfer())->setValue(static::MESSAGE_CART_REQUIRE_APPROVAL)
-        );
-
-        return $quoteValidationResponseTransfer;
+        return (new QuoteValidationResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addMessage(
+                (new MessageTransfer())->setValue(static::MESSAGE_CART_REQUIRE_APPROVAL)
+            );
     }
 }
