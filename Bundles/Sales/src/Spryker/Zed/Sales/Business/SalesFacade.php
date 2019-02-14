@@ -12,13 +12,10 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -292,11 +289,11 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @return bool
      */
-    public function updateOrderAddress(AddressTransfer $addressesTransfer, int $idAddress)
+    public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress)
     {
         return $this->getFactory()
             ->createOrderAddressWriter()
-            ->update($addressesTransfer, $idAddress);
+            ->update($addressesTransfer, (int)$idAddress);
     }
 
     /**
