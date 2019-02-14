@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "spryker-zed-content-product-gui",
+  "name": "spryker-zed-content-gui",
   "version": "1.0.0",
   "dependencies": {}
 }
