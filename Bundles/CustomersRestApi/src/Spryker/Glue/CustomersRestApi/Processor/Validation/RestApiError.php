@@ -16,12 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 class RestApiError implements RestApiErrorInterface
 {
     /**
-     * @uses \Spryker\Zed\Customer\Business\Customer\EmailValidator::COL_EMAIL_MAX_ALLOWED_LENGHT
-     */
-    protected const COL_EMAIL_MAX_ALLOWED_LENGHT = 100;
-    protected const COL_EMAIL_MAX_ALLOWED_LENGHT_KEY = '{{max_lenght}}';
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -74,13 +68,10 @@ class RestApiError implements RestApiErrorInterface
      */
     public function addCustomerEmailLengthExceededError(RestResponseInterface $restResponse): RestResponseInterface
     {
-        $detailMessage = strtr(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED, [
-            static::COL_EMAIL_MAX_ALLOWED_LENGHT_KEY => static::COL_EMAIL_MAX_ALLOWED_LENGHT,
-        ]);
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_EMAIL_LENGTH_EXCEEDED)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail($detailMessage);
+            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED);
 
         return $restResponse->addError($restErrorMessageTransfer);
     }
