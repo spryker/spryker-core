@@ -62,6 +62,7 @@ class ZedHelper extends Module
         }
 
         $tester->amOnPage('/auth/login');
+        $tester->wait(5);
 
         $tester->fillField('#auth_username', $username);
         $tester->fillField('#auth_password', $password);

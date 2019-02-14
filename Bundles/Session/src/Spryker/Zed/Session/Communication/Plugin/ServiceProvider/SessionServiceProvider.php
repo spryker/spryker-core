@@ -72,7 +72,8 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
             [
             $this,
             'extendCookieLifetime',
-            ]
+            ],
+            -128
         );
     }
 
