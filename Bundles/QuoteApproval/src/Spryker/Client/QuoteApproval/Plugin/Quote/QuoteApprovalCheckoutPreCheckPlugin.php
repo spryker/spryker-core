@@ -10,13 +10,13 @@ namespace Spryker\Client\QuoteApproval\Plugin\Quote;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
-use Spryker\Client\CheckoutExtension\Dependency\Plugin\QuoteProceedCheckoutCheckPluginInterface;
+use Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Client\QuoteApproval\QuoteApprovalClient getClient()
  */
-class QuoteApprovalProceedCheckoutCheckPlugin extends AbstractPlugin implements QuoteProceedCheckoutCheckPluginInterface
+class QuoteApprovalCheckoutPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPluginInterface
 {
     protected const MESSAGE_CART_REQUIRE_APPROVAL = 'quote_approval.cart.require_approval';
 

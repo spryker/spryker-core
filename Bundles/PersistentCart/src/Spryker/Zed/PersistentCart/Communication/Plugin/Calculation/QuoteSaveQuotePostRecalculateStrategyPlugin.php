@@ -37,9 +37,10 @@ class QuoteSaveQuotePostRecalculateStrategyPlugin extends AbstractPlugin impleme
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->getFacade()
-            ->updateQuote($this->prepareQuoteUpdateRequestTransfer($quoteTransfer))
-            ->getQuoteTransfer();
+        $this->getFacade()
+            ->updateQuote($this->prepareQuoteUpdateRequestTransfer($quoteTransfer));
+
+        return $quoteTransfer;
     }
 
     /**

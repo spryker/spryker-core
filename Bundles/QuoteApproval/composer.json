@@ -25,7 +25,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/checkout": "If you want to use QuoteApprovalProceedCheckoutCheckPlugin."
+    "spryker/checkout": "If you want to use QuoteApprovalCheckoutPreCheckPlugin."
   },
   "autoload": {
     "psr-4": {

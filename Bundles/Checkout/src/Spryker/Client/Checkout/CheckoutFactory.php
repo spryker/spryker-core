@@ -27,14 +27,14 @@ class CheckoutFactory extends AbstractFactory
      */
     public function createQuoteProceedCheckoutChecker(): QuoteProceedCheckoutCheckerInterface
     {
-        return new QuoteProceedCheckoutChecker($this->getQuoteProceedCheckoutCheckPlugins());
+        return new QuoteProceedCheckoutChecker($this->getCheckoutPreCheckPlugins());
     }
 
     /**
-     * @return \Spryker\Client\CheckoutExtension\Dependency\Plugin\QuoteProceedCheckoutCheckPluginInterface[]
+     * @return \Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInterface[]
      */
-    public function getQuoteProceedCheckoutCheckPlugins(): array
+    public function getCheckoutPreCheckPlugins(): array
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::PLUGINS_QUOTE_PROCEED_CHECKOUT_CHECK);
+        return $this->getProvidedDependency(CheckoutDependencyProvider::PLUGINS_CHECKOUT_PRE_CHECK);
     }
 }

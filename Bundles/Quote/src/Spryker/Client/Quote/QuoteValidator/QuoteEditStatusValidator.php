@@ -38,7 +38,7 @@ class QuoteEditStatusValidator implements QuoteEditStatusValidatorInterface
             return false;
         }
 
-        if ($quoteTransfer->getIdQuote() === null) {
+        if (!$quoteTransfer->getIdQuote()) {
             return true;
         }
 

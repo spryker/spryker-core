@@ -13,16 +13,16 @@ use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 class QuoteProceedCheckoutChecker implements QuoteProceedCheckoutCheckerInterface
 {
     /**
-     * @var \Spryker\Client\CheckoutExtension\Dependency\Plugin\QuoteProceedCheckoutCheckPluginInterface[]
+     * @var \Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInterface[]
      */
-    protected $quoteProccedCheckoutCheckPlugins;
+    protected $quoteProceedCheckoutCheckPlugins;
 
     /**
-     * @param \Spryker\Client\CheckoutExtension\Dependency\Plugin\QuoteProceedCheckoutCheckPluginInterface[] $quoteProccedCheckoutCheckPlugins
+     * @param \Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInterface[] $quoteProccedCheckoutCheckPlugins
      */
     public function __construct(array $quoteProccedCheckoutCheckPlugins)
     {
-        $this->quoteProccedCheckoutCheckPlugins = $quoteProccedCheckoutCheckPlugins;
+        $this->quoteProceedCheckoutCheckPlugins = $quoteProccedCheckoutCheckPlugins;
     }
 
     /**
@@ -32,7 +32,7 @@ class QuoteProceedCheckoutChecker implements QuoteProceedCheckoutCheckerInterfac
      */
     public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
-        foreach ($this->quoteProccedCheckoutCheckPlugins as $quoteProccedCheckoutCheckPlugin) {
+        foreach ($this->quoteProceedCheckoutCheckPlugins as $quoteProccedCheckoutCheckPlugin) {
             $quoteValidationResponseTransfer = $quoteProccedCheckoutCheckPlugin->isValid($quoteTransfer);
 
             if (!$quoteValidationResponseTransfer->getIsSuccessful()) {

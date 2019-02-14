@@ -13,7 +13,7 @@ use Spryker\Client\Kernel\Container;
 class CheckoutDependencyProvider extends AbstractDependencyProvider
 {
     public const SERVICE_ZED = 'zed service';
-    public const PLUGINS_QUOTE_PROCEED_CHECKOUT_CHECK = 'PLUGINS_QUOTE_PROCEED_CHECKOUT_CHECK';
+    public const PLUGINS_CHECKOUT_PRE_CHECK = 'PLUGINS_CHECKOUT_PRE_CHECK';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -26,7 +26,7 @@ class CheckoutDependencyProvider extends AbstractDependencyProvider
             return $container->getLocator()->zedRequest()->client();
         };
 
-        $container = $this->addQuoteProceedCheckoutCheckPlugins($container);
+        $container = $this->addCheckoutPreCheckPlugins($container);
 
         return $container;
     }
@@ -36,19 +36,19 @@ class CheckoutDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addQuoteProceedCheckoutCheckPlugins(Container $container): Container
+    protected function addCheckoutPreCheckPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_PROCEED_CHECKOUT_CHECK] = function () {
-            return $this->getQuoteProceedCheckoutCheckPlugins();
+        $container[static::PLUGINS_CHECKOUT_PRE_CHECK] = function () {
+            return $this->getCheckoutPreCheckPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Client\CheckoutExtension\Dependency\Plugin\QuoteProceedCheckoutCheckPluginInterface[]
+     * @return \Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInterface[]
      */
-    protected function getQuoteProceedCheckoutCheckPlugins(): array
+    protected function getCheckoutPreCheckPlugins(): array
     {
         return [];
     }

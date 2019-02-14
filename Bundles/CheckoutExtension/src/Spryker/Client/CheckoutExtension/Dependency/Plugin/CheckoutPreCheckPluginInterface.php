@@ -10,7 +10,7 @@ namespace Spryker\Client\CheckoutExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 
-interface QuoteProceedCheckoutCheckPluginInterface
+interface CheckoutPreCheckPluginInterface
 {
     /**
      * Specification:
