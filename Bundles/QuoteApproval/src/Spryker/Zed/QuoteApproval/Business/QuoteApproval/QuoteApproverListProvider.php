@@ -47,7 +47,7 @@ class QuoteApproverListProvider implements QuoteApproverListProviderInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getApprovers(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
+    public function getApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
     {
         $approverIds = $this->getApproversIds();
         $quoteTransfer->requireCustomer();
