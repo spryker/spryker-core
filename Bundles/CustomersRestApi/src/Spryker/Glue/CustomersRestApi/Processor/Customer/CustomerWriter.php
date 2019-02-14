@@ -97,59 +97,12 @@ class CustomerWriter implements CustomerWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomersAttributesTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function registerCustomer(
-        RestCustomersAttributesTransfer $restCustomersAttributesTransfer
-    ): RestResponseInterface {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        if (!$restCustomersAttributesTransfer->getAcceptedTerms()) {
-            return $this->restApiError->addNotAcceptedTermsError($restResponse);
-        }
-
-        if ($restCustomersAttributesTransfer->getPassword() !== $restCustomersAttributesTransfer->getConfirmPassword()) {
-            return $this->restApiError->addPasswordsDoNotMatchError(
-                $restResponse,
-                RestCustomersAttributesTransfer::PASSWORD,
-                RestCustomersAttributesTransfer::CONFIRM_PASSWORD
-            );
-        }
-
-        $customerTransfer = (new CustomerTransfer())->fromArray($restCustomersAttributesTransfer->toArray(), true);
-        $customerResponseTransfer = $this->customerClient->registerCustomer($customerTransfer);
-
-        if (!$customerResponseTransfer->getIsSuccess()) {
-            return $this->restApiError->processCustomerErrorOnRegistration(
-                $restResponse,
-                $customerResponseTransfer
-            );
-        }
-
-        $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
-        $customerTransfer = $this->executeCustomerPostRegisterPlugins($customerTransfer);
-
-        $restCustomersResponseAttributesTransfer = $this->customerResourceMapper
-            ->mapCustomerTransferToRestCustomersResponseAttributesTransfer($customerTransfer);
-
-        $restResource = $this->restResourceBuilder->createRestResource(
-            CustomersRestApiConfig::RESOURCE_CUSTOMERS,
-            $customerResponseTransfer->getCustomerTransfer()->getCustomerReference(),
-            $restCustomersResponseAttributesTransfer
-        );
-
-        return $restResponse->addResource($restResource);
-    }
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomersAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCustomer(
+    public function registerCustomer(
         RestRequestInterface $restRequest,
         RestCustomersAttributesTransfer $restCustomersAttributesTransfer
     ): RestResponseInterface {
