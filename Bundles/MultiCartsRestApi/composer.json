@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "spryker/carts-rest-api-extension": "^1.0.0",
+    "spryker/glue-application": "^1.8.0",
     "spryker/kernel": "^3.29.0",
     "spryker/multi-cart": "^1.1.0",
     "spryker/persistent-cart": "^1.5.0",
