@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 
 class ManualOrderEntryGuiToShipmentFacadeBridge implements ManualOrderEntryGuiToShipmentFacadeInterface
 {
@@ -25,6 +26,8 @@ class ManualOrderEntryGuiToShipmentFacadeBridge implements ManualOrderEntryGuiTo
     }
 
     /**
+     * @deprecated Use getAvailableMethodsByShipment() instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
@@ -32,6 +35,16 @@ class ManualOrderEntryGuiToShipmentFacadeBridge implements ManualOrderEntryGuiTo
     public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
         return $this->shipmentFacade->getAvailableMethods($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     */
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
+    {
+        return $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
     }
 
     /**

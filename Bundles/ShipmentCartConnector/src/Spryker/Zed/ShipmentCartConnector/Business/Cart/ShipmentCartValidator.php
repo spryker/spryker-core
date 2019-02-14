@@ -76,6 +76,8 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
             $shipmentTransfer = $itemTransfer->getShipment();
             $skipValidation = (
                 $shipmentTransfer === null
+                || $shipmentTransfer->getMethod() === null
+                || $shipmentTransfer->getMethod()->getIdShipmentMethod() === null
                 || $this->isCurrencyChanged($shipmentTransfer, $quoteTransfer) === false
             );
 

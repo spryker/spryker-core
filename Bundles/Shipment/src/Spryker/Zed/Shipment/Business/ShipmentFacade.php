@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Spryker\Shared\Shipment\ShipmentConstants;
@@ -63,7 +66,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function getMethods()
     {
         return $this->getFactory()
-            ->createMethod()
+            ->createMethodReader()
             ->getShipmentMethodTransfers();
     }
 
@@ -78,7 +81,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function createMethod(ShipmentMethodTransfer $methodTransfer)
     {
-        $methodModel = $this->getFactory()->createMethod();
+        $methodModel = $this->getFactory()->createMethodReader();
 
         return $methodModel->create($methodTransfer);
     }
@@ -95,8 +98,38 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function findMethodById($idShipmentMethod)
     {
         return $this->getFactory()
-            ->createMethod()
+            ->createMethodReader()
             ->findShipmentMethodTransferById($idShipmentMethod);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @deprecated Use getAvailableMethodsByShipment() instead.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     */
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
+    {
+        $methodModel = $this->getFactory()->createMethod();
+        /**
+         * @todo: refactor this.
+         */
+
+        $shipmentGroupCollectionTransfer = $methodModel->getAvailableMethodsByShipment($quoteTransfer);
+
+        /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer */
+        $shipmentGroupTransfer = current($shipmentGroupCollectionTransfer->getGroups());
+
+        if (!$shipmentGroupTransfer) {
+            return new ShipmentMethodsTransfer();
+        }
+
+        return $shipmentGroupTransfer->getAvailableShipmentMethods();
     }
 
     /**
@@ -106,13 +139,34 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ArrayObject
     {
-        $methodModel = $this->getFactory()->createMethod();
+        return $this
+            ->getFactory()
+            ->createMethodReader()
+            ->getAvailableMethodsByShipment($quoteTransfer);
+    }
 
-        return $methodModel->getAvailableMethods($quoteTransfer);
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     */
+    public function getAvailableMethodsByShipmentGroups(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
+    {
+        /**
+         * @todo Check and remove this as unnecessary method
+         */
+        return $this
+            ->getFactory()
+            ->createMethodReader()
+            ->getAvailableMethodsByShipment($quoteTransfer);
     }
 
     /**
@@ -127,7 +181,9 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer)
     {
-        return $this->getFactory()->createMethod()->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
+        return $this->getFactory()
+            ->createMethodReader()
+            ->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
     }
 
     /**
@@ -141,7 +197,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function getShipmentMethodTransferById($idMethod)
     {
-        $methodModel = $this->getFactory()->createMethod();
+        $methodModel = $this->getFactory()->createMethodReader();
 
         return $methodModel->getShipmentMethodTransferById($idMethod);
     }
@@ -157,7 +213,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function hasMethod($idMethod)
     {
-        $methodModel = $this->getFactory()->createMethod();
+        $methodModel = $this->getFactory()->createMethodReader();
 
         return $methodModel->hasMethod($idMethod);
     }
@@ -173,7 +229,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function deleteMethod($idMethod)
     {
-        $methodModel = $this->getFactory()->createMethod();
+        $methodModel = $this->getFactory()->createMethodReader();
 
         return $methodModel->deleteMethod($idMethod);
     }
@@ -189,7 +245,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function updateMethod(ShipmentMethodTransfer $methodTransfer)
     {
-        $methodModel = $this->getFactory()->createMethod();
+        $methodModel = $this->getFactory()->createMethodReader();
 
         return $methodModel->updateMethod($methodTransfer);
     }
@@ -288,7 +344,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function isShipmentMethodActive($idShipmentMethod)
     {
-        return $this->getFactory()->createMethod()->isShipmentMethodActive($idShipmentMethod);
+        return $this->getFactory()->createMethodReader()->isShipmentMethodActive($idShipmentMethod);
     }
 
     /**

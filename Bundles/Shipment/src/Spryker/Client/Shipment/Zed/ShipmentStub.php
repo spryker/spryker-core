@@ -8,6 +8,7 @@
 namespace Spryker\Client\Shipment\Zed;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class ShipmentStub implements ShipmentStubInterface
@@ -36,5 +37,18 @@ class ShipmentStub implements ShipmentStubInterface
         $shipmentMethodTransfer = $this->zedStub->call('/shipment/gateway/get-available-methods', $quoteTransfer);
 
         return $shipmentMethodTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     */
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer $shipmentGroupCollectionTransfer */
+        $shipmentGroupCollectionTransfer = $this->zedStub->call('/shipment/gateway/get-available-methods-by-shipment', $quoteTransfer);
+
+        return $shipmentGroupCollectionTransfer;
     }
 }

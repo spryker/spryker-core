@@ -10,6 +10,9 @@ namespace Spryker\Zed\Shipment\Dependency\Plugin;
 use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @deprecated Use \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface instead.
+ */
 interface ShipmentMethodFilterPluginInterface
 {
     /**

@@ -26,6 +26,9 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReader;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
+use Spryker\Zed\Shipment\Business\Transfer\TransferBuilder;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
@@ -60,6 +63,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use createMethodReader() instead.
+     *
      * @return \Spryker\Zed\Shipment\Business\Model\MethodInterface
      */
     public function createMethod()
@@ -72,6 +77,33 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getPlugins(),
             $this->getMethodFilterPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface
+     */
+    public function createMethodReader(): MethodReaderInterface
+    {
+        return new MethodReader(
+            $this->getQueryContainer(),
+            $this->createMethodPrice(),
+            $this->createShipmentMethodTransformer(),
+            $this->getCurrencyFacade(),
+            $this->getStoreFacade(),
+            $this->getShipmentService(),
+            $this->getPlugins(),
+            $this->getMethodFilterPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Transfer\TransferBuilder
+     */
+    public function createTransferBuilder(): TransferBuilder
+    {
+        return new TransferBuilder(
+            $this->createMethodReader()
         );
     }
 
