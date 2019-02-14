@@ -19,7 +19,6 @@ class EditContentController extends AbstractController
     protected const PARAM_TERM_KEY = 'term-key';
     protected const PARAM_REDIRECT_URL = 'redirect-url';
     protected const URL_REDIRECT_CONTENT_LIST_PAGE = '/content-gui/list-content';
-    protected const URL_REDIRECT_CONTENT_PAGE = '/content-gui/list-content';
     protected const MESSAGE_SUCCESS_CONTENT_CREATE = 'Content item has been successfully updated.';
 
     /**
@@ -31,7 +30,8 @@ class EditContentController extends AbstractController
     {
         $contentId = $request->query->get(static::PARAM_ID_CONTENT);
         $termKey = $request->query->get(static::PARAM_TERM_KEY, '');
-        if (empty($termKey)) {
+
+        if (empty($termKey) || empty($contentId)) {
             return $this->redirectResponse(static::URL_REDIRECT_CONTENT_LIST_PAGE);
         }
         $dataProvider = $this->getFactory()->createContentFormDataProvider();
@@ -45,14 +45,14 @@ class EditContentController extends AbstractController
         if ($contentForm->isSubmitted() && $contentForm->isValid()) {
             /** @var \Generated\Shared\Transfer\ContentTransfer $data */
             $data = $contentForm->getData();
-            $contentTransfer = $this->getFactory()
+            $this->getFactory()
                 ->getContentFacade()
                 ->create($data);
 
             $this->addSuccessMessage(static::MESSAGE_SUCCESS_CONTENT_CREATE);
 
             return $this->redirectResponse(
-                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_CONTENT_PAGE)
+                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_CONTENT_LIST_PAGE)
             );
         }
         $contentTabs = $this->getFactory()->createContentTabs();
@@ -60,7 +60,7 @@ class EditContentController extends AbstractController
         return $this->viewResponse([
             'contentTabs' => $contentTabs->createView(),
             'contentForm' => $contentForm->createView(),
-            'backButton' => static::URL_REDIRECT_CONTENT_PAGE,
+            'backButton' => static::URL_REDIRECT_CONTENT_LIST_PAGE,
             'contentName' => $this->getFactory()->createContentResolver()->getContentPlugin($termKey)->getTermKey(),
         ]);
     }

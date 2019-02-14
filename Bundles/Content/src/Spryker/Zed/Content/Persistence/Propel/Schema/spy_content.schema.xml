@@ -26,6 +26,12 @@
             <unique-column name="fk_content"/>
             <unique-column name="fk_locale"/>
         </unique>
+        <index name="spy_content_localized-index-fk_locale">
+            <index-column name="fk_locale"/>
+        </index>
+        <index name="spy_content_localized-index-fk_content">
+            <index-column name="fk_content"/>
+        </index>
         <behavior name="timestampable"/>
         <id-method-parameter value="spy_content_localized_pk_seq"/>
     </table>

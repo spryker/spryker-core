@@ -110,7 +110,7 @@ class LocalizedContentForm extends AbstractType
         $builder->get(static::FIELD_PARAMETERS)
             ->addModelTransformer(new CallbackTransformer(
                 function (?string $params = null) use ($contentPlugin) {
-                    $params = json_decode((string)$params, true);
+                    $params = $this->getFactory()->getUtilEncoding()->decodeJson((string)$params, true);
 
                     return $contentPlugin->getTransferObject($params);
                 },
@@ -126,7 +126,7 @@ class LocalizedContentForm extends AbstractType
                     };
                     $parameters = $arrayFilter($abstractTransfer->toArray());
 
-                    return (!empty($parameters)) ? json_encode($abstractTransfer->toArray()) : null;
+                    return (!empty($parameters)) ? $this->getFactory()->getUtilEncoding()->encodeJson($abstractTransfer->toArray()) : null;
                 }
             ));
 

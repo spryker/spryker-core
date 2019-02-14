@@ -5,9 +5,30 @@
     <transfer name="ContentStorage">
         <property name="idContentStorage" type="int"/>
         <property name="fkContent" type="int"/>
-        <property name="data" type="array"/>
+        <property name="data" type="string"/>
         <property name="locale" type="string"/>
         <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="Content">
+        <property name="idContent" type="int" />
+        <property name="name" type="string" />
+        <property name="description" type="string" />
+        <property name="contentTermKey" type="string" />
+        <property name="contentTypeKey" type="string" />
+        <property name="localizedContents" type="LocalizedContent[]" singular="localizedContent" />
+    </transfer>
+
+    <transfer name="LocalizedContent">
+        <property name="idContentLocalized" type="int" />
+        <property name="localeName" type="string" />
+        <property name="fkLocale" type="int" />
+        <property name="fkContent" type="int" />
+        <property name="parameters" type="string" />
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
     </transfer>
 </transfers>
 

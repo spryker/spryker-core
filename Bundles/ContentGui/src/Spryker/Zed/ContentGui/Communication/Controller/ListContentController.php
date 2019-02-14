@@ -20,12 +20,7 @@ class ListContentController extends AbstractController
      */
     public function indexAction(): array
     {
-        $contentTable = $this->getFactory()->createContentTable();
-
-        return $this->viewResponse([
-            'contents' => $contentTable->render(),
-            'termKeys' => $this->getFactory()->createContentResolver()->getTermKeys(),
-        ]);
+        return $this->viewResponse($this->executeIndexAction());
     }
 
     /**
@@ -36,5 +31,18 @@ class ListContentController extends AbstractController
         $contentTable = $this->getFactory()->createContentTable();
 
         return $this->jsonResponse($contentTable->fetchData());
+    }
+
+    /**
+     * @return array
+     */
+    protected function executeIndexAction()
+    {
+        $contentTable = $this->getFactory()->createContentTable();
+
+        return [
+            'contents' => $contentTable->render(),
+            'termKeys' => $this->getFactory()->createContentResolver()->getTermKeys(),
+        ];
     }
 }

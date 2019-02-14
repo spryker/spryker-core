@@ -5,8 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
-
 $(document).ready( function () {
 
     var validFrom = $('#cms_block_validFrom');

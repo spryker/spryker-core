@@ -62,14 +62,14 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
         if (!($this->criteriaBuilder instanceof CriteriaBuilderInterface)) {
             throw new DependencyException(sprintf(
                 'criteriaBuilder does not implement CriteriaBuilder\CriteriaBuilderInterface in %s',
-                get_class($this)
+                static::class
             ));
         }
 
         if (!($this->queryBuilder instanceof AbstractPdoCollectorQuery)) {
             throw new DependencyException(sprintf(
                 'queryBuilder does not implement AbstractPdoCollectorQuery in %s',
-                get_class($this)
+                static::class
             ));
         }
     }
