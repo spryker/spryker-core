@@ -119,11 +119,9 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
     /**
      * @deprecated Will be removed in next major release.
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder|null
      */
     protected function sanitizeOrderShipmentExpense(SpySalesOrder $orderEntity): ?SpySalesOrder
     {

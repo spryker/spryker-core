@@ -98,8 +98,7 @@ class SalesClient extends AbstractClient implements SalesClientInterface
     }
 
     /**
-     * Specification:
-     * - Creates array of unique order items.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -112,5 +111,21 @@ class SalesClient extends AbstractClient implements SalesClientInterface
         return $this->getFactory()
             ->createZedSalesStub()
             ->getUniqueOrderItems($itemTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     */
+    public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()
+            ->createZedSalesStub()
+            ->getUniqueOrderItemsForShipmentGroups($orderTransfer);
     }
 }

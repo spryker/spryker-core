@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 
 /**
  * @method \Spryker\Zed\Sales\Business\SalesBusinessFactory getFactory()
@@ -271,7 +272,7 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Creates array of unique order items.
+     * - Creates a collection of unique order items.
      *
      * @api
      *
@@ -280,4 +281,16 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
     public function getUniqueOrderItems(ArrayObject $itemTransfers): ItemCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Creates a collection of unique order items for shipment groups.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     */
+    public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer): ShipmentGroupCollectionTransfer;
 }

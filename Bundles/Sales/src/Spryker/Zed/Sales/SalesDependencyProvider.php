@@ -67,6 +67,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerFacade($container);
         $container = $this->addOrderItemExpanderPreSavePlugins($container);
         $container = $this->addItemTransformerStrategyPlugins($container);
+        $container = $this->addShipmentService($container);
 
         return $container;
     }

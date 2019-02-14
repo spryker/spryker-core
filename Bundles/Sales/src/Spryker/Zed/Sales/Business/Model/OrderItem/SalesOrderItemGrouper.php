@@ -10,9 +10,43 @@ namespace Spryker\Zed\Sales\Business\Model\OrderItem;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
+use Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceInterface;
 
 class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
 {
+    /**
+     * @var \Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceInterface
+     */
+    protected $shipmentService;
+
+    /**
+     * @param \Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceInterface $shipmentService
+     */
+    public function __construct(SalesToShipmentServiceInterface $shipmentService)
+    {
+        $this->shipmentService = $shipmentService;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     */
+    public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer): ShipmentGroupCollectionTransfer
+    {
+        $shipmentGroups = $this->shipmentService->groupItemsByShipment($orderTransfer->getItems());
+
+        foreach ($shipmentGroups as $shipmentGroupTransfer) {
+            $groupedShipmentItems = $this->getUniqueOrderItems($shipmentGroupTransfer->getItems());
+            $shipmentGroupTransfer->setItems($groupedShipmentItems->getItems());
+        }
+
+        return (new ShipmentGroupCollectionTransfer())
+            ->setShipmentGroups($shipmentGroups);
+    }
+
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
@@ -41,15 +75,19 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $existedOrderLines
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return array
+     * @return \ArrayObject
      */
     protected function changeQuantityOfUniqueItem(ArrayObject $existedOrderLines, ItemTransfer $itemTransfer): ArrayObject
     {
         $sku = $itemTransfer->getSku();
-        $newQuantity = $existedOrderLines[$sku]['quantity'] + $itemTransfer->getQuantity();
-        $existedOrderLines[$sku]['quantity'] = $newQuantity;
+        /**
+         * @var \Generated\Shared\Transfer\ItemTransfer $existedItem
+         */
+        $existedItem = $existedOrderLines[$sku];
+        $newQuantity = $existedItem->getQuantity() + $itemTransfer->getQuantity();
+        $existedItem->setQuantity($newQuantity);
         $newPrice = $itemTransfer->getSumPrice() * $newQuantity;
-        $existedOrderLines[$sku]['price'] = $newPrice;
+        $existedItem->setSumPrice($newPrice);
 
         return $existedOrderLines;
     }
@@ -62,12 +100,7 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
      */
     protected function addItemToUniqueItemsArray(ArrayObject $existedOrderLines, ItemTransfer $itemTransfer): ArrayObject
     {
-        $existedOrderLines[$itemTransfer->getSku()] = [
-            'name' => $itemTransfer->getName(),
-            'quantity' => (int)$itemTransfer->getQuantity(),
-            'price' => $itemTransfer->getSumPrice(),
-            'productOptions' => $itemTransfer->getProductOptions(),
-        ];
+        $existedOrderLines[$itemTransfer->getSku()] = $itemTransfer;
 
         return $existedOrderLines;
     }

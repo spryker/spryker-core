@@ -78,7 +78,7 @@ interface SalesClientInterface
 
     /**
      * Specification:
-     * - Creates array of unique order items.
+     * - Creates collection of unique order items.
      *
      * @api
      *
@@ -87,4 +87,16 @@ interface SalesClientInterface
      * @return \ArrayObject
      */
     public function getUniqueOrderItems(ArrayObject $itemTransfers): ArrayObject;
+
+    /**
+     * Specification:
+     * - Creates a collection of unique order items for shipment groups.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     **/
+    public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer);
 }
