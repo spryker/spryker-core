@@ -10,6 +10,8 @@ namespace Spryker\Zed\SharedCart\Business\QuoteResponseExpander;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface;
 
 class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInterface
@@ -35,8 +37,12 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
     public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
         $customerTransfer = $quoteResponseTransfer->requireCustomer()->getCustomer();
+        $storeTransfer = $quoteResponseTransfer->requireQuoteTransfer()
+            ->getQuoteTransfer()
+            ->requireStore()
+            ->getStore();
 
-        $sharedQuoteCollectionTransfer = $this->findSharedCustomerQuotes($customerTransfer);
+        $sharedQuoteCollectionTransfer = $this->findSharedCustomerQuotesByStore($customerTransfer, $storeTransfer);
         $quoteResponseTransfer->setSharedCustomerQuotes($sharedQuoteCollectionTransfer);
 
         if (!$quoteResponseTransfer->getQuoteTransfer()) {
@@ -48,13 +54,18 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    protected function findSharedCustomerQuotes(CustomerTransfer $customerTransfer): QuoteCollectionTransfer
+    protected function findSharedCustomerQuotesByStore(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): QuoteCollectionTransfer
     {
         if ($customerTransfer->getCompanyUserTransfer()) {
-            return $this->quoteReader->findCustomerSharedQuotes($customerTransfer->getCompanyUserTransfer());
+            $sharedQuoteCriteriaFilter = (new SharedQuoteCriteriaFilterTransfer())
+                ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser())
+                ->setIdStore($storeTransfer->getIdStore());
+
+            return $this->quoteReader->findCustomerSharedQuoteCollectionBySharedQuoteCriteriaFilter($sharedQuoteCriteriaFilter);
         }
 
         return new QuoteCollectionTransfer();
@@ -68,7 +79,7 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
      */
     protected function replaceCurrentQuoteFromList(QuoteResponseTransfer $quoteResponseTransfer, QuoteCollectionTransfer $sharedQuoteCollectionTransfer): QuoteResponseTransfer
     {
-        $currentQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+        $currentQuoteTransfer = $quoteResponseTransfer->requireQuoteTransfer()->getQuoteTransfer();
         foreach ($sharedQuoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             if ($quoteTransfer->getIdQuote() === $currentQuoteTransfer->getIdQuote()) {
                 $quoteResponseTransfer->setQuoteTransfer(

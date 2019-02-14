@@ -19,13 +19,13 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
     protected $quoteCalculators;
 
     /**
-     * @var \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginInterface[]
+     * @var \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginStrategyInterface[]
      */
     protected $quotePostRecalculatePlugins;
 
     /**
      * @param \Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[] $quoteCalculators
-     * @param \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginInterface[] $quotePostRecalculatePlugins
+     * @param \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginStrategyInterface[] $quotePostRecalculatePlugins
      */
     public function __construct(
         array $quoteCalculators,
@@ -116,7 +116,9 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
     protected function executeQuotePostRecalculatePlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($this->quotePostRecalculatePlugins as $quotePostRecalculatePlugin) {
-            $quoteTransfer = $quotePostRecalculatePlugin->execute($quoteTransfer);
+            if ($quotePostRecalculatePlugin->isApplicable($quoteTransfer)) {
+                $quoteTransfer = $quotePostRecalculatePlugin->execute($quoteTransfer);
+            }
         }
 
         return $quoteTransfer;

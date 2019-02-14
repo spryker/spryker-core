@@ -81,7 +81,7 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginInterface[]
+     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginStrategyInterface[]
      */
     protected function getQuotePostRecalculatePlugins(): array
     {

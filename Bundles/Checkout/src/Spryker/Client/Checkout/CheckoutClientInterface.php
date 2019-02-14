@@ -26,8 +26,8 @@ interface CheckoutClientInterface
 
     /**
      * Specification:
-     * - Validates quote using `QuoteProceedCheckoutCheckPluginInterface` plugins.
-     * - Consideres quote valid for checkout if no plugin returns with `isSuccessful=false`.
+     * - Validates quote using `CheckoutPreCheckPluginInterface` plugins.
+     * - Considers quote valid for checkout if no plugin returns with `isSuccessful=false`.
      *
      * @api
      *

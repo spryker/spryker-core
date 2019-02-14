@@ -13,7 +13,6 @@ use Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextPro
 use Spryker\Client\QuoteApproval\Plugin\ApproveQuotePermissionPlugin;
 use Spryker\Client\QuoteApproval\Plugin\PlaceOrderPermissionPlugin;
 use Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
-use Spryker\Shared\QuoteApproval\Plugin\RequestQuoteApprovalPermissionPlugin;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 
 class QuoteStatusChecker implements QuoteStatusCheckerInterface
@@ -49,10 +48,6 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
      */
     public function isQuoteRequireApproval(QuoteTransfer $quoteTransfer): bool
     {
-        if (!$this->can(RequestQuoteApprovalPermissionPlugin::KEY)) {
-            return false;
-        }
-
         if ($this->isQuoteWaitingForApproval($quoteTransfer)) {
             return true;
         }

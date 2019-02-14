@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
+use Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
@@ -90,6 +91,28 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
         }
 
         return $permissionCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer[]
+     */
+    public function findQuotesBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): array
+    {
+        /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $quoteQuery */
+        $quoteQuery = $this->getFactory()->createQuoteQuery()
+            ->joinWithSpyStore()
+            ->useSpyQuoteCompanyUserQuery()
+                ->filterByFkCompanyUser($sharedQuoteCriteriaFilterTransfer->getIdCompanyUser())
+            ->endUse()
+            ->addAsColumn('is_default', SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT);
+
+        if ($sharedQuoteCriteriaFilterTransfer->getIdStore()) {
+            $quoteQuery->filterByFkStore($sharedQuoteCriteriaFilterTransfer->getIdStore());
+        }
+
+        return $this->buildQueryFromCriteria($quoteQuery)->find();
     }
 
     /**

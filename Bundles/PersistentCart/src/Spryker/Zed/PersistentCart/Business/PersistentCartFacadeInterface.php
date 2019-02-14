@@ -171,7 +171,9 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     *  - Remove quote from database
+     * - Removes quote from database.
+     * - Executes update quote plugins.
+     * - Calls quote response extend plugins.
      *
      * @api
      *
@@ -199,6 +201,7 @@ interface PersistentCartFacadeInterface
      * Specification:
      *  - Saves quote in database.
      *  - Call quote response extend plugins.
+     *  - Operation will be performed only if customer has permission to update quote.
      *
      * @api
      *
@@ -242,6 +245,7 @@ interface PersistentCartFacadeInterface
      *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
      *  - Saves quote in database.
      *  - Call quote response extend plugins.
+     *  - Operation will be performed only if customer has permission to update quote.
      *
      * @api
      *
@@ -250,18 +254,4 @@ interface PersistentCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function updateAndReloadQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer;
-
-    /**
-     * Specification:
-     * - Does nothing if `DatabaseStorageStrategy` is disabled.
-     * - Does nothing if quoted does't have ID.
-     * - Saves quote attributes described in QuoteUpdateRequestAttributesTransfer to database.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function updateQuoteAttributes(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

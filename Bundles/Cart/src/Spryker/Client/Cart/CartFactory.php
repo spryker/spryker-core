@@ -68,7 +68,7 @@ class CartFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface
      */
-    public function createQuoteStorageStrategy(): QuoteStorageStrategyPluginInterface
+    public function createQuoteStorageStrategyProxy(): QuoteStorageStrategyPluginInterface
     {
         return new QuoteStorageStrategyProxy(
             $this->getMessengerClient(),
