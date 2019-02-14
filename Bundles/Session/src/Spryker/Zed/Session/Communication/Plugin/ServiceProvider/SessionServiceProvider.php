@@ -67,12 +67,10 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
         $session = $this->getSession($application);
         $this->getSessionClient()->setContainer($session);
-        $application['dispatcher']->addListener(KernelEvents::RESPONSE,
-            [
-                $this,
-                'extendCookieLifetime',
-            ],
-            -128
+        $application['dispatcher']->addListener(KernelEvents::RESPONSE, [
+            $this,
+            'extendCookieLifetime',
+            ], -255
         );
     }
 
@@ -87,7 +85,9 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
             return;
         }
 
-        $session = $event->getRequest()->getSession();
+        $request = $event->getRequest();
+
+        $session = $request->hasPreviousSession() ? $request->getSession() : null;
 
         if ($session != null && $session->isStarted()) {
             $session->save();
