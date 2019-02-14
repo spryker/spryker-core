@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 
 /**
  * @method \Spryker\Zed\Sales\Business\SalesBusinessFactory getFactory()
@@ -293,4 +294,28 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      */
     public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer): ShipmentGroupCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns the sales order address for the given sales order address id.
+     *
+     * @api
+     *
+     * @param int $idSalesOrderAddress
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findOrderAddressByIdOrderAddress(int $idSalesOrderAddress): ?AddressTransfer;
+
+    /**
+     * Specification:
+     * - Returns sales order items by salesShipmentId or null.
+     *
+     * @api
+     *
+     * @param int $idSalesShipment
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesShipment): ObjectCollection;
 }

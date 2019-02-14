@@ -29,6 +29,14 @@ use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReader;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
 use Spryker\Zed\Shipment\Business\Transfer\TransferBuilder;
+use Spryker\Zed\Shipment\Business\Shipment\ShipmentReader;
+use Spryker\Zed\Shipment\Business\Shipment\ShipmentReaderInterface;
+use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaver;
+use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaverInterface;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcher;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcherInterface;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtender;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtenderInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
@@ -378,5 +386,50 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         };
 
         return $strategyContainer;
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcherInterface
+     */
+    public function createShipmentFetcher(): ShipmentFetcherInterface
+    {
+        return new ShipmentFetcher(
+            $this->getQueryContainer(),
+            $this->getStoreFacade(),
+            $this->getCurrencyFacade(),
+            $this->createShipmentMethodTransformer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtenderInterface
+     */
+    public function createShipmentMethodExtender(): ShipmentMethodExtenderInterface
+    {
+        return new ShipmentMethodExtender(
+            $this->createShipmentFetcher()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Shipment\ShipmentReaderInterface
+     */
+    public function createShipmentReader(): ShipmentReaderInterface
+    {
+        return new ShipmentReader(
+            $this->getQueryContainer(),
+            $this->getSalesFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Shipment\ShipmentSaverInterface
+     */
+    public function createShipmentSaver(): ShipmentSaverInterface
+    {
+        return new ShipmentSaver(
+            $this->createCheckoutShipmentOrderSaverWithMultiShippingAddress(),
+            $this->createShipmentMethodExtender()
+        );
     }
 }

@@ -15,7 +15,10 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
+use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -310,6 +313,24 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return void
+     */
+    public function saveOrderShipmentFromAdmin(OrderTransfer $orderTransfer, ShipmentGroupTransfer $shipmentGroupTransfer)
+    {
+        $this->getFactory()
+            ->createCheckoutShipmentOrderSaverStrategyResolver()
+            ->resolve()
+            ->saveOrderShipmentFromAdmin($orderTransfer, $shipmentGroupTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -357,5 +378,38 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function getShipmentExpenseTypeIdentifier()
     {
         return ShipmentConstants::SHIPMENT_EXPENSE_TYPE;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idSalesShipment
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
+     */
+    public function findShipmentTransferById(int $idSalesShipment): ?ShipmentTransfer
+    {
+        return $this->getFactory()
+            ->createShipmentReader()
+            ->findShipmentById($idSalesShipment);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupResponseTransfer
+     */
+    public function saveShipment(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): ShipmentGroupResponseTransfer
+    {
+        return $this->getFactory()
+            ->createShipmentSaver()
+            ->saveShipment($shipmentGroupTransfer, $orderTransfer);
     }
 }

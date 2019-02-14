@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Persistence;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -25,8 +26,16 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
     public function createSalesShipment(ShipmentTransfer $shipmentTransfer, int $idSalesOrder): int
     {
         $salesShipmentEntity = $this->getFactory()
+            ->createSalesShipmentQuery()
+            ->findOneByIdSalesShipment($shipmentTransfer->getIdSalesShipment());
+
+        if ($salesShipmentEntity === null) {
+            $salesShipmentEntity = new SpySalesShipment();
+        }
+
+        $salesShipmentEntity = $this->getFactory()
             ->createShipmentMapper()
-            ->mapShipmentTransferToSalesOrderAddressEntity($shipmentTransfer, $idSalesOrder);
+            ->mapShipmentTransferToSalesOrderAddressEntity($shipmentTransfer, $idSalesOrder, $salesShipmentEntity);
 
         $salesShipmentEntity->save();
 

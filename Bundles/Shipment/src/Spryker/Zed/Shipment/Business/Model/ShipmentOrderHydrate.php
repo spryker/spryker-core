@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Shipment\Business\Model;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -69,9 +71,42 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
             $orderTransfer = $this->setShipmentMethodToItems($orderTransfer, $shipmentMethodTransfer);
 
             $orderTransfer->addShipmentMethod($shipmentMethodTransfer);
+            $orderTransfer = $this->hydrateSalesShipmentToOrderItem($salesShipmentEntity, $orderTransfer);
         }
 
         return $orderTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function hydrateSalesShipmentToOrderItem(SpySalesShipment $salesShipmentEntity, OrderTransfer $orderTransfer): OrderTransfer
+    {
+        foreach ($salesShipmentEntity->getSpySalesOrderItems() as $itemEntity) {
+            foreach ($orderTransfer->getItems() as $itemTransfer) {
+                $this->setFkSalesShipmentToOrderItem($itemEntity, $itemTransfer);
+            }
+        }
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem $orderItemEntity
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function setFkSalesShipmentToOrderItem(SpySalesOrderItem $orderItemEntity, ItemTransfer $itemTransfer): ItemTransfer
+    {
+        if ($itemTransfer->getIdSalesOrderItem() === $orderItemEntity->getIdSalesOrderItem()) {
+            $itemTransfer->getShipment()->setIdSalesShipment($orderItemEntity->getFkSalesShipment());
+        }
+
+        return $itemTransfer;
     }
 
     /**

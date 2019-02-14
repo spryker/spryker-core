@@ -32,8 +32,7 @@ class ItemsGrouper implements ItemsGrouperInterface
 
             $key = $this->getItemShipmentKey($shipmentTransfer);
             if (!isset($shipmentGroupTransfers[$key])) {
-                $shipmentGroupTransfers[$key] = $this
-                    ->createNewShipmentGroupTransfer()
+                $shipmentGroupTransfers[$key] = (new ShipmentGroupTransfer())
                     ->setShipment($shipmentTransfer)
                     ->setHash($key);
             }
@@ -64,13 +63,5 @@ class ItemsGrouper implements ItemsGrouperInterface
             $shippingAddressKey,
             $shipmentTransfer->getRequestedDeliveryDate()
         ));
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
-     */
-    protected function createNewShipmentGroupTransfer(): ShipmentGroupTransfer
-    {
-        return new ShipmentGroupTransfer();
     }
 }

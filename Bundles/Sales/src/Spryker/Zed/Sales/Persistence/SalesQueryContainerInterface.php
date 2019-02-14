@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -103,6 +104,15 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrderDetails($idSalesOrder);
+
+    /**
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function querySalesOrderItemsWithShippingAddresses(int $idSalesOrder): SpySalesOrderItemQuery;
 
     /**
      * @api

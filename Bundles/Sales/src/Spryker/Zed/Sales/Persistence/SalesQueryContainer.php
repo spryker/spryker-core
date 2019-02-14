@@ -10,6 +10,7 @@ namespace Spryker\Zed\Sales\Persistence;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -223,6 +224,25 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
             ->innerJoinWith('billingAddress.Country billingCountry')
             ->leftJoinWith('order.ShippingAddress shippingAddress')
             ->leftJoinWith('shippingAddress.Country shippingCountry');
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function querySalesOrderItemsWithShippingAddresses(int $idSalesOrder): SpySalesOrderItemQuery
+    {
+        $query = $this->getFactory()->createSalesOrderItemQuery()
+            ->setModelAlias('orderItem')
+            ->filterByFkSalesOrder($idSalesOrder)
+            ->innerJoinWith('orderItem.SpySalesShipment shipment')
+            ->innerJoinWith('shipment.SpySalesOrderAddress address')
+            ->innerJoinWith('address.Country shippingCountry');
 
         return $query;
     }
