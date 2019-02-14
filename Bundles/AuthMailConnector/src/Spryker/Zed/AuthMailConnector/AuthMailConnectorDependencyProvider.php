@@ -23,7 +23,20 @@ class AuthMailConnectorDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addMailFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMailFacade(Container $container): Container
     {
         $container[self::FACADE_MAIL] = function (Container $container) {
             return new AuthMailConnectorToMailBridge($container->getLocator()->mail()->facade());

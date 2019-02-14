@@ -47,6 +47,7 @@ class RestorePasswordMailTypePlugin extends AbstractPlugin implements MailTypePl
         $this
             ->setSubject($mailBuilder)
             ->setHtmlTemplate($mailBuilder)
+            ->setTextTemplate($mailBuilder)
             ->setSender($mailBuilder);
     }
 
@@ -70,6 +71,18 @@ class RestorePasswordMailTypePlugin extends AbstractPlugin implements MailTypePl
     protected function setHtmlTemplate(MailBuilderInterface $mailBuilder)
     {
         $mailBuilder->setHtmlTemplate('authMailConnector/mail/restore_password.html.twig');
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
+     *
+     * @return $this
+     */
+    protected function setTextTemplate(MailBuilderInterface $mailBuilder)
+    {
+        $mailBuilder->setTextTemplate('authMailConnector/mail/restore_password.text.twig');
 
         return $this;
     }
