@@ -449,11 +449,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     ): void {
         $productOptionGroupIsActive = $productOptionCriteriaTransfer->getProductOptionGroupIsActive();
 
-        if ($productOptionGroupIsActive === null) {
-            return;
-        }
-
-        if ($productOptionGroupIsActive === true) {
+        if ($productOptionGroupIsActive !== null) {
             $productOptionGroupQuery->filterByActive($productOptionGroupIsActive);
         }
     }
@@ -468,20 +464,20 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         ProductOptionCriteriaTransfer $productOptionCriteriaTransfer,
         SpyProductOptionGroupQuery $productOptionGroupQuery
     ): void {
-        $productOptionGroupIsAssigned = $productOptionCriteriaTransfer->getProductOptionGroupIsAssigned();
+        $productConcreteSku = $productOptionCriteriaTransfer->getSku();
 
-        if ($productOptionGroupIsAssigned === null) {
+        if ($productConcreteSku === null) {
             return;
         }
 
-        if ($productOptionGroupIsAssigned === true) {
-            $productOptionGroupQuery->innerJoinSpyProductAbstractProductOptionGroup();
-        }
-
-        if ($productOptionGroupIsAssigned === false) {
+        if ($productConcreteSku) {
             $productOptionGroupQuery
                 ->useSpyProductAbstractProductOptionGroupQuery(null, Criteria::LEFT_JOIN)
-                ->filterByFkProductAbstract(null, Criteria::ISNULL)
+                    ->useSpyProductAbstractQuery()
+                        ->useSpyProductQuery()
+                            ->filterBySku($productConcreteSku)
+                        ->endUse()
+                    ->endUse()
                 ->endUse();
         }
     }

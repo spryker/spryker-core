@@ -15,4 +15,11 @@ interface ShoppingListProductOptionConnectorRepositoryInterface
      * @return int[]
      */
     public function getShoppingListItemProductOptionIdsByIdShoppingListItem(int $idShoppingListItem): array;
+
+    /**
+     * @param int $idShoppingListItem
+     *
+     * @return string
+     */
+    public function getShoppingListItemProductAbstractSkuByIdShoppingListItem(int $idShoppingListItem): string;
 }

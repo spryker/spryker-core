@@ -55,12 +55,15 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
      */
     protected function getProductOptionCriteriaTransfer(int $idShoppingListItem): ProductOptionCriteriaTransfer
     {
-        $shoppingListItemProductOptionIds = $this->shoppingListProductOptionRepository
+        $productOptionIds = $this->shoppingListProductOptionRepository
             ->getShoppingListItemProductOptionIdsByIdShoppingListItem($idShoppingListItem);
 
+        $productConcreteSku = $this->shoppingListProductOptionRepository
+            ->getShoppingListItemProductAbstractSkuByIdShoppingListItem($idShoppingListItem);
+
         return (new ProductOptionCriteriaTransfer())
-            ->setProductOptionIds($shoppingListItemProductOptionIds)
+            ->setProductOptionIds($productOptionIds)
             ->setProductOptionGroupIsActive(true)
-            ->setProductOptionGroupIsAssigned(true);
+            ->setSku($productConcreteSku);
     }
 }
