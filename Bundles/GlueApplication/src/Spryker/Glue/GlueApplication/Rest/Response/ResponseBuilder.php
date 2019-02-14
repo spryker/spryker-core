@@ -110,11 +110,11 @@ class ResponseBuilder implements ResponseBuilderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param string $mainResourceType
+     * @param string $currentResourceType
      *
      * @return array
      */
-    protected function resourcesToArray(array $resources, RestRequestInterface $restRequest, string $mainResourceType): array
+    protected function resourcesToArray(array $resources, RestRequestInterface $restRequest, string $currentResourceType): array
     {
         $data = [];
 
@@ -126,9 +126,10 @@ class ResponseBuilder implements ResponseBuilderInterface
                 }
                 $resource->addLink(RestLinkInterface::LINK_SELF, $link);
             }
+            $includeRelations = $currentResourceType === $resource->getType() || $this->responseRelationship->hasRelationship($resource->getType(), $restRequest);
             $data[] = $this->resourceToArray(
                 $resource,
-                $mainResourceType === $resource->getType() || $this->responseRelationship->hasRelationship($resource->getType(), $restRequest),
+                $includeRelations,
                 $restRequest
             );
         }
