@@ -107,10 +107,10 @@ class SessionConfig extends AbstractBundleConfig
      */
     public function getSessionHandlerRedisConnectionParametersZed()
     {
-        $connectionParameters = $this->get(SessionConstants::ZED_SESSION_REDIS_CONNECTION_CONFIGURATION, []);
+        $connectionConfiguration = $this->get(SessionConstants::ZED_SESSION_PREDIS_CLIENT_CONFIGURATION, []);
 
-        if ($connectionParameters) {
-            return $connectionParameters;
+        if ($connectionConfiguration) {
+            return $connectionConfiguration;
         }
 
         return $this->getSessionHandlerRedisDataSourceNameZed();
@@ -121,7 +121,7 @@ class SessionConfig extends AbstractBundleConfig
      */
     public function getSessionHandlerRedisConnectionOptionsZed(): array
     {
-        return $this->get(SessionConstants::ZED_SESSION_REDIS_CONNECTION_OPTIONS, []);
+        return $this->get(SessionConstants::ZED_SESSION_PREDIS_CLIENT_OPTIONS, []);
     }
 
     /**
@@ -209,10 +209,10 @@ class SessionConfig extends AbstractBundleConfig
      */
     public function getSessionHandlerRedisConnectionParametersYves()
     {
-        $connectionParameters = $this->get(SessionConstants::YVES_SESSION_REDIS_CONNECTION_CONFIGURATION, []);
+        $connectionConfiguration = $this->get(SessionConstants::YVES_SESSION_PREDIS_CLIENT_CONFIGURATION, []);
 
-        if ($connectionParameters) {
-            return $connectionParameters;
+        if ($connectionConfiguration) {
+            return $connectionConfiguration;
         }
 
         return $this->getSessionHandlerRedisDataSourceNameYves();
@@ -223,7 +223,7 @@ class SessionConfig extends AbstractBundleConfig
      */
     public function getSessionHandlerRedisConnectionOptionsYves(): array
     {
-        return $this->get(SessionConstants::YVES_SESSION_REDIS_CONNECTION_OPTIONS, []);
+        return $this->get(SessionConstants::YVES_SESSION_PREDIS_CLIENT_OPTIONS, []);
     }
 
     /**
