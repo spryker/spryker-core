@@ -19,7 +19,7 @@ use Spryker\Client\Quote\StorageStrategy\StorageStrategyProvider;
 use Spryker\Client\Quote\Zed\QuoteStubInterface;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Shared\Quote\QuoteConfig as SharedQuoteConfig;
-use Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface;
+use Spryker\Shared\Quote\QuoteValidator\QuoteLockStatusValidatorInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
@@ -156,7 +156,7 @@ class StorageStrategyProviderTest extends Unit
             $customerClient,
             $this->createQuoteZedStubMock(),
             $this->createQuoteSession(),
-            $this->createQuoteLockStatusCheckerMock()
+            $this->createQuoteLockStatusValidatorMock()
         );
     }
 
@@ -165,7 +165,7 @@ class StorageStrategyProviderTest extends Unit
      */
     protected function createSessionStorageStrategy()
     {
-        return new SessionStorageStrategy($this->createQuoteSession(), $this->createQuoteLockStatusCheckerMock());
+        return new SessionStorageStrategy($this->createQuoteSession(), $this->createQuoteLockStatusValidatorMock());
     }
 
     /**
@@ -199,11 +199,11 @@ class StorageStrategyProviderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Quote\QuoteLock\QuoteLockStatusCheckerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Quote\QuoteValidator\QuoteLockStatusValidatorInterface
      */
-    protected function createQuoteLockStatusCheckerMock()
+    protected function createQuoteLockStatusValidatorMock()
     {
-        return $this->createMock(QuoteLockStatusCheckerInterface::class);
+        return $this->createMock(QuoteLockStatusValidatorInterface::class);
     }
 
     /**

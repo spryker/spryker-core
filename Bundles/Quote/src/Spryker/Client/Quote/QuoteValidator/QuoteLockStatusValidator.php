@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Quote\QuoteLock;
+namespace Spryker\Client\Quote\QuoteValidator;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class QuoteLockStatusChecker implements QuoteLockStatusCheckerInterface
+class QuoteLockStatusValidator implements QuoteLockStatusValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

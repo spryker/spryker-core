@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Quote\QuoteEditStatus;
+namespace Spryker\Zed\Quote\Business\QuoteValidator;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteEditStatusCheckerInterface
+interface QuoteLockStatusValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool;
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool;
 }

@@ -9,8 +9,8 @@ namespace Spryker\Client\Quote\StorageStrategy;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface;
-use Spryker\Client\Quote\QuoteEditStatus\QuoteEditStatusCheckerInterface;
-use Spryker\Client\Quote\QuoteLock\QuoteLockStatusCheckerInterface;
+use Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface;
+use Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface;
 use Spryker\Client\Quote\Session\QuoteSessionInterface;
 use Spryker\Client\Quote\Zed\QuoteStubInterface;
 use Spryker\Shared\Quote\QuoteConfig;
@@ -33,34 +33,34 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     protected $quoteSession;
 
     /**
-     * @var \Spryker\Client\Quote\QuoteLock\QuoteLockStatusCheckerInterface
+     * @var \Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface
      */
-    protected $quoteLockStatusChecker;
+    protected $quoteLockStatusValidator;
 
     /**
-     * @var \Spryker\Client\Quote\QuoteEditStatus\QuoteEditStatusCheckerInterface
+     * @var \Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface
      */
-    protected $quoteEditStatusChecker;
+    protected $quoteEditStatusValidator;
 
     /**
      * @param \Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface $customerClient
      * @param \Spryker\Client\Quote\Zed\QuoteStubInterface $quoteStub
      * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
-     * @param \Spryker\Client\Quote\QuoteLock\QuoteLockStatusCheckerInterface $quoteLockStatusChecker
-     * @param \Spryker\Client\Quote\QuoteEditStatus\QuoteEditStatusCheckerInterface $quoteEditStatusChecker
+     * @param \Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface $quoteLockStatusValidator
+     * @param \Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface $quoteEditStatusValidator
      */
     public function __construct(
         QuoteToCustomerClientInterface $customerClient,
         QuoteStubInterface $quoteStub,
         QuoteSessionInterface $quoteSession,
-        QuoteLockStatusCheckerInterface $quoteLockStatusChecker,
-        QuoteEditStatusCheckerInterface $quoteEditStatusChecker
+        QuoteLockStatusValidatorInterface $quoteLockStatusValidator,
+        QuoteEditStatusValidatorInterface $quoteEditStatusValidator
     ) {
         $this->customerClient = $customerClient;
         $this->quoteStub = $quoteStub;
         $this->quoteSession = $quoteSession;
-        $this->quoteLockStatusChecker = $quoteLockStatusChecker;
-        $this->quoteEditStatusChecker = $quoteEditStatusChecker;
+        $this->quoteLockStatusValidator = $quoteLockStatusValidator;
+        $this->quoteEditStatusValidator = $quoteEditStatusValidator;
     }
 
     /**
@@ -104,7 +104,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
      */
     public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->quoteLockStatusChecker->isQuoteLocked($quoteTransfer);
+        return $this->quoteLockStatusValidator->isQuoteLocked($quoteTransfer);
     }
 
     /**
@@ -127,6 +127,6 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
      */
     public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->quoteEditStatusChecker->isQuoteEditable($quoteTransfer);
+        return $this->quoteEditStatusValidator->isQuoteEditable($quoteTransfer);
     }
 }

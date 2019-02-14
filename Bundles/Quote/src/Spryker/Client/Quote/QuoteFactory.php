@@ -9,10 +9,10 @@ namespace Spryker\Client\Quote;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface;
-use Spryker\Client\Quote\QuoteEditStatus\QuoteEditStatusChecker;
-use Spryker\Client\Quote\QuoteEditStatus\QuoteEditStatusCheckerInterface;
-use Spryker\Client\Quote\QuoteLock\QuoteLockStatusChecker;
-use Spryker\Client\Quote\QuoteLock\QuoteLockStatusCheckerInterface;
+use Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidator;
+use Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface;
+use Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidator;
+use Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface;
 use Spryker\Client\Quote\Session\QuoteSession;
 use Spryker\Client\Quote\StorageStrategy\DatabaseStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\SessionStorageStrategy;
@@ -74,8 +74,8 @@ class QuoteFactory extends AbstractFactory
     {
         return new SessionStorageStrategy(
             $this->createSession(),
-            $this->createQuoteLockStatusChecker(),
-            $this->createQuoteEditStatusChecker()
+            $this->createQuoteLockStatusValidator(),
+            $this->createQuoteEditStatusValidator()
         );
     }
 
@@ -88,27 +88,27 @@ class QuoteFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->createZedQuoteStub(),
             $this->createSession(),
-            $this->createQuoteLockStatusChecker(),
-            $this->createQuoteEditStatusChecker()
+            $this->createQuoteLockStatusValidator(),
+            $this->createQuoteEditStatusValidator()
         );
     }
 
     /**
-     * @return \Spryker\Client\Quote\QuoteEditStatus\QuoteEditStatusCheckerInterface
+     * @return \Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface
      */
-    public function createQuoteEditStatusChecker(): QuoteEditStatusCheckerInterface
+    public function createQuoteEditStatusValidator(): QuoteEditStatusValidatorInterface
     {
-        return new QuoteEditStatusChecker(
-            $this->createQuoteLockStatusChecker()
+        return new QuoteEditStatusValidator(
+            $this->createQuoteLockStatusValidator()
         );
     }
 
     /**
-     * @return \Spryker\Client\Quote\QuoteLock\QuoteLockStatusCheckerInterface
+     * @return \Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface
      */
-    public function createQuoteLockStatusChecker(): QuoteLockStatusCheckerInterface
+    public function createQuoteLockStatusValidator(): QuoteLockStatusValidatorInterface
     {
-        return new QuoteLockStatusChecker();
+        return new QuoteLockStatusValidator();
     }
 
     /**

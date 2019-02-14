@@ -50,11 +50,11 @@ class GatewayController extends AbstractGatewayController
         return $this->getFacade()->getQuoteApproversList($quoteTransfer);
     }
 
-        /**
-         * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
-         *
-         * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
-         */
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
     public function approveQuoteApprovalAction(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         return $this->getFacade()->approveQuoteApproval($quoteApprovalRequestTransfer);
