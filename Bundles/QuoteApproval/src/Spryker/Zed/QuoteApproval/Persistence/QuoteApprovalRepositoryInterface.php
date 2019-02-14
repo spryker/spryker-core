@@ -14,9 +14,9 @@ interface QuoteApprovalRepositoryInterface
     /**
      * @param int $idQuote
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
      */
-    public function findQuoteApprovalsByIdQuote(int $idQuote): array;
+    public function getQuoteApprovalsByIdQuote(int $idQuote): array;
 
     /**
      * @param int $idQuoteApproval

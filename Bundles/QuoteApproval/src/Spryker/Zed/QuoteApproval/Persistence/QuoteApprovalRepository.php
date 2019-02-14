@@ -20,7 +20,7 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
      */
-    public function findQuoteApprovalsByIdQuote(int $idQuote): array
+    public function getQuoteApprovalsByIdQuote(int $idQuote): array
     {
         $quoteApprovalEntities = $this->getFactory()
             ->createQuoteApprovalPropelQuery()
