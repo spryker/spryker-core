@@ -26,7 +26,7 @@ interface AgentQuoteRequestClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer
      */
-    public function getAgentQuoteRequestOverviewCollection(
+    public function getQuoteRequestOverviewCollection(
         QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer
     ): QuoteRequestOverviewCollectionTransfer;
 }

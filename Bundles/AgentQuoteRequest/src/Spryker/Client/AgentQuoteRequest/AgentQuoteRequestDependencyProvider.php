@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\AgentQuoteRequest;
 
+use Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToZedRequestClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToZedRequestClientBridge;
 
 class AgentQuoteRequestDependencyProvider extends AbstractDependencyProvider
 {

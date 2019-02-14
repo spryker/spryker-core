@@ -9,8 +9,8 @@ namespace Spryker\Client\AgentQuoteRequest;
 
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
-use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\AgentQuoteRequest\Zed\AgentQuoteRequestStubInterface;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
  * @method \Spryker\Client\AgentQuoteRequest\AgentQuoteRequestFactory getFactory()
@@ -26,7 +26,7 @@ class AgentQuoteRequestClient extends AbstractClient implements AgentQuoteReques
      *
      * @return \Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer
      */
-    public function getAgentQuoteRequestOverviewCollection(QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer): QuoteRequestOverviewCollectionTransfer
+    public function getQuoteRequestOverviewCollection(QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer): QuoteRequestOverviewCollectionTransfer
     {
         return $this->getZedStub()->getQuoteRequestOverviewCollection($quoteRequestOverviewFilterTransfer);
     }

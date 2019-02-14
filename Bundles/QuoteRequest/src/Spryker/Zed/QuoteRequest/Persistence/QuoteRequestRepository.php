@@ -15,8 +15,8 @@ use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
+use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
  * @method \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestPersistenceFactory getFactory()

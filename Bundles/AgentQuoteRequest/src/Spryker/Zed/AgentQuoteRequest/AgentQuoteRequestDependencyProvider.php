@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\AgentQuoteRequest;
 
+use Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequestBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequestBridge;
 
 /**
  * @method \Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestConfig getConfig()

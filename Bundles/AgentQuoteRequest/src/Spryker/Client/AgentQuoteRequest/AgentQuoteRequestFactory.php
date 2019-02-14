@@ -7,10 +7,10 @@
 
 namespace Spryker\Client\AgentQuoteRequest;
 
-use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToZedRequestClientInterface;
 use Spryker\Client\AgentQuoteRequest\Zed\AgentQuoteRequestStub;
 use Spryker\Client\AgentQuoteRequest\Zed\AgentQuoteRequestStubInterface;
+use Spryker\Client\Kernel\AbstractFactory;
 
 class AgentQuoteRequestFactory extends AbstractFactory
 {
