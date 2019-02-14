@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Manage Attributes for Product Abstract [' ~ productAbstract.sku  ~ ']' %}
+{% set widget_title = 'Manage Attributes for Product Abstract' | trans ~ ' [' ~ productAbstract.sku  ~ ']' %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
