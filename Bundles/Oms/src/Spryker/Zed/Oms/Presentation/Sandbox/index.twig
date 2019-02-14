@@ -20,7 +20,7 @@
                 {% for row in orders %}
                 <tr>
                     <td>{{ row.getIdSalesOrder }}</td>
-                    <td><a href="/sales/details?id-sales-order={{ row.getIdSalesOrder }}">{{ row.getFirstName }} {{ row.getLastName }} {% if row.getIsTest %} <span class="label label-warning">Test order</span>{% endif %}</a></td>
+                    <td><a href="/sales/details?id-sales-order={{ row.getIdSalesOrder }}">{{ row.getFirstName }} {{ row.getLastName }} {% if row.getIsTest %} <span class="label label-warning">{{ 'Test order' | trans }}</span>{% endif %}</a></td>
                     <td>{{ row.getGrandTotal }}</td>
                 </tr>
                 {% endfor %}
