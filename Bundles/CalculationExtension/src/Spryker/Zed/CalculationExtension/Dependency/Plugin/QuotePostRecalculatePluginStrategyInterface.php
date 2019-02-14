@@ -9,7 +9,7 @@ namespace Spryker\Zed\CalculationExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuotePostRecalculatePluginInterface
+interface QuotePostRecalculatePluginStrategyInterface
 {
     /**
      * Specification:
@@ -22,4 +22,16 @@ interface QuotePostRecalculatePluginInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Defines whether `execute` method needs to be called or not.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isApplicable(QuoteTransfer $quoteTransfer): bool;
 }

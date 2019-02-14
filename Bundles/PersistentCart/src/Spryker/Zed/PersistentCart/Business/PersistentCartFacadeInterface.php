@@ -254,18 +254,4 @@ interface PersistentCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function updateAndReloadQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer;
-
-    /**
-     * Specification:
-     * - Does nothing if `DatabaseStorageStrategy` is disabled.
-     * - Does nothing if quoted does't have ID.
-     * - Saves quote attributes described in QuoteUpdateRequestAttributesTransfer to database.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function updateQuoteAttributes(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

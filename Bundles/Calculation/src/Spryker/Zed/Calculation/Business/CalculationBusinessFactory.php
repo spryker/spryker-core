@@ -331,7 +331,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginInterface[]
+     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginStrategyInterface[]
      */
     public function getQuotePostRecalculatePlugins(): array
     {
