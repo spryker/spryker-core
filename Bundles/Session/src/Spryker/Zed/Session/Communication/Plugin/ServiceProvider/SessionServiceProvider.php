@@ -84,6 +84,9 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
      */
     public function extendCookieLifetime(FilterResponseEvent $event): void
     {
+        //TODO added for tarvis check!
+        return;
+
         if ($event->isMasterRequest() === false) {
             return;
         }
