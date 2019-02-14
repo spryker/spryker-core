@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Sales\Zed;
 
-use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
@@ -48,13 +47,6 @@ interface SalesStubInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return array
-     */
-    public function getUniqueOrderItems(ArrayObject $itemTransfers): ArrayObject;
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
