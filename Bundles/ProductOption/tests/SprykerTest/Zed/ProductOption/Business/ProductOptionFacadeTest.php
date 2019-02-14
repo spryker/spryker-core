@@ -754,6 +754,7 @@ class ProductOptionFacadeTest extends Unit
      */
     public function testGetProductOptionCollectionByProductOptionCriteriaWithOneIdReturnsCollection(): void
     {
+        // Arrange
         $productOptionFacade = $this->createProductOptionFacade();
         $productOptionValueTransfer = $this->createProductOptionValueTransfer();
         $productOptionValueTransfer->setFkProductOptionGroup($this->tester->haveProductOptionGroup()->getIdProductOptionGroup());
@@ -778,6 +779,7 @@ class ProductOptionFacadeTest extends Unit
      */
     public function testGetProductOptionCollectionByProductOptionCriteriaWithTwoIdsReturnsCollection(): void
     {
+        // Arrange
         $productOptionFacade = $this->createProductOptionFacade();
         $productOptionValueTransfer = $this->createProductOptionValueTransfer();
         $productOptionValueTransfer->setFkProductOptionGroup($this->tester->haveProductOptionGroup()->getIdProductOptionGroup());
@@ -806,6 +808,7 @@ class ProductOptionFacadeTest extends Unit
      */
     public function testGetProductOptionCollectionByProductOptionCriteriaWithDeactivatedProductOptionGroupReturnsEmptyCollection(): void
     {
+        // Arrange
         $productOptionFacade = $this->createProductOptionFacade();
         $productOptionValueTransfer = $this->createProductOptionValueTransfer();
         $productOptionValueTransfer->setFkProductOptionGroup($this->tester->haveProductOptionGroup([
@@ -839,6 +842,7 @@ class ProductOptionFacadeTest extends Unit
      */
     public function testGetProductOptionCollectionByProductOptionCriteriaWithAssignedProductAbstractReturnsCollection(): void
     {
+        // Arrange
         $product = $this->tester->haveProduct();
         $productOptionFacade = $this->createProductOptionFacade();
 
@@ -852,11 +856,6 @@ class ProductOptionFacadeTest extends Unit
         $idProductOptionValue = $productOptionFacade->saveProductOptionValue($productOptionValueTransfer);
 
         $productOptionFacade->addProductAbstractToProductOptionGroup($product->getAbstractSku(), $idProductOptionGroup);
-
-//        $productOptionValueTransfer = $this->createProductOptionValueTransfer('sku_for_testing_2');
-//        $productOptionValueTransfer->setFkProductOptionGroup($this->tester->haveProductOptionGroup()->getIdProductOptionGroup());
-//        $idProductOptionValue2 = $productOptionFacade->saveProductOptionValue($productOptionValueTransfer);
-
 
         $productOptionIds = [$idProductOptionValue];
         $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())
@@ -876,6 +875,7 @@ class ProductOptionFacadeTest extends Unit
      */
     public function testGetProductOptionCollectionByProductOptionCriteriaWithNonAssignedProductAbstractReturnsEmptyCollection(): void
     {
+        // Arrange
         $product = $this->tester->haveProduct();
         $productOptionFacade = $this->createProductOptionFacade();
 
@@ -907,6 +907,7 @@ class ProductOptionFacadeTest extends Unit
      */
     public function testGetProductOptionCollectionByProductOptionCriteriaWithNoIdReturnsEmptyCollection(): void
     {
+        // Arrange
         $productOptionIds = [];
         $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setProductOptionIds($productOptionIds);
 
