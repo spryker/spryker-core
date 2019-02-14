@@ -75,9 +75,9 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
+    public function getQuoteApprovers(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
     {
-        return $this->getFactory()->createQuoteApprovalStub()->getQuoteApproversList($quoteTransfer);
+        return $this->getFactory()->createQuoteApprovalStub()->getQuoteApprovers($quoteTransfer);
     }
 
     /**

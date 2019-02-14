@@ -45,9 +45,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getQuoteApproversListAction(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
+    public function getQuoteApproversAction(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
     {
-        return $this->getFacade()->getQuoteApproversList($quoteTransfer);
+        return $this->getFacade()->getQuoteApprovers($quoteTransfer);
     }
 
     /**

@@ -69,11 +69,11 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
+    public function getQuoteApprovers(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
     {
         /** @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer $potentialQuoteApproversCollection */
         $potentialQuoteApproversCollection = $this->zedRequestClient->call(
-            '/quote-approval/gateway/get-quote-approvers-list',
+            '/quote-approval/gateway/get-quote-approvers',
             $quoteTransfer
         );
 

@@ -61,9 +61,9 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
+    public function getQuoteApprovers(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
     {
-        return $this->getFactory()->createQuoteApproversProvider()->getApproversList($quoteTransfer);
+        return $this->getFactory()->createQuoteApproversProvider()->getApprovers($quoteTransfer);
     }
 
     /**
