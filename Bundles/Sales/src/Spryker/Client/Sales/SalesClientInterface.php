@@ -9,6 +9,7 @@ namespace Spryker\Client\Sales;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 
 interface SalesClientInterface
 {
@@ -85,5 +86,5 @@ interface SalesClientInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      **/
-    public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer);
+    public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer): ShipmentGroupCollectionTransfer;
 }

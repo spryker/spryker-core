@@ -9,6 +9,7 @@ namespace Spryker\Client\Sales;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -105,7 +106,7 @@ class SalesClient extends AbstractClient implements SalesClientInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      */
-    public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer)
+    public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer): ShipmentGroupCollectionTransfer
     {
         return $this->getFactory()
             ->createZedSalesStub()
