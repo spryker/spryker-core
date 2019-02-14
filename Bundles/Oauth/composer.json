@@ -14,12 +14,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/installer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/installer": "If you want to use Installer plugins."
   },
   "autoload": {
     "psr-4": {

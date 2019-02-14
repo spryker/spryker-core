@@ -10,6 +10,7 @@ namespace Spryker\Zed\OauthCompanyUser;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCompanyUserFacadeBridge;
+use Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToOauthFacadeBridge;
 use Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodingServiceBridge;
 
 /**
@@ -18,6 +19,7 @@ use Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodi
 class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+    public const FACADE_OAUTH = 'FACADE_OAUTH';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -31,6 +33,7 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addCompanyUserFacade($container);
+        $container = $this->addOauthFacade($container);
         $container = $this->addUtilEncodingService($container);
 
         return $container;
@@ -45,6 +48,20 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container[static::FACADE_COMPANY_USER] = function (Container $container) {
             return new OauthCompanyUserToCompanyUserFacadeBridge($container->getLocator()->companyUser()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOauthFacade(Container $container): Container
+    {
+        $container[static::FACADE_OAUTH] = function (Container $container) {
+            return new OauthCompanyUserToOauthFacadeBridge($container->getLocator()->oauth()->facade());
         };
 
         return $container;

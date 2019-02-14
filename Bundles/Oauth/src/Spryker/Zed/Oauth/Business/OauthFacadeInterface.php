@@ -106,24 +106,4 @@ interface OauthFacadeInterface
      * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
      */
     public function getScopesByIdentifiers(array $customerScopes): array;
-
-    /**
-     * Specification:
-     * - Populates the database with oauth user scopes from config.
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function installOauthScope(): void;
-
-    /**
-     * Specification:
-     * - Populates the database with oauth clients from config.
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function installOauthClient(): void;
 }

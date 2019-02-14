@@ -36,4 +36,14 @@ interface OauthCompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
      */
     public function getScopes(OauthScopeRequestTransfer $oauthScopeRequestTransfer): array;
+
+    /**
+     * Specification:
+     *  - Installs oauth scope data.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function installCompanyUserOauthData(): void;
 }

@@ -5,27 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Oauth\Communication\Plugin\Installer;
+namespace Spryker\Zed\OauthCompanyUser\Communication\Plugin\Installer;
 
 use Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Oauth\Business\OauthFacadeInterface getFacade()
- * @method \Spryker\Zed\Oauth\OauthConfig getConfig()
+ * @method \Spryker\Zed\OauthCompanyUser\Business\OauthCompanyUserFacadeInterface getFacade()
+ * @method \Spryker\Zed\OauthCompanyUser\OauthCompanyUserConfig getConfig()
  */
-class OauthClientInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
+class OauthCompanyUserInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
     /**
-     * {@inheritdoc}
-     * - Populates the database with oauth clients from config.
-     *
      * @api
      *
      * @return void
      */
     public function install()
     {
-        $this->getFacade()->installOauthClient();
+        $this->getFacade()->installCompanyUserOauthData();
     }
 }

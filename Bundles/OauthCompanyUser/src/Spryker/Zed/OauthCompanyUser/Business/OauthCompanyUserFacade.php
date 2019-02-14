@@ -47,4 +47,16 @@ class OauthCompanyUserFacade extends AbstractFacade implements OauthCompanyUserF
             ->createScopeProvider()
             ->getScopes($oauthScopeRequestTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function installCompanyUserOauthData(): void
+    {
+        $this->getFactory()->createOauthScopeInstaller()->install();
+    }
 }

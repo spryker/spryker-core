@@ -120,32 +120,4 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     {
         return $this->getFactory()->createOauthScopeReader()->getScopesByIdentifiers($customerScopes);
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function installOauthScope(): void
-    {
-        $this->getFactory()
-            ->createOauthScopeInstaller()
-            ->install();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function installOauthClient(): void
-    {
-        $this->getFactory()
-            ->createOauthClientInstaller()
-            ->install();
-    }
 }

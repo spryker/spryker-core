@@ -57,20 +57,4 @@ class OauthConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getAccessTokenTTL();
     }
-
-    /**
-     * @return string[]
-     */
-    public function getScopes(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return array
-     */
-    public function getClients(): array
-    {
-        return [];
-    }
 }
