@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductDiscontinuedStorage;
 
+use Generated\Shared\Transfer\ItemValidationTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -82,5 +83,21 @@ class ProductDiscontinuedStorageClient extends AbstractClient implements Product
         return $this->getFactory()
             ->createDiscontinuedAvailabilityProductViewExpander()
             ->expandProductVew($productViewTransfer, $localeName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemValidationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemValidationTransfer
+     */
+    public function validateItemProductDiscontinued(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer
+    {
+        return $this->getFactory()
+            ->createProductDiscontinuedItemValidator()
+            ->validate($itemValidationTransfer);
     }
 }
