@@ -36,18 +36,6 @@ class PriceFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateEmptyPriceModeInQuote(): void
-    {
-        $quoteTransfer = new QuoteTransfer();
-        $quoteValidationResponseTransfer = $this->getQuoteValidationResponseTransfer($quoteTransfer);
-
-        //Act
-        $this->validatePriceModeInQuote($quoteValidationResponseTransfer, static::ERROR_MESSAGE_PRICE_MODE_DATA_IS_MISSING);
-    }
-
-    /**
-     * @return void
-     */
     public function testValidateWrongPriceModeInQuote(): void
     {
         $quoteTransfer = (new QuoteTransfer())
