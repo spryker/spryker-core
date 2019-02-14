@@ -65,7 +65,7 @@ class CustomerSessionWriter implements CustomerSessionWriterInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function executeCustomerSessionExpanderPlugins(RestRequestInterface $restRequest, CustomerTransfer $customerTransfer): \Generated\Shared\Transfer\CustomerTransfer
+    protected function executeCustomerSessionExpanderPlugins(RestRequestInterface $restRequest, CustomerTransfer $customerTransfer): CustomerTransfer
     {
         foreach ($this->customerSessionExpanderPlugins as $customerSessionExpanderPlugin) {
             $customerTransfer = $customerSessionExpanderPlugin->expand($customerTransfer, $restRequest);
