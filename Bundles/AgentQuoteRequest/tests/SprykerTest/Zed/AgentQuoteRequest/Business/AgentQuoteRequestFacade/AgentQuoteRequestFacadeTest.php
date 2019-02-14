@@ -139,7 +139,7 @@ class AgentQuoteRequestFacadeTest extends Unit
             ->getQuoteRequestOverviewCollection($quoteRequestOverviewFilterTransfer);
 
         // Assert
-        $this->assertCount(5, $quoteRequestOverviewCollectionTransfer->getQuoteRequests());
+        $this->assertCount(static::PAGINATION_MAX_PER_PAGE, $quoteRequestOverviewCollectionTransfer->getQuoteRequests());
         $this->assertEquals(
             $currentQuoteRequestTransfer->getIdQuoteRequest(),
             $quoteRequestOverviewCollectionTransfer->getCurrentQuoteRequest()->getIdQuoteRequest()
