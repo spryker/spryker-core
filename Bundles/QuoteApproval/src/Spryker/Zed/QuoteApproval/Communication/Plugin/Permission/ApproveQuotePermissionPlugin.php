@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteApproval\Communication\Plugin;
+namespace Spryker\Zed\QuoteApproval\Communication\Plugin\Permission;
 
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 
-class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
+class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterface
 {
-    public const KEY = 'PlaceOrderPermissionPlugin';
+    public const KEY = 'ApproveQuotePermissionPlugin';
     public const FIELD_STORE_MULTI_CURRENCY = 'store_multi_currency';
 
     /**
      * {@inheritdoc}
-     * - Checks if customer is allowed to place order with cent amount up to some value for specific currency, provided in configuration.
+     * - Checks if approver is allowed to approve order with cent amount up to some value for specific currency, provided in configuration.
      * - Returns false, if context is not provided.
      * - Returns true, if configuration does not have cent amount for specific currency set.
      *

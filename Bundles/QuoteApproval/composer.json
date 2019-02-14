@@ -10,7 +10,6 @@
     "spryker/company-user": "^2.0.0",
     "spryker/customer": "^7.11.0",
     "spryker/kernel": "^3.17.0",
-    "spryker/permission": "^1.0.0",
     "spryker/permission-extension": "^1.0.0",
     "spryker/quote": "^2.8.0",
     "spryker/quote-extension": "^1.2.0",
@@ -22,7 +21,8 @@
     "spryker/company": "*",
     "spryker/propel": "*",
     "spryker/store": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/permission": "^1.0.0"
   },
   "suggest": {
     "spryker/checkout": "If you want to use QuoteApprovalCheckoutPreCheckPlugin."

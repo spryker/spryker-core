@@ -20,8 +20,8 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
-use Spryker\Zed\QuoteApproval\Communication\Plugin\ApproveQuotePermissionPlugin;
-use Spryker\Zed\QuoteApproval\Communication\Plugin\PlaceOrderPermissionPlugin;
+use Spryker\Zed\QuoteApproval\Communication\Plugin\Permission\ApproveQuotePermissionPlugin;
+use Spryker\Zed\QuoteApproval\Communication\Plugin\Permission\PlaceOrderPermissionPlugin;
 use Spryker\Zed\QuoteApproval\Communication\Plugin\Quote\QuoteApprovalExpanderPlugin;
 
 /**

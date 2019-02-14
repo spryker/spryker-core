@@ -9,7 +9,6 @@ namespace Spryker\Client\QuoteApproval;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToPermissionClientBridge;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientBridge;
 
 class QuoteApprovalDependencyProvider extends AbstractDependencyProvider
@@ -26,7 +25,6 @@ class QuoteApprovalDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addZedRequestClient($container);
-        $container = $this->addPermissionClient($container);
 
         return $container;
     }
@@ -40,20 +38,6 @@ class QuoteApprovalDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
             return new QuoteApprovalToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addPermissionClient(Container $container): Container
-    {
-        $container[static::CLIENT_PERMISSION] = function (Container $container) {
-            return new QuoteApprovalToPermissionClientBridge($container->getLocator()->permission()->client());
         };
 
         return $container;

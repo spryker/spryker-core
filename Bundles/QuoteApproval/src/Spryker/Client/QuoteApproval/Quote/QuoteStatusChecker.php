@@ -10,8 +10,8 @@ namespace Spryker\Client\QuoteApproval\Quote;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\PermissionAwareTrait;
 use Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProviderInterface;
-use Spryker\Client\QuoteApproval\Plugin\ApproveQuotePermissionPlugin;
-use Spryker\Client\QuoteApproval\Plugin\PlaceOrderPermissionPlugin;
+use Spryker\Client\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
+use Spryker\Client\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
 use Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 

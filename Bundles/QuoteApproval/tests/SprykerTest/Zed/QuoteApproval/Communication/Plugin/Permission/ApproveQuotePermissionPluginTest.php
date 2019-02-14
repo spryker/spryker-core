@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\QuoteApproval\Communication\Plugin\Permission;
 use Codeception\Test\Unit;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
-use Spryker\Zed\QuoteApproval\Communication\Plugin\ApproveQuotePermissionPlugin;
+use Spryker\Zed\QuoteApproval\Communication\Plugin\Permission\ApproveQuotePermissionPlugin;
 
 /**
  * Auto-generated group annotations

@@ -19,22 +19,35 @@ class QuoteStatusCalculator implements QuoteStatusCalculatorInterface
      */
     public function calculateQuoteStatus(QuoteTransfer $quoteTransfer): ?string
     {
-        $status = null;
+        $statuses = $this->flattenApprovalStatuses($quoteTransfer);
 
-        foreach ($quoteTransfer->getQuoteApprovals() as $quoteApprovalTransfer) {
-            if ($quoteApprovalTransfer->getStatus() === QuoteApprovalConfig::STATUS_APPROVED) {
-                return QuoteApprovalConfig::STATUS_APPROVED;
-            }
-
-            if ($quoteApprovalTransfer->getStatus() === QuoteApprovalConfig::STATUS_WAITING) {
-                $status = QuoteApprovalConfig::STATUS_WAITING;
-            }
-
-            if ($status === null && $quoteApprovalTransfer->getStatus() === QuoteApprovalConfig::STATUS_DECLINED) {
-                $status = QuoteApprovalConfig::STATUS_DECLINED;
-            }
+        if (in_array(QuoteApprovalConfig::STATUS_APPROVED, $statuses, true)) {
+            return QuoteApprovalConfig::STATUS_APPROVED;
         }
 
-        return $status;
+        if (in_array(QuoteApprovalConfig::STATUS_WAITING, $statuses, true)) {
+            return QuoteApprovalConfig::STATUS_WAITING;
+        }
+
+        if (in_array(QuoteApprovalConfig::STATUS_DECLINED, $statuses, true)) {
+            return QuoteApprovalConfig::STATUS_DECLINED;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function flattenApprovalStatuses(QuoteTransfer $quoteTransfer): array
+    {
+        $statuses = [];
+        foreach ($quoteTransfer->getQuoteApprovals() as $quoteApprovalTransfer) {
+            $statuses[$quoteApprovalTransfer->getStatus()] = $quoteApprovalTransfer->getStatus();
+        }
+
+        return array_filter($statuses);
     }
 }
