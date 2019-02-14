@@ -63,9 +63,6 @@ class ZedHelper extends Module
 
         $tester->amOnPage('/auth/login');
 
-        // it is only for travis test
-        $tester->waitForElement('#auth_username', 10);
-
         $tester->fillField('#auth_username', $username);
         $tester->fillField('#auth_password', $password);
         $tester->click('Login');
