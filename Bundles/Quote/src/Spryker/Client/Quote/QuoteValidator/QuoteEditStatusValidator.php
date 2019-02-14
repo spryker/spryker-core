@@ -5,27 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Quote\QuoteEditStatus;
+namespace Spryker\Client\Quote\QuoteValidator;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\PermissionAwareTrait;
-use Spryker\Client\Quote\QuoteLock\QuoteLockStatusCheckerInterface;
 
-class QuoteEditStatusChecker implements QuoteEditStatusCheckerInterface
+class QuoteEditStatusValidator implements QuoteEditStatusValidatorInterface
 {
     use PermissionAwareTrait;
 
     /**
-     * @var \Spryker\Client\Quote\QuoteLock\QuoteLockStatusCheckerInterface
+     * @var \Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface
      */
-    protected $quoteLockStatusChecker;
+    protected $quoteLockStatusValidator;
 
     /**
-     * @param \Spryker\Client\Quote\QuoteLock\QuoteLockStatusCheckerInterface $quoteLockStatusChecker
+     * @param \Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface $quoteLockStatusValidator
      */
-    public function __construct(QuoteLockStatusCheckerInterface $quoteLockStatusChecker)
+    public function __construct(QuoteLockStatusValidatorInterface $quoteLockStatusValidator)
     {
-        $this->quoteLockStatusChecker = $quoteLockStatusChecker;
+        $this->quoteLockStatusValidator = $quoteLockStatusValidator;
     }
 
     /**
@@ -35,7 +34,7 @@ class QuoteEditStatusChecker implements QuoteEditStatusCheckerInterface
      */
     public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
     {
-        if ($this->quoteLockStatusChecker->isQuoteLocked($quoteTransfer)) {
+        if ($this->quoteLockStatusValidator->isQuoteLocked($quoteTransfer)) {
             return false;
         }
 

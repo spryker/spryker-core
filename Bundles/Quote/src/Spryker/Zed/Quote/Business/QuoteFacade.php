@@ -220,7 +220,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
     {
         return $this->getFactory()
-            ->createQuoteLockStatusChecker()
+            ->createQuoteLockStatusValidator()
             ->isQuoteLocked($quoteTransfer);
     }
 }
