@@ -121,7 +121,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
     {
         $this->sharedCartFacade->shareQuoteWithCompanyUser(
             $quoteApprovalTransfer->getFkQuote(),
-            $quoteApprovalTransfer->getFkCompanyUser(),
+            $quoteApprovalTransfer->getApproverCompanyUserId(),
             static::PERMISSION_GROUP_READ_ONLY
         );
     }
@@ -204,7 +204,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
         $quoteApprovalTransfer = new QuoteApprovalTransfer();
 
         $quoteApprovalTransfer->setStatus(QuoteApprovalConfig::STATUS_WAITING);
-        $quoteApprovalTransfer->setFkCompanyUser($idCompanyUser);
+        $quoteApprovalTransfer->setApproverCompanyUserId($idCompanyUser);
         $quoteApprovalTransfer->setFkQuote($idQuote);
 
         return $this->quoteApprovalEntityManager

@@ -13,7 +13,7 @@
         <property name="idQuoteApproval" type="int"/>
         <property name="approver" type="CompanyUser"/>
         <property name="fkQuote" type="int"/>
-        <property name="fkCompanyUser" type="int"/>
+        <property name="approverCompanyUserId" type="int"/>
         <property name="status" type="string"/>
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
