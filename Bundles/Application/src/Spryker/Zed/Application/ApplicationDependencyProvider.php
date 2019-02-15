@@ -22,7 +22,6 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SilexRoutingSer
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SubRequestServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TranslationServiceProvider;
-use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TwigGlobalVariablesServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorServiceProvider;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -38,6 +37,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const INTERNAL_CALL_SERVICE_PROVIDER = 'INTERNAL_CALL_SERVICE_PROVIDER';
     public const INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION = 'INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION';
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
+    public const ENVIRONMENT = 'ENVIRONMENT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -63,6 +63,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addInternalCallServiceProviders($container);
         $container = $this->addInternalCallServiceProvidersWithAuthentication($container);
         $container = $this->addApplicationPlugins($container);
+        $container = $this->addEnvironment($container);
 
         return $container;
     }
@@ -75,7 +76,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     protected function getServiceProviders(Container $container)
     {
         $providers = [
-            new TwigGlobalVariablesServiceProvider(),
             new RequestServiceProvider(),
             new SslServiceProvider(),
             new ServiceControllerServiceProvider(),
@@ -193,6 +193,28 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEnvironment(Container $container): Container
+    {
+        $container->set(static::ENVIRONMENT, function () {
+            return $this->getEnvironment();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\Config\Environment
+     */
+    protected function getEnvironment(): Environment
+    {
+        return Environment::getInstance();
     }
 
     /**
