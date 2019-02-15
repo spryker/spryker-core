@@ -8,7 +8,7 @@
 namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface;
@@ -61,28 +61,28 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function removeQuoteApproval(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): QuoteApprovalResponseTransfer
+    public function removeQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteApprovalRemoveRequestTransfer) {
-            return $this->executeRemoveQuoteApprovalTransaction($quoteApprovalRemoveRequestTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteApprovalRequestTransfer) {
+            return $this->executeRemoveQuoteApprovalTransaction($quoteApprovalRequestTransfer);
         });
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    protected function executeRemoveQuoteApprovalTransaction(QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer): QuoteApprovalResponseTransfer
+    protected function executeRemoveQuoteApprovalTransaction(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         $quoteApprovalResponseTransfer = new QuoteApprovalResponseTransfer();
 
         $quoteApprovalRequestValidationResponse = $this->quoteApprovalRequestValidator
-            ->validateQuoteApprovalRemoveRequest($quoteApprovalRemoveRequestTransfer);
+            ->validateQuoteApprovalRemoveRequest($quoteApprovalRequestTransfer);
 
         if (!$quoteApprovalRequestValidationResponse->getIsSuccessful()) {
             $quoteApprovalResponseTransfer->setIsSuccessful(false)
@@ -97,7 +97,7 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
 
         $this->sharedCartFacade->deleteShareForQuote($quoteTransfer);
         $this->quoteApprovalEntityManager->deleteQuoteApprovalById(
-            $quoteApprovalRemoveRequestTransfer->getIdQuoteApproval()
+            $quoteApprovalRequestTransfer->getIdQuoteApproval()
         );
 
         $quoteApprovalResponseTransfer->setIsSuccessful(false)

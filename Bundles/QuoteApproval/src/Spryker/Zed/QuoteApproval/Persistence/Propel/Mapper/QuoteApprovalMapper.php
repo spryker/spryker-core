@@ -56,6 +56,7 @@ class QuoteApprovalMapper
 
         $companyUserTransfer->setCustomer($customerTransfer);
         $quoteApprovalTransfer->setApprover($companyUserTransfer);
+        $quoteApprovalTransfer->setApproverCompanyUserId($quoteApprovalEntity->getFkCompanyUser());
 
         return $quoteApprovalTransfer;
     }
