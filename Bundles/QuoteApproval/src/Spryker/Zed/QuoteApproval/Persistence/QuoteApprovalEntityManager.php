@@ -59,7 +59,7 @@ class QuoteApprovalEntityManager extends AbstractEntityManager implements QuoteA
      *
      * @return void
      */
-    public function deleteApprovalRequestsByIdQuote(int $idQuote): void
+    public function deleteApprovalsByIdQuote(int $idQuote): void
     {
         $this->getFactory()
             ->createQuoteApprovalPropelQuery()
