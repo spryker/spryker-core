@@ -96,44 +96,27 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param \Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer[]
-     */
-    public function findQuotesBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): array
-    {
-        /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $quoteQuery */
-        $quoteQuery = $this->getFactory()->createQuoteQuery()
-            ->joinWithSpyStore()
-            ->useSpyQuoteCompanyUserQuery()
-                ->filterByFkCompanyUser($sharedQuoteCriteriaFilterTransfer->getIdCompanyUser())
-            ->endUse()
-            ->addAsColumn('is_default', SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT);
-
-        if ($sharedQuoteCriteriaFilterTransfer->getIdStore()) {
-            $quoteQuery->filterByFkStore($sharedQuoteCriteriaFilterTransfer->getIdStore());
-        }
-
-        return $this->buildQueryFromCriteria($quoteQuery)->find();
-    }
-
-    /**
-     * @module Quote
-     *
-     * @param int $idCompanyUser
-     *
      * @return int[]
      */
-    public function getIsDefaultFlagForSharedCartsByIdCompanyUser(int $idCompanyUser): array
+    public function getIsDefaultFlagForSharedCartsBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): array
     {
-        return $this->getFactory()->createQuoteQuery()
-            ->useSpyQuoteCompanyUserQuery()
-                ->filterByFkCompanyUser($idCompanyUser)
-            ->endUse()
+        $sharedQuoteCriteriaFilterTransfer->requireIdCompanyUser();
+
+        $quoteQuery = $this->getFactory()->createQuoteCompanyUserQuery()
+            ->filterByFkCompanyUser($sharedQuoteCriteriaFilterTransfer->getIdCompanyUser())
             ->select([
-                SpyQuoteTableMap::COL_ID_QUOTE,
+                SpyQuoteCompanyUserTableMap::COL_FK_QUOTE,
                 SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT,
-            ])
-            ->find()
-            ->toKeyValue(SpyQuoteTableMap::COL_ID_QUOTE, SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT);
+            ]);
+
+        if ($sharedQuoteCriteriaFilterTransfer->getIdStore()) {
+            $quoteQuery->useSpyQuoteQuery()
+                ->filterByFkStore($sharedQuoteCriteriaFilterTransfer->getIdStore())
+                ->endUse();
+        }
+
+        return $quoteQuery->find()
+            ->toKeyValue(SpyQuoteCompanyUserTableMap::COL_FK_QUOTE, SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT);
     }
 
     /**

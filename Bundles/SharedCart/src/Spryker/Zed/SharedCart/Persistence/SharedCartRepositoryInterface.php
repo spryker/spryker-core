@@ -31,16 +31,9 @@ interface SharedCartRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer[]
-     */
-    public function findQuotesBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): array;
-
-    /**
-     * @param int $idCompanyUser
-     *
      * @return int[]
      */
-    public function getIsDefaultFlagForSharedCartsByIdCompanyUser(int $idCompanyUser): array;
+    public function getIsDefaultFlagForSharedCartsBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): array;
 
     /**
      * @param string $customerReference
