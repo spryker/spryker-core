@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 
 interface SharedCartFacadeInterface
@@ -162,15 +163,13 @@ interface SharedCartFacadeInterface
 
     /**
      * Specification:
-     *  - Shares cart to company user with read only access.
+     *  - Shares cart to company user with permission group.
      *
      * @api
      *
-     * @param int $idQuote
-     * @param int $idCompanyUser
-     * @param string $permissionGroupName
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
      * @return void
      */
-    public function shareQuoteWithCompanyUser(int $idQuote, int $idCompanyUser, string $permissionGroupName): void;
+    public function shareQuoteWithCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void;
 }

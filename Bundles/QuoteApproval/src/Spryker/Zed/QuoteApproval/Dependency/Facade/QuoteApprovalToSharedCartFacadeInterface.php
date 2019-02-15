@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\QuoteApproval\Dependency\Facade;
 
+use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareCartRequestTransfer;
 
 interface QuoteApprovalToSharedCartFacadeInterface
 {
@@ -19,11 +22,16 @@ interface QuoteApprovalToSharedCartFacadeInterface
     public function deleteShareForQuote(QuoteTransfer $quoteTransfer): void;
 
     /**
-     * @param int $idQuote
-     * @param int $idCompanyUser
-     * @param string $permissionGroupName
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
      * @return void
      */
-    public function shareQuoteWithCompanyUser(int $idQuote, int $idCompanyUser, string $permissionGroupName): void;
+    public function shareQuoteWithCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer
+     */
+    public function getQuotePermissionGroupList(QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer): QuotePermissionGroupResponseTransfer;
 }

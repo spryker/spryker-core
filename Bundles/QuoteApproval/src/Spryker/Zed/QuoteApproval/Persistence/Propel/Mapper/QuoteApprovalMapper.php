@@ -24,7 +24,9 @@ class QuoteApprovalMapper
         QuoteApprovalTransfer $quoteApprovalTransfer,
         SpyQuoteApproval $quoteApprovalEntity
     ): SpyQuoteApproval {
-        $quoteApprovalEntity->setFkCompanyUser($quoteApprovalTransfer->getApproverCompanyUserId());
+        if ($quoteApprovalTransfer->getApproverCompanyUserId()) {
+            $quoteApprovalEntity->setFkCompanyUser($quoteApprovalTransfer->getApproverCompanyUserId());
+        }
         $quoteApprovalEntity->setFkQuote($quoteApprovalTransfer->getFkQuote());
         $quoteApprovalEntity->setStatus($quoteApprovalTransfer->getStatus());
 

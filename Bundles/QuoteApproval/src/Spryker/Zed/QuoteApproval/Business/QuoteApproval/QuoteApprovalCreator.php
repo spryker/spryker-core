@@ -13,7 +13,11 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareCartRequestTransfer;
+use Generated\Shared\Transfer\ShareDetailTransfer;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface;
@@ -102,6 +106,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
             $quoteApprovalCreateRequestTransfer->getApproverCompanyUserId()
         );
 
+        $this->quoteApprovalEntityManager->saveQuoteApproval($quoteApprovalTransfer);
         $this->quoteLocker->lockQuote($quoteTransfer);
         $this->sharedCartFacade->deleteShareForQuote($quoteTransfer);
 
@@ -119,11 +124,17 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
      */
     protected function shareQuoteToApprover(QuoteApprovalTransfer $quoteApprovalTransfer): void
     {
-        $this->sharedCartFacade->shareQuoteWithCompanyUser(
-            $quoteApprovalTransfer->getFkQuote(),
-            $quoteApprovalTransfer->getApproverCompanyUserId(),
-            static::PERMISSION_GROUP_READ_ONLY
-        );
+        $quotePermissionGroup = $this->findSharedCartPermissionGroup();
+
+        $shareCartRequestTransfer = (new ShareCartRequestTransfer())
+            ->setIdQuote($quoteApprovalTransfer->getFkQuote())
+            ->addShareDetail(
+                (new ShareDetailTransfer())
+                    ->setIdCompanyUser($quoteApprovalTransfer->getApproverCompanyUserId())
+                    ->setQuotePermissionGroup($quotePermissionGroup)
+            );
+
+        $this->sharedCartFacade->shareQuoteWithCompanyUser($shareCartRequestTransfer);
     }
 
     /**
@@ -140,18 +151,31 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
     }
 
     /**
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer|null
+     */
+    protected function findSharedCartPermissionGroup(): ?QuotePermissionGroupTransfer
+    {
+        $criteriaFilterTransfer = (new QuotePermissionGroupCriteriaFilterTransfer())
+            ->setName(static::PERMISSION_GROUP_READ_ONLY);
+
+        $quotePermissionGroupResponseTransfer = $this->sharedCartFacade->getQuotePermissionGroupList($criteriaFilterTransfer);
+        if (!$quotePermissionGroupResponseTransfer->getIsSuccessful()) {
+            return null;
+        }
+
+        return $quotePermissionGroupResponseTransfer->getQuotePermissionGroups()->offsetGet(0);
+    }
+
+    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
     protected function createNotSuccessfulQuoteApprovalResponseTransfer(ArrayObject $messageTransfers): QuoteApprovalResponseTransfer
     {
-        $quoteApprovalResponseTransfer = new QuoteApprovalResponseTransfer();
-
-        $quoteApprovalResponseTransfer->setIsSuccessful(false);
-        $quoteApprovalResponseTransfer->setMessages($messageTransfers);
-
-        return $quoteApprovalResponseTransfer;
+        return (new QuoteApprovalResponseTransfer())
+            ->setIsSuccessful(false)
+            ->setMessages($messageTransfers);
     }
 
     /**
@@ -163,19 +187,17 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
     {
         $approverCustomerTransfer = $quoteApprovalTransfer->getApprover()->getCustomer();
 
-        $quoteApprovalResponseTransfer = new QuoteApprovalResponseTransfer();
-        $quoteApprovalResponseTransfer->setIsSuccessful(true);
-        $quoteApprovalResponseTransfer->addMessage(
-            $this->createMessageTransfer(
-                static::GLOSSARY_KEY_APPROVAL_CREATED,
-                [
-                    '%first_name%' => $approverCustomerTransfer->getFirstName(),
-                    '%last_name%' => $approverCustomerTransfer->getLastName(),
-                ]
-            )
-        );
-
-        return $quoteApprovalResponseTransfer;
+        return (new QuoteApprovalResponseTransfer())
+            ->setIsSuccessful(true)
+            ->addMessage(
+                $this->createMessageTransfer(
+                    static::GLOSSARY_KEY_APPROVAL_CREATED,
+                    [
+                        '%first_name%' => $approverCustomerTransfer->getFirstName(),
+                        '%last_name%' => $approverCustomerTransfer->getLastName(),
+                    ]
+                )
+            );
     }
 
     /**
@@ -186,11 +208,9 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
      */
     protected function createMessageTransfer(string $message, array $parameters = []): MessageTransfer
     {
-        $messageTransfer = new MessageTransfer();
-        $messageTransfer->setValue($message);
-        $messageTransfer->setParameters($parameters);
-
-        return $messageTransfer;
+        return (new MessageTransfer())
+            ->setValue($message)
+            ->setParameters($parameters);
     }
 
     /**
@@ -201,13 +221,9 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
      */
     protected function createQuoteApprovalTransfer(int $idQuote, int $idCompanyUser): QuoteApprovalTransfer
     {
-        $quoteApprovalTransfer = new QuoteApprovalTransfer();
-
-        $quoteApprovalTransfer->setStatus(QuoteApprovalConfig::STATUS_WAITING);
-        $quoteApprovalTransfer->setApproverCompanyUserId($idCompanyUser);
-        $quoteApprovalTransfer->setFkQuote($idQuote);
-
-        return $this->quoteApprovalEntityManager
-            ->saveQuoteApproval($quoteApprovalTransfer);
+        return (new QuoteApprovalTransfer())
+            ->setStatus(QuoteApprovalConfig::STATUS_WAITING)
+            ->setApproverCompanyUserId($idCompanyUser)
+            ->setFkQuote($idQuote);
     }
 }

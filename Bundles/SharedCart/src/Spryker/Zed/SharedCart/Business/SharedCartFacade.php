@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -203,16 +204,14 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      *
      * @api
      *
-     * @param int $idQuote
-     * @param int $idCompanyUser
-     * @param string $permissionGroupName
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
      * @return void
      */
-    public function shareQuoteWithCompanyUser(int $idQuote, int $idCompanyUser, string $permissionGroupName): void
+    public function shareQuoteWithCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void
     {
         $this->getFactory()
             ->createQuoteCompanyUserWriter()
-            ->shareQuoteWithCompanyUser($idQuote, $idCompanyUser, $permissionGroupName);
+            ->shareQuoteWithCompanyUser($shareCartRequestTransfer);
     }
 }
