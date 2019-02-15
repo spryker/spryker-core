@@ -53,7 +53,7 @@ interface QuoteApprovalFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer;
+    public function getQuoteApproverList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer;
 
     /**
      * Specification:
