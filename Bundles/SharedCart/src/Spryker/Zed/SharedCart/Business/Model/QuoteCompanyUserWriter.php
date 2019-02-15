@@ -10,6 +10,7 @@ namespace Spryker\Zed\SharedCart\Business\Model;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 use Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -64,21 +65,19 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
     }
 
     /**
-     * @param int $idQuote
-     * @param int $idCompanyUser
-     * @param string $permissionGroupName
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
      * @return void
      */
-    public function shareQuoteWithCompanyUser(int $idQuote, int $idCompanyUser, string $permissionGroupName): void
+    public function shareQuoteWithCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void
     {
-        $shareDetailTransfer = (new ShareDetailTransfer())
-            ->setIdCompanyUser($idCompanyUser)
-            ->setQuotePermissionGroup(
-                $this->getPermissionGroupByName($permissionGroupName)
-            );
+        $shareCartRequestTransfer->requireIdQuote()
+            ->requireShareDetails();
 
-        $this->createNewQuoteCompanyUser($idQuote, $shareDetailTransfer);
+        /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
+        $shareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
+
+        $this->createNewQuoteCompanyUser($shareCartRequestTransfer->getIdQuote(), $shareDetailTransfer);
     }
 
     /**
@@ -211,20 +210,6 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
     {
         $criteriaFilterTransfer = new QuotePermissionGroupCriteriaFilterTransfer();
         $criteriaFilterTransfer->setIsDefault(true);
-        $permissionGroupTransferCollection = $this->sharedCartRepository->findQuotePermissionGroupList($criteriaFilterTransfer);
-
-        return reset($permissionGroupTransferCollection);
-    }
-
-    /**
-     * @param string $permissionGroupName
-     *
-     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer
-     */
-    protected function getPermissionGroupByName(string $permissionGroupName): QuotePermissionGroupTransfer
-    {
-        $criteriaFilterTransfer = new QuotePermissionGroupCriteriaFilterTransfer();
-        $criteriaFilterTransfer->setName($permissionGroupName);
         $permissionGroupTransferCollection = $this->sharedCartRepository->findQuotePermissionGroupList($criteriaFilterTransfer);
 
         return reset($permissionGroupTransferCollection);
