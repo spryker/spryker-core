@@ -9,8 +9,6 @@ namespace Spryker\Client\QuoteApproval;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
-use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
@@ -43,12 +41,12 @@ interface QuoteApprovalClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
     public function createQuoteApproval(
-        QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
+        QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
     ): QuoteApprovalResponseTransfer;
 
     /**
@@ -60,12 +58,12 @@ interface QuoteApprovalClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
     public function removeQuoteApproval(
-        QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
+        QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
     ): QuoteApprovalResponseTransfer;
 
     /**

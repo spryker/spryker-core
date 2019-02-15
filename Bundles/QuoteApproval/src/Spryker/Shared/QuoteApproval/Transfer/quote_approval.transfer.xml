@@ -26,20 +26,12 @@
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
-    <transfer name="QuoteApprovalCreateRequest">
-        <property name="requesterCompanyUserId" type="int"/>
+    <transfer name="QuoteApprovalRequest">
         <property name="idQuote" type="int"/>
         <property name="approverCompanyUserId" type="int"/>
-    </transfer>
-
-    <transfer name="QuoteApprovalRequest">
+        <property name="requesterCompanyUserId" type="int"/>
         <property name="idQuoteApproval" type="int"/>
         <property name="fkCompanyUser" type="int"/>
-    </transfer>
-
-    <transfer name="QuoteApprovalRemoveRequest">
-        <property name="idCompanyUser" type="int"/>
-        <property name="idQuoteApproval" type="int"/>
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">
