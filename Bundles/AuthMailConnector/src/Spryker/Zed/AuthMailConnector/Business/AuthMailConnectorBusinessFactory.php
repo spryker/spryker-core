@@ -8,10 +8,10 @@
 namespace Spryker\Zed\AuthMailConnector\Business;
 
 use Spryker\Zed\AuthMailConnector\AuthMailConnectorDependencyProvider;
+use Spryker\Zed\AuthMailConnector\Business\Mail\MailBuilder;
+use Spryker\Zed\AuthMailConnector\Business\Mail\MailBuilderInterface;
 use Spryker\Zed\AuthMailConnector\Business\Mail\MailSender;
 use Spryker\Zed\AuthMailConnector\Business\Mail\MailSenderInterface;
-use Spryker\Zed\AuthMailConnector\Business\Mail\MailTransferGenerator;
-use Spryker\Zed\AuthMailConnector\Business\Mail\MailTransferGeneratorInterface;
 use Spryker\Zed\AuthMailConnector\Dependency\Facade\AuthMailConnectorToMailInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -26,17 +26,17 @@ class AuthMailConnectorBusinessFactory extends AbstractBusinessFactory
     public function createMailSender(): MailSenderInterface
     {
         return new MailSender(
-            $this->createMailTransferGenerator(),
+            $this->createMailBuilder(),
             $this->getMailFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\AuthMailConnector\Business\Mail\MailTransferGeneratorInterface
+     * @return \Spryker\Zed\AuthMailConnector\Business\Mail\MailBuilderInterface
      */
-    public function createMailTransferGenerator(): MailTransferGeneratorInterface
+    public function createMailBuilder(): MailBuilderInterface
     {
-        return new MailTransferGenerator(
+        return new MailBuilder(
             $this->getConfig()
         );
     }

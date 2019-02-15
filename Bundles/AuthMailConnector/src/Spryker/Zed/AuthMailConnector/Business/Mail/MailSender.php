@@ -12,9 +12,9 @@ use Spryker\Zed\AuthMailConnector\Dependency\Facade\AuthMailConnectorToMailInter
 class MailSender implements MailSenderInterface
 {
     /**
-     * @var \Spryker\Zed\AuthMailConnector\Business\Mail\MailTransferGeneratorInterface
+     * @var \Spryker\Zed\AuthMailConnector\Business\Mail\MailBuilderInterface
      */
-    protected $mailTransferGenerator;
+    protected $mailBuilder;
 
     /**
      * @var \Spryker\Zed\AuthMailConnector\Dependency\Facade\AuthMailConnectorToMailInterface
@@ -22,14 +22,14 @@ class MailSender implements MailSenderInterface
     protected $mailFacade;
 
     /**
-     * @param \Spryker\Zed\AuthMailConnector\Business\Mail\MailTransferGeneratorInterface $mailTransferGenerator
+     * @param \Spryker\Zed\AuthMailConnector\Business\Mail\MailBuilderInterface $mailBuilder
      * @param \Spryker\Zed\AuthMailConnector\Dependency\Facade\AuthMailConnectorToMailInterface $mailFacade
      */
     public function __construct(
-        MailTransferGeneratorInterface $mailTransferGenerator,
+        MailBuilderInterface $mailBuilder,
         AuthMailConnectorToMailInterface $mailFacade
     ) {
-        $this->mailTransferGenerator = $mailTransferGenerator;
+        $this->mailBuilder = $mailBuilder;
         $this->mailFacade = $mailFacade;
     }
 
@@ -41,7 +41,7 @@ class MailSender implements MailSenderInterface
      */
     public function sendResetPasswordMail(string $email, string $token): void
     {
-        $resetPasswordMailTransfer = $this->mailTransferGenerator->createResetPasswordMailTransfer($email, $token);
+        $resetPasswordMailTransfer = $this->mailBuilder->buildResetPasswordMailTransfer($email, $token);
 
         $this->mailFacade->handleMail($resetPasswordMailTransfer);
     }

@@ -9,7 +9,7 @@ namespace Spryker\Zed\AuthMailConnector\Business\Mail;
 
 use Generated\Shared\Transfer\MailTransfer;
 
-interface MailTransferGeneratorInterface
+interface MailBuilderInterface
 {
     /**
      * @param string $email
@@ -17,5 +17,5 @@ interface MailTransferGeneratorInterface
      *
      * @return \Generated\Shared\Transfer\MailTransfer
      */
-    public function createResetPasswordMailTransfer(string $email, string $token): MailTransfer;
+    public function buildResetPasswordMailTransfer(string $email, string $token): MailTransfer;
 }

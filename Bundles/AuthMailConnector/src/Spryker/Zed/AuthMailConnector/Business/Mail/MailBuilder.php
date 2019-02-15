@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig;
 use Spryker\Zed\AuthMailConnector\Communication\Plugin\Mail\RestorePasswordMailTypePlugin;
 
-class MailTransferGenerator implements MailTransferGeneratorInterface
+class MailBuilder implements MailBuilderInterface
 {
     /**
      * @uses \Spryker\Zed\Auth\Communication\Controller\PasswordController::PARAM_TOKEN
@@ -38,7 +38,7 @@ class MailTransferGenerator implements MailTransferGeneratorInterface
      *
      * @return \Generated\Shared\Transfer\MailTransfer
      */
-    public function createResetPasswordMailTransfer(string $email, string $token): MailTransfer
+    public function buildResetPasswordMailTransfer(string $email, string $token): MailTransfer
     {
         $mailTransfer = new MailTransfer();
         $mailTransfer->setType(RestorePasswordMailTypePlugin::MAIL_TYPE);

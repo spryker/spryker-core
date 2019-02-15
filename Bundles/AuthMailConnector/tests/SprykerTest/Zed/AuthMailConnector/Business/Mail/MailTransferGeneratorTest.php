@@ -10,7 +10,8 @@ namespace SprykerTest\Zed\AuthMailConnector\Business\Mail;
 use Codeception\Test\Unit;
 use Spryker\Shared\AuthMailConnector\AuthMailConnectorConstants;
 use Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig;
-use Spryker\Zed\AuthMailConnector\Business\Mail\MailTransferGenerator;
+use Spryker\Zed\AuthMailConnector\Business\Mail\MailBuilder;
+use Spryker\Zed\AuthMailConnector\Business\Mail\MailBuilderInterface;
 use Spryker\Zed\AuthMailConnector\Communication\Plugin\Mail\RestorePasswordMailTypePlugin;
 
 /**
@@ -21,10 +22,10 @@ use Spryker\Zed\AuthMailConnector\Communication\Plugin\Mail\RestorePasswordMailT
  * @group AuthMailConnector
  * @group Business
  * @group Mail
- * @group MailTransferGeneratorTest
+ * @group MailBuilderTest
  * Add your own group annotations below this line
  */
-class MailTransferGeneratorTest extends Unit
+class MailBuilderTest extends Unit
 {
     protected const EMAIL = 'test@test.com';
     protected const TOKEN = 'token';
@@ -46,7 +47,7 @@ class MailTransferGeneratorTest extends Unit
     {
         $this->tester->setConfig(AuthMailConnectorConstants::BASE_URL_ZED, static::BASE_URL_ZED);
 
-        $resetPasswordMailTransfer = $this->createMailTransferGenerator()->createResetPasswordMailTransfer(static::EMAIL, static::TOKEN);
+        $resetPasswordMailTransfer = $this->createMailBuilder()->buildResetPasswordMailTransfer(static::EMAIL, static::TOKEN);
         $expectedResetPasswordLink = sprintf(static::EXPECTED_RESET_PASSWORD_LINK_FORMAT, static::BASE_URL_ZED, static::TOKEN);
 
         $this->assertSame($expectedResetPasswordLink, $resetPasswordMailTransfer->getResetPasswordLink());
@@ -57,7 +58,7 @@ class MailTransferGeneratorTest extends Unit
      */
     public function testGenerateResetPasswordMailTransferReturnCorrectMailType(): void
     {
-        $resetPasswordMailTransfer = $this->createMailTransferGenerator()->createResetPasswordMailTransfer(static::EMAIL, static::TOKEN);
+        $resetPasswordMailTransfer = $this->createMailBuilder()->buildResetPasswordMailTransfer(static::EMAIL, static::TOKEN);
 
         $this->assertSame(RestorePasswordMailTypePlugin::MAIL_TYPE, $resetPasswordMailTransfer->getType());
     }
@@ -67,7 +68,7 @@ class MailTransferGeneratorTest extends Unit
      */
     public function testGenerateResetPasswordMailTransferReturnCorrectRecipient(): void
     {
-        $resetPasswordMailTransfer = $this->createMailTransferGenerator()->createResetPasswordMailTransfer(static::EMAIL, static::TOKEN);
+        $resetPasswordMailTransfer = $this->createMailBuilder()->buildResetPasswordMailTransfer(static::EMAIL, static::TOKEN);
 
         $this->assertSame(static::EXPECTED_RECIPIENTS_COUNT, $resetPasswordMailTransfer->getRecipients()->count());
         /** @var \Generated\Shared\Transfer\MailRecipientTransfer $mailRecipientTransfer */
@@ -76,11 +77,11 @@ class MailTransferGeneratorTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\AuthMailConnector\Business\Mail\MailTransferGenerator
+     * @return \Spryker\Zed\AuthMailConnector\Business\Mail\MailBuilderInterface
      */
-    protected function createMailTransferGenerator(): MailTransferGenerator
+    protected function createMailBuilder(): MailBuilderInterface
     {
-        return new MailTransferGenerator(
+        return new MailBuilder(
             $this->createAuthMailConnectorConfig()
         );
     }
