@@ -10,6 +10,7 @@ namespace Spryker\Zed\TaxProductConnector\Business\Calculator;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Propel\Runtime\Collection\ArrayCollection;
 use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
@@ -66,12 +67,20 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
          */
         $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 
-        $countryIso2CodesByIdProductAbstracts = $this->getCountryIso2CodesByIdProductAbstracts($quoteTransfer->getItems());
+        $foundResults = $this->taxQueryContainer
+            ->queryTaxSetByIdProductAbstractAndCountryIso2Codes(
+                $this->getIdProductAbstruct($quoteTransfer->getItems()),
+                $this->getCountryIso2Codes($quoteTransfer->getItems())
+            )
+            ->find();
+
+        $taxRatesByIdProductAbstractAndCountry = $this->mapByIdProductAbstractAndCountry($foundResults);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $taxRate = $this->getEffectiveTaxRate(
+                $taxRatesByIdProductAbstractAndCountry,
                 $itemTransfer->getIdProductAbstract(),
-                $countryIso2CodesByIdProductAbstracts[$itemTransfer->getIdProductAbstract()]
+                $this->getShippingCountryIso2CodeByItem($itemTransfer)
             );
             $itemTransfer->setTaxRate($taxRate);
         }
@@ -82,15 +91,36 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      *
      * @return string[]
      */
-    protected function getCountryIso2CodesByIdProductAbstracts(ArrayObject $itemTransfers): array
+    protected function getCountryIso2Codes(ArrayObject $itemTransfers): array
     {
-        $countryIso2CodesByIdProductAbstracts = [];
-
+        $result = [];
         foreach ($itemTransfers as $itemTransfer) {
-            $countryIso2CodesByIdProductAbstracts[$itemTransfer->getIdProductAbstract()] = $this->getShippingCountryIso2CodeByItem($itemTransfer);
+            $result[] = $this->getShippingCountryIso2CodeByItem($itemTransfer);
         }
+        return $result;
+    }
 
-        return $countryIso2CodesByIdProductAbstracts;
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return int[]
+     */
+    protected function getIdProductAbstruct(ArrayObject $itemTransfers): array
+    {
+        $result = [];
+        foreach ($itemTransfers as $itemTransfer) {
+            $result[] = $itemTransfer->getIdProductAbstract();
+        }
+        return $result;
+    }
+
+    protected function mapByIdProductAbstractAndCountry(ArrayCollection $arrayObject): array
+    {
+        $mappedResult = [];
+        foreach ($arrayObject as $taxRate) {
+            $mappedResult[$this->createKeyForMappedArray($taxRate)] = $taxRate[TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE];
+        }
+        return $mappedResult;
     }
 
     /**
@@ -125,30 +155,23 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      *
      * @return float
      */
-    protected function getEffectiveTaxRate(int $idProductAbstract, string $countryIso2Code): float
+    protected function getEffectiveTaxRate(array $mappedTaxRates, int $idProductAbstract, string $countryIso2Code): float
     {
-        $foundResults = $this->taxQueryContainer
-            ->queryTaxSetByIdProductAbstractAndCountryIso2Code(
-                [$idProductAbstract],
-                $countryIso2Code
-            )
-            ->findOne();
+        $keyFirstTry = $idProductAbstract . '_' . $countryIso2Code;
+        $keySecondTry = $idProductAbstract . '_';
+        $taxRate = $mappedTaxRates[$keyFirstTry] ?? $mappedTaxRates[$keySecondTry] ?? $this->taxFacade->getDefaultTaxRate();
 
-        if (isset($foundResults[TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE])) {
-            return (float)$foundResults[TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE];
-        }
-
-        return $this->taxFacade->getDefaultTaxRate();
+        return (float)$taxRate;
     }
 
     /**
-     * @param string[] $countryIso2CodesByIdProductAbstracts
+     * @param $resultEntry
      *
-     * @return int[]
+     * @return string
      */
-    protected function getIdProductAbstracts(array $countryIso2CodesByIdProductAbstracts): array
+    protected function createKeyForMappedArray($resultEntry): string
     {
-        return array_keys($countryIso2CodesByIdProductAbstracts);
+        return $resultEntry[TaxProductConnectorQueryContainer::COL_ID_ABSTRACT_PRODUCT] . '_' . $resultEntry[TaxProductConnectorQueryContainer::COL_COUNTRY_CODE];
     }
 
     /**
