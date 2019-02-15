@@ -133,10 +133,10 @@ class AddressTable extends AbstractTable
 
                 $tags = [];
                 if ((is_bool($id) === false) && ($id === $defaultBillingAddress)) {
-                    $tags[] = '<span class="label label-danger" title="Default billing address">BILLING</span>';
+                    $tags[] = $this->generateLabel('BILLING', 'label-danger');
                 }
                 if ((is_bool($id) === false) && ($id === $defaultShippingAddress)) {
-                    $tags[] = '<span class="label label-danger" title="Default shipping address">SHIPPING</span>';
+                    $tags[] = $this->generateLabel('SHIPPING', 'label-danger');
                 }
 
                 $address = $this->utilSanitize->escapeHtml($lines[$key][SpyCustomerAddressTableMap::COL_ADDRESS1]);
