@@ -172,11 +172,15 @@ class QuoteReader implements QuoteReaderInterface
      */
     protected function executeExpandQuotePluginsForQuoteCollection(QuoteCollectionTransfer $quoteCollectionTransfer): QuoteCollectionTransfer
     {
+        $expandedQuotesCollection = new QuoteCollectionTransfer();
+
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
+            $expandedQuotesCollection->addQuote(
+                $this->executeExpandQuotePlugins($quoteTransfer)
+            );
         }
 
-        return $quoteCollectionTransfer;
+        return $expandedQuotesCollection;
     }
 
     /**
