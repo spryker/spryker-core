@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class QuoteApprovalRepository extends AbstractRepository implements QuoteApprovalRepositoryInterface
 {
     /**
+     * @module CompanyUser
+     * @module Customer
+     *
      * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
@@ -24,6 +27,10 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
     {
         $quoteApprovalEntities = $this->getFactory()
             ->createQuoteApprovalPropelQuery()
+            ->joinWithSpyCompanyUser()
+            ->useSpyCompanyUserQuery()
+                ->joinWithCustomer()
+            ->endUse()
             ->filterByFkQuote($idQuote)
             ->orderByIdQuoteApproval()
             ->find();
@@ -52,13 +59,15 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
         $quoteApprovalEntity = $this->getFactory()
             ->createQuoteApprovalPropelQuery()
             ->filterByIdQuoteApproval($idQuoteApproval)
-            ->find()
-            ->getFirst();
+            ->findOne();
 
         return $quoteApprovalEntity ? $quoteApprovalEntity->getFkQuote() : null;
     }
 
     /**
+     * @module CompanyUser
+     * @module Customer
+     *
      * @param int $idQuoteApproval
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer|null
@@ -67,7 +76,13 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
     {
         $quoteApprovalEntity = $this->getFactory()
             ->createQuoteApprovalPropelQuery()
-            ->findOneByIdQuoteApproval($idQuoteApproval);
+            ->joinWithSpyCompanyUser()
+                ->useSpyCompanyUserQuery()
+            ->joinWithCustomer()
+            ->endUse()
+            ->filterByIdQuoteApproval($idQuoteApproval)
+            ->find()
+            ->getFirst();
 
         if ($quoteApprovalEntity === null) {
             return null;

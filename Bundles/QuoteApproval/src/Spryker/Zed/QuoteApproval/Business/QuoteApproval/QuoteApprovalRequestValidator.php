@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\QuoteApproval\Business\Permission\ContextProvider\PermissionContextProviderInterface;
-use Spryker\Zed\QuoteApproval\Business\QuoteStatus\QuoteStatusCalculatorInterface;
+use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface;
 use Spryker\Zed\QuoteApproval\Communication\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface;
@@ -37,7 +37,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     protected const GLOSSARY_KEY_ONLY_QUOTE_OWNER_CAN_SEND_APPROVAL_REQUEST = 'quote_approval.create.only_quote_owner_can_send_request';
     protected const GLOSSARY_KEY_DO_NOT_HAVE_PERMISSION_TO_CANCEL_APPROVAL_REQUEST = 'quote_approval.cancel.do_not_have_permission';
     /**
-     * @var \Spryker\Zed\QuoteApproval\Business\QuoteStatus\QuoteStatusCalculatorInterface
+     * @var \Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface
      */
     protected $quoteStatusCalculator;
 
@@ -63,7 +63,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
 
     /**
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface $quoteFacade
-     * @param \Spryker\Zed\QuoteApproval\Business\QuoteStatus\QuoteStatusCalculatorInterface $quoteStatusCalculator
+     * @param \Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface $quoteStatusCalculator
      * @param \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface $quoteApprovalRepository
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface $companyUserFacade
      * @param \Spryker\Zed\QuoteApproval\Business\Permission\ContextProvider\PermissionContextProviderInterface $permissionContextProvider

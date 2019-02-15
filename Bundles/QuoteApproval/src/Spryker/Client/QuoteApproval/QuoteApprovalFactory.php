@@ -13,19 +13,19 @@ use Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextPro
 use Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProviderInterface;
 use Spryker\Client\QuoteApproval\Permission\PermissionLimitCalculator;
 use Spryker\Client\QuoteApproval\Permission\PermissionLimitCalculatorInterface;
+use Spryker\Client\QuoteApproval\Quote\QuoteStatusCalculator;
+use Spryker\Client\QuoteApproval\Quote\QuoteStatusCalculatorInterface;
 use Spryker\Client\QuoteApproval\Quote\QuoteStatusChecker;
 use Spryker\Client\QuoteApproval\Quote\QuoteStatusCheckerInterface;
 use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReader;
 use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReaderInterface;
-use Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculator;
-use Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStub;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface;
 
 class QuoteApprovalFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface
+     * @return \Spryker\Client\QuoteApproval\Quote\QuoteStatusCalculatorInterface
      */
     public function createQuoteStatusCalculator(): QuoteStatusCalculatorInterface
     {

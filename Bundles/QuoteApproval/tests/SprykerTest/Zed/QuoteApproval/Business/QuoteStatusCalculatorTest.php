@@ -12,8 +12,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
-use Spryker\Zed\QuoteApproval\Business\QuoteStatus\QuoteStatusCalculator;
-use Spryker\Zed\QuoteApproval\Business\QuoteStatus\QuoteStatusCalculatorInterface;
+use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculator;
+use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface;
 
 /**
  * Auto-generated group annotations
@@ -161,7 +161,7 @@ class QuoteStatusCalculatorTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApproval\Business\QuoteStatus\QuoteStatusCalculatorInterface
+     * @return \Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface
      */
     protected function createQuoteStatusCalculator(): QuoteStatusCalculatorInterface
     {

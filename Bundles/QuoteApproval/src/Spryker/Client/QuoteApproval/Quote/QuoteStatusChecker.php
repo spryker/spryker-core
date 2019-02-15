@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\PermissionAwareTrait;
 use Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProviderInterface;
 use Spryker\Client\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Client\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
-use Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 
 class QuoteStatusChecker implements QuoteStatusCheckerInterface
@@ -20,7 +19,7 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
     use PermissionAwareTrait;
 
     /**
-     * @var \Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface
+     * @var \Spryker\Client\QuoteApproval\Quote\QuoteStatusCalculatorInterface
      */
     protected $quoteStatusCalculator;
 
@@ -30,7 +29,7 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
     protected $permissionContextProvider;
 
     /**
-     * @param \Spryker\Client\QuoteApproval\QuoteStatus\QuoteStatusCalculatorInterface $quoteStatusCalculator
+     * @param \Spryker\Client\QuoteApproval\Quote\QuoteStatusCalculatorInterface $quoteStatusCalculator
      * @param \Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProviderInterface $permissionContextProvider
      */
     public function __construct(
