@@ -136,20 +136,17 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
     /**
      * @api
      *
-     * @param int[] $allIdProductAbstracts
+     * @param int[] idProductAbstracts
      * @param string $countryIso2Code
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
-    public function queryTaxSetByIdProductAbstractAndCountryIso2Codes(array $allIdProductAbstracts, array $countryIso2Code): SpyTaxSetQuery
+    public function queryTaxSetByIdProductAbstractAndCountryIso2Codes(array $idProductAbstracts, array $countryIso2Code): SpyTaxSetQuery
     {
-        $allIdProductAbstracts = array_unique($allIdProductAbstracts);
-        $countryIso2Code = array_unique($countryIso2Code);
-
         return $this->getFactory()
             ->createTaxSetQuery()
             ->useSpyProductAbstractQuery()
-                ->filterByIdProductAbstract($allIdProductAbstracts, Criteria::IN)
+                ->filterByIdProductAbstract($idProductAbstracts, Criteria::IN)
                 ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_ABSTRACT_PRODUCT)
                 ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->endUse()

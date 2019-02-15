@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Propel\Runtime\Collection\ArrayCollection;
+use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
@@ -97,7 +98,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
         foreach ($itemTransfers as $itemTransfer) {
             $result[] = $this->getShippingCountryIso2CodeByItem($itemTransfer);
         }
-        return $result;
+        return array_unique($result);
     }
 
     /**
@@ -111,7 +112,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
         foreach ($itemTransfers as $itemTransfer) {
             $result[] = $itemTransfer->getIdProductAbstract();
         }
-        return $result;
+        return array_unique($result);
     }
 
     /**
@@ -123,7 +124,11 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     {
         $mappedResult = [];
         foreach ($taxRatesByCountryAndProduct as $taxRate) {
-            $mappedResult[$this->createKeyForMappedArray($taxRate)] = $taxRate[TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE];
+            $idProductAbstract = $taxRate[TaxProductConnectorQueryContainer::COL_ID_ABSTRACT_PRODUCT];
+            $iso2Code = $taxRate[TaxProductConnectorQueryContainer::COL_COUNTRY_CODE] ?? TaxConstants::TAX_EXEMPT_PLACEHOLDER;
+            $maxTaxRate = $taxRate[TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE];
+
+            $mappedResult[$idProductAbstract][$iso2Code] = $maxTaxRate;
         }
         return $mappedResult;
     }
@@ -163,9 +168,9 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      */
     protected function getEffectiveTaxRate(array $mappedTaxRates, int $idProductAbstract, string $countryIso2Code): float
     {
-        $keyFirstTry = $idProductAbstract . '_' . $countryIso2Code;
-        $keySecondTry = $idProductAbstract . '_';
-        $taxRate = $mappedTaxRates[$keyFirstTry] ?? $mappedTaxRates[$keySecondTry] ?? $this->taxFacade->getDefaultTaxRate();
+        $taxRate = $mappedTaxRates[$idProductAbstract][$countryIso2Code] ??
+            $mappedTaxRates[$idProductAbstract][TaxConstants::TAX_EXEMPT_PLACEHOLDER] ??
+            $this->taxFacade->getDefaultTaxRate();
 
         return (float)$taxRate;
     }
