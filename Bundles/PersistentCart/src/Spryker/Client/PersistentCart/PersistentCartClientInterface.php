@@ -15,7 +15,9 @@ interface PersistentCartClientInterface
 {
     /**
      * Specification:
-     * - Deletes existing quote in database
+     * - Makes zed request.
+     * - Deletes existing quote in database.
+     * - Executes update quote plugins.
      *
      * @api
      *
@@ -27,7 +29,7 @@ interface PersistentCartClientInterface
 
     /**
      * Specification:
-     * - Creates quote in database
+     * - Creates quote in database.
      *
      * @api
      *
@@ -53,7 +55,7 @@ interface PersistentCartClientInterface
 
     /**
      * Specification:
-     * - Updates quote in database
+     * - Updates quote in database.
      *
      * @api
      *

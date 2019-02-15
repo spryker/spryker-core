@@ -22,6 +22,7 @@ use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttribute;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReader;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeWriter;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReader;
+use Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeServiceInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeDependencyProvider;
 
 /**
@@ -64,7 +65,8 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
             $this->createProductAttributeReader(),
             $this->getLocaleFacade(),
             $this->getProductFacade(),
-            $this->createProductReader()
+            $this->createProductReader(),
+            $this->getUtilSanitizeService()
         );
     }
 
@@ -206,5 +208,13 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     protected function getEncodingService()
     {
         return $this->getProvidedDependency(ProductAttributeDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeServiceInterface
+     */
+    protected function getUtilSanitizeService(): ProductAttributeToUtilSanitizeServiceInterface
+    {
+        return $this->getProvidedDependency(ProductAttributeDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
 }
