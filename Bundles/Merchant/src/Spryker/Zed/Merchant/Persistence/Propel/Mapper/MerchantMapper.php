@@ -10,6 +10,7 @@ namespace Spryker\Zed\Merchant\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class MerchantMapper implements MerchantMapperInterface
 {
@@ -32,7 +33,7 @@ class MerchantMapper implements MerchantMapperInterface
      *
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchant
      */
-    public function mapMerchantTransferToEntity(
+    public function mapMerchantTransferToMerchantEntity(
         MerchantTransfer $merchantTransfer,
         SpyMerchant $spyMerchant
     ): SpyMerchant {
@@ -49,7 +50,7 @@ class MerchantMapper implements MerchantMapperInterface
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    public function mapEntityToMerchantTransfer(
+    public function mapMerchantEntityToMerchantTransfer(
         SpyMerchant $spyMerchant,
         MerchantTransfer $merchantTransfer
     ): MerchantTransfer {
@@ -58,23 +59,28 @@ class MerchantMapper implements MerchantMapperInterface
             true
         );
 
-        $merchantTransfer->setAddress($this->mapFirstMerchantAddress($spyMerchant->getSpyMerchantAddresses(), new MerchantAddressTransfer()));
+        $merchantTransfer->setAddress(
+            $this->mapFirstMerchantAddress(
+                $spyMerchant->getSpyMerchantAddresses(),
+                new MerchantAddressTransfer()
+            )
+        );
 
         return $merchantTransfer;
     }
 
     /**
-     * @param \Orm\Zed\Merchant\Persistence\SpyMerchantAddress[] $spyMerchantAddresses
+     * @param \Orm\Zed\Merchant\Persistence\SpyMerchantAddress[]|\Propel\Runtime\Collection\ObjectCollection $spyMerchantAddresses
      * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
      */
     protected function mapFirstMerchantAddress(
-        array $spyMerchantAddresses,
+        ObjectCollection $spyMerchantAddresses,
         MerchantAddressTransfer $merchantAddressTransfer
     ): ?MerchantAddressTransfer {
         foreach ($spyMerchantAddresses as $spyMerchantAddress) {
-            return $this->merchantAddressMapper->mapSpyMerchantAddressEntityToMerchantAddressTransfer(
+            return $this->merchantAddressMapper->mapMerchantAddressEntityToMerchantAddressTransfer(
                 $spyMerchantAddress,
                 $merchantAddressTransfer
             );

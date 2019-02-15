@@ -17,6 +17,11 @@
         <property name="address" type="MerchantAddress" />
     </transfer>
 
+    <transfer name="MerchantResponse">
+        <property name="merchant" type="Merchant" />
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
     <transfer name="MerchantAddress">
         <property name="idMerchantAddress" type="int" />
         <property name="key" type="string" />

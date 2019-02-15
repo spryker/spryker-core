@@ -49,7 +49,7 @@ class MerchantDataImportBusinessFactory extends DataImportBusinessFactory
         $dataSetStepBroker
             ->addStep($this->createMerchantKeyToIdMerchantStep())
             ->addStep($this->createCountryIsoCodeToIdCountryStep())
-            ->addStep(new MerchantAddressWriterStep());
+            ->addStep($this->createMerchantAddressWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
@@ -59,7 +59,7 @@ class MerchantDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    protected function createMerchantKeyToIdMerchantStep(): DataImportStepInterface
+    public function createMerchantKeyToIdMerchantStep(): DataImportStepInterface
     {
         return new MerchantKeyToIdMerchantStep();
     }
@@ -67,8 +67,16 @@ class MerchantDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    protected function createCountryIsoCodeToIdCountryStep(): DataImportStepInterface
+    public function createCountryIsoCodeToIdCountryStep(): DataImportStepInterface
     {
         return new CountryIsoCodeToIdCountryStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createMerchantAddressWriterStep(): DataImportStepInterface
+    {
+        return new MerchantAddressWriterStep();
     }
 }

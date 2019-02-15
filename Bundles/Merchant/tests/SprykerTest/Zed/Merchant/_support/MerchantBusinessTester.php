@@ -8,7 +8,10 @@
 namespace SprykerTest\Zed\Merchant;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\MerchantAddressBuilder;
+use Generated\Shared\DataBuilder\MerchantBuilder;
 use Generated\Shared\Transfer\MerchantAddressTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 
 /**
@@ -43,11 +46,16 @@ class MerchantBusinessTester extends Actor
     }
 
     /**
-     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
+     * @param int|null $merchantId
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    protected function getMerchantQuery(): SpyMerchantQuery
+    public function createMerchantTransferWithAddressTransfer(?int $merchantId = null): MerchantTransfer
     {
-        return SpyMerchantQuery::create();
+        return (new MerchantBuilder())
+            ->withAddress()
+            ->build()
+            ->setIdMerchant($merchantId);
     }
 
     /**
@@ -55,11 +63,15 @@ class MerchantBusinessTester extends Actor
      */
     public function createMerchantAddressTransfer(): MerchantAddressTransfer
     {
-        return (new MerchantAddressTransfer())
-            ->setAddress1('street')
-            ->setAddress2('number')
-            ->setCity('city')
-            ->setZipCode('12567')
-            ->setFkCountry(60);
+        return (new MerchantAddressBuilder())
+            ->build();
+    }
+
+    /**
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
+     */
+    protected function getMerchantQuery(): SpyMerchantQuery
+    {
+        return SpyMerchantQuery::create();
     }
 }

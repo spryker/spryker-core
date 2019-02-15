@@ -39,11 +39,9 @@ class MerchantFormDataProvider
      */
     public function getOptions(): array
     {
-        $options = [
+        return [
             'data_class' => MerchantTransfer::class,
             MerchantForm::SALUTATION_CHOICES_OPTION => $this->config->getSalutationChoices(),
         ];
-
-        return $options;
     }
 }

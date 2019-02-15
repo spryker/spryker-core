@@ -43,11 +43,13 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
 
         $spyMerchant = $this->getFactory()
             ->createPropelMerchantMapper()
-            ->mapMerchantTransferToEntity($merchantTransfer, $spyMerchant);
+            ->mapMerchantTransferToMerchantEntity($merchantTransfer, $spyMerchant);
 
         $spyMerchant->save();
 
-        $merchantTransfer->fromArray($spyMerchant->toArray(), true);
+        $merchantTransfer = $this->getFactory()
+            ->createPropelMerchantMapper()
+            ->mapMerchantEntityToMerchantTransfer($spyMerchant, $merchantTransfer);
 
         return $merchantTransfer;
     }
@@ -70,7 +72,9 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
 
         $spyMerchantAddress->save();
 
-        $merchantAddressTransfer->fromArray($spyMerchantAddress->toArray(), true);
+        $merchantAddressTransfer = $this->getFactory()
+            ->createMerchantAddressMapper()
+            ->mapMerchantAddressEntityToMerchantAddressTransfer($spyMerchantAddress, $merchantAddressTransfer);
 
         return $merchantAddressTransfer;
     }

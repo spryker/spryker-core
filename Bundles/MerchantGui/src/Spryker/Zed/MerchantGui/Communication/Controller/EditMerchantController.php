@@ -22,6 +22,7 @@ class EditMerchantController extends AbstractController
 
     protected const MESSAGE_MERCHANT_UPDATE_SUCCESS = 'Merchant updated successfully.';
     protected const MESSAGE_MERCHANT_NOT_FOUND = 'Merchant is not found.';
+    protected const MESSAGE_MERCHANT_ERROR = 'Merchant was not updated.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -68,14 +69,20 @@ class EditMerchantController extends AbstractController
         $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL, MerchantTableConstants::URL_MERCHANT_LIST);
         $merchantTransfer = $merchantForm->getData();
         try {
-            $this->getFactory()
+            $merchantResponseTransfer = $this->getFactory()
                 ->getMerchantFacade()
                 ->updateMerchant($merchantTransfer);
 
-            $this->addSuccessMessage(static::MESSAGE_MERCHANT_UPDATE_SUCCESS);
+            if ($merchantResponseTransfer->getIsSuccess()) {
+                $this->addSuccessMessage(static::MESSAGE_MERCHANT_UPDATE_SUCCESS);
+
+                return $this->redirectResponse($redirectUrl);
+            }
         } catch (MerchantNotFoundException $exception) {
             $this->addErrorMessage(static::MESSAGE_MERCHANT_NOT_FOUND);
         }
+
+        $this->addErrorMessage(static::MESSAGE_MERCHANT_ERROR);
 
         return $this->redirectResponse($redirectUrl);
     }

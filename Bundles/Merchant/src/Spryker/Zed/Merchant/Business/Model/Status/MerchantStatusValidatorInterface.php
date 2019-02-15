@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\Merchant\Business\Model\Status;
 
-use Generated\Shared\Transfer\MerchantTransfer;
-
 interface MerchantStatusValidatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param int $idMerchant
+     * @param string $newStatus
      *
-     * @return void
+     * @return bool
      */
-    public function validateTransitionToStatus(MerchantTransfer $merchantTransfer): void;
+    public function isMerchantStatusTransitionValid(int $idMerchant, string $newStatus): bool;
 }

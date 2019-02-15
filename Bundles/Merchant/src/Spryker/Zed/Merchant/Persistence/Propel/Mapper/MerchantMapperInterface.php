@@ -18,7 +18,7 @@ interface MerchantMapperInterface
      *
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchant
      */
-    public function mapMerchantTransferToEntity(
+    public function mapMerchantTransferToMerchantEntity(
         MerchantTransfer $merchantTransfer,
         SpyMerchant $spyMerchant
     ): SpyMerchant;
@@ -29,7 +29,7 @@ interface MerchantMapperInterface
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    public function mapEntityToMerchantTransfer(
+    public function mapMerchantEntityToMerchantTransfer(
         SpyMerchant $spyMerchant,
         MerchantTransfer $merchantTransfer
     ): MerchantTransfer;

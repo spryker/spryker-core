@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\Merchant\Business\Model\Status;
 
-use Generated\Shared\Transfer\MerchantTransfer;
-use Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException;
-use Spryker\Zed\Merchant\Business\Exception\MerchantStatusTransitionNotAllowedException;
 use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
 
 class MerchantStatusValidator implements MerchantStatusValidatorInterface
@@ -37,64 +34,51 @@ class MerchantStatusValidator implements MerchantStatusValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param int $idMerchant
+     * @param string $newStatus
      *
-     * @throws \Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException
-     *
-     * @return void
+     * @return bool
      */
-    public function validateTransitionToStatus(MerchantTransfer $merchantTransfer): void
+    public function isMerchantStatusTransitionValid(int $idMerchant, string $newStatus): bool
     {
-        $existingMerchantTransfer = $this->merchantRepository->findMerchantByIdMerchant($merchantTransfer->getIdMerchant());
+        $existingMerchantTransfer = $this->merchantRepository->findMerchantByIdMerchant($idMerchant);
 
         if ($existingMerchantTransfer === null) {
-            throw new MerchantNotFoundException();
+            return false;
         }
 
-        if (!$this->isStatusChanged($merchantTransfer, $existingMerchantTransfer)) {
-            return;
+        if ($this->isStatusSame($newStatus, $existingMerchantTransfer->getStatus())) {
+            return true;
         }
 
-        if (!$this->isTransitionToStatusAllowed($merchantTransfer, $existingMerchantTransfer)) {
-            $this->throwException($merchantTransfer);
+        if (!$this->isTransitionToStatusAllowed($newStatus, $existingMerchantTransfer->getStatus())) {
+            return false;
         }
+
+        return true;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $existingMerchantTransfer
+     * @param string $newStatus
+     * @param string $currentStatus
      *
      * @return bool
      */
-    protected function isStatusChanged(MerchantTransfer $merchantTransfer, MerchantTransfer $existingMerchantTransfer): bool
+    protected function isStatusSame(string $newStatus, string $currentStatus): bool
     {
-        return $merchantTransfer->getStatus() !== $existingMerchantTransfer->getStatus();
+        return $newStatus === $currentStatus;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\MerchantTransfer $existingMerchantTransfer
+     * @param string $newStatus
+     * @param string $currentStatus
      *
      * @return bool
      */
-    protected function isTransitionToStatusAllowed(MerchantTransfer $merchantTransfer, MerchantTransfer $existingMerchantTransfer): bool
+    protected function isTransitionToStatusAllowed(string $newStatus, string $currentStatus): bool
     {
-        $nextStatuses = $this->merchantStatusReader->getNextStatuses($existingMerchantTransfer->getStatus());
+        $nextStatuses = $this->merchantStatusReader->getNextStatuses($currentStatus);
 
-        return in_array($merchantTransfer->getStatus(), $nextStatuses);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @throws \Spryker\Zed\Merchant\Business\Exception\MerchantStatusTransitionNotAllowedException
-     *
-     * @return void
-     */
-    protected function throwException(MerchantTransfer $merchantTransfer): void
-    {
-        throw new MerchantStatusTransitionNotAllowedException(
-            sprintf('Transition to status \'%s\' is not allowed.', $merchantTransfer->getStatus())
-        );
+        return in_array($newStatus, $nextStatuses);
     }
 }

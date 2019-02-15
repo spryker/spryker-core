@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\Merchant\Persistence"
+          package="src.Orm.Zed.Merchant.Persistence">
+
+    <table name="spy_merchant" phpName="SpyMerchant">
+        <column name="merchant_key" type="VARCHAR" size="255"  description="Identifier for existing entities. It should never be changed."/>
+
+        <unique name="spy_merchant-merchant_key">
+            <unique-column name="merchant_key"/>
+        </unique>
+    </table>
+
+    <table name="spy_merchant_address">
+        <column name="key" type="VARCHAR" size="255" description="Identifier for existing entities. It should never be changed."/>
+
+        <unique name="spy_merchant_address-unique-key">
+            <unique-column name="key"/>
+        </unique>
+    </table>
+
+</database>

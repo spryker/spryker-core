@@ -35,7 +35,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
 
         return $this->getFactory()
             ->createPropelMerchantMapper()
-            ->mapEntityToMerchantTransfer($spyMerchant, new MerchantTransfer());
+            ->mapMerchantEntityToMerchantTransfer($spyMerchant, new MerchantTransfer());
     }
 
     /**
@@ -56,7 +56,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
 
         return $this->getFactory()
             ->createPropelMerchantMapper()
-            ->mapEntityToMerchantTransfer($spyMerchant, new MerchantTransfer());
+            ->mapMerchantEntityToMerchantTransfer($spyMerchant, new MerchantTransfer());
     }
 
     /**
@@ -75,7 +75,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
         $merchantCollectionTransfer = new MerchantCollectionTransfer();
         foreach ($spyMerchants as $spyMerchant) {
             $merchantCollectionTransfer->addMerchants(
-                $mapper->mapEntityToMerchantTransfer($spyMerchant, new MerchantTransfer())
+                $mapper->mapMerchantEntityToMerchantTransfer($spyMerchant, new MerchantTransfer())
             );
         }
 
@@ -113,6 +113,6 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
 
         return $this->getFactory()
             ->createMerchantAddressMapper()
-            ->mapSpyMerchantAddressEntityToMerchantAddressTransfer($spyMerchantAddress, new MerchantAddressTransfer());
+            ->mapMerchantAddressEntityToMerchantAddressTransfer($spyMerchantAddress, new MerchantAddressTransfer());
     }
 }

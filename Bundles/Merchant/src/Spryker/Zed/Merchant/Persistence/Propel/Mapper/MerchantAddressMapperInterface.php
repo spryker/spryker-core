@@ -29,7 +29,7 @@ interface MerchantAddressMapperInterface
      *
      * @return \Generated\Shared\Transfer\MerchantAddressTransfer
      */
-    public function mapSpyMerchantAddressEntityToMerchantAddressTransfer(
+    public function mapMerchantAddressEntityToMerchantAddressTransfer(
         SpyMerchantAddress $spyMerchantAddress,
         MerchantAddressTransfer $merchantAddressTransfer
     ): MerchantAddressTransfer;

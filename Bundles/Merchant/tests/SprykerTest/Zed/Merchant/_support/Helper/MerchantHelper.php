@@ -12,8 +12,9 @@ use Generated\Shared\DataBuilder\MerchantAddressBuilder;
 use Generated\Shared\DataBuilder\MerchantBuilder;
 use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Orm\Zed\Merchant\Persistence\SpyMerchantAddressQuery;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
-use Spryker\Zed\Merchant\Persistence\Propel\SpyMerchantAddressQuery;
+use Spryker\Zed\Merchant\MerchantConfig;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -34,10 +35,12 @@ class MerchantHelper extends Module
         $merchantTransfer->setAddress((new MerchantAddressBuilder())->build());
         $merchantTransfer->setIdMerchant(null);
 
-        $merchantTransfer = $this->getLocator()
+        $merchantResponseTransfer = $this->getLocator()
             ->merchant()
             ->facade()
             ->createMerchant($merchantTransfer);
+
+        $merchantTransfer = $merchantResponseTransfer->getMerchant();
 
         $merchantAddressTransfer = $this->getLocator()
             ->merchant()
@@ -123,6 +126,14 @@ class MerchantHelper extends Module
     }
 
     /**
+     * @return \Spryker\Zed\Merchant\MerchantConfig
+     */
+    public function createMerchantConfig(): MerchantConfig
+    {
+        return new MerchantConfig();
+    }
+
+    /**
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
      */
     protected function getMerchantQuery(): SpyMerchantQuery
@@ -131,7 +142,7 @@ class MerchantHelper extends Module
     }
 
     /**
-     * @return \Spryker\Zed\Merchant\Persistence\Propel\SpyMerchantAddressQuery
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantAddressQuery
      */
     protected function getMerchantAddressQuery(): SpyMerchantAddressQuery
     {

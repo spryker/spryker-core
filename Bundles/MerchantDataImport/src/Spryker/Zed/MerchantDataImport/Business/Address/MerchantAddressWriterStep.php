@@ -12,10 +12,18 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\Merchant\Persistence\Propel\SpyMerchantAddressQuery;
 use Spryker\Zed\MerchantDataImport\Business\Address\DataSet\MerchantAddressDataSetInterface;
-use Spryker\Zed\MerchantDataImport\Business\Model\DataSet\MerchantDataSetInterface;
 
 class MerchantAddressWriterStep implements DataImportStepInterface
 {
+    protected const REQUIRED_DATA_SET_KEYS = [
+        MerchantAddressDataSetInterface::KEY,
+        MerchantAddressDataSetInterface::ADDRESS1,
+        MerchantAddressDataSetInterface::ADDRESS2,
+        MerchantAddressDataSetInterface::CITY,
+        MerchantAddressDataSetInterface::ZIP_CODE,
+        MerchantAddressDataSetInterface::MERCHANT_KEY,
+    ];
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -43,38 +51,52 @@ class MerchantAddressWriterStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
-     *
      * @return void
      */
     protected function validateDataSet(DataSetInterface $dataSet): void
     {
-        if (!$dataSet[MerchantAddressDataSetInterface::KEY]) {
-            throw new InvalidDataException('"' . MerchantAddressDataSetInterface::KEY . '" is required.');
-        }
+        $this->validateSimpleRequiredDataSet($dataSet);
+        $this->validateCombinedRequiredDataSet($dataSet);
+    }
 
-        if (!$dataSet[MerchantAddressDataSetInterface::ADDRESS1]) {
-            throw new InvalidDataException('"' . MerchantAddressDataSetInterface::ADDRESS1 . '" is required.');
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return void
+     */
+    protected function validateSimpleRequiredDataSet(DataSetInterface $dataSet): void
+    {
+        foreach (static::REQUIRED_DATA_SET_KEYS as $requiredDataSetKey) {
+            $this->validateRequireDataSetByKey($dataSet, $requiredDataSetKey);
         }
+    }
 
-        if (!$dataSet[MerchantAddressDataSetInterface::ADDRESS2]) {
-            throw new InvalidDataException('"' . MerchantAddressDataSetInterface::ADDRESS2 . '" is required.');
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     * @param string $requiredDataSetKey
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
+     *
+     * @return void
+     */
+    protected function validateRequireDataSetByKey(DataSetInterface $dataSet, string $requiredDataSetKey): void
+    {
+        if (!$dataSet[$requiredDataSetKey]) {
+            throw new InvalidDataException('"' . $requiredDataSetKey . '" is required.');
         }
+    }
 
-        if (!$dataSet[MerchantAddressDataSetInterface::CITY]) {
-            throw new InvalidDataException('"' . MerchantAddressDataSetInterface::CITY . '" is required.');
-        }
-
-        if (!$dataSet[MerchantAddressDataSetInterface::ZIP_CODE]) {
-            throw new InvalidDataException('"' . MerchantAddressDataSetInterface::ZIP_CODE . '" is required.');
-        }
-
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
+     *
+     * @return void
+     */
+    protected function validateCombinedRequiredDataSet(DataSetInterface $dataSet): void
+    {
         if (!$dataSet[MerchantAddressDataSetInterface::COUNTRY_ISO2_CODE] && !$dataSet[MerchantAddressDataSetInterface::COUNTRY_ISO3_CODE]) {
             throw new InvalidDataException('"' . MerchantAddressDataSetInterface::COUNTRY_ISO2_CODE . '" or "' . MerchantAddressDataSetInterface::COUNTRY_ISO3_CODE . '" are required.');
-        }
-
-        if (!$dataSet[MerchantDataSetInterface::MERCHANT_KEY]) {
-            throw new InvalidDataException('"' . MerchantDataSetInterface::MERCHANT_KEY . '" is required.');
         }
     }
 }
