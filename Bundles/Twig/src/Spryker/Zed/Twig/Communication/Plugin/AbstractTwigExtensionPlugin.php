@@ -7,16 +7,36 @@
 
 namespace Spryker\Zed\Twig\Communication\Plugin;
 
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Twig\TwigExtensionInterface;
+use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Twig\Environment;
 use Twig_Environment;
-use Twig_ExtensionInterface;
 
 /**
  * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
  * @method \Spryker\Zed\Twig\Business\TwigFacadeInterface getFacade()
  */
-abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twig_ExtensionInterface
+abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements TwigPluginInterface, TwigExtensionInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Twig\Environment $twig
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Twig\Environment
+     */
+    public function extend(Environment $twig, ContainerInterface $container): Environment
+    {
+        $twig->addExtension($this);
+
+        return $twig;
+    }
+
     /**
      * Initializes the runtime environment.
      *
