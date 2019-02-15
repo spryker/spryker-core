@@ -18,6 +18,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPasswordResetSenderInterface
 {
     /**
+     * @deprecated
+     */
+    public const SUBJECT = 'Password reset request';
+
+    /**
      * {@inheritdoc}
      * - Generates MailTransfer for reset password functionality.
      * - Uses `MailFacade::handleMail()` to handle generated MailTransfer.

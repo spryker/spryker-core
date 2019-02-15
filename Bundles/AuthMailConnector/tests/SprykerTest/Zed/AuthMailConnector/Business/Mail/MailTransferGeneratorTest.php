@@ -46,7 +46,7 @@ class MailTransferGeneratorTest extends Unit
     {
         $this->tester->setConfig(AuthMailConnectorConstants::BASE_URL_ZED, static::BASE_URL_ZED);
 
-        $resetPasswordMailTransfer = $this->createMailTransferGenerator()->generateResetPasswordMailTransfer(static::EMAIL, static::TOKEN);
+        $resetPasswordMailTransfer = $this->createMailTransferGenerator()->createResetPasswordMailTransfer(static::EMAIL, static::TOKEN);
         $expectedResetPasswordLink = sprintf(static::EXPECTED_RESET_PASSWORD_LINK_FORMAT, static::BASE_URL_ZED, static::TOKEN);
 
         $this->assertSame($expectedResetPasswordLink, $resetPasswordMailTransfer->getResetPasswordLink());
@@ -57,7 +57,7 @@ class MailTransferGeneratorTest extends Unit
      */
     public function testGenerateResetPasswordMailTransferReturnCorrectMailType(): void
     {
-        $resetPasswordMailTransfer = $this->createMailTransferGenerator()->generateResetPasswordMailTransfer(static::EMAIL, static::TOKEN);
+        $resetPasswordMailTransfer = $this->createMailTransferGenerator()->createResetPasswordMailTransfer(static::EMAIL, static::TOKEN);
 
         $this->assertSame(RestorePasswordMailTypePlugin::MAIL_TYPE, $resetPasswordMailTransfer->getType());
     }
@@ -67,7 +67,7 @@ class MailTransferGeneratorTest extends Unit
      */
     public function testGenerateResetPasswordMailTransferReturnCorrectRecipient(): void
     {
-        $resetPasswordMailTransfer = $this->createMailTransferGenerator()->generateResetPasswordMailTransfer(static::EMAIL, static::TOKEN);
+        $resetPasswordMailTransfer = $this->createMailTransferGenerator()->createResetPasswordMailTransfer(static::EMAIL, static::TOKEN);
 
         $this->assertSame(static::EXPECTED_RECIPIENTS_COUNT, $resetPasswordMailTransfer->getRecipients()->count());
         /** @var \Generated\Shared\Transfer\MailRecipientTransfer $mailRecipientTransfer */

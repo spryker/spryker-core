@@ -41,7 +41,7 @@ class MailSender implements MailSenderInterface
      */
     public function sendResetPasswordMail(string $email, string $token): void
     {
-        $resetPasswordMailTransfer = $this->mailTransferGenerator->generateResetPasswordMailTransfer($email, $token);
+        $resetPasswordMailTransfer = $this->mailTransferGenerator->createResetPasswordMailTransfer($email, $token);
 
         $this->mailFacade->handleMail($resetPasswordMailTransfer);
     }

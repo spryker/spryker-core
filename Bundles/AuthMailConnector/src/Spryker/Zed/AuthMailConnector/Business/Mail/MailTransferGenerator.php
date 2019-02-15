@@ -9,12 +9,16 @@ namespace Spryker\Zed\AuthMailConnector\Business\Mail;
 
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use Spryker\Zed\Auth\Communication\Controller\PasswordController;
 use Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig;
 use Spryker\Zed\AuthMailConnector\Communication\Plugin\Mail\RestorePasswordMailTypePlugin;
 
 class MailTransferGenerator implements MailTransferGeneratorInterface
 {
+    /**
+     * @uses \Spryker\Zed\Auth\Communication\Controller\PasswordController::PARAM_TOKEN
+     */
+    protected const PARAM_TOKEN = 'token';
+
     /**
      * @var \Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig
      */
@@ -34,11 +38,11 @@ class MailTransferGenerator implements MailTransferGeneratorInterface
      *
      * @return \Generated\Shared\Transfer\MailTransfer
      */
-    public function generateResetPasswordMailTransfer(string $email, string $token): MailTransfer
+    public function createResetPasswordMailTransfer(string $email, string $token): MailTransfer
     {
         $mailTransfer = new MailTransfer();
         $mailTransfer->setType(RestorePasswordMailTypePlugin::MAIL_TYPE);
-        $mailTransfer->addRecipient($this->generateMailRecipientTransfer($email));
+        $mailTransfer->addRecipient($this->createMailRecipientTransfer($email));
         $mailTransfer->setResetPasswordLink($this->generateResetPasswordLink($token));
 
         return $mailTransfer;
@@ -49,7 +53,7 @@ class MailTransferGenerator implements MailTransferGeneratorInterface
      *
      * @return \Generated\Shared\Transfer\MailRecipientTransfer
      */
-    protected function generateMailRecipientTransfer(string $email): MailRecipientTransfer
+    protected function createMailRecipientTransfer(string $email): MailRecipientTransfer
     {
         $mailRecipientTransfer = new MailRecipientTransfer();
         $mailRecipientTransfer->setEmail($email);
@@ -77,7 +81,7 @@ class MailTransferGenerator implements MailTransferGeneratorInterface
     protected function generateResetPasswordLinkQuery(string $token): string
     {
         return http_build_query([
-            PasswordController::PARAM_TOKEN => $token,
+            static::PARAM_TOKEN => $token,
         ]);
     }
 }

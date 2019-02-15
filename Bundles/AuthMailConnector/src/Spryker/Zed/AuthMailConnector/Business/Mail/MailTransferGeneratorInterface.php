@@ -17,5 +17,5 @@ interface MailTransferGeneratorInterface
      *
      * @return \Generated\Shared\Transfer\MailTransfer
      */
-    public function generateResetPasswordMailTransfer(string $email, string $token): MailTransfer;
+    public function createResetPasswordMailTransfer(string $email, string $token): MailTransfer;
 }
