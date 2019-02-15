@@ -114,6 +114,11 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
         return $result;
     }
 
+    /**
+     * @param \Propel\Runtime\Collection\ArrayCollection $arrayObject
+     *
+     * @return array
+     */
     protected function mapByIdProductAbstractAndCountry(ArrayCollection $arrayObject): array
     {
         $mappedResult = [];
@@ -150,6 +155,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
+     * @param array $mappedTaxRates
      * @param int $idProductAbstract
      * @param string $countryIso2Code
      *
@@ -165,11 +171,11 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param $resultEntry
+     * @param array $resultEntry
      *
      * @return string
      */
-    protected function createKeyForMappedArray($resultEntry): string
+    protected function createKeyForMappedArray(array $resultEntry): string
     {
         return $resultEntry[TaxProductConnectorQueryContainer::COL_ID_ABSTRACT_PRODUCT] . '_' . $resultEntry[TaxProductConnectorQueryContainer::COL_COUNTRY_CODE];
     }
