@@ -24,20 +24,6 @@ class GetNextStatusesTest extends AbstractMerchantFacadeTest
     /**
      * @return void
      */
-    public function testGetMerchantsReturnNotEmptyCollection(): void
-    {
-        $this->tester->truncateMerchantRelations();
-
-        $this->tester->haveMerchant();
-        $this->tester->haveMerchant();
-
-        $merchantCollectionTransfer = $this->tester->getFacade()->getMerchantCollection();
-        $this->assertCount(2, $merchantCollectionTransfer->getMerchants());
-    }
-
-    /**
-     * @return void
-     */
     public function testGetNextStatusesWillReturnArray(): void
     {
         $nextStatuses = $this->tester->getFacade()->getNextStatuses($this->tester->createMerchantConfig()->getDefaultMerchantStatus());

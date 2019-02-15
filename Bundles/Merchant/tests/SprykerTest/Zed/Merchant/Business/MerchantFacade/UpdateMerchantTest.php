@@ -7,7 +7,10 @@
 
 namespace SprykerTest\Zed\Merchant\Business\MerchantFacade;
 
+use Generated\Shared\Transfer\MerchantResponseTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Zed\Merchant\MerchantConfig;
 use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
 
 /**
@@ -22,11 +25,6 @@ use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
  */
 class UpdateMerchantTest extends AbstractMerchantFacadeTest
 {
-    protected const MERCHANT_STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval'; // todo: has to be removed
-    protected const MERCHANT_STATUS_APPROVED = 'approved';
-    protected const MERCHANT_STATUS_ACTIVE = 'active';
-    protected const MERCHANT_STATUS_INACTIVE = 'inactive';
-
     /**
      * @return void
      */
@@ -53,72 +51,35 @@ class UpdateMerchantTest extends AbstractMerchantFacadeTest
     }
 
     /**
-     * @return void
-     */
-    public function testUpdateMerchantWithoutMerchantKey(): void
-    {
-        $merchantTransfer = $this->tester->haveMerchant();
-
-        $expectedIdMerchant = $merchantTransfer->getIdMerchant();
-        $merchantTransfer->setMerchantKey(null);
-
-        $merchantResponseTransfer = $this->tester->getFacade()->updateMerchant($merchantTransfer);
-        $updatedMerchant = $merchantResponseTransfer->getMerchant();
-
-        $this->assertSame($expectedIdMerchant, $updatedMerchant->getIdMerchant());
-        $this->assertNotEmpty($updatedMerchant->getMerchantKey());
-    }
-
-    /**
      * @dataProvider getCorrectStatusTransitions
      *
      * @param string[] $presetStatuses
-     * @param string $correctlyChangedStatus
      *
      * @return void
      */
-    public function testUpdateMerchantWithCorrectStatusWorks(array $presetStatuses, string $correctlyChangedStatus): void
+    public function testUpdateMerchantWithCorrectStatusWorks(array $presetStatuses): void
     {
         $merchantTransfer = $this->tester->haveMerchant();
+        $expectedStatus = end($presetStatuses);
 
-        foreach ($presetStatuses as $presetStatus) {
-            $merchantTransfer->setStatus($presetStatus);
-            $merchantResponseTransfer = $this->tester->getFacade()->updateMerchant($merchantTransfer);
-            $merchantTransfer = $merchantResponseTransfer->getMerchant();
-        }
+        $merchantResponseTransfer = $this->updateMerchantWithStatuses($merchantTransfer, $presetStatuses);
 
-        $expectedIdMerchant = $merchantTransfer->getIdMerchant();
-        $merchantTransfer
-            ->setStatus($correctlyChangedStatus);
-
-        $merchantResponseTransfer = $this->tester->getFacade()->updateMerchant($merchantTransfer);
-        $updatedMerchant = $merchantResponseTransfer->getMerchant();
-
-        $this->assertSame($expectedIdMerchant, $updatedMerchant->getIdMerchant());
-        $this->assertSame($correctlyChangedStatus, $updatedMerchant->getStatus());
+        $this->assertTrue($merchantResponseTransfer->getIsSuccess());
+        $this->assertSame($expectedStatus, $merchantResponseTransfer->getMerchant()->getStatus());
     }
 
     /**
      * @dataProvider getWrongStatusTransitions
      *
      * @param string[] $presetStatuses
-     * @param string $wronglyChangedStatus
      *
      * @return void
      */
-    public function testUpdateMerchantWithIncorrectStatusReturnsIsSuccessFalse(array $presetStatuses, string $wronglyChangedStatus): void
+    public function testUpdateMerchantWithIncorrectStatusReturnsIsSuccessFalse(array $presetStatuses): void
     {
         $merchantTransfer = $this->tester->haveMerchant();
 
-        foreach ($presetStatuses as $presetStatus) {
-            $merchantTransfer->setStatus($presetStatus);
-            $this->tester->getFacade()->updateMerchant($merchantTransfer);
-        }
-
-        $merchantTransfer
-            ->setStatus($wronglyChangedStatus);
-
-        $merchantResponseTransfer = $this->tester->getFacade()->updateMerchant($merchantTransfer);
+        $merchantResponseTransfer = $this->updateMerchantWithStatuses($merchantTransfer, $presetStatuses);
 
         $this->assertFalse($merchantResponseTransfer->getIsSuccess());
     }
@@ -130,7 +91,6 @@ class UpdateMerchantTest extends AbstractMerchantFacadeTest
     {
         $merchantTransfer = $this->tester->haveMerchant();
         $merchantTransfer
-            ->setMerchantKey(null)
             ->setName(null);
 
         $this->expectException(RequiredTransferPropertyException::class);
@@ -158,11 +118,11 @@ class UpdateMerchantTest extends AbstractMerchantFacadeTest
     public function getCorrectStatusTransitions(): array
     {
         return [
-            [[], static::MERCHANT_STATUS_APPROVED],
-            [[static::MERCHANT_STATUS_APPROVED], static::MERCHANT_STATUS_ACTIVE],
-            [[static::MERCHANT_STATUS_APPROVED], static::MERCHANT_STATUS_INACTIVE],
-            [[static::MERCHANT_STATUS_APPROVED, static::MERCHANT_STATUS_ACTIVE], static::MERCHANT_STATUS_INACTIVE],
-            [[static::MERCHANT_STATUS_APPROVED, static::MERCHANT_STATUS_INACTIVE], static::MERCHANT_STATUS_ACTIVE],
+            [[MerchantConfig::STATUS_APPROVED]],
+            [[MerchantConfig::STATUS_APPROVED, MerchantConfig::STATUS_ACTIVE]],
+            [[MerchantConfig::STATUS_APPROVED, MerchantConfig::STATUS_INACTIVE]],
+            [[MerchantConfig::STATUS_APPROVED, MerchantConfig::STATUS_ACTIVE, MerchantConfig::STATUS_INACTIVE]],
+            [[MerchantConfig::STATUS_APPROVED, MerchantConfig::STATUS_INACTIVE, MerchantConfig::STATUS_ACTIVE]],
         ];
     }
 
@@ -172,11 +132,34 @@ class UpdateMerchantTest extends AbstractMerchantFacadeTest
     public function getWrongStatusTransitions(): array
     {
         return [
-            [[], static::MERCHANT_STATUS_ACTIVE],
-            [[], static::MERCHANT_STATUS_INACTIVE],
-            [[static::MERCHANT_STATUS_APPROVED], static::MERCHANT_STATUS_WAITING_FOR_APPROVAL],
-            [[static::MERCHANT_STATUS_APPROVED, static::MERCHANT_STATUS_ACTIVE], static::MERCHANT_STATUS_WAITING_FOR_APPROVAL],
-            [[static::MERCHANT_STATUS_APPROVED, static::MERCHANT_STATUS_INACTIVE], static::MERCHANT_STATUS_WAITING_FOR_APPROVAL],
+            [[MerchantConfig::STATUS_ACTIVE]],
+            [[MerchantConfig::STATUS_INACTIVE]],
+            [[MerchantConfig::STATUS_APPROVED, MerchantConfig::STATUS_WAITING_FOR_APPROVAL]],
+            [[MerchantConfig::STATUS_APPROVED, MerchantConfig::STATUS_ACTIVE, MerchantConfig::STATUS_WAITING_FOR_APPROVAL]],
+            [[MerchantConfig::STATUS_APPROVED, MerchantConfig::STATUS_INACTIVE, MerchantConfig::STATUS_WAITING_FOR_APPROVAL]],
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param array $presetStatuses
+     *
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     */
+    protected function updateMerchantWithStatuses(MerchantTransfer $merchantTransfer, array $presetStatuses): MerchantResponseTransfer
+    {
+        $merchantResponseTransfer = (new MerchantResponseTransfer())->setIsSuccess(false);
+
+        foreach ($presetStatuses as $presetStatus) {
+            $merchantTransfer->setStatus($presetStatus);
+            $merchantResponseTransfer = $this->tester->getFacade()->updateMerchant($merchantTransfer);
+            $merchantTransfer = $merchantResponseTransfer->getMerchant();
+
+            if ($merchantResponseTransfer->getIsSuccess() === false) {
+                return $merchantResponseTransfer;
+            }
+        }
+
+        return $merchantResponseTransfer;
     }
 }

@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\Merchant\Business\MerchantFacade;
 
-use Exception;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
 
@@ -24,11 +23,6 @@ use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
 class CreateMerchantTest extends AbstractMerchantFacadeTest
 {
     /**
-     * @var \SprykerTest\Zed\Merchant\MerchantBusinessTester
-     */
-    protected $tester;
-
-    /**
      * @return void
      */
     public function testCreateMerchant(): void
@@ -38,19 +32,6 @@ class CreateMerchantTest extends AbstractMerchantFacadeTest
         $merchantResponseTransfer = $this->tester->getFacade()->createMerchant($merchantTransfer);
 
         $this->assertNotNull($merchantResponseTransfer->getMerchant()->getIdMerchant());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCreateMerchantWithEmptyKeyGeneratesKey(): void
-    {
-        $merchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer()
-            ->setMerchantKey(null);
-
-        $merchantResponseTransfer = $this->tester->getFacade()->createMerchant($merchantTransfer);
-
-        $this->assertNotNull($merchantResponseTransfer->getMerchant()->getMerchantKey());
     }
 
     /**
@@ -89,19 +70,5 @@ class CreateMerchantTest extends AbstractMerchantFacadeTest
 
         $merchantResponseTransfer = $this->tester->getFacade()->createMerchant($newMerchantTransfer);
         $this->assertNotNull($merchantResponseTransfer->getMerchant()->getIdMerchant());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCreateMerchantWithNotUniqueKeyThrowsException(): void
-    {
-        $merchantTransfer = $this->tester->haveMerchant();
-        $newMerchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer()
-            ->setMerchantKey($merchantTransfer->getMerchantKey());
-
-        $this->expectException(Exception::class);
-
-        $this->tester->getFacade()->createMerchant($newMerchantTransfer);
     }
 }

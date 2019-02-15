@@ -21,8 +21,6 @@ use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
  */
 class FindMerchantAddressByIdMerchantAddressTest extends AbstractMerchantFacadeTest
 {
-    protected const ID_MERCHANT_ADDRESS = 1243; // todo:check
-
     /**
      * @return void
      */
@@ -42,8 +40,10 @@ class FindMerchantAddressByIdMerchantAddressTest extends AbstractMerchantFacadeT
      */
     public function testFindMerchantAddressByIdMerchantAddressWillNotFindMissingMerchantAddress(): void
     {
+        $merchantAddressTransfer = $this->tester->haveMerchantAddress();
+
         $actualMerchantAddressTransfer = $this->tester->getFacade()->findMerchantAddressByIdMerchantAddress(
-            static::ID_MERCHANT_ADDRESS
+            $merchantAddressTransfer->getIdMerchantAddress() + 1
         );
 
         $this->assertNull($actualMerchantAddressTransfer);
