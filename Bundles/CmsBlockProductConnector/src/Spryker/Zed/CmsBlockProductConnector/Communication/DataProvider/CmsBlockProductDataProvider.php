@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlockProductConnector\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Spryker\Zed\CmsBlockProductConnector\Communication\Form\CmsBlockProductAbstractType;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleInterface;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerInterface;
 use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface;
@@ -47,12 +48,15 @@ class CmsBlockProductDataProvider
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(CmsBlockTransfer $cmsBlockTransfer)
     {
         return [
             'data_class' => CmsBlockTransfer::class,
+            CmsBlockProductAbstractType::OPTION_PRODUCT_ABSTRACT_ARRAY => $this->getAssignedProductOptions($cmsBlockTransfer),
         ];
     }
 
@@ -85,5 +89,35 @@ class CmsBlockProductDataProvider
             ->queryCmsBlockProductConnectorByIdCmsBlock($idCmsBlock)
             ->find()
             ->getColumnValues('fkProductAbstract');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return array
+     */
+    protected function getAssignedProductOptions(CmsBlockTransfer $cmsBlockTransfer): array
+    {
+        $productAbstractArray = [];
+
+        $idLocale = $this->localeFacade
+            ->getCurrentLocale()
+            ->getIdLocale();
+
+        $productAbstracts = $this->productAbstractQueryContainer
+            ->queryProductAbstractWithName($idLocale)
+            ->useSpyCmsBlockProductConnectorQuery()
+                ->filterByFkCmsBlock($cmsBlockTransfer->getIdCmsBlock())
+            ->endUse()
+            ->find();
+
+        foreach ($productAbstracts as $spyProductAbstract) {
+            $label = $spyProductAbstract->getVirtualColumn(static::PRODUCT_ABSTRACT_VIRTUAL_COLUMN_NAME) .
+                ' (SKU: ' . $spyProductAbstract->getSku() . ')';
+
+            $productAbstractArray[$label] = $spyProductAbstract->getIdProductAbstract();
+        }
+
+        return $productAbstractArray;
     }
 }

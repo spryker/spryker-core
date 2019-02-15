@@ -8,8 +8,11 @@
 namespace Spryker\Zed\CmsBlockProductConnector\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Spryker\Zed\Gui\Communication\Form\Type\SelectType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 /**
  * @method \Spryker\Zed\CmsBlockProductConnector\Business\CmsBlockProductConnectorFacadeInterface getFacade()
@@ -32,20 +35,26 @@ class CmsBlockProductAbstractType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addProductsAbstractField($builder);
+        $this->addProductsAbstractField($builder, $options[static::OPTION_PRODUCT_ABSTRACT_ARRAY]);
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, $this->getProductSearchPreSubmitCallback());
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
      *
      * @return $this
      */
-    protected function addProductsAbstractField(FormBuilderInterface $builder)
+    protected function addProductsAbstractField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(static::FIELD_ID_PRODUCT_ABSTRACTS, Select2ComboBoxType::class, [
             'label' => 'Products',
             'multiple' => true,
             'required' => false,
+            'choices' => $choices,
+            'attr' => [
+                'placeholder' => 'Type three letters of name or sku for suggestions.',
+            ],
         ]);
 
         return $this;
@@ -67,5 +76,36 @@ class CmsBlockProductAbstractType extends AbstractType
     public function getName()
     {
         return $this->getBlockPrefix();
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function getProductSearchPreSubmitCallback(): callable
+    {
+        return function (FormEvent $e) {
+            $data = $e->getData();
+            $form = $e->getForm();
+
+            if (empty($data[static::FIELD_ID_PRODUCT_ABSTRACTS])) {
+                return;
+            }
+            if ($form->has(static::FIELD_ID_PRODUCT_ABSTRACTS)) {
+                $form->remove(static::FIELD_ID_PRODUCT_ABSTRACTS);
+            }
+            $form->add(
+                static::FIELD_ID_PRODUCT_ABSTRACTS,
+                SelectType::class,
+                [
+                    'label' => 'Products',
+                    'attr' => [
+                        'placeholder' => 'Type three letters of name or sku for suggestions.',
+                    ],
+                    'required' => false,
+                    'choices' => $data[static::FIELD_ID_PRODUCT_ABSTRACTS],
+                    'multiple' => true,
+                ]
+            );
+        };
     }
 }
