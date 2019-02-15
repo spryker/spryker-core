@@ -91,7 +91,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      *
      * @return string[]
      */
-    protected function getCountryIso2Codes(ArrayObject $itemTransfers): array
+    protected function getCountryIso2Codes(iterable $itemTransfers): array
     {
         $result = [];
         foreach ($itemTransfers as $itemTransfer) {
@@ -105,7 +105,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      *
      * @return int[]
      */
-    protected function getIdProductAbstruct(ArrayObject $itemTransfers): array
+    protected function getIdProductAbstruct(iterable $itemTransfers): array
     {
         $result = [];
         foreach ($itemTransfers as $itemTransfer) {
@@ -115,14 +115,14 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ArrayCollection $arrayObject
+     * @param \Propel\Runtime\Collection\ArrayCollection $taxRatesByCountryAndProduct
      *
      * @return array
      */
-    protected function mapByIdProductAbstractAndCountry(ArrayCollection $arrayObject): array
+    protected function mapByIdProductAbstractAndCountry(iterable $taxRatesByCountryAndProduct): array
     {
         $mappedResult = [];
-        foreach ($arrayObject as $taxRate) {
+        foreach ($taxRatesByCountryAndProduct as $taxRate) {
             $mappedResult[$this->createKeyForMappedArray($taxRate)] = $taxRate[TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE];
         }
         return $mappedResult;
@@ -178,16 +178,6 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected function createKeyForMappedArray(array $resultEntry): string
     {
         return $resultEntry[TaxProductConnectorQueryContainer::COL_ID_ABSTRACT_PRODUCT] . '_' . $resultEntry[TaxProductConnectorQueryContainer::COL_COUNTRY_CODE];
-    }
-
-    /**
-     * @param string[] $countryIso2Codes
-     *
-     * @return string[]
-     */
-    protected function getUniqueCountryIso2Codes(array $countryIso2Codes): array
-    {
-        return array_unique($countryIso2Codes);
     }
 
     /**
