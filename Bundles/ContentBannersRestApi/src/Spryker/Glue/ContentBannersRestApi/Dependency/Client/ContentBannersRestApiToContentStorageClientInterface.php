@@ -13,7 +13,7 @@ interface ContentBannersRestApiToContentStorageClientInterface
      * @param int $idContent
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer
+     * @return array|null
      */
-    public function findContentStorageData($idContent, $localeName);
+    public function findContentStorageData(int $idContent, string $localeName): ?array;
 }

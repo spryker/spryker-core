@@ -28,7 +28,7 @@ class ContentBannersRestApiToContentStorageClientBridge implements ContentBanner
      *
      * @return array|null
      */
-    public function findContentStorageData($idContent, $localeName)
+    public function findContentStorageData(int $idContent, string $localeName): ?array
     {
         return $this->contentStorageClient->findContentById($idContent, $localeName);
     }
