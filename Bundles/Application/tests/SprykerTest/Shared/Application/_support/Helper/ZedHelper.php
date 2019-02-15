@@ -61,6 +61,7 @@ class ZedHelper extends Module
             return;
         }
 
+        $tester->_backupSession()->manage()->deleteAllCookies();
         $tester->amOnPage('/auth/login');
 
         $tester->fillField('#auth_username', $username);
