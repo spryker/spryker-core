@@ -92,8 +92,8 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
         $quoteRequestQuery
             ->filterByStatus(SharedQuoteRequestConfig::STATUS_CLOSED, Criteria::ALT_NOT_EQUAL);
 
-        if ($quoteRequestFilterTransfer->getIsHidden()) {
-            $quoteRequestQuery->filterByIsHidden($quoteRequestFilterTransfer->getIsHidden());
+        if (!$quoteRequestFilterTransfer->getWithHidden()) {
+            $quoteRequestQuery->filterByIsHidden(false);
         }
 
         if ($quoteRequestFilterTransfer->getCompanyUser() && $quoteRequestFilterTransfer->getCompanyUser()->getIdCompanyUser()) {

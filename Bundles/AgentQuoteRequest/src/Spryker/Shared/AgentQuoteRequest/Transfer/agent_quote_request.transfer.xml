@@ -12,4 +12,25 @@
         <property name="quoteRequestReference" type="string" />
         <property name="pagination" type="Pagination" />
     </transfer>
+
+    <transfer name="QuoteRequest">
+        <property name="idQuoteRequest" type="int" />
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int" />
+        <property name="maxPerPage" type="int" />
+    </transfer>
+
+    <transfer name="QuoteRequestCollection">
+        <property name="quoteRequests" type="QuoteRequest[]" singular="quoteRequest" />
+        <property name="pagination" type="Pagination" />
+    </transfer>
+
+    <transfer name="QuoteRequestFilter">
+        <property name="quoteRequestReference" type="string" />
+        <property name="withHidden" type="bool" />
+        <property name="pagination" type="Pagination" />
+    </transfer>
+
 </transfers>

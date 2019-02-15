@@ -48,7 +48,7 @@
     <transfer name="QuoteRequestFilter">
         <property name="companyUser" type="CompanyUser" />
         <property name="quoteRequestReference" type="string" />
-        <property name="isHidden" type="bool" default="false" />
+        <property name="withHidden" type="bool" />
         <property name="pagination" type="Pagination" />
     </transfer>
 
@@ -93,4 +93,5 @@
         <property name="firstPage" type="int" />
         <property name="lastPage" type="int" />
     </transfer>
+
 </transfers>
