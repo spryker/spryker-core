@@ -11,14 +11,16 @@ use Orm\Zed\Content\Persistence\Base\SpyContentQuery;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeBridge;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeBridge;
 use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilDateTimeServiceBridge;
+use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PLUGIN_CONTENT_ITEM_PLUGINS = 'PLUGIN_CONTENT_ITEM_PLUGINS';
+    public const PLUGINS_CONTENT_ITEM = 'PLUGINS_CONTENT_ITEM';
     public const PROPEL_QUERY_CONTENT = 'PROPEL_QUERY_CONTENT';
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_CONTENT = 'FACADE_CONTENT';
 
@@ -36,6 +38,7 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleFacadeService($container);
         $container = $this->addContentFacade($container);
         $container = $this->addContentPlugins($container);
+        $container = $this->addUtilEncoding($container);
 
         return $container;
     }
@@ -45,9 +48,9 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addContentPlugins(Container $container)
+    protected function addContentPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CONTENT_ITEM_PLUGINS] = function () {
+        $container[static::PLUGINS_CONTENT_ITEM] = function () {
             return $this->getContentPlugins();
         };
 
@@ -117,6 +120,20 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
             return new ContentGuiToContentFacadeBridge(
                 $container->getLocator()->content()->facade()
             );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncoding(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new ContentGuiToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;

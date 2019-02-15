@@ -18,15 +18,15 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     /**
      * {@inheritdoc}
      *
-     * @param int $id
+     * @param int $idContent
      *
      * @return null|\Generated\Shared\Transfer\ContentTransfer
      */
-    public function findContentById(int $id): ?ContentTransfer
+    public function findContentById(int $idContent): ?ContentTransfer
     {
         $contentEntity = $this->getFactory()
             ->createContentQuery()
-            ->findOneByIdContent($id);
+            ->findOneByIdContent($idContent);
 
         if ($contentEntity === null) {
             return null;

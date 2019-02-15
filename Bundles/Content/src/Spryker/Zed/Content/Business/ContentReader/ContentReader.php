@@ -26,12 +26,12 @@ class ContentReader implements ContentReaderInterface
     }
 
     /**
-     * @param int $id
+     * @param int $idContent
      *
      * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
-    public function findContentById(int $id): ?ContentTransfer
+    public function findContentById(int $idContent): ?ContentTransfer
     {
-        return $this->contentRepository->findContentById($id);
+        return $this->contentRepository->findContentById($idContent);
     }
 }

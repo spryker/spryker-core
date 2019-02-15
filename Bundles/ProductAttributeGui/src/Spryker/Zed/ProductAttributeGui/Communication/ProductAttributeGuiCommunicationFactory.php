@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAttributeGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeCsrfForm;
 use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeForm;
 use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeKeyForm;
 use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeKeyFormDataProvider;
@@ -94,6 +95,17 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getAttributeForm(array $data = [], array $options = [])
     {
         return $this->getFormFactory()->create(AttributeForm::class, $data, $options);
+    }
+
+    /**
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getAttributeCsrfForm(array $data = [], array $options = [])
+    {
+        return $this->getFormFactory()->create(AttributeCsrfForm::class, $data, $options);
     }
 
     /**

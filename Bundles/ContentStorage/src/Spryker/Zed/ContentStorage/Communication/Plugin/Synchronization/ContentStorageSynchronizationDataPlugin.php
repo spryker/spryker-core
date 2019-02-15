@@ -8,13 +8,14 @@
 namespace Spryker\Zed\ContentStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Spryker\Shared\ContentStorage\ContentStorageConstants;
+use Spryker\Shared\ContentStorage\ContentStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
 /**
  * @method \Spryker\Zed\ContentStorage\Business\ContentStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ContentStorage\Communication\ContentStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ContentStorage\ContentStorageConfig getConfig()
  */
 class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
@@ -28,7 +29,7 @@ class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements 
      */
     public function getResourceName(): string
     {
-        return ContentStorageConstants::CONTENT_RESOURCE_NAME;
+        return ContentStorageConfig::CONTENT_RESOURCE_NAME;
     }
 
     /**
@@ -57,19 +58,16 @@ class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements 
         $synchronizationDataTransfers = [];
 
         if (!empty($ids)) {
-            $contentStorageTransfers = $this->getFactory()->getContentStorageRepository()->findContentStorageByContentIds($ids);
+            $contentStorageTransfers = $this->getRepository()->findContentStorageByContentIds($ids);
         } else {
-            $contentStorageTransfers = $this->getFactory()->getContentStorageRepository()->findAllContentStorage();
+            $contentStorageTransfers = $this->getRepository()->findAllContentStorage();
         }
 
         foreach ($contentStorageTransfers as $contentStorageTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            /**
-             * @var string $data
-             */
-            $data = $contentStorageTransfer->getData();
-            $synchronizationDataTransfer->setData($data);
+            $synchronizationDataTransfer->setData($contentStorageTransfer->getData());
             $synchronizationDataTransfer->setKey($contentStorageTransfer->getKey());
+
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 
@@ -97,7 +95,7 @@ class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements 
      */
     public function getQueueName(): string
     {
-        return ContentStorageConstants::CONTENT_SYNC_STORAGE_QUEUE;
+        return ContentStorageConfig::CONTENT_SYNC_STORAGE_QUEUE;
     }
 
     /**

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ContentStorage\Communication\Plugin\Event;
 
 use Orm\Zed\Content\Persistence\Map\SpyContentTableMap;
-use Spryker\Shared\ContentStorage\ContentStorageConstants;
+use Spryker\Shared\ContentStorage\ContentStorageConfig;
 use Spryker\Zed\Content\Dependency\ContentEvents;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceRepositoryPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\ContentStorage\Business\ContentStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ContentStorage\Communication\ContentStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ContentStorage\ContentStorageConfig getConfig()
  */
 class ContentStorageEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
@@ -29,7 +30,7 @@ class ContentStorageEventResourceQueryContainerPlugin extends AbstractPlugin imp
      */
     public function getResourceName(): string
     {
-        return ContentStorageConstants::CONTENT_RESOURCE_NAME;
+        return ContentStorageConfig::CONTENT_RESOURCE_NAME;
     }
 
     /**
@@ -44,12 +45,10 @@ class ContentStorageEventResourceQueryContainerPlugin extends AbstractPlugin imp
     public function getData(array $ids = []): array
     {
         if (!empty($ids)) {
-            $contentEntities = $this->getFactory()->getContentStorageRepository()->findContentByIds($ids);
-        } else {
-            $contentEntities = $this->getFactory()->getContentStorageRepository()->findAllContent();
+            return $contentEntities = $this->getRepository()->findContentByIds($ids)->getArrayCopy();
         }
 
-        return $contentEntities->getArrayCopy();
+        return $contentEntities = $this->getRepository()->findAllContent()->getArrayCopy();
     }
 
     /**

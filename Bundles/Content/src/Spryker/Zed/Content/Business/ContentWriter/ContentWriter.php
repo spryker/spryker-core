@@ -32,8 +32,7 @@ class ContentWriter implements ContentWriterInterface
      */
     public function create(ContentTransfer $contentTransfer): ContentTransfer
     {
-        $contentTransfer
-            ->requireName()
+        $contentTransfer->requireName()
             ->requireContentTypeKey()
             ->requireContentTermKey()
             ->requireLocalizedContents();

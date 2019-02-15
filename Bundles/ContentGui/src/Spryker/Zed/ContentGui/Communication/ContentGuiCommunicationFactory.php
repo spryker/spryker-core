@@ -57,6 +57,14 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ContentGui\Communication\Resolver\ContentResolverInterface
+     */
+    public function createContentResolver(): ContentResolverInterface
+    {
+        return new ContentResolver($this->getContentPlugins());
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ContentTransfer|null $data
      * @param array $options
      *
@@ -70,7 +78,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Orm\Zed\Content\Persistence\SpyContentQuery
      */
-    protected function getPropelContentQuery(): SpyContentQuery
+    public function getPropelContentQuery(): SpyContentQuery
     {
         return $this->getProvidedDependency(ContentGuiDependencyProvider::PROPEL_QUERY_CONTENT);
     }
@@ -78,7 +86,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilDateTimeServiceInterface
      */
-    protected function getUtilDateTimeService(): ContentGuiToUtilDateTimeServiceInterface
+    public function getUtilDateTimeService(): ContentGuiToUtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(ContentGuiDependencyProvider::SERVICE_UTIL_DATE_TIME);
     }
@@ -100,18 +108,18 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ContentGui\Communication\Resolver\ContentResolverInterface
-     */
-    public function createContentResolver(): ContentResolverInterface
-    {
-        return new ContentResolver($this->getContentPlugins());
-    }
-
-    /**
      * @return \Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface[]
      */
     public function getContentPlugins(): array
     {
-        return $this->getProvidedDependency(ContentGuiDependencyProvider::PLUGIN_CONTENT_ITEM_PLUGINS);
+        return $this->getProvidedDependency(ContentGuiDependencyProvider::PLUGINS_CONTENT_ITEM);
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingInterface
+     */
+    public function getUtilEncoding()
+    {
+        return $this->getProvidedDependency(ContentGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

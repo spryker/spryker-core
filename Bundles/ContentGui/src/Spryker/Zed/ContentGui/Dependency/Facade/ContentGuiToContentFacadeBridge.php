@@ -25,13 +25,13 @@ class ContentGuiToContentFacadeBridge implements ContentGuiToContentFacadeInterf
     }
 
     /**
-     * @param int $id
+     * @param int $idContent
      *
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
-    public function findContentById(int $id): ContentTransfer
+    public function findContentById(int $idContent): ContentTransfer
     {
-        return $this->contentFacade->findContentById($id);
+        return $this->contentFacade->findContentById($idContent);
     }
 
     /**

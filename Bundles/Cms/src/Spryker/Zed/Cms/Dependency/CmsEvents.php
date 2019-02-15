@@ -72,4 +72,28 @@ interface CmsEvents
      * @api
      */
     public const ENTITY_SPY_CMS_VERSION_DELETE = 'Entity.spy_cms_version.delete';
+
+    /**
+     * Specification:
+     * - Represents spy_cms_page_store entity creation.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_CMS_STORE_CREATE = 'Entity.spy_cms_page_store.create';
+
+    /**
+     * Specification:
+     * - Represents spy_cms_page_store entity changes.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_CMS_STORE_UPDATE = 'Entity.spy_cms_page_store.update';
+
+    /**
+     * Specification:
+     * - Represents spy_cms_page_store entity deletion.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_CMS_STORE_DELETE = 'Entity.spy_cms_page_store.delete';
 }

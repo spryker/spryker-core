@@ -31,18 +31,18 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
     /**
      * @var \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface
      */
-    protected $localFacade;
+    protected $localeFacade;
 
     /**
      * @param \Spryker\Zed\ContentGui\Communication\Resolver\ContentResolverInterface $contentResolver
      * @param \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface $contentFacade
-     * @param \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface $localFacade
+     * @param \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface $localeFacade
      */
-    public function __construct(ContentResolverInterface $contentResolver, ContentGuiToContentFacadeInterface $contentFacade, ContentGuiToLocaleFacadeInterface $localFacade)
+    public function __construct(ContentResolverInterface $contentResolver, ContentGuiToContentFacadeInterface $contentFacade, ContentGuiToLocaleFacadeInterface $localeFacade)
     {
         $this->contentResolver = $contentResolver;
         $this->contentFacade = $contentFacade;
-        $this->localFacade = $localFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -55,26 +55,16 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
     {
         if ($contentId !== null) {
             $contentTransfer = $this->contentFacade->findContentById($contentId);
-        } else {
-            $contentTransfer = new ContentTransfer();
-            $contentPlugin = $this->contentResolver->getContentPlugin($termKey);
-            $contentTransfer->setContentTypeKey($contentPlugin->getTypeKey());
-            $contentTransfer->setContentTermKey($contentPlugin->getTermKey());
-        }
-        $localizedContents = $this->getLocalizedContentList($contentTransfer->getLocalizedContents());
-        $contentTransfer->setLocalizedContents((new ArrayObject()));
-        foreach ($this->getAvailableLocales() as $locale) {
-            $localizedContentTransfer = new LocalizedContentTransfer();
-            if (!empty($localizedContents[$locale->getIdLocale()])) {
-                $localizedContentTransfer->fromArray($localizedContents[$locale->getIdLocale()]->toArray());
-            }
-            $localizedContentTransfer->setLocaleName($locale->getLocaleName());
-            $localizedContentTransfer->setFkLocale($locale->getIdLocale());
 
-            $contentTransfer->addLocalizedContent($localizedContentTransfer);
+            return $this->setAvailableLocales($contentTransfer);
         }
 
-        return $contentTransfer;
+        $contentTransfer = new ContentTransfer();
+        $contentPlugin = $this->contentResolver->getContentPlugin($termKey);
+        $contentTransfer->setContentTypeKey($contentPlugin->getTypeKey());
+        $contentTransfer->setContentTermKey($contentPlugin->getTermKey());
+
+        return $this->setAvailableLocales($contentTransfer);
     }
 
     /**
@@ -99,10 +89,33 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedContentTransfer[] $localizedContents
+     * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
      *
-     * @return \Generated\Shared\Transfer\LocalizedContentTransfer[]
+     * @return \Generated\Shared\Transfer\ContentTransfer
      */
+    protected function setAvailableLocales(ContentTransfer $contentTransfer): ContentTransfer
+    {
+        $localizedContents = $this->getLocalizedContentList($contentTransfer->getLocalizedContents());
+        $contentTransfer->setLocalizedContents(new ArrayObject());
+        foreach ($this->getAvailableLocales() as $locale) {
+            $localizedContentTransfer = new LocalizedContentTransfer();
+            if (!empty($localizedContents[$locale->getIdLocale()])) {
+                $localizedContentTransfer->fromArray($localizedContents[$locale->getIdLocale()]->toArray());
+            }
+            $localizedContentTransfer->setLocaleName($locale->getLocaleName());
+            $localizedContentTransfer->setFkLocale($locale->getIdLocale());
+
+            $contentTransfer->addLocalizedContent($localizedContentTransfer);
+        }
+
+        return $contentTransfer;
+    }
+
+        /**
+         * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedContentTransfer[] $localizedContents
+         *
+         * @return \Generated\Shared\Transfer\LocalizedContentTransfer[]
+         */
     protected function getLocalizedContentList(ArrayObject $localizedContents): array
     {
         $indexLocalizedContents = [];
@@ -121,7 +134,7 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
         $defaultLocale = new LocaleTransfer();
         $defaultLocale->setLocaleName('Default locale');
 
-        $locales = $this->localFacade
+        $locales = $this->localeFacade
             ->getLocaleCollection();
 
         $locales[$defaultLocale->getLocaleName()] = $defaultLocale;

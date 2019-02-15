@@ -15,7 +15,7 @@ use ArrayObject;
 interface ContentStorageRepositoryInterface
 {
     /**
-     * @param array $contentIds
+     * @param int[] $contentIds
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ContentStorageTransfer[]
      */

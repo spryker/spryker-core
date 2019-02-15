@@ -22,13 +22,13 @@ class ContentFacade extends AbstractFacade implements ContentFacadeInterface
      *
      * @api
      *
-     * @param int $id
+     * @param int $idContent
      *
      * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
-    public function findContentById(int $id): ?ContentTransfer
+    public function findContentById(int $idContent): ?ContentTransfer
     {
-        return $this->getFactory()->createContentReader()->findContentById($id);
+        return $this->getFactory()->createContentReader()->findContentById($idContent);
     }
 
     /**

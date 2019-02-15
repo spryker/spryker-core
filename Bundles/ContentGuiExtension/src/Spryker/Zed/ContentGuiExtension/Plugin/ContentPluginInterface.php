@@ -12,21 +12,41 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 interface ContentPluginInterface
 {
     /**
+     * Specification:
+     * - Returns term key.
+     *
+     * @api
+     *
      * @return string
      */
     public function getTermKey(): string;
 
     /**
+     * Specification:
+     * - Returns type key.
+     *
+     * @api
+     *
      * @return string
      */
     public function getTypeKey(): string;
 
     /**
+     * Specification:
+     * - Returns form name.
+     *
+     * @api
+     *
      * @return string
      */
     public function getForm(): string;
 
     /**
+     * Specification:
+     * - Data mappings to a object.
+     *
+     * @api
+     *
      * @param array|null $params
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer

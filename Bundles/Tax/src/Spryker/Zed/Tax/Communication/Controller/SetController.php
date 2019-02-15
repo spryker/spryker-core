@@ -39,7 +39,7 @@ class SetController extends AbstractController
 
             if ($taxSetForm->isSubmitted() && $taxSetForm->isValid()) {
                 $taxSetTransfer = $this->getFacade()->createTaxSet($taxSetForm->getData());
-                $this->addSuccessMessage(sprintf('Tax set %d was created successfully.', $taxSetTransfer->getIdTaxSet()));
+                $this->addSuccessMessage('Tax set %d was created successfully.', ['%d' => $taxSetTransfer->getIdTaxSet()]);
                 $redirectUrl = Url::generate('/tax/set/edit', [
                     static::PARAM_URL_ID_TAX_SET => $taxSetTransfer->getIdTaxSet(),
                 ])->build();
@@ -68,7 +68,7 @@ class SetController extends AbstractController
         $taxSetTransfer = $taxSetFormDataProvider->getData($idTaxSet);
 
         if ($taxSetTransfer === null) {
-            $this->addErrorMessage(sprintf('Tax set with id %s doesn\'t exist', $idTaxSet));
+            $this->addErrorMessage("Tax set with id %s doesn't exist", ["%s" => $idTaxSet]);
 
             return $this->redirectResponse(
                 static::REDIRECT_URL_DEFAULT
@@ -86,7 +86,7 @@ class SetController extends AbstractController
                 $rowsAffected = $this->getFacade()->updateTaxSet($taxSetForm->getData());
 
                 if ($rowsAffected > 0) {
-                    $this->addSuccessMessage(sprintf('Tax set %d was updated successfully.', $idTaxSet));
+                    $this->addSuccessMessage('Tax set %d was updated successfully.', ['%d' => $idTaxSet]);
                 }
             } else {
                 $this->addErrorMessage('Tax set is not updated. Please fill-in all required fields.');
@@ -111,7 +111,7 @@ class SetController extends AbstractController
         $taxSetTransfer = $this->getFacade()->findTaxSet($idTaxSet);
 
         if ($taxSetTransfer === null) {
-            $this->addErrorMessage(sprintf('Tax set with id %s doesn\'t exist', $idTaxSet));
+            $this->addErrorMessage("Tax set with id %s doesn't exist", ["%s" => $idTaxSet]);
 
             return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
         }
