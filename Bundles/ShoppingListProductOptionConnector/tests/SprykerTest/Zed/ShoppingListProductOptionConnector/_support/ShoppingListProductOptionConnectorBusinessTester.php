@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ShoppingListProductOptionConnector;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOptionQuery;
@@ -35,13 +36,16 @@ class ShoppingListProductOptionConnectorBusinessTester extends Actor
 
     /**
      * @param string $sku
+     * @param bool $groupIsActive
      *
      * @return \Generated\Shared\Transfer\ProductOptionValueTransfer
      */
-    public function createProductOptionGroupValueTransfer(string $sku): ProductOptionValueTransfer
+    public function createProductOptionGroupValueTransfer(string $sku, $groupIsActive = true): ProductOptionValueTransfer
     {
         $productOptionGroupTransfer = $this->haveProductOptionGroupWithValues(
-            [],
+            [
+                ProductOptionGroupTransfer::ACTIVE => $groupIsActive,
+            ],
             [
                 [
                     [ProductOptionValueTransfer::SKU => $sku],
@@ -82,7 +86,8 @@ class ShoppingListProductOptionConnectorBusinessTester extends Actor
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setIdShoppingListItem($idShoppingListItem);
 
-        $this->getFacade()
-            ->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+        /** @var \Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOptionConnectorFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade $facade */
+        $facade = $this->getFacade();
+        $facade->saveShoppingListItemProductOptions($shoppingListItemTransfer);
     }
 }
