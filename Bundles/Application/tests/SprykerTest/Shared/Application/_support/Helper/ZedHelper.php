@@ -53,7 +53,7 @@ class ZedHelper extends Module
      *
      * @return void
      */
-    public function amLoggedInUser($username = 'admin@spryker.com', $password = 'change123'): void
+    public function amLoggedInUser($username = 'admin@spryker.com', $password = 'change123')
     {
         $tester = $this->getWebDriver();
 
