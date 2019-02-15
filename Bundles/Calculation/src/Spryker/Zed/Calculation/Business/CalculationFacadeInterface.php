@@ -64,7 +64,6 @@ interface CalculationFacadeInterface
      * Specification:
      *  - Checks if the calculated totals in the quote are still valid/consistent.
      *  - If not valid then adds an error code and message to the response
-     *  - Executes `QuotePostRecalculatePluginInterface` stack of plugins.
      *
      * @api
      *
