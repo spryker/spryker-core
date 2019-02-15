@@ -94,6 +94,8 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     }
 
     /**
+     * @module Quote
+     *
      * @param \Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer
      *
      * @return int[]
