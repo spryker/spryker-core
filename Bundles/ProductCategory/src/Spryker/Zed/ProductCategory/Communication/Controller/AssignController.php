@@ -35,7 +35,7 @@ class AssignController extends AbstractController
         $categoryEntity = $this->getCategoryEntity($idCategory);
 
         if (!$categoryEntity) {
-            return new RedirectResponse('/category-gui/list');
+            return new RedirectResponse('/category/root');
         }
 
         $form = $this->getForm($idCategory);
