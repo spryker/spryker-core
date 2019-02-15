@@ -43,14 +43,11 @@ class MerchantAddressFormDataProvider
      */
     public function getData(?int $idMerchantAddress = null): ?MerchantAddressTransfer
     {
-        $merchantAddressTransfer = new MerchantAddressTransfer();
-        if (!$idMerchantAddress) {
-            return $merchantAddressTransfer;
+        if ($idMerchantAddress === null) {
+            return null;
         }
 
-        $merchantAddressTransfer->setIdMerchantAddress($idMerchantAddress);
-
-        return $this->merchantFacade->findMerchantAddressById($merchantAddressTransfer);
+        return $this->merchantFacade->findMerchantAddressByIdMerchantAddress($idMerchantAddress);
     }
 
     /**

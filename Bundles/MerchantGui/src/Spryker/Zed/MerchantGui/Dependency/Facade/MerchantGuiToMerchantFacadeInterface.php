@@ -41,25 +41,25 @@ interface MerchantGuiToMerchantFacadeInterface
     public function getMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param int $idMerchant
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
+    public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param string $email
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findMerchantByEmail(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
+    public function findMerchantByEmail(string $email): ?MerchantTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressAddressTransfer
+     * @param int $idMerchantAddress
      *
      * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
      */
-    public function findMerchantAddressById(MerchantAddressTransfer $merchantAddressAddressTransfer): ?MerchantAddressTransfer;
+    public function findMerchantAddressByIdMerchantAddress(int $idMerchantAddress): ?MerchantAddressTransfer;
 
     /**
      * @param string $currentStatus

@@ -22,7 +22,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findMerchantById(int $idMerchant): ?MerchantTransfer
+    public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer
     {
         $spyMerchant = $this->getFactory()
             ->createMerchantQuery()
@@ -62,7 +62,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     /**
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getMerchants(): MerchantCollectionTransfer
+    public function getMerchantCollection(): MerchantCollectionTransfer
     {
         $spyMerchants = $this->getFactory()
             ->createMerchantQuery()
@@ -100,7 +100,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
      *
      * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
      */
-    public function findMerchantAddressById(int $idMerchantAddress): ?MerchantAddressTransfer
+    public function findMerchantAddressByIdMerchantAddress(int $idMerchantAddress): ?MerchantAddressTransfer
     {
         $spyMerchantAddress = $this->getFactory()
             ->createMerchantAddressQuery()

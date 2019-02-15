@@ -58,17 +58,28 @@ class MerchantMapper implements MerchantMapperInterface
             true
         );
 
-        foreach ($spyMerchant->getSpyMerchantAddresses() as $spyMerchantAddress) {
-            $merchantTransfer->setAddress(
-                $this->merchantAddressMapper->mapSpyMerchantAddressEntityToMerchantAddressTransfer(
-                    $spyMerchantAddress,
-                    new MerchantAddressTransfer()
-                )
-            );
-
-            break;
-        }
+        $merchantTransfer->setAddress($this->mapFirstMerchantAddress($spyMerchant->getSpyMerchantAddresses(), new MerchantAddressTransfer()));
 
         return $merchantTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Merchant\Persistence\SpyMerchantAddress[] $spyMerchantAddresses
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
+     */
+    protected function mapFirstMerchantAddress(
+        array $spyMerchantAddresses,
+        MerchantAddressTransfer $merchantAddressTransfer
+    ): ?MerchantAddressTransfer {
+        foreach ($spyMerchantAddresses as $spyMerchantAddress) {
+            return $this->merchantAddressMapper->mapSpyMerchantAddressEntityToMerchantAddressTransfer(
+                $spyMerchantAddress,
+                $merchantAddressTransfer
+            );
+        }
+
+        return null;
     }
 }

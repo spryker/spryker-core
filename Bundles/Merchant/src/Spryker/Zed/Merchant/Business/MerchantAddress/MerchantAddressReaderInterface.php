@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\MerchantAddressTransfer;
 interface MerchantAddressReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     * @param int $idMerchantAddress
      *
      * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
      */
-    public function findMerchantAddressById(MerchantAddressTransfer $merchantAddressTransfer): ?MerchantAddressTransfer;
+    public function findMerchantAddressByIdMerchantAddress(int $idMerchantAddress): ?MerchantAddressTransfer;
 }

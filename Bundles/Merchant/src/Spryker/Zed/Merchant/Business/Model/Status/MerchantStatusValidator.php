@@ -14,12 +14,10 @@ use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
 
 class MerchantStatusValidator implements MerchantStatusValidatorInterface
 {
-    protected const ERROR_TRANSITION_TO_STATUS_NOT_ALLOWED = 'Transition to status \'%s\' is not allowed.';
-
     /**
      * @var \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface
      */
-    protected $repository;
+    protected $merchantRepository;
 
     /**
      * @var \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReaderInterface
@@ -27,14 +25,14 @@ class MerchantStatusValidator implements MerchantStatusValidatorInterface
     protected $merchantStatusReader;
 
     /**
-     * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $repository
+     * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
      * @param \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReaderInterface $merchantStatusReader
      */
     public function __construct(
-        MerchantRepositoryInterface $repository,
+        MerchantRepositoryInterface $merchantRepository,
         MerchantStatusReaderInterface $merchantStatusReader
     ) {
-        $this->repository = $repository;
+        $this->merchantRepository = $merchantRepository;
         $this->merchantStatusReader = $merchantStatusReader;
     }
 
@@ -47,7 +45,7 @@ class MerchantStatusValidator implements MerchantStatusValidatorInterface
      */
     public function validateTransitionToStatus(MerchantTransfer $merchantTransfer): void
     {
-        $existingMerchantTransfer = $this->repository->findMerchantById($merchantTransfer->getIdMerchant());
+        $existingMerchantTransfer = $this->merchantRepository->findMerchantByIdMerchant($merchantTransfer->getIdMerchant());
 
         if ($existingMerchantTransfer === null) {
             throw new MerchantNotFoundException();
@@ -95,6 +93,8 @@ class MerchantStatusValidator implements MerchantStatusValidatorInterface
      */
     protected function throwException(MerchantTransfer $merchantTransfer): void
     {
-        throw new MerchantStatusTransitionNotAllowedException(sprintf(static::ERROR_TRANSITION_TO_STATUS_NOT_ALLOWED, $merchantTransfer->getStatus()));
+        throw new MerchantStatusTransitionNotAllowedException(
+            sprintf('Transition to status \'%s\' is not allowed.', $merchantTransfer->getStatus())
+        );
     }
 }

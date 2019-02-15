@@ -15,25 +15,23 @@ class MerchantAddressReader implements MerchantAddressReaderInterface
     /**
      * @var \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface
      */
-    protected $repository;
+    protected $merchantRepository;
 
     /**
-     * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $repository
+     * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
      */
-    public function __construct(MerchantRepositoryInterface $repository)
+    public function __construct(MerchantRepositoryInterface $merchantRepository)
     {
-        $this->repository = $repository;
+        $this->merchantRepository = $merchantRepository;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     * @param int $idMerchantAddress
      *
      * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
      */
-    public function findMerchantAddressById(MerchantAddressTransfer $merchantAddressTransfer): ?MerchantAddressTransfer
+    public function findMerchantAddressByIdMerchantAddress(int $idMerchantAddress): ?MerchantAddressTransfer
     {
-        $merchantAddressTransfer->requireIdMerchantAddress();
-
-        return $this->repository->findMerchantAddressById($merchantAddressTransfer->getIdMerchantAddress());
+        return $this->merchantRepository->findMerchantAddressByIdMerchantAddress($idMerchantAddress);
     }
 }

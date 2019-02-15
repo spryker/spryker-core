@@ -28,10 +28,10 @@ class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $iso2Code = $this->getIso2Code($dataSet);
-        $iso3Code = $this->getIso3Code($dataSet);
+        $iso2Code = $this->findIso2Code($dataSet);
+        $iso3Code = $this->findIso3Code($dataSet);
 
-        $idCountry = $this->getIdCountryFromCache($iso2Code, $iso3Code);
+        $idCountry = $this->findIdCountryFromCache($iso2Code, $iso3Code);
         if (!$idCountry) {
             $idCountry = $this->getIdCountryFromDatabase($iso2Code, $iso3Code);
         }
@@ -44,7 +44,7 @@ class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
      *
      * @return string|null
      */
-    protected function getIso2Code(DataSetInterface $dataSet): ?string
+    protected function findIso2Code(DataSetInterface $dataSet): ?string
     {
         if (!empty($dataSet[MerchantAddressDataSetInterface::COUNTRY_ISO2_CODE])) {
             return $dataSet[MerchantAddressDataSetInterface::COUNTRY_ISO2_CODE];
@@ -58,7 +58,7 @@ class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
      *
      * @return string|null
      */
-    protected function getIso3Code(DataSetInterface $dataSet): ?string
+    protected function findIso3Code(DataSetInterface $dataSet): ?string
     {
         if (!empty($dataSet[MerchantAddressDataSetInterface::COUNTRY_ISO3_CODE])) {
             return $dataSet[MerchantAddressDataSetInterface::COUNTRY_ISO3_CODE];
@@ -73,7 +73,7 @@ class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
      *
      * @return int|null
      */
-    protected function getIdCountryFromCache(?string $iso2Code, ?string $iso3Code): ?int
+    protected function findIdCountryFromCache(?string $iso2Code, ?string $iso3Code): ?int
     {
         if ($iso2Code !== null && isset($this->idCountryCache[$iso2Code])) {
             return $this->idCountryCache[$iso2Code];

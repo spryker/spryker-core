@@ -44,10 +44,7 @@ class MerchantUpdateFormDataProvider
      */
     public function getData(int $idMerchant): ?MerchantTransfer
     {
-        $merchantTransfer = new MerchantTransfer();
-        $merchantTransfer->setIdMerchant($idMerchant);
-
-        return $this->merchantFacade->findMerchantById($merchantTransfer);
+        return $this->merchantFacade->findMerchantByIdMerchant($idMerchant);
     }
 
     /**

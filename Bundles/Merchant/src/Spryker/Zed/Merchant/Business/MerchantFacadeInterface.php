@@ -95,31 +95,29 @@ interface MerchantFacadeInterface
 
     /**
      * Specification:
-     * - Finds a merchant by merchant id in provided transfer.
-     * - Will fail in case id_merchant is not set on the MerchantTransfer.
+     * - Finds a merchant by merchant id.
      * - Returns MerchantTransfer if found, NULL otherwise.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param int $idMerchant
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
+    public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer;
 
     /**
      * Specification:
-     * - Finds a merchant by email in provided transfer.
-     * - Will fail in case email is not set on the MerchantTransfer.
+     * - Finds a merchant by email.
      * - Returns MerchantTransfer if found, NULL otherwise.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param string $email
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findMerchantByEmail(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
+    public function findMerchantByEmail(string $email): ?MerchantTransfer;
 
     /**
      * Specification:
@@ -129,7 +127,7 @@ interface MerchantFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getMerchants(): MerchantCollectionTransfer;
+    public function getMerchantCollection(): MerchantCollectionTransfer;
 
     /**
      * Specification:
@@ -148,17 +146,16 @@ interface MerchantFacadeInterface
 
     /**
      * Specification:
-     * - Finds a merchant address by merchant address id in provided transfer.
-     * - Will fail in case id_merchant_address is not set on the MerchantAddressTransfer.
+     * - Finds a merchant address by merchant address id.
      * - Returns MerchantAddressTransfer if found, NULL otherwise.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     * @param int $idMerchantAddress
      *
      * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
      */
-    public function findMerchantAddressById(MerchantAddressTransfer $merchantAddressTransfer): ?MerchantAddressTransfer;
+    public function findMerchantAddressByIdMerchantAddress(int $idMerchantAddress): ?MerchantAddressTransfer;
 
     /**
      * Specification:

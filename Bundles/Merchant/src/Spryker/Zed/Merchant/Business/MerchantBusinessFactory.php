@@ -82,7 +82,9 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
      */
     public function createMerchantAddressWriter(): MerchantAddressWriterInterface
     {
-        return new MerchantAddressWriter($this->getEntityManager());
+        return new MerchantAddressWriter(
+            $this->getEntityManager()
+        );
     }
 
     /**

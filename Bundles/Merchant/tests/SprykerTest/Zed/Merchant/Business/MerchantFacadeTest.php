@@ -329,11 +329,7 @@ class MerchantFacadeTest extends Unit
     public function testFindMerchantByIdWillFindExistingMerchant(): void
     {
         $expectedMerchant = $this->tester->haveMerchant();
-
-        $merchantTransfer = (new MerchantTransfer())
-            ->setIdMerchant($expectedMerchant->getIdMerchant());
-
-        $actualMerchant = $this->merchantFacade->findMerchantById($merchantTransfer);
+        $actualMerchant = $this->merchantFacade->findMerchantByIdMerchant($expectedMerchant->getIdMerchant());
 
         $this->assertEquals($expectedMerchant, $actualMerchant);
     }
@@ -343,10 +339,7 @@ class MerchantFacadeTest extends Unit
      */
     public function testFindMerchantByIdWillNotFindMerchant(): void
     {
-        $merchantTransfer = (new MerchantTransfer())
-            ->setIdMerchant(static::ID_MERCHANT);
-
-        $actualMerchant = $this->merchantFacade->findMerchantById($merchantTransfer);
+        $actualMerchant = $this->merchantFacade->findMerchantByIdMerchant(static::ID_MERCHANT);
 
         $this->assertNull($actualMerchant);
     }
@@ -358,10 +351,7 @@ class MerchantFacadeTest extends Unit
     {
         $expectedMerchant = $this->tester->haveMerchant();
 
-        $merchantTransfer = (new MerchantTransfer())
-            ->setEmail($expectedMerchant->getEmail());
-
-        $actualMerchant = $this->merchantFacade->findMerchantByEmail($merchantTransfer);
+        $actualMerchant = $this->merchantFacade->findMerchantByEmail($expectedMerchant->getEmail());
 
         $this->assertEquals($expectedMerchant, $actualMerchant);
     }
@@ -371,10 +361,7 @@ class MerchantFacadeTest extends Unit
      */
     public function testFindMerchantByEmailWillNotFindMerchant(): void
     {
-        $merchantTransfer = (new MerchantTransfer())
-            ->setEmail(static::MERCHANT_EMAIL);
-
-        $actualMerchant = $this->merchantFacade->findMerchantByEmail($merchantTransfer);
+        $actualMerchant = $this->merchantFacade->findMerchantByEmail(static::MERCHANT_EMAIL);
 
         $this->assertNull($actualMerchant);
     }
@@ -413,8 +400,8 @@ class MerchantFacadeTest extends Unit
         $this->tester->haveMerchant();
         $this->tester->haveMerchant();
 
-        $merchantTransferCollection = $this->merchantFacade->getMerchants();
-        $this->assertCount(2, $merchantTransferCollection->getMerchants());
+        $merchantCollectionTransfer = $this->merchantFacade->getMerchantCollection();
+        $this->assertCount(2, $merchantCollectionTransfer->getMerchants());
     }
 
     /**
@@ -500,13 +487,12 @@ class MerchantFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindMerchantAddressByIdWillFindMerchantAddress(): void
+    public function testfindMerchantAddressByIdMerchantAddressWillFindMerchantAddress(): void
     {
         $expectedMerchantAddressTransfer = $this->tester->haveMerchantAddress();
 
-        $actualMerchantAddressTransfer = $this->merchantFacade->findMerchantAddressById(
-            (new MerchantAddressTransfer())
-                ->setIdMerchantAddress($expectedMerchantAddressTransfer->getIdMerchantAddress())
+        $actualMerchantAddressTransfer = $this->merchantFacade->findMerchantAddressByIdMerchantAddress(
+            $expectedMerchantAddressTransfer->getIdMerchantAddress()
         );
 
         $this->assertNotEmpty($actualMerchantAddressTransfer->getIdMerchantAddress());
@@ -515,11 +501,10 @@ class MerchantFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindMerchantAddressByIdWillNotFindMissingMerchantAddress(): void
+    public function testfindMerchantAddressByIdMerchantAddressWillNotFindMissingMerchantAddress(): void
     {
-        $actualMerchantAddressTransfer = $this->merchantFacade->findMerchantAddressById(
-            (new MerchantAddressTransfer())
-                ->setIdMerchantAddress(static::ID_MERCHANT_ADDRESS)
+        $actualMerchantAddressTransfer = $this->merchantFacade->findMerchantAddressByIdMerchantAddress(
+            static::ID_MERCHANT_ADDRESS
         );
 
         $this->assertNull($actualMerchantAddressTransfer);

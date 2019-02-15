@@ -23,7 +23,7 @@ class MerchantWriter implements MerchantWriterInterface
     /**
      * @var \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface
      */
-    protected $entityManager;
+    protected $merchantEntityManager;
 
     /**
      * @var \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface
@@ -44,27 +44,27 @@ class MerchantWriter implements MerchantWriterInterface
     /**
      * @var \Spryker\Zed\Merchant\MerchantConfig
      */
-    protected $config;
+    protected $merchantConfig;
 
     /**
-     * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $merchantEntityManager
      * @param \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface $merchantKeyGenerator
      * @param \Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface $merchantAddressWriter
      * @param \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface $merchantStatusValidator
-     * @param \Spryker\Zed\Merchant\MerchantConfig $config
+     * @param \Spryker\Zed\Merchant\MerchantConfig $merchantConfig
      */
     public function __construct(
-        MerchantEntityManagerInterface $entityManager,
+        MerchantEntityManagerInterface $merchantEntityManager,
         MerchantKeyGeneratorInterface $merchantKeyGenerator,
         MerchantAddressWriterInterface $merchantAddressWriter,
         MerchantStatusValidatorInterface $merchantStatusValidator,
-        MerchantConfig $config
+        MerchantConfig $merchantConfig
     ) {
-        $this->entityManager = $entityManager;
+        $this->merchantEntityManager = $merchantEntityManager;
         $this->merchantKeyGenerator = $merchantKeyGenerator;
         $this->merchantAddressWriter = $merchantAddressWriter;
         $this->merchantStatusValidator = $merchantStatusValidator;
-        $this->config = $config;
+        $this->merchantConfig = $merchantConfig;
     }
 
     /**
@@ -74,15 +74,7 @@ class MerchantWriter implements MerchantWriterInterface
      */
     public function create(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantTransfer
-            ->requireName()
-            ->requireRegistrationNumber()
-            ->requireContactPersonTitle()
-            ->requireContactPersonFirstName()
-            ->requireContactPersonLastName()
-            ->requireContactPersonPhone()
-            ->requireEmail()
-            ->requireAddress();
+        $this->assertCreateMerchantRequirements($merchantTransfer);
 
         if (empty($merchantTransfer->getMerchantKey())) {
             $merchantTransfer->setMerchantKey(
@@ -90,7 +82,7 @@ class MerchantWriter implements MerchantWriterInterface
             );
         }
 
-        $merchantTransfer->setStatus($this->config->getDefaultMerchantStatus());
+        $merchantTransfer->setStatus($this->merchantConfig->getDefaultMerchantStatus());
 
         $merchantTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {
             return $this->executeCreateTransaction($merchantTransfer);
@@ -106,9 +98,9 @@ class MerchantWriter implements MerchantWriterInterface
      */
     protected function executeCreateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantTransfer = $this->entityManager->saveMerchant($merchantTransfer);
+        $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
 
-        $merchantAddressTransfer = $this->createMerchantAddress($merchantTransfer);
+        $merchantAddressTransfer = $this->handleMerchantAddressSave($merchantTransfer);
         $merchantTransfer->setAddress($merchantAddressTransfer);
 
         return $merchantTransfer;
@@ -121,16 +113,7 @@ class MerchantWriter implements MerchantWriterInterface
      */
     public function update(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantTransfer
-            ->requireIdMerchant()
-            ->requireName()
-            ->requireRegistrationNumber()
-            ->requireContactPersonTitle()
-            ->requireContactPersonFirstName()
-            ->requireContactPersonLastName()
-            ->requireContactPersonPhone()
-            ->requireEmail()
-            ->requireAddress();
+        $this->assertUpdateMerchantRequirements($merchantTransfer);
 
         $this->validateStatusTransition($merchantTransfer);
 
@@ -150,6 +133,20 @@ class MerchantWriter implements MerchantWriterInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
+     * @return void
+     */
+    public function delete(MerchantTransfer $merchantTransfer): void
+    {
+        $merchantTransfer->requireIdMerchant();
+
+        $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {
+            $this->executeDeleteTransaction($merchantTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
     protected function executeUpdateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
@@ -157,7 +154,7 @@ class MerchantWriter implements MerchantWriterInterface
         $merchantAddressTransfer = $this->handleMerchantAddressSave($merchantTransfer);
         $merchantTransfer->setAddress($merchantAddressTransfer);
 
-        return $this->entityManager->saveMerchant($merchantTransfer);
+        return $this->merchantEntityManager->saveMerchant($merchantTransfer);
     }
 
     /**
@@ -181,23 +178,12 @@ class MerchantWriter implements MerchantWriterInterface
      *
      * @return void
      */
-    public function delete(MerchantTransfer $merchantTransfer): void
-    {
-        $merchantTransfer->requireIdMerchant();
-
-        $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {
-            $this->executeDeleteTransaction($merchantTransfer);
-        });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return void
-     */
     protected function executeDeleteTransaction(MerchantTransfer $merchantTransfer): void
     {
-        $this->entityManager->deleteMerchantById($merchantTransfer->getIdMerchant());
+        $idMerchant = $merchantTransfer->getIdMerchant();
+
+        $this->merchantEntityManager->deleteMerchantAddressByIdMerchant($idMerchant);
+        $this->merchantEntityManager->deleteMerchantByIdMerchant($idMerchant);
     }
 
     /**
@@ -213,14 +199,37 @@ class MerchantWriter implements MerchantWriterInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
+     * @return void
      */
-    protected function createMerchantAddress(MerchantTransfer $merchantTransfer): MerchantAddressTransfer
+    protected function assertCreateMerchantRequirements(MerchantTransfer $merchantTransfer): void
     {
-        $merchantAddressTransfer = $merchantTransfer->getAddress();
-        $merchantAddressTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
-        $merchantAddressTransfer = $this->merchantAddressWriter->create($merchantAddressTransfer);
+        $merchantTransfer
+            ->requireName()
+            ->requireRegistrationNumber()
+            ->requireContactPersonTitle()
+            ->requireContactPersonFirstName()
+            ->requireContactPersonLastName()
+            ->requireContactPersonPhone()
+            ->requireEmail()
+            ->requireAddress();
+    }
 
-        return $merchantAddressTransfer;
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return void
+     */
+    protected function assertUpdateMerchantRequirements(MerchantTransfer $merchantTransfer): void
+    {
+        $merchantTransfer
+            ->requireIdMerchant()
+            ->requireName()
+            ->requireRegistrationNumber()
+            ->requireContactPersonTitle()
+            ->requireContactPersonFirstName()
+            ->requireContactPersonLastName()
+            ->requireContactPersonPhone()
+            ->requireEmail()
+            ->requireAddress();
     }
 }

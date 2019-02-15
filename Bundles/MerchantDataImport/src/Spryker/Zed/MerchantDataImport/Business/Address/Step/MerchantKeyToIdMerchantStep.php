@@ -25,7 +25,6 @@ class MerchantKeyToIdMerchantStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
      *
      * @return void
@@ -33,22 +32,36 @@ class MerchantKeyToIdMerchantStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         $merchantKey = $dataSet[MerchantAddressDataSetInterface::MERCHANT_KEY];
+
         if (!$merchantKey) {
             throw new InvalidDataException('"' . MerchantAddressDataSetInterface::MERCHANT_KEY . '" is required.');
         }
+
         if (!isset($this->idMerchantCache[$merchantKey])) {
-            /** @var \Orm\Zed\Merchant\Persistence\SpyMerchantQuery $merchantQuery */
-            $merchantQuery = SpyMerchantQuery::create()
-                ->select(SpyMerchantTableMap::COL_ID_MERCHANT);
-            $idMerchant = $merchantQuery->findOneByMerchantKey($merchantKey);
-
-            if (!$idMerchant) {
-                throw new EntityNotFoundException(sprintf('Could not find Merchant by key "%s"', $merchantKey));
-            }
-
-            $this->idMerchantCache[$merchantKey] = $idMerchant;
+            $this->idMerchantCache[$merchantKey] = $this->getIdMerchant($merchantKey);
         }
 
         $dataSet[MerchantAddressDataSetInterface::ID_MERCHANT] = $this->idMerchantCache[$merchantKey];
+    }
+
+    /**
+     * @param string $merchantKey
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return int
+     */
+    protected function getIdMerchant(string $merchantKey): int
+    {
+        /** @var \Orm\Zed\Merchant\Persistence\SpyMerchantQuery $merchantQuery */
+        $merchantQuery = SpyMerchantQuery::create()
+            ->select(SpyMerchantTableMap::COL_ID_MERCHANT);
+        $idMerchant = $merchantQuery->findOneByMerchantKey($merchantKey);
+
+        if (!$idMerchant) {
+            throw new EntityNotFoundException(sprintf('Could not find Merchant by key "%s"', $merchantKey));
+        }
+
+        return $idMerchant;
     }
 }

@@ -19,16 +19,16 @@ interface MerchantReaderInterface
     public function getMerchantById(MerchantTransfer $merchantTransfer): MerchantTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param int $idMerchant
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
+    public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param string $email
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findMerchantByEmail(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
+    public function findMerchantByEmail(string $email): ?MerchantTransfer;
 }

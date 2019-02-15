@@ -66,33 +66,33 @@ class MerchantGuiToMerchantFacadeBridge implements MerchantGuiToMerchantFacadeIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param int $idMerchant
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer
+    public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer
     {
-        return $this->merchantFacade->findMerchantById($merchantTransfer);
+        return $this->merchantFacade->findMerchantByIdMerchant($idMerchant);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param string $email
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findMerchantByEmail(MerchantTransfer $merchantTransfer): ?MerchantTransfer
+    public function findMerchantByEmail(string $email): ?MerchantTransfer
     {
-        return $this->merchantFacade->findMerchantByEmail($merchantTransfer);
+        return $this->merchantFacade->findMerchantByEmail($email);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     * @param int $idMerchantAddress
      *
      * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
      */
-    public function findMerchantAddressById(MerchantAddressTransfer $merchantAddressTransfer): ?MerchantAddressTransfer
+    public function findMerchantAddressByIdMerchantAddress(int $idMerchantAddress): ?MerchantAddressTransfer
     {
-        return $this->merchantFacade->findMerchantAddressById($merchantAddressTransfer);
+        return $this->merchantFacade->findMerchantAddressByIdMerchantAddress($idMerchantAddress);
     }
 
     /**

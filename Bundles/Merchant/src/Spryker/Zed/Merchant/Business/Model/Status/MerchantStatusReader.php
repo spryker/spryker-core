@@ -14,14 +14,14 @@ class MerchantStatusReader implements MerchantStatusReaderInterface
     /**
      * @var \Spryker\Zed\Merchant\MerchantConfig
      */
-    protected $config;
+    protected $merchantConfig;
 
     /**
-     * @param \Spryker\Zed\Merchant\MerchantConfig $config
+     * @param \Spryker\Zed\Merchant\MerchantConfig $merchantConfig
      */
-    public function __construct(MerchantConfig $config)
+    public function __construct(MerchantConfig $merchantConfig)
     {
-        $this->config = $config;
+        $this->merchantConfig = $merchantConfig;
     }
 
     /**
@@ -31,7 +31,7 @@ class MerchantStatusReader implements MerchantStatusReaderInterface
      */
     public function getNextStatuses(string $currentStatus): array
     {
-        $statusTree = $this->config->getStatusTree();
+        $statusTree = $this->merchantConfig->getStatusTree();
 
         return $statusTree[$currentStatus] ?? [];
     }

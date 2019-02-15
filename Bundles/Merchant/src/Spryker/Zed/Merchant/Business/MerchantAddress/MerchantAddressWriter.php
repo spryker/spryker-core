@@ -15,14 +15,14 @@ class MerchantAddressWriter implements MerchantAddressWriterInterface
     /**
      * @var \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface
      */
-    protected $entityManager;
+    protected $merchantEntityManager;
 
     /**
-     * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $merchantEntityManager
      */
-    public function __construct(MerchantEntityManagerInterface $entityManager)
+    public function __construct(MerchantEntityManagerInterface $merchantEntityManager)
     {
-        $this->entityManager = $entityManager;
+        $this->merchantEntityManager = $merchantEntityManager;
     }
 
     /**
@@ -32,14 +32,9 @@ class MerchantAddressWriter implements MerchantAddressWriterInterface
      */
     public function create(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer
     {
-        $merchantAddressTransfer
-            ->requireCity()
-            ->requireZipCode()
-            ->requireAddress1()
-            ->requireFkMerchant()
-            ->requireFkCountry();
+        $this->assertCreateMerchantAddressTransferRequirements($merchantAddressTransfer);
 
-        return $this->entityManager->saveMerchantAddress($merchantAddressTransfer);
+        return $this->merchantEntityManager->saveMerchantAddress($merchantAddressTransfer);
     }
 
     /**
@@ -49,6 +44,33 @@ class MerchantAddressWriter implements MerchantAddressWriterInterface
      */
     public function update(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer
     {
+        $this->assertUpdateMerchantAddressTransferRequirements($merchantAddressTransfer);
+
+        return $this->merchantEntityManager->saveMerchantAddress($merchantAddressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     *
+     * @return void
+     */
+    protected function assertCreateMerchantAddressTransferRequirements(MerchantAddressTransfer $merchantAddressTransfer): void
+    {
+        $merchantAddressTransfer
+            ->requireCity()
+            ->requireZipCode()
+            ->requireAddress1()
+            ->requireFkMerchant()
+            ->requireFkCountry();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     *
+     * @return void
+     */
+    protected function assertUpdateMerchantAddressTransferRequirements(MerchantAddressTransfer $merchantAddressTransfer): void
+    {
         $merchantAddressTransfer
             ->requireIdMerchantAddress()
             ->requireCity()
@@ -56,7 +78,5 @@ class MerchantAddressWriter implements MerchantAddressWriterInterface
             ->requireAddress1()
             ->requireFkMerchant()
             ->requireFkCountry();
-
-        return $this->entityManager->saveMerchantAddress($merchantAddressTransfer);
     }
 }

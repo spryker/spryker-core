@@ -17,7 +17,14 @@ interface MerchantEntityManagerInterface
      *
      * @return void
      */
-    public function deleteMerchantById(int $idMerchant): void;
+    public function deleteMerchantByIdMerchant(int $idMerchant): void;
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return void
+     */
+    public function deleteMerchantAddressByIdMerchant(int $idMerchant): void;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
