@@ -154,7 +154,6 @@
     <transfer name="Shipment">
         <property name="method" type="ShipmentMethod"/>
         <property name="shippingAddress" type="Address" />
-        <property name="expense" type="Expense" />
     </transfer>
 
     <transfer name="ShipmentGroup">

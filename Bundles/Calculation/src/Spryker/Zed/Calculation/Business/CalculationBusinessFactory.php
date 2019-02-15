@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Calculation\Business;
 
-use Spryker\Service\Calculation\CalculationServiceInterface;
 use Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator;
 use Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator\DiscountAmountAggregatorForGrossAmount;
 use Spryker\Zed\Calculation\Business\Model\Aggregator\ItemDiscountAmountFullAggregator;
@@ -99,7 +98,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     protected function createPriceNetCalculator()
     {
-        return new PriceNetCalculator($this->getCalculationService());
+        return new PriceNetCalculator();
     }
 
     /**
@@ -107,7 +106,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSumNetPriceCalculator()
     {
-        return new SumNetPriceCalculator($this->getCalculationService());
+        return new SumNetPriceCalculator();
     }
 
     /**
@@ -115,7 +114,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createPriceGrossCalculator()
     {
-        return new PriceGrossCalculator($this->getCalculationService());
+        return new PriceGrossCalculator();
     }
 
     /**
@@ -133,7 +132,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSumGrossPriceCalculator()
     {
-        return new SumGrossPriceCalculator($this->getCalculationService());
+        return new SumGrossPriceCalculator();
     }
 
     /**
@@ -189,7 +188,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createPriceToPayAggregator()
     {
-        return new PriceToPayAggregator($this->getCalculationService());
+        return new PriceToPayAggregator();
     }
 
     /**
@@ -205,7 +204,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createExpenseTotalCalculator()
     {
-        return new ExpenseTotalCalculator($this->getCalculationService());
+        return new ExpenseTotalCalculator();
     }
 
     /**
@@ -221,7 +220,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createTaxTotalCalculator()
     {
-        return new TaxTotalCalculator($this->getCalculationService());
+        return new TaxTotalCalculator();
     }
 
     /**
@@ -245,10 +244,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createGrandTotalCalculator()
     {
-        return new GrandTotalCalculator(
-            $this->getUtilTextService(),
-            $this->getCalculationService()
-        );
+        return new GrandTotalCalculator($this->getUtilTextService());
     }
 
     /**
@@ -337,13 +333,5 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     public function getUtilTextService()
     {
         return $this->getProvidedDependency(CalculationDependencyProvider::SERVICE_UTIL_TEXT);
-    }
-
-    /**
-     * @return \Spryker\Service\Calculation\CalculationServiceInterface
-     */
-    public function getCalculationService(): CalculationServiceInterface
-    {
-        return $this->getProvidedDependency(CalculationDependencyProvider::SERVICE_CALCULATION);
     }
 }

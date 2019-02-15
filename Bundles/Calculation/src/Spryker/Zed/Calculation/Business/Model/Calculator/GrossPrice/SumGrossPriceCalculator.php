@@ -11,27 +11,10 @@ use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Spryker\Service\Calculation\CalculationServiceInterface;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
-use Spryker\Zed\Calculation\Business\Model\Calculator\ShipmentAwareTrait;
 
 class SumGrossPriceCalculator implements CalculatorInterface
 {
-    use ShipmentAwareTrait;
-
-    /**
-     * @var \Spryker\Service\Calculation\CalculationServiceInterface
-     */
-    protected $calculationService;
-
-    /**
-     * @param \Spryker\Service\Calculation\CalculationServiceInterface $calculationService
-     */
-    public function __construct(CalculationServiceInterface $calculationService)
-    {
-        $this->calculationService = $calculationService;
-    }
-
     /**
      * For already ordered entities, sum prices are acting as source of truth.
      *
@@ -43,7 +26,6 @@ class SumGrossPriceCalculator implements CalculatorInterface
     {
         $this->calculateItemGrossAmountForItems($calculableObjectTransfer->getItems());
         $this->calculateSumGrossPriceForExpenses($calculableObjectTransfer->getExpenses());
-        $this->calculateSumGrossPriceForItemExpenses($calculableObjectTransfer->getItems());
     }
 
     /**
@@ -116,29 +98,6 @@ class SumGrossPriceCalculator implements CalculatorInterface
 
                 $productOptionTransfer->setSumGrossPrice($productOptionTransfer->getUnitGrossPrice() * $productOptionTransfer->getQuantity());
             }
-        }
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     *
-     * @return void
-     */
-    protected function calculateSumGrossPriceForItemExpenses(ArrayObject $items): void
-    {
-        $shipmentGroups = $this->calculationService->groupItemsByShipment($items);
-
-        foreach ($shipmentGroups as $shipmentGroupTransfer) {
-            if ($this->assertShipmentGroupHasNoExpense($shipmentGroupTransfer)) {
-                continue;
-            }
-
-            $expenseTransfer = $shipmentGroupTransfer->getShipment()->getExpense();
-            if ($expenseTransfer->getIsOrdered() === true) {
-                continue;
-            }
-
-            $expenseTransfer->setSumGrossPrice($expenseTransfer->getUnitGrossPrice() * $expenseTransfer->getQuantity());
         }
     }
 }

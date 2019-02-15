@@ -20,7 +20,6 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     public const ORDER_CALCULATOR_PLUGIN_STACK = 'order calculator plugin stack';
 
     public const SERVICE_UTIL_TEXT = 'util text service';
-    public const SERVICE_CALCULATION = 'SERVICE_CALCULATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -40,8 +39,6 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::SERVICE_UTIL_TEXT] = function (Container $container) {
             return new CalculationToUtilTextBridge($container->getLocator()->utilText()->service());
         };
-
-        $container = $this->addCalculationService($container);
 
         return $container;
     }
@@ -64,19 +61,5 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     protected function getOrderCalculatorPluginStack(Container $container)
     {
         return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCalculationService(Container $container): Container
-    {
-        $container[static::SERVICE_CALCULATION] = function (Container $container) {
-            return $container->getLocator()->calculation()->service();
-        };
-
-        return $container;
     }
 }

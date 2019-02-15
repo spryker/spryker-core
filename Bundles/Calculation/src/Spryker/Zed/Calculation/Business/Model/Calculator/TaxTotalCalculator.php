@@ -10,25 +10,9 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
-use Spryker\Service\Calculation\CalculationServiceInterface;
 
 class TaxTotalCalculator implements CalculatorInterface
 {
-    use ShipmentAwareTrait;
-
-    /**
-     * @var \Spryker\Service\Calculation\CalculationServiceInterface
-     */
-    protected $calculationService;
-
-    /**
-     * @param \Spryker\Service\Calculation\CalculationServiceInterface $calculationService
-     */
-    public function __construct(CalculationServiceInterface $calculationService)
-    {
-        $this->calculationService = $calculationService;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -40,7 +24,6 @@ class TaxTotalCalculator implements CalculatorInterface
 
         $totalTaxAmount = $this->calculateTaxTotalForItems($calculableObjectTransfer->getItems());
         $totalTaxAmount += $this->calculateTaxTotalAmountForExpenses($calculableObjectTransfer->getExpenses());
-        $totalTaxAmount += $this->calculateTaxTotalAmountForItemExpenses($calculableObjectTransfer->getItems());
 
         $taxTotalTransfer = new TaxTotalTransfer();
         $taxTotalTransfer->setAmount((int)round($totalTaxAmount));
@@ -73,27 +56,6 @@ class TaxTotalCalculator implements CalculatorInterface
         foreach ($expenses as $expenseTransfer) {
             $totalTaxAmount += $expenseTransfer->getSumTaxAmount();
         }
-        return $totalTaxAmount;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     *
-     * @return int
-     */
-    protected function calculateTaxTotalAmountForItemExpenses(ArrayObject $items): int
-    {
-        $totalTaxAmount = 0;
-        $shipmentGroups = $this->calculationService->groupItemsByShipment($items);
-
-        foreach ($shipmentGroups as $shipmentGroupTransfer) {
-            if ($this->assertShipmentGroupHasNoExpense($shipmentGroupTransfer)) {
-                continue;
-            }
-
-            $totalTaxAmount += $shipmentGroupTransfer->getShipment()->getExpense()->getSumTaxAmount();
-        }
-
         return $totalTaxAmount;
     }
 }

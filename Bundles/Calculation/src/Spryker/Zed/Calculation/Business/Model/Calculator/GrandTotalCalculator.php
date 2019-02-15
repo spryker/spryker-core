@@ -8,34 +8,22 @@
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Spryker\Service\Calculation\CalculationServiceInterface;
 use Spryker\Service\UtilText\Model\Hash;
 use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextInterface;
 
 class GrandTotalCalculator implements CalculatorInterface
 {
-    use ShipmentAwareTrait;
-
     /**
      * @var \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextInterface
      */
     protected $utilTextService;
 
     /**
-     * @var \Spryker\Service\Calculation\CalculationServiceInterface
-     */
-    protected $calculationService;
-
-    /**
      * @param \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextInterface $utilTextService
-     * @param \Spryker\Service\Calculation\CalculationServiceInterface $calculationService
      */
-    public function __construct(
-        CalculationToUtilTextInterface $utilTextService,
-        CalculationServiceInterface $calculationService
-    ) {
+    public function __construct(CalculationToUtilTextInterface $utilTextService)
+    {
         $this->utilTextService = $utilTextService;
-        $this->calculationService = $calculationService;
     }
 
     /**
@@ -50,7 +38,6 @@ class GrandTotalCalculator implements CalculatorInterface
         $grandTotal = 0;
         $grandTotal = $this->calculateItemGrandTotal($calculableObjectTransfer, $grandTotal);
         $grandTotal = $this->calculateExpenseGrandTotal($calculableObjectTransfer, $grandTotal);
-        $grandTotal = $this->calculateExpenseItemGrandTotal($calculableObjectTransfer, $grandTotal);
 
         $totalsTransfer = $calculableObjectTransfer->getTotals();
         $totalsTransfer->setHash($this->generateTotalsHash($grandTotal));
@@ -64,19 +51,11 @@ class GrandTotalCalculator implements CalculatorInterface
      *
      * @return int
      */
-    protected function calculateExpenseItemGrandTotal(CalculableObjectTransfer $calculableObjectTransfer, $grandTotal)
+    protected function calculateItemGrandTotal(CalculableObjectTransfer $calculableObjectTransfer, $grandTotal)
     {
-        $shipmentGroups = $this->calculationService->groupItemsByShipment($calculableObjectTransfer->getItems());
-
-        foreach ($shipmentGroups as $shipmentGroupTransfer) {
-            if ($this->assertShipmentGroupHasNoExpense($shipmentGroupTransfer)) {
-                continue;
-            }
-
-            $expenseTransfer = $shipmentGroupTransfer->getShipment()->getExpense();
-            $grandTotal += $expenseTransfer->getSumPriceToPayAggregation() - $expenseTransfer->getCanceledAmount();
+        foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
+            $grandTotal += $itemTransfer->getSumPriceToPayAggregation() - $itemTransfer->getCanceledAmount();
         }
-
         return $grandTotal;
     }
 
@@ -91,21 +70,6 @@ class GrandTotalCalculator implements CalculatorInterface
         foreach ($calculableObjectTransfer->getExpenses() as $expenseTransfer) {
             $grandTotal += $expenseTransfer->getSumPriceToPayAggregation() - $expenseTransfer->getCanceledAmount();
         }
-        return $grandTotal;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     * @param int $grandTotal
-     *
-     * @return int
-     */
-    protected function calculateItemGrandTotal(CalculableObjectTransfer $calculableObjectTransfer, int $grandTotal)
-    {
-        foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
-            $grandTotal += $itemTransfer->getSumPriceToPayAggregation() - $itemTransfer->getCanceledAmount();
-        }
-
         return $grandTotal;
     }
 

@@ -10,27 +10,10 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator\GrossPrice;
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Service\Calculation\CalculationServiceInterface;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
-use Spryker\Zed\Calculation\Business\Model\Calculator\ShipmentAwareTrait;
 
 class PriceGrossCalculator implements CalculatorInterface
 {
-    use ShipmentAwareTrait;
-
-    /**
-     * @var \Spryker\Service\Calculation\CalculationServiceInterface
-     */
-    protected $calculationService;
-
-    /**
-     * @param \Spryker\Service\Calculation\CalculationServiceInterface $calculationService
-     */
-    public function __construct(CalculationServiceInterface $calculationService)
-    {
-        $this->calculationService = $calculationService;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -40,7 +23,6 @@ class PriceGrossCalculator implements CalculatorInterface
     {
         $this->calculatePriceForItems($calculableObjectTransfer->getItems());
         $this->calculatePricesForExpenses($calculableObjectTransfer->getExpenses());
-        $this->calculatePricesForItemExpenses($calculableObjectTransfer->getItems());
     }
 
     /**
@@ -79,26 +61,6 @@ class PriceGrossCalculator implements CalculatorInterface
     protected function calculatePricesForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
-            $expenseTransfer->setUnitPrice($expenseTransfer->getUnitGrossPrice());
-            $expenseTransfer->setSumPrice($expenseTransfer->getSumGrossPrice());
-        }
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     *
-     * @return void
-     */
-    protected function calculatePricesForItemExpenses(ArrayObject $items): void
-    {
-        $shipmentGroups = $this->calculationService->groupItemsByShipment($items);
-
-        foreach ($shipmentGroups as $shipmentGroupTransfer) {
-            if ($this->assertShipmentGroupHasNoExpense($shipmentGroupTransfer)) {
-                continue;
-            }
-
-            $expenseTransfer = $shipmentGroupTransfer->getShipment()->getExpense();
             $expenseTransfer->setUnitPrice($expenseTransfer->getUnitGrossPrice());
             $expenseTransfer->setSumPrice($expenseTransfer->getSumGrossPrice());
         }

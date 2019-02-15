@@ -9,25 +9,9 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Spryker\Service\Calculation\CalculationServiceInterface;
 
 class ExpenseTotalCalculator implements CalculatorInterface
 {
-    use ShipmentAwareTrait;
-
-    /**
-     * @var \Spryker\Service\Calculation\CalculationServiceInterface
-     */
-    protected $calculationService;
-
-    /**
-     * @param \Spryker\Service\Calculation\CalculationServiceInterface $calculationService
-     */
-    public function __construct(CalculationServiceInterface $calculationService)
-    {
-        $this->calculationService = $calculationService;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -38,7 +22,6 @@ class ExpenseTotalCalculator implements CalculatorInterface
         $calculableObjectTransfer->requireTotals();
 
         $expenseTotal = $this->calculateExpenseTotalSumPrice($calculableObjectTransfer->getExpenses());
-        $expenseTotal += $this->calculateItemExpenseTotalSumPrice($calculableObjectTransfer->getItems());
 
         $calculableObjectTransfer->getTotals()->setExpenseTotal($expenseTotal);
     }
@@ -54,27 +37,6 @@ class ExpenseTotalCalculator implements CalculatorInterface
         foreach ($expenses as $expenseTransfer) {
             $expenseTotal += $expenseTransfer->getSumPrice();
         }
-        return $expenseTotal;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     *
-     * @return int
-     */
-    protected function calculateItemExpenseTotalSumPrice(ArrayObject $items): int
-    {
-        $expenseTotal = 0;
-        $shipmentGroups = $this->calculationService->groupItemsByShipment($items);
-
-        foreach ($shipmentGroups as $shipmentGroupTransfer) {
-            if ($this->assertShipmentGroupHasNoExpense($shipmentGroupTransfer)) {
-                continue;
-            }
-
-            $expenseTotal += $shipmentGroupTransfer->getShipment()->getExpense()->getSumPrice();
-        }
-
         return $expenseTotal;
     }
 }
