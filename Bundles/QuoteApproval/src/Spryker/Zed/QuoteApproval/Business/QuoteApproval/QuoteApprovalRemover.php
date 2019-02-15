@@ -9,6 +9,7 @@ namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface;
@@ -85,12 +86,26 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
             ->validateQuoteApprovalRemoveRequest($quoteApprovalRequestTransfer);
 
         if (!$quoteApprovalRequestValidationResponse->getIsSuccessful()) {
-            $quoteApprovalResponseTransfer->setIsSuccessful(false)
+            return $quoteApprovalResponseTransfer->setIsSuccessful(false)
                 ->addMessage($this->createMessageTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED));
-
-            return $quoteApprovalResponseTransfer;
         }
 
+        $this->executeQuoteApprovalRemoval($quoteApprovalRequestValidationResponse, $quoteApprovalRequestTransfer);
+
+        return $quoteApprovalResponseTransfer->setIsSuccessful(true)
+            ->addMessage($this->createMessageTransfer(static::GLOSSARY_KEY_APPROVAL_REMOVED));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer $quoteApprovalRequestValidationResponse
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return void
+     */
+    protected function executeQuoteApprovalRemoval(
+        QuoteApprovalRequestValidationResponseTransfer $quoteApprovalRequestValidationResponse,
+        QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+    ): void {
         $quoteTransfer = $quoteApprovalRequestValidationResponse->getQuote();
 
         $this->quoteLocker->unlockQuote($quoteTransfer);
@@ -99,13 +114,6 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
         $this->quoteApprovalEntityManager->deleteQuoteApprovalById(
             $quoteApprovalRequestTransfer->getIdQuoteApproval()
         );
-
-        $quoteApprovalResponseTransfer->setIsSuccessful(false)
-            ->addMessage($this->createMessageTransfer(static::GLOSSARY_KEY_APPROVAL_REMOVED));
-
-        $quoteApprovalResponseTransfer->setIsSuccessful(true);
-
-        return $quoteApprovalResponseTransfer;
     }
 
     /**

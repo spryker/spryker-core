@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
@@ -100,7 +101,26 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
             );
         }
 
+        $quoteApprovalTransfer = $this->executeQuoteApprovalCreation(
+            $quoteApprovalRequestValidationResponseTransfer,
+            $quoteApprovalRequestTransfer
+        );
+
+        return $this->createSuccessfullQuoteApprovalResponseTransfer($quoteApprovalTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer $quoteApprovalRequestValidationResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer
+     */
+    protected function executeQuoteApprovalCreation(
+        QuoteApprovalRequestValidationResponseTransfer $quoteApprovalRequestValidationResponseTransfer,
+        QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+    ): QuoteApprovalTransfer {
         $quoteTransfer = $quoteApprovalRequestValidationResponseTransfer->getQuote();
+
         $quoteApprovalTransfer = $this->createQuoteApprovalTransfer(
             $quoteTransfer->getIdQuote(),
             $quoteApprovalRequestTransfer->getApproverCompanyUserId()
@@ -114,7 +134,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
             $this->shareQuoteToApprover($quoteApprovalTransfer);
         }
 
-        return $this->createSuccessfullQuoteApprovalResponseTransfer($quoteApprovalTransfer);
+        return $quoteApprovalTransfer;
     }
 
     /**
