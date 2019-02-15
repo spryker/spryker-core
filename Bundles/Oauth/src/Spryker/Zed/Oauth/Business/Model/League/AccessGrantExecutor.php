@@ -17,13 +17,28 @@ class AccessGrantExecutor implements AccessGrantExecutorInterface
      * @var \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface[]
      */
     protected $grants;
+    /**
+     * @var \Spryker\Zed\Oauth\Business\Model\League\GrantTypeExecutor
+     */
+    protected $grantTypeExecutor;
+    /**
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeProviderPluginInterface[]
+     */
+    protected $grantTypeProviderPlugins;
 
     /**
      * @param array $grantTypes
+     * @param \Spryker\Zed\Oauth\Business\Model\League\GrantTypeExecutor $grantTypeExecutor
+     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeProviderPluginInterface[] $grantTypeProviderPlugins
      */
-    public function __construct(array $grantTypes)
-    {
+    public function __construct(
+        array $grantTypes,
+        GrantTypeExecutor $grantTypeExecutor,
+        array $grantTypeProviderPlugins
+    ) {
         $this->grants = $grantTypes;
+        $this->grantTypeExecutor = $grantTypeExecutor;
+        $this->grantTypeProviderPlugins = $grantTypeProviderPlugins;
     }
 
     /**

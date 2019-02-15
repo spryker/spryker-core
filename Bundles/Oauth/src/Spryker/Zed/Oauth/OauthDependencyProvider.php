@@ -17,6 +17,7 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_USER_PROVIDER = 'PLUGIN_USER_PROVIDER';
     public const PLUGIN_SCOPE_PROVIDER = 'PLUGIN_SCOPE_PROVIDER';
+    public const PLUGIN_GRANT_TYPE_PROVIDER = 'PLUGIN_GRANT_TYPE_PROVIDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,6 +28,7 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addUserProviderPlugins($container);
         $container = $this->addScopeProviderPlugins($container);
+        $container = $this->addGrantTypeProviderPlugins($container);
 
         return $container;
     }
@@ -60,6 +62,20 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGrantTypeProviderPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_GRANT_TYPE_PROVIDER] = function (Container $container) {
+            return $this->getGrantTypeProviderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface[]
      */
     protected function getUserProviderPlugins(): array
@@ -74,4 +90,13 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
+
+    /**
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeProviderPluginInterface[]
+     */
+    protected function getGrantTypeProviderPlugins(): array
+    {
+        return [];
+    }
+
 }

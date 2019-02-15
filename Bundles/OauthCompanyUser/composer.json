@@ -4,6 +4,7 @@
   "description": "OauthCompanyUser module",
   "license": "proprietary",
   "require": {
+    "league/oauth2-server": "^7.1",
     "php": ">=7.1",
     "spryker/company-user": "^2.6.0",
     "spryker/kernel": "^3.0.0",
