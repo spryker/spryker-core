@@ -26,6 +26,7 @@ use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\Merchant\Business\MerchantFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
