@@ -37,6 +37,11 @@ class AutoloadUpdater implements UpdaterInterface
     public const PSR_0 = 'psr-0';
     public const PSR_4 = 'psr-4';
 
+    protected const RESERVED_NAMESPACES = [
+        'vendor/',
+        'tests/',
+    ];
+
     /**
      * @var array
      */
@@ -455,7 +460,7 @@ class AutoloadUpdater implements UpdaterInterface
     protected function removeInvalidAutoloadNamespaces(array $autoload, $modulePath)
     {
         foreach ($autoload as $namespace => $relativeDirectory) {
-            if (substr($relativeDirectory, 0, 7) === 'vendor/') {
+            if ($this->isReservedNamespace($relativeDirectory)) {
                 continue;
             }
 
@@ -507,5 +512,21 @@ class AutoloadUpdater implements UpdaterInterface
         $filterChain->attach(new DashToCamelCase());
 
         return $filterChain->filter($value);
+    }
+
+    /**
+     * @param string $relativeDirectory
+     *
+     * @return bool
+     */
+    protected function isReservedNamespace(string $relativeDirectory): bool
+    {
+        foreach (static::RESERVED_NAMESPACES as $reservedNamespace) {
+            if (strpos($relativeDirectory, $reservedNamespace) === 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -154,6 +154,10 @@ class ModuleFinder implements ModuleFinderInterface
     {
         foreach ($this->getModuleFinder() as $directoryInfo) {
             $moduleTransfer = $this->getModuleTransfer($directoryInfo);
+
+            if (!$this->isModule($moduleTransfer)) {
+                continue;
+            }
             $moduleTransferCollection = $this->addModuleToCollection($moduleTransfer, $moduleTransferCollection, $moduleFilterTransfer);
         }
 
@@ -330,6 +334,9 @@ class ModuleFinder implements ModuleFinderInterface
     protected function getComposerJsonAsArray(string $path): array
     {
         $pathToComposerJson = sprintf('%s/composer.json', $path);
+        if (!is_file($pathToComposerJson)) {
+            return [];
+        }
         $fileContent = file_get_contents($pathToComposerJson);
         $composerJsonAsArray = json_decode($fileContent, true);
 
