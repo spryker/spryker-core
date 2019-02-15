@@ -71,7 +71,7 @@ class ResponseBuilder implements ResponseBuilderInterface
             $restRequest
         );
 
-        $data = $this->resourcesToArray($restResponse->getResources(), $restRequest);
+        $data = $this->resourcesToArray($restResponse->getResources(), $restRequest, $mainResourceType);
 
         if ($this->isSingleObjectRequest($restRequest, $data)) {
             $response[RestResponseInterface::RESPONSE_DATA] = $data[0];
@@ -82,7 +82,7 @@ class ResponseBuilder implements ResponseBuilderInterface
 
         $included = $this->responseRelationship->processIncluded($restResponse->getResources(), $restRequest);
         if ($included) {
-            $response[RestResponseInterface::RESPONSE_INCLUDED] = $this->resourcesToArray($included, $restRequest);
+            $response[RestResponseInterface::RESPONSE_INCLUDED] = $this->resourcesToArray($included, $restRequest, $mainResourceType);
         }
 
         if ($restRequest->getPage()) {
@@ -110,10 +110,11 @@ class ResponseBuilder implements ResponseBuilderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $currentResourceType
      *
      * @return array
      */
-    protected function resourcesToArray(array $resources, RestRequestInterface $restRequest): array
+    protected function resourcesToArray(array $resources, RestRequestInterface $restRequest, string $currentResourceType): array
     {
         $data = [];
 
@@ -125,9 +126,10 @@ class ResponseBuilder implements ResponseBuilderInterface
                 }
                 $resource->addLink(RestLinkInterface::LINK_SELF, $link);
             }
+            $includeRelations = $currentResourceType === $resource->getType() || $this->responseRelationship->hasRelationship($resource->getType(), $restRequest);
             $data[] = $this->resourceToArray(
                 $resource,
-                $this->responseRelationship->hasRelationship($resource->getType(), $restRequest),
+                $includeRelations,
                 $restRequest
             );
         }

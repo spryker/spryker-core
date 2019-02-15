@@ -176,20 +176,14 @@ class UsersTable extends AbstractTable
      */
     public function createStatusLabel(array $user)
     {
-        $statusLabel = '';
         switch ($user[SpyUserTableMap::COL_STATUS]) {
             case SpyUserTableMap::COL_STATUS_ACTIVE:
-                $statusLabel = '<span class="label label-success" title="Active">Active</span>';
-                break;
+                return $this->generateLabel('Active', 'label-success');
             case SpyUserTableMap::COL_STATUS_BLOCKED:
-                $statusLabel = '<span class="label label-danger" title="Deactivated">Deactivated</span>';
-                break;
+                return $this->generateLabel('Deactivated', 'label-danger');
             case SpyUserTableMap::COL_STATUS_DELETED:
-                $statusLabel = '<span class="label label-default" title="Deleted">Deleted</span>';
-                break;
+                return $this->generateLabel('Deleted', 'label-default');
         }
-
-        return $statusLabel;
     }
 
     /**
