@@ -5,18 +5,22 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/auth": "^3.1.0",
     "spryker/kernel": "^3.0.0",
     "spryker/mail": "^4.0.0"
   },
   "require-dev": {
-    "spryker/auth": "*"
-  },
-  "suggest": {
-    "spryker/auth": "If you want to use Auth plugins."
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
