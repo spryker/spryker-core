@@ -30,6 +30,8 @@ class QuoteApprovalExpanderPlugin extends AbstractPlugin implements QuoteExpande
      */
     public function expand(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
+        $quoteTransfer->requireIdQuote();
+
         $quoteTransfer->setQuoteApprovals(
             new ArrayObject($this->getFacade()->getQuoteApprovalsByIdQuote($quoteTransfer->getIdQuote()))
         );
