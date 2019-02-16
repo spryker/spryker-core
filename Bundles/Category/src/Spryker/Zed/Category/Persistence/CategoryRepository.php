@@ -65,7 +65,8 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             $localeTransfer->getIdLocale(),
             static::NODE_PATH_ZERO_DEPTH
         );
-        return $this->generateNodePathString($nodePathQuery);
+
+        return $this->generateNodePathString($nodePathQuery, static::NODE_PATH_GLUE);
     }
 
     /**
@@ -81,6 +82,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             $localeTransfer->getIdLocale(),
             static::NODE_PATH_NULL_DEPTH
         );
+
         return $this->generateNodePathString($nodePathQuery, static::CATEGORY_NODE_PATH_GLUE);
     }
 
@@ -90,7 +92,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      *
      * @return string
      */
-    protected function generateNodePathString(SpyCategoryNodeQuery $nodePathQuery, string $glue = self::NODE_PATH_GLUE): string
+    protected function generateNodePathString(SpyCategoryNodeQuery $nodePathQuery, string $glue): string
     {
         $nodePathQuery = $nodePathQuery
             ->clearSelectColumns()
@@ -114,9 +116,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         int $idLocale,
         ?int $depth = self::NODE_PATH_NULL_DEPTH
     ): SpyCategoryNodeQuery {
-        $nodeQuery = $this->getFactory()->createCategoryNodeQuery();
-
-        $nodeQuery
+        return $this->getFactory()->createCategoryNodeQuery()
             ->useClosureTableQuery()
                 ->orderByFkCategoryNodeDescendant(Criteria::DESC)
                 ->orderByDepth(Criteria::DESC)
@@ -124,13 +124,11 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 ->filterByDepth($depth, Criteria::NOT_EQUAL)
             ->endUse()
             ->useCategoryQuery()
-                ->useAttributeQuery()
-                    ->filterByFkLocale($idLocale)
-                ->endUse()
-            ->endUse();
-
-        $nodeQuery->setFormatter(new PropelArraySetFormatter());
-        return $nodeQuery;
+            ->useAttributeQuery()
+            ->filterByFkLocale($idLocale)
+            ->endUse()
+            ->endUse()
+            ->setFormatter(new PropelArraySetFormatter());
     }
 
     /**
@@ -145,9 +143,8 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         int $idLocale,
         ?int $depth = self::NODE_PATH_NULL_DEPTH
     ): SpyCategoryNodeQuery {
-        $nodeQuery = $this->queryNodePathWithRootNode($idNode, $idLocale, $depth);
-        $nodeQuery->filterByIsRoot(static::IS_NOT_ROOT_NODE);
-        return $nodeQuery;
+        return $this->queryNodePathWithRootNode($idNode, $idLocale, $depth)
+            ->filterByIsRoot(static::IS_NOT_ROOT_NODE);
     }
 
     /**

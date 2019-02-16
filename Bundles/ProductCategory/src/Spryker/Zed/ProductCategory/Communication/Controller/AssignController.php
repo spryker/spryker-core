@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AssignController extends AbstractController
 {
+    public const PARAM_ID_CATEGORY = 'id-category';
     public const PARAM_ID_NODE = 'id-node';
 
     /**
@@ -31,7 +32,7 @@ class AssignController extends AbstractController
     public function indexAction(Request $request)
     {
         $idCategory = $this->castId($request->get(ProductCategoryTable::PARAM_ID_CATEGORY));
-        $idNode = $request->get(static::PARAM_ID_NODE);
+        $idNode = $this->castId(static::PARAM_ID_NODE);
         $categoryEntity = $this->getCategoryEntity($idCategory);
 
         if (!$categoryEntity) {

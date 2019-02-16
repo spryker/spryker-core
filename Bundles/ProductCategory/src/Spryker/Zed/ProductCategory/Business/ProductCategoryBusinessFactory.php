@@ -57,7 +57,6 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_CATEGORY);
     }
 
-
     /**
      * @return \Spryker\Zed\ProductCategory\Business\Model\CategoryReaderInterface
      */

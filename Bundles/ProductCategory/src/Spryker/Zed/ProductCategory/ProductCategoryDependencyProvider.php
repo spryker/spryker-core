@@ -45,13 +45,11 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductCategoryToProductBridge($container->getLocator()->product()->facade());
         };
 
-        $container[self::FACADE_CATEGORY] = function (Container $container) {
-            return new ProductCategoryToCategoryBridge($container->getLocator()->category()->facade());
-        };
-
         $container[self::FACADE_EVENT] = function (Container $container) {
             return new ProductCategoryToEventBridge($container->getLocator()->event()->facade());
         };
+
+        $container = $this->addCategoryFacade($container);
 
         return $container;
     }
@@ -76,6 +74,20 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::FACADE_CATEGORY] = function (Container $container) {
+            return new ProductCategoryToCategoryBridge($container->getLocator()->category()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryFacade(Container $container): Container
+    {
+        $container[static::FACADE_CATEGORY] = function (Container $container) {
             return new ProductCategoryToCategoryBridge($container->getLocator()->category()->facade());
         };
 
