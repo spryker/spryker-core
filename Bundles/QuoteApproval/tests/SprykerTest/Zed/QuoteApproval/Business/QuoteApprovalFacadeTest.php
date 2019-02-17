@@ -11,8 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
-use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
@@ -243,7 +241,7 @@ class QuoteApprovalFacadeTest extends Unit
         );
 
         $notQuoteCompanyUserTransfer = $this->haveCompanyUser();
-        $quoteApprovalRemoveRequestTransfer->setIdCompanyUser($notQuoteCompanyUserTransfer->getIdCompanyUser());
+        $quoteApprovalRemoveRequestTransfer->setRequesterCompanyUserId($notQuoteCompanyUserTransfer->getIdCompanyUser());
 
         //Act
         $quoteApprovalResponseTransfer = $this->getFacade()->removeQuoteApproval($quoteApprovalRemoveRequestTransfer);
@@ -253,32 +251,32 @@ class QuoteApprovalFacadeTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalCreateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalRequestTransfer
      */
     protected function createValidQuoteApprovalRemoveRequestTransfer(
-        QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
-    ): QuoteApprovalRemoveRequestTransfer {
+        QuoteApprovalRequestTransfer $quoteApprovalCreateRequestTransfer
+    ): QuoteApprovalRequestTransfer {
         $this->getFacade()
             ->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
         $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
 
-        $quoteApprovalRemoveRequestTransfer = new QuoteApprovalRemoveRequestTransfer();
-        $quoteApprovalRemoveRequestTransfer->setIdCompanyUser($quoteApprovalCreateRequestTransfer->getRequesterCompanyUserId());
+        $quoteApprovalRemoveRequestTransfer = new QuoteApprovalRequestTransfer();
+        $quoteApprovalRemoveRequestTransfer->setRequesterCompanyUserId($quoteApprovalCreateRequestTransfer->getRequesterCompanyUserId());
         $quoteApprovalRemoveRequestTransfer->setIdQuoteApproval($quoteApprovalTransfers[0]->getIdQuoteApproval());
 
         return $quoteApprovalRemoveRequestTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalCreateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalRequestTransfer
      */
     protected function createValidQuoteApprovalRequestTransfer(
-        QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
+        QuoteApprovalRequestTransfer $quoteApprovalCreateRequestTransfer
     ): QuoteApprovalRequestTransfer {
         $this->getFacade()
             ->createQuoteApproval($quoteApprovalCreateRequestTransfer);
@@ -286,16 +284,16 @@ class QuoteApprovalFacadeTest extends Unit
         $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
 
         $quoteApprovalRequestTransfer = new QuoteApprovalRequestTransfer();
-        $quoteApprovalRequestTransfer->setFkCompanyUser($quoteApprovalCreateRequestTransfer->getRequesterCompanyUserId());
+        $quoteApprovalRequestTransfer->setApproverCompanyUserId($quoteApprovalCreateRequestTransfer->getRequesterCompanyUserId());
         $quoteApprovalRequestTransfer->setIdQuoteApproval($quoteApprovalTransfers[0]->getIdQuoteApproval());
 
         return $quoteApprovalRequestTransfer;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalRequestTransfer
      */
-    protected function createValidQuoteApprovalCreateRequestTransfer(): QuoteApprovalCreateRequestTransfer
+    protected function createValidQuoteApprovalCreateRequestTransfer(): QuoteApprovalRequestTransfer
     {
         $this->prepareEnvForQuoteApprovalCreation();
 
@@ -329,14 +327,14 @@ class QuoteApprovalFacadeTest extends Unit
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalRequestTransfer
      */
-    protected function createQuoteApprovalCreateRequestTransfer(QuoteTransfer $quoteTransfer): QuoteApprovalCreateRequestTransfer
+    protected function createQuoteApprovalCreateRequestTransfer(QuoteTransfer $quoteTransfer): QuoteApprovalRequestTransfer
     {
         $this->prepareEnvForQuoteApprovalCreation();
         $companyUserTransfer = $this->haveCompanyUser();
 
-        $quoteApprovalCreateRequestTransfer = new QuoteApprovalCreateRequestTransfer();
+        $quoteApprovalCreateRequestTransfer = new QuoteApprovalRequestTransfer();
         $quoteApprovalCreateRequestTransfer->setIdQuote($quoteTransfer->getIdQuote());
         $quoteApprovalCreateRequestTransfer->setApproverCompanyUserId($companyUserTransfer->getIdCompanyUser());
 

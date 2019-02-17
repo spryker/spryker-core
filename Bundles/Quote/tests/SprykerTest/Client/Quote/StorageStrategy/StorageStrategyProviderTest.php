@@ -12,6 +12,8 @@ use Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface;
 use Spryker\Client\Quote\Exception\StorageStrategyNotFound;
 use Spryker\Client\Quote\QuoteConfig;
+use Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface;
+use Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface;
 use Spryker\Client\Quote\Session\QuoteSession;
 use Spryker\Client\Quote\StorageStrategy\DatabaseStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\SessionStorageStrategy;
@@ -19,7 +21,6 @@ use Spryker\Client\Quote\StorageStrategy\StorageStrategyProvider;
 use Spryker\Client\Quote\Zed\QuoteStubInterface;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Shared\Quote\QuoteConfig as SharedQuoteConfig;
-use Spryker\Shared\Quote\QuoteValidator\QuoteLockStatusValidatorInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
@@ -156,7 +157,8 @@ class StorageStrategyProviderTest extends Unit
             $customerClient,
             $this->createQuoteZedStubMock(),
             $this->createQuoteSession(),
-            $this->createQuoteLockStatusValidatorMock()
+            $this->createQuoteLockStatusValidatorMock(),
+            $this->createQuoteEditStatusValidatorMock()
         );
     }
 
@@ -165,7 +167,11 @@ class StorageStrategyProviderTest extends Unit
      */
     protected function createSessionStorageStrategy()
     {
-        return new SessionStorageStrategy($this->createQuoteSession(), $this->createQuoteLockStatusValidatorMock());
+        return new SessionStorageStrategy(
+            $this->createQuoteSession(),
+            $this->createQuoteLockStatusValidatorMock(),
+            $this->createQuoteEditStatusValidatorMock()
+        );
     }
 
     /**
@@ -199,11 +205,19 @@ class StorageStrategyProviderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Quote\QuoteValidator\QuoteLockStatusValidatorInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface
      */
     protected function createQuoteLockStatusValidatorMock()
     {
         return $this->createMock(QuoteLockStatusValidatorInterface::class);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface
+     */
+    protected function createQuoteEditStatusValidatorMock()
+    {
+        return $this->createMock(QuoteEditStatusValidatorInterface::class);
     }
 
     /**
