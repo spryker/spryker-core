@@ -80,14 +80,14 @@ class QuoteApprovalFacadeTest extends Unit
         $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
 
         //Act
-        $quoteApprovalRepsponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+        $quoteApprovalResponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
         //Assert
         $shareDeatailCollectionTransfer = $this->getShareDetailsByIdQuote(
             $quoteApprovalCreateRequestTransfer->getIdQuote()
         );
 
-        $this->assertEquals(true, $quoteApprovalRepsponseTransfer->getIsSuccessful());
+        $this->assertEquals(true, $quoteApprovalResponseTransfer->getIsSuccessful());
         $this->assertCount(1, $shareDeatailCollectionTransfer->getShareDetails());
         $this->assertEquals(
             $shareDeatailCollectionTransfer->getShareDetails()->offsetGet(0)->getIdCompanyUser(),
@@ -104,10 +104,10 @@ class QuoteApprovalFacadeTest extends Unit
         $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
 
         //Act
-        $quoteApprovalRepsponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+        $quoteApprovalResponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
         //Assert
-        $this->assertEquals(true, $quoteApprovalRepsponseTransfer->getIsSuccessful());
+        $this->assertEquals(true, $quoteApprovalResponseTransfer->getIsSuccessful());
 
         $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
 
@@ -125,10 +125,10 @@ class QuoteApprovalFacadeTest extends Unit
         $this->approverCanApproveUpToAmount(9, $quoteTransfer);
 
         //Act
-        $quoteApprovalRepsponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+        $quoteApprovalResponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
         //Assert
-        $this->assertEquals(false, $quoteApprovalRepsponseTransfer->getIsSuccessful());
+        $this->assertEquals(false, $quoteApprovalResponseTransfer->getIsSuccessful());
     }
 
     /**
@@ -142,10 +142,10 @@ class QuoteApprovalFacadeTest extends Unit
         $quoteApprovalCreateRequestTransfer->setRequesterCompanyUserId($quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
 
         //Act
-        $quoteApprovalRepsponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+        $quoteApprovalResponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
         //Assert
-        $this->assertEquals(false, $quoteApprovalRepsponseTransfer->getIsSuccessful());
+        $this->assertEquals(false, $quoteApprovalResponseTransfer->getIsSuccessful());
     }
 
     /**
@@ -164,10 +164,10 @@ class QuoteApprovalFacadeTest extends Unit
         $quoteApprovalCreateRequestTransfer->setRequesterCompanyUserId($notQuoteCompanyUserTransfer->getIdCompanyUser());
 
         //Act
-        $quoteApprovalRepsponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+        $quoteApprovalResponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
         //Assert
-        $this->assertEquals(false, $quoteApprovalRepsponseTransfer->getIsSuccessful());
+        $this->assertEquals(false, $quoteApprovalResponseTransfer->getIsSuccessful());
     }
 
     /**
@@ -180,10 +180,10 @@ class QuoteApprovalFacadeTest extends Unit
         $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
         //Act
-        $quoteApprovalRepsponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+        $quoteApprovalResponseTransfer = $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
         //Assert
-        $this->assertEquals(false, $quoteApprovalRepsponseTransfer->getIsSuccessful());
+        $this->assertEquals(false, $quoteApprovalResponseTransfer->getIsSuccessful());
     }
 
     /**
