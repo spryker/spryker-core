@@ -29,12 +29,11 @@ class ZedHelper extends Module
     {
         $tester = $this->getWebDriver();
 
-//        try {
-            $tester->seeElement('.nav-header .dropdown-menu a');
+        try {
             $tester->click('Logout');
-//        } catch (\Exception $exception) {
+        } catch (\Exception $exception) {
 //            // NOP
-//        }
+        }
 
         static::$alreadyLoggedIn = false;
     }
