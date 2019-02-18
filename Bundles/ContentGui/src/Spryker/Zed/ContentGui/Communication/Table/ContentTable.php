@@ -41,6 +41,7 @@ class ContentTable extends AbstractTable
             ContentTableConstants::COL_ID_CONTENT,
             ContentTableConstants::COL_NAME,
             ContentTableConstants::COL_CONTENT_TYPE_KEY,
+            ContentTableConstants::COL_CREATED_AT,
             ContentTableConstants::COL_UPDATED_AT,
         ]);
 
@@ -53,6 +54,7 @@ class ContentTable extends AbstractTable
             ContentTableConstants::COL_NAME,
             ContentTableConstants::COL_DESCRIPTION,
             ContentTableConstants::COL_CONTENT_TYPE_KEY,
+            ContentTableConstants::COL_CREATED_AT,
             ContentTableConstants::COL_UPDATED_AT,
         ]);
 
@@ -71,6 +73,7 @@ class ContentTable extends AbstractTable
             ContentTableConstants::COL_NAME => 'Name',
             ContentTableConstants::COL_DESCRIPTION => 'Description',
             ContentTableConstants::COL_CONTENT_TYPE_KEY => 'Content Type',
+            ContentTableConstants::COL_CREATED_AT => 'Created',
             ContentTableConstants::COL_UPDATED_AT => 'Updated',
             ContentTableConstants::COL_ACTIONS => 'Actions',
         ];
@@ -96,6 +99,7 @@ class ContentTable extends AbstractTable
                 ContentTableConstants::COL_NAME => $content[SpyContentTableMap::COL_NAME],
                 ContentTableConstants::COL_DESCRIPTION => $content[SpyContentTableMap::COL_DESCRIPTION],
                 ContentTableConstants::COL_CONTENT_TYPE_KEY => $this->buildContentTypeLabel($content[SpyContentTableMap::COL_CONTENT_TYPE_KEY]),
+                ContentTableConstants::COL_CREATED_AT => date('Y-m-d H:i:s', strtotime($content[SpyContentTableMap::COL_CREATED_AT])),
                 ContentTableConstants::COL_UPDATED_AT => date('Y-m-d H:i:s', strtotime($content[SpyContentTableMap::COL_UPDATED_AT])),
                 ContentTableConstants::COL_ACTIONS => $this->buildLinks($content),
             ];
