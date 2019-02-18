@@ -32,9 +32,13 @@ class ZedHelper extends Module
 
 
         if ($tester->seeLink('Logout')) {
-            $tester->click('Logout');
+            // $tester->click('Logout');
         }
 
+
+        $pageSource = $tester->grabPageSource();
+        codecept_debug($pageSource);
+        // $pageSource->debugWebDriverLogs();
 
 //        $tester->_backupSession()->quit();
 
