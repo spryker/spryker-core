@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ContentStorage\ContentStorageConfig getConfig()
  */
-class ContentStorageEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
+class ContentStorageEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -45,10 +45,10 @@ class ContentStorageEventResourceQueryContainerPlugin extends AbstractPlugin imp
     public function getData(array $ids = []): array
     {
         if (!empty($ids)) {
-            return $contentEntities = $this->getRepository()->findContentByIds($ids)->getArrayCopy();
+            return $this->getRepository()->findContentByIds($ids)->getArrayCopy();
         }
 
-        return $contentEntities = $this->getRepository()->findAllContent()->getArrayCopy();
+        return $this->getRepository()->findAllContent()->getArrayCopy();
     }
 
     /**
