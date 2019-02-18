@@ -44,4 +44,12 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     {
         return $this->categoryFacade->getNodePath($idNode, $localeTransfer);
     }
+
+    /**
+     * @return string
+     */
+    public function getCategoryListUrl(): string
+    {
+        return $this->categoryFacade->getCategoryListUrl();
+    }
 }

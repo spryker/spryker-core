@@ -529,4 +529,14 @@ interface CategoryFacadeInterface
      * @return string
      */
     public function getNodePath(int $idNode, LocaleTransfer $localeTransfer): string;
+
+    /**
+     * Specification:
+     * - Retrieve url to category list.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCategoryListUrl(): string;
 }
