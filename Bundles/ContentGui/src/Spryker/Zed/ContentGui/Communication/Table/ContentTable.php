@@ -10,7 +10,6 @@ namespace Spryker\Zed\ContentGui\Communication\Table;
 use Orm\Zed\Content\Persistence\Map\SpyContentTableMap;
 use Orm\Zed\Content\Persistence\SpyContentQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -22,20 +21,11 @@ class ContentTable extends AbstractTable
     private $contentQuery;
 
     /**
-     * @var \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilDateTimeServiceInterface
-     */
-    private $utilDateTimeService;
-
-    /**
      * @param \Orm\Zed\Content\Persistence\SpyContentQuery $contentQuery
-     * @param \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilDateTimeServiceInterface $utilDateTimeService
      */
-    public function __construct(
-        SpyContentQuery $contentQuery,
-        ContentGuiToUtilDateTimeServiceInterface $utilDateTimeService
-    ) {
+    public function __construct(SpyContentQuery $contentQuery)
+    {
         $this->contentQuery = $contentQuery;
-        $this->utilDateTimeService = $utilDateTimeService;
     }
 
     /**
@@ -51,6 +41,7 @@ class ContentTable extends AbstractTable
             ContentTableConstants::COL_ID_CONTENT,
             ContentTableConstants::COL_NAME,
             ContentTableConstants::COL_CONTENT_TYPE_KEY,
+            ContentTableConstants::COL_CREATED_AT,
             ContentTableConstants::COL_UPDATED_AT,
         ]);
 
@@ -63,6 +54,8 @@ class ContentTable extends AbstractTable
             ContentTableConstants::COL_NAME,
             ContentTableConstants::COL_DESCRIPTION,
             ContentTableConstants::COL_CONTENT_TYPE_KEY,
+            ContentTableConstants::COL_CREATED_AT,
+            ContentTableConstants::COL_UPDATED_AT,
         ]);
 
         return $config;
@@ -80,6 +73,7 @@ class ContentTable extends AbstractTable
             ContentTableConstants::COL_NAME => 'Name',
             ContentTableConstants::COL_DESCRIPTION => 'Description',
             ContentTableConstants::COL_CONTENT_TYPE_KEY => 'Content Type',
+            ContentTableConstants::COL_CREATED_AT => 'Created',
             ContentTableConstants::COL_UPDATED_AT => 'Updated',
             ContentTableConstants::COL_ACTIONS => 'Actions',
         ];
@@ -105,7 +99,8 @@ class ContentTable extends AbstractTable
                 ContentTableConstants::COL_NAME => $content[SpyContentTableMap::COL_NAME],
                 ContentTableConstants::COL_DESCRIPTION => $content[SpyContentTableMap::COL_DESCRIPTION],
                 ContentTableConstants::COL_CONTENT_TYPE_KEY => $this->buildContentTypeLabel($content[SpyContentTableMap::COL_CONTENT_TYPE_KEY]),
-                ContentTableConstants::COL_UPDATED_AT => $this->utilDateTimeService->formatDateTime($content[SpyContentTableMap::COL_UPDATED_AT]),
+                ContentTableConstants::COL_CREATED_AT => date('Y-m-d H:i:s', strtotime($content[SpyContentTableMap::COL_CREATED_AT])),
+                ContentTableConstants::COL_UPDATED_AT => date('Y-m-d H:i:s', strtotime($content[SpyContentTableMap::COL_UPDATED_AT])),
                 ContentTableConstants::COL_ACTIONS => $this->buildLinks($content),
             ];
         }

@@ -10,7 +10,6 @@ namespace Spryker\Zed\ContentGui;
 use Orm\Zed\Content\Persistence\Base\SpyContentQuery;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeBridge;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeBridge;
-use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilDateTimeServiceBridge;
 use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -19,7 +18,6 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_CONTENT_ITEM = 'PLUGINS_CONTENT_ITEM';
     public const PROPEL_QUERY_CONTENT = 'PROPEL_QUERY_CONTENT';
-    public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_CONTENT = 'FACADE_CONTENT';
@@ -34,7 +32,6 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideCommunicationLayerDependencies($container);
 
         $container = $this->addPropelContentQuery($container);
-        $container = $this->addUtilDateTimeService($container);
         $container = $this->addLocaleFacadeService($container);
         $container = $this->addContentFacade($container);
         $container = $this->addContentPlugins($container);
@@ -88,22 +85,6 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PROPEL_QUERY_CONTENT] = function () {
             return SpyContentQuery::create();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addUtilDateTimeService(Container $container): Container
-    {
-        $container[static::SERVICE_UTIL_DATE_TIME] = function (Container $container) {
-            return new ContentGuiToUtilDateTimeServiceBridge(
-                $container->getLocator()->utilDateTime()->service()
-            );
         };
 
         return $container;
