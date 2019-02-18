@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\MerchantDataImport\Business\Address;
 
+use Orm\Zed\Merchant\Persistence\SpyMerchantAddressQuery;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\Merchant\Persistence\Propel\SpyMerchantAddressQuery;
 use Spryker\Zed\MerchantDataImport\Business\Address\DataSet\MerchantAddressDataSetInterface;
 
 class MerchantAddressWriterStep implements DataImportStepInterface
