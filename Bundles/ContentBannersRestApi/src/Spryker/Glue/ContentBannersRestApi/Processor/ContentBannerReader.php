@@ -59,7 +59,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
         $response = $this->restResourceBuilder->createRestResponse();
 
         $idContentBanner = $restRequest->getResource()->getId();
-        if (is_numeric($idContentBanner)) {
+        if (!is_numeric($idContentBanner)) {
             return $this->addContentBannerIdNotSpecifiedError($response);
         }
 
@@ -126,7 +126,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(ContentBannersRestApiConfig::RESPONSE_CODE_CONTENT_TYPE_INVALID)
-            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->setDetail(ContentBannersRestApiConfig::RESPONSE_DETAILS_CONTENT_TYPE_INVALID);
 
         return $response->addError($restErrorTransfer);
