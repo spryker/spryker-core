@@ -28,7 +28,7 @@ class ZedHelper extends Module
     public function _after(TestInterface $test)
     {
         $tester = $this->getWebDriver();
-        $tester->_backupSession()->manage()->();
+        $tester->_backupSession()->manage()->deleteAllCookies();
 
 
         if ($tester->seeLink('Logout')) {
