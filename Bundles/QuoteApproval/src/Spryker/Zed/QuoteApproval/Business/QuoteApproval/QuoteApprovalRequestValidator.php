@@ -240,7 +240,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
             $quoteApprovalRequestTransfer->getIdQuoteApproval()
         );
 
-        return $quoteApprovalTransfer->getApproverCompanyUserId() === $quoteApprovalRequestTransfer->getApproverCompanyUserId();
+        return $quoteApprovalTransfer->getApproverCompanyUserId() === $quoteApprovalRequestTransfer->getRequesterCompanyUserId();
     }
 
     /**
