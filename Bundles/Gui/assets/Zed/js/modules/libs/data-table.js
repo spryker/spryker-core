@@ -1,7 +1,7 @@
 'use strict';
 
 function getLocale() {
-    var locale = $('#locale').val()
+    var locale = document.documentElement.dataset.applicationLocale
     if (typeof(locale) === 'string') {
 
         return locale.split('_')[0].split('-')[0];
