@@ -118,16 +118,17 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @module Quote
      *
-     * @param int $idCompanyUser
+     * @param \Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer
      *
      * @return int[]
      */
-    public function getIsDefaultFlagForSharedCartsByIdCompanyUser(int $idCompanyUser): array
+    public function getIsDefaultFlagForSharedCartsBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): array
     {
         return $this->getFactory()->createQuoteQuery()
             ->useSpyQuoteCompanyUserQuery()
-                ->filterByFkCompanyUser($idCompanyUser)
+                ->filterByFkCompanyUser($sharedQuoteCriteriaFilterTransfer->getIdCompanyUser())
             ->endUse()
+            ->filterByFkStore($sharedQuoteCriteriaFilterTransfer->getIdStore())
             ->select([
                 SpyQuoteTableMap::COL_ID_QUOTE,
                 SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT,

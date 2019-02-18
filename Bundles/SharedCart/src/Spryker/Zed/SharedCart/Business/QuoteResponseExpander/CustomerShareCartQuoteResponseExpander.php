@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface;
+use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToStoreFacadeInterface;
 
 class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInterface
 {
@@ -22,11 +23,20 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
     protected $quoteReader;
 
     /**
-     * @param \Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface $quoteReader
+     * @var \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToStoreFacadeInterface
      */
-    public function __construct(QuoteReaderInterface $quoteReader)
-    {
+    protected $storeFacade;
+
+    /**
+     * @param \Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface $quoteReader
+     * @param \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToStoreFacadeInterface $storeFacade
+     */
+    public function __construct(
+        QuoteReaderInterface $quoteReader,
+        SharedCartToStoreFacadeInterface $storeFacade
+    ) {
         $this->quoteReader = $quoteReader;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -36,11 +46,9 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
      */
     public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        $customerTransfer = $quoteResponseTransfer->requireCustomer()->getCustomer();
-        $storeTransfer = $quoteResponseTransfer->requireQuoteTransfer()
-            ->getQuoteTransfer()
-            ->requireStore()
-            ->getStore();
+        $customerTransfer = $quoteResponseTransfer->requireCustomer()
+            ->getCustomer();
+        $storeTransfer = $this->storeFacade->getCurrentStore();
 
         $sharedQuoteCollectionTransfer = $this->findSharedCustomerQuotesByStore($customerTransfer, $storeTransfer);
         $quoteResponseTransfer->setSharedCustomerQuotes($sharedQuoteCollectionTransfer);

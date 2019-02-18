@@ -36,11 +36,11 @@ interface SharedCartRepositoryInterface
     public function findQuotesBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): array;
 
     /**
-     * @param int $idCompanyUser
+     * @param \Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer
      *
      * @return int[]
      */
-    public function getIsDefaultFlagForSharedCartsByIdCompanyUser(int $idCompanyUser): array;
+    public function getIsDefaultFlagForSharedCartsBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): array;
 
     /**
      * @param string $customerReference
