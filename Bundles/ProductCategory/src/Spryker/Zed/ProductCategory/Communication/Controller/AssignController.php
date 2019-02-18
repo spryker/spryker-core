@@ -58,8 +58,7 @@ class AssignController extends AbstractController
         $categoryProductsTable = $this->getCategoryProductsTable($idCategory, $localeTransfer);
         $productsTable = $this->getProductsTable($idCategory, $localeTransfer);
 
-        if ($idNode !== null) {
-            $idNode = $this->castId($idNode);
+        if ($idNode) {
             $categoryFacade = $this->getFactory()->getCategoryFacade();
             $categoryPath = $categoryFacade->getNodePath($idNode, $localeTransfer);
         }
