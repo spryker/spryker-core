@@ -30,8 +30,8 @@ class ZedHelper extends Module
         $tester = $this->getWebDriver();
 
 //        try {
-            $tester->seeLink('Logout','/auth/logout');
-//            $tester->click('Logout');
+            $tester->seeElement('.nav-header .dropdown-menu a');
+            $tester->click('Logout');
 //        } catch (\Exception $exception) {
 //            // NOP
 //        }
