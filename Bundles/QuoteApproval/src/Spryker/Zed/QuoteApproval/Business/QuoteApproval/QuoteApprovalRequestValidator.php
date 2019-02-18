@@ -10,7 +10,7 @@ namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
-use Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer;
+use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
@@ -83,9 +83,9 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     /**
      * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function validateQuoteApprovalCreateRequest(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalRequestValidationResponseTransfer
+    public function validateQuoteApprovalCreateRequest(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         $this->assertQuoteApprovalCreateRequestValid($quoteApprovalRequestTransfer);
         $quoteTransfer = $this->getQuoteById($quoteApprovalRequestTransfer->getIdQuote());
@@ -113,9 +113,9 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     /**
      * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function validateQuoteApprovalRemoveRequest(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalRequestValidationResponseTransfer
+    public function validateQuoteApprovalRemoveRequest(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         $quoteTransfer = $this->findQuoteByIdQuoteApproval($quoteApprovalRequestTransfer->getIdQuoteApproval());
 
@@ -132,9 +132,9 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     /**
      * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function validateQuoteApprovalRequest(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalRequestValidationResponseTransfer
+    public function validateQuoteApprovalRequest(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         $this->assertQuoteApprovalRequestValid($quoteApprovalRequestTransfer);
         $quoteApprovalTransfer = $this->quoteApprovalRepository
@@ -188,28 +188,28 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     /**
      * @param string $message
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    protected function createUnsuccessfulValidationResponseTransfer(string $message): QuoteApprovalRequestValidationResponseTransfer
+    protected function createUnsuccessfulValidationResponseTransfer(string $message): QuoteApprovalResponseTransfer
     {
-        $quoteApprovalRequestValidationResponseTransfer = new QuoteApprovalRequestValidationResponseTransfer();
-        $quoteApprovalRequestValidationResponseTransfer->setIsSuccessful(false);
-        $quoteApprovalRequestValidationResponseTransfer->addMessage(
+        $quoteApprovalResponseTransfer = new QuoteApprovalResponseTransfer();
+        $quoteApprovalResponseTransfer->setIsSuccessful(false);
+        $quoteApprovalResponseTransfer->addMessage(
             (new MessageTransfer())->setValue($message)
         );
 
-        return $quoteApprovalRequestValidationResponseTransfer;
+        return $quoteApprovalResponseTransfer;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    protected function createSuccessfullValidationResponseTransfer(): QuoteApprovalRequestValidationResponseTransfer
+    protected function createSuccessfullValidationResponseTransfer(): QuoteApprovalResponseTransfer
     {
-        $quoteApprovalRequestValidationResponseTransfer = new QuoteApprovalRequestValidationResponseTransfer();
-        $quoteApprovalRequestValidationResponseTransfer->setIsSuccessful(true);
+        $quoteApprovalResponseTransfer = new QuoteApprovalResponseTransfer();
+        $quoteApprovalResponseTransfer->setIsSuccessful(true);
 
-        return $quoteApprovalRequestValidationResponseTransfer;
+        return $quoteApprovalResponseTransfer;
     }
 
     /**

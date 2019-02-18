@@ -9,7 +9,6 @@ namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
-use Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface;
@@ -20,7 +19,6 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
 {
     use TransactionTrait;
 
-    protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
     protected const GLOSSARY_KEY_APPROVAL_REMOVED = 'quote_approval.removed';
 
     /**
@@ -82,31 +80,30 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
     {
         $quoteApprovalResponseTransfer = new QuoteApprovalResponseTransfer();
 
-        $quoteApprovalRequestValidationResponse = $this->quoteApprovalRequestValidator
+        $quoteApprovalResponse = $this->quoteApprovalRequestValidator
             ->validateQuoteApprovalRemoveRequest($quoteApprovalRequestTransfer);
 
-        if (!$quoteApprovalRequestValidationResponse->getIsSuccessful()) {
-            return $quoteApprovalResponseTransfer->setIsSuccessful(false)
-                ->addMessage($this->createMessageTransfer(static::GLOSSARY_KEY_PERMISSION_FAILED));
+        if (!$quoteApprovalResponse->getIsSuccessful()) {
+            return $quoteApprovalResponse;
         }
 
-        $this->executeQuoteApprovalRemoval($quoteApprovalRequestValidationResponse, $quoteApprovalRequestTransfer);
+        $this->executeQuoteApprovalRemoval($quoteApprovalResponse, $quoteApprovalRequestTransfer);
 
         return $quoteApprovalResponseTransfer->setIsSuccessful(true)
             ->addMessage($this->createMessageTransfer(static::GLOSSARY_KEY_APPROVAL_REMOVED));
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalRequestValidationResponseTransfer $quoteApprovalRequestValidationResponse
+     * @param \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponse
      * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
      *
      * @return void
      */
     protected function executeQuoteApprovalRemoval(
-        QuoteApprovalRequestValidationResponseTransfer $quoteApprovalRequestValidationResponse,
+        QuoteApprovalResponseTransfer $quoteApprovalResponse,
         QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
     ): void {
-        $quoteTransfer = $quoteApprovalRequestValidationResponse->getQuote();
+        $quoteTransfer = $quoteApprovalResponse->getQuote();
 
         $this->quoteLocker->unlockQuote($quoteTransfer);
 

@@ -89,19 +89,19 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
      */
     protected function executeDeclineQuoteApprovalTransaction(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-        $quoteApprovalRequestValidationResponseTransfer = $this->quoteApprovalRequestValidator
+        $quoteApprovalResponseTransfer = $this->quoteApprovalRequestValidator
             ->validateQuoteApprovalRequest($quoteApprovalRequestTransfer);
 
-        if (!$quoteApprovalRequestValidationResponseTransfer->getIsSuccessful()) {
+        if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
             return $this->createNotSuccessfulQuoteApprovalResponseTransfer(
-                $quoteApprovalRequestValidationResponseTransfer->getMessages()
+                $quoteApprovalResponseTransfer->getMessages()
             );
         }
 
-        $this->quoteLocker->unlockQuote($quoteApprovalRequestValidationResponseTransfer->getQuote());
+        $this->quoteLocker->unlockQuote($quoteApprovalResponseTransfer->getQuote());
 
         return $this->updateQuoteApprovalWithStatus(
-            $quoteApprovalRequestValidationResponseTransfer->getQuoteApproval(),
+            $quoteApprovalResponseTransfer->getQuoteApproval(),
             QuoteApprovalConfig::STATUS_DECLINED
         );
     }
@@ -113,17 +113,17 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
      */
     protected function executeApproveQuoteApprovalTransaction(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-        $quoteApprovalRequestValidationResponseTransfer = $this->quoteApprovalRequestValidator
+        $quoteApprovalResponseTransfer = $this->quoteApprovalRequestValidator
             ->validateQuoteApprovalRequest($quoteApprovalRequestTransfer);
 
-        if (!$quoteApprovalRequestValidationResponseTransfer->getIsSuccessful()) {
+        if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
             return $this->createNotSuccessfulQuoteApprovalResponseTransfer(
-                $quoteApprovalRequestValidationResponseTransfer->getMessages()
+                $quoteApprovalResponseTransfer->getMessages()
             );
         }
 
         return $this->updateQuoteApprovalWithStatus(
-            $quoteApprovalRequestValidationResponseTransfer->getQuoteApproval(),
+            $quoteApprovalResponseTransfer->getQuoteApproval(),
             QuoteApprovalConfig::STATUS_APPROVED
         );
     }
