@@ -148,8 +148,12 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
      */
     protected function updateQuoteApprovalWithStatus(QuoteApprovalTransfer $quoteApprovalTransfer, string $status): QuoteApprovalResponseTransfer
     {
+        $this->quoteApprovalEntityManager->updateQuoteApprovalWithStatus(
+            $quoteApprovalTransfer->getIdQuoteApproval(),
+            $status
+        );
+
         $quoteApprovalTransfer->setStatus($status);
-        $quoteApprovalTransfer = $this->quoteApprovalEntityManager->saveQuoteApproval($quoteApprovalTransfer);
 
         return (new QuoteApprovalResponseTransfer())
             ->setQuoteApproval($quoteApprovalTransfer)

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\QuoteApproval\Persistence;
 
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
+use Generated\Shared\Transfer\SpyQuoteApprovalEntityTransfer;
+use Orm\Zed\QuoteApproval\Persistence\SpyQuoteApproval;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -20,18 +22,13 @@ class QuoteApprovalEntityManager extends AbstractEntityManager implements QuoteA
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer
      */
-    public function saveQuoteApproval(QuoteApprovalTransfer $quoteApprovalTransfer): QuoteApprovalTransfer
+    public function createQuoteApproval(QuoteApprovalTransfer $quoteApprovalTransfer): QuoteApprovalTransfer
     {
-        $quoteApprovalEntity = $this->getFactory()
-            ->createQuoteApprovalPropelQuery()
-            ->filterByIdQuoteApproval($quoteApprovalTransfer->getIdQuoteApproval())
-            ->findOneOrCreate();
-
         $quoteApprovalEntity = $this->getFactory()
             ->createQuoteApprovalMapper()
             ->mapQuoteApprovalTransferToEntity(
                 $quoteApprovalTransfer,
-                $quoteApprovalEntity
+                new SpyQuoteApproval()
             );
 
         $quoteApprovalEntity->save();
@@ -39,6 +36,20 @@ class QuoteApprovalEntityManager extends AbstractEntityManager implements QuoteA
         return $this->getFactory()
             ->createQuoteApprovalMapper()
             ->mapQuoteApprovalEntityToTransfer($quoteApprovalEntity, $quoteApprovalTransfer);
+    }
+
+    /**
+     * @param int $idQuoteApproval
+     * @param string $status
+     *
+     * @return void
+     */
+    public function updateQuoteApprovalWithStatus(int $idQuoteApproval, string $status): void
+    {
+        $this->getFactory()
+            ->createQuoteApprovalPropelQuery()
+            ->filterByIdQuoteApproval($idQuoteApproval)
+            ->update([ucfirst(SpyQuoteApprovalEntityTransfer::STATUS) => $status]);
     }
 
     /**

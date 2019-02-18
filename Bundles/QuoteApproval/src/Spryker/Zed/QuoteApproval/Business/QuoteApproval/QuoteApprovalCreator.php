@@ -122,7 +122,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
             $quoteApprovalRequestTransfer->getApproverCompanyUserId()
         );
 
-        $this->quoteApprovalEntityManager->saveQuoteApproval($quoteApprovalTransfer);
+        $this->quoteApprovalEntityManager->createQuoteApproval($quoteApprovalTransfer);
         $this->quoteLocker->lockQuote($quoteTransfer);
         $this->sharedCartFacade->deleteShareForQuote($quoteTransfer);
 
