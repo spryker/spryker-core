@@ -9,16 +9,15 @@ namespace Spryker\Zed\Oauth\Business\Model\League;
 
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
-use League\OAuth2\Server\Grant\GrantTypeInterface;
-use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface;
+use League\OAuth2\Server\Grant\AbstractGrant;
 
 interface GrantTypeExecutorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
-     * @param \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface $grantType
+     * @param \League\OAuth2\Server\Grant\AbstractGrant $grantType
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function processAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer, GrantInterface $grantType): OauthResponseTransfer;
+    public function processAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer, AbstractGrant $grantType): OauthResponseTransfer;
 }

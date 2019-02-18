@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\OauthExtension\Dependency\Plugin;
 
-use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface;
+use League\OAuth2\Server\Grant\AbstractGrant;
 
 interface OauthGrantTypeProviderPluginInterface
 {
@@ -23,11 +23,11 @@ interface OauthGrantTypeProviderPluginInterface
 
     /**
      * Specification:
-     *  -
+     *  - Returns Grant type object instance.
      *
      * @api
      *
-     * @return \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface
+     * @return \League\OAuth2\Server\Grant\AbstractGrant
      */
-    public function getGrantType(): GrantInterface;
+    public function getGrantType(): AbstractGrant;
 }

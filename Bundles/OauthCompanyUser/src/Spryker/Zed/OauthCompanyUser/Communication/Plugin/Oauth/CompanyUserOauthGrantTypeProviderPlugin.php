@@ -8,7 +8,8 @@
 namespace Spryker\Zed\OauthCompanyUser\Communication\Plugin\Oauth;
 
 
-use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface;
+use League\OAuth2\Server\Grant\AbstractGrant;
+use Spryker\Zed\OauthCompanyUser\Business\League\Grant\IdCompanyUserGrant;
 use Spryker\Zed\OauthCompanyUser\OauthCompanyUserConfig;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeProviderPluginInterface;
 
@@ -16,8 +17,8 @@ class CompanyUserOauthGrantTypeProviderPlugin implements OauthGrantTypeProviderP
 {
 
     /**
-     * Specification:
-     *  - Returns grant type name.
+     * {@inheritdoc}
+     *  - Returns name of id company user grant type.
      *
      * @api
      *
@@ -29,15 +30,14 @@ class CompanyUserOauthGrantTypeProviderPlugin implements OauthGrantTypeProviderP
     }
 
     /**
-     * Specification:
-     *  -
-     *
+     * {@inheritdoc}
+     *  - Returns instance of id company user grant type.
      * @api
      *
-     * @return \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface
+     * @return \League\OAuth2\Server\Grant\AbstractGrant
      */
-    public function getGrantType(): GrantInterface
+    public function getGrantType(): AbstractGrant
     {
-        // TODO: Implement getGrantType() method.
+        return new IdCompanyUserGrant();
     }
 }

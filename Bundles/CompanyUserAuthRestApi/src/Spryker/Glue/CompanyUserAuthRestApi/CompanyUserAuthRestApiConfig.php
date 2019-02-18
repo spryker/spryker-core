@@ -13,7 +13,7 @@ class CompanyUserAuthRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_COMPANY_USER_ACCESS_TOKENS = 'company-user-access-tokens';
 
-    public const CLIENT_GRANT_USER = 'user';
+    public const CLIENT_GRANT_USER = 'idCompanyUser';
 
     public const RESPONSE_DETAIL_MISSING_ACCESS_TOKEN = 'Missing access token.';
     public const RESPONSE_DETAIL_INVALID_ACCESS_TOKEN = 'Invalid access token.';

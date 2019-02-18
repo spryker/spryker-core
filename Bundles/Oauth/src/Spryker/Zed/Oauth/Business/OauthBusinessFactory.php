@@ -50,7 +50,6 @@ class OauthBusinessFactory extends AbstractBusinessFactory
         return new AccessGrantExecutor([
             OauthConfig::GRANT_TYPE_PASSWORD => $this->createPasswordGrant(),
             OauthConfig::GRANT_TYPE_REFRESH_TOKEN => $this->createRefreshTokenGrant(),
-            OauthConfig::GRANT_TYPE_USER => $this->createUserGrant(),
         ],
             $this->createGrantTypeExecutor(),
             $this->getGrantTypeProviderPlugins()
@@ -75,18 +74,6 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     protected function createRefreshTokenGrant(): GrantInterface
     {
         return new RefreshTokenGrant(
-            $this->createAuthorizationServerBuilder()->build(),
-            $this->createRepositoryBuilder(),
-            $this->getConfig()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface
-     */
-    protected function createUserGrant(): GrantInterface
-    {
-        return new UserGrant(
             $this->createAuthorizationServerBuilder()->build(),
             $this->createRepositoryBuilder(),
             $this->getConfig()
@@ -151,7 +138,11 @@ class OauthBusinessFactory extends AbstractBusinessFactory
      */
     public function createGrantTypeExecutor(): GrantTypeExecutorInterface
     {
-        return new GrantTypeExecutor();
+        return new GrantTypeExecutor(
+            $this->createAuthorizationServerBuilder()->build(),
+            $this->createRepositoryBuilder(),
+            $this->getConfig()
+        );
     }
 
     /**

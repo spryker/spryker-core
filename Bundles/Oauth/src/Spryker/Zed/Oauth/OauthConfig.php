@@ -16,7 +16,6 @@ class OauthConfig extends AbstractBundleConfig
 {
     public const GRANT_TYPE_PASSWORD = 'password';
     public const GRANT_TYPE_REFRESH_TOKEN = 'refresh_token';
-    public const GRANT_TYPE_USER = 'user';
 
     /**
      * @return string

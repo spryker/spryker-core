@@ -29,7 +29,7 @@ class CompanyUserOauthScopeProviderPlugin extends AbstractPlugin implements Oaut
      */
     public function accept(OauthScopeRequestTransfer $oauthScopeRequestTransfer): bool
     {
-        if ($oauthScopeRequestTransfer->getGrantType() !== OauthCompanyUserConfig::GRANT_TYPE_USER) {
+        if ($oauthScopeRequestTransfer->getGrantType() !== OauthCompanyUserConfig::GRANT_TYPE_ID_COMPANY_USER) {
             return false;
         }
 
