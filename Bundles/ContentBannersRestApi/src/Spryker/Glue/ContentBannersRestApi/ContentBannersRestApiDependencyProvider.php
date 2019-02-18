@@ -25,7 +25,7 @@ class ContentBannersRestApiDependencyProvider extends AbstractBundleDependencyPr
      */
     public function provideDependencies(Container $container): Container
     {
-        $container = $this->addCustomerClient($container);
+        $container = $this->addContentClient($container);
 
         return $container;
     }
@@ -35,7 +35,7 @@ class ContentBannersRestApiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addCustomerClient(Container $container): Container
+    protected function addContentClient(Container $container): Container
     {
         $container[static::CLIENT_CONTENT_STORAGE] = function (Container $container) {
             return new ContentBannersRestApiToContentStorageClientBridge($container->getLocator()->contentStorage()->client());
