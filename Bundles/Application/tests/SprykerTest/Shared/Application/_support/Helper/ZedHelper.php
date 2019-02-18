@@ -30,9 +30,10 @@ class ZedHelper extends Module
         $tester = $this->getWebDriver();
 
         try {
+            $tester->seeElement('Logout', '//a[@href="/auth/logout"]');
             $tester->click('Logout');
         } catch (\Exception $exception) {
-//            // NOP
+//            NOP
         }
 
         static::$alreadyLoggedIn = false;
