@@ -36,7 +36,7 @@ class QuoteApprovalCheckoutPreCheckPlugin extends AbstractPlugin implements Chec
      */
     public function isValid(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
-        $canProceedCheckout = !$this->getClient()->isQuoteRequireApproval($quoteTransfer);
+        $canProceedCheckout = !$this->getClient()->isQuoteApprovalRequired($quoteTransfer);
 
         if ($canProceedCheckout === true) {
             return (new QuoteValidationResponseTransfer())->setIsSuccessful(true);

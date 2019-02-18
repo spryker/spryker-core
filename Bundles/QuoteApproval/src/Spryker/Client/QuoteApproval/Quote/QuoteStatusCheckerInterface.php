@@ -16,14 +16,14 @@ interface QuoteStatusCheckerInterface
      *
      * @return bool
      */
-    public function isQuoteRequireApproval(QuoteTransfer $quoteTransfer): bool;
+    public function isQuoteApprovalRequired(QuoteTransfer $quoteTransfer): bool;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isQuoteCanBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool;
+    public function canQuoteBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

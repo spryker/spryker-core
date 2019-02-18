@@ -42,7 +42,7 @@ class QuoteApprovalReader implements QuoteApprovalReaderInterface
      *
      * @return bool
      */
-    public function hasQuoteApprovalsForCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool
+    public function isCompanyUserInQuoteApproverList(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool
     {
         foreach ($quoteTransfer->getQuoteApprovals() as $quoteApprovalTransfer) {
             if ($quoteApprovalTransfer->getApprover()->getIdCompanyUser() === $idCompanyUser) {

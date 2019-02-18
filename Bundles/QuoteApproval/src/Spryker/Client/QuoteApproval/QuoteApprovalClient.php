@@ -87,9 +87,9 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      *
      * @return bool
      */
-    public function isQuoteRequireApproval(QuoteTransfer $quoteTransfer): bool
+    public function isQuoteApprovalRequired(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->getFactory()->createQuoteStatusChecker()->isQuoteRequireApproval($quoteTransfer);
+        return $this->getFactory()->createQuoteStatusChecker()->isQuoteApprovalRequired($quoteTransfer);
     }
 
     /**
@@ -211,11 +211,11 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      *
      * @return bool
      */
-    public function isQuoteCanBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool
+    public function canQuoteBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool
     {
         return $this->getFactory()
             ->createQuoteStatusChecker()
-            ->isQuoteCanBeApprovedByCurrentCustomer($quoteTransfer);
+            ->canQuoteBeApprovedByCurrentCustomer($quoteTransfer);
     }
 
     /**
@@ -228,10 +228,10 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      *
      * @return bool
      */
-    public function hasQuoteApprovalsForCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool
+    public function isCompanyUserInQuoteApproverList(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool
     {
         return $this->getFactory()
             ->createQuoteApprovalReader()
-            ->hasQuoteApprovalsForCompanyUser($quoteTransfer, $idCompanyUser);
+            ->isCompanyUserInQuoteApproverList($quoteTransfer, $idCompanyUser);
     }
 }

@@ -26,5 +26,5 @@ interface QuoteApprovalReaderInterface
      *
      * @return bool
      */
-    public function hasQuoteApprovalsForCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool;
+    public function isCompanyUserInQuoteApproverList(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool;
 }

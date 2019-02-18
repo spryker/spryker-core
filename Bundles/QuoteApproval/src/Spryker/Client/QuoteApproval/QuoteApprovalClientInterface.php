@@ -92,7 +92,7 @@ interface QuoteApprovalClientInterface
      *
      * @return bool
      */
-    public function isQuoteRequireApproval(QuoteTransfer $quoteTransfer): bool;
+    public function isQuoteApprovalRequired(QuoteTransfer $quoteTransfer): bool;
 
     /**
      * Specification:
@@ -194,7 +194,7 @@ interface QuoteApprovalClientInterface
      *
      * @return bool
      */
-    public function isQuoteCanBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool;
+    public function canQuoteBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool;
 
     /**
      * Specification:
@@ -207,5 +207,5 @@ interface QuoteApprovalClientInterface
      *
      * @return bool
      */
-    public function hasQuoteApprovalsForCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool;
+    public function isCompanyUserInQuoteApproverList(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool;
 }

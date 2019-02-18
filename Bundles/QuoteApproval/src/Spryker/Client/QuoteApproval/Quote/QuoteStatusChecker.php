@@ -45,7 +45,7 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
      *
      * @return bool
      */
-    public function isQuoteRequireApproval(QuoteTransfer $quoteTransfer): bool
+    public function isQuoteApprovalRequired(QuoteTransfer $quoteTransfer): bool
     {
         if ($this->isQuoteWaitingForApproval($quoteTransfer)) {
             return true;
@@ -63,7 +63,7 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
      *
      * @return bool
      */
-    public function isQuoteCanBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool
+    public function canQuoteBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool
     {
         return $this->can(ApproveQuotePermissionPlugin::KEY, $this->permissionContextProvider->provideContext($quoteTransfer));
     }
