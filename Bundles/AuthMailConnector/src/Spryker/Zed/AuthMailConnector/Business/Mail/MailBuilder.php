@@ -70,7 +70,7 @@ class MailBuilder implements MailBuilderInterface
     {
         $query = $this->generateResetPasswordLinkQuery($token);
 
-        return sprintf('%s%s?%s', $this->config->getBaseUrlZed(), $this->config->getAuthPasswordResetUrl(), $query);
+        return sprintf('%s%s?%s', $this->config->getBaseUrlZed(), $this->config->getAuthPasswordResetPath(), $query);
     }
 
     /**

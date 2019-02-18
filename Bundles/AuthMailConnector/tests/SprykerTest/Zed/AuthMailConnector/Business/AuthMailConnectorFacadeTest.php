@@ -40,48 +40,6 @@ class AuthMailConnectorFacadeTest extends Unit
      */
     public function testSendResetPasswordMailTriggerMailFacadeHandleMailMethodOnce(): void
     {
-        $authMailConnectorFacade = $this->createAuthMailConnectorFacade();
-        $authMailConnectorFacade->sendResetPasswordMail(static::EMAIL, static::TOKEN);
-    }
-
-    /**
-     * @return \Spryker\Zed\AuthMailConnector\Business\AuthMailConnectorFacadeInterface
-     */
-    protected function createAuthMailConnectorFacade(): AuthMailConnectorFacadeInterface
-    {
-        /** @var \Spryker\Zed\AuthMailConnector\Business\AuthMailConnectorFacadeInterface $authMailConnectorFacade */
-        $authMailConnectorFacade = $this->tester->getFacade();
-        $authMailConnectorFacade->setFactory($this->createAuthMailConnectorBusinessFactoryMock());
-
-        return $authMailConnectorFacade;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createAuthMailConnectorBusinessFactoryMock(): MockObject
-    {
-        $authMailConnectorBusinessFactoryMockBuilder = $this->getMockBuilder(AuthMailConnectorBusinessFactory::class)
-            ->setMethods(['getMailFacade', 'getConfig']);
-
-        $authMailConnectorBusinessFactoryMock = $authMailConnectorBusinessFactoryMockBuilder
-            ->getMock();
-        $authMailConnectorBusinessFactoryMock
-            ->method('getMailFacade')
-            ->willReturn($this->createAuthMailConnectorToMailBridgeMock());
-
-        $authMailConnectorBusinessFactoryMock
-            ->method('getConfig')
-            ->willReturn(new AuthMailConnectorConfig());
-
-        return $authMailConnectorBusinessFactoryMock;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createAuthMailConnectorToMailBridgeMock(): MockObject
-    {
         $authMailConnectorToMailBridgeMockBuilder = $this->getMockBuilder(AuthMailConnectorToMailBridge::class)
             ->disableOriginalConstructor()
             ->setMethods(['handleMail']);
@@ -91,6 +49,45 @@ class AuthMailConnectorFacadeTest extends Unit
             ->expects($this->once())
             ->method('handleMail');
 
-        return $authMailConnectorToMailBridgeMock;
+        $authMailConnectorFacade = $this->createAuthMailConnectorFacade($authMailConnectorToMailBridgeMock);
+
+        $authMailConnectorFacade->sendResetPasswordMail(static::EMAIL, static::TOKEN);
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject $authMailConnectorToMailBridgeMock
+     *
+     * @return \Spryker\Zed\AuthMailConnector\Business\AuthMailConnectorFacadeInterface
+     */
+    protected function createAuthMailConnectorFacade(MockObject $authMailConnectorToMailBridgeMock): AuthMailConnectorFacadeInterface
+    {
+        /** @var \Spryker\Zed\AuthMailConnector\Business\AuthMailConnectorFacadeInterface $authMailConnectorFacade */
+        $authMailConnectorFacade = $this->tester->getFacade();
+        $authMailConnectorFacade->setFactory($this->createAuthMailConnectorBusinessFactoryMock($authMailConnectorToMailBridgeMock));
+
+        return $authMailConnectorFacade;
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject $authMailConnectorToMailBridgeMock
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createAuthMailConnectorBusinessFactoryMock(MockObject $authMailConnectorToMailBridgeMock): MockObject
+    {
+        $authMailConnectorBusinessFactoryMockBuilder = $this->getMockBuilder(AuthMailConnectorBusinessFactory::class)
+            ->setMethods(['getMailFacade', 'getConfig']);
+
+        $authMailConnectorBusinessFactoryMock = $authMailConnectorBusinessFactoryMockBuilder
+            ->getMock();
+        $authMailConnectorBusinessFactoryMock
+            ->method('getMailFacade')
+            ->willReturn($authMailConnectorToMailBridgeMock);
+
+        $authMailConnectorBusinessFactoryMock
+            ->method('getConfig')
+            ->willReturn(new AuthMailConnectorConfig());
+
+        return $authMailConnectorBusinessFactoryMock;
     }
 }
