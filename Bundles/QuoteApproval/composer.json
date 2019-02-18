@@ -19,10 +19,10 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/company": "*",
+    "spryker/permission": "^1.0.0",
     "spryker/propel": "*",
     "spryker/store": "*",
-    "spryker/testify": "*",
-    "spryker/permission": "^1.0.0"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/checkout": "If you want to use QuoteApprovalCheckoutPreCheckPlugin."
