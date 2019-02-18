@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsGui\Communication\Table;
 
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CmsGui\CmsGuiConfig;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
@@ -290,7 +291,7 @@ class CmsPageTable extends AbstractTable
                 $this->createEditPageButtonItem($item),
                 $this->createEditGlossaryButtonItem($item),
             ],
-            'Edit ',
+            'Edit',
             [
                 'class' => 'btn-edit',
                 'icon' => 'fa-pencil-square-o',
@@ -388,10 +389,10 @@ class CmsPageTable extends AbstractTable
     protected function getActiveStatusLabel($item)
     {
         if (!$item[CmsPageTableConstants::COL_IS_ACTIVE]) {
-            return '<span class="label label-danger">Inactive</span>';
+            return $this->generateLabel('Inactive', 'label-danger');
         }
 
-        return '<span class="label label-info">Active</span>';
+        return $this->generateLabel('Active', 'label-info');
     }
 
     /**
@@ -405,7 +406,7 @@ class CmsPageTable extends AbstractTable
             return $this->getActiveStatusLabel($item);
         }
 
-        return '<span class="label label-default">Unpublished</span>';
+        return $this->generateLabel('Unpublished', 'label-default');
     }
 
     /**
@@ -431,6 +432,7 @@ class CmsPageTable extends AbstractTable
             CmsPageTableConstants::COL_URL => 'Url',
             CmsPageTableConstants::COL_TEMPLATE => 'Template',
             CmsPageTableConstants::COL_STATUS => 'Status',
+            CmsPageTableConstants::COL_STORE_RELATION => 'Stores',
             CmsPageTableConstants::ACTIONS => CmsPageTableConstants::ACTIONS,
         ]);
     }
@@ -446,6 +448,7 @@ class CmsPageTable extends AbstractTable
             CmsPageTableConstants::ACTIONS,
             CmsPageTableConstants::COL_URL,
             CmsPageTableConstants::COL_STATUS,
+            CmsPageTableConstants::COL_STORE_RELATION,
         ]);
     }
 
@@ -502,6 +505,7 @@ class CmsPageTable extends AbstractTable
             CmsPageTableConstants::COL_URL => $this->buildUrlList($item),
             CmsPageTableConstants::COL_TEMPLATE => $item[CmsPageTableConstants::COL_TEMPLATE],
             CmsPageTableConstants::COL_STATUS => $this->getStatusLabel($item),
+            CmsPageTableConstants::COL_STORE_RELATION => $this->getStoreNames($item[CmsPageTableConstants::COL_ID_CMS_PAGE]),
             CmsPageTableConstants::ACTIONS => $actions,
         ];
     }
@@ -546,5 +550,40 @@ class CmsPageTable extends AbstractTable
     protected function hasMultipleVersions(array $item)
     {
         return $item[CmsPageTableConstants::COL_CMS_VERSION_COUNT] > 1;
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return string
+     */
+    protected function getStoreNames(int $idCmsPage): string
+    {
+        $cmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
+
+        return $this->formatStoreNames($cmsPageTransfer->getStoreRelation());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $storeRelationTransfer
+     *
+     * @return string
+     */
+    protected function formatStoreNames(?StoreRelationTransfer $storeRelationTransfer): string
+    {
+        if (!$storeRelationTransfer) {
+            return '';
+        }
+
+        $storeNames = [];
+
+        foreach ($storeRelationTransfer->getStores() as $storeTransfer) {
+            $storeNames[] = sprintf(
+                '<span class="label label-info">%s</span>',
+                $storeTransfer->getName()
+            );
+        }
+
+        return implode(" ", $storeNames);
     }
 }

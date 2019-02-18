@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Quote\Persistence;
 
-use DateTime;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteEntityManagerInterface
@@ -25,11 +24,4 @@ interface QuoteEntityManagerInterface
      * @return void
      */
     public function deleteQuoteById($idQuote);
-
-    /**
-     * @param \DateTime $lifetimeLimitDate
-     *
-     * @return void
-     */
-    public function deleteExpiredGuestQuotes(DateTime $lifetimeLimitDate): void;
 }

@@ -55,7 +55,6 @@ class MerchantRelationshipTable extends AbstractTable
 
         $config->setUrl($url->build());
         $config = $this->setHeader($config);
-        $config = $this->setHeader($config);
 
         $config->setSortable([
             MerchantRelationshipTableConstants::COL_ID_MERCHANT_RELATIONSHIP,

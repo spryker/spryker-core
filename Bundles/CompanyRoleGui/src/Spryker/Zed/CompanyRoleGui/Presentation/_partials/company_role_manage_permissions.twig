@@ -12,7 +12,7 @@
 <div id="company-role_permission_collection">
     {% if hasAssignedPermissions %}
         <div class="form-group">
-            <label>Assigned Permissions</label>
+            <label>{{ 'Assigned Permissions' | trans }}</label>
             {% for child in form %}
                 {% if child.vars.data %}
                     {{ form_widget(child) }}
@@ -23,7 +23,7 @@
 
     {% if hasUnassignedPermissions %}
         <div class="form-group">
-            <label>Unassigned Permissions</label>
+            <label>{{ 'Unassigned Permissions' | trans }}</label>
             {% for child in form %}
                 {% if not child.vars.data %}
                     {{ form_widget(child) }}

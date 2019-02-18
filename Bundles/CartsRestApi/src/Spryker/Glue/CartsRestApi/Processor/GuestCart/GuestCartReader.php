@@ -48,11 +48,6 @@ class GuestCartReader extends CartReader implements GuestCartReaderInterface
      */
     public function readCurrentCustomerCarts(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (!$restRequest->getUser()) {
-            return $this->guestCartRestResponseBuilder
-                ->createAnonymousCustomerUniqueIdEmptyErrorRestResponse();
-        }
-
         $quoteCollectionTransfer = $this->getCustomerQuotes($restRequest);
         if (count($quoteCollectionTransfer->getQuotes()) === 0) {
             return $this->guestCartRestResponseBuilder->createEmptyGuestCartRestResponse();

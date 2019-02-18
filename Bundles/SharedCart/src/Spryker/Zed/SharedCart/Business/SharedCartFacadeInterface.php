@@ -31,7 +31,7 @@ interface SharedCartFacadeInterface
 
     /**
      * Specification:
-     * - Adds customer shared cart to QuoteResponseTransfer.
+     * - Adds customer shared cart filtered by store to QuoteResponseTransfer.
      *
      * @api
      *
