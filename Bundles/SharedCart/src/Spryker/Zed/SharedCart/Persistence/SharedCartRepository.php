@@ -146,9 +146,14 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     {
         $quotePermissionGroupQuery = $this->getFactory()
             ->createQuotePermissionGroupQuery();
-        $modifiedParams = $criteriaFilterTransfer->modifiedToArray();
-        if (isset($modifiedParams['is_default'])) {
-            $quotePermissionGroupQuery->filterByIsDefault($modifiedParams['is_default']);
+        $modifiedParams = $criteriaFilterTransfer->modifiedToArray(true, true);
+
+        if (isset($modifiedParams[QuotePermissionGroupCriteriaFilterTransfer::IS_DEFAULT])) {
+            $quotePermissionGroupQuery->filterByIsDefault($modifiedParams[QuotePermissionGroupCriteriaFilterTransfer::IS_DEFAULT]);
+        }
+
+        if (isset($modifiedParams[QuotePermissionGroupCriteriaFilterTransfer::NAME])) {
+            $quotePermissionGroupQuery->filterByName($modifiedParams[QuotePermissionGroupCriteriaFilterTransfer::NAME]);
         }
 
         $quotePermissionGroupEntityTransferList = $this->buildQueryFromCriteria($quotePermissionGroupQuery, $criteriaFilterTransfer->getFilter())->find();
