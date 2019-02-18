@@ -213,7 +213,7 @@ class CartClientTest extends Unit
         ?QuoteStorageStrategyPluginInterface $quoteStorageStrategyPlugin = null
     ) {
         $factoryMock = $this->getMockBuilder(AbstractFactory::class)
-            ->setMethods(['getQuoteClient', 'createZedStub', 'createQuoteStorageStrategy', 'createCartChangeRequestExpander', 'getQuoteItemFinderPlugin'])
+            ->setMethods(['getQuoteClient', 'createZedStub', 'createQuoteStorageStrategyProxy', 'createCartChangeRequestExpander', 'getQuoteItemFinderPlugin'])
             ->disableOriginalConstructor()->getMock();
 
         if ($quote !== null) {
@@ -231,7 +231,7 @@ class CartClientTest extends Unit
                 ->method('getFactory')
                 ->will($this->returnValue($factoryMock));
             $factoryMock->expects($this->any())
-                ->method('createQuoteStorageStrategy')
+                ->method('createQuoteStorageStrategyProxy')
                 ->will($this->returnValue($quoteStorageStrategyPlugin));
         }
 

@@ -59,7 +59,7 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
+    public function getQuoteApproverList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
     {
         return $this->getFactory()->createQuoteApproversProvider()->getApproversList($quoteTransfer);
     }
@@ -119,8 +119,8 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      *
      * @return void
      */
-    public function deleteApprovalRequestsByIdQuote(int $idQuote): void
+    public function deleteApprovalsByIdQuote(int $idQuote): void
     {
-        $this->getEntityManager()->deleteApprovalRequestsByIdQuote($idQuote);
+        $this->getEntityManager()->deleteApprovalsByIdQuote($idQuote);
     }
 }

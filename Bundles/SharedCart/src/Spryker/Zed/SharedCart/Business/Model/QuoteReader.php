@@ -43,6 +43,7 @@ class QuoteReader implements QuoteReaderInterface
     public function findCustomerSharedQuoteCollectionBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
         $sharedCartsIdDefaultFlagData = $this->sharedCartRepository->getIsDefaultFlagForSharedCartsBySharedQuoteCriteriaFilter($sharedQuoteCriteriaFilterTransfer);
+
         $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
             ->setQuoteIds(array_keys($sharedCartsIdDefaultFlagData));
 
