@@ -31,13 +31,13 @@ class ZedHelper extends Module
         $tester->_backupSession()->manage()->deleteAllCookies();
 
 
-//        if ($tester->seeLink('Logout')) {
-//            // $tester->click('Logout');
-//        }
+        if ($tester->seeLink('Logout','/auth/logout')) {
+            $tester->click('Logout');
+        }
 
 
-        $pageSource = $tester->grabPageSource();
-        dd($pageSource);
+//        $pageSource = $tester->grabPageSource();
+//        dd($pageSource);
 
 
         // $pageSource->debugWebDriverLogs();
