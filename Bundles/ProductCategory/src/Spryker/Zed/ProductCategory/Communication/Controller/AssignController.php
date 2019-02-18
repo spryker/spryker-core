@@ -32,7 +32,6 @@ class AssignController extends AbstractController
     public function indexAction(Request $request)
     {
         $idCategory = $this->castId($request->get(ProductCategoryTable::PARAM_ID_CATEGORY));
-        $idNode = $this->castId(static::PARAM_ID_NODE);
         $categoryEntity = $this->getCategoryEntity($idCategory);
 
         if (!$categoryEntity) {
@@ -58,9 +57,11 @@ class AssignController extends AbstractController
         $categoryProductsTable = $this->getCategoryProductsTable($idCategory, $localeTransfer);
         $productsTable = $this->getProductsTable($idCategory, $localeTransfer);
 
-        if ($idNode) {
+        $nodeId = $request->get(static::PARAM_ID_NODE);
+
+        if ($nodeId !== null) {
             $categoryFacade = $this->getFactory()->getCategoryFacade();
-            $categoryPath = $categoryFacade->getNodePath($idNode, $localeTransfer);
+            $categoryPath = $categoryFacade->getNodePath($this->castId($nodeId), $localeTransfer);
         }
 
         return $this->viewResponse([
