@@ -19,7 +19,6 @@ use Spryker\Zed\ContentGui\Communication\Tabs\ContentTabs;
 use Spryker\Zed\ContentGui\ContentGuiDependencyProvider;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface;
-use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -30,10 +29,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createContentTable(): ContentTable
     {
-        return new ContentTable(
-            $this->getPropelContentQuery(),
-            $this->getUtilDateTimeService()
-        );
+        return new ContentTable($this->getPropelContentQuery());
     }
 
     /**
@@ -81,14 +77,6 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getPropelContentQuery(): SpyContentQuery
     {
         return $this->getProvidedDependency(ContentGuiDependencyProvider::PROPEL_QUERY_CONTENT);
-    }
-
-    /**
-     * @return \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilDateTimeServiceInterface
-     */
-    public function getUtilDateTimeService(): ContentGuiToUtilDateTimeServiceInterface
-    {
-        return $this->getProvidedDependency(ContentGuiDependencyProvider::SERVICE_UTIL_DATE_TIME);
     }
 
     /**
