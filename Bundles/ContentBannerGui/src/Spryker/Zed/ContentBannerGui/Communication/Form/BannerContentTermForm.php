@@ -27,6 +27,12 @@ class BannerContentTermForm extends AbstractType
     public const FIELD_CLICK_URL = 'clickUrl';
     public const FIELD_ALT_TEXT = 'altText';
 
+    public const PLACEHOLDER_TITLE = 'Title';
+    public const PLACEHOLDER_SUB_TITLE = 'Sub Title';
+    public const PLACEHOLDER_IMAGE_URL = 'Image URL';
+    public const PLACEHOLDER_CLICK_URL = 'Click URL';
+    public const PLACEHOLDER_ALT_TEXT = 'Alt-text';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -87,7 +93,7 @@ class BannerContentTermForm extends AbstractType
     {
         $builder->add(static::FIELD_TITLE, TextType::class, [
             'attr' => [
-                'placeholder' => 'Title',
+                'placeholder' => static::PLACEHOLDER_TITLE,
             ],
             'label' => false,
             'constraints' => array_merge(
@@ -110,7 +116,7 @@ class BannerContentTermForm extends AbstractType
     {
         $builder->add(static::FIELD_SUB_TITLE, TextType::class, [
             'attr' => [
-                'placeholder' => 'Sub Title',
+                'placeholder' => static::PLACEHOLDER_SUB_TITLE,
             ],
             'label' => false,
             'constraints' => array_merge(
@@ -133,7 +139,7 @@ class BannerContentTermForm extends AbstractType
     {
         $builder->add(static::FIELD_IMAGE_URL, TextType::class, [
             'attr' => [
-                'placeholder' => 'Image URL',
+                'placeholder' => static::PLACEHOLDER_IMAGE_URL,
             ],
             'label' => false,
             'constraints' => array_merge(
@@ -157,7 +163,7 @@ class BannerContentTermForm extends AbstractType
     {
         $builder->add(static::FIELD_CLICK_URL, UrlType::class, [
             'attr' => [
-                'placeholder' => 'Click URL',
+                'placeholder' => static::PLACEHOLDER_CLICK_URL,
             ],
             'label' => false,
             'constraints' => array_merge(
@@ -181,7 +187,7 @@ class BannerContentTermForm extends AbstractType
     {
         $builder->add(static::FIELD_ALT_TEXT, TextType::class, [
             'attr' => [
-                'placeholder' => 'Alt-text',
+                'placeholder' => static::PLACEHOLDER_ALT_TEXT,
             ],
             'label' => false,
             'constraints' => array_merge(
