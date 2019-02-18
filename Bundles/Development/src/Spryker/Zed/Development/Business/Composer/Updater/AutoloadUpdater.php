@@ -39,7 +39,7 @@ class AutoloadUpdater implements UpdaterInterface
 
     protected const RESERVED_NAMESPACES = [
         'vendor/',
-        'tests/',
+        'tests/_',
     ];
 
     /**
