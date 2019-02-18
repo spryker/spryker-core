@@ -31,7 +31,7 @@ class RemoveQuoteApprovalsBeforeQuoteDeletePlugin extends AbstractPlugin impleme
     {
         $quoteTransfer->requireIdQuote();
 
-        $this->getFacade()->deleteApprovalsByIdQuote($quoteTransfer->getIdQuote());
+        $this->getFacade()->removeApprovalsByIdQuote($quoteTransfer->getIdQuote());
 
         return $quoteTransfer;
     }

@@ -119,8 +119,8 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      *
      * @return void
      */
-    public function deleteApprovalsByIdQuote(int $idQuote): void
+    public function removeApprovalsByIdQuote(int $idQuote): void
     {
-        $this->getEntityManager()->deleteApprovalsByIdQuote($idQuote);
+        $this->getEntityManager()->removeApprovalsByIdQuote($idQuote);
     }
 }

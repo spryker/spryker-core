@@ -106,5 +106,5 @@ interface QuoteApprovalFacadeInterface
      *
      * @return void
      */
-    public function deleteApprovalsByIdQuote(int $idQuote): void;
+    public function removeApprovalsByIdQuote(int $idQuote): void;
 }
