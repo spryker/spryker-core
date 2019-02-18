@@ -63,6 +63,7 @@ class PermissionLimitCalculator implements PermissionLimitCalculatorInterface
         string $configurationKey
     ) {
         $highestLimit = null;
+        $isLimitUpdated = false;
 
         foreach ($companyUserTransfer->getCompanyRoleCollection()->getRoles() as $companyRoleTransfer) {
             $permissionTransfer = $this->findPermissionByKey(
@@ -80,8 +81,9 @@ class PermissionLimitCalculator implements PermissionLimitCalculatorInterface
                 $configurationKey
             );
 
-            if ($limit > $highestLimit) {
+            if (!$isLimitUpdated || $limit > $highestLimit) {
                 $highestLimit = $limit;
+                $isLimitUpdated = true;
             }
         }
 
