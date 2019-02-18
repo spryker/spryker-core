@@ -1,40 +1,28 @@
 {
-  "name": "spryker/quote-request",
+  "name": "spryker/agent-quote-request",
   "type": "library",
-  "description": "QuoteRequest module",
+  "description": "AgentQuoteRequest module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/calculation": "^4.0.0",
-    "spryker/checkout-extension": "^1.1.0",
-    "spryker/company-user": "^2.6.0",
     "spryker/kernel": "^3.17.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/sequence-number": "^3.0.0",
-    "spryker/util-encoding": "^2.0.0",
+    "spryker/quote-request": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/company": "*",
     "spryker/company-business-unit": "*",
+    "spryker/company-user": "*",
     "spryker/customer": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/quote": "*",
     "spryker/testify": "*"
   },
-  "suggest": {
-    "spryker/checkout": "If you want to use Checkout plugins."
-  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

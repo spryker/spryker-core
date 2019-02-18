@@ -7,11 +7,15 @@
 
 namespace Spryker\Zed\QuoteRequest\Persistence;
 
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
+use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -22,6 +26,8 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
     /**
      * @module Customer
      * @module CompanyUser
+     * @module Company
+     * @module CompanyBusinessUnit
      *
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
@@ -32,23 +38,20 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
     ): QuoteRequestCollectionTransfer {
         $quoteRequestQuery = $this->getFactory()
             ->getQuoteRequestPropelQuery()
-            ->leftJoinWithSpyQuoteRequestVersion()
+            ->joinWithCompanyUser()
             ->useCompanyUserQuery()
                 ->joinWithCustomer()
+                ->joinWithCompany()
+                ->joinWithCompanyBusinessUnit()
             ->endUse()
             ->orderByIdQuoteRequest(Criteria::DESC);
 
-        if ($quoteRequestFilterTransfer->getCompanyUser() && $quoteRequestFilterTransfer->getCompanyUser()->getIdCompanyUser()) {
-            $quoteRequestQuery->filterByFkCompanyUser($quoteRequestFilterTransfer->getCompanyUser()->getIdCompanyUser());
-        }
-
-        if ($quoteRequestFilterTransfer->getQuoteRequestReference()) {
-            $quoteRequestQuery->filterByQuoteRequestReference($quoteRequestFilterTransfer->getQuoteRequestReference());
-        }
+        $quoteRequestQuery = $this->setQuoteRequestFilters($quoteRequestQuery, $quoteRequestFilterTransfer);
 
         return $this->getFactory()
             ->createQuoteRequestMapper()
-            ->mapEntityCollectionToTransferCollection($quoteRequestQuery->find());
+            ->mapEntityCollectionToTransferCollection($quoteRequestQuery->find())
+            ->setPagination($quoteRequestFilterTransfer->getPagination());
     }
 
     /**
@@ -74,5 +77,66 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
         return $this->getFactory()
             ->createQuoteRequestVersionMapper()
             ->mapEntityCollectionToTransferCollection($quoteRequestVersionQuery->find());
+    }
+
+    /**
+     * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery $quoteRequestQuery
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery
+     */
+    protected function setQuoteRequestFilters(
+        SpyQuoteRequestQuery $quoteRequestQuery,
+        QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+    ): SpyQuoteRequestQuery {
+        $quoteRequestQuery
+            ->filterByStatus(SharedQuoteRequestConfig::STATUS_CLOSED, Criteria::ALT_NOT_EQUAL);
+
+        if (!$quoteRequestFilterTransfer->getWithHidden()) {
+            $quoteRequestQuery->filterByIsHidden(false);
+        }
+
+        if ($quoteRequestFilterTransfer->getCompanyUser() && $quoteRequestFilterTransfer->getCompanyUser()->getIdCompanyUser()) {
+            $quoteRequestQuery->filterByFkCompanyUser($quoteRequestFilterTransfer->getCompanyUser()->getIdCompanyUser());
+        }
+
+        if ($quoteRequestFilterTransfer->getQuoteRequestReference()) {
+            $quoteRequestQuery->filterByQuoteRequestReference($quoteRequestFilterTransfer->getQuoteRequestReference());
+        }
+
+        if ($quoteRequestFilterTransfer->getPagination()) {
+            $quoteRequestQuery = $this->preparePagination($quoteRequestQuery, $quoteRequestFilterTransfer->getPagination());
+        }
+
+        return $quoteRequestQuery;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery
+     */
+    protected function preparePagination(ModelCriteria $query, PaginationTransfer $paginationTransfer): SpyQuoteRequestQuery
+    {
+        $page = $paginationTransfer
+            ->requirePage()
+            ->getPage();
+
+        $maxPerPage = $paginationTransfer
+            ->requireMaxPerPage()
+            ->getMaxPerPage();
+
+        $paginationModel = $query->paginate($page, $maxPerPage);
+
+        $paginationTransfer->setNbResults($paginationModel->getNbResults())
+            ->setFirstIndex($paginationModel->getFirstIndex())
+            ->setLastIndex($paginationModel->getLastIndex())
+            ->setFirstPage($paginationModel->getFirstPage())
+            ->setLastPage($paginationModel->getLastPage())
+            ->setNextPage($paginationModel->getNextPage())
+            ->setPreviousPage($paginationModel->getPreviousPage());
+
+        return $paginationModel->getQuery();
     }
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="spryker:transfer-01"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="QuoteRequestOverviewCollection">
+        <property name="quoteRequests" type="QuoteRequest[]" singular="quoteRequest" />
+        <property name="currentQuoteRequest" type="QuoteRequest" />
+    </transfer>
+
+    <transfer name="QuoteRequestOverviewFilter">
+        <property name="quoteRequestReference" type="string" />
+        <property name="pagination" type="Pagination" />
+    </transfer>
+
+    <transfer name="QuoteRequest">
+        <property name="idQuoteRequest" type="int" />
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int" />
+        <property name="maxPerPage" type="int" />
+    </transfer>
+
+    <transfer name="QuoteRequestCollection">
+        <property name="quoteRequests" type="QuoteRequest[]" singular="quoteRequest" />
+        <property name="pagination" type="Pagination" />
+    </transfer>
+
+    <transfer name="QuoteRequestFilter">
+        <property name="quoteRequestReference" type="string" />
+        <property name="withHidden" type="bool" />
+        <property name="pagination" type="Pagination" />
+    </transfer>
+
+</transfers>

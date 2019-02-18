@@ -11,6 +11,7 @@
 
     <transfer name="QuoteRequestCollection">
         <property name="quoteRequests" type="QuoteRequest[]" singular="quoteRequest" />
+        <property name="pagination" type="Pagination" />
     </transfer>
 
     <transfer name="QuoteRequestVersionCollection">
@@ -18,46 +19,50 @@
     </transfer>
 
     <transfer name="QuoteRequest">
-        <property name="idQuoteRequest" type="int"/>
+        <property name="idQuoteRequest" type="int" />
 
-        <property name="companyUser" type="CompanyUser"/>
+        <property name="companyUser" type="CompanyUser" />
 
-        <property name="quoteRequestReference" type="string"/>
-        <property name="metadata" type="array"/>
-        <property name="status" type="string"/>
+        <property name="quoteRequestReference" type="string" />
+        <property name="metadata" type="array" />
+        <property name="status" type="string" />
 
-        <property name="validUntil" type="string"/>
+        <property name="isHidden" type="bool" />
+        <property name="validUntil" type="string" />
         <property name="createdAt" type="string" />
 
-        <property name="latestVersion" type="QuoteRequestVersion"/>
+        <property name="latestVersion" type="QuoteRequestVersion" />
     </transfer>
 
     <transfer name="QuoteRequestVersion">
-        <property name="idQuoteRequestVersion" type="int"/>
-        <property name="fkQuoteRequest" type="int"/>
+        <property name="idQuoteRequestVersion" type="int" />
+        <property name="fkQuoteRequest" type="int" />
 
-        <property name="version" type="int"/>
-        <property name="versionReference" type="string"/>
+        <property name="version" type="int" />
+        <property name="versionReference" type="string" />
 
-        <property name="quoteRequest" type="QuoteRequest"/>
-        <property name="quote" type="Quote"/>
+        <property name="quoteRequest" type="QuoteRequest" />
+        <property name="quote" type="Quote" />
     </transfer>
 
     <transfer name="QuoteRequestFilter">
-        <property name="companyUser" type="CompanyUser"/>
-        <property name="quoteRequestReference" type="string"/>
+        <property name="companyUser" type="CompanyUser" />
+        <property name="quoteRequestReference" type="string" />
+        <property name="withHidden" type="bool" />
+        <property name="pagination" type="Pagination" />
     </transfer>
 
     <transfer name="QuoteRequestVersionFilter">
-        <property name="quoteRequest" type="QuoteRequest"/>
-        <property name="quoteRequestVersionReference" type="string"/>
+        <property name="quoteRequest" type="QuoteRequest" />
+        <property name="quoteRequestVersionReference" type="string" />
     </transfer>
 
     <transfer name="Quote">
         <property name="quoteRequestVersionReference" type="string" />
+        <property name="quoteRequestReference" type="string" />
 
-        <property name="items" type="Item[]" singular="item"/>
-        <property name="totals" type="Totals"/>
+        <property name="items" type="Item[]" singular="item" />
+        <property name="totals" type="Totals" />
     </transfer>
 
     <transfer name="Totals">
@@ -76,4 +81,17 @@
     <transfer name="CheckoutError">
         <property name="message" type="string" />
     </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int" />
+        <property name="maxPerPage" type="int" />
+        <property name="nbResults" type="int" />
+        <property name="previousPage" type="int" />
+        <property name="nextPage" type="int" />
+        <property name="firstIndex" type="int" />
+        <property name="lastIndex" type="int" />
+        <property name="firstPage" type="int" />
+        <property name="lastPage" type="int" />
+    </transfer>
+
 </transfers>

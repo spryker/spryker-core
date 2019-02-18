@@ -38,7 +38,7 @@ interface QuoteRequestClientInterface
      * - Retrieves "Request for Quote" entities filtered by company user.
      * - Filters by quote request reference when provided.
      * - Excludes hidden "Request for Quote" entities.
-     * - Selects latestVersion based on latest version createdAt.
+     * - Selects latestVersion based on latest version id.
      *
      * @api
      *
