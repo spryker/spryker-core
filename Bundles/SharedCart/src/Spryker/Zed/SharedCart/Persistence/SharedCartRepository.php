@@ -106,17 +106,14 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
 
         $quoteQuery = $this->getFactory()->createQuoteCompanyUserQuery()
             ->filterByFkCompanyUser($sharedQuoteCriteriaFilterTransfer->getIdCompanyUser())
+			->useSpyQuoteQuery()
+                ->filterByFkStore($sharedQuoteCriteriaFilterTransfer->getIdStore())
+            ->endUse()
             ->select([
                 SpyQuoteCompanyUserTableMap::COL_FK_QUOTE,
                 SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT,
             ]);
-
-        if ($sharedQuoteCriteriaFilterTransfer->getIdStore()) {
-            $quoteQuery->useSpyQuoteQuery()
-                ->filterByFkStore($sharedQuoteCriteriaFilterTransfer->getIdStore())
-                ->endUse();
-        }
-
+            
         return $quoteQuery->find()
             ->toKeyValue(SpyQuoteCompanyUserTableMap::COL_FK_QUOTE, SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT);
     }
