@@ -52,6 +52,24 @@
 
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
+        <property name="companyRoleCollection" type="CompanyRoleCollection"/>
+    </transfer>
+
+    <transfer name="CompanyRoleCollection">
+        <property name="roles" type="CompanyRole[]" singular="role"/>
+    </transfer>
+
+    <transfer name="CompanyRole">
+        <property name="permissionCollection" type="PermissionCollection"/>
+    </transfer>
+
+    <transfer name="PermissionCollection">
+        <property name="permissions" type="Permission[]" singular="permission"/>
+    </transfer>
+
+    <transfer name="Permission">
+        <property name="key" type="string"/>
+        <property name="configuration" type="array"/>
     </transfer>
 
     <transfer name="Currency">
