@@ -171,5 +171,5 @@ interface SharedCartFacadeInterface
      *
      * @return void
      */
-    public function shareQuoteWithCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void;
+    public function addQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void;
 }

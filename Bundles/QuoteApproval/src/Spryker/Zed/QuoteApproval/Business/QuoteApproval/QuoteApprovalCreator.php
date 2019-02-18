@@ -154,7 +154,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
                     ->setQuotePermissionGroup($quotePermissionGroup)
             );
 
-        $this->sharedCartFacade->shareQuoteWithCompanyUser($shareCartRequestTransfer);
+        $this->sharedCartFacade->addQuoteCompanyUser($shareCartRequestTransfer);
     }
 
     /**

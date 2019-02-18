@@ -42,9 +42,9 @@ class QuoteApprovalToSharedCartFacadeBridge implements QuoteApprovalToSharedCart
      *
      * @return void
      */
-    public function shareQuoteWithCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void
+    public function addQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void
     {
-        $this->sharedCartFacade->shareQuoteWithCompanyUser($shareCartRequestTransfer);
+        $this->sharedCartFacade->addQuoteCompanyUser($shareCartRequestTransfer);
     }
 
     /**

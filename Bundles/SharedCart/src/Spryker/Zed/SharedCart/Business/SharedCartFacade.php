@@ -208,10 +208,10 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      *
      * @return void
      */
-    public function shareQuoteWithCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void
+    public function addQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void
     {
         $this->getFactory()
             ->createQuoteCompanyUserWriter()
-            ->shareQuoteWithCompanyUser($shareCartRequestTransfer);
+            ->addQuoteCompanyUser($shareCartRequestTransfer);
     }
 }
