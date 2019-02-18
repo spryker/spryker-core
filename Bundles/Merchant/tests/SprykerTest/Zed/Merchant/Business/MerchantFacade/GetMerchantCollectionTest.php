@@ -28,8 +28,8 @@ class GetMerchantCollectionTest extends AbstractMerchantFacadeTest
     {
         $this->tester->truncateMerchantRelations();
 
-        $this->tester->haveMerchant();
-        $this->tester->haveMerchant();
+        $this->tester->haveMerchantWithAddress();
+        $this->tester->haveMerchantWithAddress();
 
         $merchantCollectionTransfer = $this->tester->getFacade()->getMerchantCollection();
         $this->assertCount(2, $merchantCollectionTransfer->getMerchants());

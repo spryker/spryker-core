@@ -12,6 +12,7 @@ use Generated\Shared\DataBuilder\MerchantAddressBuilder;
 use Generated\Shared\DataBuilder\MerchantBuilder;
 use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Orm\Zed\Merchant\Persistence\SpyMerchant;
 use Orm\Zed\Merchant\Persistence\SpyMerchantAddressQuery;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Merchant\MerchantConfig;
@@ -29,6 +30,31 @@ class MerchantHelper extends Module
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
     public function haveMerchant(array $seedData = []): MerchantTransfer
+    {
+        /** @var \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer */
+        $merchantTransfer = (new MerchantBuilder($seedData))->build();
+
+        $merchantEntity = $this->createSpyMerchant();
+        $merchantEntity->fromArray($merchantTransfer->setIdMerchant(null)->toArray());
+        $merchantEntity->save();
+
+        $merchantTransfer->setIdMerchant($merchantEntity->getIdMerchant());
+
+        /** @var \SprykerTest\Shared\Testify\Helper\DataCleanupHelper $dataCleanupHelper */
+        $dataCleanupHelper = $this->getDataCleanupHelper();
+        $dataCleanupHelper->_addCleanup(function () use ($merchantTransfer) {
+            $this->cleanupMerchant($merchantTransfer);
+        });
+
+        return $merchantTransfer;
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    public function haveMerchantWithAddress(array $seedData = []): MerchantTransfer
     {
         /** @var \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer */
         $merchantTransfer = (new MerchantBuilder($seedData))->build();
@@ -51,8 +77,9 @@ class MerchantHelper extends Module
 
         /** @var \SprykerTest\Shared\Testify\Helper\DataCleanupHelper $dataCleanupHelper */
         $dataCleanupHelper = $this->getDataCleanupHelper();
-        $dataCleanupHelper->_addCleanup(function () use ($merchantTransfer) {
+        $dataCleanupHelper->_addCleanup(function () use ($merchantTransfer, $merchantAddressTransfer) {
             $this->cleanupMerchant($merchantTransfer);
+            $this->cleanupMerchantAddress($merchantAddressTransfer);
         });
 
         return $merchantTransfer;
@@ -131,6 +158,14 @@ class MerchantHelper extends Module
     public function createMerchantConfig(): MerchantConfig
     {
         return new MerchantConfig();
+    }
+
+    /**
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchant
+     */
+    protected function createSpyMerchant(): SpyMerchant
+    {
+        return new SpyMerchant();
     }
 
     /**
