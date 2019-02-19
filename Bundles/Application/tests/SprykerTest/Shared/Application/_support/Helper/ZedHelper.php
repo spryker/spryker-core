@@ -27,7 +27,16 @@ class ZedHelper extends Module
      */
     public function _after(TestInterface $test)
     {
-         static::$alreadyLoggedIn = false;
+        $tester = $this->getWebDriver();
+
+        try {
+            $tester->seeElement(['href' => '/auth/logout']);
+            $tester->click('Logout');
+        } catch (\Exception $exception) {
+//            NOP
+        }
+
+        static::$alreadyLoggedIn = false;
     }
 
     /**
@@ -61,7 +70,6 @@ class ZedHelper extends Module
             return;
         }
 
-        $tester->_backupSession()->manage()->deleteAllCookies();
         $tester->amOnPage('/auth/login');
 
         $tester->fillField('#auth_username', $username);
