@@ -51,7 +51,7 @@ class AuthRestApiFactory extends AbstractFactory
      */
     public function createAccessTokenValidator(): AccessTokenValidatorInterface
     {
-        return new AccessTokenValidator($this->getOauthClient(), $this->getRestUserIdentifierExpanderPlugins());
+        return new AccessTokenValidator($this->getOauthClient(), $this->getRestUserExpanderPlugins());
     }
 
     /**
@@ -71,10 +71,10 @@ class AuthRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserIdentifierExpanderPluginInterface[]
+     * @return \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserExpanderPluginInterface[]
      */
-    protected function getRestUserIdentifierExpanderPlugins(): array
+    protected function getRestUserExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(AuthRestApiDependencyProvider::PLUGINS_REST_USER_IDENTIFIER_EXPANDER);
+        return $this->getProvidedDependency(AuthRestApiDependencyProvider::PLUGINS_REST_USER_EXPANDER);
     }
 }

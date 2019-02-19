@@ -7,24 +7,24 @@
 
 namespace Spryker\Glue\AuthRestApiExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\RestUserIdentifierTransfer;
+use Generated\Shared\Transfer\RestUserTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface RestUserIdentifierExpanderPluginInterface
+interface RestUserExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands rest user identifier with additional data.
+     * - Expands rest user with additional data.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestUserIdentifierTransfer $restUserIdentifierTransfer
+     * @param \Generated\Shared\Transfer\RestUserTransfer $restUserTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestUserIdentifierTransfer
+     * @return \Generated\Shared\Transfer\RestUserTransfer
      */
     public function expand(
-        RestUserIdentifierTransfer $restUserIdentifierTransfer,
+        RestUserTransfer $restUserTransfer,
         RestRequestInterface $restRequest
-    ): RestUserIdentifierTransfer;
+    ): RestUserTransfer;
 }

@@ -6,8 +6,6 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\Request\Data;
 
-use Generated\Shared\Transfer\RestUserIdentifierTransfer;
-
 class User implements UserInterface
 {
     /**
@@ -26,22 +24,15 @@ class User implements UserInterface
     protected $scopes;
 
     /**
-     * @var \Generated\Shared\Transfer\RestUserIdentifierTransfer|null
-     */
-    protected $restUserIdentifierTransfer;
-
-    /**
      * @param string $surrogateIdentifier
      * @param string $naturalIdentifier
      * @param array $scopes
-     * @param \Generated\Shared\Transfer\RestUserIdentifierTransfer|null $restUserIdentifierTransfer
      */
-    public function __construct(string $surrogateIdentifier, string $naturalIdentifier, array $scopes = [], ?RestUserIdentifierTransfer $restUserIdentifierTransfer = null)
+    public function __construct(string $surrogateIdentifier, string $naturalIdentifier, array $scopes = [])
     {
         $this->surrogateIdentifier = $surrogateIdentifier;
         $this->naturalIdentifier = $naturalIdentifier;
         $this->scopes = $scopes;
-        $this->restUserIdentifierTransfer = $restUserIdentifierTransfer;
     }
 
     /**
@@ -66,13 +57,5 @@ class User implements UserInterface
     public function getScopes(): array
     {
         return $this->scopes;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\RestUserIdentifierTransfer|null
-     */
-    public function getRestUserIdentifierTransfer(): ?RestUserIdentifierTransfer
-    {
-        return $this->restUserIdentifierTransfer;
     }
 }
