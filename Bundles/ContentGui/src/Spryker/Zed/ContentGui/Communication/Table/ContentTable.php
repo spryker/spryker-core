@@ -99,8 +99,8 @@ class ContentTable extends AbstractTable
                 ContentTableConstants::COL_NAME => $content[SpyContentTableMap::COL_NAME],
                 ContentTableConstants::COL_DESCRIPTION => $content[SpyContentTableMap::COL_DESCRIPTION],
                 ContentTableConstants::COL_CONTENT_TYPE_KEY => $this->buildContentTypeLabel($content[SpyContentTableMap::COL_CONTENT_TYPE_KEY]),
-                ContentTableConstants::COL_CREATED_AT => date('Y-m-d H:i:s', strtotime($content[SpyContentTableMap::COL_CREATED_AT])),
-                ContentTableConstants::COL_UPDATED_AT => date('Y-m-d H:i:s', strtotime($content[SpyContentTableMap::COL_UPDATED_AT])),
+                ContentTableConstants::COL_CREATED_AT => date('Y-m-d H:i', strtotime($content[SpyContentTableMap::COL_CREATED_AT])),
+                ContentTableConstants::COL_UPDATED_AT => date('Y-m-d H:i', strtotime($content[SpyContentTableMap::COL_UPDATED_AT])),
                 ContentTableConstants::COL_ACTIONS => $this->buildLinks($content),
             ];
         }
