@@ -10,7 +10,7 @@
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",
     "spryker/util-sanitize": "^2.0.0",
-    "spryker/util-text": "*"
+    "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
     "spryker/application": "*",
