@@ -9,12 +9,12 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Session;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface CustomerSessionWriterInterface
+interface SessionCreatorInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
      */
-    public function setCustomerSession(RestRequestInterface $restRequest): void;
+    public function setCustomer(RestRequestInterface $restRequest): void;
 }

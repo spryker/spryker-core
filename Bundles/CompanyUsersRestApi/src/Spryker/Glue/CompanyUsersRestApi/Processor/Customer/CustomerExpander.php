@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class CustomerSessionExpander implements CustomerSessionExpanderInterface
+class CustomerExpander implements CustomerExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -21,16 +21,15 @@ class CustomerSessionExpander implements CustomerSessionExpanderInterface
      */
     public function expand(CustomerTransfer $customerTransfer, RestRequestInterface $restRequest): CustomerTransfer
     {
-        if (!$restRequest->getUser()) {
+        $restUserTransfer = $restRequest->getRestUser();
+        if (!$restUserTransfer) {
             return $customerTransfer;
         }
 
-        $restUserIdentifier = $restRequest->getUser()->getRestUserIdentifierTransfer();
-
-        if ($restUserIdentifier->getIdCompanyUser() !== null && $restUserIdentifier->getIdCompany() !== null) {
+        if ($restUserTransfer->getIdCompanyUser() !== null && $restUserTransfer->getIdCompany() !== null) {
             $companyUserTransfer = (new CompanyUserTransfer())
-                ->setIdCompanyUser((int)$restUserIdentifier->getIdCompanyUser())
-                ->setFkCompany((int)$restUserIdentifier->getIdCompany());
+                ->setIdCompanyUser((int)$restUserTransfer->getIdCompanyUser())
+                ->setFkCompany((int)$restUserTransfer->getIdCompany());
 
             $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
         }

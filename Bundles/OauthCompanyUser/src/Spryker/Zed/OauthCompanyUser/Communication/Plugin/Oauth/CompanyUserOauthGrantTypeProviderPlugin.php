@@ -8,13 +8,14 @@
 namespace Spryker\Zed\OauthCompanyUser\Communication\Plugin\Oauth;
 
 use League\OAuth2\Server\Grant\AbstractGrant;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\OauthCompanyUser\OauthCompanyUserConfig;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeProviderPluginInterface;
 
 /**
  * @method \Spryker\Zed\OauthCompanyUser\Communication\OauthCompanyUserCommunicationFactory getFactory()
  */
-class CompanyUserOauthGrantTypeProviderPlugin implements OauthGrantTypeProviderPluginInterface
+class CompanyUserOauthGrantTypeProviderPlugin extends AbstractPlugin implements OauthGrantTypeProviderPluginInterface
 {
     /**
      * {@inheritdoc}

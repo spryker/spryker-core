@@ -5,26 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin;
+namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\Customer;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface CustomerSessionExpanderPluginInterface
+interface CustomerExpanderInterface
 {
     /**
-     * Specification:
-     * - Expands customer transfer for session with additional data.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function expand(
-        CustomerTransfer $customerTransfer,
-        RestRequestInterface $restRequest
-    ): CustomerTransfer;
+    public function expand(CustomerTransfer $customerTransfer, RestRequestInterface $restRequest): CustomerTransfer;
 }

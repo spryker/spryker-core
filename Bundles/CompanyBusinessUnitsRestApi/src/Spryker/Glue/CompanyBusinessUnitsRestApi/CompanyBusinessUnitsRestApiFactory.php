@@ -7,17 +7,17 @@
 
 namespace Spryker\Glue\CompanyBusinessUnitsRestApi;
 
-use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\Customer\CustomerSessionExpander;
-use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\Customer\CustomerSessionExpanderInterface;
+use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\Customer\CustomerExpander;
+use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\Customer\CustomerExpanderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CompanyBusinessUnitsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\Customer\CustomerSessionExpanderInterface
+     * @return \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\Customer\CustomerExpanderInterface
      */
-    public function createCustomerSessionExpander(): CustomerSessionExpanderInterface
+    public function createCustomerExpander(): CustomerExpanderInterface
     {
-        return new CustomerSessionExpander();
+        return new CustomerExpander();
     }
 }

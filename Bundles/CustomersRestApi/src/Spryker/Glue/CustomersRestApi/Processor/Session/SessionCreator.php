@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class CustomerSessionWriter implements CustomerSessionWriterInterface
+class SessionCreator implements SessionCreatorInterface
 {
     /**
      * @var \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface
@@ -19,20 +19,20 @@ class CustomerSessionWriter implements CustomerSessionWriterInterface
     protected $customerClient;
 
     /**
-     * @var array|\Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerSessionExpanderPluginInterface[]
+     * @var array|\Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
      */
-    protected $customerSessionExpanderPlugins;
+    protected $customerExpanderPlugins;
 
     /**
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
-     * @param \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerSessionExpanderPluginInterface[] $customerSessionExpanderPlugins
+     * @param \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $customerExpanderPlugins
      */
     public function __construct(
         CustomersRestApiToCustomerClientInterface $customerClient,
-        array $customerSessionExpanderPlugins
+        array $customerExpanderPlugins
     ) {
         $this->customerClient = $customerClient;
-        $this->customerSessionExpanderPlugins = $customerSessionExpanderPlugins;
+        $this->customerExpanderPlugins = $customerExpanderPlugins;
     }
 
     /**
@@ -40,20 +40,19 @@ class CustomerSessionWriter implements CustomerSessionWriterInterface
      *
      * @return void
      */
-    public function setCustomerSession(RestRequestInterface $restRequest): void
+    public function setCustomer(RestRequestInterface $restRequest): void
     {
-        if (!$restRequest->getUser()) {
+        $restUserTransfer = $restRequest->getRestUser();
+        if (!$restUserTransfer) {
             return;
         }
 
-        $user = $restRequest->getUser();
-
         $customerTransfer = (new CustomerTransfer())
-            ->setIdCustomer($user->getSurrogateIdentifier() ? (int)$user->getSurrogateIdentifier() : null)
+            ->setIdCustomer($restUserTransfer->getSurrogateIdentifier() ? (int)$restUserTransfer->getSurrogateIdentifier() : null)
             ->setIsDirty(false)
-            ->setCustomerReference($user->getNaturalIdentifier());
+            ->setCustomerReference($restUserTransfer->getNaturalIdentifier());
 
-        $customerTransfer = $this->executeCustomerSessionExpanderPlugins($restRequest, $customerTransfer);
+        $customerTransfer = $this->executeCustomerExpanderPlugins($restRequest, $customerTransfer);
 
         $this->customerClient
             ->setCustomer($customerTransfer);
@@ -65,10 +64,10 @@ class CustomerSessionWriter implements CustomerSessionWriterInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function executeCustomerSessionExpanderPlugins(RestRequestInterface $restRequest, CustomerTransfer $customerTransfer): CustomerTransfer
+    protected function executeCustomerExpanderPlugins(RestRequestInterface $restRequest, CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        foreach ($this->customerSessionExpanderPlugins as $customerSessionExpanderPlugin) {
-            $customerTransfer = $customerSessionExpanderPlugin->expand($customerTransfer, $restRequest);
+        foreach ($this->customerExpanderPlugins as $customerExpanderPlugin) {
+            $customerTransfer = $customerExpanderPlugin->expand($customerTransfer, $restRequest);
         }
 
         return $customerTransfer;

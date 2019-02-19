@@ -5,21 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Plugin\CustomersRestApi;
+namespace Spryker\Glue\CompanyUsersRestApi\Plugin\CustomersRestApi;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerSessionExpanderPluginInterface;
+use Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiFactory getFactory()
  */
-class CompanyBusinessUnitCustomerSessionExpanderPlugin extends AbstractPlugin implements CustomerSessionExpanderPluginInterface
+class CompanyUserCustomerExpanderPlugin extends AbstractPlugin implements CustomerExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Expands customer transfer for session with company business unit transfer.
+     * - Expands customer transfer with company user transfer.
      *
      * @api
      *
@@ -31,7 +31,7 @@ class CompanyBusinessUnitCustomerSessionExpanderPlugin extends AbstractPlugin im
     public function expand(CustomerTransfer $customerTransfer, RestRequestInterface $restRequest): CustomerTransfer
     {
         return $this->getFactory()
-            ->createCustomerSessionExpander()
+            ->createCustomerExpander()
             ->expand($customerTransfer, $restRequest);
     }
 }

@@ -31,8 +31,8 @@ use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Session\CustomerSessionWriter;
-use Spryker\Glue\CustomersRestApi\Processor\Session\CustomerSessionWriterInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Session\SessionCreator;
+use Spryker\Glue\CustomersRestApi\Processor\Session\SessionCreatorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiError;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidator;
@@ -186,13 +186,13 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CustomersRestApi\Processor\Session\CustomerSessionWriterInterface
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Session\SessionCreatorInterface
      */
-    public function createCustomerSessionWriter(): CustomerSessionWriterInterface
+    public function createSessionCreator(): SessionCreatorInterface
     {
-        return new CustomerSessionWriter(
+        return new SessionCreator(
             $this->getCustomerClient(),
-            $this->getCustomerSessionExpanderPlugins()
+            $this->getCustomerExpanderPlugins()
         );
     }
 
@@ -223,10 +223,10 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerSessionExpanderPluginInterface[]
+     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
      */
-    public function getCustomerSessionExpanderPlugins(): array
+    public function getCustomerExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::PLUGINS_CUSTOMER_SESSION_EXPANDER);
+        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::PLUGINS_CUSTOMER_EXPANDER);
     }
 }
