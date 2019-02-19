@@ -79,6 +79,18 @@ interface ProductPageSearchFacadeInterface
     public function unpublishProductConcretes(array $productIds): void;
 
     /**
+     * Specification:
+     * - Unpublishes concrete products by given abstract product ids and store names.
+     *
+     * @api
+     *
+     * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
+     *
+     * @return void
+     */
+    public function unpublishProductConcretePageSearches(array $productAbstractStoreMap): void;
+
+    /**
      * Specification
      * - Finds product concrete page search entities by given concrete product ids.
      * - Returns array of ProductConcretePageSearchTransfer objects.
@@ -90,4 +102,16 @@ interface ProductPageSearchFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
     public function getProductConcretePageSearchTransfersByProductIds(array $productIds): array;
+
+    /**
+     * Specification:
+     * - Publishes concrete products by given abstract product ids.
+     *
+     * @api
+     *
+     * @param array $productAbstractIds
+     *
+     * @return void
+     */
+    public function publishProductConcretePageSearchesByProductAbstractIds(array $productAbstractIds): void;
 }
