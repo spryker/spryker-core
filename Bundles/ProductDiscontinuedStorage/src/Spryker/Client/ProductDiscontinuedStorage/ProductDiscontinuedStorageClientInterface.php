@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductDiscontinuedStorage;
 
+use Generated\Shared\Transfer\ItemValidationTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
@@ -68,4 +69,20 @@ interface ProductDiscontinuedStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     public function expandDiscontinuedProductAvailability(ProductViewTransfer $productViewTransfer, string $localeName): ProductViewTransfer;
+
+    /**
+     * Specification:
+     * - Requires ItemTransfer inside ItemValidationTransfer.
+     * - Returns not modified ItemValidationTransfer if ItemTransfer.id is missing.
+     * - Requires sku inside ItemTransfer.
+     * - Calls ProductDiscontinuedStorageClient::findProductDiscontinuedStorage() to know if product is discontinued or not (uses current locale).
+     * - Adds error message if product is discontinued. Otherwise returns not modified ItemValidationTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemValidationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemValidationTransfer
+     */
+    public function validateItemProductDiscontinued(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer;
 }
