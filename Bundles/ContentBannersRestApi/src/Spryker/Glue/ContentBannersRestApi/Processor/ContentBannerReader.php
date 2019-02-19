@@ -59,7 +59,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
         $response = $this->restResourceBuilder->createRestResponse();
 
         $idContentBanner = $restRequest->getResource()->getId();
-        if (!is_numeric($idContentBanner)) {
+        if (!$idContentBanner) {
             return $this->addContentBannerIdNotSpecifiedError($response);
         }
 
