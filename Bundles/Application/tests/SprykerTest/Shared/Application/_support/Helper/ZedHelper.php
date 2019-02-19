@@ -9,12 +9,14 @@ namespace SprykerTest\Shared\Application\Helper;
 
 use Codeception\Module;
 use Codeception\TestInterface;
+use PHPUnit\Framework\AssertionFailedError;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Testify\TestifyConstants;
 
 class ZedHelper extends Module
 {
+    protected const LOGOUT_LINK_SELECTOR = "//a[contains(@href,'auth/logout')]";
     /**
      * @var bool
      */
@@ -29,14 +31,28 @@ class ZedHelper extends Module
     {
         $tester = $this->getWebDriver();
 
-        try {
-            $tester->seeElement(['href' => '/auth/logout']);
-            $tester->click('Logout');
-        } catch (\Exception $exception) {
-//            NOP
+        if ($this->seeElement(static::LOGOUT_LINK_SELECTOR)) {
+            $tester->click(static::LOGOUT_LINK_SELECTOR);
         }
 
         static::$alreadyLoggedIn = false;
+    }
+
+    /**
+     * @param string $selector
+     *
+     * @return bool
+     */
+    protected function seeElement(string $selector): bool
+    {
+        $tester = $this->getWebDriver();
+        try {
+            $tester->seeElement($selector);
+
+            return true;
+        } catch (AssertionFailedError $exception) {
+            return false;
+        }
     }
 
     /**
