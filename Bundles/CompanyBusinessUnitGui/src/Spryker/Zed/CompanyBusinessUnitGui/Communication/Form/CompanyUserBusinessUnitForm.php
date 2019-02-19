@@ -56,7 +56,7 @@ class CompanyUserBusinessUnitForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyBusinessUnitCollectionField(FormBuilderInterface $builder, array $options): self
+    protected function addCompanyBusinessUnitCollectionField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_FK_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
             'label' => 'Business Unit',

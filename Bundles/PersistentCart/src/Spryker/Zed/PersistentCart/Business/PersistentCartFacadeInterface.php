@@ -171,7 +171,9 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     *  - Remove quote from database
+     * - Removes quote from database.
+     * - Executes update quote plugins.
+     * - Calls quote response extend plugins.
      *
      * @api
      *
@@ -199,6 +201,7 @@ interface PersistentCartFacadeInterface
      * Specification:
      *  - Saves quote in database.
      *  - Call quote response extend plugins.
+     *  - Operation will be performed only if customer has permission to update quote.
      *
      * @api
      *
@@ -223,11 +226,26 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
+     *  - Creates quote in database.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Calls quote response extend plugins.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createQuoteWithReloadedItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
      *  - Load quote by id.
      *  - Add changes.
      *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
      *  - Saves quote in database.
      *  - Call quote response extend plugins.
+     *  - Operation will be performed only if customer has permission to update quote.
      *
      * @api
      *
