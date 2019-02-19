@@ -12,16 +12,10 @@ use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductBundleFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface;
-use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Persistence\ProductDiscontinuedProductBundleConnectorRepositoryInterface;
 
 class ProductBundleDiscontinuedReader implements ProductBundleDiscontinuedReaderInterface
 {
     protected const ERROR_MESSAGE_PRODUCT_BUNDLE_DISCONTINUED = 'You can not unmark the discontinued bundle until any of the bundled products are discontinued.';
-
-    /**
-     * @var \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Persistence\ProductDiscontinuedProductBundleConnectorRepositoryInterface
-     */
-    protected $productDiscontinuedProductBundleConnectorRepository;
 
     /**
      * @var \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface
@@ -34,18 +28,15 @@ class ProductBundleDiscontinuedReader implements ProductBundleDiscontinuedReader
     protected $productBundleFacade;
 
     /**
-     * @param \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Persistence\ProductDiscontinuedProductBundleConnectorRepositoryInterface $productDiscontinuedProductBundleConnectorRepository
      * @param \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface $productDiscontinuedFacade
      * @param \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductBundleFacadeInterface $productBundleFacade
      */
     public function __construct(
-        ProductDiscontinuedProductBundleConnectorRepositoryInterface $productDiscontinuedProductBundleConnectorRepository,
         ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface $productDiscontinuedFacade,
         ProductDiscontinuedProductBundleConnectorToProductBundleFacadeInterface $productBundleFacade
     ) {
         $this->productDiscontinuedFacade = $productDiscontinuedFacade;
         $this->productBundleFacade = $productBundleFacade;
-        $this->productDiscontinuedProductBundleConnectorRepository = $productDiscontinuedProductBundleConnectorRepository;
     }
 
     /**
@@ -59,7 +50,7 @@ class ProductBundleDiscontinuedReader implements ProductBundleDiscontinuedReader
         $bundledProductConcreteIds = $this->getBundledProductConcreteIds($productDiscontinuedTransfer);
 
         if (!$bundledProductConcreteIds
-            || !$this->productDiscontinuedFacade->isOneOfConcreteProductsDiscontinued($bundledProductConcreteIds)
+            || !$this->productDiscontinuedFacade->isAnyProductConcreteDiscontinued($bundledProductConcreteIds)
         ) {
             return $productDiscontinuedResponseTransfer;
         }

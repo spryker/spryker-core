@@ -63,15 +63,11 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param array $productIds
      *
      * @return bool
      */
-    public function isOneOfConcreteProductsDiscontinued(array $productIds): bool
+    public function isAnyProductConcreteDiscontinued(array $productIds): bool
     {
         return ($this->getFactory()
                 ->createProductDiscontinuedQuery()

@@ -40,8 +40,8 @@ class ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeBridge
      *
      * @return bool
      */
-    public function isOneOfConcreteProductsDiscontinued(array $productConcreteIds): bool
+    public function isAnyProductConcreteDiscontinued(array $productConcreteIds): bool
     {
-        return $this->productDiscontinuedFacade->isOneOfConcreteProductsDiscontinued($productConcreteIds);
+        return $this->productDiscontinuedFacade->isAnyProductConcreteDiscontinued($productConcreteIds);
     }
 }

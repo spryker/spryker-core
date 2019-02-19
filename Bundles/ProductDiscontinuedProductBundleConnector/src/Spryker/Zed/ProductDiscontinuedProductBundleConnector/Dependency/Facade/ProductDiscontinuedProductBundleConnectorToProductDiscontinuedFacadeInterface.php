@@ -24,5 +24,5 @@ interface ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeIn
      *
      * @return bool
      */
-    public function isOneOfConcreteProductsDiscontinued(array $productConcreteIds): bool;
+    public function isAnyProductConcreteDiscontinued(array $productConcreteIds): bool;
 }

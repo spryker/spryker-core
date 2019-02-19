@@ -40,7 +40,7 @@ interface ProductDiscontinuedProductBundleConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Checks discontinued status of bundled products using DB query with join to table spy_product_bundle.
+     * - Checks discontinued status of bundled products.
      * - Returns ProductDiscontinuedResponseTransfer with isSuccessful=true if all bundled products are not discontinued.
      *
      * @api

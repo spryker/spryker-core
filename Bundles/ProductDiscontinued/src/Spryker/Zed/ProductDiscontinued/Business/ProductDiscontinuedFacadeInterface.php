@@ -83,7 +83,7 @@ interface ProductDiscontinuedFacadeInterface
 
     /**
      * Specification:
-     *  - Checks if at least one of given products is discontinued.
+     *  - Checks if at least one of given concrete products is discontinued.
      *
      * @api
      *
@@ -91,7 +91,7 @@ interface ProductDiscontinuedFacadeInterface
      *
      * @return bool
      */
-    public function isOneOfConcreteProductsDiscontinued(array $productConcreteIds): bool;
+    public function isAnyProductConcreteDiscontinued(array $productConcreteIds): bool;
 
     /**
      * Specification:

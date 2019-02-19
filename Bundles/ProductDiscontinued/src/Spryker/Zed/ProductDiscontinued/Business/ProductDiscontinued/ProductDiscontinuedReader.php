@@ -51,9 +51,9 @@ class ProductDiscontinuedReader implements ProductDiscontinuedReaderInterface
      *
      * @return bool
      */
-    public function isOneOfConcreteProductsDiscontinued(array $productConcreteIds): bool
+    public function isAnyProductConcreteDiscontinued(array $productConcreteIds): bool
     {
-        return $this->productDiscontinuedRepository->isOneOfConcreteProductsDiscontinued($productConcreteIds);
+        return $this->productDiscontinuedRepository->isAnyProductConcreteDiscontinued($productConcreteIds);
     }
 
     /**

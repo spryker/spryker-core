@@ -39,7 +39,6 @@ class ProductDiscontinuedProductBundleConnectorBusinessFactory extends AbstractB
     public function createProductBundleDiscontinuedReader(): ProductBundleDiscontinuedReader
     {
         return new ProductBundleDiscontinuedReader(
-            $this->getRepository(),
             $this->getProductDiscontinuedFacade(),
             $this->getProductBundleFacade()
         );
