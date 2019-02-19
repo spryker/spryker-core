@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class LogConfig extends AbstractBundleConfig
 {
-    protected const DEFAULT_BUFFER_LIMIT = 100;
+    protected const BUFFER_LIMIT = 100;
 
     /**
      * @var string[]
@@ -114,6 +114,6 @@ class LogConfig extends AbstractBundleConfig
      */
     public function getBufferLimit(): int
     {
-        return $this->get(LogConstants::LOG_BUFFER_LIMIT, static::DEFAULT_BUFFER_LIMIT);
+        return $this->get(static::BUFFER_LIMIT);
     }
 }
