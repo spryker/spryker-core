@@ -200,6 +200,7 @@ class CategoryTable extends AbstractTable
         return $this->generateViewButton(
             Url::generate('/product-category/assign', [
                 CategoryConstants::PARAM_ID_CATEGORY => $item->getIdCategory(),
+                CategoryConstants::PARAM_ID_NODE => $item->getVirtualColumn(static::COL_ID_CATEGORY_NODE),
             ]),
             'Assign products'
         );
