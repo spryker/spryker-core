@@ -42,7 +42,8 @@ class CheckoutDataResourceController extends AbstractController
      *              "400": "Bad Response.",
      *              "422": "Unprocessable entity."
      *          },
-     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestCheckoutDataResponseAttributesTransfer"
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestCheckoutDataResponseAttributesTransfer",
+     *          "isIdNullable": true
      *     }
      * })
      *

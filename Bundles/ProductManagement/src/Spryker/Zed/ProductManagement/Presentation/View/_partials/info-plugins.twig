@@ -6,7 +6,7 @@
                     <p>{{ renderedContent }}</p>
                 {% endfor %}
             {% else %}
-                <p>No records</p>
+                <p>{{ 'No records' | trans }}</p>
             {% endif %}
         {% endblock %}
     {% endembed %}

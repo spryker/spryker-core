@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CustomerAccessPermission\CustomerAccess;
 
+use Generated\Shared\Transfer\CustomerAccessTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 
 interface CustomerAccessInterface
@@ -25,4 +26,15 @@ interface CustomerAccessInterface
      * @return string
      */
     public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
+     * @param string $customerSecuredPattern
+     *
+     * @return string
+     */
+    public function applyCustomerAccessOnCustomerSecuredPattern(
+        CustomerAccessTransfer $customerAccessTransfer,
+        string $customerSecuredPattern
+    ): string;
 }

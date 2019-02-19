@@ -68,6 +68,7 @@ abstract class AbstractMerchantRelationshipThresholdType extends AbstractType
             'divisor' => 100,
             'constraints' => [
                 new Range(['min' => 0]),
+                $this->getFactory()->createThresholdStrategyConstraint(),
             ],
             'required' => false,
         ]);
