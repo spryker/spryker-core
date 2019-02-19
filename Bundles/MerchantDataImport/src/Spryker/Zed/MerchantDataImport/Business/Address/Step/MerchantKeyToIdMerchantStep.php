@@ -56,12 +56,13 @@ class MerchantKeyToIdMerchantStep implements DataImportStepInterface
         /** @var \Orm\Zed\Merchant\Persistence\SpyMerchantQuery $merchantQuery */
         $merchantQuery = SpyMerchantQuery::create()
             ->select(SpyMerchantTableMap::COL_ID_MERCHANT);
-        $merchantEntity = $merchantQuery->findOneByMerchantKey($merchantKey);
+        /** @var int $idMerchant */
+        $idMerchant = $merchantQuery->findOneByMerchantKey($merchantKey);
 
-        if (!$merchantEntity) {
+        if (!$idMerchant) {
             throw new EntityNotFoundException(sprintf('Could not find Merchant by key "%s"', $merchantKey));
         }
 
-        return $merchantEntity->getIdMerchant();
+        return $idMerchant;
     }
 }
