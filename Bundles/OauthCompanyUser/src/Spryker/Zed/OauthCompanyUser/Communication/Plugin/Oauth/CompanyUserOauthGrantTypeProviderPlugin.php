@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\OauthCompanyUser\Communication\Plugin\Oauth;
 
-
 use League\OAuth2\Server\Grant\AbstractGrant;
-use Spryker\Zed\OauthCompanyUser\Business\League\Grant\IdCompanyUserGrantType;
 use Spryker\Zed\OauthCompanyUser\OauthCompanyUserConfig;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeProviderPluginInterface;
 
@@ -18,7 +16,6 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeProviderPluginInt
  */
 class CompanyUserOauthGrantTypeProviderPlugin implements OauthGrantTypeProviderPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *  - Returns name of id company user grant type.

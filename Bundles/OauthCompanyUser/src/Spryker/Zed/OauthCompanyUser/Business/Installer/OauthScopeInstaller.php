@@ -8,18 +8,14 @@
 namespace Spryker\Zed\OauthCompanyUser\Business\Installer;
 
 use Generated\Shared\Transfer\OauthScopeTransfer;
-use Spryker\Zed\Oauth\Business\Model\OauthScopeReaderInterface;
-use Spryker\Zed\Oauth\Business\Model\OauthScopeWriterInterface;
-use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToOauthFacadeInterface;
 use Spryker\Zed\OauthCompanyUser\OauthCompanyUserConfig;
-use Spryker\Zed\OauthCustomerConnector\Dependency\Facade\OauthCustomerConnectorToOauthFacadeInterface;
 
 class OauthScopeInstaller implements OauthScopeInstallerInterface
 {
     /**
      * @var \Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToOauthFacadeInterface
-*/
+     */
     protected $oauthFacade;
 
     /**

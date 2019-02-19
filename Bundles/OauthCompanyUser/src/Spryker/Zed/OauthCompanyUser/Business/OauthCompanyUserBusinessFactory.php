@@ -43,6 +43,9 @@ class OauthCompanyUserBusinessFactory extends AbstractBusinessFactory
         return new ScopeProvider($this->getConfig());
     }
 
+    /**
+     * @return \Spryker\Zed\OauthCompanyUser\Business\Installer\OauthScopeInstallerInterface
+     */
     public function createOauthScopeInstaller(): OauthScopeInstallerInterface
     {
         return new OauthScopeInstaller(
@@ -50,6 +53,7 @@ class OauthCompanyUserBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()
         );
     }
+
     /**
      * @return \Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCompanyUserFacadeInterface
      */

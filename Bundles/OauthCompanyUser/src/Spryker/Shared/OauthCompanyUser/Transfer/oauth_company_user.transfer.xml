@@ -21,4 +21,9 @@
         <property name="idCompanyUser" type="string"/>
     </transfer>
 
+    <transfer name="RestUser">
+        <property name="idCompanyUser" type="int"/>
+        <property name="idCompany" type="string"/>
+    </transfer>
+
 </transfers>

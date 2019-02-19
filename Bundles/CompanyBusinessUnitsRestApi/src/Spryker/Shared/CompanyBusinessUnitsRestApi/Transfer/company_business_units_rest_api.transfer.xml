@@ -15,7 +15,7 @@
         <property name="companyUserTransfer" type="CompanyUser"/>
     </transfer>
 
-    <transfer name="RestUserIdentifier">
+    <transfer name="RestUser">
         <property name="idCompanyBusinessUnit" type="string"/>
     </transfer>
 
