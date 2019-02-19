@@ -44,14 +44,14 @@ class ErrorHandler
      */
     public function handleException($exception, $exit = true)
     {
-        ErrorLogger::getInstance()->log($exception);
+        $this->errorLogger->log($exception);
 
         try {
             $this->send500Header();
             $this->cleanOutputBuffer();
             echo $this->errorRenderer->render($exception);
         } catch (Throwable $internalException) {
-            ErrorLogger::getInstance()->log($internalException);
+            $this->errorLogger->log($internalException);
         }
 
         if ($exit) {
