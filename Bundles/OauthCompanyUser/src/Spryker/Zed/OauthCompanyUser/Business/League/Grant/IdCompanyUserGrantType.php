@@ -16,17 +16,20 @@ use League\OAuth2\Server\RequestEvent;
 use League\OAuth2\Server\ResponseTypes\ResponseTypeInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class IdCompanyUserGrant extends AbstractGrant
+class IdCompanyUserGrantType extends AbstractGrant
 {
     /**
-     * {@inheritdoc}
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \League\OAuth2\Server\ResponseTypes\ResponseTypeInterface $responseType
+     * @param \DateInterval $accessTokenTTL
+     *
+     * @return \League\OAuth2\Server\ResponseTypes\ResponseTypeInterface
      */
     public function respondToAccessTokenRequest(
         ServerRequestInterface $request,
         ResponseTypeInterface $responseType,
         DateInterval $accessTokenTTL
-    )
-    {
+    ): ResponseTypeInterface {
         // Validate request
         $client = $this->validateClient($request);
         $scopes = $this->validateScopes($this->getRequestParameter('scope', $request, $this->defaultScope));
@@ -73,8 +76,6 @@ class IdCompanyUserGrant extends AbstractGrant
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return string
      */
     public function getIdentifier()

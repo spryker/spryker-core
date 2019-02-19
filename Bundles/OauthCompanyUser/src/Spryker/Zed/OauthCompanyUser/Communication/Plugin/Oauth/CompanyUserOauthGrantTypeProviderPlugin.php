@@ -9,10 +9,13 @@ namespace Spryker\Zed\OauthCompanyUser\Communication\Plugin\Oauth;
 
 
 use League\OAuth2\Server\Grant\AbstractGrant;
-use Spryker\Zed\OauthCompanyUser\Business\League\Grant\IdCompanyUserGrant;
+use Spryker\Zed\OauthCompanyUser\Business\League\Grant\IdCompanyUserGrantType;
 use Spryker\Zed\OauthCompanyUser\OauthCompanyUserConfig;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeProviderPluginInterface;
 
+/**
+ * @method \Spryker\Zed\OauthCompanyUser\Communication\OauthCompanyUserCommunicationFactory getFactory()
+ */
 class CompanyUserOauthGrantTypeProviderPlugin implements OauthGrantTypeProviderPluginInterface
 {
 
@@ -38,6 +41,6 @@ class CompanyUserOauthGrantTypeProviderPlugin implements OauthGrantTypeProviderP
      */
     public function getGrantType(): AbstractGrant
     {
-        return new IdCompanyUserGrant();
+        return $this->getFactory()->createIdCompanyUserGrantType();
     }
 }
