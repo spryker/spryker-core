@@ -205,12 +205,12 @@ class Container implements ContainerInterface, ArrayAccess
             return static::$globalServices[$id];
         }
 
-        $raw = static::$globalServices[$id];
-        $val = static::$globalServices[$id] = $raw($this);
+        $rawService = static::$globalServices[$id];
+        $resolvedService = static::$globalServices[$id] = $rawService($this);
 
         static::$globalFrozenServices[$id] = true;
 
-        return $val;
+        return $resolvedService;
     }
 
     /**
@@ -222,7 +222,7 @@ class Container implements ContainerInterface, ArrayAccess
      */
     protected function getService(string $id)
     {
-        if (!isset($this->serviceIdentifier[$id])) {
+        if (!$this->hasService($id)) {
             throw new NotFoundException(sprintf('The requested service "%s" was not found in the container!', $id));
         }
 
@@ -237,12 +237,12 @@ class Container implements ContainerInterface, ArrayAccess
             return $this->services[$id]($this);
         }
 
-        $raw = $this->services[$id];
-        $val = $this->services[$id] = $raw($this);
+        $rawService = $this->services[$id];
+        $resolvedService = $this->services[$id] = $rawService($this);
 
         $this->frozenServices[$id] = true;
 
-        return $val;
+        return $resolvedService;
     }
 
     /**
@@ -255,7 +255,7 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function configure(string $id, array $configuration): void
     {
-        if (!isset($this->serviceIdentifier[$id])) {
+        if (!$this->hasService($id)) {
             throw new NotFoundException(sprintf('Only services which are added to the container can be configured! The service "%s" was not found.', $id));
         }
 
@@ -308,11 +308,11 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function extend(string $id, $service)
     {
-        if (isset(static::$globalServiceIdentifier[$id])) {
+        if ($this->hasGlobalService($id)) {
             return $this->extendGlobalService($id, $service);
         }
 
-        if (!isset($this->serviceIdentifier[$id])) {
+        if (!$this->hasService($id)) {
             // For BC reasons we will not throw exception here until everything is migrated.
             // We store the extension until the service is set and do the extension than.
             $this->extendLater($id, $service);
@@ -408,7 +408,7 @@ class Container implements ContainerInterface, ArrayAccess
      */
     protected function removeService(string $id): void
     {
-        if (isset($this->serviceIdentifier[$id])) {
+        if ($this->hasService($id)) {
             unset(
                 $this->services[$id],
                 $this->frozenServices[$id],
@@ -424,7 +424,7 @@ class Container implements ContainerInterface, ArrayAccess
      */
     protected function removeGlobalService(string $id): void
     {
-        if (isset(static::$globalServiceIdentifier[$id])) {
+        if ($this->hasGlobalService($id)) {
             unset(
                 static::$globalServices[$id],
                 static::$globalFrozenServices[$id],
