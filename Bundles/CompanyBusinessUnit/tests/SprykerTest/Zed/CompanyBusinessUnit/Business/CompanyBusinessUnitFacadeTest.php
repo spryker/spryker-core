@@ -73,7 +73,7 @@ class CompanyBusinessUnitFacadeTest extends Test
             ->create($companyBusinessUnitTransfer)
             ->getCompanyBusinessUnitTransfer();
         $actualCompanyBusinessUnitTransfer = $this->getFacade()
-            ->findCompanyBusinessUnitById($expectedCompanyBusinessUnitTransfer);
+            ->findCompanyBusinessUnitById($expectedCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit());
 
         //Assert
         $this->assertSame($expectedCompanyBusinessUnitTransfer->getName(), $actualCompanyBusinessUnitTransfer->getName());

@@ -120,7 +120,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
             ->endUse();
 
         /**
-         * @var \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress
+         * @var \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress|null
          */
         $companyUnitAddressEntity = $companyUnitAddressQuery->findOne();
 
