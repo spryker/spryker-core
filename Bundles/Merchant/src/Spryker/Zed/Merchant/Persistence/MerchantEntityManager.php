@@ -84,7 +84,7 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
      *
      * @return void
      */
-    public function deleteMerchantAddressByIdMerchant(int $idMerchant): void
+    public function deleteMerchantAddressesByIdMerchant(int $idMerchant): void
     {
         $this->getFactory()
             ->createMerchantAddressQuery()

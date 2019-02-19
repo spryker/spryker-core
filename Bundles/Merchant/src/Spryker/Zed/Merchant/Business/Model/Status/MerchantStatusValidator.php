@@ -47,7 +47,7 @@ class MerchantStatusValidator implements MerchantStatusValidatorInterface
             return false;
         }
 
-        if ($this->isStatusSame($newStatus, $existingMerchantTransfer->getStatus())) {
+        if ($newStatus === $existingMerchantTransfer->getStatus()) {
             return true;
         }
 
@@ -56,17 +56,6 @@ class MerchantStatusValidator implements MerchantStatusValidatorInterface
         }
 
         return true;
-    }
-
-    /**
-     * @param string $newStatus
-     * @param string $currentStatus
-     *
-     * @return bool
-     */
-    protected function isStatusSame(string $newStatus, string $currentStatus): bool
-    {
-        return $newStatus === $currentStatus;
     }
 
     /**

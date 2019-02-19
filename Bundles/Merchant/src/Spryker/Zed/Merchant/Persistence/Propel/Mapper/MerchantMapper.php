@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\MerchantAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
@@ -58,10 +59,10 @@ class MerchantMapper implements MerchantMapperInterface
             true
         );
 
-        $merchantTransfer->setAddress(
-            $this->mapFirstMerchantAddress(
+        $merchantTransfer->setAddressCollection(
+            $this->mapMerchantAddressCollection(
                 $spyMerchant->getSpyMerchantAddresses()->getArrayCopy(),
-                new MerchantAddressTransfer()
+                new MerchantAddressCollectionTransfer()
             )
         );
 
@@ -70,21 +71,21 @@ class MerchantMapper implements MerchantMapperInterface
 
     /**
      * @param \Orm\Zed\Merchant\Persistence\SpyMerchantAddress[] $spyMerchantAddresses
-     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     * @param \Generated\Shared\Transfer\MerchantAddressCollectionTransfer $merchantAddressCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantAddressCollectionTransfer|null
      */
-    protected function mapFirstMerchantAddress(
+    protected function mapMerchantAddressCollection(
         array $spyMerchantAddresses,
-        MerchantAddressTransfer $merchantAddressTransfer
-    ): ?MerchantAddressTransfer {
+        MerchantAddressCollectionTransfer $merchantAddressCollectionTransfer
+    ): ?MerchantAddressCollectionTransfer {
         foreach ($spyMerchantAddresses as $spyMerchantAddress) {
-            return $this->merchantAddressMapper->mapMerchantAddressEntityToMerchantAddressTransfer(
+            $merchantAddressCollectionTransfer->addAddress($this->merchantAddressMapper->mapMerchantAddressEntityToMerchantAddressTransfer(
                 $spyMerchantAddress,
-                $merchantAddressTransfer
-            );
+                new MerchantAddressTransfer()
+            ));
         }
 
-        return null;
+        return $merchantAddressCollectionTransfer;
     }
 }

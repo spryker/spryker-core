@@ -85,7 +85,7 @@ class MerchantForm extends AbstractType
             ->addContactPersonFirstNameField($builder)
             ->addContactPersonLastNameField($builder)
             ->addContactPersonPhoneField($builder)
-            ->addAddressSubform($builder);
+            ->addAddressCollectionSubform($builder);
     }
 
     /**
@@ -216,12 +216,12 @@ class MerchantForm extends AbstractType
      *
      * @return $this
      */
-    protected function addAddressSubform(FormBuilderInterface $builder)
+    protected function addAddressCollectionSubform(FormBuilderInterface $builder)
     {
         $merchantAddressFormDataProvider = $this->getFactory()->createMerchantAddressFormDataProvider();
 
         $builder->add(
-            'address',
+            'addressCollection',
             MerchantAddressForm::class,
             $merchantAddressFormDataProvider->getOptions()
         );

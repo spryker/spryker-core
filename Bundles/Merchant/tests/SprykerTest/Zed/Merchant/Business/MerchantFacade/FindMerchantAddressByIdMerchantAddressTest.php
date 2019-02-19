@@ -26,13 +26,15 @@ class FindMerchantAddressByIdMerchantAddressTest extends AbstractMerchantFacadeT
      */
     public function testFindMerchantAddressByIdMerchantAddressWillFindMerchantAddress(): void
     {
-        $expectedMerchantAddressTransfer = $this->tester->haveMerchantAddress();
+        $expectedMerchantAddressCollectionTransfer = $this->tester->haveMerchantAddressCollection();
 
-        $actualMerchantAddressTransfer = $this->tester->getFacade()->findMerchantAddressByIdMerchantAddress(
-            $expectedMerchantAddressTransfer->getIdMerchantAddress()
-        );
+        foreach ($expectedMerchantAddressCollectionTransfer->getAddresses() as $expectedMerchantAddressTransfer) {
+            $actualMerchantAddressTransfer = $this->tester->getFacade()->findMerchantAddressByIdMerchantAddress(
+                $expectedMerchantAddressTransfer->getIdMerchantAddress()
+            );
 
-        $this->assertNotEmpty($actualMerchantAddressTransfer->getIdMerchantAddress());
+            $this->assertNotEmpty($actualMerchantAddressTransfer->getIdMerchantAddress());
+        }
     }
 
     /**
@@ -40,12 +42,14 @@ class FindMerchantAddressByIdMerchantAddressTest extends AbstractMerchantFacadeT
      */
     public function testFindMerchantAddressByIdMerchantAddressWillNotFindMissingMerchantAddress(): void
     {
-        $merchantAddressTransfer = $this->tester->haveMerchantAddress();
+        $merchantAddressCollectionTransfer = $this->tester->haveMerchantAddressCollection();
 
-        $actualMerchantAddressTransfer = $this->tester->getFacade()->findMerchantAddressByIdMerchantAddress(
-            $merchantAddressTransfer->getIdMerchantAddress() + 1
-        );
+        foreach ($merchantAddressCollectionTransfer->getAddresses() as $merchantAddressTransfer) {
+            $actualMerchantAddressTransfer = $this->tester->getFacade()->findMerchantAddressByIdMerchantAddress(
+                $merchantAddressTransfer->getIdMerchantAddress() + 1
+            );
 
-        $this->assertNull($actualMerchantAddressTransfer);
+            $this->assertNull($actualMerchantAddressTransfer);
+        }
     }
 }

@@ -9,7 +9,9 @@ namespace SprykerTest\Zed\Merchant\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\MerchantAddressBuilder;
+use Generated\Shared\DataBuilder\MerchantAddressCollectionBuilder;
 use Generated\Shared\DataBuilder\MerchantBuilder;
+use Generated\Shared\Transfer\MerchantAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
@@ -54,26 +56,21 @@ class MerchantHelper extends Module
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    public function haveMerchantWithAddress(array $seedData = []): MerchantTransfer
+    public function haveMerchantWithAddressCollection(array $seedData = []): MerchantTransfer
     {
         /** @var \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer */
         $merchantTransfer = (new MerchantBuilder($seedData))->build();
-        $merchantTransfer->setAddress((new MerchantAddressBuilder())->build());
         $merchantTransfer->setIdMerchant(null);
+        $merchantAddressTransfer = (new MerchantAddressBuilder())->build();
+        $merchantAddressCollection = (new MerchantAddressCollectionBuilder())->build();
+        $merchantAddressCollection->addAddress($merchantAddressTransfer);
+        $merchantTransfer->setAddressCollection($merchantAddressCollection);
 
         $merchantResponseTransfer = $this->getLocator()
             ->merchant()
             ->facade()
             ->createMerchant($merchantTransfer);
-
         $merchantTransfer = $merchantResponseTransfer->getMerchant();
-
-        $merchantAddressTransfer = $this->getLocator()
-            ->merchant()
-            ->facade()
-            ->createMerchantAddress($merchantTransfer->getAddress()->setFkMerchant($merchantTransfer->getIdMerchant()));
-
-        $merchantTransfer->getAddress()->setIdMerchantAddress($merchantAddressTransfer->getIdMerchantAddress());
 
         /** @var \SprykerTest\Shared\Testify\Helper\DataCleanupHelper $dataCleanupHelper */
         $dataCleanupHelper = $this->getDataCleanupHelper();
@@ -83,6 +80,20 @@ class MerchantHelper extends Module
         });
 
         return $merchantTransfer;
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressCollectionTransfer
+     */
+    public function haveMerchantAddressCollection(array $seedData = []): MerchantAddressCollectionTransfer
+    {
+        $merchantAddressTransfer = $this->haveMerchantAddress();
+        $merchantAddressCollectionTransfer = new MerchantAddressCollectionTransfer();
+        $merchantAddressCollectionTransfer = $merchantAddressCollectionTransfer->addAddress($merchantAddressTransfer);
+
+        return $merchantAddressCollectionTransfer;
     }
 
     /**

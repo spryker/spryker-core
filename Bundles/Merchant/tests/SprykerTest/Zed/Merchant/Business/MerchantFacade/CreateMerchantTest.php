@@ -64,7 +64,7 @@ class CreateMerchantTest extends AbstractMerchantFacadeTest
      */
     public function testCreateMerchantWithNotUniqueName(): void
     {
-        $merchantTransfer = $this->tester->haveMerchantWithAddress();
+        $merchantTransfer = $this->tester->haveMerchantWithAddressCollection();
         $newMerchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer()
             ->setName($merchantTransfer->getName());
 

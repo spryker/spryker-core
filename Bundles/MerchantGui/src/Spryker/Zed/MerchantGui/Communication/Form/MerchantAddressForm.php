@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\MerchantGui\Communication\Form\Transformer\MerchantAddressCollectionTransferToMerchantAddressTransferTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -65,6 +66,8 @@ class MerchantAddressForm extends AbstractType
             ->addAddress1Field($builder)
             ->addAddress2Field($builder)
             ->addAddress3Field($builder);
+
+        $builder->addModelTransformer(new MerchantAddressCollectionTransferToMerchantAddressTransferTransformer());
     }
 
     /**

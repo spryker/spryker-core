@@ -26,7 +26,7 @@ class FindMerchantByIdMerchantTest extends AbstractMerchantFacadeTest
      */
     public function testFindMerchantByIdWillFindExistingMerchant(): void
     {
-        $expectedMerchant = $this->tester->haveMerchantWithAddress();
+        $expectedMerchant = $this->tester->haveMerchantWithAddressCollection();
 
         $actualMerchant = $this->tester->getFacade()->findMerchantByIdMerchant($expectedMerchant->getIdMerchant());
 
@@ -38,7 +38,7 @@ class FindMerchantByIdMerchantTest extends AbstractMerchantFacadeTest
      */
     public function testFindMerchantByIdWillNotFindMerchant(): void
     {
-        $merchantTransfer = $this->tester->haveMerchantWithAddress();
+        $merchantTransfer = $this->tester->haveMerchantWithAddressCollection();
 
         $actualMerchant = $this->tester->getFacade()->findMerchantByIdMerchant($merchantTransfer->getIdMerchant() + 1);
 

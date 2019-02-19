@@ -61,7 +61,7 @@ class MerchantUpdateForm extends MerchantForm
             ->addContactPersonLastNameField($builder)
             ->addContactPersonPhoneField($builder)
             ->addStatusField($builder, $options[static::OPTION_STATUS_CHOICES])
-            ->addAddressSubform($builder);
+            ->addAddressCollectionSubform($builder);
     }
 
     /**

@@ -28,7 +28,7 @@ class GetMerchantByIdTest extends AbstractMerchantFacadeTest
      */
     public function testGetMerchantById(): void
     {
-        $expectedMerchant = $this->tester->haveMerchantWithAddress();
+        $expectedMerchant = $this->tester->haveMerchantWithAddressCollection();
 
         $merchantTransfer = (new MerchantTransfer())
             ->setIdMerchant($expectedMerchant->getIdMerchant());
@@ -43,7 +43,7 @@ class GetMerchantByIdTest extends AbstractMerchantFacadeTest
      */
     public function testGetMerchantByIdWillThrowMerchantNotFoundException(): void
     {
-        $merchantTransfer = $this->tester->haveMerchantWithAddress();
+        $merchantTransfer = $this->tester->haveMerchantWithAddressCollection();
 
         $merchantTransfer = (new MerchantTransfer())
             ->setIdMerchant($merchantTransfer->getIdMerchant() + 1);

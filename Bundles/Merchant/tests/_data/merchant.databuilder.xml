@@ -14,7 +14,7 @@
         <property name="contactPersonLastName" dataBuilderRule="word" />
         <property name="contactPersonPhone" dataBuilderRule="e164PhoneNumber" />
         <property name="email" dataBuilderRule="email" />
-        <property name="address" type="MerchantAddress" />
+        <property name="addressCollection" type="MerchantAddressCollection" />
     </transfer>
 
 </transfers>

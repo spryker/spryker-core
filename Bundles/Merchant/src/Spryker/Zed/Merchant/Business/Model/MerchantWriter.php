@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant\Business\Model;
 
+use Generated\Shared\Transfer\MerchantAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -136,10 +137,10 @@ class MerchantWriter implements MerchantWriterInterface
      */
     protected function executeCreateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantAddressTransfer = $merchantTransfer->getAddress();
+        $merchantAddressCollectionTransfer = $merchantTransfer->getAddressCollection();
         $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
-        $merchantAddressTransfer = $this->handleMerchantAddressSave($merchantAddressTransfer, $merchantTransfer->getIdMerchant());
-        $merchantTransfer->setAddress($merchantAddressTransfer);
+        $merchantAddressCollectionTransfer = $this->handleMerchantAddressCollectionSave($merchantAddressCollectionTransfer, $merchantTransfer->getIdMerchant());
+        $merchantTransfer->setAddressCollection($merchantAddressCollectionTransfer);
 
         return $merchantTransfer;
     }
@@ -165,10 +166,27 @@ class MerchantWriter implements MerchantWriterInterface
      */
     protected function executeUpdateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantAddressTransfer = $this->handleMerchantAddressSave($merchantTransfer->getAddress(), $merchantTransfer->getIdMerchant());
-        $merchantTransfer->setAddress($merchantAddressTransfer);
+        $merchantAddressCollectionTransfer = $this->handleMerchantAddressCollectionSave($merchantTransfer->getAddressCollection(), $merchantTransfer->getIdMerchant());
+        $merchantTransfer->setAddressCollection($merchantAddressCollectionTransfer);
 
         return $this->merchantEntityManager->saveMerchant($merchantTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantAddressCollectionTransfer $merchantAddressCollectionTransfer
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressCollectionTransfer
+     */
+    protected function handleMerchantAddressCollectionSave(MerchantAddressCollectionTransfer $merchantAddressCollectionTransfer, int $idMerchant): MerchantAddressCollectionTransfer
+    {
+        $savedMerchantAddressCollectionTransfer = new MerchantAddressCollectionTransfer();
+
+        foreach ($merchantAddressCollectionTransfer->getAddresses() as $merchantAddressTransfer) {
+            $savedMerchantAddressCollectionTransfer->addAddress($this->handleMerchantAddressSave($merchantAddressTransfer, $idMerchant));
+        }
+
+        return $savedMerchantAddressCollectionTransfer;
     }
 
     /**
@@ -197,7 +215,7 @@ class MerchantWriter implements MerchantWriterInterface
     {
         $idMerchant = $merchantTransfer->getIdMerchant();
 
-        $this->merchantEntityManager->deleteMerchantAddressByIdMerchant($idMerchant);
+        $this->merchantEntityManager->deleteMerchantAddressesByIdMerchant($idMerchant);
         $this->merchantEntityManager->deleteMerchantByIdMerchant($idMerchant);
     }
 
@@ -227,7 +245,7 @@ class MerchantWriter implements MerchantWriterInterface
             ->requireContactPersonLastName()
             ->requireContactPersonPhone()
             ->requireEmail()
-            ->requireAddress();
+            ->requireAddressCollection();
     }
 
     /**
@@ -246,7 +264,7 @@ class MerchantWriter implements MerchantWriterInterface
             ->requireContactPersonLastName()
             ->requireContactPersonPhone()
             ->requireEmail()
-            ->requireAddress();
+            ->requireAddressCollection();
     }
 
     /**
