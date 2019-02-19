@@ -16,7 +16,7 @@ use Spryker\Shared\Testify\TestifyConstants;
 
 class ZedHelper extends Module
 {
-    protected const LOGOUT_LINK_SELECTOR = "//a[contains(@href,'auth/logout')]";
+    protected const LOGOUT_LINK_SELECTOR = "(//a[contains(@href,'/auth/logout')])[2]";
     /**
      * @var bool
      */
@@ -36,23 +36,6 @@ class ZedHelper extends Module
         }
 
         static::$alreadyLoggedIn = false;
-    }
-
-    /**
-     * @param string $selector
-     *
-     * @return bool
-     */
-    protected function seeElement(string $selector): bool
-    {
-        $tester = $this->getWebDriver();
-        try {
-            $tester->seeElement($selector);
-
-            return true;
-        } catch (AssertionFailedError $exception) {
-            return false;
-        }
     }
 
     /**
@@ -101,5 +84,22 @@ class ZedHelper extends Module
     protected function getWebDriver()
     {
         return $this->getModule('WebDriver');
+    }
+
+    /**
+     * @param string $selector
+     *
+     * @return bool
+     */
+    protected function seeElement(string $selector): bool
+    {
+        $tester = $this->getWebDriver();
+        try {
+            $tester->seeElement($selector);
+
+            return true;
+        } catch (AssertionFailedError $exception) {
+            return false;
+        }
     }
 }
