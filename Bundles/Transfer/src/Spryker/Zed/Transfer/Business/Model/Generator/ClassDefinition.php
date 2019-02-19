@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
+use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
+use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\Filter\Word\UnderscoreToCamelCase;
@@ -14,6 +16,7 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 class ClassDefinition implements ClassDefinitionInterface
 {
     public const TYPE_FULLY_QUALIFIED = 'type_fully_qualified';
+    public const DEFAULT_ASSOCIATIVE_ARRAY_TYPE = 'string|int';
 
     /**
      * @var string
@@ -176,6 +179,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'type' => $this->getPropertyType($property),
             'is_typed_array' => $property['is_typed_array'],
             'bundles' => $property['bundles'],
+            'is_associative' => $property['is_associative'],
         ];
 
         $this->properties[$property['name']] = $propertyInfo;
@@ -223,6 +227,8 @@ class ClassDefinition implements ClassDefinitionInterface
             if ($this->isTypedArray($property)) {
                 $property['is_typed_array'] = true;
             }
+
+            $property['is_associative'] = $this->isAssociativeArray($property);
 
             $normalizedProperties[] = $property;
         }
@@ -527,6 +533,16 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool
      */
+    private function isAssociativeArray(array $property)
+    {
+        return isset($property['associative']) && filter_var($property['associative'], FILTER_VALIDATE_BOOLEAN);
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
     private function isTypedArray(array $property)
     {
         return (bool)preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $property['type']);
@@ -539,6 +555,10 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function getTypeHint(array $property)
     {
+        if ($this->isArray($property) && isset($property['associative'])) {
+            return false;
+        }
+
         if ($this->isArray($property)) {
             return 'array';
         }
@@ -628,6 +648,7 @@ class ClassDefinition implements ClassDefinitionInterface
         }
         $propertyName = $this->getPropertyName($property);
         $methodName = 'add' . ucfirst($propertyName);
+
         $method = [
             'name' => $methodName,
             'property' => $propertyName,
@@ -636,11 +657,19 @@ class ClassDefinition implements ClassDefinitionInterface
             'var' => $this->getAddVar($property),
             'bundles' => $property['bundles'],
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
+            'is_associative' => $this->isAssociativeArray($property),
         ];
 
         $typeHint = $this->getAddTypeHint($property);
         if ($typeHint) {
             $method['typeHint'] = $typeHint;
+        }
+
+        if ($method['is_associative']) {
+            $method['var'] = static::DEFAULT_ASSOCIATIVE_ARRAY_TYPE;
+            $method['typeHint'] = null;
+            $method['varValue'] = $this->getAddVar($property);
+            $method['typeHintValue'] = $this->getAddTypeHint($property);
         }
 
         $this->methods[$methodName] = $method;
@@ -708,6 +737,7 @@ class ClassDefinition implements ClassDefinitionInterface
     private function assertProperty(array $property)
     {
         $this->assertPropertyName($property['name']);
+        $this->assertPropertyAssociative($property);
     }
 
     /**
@@ -724,6 +754,52 @@ class ClassDefinition implements ClassDefinitionInterface
                 'Transfer property "%s" needs to be alpha-numeric and camel-case formatted in "%s"!',
                 $propertyName,
                 $this->name
+            ));
+        }
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return void
+     */
+    private function assertPropertyAssociative(array $property)
+    {
+        if (isset($property['associative'])) {
+            $this->assertPropertyAssociativeType($property);
+            $this->assertPropertyAssociativeValue($property);
+        }
+    }
+
+    /**
+     * @param array $property
+     *
+     * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException
+     *
+     * @return void
+     */
+    private function assertPropertyAssociativeValue(array $property)
+    {
+        if (!preg_match('(true|false|1|0)', $property['associative'])) {
+            throw new InvalidAssociativeValueException(
+                'Transfer property "associative" has invalid value. The value has to be "true" or "false".'
+            );
+        }
+    }
+
+    /**
+     * @param array $property
+     *
+     * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException
+     *
+     * @return void
+     */
+    private function assertPropertyAssociativeType(array $property)
+    {
+        if (!$this->isArray($property) && !$this->isCollection($property)) {
+            throw new InvalidAssociativeTypeException(sprintf(
+                'Transfer property "associative" cannot be defined to type: "%s"!',
+                $property['type']
             ));
         }
     }

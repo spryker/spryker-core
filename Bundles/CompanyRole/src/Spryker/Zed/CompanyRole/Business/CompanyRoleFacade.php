@@ -199,6 +199,20 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
      *
      * @api
      *
+     * @param string $permissionKey
+     *
+     * @return int[]
+     */
+    public function getCompanyUserIdsByPermissionKey(string $permissionKey): array
+    {
+        return $this->getRepository()->getCompanyUserIdsByPermissionKey($permissionKey);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer

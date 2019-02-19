@@ -32,7 +32,7 @@ class ViewController extends AbstractController
         $categoryTransfer = $this->getFacade()->findCategoryById($idCategory);
 
         if ($categoryTransfer === null) {
-            $this->addErrorMessage(sprintf('Category with id %s doesn\'t exist', $idCategory));
+            $this->addErrorMessage("Category with id %s doesn't exist", ['%s' => $idCategory]);
 
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }

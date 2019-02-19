@@ -50,6 +50,13 @@ interface CompanyRoleRepositoryInterface
     public function findCompanyRolePermissions(int $idCompanyRole): PermissionCollectionTransfer;
 
     /**
+     * @param string $permissionKey
+     *
+     * @return int[]
+     */
+    public function getCompanyUserIdsByPermissionKey(string $permissionKey): array;
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
