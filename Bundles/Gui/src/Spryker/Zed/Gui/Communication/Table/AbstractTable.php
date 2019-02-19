@@ -15,7 +15,6 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Spryker\Service\UtilSanitize\UtilSanitizeService;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Twig_Environment;
@@ -145,6 +144,7 @@ abstract class AbstractTable
             $config = $this->configure($config);
             $this->setConfiguration($config);
             $this->twig = $this->getTwig();
+            $this->generateTableIdentifier();
         }
 
         return $this;
@@ -341,8 +341,7 @@ abstract class AbstractTable
      */
     protected function generateTableIdentifier($prefix = 'table-')
     {
-        $utilTextService = new UtilTextService();
-        $this->tableIdentifier = $prefix . $utilTextService->generateRandomString(32);
+        $this->tableIdentifier = $prefix . md5(get_class($this));
 
         return $this;
     }

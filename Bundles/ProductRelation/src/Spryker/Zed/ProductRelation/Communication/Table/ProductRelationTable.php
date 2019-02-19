@@ -70,8 +70,6 @@ class ProductRelationTable extends AbstractTable
         $this->productFacade = $productFacade;
         $this->productRelationConfig = $productRelationConfig;
         $this->localeFacade = $localeFacade;
-
-        $this->setTableIdentifier('product-relation-table');
     }
 
     /**

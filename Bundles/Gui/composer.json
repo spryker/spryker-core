@@ -9,17 +9,18 @@
     "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",
-    "spryker/util-sanitize": "^2.0.0",
-    "spryker/util-text": "^1.1.0"
+    "spryker/util-sanitize": "^2.0.0"
   },
   "require-dev": {
     "spryker/application": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/util-text": "*"
   },
   "suggest": {
-    "spryker/silex": "If you want to use ServiceProvider."
+    "spryker/silex": "If you want to use ServiceProvider.",
+    "spryker/util-text": "If you want to use UrlFunction twig plugin."
   },
   "autoload": {
     "psr-4": {
