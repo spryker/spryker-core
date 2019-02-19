@@ -9,7 +9,7 @@ namespace SprykerTest\Shared\Application\Helper;
 
 use Codeception\Module;
 use Codeception\TestInterface;
-use PHPUnit\Framework\AssertionFailedError;
+use Exception;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Testify\TestifyConstants;
@@ -29,9 +29,8 @@ class ZedHelper extends Module
      */
     public function _after(TestInterface $test)
     {
-        $tester = $this->getWebDriver();
-
         if ($this->seeElement(static::LOGOUT_LINK_SELECTOR)) {
+            $tester = $this->getWebDriver();
             $tester->click(static::LOGOUT_LINK_SELECTOR);
         }
 
@@ -93,12 +92,11 @@ class ZedHelper extends Module
      */
     protected function seeElement(string $selector): bool
     {
-        $tester = $this->getWebDriver();
         try {
-            $tester->seeElement($selector);
+            $this->getWebDriver()->seeElement($selector);
 
             return true;
-        } catch (AssertionFailedError $exception) {
+        } catch (Exception $exception) {
             return false;
         }
     }
