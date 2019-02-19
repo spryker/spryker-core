@@ -34,26 +34,31 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveLabelToAddressRelations(): void
+    public function testSaveLabelToAddressRelationsStoresDataToTheDatabase(): void
     {
-        $facade = $this->tester->getCompanyUnitAddressLabelFacade();
+        // Arrange
+        $companyUnitAddressLabelFacade = $this->tester->getCompanyUnitAddressLabelFacade();
         $companyUnitAddressTransfer = $this->tester->haveCompanyUnitAddressTransfer(
             $this->tester->haveCompanyBusinessUnitWithCompany()
         );
 
-        $labels = $this->tester->haveLabelCollection();
-        $companyUnitAddressTransfer->setLabelCollection($labels);
+        $companyUnitAddressLabelCollectionTransfer = $this->tester->haveLabelCollection();
+        $companyUnitAddressTransfer->setLabelCollection($companyUnitAddressLabelCollectionTransfer);
 
-        $facade->saveLabelToAddressRelations($companyUnitAddressTransfer);
+        // Act
+        $companyUnitAddressLabelFacade->saveLabelToAddressRelations($companyUnitAddressTransfer);
+
+        // Assert
         $this->assertLabelsAreStored($companyUnitAddressTransfer);
     }
 
     /**
      * @return void
      */
-    public function testHydrateCompanyUnitAddressWithLabelCollection(): void
+    public function testHydrateCompanyUnitAddressWithLabelCollectionHydratesTransfer(): void
     {
-        $facade = $this->tester->getCompanyUnitAddressLabelFacade();
+        // Arrange
+        $companyUnitAddressLabelFacade = $this->tester->getCompanyUnitAddressLabelFacade();
         $companyUnitAddressTransfer = $this->tester->haveCompanyUnitAddressTransfer(
             $this->tester->haveCompanyBusinessUnitWithCompany()
         );
@@ -61,7 +66,10 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
 
         $this->tester->haveLabelAddressRelations($companyUnitAddressTransfer);
 
-        $companyUnitAddressTransfer = $facade->hydrateCompanyUnitAddressWithLabelCollection($companyUnitAddressTransfer);
+        // Act
+        $companyUnitAddressTransfer = $companyUnitAddressLabelFacade->hydrateCompanyUnitAddressWithLabelCollection($companyUnitAddressTransfer);
+
+        // Assert
         $this->assertNotEmpty($companyUnitAddressTransfer->getLabelCollection());
         $this->assertNotEmpty($companyUnitAddressTransfer->getLabelCollection()->getLabels());
         foreach ($companyUnitAddressTransfer->getLabelCollection()->getLabels() as $label) {
