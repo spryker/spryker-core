@@ -40,10 +40,9 @@ class CreateController extends AbstractProductSetController
                 ->getProductSetFacade()
                 ->createProductSet($productSetTransfer);
 
-            $this->addSuccessMessage(sprintf(
-                'Product Set "%s" created successfully.',
-                $productSetTransfer->getLocalizedData()[0]->getProductSetData()->getName()
-            ));
+            $this->addSuccessMessage('Product Set "%s" created successfully.', [
+                '%s' => $productSetTransfer->getLocalizedData()[0]->getProductSetData()->getName(),
+            ]);
 
             return $this->redirectResponse(
                 Url::generate('/product-set-gui/view', [

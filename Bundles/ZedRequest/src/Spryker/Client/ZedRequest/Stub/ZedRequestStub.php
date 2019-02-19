@@ -47,4 +47,28 @@ class ZedRequestStub
     {
         return $this->zedStub->getLastResponseErrorMessages();
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesInfoMessages(): array
+    {
+        return $this->zedStub->getResponsesInfoMessages();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesSuccessMessages(): array
+    {
+        return $this->zedStub->getResponsesSuccessMessages();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesErrorMessages(): array
+    {
+        return $this->zedStub->getResponsesErrorMessages();
+    }
 }

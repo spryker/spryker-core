@@ -16,23 +16,27 @@ use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
-use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
+use Spryker\Zed\Cms\Communication\Table\CmsTableConstants;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Cms\Persistence\CmsRepositoryInterface getRepository()
  * @method \Spryker\Zed\Cms\Business\CmsFacadeInterface getFacade()
  */
 class GlossaryController extends AbstractController
 {
-    public const REDIRECT_ADDRESS = '/cms/glossary';
-    public const SEARCH_LIMIT = 10;
-    public const ID_FORM = 'id-form';
-    public const TYPE = 'type';
+    protected const REDIRECT_ADDRESS = '/cms/glossary';
+    protected const SEARCH_LIMIT = 10;
+    protected const ID_FORM = 'id-form';
+    protected const TYPE = 'type';
 
     /**
      * @var string
@@ -46,7 +50,7 @@ class GlossaryController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idPage = $this->castId($request->get(CmsPageTable::REQUEST_ID_PAGE));
+        $idPage = $this->castId($request->get(CmsTableConstants::REQUEST_ID_PAGE));
         $idForm = (int)$request->get(self::ID_FORM);
         $type = CmsConstants::RESOURCE_TYPE_PAGE;
 
@@ -87,7 +91,7 @@ class GlossaryController extends AbstractController
      *
      * @return int|null
      */
-    public function getLocaleByCmsPage(SpyCmsPage $cmsPage)
+    protected function getLocaleByCmsPage(SpyCmsPage $cmsPage): ?int
     {
         $fkLocale = null;
         $url = $cmsPage->getSpyUrls()->getFirst();
@@ -106,14 +110,14 @@ class GlossaryController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(Request $request)
+    public function deleteAction(Request $request): RedirectResponse
     {
         if (!$request->isMethod(Request::METHOD_DELETE)) {
             throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
         }
 
         $idMapping = $this->castId($request->request->get(CmsGlossaryTable::REQUEST_ID_MAPPING));
-        $idPage = $this->castId($request->request->get(CmsPageTable::REQUEST_ID_PAGE));
+        $idPage = $this->castId($request->request->get(CmsTableConstants::REQUEST_ID_PAGE));
 
         $mappingGlossary = $this->getQueryContainer()
             ->queryGlossaryKeyMappingById($idMapping)
@@ -123,7 +127,7 @@ class GlossaryController extends AbstractController
         $this->getFacade()
             ->deletePageKeyMapping($pageTransfer, $mappingGlossary->getPlaceholder());
 
-        $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage;
+        $redirectUrl = static::REDIRECT_ADDRESS . '?' . http_build_query([CmsTableConstants::REQUEST_ID_PAGE => $idPage]);
 
         return $this->redirectResponse($redirectUrl);
     }
@@ -133,7 +137,7 @@ class GlossaryController extends AbstractController
      *
      * @return array
      */
-    protected function findTemplatePlaceholders($tempFile)
+    protected function findTemplatePlaceholders(string $tempFile): array
     {
         $placeholderMap = [];
         $placeholderPattern = $this->getFactory()->getConfig()->getPlaceholderPattern();
@@ -156,7 +160,7 @@ class GlossaryController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function searchAction(Request $request)
+    public function searchAction(Request $request): JsonResponse
     {
         $value = $request->query->get('value');
         $key = $request->query->get('key');
@@ -176,13 +180,13 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param string $value
-     * @param string $key
-     * @param int $localeId
+     * @param string|null $value
+     * @param string|null $key
+     * @param int|null $localeId
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey[]|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[]
      */
-    protected function searchGlossaryKeysAndTranslations($value, $key, $localeId)
+    protected function searchGlossaryKeysAndTranslations(?string $value, ?string $key, ?int $localeId)
     {
         $searchedItems = [];
         if ($value !== null) {
@@ -208,7 +212,7 @@ class GlossaryController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    protected function createKeyMappingTransfer(array $data)
+    protected function createKeyMappingTransfer(array $data): PageKeyMappingTransfer
     {
         $pageKeyMappingTransfer = (new PageKeyMappingTransfer())->fromArray($data, true);
         $hasPageMapping = $this->getFacade()->hasPagePlaceholderMapping($data['fkPage'], $data['placeholder']);
@@ -231,7 +235,7 @@ class GlossaryController extends AbstractController
      *
      * @return void
      */
-    protected function saveGlossaryKeyPageMapping(array $data, LocaleTransfer $localeTransfer)
+    protected function saveGlossaryKeyPageMapping(array $data, LocaleTransfer $localeTransfer): void
     {
         $keyTranslationTransfer = $this->createKeyTranslationTransfer($data, $localeTransfer);
         $this->getFactory()->getGlossaryFacade()
@@ -246,7 +250,7 @@ class GlossaryController extends AbstractController
      *
      * @return array
      */
-    protected function findPagePlaceholders(SpyCmsPage $pageUrl)
+    protected function findPagePlaceholders(SpyCmsPage $pageUrl): array
     {
         $pageUrlArray = $pageUrl->toArray();
         $tempFiles = $this->getFactory()
@@ -270,12 +274,12 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param int $idPage
+     * @param int|null $idPage
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
-    protected function extractGlossaryMapping($idPage, LocaleTransfer $localeTransfer)
+    protected function extractGlossaryMapping(?int $idPage, LocaleTransfer $localeTransfer): array
     {
         $glossaryQuery = $this->getQueryContainer()
             ->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $localeTransfer->getIdLocale());
@@ -298,7 +302,7 @@ class GlossaryController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    protected function handleAjaxRequest(array $forms, $idForm, LocaleTransfer $localeTransfer)
+    protected function handleAjaxRequest(array $forms, int $idForm, LocaleTransfer $localeTransfer): JsonResponse
     {
         if ($forms[$idForm]->isValid()) {
             $data = $forms[$idForm]->getData();
@@ -321,13 +325,13 @@ class GlossaryController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $glossaryMappingArray
-     * @param string $placeholder
-     * @param int $idPage
-     * @param int $fkLocale
+     * @param string|null $placeholder
+     * @param int|null $idPage
+     * @param int|null $fkLocale
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function createPlaceholderForm(Request $request, array $glossaryMappingArray, $placeholder, $idPage, $fkLocale)
+    protected function createPlaceholderForm(Request $request, array $glossaryMappingArray, ?string $placeholder, ?int $idPage, ?int $fkLocale): FormInterface
     {
         $idMapping = null;
         if (isset($glossaryMappingArray[$placeholder])) {
@@ -350,7 +354,7 @@ class GlossaryController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\KeyTranslationTransfer
      */
-    protected function createKeyTranslationTransfer(array $data, LocaleTransfer $localeTransfer)
+    protected function createKeyTranslationTransfer(array $data, LocaleTransfer $localeTransfer): KeyTranslationTransfer
     {
         $this->glossaryKeyName = $data[CmsGlossaryForm::FIELD_GLOSSARY_KEY];
 
@@ -376,7 +380,7 @@ class GlossaryController extends AbstractController
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPage|\Orm\Zed\Url\Persistence\SpyUrl
      */
-    protected function findCmsPageById($idPage)
+    protected function findCmsPageById(int $idPage)
     {
         $cmsPage = $this->getQueryContainer()
             ->queryPageWithTemplatesAndUrlByIdPage($idPage)
@@ -396,7 +400,7 @@ class GlossaryController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    protected function getLocaleTransfer(SpyCmsPage $cmsPageEntity)
+    protected function getLocaleTransfer(SpyCmsPage $cmsPageEntity): LocaleTransfer
     {
         $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
         $url = $cmsPageEntity->getSpyUrls()->getFirst();

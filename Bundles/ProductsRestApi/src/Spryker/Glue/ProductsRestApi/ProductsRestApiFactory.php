@@ -64,7 +64,8 @@ class ProductsRestApiFactory extends AbstractFactory
             $this->getProductStorageClient(),
             $this->getResourceBuilder(),
             $this->createConcreteProductsResourceMapper(),
-            $this->createConcreteProductAttributeTranslationExpander()
+            $this->createConcreteProductAttributeTranslationExpander(),
+            $this->getConcreteProductResourceExpanderPlugins()
         );
     }
 
@@ -102,5 +103,13 @@ class ProductsRestApiFactory extends AbstractFactory
     public function getGlossaryStorageClient(): ProductsRestApiToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(ProductsRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\ConcreteProductsResourceExpanderPluginInterface[]
+     */
+    public function getConcreteProductResourceExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductsRestApiDependencyProvider::PLUGINS_CONCRETE_PRODUCTS_RESOURCE_EXPANDER);
     }
 }

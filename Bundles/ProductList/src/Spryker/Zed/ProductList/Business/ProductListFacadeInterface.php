@@ -129,7 +129,7 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product list IDs with type "blacklist" for the given product concrete ID.
+     *  - Retrieves unique product list IDs with type "blacklist" for the given product concrete ID.
      *
      * @api
      *
@@ -155,7 +155,7 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product list IDs with type "whitelist" for the given product concrete ID.
+     *  - Retrieves unique product list IDs with type "whitelist" for the given product concrete ID.
      *
      * @api
      *
@@ -214,4 +214,16 @@ interface ProductListFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function filterRestrictedItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     *  - Finds product concrete ids by product list ids.
+     *
+     * @api
+     *
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductListIds(array $productListIds): array;
 }

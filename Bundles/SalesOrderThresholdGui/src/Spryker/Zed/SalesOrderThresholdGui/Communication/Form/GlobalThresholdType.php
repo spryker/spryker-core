@@ -85,7 +85,7 @@ class GlobalThresholdType extends AbstractType
      *
      * @return $this
      */
-    protected function addStoreCurrencyField(FormBuilderInterface $builder, array $options): self
+    protected function addStoreCurrencyField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_STORE_CURRENCY, Select2ComboBoxType::class, [
             'label' => 'Store and Currency',
@@ -105,7 +105,7 @@ class GlobalThresholdType extends AbstractType
      *
      * @return $this
      */
-    protected function addHardThresholdForm(FormBuilderInterface $builder, array $options): self
+    protected function addHardThresholdForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_HARD, GlobalHardThresholdType::class, [
             static::OPTION_HARD_TYPES_ARRAY => $options[static::OPTION_HARD_TYPES_ARRAY],
@@ -121,7 +121,7 @@ class GlobalThresholdType extends AbstractType
      *
      * @return $this
      */
-    protected function addSoftThresholdForm(FormBuilderInterface $builder, array $options): self
+    protected function addSoftThresholdForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_SOFT, GlobalSoftThresholdType::class, [
             static::OPTION_SOFT_TYPES_ARRAY => $options[static::OPTION_SOFT_TYPES_ARRAY],

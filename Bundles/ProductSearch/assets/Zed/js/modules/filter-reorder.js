@@ -5,8 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
-
 var filterList = {};
 
 var showLoaderBar = function(btn){
