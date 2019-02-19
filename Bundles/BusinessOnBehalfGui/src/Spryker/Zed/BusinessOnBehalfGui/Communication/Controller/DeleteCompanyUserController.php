@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Controller;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,11 +53,18 @@ class DeleteCompanyUserController extends AbstractController
     {
         $idCompanyUser = $this->castId($request->query->getInt(static::PARAM_ID_COMPANY_USER));
 
-        $companyUserTransfer = (new CompanyUserTransfer())
-            ->setIdCompanyUser($idCompanyUser);
+        $companyUserFacade = $this->getFactory()
+            ->getCompanyUserFacade();
 
-        $companyUserResponseTransfer = $this->getFactory()
-            ->getCompanyUserFacade()
+        $companyUserTransfer = $companyUserFacade->findCompanyUserById($idCompanyUser);
+
+        if (!$companyUserTransfer) {
+            $this->addErrorMessage(static::MESSAGE_COMPANY_USER_NOT_FOUND);
+
+            return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+        }
+
+        $companyUserResponseTransfer = $companyUserFacade
             ->deleteCompanyUser($companyUserTransfer);
 
         if ($companyUserResponseTransfer->getIsSuccessful()) {
