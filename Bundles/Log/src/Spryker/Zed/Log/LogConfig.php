@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class LogConfig extends AbstractBundleConfig
 {
+    protected const DEFAULT_BUFFER_LIMIT = 100;
+
     /**
      * @var string[]
      */
@@ -105,5 +107,13 @@ class LogConfig extends AbstractBundleConfig
     public function getQueueName()
     {
         return $this->get(LogConstants::LOG_QUEUE_NAME);
+    }
+
+    /**
+     * @return int
+     */
+    public function getBufferLimit(): int
+    {
+        return $this->get(LogConstants::LOG_BUFFER_LIMIT, static::DEFAULT_BUFFER_LIMIT);
     }
 }

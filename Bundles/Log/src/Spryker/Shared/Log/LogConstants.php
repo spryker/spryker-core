@@ -208,4 +208,12 @@ interface LogConstants
      * @api
      */
     public const EXCEPTION_LOG_FILE_PATH_GLUE = 'LOG:EXCEPTION_LOG_FILE_PATH_GLUE';
+
+    /**
+     * Specification:
+     * - Sets how many entries should be buffered at most, beyond that the oldest items are removed from the buffer.
+     *
+     * @api
+     */
+    public const LOG_BUFFER_LIMIT = 'LOG:LOG_BUFFER_LIMIT';
 }
