@@ -33,6 +33,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     protected const CONTROLLER_WITH_INVALID_ANNOTATIONS_FILE_NAME = 'TestResourceWithInvalidAnnotationsController.php';
     protected const CONTROLLER_WITHOUT_ANNOTATIONS = 'TestResourceWithoutAnnotationsController.php';
     protected const CONTROLLER_WITH_EMPTY_ANNOTATIONS = 'TestResourceWithEmptyAnnotationsController.php';
+    protected const CONTROLLER_WITH_NULLABLE_ID = 'TestResourceWithNullableIdController.php';
 
     protected const SUMMARY = 'Summary example';
     protected const ALTERNATIVE_RESPONSE_CLASS = RestTestAlternativeAttributesTransfer::class;
@@ -138,6 +139,21 @@ class GlueAnnotationAnalyzerTest extends Unit
         $this->assertEmpty($parameters->getGetCollection());
         $this->assertEmpty($parameters->getGetResourceById());
         $this->assertEmpty($parameters->getDelete());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetResourceParametersFromPluginWithNullableIdWillReturnCorrectParameters(): void
+    {
+        $glueAnnotationAnalyzer = new GlueAnnotationAnalyzer(
+            $this->getGlueControllerFinder(static::CONTROLLER_SOURCE_DIRECTORY . DIRECTORY_SEPARATOR . static::CONTROLLER_WITH_NULLABLE_ID),
+            $this->getUtilEncodingService()
+        );
+
+        $parameters = $glueAnnotationAnalyzer->getResourceParametersFromPlugin(new TestResourceRoutePlugin());
+        $this->assertNotEmpty($parameters->getGetCollection());
+        $this->assertTrue($parameters->getGetCollection()->getIsIdNullable());
     }
 
     /**
