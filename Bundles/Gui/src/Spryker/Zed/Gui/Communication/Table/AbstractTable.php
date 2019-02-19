@@ -85,9 +85,9 @@ abstract class AbstractTable
     protected $initialized = false;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $tableIdentifier;
+    protected $tableIdentifier = null;
 
     /**
      * @var \Generated\Shared\Transfer\DataTablesTransfer
@@ -144,7 +144,10 @@ abstract class AbstractTable
             $config = $this->configure($config);
             $this->setConfiguration($config);
             $this->twig = $this->getTwig();
-            $this->generateTableIdentifier();
+
+            if ($this->tableIdentifier === null) {
+                $this->generateTableIdentifier();
+            }
         }
 
         return $this;
@@ -341,7 +344,7 @@ abstract class AbstractTable
      */
     protected function generateTableIdentifier($prefix = 'table-')
     {
-        $this->tableIdentifier = $prefix . md5(get_class($this));
+        $this->tableIdentifier = $prefix . md5(static::class);
 
         return $this;
     }
