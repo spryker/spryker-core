@@ -10,8 +10,7 @@ namespace Spryker\Zed\CmsBlockProductConnector\Communication\DataProvider;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\CmsBlockProductConnector\Communication\Form\CmsBlockProductAbstractType;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleInterface;
-use Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerInterface;
-use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface;
+use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRepositoryInterface;
 
 class CmsBlockProductDataProvider
 {
@@ -33,18 +32,20 @@ class CmsBlockProductDataProvider
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductQueryContainer
-     * @param \Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerInterface $productAbstractQueryContainer
+     * @var \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRepositoryInterface
+     */
+    protected $repository;
+
+    /**
      * @param \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRepositoryInterface $repository
      */
     public function __construct(
-        CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductQueryContainer,
-        CmsBlockProductConnectorToProductAbstractQueryContainerInterface $productAbstractQueryContainer,
-        CmsBlockProductConnectorToLocaleInterface $localeFacade
+        CmsBlockProductConnectorToLocaleInterface $localeFacade,
+        CmsBlockProductConnectorRepositoryInterface $repository
     ) {
-        $this->cmsBlockProductQueryContainer = $cmsBlockProductQueryContainer;
-        $this->productAbstractQueryContainer = $productAbstractQueryContainer;
         $this->localeFacade = $localeFacade;
+        $this->repository = $repository;
     }
 
     /**
@@ -70,25 +71,12 @@ class CmsBlockProductDataProvider
         $idProductAbstracts = [];
 
         if ($cmsBlockTransfer->getIdCmsBlock()) {
-            $idProductAbstracts = $this->getAssignedProductAbstractArray($cmsBlockTransfer->getIdCmsBlock());
+            $idProductAbstracts = $this->repository->getAssignedProductAbstractArray($cmsBlockTransfer->getIdCmsBlock());
         }
 
         $cmsBlockTransfer->setIdProductAbstracts($idProductAbstracts);
 
         return $cmsBlockTransfer;
-    }
-
-    /**
-     * @param int $idCmsBlock
-     *
-     * @return array
-     */
-    protected function getAssignedProductAbstractArray($idCmsBlock)
-    {
-        return $this->cmsBlockProductQueryContainer
-            ->queryCmsBlockProductConnectorByIdCmsBlock($idCmsBlock)
-            ->find()
-            ->getColumnValues('fkProductAbstract');
     }
 
     /**
@@ -98,26 +86,13 @@ class CmsBlockProductDataProvider
      */
     protected function getAssignedProductOptions(CmsBlockTransfer $cmsBlockTransfer): array
     {
-        $productAbstractArray = [];
-
         $idLocale = $this->localeFacade
             ->getCurrentLocale()
             ->getIdLocale();
 
-        $productAbstracts = $this->productAbstractQueryContainer
-            ->queryProductAbstractWithName($idLocale)
-            ->useSpyCmsBlockProductConnectorQuery()
-                ->filterByFkCmsBlock($cmsBlockTransfer->getIdCmsBlock())
-            ->endUse()
-            ->find();
-
-        foreach ($productAbstracts as $spyProductAbstract) {
-            $label = $spyProductAbstract->getVirtualColumn(static::PRODUCT_ABSTRACT_VIRTUAL_COLUMN_NAME) .
-                ' (SKU: ' . $spyProductAbstract->getSku() . ')';
-
-            $productAbstractArray[$label] = $spyProductAbstract->getIdProductAbstract();
-        }
-
-        return $productAbstractArray;
+        return $this->repository->getAssignedProductOptions(
+            $idLocale,
+            $cmsBlockTransfer->getIdCmsBlock()
+        );
     }
 }

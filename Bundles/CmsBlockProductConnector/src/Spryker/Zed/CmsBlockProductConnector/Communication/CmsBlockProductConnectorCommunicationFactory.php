@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  * @method \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CmsBlockProductConnector\CmsBlockProductConnectorConfig getConfig()
  * @method \Spryker\Zed\CmsBlockProductConnector\Business\CmsBlockProductConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRepositoryInterface getRepository()
  */
 class CmsBlockProductConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -33,9 +34,8 @@ class CmsBlockProductConnectorCommunicationFactory extends AbstractCommunication
     public function createCmsBlockProductDataProvider()
     {
         return new CmsBlockProductDataProvider(
-            $this->getQueryContainer(),
-            $this->getProductAbstractQueryContainer(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->getRepository()
         );
     }
 

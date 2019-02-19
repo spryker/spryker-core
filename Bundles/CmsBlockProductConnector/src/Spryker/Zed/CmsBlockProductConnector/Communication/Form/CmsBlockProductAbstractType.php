@@ -19,11 +19,13 @@ use Symfony\Component\Form\FormEvents;
  * @method \Spryker\Zed\CmsBlockProductConnector\Communication\CmsBlockProductConnectorCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CmsBlockProductConnector\CmsBlockProductConnectorConfig getConfig()
+ * @method \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRepositoryInterface getRepository()
  */
 class CmsBlockProductAbstractType extends AbstractType
 {
     public const FIELD_ID_CMS_BLOCK = 'id_cms_block';
     public const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
+    public const PLACEHOLDER_ID_CMS_BLOCK = 'Type three letters of name or sku for suggestions.';
 
     public const OPTION_PRODUCT_ABSTRACT_ARRAY = 'option-product-abstracts';
 
@@ -53,7 +55,7 @@ class CmsBlockProductAbstractType extends AbstractType
             'required' => false,
             'choices' => $choices,
             'attr' => [
-                'placeholder' => 'Type three letters of name or sku for suggestions.',
+                'placeholder' => static::PLACEHOLDER_ID_CMS_BLOCK,
             ],
         ]);
 
@@ -99,7 +101,7 @@ class CmsBlockProductAbstractType extends AbstractType
                 [
                     'label' => 'Products',
                     'attr' => [
-                        'placeholder' => 'Type three letters of name or sku for suggestions.',
+                        'placeholder' => static::PLACEHOLDER_ID_CMS_BLOCK,
                     ],
                     'required' => false,
                     'choices' => $data[static::FIELD_ID_PRODUCT_ABSTRACTS],

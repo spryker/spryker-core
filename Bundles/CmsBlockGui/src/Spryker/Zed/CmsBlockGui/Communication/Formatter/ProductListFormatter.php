@@ -11,7 +11,7 @@ class ProductListFormatter implements ProductListFormatterInterface
 {
     protected const KEY_ID = 'id';
     protected const KEY_TEXT = 'text';
-    protected const TEXT_FORMAT = '%s (sku: %s)';
+    protected const TEXT_FORMAT = '%s (SKU: %s)';
 
     /**
      * @param array $suggestData

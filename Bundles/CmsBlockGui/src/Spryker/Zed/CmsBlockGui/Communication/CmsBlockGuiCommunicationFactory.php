@@ -65,7 +65,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToProductFacadeBridge
+     * @return \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToProductFacadeInterface
      */
     public function getProductFacade(): CmsBlockGuiToProductFacadeInterface
     {
