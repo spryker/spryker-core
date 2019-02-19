@@ -36,10 +36,10 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
      */
     public function testSaveLabelToAddressRelations(): void
     {
-        $this->markTestIncomplete('haveCompanyUnitAddressTransfer can not create a company transfer, because of missing customer in CompanyUser');
-
         $facade = $this->tester->getCompanyUnitAddressLabelFacade();
-        $companyUnitAddressTransfer = $this->tester->haveCompanyUnitAddressTransfer();
+        $companyUnitAddressTransfer = $this->tester->haveCompanyUnitAddressTransfer(
+            $this->tester->haveCompanyBusinessUnitWithCompany()
+        );
 
         $labels = $this->tester->haveLabelCollection();
         $companyUnitAddressTransfer->setLabelCollection($labels);
@@ -53,10 +53,10 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
      */
     public function testHydrateCompanyUnitAddressWithLabelCollection(): void
     {
-        $this->markTestIncomplete('haveCompanyUnitAddressTransfer can not create a company transfer, because of missing customer in CompanyUser');
-
         $facade = $this->tester->getCompanyUnitAddressLabelFacade();
-        $companyUnitAddressTransfer = $this->tester->haveCompanyUnitAddressTransfer();
+        $companyUnitAddressTransfer = $this->tester->haveCompanyUnitAddressTransfer(
+            $this->tester->haveCompanyBusinessUnitWithCompany()
+        );
         $this->assertEmpty($companyUnitAddressTransfer->getLabelCollection());
 
         $this->tester->haveLabelAddressRelations($companyUnitAddressTransfer);
