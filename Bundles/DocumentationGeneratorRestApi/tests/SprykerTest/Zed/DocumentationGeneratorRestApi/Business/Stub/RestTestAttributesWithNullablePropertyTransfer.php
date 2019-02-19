@@ -9,47 +9,47 @@ namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub;
 
 use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
 
-class RestTestAlternativeAttributesTransfer extends AbstractTransfer
+class RestTestAttributesWithNullablePropertyTransfer extends AbstractTransfer
 {
-    public const ATTRIBUTE3 = 'attribute3';
+    public const ATTRIBUTE1 = 'attribute1';
 
-    public const ATTRIBUTE4 = 'attribute4';
-
-    /**
-     * @var string
-     */
-    protected $attribute3;
+    public const ATTRIBUTE2 = 'attribute2';
 
     /**
      * @var string
      */
-    protected $attribute4;
+    protected $attribute1;
+
+    /**
+     * @var string
+     */
+    protected $attribute2;
 
     /**
      * @var array
      */
     protected $transferPropertyNameMap = [
-        'attribute3' => 'attribute3',
-        'Attribute3' => 'attribute3',
-        'attribute4' => 'attribute4',
-        'Attribute4' => 'Attribute4',
+        'attribute1' => 'attribute1',
+        'Attribute1' => 'attribute1',
+        'attribute2' => 'attribute2',
+        'Attribute2' => 'Attribute2',
     ];
 
     /**
      * @var array
      */
     protected $transferMetadata = [
-        self::ATTRIBUTE3 => [
+        self::ATTRIBUTE1 => [
             'type' => 'string',
-            'name_underscore' => 'attribute3',
+            'name_underscore' => 'attribute1',
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'no',
-            'is_nullable' => false,
+            'is_nullable' => true,
         ],
-        self::ATTRIBUTE4 => [
+        self::ATTRIBUTE2 => [
             'type' => 'string',
-            'name_underscore' => 'attribute4',
+            'name_underscore' => 'attribute2',
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'required',
@@ -60,20 +60,20 @@ class RestTestAlternativeAttributesTransfer extends AbstractTransfer
     /**
      * @return string|null
      */
-    public function getAttribute3(): ?string
+    public function getAttribute1(): ?string
     {
-        return $this->attribute3;
+        return $this->attribute1;
     }
 
     /**
-     * @param string $attribute3
+     * @param string $attribute1
      *
      * @return $this
      */
-    public function setAttribute3(string $attribute3)
+    public function setAttribute1(string $attribute1)
     {
-        $this->attribute3 = $attribute3;
-        $this->modifiedProperties[self::ATTRIBUTE3] = true;
+        $this->attribute1 = $attribute1;
+        $this->modifiedProperties[self::ATTRIBUTE1] = true;
 
         return $this;
     }
@@ -81,20 +81,20 @@ class RestTestAlternativeAttributesTransfer extends AbstractTransfer
     /**
      * @return string|null
      */
-    public function getAttribute4(): ?string
+    public function getAttribute2(): ?string
     {
-        return $this->attribute4;
+        return $this->attribute2;
     }
 
     /**
-     * @param string $attribute4
+     * @param string $attribute2
      *
      * @return $this
      */
-    public function setAttribute4(string $attribute4)
+    public function setAttribute2(string $attribute2)
     {
-        $this->attribute4 = $attribute4;
-        $this->modifiedProperties[self::ATTRIBUTE4] = true;
+        $this->attribute2 = $attribute2;
+        $this->modifiedProperties[self::ATTRIBUTE2] = true;
 
         return $this;
     }
