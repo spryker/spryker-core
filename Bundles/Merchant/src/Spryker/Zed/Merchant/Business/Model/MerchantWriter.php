@@ -76,7 +76,7 @@ class MerchantWriter implements MerchantWriterInterface
      */
     public function create(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
-        $this->assertCreateMerchantRequirements($merchantTransfer);
+        $this->assertDefaultMerchantRequirements($merchantTransfer);
 
         if (empty($merchantTransfer->getMerchantKey())) {
             $merchantTransfer->setMerchantKey(
@@ -105,7 +105,8 @@ class MerchantWriter implements MerchantWriterInterface
      */
     public function update(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
-        $this->assertUpdateMerchantRequirements($merchantTransfer);
+        $this->assertDefaultMerchantRequirements($merchantTransfer);
+        $merchantTransfer->requireIdMerchant();
 
         $merchantResponseTransfer = $this->createMerchantResponseTransfer();
 
@@ -235,28 +236,9 @@ class MerchantWriter implements MerchantWriterInterface
      *
      * @return void
      */
-    protected function assertCreateMerchantRequirements(MerchantTransfer $merchantTransfer): void
+    protected function assertDefaultMerchantRequirements(MerchantTransfer $merchantTransfer): void
     {
         $merchantTransfer
-            ->requireName()
-            ->requireRegistrationNumber()
-            ->requireContactPersonTitle()
-            ->requireContactPersonFirstName()
-            ->requireContactPersonLastName()
-            ->requireContactPersonPhone()
-            ->requireEmail()
-            ->requireAddressCollection();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return void
-     */
-    protected function assertUpdateMerchantRequirements(MerchantTransfer $merchantTransfer): void
-    {
-        $merchantTransfer
-            ->requireIdMerchant()
             ->requireName()
             ->requireRegistrationNumber()
             ->requireContactPersonTitle()
