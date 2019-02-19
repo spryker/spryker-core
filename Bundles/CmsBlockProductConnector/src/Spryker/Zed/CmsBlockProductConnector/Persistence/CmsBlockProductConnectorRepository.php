@@ -14,6 +14,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class CmsBlockProductConnectorRepository extends AbstractRepository implements CmsBlockProductConnectorRepositoryInterface
 {
+    /**
+     * @uses \Orm\Zed\CmsBlockProductConnector\Persistence\Map\SpyCmsBlockProductConnectorTableMap
+     */
+    protected const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
+
     /***
      * @param int $idLocale
      * @param int $idCmsBlock
@@ -44,6 +49,6 @@ class CmsBlockProductConnectorRepository extends AbstractRepository implements C
         return $this->getFactory()->createCmsBlockProductConnectorQuery()
             ->filterByFkCmsBlock($idCmsBlock)
             ->find()
-            ->getColumnValues('fkProductAbstract');
+            ->getColumnValues(static::FK_PRODUCT_ABSTRACT);
     }
 }
