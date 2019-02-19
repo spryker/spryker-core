@@ -17,10 +17,12 @@ class AccessGrantExecutor implements AccessGrantExecutorInterface
      * @var \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface[]
      */
     protected $grants;
+
     /**
      * @var \Spryker\Zed\Oauth\Business\Model\League\GrantTypeExecutorInterface
      */
     protected $grantTypeExecutor;
+
     /**
      * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeProviderPluginInterface[]
      */

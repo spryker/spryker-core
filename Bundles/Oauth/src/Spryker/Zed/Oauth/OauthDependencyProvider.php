@@ -98,5 +98,4 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\Oauth\Business\Model\League\AuthorizationServerBuilderInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\PasswordGrant;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\RefreshTokenGrant;
-use Spryker\Zed\Oauth\Business\Model\League\Grant\UserGrant;
 use Spryker\Zed\Oauth\Business\Model\League\GrantTypeExecutor;
 use Spryker\Zed\Oauth\Business\Model\League\GrantTypeExecutorInterface;
 use Spryker\Zed\Oauth\Business\Model\League\RepositoryBuilder;
@@ -47,10 +46,11 @@ class OauthBusinessFactory extends AbstractBusinessFactory
      */
     public function createAccessGrantExecutor(): AccessGrantExecutorInterface
     {
-        return new AccessGrantExecutor([
+        return new AccessGrantExecutor(
+            [
             OauthConfig::GRANT_TYPE_PASSWORD => $this->createPasswordGrant(),
             OauthConfig::GRANT_TYPE_REFRESH_TOKEN => $this->createRefreshTokenGrant(),
-        ],
+            ],
             $this->createGrantTypeExecutor(),
             $this->getGrantTypeProviderPlugins()
         );
@@ -188,6 +188,4 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(OauthDependencyProvider::PLUGIN_GRANT_TYPE_PROVIDER);
     }
-
-
 }

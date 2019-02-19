@@ -14,6 +14,8 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeProviderPluginInt
 
 /**
  * @method \Spryker\Zed\OauthCompanyUser\Communication\OauthCompanyUserCommunicationFactory getFactory()
+ * @method \Spryker\Zed\OauthCompanyUser\OauthCompanyUserConfig getConfig()
+ * @method \Spryker\Zed\OauthCompanyUser\Business\OauthCompanyUserFacadeInterface getFacade()
  */
 class CompanyUserOauthGrantTypeProviderPlugin extends AbstractPlugin implements OauthGrantTypeProviderPluginInterface
 {

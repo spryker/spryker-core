@@ -65,6 +65,7 @@ class RestRequest implements RestRequestInterface
 
     /**
      * @deprecated use $restUser instead.
+     *
      * @var \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface|null
      */
     protected $user;
@@ -250,6 +251,7 @@ class RestRequest implements RestRequestInterface
 
     /**
      * @deprecated use getRestUser() instead.
+     *
      * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface|null
      */
     public function getUser(): ?UserInterface

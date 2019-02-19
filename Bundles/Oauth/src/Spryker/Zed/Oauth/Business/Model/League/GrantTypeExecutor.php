@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Oauth\Business\Model\League;
 
-
 use DateInterval;
 use Generated\Shared\Transfer\OauthErrorTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
@@ -19,7 +18,7 @@ use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\Grant\AbstractGrant;
 use Spryker\Zed\Oauth\OauthConfig;
 
-class GrantTypeExecutor implements  GrantTypeExecutorInterface
+class GrantTypeExecutor implements GrantTypeExecutorInterface
 {
     /**
      * @var \League\OAuth2\Server\AuthorizationServer
@@ -50,7 +49,6 @@ class GrantTypeExecutor implements  GrantTypeExecutorInterface
         $this->repositoryBuilder = $repositoryBuilder;
         $this->oauthConfig = $oauthConfig;
     }
-
 
     /**
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
