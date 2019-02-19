@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AgentQuoteRequest;
 
 use Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequestBridge;
+use Spryker\Zed\AgentQuoteRequest\Dependency\Service\AgentQuoteRequestToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -17,6 +18,7 @@ use Spryker\Zed\Kernel\Container;
 class AgentQuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_QUOTE_REQUEST = 'FACADE_QUOTE_REQUEST';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -36,10 +38,37 @@ class AgentQuoteRequestDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+        $container = $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addQuoteRequestFacade(Container $container): Container
     {
         $container[static::FACADE_QUOTE_REQUEST] = function (Container $container) {
             return new AgentQuoteRequestToQuoteRequestBridge($container->getLocator()->quoteRequest()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new AgentQuoteRequestToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;

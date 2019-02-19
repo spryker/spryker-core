@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AgentQuoteRequest\Persistence;
 
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -14,4 +15,24 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class AgentQuoteRequestEntityManager extends AbstractEntityManager implements AgentQuoteRequestEntityManagerInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer
+    {
+        $quoteRequestEntity = $this->getFactory()
+            ->getQuoteRequestPropelQuery()
+            ->filterByIdQuoteRequest($quoteRequestTransfer->getIdQuoteRequest())
+            ->findOne();
+
+        $quoteRequestEntity = $this->getFactory()
+            ->createQuoteRequestMapper()
+            ->mapQuoteRequestTransferToQuoteRequestEntity($quoteRequestTransfer, $quoteRequestEntity);
+
+        $quoteRequestEntity->save();
+
+        return $quoteRequestTransfer;
+    }
 }
