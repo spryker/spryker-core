@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
 class AssignController extends AbstractController
 {
     public const PARAM_ID_CATEGORY = 'id-category';
-    public const PARAM_ID_NODE = 'id-node';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -57,12 +56,8 @@ class AssignController extends AbstractController
         $categoryProductsTable = $this->getCategoryProductsTable($idCategory, $localeTransfer);
         $productsTable = $this->getProductsTable($idCategory, $localeTransfer);
 
-        $nodeId = $request->get(static::PARAM_ID_NODE);
-
-        if ($nodeId !== null) {
-            $categoryFacade = $this->getFactory()->getCategoryFacade();
-            $categoryPath = $categoryFacade->getNodePath($this->castId($nodeId), $localeTransfer);
-        }
+        $categoryFacade = $this->getFactory()->getCategoryFacade();
+        $categoryPath = $categoryFacade->getNodePath($idCategory, $localeTransfer);
 
         return $this->viewResponse([
             'idCategory' => $idCategory,
@@ -70,7 +65,7 @@ class AssignController extends AbstractController
             'productCategoriesTable' => $categoryProductsTable->render(),
             'productsTable' => $productsTable->render(),
             'currentCategory' => $categoryEntity->toArray(),
-            'categoryPath' => $categoryPath ?? null,
+            'categoryPath' => $categoryPath,
             'currentLocale' => $localeTransfer->getLocaleName(),
         ]);
     }
