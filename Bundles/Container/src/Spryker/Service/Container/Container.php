@@ -44,7 +44,7 @@ class Container implements ContainerInterface, ArrayAccess
     protected static $globalServiceIdentifier = [];
 
     /**
-     * @var array
+     * @var bool[]
      */
     protected static $globalFrozenServices = [];
 
@@ -59,7 +59,7 @@ class Container implements ContainerInterface, ArrayAccess
     protected $protectedServices;
 
     /**
-     * @var array
+     * @var bool[]
      */
     protected $frozenServices = [];
 
