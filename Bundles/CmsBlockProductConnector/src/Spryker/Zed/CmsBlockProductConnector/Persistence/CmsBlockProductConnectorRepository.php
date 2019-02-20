@@ -27,16 +27,13 @@ class CmsBlockProductConnectorRepository extends AbstractRepository implements C
      */
     public function getAssignedProductOptions(int $idLocale, int $idCmsBlock): array
     {
-        $productAbstracts = $this->getFactory()->getCmsBlockProductConnectorToProductAbstractQueryContainer()
+        return $this->getFactory()->getCmsBlockProductConnectorToProductAbstractQueryContainer()
             ->queryProductAbstractWithName($idLocale)
             ->useSpyCmsBlockProductConnectorQuery()
                 ->filterByFkCmsBlock($idCmsBlock)
             ->endUse()
-            ->find();
-
-        return $this->getFactory()
-            ->createProductAbstractMapper()
-            ->mapProductAbstractArrayToOptions($productAbstracts);
+            ->find()
+            ->toArray();
     }
 
     /**

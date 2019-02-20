@@ -14,7 +14,12 @@ use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRep
 
 class CmsBlockProductDataProvider
 {
+    /**
+     * @uses \Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap
+     */
     public const PRODUCT_ABSTRACT_VIRTUAL_COLUMN_NAME = 'name';
+    public const PRODUCT_ABSTRACT_COLUMN_SKU = 'Sku';
+    public const PRODUCT_ABSTRACT_COLUMN_ID = 'IdProductAbstract';
 
     /**
      * @var \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface
@@ -86,13 +91,23 @@ class CmsBlockProductDataProvider
      */
     protected function getAssignedProductOptions(CmsBlockTransfer $cmsBlockTransfer): array
     {
+        $productAbstractOptions = [];
+
         $idLocale = $this->localeFacade
             ->getCurrentLocale()
             ->getIdLocale();
-
-        return $this->repository->getAssignedProductOptions(
+        $productAbstracts = $this->repository->getAssignedProductOptions(
             $idLocale,
             $cmsBlockTransfer->getIdCmsBlock()
         );
+
+        foreach ($productAbstracts as $productAbstract) {
+            $label = $productAbstract[static::PRODUCT_ABSTRACT_VIRTUAL_COLUMN_NAME] .
+                ' (SKU: ' . $productAbstract[static::PRODUCT_ABSTRACT_COLUMN_SKU] . ')';
+
+            $productAbstractOptions[$label] = $productAbstract[static::PRODUCT_ABSTRACT_COLUMN_ID];
+        }
+
+        return $productAbstractOptions;
     }
 }

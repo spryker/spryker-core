@@ -10,8 +10,6 @@ namespace Spryker\Zed\CmsBlockProductConnector\Persistence;
 use Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery;
 use Spryker\Zed\CmsBlockProductConnector\CmsBlockProductConnectorDependencyProvider;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerInterface;
-use Spryker\Zed\CmsBlockProductConnector\Persistence\Mapper\ProductAbstractMapper;
-use Spryker\Zed\CmsBlockProductConnector\Persistence\Mapper\ProductAbstractMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -35,13 +33,5 @@ class CmsBlockProductConnectorPersistenceFactory extends AbstractPersistenceFact
     public function getCmsBlockProductConnectorToProductAbstractQueryContainer(): CmsBlockProductConnectorToProductAbstractQueryContainerInterface
     {
         return $this->getProvidedDependency(CmsBlockProductConnectorDependencyProvider::QUERY_CONTAINER_PRODUCT_ABSTRACT);
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsBlockProductConnector\Persistence\Mapper\ProductAbstractMapperInterface
-     */
-    public function createProductAbstractMapper(): ProductAbstractMapperInterface
-    {
-        return new ProductAbstractMapper();
     }
 }
