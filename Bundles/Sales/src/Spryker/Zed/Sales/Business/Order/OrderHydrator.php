@@ -131,6 +131,36 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
     }
 
     /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    protected function hydrateBillingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): void
+    {
+        $orderTransfer->setBillingAddress(
+            $this->createAddressTransfer($orderEntity->getBillingAddress())
+        );
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    protected function hydrateShippingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): void
+    {
+        $shippingAddress = $orderEntity->getShippingAddress();
+
+        if ($shippingAddress === null) {
+            return;
+        }
+
+        $orderTransfer->setShippingAddress($this->createAddressTransfer($shippingAddress));
+    }
+
+    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $salesOrderAddressEntity
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
