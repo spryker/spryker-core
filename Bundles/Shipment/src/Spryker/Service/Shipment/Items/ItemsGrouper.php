@@ -7,7 +7,6 @@
 
 namespace Spryker\Service\Shipment\Items;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -17,13 +16,13 @@ class ItemsGrouper implements ItemsGrouperInterface
     protected const SHIPMENT_TRANSFER_KEY_PATTERN = '%s-%s-%s';
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupByShipment(ArrayObject $itemTransfers): ArrayObject
+    public function groupByShipment(iterable $itemTransfers): array
     {
-        $shipmentGroupTransfers = new ArrayObject();
+        $shipmentGroupTransfers = [];
 
         foreach ($itemTransfers as $itemTransfer) {
             $this->assertRequiredShipment($itemTransfer);
