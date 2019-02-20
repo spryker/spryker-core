@@ -11,7 +11,7 @@ use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
-use Spryker\Zed\Oauth\Business\Model\League\Repositories\UserRepositoryInterface;
+use League\OAuth2\Server\Repositories\UserRepositoryInterface;
 
 interface RepositoryBuilderInterface
 {
@@ -31,7 +31,7 @@ interface RepositoryBuilderInterface
     public function createAccessTokenRepository(): AccessTokenRepositoryInterface;
 
     /**
-     * @return \Spryker\Zed\Oauth\Business\Model\League\Repositories\UserRepositoryInterface
+     * @return \League\OAuth2\Server\Repositories\UserRepositoryInterface
      */
     public function createUserRepository(): UserRepositoryInterface;
 
