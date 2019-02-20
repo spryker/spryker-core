@@ -9,6 +9,7 @@ namespace Spryker\Zed\Product\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\SpyProductEntityTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
@@ -24,6 +25,36 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 {
     public const KEY_FILTERED_PRODUCTS_RESULT = 'result';
     public const KEY_FILTERED_PRODUCTS_PRODUCT_NAME = 'name';
+
+    /**
+     * @param string $productConcreteSku
+     *
+     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer|null
+     */
+    public function findProductConcreteBySku(string $productConcreteSku): ?SpyProductEntityTransfer
+    {
+        $productQuery = $this->getFactory()
+            ->createProductQuery()
+            ->joinWithSpyProductAbstract()
+            ->filterBySku($productConcreteSku);
+
+        return $this->buildQueryFromCriteria($productQuery)->findOne();
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer|null
+     */
+    public function findProductConcreteById(int $idProductConcrete): ?SpyProductEntityTransfer
+    {
+        $productQuery = $this->getFactory()
+            ->createProductQuery()
+            ->joinWithSpyProductAbstract()
+            ->filterByIdProduct($idProductConcrete);
+
+        return $this->buildQueryFromCriteria($productQuery)->findOne();
+    }
 
     /**
      * @param string $search

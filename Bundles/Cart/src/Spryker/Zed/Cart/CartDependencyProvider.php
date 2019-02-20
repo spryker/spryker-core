@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cart;
 
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationBridge;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerBridge;
+use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -19,6 +20,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CALCULATION = 'calculation facade';
     public const FACADE_MESSENGER = 'messenger facade';
+    public const FACADE_QUOTE = 'FACADE_QUOTE';
 
     public const CART_EXPANDER_PLUGINS = 'cart expander plugins';
     public const CART_PRE_CHECK_PLUGINS = 'pre check plugins';
@@ -43,6 +45,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addCalculationFacade($container);
         $container = $this->addMessengerFacade($container);
+        $container = $this->addQuoteFacade($container);
         $container = $this->addExpanderPlugins($container);
         $container = $this->addPostSavePlugins($container);
         $container = $this->addPreCheckPlugins($container);
@@ -67,6 +70,19 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_CALCULATION] = function (Container $container) {
             return new CartToCalculationBridge($container->getLocator()->calculation()->facade());
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteFacade(Container $container)
+    {
+        $container[static::FACADE_QUOTE] = function (Container $container) {
+            return new CartToQuoteFacadeBridge($container->getLocator()->quote()->facade());
         };
         return $container;
     }
