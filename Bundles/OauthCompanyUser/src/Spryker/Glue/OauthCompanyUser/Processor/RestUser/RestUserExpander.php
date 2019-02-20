@@ -34,8 +34,8 @@ class RestUserExpander implements RestUserExpanderInterface
      */
     public function expand(RestUserTransfer $restUserTransfer, RestRequestInterface $restRequest): RestUserTransfer
     {
-        $uuidCompanyUser = $restUserTransfer->getIdCompanyUser();
-        if ($uuidCompanyUser === null) {
+        $uuidCompanyUser = (string)$restUserTransfer->getIdCompanyUser();
+        if (!$uuidCompanyUser) {
             return $restUserTransfer;
         }
 

@@ -23,17 +23,6 @@ use Spryker\Zed\OauthCompanyUser\OauthCompanyUserDependencyProvider;
 class OauthCompanyUserBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\OauthCompanyUser\Business\CompanyUser\CompanyUserProviderInterface
-     */
-    public function createCustomerProvider(): CompanyUserProviderInterface
-    {
-        return new CompanyUserProvider(
-            $this->getCompanyUserFacade(),
-            $this->getUtilEncodingService()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\OauthCompanyUser\Business\Scope\ScopeProviderInterface
      */
     public function createScopeProvider(): ScopeProviderInterface

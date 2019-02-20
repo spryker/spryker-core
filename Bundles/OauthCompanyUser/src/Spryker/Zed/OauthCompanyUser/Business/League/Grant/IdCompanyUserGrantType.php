@@ -83,7 +83,7 @@ class IdCompanyUserGrantType extends AbstractGrant
             ->setClientName($clientEntity->getName());
         $oauthUserTransfer = $this->companyUserProvider->getOauthCompanyUser($oauthUserTransfer);
 
-        if ($oauthUserTransfer && $oauthUserTransfer->getIsSuccess() && $oauthUserTransfer->getUserIdentifier()) {
+        if ($oauthUserTransfer->getIsSuccess() && $oauthUserTransfer->getUserIdentifier()) {
             return new UserEntity($oauthUserTransfer->getUserIdentifier());
         }
 
