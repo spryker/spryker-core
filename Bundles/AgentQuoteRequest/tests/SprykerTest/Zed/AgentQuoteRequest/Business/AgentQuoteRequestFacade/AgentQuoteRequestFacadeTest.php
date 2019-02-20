@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
-use Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestConfig;
+use Spryker\Shared\AgentQuoteRequest\AgentQuoteRequestConfig as SharedAgentQuoteRequestConfig;
 
 /**
  * Auto-generated group annotations
@@ -169,7 +169,7 @@ class AgentQuoteRequestFacadeTest extends Unit
         // Assert
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccess());
         $this->assertEquals(
-            AgentQuoteRequestConfig::STATUS_CANCELED,
+            SharedAgentQuoteRequestConfig::STATUS_CANCELED,
             $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
         );
     }

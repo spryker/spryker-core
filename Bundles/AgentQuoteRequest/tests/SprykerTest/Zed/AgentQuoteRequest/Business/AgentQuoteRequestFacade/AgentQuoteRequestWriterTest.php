@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteRequestBuilder;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Spryker\Shared\AgentQuoteRequest\AgentQuoteRequestConfig as SharedAgentQuoteRequestConfig;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestConfig;
 use Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest\AgentQuoteRequestWriter;
@@ -62,7 +63,7 @@ class AgentQuoteRequestWriterTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
-            QuoteRequestTransfer::STATUS => AgentQuoteRequestConfig::STATUS_WAITING,
+            QuoteRequestTransfer::STATUS => SharedAgentQuoteRequestConfig::STATUS_WAITING,
         ]))->build();
 
         $this->agentQuoteRequestWriter->expects($this->any())
@@ -78,7 +79,7 @@ class AgentQuoteRequestWriterTest extends Unit
         // Assert
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccess());
         $this->assertEquals(
-            AgentQuoteRequestConfig::STATUS_CANCELED,
+            SharedAgentQuoteRequestConfig::STATUS_CANCELED,
             $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
         );
     }
@@ -129,7 +130,7 @@ class AgentQuoteRequestWriterTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
-            QuoteRequestTransfer::STATUS => AgentQuoteRequestConfig::STATUS_CANCELED,
+            QuoteRequestTransfer::STATUS => SharedAgentQuoteRequestConfig::STATUS_CANCELED,
         ]))->build();
 
         $this->agentQuoteRequestWriter->expects($this->any())
@@ -161,6 +162,7 @@ class AgentQuoteRequestWriterTest extends Unit
             ->setConstructorArgs([
                 $this->createAgentQuoteRequestToQuoteRequestInterfaceMock(),
                 $this->createAgentQuoteRequestEntityManagerInterfaceMock(),
+                $this->createQuoteRequestConfigMock(),
             ])
             ->getMock();
     }
@@ -192,5 +194,27 @@ class AgentQuoteRequestWriterTest extends Unit
             });
 
         return $agentQuoteRequestEntityManagerInterface;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestConfig
+     */
+    protected function createQuoteRequestConfigMock(): AgentQuoteRequestConfig
+    {
+        $quoteRequestConfigMock = $this->getMockBuilder(AgentQuoteRequestConfig::class)
+            ->setMethods(['getCancelableStatuses'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $quoteRequestConfigMock
+            ->method('getCancelableStatuses')
+            ->willReturn([
+                SharedAgentQuoteRequestConfig::STATUS_DRAFT,
+                SharedAgentQuoteRequestConfig::STATUS_WAITING,
+                SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS,
+                SharedAgentQuoteRequestConfig::STATUS_READY,
+            ]);
+
+        return $quoteRequestConfigMock;
     }
 }

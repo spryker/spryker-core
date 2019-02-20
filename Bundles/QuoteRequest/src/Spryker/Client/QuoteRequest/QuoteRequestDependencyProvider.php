@@ -11,6 +11,9 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientBridge;
 
+/**
+ * @method \Spryker\Client\QuoteRequest\QuoteRequestConfig getConfig()
+ */
 class QuoteRequestDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';

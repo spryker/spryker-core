@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Client\AgentQuoteRequest\Zed\AgentQuoteRequestStubInterface;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -45,6 +46,22 @@ class AgentQuoteRequestClient extends AbstractClient implements AgentQuoteReques
     public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
         return $this->getZedStub()->cancelByReference($quoteRequestFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteRequestChecker()
+            ->isQuoteRequestCancelable($quoteRequestTransfer);
     }
 
     /**

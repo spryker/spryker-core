@@ -14,6 +14,7 @@ use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestVersionBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
@@ -74,141 +75,141 @@ class QuoteRequestWriterTest extends Unit
         $this->quoteRequestWriter = $this->createQuoteRequestWriterMock();
     }
 
-//    /**
-//     * @return void
-//     */
-//    public function testCancelByReferenceChangesQuoteRequestStatusToCanceled(): void
-//    {
-//        // Arrange
-//        $quoteRequestTransfer = (new QuoteRequestBuilder([
-//            QuoteRequestTransfer::STATUS => SharedQuoteRequestConfig::STATUS_WAITING,
-//            QuoteRequestTransfer::COMPANY_USER => $this->companyUserTransfer,
-//        ]))->build();
-//
-//        $this->quoteRequestWriter->expects($this->any())
-//            ->method('findQuoteRequest')
-//            ->willReturn($quoteRequestTransfer);
-//
-//        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-//            ->setCompanyUser($this->companyUserTransfer)
-//            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
-//
-//        // Act
-//        $quoteRequestResponseTransfer = $this->quoteRequestWriter->cancelByReference($quoteRequestFilterTransfer);
-//
-//        // Assert
-//        $this->assertTrue($quoteRequestResponseTransfer->getIsSuccess());
-//        $this->assertEquals(
-//            SharedQuoteRequestConfig::STATUS_CANCELED,
-//            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
-//        );
-//    }
-//
-//    /**
-//     * @return void
-//     */
-//    public function testCancelByReferenceChangesQuoteRequestStatusToCanceledWithoutReference(): void
-//    {
-//        // Arrange
-//
-//        // Assert
-//        $this->expectException(RequiredTransferPropertyException::class);
-//
-//        // Act
-//        $this->quoteRequestWriter->cancelByReference(new QuoteRequestFilterTransfer());
-//    }
-//
-//    /**
-//     * @return void
-//     */
-//    public function testCancelByReferenceChangesQuoteRequestStatusToCanceledWithoutCompanyUser(): void
-//    {
-//        // Arrange
-//        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-//            ->setQuoteRequestReference(static::FAKE_ID_QUOTE_REQUEST_VERSION);
-//
-//        // Assert
-//        $this->expectException(RequiredTransferPropertyException::class);
-//
-//        // Act
-//        $this->quoteRequestWriter->cancelByReference($quoteRequestFilterTransfer);
-//    }
-//
-//    /**
-//     * @return void
-//     */
-//    public function testCancelByReferenceChangesQuoteRequestStatusToCanceledWithoutIdCompanyUser(): void
-//    {
-//        // Arrange
-//        $this->companyUserTransfer->setIdCompanyUser(null);
-//
-//        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-//            ->setCompanyUser($this->companyUserTransfer)
-//            ->setQuoteRequestReference(static::FAKE_ID_QUOTE_REQUEST_VERSION);
-//
-//        // Assert
-//        $this->expectException(RequiredTransferPropertyException::class);
-//
-//        // Act
-//        $this->quoteRequestWriter->cancelByReference($quoteRequestFilterTransfer);
-//    }
-//
-//    /**
-//     * @return void
-//     */
-//    public function testCancelByReferenceChangesQuoteRequestStatusToCanceledWithWrongReference(): void
-//    {
-//        // Arrange
-//        $this->quoteRequestWriter->expects($this->any())
-//            ->method('findQuoteRequest')
-//            ->willReturn(null);
-//
-//        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-//            ->setCompanyUser($this->companyUserTransfer)
-//            ->setQuoteRequestReference(static::FAKE_ID_QUOTE_REQUEST_VERSION);
-//
-//        // Act
-//        $quoteRequestResponseTransfer = $this->quoteRequestWriter->cancelByReference($quoteRequestFilterTransfer);
-//
-//        // Assert
-//        $this->assertFalse($quoteRequestResponseTransfer->getIsSuccess());
-//        $this->assertCount(1, $quoteRequestResponseTransfer->getErrors());
-//        $this->assertEquals(
-//            static::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS,
-//            $quoteRequestResponseTransfer->getErrors()[0]
-//        );
-//    }
-//
-//    /**
-//     * @return void
-//     */
-//    public function testCancelByReferenceChangesQuoteRequestStatusToCanceledWithWrongStatus(): void
-//    {
-//        // Arrange
-//        $quoteRequestTransfer = (new QuoteRequestBuilder([
-//            QuoteRequestTransfer::STATUS => SharedQuoteRequestConfig::STATUS_IN_PROGRESS,
-//            QuoteRequestTransfer::COMPANY_USER => $this->companyUserTransfer,
-//        ]))->build();
-//
-//        $this->quoteRequestWriter->expects($this->any())
-//            ->method('findQuoteRequest')
-//            ->willReturn($quoteRequestTransfer);
-//
-//        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-//            ->setCompanyUser($this->companyUserTransfer)
-//            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
-//
-//        // Act
-//        $quoteRequestResponseTransfer = $this->quoteRequestWriter->cancelByReference($quoteRequestFilterTransfer);
-//
-//        // Assert
-//        $this->assertFalse($quoteRequestResponseTransfer->getIsSuccess());
-//        $this->assertCount(1, $quoteRequestResponseTransfer->getErrors());
-//        $this->assertEquals(
-//            static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS,
-//            $quoteRequestResponseTransfer->getErrors()[0]
-//        );
-//    }
+    /**
+     * @return void
+     */
+    public function testCancelByReferenceChangesQuoteRequestStatusToCanceled(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = (new QuoteRequestBuilder([
+            QuoteRequestTransfer::STATUS => SharedQuoteRequestConfig::STATUS_WAITING,
+            QuoteRequestTransfer::COMPANY_USER => $this->companyUserTransfer,
+        ]))->build();
+
+        $this->quoteRequestWriter->expects($this->any())
+            ->method('findQuoteRequest')
+            ->willReturn($quoteRequestTransfer);
+
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setCompanyUser($this->companyUserTransfer)
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
+
+        // Act
+        $quoteRequestResponseTransfer = $this->quoteRequestWriter->cancelByReference($quoteRequestFilterTransfer);
+
+        // Assert
+        $this->assertTrue($quoteRequestResponseTransfer->getIsSuccess());
+        $this->assertEquals(
+            SharedQuoteRequestConfig::STATUS_CANCELED,
+            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCancelByReferenceChangesQuoteRequestStatusToCanceledWithoutReference(): void
+    {
+        // Arrange
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->quoteRequestWriter->cancelByReference(new QuoteRequestFilterTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCancelByReferenceChangesQuoteRequestStatusToCanceledWithoutCompanyUser(): void
+    {
+        // Arrange
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setQuoteRequestReference(static::FAKE_ID_QUOTE_REQUEST_VERSION);
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->quoteRequestWriter->cancelByReference($quoteRequestFilterTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCancelByReferenceChangesQuoteRequestStatusToCanceledWithoutIdCompanyUser(): void
+    {
+        // Arrange
+        $this->companyUserTransfer->setIdCompanyUser(null);
+
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setCompanyUser($this->companyUserTransfer)
+            ->setQuoteRequestReference(static::FAKE_ID_QUOTE_REQUEST_VERSION);
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->quoteRequestWriter->cancelByReference($quoteRequestFilterTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCancelByReferenceChangesQuoteRequestStatusToCanceledWithWrongReference(): void
+    {
+        // Arrange
+        $this->quoteRequestWriter->expects($this->any())
+            ->method('findQuoteRequest')
+            ->willReturn(null);
+
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setCompanyUser($this->companyUserTransfer)
+            ->setQuoteRequestReference(static::FAKE_ID_QUOTE_REQUEST_VERSION);
+
+        // Act
+        $quoteRequestResponseTransfer = $this->quoteRequestWriter->cancelByReference($quoteRequestFilterTransfer);
+
+        // Assert
+        $this->assertFalse($quoteRequestResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $quoteRequestResponseTransfer->getErrors());
+        $this->assertEquals(
+            static::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS,
+            $quoteRequestResponseTransfer->getErrors()[0]
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCancelByReferenceChangesQuoteRequestStatusToCanceledWithWrongStatus(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = (new QuoteRequestBuilder([
+            QuoteRequestTransfer::STATUS => SharedQuoteRequestConfig::STATUS_IN_PROGRESS,
+            QuoteRequestTransfer::COMPANY_USER => $this->companyUserTransfer,
+        ]))->build();
+
+        $this->quoteRequestWriter->expects($this->any())
+            ->method('findQuoteRequest')
+            ->willReturn($quoteRequestTransfer);
+
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setCompanyUser($this->companyUserTransfer)
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
+
+        // Act
+        $quoteRequestResponseTransfer = $this->quoteRequestWriter->cancelByReference($quoteRequestFilterTransfer);
+
+        // Assert
+        $this->assertFalse($quoteRequestResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $quoteRequestResponseTransfer->getErrors());
+        $this->assertEquals(
+            static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS,
+            $quoteRequestResponseTransfer->getErrors()[0]
+        );
+    }
 
     /**
      * @return void
@@ -364,12 +365,21 @@ class QuoteRequestWriterTest extends Unit
     protected function createQuoteRequestConfigMock(): QuoteRequestConfig
     {
         $quoteRequestConfigMock = $this->getMockBuilder(QuoteRequestConfig::class)
-            ->setMethods(['getInitialStatus'])
+            ->setMethods(['getInitialStatus', 'getCancelableStatuses'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $quoteRequestConfigMock->method('getInitialStatus')
+        $quoteRequestConfigMock
+            ->method('getInitialStatus')
             ->willReturn(SharedQuoteRequestConfig::STATUS_WAITING);
+
+        $quoteRequestConfigMock
+            ->method('getCancelableStatuses')
+            ->willReturn([
+                SharedQuoteRequestConfig::STATUS_DRAFT,
+                SharedQuoteRequestConfig::STATUS_WAITING,
+                SharedQuoteRequestConfig::STATUS_READY,
+            ]);
 
         return $quoteRequestConfigMock;
     }

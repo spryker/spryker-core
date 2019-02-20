@@ -10,6 +10,7 @@ namespace Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Spryker\Shared\AgentQuoteRequest\AgentQuoteRequestConfig as SharedAgentQuoteRequestConfig;
 use Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestConfig;
 use Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequestInterface;
 use Spryker\Zed\AgentQuoteRequest\Persistence\AgentQuoteRequestEntityManagerInterface;
@@ -30,15 +31,23 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
     protected $agentQuoteRequestEntityManager;
 
     /**
+     * @var \Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestConfig
+     */
+    protected $agentQuoteRequestConfig;
+
+    /**
      * @param \Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequestInterface $quoteRequestFacade
      * @param \Spryker\Zed\AgentQuoteRequest\Persistence\AgentQuoteRequestEntityManagerInterface $agentQuoteRequestEntityManager
+     * @param \Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestConfig $agentQuoteRequestConfig
      */
     public function __construct(
         AgentQuoteRequestToQuoteRequestInterface $quoteRequestFacade,
-        AgentQuoteRequestEntityManagerInterface $agentQuoteRequestEntityManager
+        AgentQuoteRequestEntityManagerInterface $agentQuoteRequestEntityManager,
+        AgentQuoteRequestConfig $agentQuoteRequestConfig
     ) {
         $this->quoteRequestFacade = $quoteRequestFacade;
         $this->agentQuoteRequestEntityManager = $agentQuoteRequestEntityManager;
+        $this->agentQuoteRequestConfig = $agentQuoteRequestConfig;
     }
 
     /**
@@ -59,13 +68,13 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
                 ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS);
         }
 
-        if ($quoteRequestTransfer->getStatus() === AgentQuoteRequestConfig::STATUS_CANCELED) {
+        if (!$this->isQuoteRequestCancelable($quoteRequestTransfer)) {
             return $quoteRequestResponseTransfer
                 ->setIsSuccess(false)
                 ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS);
         }
 
-        $quoteRequestTransfer->setStatus(AgentQuoteRequestConfig::STATUS_CANCELED);
+        $quoteRequestTransfer->setStatus(SharedAgentQuoteRequestConfig::STATUS_CANCELED);
         $quoteRequestTransfer = $this->agentQuoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
         return $quoteRequestResponseTransfer
@@ -86,5 +95,15 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
             ->getArrayCopy();
 
         return array_shift($quoteRequestTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return in_array($quoteRequestTransfer->getStatus(), $this->agentQuoteRequestConfig->getCancelableStatuses());
     }
 }

@@ -62,6 +62,22 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteRequestChecker()
+            ->isQuoteRequestCancelable($quoteRequestTransfer);
+    }
+
+    /**
      * @return \Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface
      */
     protected function getZedStub(): QuoteRequestStubInterface

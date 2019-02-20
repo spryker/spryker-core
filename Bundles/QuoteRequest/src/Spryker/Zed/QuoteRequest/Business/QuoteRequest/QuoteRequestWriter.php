@@ -114,7 +114,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
                 ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS);
         }
 
-        if ($quoteRequestTransfer->getStatus() !== SharedQuoteRequestConfig::STATUS_WAITING) {
+        if (!$this->isQuoteRequestCancelable($quoteRequestTransfer)) {
             return $quoteRequestResponseTransfer
                 ->setIsSuccess(false)
                 ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS);
@@ -220,5 +220,15 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->getCustomerReferencesByCompanyUserIds([$companyUserTransfer->getIdCompanyUser()]);
 
         return array_shift($customerReferences);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return in_array($quoteRequestTransfer->getStatus(), $this->quoteRequestConfig->getCancelableStatuses());
     }
 }

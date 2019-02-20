@@ -8,12 +8,25 @@
 namespace Spryker\Client\AgentQuoteRequest;
 
 use Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToZedRequestClientInterface;
+use Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestChecker;
+use Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestCheckerInterface;
 use Spryker\Client\AgentQuoteRequest\Zed\AgentQuoteRequestStub;
 use Spryker\Client\AgentQuoteRequest\Zed\AgentQuoteRequestStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
+/**
+ * @method \Spryker\Client\AgentQuoteRequest\AgentQuoteRequestConfig getConfig()
+ */
 class AgentQuoteRequestFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestCheckerInterface
+     */
+    public function createQuoteRequestChecker(): QuoteRequestCheckerInterface
+    {
+        return new QuoteRequestChecker($this->getConfig());
+    }
+
     /**
      * @return \Spryker\Client\AgentQuoteRequest\Zed\AgentQuoteRequestStubInterface
      */
