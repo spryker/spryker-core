@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\MerchantAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantAddress;
 
@@ -27,6 +28,26 @@ class MerchantAddressMapper implements MerchantAddressMapperInterface
         );
 
         return $spyMerchantAddress;
+    }
+
+    /**
+     * @param \Orm\Zed\Merchant\Persistence\SpyMerchantAddress[] $spyMerchantAddresses
+     * @param \Generated\Shared\Transfer\MerchantAddressCollectionTransfer $merchantAddressCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressCollectionTransfer|null
+     */
+    public function mapMerchantAddressEntitiesToMerchantAddressCollectionTransfer(
+        array $spyMerchantAddresses,
+        MerchantAddressCollectionTransfer $merchantAddressCollectionTransfer
+    ): ?MerchantAddressCollectionTransfer {
+        foreach ($spyMerchantAddresses as $spyMerchantAddress) {
+            $merchantAddressCollectionTransfer->addAddress($this->mapMerchantAddressEntityToMerchantAddressTransfer(
+                $spyMerchantAddress,
+                new MerchantAddressTransfer()
+            ));
+        }
+
+        return $merchantAddressCollectionTransfer;
     }
 
     /**
