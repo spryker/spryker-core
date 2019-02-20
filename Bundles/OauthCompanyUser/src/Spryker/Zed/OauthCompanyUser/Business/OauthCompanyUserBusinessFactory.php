@@ -8,8 +8,6 @@
 namespace Spryker\Zed\OauthCompanyUser\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\OauthCompanyUser\Business\CompanyUser\CompanyUserProvider;
-use Spryker\Zed\OauthCompanyUser\Business\CompanyUser\CompanyUserProviderInterface;
 use Spryker\Zed\OauthCompanyUser\Business\Installer\OauthScopeInstaller;
 use Spryker\Zed\OauthCompanyUser\Business\Installer\OauthScopeInstallerInterface;
 use Spryker\Zed\OauthCompanyUser\Business\Scope\ScopeProvider;
