@@ -89,17 +89,15 @@ class QuoteWriter implements QuoteWriterInterface
      */
     public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
-        if (!$this->hasCustomerWritePermission($quoteUpdateRequestTransfer)) {
-            return (new QuoteResponseTransfer())->setIsSuccessful(false);
-        }
-
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $quoteUpdateRequestTransfer->getIdQuote(),
             $quoteUpdateRequestTransfer->getCustomer()
         );
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+
+        if (!$this->hasCustomerWritePermission($quoteUpdateRequestTransfer) || !$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->quoteResponseExpander->expand($quoteResponseTransfer->setIsSuccessful(false));
         }
+
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteTransfer->fromArray($quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->modifiedToArray(), true);
 
@@ -113,17 +111,15 @@ class QuoteWriter implements QuoteWriterInterface
      */
     public function updateAndReloadQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
-        if (!$this->hasCustomerWritePermission($quoteUpdateRequestTransfer)) {
-            return (new QuoteResponseTransfer())->setIsSuccessful(false);
-        }
-
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $quoteUpdateRequestTransfer->getIdQuote(),
             $quoteUpdateRequestTransfer->getCustomer()
         );
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+
+        if (!$this->hasCustomerWritePermission($quoteUpdateRequestTransfer) || !$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->quoteResponseExpander->expand($quoteResponseTransfer->setIsSuccessful(false));
         }
+
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteTransfer->fromArray($quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->modifiedToArray(), true);
 
