@@ -46,11 +46,6 @@ class AgentQuoteRequestWriterTest extends Unit
     protected $agentQuoteRequestWriter;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequestInterface
-     */
-    protected $agentQuoteRequestToQuoteRequestInterface;
-
-    /**
      * @return void
      */
     protected function setUp(): void
@@ -186,9 +181,16 @@ class AgentQuoteRequestWriterTest extends Unit
      */
     protected function createAgentQuoteRequestEntityManagerInterfaceMock(): AgentQuoteRequestEntityManagerInterface
     {
-        return $this->getMockBuilder(AgentQuoteRequestEntityManagerInterface::class)
+        $agentQuoteRequestEntityManagerInterface = $this->getMockBuilder(AgentQuoteRequestEntityManagerInterface::class)
             ->setMethods(['updateQuoteRequest'])
             ->disableOriginalConstructor()
             ->getMock();
+
+        $agentQuoteRequestEntityManagerInterface->method('updateQuoteRequest')
+            ->willReturnCallback(function (QuoteRequestTransfer $quoteRequestTransfer) {
+                return $quoteRequestTransfer;
+            });
+
+        return $agentQuoteRequestEntityManagerInterface;
     }
 }

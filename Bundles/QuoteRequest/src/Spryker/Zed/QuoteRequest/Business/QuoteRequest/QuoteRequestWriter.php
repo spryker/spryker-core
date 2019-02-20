@@ -105,12 +105,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->getCompanyUser()
             ->requireIdCompanyUser();
 
-        $quoteRequests = $this->quoteRequestRepository
-            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
-            ->getQuoteRequests()
-            ->getArrayCopy();
-
-        $quoteRequestTransfer = array_shift($quoteRequests);
+        $quoteRequestTransfer = $this->findQuoteRequest($quoteRequestFilterTransfer);
         $quoteRequestResponseTransfer = new QuoteRequestResponseTransfer();
 
         if (!$quoteRequestTransfer) {
@@ -197,6 +192,21 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         );
 
         return $this->quoteRequestEntityManager->createQuoteRequestVersion($quoteRequestVersionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    protected function findQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): ?QuoteRequestTransfer
+    {
+        $quoteRequestTransfers = $this->quoteRequestRepository
+            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
+            ->getQuoteRequests()
+            ->getArrayCopy();
+
+        return array_shift($quoteRequestTransfers);
     }
 
     /**

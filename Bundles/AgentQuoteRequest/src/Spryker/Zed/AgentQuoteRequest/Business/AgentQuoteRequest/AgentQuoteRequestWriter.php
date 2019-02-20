@@ -66,7 +66,7 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
         }
 
         $quoteRequestTransfer->setStatus(AgentQuoteRequestConfig::STATUS_CANCELED);
-        $this->agentQuoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
+        $quoteRequestTransfer = $this->agentQuoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
         return $quoteRequestResponseTransfer
             ->setQuoteRequest($quoteRequestTransfer)
