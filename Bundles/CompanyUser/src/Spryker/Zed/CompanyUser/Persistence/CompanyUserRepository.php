@@ -360,11 +360,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     {
         $query = $this->getFactory()
             ->createCompanyUserQuery()
-            ->useCompanyQuery()
-                ->filterByIdCompany_In($companyIds)
-                ->filterByIsActive(true)
-                ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
-            ->endUse()
+            ->filterByFkCompany_In($companyIds)
             ->filterByIsActive(true)
             ->useCustomerQuery()
                 ->filterByAnonymizedAt(null, Criteria::ISNULL)

@@ -246,7 +246,7 @@ interface CompanyUserFacadeInterface
     /**
      * Specification
      *  - Retrieves active company user ids by company ids.
-     *  - Checks activity flag in related company user.
+     *  - Checks activity flag in company user.
      *  - Checks whether related customer is not anonymized.
      *
      * @api
