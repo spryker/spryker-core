@@ -81,7 +81,7 @@ class ShipmentOrderSaverWithMultiShippingAddress implements ShipmentOrderSaverWi
         /**
          * @deprecated Will be removed in next major release.
          */
-        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
+//        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 
         $this->assertShipmentRequirements($quoteTransfer);
 
@@ -99,7 +99,7 @@ class ShipmentOrderSaverWithMultiShippingAddress implements ShipmentOrderSaverWi
      */
     public function processShipmentGroup(OrderTransfer $orderTransfer, ShipmentGroupTransfer $shipmentGroupTransfer, SaveOrderTransfer $saveOrderTransfer): ShipmentGroupTransfer
     {
-        $this->saveShipmentAddressTransfer($shipmentGroupTransfer);
+        $this->saveSalesOrderAddress($shipmentGroupTransfer);
         $this->addExpensesToOrder($shipmentGroupTransfer, $orderTransfer, $saveOrderTransfer);
 
         $idSalesShipment = $this->entityManager->createSalesShipment(
@@ -134,7 +134,7 @@ class ShipmentOrderSaverWithMultiShippingAddress implements ShipmentOrderSaverWi
      *
      * @return void
      */
-    protected function saveShipmentAddressTransfer(ShipmentGroupTransfer $shipmentGroupTransfer): void
+    protected function saveSalesOrderAddress(ShipmentGroupTransfer $shipmentGroupTransfer): void
     {
         $shippingAddressTransfer = $shipmentGroupTransfer->getShipment()->getShippingAddress();
         $customerAddressTransfer = $this->customerFacade->findCustomerAddressByAddressData($shippingAddressTransfer);
@@ -159,31 +159,16 @@ class ShipmentOrderSaverWithMultiShippingAddress implements ShipmentOrderSaverWi
         OrderTransfer $salesOrderTransfer,
         SaveOrderTransfer $saveOrderTransfer
     ): void {
-        $expenseTransfer = $this->sanitizeExpenseSumPrices($shipmentGroupTransfer->getShipment()->getExpense());
-        $expenseTransfer->setFkSalesOrder($salesOrderTransfer->getIdSalesOrder());
-        $this->createExpense($expenseTransfer);
+        $expenseTransfer = $this->findShipmentExpense($salesOrderTransfer, $shipmentGroupTransfer->getShipment());
 
-        $shipmentGroupTransfer
-            ->getShipment()
-            ->getExpense()
-            ->setIdSalesExpense($expenseTransfer->getIdSalesExpense());
+        $expenseTransfer = $this->sanitizeExpenseSumPrices($expenseTransfer);
+        $expenseTransfer->setFkSalesOrder($salesOrderTransfer->getIdSalesOrder());
+        if ($expenseTransfer->getIdSalesExpense() === null) {
+            $expenseTransfer = $this->salesFacade->createSalesExpense($expenseTransfer);
+        }
 
         $salesOrderTransfer->addExpense($expenseTransfer);
         $saveOrderTransfer->addOrderExpense($expenseTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     *
-     * @return \Generated\Shared\Transfer\ExpenseTransfer
-     */
-    protected function createExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer
-    {
-        if ($expenseTransfer->getIdSalesExpense()) {
-            return $expenseTransfer;
-        }
-
-        return $this->salesFacade->createSalesExpense($expenseTransfer);
     }
 
     /**
@@ -230,8 +215,27 @@ class ShipmentOrderSaverWithMultiShippingAddress implements ShipmentOrderSaverWi
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->requireShipment();
             $itemTransfer->getShipment()->requireMethod();
-            $itemTransfer->getShipment()->requireShippingAddress();
-            $itemTransfer->getShipment()->requireExpense();
+            $itemTransfer->getShipment()->requireShippingAddress();;
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $salesOrderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer|null
+     */
+    protected function findShipmentExpense(OrderTransfer $salesOrderTransfer, ShipmentTransfer $shipmentTransfer): ?ExpenseTransfer
+    {
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+            $expenseShipmentTransfer = $expenseTransfer->getShipment();
+            if ($expenseShipmentTransfer !== $shipmentTransfer) {
+                continue;
+            }
+
+            return $expenseTransfer;
+        }
+
+        return null;
     }
 }

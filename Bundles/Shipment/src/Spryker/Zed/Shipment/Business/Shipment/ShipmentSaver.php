@@ -52,7 +52,7 @@ class ShipmentSaver implements ShipmentSaverInterface
     {
         $saveOrderTransfer = $this->buildSaveOrderTransfer($orderTransfer);
         $this->updateShipmentMethodForShipmentGroup($shipmentGroupTransfer, $orderTransfer);
-        $expanse = $this->createShippingExpenseTransfer($shipmentGroupTransfer->getShipment()->getMethod(), $orderTransfer);
+        $expense = $this->createShippingExpenseTransfer($shipmentGroupTransfer->getShipment()->getMethod(), $orderTransfer);
         $shipmentGroupTransfer->getShipment()->setExpense($expanse);
 
         $shipmentGroupTransfer = $this->handleDatabaseTransaction(function () use ($orderTransfer, $shipmentGroupTransfer, $saveOrderTransfer) {

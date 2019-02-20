@@ -80,7 +80,6 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
          * @deprecated Will be removed in next major release.
          */
         $orderEntity = $this->orderDataBCForMultiShipmentAdapter->adapt($orderEntity);
-        $orderEntity = $this->sanitizeOrderShipmentExpense($orderEntity);
 
         return $orderEntity;
     }
@@ -111,30 +110,8 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
          * @deprecated Will be removed in next major release.
          */
         $orderEntity = $this->orderDataBCForMultiShipmentAdapter->adapt($orderEntity);
-        $orderEntity = $this->sanitizeOrderShipmentExpense($orderEntity);
 
         return $this->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
-    }
-
-    /**
-     * @deprecated Will be removed in next major release.
-     *
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder|null
-     */
-    protected function sanitizeOrderShipmentExpense(SpySalesOrder $orderEntity): ?SpySalesOrder
-    {
-        $orderExpensesCollection = $orderEntity->getExpenses();
-        foreach ($orderExpensesCollection as $key => $expenseEntity) {
-            if ($expenseEntity->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                continue;
-            }
-
-            $orderExpensesCollection->offsetUnset($key);
-        }
-
-        return $orderEntity;
     }
 
     /**
@@ -147,40 +124,10 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
         $itemTransfer = parent::hydrateOrderItemTransfer($orderItemEntity);
 
         if ($orderItemEntity->getSpySalesShipment() !== null) {
-            $this->hydrateItemShipping($orderItemEntity, $itemTransfer);
+            $this->hydrateItemShipment($orderItemEntity, $itemTransfer);
         }
 
         return $itemTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    protected function hydrateBillingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): void
-    {
-        $orderTransfer->setBillingAddress(
-            $this->createAddressTransfer($orderEntity->getBillingAddress())
-        );
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    protected function hydrateShippingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): void
-    {
-        $shippingAddress = $orderEntity->getShippingAddress();
-
-        if ($shippingAddress === null) {
-            return;
-        }
-
-        $orderTransfer->setShippingAddress($this->createAddressTransfer($shippingAddress));
     }
 
     /**
@@ -203,25 +150,12 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    protected function hydrateExpensesToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): void
-    {
-        foreach ($orderEntity->getExpenses() as $expenseEntity) {
-            $orderTransfer->addExpense($this->createExpense($expenseEntity));
-        }
-    }
-
-    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
-    protected function hydrateItemShipping(SpySalesOrderItem $orderItemEntity, ItemTransfer $itemTransfer): void
+    protected function hydrateItemShipment(SpySalesOrderItem $orderItemEntity, ItemTransfer $itemTransfer): void
     {
         $spySalesShipment = $orderItemEntity->getSpySalesShipment();
 
@@ -229,7 +163,6 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
         $shipmentTransfer->setShippingAddress(
             $this->createAddressTransfer($spySalesShipment->getSpySalesOrderAddress())
         );
-        $shipmentTransfer->setExpense($this->createExpense($spySalesShipment->getExpense()));
         $shipmentTransfer->setCarrier($this->createShipmentCarrier($spySalesShipment->getCarrierName()));
         $shipmentTransfer->setMethod($this->createShipmentMethod($spySalesShipment->getName()));
         $shipmentTransfer->setRequestedDeliveryDate($spySalesShipment->getRequestedDeliveryDate());
@@ -257,28 +190,5 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
     {
         return (new ShipmentCarrierTransfer())
             ->setName($carrierName);
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesExpense $expenseEntity
-     *
-     * @return \Generated\Shared\Transfer\ExpenseTransfer
-     */
-    protected function createExpense(SpySalesExpense $expenseEntity): ExpenseTransfer
-    {
-        $expenseTransfer = new ExpenseTransfer();
-        $expenseTransfer->fromArray($expenseEntity->toArray(), true);
-
-        $expenseTransfer->setQuantity(1);
-        $expenseTransfer->setSumGrossPrice($expenseEntity->getGrossPrice());
-        $expenseTransfer->setSumNetPrice($expenseEntity->getNetPrice());
-        $expenseTransfer->setSumPrice($expenseEntity->getPrice());
-        $expenseTransfer->setSumPriceToPayAggregation($expenseEntity->getPriceToPayAggregation());
-        $expenseTransfer->setSumTaxAmount($expenseEntity->getTaxAmount());
-
-        $expenseTransfer->setIsOrdered(true);
-        $this->deriveExpenseUnitPrices($expenseTransfer);
-
-        return $expenseTransfer;
     }
 }

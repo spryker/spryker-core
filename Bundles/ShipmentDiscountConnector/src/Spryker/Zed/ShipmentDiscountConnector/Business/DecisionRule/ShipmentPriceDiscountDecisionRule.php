@@ -24,7 +24,17 @@ class ShipmentPriceDiscountDecisionRule extends ShipmentPriceDiscountDecisionRul
      */
     public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer)
     {
-        return $this->isSatisfiedPrice($itemTransfer->getShipment()->getExpense(), $clauseTransfer);
+        if ($itemTransfer->getShipment() === null) {
+            return false;
+        }
+
+        $expenseTransfer = $this->findShipmentExpense($quoteTransfer, $itemTransfer->getShipment());
+
+        if ($expenseTransfer === null) {
+            return false;
+        }
+
+        return $this->isSatisfiedPrice($expenseTransfer, $clauseTransfer);
     }
 
     /**
@@ -50,5 +60,25 @@ class ShipmentPriceDiscountDecisionRule extends ShipmentPriceDiscountDecisionRul
         $moneyAmount = $this->moneyFacade->convertIntegerToDecimal($expenseTransfer->getUnitGrossPrice());
 
         return $this->discountFacade->queryStringCompare($clauseTransfer, $moneyAmount);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer|null
+     */
+    protected function findShipmentExpense(QuoteTransfer $quoteTransfer, ShipmentTransfer $shipmentTransfer): ?ExpenseTransfer
+    {
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+            $expenseShipmentTransfer = $expenseTransfer->getShipment();
+            if ($expenseShipmentTransfer !== $shipmentTransfer) {
+                continue;
+            }
+
+            return $expenseTransfer;
+        }
+
+        return null;
     }
 }

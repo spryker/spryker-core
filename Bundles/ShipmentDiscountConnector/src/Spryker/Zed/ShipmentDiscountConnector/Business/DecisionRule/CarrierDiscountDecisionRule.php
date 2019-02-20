@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\CarrierDiscountDecisionRule as CarrierDiscountDecisionRuleWithMultiShipment;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\CarrierDiscountDecisionRule as CarrierDiscountDecisionRuleWithoutMultiShipment;
 
-class CarrierDiscountDecisionRule extends CarrierDiscountDecisionRuleWithMultiShipment
+class CarrierDiscountDecisionRule extends CarrierDiscountDecisionRuleWithoutMultiShipment
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -63,18 +63,18 @@ class CarrierDiscountDecisionRule extends CarrierDiscountDecisionRuleWithMultiSh
      */
     protected function getIdShipmentCarrierByItem(ItemTransfer $itemTransfer): ?int
     {
-        $shipment = $itemTransfer->getShipment();
+        $shipmentTransfer = $itemTransfer->getShipment();
 
-        if (!$shipment) {
+        if ($shipmentTransfer === null) {
             return null;
         }
 
-        if ($shipment->getCarrier()) {
-            return $shipment->getCarrier()->getIdShipmentCarrier();
+        if ($shipmentTransfer->getCarrier()) {
+            return $shipmentTransfer->getCarrier()->getIdShipmentCarrier();
         }
 
-        if ($shipment->getMethod()) {
-            $shipmentMethodTransfer = $this->shipmentFacade->findMethodById($shipment->getMethod()->getIdShipmentMethod());
+        if ($shipmentTransfer->getMethod()) {
+            $shipmentMethodTransfer = $this->shipmentFacade->findMethodById($shipmentTransfer->getMethod()->getIdShipmentMethod());
             return $shipmentMethodTransfer->getFkShipmentCarrier();
         }
 

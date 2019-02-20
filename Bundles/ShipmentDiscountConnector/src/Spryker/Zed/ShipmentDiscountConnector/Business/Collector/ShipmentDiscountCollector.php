@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ShipmentDiscountConnector\Business\Collector;
 
 use Generated\Shared\Transfer\ClauseTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollector as ShipmentDiscountWithoutMultiShipmentCollector;
 
@@ -31,7 +33,7 @@ class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentColl
     ) {
         parent::__construct($carrierDiscountDecisionRule);
 
-        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
+//        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
     }
 
     /**
@@ -45,16 +47,20 @@ class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentColl
         /**
          * @deprecated Will be removed in next major release.
          */
-        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
+//        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 
         $discountableItems = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getExpense() === null) {
+            $shipmentTransfer = $itemTransfer->getShipment();
+            if ($shipmentTransfer === null) {
                 continue;
             }
 
-            $expenseTransfer = $itemTransfer->getShipment()->getExpense();
+            $expenseTransfer = $this->findShipmentExpense($quoteTransfer, $shipmentTransfer);
+            if ($expenseTransfer === null) {
+                continue;
+            }
 
             $isSatisfied = $this->shipmentDiscountDecisionRule->isItemShipmentExpenseSatisfiedBy($itemTransfer, $expenseTransfer, $clauseTransfer);
 
@@ -64,5 +70,25 @@ class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentColl
         }
 
         return $discountableItems;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer|null
+     */
+    protected function findShipmentExpense(QuoteTransfer $quoteTransfer, ShipmentTransfer $shipmentTransfer): ?ExpenseTransfer
+    {
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+            $expenseShipmentTransfer = $expenseTransfer->getShipment();
+            if ($expenseShipmentTransfer !== $shipmentTransfer) {
+                continue;
+            }
+
+            return $expenseTransfer;
+        }
+
+        return null;
     }
 }

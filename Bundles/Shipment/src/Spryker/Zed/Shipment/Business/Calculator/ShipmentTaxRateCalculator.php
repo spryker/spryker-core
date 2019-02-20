@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Business\Calculator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
@@ -24,6 +25,11 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
      * @var \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface
      */
     protected $taxFacade;
+
+    /**
+     * @var array|\Generated\Shared\Transfer\ExpenseTransfer[]
+     */
+    protected $quoteShipmentExpenses;
 
     /**
      * @deprecated Will be removed in next major release.
@@ -57,16 +63,41 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
         /**
          * @deprecated Will be removed in next major release.
          */
-        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
+//        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
+
+        $this->quoteShipmentExpenses = $this->getQuoteExpenses($quoteTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getMethod() === null) {
                 continue;
             }
+
             $taxRate = $this->getTaxRate($itemTransfer);
             $this->setItemShipmentTaxRate($itemTransfer, $taxRate);
             $this->setItemShipmentExpenseTaxRate($itemTransfer, $taxRate);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array|\Generated\Shared\Transfer\ExpenseTransfer[]
+     */
+    protected function getQuoteExpenses(QuoteTransfer $quoteTransfer): array
+    {
+        $quoteExpenses = [];
+
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE
+                || $expenseTransfer->getShipment() === null
+            ) {
+                continue;
+            }
+
+            $quoteExpenses[$expenseTransfer->getShipment()->serialize()] = $expenseTransfer;
+        }
+
+        return $quoteExpenses;
     }
 
     /**
@@ -77,14 +108,12 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
      */
     protected function setItemShipmentExpenseTaxRate(ItemTransfer $itemTransfer, float $taxRate): void
     {
-        if ($itemTransfer->getShipment()->getExpense() === null) {
+        $expenseTransfer = $this->quoteShipmentExpenses[$itemTransfer->getShipment()->serialize()] ?? null;
+        if ($expenseTransfer === null) {
             return;
         }
 
-        $itemTransfer
-            ->getShipment()
-            ->getExpense()
-            ->setTaxRate($taxRate);
+        $expenseTransfer->setTaxRate($taxRate);
     }
 
     /**

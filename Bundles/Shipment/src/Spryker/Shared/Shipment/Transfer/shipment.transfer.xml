@@ -66,7 +66,6 @@
         <property name="shipmentSelection" type="string"/>
         <property name="shippingAddress" type="Address" />
         <property name="requestedDeliveryDate" type="string" />
-        <property name="expense" type="Expense" />
     </transfer>
 
     <transfer name="Address">
@@ -96,6 +95,7 @@
         <property name="unitTaxAmount" type="int" />
         <property name="sumTaxAmount" type="int" />
         <property name="taxRate" type="float" />
+        <property name="shipment" type="Shipment" />
     </transfer>
 
     <transfer name="CheckoutResponse">

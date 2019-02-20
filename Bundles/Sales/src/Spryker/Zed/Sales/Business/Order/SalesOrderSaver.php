@@ -79,7 +79,7 @@ class SalesOrderSaver extends SalesOrderSaverWithoutItemShipmentAddress
         /**
          * @deprecated Will be removed in next major release.
          */
-        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
+//        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 
         parent::saveOrderSales($quoteTransfer, $saveOrderTransfer);
     }

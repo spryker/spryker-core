@@ -17,7 +17,6 @@
         <property name="idSalesShipment" type="string"/>
         <property name="shippingAddress" type="Address"/>
         <property name="requestedDeliveryDate" type="string"/>
-        <property name="expense" type="Expense"/>
     </transfer>
 
     <transfer name="ShipmentGroup">
