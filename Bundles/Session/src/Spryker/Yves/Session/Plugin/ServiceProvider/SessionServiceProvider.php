@@ -61,19 +61,21 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
         $session = $event->getRequest()->getSession();
 
-        if ($session != null && $session->isStarted()) {
-            $params = session_get_cookie_params();
-
-            $event->getResponse()->headers->setCookie(new Cookie(
-                $session->getName(),
-                $session->getId(),
-                $params['lifetime'] === 0 ? 0 : time() + $params['lifetime'],
-                $params['path'],
-                $params['domain'],
-                $params['secure'],
-                $params['httponly']
-            ));
+        if ($session === null || $session->isStarted() === false) {
+            return;
         }
+
+        $params = session_get_cookie_params();
+
+        $event->getResponse()->headers->setCookie(new Cookie(
+            $session->getName(),
+            $session->getId(),
+            $params['lifetime'] === 0 ? 0 : time() + $params['lifetime'],
+            $params['path'],
+            $params['domain'],
+            $params['secure'],
+            $params['httponly']
+        ));
     }
 
     /**
