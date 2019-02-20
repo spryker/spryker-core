@@ -31,7 +31,7 @@
 
     <transfer name="RestUser">
         <property name="idCompanyUser" type="int"/>
-        <property name="idCompany" type="string"/>
+        <property name="idCompany" type="int"/>
     </transfer>
 
 </transfers>

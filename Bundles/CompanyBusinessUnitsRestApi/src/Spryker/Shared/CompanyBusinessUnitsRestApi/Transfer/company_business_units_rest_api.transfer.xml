@@ -26,7 +26,7 @@
     </transfer>
 
     <transfer name="RestUser">
-        <property name="idCompanyBusinessUnit" type="string"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
     </transfer>
 
 </transfers>
