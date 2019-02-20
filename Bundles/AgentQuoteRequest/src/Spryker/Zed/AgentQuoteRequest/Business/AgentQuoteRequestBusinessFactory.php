@@ -16,7 +16,6 @@ use Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequ
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \Spryker\Zed\AgentQuoteRequest\Persistence\AgentQuoteRequestEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestConfig getConfig()
  */
 class AgentQuoteRequestBusinessFactory extends AbstractBusinessFactory
@@ -38,7 +37,6 @@ class AgentQuoteRequestBusinessFactory extends AbstractBusinessFactory
     {
         return new AgentQuoteRequestWriter(
             $this->getQuoteRequestFacade(),
-            $this->getEntityManager(),
             $this->getConfig()
         );
     }

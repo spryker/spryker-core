@@ -35,6 +35,20 @@ interface QuoteRequestClientInterface
     /**
      * Specification:
      * - Makes Zed request.
+     * - Finds a company by QuoteRequestTransfer::idQuoteRequest in the transfer.
+     * - Updates fields in a "Request for Quote" entity.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function update(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
      * - Retrieves "Request for Quote" entities filtered by company user.
      * - Filters by quote request reference when provided.
      * - Excludes hidden "Request for Quote" entities.

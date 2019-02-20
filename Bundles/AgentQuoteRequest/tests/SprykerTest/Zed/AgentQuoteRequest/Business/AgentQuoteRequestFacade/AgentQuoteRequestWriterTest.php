@@ -10,13 +10,13 @@ namespace SprykerTest\Zed\AgentQuoteRequest\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteRequestBuilder;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\AgentQuoteRequest\AgentQuoteRequestConfig as SharedAgentQuoteRequestConfig;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestConfig;
 use Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest\AgentQuoteRequestWriter;
 use Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequestInterface;
-use Spryker\Zed\AgentQuoteRequest\Persistence\AgentQuoteRequestEntityManagerInterface;
 
 /**
  * Auto-generated group annotations
@@ -161,7 +161,6 @@ class AgentQuoteRequestWriterTest extends Unit
             ->setMethods(['findQuoteRequest'])
             ->setConstructorArgs([
                 $this->createAgentQuoteRequestToQuoteRequestInterfaceMock(),
-                $this->createAgentQuoteRequestEntityManagerInterfaceMock(),
                 $this->createQuoteRequestConfigMock(),
             ])
             ->getMock();
@@ -172,28 +171,18 @@ class AgentQuoteRequestWriterTest extends Unit
      */
     protected function createAgentQuoteRequestToQuoteRequestInterfaceMock(): AgentQuoteRequestToQuoteRequestInterface
     {
-        return $this->getMockBuilder(AgentQuoteRequestToQuoteRequestInterface::class)
-            ->setMethods(['getQuoteRequestCollectionByFilter'])
-            ->disableOriginalConstructor()
-            ->getMock();
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\AgentQuoteRequest\Persistence\AgentQuoteRequestEntityManagerInterface
-     */
-    protected function createAgentQuoteRequestEntityManagerInterfaceMock(): AgentQuoteRequestEntityManagerInterface
-    {
-        $agentQuoteRequestEntityManagerInterface = $this->getMockBuilder(AgentQuoteRequestEntityManagerInterface::class)
-            ->setMethods(['updateQuoteRequest'])
+        $agentQuoteRequestToQuoteRequestInterface = $this->getMockBuilder(AgentQuoteRequestToQuoteRequestInterface::class)
+            ->setMethods(['getQuoteRequestCollectionByFilter', 'update'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $agentQuoteRequestEntityManagerInterface->method('updateQuoteRequest')
+        $agentQuoteRequestToQuoteRequestInterface
+            ->method('update')
             ->willReturnCallback(function (QuoteRequestTransfer $quoteRequestTransfer) {
-                return $quoteRequestTransfer;
+                return (new QuoteRequestResponseTransfer())->setQuoteRequest($quoteRequestTransfer)->setIsSuccess(true);
             });
 
-        return $agentQuoteRequestEntityManagerInterface;
+        return $agentQuoteRequestToQuoteRequestInterface;
     }
 
     /**

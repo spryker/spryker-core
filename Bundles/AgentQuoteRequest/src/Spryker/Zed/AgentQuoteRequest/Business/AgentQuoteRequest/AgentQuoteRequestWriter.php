@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\AgentQuoteRequest\AgentQuoteRequestConfig as SharedAgentQuoteRequestConfig;
 use Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestConfig;
 use Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequestInterface;
-use Spryker\Zed\AgentQuoteRequest\Persistence\AgentQuoteRequestEntityManagerInterface;
 
 class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
 {
@@ -26,27 +25,19 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
     protected $quoteRequestFacade;
 
     /**
-     * @var \Spryker\Zed\AgentQuoteRequest\Persistence\AgentQuoteRequestEntityManagerInterface
-     */
-    protected $agentQuoteRequestEntityManager;
-
-    /**
      * @var \Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestConfig
      */
     protected $agentQuoteRequestConfig;
 
     /**
      * @param \Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequestInterface $quoteRequestFacade
-     * @param \Spryker\Zed\AgentQuoteRequest\Persistence\AgentQuoteRequestEntityManagerInterface $agentQuoteRequestEntityManager
      * @param \Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestConfig $agentQuoteRequestConfig
      */
     public function __construct(
         AgentQuoteRequestToQuoteRequestInterface $quoteRequestFacade,
-        AgentQuoteRequestEntityManagerInterface $agentQuoteRequestEntityManager,
         AgentQuoteRequestConfig $agentQuoteRequestConfig
     ) {
         $this->quoteRequestFacade = $quoteRequestFacade;
-        $this->agentQuoteRequestEntityManager = $agentQuoteRequestEntityManager;
         $this->agentQuoteRequestConfig = $agentQuoteRequestConfig;
     }
 
@@ -75,11 +66,8 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
         }
 
         $quoteRequestTransfer->setStatus(SharedAgentQuoteRequestConfig::STATUS_CANCELED);
-        $quoteRequestTransfer = $this->agentQuoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
-        return $quoteRequestResponseTransfer
-            ->setQuoteRequest($quoteRequestTransfer)
-            ->setIsSuccess(true);
+        return $this->quoteRequestFacade->update($quoteRequestTransfer);
     }
 
     /**

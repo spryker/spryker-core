@@ -94,6 +94,18 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function update(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteRequestTransfer) {
+            return $this->executeUpdateTransaction($quoteRequestTransfer);
+        });
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
@@ -139,6 +151,20 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         $quoteRequestVersionTransfer = $this->createQuoteRequestVersion($quoteRequestTransfer);
 
         $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
+
+        return (new QuoteRequestResponseTransfer())
+            ->setQuoteRequest($quoteRequestTransfer)
+            ->setIsSuccess(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    protected function executeUpdateTransaction(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
         return (new QuoteRequestResponseTransfer())
             ->setQuoteRequest($quoteRequestTransfer)

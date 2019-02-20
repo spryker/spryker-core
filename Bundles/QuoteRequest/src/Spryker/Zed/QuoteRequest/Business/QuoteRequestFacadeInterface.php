@@ -36,6 +36,19 @@ interface QuoteRequestFacadeInterface
 
     /**
      * Specification:
+     * - Finds a company by QuoteRequestTransfer::idQuoteRequest in the transfer.
+     * - Updates fields in a "Request for Quote" entity.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function update(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
      * - Retrieves "Request for Quote" entities filtered by company user.
      * - Filters by quote request reference when provided.
      * - Excludes "Request for Quote" with status "closed".

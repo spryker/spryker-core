@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequestBusinessFactory getFactory()
- * @method \Spryker\Zed\AgentQuoteRequest\Persistence\AgentQuoteRequestEntityManagerInterface getEntityManager()
  */
 class AgentQuoteRequestFacade extends AbstractFacade implements AgentQuoteRequestFacadeInterface
 {

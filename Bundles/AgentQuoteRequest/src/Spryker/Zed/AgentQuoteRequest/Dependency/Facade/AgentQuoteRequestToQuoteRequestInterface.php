@@ -9,6 +9,8 @@ namespace Spryker\Zed\AgentQuoteRequest\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 
 interface AgentQuoteRequestToQuoteRequestInterface
 {
@@ -18,4 +20,11 @@ interface AgentQuoteRequestToQuoteRequestInterface
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
      */
     public function getQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function update(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
 }
