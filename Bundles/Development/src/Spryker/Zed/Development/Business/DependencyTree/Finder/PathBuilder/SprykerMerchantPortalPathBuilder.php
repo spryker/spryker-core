@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder;
 
-class SprykerPathBuilder extends AbstractPathBuilder implements PathBuilderInterface
+class SprykerMerchantPortalPathBuilder extends AbstractPathBuilder implements PathBuilderInterface
 {
-    protected const ORGANIZATION = 'Spryker';
+    protected const ORGANIZATION = 'SprykerMerchantPortal';
 
     protected const LOOKUP_NAMESPACES = [
-        'src' => 'Spryker',
-        'tests' => 'SprykerTest',
+        'src' => 'SprykerMerchantPortal',
+        'tests' => 'SprykerMerchantPortalTest',
     ];
 }

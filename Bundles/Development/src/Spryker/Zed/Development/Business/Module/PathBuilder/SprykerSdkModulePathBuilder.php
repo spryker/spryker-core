@@ -9,12 +9,12 @@ namespace Spryker\Zed\Development\Business\Module\PathBuilder;
 
 use Generated\Shared\Transfer\ModuleTransfer;
 
-class SprykerEcoModulePathBuilder extends AbstractPathBuilder
+class SprykerSdkModulePathBuilder extends AbstractPathBuilder
 {
     /**
      * @var string
      */
-    protected const ORGANIZATION = 'SprykerEco';
+    protected const ORGANIZATION = 'SprykerSdk';
 
     /**
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer

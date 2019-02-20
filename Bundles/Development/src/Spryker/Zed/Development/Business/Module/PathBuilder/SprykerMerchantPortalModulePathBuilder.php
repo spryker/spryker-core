@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Development\Business\Module\PathBuilder;
 
-class SprykerShopModulePathBuilder extends AbstractPathBuilder
+class SprykerMerchantPortalModulePathBuilder extends AbstractPathBuilder
 {
     /**
      * @var string
      */
-    protected const ORGANIZATION = 'SprykerShop';
+    protected const ORGANIZATION = 'SprykerMerchantPortal';
 }
