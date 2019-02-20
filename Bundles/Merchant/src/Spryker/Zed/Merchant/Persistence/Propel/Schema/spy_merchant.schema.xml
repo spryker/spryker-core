@@ -4,7 +4,7 @@
           namespace="Orm\Zed\Merchant\Persistence"
           package="src.Orm.Zed.Merchant.Persistence">
 
-    <table name="spy_merchant" phpName="SpyMerchant">
+    <table name="spy_merchant" phpName="SpyMerchant" identifierQuoting="true">
         <column name="id_merchant" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
         <column name="name" required="true" size="255" type="VARCHAR"/>
 
@@ -25,7 +25,7 @@
         <id-method-parameter value="spy_merchant_pk_seq"/>
     </table>
 
-    <table name="spy_merchant_address">
+    <table name="spy_merchant_address" identifierQuoting="true">
         <column name="id_merchant_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_country" required="true" type="INTEGER"/>
         <column name="address1" size="255" type="VARCHAR"/>
