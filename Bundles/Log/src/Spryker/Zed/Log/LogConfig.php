@@ -12,7 +12,20 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class LogConfig extends AbstractBundleConfig
 {
-    protected const BUFFER_LIMIT = 100;
+    /**
+     * Sets how many entries should be buffered at most, beyond that the oldest items are removed from the buffer.
+     */
+    protected const BUFFER_LIMIT = 0;
+
+    /**
+     * Sets that the messages that are handled can bubble up the stack or not.
+     */
+    protected const BUBBLE = true;
+
+    /**
+     * Sets is buffer have to be flushed when the max size has been reached, by default oldest entries are discarded.
+     */
+    protected const FLUSH_ON_OVERFLOW = false;
 
     /**
      * @var string[]
@@ -114,6 +127,22 @@ class LogConfig extends AbstractBundleConfig
      */
     public function getBufferLimit(): int
     {
-        return $this->get(static::BUFFER_LIMIT);
+        return static::BUFFER_LIMIT;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsBubble(): bool
+    {
+        return static::BUBBLE;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsFlushOnOverflow(): bool
+    {
+        return static::FLUSH_ON_OVERFLOW;
     }
 }
