@@ -69,6 +69,7 @@ class SchemaRenderer implements SchemaRendererInterface
     {
         $schemaPropertyComponentTransfer = new SchemaPropertyComponentTransfer();
         $schemaPropertyComponentTransfer->setName($property->getName());
+        $schemaPropertyComponentTransfer->setIsNullable($property->getIsNullable());
         if ($property->getType()) {
             $schemaPropertyComponentTransfer->setType($property->getType());
         }
