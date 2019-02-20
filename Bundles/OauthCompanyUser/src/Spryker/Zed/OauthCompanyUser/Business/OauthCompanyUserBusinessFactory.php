@@ -14,9 +14,7 @@ use Spryker\Zed\OauthCompanyUser\Business\Installer\OauthScopeInstaller;
 use Spryker\Zed\OauthCompanyUser\Business\Installer\OauthScopeInstallerInterface;
 use Spryker\Zed\OauthCompanyUser\Business\Scope\ScopeProvider;
 use Spryker\Zed\OauthCompanyUser\Business\Scope\ScopeProviderInterface;
-use Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCompanyUserFacadeInterface;
 use Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToOauthFacadeInterface;
-use Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodingServiceInterface;
 use Spryker\Zed\OauthCompanyUser\OauthCompanyUserDependencyProvider;
 
 /**
@@ -55,26 +53,10 @@ class OauthCompanyUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCompanyUserFacadeInterface
-     */
-    public function getCompanyUserFacade(): OauthCompanyUserToCompanyUserFacadeInterface
-    {
-        return $this->getProvidedDependency(OauthCompanyUserDependencyProvider::FACADE_COMPANY_USER);
-    }
-
-    /**
      * @return \Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToOauthFacadeInterface
      */
     public function getOauthFacade(): OauthCompanyUserToOauthFacadeInterface
     {
         return $this->getProvidedDependency(OauthCompanyUserDependencyProvider::FACADE_OAUTH);
-    }
-
-    /**
-     * @return \Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodingServiceInterface
-     */
-    public function getUtilEncodingService(): OauthCompanyUserToUtilEncodingServiceInterface
-    {
-        return $this->getProvidedDependency(OauthCompanyUserDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

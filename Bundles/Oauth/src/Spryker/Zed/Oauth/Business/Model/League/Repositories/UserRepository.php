@@ -9,7 +9,7 @@ namespace Spryker\Zed\Oauth\Business\Model\League\Repositories;
 
 use Generated\Shared\Transfer\OauthUserTransfer;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
-use League\OAuth2\Server\Entities\UserEntityInterface;
+use League\OAuth2\Server\Repositories\UserRepositoryInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Entities\UserEntity;
 
 class UserRepository implements UserRepositoryInterface
@@ -25,33 +25,6 @@ class UserRepository implements UserRepositoryInterface
     public function __construct(array $userProviderPlugins = [])
     {
         $this->userProviderPlugins = $userProviderPlugins;
-    }
-
-    /**
-     * @param array $request
-     * @param string $grantType The grant type used
-     * @param \League\OAuth2\Server\Entities\ClientEntityInterface $clientEntity
-     *
-     * @return \League\OAuth2\Server\Entities\UserEntityInterface|null
-     */
-    public function getUserEntityByRequest(
-        array $request,
-        string $grantType,
-        ClientEntityInterface $clientEntity
-    ): ?UserEntityInterface {
-
-        $oauthUserTransfer = new OauthUserTransfer();
-        $oauthUserTransfer->fromArray($request, true);
-        $oauthUserTransfer->setClientId($clientEntity->getIdentifier())
-            ->setGrantType($grantType)
-            ->setClientName($clientEntity->getName());
-        $oauthUserTransfer = $this->findUser($oauthUserTransfer);
-
-        if ($oauthUserTransfer && $oauthUserTransfer->getIsSuccess() && $oauthUserTransfer->getUserIdentifier()) {
-            return new UserEntity($oauthUserTransfer->getUserIdentifier());
-        }
-
-        return null;
     }
 
     /**

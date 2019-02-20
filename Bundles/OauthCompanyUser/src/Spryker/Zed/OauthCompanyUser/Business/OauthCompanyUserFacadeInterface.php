@@ -8,23 +8,9 @@
 namespace Spryker\Zed\OauthCompanyUser\Business;
 
 use Generated\Shared\Transfer\OauthScopeRequestTransfer;
-use Generated\Shared\Transfer\OauthUserTransfer;
 
 interface OauthCompanyUserFacadeInterface
 {
-    /**
-     * Specification:
-     *  - Authenticates company user.
-     *  - Reads company user data and provides it for access token.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\OauthUserTransfer
-     */
-    public function getOauthCompanyUser(OauthUserTransfer $oauthUserTransfer): OauthUserTransfer;
-
     /**
      * Specification:
      *  - Reads company user scopes.

@@ -8,16 +8,31 @@
 namespace Spryker\Zed\OauthCompanyUser\Business\League\Grant;
 
 use DateInterval;
+use Generated\Shared\Transfer\OauthUserTransfer;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
-use League\OAuth2\Server\Entities\UserEntityInterface;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\Grant\AbstractGrant;
 use League\OAuth2\Server\RequestEvent;
 use League\OAuth2\Server\ResponseTypes\ResponseTypeInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Spryker\Zed\Oauth\Business\Model\League\Entities\UserEntity;
+use Spryker\Zed\OauthCompanyUser\Business\CompanyUser\CompanyUserProviderInterface;
 
 class IdCompanyUserGrantType extends AbstractGrant
 {
+    /**
+     * @var \Spryker\Zed\OauthCompanyUser\Business\CompanyUser\CompanyUserProviderInterface
+     */
+    protected $companyUserProvider;
+
+    /**
+     * @param \Spryker\Zed\OauthCompanyUser\Business\CompanyUser\CompanyUserProviderInterface $companyUserProvider
+     */
+    public function __construct(CompanyUserProviderInterface $companyUserProvider)
+    {
+        $this->companyUserProvider = $companyUserProvider;
+    }
+
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \League\OAuth2\Server\ResponseTypes\ResponseTypeInterface $responseType
@@ -55,24 +70,25 @@ class IdCompanyUserGrantType extends AbstractGrant
 
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \League\OAuth2\Server\Entities\ClientEntityInterface $client
+     * @param \League\OAuth2\Server\Entities\ClientEntityInterface $clientEntity
      *
      * @return \League\OAuth2\Server\Entities\UserEntityInterface
      */
-    protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client)
+    protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $clientEntity)
     {
-        $user = $this->userRepository->getUserEntityByRequest(
-            $request->getParsedBody(),
-            $this->getIdentifier(),
-            $client
-        );
-        if (!$user instanceof UserEntityInterface) {
-            $this->getEmitter()->emit(new RequestEvent(RequestEvent::USER_AUTHENTICATION_FAILED, $request));
+        $oauthUserTransfer = new OauthUserTransfer();
+        $oauthUserTransfer->fromArray($request->getParsedBody(), true);
+        $oauthUserTransfer->setClientId($clientEntity->getIdentifier())
+            ->setGrantType($this->getIdentifier())
+            ->setClientName($clientEntity->getName());
+        $oauthUserTransfer = $this->companyUserProvider->getOauthCompanyUser($oauthUserTransfer);
 
-            throw OAuthServerException::invalidCredentials();
+        if ($oauthUserTransfer && $oauthUserTransfer->getIsSuccess() && $oauthUserTransfer->getUserIdentifier()) {
+            return new UserEntity($oauthUserTransfer->getUserIdentifier());
         }
 
-        return $user;
+        $this->getEmitter()->emit(new RequestEvent(RequestEvent::USER_AUTHENTICATION_FAILED, $request));
+        throw OAuthServerException::invalidCredentials();
     }
 
     /**

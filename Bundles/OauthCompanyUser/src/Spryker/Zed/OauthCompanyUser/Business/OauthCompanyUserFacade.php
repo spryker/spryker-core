@@ -8,7 +8,6 @@
 namespace Spryker\Zed\OauthCompanyUser\Business;
 
 use Generated\Shared\Transfer\OauthScopeRequestTransfer;
-use Generated\Shared\Transfer\OauthUserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -16,22 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class OauthCompanyUserFacade extends AbstractFacade implements OauthCompanyUserFacadeInterface
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\OauthUserTransfer
-     */
-    public function getOauthCompanyUser(OauthUserTransfer $oauthUserTransfer): OauthUserTransfer
-    {
-        return $this->getFactory()
-            ->createCustomerProvider()
-            ->getOauthCompanyUser($oauthUserTransfer);
-    }
-
     /**
      * {@inheritdoc}
      *

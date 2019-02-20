@@ -16,11 +16,6 @@ class OauthCompanyUserConfig extends AbstractBundleConfig
 {
     public const SCOPE_COMPANY_USER = 'company_user';
 
-    /**
-     * @uses \Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig::SCOPE_CUSTOMER
-     */
-    public const SCOPE_CUSTOMER = 'customer';
-
     public const GRANT_TYPE_ID_COMPANY_USER = 'idCompanyUser';
 
     /**
@@ -49,7 +44,6 @@ class OauthCompanyUserConfig extends AbstractBundleConfig
     public function getCompanyUserScopes(): array
     {
         return [
-            static::SCOPE_CUSTOMER,
             static::SCOPE_COMPANY_USER,
         ];
     }

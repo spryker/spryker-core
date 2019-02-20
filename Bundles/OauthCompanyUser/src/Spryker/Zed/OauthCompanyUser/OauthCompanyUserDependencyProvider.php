@@ -32,8 +32,21 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $container = $this->addCompanyUserFacade($container);
         $container = $this->addOauthFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideCommunicationLayerDependencies($container);
+
+        $container = $this->addCompanyUserFacade($container);
         $container = $this->addUtilEncodingService($container);
 
         return $container;
