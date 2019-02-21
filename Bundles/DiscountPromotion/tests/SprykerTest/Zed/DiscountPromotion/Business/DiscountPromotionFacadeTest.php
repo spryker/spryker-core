@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
  * Auto-generated group annotations
@@ -226,6 +227,75 @@ class DiscountPromotionFacadeTest extends Unit
         );
 
         $this->assertSame($discountPromotionTransferUpdated->getAbstractSku(), $updateSku);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeletePromotionDiscountShouldDeleteAnyExistingPromotions()
+    {
+        // Arrange
+        $discountPromotionFacade = $this->getDiscountPromotionFacade();
+
+        $promotionItemSku = '001';
+        $promotionItemQuantity = 1;
+        $discountGeneralTransfer = $this->tester->haveDiscount();
+
+        $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
+        $discountPromotionTransfer->setFkDiscount($discountGeneralTransfer->getIdDiscount());
+
+        $discountPromotionTransferSaved = $discountPromotionFacade->createPromotionDiscount($discountPromotionTransfer);
+
+        // Act
+        $discountPromotionFacade->removePromotionFromDiscount($discountPromotionTransferSaved);
+
+        $discountPromotionTransferUpdated = $discountPromotionFacade->findDiscountPromotionByIdDiscount(
+            $discountPromotionTransferSaved->getFkDiscount()
+        );
+
+        // Assert
+        $this->assertNull($discountPromotionTransferUpdated);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeletePromotionDiscountShouldNotFailIfThereWasNoExistingPromotion()
+    {
+        // Arrange
+        $discountPromotionFacade = $this->getDiscountPromotionFacade();
+
+        $promotionItemSku = '001';
+        $promotionItemQuantity = 1;
+        $discountGeneralTransfer = $this->tester->haveDiscount();
+
+        $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
+        $discountPromotionTransfer->setFkDiscount($discountGeneralTransfer->getIdDiscount());
+
+        // Act
+        $discountPromotionFacade->removePromotionFromDiscount($discountPromotionTransfer);
+
+        $discountPromotionTransferUpdated = $discountPromotionFacade->findDiscountPromotionByIdDiscount(
+            $discountPromotionTransfer->getFkDiscount()
+        );
+
+        // Assert
+        $this->assertEmpty($discountPromotionTransferUpdated);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeletePromotionDiscountShouldFailIfNoIdDiscountProvided()
+    {
+        // Arrange
+        $discountPromotionFacade = $this->getDiscountPromotionFacade();
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $discountPromotionFacade->removePromotionFromDiscount(new DiscountPromotionTransfer());
     }
 
     /**
