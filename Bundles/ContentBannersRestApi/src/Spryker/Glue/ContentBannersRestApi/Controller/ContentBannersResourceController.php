@@ -28,7 +28,7 @@ class ContentBannersResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Content id is missing.",
-     *              "404": "Content not found."
+     *              "404": "Content not found.",
      *              "422": "Content type is invalid."
      *          }
      *     }
