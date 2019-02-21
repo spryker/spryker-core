@@ -7,13 +7,15 @@
 
 namespace Spryker\Glue\ContentBannersRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\ExecutedContentStorageTransfer;
+
 interface ContentBannersRestApiToContentStorageClientInterface
 {
     /**
      * @param int $idContent
      * @param string $localeName
      *
-     * @return array|null
+     * @return \Generated\Shared\Transfer\ExecutedContentStorageTransfer|null
      */
-    public function findContentStorageData(int $idContent, string $localeName): ?array;
+    public function findContentById(int $idContent, string $localeName): ?ExecutedContentStorageTransfer;
 }

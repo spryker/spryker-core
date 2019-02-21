@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ContentStorage\ContentStorage;
 
+use Generated\Shared\Transfer\ExecutedContentStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface;
 use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchronizationServiceInterface;
@@ -49,9 +50,9 @@ class ContentStorageReader implements ContentStorageReaderInterface
      * @param int $idContent
      * @param string $localeName
      *
-     * @return array|null
+     * @return \Generated\Shared\Transfer\ExecutedContentStorageTransfer|null
      */
-    public function findContentById(int $idContent, string $localeName): ?array
+    public function findContentById(int $idContent, string $localeName): ?ExecutedContentStorageTransfer
     {
         $storageKey = $this->generateKey((string)$idContent, $localeName);
         $content = $this->storageClient->get($storageKey);
@@ -62,7 +63,10 @@ class ContentStorageReader implements ContentStorageReaderInterface
 
         $contentExtractorPlugin = $this->contentResolver->getContentPlugin($content[ContentStorageConfig::TERM_KEY]);
 
-        return $contentExtractorPlugin->execute($content[ContentStorageConfig::CONTENT_KEY]);
+        return (new ExecutedContentStorageTransfer())
+            ->setIdContent($idContent)
+            ->setType($contentExtractorPlugin->getTypeKey())
+            ->setContent($contentExtractorPlugin->execute($content[ContentStorageConfig::CONTENT_KEY]));
     }
 
     /**

@@ -7,13 +7,15 @@
 
 namespace Spryker\Client\ContentStorage\ContentStorage;
 
+use Generated\Shared\Transfer\ExecutedContentStorageTransfer;
+
 interface ContentStorageReaderInterface
 {
     /**
      * @param int $idContent
      * @param string $localeName
      *
-     * @return array|null
+     * @return \Generated\Shared\Transfer\ExecutedContentStorageTransfer|null
      */
-    public function findContentById(int $idContent, string $localeName): ?array;
+    public function findContentById(int $idContent, string $localeName): ?ExecutedContentStorageTransfer;
 }

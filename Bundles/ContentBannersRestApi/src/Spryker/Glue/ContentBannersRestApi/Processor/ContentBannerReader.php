@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\ContentBannersRestApi\Processor;
 
+use Generated\Shared\Transfer\RestContentBannerAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use InvalidArgumentException;
 use Spryker\Glue\ContentBannersRestApi\ContentBannersRestApiConfig;
 use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentStorageClientInterface;
 use Spryker\Glue\ContentBannersRestApi\Mapper\ContentBannerMapperInterface;
@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ContentBannerReader implements ContentBannerReaderInterface
 {
+    /** @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::CONTENT_TYPE_BANNER */
+    protected const CONTENT_TYPE_BANNER = 'Banner';
+
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
@@ -63,20 +66,24 @@ class ContentBannerReader implements ContentBannerReaderInterface
             return $this->addContentBannerIdNotSpecifiedError($response);
         }
 
-        $bannerData = $this->contentStorageClient->findContentStorageData(
+        $executedContentStorageTransfer = $this->contentStorageClient->findContentById(
             (int)$idContentBanner,
             $restRequest->getMetadata()->getLocale()
         );
 
-        if (!$bannerData) {
+        if (!$executedContentStorageTransfer) {
             return $this->addContentBannerNotFoundError($response);
         }
 
-        try {
-            $restContentBannerAttributes = $this->contentBannerMapper->mapContentTransferToRestContentBannerAttributes($bannerData);
-        } catch (InvalidArgumentException $e) {
+        if ($executedContentStorageTransfer->getType() !== static::CONTENT_TYPE_BANNER) {
             return $this->addContentTypeInvalidError($response);
         }
+
+        $restContentBannerAttributes = $this->contentBannerMapper
+            ->mapExecutedContentStorageTransferToRestContentBannerAttributes(
+                $executedContentStorageTransfer,
+                new RestContentBannerAttributesTransfer()
+            );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             ContentBannersRestApiConfig::RESOURCE_CONTENT_BANNERS,
