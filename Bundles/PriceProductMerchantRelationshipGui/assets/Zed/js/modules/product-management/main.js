@@ -5,9 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
-
-
 /**
  * @see \Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd
  * @type {string}

@@ -1,15 +1,15 @@
 {% embed '@Gui/Partials/widget.twig' %}
     {% block widget_title %}
         <h5>
-            Order
+            {{ 'Order' | trans }}
             <a href="{{ url('/sales/detail', {'id-sales-order': reclamation.order.idSalesOrder}) }}">
                 {{ reclamation.order.orderReference }}
             </a>
-            items:
+            {{ 'items' | trans }}:
         </h5>
     {% endblock %}
     {% block widget_header_content %}
-        Reclamation state: {{ reclamation.status }}
+        {{ 'Reclamation state' | trans }}: {{ reclamation.status | trans }}
     {% endblock %}
 
     {% block widget_content %}
@@ -21,8 +21,8 @@
                 <th>{{ 'Unit Price' | trans }} <small>({{ reclamation.order.priceMode }})</small></th>
                 <th>{{ 'Item total' | trans }}</th>
                 <th>{{ 'State' | trans }}</th>
-                <th>State</th>
-                <th>Actions</th>
+                <th>{{ 'State' | trans }}</th>
+                <th>{{ 'Actions' | trans }}</th>
             </tr>
             </thead>
             {% embed '@SalesReclamation/Detail/boxes/no-group-items.twig' with {items: reclamation.reclamationItems} %}{% endembed %}
