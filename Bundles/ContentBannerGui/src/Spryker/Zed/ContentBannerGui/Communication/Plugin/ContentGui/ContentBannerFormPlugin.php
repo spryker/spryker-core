@@ -9,7 +9,7 @@ namespace Spryker\Zed\ContentBannerGui\Communication\Plugin\ContentGui;
 
 use Generated\Shared\Transfer\ContentBannerTransfer;
 use Spryker\Shared\ContentBannerGui\ContentBannerGuiConfig;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\ContentBannerGui\Communication\Form\BannerContentTermForm;
 use Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -61,7 +61,7 @@ class ContentBannerFormPlugin extends AbstractPlugin implements ContentPluginInt
      *
      * @return \Generated\Shared\Transfer\ContentBannerTransfer
      */
-    public function getTransferObject(?array $params = null): AbstractTransfer
+    public function getTransferObject(?array $params = null): TransferInterface
     {
         $contentBannerTransfer = new ContentBannerTransfer();
 

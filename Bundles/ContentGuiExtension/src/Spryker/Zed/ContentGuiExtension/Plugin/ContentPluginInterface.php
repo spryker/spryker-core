@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ContentGuiExtension\Plugin;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface ContentPluginInterface
 {
@@ -49,7 +49,7 @@ interface ContentPluginInterface
      *
      * @param array|null $params
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function getTransferObject(?array $params = null): AbstractTransfer;
+    public function getTransferObject(?array $params = null): TransferInterface;
 }

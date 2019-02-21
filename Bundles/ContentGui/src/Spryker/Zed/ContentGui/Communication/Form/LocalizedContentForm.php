@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ContentGui\Communication\Form;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -114,7 +114,7 @@ class LocalizedContentForm extends AbstractType
 
                     return $contentPlugin->getTransferObject($params);
                 },
-                function (AbstractTransfer $abstractTransfer) {
+                function (TransferInterface $transfer) {
                     $arrayFilter = function ($input) use (&$arrayFilter) {
                         foreach ($input as &$value) {
                             if (is_array($value)) {
@@ -124,9 +124,9 @@ class LocalizedContentForm extends AbstractType
 
                         return array_filter($input);
                     };
-                    $parameters = $arrayFilter($abstractTransfer->toArray());
+                    $parameters = $arrayFilter($transfer->toArray());
 
-                    return (!empty($parameters)) ? $this->getFactory()->getUtilEncoding()->encodeJson($abstractTransfer->toArray()) : null;
+                    return (!empty($parameters)) ? $this->getFactory()->getUtilEncoding()->encodeJson($transfer->toArray()) : null;
                 }
             ));
 
