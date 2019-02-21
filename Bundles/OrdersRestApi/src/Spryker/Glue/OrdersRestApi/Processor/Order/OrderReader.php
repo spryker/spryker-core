@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\OrdersRestApi\Processor\Order;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -109,19 +109,13 @@ class OrderReader implements OrderReaderInterface
 
         $limit = 0;
         if ($restRequest->getPage()) {
-            $offset = $restRequest->getPage()->getOffset();
-            $limit = $restRequest->getPage()->getLimit();
-
-            $orderListTransfer->setPagination($this->createPaginationTransfer(++$offset, $limit));
+            $orderListTransfer->setFilter($this->createFilterTransfer($restRequest));
         }
 
         $orderListTransfer = $this->salesClient->getPaginatedOrder($orderListTransfer);
         $response = $this
             ->restResourceBuilder
-            ->createRestResponse(
-                $orderListTransfer->getPagination() !== null ? $orderListTransfer->getPagination()->getNbResults() : 0,
-                $limit
-            );
+            ->createRestResponse($orderListTransfer->getOrders()->count(), $limit);
 
         foreach ($orderListTransfer->getOrders() as $orderTransfer) {
             $restOrdersAttributesTransfer = $this->orderResourceMapper->mapOrderTransferToRestOrdersAttributesTransfer($orderTransfer);
@@ -173,15 +167,14 @@ class OrderReader implements OrderReaderInterface
     }
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\PaginationTransfer
+     * @return \Generated\Shared\Transfer\FilterTransfer
      */
-    protected function createPaginationTransfer(int $offset, int $limit): PaginationTransfer
+    protected function createFilterTransfer(RestRequestInterface $restRequest): FilterTransfer
     {
-        return (new PaginationTransfer())
-            ->setPage($offset)
-            ->setMaxPerPage($limit);
+        return (new FilterTransfer())
+            ->setOffset($restRequest->getPage()->getOffset())
+            ->setLimit($restRequest->getPage()->getLimit());
     }
 }
