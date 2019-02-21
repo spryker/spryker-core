@@ -11,7 +11,7 @@
     "mikey179/vfsStream": "^1.6"
   },
   "require-dev": {
-    "spryker/code-sniffer": "dev-bugfix/chainable"
+    "spryker/code-sniffer": "dev-master"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
