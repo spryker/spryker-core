@@ -297,8 +297,7 @@ class OrdersTable extends AbstractTable
             SpySalesOrderTableMap::COL_ORDER_REFERENCE,
             SpySalesOrderTableMap::COL_CREATED_AT,
             SpySalesOrderTableMap::COL_EMAIL,
-            SpySalesOrderTableMap::COL_FIRST_NAME,
-            SpySalesOrderTableMap::COL_LAST_NAME,
+            [' ', SpySalesOrderTableMap::COL_FIRST_NAME, SpySalesOrderTableMap::COL_LAST_NAME],
         ];
     }
 
