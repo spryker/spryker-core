@@ -16,7 +16,10 @@ use Spryker\Glue\Kernel\AbstractPlugin;
  */
 class WishlistItemsConcreteProductsResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
-    protected const RELATIONSHIP_RESOURCE_TYPE = 'wishlist-items-products';
+    /**
+     * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS
+     */
+    protected const RELATIONSHIP_RESOURCE_TYPE = 'concrete-products';
 
     /**
      * {@inheritdoc}

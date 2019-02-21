@@ -30,7 +30,7 @@
                 <p><b>{{ 'Email' | trans }}:</b> {{ order.email }}</p>
                 <p><b>{{ 'Status' | trans }}:</b>
                     {% for state in distinctOrderStates %}
-                      <span class="label label-info">{{ state }}</span>
+                      <span class="label label-info">{{ state | trans }}</span>
                     {% endfor %}
                 </p>
                 <p><b>{{ 'All orders of the customer' | trans }}:</b> ({{ order.totalOrderCount }})</p>

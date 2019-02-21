@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\User\Business\Model;
 
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 use Spryker\Zed\User\UserConfig;
 
@@ -64,12 +65,9 @@ class Installer implements InstallerInterface
                 continue;
             }
 
-            $this->user->addUser(
-                $user['firstName'],
-                $user['lastName'],
-                $user['username'],
-                $user['password']
-            );
+            $userTransfer = (new UserTransfer())->fromArray($user, true);
+
+            $this->user->createUser($userTransfer);
         }
     }
 }

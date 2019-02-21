@@ -14,8 +14,8 @@
             <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
             {% filter trans|raw %}
                 <ul>
-                    <li>If a navigation node is inactive, then this item and all navigation items under this one will not be visible.</li>
-                    <li>You can drag and drop to define item order.</li>
+                    <li>{{ 'If a navigation node is inactive, then this item and all navigation items under this one will not be visible.' | trans }}</li>
+                    <li>{{ 'You can drag and drop to define item order.' | trans }}</li>
                 </ul>
             {% endfilter %}
         </div>
