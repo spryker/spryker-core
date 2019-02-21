@@ -115,7 +115,7 @@ class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin 
      *
      * @return $this
      */
-    protected function setSender(MailBuilderInterface $mailBuilder): MailTypePluginInterface
+    protected function setSender(MailBuilderInterface $mailBuilder)
     {
         $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
 
