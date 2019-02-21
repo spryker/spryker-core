@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -114,27 +113,9 @@ interface ShipmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
-     */
-    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ArrayObject;
-
-    /**
-     * Specification:
-     * - Retrieves active shipment methods for every shipment group in QuoteTransfer.
-     * - Calculates shipment method delivery time using its assigned ShipmentMethodDeliveryTimePluginInterface plugin.
-     * - Selects shipment method price for the provided currency and current store.
-     * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
-     * - Excludes shipment methods which do not have a valid price as a result.
-     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin
-     * requirements.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      */
-    public function getAvailableMethodsByShipmentGroups(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer;
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer;
 
     /**
      * Specification:
@@ -251,19 +232,6 @@ interface ShipmentFacadeInterface
      * @return void
      */
     public function saveOrderShipment(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
-
-    /**
-     * Specification:
-     * - Creates or updates shipment for order via admin web interface.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     *
-     * @return void
-     */
-    public function saveOrderShipmentFromAdmin(OrderTransfer $orderTransfer, ShipmentGroupTransfer $shipmentGroupTransfer);
 
     /**
      * Specification:

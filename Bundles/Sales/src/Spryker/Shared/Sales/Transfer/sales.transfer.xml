@@ -20,7 +20,7 @@
         <property name="invoice" type="Invoice[]" />
         <property name="invoiceReference" type="string" />
         <property name="invoiceCreatedAt" type="string" />
-        <property name="fkShipmentMethod" type="int" deprecated="@TODO: Add item.shipment.fkShipmentMethod. Use item level shipping addresses (item.shipment.fkShipmentMethod) instead." />
+        <property name="fkShipmentMethod" type="int" deprecated="Use item level shipping addresses (item.shipment.method.fkShipmentMethod) instead." />
         <property name="fkCustomer" type="int" />
         <property name="customerReference" type="string" />
         <property name="totals" type="Totals" />

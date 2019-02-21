@@ -33,11 +33,6 @@ class TransferBuilder
      */
     public function getAvailableMethodsByShipmentGroups(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
     {
-        /**
-         * @todo Fix this or remove whole class
-         */
-        return (new ShipmentGroupCollectionTransfer())->setGroups(
-            $this->methodReader->getAvailableMethodsByShipment($quoteTransfer)
-        );
+        return $this->methodReader->getAvailableMethodsByShipment($quoteTransfer);
     }
 }

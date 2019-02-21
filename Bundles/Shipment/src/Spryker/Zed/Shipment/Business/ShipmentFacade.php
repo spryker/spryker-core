@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -16,7 +15,6 @@ use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
-use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
@@ -118,38 +116,9 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
-        $methodModel = $this->getFactory()->createMethod();
-        /**
-         * @todo: refactor this.
-         */
-
-        $shipmentGroupCollectionTransfer = $methodModel->getAvailableMethodsByShipment($quoteTransfer);
-
-        /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer */
-        $shipmentGroupTransfer = current($shipmentGroupCollectionTransfer->getGroups());
-
-        if (!$shipmentGroupTransfer) {
-            return new ShipmentMethodsTransfer();
-        }
-
-        return $shipmentGroupTransfer->getAvailableShipmentMethods();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
-     */
-    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ArrayObject
-    {
-        return $this
-            ->getFactory()
-            ->createMethodReader()
-            ->getAvailableMethodsByShipment($quoteTransfer);
+        return $this->getFactory()
+            ->createMethod()
+            ->getAvailableShipmentMethods($quoteTransfer);
     }
 
     /**
@@ -161,11 +130,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      */
-    public function getAvailableMethodsByShipmentGroups(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
     {
-        /**
-         * @todo Check and remove this as unnecessary method
-         */
         return $this
             ->getFactory()
             ->createMethodReader()
@@ -305,24 +271,6 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
             ->createCheckoutShipmentOrderSaverStrategyResolver()
             ->resolve()
             ->saveOrderShipment($quoteTransfer, $saveOrderTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     *
-     * @return void
-     */
-    public function saveOrderShipmentFromAdmin(OrderTransfer $orderTransfer, ShipmentGroupTransfer $shipmentGroupTransfer)
-    {
-        $this->getFactory()
-            ->createCheckoutShipmentOrderSaverStrategyResolver()
-            ->resolve()
-            ->saveOrderShipmentFromAdmin($orderTransfer, $shipmentGroupTransfer);
     }
 
     /**
