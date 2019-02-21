@@ -11,7 +11,7 @@ class CmsContentWidgetBannerConfigurationProvider implements CmsContentWidgetBan
 {
     public const FUNCTION_NAME = 'cms_banner';
 
-    public const CUSTOM_TEMPLATE_IDENTIFIER = 'custom';
+    public const TITLE_BOTTOM_TEMPLATE_IDENTIFIER = 'title-bottom';
 
     /**
      * @return string
@@ -28,7 +28,7 @@ class CmsContentWidgetBannerConfigurationProvider implements CmsContentWidgetBan
     {
         return [
             static::DEFAULT_TEMPLATE_IDENTIFIER => '@CmsContentWidgetBanner/views/cms-banner/cms-banner.twig',
-            static::CUSTOM_TEMPLATE_IDENTIFIER => '@CmsContentWidgetBanner/views/cms-banner/cms-banner-custom.twig',
+            static::TITLE_BOTTOM_TEMPLATE_IDENTIFIER => '@CmsContentWidgetBanner/views/cms-banner/cms-banner-title-bottom.twig',
         ];
     }
 
@@ -37,6 +37,8 @@ class CmsContentWidgetBannerConfigurationProvider implements CmsContentWidgetBan
      */
     public function getUsageInformation(): string
     {
-        return "{{ cms_banner({title: string, subTitle: string, imageUrl: string, clickUrl: string, altText: string}) }}. To use a different template {{ cms_banner({title: string, subTitle: string, imageUrl: string, clickUrl: string, altText: string}), 'default') }}.";
+        return "{{ cms_banner({title: string, subTitle: string, imageUrl: string, clickUrl: string, altText: string}) }}. 
+            To use a different template 
+            {{ cms_banner({title: string, subTitle: string, imageUrl: string, clickUrl: string, altText: string}), 'default') }}.";
     }
 }
