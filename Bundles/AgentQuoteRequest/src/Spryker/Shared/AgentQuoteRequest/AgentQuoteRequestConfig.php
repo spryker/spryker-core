@@ -37,6 +37,11 @@ class AgentQuoteRequestConfig extends AbstractSharedConfig
     public const STATUS_IN_PROGRESS = 'in-progress';
 
     /**
+     * @see \Spryker\Shared\QuoteRequest\QuoteRequestConfig::STATUS_CLOSED
+     */
+    public const STATUS_CLOSED = 'closed';
+
+    /**
      * @return string[]
      */
     public function getCancelableStatuses(): array

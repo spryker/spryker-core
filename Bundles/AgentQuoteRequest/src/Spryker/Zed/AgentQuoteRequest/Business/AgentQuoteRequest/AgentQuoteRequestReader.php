@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Spryker\Shared\AgentQuoteRequest\AgentQuoteRequestConfig as SharedAgentQuoteRequestConfig;
 use Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequestInterface;
 
 class AgentQuoteRequestReader implements AgentQuoteRequestReaderInterface
@@ -51,6 +52,7 @@ class AgentQuoteRequestReader implements AgentQuoteRequestReaderInterface
         QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer
     ): QuoteRequestCollectionTransfer {
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setExcludedStatuses([SharedAgentQuoteRequestConfig::STATUS_CLOSED])
             ->setPagination($quoteRequestOverviewFilterTransfer->getPagination())
             ->setWithHidden(true);
 

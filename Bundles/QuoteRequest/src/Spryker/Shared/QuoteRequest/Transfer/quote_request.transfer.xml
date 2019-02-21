@@ -49,6 +49,7 @@
         <property name="companyUser" type="CompanyUser" />
         <property name="quoteRequestReference" type="string" />
         <property name="withHidden" type="bool" />
+        <property name="excludedStatuses" type="array" />
         <property name="pagination" type="Pagination" />
     </transfer>
 

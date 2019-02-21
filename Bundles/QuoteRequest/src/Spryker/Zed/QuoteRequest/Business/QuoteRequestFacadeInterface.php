@@ -51,7 +51,7 @@ interface QuoteRequestFacadeInterface
      * Specification:
      * - Retrieves "Request for Quote" entities filtered by company user.
      * - Filters by quote request reference when provided.
-     * - Excludes "Request for Quote" with status "closed".
+     * - Excludes hidden "Request for Quote" entities.
      * - Selects latestVersion based on latest version id.
      *
      * @api

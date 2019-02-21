@@ -18,7 +18,6 @@ interface AgentQuoteRequestFacadeInterface
      * Specification:
      * - Retrieves "Request for Quote" entities according to provided filter.
      * - Sets current "Request for Quote" by quote request reference when provided.
-     * - Excludes "Request for Quote" with status "closed".
      * - Selects latestVersion based on latest version id.
      *
      * @api
