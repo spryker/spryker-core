@@ -10,6 +10,7 @@ namespace Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface;
+use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface;
 
 class QuoteReader implements QuoteReaderInterface
 {
@@ -19,11 +20,20 @@ class QuoteReader implements QuoteReaderInterface
     protected $cartsRestApiFacade;
 
     /**
-     * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade
+     * @var \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface
      */
-    public function __construct(CheckoutRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade)
-    {
+    protected $customerFacade;
+
+    /**
+     * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade
+     * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface $customerFacade
+     */
+    public function __construct(
+        CheckoutRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade,
+        CheckoutRestApiToCustomerFacadeInterface $customerFacade
+    ) {
         $this->cartsRestApiFacade = $cartsRestApiFacade;
+        $this->customerFacade = $customerFacade;
     }
 
     /**
@@ -42,16 +52,21 @@ class QuoteReader implements QuoteReaderInterface
             ->setUuid($restCheckoutRequestAttributesTransfer->getIdCart());
 
         $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
-
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return null;
         }
 
+        $retrievedQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $customerReference = $restCheckoutRequestAttributesTransfer->getCustomer()->getCustomerReference();
-        if ($quoteResponseTransfer->getQuoteTransfer()->getCustomerReference() !== $customerReference) {
+        if ($retrievedQuoteTransfer->getCustomerReference() !== $customerReference) {
             return null;
         }
 
-        return $quoteResponseTransfer->getQuoteTransfer();
+        $customerResponseTransfer = $this->customerFacade->findCustomerByReference($customerReference);
+        if (!$customerResponseTransfer->getIsSuccess()) {
+            return null;
+        }
+
+        return $retrievedQuoteTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
     }
 }
