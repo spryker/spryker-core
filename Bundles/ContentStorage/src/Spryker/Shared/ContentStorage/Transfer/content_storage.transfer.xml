@@ -2,6 +2,15 @@
 <transfers xmlns="spryker:transfer-01"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    <transfer name="Content">
+        <property name="idContent" type="int" />
+        <property name="name" type="string" />
+        <property name="description" type="string" />
+        <property name="contentTermKey" type="string" />
+        <property name="contentTypeKey" type="string" />
+        <property name="localizedContents" type="LocalizedContent[]" singular="localizedContent" />
+    </transfer>
+
     <transfer name="ContentStorage">
         <property name="idContentStorage" type="int"/>
         <property name="fkContent" type="int"/>
@@ -10,13 +19,10 @@
         <property name="key" type="string"/>
     </transfer>
 
-    <transfer name="Content">
+    <transfer name="ExecutedContentStorage">
         <property name="idContent" type="int" />
-        <property name="name" type="string" />
-        <property name="description" type="string" />
-        <property name="contentTermKey" type="string" />
-        <property name="contentTypeKey" type="string" />
-        <property name="localizedContents" type="LocalizedContent[]" singular="localizedContent" />
+        <property name="type" type="string" />
+        <property name="content" type="array" />
     </transfer>
 
     <transfer name="LocalizedContent">

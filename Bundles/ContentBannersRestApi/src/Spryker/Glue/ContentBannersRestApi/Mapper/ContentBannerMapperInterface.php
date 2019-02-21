@@ -7,14 +7,19 @@
 
 namespace Spryker\Glue\ContentBannersRestApi\Mapper;
 
+use Generated\Shared\Transfer\ExecutedContentStorageTransfer;
 use Generated\Shared\Transfer\RestContentBannerAttributesTransfer;
 
 interface ContentBannerMapperInterface
 {
     /**
-     * @param array $content
+     * @param \Generated\Shared\Transfer\ExecutedContentStorageTransfer $executedContentStorageTransfer
+     * @param \Generated\Shared\Transfer\RestContentBannerAttributesTransfer $restContentBannerAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestContentBannerAttributesTransfer
      */
-    public function mapContentTransferToRestContentBannerAttributes(array $content): RestContentBannerAttributesTransfer;
+    public function mapExecutedContentStorageTransferToRestContentBannerAttributes(
+        ExecutedContentStorageTransfer $executedContentStorageTransfer,
+        RestContentBannerAttributesTransfer $restContentBannerAttributesTransfer
+    ): RestContentBannerAttributesTransfer;
 }
