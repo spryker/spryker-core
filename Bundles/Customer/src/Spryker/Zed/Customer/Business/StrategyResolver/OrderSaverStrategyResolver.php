@@ -30,14 +30,18 @@ class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
     }
 
     /**
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
      * @return \Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface
      */
-    public function resolve(): CustomerOrderSaverInterface
+    public function resolve(iterable $itemTransfers): CustomerOrderSaverInterface
     {
-        if (!defined('\Generated\Shared\Transfer\ItemTransfer::SHIPMENT')) {
-            $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
+        foreach ($itemTransfers as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
 
-            return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
+                return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
+            }
         }
 
         $this->assertRequiredStrategyWithMultiShipmentContainerItems();
