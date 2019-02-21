@@ -341,13 +341,30 @@ $(document).ready(function(){
     });
 
     $('.gui-table-data').on('init.dt', function () {
-        var $rows = $(this).find('tbody tr'),
-            $lastRows = $rows.slice(-2),
-            $dropdownMenus = $lastRows.find('.column-Actions button.dropdown-toggle').next();
+        var $toggleWrap = $(this).find('.dropdown'),
+            $toggleDropdown;
 
-        if($dropdownMenus.hasClass('dropdown-menu')) {
-            $dropdownMenus.addClass('dropdown-menu--top');
-        }
+        $toggleWrap.on('show.bs.dropdown', function () {
+            var button = this.querySelector('.dropdown-toggle'),
+                rect = button.getBoundingClientRect(),
+                buttonLeftOffset = rect.left,
+                buttonTopOffset = rect.top,
+                buttonHeight = rect.height;
+
+            $toggleDropdown = $(this).find('.dropdown-menu');
+
+            $('body').append($toggleDropdown.css({
+                position: 'absolute',
+                left: buttonLeftOffset + 'px',
+                top: buttonTopOffset + buttonHeight + 5 + 'px',
+                display: 'block',
+                zIndex: '10000'
+            }).detach());
+        });
+
+        $toggleWrap.on('hidden.bs.dropdown', function () {
+            $(this).append($toggleDropdown.removeAttr('style').detach());
+        });
     });
 });
 
