@@ -1205,8 +1205,8 @@ abstract class AbstractTable
      */
     public function getQueryConditionFilter(): string
     {
-        if (!$this->queryConditionFilter) {
-            $this->filter = '';
+        if ($this->queryConditionFilter === null) {
+            $this->queryConditionFilter = '';
             $driverName = Propel::getConnection()->getAttribute(PDO::ATTR_DRIVER_NAME);
             // @todo fix this in CD-412
             if ($driverName === 'pgsql') {
