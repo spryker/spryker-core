@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Merchant\Business;
 
+use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
+use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -25,9 +27,9 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function createMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer
+    public function createMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
         return $this->getFactory()
             ->createMerchantWriter()
@@ -41,9 +43,9 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer
+    public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
         return $this->getFactory()
             ->createMerchantWriter()
@@ -87,11 +89,15 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function getMerchants(): MerchantCollectionTransfer
+    public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer
     {
-        return $this->getRepository()->getMerchants();
+        return $this->getFactory()
+            ->createMerchantReader()
+            ->findMerchantByIdMerchant($idMerchant);
     }
 
     /**
@@ -99,14 +105,72 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param string $email
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer
+    public function findMerchantByEmail(string $email): ?MerchantTransfer
     {
         return $this->getFactory()
             ->createMerchantReader()
-            ->findMerchantById($merchantTransfer);
+            ->findMerchantByEmail($email);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    public function getMerchantCollection(): MerchantCollectionTransfer
+    {
+        return $this->getRepository()->getMerchantCollection();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
+     */
+    public function createMerchantAddress(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantAddressWriter()
+            ->create($merchantAddressTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idMerchantAddress
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
+     */
+    public function findMerchantAddressByIdMerchantAddress(int $idMerchantAddress): ?MerchantAddressTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantAddressReader()
+            ->findMerchantAddressByIdMerchantAddress($idMerchantAddress);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $currentStatus
+     *
+     * @return string[]
+     */
+    public function getNextStatuses(string $currentStatus): array
+    {
+        return $this->getFactory()->createMerchantStatusReader()->getNextStatuses($currentStatus);
     }
 }

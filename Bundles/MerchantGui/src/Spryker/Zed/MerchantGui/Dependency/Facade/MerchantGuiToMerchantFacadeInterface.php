@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantAddressTransfer;
+use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 interface MerchantGuiToMerchantFacadeInterface
@@ -14,16 +16,16 @@ interface MerchantGuiToMerchantFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function createMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer;
+    public function createMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer;
+    public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
@@ -40,9 +42,37 @@ interface MerchantGuiToMerchantFacadeInterface
     public function getMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param int $idMerchant
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
+    public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer;
+
+    /**
+     * @param string $email
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function findMerchantByEmail(string $email): ?MerchantTransfer;
+
+    /**
+     * @param int $idMerchantAddress
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
+     */
+    public function findMerchantAddressByIdMerchantAddress(int $idMerchantAddress): ?MerchantAddressTransfer;
+
+    /**
+     * @param string $currentStatus
+     *
+     * @return string[]
+     */
+    public function getNextStatuses(string $currentStatus): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
+     */
+    public function createMerchantAddress(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer;
 }

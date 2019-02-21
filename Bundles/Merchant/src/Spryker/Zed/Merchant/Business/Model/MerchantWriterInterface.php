@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant\Business\Model;
 
+use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 interface MerchantWriterInterface
@@ -14,16 +15,16 @@ interface MerchantWriterInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function create(MerchantTransfer $merchantTransfer): MerchantTransfer;
+    public function create(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function update(MerchantTransfer $merchantTransfer): MerchantTransfer;
+    public function update(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer

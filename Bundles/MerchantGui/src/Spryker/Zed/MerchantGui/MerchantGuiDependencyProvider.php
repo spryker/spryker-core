@@ -9,10 +9,15 @@ namespace Spryker\Zed\MerchantGui;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToCountryFacadeBridge;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
+ */
 class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_COUNTRY = 'FACADE_COUNTRY';
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
     public const PROPEL_MERCHANT_QUERY = 'PROPEL_MERCHANT_QUERY';
 
@@ -24,8 +29,23 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addCountryFacade($container);
         $container = $this->addMerchantFacade($container);
         $container = $this->addPropelMerchantQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCountryFacade(Container $container): Container
+    {
+        $container[static::FACADE_COUNTRY] = function (Container $container) {
+            return new MerchantGuiToCountryFacadeBridge($container->getLocator()->country()->facade());
+        };
 
         return $container;
     }

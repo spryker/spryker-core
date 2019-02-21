@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Merchant\Business;
 
+use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
+use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 /**
@@ -20,6 +22,15 @@ interface MerchantFacadeInterface
     /**
      * Specification:
      * - Creates a new merchant entity.
+     * - Requires the following data set on the MerchantTransfer:
+     *   - name
+     *   - registrationNumber
+     *   - contactPersonTitle
+     *   - contactPersonFirstName
+     *   - contactPersonLastName
+     *   - contactPersonPhone
+     *   - email
+     *   - address
      * - Uses incoming transfer to set entity fields.
      * - Persists the entity to DB.
      * - Sets ID to the returning transfer.
@@ -28,13 +39,23 @@ interface MerchantFacadeInterface
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function createMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer;
+    public function createMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 
     /**
      * Specification:
      * - Finds a merchant record by ID in DB.
+     * - Requires the following data set on the MerchantTransfer:
+     *   - idMerchant
+     *   - name
+     *   - registrationNumber
+     *   - contactPersonTitle
+     *   - contactPersonFirstName
+     *   - contactPersonLastName
+     *   - contactPersonPhone
+     *   - email
+     *   - address
      * - Uses incoming transfer to update entity fields.
      * - Persists the entity to DB.
      * - Throws MerchantNotFoundException in case a record is not found.
@@ -43,9 +64,9 @@ interface MerchantFacadeInterface
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer;
+    public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 
     /**
      * Specification:
@@ -75,24 +96,77 @@ interface MerchantFacadeInterface
 
     /**
      * Specification:
+     * - Finds a merchant by merchant id.
+     * - Returns MerchantTransfer if found, NULL otherwise.
+     *
+     * @api
+     *
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer;
+
+    /**
+     * Specification:
+     * - Finds a merchant by email.
+     * - Returns MerchantTransfer if found, NULL otherwise.
+     *
+     * @api
+     *
+     * @param string $email
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function findMerchantByEmail(string $email): ?MerchantTransfer;
+
+    /**
+     * Specification:
      * - Retrieves collection of all merchants.
      *
      * @api
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getMerchants(): MerchantCollectionTransfer;
+    public function getMerchantCollection(): MerchantCollectionTransfer;
 
     /**
      * Specification:
-     * - Finds a merchant by merchant id in provided transfer.
-     * - Returns MerchantTransfer if found, NULL otherwise.
+     * - Creates a new merchant address entity.
+     * - Uses incoming transfer to set entity fields.
+     * - Persists the entity to DB.
+     * - Sets ID to the returning transfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
      */
-    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
+    public function createMerchantAddress(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer;
+
+    /**
+     * Specification:
+     * - Finds a merchant address by merchant address id.
+     * - Returns MerchantAddressTransfer if found, NULL otherwise.
+     *
+     * @api
+     *
+     * @param int $idMerchantAddress
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
+     */
+    public function findMerchantAddressByIdMerchantAddress(int $idMerchantAddress): ?MerchantAddressTransfer;
+
+    /**
+     * Specification:
+     * - Gets the available merchant statuses for the current merchant status.
+     *
+     * @api
+     *
+     * @param string $currentStatus
+     *
+     * @return string[]
+     */
+    public function getNextStatuses(string $currentStatus): array;
 }

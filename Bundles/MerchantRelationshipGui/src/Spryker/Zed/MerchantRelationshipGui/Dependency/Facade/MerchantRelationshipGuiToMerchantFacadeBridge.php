@@ -27,8 +27,8 @@ class MerchantRelationshipGuiToMerchantFacadeBridge implements MerchantRelations
     /**
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getMerchants(): MerchantCollectionTransfer
+    public function getMerchantCollection(): MerchantCollectionTransfer
     {
-        return $this->merchantFacade->getMerchants();
+        return $this->merchantFacade->getMerchantCollection();
     }
 }

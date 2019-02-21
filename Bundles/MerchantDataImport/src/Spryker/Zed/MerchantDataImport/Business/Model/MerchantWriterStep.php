@@ -15,6 +15,18 @@ use Spryker\Zed\MerchantDataImport\Business\Model\DataSet\MerchantDataSetInterfa
 
 class MerchantWriterStep implements DataImportStepInterface
 {
+    protected const REQUIRED_DATA_SET_KEYS = [
+        MerchantDataSetInterface::MERCHANT_KEY,
+        MerchantDataSetInterface::NAME,
+        MerchantDataSetInterface::REGISTRATION_NUMBER,
+        MerchantDataSetInterface::STATUS,
+        MerchantDataSetInterface::CONTACT_PERSON_TITLE,
+        MerchantDataSetInterface::CONTACT_PERSON_FIRST_NAME,
+        MerchantDataSetInterface::CONTACT_PERSON_LAST_NAME,
+        MerchantDataSetInterface::CONTACT_PERSON_PHONE,
+        MerchantDataSetInterface::EMAIL,
+    ];
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -30,24 +42,40 @@ class MerchantWriterStep implements DataImportStepInterface
 
         $merchantEntity
             ->setName($dataSet[MerchantDataSetInterface::NAME])
+            ->setRegistrationNumber($dataSet[MerchantDataSetInterface::REGISTRATION_NUMBER])
+            ->setStatus($dataSet[MerchantDataSetInterface::STATUS])
+            ->setContactPersonTitle($dataSet[MerchantDataSetInterface::CONTACT_PERSON_TITLE])
+            ->setContactPersonFirstName($dataSet[MerchantDataSetInterface::CONTACT_PERSON_FIRST_NAME])
+            ->setContactPersonLastName($dataSet[MerchantDataSetInterface::CONTACT_PERSON_LAST_NAME])
+            ->setContactPersonPhone($dataSet[MerchantDataSetInterface::CONTACT_PERSON_PHONE])
+            ->setEmail($dataSet[MerchantDataSetInterface::EMAIL])
             ->save();
     }
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
-     *
      * @return void
      */
     protected function validateDataSet(DataSetInterface $dataSet): void
     {
-        if (!$dataSet[MerchantDataSetInterface::MERCHANT_KEY]) {
-            throw new InvalidDataException('"' . MerchantDataSetInterface::MERCHANT_KEY . '" is required.');
+        foreach (static::REQUIRED_DATA_SET_KEYS as $requiredDataSetKey) {
+            $this->validateRequireDataSetByKey($dataSet, $requiredDataSetKey);
         }
+    }
 
-        if (!$dataSet[MerchantDataSetInterface::NAME]) {
-            throw new InvalidDataException('"' . MerchantDataSetInterface::NAME . '" is required.');
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     * @param string $requiredDataSetKey
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
+     *
+     * @return void
+     */
+    protected function validateRequireDataSetByKey(DataSetInterface $dataSet, string $requiredDataSetKey): void
+    {
+        if (!$dataSet[$requiredDataSetKey]) {
+            throw new InvalidDataException('"' . $requiredDataSetKey . '" is required.');
         }
     }
 }

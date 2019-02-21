@@ -14,5 +14,5 @@ interface MerchantRelationshipGuiToMerchantFacadeInterface
     /**
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getMerchants(): MerchantCollectionTransfer;
+    public function getMerchantCollection(): MerchantCollectionTransfer;
 }

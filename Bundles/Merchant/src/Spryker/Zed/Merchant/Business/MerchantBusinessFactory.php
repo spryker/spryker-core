@@ -10,10 +10,18 @@ namespace Spryker\Zed\Merchant\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGenerator;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
+use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressReader;
+use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressReaderInterface;
+use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriter;
+use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface;
 use Spryker\Zed\Merchant\Business\Model\MerchantReader;
 use Spryker\Zed\Merchant\Business\Model\MerchantReaderInterface;
 use Spryker\Zed\Merchant\Business\Model\MerchantWriter;
 use Spryker\Zed\Merchant\Business\Model\MerchantWriterInterface;
+use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReader;
+use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReaderInterface;
+use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidator;
+use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface;
 use Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceInterface;
 use Spryker\Zed\Merchant\MerchantDependencyProvider;
 
@@ -31,7 +39,10 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantWriter(
             $this->getEntityManager(),
-            $this->createMerchantKeyGenerator()
+            $this->createMerchantKeyGenerator(),
+            $this->createMerchantAddressWriter(),
+            $this->createMerchantStatusValidator(),
+            $this->getConfig()
         );
     }
 
@@ -41,6 +52,47 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     public function createMerchantReader(): MerchantReaderInterface
     {
         return new MerchantReader(
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReaderInterface
+     */
+    public function createMerchantStatusReader(): MerchantStatusReaderInterface
+    {
+        return new MerchantStatusReader(
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface
+     */
+    public function createMerchantStatusValidator(): MerchantStatusValidatorInterface
+    {
+        return new MerchantStatusValidator(
+            $this->getRepository(),
+            $this->createMerchantStatusReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface
+     */
+    public function createMerchantAddressWriter(): MerchantAddressWriterInterface
+    {
+        return new MerchantAddressWriter(
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressReaderInterface
+     */
+    public function createMerchantAddressReader(): MerchantAddressReaderInterface
+    {
+        return new MerchantAddressReader(
             $this->getRepository()
         );
     }

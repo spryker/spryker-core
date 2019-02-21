@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\Merchant\Persistence;
 
+use Orm\Zed\Merchant\Persistence\SpyMerchantAddressQuery;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantAddressMapper;
+use Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantAddressMapperInterface;
 use Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantMapper;
 use Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantMapperInterface;
 
@@ -32,6 +35,22 @@ class MerchantPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createPropelMerchantMapper(): MerchantMapperInterface
     {
-        return new MerchantMapper();
+        return new MerchantMapper($this->createMerchantAddressMapper());
+    }
+
+    /**
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantAddressQuery
+     */
+    public function createMerchantAddressQuery(): SpyMerchantAddressQuery
+    {
+        return SpyMerchantAddressQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantAddressMapperInterface
+     */
+    public function createMerchantAddressMapper(): MerchantAddressMapperInterface
+    {
+        return new MerchantAddressMapper();
     }
 }

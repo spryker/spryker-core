@@ -16,14 +16,14 @@ class MerchantReader implements MerchantReaderInterface
     /**
      * @var \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface
      */
-    protected $repository;
+    protected $merchantRepository;
 
     /**
-     * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $repository
+     * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
      */
-    public function __construct(MerchantRepositoryInterface $repository)
+    public function __construct(MerchantRepositoryInterface $merchantRepository)
     {
-        $this->repository = $repository;
+        $this->merchantRepository = $merchantRepository;
     }
 
     /**
@@ -37,7 +37,7 @@ class MerchantReader implements MerchantReaderInterface
     {
         $merchantTransfer->requireIdMerchant();
 
-        $merchantTransfer = $this->repository->getMerchantById($merchantTransfer->getIdMerchant());
+        $merchantTransfer = $this->merchantRepository->findMerchantByIdMerchant($merchantTransfer->getIdMerchant());
         if (!$merchantTransfer) {
             throw new MerchantNotFoundException();
         }
@@ -46,14 +46,22 @@ class MerchantReader implements MerchantReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param int $idMerchant
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer
+    public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer
     {
-        $merchantTransfer->requireIdMerchant();
+        return $this->merchantRepository->findMerchantByIdMerchant($idMerchant);
+    }
 
-        return $this->repository->getMerchantById($merchantTransfer->getIdMerchant());
+    /**
+     * @param string $email
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function findMerchantByEmail(string $email): ?MerchantTransfer
+    {
+        return $this->merchantRepository->findMerchantByEmail($email);
     }
 }
