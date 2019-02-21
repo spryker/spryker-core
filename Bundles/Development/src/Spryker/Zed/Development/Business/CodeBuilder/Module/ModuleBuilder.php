@@ -226,11 +226,9 @@ class ModuleBuilder
      */
     protected function getDirectoryName($namespace)
     {
-        if ($namespace === static::NAMESPACE_SPRYKER_SHOP) {
-            return $this->config->getPathToShop();
-        }
-        if ($namespace === static::NAMESPACE_SPRYKER) {
-            return $this->config->getPathToCore();
+        $pathToInternalNamespace = $this->config->getPathToInternalNamespace($namespace);
+        if ($pathToInternalNamespace) {
+            return $pathToInternalNamespace;
         }
 
         $folder = $this->camelCaseToDash($namespace);
@@ -246,7 +244,7 @@ class ModuleBuilder
      */
     protected function getModuleName($module, $namespace)
     {
-        if ($namespace === static::NAMESPACE_SPRYKER_SHOP || $namespace === static::NAMESPACE_SPRYKER) {
+        if (in_array($namespace, $this->config->getInternalNamespacesList(), true)) {
             return $module;
         }
 
