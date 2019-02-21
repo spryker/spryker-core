@@ -219,7 +219,7 @@ class ShipmentOrderSaverWithMultiShippingAddress implements ShipmentOrderSaverWi
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->requireShipment();
             $itemTransfer->getShipment()->requireMethod();
-            $itemTransfer->getShipment()->requireShippingAddress();;
+            $itemTransfer->getShipment()->requireShippingAddress();
         }
     }
 

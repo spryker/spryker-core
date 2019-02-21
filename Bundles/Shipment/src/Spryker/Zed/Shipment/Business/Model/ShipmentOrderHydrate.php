@@ -46,7 +46,9 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
             ->querySalesShipmentByIdSalesOrder($idSalesOrder)
             ->find();
 
-        return $this->hydrateShipmentMethodToOrderTransfer($salesOrderShipments, $orderTransfer);
+        $orderTransfer = $this->hydrateShipmentMethodToOrderTransfer($salesOrderShipments, $orderTransfer);
+
+        return $this->setShipmentToOrderExpenses($salesOrderShipments, $orderTransfer);
     }
 
     /**
@@ -120,6 +122,37 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         foreach ($orderTransfer->getItems() as $item) {
             if ($item->getShipment()->getMethod()->getName() === $shipmentMethodTransfer->getName()) {
                 $item->getShipment()->setMethod($shipmentMethodTransfer);
+            }
+        }
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderShipments
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function setShipmentToOrderExpenses(ObjectCollection $salesOrderShipments, OrderTransfer $orderTransfer): OrderTransfer
+    {
+        foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
+            $shipmentEntity = null;
+            foreach ($salesOrderShipments as $salesShipmentEntity) {
+                if ($salesShipmentEntity->getFkSalesExpense() === $expenseTransfer->getIdSalesExpense()) {
+                    $shipmentEntity = $salesShipmentEntity;
+                    break;
+                }
+            }
+
+            if ($shipmentEntity === null) {
+                continue;
+            }
+
+            foreach ($orderTransfer->getItems() as $itemTransfer) {
+                if ($itemTransfer->getShipment()->getIdSalesShipment() === $shipmentEntity->getIdSalesShipment()) {
+                    $expenseTransfer->setShipment($itemTransfer->getShipment());
+                }
             }
         }
 

@@ -28,7 +28,7 @@ class SalesOrderDataBCForMultiShipmentAdapter implements SalesOrderDataBCForMult
      */
     public function adapt(OrderTransfer $orderTransfer): OrderTransfer
     {
-        if ($this->assertThatItemTransfersHaveShipmentAndShipmentExpenseAndAddress($orderTransfer)) {
+        if ($this->assertThatItemTransfersHaveShipmentAndAddress($orderTransfer)) {
             return $orderTransfer;
         }
 
@@ -40,17 +40,12 @@ class SalesOrderDataBCForMultiShipmentAdapter implements SalesOrderDataBCForMult
             return $orderTransfer;
         }
 
-        $orderExpenseTransfer = $this->findOrderShipmentExpense($orderTransfer);
-        if ($orderExpenseTransfer === null) {
-            return $orderTransfer;
-        }
-
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-            if ($this->assertThatItemTransferHasShipmentWithShipmentExpense($itemTransfer)) {
+            if ($this->assertThatItemTransferHasShipment($itemTransfer)) {
                 continue;
             }
 
-            $this->setItemTransferShipmentAndShipmentAddressAndShipmentExpenseForBC($itemTransfer, $orderTransfer, $orderExpenseTransfer);
+            $this->setItemTransferShipmentAndShipmentAddressForBC($itemTransfer, $orderTransfer);
         }
 
         return $orderTransfer;
@@ -63,11 +58,10 @@ class SalesOrderDataBCForMultiShipmentAdapter implements SalesOrderDataBCForMult
      *
      * @return bool
      */
-    protected function assertThatItemTransfersHaveShipmentAndShipmentExpenseAndAddress(OrderTransfer $orderTransfer): bool
+    protected function assertThatItemTransfersHaveShipmentAndAddress(OrderTransfer $orderTransfer): bool
     {
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null
-                || $itemTransfer->getShipment()->getExpense() === null
                 || $itemTransfer->getShipment()->getShippingAddress() === null
             ) {
                 return false;
@@ -104,33 +98,13 @@ class SalesOrderDataBCForMultiShipmentAdapter implements SalesOrderDataBCForMult
     /**
      * @deprecated Will be removed in next major release.
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ExpenseTransfer|null
-     */
-    protected function findOrderShipmentExpense(OrderTransfer $orderTransfer): ?ExpenseTransfer
-    {
-        foreach ($orderTransfer->getExpenses() as $key => $expenseTransfer) {
-            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                continue;
-            }
-
-            return $expenseTransfer;
-        }
-
-        return null;
-    }
-
-    /**
-     * @deprecated Will be removed in next major release.
-     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return bool
      */
-    protected function assertThatItemTransferHasShipmentWithShipmentExpense(ItemTransfer $itemTransfer): bool
+    protected function assertThatItemTransferHasShipment(ItemTransfer $itemTransfer): bool
     {
-        return ($itemTransfer->getShipment() !== null && $itemTransfer->getShipment()->getExpense() !== null);
+        return ($itemTransfer->getShipment() !== null);
     }
 
     /**
@@ -148,23 +122,6 @@ class SalesOrderDataBCForMultiShipmentAdapter implements SalesOrderDataBCForMult
         }
 
         return $orderTransfer->getShipment();
-    }
-
-    /**
-     * @deprecated Will be removed in next major release.
-     *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $orderExpenseTransfer
-     *
-     * @return \Generated\Shared\Transfer\ExpenseTransfer
-     */
-    protected function getShipmentExpenseTransferForBC(ItemTransfer $itemTransfer, ExpenseTransfer $orderExpenseTransfer): ExpenseTransfer
-    {
-        if ($itemTransfer->getShipment() !== null && $itemTransfer->getShipment()->getExpense() !== null) {
-            return $itemTransfer->getShipment()->getExpense();
-        }
-
-        return $orderExpenseTransfer;
     }
 
     /**
@@ -193,17 +150,12 @@ class SalesOrderDataBCForMultiShipmentAdapter implements SalesOrderDataBCForMult
      *
      * @return void
      */
-    protected function setItemTransferShipmentAndShipmentAddressAndShipmentExpenseForBC(
-        ItemTransfer $itemTransfer,
-        OrderTransfer $orderTransfer,
-        ExpenseTransfer $orderExpenseTransfer
-    ): void {
+    protected function setItemTransferShipmentAndShipmentAddressForBC(ItemTransfer $itemTransfer, OrderTransfer $orderTransfer): void
+    {
         $shipmentTransfer = $this->getShipmentTransferForBC($itemTransfer, $orderTransfer);
         $itemTransfer->setShipment($shipmentTransfer);
 
-        $shipmentExpenseTransfer = $this->getShipmentExpenseTransferForBC($itemTransfer, $orderExpenseTransfer);
         $shippingAddressTransfer = $this->getShipmentAddressTransferForBC($itemTransfer, $orderTransfer);
-        $shipmentTransfer->setExpense($shipmentExpenseTransfer)
-            ->setShippingAddress($shippingAddressTransfer);
+        $shipmentTransfer->setShippingAddress($shippingAddressTransfer);
     }
 }

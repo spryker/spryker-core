@@ -54,29 +54,7 @@ class OrderReader extends OrderReaderWithoutMultiShippingAddress
          * @deprecated Will be removed in next major release.
          */
         $orderEntity = $this->orderDataBCForMultiShipmentAdapter->adapt($orderEntity);
-        $orderEntity = $this->sanitizeOrderShipmentExpense($orderEntity);
 
         return $this->orderHydrator->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
-    }
-
-    /**
-     * @deprecated Will be removed in next major release.
-     *
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder|null
-     */
-    protected function sanitizeOrderShipmentExpense(SpySalesOrder $orderEntity): ?SpySalesOrder
-    {
-        $orderExpensesCollection = $orderEntity->getExpenses();
-        foreach ($orderExpensesCollection as $key => $expenseEntity) {
-            if ($expenseEntity->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                continue;
-            }
-
-            $orderExpensesCollection->offsetUnset($key);
-        }
-
-        return $orderEntity;
     }
 }

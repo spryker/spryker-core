@@ -38,6 +38,7 @@ class SalesController extends AbstractController
 
         return $this->viewResponse([
             'shipmentGroups' => $shipmentGroups,
+            'order' => $orderTransfer,
             'currencyIsoCode' => $orderTransfer->getCurrencyIsoCode(),
         ]);
     }

@@ -6,6 +6,14 @@
             {% block widget_content %}
 
                 {% for shipmentGroup in shipmentGroups %}
+                    {% set sumPriceToPayAggregation = null %}
+                    {% for expense in order.expenses %}
+                        {% if expense.type == constant('\\Spryker\\Shared\\Shipment\\ShipmentConstants::SHIPMENT_EXPENSE_TYPE')
+                            and expense.shipment.idSalesShipment == shipmentGroup.shipment.idSalesShipment
+                        %}
+                            {% set sumPriceToPayAggregation = expense.sumPriceToPayAggregation %}
+                        {% endif %}
+                    {% endfor %}
                 <table class="footable table table-striped toggle-arrow-tiny">
                     <thead>
                         <tr>
@@ -18,7 +26,7 @@
                         <tr>
                             <td>{{ shipmentGroup.shipment.method.carrierName }}</td>
                             <td>{{ shipmentGroup.shipment.method.name }}</td>
-                            <td>{{ shipmentGroup.shipment.expense.sumPriceToPayAggregation | money(true, currencyIsoCode) }}</td>
+                            <td>{% if sumPriceToPayAggregation %}{{ sumPriceToPayAggregation | money(true, currencyIsoCode) }}{% endif %}</td>
                         </tr>
                     </tbody>
                 </table>
