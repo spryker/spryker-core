@@ -112,7 +112,7 @@ class ProductFormHandler implements FormHandlerInterface
      *
      * @return bool
      */
-    protected function isProductInvalid($newProduct, $addedSkus): bool
+    protected function isProductInvalid(ItemTransfer $newProduct, array $addedSkus): bool
     {
         return $newProduct->getSku() === ''
             || $newProduct->getQuantity() <= 0
