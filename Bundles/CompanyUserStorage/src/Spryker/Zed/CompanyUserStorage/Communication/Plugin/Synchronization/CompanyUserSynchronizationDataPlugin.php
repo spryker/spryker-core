@@ -56,11 +56,7 @@ class CompanyUserSynchronizationDataPlugin extends AbstractPlugin implements Syn
     public function getData(array $ids = []): array
     {
         $synchronizationDataTransfers = [];
-        $companyUserStorageEntities = $this->getRepository()->findCompanyUserStorageEntities($ids);
-
-        if (count($ids) === 0) {
-            $companyUserStorageEntities = $this->getRepository()->findAllCompanyUserStorageEntities();
-        }
+        $companyUserStorageEntities = $this->findCompanyUserStorageEntities($ids);
 
         foreach ($companyUserStorageEntities as $companyUserStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
@@ -110,5 +106,19 @@ class CompanyUserSynchronizationDataPlugin extends AbstractPlugin implements Syn
     {
         return $this->getConfig()
             ->getCompanyUserSynchronizationPoolName();
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return array|\Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
+     */
+    protected function findCompanyUserStorageEntities(array $ids): array
+    {
+        if (count($ids)) {
+           return $this->getRepository()->findCompanyUserStorageEntities($ids);
+        }
+
+        return $this->getRepository()->findAllCompanyUserStorageEntities();
     }
 }

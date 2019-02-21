@@ -17,6 +17,7 @@ class CompanyUserAccessTokensResourceRoutePlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritdoc}
+     *  - configure actions for `company-user-access-tokens` resource.
      *
      * @api
      *
@@ -52,7 +53,7 @@ class CompanyUserAccessTokensResourceRoutePlugin extends AbstractPlugin implemen
      */
     public function getController(): string
     {
-         return 'company-user-access-tokens-resource';
+         return CompanyUserAuthRestApiConfig::CONTROLLER_COMPANY_USER_ACCESS_TOKENS_RESOURCE;
     }
 
     /**

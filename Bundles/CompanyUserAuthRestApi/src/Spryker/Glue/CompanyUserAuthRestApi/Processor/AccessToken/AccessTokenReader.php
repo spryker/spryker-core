@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CompanyUserAuthRestApi\Processor\AccessToken;
 
 use Generated\Shared\Transfer\OauthRequestTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAccessTokensAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestTokenResponseAttributesTransfer;
@@ -61,6 +62,27 @@ class AccessTokenReader implements AccessTokenReaderInterface
         RestRequestInterface $restRequest,
         RestCompanyUserAccessTokensAttributesTransfer $restCompanyUserAccessTokensAttributesTransfer
     ): RestResponseInterface {
+        $oauthRequestTransfer = $this->createOauthRequestTransfer($restRequest, $restCompanyUserAccessTokensAttributesTransfer);
+
+        $oauthResponseTransfer = $this->oauthClient->processAccessTokenRequest($oauthRequestTransfer);
+
+        if (!$oauthResponseTransfer->getIsValid()) {
+            return $this->createInvalidLoginResponse();
+        }
+
+        return $this->createResponse($oauthResponseTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCompanyUserAccessTokensAttributesTransfer $restCompanyUserAccessTokensAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthRequestTransfer
+     */
+    protected function createOauthRequestTransfer(
+        RestRequestInterface $restRequest,
+        RestCompanyUserAccessTokensAttributesTransfer $restCompanyUserAccessTokensAttributesTransfer
+    ): OauthRequestTransfer {
         $oauthRequestTransfer = (new OauthRequestTransfer())
             ->setIdCompanyUser($restCompanyUserAccessTokensAttributesTransfer->getIdCompanyUser())
             ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
@@ -68,20 +90,32 @@ class AccessTokenReader implements AccessTokenReaderInterface
             ->setClientId($this->oauthCompanyUserClient->getClientId())
             ->setClientSecret($this->oauthCompanyUserClient->getClientSecret());
 
-        $oauthResponseTransfer = $this->oauthClient->processAccessTokenRequest($oauthRequestTransfer);
+        return $oauthRequestTransfer;
+    }
 
-        if (!$oauthResponseTransfer->getIsValid()) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CompanyUserAuthRestApiConfig::RESPONSE_INVALID_LOGIN)
-                ->setStatus(Response::HTTP_UNAUTHORIZED)
-                ->setDetail('Failed to authenticate user.');
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createInvalidLoginResponse(): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CompanyUserAuthRestApiConfig::RESPONSE_CODE_INVALID_LOGIN)
+            ->setStatus(Response::HTTP_UNAUTHORIZED)
+            ->setDetail(CompanyUserAuthRestApiConfig::RESPONSE_DETAIL_INVALID_LOGIN);
 
-            $response = $this->restResourceBuilder->createRestResponse();
-            $response->addError($restErrorTransfer);
+        $response = $this->restResourceBuilder->createRestResponse();
+        $response->addError($restErrorTransfer);
 
-            return $response;
-        }
+        return $response;
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createResponse(OauthResponseTransfer $oauthResponseTransfer): RestResponseInterface
+    {
         $restTokenAttributesTransfer = new RestTokenResponseAttributesTransfer();
         $restTokenAttributesTransfer->fromArray($oauthResponseTransfer->toArray(), true);
 

@@ -11,7 +11,7 @@ interface CompanyUserEvents
 {
     /**
      * Specification
-     *  - This event will be used for company_user publishing
+     *  - This event will be used for company_user publishing.
      *
      * @api
      */
@@ -19,7 +19,7 @@ interface CompanyUserEvents
 
     /**
      * Specification
-     *  - This event will be used for company_user un-publishing
+     *  - This event will be used for company_user un-publishing.
      *
      * @api
      */
@@ -27,7 +27,7 @@ interface CompanyUserEvents
 
     /**
      * Specification:
-     *  - This event will be used for company_user entity creation
+     *  - This event will be used for company_user entity creation.
      *
      * @api
      */
@@ -35,7 +35,7 @@ interface CompanyUserEvents
 
     /**
      * Specification:
-     * - This event will be used for company_user entity update
+     * - This event will be used for company_user entity update.
      *
      * @api
      */
@@ -43,7 +43,7 @@ interface CompanyUserEvents
 
     /**
      * Specification:
-     * - This event will be used for company_user entity delete
+     * - This event will be used for company_user entity delete.s
      *
      * @api
      */

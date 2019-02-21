@@ -186,6 +186,6 @@ class OauthBusinessFactory extends AbstractBusinessFactory
      */
     public function getGrantTypeProviderPlugins(): array
     {
-        return $this->getProvidedDependency(OauthDependencyProvider::PLUGIN_GRANT_TYPE_PROVIDER);
+        return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_GRANT_TYPE_PROVIDER);
     }
 }

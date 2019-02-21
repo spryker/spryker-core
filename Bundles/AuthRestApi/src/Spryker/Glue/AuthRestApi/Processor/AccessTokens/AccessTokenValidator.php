@@ -163,6 +163,17 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
             ->setNaturalIdentifier($userIdentifier['customer_reference'])
             ->setSurrogateIdentifier($userIdentifier['id_customer']);
 
+        return $this->executeRestUserExpanderPlugins($restRequest, $restUserTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestUserTransfer $restUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestUserTransfer
+     */
+    protected function executeRestUserExpanderPlugins(RestRequestInterface $restRequest, RestUserTransfer $restUserTransfer): RestUserTransfer
+    {
         foreach ($this->restUserExpanderPlugins as $restUserExpanderPlugin) {
             $restUserTransfer = $restUserExpanderPlugin->expand($restUserTransfer, $restRequest);
         }

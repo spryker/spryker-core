@@ -35,6 +35,7 @@ class CompanyUserOauthGrantTypeProviderPlugin extends AbstractPlugin implements 
     /**
      * {@inheritdoc}
      *  - Returns instance of id company user grant type.
+     *
      * @api
      *
      * @return \League\OAuth2\Server\Grant\AbstractGrant

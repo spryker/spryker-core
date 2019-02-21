@@ -226,6 +226,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
                 ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
                 ->filterByIsActive(true)
             ->endUse()
+            ->filterByIsActive(true)
             ->filterByUuid($uuidCompanyUser);
 
         $companyUserEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
@@ -272,7 +273,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @module Customer
      *
      * @param int $idCompany
      *
@@ -297,7 +298,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
+     * @module Company
      *
      * @param int $idCustomer
      *
@@ -317,8 +318,8 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
-     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @module Customer
+     * @module Company
      *
      * @param array $companyUserIds
      *
@@ -350,7 +351,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @module Customer
      *
      * @param array $companyIds
      *
