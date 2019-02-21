@@ -280,7 +280,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Will be removed in next major release. Use $this->createProductOptionTaxRateWithItemShipmentTaxRateCalculator() instead.
      *
-     * @return \Spryker\Zed\ProductOption\Business\StrategyResolver\TaxRateCalculatorStrategyResolver
+     * @return \Spryker\Zed\ProductOption\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface
      */
     public function createProductItemTaxRateCalculatorStrategyResolver(): TaxRateCalculatorStrategyResolverInterface
     {
@@ -301,7 +301,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
      */
     protected function addStrategyProductOptionTaxRateCalculatorWithoutMultipleShipmentTaxRate(array $strategyContainer): array
     {
-        $strategyContainer[TaxRateCalculatorStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+        $strategyContainer[TaxRateCalculatorStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createProductOptionTaxRateCalculator();
         };
 
@@ -317,7 +317,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
      */
     protected function addStrategyProductOptionTaxRateCalculatorWithMultipleShipmentTaxRate(array $strategyContainer): array
     {
-        $strategyContainer[TaxRateCalculatorStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+        $strategyContainer[TaxRateCalculatorStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createProductOptionTaxRateWithItemShipmentTaxRateCalculator();
         };
 
