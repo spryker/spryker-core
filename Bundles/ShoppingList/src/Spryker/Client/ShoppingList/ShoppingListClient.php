@@ -384,4 +384,16 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     {
         $this->getFactory()->createPermissionUpdater()->updateCompanyUserPermissions();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function updateCustomerPermission(): void
+    {
+        $this->getFactory()->createPermissionUpdater()->updateCompanyUserPermissions();
+    }
 }
