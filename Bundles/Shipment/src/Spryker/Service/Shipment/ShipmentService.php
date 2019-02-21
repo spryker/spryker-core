@@ -7,6 +7,7 @@
 
 namespace Spryker\Service\Shipment;
 
+use ArrayObject;
 use Spryker\Service\Kernel\AbstractService;
 use Spryker\Service\Shipment\Items\ItemsGrouperInterface;
 
@@ -25,11 +26,11 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
      *
      * @api
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShipment(iterable $itemTransfers): array
+    public function groupItemsByShipment(iterable $itemTransfers): ArrayObject
     {
         return $this->getItemsGrouper()->groupByShipment($itemTransfers);
     }

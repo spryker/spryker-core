@@ -7,12 +7,14 @@
 
 namespace Spryker\Service\Shipment\Items;
 
+use ArrayObject;
+
 interface ItemsGrouperInterface
 {
     /**
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupByShipment(iterable $itemTransfers): array;
+    public function groupByShipment(iterable $itemTransfers): ArrayObject;
 }
