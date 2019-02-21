@@ -65,10 +65,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createQuoteReader(): QuoteReaderInterface
     {
-        return new QuoteReader(
-            $this->getCartsRestApiFacade(),
-            $this->getCustomerFacade()
-        );
+        return new QuoteReader($this->getCartsRestApiFacade());
     }
 
     /**
