@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface;
@@ -50,6 +51,12 @@ class QuoteReader implements QuoteReaderInterface
         $customerReference = $restCheckoutRequestAttributesTransfer->getCustomer()->getCustomerReference();
         if ($quoteResponseTransfer->getQuoteTransfer()->getCustomerReference() !== $customerReference) {
             return null;
+        }
+
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+        if (!$quoteTransfer->getCustomer()) {
+            $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
+            $quoteTransfer->setCustomer($customerTransfer);
         }
 
         return $quoteTransfer;
