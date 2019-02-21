@@ -22,6 +22,7 @@ class ProductType extends AbstractType
 {
     public const FIELD_SKU = 'sku';
     public const FIELD_QUANTITY = 'quantity';
+    protected const PATTERN_QUANTITY = '/^\d*\.?\d{0,2}$/';
 
     protected const ERROR_MESSAGE_QUANTITY = 'Invalid Quantity.';
 
@@ -82,7 +83,7 @@ class ProductType extends AbstractType
             'constraints' => [
                 $this->createNumberConstraint($options),
             ],
-            'data' => 1,
+            'data' => 1.0,
         ]);
 
         return $this;
@@ -98,7 +99,7 @@ class ProductType extends AbstractType
         $validationGroup = $this->getValidationGroup($options);
 
         return new Regex([
-            'pattern' => '/^\d*$/',
+            'pattern' => static::PATTERN_QUANTITY,
             'message' => static::ERROR_MESSAGE_QUANTITY,
             'groups' => $validationGroup,
         ]);

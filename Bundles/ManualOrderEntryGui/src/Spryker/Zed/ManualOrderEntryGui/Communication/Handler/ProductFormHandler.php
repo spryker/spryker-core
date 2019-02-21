@@ -52,7 +52,7 @@ class ProductFormHandler implements FormHandlerInterface
         $addedSkus = [];
 
         foreach ($quoteTransfer->getManualOrder()->getProducts() as $newProduct) {
-            if ($this->isProductValid($newProduct, $addedSkus)) {
+            if ($this->isProductInvalid($newProduct, $addedSkus)) {
                 continue;
             }
 
@@ -112,7 +112,7 @@ class ProductFormHandler implements FormHandlerInterface
      *
      * @return bool
      */
-    protected function isProductValid($newProduct, $addedSkus): bool
+    protected function isProductInvalid($newProduct, $addedSkus): bool
     {
         return $newProduct->getSku() === ''
             || $newProduct->getQuantity() <= 0

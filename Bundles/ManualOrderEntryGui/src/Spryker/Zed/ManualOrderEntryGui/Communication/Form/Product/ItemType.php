@@ -34,6 +34,7 @@ class ItemType extends AbstractType
     protected const ERROR_MESSAGE_QUANTITY = 'Invalid Quantity.';
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
+    protected const PATTERN_QUANTITY = self::PATTERN_MONEY;
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -159,7 +160,7 @@ class ItemType extends AbstractType
         $validationGroup = $this->getValidationGroup($options);
 
         return new Regex([
-            'pattern' => '/^\d*$/',
+            'pattern' => static::PATTERN_QUANTITY,
             'message' => static::ERROR_MESSAGE_QUANTITY,
             'groups' => $validationGroup,
         ]);
