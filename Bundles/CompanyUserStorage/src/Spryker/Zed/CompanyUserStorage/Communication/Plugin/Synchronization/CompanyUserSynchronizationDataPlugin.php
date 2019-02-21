@@ -111,12 +111,12 @@ class CompanyUserSynchronizationDataPlugin extends AbstractPlugin implements Syn
     /**
      * @param array $ids
      *
-     * @return array|\Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
+     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
      */
     protected function findCompanyUserStorageEntities(array $ids): array
     {
         if (count($ids)) {
-           return $this->getRepository()->findCompanyUserStorageEntities($ids);
+            return $this->getRepository()->findCompanyUserStorageEntities($ids);
         }
 
         return $this->getRepository()->findAllCompanyUserStorageEntities();
