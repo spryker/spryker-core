@@ -15,9 +15,11 @@ use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeInt
 use Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface;
 use Spryker\Zed\ContentStorage\Persistence\ContentStorageEntityManagerInterface;
 use Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class ContentStorageWriter implements ContentStorageWriterInterface
 {
+    use TransactionTrait;
 
     protected const DEFAULT_LOCALE = 'DEFAULT_LOCALE';
 
@@ -62,14 +64,26 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     /**
      * @param int[] $contentIds
      *
-     * @return bool
+     * @return void
      */
     public function publish(array $contentIds): void
     {
         $contentTransfers = $this->contentStorageRepository->findContentByIds($contentIds);
         $contentStorageTransfers = $this->contentStorageRepository->findContentStorageByContentIds($contentIds);
 
+        $this->getTransactionHandler()->handleTransaction(function () use ($contentTransfers, $contentStorageTransfers) {
+            return $this->executePublishTransaction($contentTransfers, $contentStorageTransfers);
+        });
+    }
 
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ContentTransfer[] $contentTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ContentStorageTransfer[] $contentStorageTransfers
+     *
+     * @return bool
+     */
+    protected function executePublishTransaction(ArrayObject $contentTransfers, ArrayObject $contentStorageTransfers): bool
+    {
         $availableLocales = $this->localeFacade->getLocaleCollection();
         $contentStorageTransfers = $this->groupByIdContentAndLocale($contentStorageTransfers);
         foreach ($contentTransfers as $contentTransfer) {
@@ -77,7 +91,6 @@ class ContentStorageWriter implements ContentStorageWriterInterface
         }
 
         return true;
-
     }
 
     /**
