@@ -96,6 +96,10 @@ class CmsBlockProductDataProvider
         $idLocale = $this->localeFacade
             ->getCurrentLocale()
             ->getIdLocale();
+
+        if ($cmsBlockTransfer->getIdCmsBlock() === null) {
+            return $productAbstractOptions;
+        }
         $productAbstracts = $this->repository->getAssignedProductOptions(
             $idLocale,
             $cmsBlockTransfer->getIdCmsBlock()
