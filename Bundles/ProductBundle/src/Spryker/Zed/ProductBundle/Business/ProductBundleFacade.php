@@ -20,6 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface getRepository()
  */
 class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeInterface
 {
