@@ -36,8 +36,8 @@ class ProductBundleCartActiveCheckTest extends Unit
      */
     public function testShouldReturnErrorMessageIfBundleProductIsNotActive()
     {
-        $productBundleCartActiveCheck = $this->createProductBundleCartActiveCheck();
-        $cartPreCheckResponseTransfer = $productBundleCartActiveCheck->checkCartAvailability(
+        $productBundleCartActiveCheckStub = $this->createProductBundleCartActiveCheckStub();
+        $cartPreCheckResponseTransfer = $productBundleCartActiveCheckStub->checkActiveItems(
             $this->createCartChangeTransferWithProduct(static::INACTIVE_PRODUCT_SKU)
         );
 
@@ -50,8 +50,8 @@ class ProductBundleCartActiveCheckTest extends Unit
      */
     public function testShouldReturnNoMessagesIfBundleProductIsActive()
     {
-        $productBundleCartActiveCheck = $this->createProductBundleCartActiveCheck();
-        $cartPreCheckResponseTransfer = $productBundleCartActiveCheck->checkCartAvailability(
+        $productBundleCartActiveCheckStub = $this->createProductBundleCartActiveCheckStub();
+        $cartPreCheckResponseTransfer = $productBundleCartActiveCheckStub->checkActiveItems(
             $this->createCartChangeTransferWithProduct(static::ACTIVE_PRODUCT_SKU)
         );
 
@@ -78,7 +78,7 @@ class ProductBundleCartActiveCheckTest extends Unit
     /**
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheckInterface
      */
-    protected function createProductBundleCartActiveCheck()
+    protected function createProductBundleCartActiveCheckStub()
     {
         return Stub::construct(ProductBundleCartActiveCheck::class, [
             $this->createProductRepositoryStub(),
