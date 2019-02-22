@@ -32,7 +32,8 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
             ->joinSpyNewsletterSubscriber()
             ->useSpyNewsletterSubscriberQuery()
                 ->filterByEmail($email)
-            ->endUse();
+            ->endUse()
+            ->setIgnoreCase(true);
 
         return $subscriptionQuery;
     }

@@ -22,12 +22,22 @@ class CustomerAccessConfig extends AbstractBundleConfig
     }
 
     /**
-     * Gets content type access for install (all content types will be created with restricted access)
+     * Gets content type access for install.
      *
      * @return bool
      */
     public function getContentTypeAccess(): bool
     {
         return true;
+    }
+
+    /**
+     * Returns content access by type for install.
+     *
+     * @return bool[]
+     */
+    public function getContentAccessByType(): array
+    {
+        return [];
     }
 }

@@ -25,10 +25,21 @@ class ProductDiscontinuedStorageRepository extends AbstractRepository implements
             return [];
         }
 
+        return $this->getFactory()
+            ->createProductDiscontinuedStoragePropelQuery()
+            ->filterByFkProductDiscontinued_In($productDiscontinuedIds)
+            ->find()
+            ->getArrayCopy();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
+     */
+    public function findAllProductDiscontinuedStorageEntities(): array
+    {
         /** @var \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]|\Propel\Runtime\Collection\ObjectCollection $productDiscontinuedStorageEntities */
         $productDiscontinuedStorageEntities = $this->getFactory()
             ->createProductDiscontinuedStoragePropelQuery()
-            ->filterByFkProductDiscontinued_In($productDiscontinuedIds)
             ->find();
 
         if (!$productDiscontinuedStorageEntities->count()) {
