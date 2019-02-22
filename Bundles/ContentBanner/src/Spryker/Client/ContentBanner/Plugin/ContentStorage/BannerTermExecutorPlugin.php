@@ -13,7 +13,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\ContentBanner\ContentBannerConfig;
 
 /**
- * @method \Spryker\Client\ContentBanner\ContentBannerFactory getFactory()
+ * @method \Spryker\Client\ContentBanner\ContentBannerClient getClient()
  */
 class BannerTermExecutorPlugin extends AbstractPlugin implements ContentTermExecutorPluginInterface
 {
@@ -28,8 +28,7 @@ class BannerTermExecutorPlugin extends AbstractPlugin implements ContentTermExec
      */
     public function execute(array $parameters): array
     {
-        return $this->getFactory()
-            ->createBannerTermExecutor()
+        return $this->getClient()
             ->execute(
                 $this->mapParametersToTransferObject($parameters)
             );
