@@ -8,17 +8,17 @@
 namespace Spryker\Zed\ContentGui\Communication\Resolver;
 
 use Spryker\Zed\ContentGui\Communication\Exception\MissingContentTermFormTypePluginException;
-use Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface;
+use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface;
 
 class ContentResolver implements ContentResolverInterface
 {
     /**
-     * @var array|\Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface[]
+     * @var array|\Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface[]
      */
     protected $contentPlugins;
 
     /**
-     * @param \Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface[] $contentPlugins
+     * @param \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface[] $contentPlugins
      */
     public function __construct(array $contentPlugins)
     {
@@ -43,7 +43,7 @@ class ContentResolver implements ContentResolverInterface
      *
      * @throws \Spryker\Zed\ContentGui\Communication\Exception\MissingContentTermFormTypePluginException
      *
-     * @return \Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface
+     * @return \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface
      */
     public function getContentPlugin(string $termKey): ContentPluginInterface
     {

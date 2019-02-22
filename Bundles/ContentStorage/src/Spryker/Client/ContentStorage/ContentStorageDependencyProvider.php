@@ -49,7 +49,7 @@ class ContentStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface[]
+     * @return \Spryker\Client\ContentStorageExtension\Dependency\Plugin\ContentTermExecutorPluginInterface[]
      */
     protected function getContentPlugins(): array
     {

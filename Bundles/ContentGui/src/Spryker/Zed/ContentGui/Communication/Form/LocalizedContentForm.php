@@ -95,7 +95,7 @@ class LocalizedContentForm extends AbstractType
     protected function addParameterCollection(FormBuilderInterface $builder, array $options)
     {
         /**
-         * @var \Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface $contentPlugin
+         * @var \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface $contentPlugin
          */
         $contentPlugin = $options[ContentForm::OPTION_CONTENT_ITEM_FORM_PLUGIN];
 

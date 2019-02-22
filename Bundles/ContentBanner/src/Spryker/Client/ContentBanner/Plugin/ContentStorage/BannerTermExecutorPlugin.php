@@ -8,7 +8,7 @@
 namespace Spryker\Client\ContentBanner\Plugin\ContentStorage;
 
 use Generated\Shared\Transfer\ContentBannerTransfer;
-use Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface;
+use Spryker\Client\ContentStorageExtension\Dependency\Plugin\ContentTermExecutorPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\ContentBanner\ContentBannerConfig;
 

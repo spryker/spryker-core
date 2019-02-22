@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ContentBannerTransfer;
 use Spryker\Shared\ContentBannerGui\ContentBannerGuiConfig;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\ContentBannerGui\Communication\Form\BannerContentTermForm;
-use Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface;
+use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 class ContentBannerFormPlugin extends AbstractPlugin implements ContentPluginInterface

@@ -8,17 +8,17 @@
 namespace Spryker\Client\ContentStorage\Resolver;
 
 use Spryker\Client\ContentStorage\Exception\MissingContentTermTypePluginException;
-use Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface;
+use Spryker\Client\ContentStorageExtension\Dependency\Plugin\ContentTermExecutorPluginInterface;
 
 class ContentResolver implements ContentResolverInterface
 {
     /**
-     * @var array|\Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface[]
+     * @var array|\Spryker\Client\ContentStorageExtension\Dependency\Plugin\ContentTermExecutorPluginInterface[]
      */
     protected $contentTermPlugins;
 
     /**
-     * @param \Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface[] $contentTermPlugins
+     * @param \Spryker\Client\ContentStorageExtension\Dependency\Plugin\ContentTermExecutorPluginInterface[] $contentTermPlugins
      */
     public function __construct(array $contentTermPlugins)
     {
@@ -43,7 +43,7 @@ class ContentResolver implements ContentResolverInterface
      *
      * @throws \Spryker\Client\ContentStorage\Exception\MissingContentTermTypePluginException
      *
-     * @return \Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface
+     * @return \Spryker\Client\ContentStorageExtension\Dependency\Plugin\ContentTermExecutorPluginInterface
      */
     public function getContentPlugin(string $termKey): ContentTermExecutorPluginInterface
     {

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ContentGui\Communication\Resolver;
 
-use Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface;
+use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface;
 
 interface ContentResolverInterface
 {
@@ -16,7 +16,7 @@ interface ContentResolverInterface
      *
      * @throws \Spryker\Zed\ContentGui\Communication\Exception\MissingContentTermFormTypePluginException
      *
-     * @return \Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface
+     * @return \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface
      */
     public function getContentPlugin(string $termKey): ContentPluginInterface;
 

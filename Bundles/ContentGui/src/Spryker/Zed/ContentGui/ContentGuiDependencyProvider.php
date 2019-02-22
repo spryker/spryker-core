@@ -55,7 +55,7 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface[]
+     * @return \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface[]
      */
     protected function getContentPlugins(): array
     {

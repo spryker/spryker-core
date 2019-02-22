@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ContentGuiExtension\Plugin;
+namespace Spryker\Zed\ContentGuiExtension\Dependency\Plugin;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 

@@ -54,7 +54,7 @@ class ContentStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface[]
+     * @return \Spryker\Client\ContentStorageExtension\Dependency\Plugin\ContentTermExecutorPluginInterface[]
      */
     public function getContentPlugins(): array
     {

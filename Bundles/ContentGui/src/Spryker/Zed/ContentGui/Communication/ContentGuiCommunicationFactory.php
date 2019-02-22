@@ -96,7 +96,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ContentGuiExtension\Plugin\ContentPluginInterface[]
+     * @return \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface[]
      */
     public function getContentPlugins(): array
     {

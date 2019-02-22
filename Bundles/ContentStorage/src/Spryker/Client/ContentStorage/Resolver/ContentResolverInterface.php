@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ContentStorage\Resolver;
 
-use Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface;
+use Spryker\Client\ContentStorageExtension\Dependency\Plugin\ContentTermExecutorPluginInterface;
 
 interface ContentResolverInterface
 {
@@ -21,7 +21,7 @@ interface ContentResolverInterface
      *
      * @throws \Spryker\Client\ContentStorage\Exception\MissingContentTermTypePluginException
      *
-     * @return \Spryker\Client\ContentStorageExtension\Plugin\ContentTermExecutorPluginInterface
+     * @return \Spryker\Client\ContentStorageExtension\Dependency\Plugin\ContentTermExecutorPluginInterface
      */
     public function getContentPlugin(string $termKey): ContentTermExecutorPluginInterface;
 }
