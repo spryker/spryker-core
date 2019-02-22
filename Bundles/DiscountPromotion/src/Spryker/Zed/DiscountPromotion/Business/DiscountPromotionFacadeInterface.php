@@ -56,7 +56,7 @@ interface DiscountPromotionFacadeInterface
 
     /**
      * Specification:
-     *  - Removes discount promotion.
+     *  - Removes Promotion from Discount.
      *
      * @api
      *
