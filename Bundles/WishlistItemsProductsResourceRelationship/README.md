@@ -7,7 +7,7 @@ WishlistItemsProductsResourceRelationship module provides relation between wishl
 ## Installation
 
 ```
-composer require spryker/wishlists-products-resource-relationship
+composer require spryker/wishlist-items-products-resource-relationship
 ```
 
 ## Documentation

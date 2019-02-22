@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductStorage;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -74,6 +75,24 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
+     * @param int $idProductAbstract
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findProductAbstractViewTransfer(int $idProductAbstract, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
+    {
+        return $this->getFactory()
+            ->createProductAbstractViewTransferFinder()
+            ->findProductViewTransfer($idProductAbstract, $localeName, $selectedAttributes);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int $idProductConcrete
      * @param string $localeName
      *
@@ -91,6 +110,40 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
+     */
+    public function getProductConcreteStorageTransfers(array $productIds): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteStorageReader()
+            ->getProductConcreteStorageTransfersForCurrentLocale($productIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findProductConcreteViewTransfer(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
+    {
+        return $this->getFactory()
+            ->createProductConcreteViewTransferFinder()
+            ->findProductViewTransfer($idProductConcrete, $localeName, $selectedAttributes);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param array $data
      * @param string $localeName
      * @param array $selectedAttributes
@@ -101,6 +154,24 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     {
         return $this->getFactory()
             ->createProductStorageDataMapper()
+            ->mapProductStorageData($localeName, $data, $selectedAttributes);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $data
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function mapProductAbstractStorageData(array $data, $localeName, array $selectedAttributes = [])
+    {
+        return $this->getFactory()
+            ->createProductAbstractStorageDataMapper()
             ->mapProductStorageData($localeName, $data, $selectedAttributes);
     }
 
@@ -170,5 +241,22 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
         return $this->getFactory()
             ->createProductConcreteStorageReader()
             ->findProductConcreteStorageDataByMapping($mappingType, $identifier, $localeName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string $identifier
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array
+    {
+        return $this->getFactory()
+            ->createProductConcreteStorageReader()
+            ->findProductConcreteStorageDataByMappingForCurrentLocale($mappingType, $identifier);
     }
 }

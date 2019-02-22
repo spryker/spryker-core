@@ -14,6 +14,10 @@ use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSnifferInte
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
 use Spryker\Zed\Development\Business\CodeBuilder\Module\ModuleBuilder;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
+use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfiguration;
+use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface;
+use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationLoader;
+use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationLoaderInterface;
 use Spryker\Zed\Development\Business\CodeTest\CodeTester;
 use Spryker\Zed\Development\Business\Composer\ComposerJson;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonFinder;
@@ -44,6 +48,7 @@ use Spryker\Zed\Development\Business\Dependency\DependencyFinder\InternalDepende
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\LocatorDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ModuleAnnotationDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\PersistenceDependencyFinder;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\SprykerSdkDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TravisDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\AtomFunctionDependencyFinder;
@@ -109,6 +114,7 @@ use Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor;
 use Spryker\Zed\Development\Business\DependencyTree\Finder\FileFinder;
 use Spryker\Zed\Development\Business\DependencyTree\Finder\FinderComposite;
 use Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\SprykerEcoPathBuilder;
+use Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\SprykerMerchantPortalPathBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\SprykerPathBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\SprykerSdkPathBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\SprykerShopPathBuilder;
@@ -142,7 +148,9 @@ use Spryker\Zed\Development\Business\Module\ModuleOverviewInterface;
 use Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderComposite;
 use Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface;
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerEcoModulePathBuilder;
+use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerMerchantPortalModulePathBuilder;
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerModulePathBuilder;
+use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerSdkModulePathBuilder;
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerShopModulePathBuilder;
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerStandaloneModulePathBuilder;
 use Spryker\Zed\Development\Business\Module\ProjectModuleFinder\ProjectModuleFinder;
@@ -178,11 +186,31 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer
      */
-    public function createCodeStyleSniffer()
+    public function createCodeStyleSniffer(): CodeStyleSniffer
     {
         return new CodeStyleSniffer(
-            $this->getConfig()
+            $this->getConfig(),
+            $this->createCodeStyleSnifferConfigurationLoader()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationLoaderInterface
+     */
+    public function createCodeStyleSnifferConfigurationLoader(): CodeStyleSnifferConfigurationLoaderInterface
+    {
+        return new CodeStyleSnifferConfigurationLoader(
+            $this->createConfigurationReader(),
+            $this->createCodeStyleSnifferConfiguration()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface
+     */
+    public function createCodeStyleSnifferConfiguration(): CodeStyleSnifferConfigurationInterface
+    {
+        return new CodeStyleSnifferConfiguration($this->getConfig());
     }
 
     /**
@@ -202,9 +230,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createPhpMdRunner()
     {
         return new PhpMdRunner(
-            $this->getConfig()->getPathToRoot(),
-            $this->getConfig()->getPathToCore(),
-            $this->getConfig()->getArchitectureStandard()
+            $this->getConfig()
         );
     }
 
@@ -276,6 +302,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createSprykerModuleFilePathBuilder(),
             $this->createSprykerShopModuleFilePathBuilder(),
             $this->createSprykerEcoModuleFilePathBuilder(),
+            $this->createSprykerSdkModulePathBuilder(),
+            $this->createSprykerMerchantPortalModulePathBuilder(),
         ]);
     }
 
@@ -284,7 +312,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createSprykerStandaloneModuleFilePathBuilder(): PathBuilderInterface
     {
-        return new SprykerStandaloneModulePathBuilder();
+        return new SprykerStandaloneModulePathBuilder($this->getConfig());
     }
 
     /**
@@ -293,7 +321,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createSprykerModuleFilePathBuilder(): PathBuilderInterface
     {
         return new SprykerModulePathBuilder(
-            $this->getConfig()->getPathToCore()
+            $this->getConfig()
         );
     }
 
@@ -303,7 +331,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createSprykerShopModuleFilePathBuilder(): PathBuilderInterface
     {
         return new SprykerShopModulePathBuilder(
-            $this->getConfig()->getPathToShop()
+            $this->getConfig()
         );
     }
 
@@ -313,8 +341,26 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createSprykerEcoModuleFilePathBuilder(): PathBuilderInterface
     {
         return new SprykerEcoModulePathBuilder(
-            $this->getConfig()->getPathToEco()
+            $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface
+     */
+    public function createSprykerSdkModulePathBuilder(): PathBuilderInterface
+    {
+        return new SprykerSdkModulePathBuilder(
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface
+     */
+    public function createSprykerMerchantPortalModulePathBuilder(): PathBuilderInterface
+    {
+        return new SprykerMerchantPortalModulePathBuilder($this->getConfig());
     }
 
     /**
@@ -331,6 +377,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createDependencyFinder(): DependencyFinderInterface
     {
         return new DependencyFinderComposite([
+            $this->createSprykerSdkDependencyFinder(),
             $this->createInternalDependencyFinder(),
             $this->createExternalDependencyFinder(),
             $this->createExtensionDependencyFinder(),
@@ -342,6 +389,17 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createCodeceptionDependencyFinder(),
             $this->createModuleAnnotationDependencyFinder(),
         ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface
+     */
+    public function createSprykerSdkDependencyFinder(): DependencyFinderInterface
+    {
+        return new SprykerSdkDependencyFinder(
+            $this->createUseStatementParser(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -521,12 +579,10 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createDependencyManager()
     {
-        return new Manager($this->createModuleDependencyParser(), [
-            $this->getConfig()->getPathToCore(),
-            $this->getConfig()->getPathToShop(),
-            $this->getConfig()->getPathToSdk(),
-            $this->getConfig()->getPathToEco(),
-        ]);
+        return new Manager(
+            $this->createModuleDependencyParser(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -560,6 +616,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         $finderComposite = new FinderComposite();
         $finderComposite
             ->addFinder($this->createSprykerFinder())
+            ->addFinder($this->createSprykerMerchantPortalFinder())
             ->addFinder($this->createShopFinder());
 
         return $finderComposite;
@@ -578,13 +635,34 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface
+     */
+    protected function createSprykerMerchantPortalFinder()
+    {
+        $finder = new FileFinder(
+            $this->createSprykerMerchantPortalPathBuilder()
+        );
+
+        return $finder;
+    }
+
+    /**
      * @return \Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\PathBuilderInterface
      */
     protected function createSprykerPathBuilder()
     {
         return new SprykerPathBuilder(
-            $this->getConfig()->getPathToCore(),
-            $this->getConfig()->getApplications()
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\PathBuilderInterface
+     */
+    protected function createSprykerMerchantPortalPathBuilder()
+    {
+        return new SprykerMerchantPortalPathBuilder(
+            $this->getConfig()
         );
     }
 
@@ -780,8 +858,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createSprykerSdkPathBuilder()
     {
         return new SprykerSdkPathBuilder(
-            $this->getConfig()->getPathToSdk(),
-            $this->getConfig()->getApplications()
+            $this->getConfig()
         );
     }
 
@@ -811,8 +888,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createSprykerEcoPathBuilder()
     {
         return new SprykerEcoPathBuilder(
-            $this->getConfig()->getPathToEco(),
-            $this->getConfig()->getApplications()
+            $this->getConfig()
         );
     }
 
@@ -834,8 +910,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createSprykerShopPathBuilder()
     {
         return new SprykerShopPathBuilder(
-            $this->getConfig()->getPathToShop(),
-            $this->getConfig()->getApplications()
+            $this->getConfig()
         );
     }
 

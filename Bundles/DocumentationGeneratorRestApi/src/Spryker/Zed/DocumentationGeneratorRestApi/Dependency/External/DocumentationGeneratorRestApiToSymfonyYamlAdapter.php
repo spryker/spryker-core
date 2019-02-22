@@ -13,6 +13,7 @@ class DocumentationGeneratorRestApiToSymfonyYamlAdapter implements Documentation
 {
     public const DUMP_EMPTY_ARRAY_AS_SEQUENCE = Yaml::DUMP_EMPTY_ARRAY_AS_SEQUENCE;
     public const DUMP_MULTI_LINE_LITERAL_BLOCK = Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK;
+    public const DUMP_OBJECT_AS_MAP = Yaml::DUMP_OBJECT_AS_MAP;
 
     /**
      * @param mixed $input
