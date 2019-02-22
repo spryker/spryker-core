@@ -25,6 +25,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const PLUGINS_QUOTE_DELETE_BEFORE = 'PLUGINS_QUOTE_DELETE_BEFORE';
     public const PLUGINS_QUOTE_DELETE_AFTER = 'PLUGINS_QUOTE_DELETE_AFTER';
+    public const PLUGINS_QUOTE_EXPANDER = 'PLUGINS_QUOTE_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -33,6 +34,8 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addStoreFacade($container);
         $container = $this->addQuoteCreateAfterPlugins($container);
         $container = $this->addQuoteCreateBeforePlugins($container);
@@ -40,6 +43,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteUpdateBeforePlugins($container);
         $container = $this->addQuoteDeleteBeforePlugins($container);
         $container = $this->addQuoteDeleteAfterPlugins($container);
+        $container = $this->addQuoteExpanderPlugins($container);
 
         return $container;
     }
@@ -93,6 +97,20 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::PLUGINS_QUOTE_CREATE_AFTER] = function (Container $container) {
             return $this->getQuoteCreateAfterPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUOTE_EXPANDER] = function (Container $container) {
+            return $this->getQuoteExpanderPlugins();
         };
 
         return $container;
@@ -172,6 +190,14 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
      */
     protected function getQuoteCreateAfterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface[]
+     */
+    protected function getQuoteExpanderPlugins(): array
     {
         return [];
     }
