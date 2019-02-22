@@ -5,15 +5,23 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.0.0"
+    "spryker/application-extension": "^1.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/locale-extension": "^1.0.0"
   },
   "require-dev": {
+    "spryker/config": "*",
+    "spryker/container": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
+    "spryker/symfony": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/installer": "If you want to use Installer plugins."
+    "spryker/config": "If you want to use LocaleApplicationPlugin",
+    "spryker/container": "If you want to use Application plugins",
+    "spryker/installer": "If you want to use Installer plugins.",
+    "spryker/symfony": "If you want to use LocaleLocalePlugin"
   },
   "autoload": {
     "psr-4": {

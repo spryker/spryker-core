@@ -135,4 +135,16 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     {
         return [];
     }
+
+    /**
+     * @api
+     *
+     * @deprecated since 1.26 (to be removed in 2.0), not used anymore internally
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return static::class;
+    }
 }
