@@ -1,5 +1,6 @@
 {
   "name": "spryker/content-banners-rest-api",
+  "type": "library",
   "description": "ContentBannersRestApi module",
   "license": "proprietary",
   "require": {
@@ -9,6 +10,10 @@
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.22.0",
     "spryker/symfony": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
@@ -24,9 +29,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
   }
 }
