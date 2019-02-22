@@ -7,21 +7,26 @@
 
 namespace Spryker\Zed\AuthMailConnector\Communication\Plugin;
 
-use Generated\Shared\Transfer\MailRecipientTransfer;
-use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @method \Spryker\Zed\AuthMailConnector\Business\AuthMailConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\AuthMailConnector\Communication\AuthMailConnectorCommunicationFactory getFactory()
  * @method \Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig getConfig()
  */
 class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPasswordResetSenderInterface
 {
+    /**
+     * @deprecated
+     */
     public const SUBJECT = 'Password reset request';
-    public const TEMPLATE = 'Auth.password.reset';
 
     /**
+     * {@inheritdoc}
+     * - Generates MailTransfer for reset password functionality.
+     * - Uses `MailFacade::handleMail()` to handle generated MailTransfer.
+     *
      * @api
      *
      * @param string $email
@@ -31,21 +36,6 @@ class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPa
      */
     public function send($email, $token)
     {
-        $mailTransfer = new MailTransfer();
-        $mailRecipientTransfer = new MailRecipientTransfer();
-        $mailRecipientTransfer->setEmail($email);
-
-        $mailTransfer->addRecipient($mailRecipientTransfer);
-        $mailTransfer->setSubject(static::SUBJECT);
-        $mailTransfer->setTemplateName(static::TEMPLATE);
-        $mailTransfer->setMerge(true);
-        $mailTransfer->setMergeLanguage('handlebars');
-        $mailTransfer->setGlobalMergeVars([
-            'reset_password_token' => $token,
-        ]);
-
-        $this->getFactory()
-            ->getMailFacade()
-            ->sendMail($mailTransfer);
+        $this->getFacade()->sendResetPasswordMail($email, $token);
     }
 }
