@@ -26,7 +26,7 @@ class CmsBlockProductConnectorRepository extends AbstractRepository implements C
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
      */
-    public function getAssignedProductOptions(int $idLocale, int $idCmsBlock): array
+    public function getAssignedProductAbstracts(int $idLocale, int $idCmsBlock): array
     {
         $abstractProductTransfers = [];
         $abstractProductEntities = $this->getFactory()->getCmsBlockProductConnectorToProductAbstractQueryContainer()

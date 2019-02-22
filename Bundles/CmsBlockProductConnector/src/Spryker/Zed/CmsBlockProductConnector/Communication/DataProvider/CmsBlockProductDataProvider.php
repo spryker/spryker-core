@@ -55,7 +55,7 @@ class CmsBlockProductDataProvider
     {
         return [
             'data_class' => CmsBlockTransfer::class,
-            CmsBlockProductAbstractType::OPTION_PRODUCT_ABSTRACT_ARRAY => $this->getAssignedProductOptions($cmsBlockTransfer),
+            CmsBlockProductAbstractType::OPTION_PRODUCT_ABSTRACT_ARRAY => $this->getAssignedProductAbstracts($cmsBlockTransfer),
         ];
     }
 
@@ -82,7 +82,7 @@ class CmsBlockProductDataProvider
      *
      * @return array
      */
-    protected function getAssignedProductOptions(CmsBlockTransfer $cmsBlockTransfer): array
+    protected function getAssignedProductAbstracts(CmsBlockTransfer $cmsBlockTransfer): array
     {
         $productAbstractOptions = [];
 
@@ -93,7 +93,7 @@ class CmsBlockProductDataProvider
         if ($cmsBlockTransfer->getIdCmsBlock() === null) {
             return $productAbstractOptions;
         }
-        $productAbstractTransfers = $this->repository->getAssignedProductOptions(
+        $productAbstractTransfers = $this->repository->getAssignedProductAbstracts(
             $idLocale,
             $cmsBlockTransfer->getIdCmsBlock()
         );
