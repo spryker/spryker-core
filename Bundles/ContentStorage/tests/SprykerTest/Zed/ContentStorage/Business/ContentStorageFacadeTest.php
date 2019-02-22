@@ -56,7 +56,7 @@ class ContentStorageFacadeTest extends Unit
             ContentTransfer::CONTENT_TERM_KEY => 'test-term',
             ContentTransfer::LOCALIZED_CONTENTS => [
                 [
-                    LocalizedContentTransfer::PARAMETERS => '["M23222", "M23232"]',
+                    LocalizedContentTransfer::PARAMETERS => ["M23222", "M23232"],
                 ],
             ],
         ];
