@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockGui;
 
 use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockBridge;
 use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToLocaleBridge;
-use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToProductFacadeBridge;
 use Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerBridge;
 use Spryker\Zed\CmsBlockGui\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -24,7 +23,6 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CMS_BLOCK = 'CMS_BLOCK_GUI:FACADE_CMS_BLOCK';
     public const FACADE_LOCALE = 'CMS_BLOCK_GUI:FACADE_LOCALE';
-    public const FACADE_PRODUCT = 'CMS_BLOCK_GUI:FACADE_PRODUCT';
 
     public const QUERY_CONTAINER_CMS_BLOCK = 'CMS_BLOCK_GUI:QUERY_CONTAINER_CMS_BLOCK';
 
@@ -49,7 +47,6 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCmsBlockViewPlugins($container);
         $container = $this->addTwigEnvironment($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
-        $container = $this->addProductFacade($container);
 
         return $container;
     }
@@ -105,20 +102,6 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new CmsBlockGuiToLocaleBridge($container->getLocator()->locale()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductFacade(Container $container): Container
-    {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
-            return new CmsBlockGuiToProductFacadeBridge($container->getLocator()->product()->facade());
         };
 
         return $container;

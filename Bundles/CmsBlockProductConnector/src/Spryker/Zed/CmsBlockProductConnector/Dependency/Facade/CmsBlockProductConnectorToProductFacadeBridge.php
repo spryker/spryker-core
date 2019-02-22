@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsBlockGui\Dependency\Facade;
+namespace Spryker\Zed\CmsBlockProductConnector\Dependency\Facade;
 
-class CmsBlockGuiToProductFacadeBridge implements CmsBlockGuiToProductFacadeInterface
+class CmsBlockProductConnectorToProductFacadeBridge implements CmsBlockProductConnectorToProductFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface

@@ -32,17 +32,6 @@ $(document).ready( function () {
         }
     });
 
-
-    $('#cms_block_id_product_abstracts').select2({
-        ajax: {
-            url: '/cms-block-gui/product-autocomplete/',
-            dataType: 'json',
-            delay: 500,
-            cache: true,
-        },
-        minimumInputLength: 3
-    });
-
     $('[name=cms_block_glossary]').on('submit', function() {
         var self = $(this);
 

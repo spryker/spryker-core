@@ -16,11 +16,8 @@ use Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockGlossaryForm
 use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryForm;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderForm;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderTranslationForm;
-use Spryker\Zed\CmsBlockGui\Communication\Formatter\ProductListFormatter;
-use Spryker\Zed\CmsBlockGui\Communication\Formatter\ProductListFormatterInterface;
 use Spryker\Zed\CmsBlockGui\Communication\Table\CmsBlockTable;
 use Spryker\Zed\CmsBlockGui\Communication\Tabs\CmsBlockGlossaryTabs;
-use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToProductFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -62,14 +59,6 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToProductFacadeBridge
-     */
-    public function getProductFacade(): CmsBlockGuiToProductFacadeInterface
-    {
-        return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::FACADE_PRODUCT);
     }
 
     /**
@@ -195,13 +184,5 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getStoreRelationFormTypePlugin()
     {
         return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsBlockGui\Communication\Formatter\ProductListFormatterInterface
-     */
-    public function createProductListFormatter(): ProductListFormatterInterface
-    {
-        return new ProductListFormatter();
     }
 }

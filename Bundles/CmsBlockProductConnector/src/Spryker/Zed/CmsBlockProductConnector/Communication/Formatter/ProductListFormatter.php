@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsBlockGui\Communication\Formatter;
+namespace Spryker\Zed\CmsBlockProductConnector\Communication\Formatter;
 
 class ProductListFormatter implements ProductListFormatterInterface
 {

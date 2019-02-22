@@ -10,6 +10,9 @@ namespace Spryker\Zed\CmsBlockProductConnector\Communication;
 use Spryker\Zed\CmsBlockProductConnector\CmsBlockProductConnectorDependencyProvider;
 use Spryker\Zed\CmsBlockProductConnector\Communication\DataProvider\CmsBlockProductDataProvider;
 use Spryker\Zed\CmsBlockProductConnector\Communication\Form\CmsBlockProductAbstractType;
+use Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductListFormatter;
+use Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductListFormatterInterface;
+use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToProductFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -53,5 +56,21 @@ class CmsBlockProductConnectorCommunicationFactory extends AbstractCommunication
     protected function getLocaleFacade()
     {
         return $this->getProvidedDependency(CmsBlockProductConnectorDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToProductFacadeInterface
+     */
+    public function getProductFacade(): CmsBlockProductConnectorToProductFacadeInterface
+    {
+        return $this->getProvidedDependency(CmsBlockProductConnectorDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductListFormatterInterface
+     */
+    public function createProductListFormatter(): ProductListFormatterInterface
+    {
+        return new ProductListFormatter();
     }
 }

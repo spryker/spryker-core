@@ -27,6 +27,8 @@ class CmsBlockProductAbstractType extends AbstractType
 
     public const OPTION_PRODUCT_ABSTRACT_ARRAY = 'option-product-abstracts';
 
+    protected const TEMPLATE_PATH = '@CmsBlockProductConnector/Form/cms-block-product-abstract-type.twig';
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -53,6 +55,7 @@ class CmsBlockProductAbstractType extends AbstractType
             'required' => false,
             'choices' => $choices,
             'attr' => [
+                'template_path' => $this->getTemplatePath(),
                 'placeholder' => 'Type three letters of name or sku for suggestions.',
             ],
         ]);
@@ -107,5 +110,13 @@ class CmsBlockProductAbstractType extends AbstractType
                 ]
             );
         };
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTemplatePath(): string
+    {
+        return static::TEMPLATE_PATH;
     }
 }

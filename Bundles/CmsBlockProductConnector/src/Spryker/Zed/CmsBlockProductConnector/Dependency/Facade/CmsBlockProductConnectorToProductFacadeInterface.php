@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsBlockGui\Dependency\Facade;
+namespace Spryker\Zed\CmsBlockProductConnector\Dependency\Facade;
 
-interface CmsBlockGuiToProductFacadeInterface
+interface CmsBlockProductConnectorToProductFacadeInterface
 {
     /**
      * @param string $suggestion
