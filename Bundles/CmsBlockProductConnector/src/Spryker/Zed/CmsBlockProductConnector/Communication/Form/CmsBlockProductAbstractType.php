@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\CmsBlockProductConnector\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Gui\Communication\Form\Type\SelectType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -51,7 +51,7 @@ class CmsBlockProductAbstractType extends AbstractType
      */
     protected function addProductsAbstractField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(static::FIELD_ID_PRODUCT_ABSTRACTS, Select2ComboBoxType::class, [
+        $builder->add(static::FIELD_ID_PRODUCT_ABSTRACTS, ChoiceType::class, [
             'label' => 'Products',
             'multiple' => true,
             'required' => false,
