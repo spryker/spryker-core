@@ -340,16 +340,15 @@ $(document).ready(function(){
         });
     });
 
-    $('.gui-table-data').on('init.dt', function () {
-        var $toggleWrap = $(this).find('.dropdown'),
-            $toggleDropdown;
+    $('.gui-table-data').on('draw.dt', function () {
+        const $toggleWrap = $(this).find('.dropdown');
+        let $toggleDropdown;
 
         $toggleWrap.on('show.bs.dropdown', function () {
-            var button = this.querySelector('.dropdown-toggle'),
-                rect = button.getBoundingClientRect(),
-                buttonLeftOffset = rect.left,
-                buttonTopOffset = rect.top,
-                buttonHeight = rect.height;
+            const $button = $(this).find('.dropdown-toggle'),
+                buttonLeftOffset = $button.offset().left,
+                buttonTopOffset = $button.offset().top,
+                buttonHeight = $button.height();
 
             $toggleDropdown = $(this).find('.dropdown-menu');
 
