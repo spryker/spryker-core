@@ -9,4 +9,12 @@
         <property name="name" dataBuilderRule="unique()->sentence(2)"/>
     </transfer>
 
+    <transfer name="SpyCompanyUnitAddressLabelEntity">
+        <property name="name" type="string" dataBuilderRule="unique()->sentence(2)"/>
+    </transfer>
+
+    <transfer name="CompanyUnitAddressLabelCollection">
+        <property name="labels" dataBuilderRule="SpyCompanyUnitAddressLabelEntity[]" />
+    </transfer>
+
 </transfers>

@@ -7,17 +7,16 @@
 
 namespace SprykerTest\Zed\CompanyUnitAddressLabel\Helper;
 
-use ArrayObject;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyUnitAddressBuilder;
 use Generated\Shared\DataBuilder\CompanyUnitAddressLabelBuilder;
+use Generated\Shared\DataBuilder\CompanyUnitAddressLabelCollectionBuilder;
 use Generated\Shared\DataBuilder\CountryBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressLabelTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
-use Generated\Shared\Transfer\SpyCompanyUnitAddressLabelEntityTransfer;
 use Generated\Shared\Transfer\SpyRegionEntityTransfer;
 use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabel;
 use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelQuery;
@@ -134,20 +133,20 @@ class CompanyUnitAddressLabelDataHelper extends Module
      */
     public function haveLabelCollection(): CompanyUnitAddressLabelCollectionTransfer
     {
-        $labelEntity = new SpyCompanyUnitAddressLabel();
-        $labelEntity->setName("test label");
-        $labelEntity->save();
 
-        return (new CompanyUnitAddressLabelCollectionTransfer())
-            ->setLabels(
-                new ArrayObject(
-                    [
-                        (new SpyCompanyUnitAddressLabelEntityTransfer())
-                            ->setName($labelEntity->getName())
-                            ->setIdCompanyUnitAddressLabel($labelEntity->getIdCompanyUnitAddressLabel()),
-                    ]
-                )
-            );
+        /** @var \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer $companyUnitAddressLabelCollection */
+        $companyUnitAddressLabelCollection = (new CompanyUnitAddressLabelCollectionBuilder())
+            ->withLabels()
+            ->build();
+
+        foreach ($companyUnitAddressLabelCollection->getLabels() as $companyUnitAddressLabelEntityTransfer) {
+            $spyCompanyUnitAddressLabelEntity = new SpyCompanyUnitAddressLabel();
+            $spyCompanyUnitAddressLabelEntity->setName($companyUnitAddressLabelEntityTransfer->getName())
+                ->save();
+            $companyUnitAddressLabelEntityTransfer->setIdCompanyUnitAddressLabel($spyCompanyUnitAddressLabelEntity->getIdCompanyUnitAddressLabel());
+        }
+
+        return $companyUnitAddressLabelCollection;
     }
 
     /**
