@@ -36,6 +36,16 @@ class OrdersRestApiToSalesClientBridge implements OrdersRestApiToSalesClientInte
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getCustomerChunkOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer
+    {
+        return $this->salesClient->getCustomerChunkOrderList($orderListTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer

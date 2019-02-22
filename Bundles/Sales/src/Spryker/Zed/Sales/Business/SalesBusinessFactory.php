@@ -13,6 +13,8 @@ use Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface;
 use Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdater;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
+use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderChunkReader;
+use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderChunkReaderInterface;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderOverviewInterface;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
 use Spryker\Zed\Sales\Business\Model\Customer\PaginatedCustomerOrderOverview;
@@ -62,6 +64,17 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createOrderHydrator(),
             $this->getOmsFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderChunkReaderInterface
+     */
+    public function createCustomerOrderChunkReader(): CustomerOrderChunkReaderInterface
+    {
+        return new CustomerOrderChunkReader(
+            $this->getQueryContainer(),
+            $this->createOrderHydrator()
         );
     }
 

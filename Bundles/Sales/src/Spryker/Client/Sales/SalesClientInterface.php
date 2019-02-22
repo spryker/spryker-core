@@ -38,6 +38,18 @@ interface SalesClientInterface
 
     /**
      * Specification:
+     * - Returns chunk of sales orders for the given customer and filters.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getCustomerChunkOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer;
+
+    /**
+     * Specification:
      *  - Returns a list of of orders for the given customer id and (optional) filters, without order items information.
      *  - Aggregates order totals calls -> SalesAggregator
      *  - Paginates order list for limited result

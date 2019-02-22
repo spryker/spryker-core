@@ -111,7 +111,7 @@ class OrderReader implements OrderReaderInterface
             $orderListTransfer->setFilter($this->createFilterTransfer($restRequest));
         }
 
-        $orderListTransfer = $this->salesClient->getPaginatedOrder($orderListTransfer);
+        $orderListTransfer = $this->salesClient->getCustomerChunkOrderList($orderListTransfer);
 
         $response = $this
             ->restResourceBuilder

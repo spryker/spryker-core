@@ -20,6 +20,13 @@ interface OrdersRestApiToSalesClientInterface
     public function getPaginatedOrder(OrderListTransfer $orderListTransfer);
 
     /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getCustomerChunkOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer

@@ -149,6 +149,20 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
+     *  - Returns a list of of orders for the given customer id and (optional) filters.
+     *  - Paginates order list with offset
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getCustomerChunkOrderList(OrderListTransfer $orderListTransfer, int $idCustomer): OrderListTransfer;
+
+    /**
+     * Specification:
      *  - Returns a list of of orders for the given customer id and (optional) filters, without order items information.
      *  - Aggregates order totals calls -> SalesAggregator
      *  - Paginates order list for limited result
