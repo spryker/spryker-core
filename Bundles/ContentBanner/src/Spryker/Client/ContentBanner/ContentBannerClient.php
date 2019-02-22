@@ -8,11 +8,12 @@
 namespace Spryker\Client\ContentBanner;
 
 use Generated\Shared\Transfer\ContentBannerTransfer;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
  * @method \Spryker\Client\ContentBanner\ContentBannerFactory getFactory()
  */
-class ContentBannerClient implements ContentBannerClientInterface
+class ContentBannerClient extends AbstractClient implements ContentBannerClientInterface
 {
     /**
      * {@inheritdoc}
