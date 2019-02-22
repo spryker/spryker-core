@@ -5,7 +5,7 @@
 
     <transfer name="RestContentBannerAttributes">
         <property name="title" type="string" />
-        <property name="subTitle" type="string" />
+        <property name="subtitle" type="string" />
         <property name="imageUrl" type="string" />
         <property name="clickUrl" type="string" />
         <property name="altText" type="string" />

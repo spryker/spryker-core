@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints\Url;
 class BannerContentTermForm extends AbstractType
 {
     public const FIELD_TITLE = 'title';
-    public const FIELD_SUB_TITLE = 'subTitle';
+    public const FIELD_SUB_TITLE = 'subtitle';
     public const FIELD_IMAGE_URL = 'imageUrl';
     public const FIELD_CLICK_URL = 'clickUrl';
     public const FIELD_ALT_TEXT = 'altText';
