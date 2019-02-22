@@ -380,11 +380,9 @@ class OrdersTable extends AbstractTable
         $searchTerm = $this->getSearchTerm();
         $searchValueLength = mb_strlen($searchTerm[self::PARAMETER_VALUE]);
 
-        if ($searchValueLength === false || $searchValueLength === 0) {
-            return $salesOrderQuery;
+        if ($searchValueLength > 0) {
+            $salesOrderQuery->withColumn(static::COL_ORDER_USER_FULL_NAME, static::COL_ORDER_USER_FULL_NAME);
         }
-
-        $salesOrderQuery->withColumn(static::COL_ORDER_USER_FULL_NAME, static::COL_ORDER_USER_FULL_NAME);
 
         return $salesOrderQuery;
     }
