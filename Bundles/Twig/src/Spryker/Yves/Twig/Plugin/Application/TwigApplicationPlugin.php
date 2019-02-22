@@ -20,8 +20,6 @@ use Twig\Environment;
 class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
     protected const SERVICE_TWIG = 'twig';
-    //@todo remove it before release. For testing during developing epic only
-    protected const SERVICE_TWIG_GLOBAL_VARIABLES = 'twig.global.variables';
 
     protected const SERVICE_DEBUG = 'debug';
 
@@ -38,7 +36,6 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      */
     public function provide(ContainerInterface $container): ContainerInterface
     {
-        $container = $this->addTwigGlobalVariables($container);
         $container = $this->addTwigService($container);
 
         return $container;
@@ -56,12 +53,6 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
             $twigLoader = $this->getTwigChainLoader();
             $twig = new Environment($twigLoader, $twigOptions);
             $twig->addGlobal('app', $container);
-
-            //@todo remove it before release. For testing during developing epic only
-            $twigGlobalVariables = $container->get(static::SERVICE_TWIG_GLOBAL_VARIABLES);
-            foreach ($twigGlobalVariables as $name => $value) {
-                $twig->addGlobal($name, $value);
-            }
 
             $twig = $this->extendTwig($twig, $container);
 
@@ -93,22 +84,6 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
         }
 
         return $twig;
-    }
-
-    /**
-     * @todo remove it before release. For testing during developing epic only
-     *
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
-    protected function addTwigGlobalVariables(ContainerInterface $container): ContainerInterface
-    {
-        $container->set(static::SERVICE_TWIG_GLOBAL_VARIABLES, function (ContainerInterface $container) {
-            return [];
-        });
-
-        return $container;
     }
 
     /**

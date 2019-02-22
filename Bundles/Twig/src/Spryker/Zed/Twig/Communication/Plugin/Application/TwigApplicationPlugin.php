@@ -21,8 +21,6 @@ use Twig\Environment;
 class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
     protected const SERVICE_TWIG = 'twig';
-    //@todo Delete it before PR to epic master. Left just to make sure that application works until we nove all twig service providers.
-    protected const SERVICE_TWIG_GLOBAL_VARIABLES = 'twig.global.variables';
 
     protected const SERVICE_DEBUG = 'debug';
 
@@ -39,7 +37,6 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      */
     public function provide(ContainerInterface $container): ContainerInterface
     {
-        $container = $this->addTwigGlobalVariables($container);
         $container = $this->addTwigService($container);
 
         return $container;
@@ -57,13 +54,6 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
             $twigOptions = $this->getTwigOptions($container);
             $twig = new Environment($twigChainLoader, $twigOptions);
             $twig->addGlobal('app', $container);
-
-            //@todo Delete it before PR to epic master. Left just to make sure that application works until we nove all twig service providers.
-            $twigGlobalVariables = $container->get(static::SERVICE_TWIG_GLOBAL_VARIABLES);
-            foreach ($twigGlobalVariables as $name => $value) {
-                $twig->addGlobal($name, $value);
-            }
-
             $twig = $this->extendTwig($twig, $container);
 
             return $twig;
@@ -112,21 +102,5 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
         ];
 
         return array_replace($globalOptions, $twigOptions);
-    }
-
-    /**
-     * @todo Delete it before PR to epic master. Left just to make sure that application works until we nove all twig service providers.
-     *
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
-    protected function addTwigGlobalVariables(ContainerInterface $container): ContainerInterface
-    {
-        $container->set(static::SERVICE_TWIG_GLOBAL_VARIABLES, function (ContainerInterface $container) {
-            return [];
-        });
-
-        return $container;
     }
 }
