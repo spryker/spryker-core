@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\AgentQuoteRequest\Business;
 
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 
 interface AgentQuoteRequestFacadeInterface
 {
@@ -16,7 +18,6 @@ interface AgentQuoteRequestFacadeInterface
      * Specification:
      * - Retrieves "Request for Quote" entities according to provided filter.
      * - Sets current "Request for Quote" by quote request reference when provided.
-     * - Excludes "Request for Quote" with status "closed".
      * - Selects latestVersion based on latest version id.
      *
      * @api
@@ -28,4 +29,18 @@ interface AgentQuoteRequestFacadeInterface
     public function getQuoteRequestOverviewCollection(
         QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer
     ): QuoteRequestOverviewCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Looks up one "Request for Quote" by provided quote request reference.
+     * - Expects "Request for Quote" status to not be "canceled".
+     * - Sets status to "Cancelled".
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
 }

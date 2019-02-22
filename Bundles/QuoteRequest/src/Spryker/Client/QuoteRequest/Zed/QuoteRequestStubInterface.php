@@ -22,6 +22,13 @@ interface QuoteRequestStubInterface
     public function create(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function update(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer

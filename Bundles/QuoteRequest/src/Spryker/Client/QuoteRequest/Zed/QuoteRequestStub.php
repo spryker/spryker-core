@@ -45,6 +45,22 @@ class QuoteRequestStub implements QuoteRequestStubInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function update(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
+        $quoteRequestResponseTransfer = $this->zedRequestClient->call(
+            '/quote-request/gateway/update',
+            $quoteRequestTransfer
+        );
+
+        return $quoteRequestResponseTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer

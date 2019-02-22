@@ -43,6 +43,22 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function update(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestWriter()
+            ->update($quoteRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer

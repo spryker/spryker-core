@@ -13,6 +13,9 @@ use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Shared\QuoteRequest\QuoteRequestConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\QuoteRequest\QuoteRequestConfig getSharedConfig()
+ */
 class QuoteRequestConfig extends AbstractBundleConfig
 {
     /**
@@ -40,6 +43,14 @@ class QuoteRequestConfig extends AbstractBundleConfig
             QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE,
             QuoteTransfer::QUOTE_REQUEST_REFERENCE,
         ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getCancelableStatuses(): array
+    {
+        return $this->getSharedConfig()->getCancelableStatuses();
     }
 
     /**

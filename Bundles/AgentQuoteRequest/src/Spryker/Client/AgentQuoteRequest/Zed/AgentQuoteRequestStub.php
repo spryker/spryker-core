@@ -7,8 +7,10 @@
 
 namespace Spryker\Client\AgentQuoteRequest\Zed;
 
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToZedRequestClientInterface;
 
 class AgentQuoteRequestStub implements AgentQuoteRequestStubInterface
@@ -41,5 +43,21 @@ class AgentQuoteRequestStub implements AgentQuoteRequestStubInterface
         );
 
         return $quoteRequestOverviewCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
+        $quoteRequestResponseTransfer = $this->zedRequestClient->call(
+            '/agent-quote-request/gateway/cancel-by-reference',
+            $quoteRequestFilterTransfer
+        );
+
+        return $quoteRequestResponseTransfer;
     }
 }

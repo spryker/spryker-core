@@ -38,6 +38,20 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function update(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getZedStub()->update($quoteRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
@@ -59,6 +73,22 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
         return $this->getZedStub()->cancelByReference($quoteRequestFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteRequestChecker()
+            ->isQuoteRequestCancelable($quoteRequestTransfer);
     }
 
     /**

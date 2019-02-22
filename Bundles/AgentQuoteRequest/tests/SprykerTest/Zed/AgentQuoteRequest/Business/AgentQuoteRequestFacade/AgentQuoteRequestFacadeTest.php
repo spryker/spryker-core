@@ -8,10 +8,12 @@
 namespace SprykerTest\Zed\AgentQuoteRequest\Business\AgentQuoteRequestFacade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\QuoteRequestFilterBuilder;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Spryker\Shared\AgentQuoteRequest\AgentQuoteRequestConfig as SharedAgentQuoteRequestConfig;
 
 /**
  * Auto-generated group annotations
@@ -143,6 +145,32 @@ class AgentQuoteRequestFacadeTest extends Unit
         $this->assertEquals(
             $currentQuoteRequestTransfer->getIdQuoteRequest(),
             $quoteRequestOverviewCollectionTransfer->getCurrentQuoteRequest()->getIdQuoteRequest()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCancelByReferenceChangesQuoteRequestStatusToCanceled(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->tester->createQuoteRequest(
+            $this->tester->createQuoteRequestVersion($this->quoteTransfer),
+            $this->companyUserTransfer
+        );
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterBuilder())->build()
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
+
+        // Act
+        $quoteRequestResponseTransfer = $this->tester
+            ->getFacade()
+            ->cancelByReference($quoteRequestFilterTransfer);
+
+        // Assert
+        $this->assertTrue($quoteRequestResponseTransfer->getIsSuccess());
+        $this->assertEquals(
+            SharedAgentQuoteRequestConfig::STATUS_CANCELED,
+            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
         );
     }
 

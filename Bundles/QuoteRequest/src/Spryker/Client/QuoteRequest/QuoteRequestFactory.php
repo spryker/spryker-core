@@ -9,11 +9,24 @@ namespace Spryker\Client\QuoteRequest;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientInterface;
+use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestChecker;
+use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestCheckerInterface;
 use Spryker\Client\QuoteRequest\Zed\QuoteRequestStub;
 use Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface;
 
+/**
+ * @method \Spryker\Client\QuoteRequest\QuoteRequestConfig getConfig()
+ */
 class QuoteRequestFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestCheckerInterface
+     */
+    public function createQuoteRequestChecker(): QuoteRequestCheckerInterface
+    {
+        return new QuoteRequestChecker($this->getConfig());
+    }
+
     /**
      * @return \Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface
      */

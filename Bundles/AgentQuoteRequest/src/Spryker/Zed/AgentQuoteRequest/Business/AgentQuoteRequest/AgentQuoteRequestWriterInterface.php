@@ -5,24 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\AgentQuoteRequest\Zed;
+namespace Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest;
 
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
-use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
-use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 
-interface AgentQuoteRequestStubInterface
+interface AgentQuoteRequestWriterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer
-     */
-    public function getQuoteRequestOverviewCollection(
-        QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer
-    ): QuoteRequestOverviewCollectionTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *

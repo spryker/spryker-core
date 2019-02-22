@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\AgentQuoteRequest\Communication\Controller;
 
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -26,5 +28,15 @@ class GatewayController extends AbstractGatewayController
     ): QuoteRequestOverviewCollectionTransfer {
         return $this->getFacade()
             ->getQuoteRequestOverviewCollection($quoteRequestOverviewFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function cancelByReferenceAction(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getFacade()->cancelByReference($quoteRequestFilterTransfer);
     }
 }

@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -89,11 +88,12 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
         SpyQuoteRequestQuery $quoteRequestQuery,
         QuoteRequestFilterTransfer $quoteRequestFilterTransfer
     ): SpyQuoteRequestQuery {
-        $quoteRequestQuery
-            ->filterByStatus(SharedQuoteRequestConfig::STATUS_CLOSED, Criteria::ALT_NOT_EQUAL);
-
         if (!$quoteRequestFilterTransfer->getWithHidden()) {
             $quoteRequestQuery->filterByIsHidden(false);
+        }
+
+        if ($quoteRequestFilterTransfer->getExcludedStatuses()) {
+            $quoteRequestQuery->filterByStatus($quoteRequestFilterTransfer->getExcludedStatuses(), Criteria::NOT_IN);
         }
 
         if ($quoteRequestFilterTransfer->getCompanyUser() && $quoteRequestFilterTransfer->getCompanyUser()->getIdCompanyUser()) {

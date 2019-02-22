@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\AgentQuoteRequest\Business;
 
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequestBusinessFactory getFactory()
- * @method \Spryker\Zed\AgentQuoteRequest\Persistence\AgentQuoteRequestEntityManagerInterface getEntityManager()
  */
 class AgentQuoteRequestFacade extends AbstractFacade implements AgentQuoteRequestFacadeInterface
 {
@@ -32,5 +33,21 @@ class AgentQuoteRequestFacade extends AbstractFacade implements AgentQuoteReques
         return $this->getFactory()
             ->createAgentQuoteRequestReader()
             ->getQuoteRequestOverviewCollection($quoteRequestOverviewFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getFactory()
+            ->createAgentQuoteRequestWriter()
+            ->cancelByReference($quoteRequestFilterTransfer);
     }
 }

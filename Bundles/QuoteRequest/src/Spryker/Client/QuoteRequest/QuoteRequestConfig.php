@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AgentQuoteRequest;
+namespace Spryker\Client\QuoteRequest;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Client\Kernel\AbstractBundleConfig;
 
 /**
- * @method \Spryker\Shared\AgentQuoteRequest\AgentQuoteRequestConfig getSharedConfig()
+ * @method \Spryker\Shared\QuoteRequest\QuoteRequestConfig getSharedConfig()
  */
-class AgentQuoteRequestConfig extends AbstractBundleConfig
+class QuoteRequestConfig extends AbstractBundleConfig
 {
     /**
      * @return string[]

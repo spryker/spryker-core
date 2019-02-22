@@ -10,11 +10,12 @@ namespace Spryker\Zed\AgentQuoteRequest\Business;
 use Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestDependencyProvider;
 use Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest\AgentQuoteRequestReader;
 use Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest\AgentQuoteRequestReaderInterface;
+use Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest\AgentQuoteRequestWriter;
+use Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest\AgentQuoteRequestWriterInterface;
 use Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequestInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \Spryker\Zed\AgentQuoteRequest\Persistence\AgentQuoteRequestEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestConfig getConfig()
  */
 class AgentQuoteRequestBusinessFactory extends AbstractBusinessFactory
@@ -26,6 +27,17 @@ class AgentQuoteRequestBusinessFactory extends AbstractBusinessFactory
     {
         return new AgentQuoteRequestReader(
             $this->getQuoteRequestFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest\AgentQuoteRequestWriterInterface
+     */
+    public function createAgentQuoteRequestWriter(): AgentQuoteRequestWriterInterface
+    {
+        return new AgentQuoteRequestWriter(
+            $this->getQuoteRequestFacade(),
+            $this->getConfig()
         );
     }
 

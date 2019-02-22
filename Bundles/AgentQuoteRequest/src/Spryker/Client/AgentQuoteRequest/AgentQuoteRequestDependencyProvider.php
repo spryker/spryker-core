@@ -11,6 +11,9 @@ use Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToZedReq
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
+/**
+ * @method \Spryker\Client\AgentQuoteRequest\AgentQuoteRequestConfig getConfig()
+ */
 class AgentQuoteRequestDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
