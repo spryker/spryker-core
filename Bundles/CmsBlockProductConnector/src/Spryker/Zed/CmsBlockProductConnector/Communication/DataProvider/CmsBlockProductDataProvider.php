@@ -15,13 +15,6 @@ use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRep
 class CmsBlockProductDataProvider
 {
     /**
-     * @uses \Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap
-     */
-    public const PRODUCT_ABSTRACT_VIRTUAL_COLUMN_NAME = 'name';
-    public const PRODUCT_ABSTRACT_COLUMN_SKU = 'Sku';
-    public const PRODUCT_ABSTRACT_COLUMN_ID = 'IdProductAbstract';
-
-    /**
      * @var \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface
      */
     protected $cmsBlockProductQueryContainer;
@@ -76,7 +69,7 @@ class CmsBlockProductDataProvider
         $idProductAbstracts = [];
 
         if ($cmsBlockTransfer->getIdCmsBlock()) {
-            $idProductAbstracts = $this->repository->getAssignedProductAbstractArray($cmsBlockTransfer->getIdCmsBlock());
+            $idProductAbstracts = $this->repository->getAssignedProductAbstractIds($cmsBlockTransfer->getIdCmsBlock());
         }
 
         $cmsBlockTransfer->setIdProductAbstracts($idProductAbstracts);
@@ -100,16 +93,16 @@ class CmsBlockProductDataProvider
         if ($cmsBlockTransfer->getIdCmsBlock() === null) {
             return $productAbstractOptions;
         }
-        $productAbstracts = $this->repository->getAssignedProductOptions(
+        $productAbstractTransfers = $this->repository->getAssignedProductOptions(
             $idLocale,
             $cmsBlockTransfer->getIdCmsBlock()
         );
 
-        foreach ($productAbstracts as $productAbstract) {
-            $label = $productAbstract[static::PRODUCT_ABSTRACT_VIRTUAL_COLUMN_NAME] .
-                ' (SKU: ' . $productAbstract[static::PRODUCT_ABSTRACT_COLUMN_SKU] . ')';
+        foreach ($productAbstractTransfers as $productAbstractTransfer) {
+            $label = $productAbstractTransfer->getName() .
+                ' (SKU: ' . $productAbstractTransfer->getSku() . ')';
 
-            $productAbstractOptions[$label] = $productAbstract[static::PRODUCT_ABSTRACT_COLUMN_ID];
+            $productAbstractOptions[$label] = $productAbstractTransfer->getIdProductAbstract();
         }
 
         return $productAbstractOptions;

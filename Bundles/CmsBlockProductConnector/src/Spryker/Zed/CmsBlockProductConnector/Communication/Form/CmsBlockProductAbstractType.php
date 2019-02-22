@@ -25,7 +25,7 @@ class CmsBlockProductAbstractType extends AbstractType
 {
     public const FIELD_ID_CMS_BLOCK = 'id_cms_block';
     public const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
-    public const PLACEHOLDER_ID_CMS_BLOCK = 'Type three letters of name or sku for suggestions.';
+    public const PLACEHOLDER_ID_PRODUCT_ABSTRACTS = 'Type three letters of name or sku for suggestions.';
 
     public const OPTION_PRODUCT_ABSTRACT_ARRAY = 'option-product-abstracts';
 
@@ -57,7 +57,7 @@ class CmsBlockProductAbstractType extends AbstractType
             'required' => false,
             'choices' => $choices,
             'attr' => [
-                'placeholder' => static::PLACEHOLDER_ID_CMS_BLOCK,
+                'placeholder' => static::PLACEHOLDER_ID_PRODUCT_ABSTRACTS,
                 'template_path' => $this->getTemplatePath(),
             ],
         ]);
@@ -104,7 +104,7 @@ class CmsBlockProductAbstractType extends AbstractType
                 [
                     'label' => 'Products',
                     'attr' => [
-                        'placeholder' => static::PLACEHOLDER_ID_CMS_BLOCK,
+                        'placeholder' => static::PLACEHOLDER_ID_PRODUCT_ABSTRACTS,
                     ],
                     'required' => false,
                     'choices' => $data[static::FIELD_ID_PRODUCT_ABSTRACTS],

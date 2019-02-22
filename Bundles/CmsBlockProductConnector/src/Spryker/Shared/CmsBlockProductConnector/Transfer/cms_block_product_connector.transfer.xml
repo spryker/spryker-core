@@ -8,4 +8,10 @@
         <property name="idProductAbstracts" type="array" />
     </transfer>
 
+    <transfer name="ProductAbstract">
+        <property name="idProductAbstract" type="int" />
+        <property name="sku" type="string" />
+        <property name="name" type="string" />
+    </transfer>
+
 </transfers>

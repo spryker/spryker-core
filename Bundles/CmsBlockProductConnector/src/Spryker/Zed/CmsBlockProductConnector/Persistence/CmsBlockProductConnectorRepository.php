@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockProductConnector\Persistence;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -23,25 +24,36 @@ class CmsBlockProductConnectorRepository extends AbstractRepository implements C
      * @param int $idLocale
      * @param int $idCmsBlock
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
      */
     public function getAssignedProductOptions(int $idLocale, int $idCmsBlock): array
     {
-        return $this->getFactory()->getCmsBlockProductConnectorToProductAbstractQueryContainer()
+        $abstractProductTransfers = [];
+        $abstractProductEntities = $this->getFactory()->getCmsBlockProductConnectorToProductAbstractQueryContainer()
             ->queryProductAbstractWithName($idLocale)
             ->useSpyCmsBlockProductConnectorQuery()
                 ->filterByFkCmsBlock($idCmsBlock)
             ->endUse()
-            ->find()
-            ->toArray();
+            ->find();
+
+        /**
+         * @var \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity
+         */
+        foreach ($abstractProductEntities as $abstractProductEntity) {
+            $abstractProductTransfers[] = $this->getFactory()
+                ->createCmsBlockConnectorMapper()
+                ->mapProductAbstractEntityToProductAbstractTransfer($abstractProductEntity, new ProductAbstractTransfer());
+        }
+
+        return $abstractProductTransfers;
     }
 
     /**
      * @param int $idCmsBlock
      *
-     * @return array
+     * @return int[]
      */
-    public function getAssignedProductAbstractArray(int $idCmsBlock): array
+    public function getAssignedProductAbstractIds(int $idCmsBlock): array
     {
         return $this->getFactory()->createCmsBlockProductConnectorQuery()
             ->filterByFkCmsBlock($idCmsBlock)

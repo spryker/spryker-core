@@ -13,7 +13,7 @@ interface CmsBlockProductConnectorRepositoryInterface
      * @param int $idLocale
      * @param int $idCmsBlock
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
      */
     public function getAssignedProductOptions(int $idLocale, int $idCmsBlock): array;
 
@@ -22,5 +22,5 @@ interface CmsBlockProductConnectorRepositoryInterface
      *
      * @return array
      */
-    public function getAssignedProductAbstractArray(int $idCmsBlock): array;
+    public function getAssignedProductAbstractIds(int $idCmsBlock): array;
 }
